@@ -1,54 +1,76 @@
 package kg.apc.jmeter.dotchart;
 
-
+import java.util.Arrays;
 import java.util.HashMap;
 import org.apache.jmeter.samplers.SampleResult;
-
 
 /**
  *
  * @author apc
  */
 public class DotChartModel
-   extends HashMap
+     extends HashMap
 {
-    public DotChartModel()
-    {
-        super(0);
-    }
+   private int maxThreads;
+   private long maxTime;
 
-    public void addSample(SampleResult res)
-    {
-        String label = res.getSampleLabel();
-        SamplingStatCalculatorColored row;
-        if (containsKey(label))
-        {
-            row = (SamplingStatCalculatorColored) get(label);
-        }
-        else
-        {
-            row = new SamplingStatCalculatorColored(label);
-            put(label, row);
-        }
+   public DotChartModel()
+   {
+      super(0);
+   }
 
-        row.addSample(res);
-    }
+   public void addSample(SampleResult res)
+   {
+      if (res.getGroupThreads()==0)
+         return;
 
-    public SamplingStatCalculatorColored get(String key)
-    {
-        return (SamplingStatCalculatorColored) super.get(key);
-    }
+      String label = res.getSampleLabel();
+      SamplingStatCalculatorColored row;
+      if (containsKey(label))
+         row = (SamplingStatCalculatorColored) get(label);
+      else
+      {
+         row = new SamplingStatCalculatorColored(label);
+         put(label, row);
+      }
 
-    /*
-    public Sample getCurrentSample()
-    {
-        if (!containsKey(lastAddedLabel))
-            return null;
+      row.addSample(res);
+      calculateAggregates(res);
+   }
 
-        SamplingStatCalculatorColored row = null;
-        row = (SamplingStatCalculatorColored) get(lastAddedLabel);
+   public SamplingStatCalculatorColored get(String key)
+   {
+      return (SamplingStatCalculatorColored) super.get(key);
+   }
 
-        return row.getCurrentSample();
-    }
-     */
+   public int getMaxThreads()
+   {
+      return maxThreads;
+   }
+
+   long getMaxTime()
+   {
+      return maxTime;
+   }
+
+   private void calculateAggregates(SampleResult res)
+   {
+      int threads = res.getAllThreads();
+      if (threads > maxThreads)
+         maxThreads = threads;
+      //avgThreads = (avgThreads * count + threads) / (count + 1);
+      long time = res.getTime();
+      if (time > maxTime)
+         maxTime = time;
+      //avgTime = (avgTime * count + time) / (count + 1);
+      //count++;
+   }
+
+   @Override
+   public void clear()
+   {
+      super.clear();
+      maxThreads = 0;
+      maxTime = 0;
+   }
 }

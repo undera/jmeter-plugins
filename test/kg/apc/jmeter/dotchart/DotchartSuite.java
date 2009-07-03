@@ -17,7 +17,11 @@ import org.junit.runners.Suite;
  * @author apc
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.dotchart.DotChartTest.class,kg.apc.jmeter.dotchart.LeanSampleResultTest.class,kg.apc.jmeter.dotchart.DotChartModelTest.class,kg.apc.jmeter.dotchart.DotChartVisualizerTest.class,kg.apc.jmeter.dotchart.SamplingStatCalculatorColoredTest.class})
+@Suite.SuiteClasses({DotChartTest.class,
+        DotChartModelTest.class,
+        SamplingStatCalculatorColoredTest.class,
+        LeanSampleResultTest.class,
+        DotChartVisualizerTest.class})
 public class DotchartSuite {
 
     @BeforeClass

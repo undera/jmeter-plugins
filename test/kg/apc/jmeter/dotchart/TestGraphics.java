@@ -25,7 +25,6 @@ import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
-import sun.font.FontDesignMetrics;
 
 /*
  * To change this template, choose Tools | Templates

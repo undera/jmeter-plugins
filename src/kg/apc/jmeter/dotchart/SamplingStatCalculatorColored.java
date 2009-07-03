@@ -70,12 +70,12 @@ public class SamplingStatCalculatorColored
         return avgTime;
     }
 
-    int getMaxThreads()
+    private int getMaxThreads()
     {
         return maxThreads;
     }
 
-    long getMaxTime()
+    private long getMaxTime()
     {
         return maxTime;
     }

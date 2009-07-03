@@ -19,18 +19,12 @@ public class DotChart
    private DotChartModel model;
    private final int xborder = 30;
 
-   /**
-    * Constructor for the Graph object.
-    */
    public DotChart()
    {
-      setSize(100, 100);
+      setSize(100, 100); // this is for unit tests
       init();
    }
 
-   /**
-    * Constructor for the Graph object.
-    */
    public DotChart(DotChartModel model)
    {
       this();
@@ -52,76 +46,42 @@ public class DotChart
       repaint();
    }
 
-   /**
-    * Gets the ScrollableTracksViewportWidth attribute of the Graph object.
-    *
-    * @return the ScrollableTracksViewportWidth value
-    */
    public boolean getScrollableTracksViewportWidth()
    {
       return true;
    }
 
-   /**
-    * Gets the ScrollableTracksViewportHeight attribute of the Graph object.
-    *
-    * @return the ScrollableTracksViewportHeight value
-    */
    public boolean getScrollableTracksViewportHeight()
    {
       return true;
    }
 
-   /**
-    * Sets the Model attribute of the Graph object.
-    */
    private void setModel(Object model)
    {
       this.model = (DotChartModel) model;
       repaint();
    }
 
-   /**
-    * Gets the PreferredScrollableViewportSize attribute of the Graph object.
-    *
-    * @return the PreferredScrollableViewportSize value
-    */
    public Dimension getPreferredScrollableViewportSize()
    {
       return this.getPreferredSize();
    }
 
-   /**
-    * Gets the ScrollableUnitIncrement attribute of the Graph object.
-    *
-    * @return the ScrollableUnitIncrement value
-    */
    public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction)
    {
       return 5;
    }
 
-   /**
-    * Gets the ScrollableBlockIncrement attribute of the Graph object.
-    *
-    * @return the ScrollableBlockIncrement value
-    */
    public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction)
    {
       return (int) (visibleRect.width * .9);
    }
 
-   /**
-    * Clears this graph.
-    */
    public void clearData()
    {
       model.clear();
    }
 
-   /**
-    * Method is responsible for calling drawSample and updating the graph.
-    */
    @Override
    public void paintComponent(Graphics g)
    {
@@ -141,24 +101,29 @@ public class DotChart
       for (Iterator it = p_model.values().iterator(); it.hasNext();)
       {
          row = (SamplingStatCalculatorColored) it.next();
-         drawSamples(row, g, offsetY);
+         drawSamples(p_model, row, g, offsetY);
       }
 
       for (Iterator it = p_model.values().iterator(); it.hasNext();)
       {
          row = (SamplingStatCalculatorColored) it.next();
-         drawAverage(row, g, offsetY);
+         //drawThreadsAverage(p_model, row, g, offsetY);
+      }
+
+      for (Iterator it = p_model.values().iterator(); it.hasNext();)
+      {
+         row = (SamplingStatCalculatorColored) it.next();
+         drawAverage(p_model, row, g, offsetY);
       }
    }
 
-   private void drawSamples(SamplingStatCalculatorColored row, Graphics g, int offsetY)
+   private void drawSamples(DotChartModel p_model, SamplingStatCalculatorColored row, Graphics g, int offsetY)
    {
       if (row.getCount() < 1)
          return;
 
-      int sampleCount = row.getCount();
-      int maxThreads = row.getMaxThreads();
-      long maxTime = row.getMaxTime();
+      int maxThreads = p_model.getMaxThreads();
+      long maxTime = p_model.getMaxTime();
       if (maxThreads < 1 || maxTime < 1)
          return;
 
@@ -171,6 +136,7 @@ public class DotChart
       double dotH = (double) getChartHeight(offsetY) / (double) (maxTime + 1);
 
       LeanSampleResult res;
+      int sampleCount = row.getCount();
       for (int sampleNo = 0; sampleNo < sampleCount; sampleNo++)
       {
          res = row.getSample(sampleNo);
@@ -183,13 +149,44 @@ public class DotChart
       }
    }
 
-   private void drawAverage(SamplingStatCalculatorColored row, Graphics g, int offsetY)
+   private void drawAverage(DotChartModel p_model, SamplingStatCalculatorColored row, Graphics g, int offsetY)
    {
       if (row.getCount() < 1)
          return;
 
-      int maxThreads = row.getMaxThreads();
-      long maxTime = row.getMaxTime();
+      int maxThreads = p_model.getMaxThreads();
+      long maxTime = p_model.getMaxTime();
+      if (maxThreads < 1 || maxTime < 1)
+         return;
+
+      int x1 = xborder;
+      int y1 = offsetY + xborder;
+      int x2 = x1 + getChartWidth();
+      int y2 = y1 + getChartHeight(offsetY);
+
+      final int radius = 3;
+      double dotW = (double) getChartWidth() / (double) (maxThreads + 1);
+      double dotH = (double) getChartHeight(offsetY) / (double) (maxTime + 1);
+
+      int x = x1 + (int) (dotW * (row.getAvgThreads() + 0.5));
+      double avgTime = row.getAvgTime();
+      int y = y2 - (int) (dotH * avgTime);
+
+      g.setColor(row.getColor());
+      g.fillOval(x - radius, y - radius, (radius) * 2, (radius) * 2);
+      g.setColor(Color.black);
+      g.drawOval(x - radius, y - radius, radius * 2, radius * 2);
+
+      g.drawString(Long.toString(Math.round(avgTime)), x + radius + radius, y + radius + (int) dotH);
+   }
+
+   private void drawThreadsAverage(DotChartModel p_model, SamplingStatCalculatorColored row, Graphics g, int offsetY)
+   {
+      if (row.getCount() < 1)
+         return;
+
+      int maxThreads = p_model.getMaxThreads();
+      long maxTime = p_model.getMaxTime();
       if (maxThreads < 1 || maxTime < 1)
          return;
 
@@ -247,20 +244,12 @@ public class DotChart
       return currentY + xborder / 2;
    }
 
-   private void drawGraphLayout(DotChartModel model, Graphics g, int offsetY)
+   private void drawGraphLayout(DotChartModel p_model, Graphics g, int offsetY)
    {
       // get max values
       SamplingStatCalculatorColored row;
-      int maxThreads = 0;
-      long maxTime = 0;
-      for (Iterator it = model.values().iterator(); it.hasNext();)
-      {
-         row = (SamplingStatCalculatorColored) it.next();
-         if (row.getMaxThreads() > maxThreads)
-            maxThreads = row.getMaxThreads();
-         if (row.getMaxTime() > maxTime)
-            maxTime = row.getMaxTime();
-      }
+      int maxThreads = p_model.getMaxThreads();
+      long maxTime = p_model.getMaxTime();
 
       int x1 = xborder;
       int y1 = offsetY + xborder;

@@ -40,52 +40,52 @@ public class LeanSampleResultTest {
     }
 
     /**
-     * Test of getThreads method, of class LeanSampleResult.
+     * Test of getThreads method, of class DotChartSampleResult.
      */
     @Test
     public void testGetThreads()
     {
         System.out.println("getThreads");
-        LeanSampleResult instance = new LeanSampleResult();
+        DotChartSampleResult instance = new DotChartSampleResult();
         int expResult = 0;
         int result = instance.getThreads();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getTime method, of class LeanSampleResult.
+     * Test of getTime method, of class DotChartSampleResult.
      */
     @Test
     public void testGetTime()
     {
         System.out.println("getTime");
-        LeanSampleResult instance = new LeanSampleResult();
+        DotChartSampleResult instance = new DotChartSampleResult();
         long expResult = 0L;
         long result = instance.getTime();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getLabel method, of class LeanSampleResult.
+     * Test of getLabel method, of class DotChartSampleResult.
      */
     @Test
     public void testGetLabel()
     {
         System.out.println("getLabel");
-        LeanSampleResult instance = new LeanSampleResult();
+        DotChartSampleResult instance = new DotChartSampleResult();
         String expResult = null;
         String result = instance.getLabel();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getRepeatCount method, of class LeanSampleResult.
+     * Test of getRepeatCount method, of class DotChartSampleResult.
      */
     @Test
     public void testGetRepeatCount()
     {
         System.out.println("getRepeatCount");
-        LeanSampleResult instance = new LeanSampleResult();
+        DotChartSampleResult instance = new DotChartSampleResult();
         int expResult = 1;
         int result = instance.getRepeatCount();
         assertEquals(expResult, result);

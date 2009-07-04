@@ -1,6 +1,5 @@
 package kg.apc.jmeter.dotchart;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import org.apache.jmeter.samplers.SampleResult;
 
@@ -25,12 +24,12 @@ public class DotChartModel
          return;
 
       String label = res.getSampleLabel();
-      SamplingStatCalculatorColored row;
+      DotChartColoredRow row;
       if (containsKey(label))
-         row = (SamplingStatCalculatorColored) get(label);
+         row = (DotChartColoredRow) get(label);
       else
       {
-         row = new SamplingStatCalculatorColored(label);
+         row = new DotChartColoredRow(label);
          put(label, row);
       }
 
@@ -38,9 +37,9 @@ public class DotChartModel
       calculateAggregates(res);
    }
 
-   public SamplingStatCalculatorColored get(String key)
+   public DotChartColoredRow get(String key)
    {
-      return (SamplingStatCalculatorColored) super.get(key);
+      return (DotChartColoredRow) super.get(key);
    }
 
    public int getMaxThreads()

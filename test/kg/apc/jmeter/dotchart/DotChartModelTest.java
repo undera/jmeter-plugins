@@ -55,18 +55,15 @@ public class DotChartModelTest
       SampleResult res = new HTTPSampleResult();
       res.setSampleLabel("Test1");
       res.setBytes(200);
+      res.setGroupThreads(1);
 
       DotChartModel instance = new DotChartModel();
 
-      //assertNull(instance.getCurrentSample());
       assertEquals(0, instance.size());
       instance.addSample(res);
       assertEquals(1, instance.size());
       instance.addSample(res);
       assertEquals(1, instance.size());
-
-      //assertNotNull(instance.getCurrentSample());
-      //assertEquals(200, instance.getCurrentSample().getBytes());
 
       res.setSampleLabel("Test2");
       instance.addSample(res);
@@ -80,11 +77,24 @@ public class DotChartModelTest
    public void testAddSample()
    {
       System.out.println("addSample");
+      DotChartModel instance = new DotChartModel();
+
       SampleResult res = new SampleResult();
       res.setSampleLabel("Test1");
-      DotChartModel instance = new DotChartModel();
+      res.setGroupThreads(1);
       instance.addSample(res);
+
       assertEquals(1, instance.size());
+      assertTrue(instance.get("Test1") instanceof DotChartColoredRow);
+
+      res = new SampleResult();
+      res.setSampleLabel("Test2");
+      res.setGroupThreads(1);
+      instance.addSample(res);
+
+      assertEquals(2, instance.size());
+      assertTrue(instance.get("Test2") instanceof DotChartColoredRow);
+      assertTrue(instance.get("Test1") instanceof DotChartColoredRow);
    }
 
    /**
@@ -94,15 +104,15 @@ public class DotChartModelTest
    public void testGet()
    {
       System.out.println("get");
-      String key = "";
       DotChartModel instance = new DotChartModel();
-      SamplingStatCalculatorColored expResult = null;
-      SamplingStatCalculatorColored result = instance.get(key);
-      assertEquals(expResult, result);
 
-      instance.addSample(new SampleResult());
-      result = instance.get(key);
-      assertTrue(result instanceof SamplingStatCalculatorColored);
+      SampleResult sampleResult = new SampleResult();
+      sampleResult.setSampleLabel("TEST");
+      sampleResult.setGroupThreads(1);
+      instance.addSample(sampleResult);
+      
+      DotChartColoredRow result = instance.get("TEST");
+      assertTrue(result instanceof DotChartColoredRow);
    }
 
    /**
@@ -115,9 +125,11 @@ public class DotChartModelTest
       DotChartModel instance = new DotChartModel();
       SampleResult res1 = new SampleResult();
       res1.setAllThreads(3);
+      res1.setGroupThreads(3);
       instance.addSample(res1);
       SampleResult res2 = new SampleResult();
       res2.setAllThreads(2);
+      res2.setGroupThreads(2);
       instance.addSample(res2);
 
       int expResult = 3;
@@ -136,13 +148,35 @@ public class DotChartModelTest
 
       SampleResult res1 = new SampleResult();
       res1.setTime(1);
+      res1.setGroupThreads(1);
       instance.addSample(res1);
       SampleResult res2 = new SampleResult();
       res2.setTime(2);
+      res2.setGroupThreads(2);
       instance.addSample(res2);
 
       long expResult = 2L;
       long result = instance.getMaxTime();
       assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of clear method, of class DotChartModel.
+    */
+   @Test
+   public void testClear()
+   {
+      System.out.println("clear");
+      DotChartModel instance = new DotChartModel();
+      SampleResult res1 = new SampleResult();
+      res1.setAllThreads(3);
+      instance.addSample(res1);
+      SampleResult res2 = new SampleResult();
+      res2.setAllThreads(2);
+      instance.addSample(res2);
+
+      instance.clear();
+      assertEquals(0, instance.getMaxThreads());
+      assertEquals(0, instance.getMaxTime());
    }
 }

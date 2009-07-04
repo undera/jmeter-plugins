@@ -2,19 +2,19 @@ package kg.apc.jmeter.dotchart;
 
 import org.apache.jmeter.samplers.SampleResult;
 // TODO implement lean idea
-public class LeanSampleResult
+public class DotChartSampleResult
 {
    private int repeatCount;
    private int threads;
    private long time;
    private String label;
 
-   public LeanSampleResult()
+   public DotChartSampleResult()
    {
       repeatCount = 1;
    }
 
-   public LeanSampleResult(SampleResult res)
+   public DotChartSampleResult(SampleResult res)
    {
       this();
       threads = res.getAllThreads();

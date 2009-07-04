@@ -1,7 +1,7 @@
 package kg.apc.jmeter.dotchart;
 
 import org.apache.jmeter.samplers.SampleResult;
-// TODO implement lean idea
+
 public class DotChartSampleResult
 {
    private int repeatCount;
@@ -40,5 +40,10 @@ public class DotChartSampleResult
    public int getRepeatCount()
    {
       return repeatCount;
+   }
+
+   void addRepeat()
+   {
+      repeatCount++;
    }
 }

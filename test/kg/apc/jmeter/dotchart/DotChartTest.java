@@ -179,4 +179,73 @@ public class DotChartTest
       sr.setSampleLabel("Test1");
       model.addSample(sr);
    }
+
+   @Test
+   public void testSetDrawSamples()
+   {
+      System.out.println("setDrawSamples");
+      boolean b = false;
+      DotChart instance = new DotChart();
+      instance.setDrawSamples(b);
+      // TODO review the generated test code and remove the default call to fail.
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testIsDrawSamples()
+   {
+      System.out.println("isDrawSamples");
+      DotChart instance = new DotChart();
+      boolean expResult = false;
+      boolean result = instance.isDrawSamples();
+      assertEquals(expResult, result);
+      // TODO review the generated test code and remove the default call to fail.
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testIsDrawThreadAverages()
+   {
+      System.out.println("isDrawThreadAverages");
+      DotChart instance = new DotChart();
+      boolean expResult = false;
+      boolean result = instance.isDrawThreadAverages();
+      assertEquals(expResult, result);
+      // TODO review the generated test code and remove the default call to fail.
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testSetDrawThreadAverages()
+   {
+      System.out.println("setDrawThreadAverages");
+      boolean drawThreadAverages = false;
+      DotChart instance = new DotChart();
+      instance.setDrawThreadAverages(drawThreadAverages);
+      // TODO review the generated test code and remove the default call to fail.
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testIsDrawAverages()
+   {
+      System.out.println("isDrawAverages");
+      DotChart instance = new DotChart();
+      boolean expResult = false;
+      boolean result = instance.isDrawAverages();
+      assertEquals(expResult, result);
+      // TODO review the generated test code and remove the default call to fail.
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testSetDrawAverages()
+   {
+      System.out.println("setDrawAverages");
+      boolean drawAverages = false;
+      DotChart instance = new DotChart();
+      instance.setDrawAverages(drawAverages);
+      // TODO review the generated test code and remove the default call to fail.
+      fail("The test case is a prototype.");
+   }
 }

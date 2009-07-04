@@ -113,20 +113,21 @@ public class DotChartVisualizer
     */
    private void init()
    {
+      JPanel lgraphPanel = new JPanel(new BorderLayout());
+      lgraphPanel.add(createGraphPanel(), BorderLayout.CENTER);
+
+      JPanel guiPanel = new JPanel(new BorderLayout());
+      guiPanel.add(new DotChartGuiPanel(graph), BorderLayout.CENTER);
+
+      JPanel topPanel=new JPanel(new BorderLayout());
+      topPanel.add(makeTitlePanel(), BorderLayout.NORTH);
+      topPanel.add(guiPanel, BorderLayout.SOUTH);
+
       this.setLayout(new BorderLayout());
-
-      // MAIN PANEL
       Border margin = new EmptyBorder(10, 10, 5, 10);
-
       this.setBorder(margin);
-
-      this.add(makeTitlePanel(), BorderLayout.NORTH);
-
-      // Set up the graph with header, footer, Y axis and graph display
-      //JPanel lgraphPanel = new JPanel(new BorderLayout());
-      //lgraphPanel.add(createGraphPanel(), BorderLayout.CENTER);
-
-      this.add(createGraphPanel(), BorderLayout.CENTER);
+      this.add(topPanel, BorderLayout.NORTH);
+      this.add(lgraphPanel, BorderLayout.CENTER);
    }
 
    // Methods used in creating the GUI

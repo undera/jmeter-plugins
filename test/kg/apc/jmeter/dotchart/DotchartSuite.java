@@ -18,9 +18,11 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({DotChartTest.class,
+        DotChartGuiPanelTest.class,
         DotChartModelTest.class,
-        SamplingStatCalculatorColoredTest.class,
-        LeanSampleResultTest.class,
+        DotChartSampleResultTest.class,
+        DotChartColoredRowTest.class,
+        DotChartAverageValuesTest.class,
         DotChartVisualizerTest.class})
 public class DotchartSuite {
 

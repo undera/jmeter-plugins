@@ -19,6 +19,9 @@ public class DotChart
 {
    private DotChartModel model;
    private final int xborder = 30;
+   private boolean drawSamples = false;
+   private boolean drawThreadAverages = true;
+   private boolean drawAverages = true;
 
    public DotChart()
    {
@@ -88,7 +91,7 @@ public class DotChart
    {
       if (getParent().getHeight() - xborder != getHeight())
          setSize(getWidth(), getParent().getHeight() - xborder);
-      
+
       super.paintComponent(g);
       final DotChartModel m = this.model;
       synchronized (m)
@@ -102,23 +105,26 @@ public class DotChart
    private void drawRows(DotChartModel p_model, Graphics g, int offsetY)
    {
       DotChartColoredRow row;
-      for (Iterator it = p_model.values().iterator(); it.hasNext();)
-      {
-         row = (DotChartColoredRow) it.next();
-         drawSamples(p_model, row, g, offsetY);
-      }
+      if (isDrawSamples())
+         for (Iterator it = p_model.values().iterator(); it.hasNext();)
+         {
+            row = (DotChartColoredRow) it.next();
+            drawSamples(p_model, row, g, offsetY);
+         }
 
-      for (Iterator it = p_model.values().iterator(); it.hasNext();)
-      {
-         row = (DotChartColoredRow) it.next();
-         drawThreadsAverage(p_model, row, g, offsetY);
-      }
+      if (isDrawThreadAverages())
+         for (Iterator it = p_model.values().iterator(); it.hasNext();)
+         {
+            row = (DotChartColoredRow) it.next();
+            drawThreadsAverage(p_model, row, g, offsetY);
+         }
 
-      for (Iterator it = p_model.values().iterator(); it.hasNext();)
-      {
-         row = (DotChartColoredRow) it.next();
-         drawAverage(p_model, row, g, offsetY);
-      }
+      if (isDrawAverages())
+         for (Iterator it = p_model.values().iterator(); it.hasNext();)
+         {
+            row = (DotChartColoredRow) it.next();
+            drawAverage(p_model, row, g, offsetY);
+         }
    }
 
    private void drawSamples(DotChartModel p_model, DotChartColoredRow row, Graphics g, int offsetY)
@@ -316,5 +322,53 @@ public class DotChart
       g.drawLine(x1, y1, x2, y1);
       g.drawLine(x2, y1, x2, y2);
       g.drawLine(x1, y2, x2, y2);
+   }
+
+   void setDrawSamples(boolean b)
+   {
+      drawSamples = b;
+      repaint();
+   }
+
+   /**
+    * @return the drawSamples
+    */
+   public boolean isDrawSamples()
+   {
+      return drawSamples;
+   }
+
+   /**
+    * @return the drawThreadAverages
+    */
+   public boolean isDrawThreadAverages()
+   {
+      return drawThreadAverages;
+   }
+
+   /**
+    * @param drawThreadAverages the drawThreadAverages to set
+    */
+   public void setDrawThreadAverages(boolean drawThreadAverages)
+   {
+      this.drawThreadAverages = drawThreadAverages;
+      repaint();
+   }
+
+   /**
+    * @return the drawAverages
+    */
+   public boolean isDrawAverages()
+   {
+      return drawAverages;
+   }
+
+   /**
+    * @param drawAverages the drawAverages to set
+    */
+   public void setDrawAverages(boolean drawAverages)
+   {
+      this.drawAverages = drawAverages;
+      repaint();
    }
 }

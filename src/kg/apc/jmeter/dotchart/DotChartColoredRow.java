@@ -1,7 +1,6 @@
 package kg.apc.jmeter.dotchart;
 
 import java.awt.Color;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
 import org.apache.jmeter.samplers.SampleResult;
@@ -34,6 +33,17 @@ public class DotChartColoredRow
 
    public void addSample(SampleResult res)
    {
+      DotChartSampleResult oldres;
+      for (int n = 0; n < values.size(); n++)
+      {
+         oldres = (DotChartSampleResult) values.elementAt(n);
+         if (oldres.getThreads()==res.getAllThreads() && oldres.getTime()==res.getTime())
+         {
+            oldres.addRepeat();
+            return;
+         }
+      }
+
       DotChartSampleResult leanres = new DotChartSampleResult(res);
       values.add(leanres);
       calculateAggregates(leanres);

@@ -17,11 +17,11 @@ public class DotChartColoredRow
    private long maxTime;
    private Vector avgTimeByThreads;
 
-   DotChartColoredRow(String alabel)
+   DotChartColoredRow(String alabel, Color acolor)
    {
       label = alabel;
       Random r = new Random();
-      color = new Color(r.nextInt(0xFFFFFF));
+      color = acolor;
       values = new Vector(0);
       avgTimeByThreads = new Vector(0);
    }

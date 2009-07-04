@@ -25,7 +25,7 @@ public class DotChartGuiPanel
       setLayout(new FlowLayout());
       JLabel selectGraphsLabel = new JLabel("Draw: ");
       drawSamples = createChooseCheckBox("Response Times", chart.isDrawSamples());
-      drawThreadAverages = createChooseCheckBox("Response Times vs Active Threads", chart.isDrawThreadAverages());
+      drawThreadAverages = createChooseCheckBox("Response Time Averages vs Active Threads", chart.isDrawThreadAverages());
       drawAverages = createChooseCheckBox("Overall Response Time Averages", chart.isDrawAverages());
 
       add(selectGraphsLabel);

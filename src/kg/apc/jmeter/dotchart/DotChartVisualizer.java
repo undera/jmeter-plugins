@@ -87,7 +87,7 @@ public class DotChartVisualizer
    @Override
    public String getStaticLabel()
    {
-      return "Dot Chart";
+      return "Response Times vs Active Threads";
    }
 
    public String getLabelResource()
@@ -105,7 +105,7 @@ public class DotChartVisualizer
    @Override
    public String toString()
    {
-      return "Show the samples in a dot graph";
+      return "Show the samples in a nice graph";
    }
 
    /**

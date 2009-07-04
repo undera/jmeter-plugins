@@ -13,6 +13,7 @@ import javax.swing.Scrollable;
 
 import org.apache.jmeter.samplers.Clearable;
 
+// TODO needs strong refactoring
 public class DotChart
      extends JComponent
      implements Scrollable, Clearable
@@ -22,6 +23,14 @@ public class DotChart
    private boolean drawSamples = false;
    private boolean drawThreadAverages = true;
    private boolean drawAverages = true;
+   private final int gridLinesCount = 9;
+   private int offsetY;
+   private int x1;
+   private int y1;
+   private int x2;
+   private int y2;
+   private double dotW;
+   private double dotH;
 
    public DotChart()
    {
@@ -35,7 +44,53 @@ public class DotChart
       setModel(model);
    }
 
-   private int getChartHeight(int offsetY)
+   private void calculateGraphCoords(int maxThreads, long maxTime)
+   {
+      x1 = xborder;
+      y1 = offsetY + xborder;
+      x2 = x1 + getChartWidth();
+      y2 = y1 + getChartHeight();
+      dotW = (double) getChartWidth() / (double) (maxThreads + 1);
+      dotH = (double) getChartHeight() / (double) (maxTime + 1);
+   }
+
+   private void drawXAxis(Graphics g, int maxThreads, int x1, int y1, int y2, FontMetrics fm)
+   {
+      int coordX;
+      String xVal;
+      for (int x = 0; x <= gridLinesCount; x++)
+      {
+         coordX = x1 + x * getChartWidth() / gridLinesCount;
+         xVal = String.valueOf(x * maxThreads / gridLinesCount);
+         if (x == gridLinesCount)
+            xVal += " threads";
+         g.setColor(Color.lightGray);
+         g.drawLine(coordX, y1, coordX, y2);
+         g.setColor(Color.black);
+         g.drawString(xVal, coordX - fm.stringWidth(xVal) / 2, y2 + fm.getHeight() + 1);
+      }
+   }
+
+   private void drawYAxis(Graphics g, long maxTime, int y1, int x1, int x2, FontMetrics fm)
+   {
+      int coordY;
+      String yVal;
+      int labelPos;
+      for (int y = 0; y <= gridLinesCount; y++)
+      {
+         coordY = y1 + (gridLinesCount - y) * getChartHeight() / gridLinesCount;
+         yVal = String.valueOf(y * maxTime / gridLinesCount);
+         if (y == gridLinesCount)
+            yVal += " msec";
+         g.setColor(Color.lightGray);
+         g.drawLine(x1, coordY, x2, coordY);
+         g.setColor(Color.black);
+         labelPos = x1 - fm.stringWidth(yVal) - 1;
+         g.drawString(yVal, labelPos > 0 ? labelPos : 0, coordY - 1);
+      }
+   }
+
+   private int getChartHeight()
    {
       return getHeight() - offsetY - xborder * 2;
    }
@@ -96,38 +151,38 @@ public class DotChart
       final DotChartModel m = this.model;
       synchronized (m)
       {
-         int offsetY = drawLegend(m, g);
-         drawGraphLayout(m, g, offsetY);
-         drawRows(m, g, offsetY);
+         drawLegend(m, g);
+         drawAxis(m, g);
+         drawRows(m, g);
       }
    }
 
-   private void drawRows(DotChartModel p_model, Graphics g, int offsetY)
+   private void drawRows(DotChartModel p_model, Graphics g)
    {
       DotChartColoredRow row;
       if (isDrawSamples())
          for (Iterator it = p_model.values().iterator(); it.hasNext();)
          {
             row = (DotChartColoredRow) it.next();
-            drawSamples(p_model, row, g, offsetY);
+            drawSamples(p_model, row, g);
          }
 
       if (isDrawThreadAverages())
          for (Iterator it = p_model.values().iterator(); it.hasNext();)
          {
             row = (DotChartColoredRow) it.next();
-            drawThreadsAverage(p_model, row, g, offsetY);
+            drawThreadsAverage(p_model, row, g);
          }
 
       if (isDrawAverages())
          for (Iterator it = p_model.values().iterator(); it.hasNext();)
          {
             row = (DotChartColoredRow) it.next();
-            drawAverage(p_model, row, g, offsetY);
+            drawAverage(p_model, row, g);
          }
    }
 
-   private void drawSamples(DotChartModel p_model, DotChartColoredRow row, Graphics g, int offsetY)
+   private void drawSamples(DotChartModel p_model, DotChartColoredRow row, Graphics g)
    {
       if (row.getCount() < 1)
          return;
@@ -137,13 +192,7 @@ public class DotChart
       if (maxThreads < 1 || maxTime < 1)
          return;
 
-      int x1 = xborder;
-      int y1 = offsetY + xborder;
-      int x2 = x1 + getChartWidth();
-      int y2 = y1 + getChartHeight(offsetY);
-
-      double dotW = (double) getChartWidth() / (double) (maxThreads + 1);
-      double dotH = (double) getChartHeight(offsetY) / (double) (maxTime + 1);
+      calculateGraphCoords(maxThreads, maxTime);
 
       DotChartSampleResult res;
       int sampleCount = row.getCount();
@@ -151,15 +200,15 @@ public class DotChart
       {
          res = row.getSample(sampleNo);
 
-         int x = x1 + (int) (dotW * (double) res.getThreads());
-         int y = y2 - (int) (dotH * (double) res.getTime());
+         int x = x1 + (int) (dotW * ((double) res.getThreads() - 0.5));
+         int y = y2 - (int) (dotH * ((double) res.getTime() - 0.5));
 
          g.setColor(row.getColor());
-         g.fillRect(x, y, 1 /*(int) dotW < 1 ? 1 : (int) dotW*/, 1 /*(int) dotH < 1 ? 1 : (int) dotH*/);
+         g.fillRect(x, y, (int) dotW < 1 ? 1 : (int) dotW, (int) dotH < 1 ? 1 : (int) dotH);
       }
    }
 
-   private void drawAverage(DotChartModel p_model, DotChartColoredRow row, Graphics g, int offsetY)
+   private void drawAverage(DotChartModel p_model, DotChartColoredRow row, Graphics g)
    {
       if (row.getCount() < 1)
          return;
@@ -169,16 +218,11 @@ public class DotChart
       if (maxThreads < 1 || maxTime < 1)
          return;
 
-      int x1 = xborder;
-      int y1 = offsetY + xborder;
-      int x2 = x1 + getChartWidth();
-      int y2 = y1 + getChartHeight(offsetY);
+      calculateGraphCoords(maxThreads, maxTime);
 
       final int radius = 4;
-      double dotW = (double) getChartWidth() / (double) (maxThreads + 1);
-      double dotH = (double) getChartHeight(offsetY) / (double) (maxTime + 1);
 
-      int x = x1 + (int) (dotW * (row.getAvgThreads() + 0.5));
+      int x = x1 + (int) (dotW * (double) row.getAvgThreads());
       double avgTime = row.getAvgTime();
       int y = y2 - (int) (dotH * avgTime);
 
@@ -190,7 +234,7 @@ public class DotChart
       g.drawString(Long.toString(Math.round(avgTime)), x + radius + radius, y + radius + (int) dotH);
    }
 
-   private void drawThreadsAverage(DotChartModel p_model, DotChartColoredRow row, Graphics g, int offsetY)
+   private void drawThreadsAverage(DotChartModel p_model, DotChartColoredRow row, Graphics g)
    {
       if (row.getCount() < 1)
          return;
@@ -200,17 +244,12 @@ public class DotChart
       if (maxThreads < 1 || maxTime < 1)
          return;
 
-      int x1 = xborder;
-      int y1 = offsetY + xborder;
-      int x2 = x1 + getChartWidth();
-      int y2 = y1 + getChartHeight(offsetY);
+      calculateGraphCoords(maxThreads, maxTime);
 
       final int radius = 2;
-      double dotW = (double) getChartWidth() / (double) (maxThreads + 1);
-      double dotH = (double) getChartHeight(offsetY) / (double) (maxTime + 1);
 
       Vector avgTimeByThreads = row.getAvgTimeByThreads();
-      int prevX = 0, prevY = 0;
+      //int prevX = 0, prevY = 0;
       for (int threads = 0; threads < avgTimeByThreads.size(); threads++)
       {
          if (avgTimeByThreads.elementAt(threads) == null)
@@ -218,7 +257,7 @@ public class DotChart
 
          double avgTime = ((DotChartAverageValues) avgTimeByThreads.get(threads)).getAvgTime();
 
-         int x = x1 + (int) (dotW * (double) threads + 0.5);
+         int x = x1 + (int) (dotW * (double) threads);
 
          int y = y2 - (int) (dotH * avgTime);
 
@@ -226,19 +265,20 @@ public class DotChart
          //if (prevX > 0)
          //   g.drawLine(prevX, prevY, x, y);
 
-         g.fillOval(x - radius, y - radius, (radius) * 2, (radius) * 2);
+         g.fillOval(x - radius, y - radius, radius * 2, radius * 2);
          g.setColor(Color.black);
          g.drawOval(x - radius, y - radius, radius * 2, radius * 2);
 
-         prevX = x;
-         prevY = y;
+         //prevX = x;
+         //prevY = y;
          //g.drawString(Long.toString(Math.round(avgTime)), x + radius + radius, y + radius + (int) dotH);
       }
    }
 
-   private int drawLegend(DotChartModel model, Graphics g)
+   private void drawLegend(DotChartModel model, Graphics g)
    {
-      int offsetX = 1, offsetY = 1;
+      int offsetX = 1;
+      offsetY = 1;
       int currentX = offsetX, currentY = offsetY;
 
       FontMetrics fm = g.getFontMetrics(g.getFont());
@@ -266,20 +306,16 @@ public class DotChart
          }
       }
 
-      return currentY + xborder / 2;
+      offsetY = currentY + xborder / 2;
    }
 
-   private void drawGraphLayout(DotChartModel p_model, Graphics g, int offsetY)
+   private void drawAxis(DotChartModel p_model, Graphics g)
    {
       // get max values
-      DotChartColoredRow row;
       int maxThreads = p_model.getMaxThreads();
       long maxTime = p_model.getMaxTime();
 
-      int x1 = xborder;
-      int y1 = offsetY + xborder;
-      int x2 = x1 + getChartWidth();
-      int y2 = y1 + getChartHeight(offsetY);
+      calculateGraphCoords(maxThreads, maxTime);
 
       // clear bg
       g.setColor(Color.white);
@@ -287,34 +323,10 @@ public class DotChart
 
       // lets draw the grid
       FontMetrics fm = g.getFontMetrics(g.getFont());
-      int coordY;
-      String yVal;
-      final int gridLinesCount = 4;
-      int labelPos;
-      for (int y = 0; y <= gridLinesCount; y++)
-      {
-         coordY = y1 + (gridLinesCount - y) * getChartHeight(offsetY) / gridLinesCount;
-         yVal = String.valueOf(y * maxTime / gridLinesCount);
 
-         g.setColor(Color.lightGray);
-         g.drawLine(x1, coordY, x2, coordY);
-         g.setColor(Color.black);
-         labelPos = x1 - fm.stringWidth(yVal) - 1;
-         g.drawString(yVal, labelPos > 0 ? labelPos : 0, coordY + fm.getHeight() / 2);
-      }
+      drawYAxis(g, maxTime, y1, x1, x2, fm);
 
-      int coordX;
-      String xVal;
-      for (int x = 0; x <= gridLinesCount; x++)
-      {
-         coordX = x1 + x * getChartWidth() / gridLinesCount;
-         xVal = String.valueOf(x * maxThreads / gridLinesCount);
-
-         g.setColor(Color.lightGray);
-         g.drawLine(coordX, y1, coordX, y2);
-         g.setColor(Color.black);
-         g.drawString(xVal, coordX - fm.stringWidth(xVal) / 2, y2 + fm.getHeight() + 1);
-      }
+      drawXAxis(g, maxThreads, x1, y1, y2, fm);
 
       // bounds
       g.setColor(Color.black);

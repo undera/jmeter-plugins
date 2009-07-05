@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package kg.apc.jmeter.dotchart;
 
 import java.awt.event.ItemEvent;
+import javax.swing.JCheckBox;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,10 +17,11 @@ import static org.junit.Assert.*;
  *
  * @author APC
  */
-public class DotChartGuiPanelTest {
-
-    public DotChartGuiPanelTest() {
-    }
+public class DotChartGuiPanelTest
+{
+   public DotChartGuiPanelTest()
+   {
+   }
 
    @BeforeClass
    public static void setUpClass()
@@ -34,23 +35,26 @@ public class DotChartGuiPanelTest {
    {
    }
 
-    @Before
-    public void setUp() {
-    }
+   @Before
+   public void setUp()
+   {
+   }
 
-    @After
-    public void tearDown() {
-    }
+   @After
+   public void tearDown()
+   {
+   }
 
    @Test
    public void testItemStateChanged()
    {
       System.out.println("itemStateChanged");
-      ItemEvent e = null;
-      DotChartGuiPanel instance = null;
-      instance.itemStateChanged(e);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
-   }
+      int id = 0;
+      int stateChange = ItemEvent.ITEM_STATE_CHANGED;
+      DotChartGuiPanel instance = new DotChartGuiPanel(new DotChart());
 
+      JCheckBox checkbox = new JCheckBox();
+      ItemEvent e = new ItemEvent(checkbox, id, this, stateChange);
+      instance.itemStateChanged(e);
+   }
 }

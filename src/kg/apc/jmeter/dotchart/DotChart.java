@@ -31,6 +31,7 @@ public class DotChart
    private int y2;
    private double dotW;
    private double dotH;
+   private int currentThreads;
 
    public DotChart()
    {
@@ -328,6 +329,11 @@ public class DotChart
 
       drawXAxis(g, maxThreads, x1, y1, y2, fm);
 
+      // current threads line
+      g.setColor(Color.GRAY);
+      int coordX = x1 +  (int) ((double) currentThreads * dotW);
+      g.drawLine(coordX, y1, coordX, y2);
+
       // bounds
       g.setColor(Color.black);
       g.drawLine(x1, y1, x1, y2);
@@ -382,5 +388,10 @@ public class DotChart
    {
       this.drawAverages = drawAverages;
       repaint();
+   }
+
+   void setCurrentThreads(int allThreads)
+   {
+      currentThreads = allThreads;
    }
 }

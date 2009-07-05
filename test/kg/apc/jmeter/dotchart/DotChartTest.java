@@ -173,7 +173,7 @@ public class DotChartTest
       sr.setSampleLabel("Test1");
       sr.setAllThreads(2);
       model.addSample(sr);
-      
+
       sr = new SampleResult();
       sr.setTime(0);
       sr.setSampleLabel("Test1");
@@ -184,11 +184,10 @@ public class DotChartTest
    public void testSetDrawSamples()
    {
       System.out.println("setDrawSamples");
-      boolean b = false;
+      boolean b = true;
       DotChart instance = new DotChart();
       instance.setDrawSamples(b);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
+      assertTrue(instance.isDrawSamples());
    }
 
    @Test
@@ -196,11 +195,10 @@ public class DotChartTest
    {
       System.out.println("isDrawSamples");
       DotChart instance = new DotChart();
-      boolean expResult = false;
+      boolean expResult = true;
+      instance.setDrawSamples(expResult);
       boolean result = instance.isDrawSamples();
       assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -208,11 +206,9 @@ public class DotChartTest
    {
       System.out.println("isDrawThreadAverages");
       DotChart instance = new DotChart();
-      boolean expResult = false;
+      boolean expResult = true;
       boolean result = instance.isDrawThreadAverages();
       assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -222,8 +218,7 @@ public class DotChartTest
       boolean drawThreadAverages = false;
       DotChart instance = new DotChart();
       instance.setDrawThreadAverages(drawThreadAverages);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
+      assertEquals(drawThreadAverages, instance.isDrawThreadAverages());
    }
 
    @Test
@@ -231,11 +226,9 @@ public class DotChartTest
    {
       System.out.println("isDrawAverages");
       DotChart instance = new DotChart();
-      boolean expResult = false;
+      boolean expResult = true;
       boolean result = instance.isDrawAverages();
       assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -245,7 +238,6 @@ public class DotChartTest
       boolean drawAverages = false;
       DotChart instance = new DotChart();
       instance.setDrawAverages(drawAverages);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
+      assertEquals(drawAverages, instance.isDrawAverages());
    }
 }

@@ -27,7 +27,7 @@ public class DotChartVisualizer
    private DotChartModel model;
    private JPanel graphPanel = null;
    private DotChart graph;
-   private int delay = 1000;
+   private int delay = 50;
    private long lastRepaint = 0;
 
    public DotChartVisualizer()
@@ -81,6 +81,7 @@ public class DotChartVisualizer
    public synchronized void add(SampleResult res)
    {
       model.addSample(res);
+      graph.setCurrentThreads(res.getAllThreads());
       updateGui();
    }
 

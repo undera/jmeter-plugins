@@ -49,19 +49,21 @@ public class DotChartAverageValuesTest {
       int expResult = 0;
       int result = instance.getCount();
       assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
+
+      instance.addCount();
+      expResult++;
+      result=instance.getCount();
+      assertEquals(expResult, result);
    }
 
    @Test
    public void testSetAvgTime()
    {
       System.out.println("setAvgTime");
-      double l = 0.0;
+      double l = 1.25;
       DotChartAverageValues instance = new DotChartAverageValues();
       instance.setAvgTime(l);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
+      assertEquals(l, instance.getAvgTime(), 0.01);
    }
 
    @Test
@@ -69,11 +71,10 @@ public class DotChartAverageValuesTest {
    {
       System.out.println("getAvgTime");
       DotChartAverageValues instance = new DotChartAverageValues();
-      double expResult = 0.0;
+      double expResult = 1.25;
+      instance.setAvgTime(expResult);
       double result = instance.getAvgTime();
-      assertEquals(expResult, result, 0.0);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
+      assertEquals(expResult, result, 0.01);
    }
 
    @Test
@@ -82,8 +83,7 @@ public class DotChartAverageValuesTest {
       System.out.println("addCount");
       DotChartAverageValues instance = new DotChartAverageValues();
       instance.addCount();
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
+      assertEquals(1, instance.getCount());
    }
 
 }

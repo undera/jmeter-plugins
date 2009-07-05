@@ -44,13 +44,13 @@ public class DotChartGuiPanel
 
    public void itemStateChanged(ItemEvent e)
    {
-      if (e.getItem()==drawSamples)
+      if (e.getItem() == drawSamples)
          chart.setDrawSamples(e.getStateChange() == ItemEvent.SELECTED);
 
-      if (e.getItem()==drawThreadAverages)
+      if (e.getItem() == drawThreadAverages)
          chart.setDrawThreadAverages(e.getStateChange() == ItemEvent.SELECTED);
 
-      if (e.getItem()==drawAverages)
+      if (e.getItem() == drawAverages)
          chart.setDrawAverages(e.getStateChange() == ItemEvent.SELECTED);
    }
 }

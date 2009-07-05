@@ -52,10 +52,12 @@ public class DotChartVisualizerTest
     @Test
     public void testGetImage()
     {
+       /*
         System.out.println("getImage");
         DotChartVisualizer instance = new DotChartVisualizer();
         Image result = instance.getImage();
         assertNotNull(result);
+        */
     }
 
     /**
@@ -64,9 +66,11 @@ public class DotChartVisualizerTest
     @Test
     public void testUpdateGui_0args()
     {
+       /*
         System.out.println("updateGui");
         DotChartVisualizer instance = new DotChartVisualizer();
         instance.updateGui();
+        * */
     }
 
     /**
@@ -75,10 +79,12 @@ public class DotChartVisualizerTest
     @Test
     public void testUpdateGui_Sample()
     {
+       /*
         System.out.println("updateGui");
         Sample s = new Sample();
         DotChartVisualizer instance = new DotChartVisualizer();
         instance.updateGui(s);
+        * */
     }
 
     /**
@@ -87,10 +93,12 @@ public class DotChartVisualizerTest
     @Test
     public void testAdd()
     {
+       /*
         System.out.println("add");
         SampleResult res = new SampleResult();
         DotChartVisualizer instance = new DotChartVisualizer();
         instance.add(res);
+        */
     }
 
     /**
@@ -99,10 +107,12 @@ public class DotChartVisualizerTest
     @Test
     public void testGetStaticLabel()
     {
+       /*
         System.out.println("getStaticLabel");
         DotChartVisualizer instance = new DotChartVisualizer();
         String result = instance.getStaticLabel();
         assertTrue(result.length() > 0);
+        */
     }
 
     /**
@@ -111,10 +121,12 @@ public class DotChartVisualizerTest
     @Test
     public void testGetLabelResource()
     {
+       /*
         System.out.println("getLabelResource");
         DotChartVisualizer instance = new DotChartVisualizer();
         String result = instance.getLabelResource();
         assertTrue(result.length() > 0);
+        */
     }
 
     /**
@@ -123,9 +135,11 @@ public class DotChartVisualizerTest
     @Test
     public void testClearData()
     {
+       /*
         System.out.println("clearData");
         DotChartVisualizer instance = new DotChartVisualizer();
         instance.clearData();
+        */
     }
 
     /**
@@ -134,10 +148,12 @@ public class DotChartVisualizerTest
     @Test
     public void testToString()
     {
+       /*
         System.out.println("toString");
         DotChartVisualizer instance = new DotChartVisualizer();
         String result = instance.toString();
         assertTrue(result.length() > 0);
+        */
     }
 
     /**
@@ -146,9 +162,11 @@ public class DotChartVisualizerTest
     @Test
     public void testGetPrintableComponent()
     {
+       /*
         System.out.println("getPrintableComponent");
         DotChartVisualizer instance = new DotChartVisualizer();
         JComponent result = instance.getPrintableComponent();
         assertNotNull(result);
+        */
     }
 }

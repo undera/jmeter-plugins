@@ -41,62 +41,55 @@ public class DotChartSampleResultTest {
     public void tearDown() {
     }
 
-   @Test
-   public void testGetThreads()
-   {
-      System.out.println("getThreads");
-      DotChartSampleResult instance = new DotChartSampleResult();
-      int expResult = 0;
-      int result = instance.getThreads();
-      assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
-   }
+    /**
+     * Test of getThreads method, of class DotChartSampleResult.
+     */
+    @Test
+    public void testGetThreads()
+    {
+        System.out.println("getThreads");
+        DotChartSampleResult instance = new DotChartSampleResult();
+        int expResult = 0;
+        int result = instance.getThreads();
+        assertEquals(expResult, result);
+    }
 
-   @Test
-   public void testGetTime()
-   {
-      System.out.println("getTime");
-      DotChartSampleResult instance = new DotChartSampleResult();
-      long expResult = 0L;
-      long result = instance.getTime();
-      assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
-   }
+    /**
+     * Test of getTime method, of class DotChartSampleResult.
+     */
+    @Test
+    public void testGetTime()
+    {
+        System.out.println("getTime");
+        DotChartSampleResult instance = new DotChartSampleResult();
+        long expResult = 0L;
+        long result = instance.getTime();
+        assertEquals(expResult, result);
+    }
 
-   @Test
-   public void testGetLabel()
-   {
-      System.out.println("getLabel");
-      DotChartSampleResult instance = new DotChartSampleResult();
-      String expResult = "";
-      String result = instance.getLabel();
-      assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
-   }
+    /**
+     * Test of getLabel method, of class DotChartSampleResult.
+     */
+    @Test
+    public void testGetLabel()
+    {
+        System.out.println("getLabel");
+        DotChartSampleResult instance = new DotChartSampleResult();
+        String expResult = null;
+        String result = instance.getLabel();
+        assertEquals(expResult, result);
+    }
 
-   @Test
-   public void testGetRepeatCount()
-   {
-      System.out.println("getRepeatCount");
-      DotChartSampleResult instance = new DotChartSampleResult();
-      int expResult = 0;
-      int result = instance.getRepeatCount();
-      assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
-   }
-
-   @Test
-   public void testAddRepeat()
-   {
-      System.out.println("addRepeat");
-      DotChartSampleResult instance = new DotChartSampleResult();
-      instance.addRepeat();
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
-   }
-
+    /**
+     * Test of getRepeatCount method, of class DotChartSampleResult.
+     */
+    @Test
+    public void testGetRepeatCount()
+    {
+        System.out.println("getRepeatCount");
+        DotChartSampleResult instance = new DotChartSampleResult();
+        int expResult = 1;
+        int result = instance.getRepeatCount();
+        assertEquals(expResult, result);
+    }
 }

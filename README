@@ -1,0 +1,15 @@
+   J M E T E R   P L U G I N S
+
+1. What is it?
+This library contains additional plugins for Apache JMeter Tool.
+For now, there is one plugin "Response Times vs Active Threads"
+in Listeners category.
+
+2. Installation
+Just copy the JAR file into JMeter's lib/ext directory.
+Then you can start JMeter and add additional items to your Test Plan.
+
+3. Latest Downloads and Project Page
+Visit http://code.google.com/p/jmeter-plugins/ for latest information
+and downloads.
+

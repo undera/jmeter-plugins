@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package kg.apc.jmeter.dotchart;
+package kg.apc.jmeter;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,8 +17,8 @@ import org.junit.runners.Suite;
  * @author apc
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DotChartModelTest.class, DotChartAverageValuesTest.class, DotChartVisualizerTest.class, DotChartTest.class, DotChartSampleResultTest.class, DotChartGuiPanelTest.class, DotChartColoredRowTest.class})
-public class DotchartSuite {
+@Suite.SuiteClasses({kg.apc.jmeter.dotchart.DotchartSuite.class})
+public class JmeterSuite {
 
     @BeforeClass
     public static void setUpClass() throws Exception

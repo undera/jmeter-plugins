@@ -92,4 +92,19 @@ public class DotChartSampleResultTest {
         int result = instance.getRepeatCount();
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of addRepeat method, of class DotChartSampleResult.
+     */
+    @Test
+    public void testAddRepeat()
+    {
+        System.out.println("addRepeat");
+        DotChartSampleResult instance = new DotChartSampleResult();
+        assertEquals(1, instance.getRepeatCount());
+        instance.addRepeat();
+        assertEquals(2, instance.getRepeatCount());
+        instance.addRepeat();
+        assertEquals(3, instance.getRepeatCount());
+    }
 }

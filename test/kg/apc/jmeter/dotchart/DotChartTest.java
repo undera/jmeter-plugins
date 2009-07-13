@@ -240,4 +240,16 @@ public class DotChartTest
       instance.setDrawAverages(drawAverages);
       assertEquals(drawAverages, instance.isDrawAverages());
    }
+
+    /**
+     * Test of setCurrentThreads method, of class DotChart.
+     */
+    @Test
+    public void testSetCurrentThreads()
+    {
+        System.out.println("setCurrentThreads");
+        int allThreads = 15;
+        DotChart instance = new DotChart();
+        instance.setCurrentThreads(allThreads);
+    }
 }

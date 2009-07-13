@@ -1,3 +1,5 @@
+// TODO сделать вертикальный лимит отображения
+// TODO сделать отключение отображения столбцов
 package kg.apc.jmeter.dotchart;
 
 import java.awt.FlowLayout;

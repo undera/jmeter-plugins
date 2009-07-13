@@ -142,11 +142,11 @@ public class DotChart
       model.clear();
    }
 
-   @Override
+    @Override
    public void paintComponent(Graphics g)
    {
-      if (getParent().getHeight() - xborder != getHeight())
-         setSize(getWidth(), getParent().getHeight() - xborder);
+      //if (getParent().getHeight() - xborder != getHeight())
+      //   setSize(getWidth(), getParent().getHeight() - xborder);
 
       super.paintComponent(g);
       final DotChartModel m = this.model;

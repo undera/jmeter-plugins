@@ -89,7 +89,6 @@ public class DotChartModel
       //count++;
    }
 
-   @Override
    public void clear()
    {
       super.clear();

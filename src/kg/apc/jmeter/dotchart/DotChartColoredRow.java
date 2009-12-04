@@ -88,16 +88,6 @@ public class DotChartColoredRow
       count++;
    }
 
-   private int getMaxThreads()
-   {
-      return maxThreads;
-   }
-
-   private long getMaxTime()
-   {
-      return maxTime;
-   }
-
    Vector getAvgTimeByThreads()
    {
       return avgTimeByThreads;

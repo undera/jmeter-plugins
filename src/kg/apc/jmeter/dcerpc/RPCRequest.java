@@ -67,7 +67,7 @@ public abstract class RPCRequest
    abstract protected byte[] getBodyBytes();
 
    // took here http://snippets.dzone.com/posts/show/93
-   public final byte[] intToByteArray(int value)
+   protected final byte[] intToByteArray(int value)
    {
       byte[] result = new byte[4];
       result[3]=(byte) (value >>> 24);
@@ -77,7 +77,7 @@ public abstract class RPCRequest
       return result;
    }
 
-   public final byte[] shortToByteArray(short value)
+   protected final byte[] shortToByteArray(short value)
    {
       byte[] result = new byte[2];
       result[1]=(byte) (value >>> 8);

@@ -55,25 +55,13 @@ public class RPCBindRequestTest
       RPCBindRequest instance = new RPCBindRequest("c2ce97a0-8b15-11d1-96ab-00a0c9103fcf", "8a885d04-1ceb-11c9-9fe8-08002b104860");
       String ExpectedHex = "05000b03100000004800000001000000d016d016000000000100000000000100a097cec2158bd11196ab00a0c9103fcf01000000045d888aeb1cc9119fe808002b10486002000000";
       byte[] expResult = hexStringToByteArray(ExpectedHex);
-      int ExpectedLen=expResult.length;
-      System.out.println("Expected packet len: "+Integer.toString(ExpectedLen));
+      int ExpectedLen = expResult.length;
+      System.out.println("Expected packet len: " + Integer.toString(ExpectedLen));
       byte[] result = instance.getBytes();
 
       //System.out.println("EXP: " + ExpectedHex);
       //System.out.println("ACT: " + getHexString(result));
       assertEquals(ExpectedLen, result.length);
       assertArrayEquals(expResult, result);
-   }
-
-   // took here http://www.rgagnon.com/javadetails/java-0596.html
-   public static String getHexString(byte[] b)
-   {
-      String result = "";
-      for (int i = 0; i < b.length; i++)
-      {
-         result +=
-            Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
-      }
-      return result;
    }
 }

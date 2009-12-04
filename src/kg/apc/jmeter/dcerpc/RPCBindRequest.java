@@ -49,7 +49,6 @@ public class RPCBindRequest
       System.arraycopy(shortToByteArray(interfaceVerMinor), 0, header, curPos, 2);
       curPos += 2;
 
-
       System.arraycopy(transferSyntax, 0, header, curPos, 16);
       curPos += 16;
       System.arraycopy(intToByteArray(transferSyntaxVer), 0, header, curPos, 4);

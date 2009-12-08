@@ -5,7 +5,9 @@
 package kg.apc.jmeter.dotchart;
 
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
 import javax.swing.JCheckBox;
+import javax.swing.JTextField;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,19 +20,20 @@ import org.junit.Test;
  */
 public class DotChartGuiPanelTest
 {
+
    public DotChartGuiPanelTest()
    {
    }
 
    @BeforeClass
    public static void setUpClass()
-        throws Exception
+      throws Exception
    {
    }
 
    @AfterClass
    public static void tearDownClass()
-        throws Exception
+      throws Exception
    {
    }
 
@@ -55,5 +58,17 @@ public class DotChartGuiPanelTest
       JCheckBox checkbox = new JCheckBox();
       ItemEvent e = new ItemEvent(checkbox, id, this, stateChange);
       instance.itemStateChanged(e);
+   }
+
+   /**
+    * Test of keyTyped method, of class DotChartGuiPanel.
+    */
+   @Test
+   public void testKeyTyped()
+   {
+      System.out.println("keyTyped");
+      DotChartGuiPanel instance = new DotChartGuiPanel(new DotChart());
+      KeyEvent event = new KeyEvent(new JTextField(), KeyEvent.KEY_TYPED, 1, 0, KeyEvent.VK_UNDEFINED, (char) 200);
+      instance.keyTyped(event);
    }
 }

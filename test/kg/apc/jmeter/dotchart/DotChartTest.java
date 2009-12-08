@@ -1,9 +1,5 @@
 package kg.apc.jmeter.dotchart;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Graphics;
@@ -15,10 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author apc
- */
 public class DotChartTest
 {
    public DotChartTest()
@@ -69,10 +61,13 @@ public class DotChartTest
    {
       System.out.println("paintComponent");
       DotChartModel model = new DotChartModel();
+      fillSamples(model);
       DotChart parent = new DotChart(model);
       DotChart instance = new DotChart(model);
       parent.add(instance);
       Graphics g = new TestGraphics();
+      instance.setDrawSamples(true);
+      instance.setYAxisLimit(100);
 
       instance.paintComponent(g);
       fillSamples(model);

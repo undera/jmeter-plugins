@@ -15,9 +15,10 @@ import org.apache.jmeter.samplers.Clearable;
 
 // TODO needs strong refactoring
 public class DotChart
-     extends JComponent
-     implements Scrollable, Clearable
+   extends JComponent
+   implements Scrollable, Clearable
 {
+
    private DotChartModel model;
    private final int xborder = 30;
    private boolean drawSamples = false;
@@ -25,13 +26,14 @@ public class DotChart
    private boolean drawAverages = true;
    private final int gridLinesCount = 9;
    private int offsetY;
-   private int x1;
-   private int y1;
-   private int x2;
-   private int y2;
+   private int chartLeftX;
+   private int chartTopY;
+   private int chartRightX;
+   private int chartBottomY;
    private double dotW;
    private double dotH;
    private int currentThreads;
+   private int yAxisLimit = 0;
 
    public DotChart()
    {
@@ -47,10 +49,16 @@ public class DotChart
 
    private void calculateGraphCoords(int maxThreads, long maxTime)
    {
-      x1 = xborder;
-      y1 = offsetY + xborder;
-      x2 = x1 + getChartWidth();
-      y2 = y1 + getChartHeight();
+      // handle axis limit
+      if (yAxisLimit > 0)
+      {
+         maxTime = yAxisLimit;
+      }
+
+      chartLeftX = xborder;
+      chartTopY = offsetY + xborder;
+      chartRightX = chartLeftX + getChartWidth();
+      chartBottomY = chartTopY + getChartHeight();
       dotW = (double) getChartWidth() / (double) (maxThreads + 1);
       dotH = (double) getChartHeight() / (double) (maxTime + 1);
    }
@@ -64,7 +72,9 @@ public class DotChart
          coordX = x1 + x * getChartWidth() / gridLinesCount;
          xVal = String.valueOf(x * maxThreads / gridLinesCount);
          if (x == gridLinesCount)
+         {
             xVal += " threads";
+         }
          g.setColor(Color.lightGray);
          g.drawLine(coordX, y1, coordX, y2);
          g.setColor(Color.black);
@@ -74,6 +84,12 @@ public class DotChart
 
    private void drawYAxis(Graphics g, long maxTime, int y1, int x1, int x2, FontMetrics fm)
    {
+      // handle axis limit
+      if (yAxisLimit > 0)
+      {
+         maxTime = yAxisLimit;
+      }
+
       int coordY;
       String yVal;
       int labelPos;
@@ -82,7 +98,9 @@ public class DotChart
          coordY = y1 + (gridLinesCount - y) * getChartHeight() / gridLinesCount;
          yVal = String.valueOf(y * maxTime / gridLinesCount);
          if (y == gridLinesCount)
+         {
             yVal += " msec";
+         }
          g.setColor(Color.lightGray);
          g.drawLine(x1, coordY, x2, coordY);
          g.setColor(Color.black);
@@ -142,7 +160,7 @@ public class DotChart
       model.clear();
    }
 
-    @Override
+   @Override
    public void paintComponent(Graphics g)
    {
       //if (getParent().getHeight() - xborder != getHeight())
@@ -162,36 +180,46 @@ public class DotChart
    {
       DotChartColoredRow row;
       if (isDrawSamples())
+      {
          for (Iterator it = p_model.values().iterator(); it.hasNext();)
          {
             row = (DotChartColoredRow) it.next();
             drawSamples(p_model, row, g);
          }
+      }
 
       if (isDrawThreadAverages())
+      {
          for (Iterator it = p_model.values().iterator(); it.hasNext();)
          {
             row = (DotChartColoredRow) it.next();
             drawThreadsAverage(p_model, row, g);
          }
+      }
 
       if (isDrawAverages())
+      {
          for (Iterator it = p_model.values().iterator(); it.hasNext();)
          {
             row = (DotChartColoredRow) it.next();
             drawAverage(p_model, row, g);
          }
+      }
    }
 
    private void drawSamples(DotChartModel p_model, DotChartColoredRow row, Graphics g)
    {
       if (row.getCount() < 1)
+      {
          return;
+      }
 
       int maxThreads = p_model.getMaxThreads();
       long maxTime = p_model.getMaxTime();
       if (maxThreads < 1 || maxTime < 1)
+      {
          return;
+      }
 
       calculateGraphCoords(maxThreads, maxTime);
 
@@ -201,8 +229,13 @@ public class DotChart
       {
          res = row.getSample(sampleNo);
 
-         int x = x1 + (int) (dotW * ((double) res.getThreads() - 0.5));
-         int y = y2 - (int) (dotH * ((double) res.getTime() - 0.5));
+         int x = chartLeftX + (int) (dotW * ((double) res.getThreads() - 0.5));
+         int y = chartBottomY - (int) (dotH * ((double) res.getTime() - 0.5));
+
+         if (y < chartTopY)
+         {
+            y = chartTopY;
+         }
 
          g.setColor(row.getColor());
          g.fillRect(x, y, (int) dotW < 1 ? 1 : (int) dotW, (int) dotH < 1 ? 1 : (int) dotH);
@@ -212,20 +245,29 @@ public class DotChart
    private void drawAverage(DotChartModel p_model, DotChartColoredRow row, Graphics g)
    {
       if (row.getCount() < 1)
+      {
          return;
+      }
 
       int maxThreads = p_model.getMaxThreads();
       long maxTime = p_model.getMaxTime();
       if (maxThreads < 1 || maxTime < 1)
+      {
          return;
+      }
 
       calculateGraphCoords(maxThreads, maxTime);
 
       final int radius = 4;
 
-      int x = x1 + (int) (dotW * (double) row.getAvgThreads());
+      int x = chartLeftX + (int) (dotW * (double) row.getAvgThreads());
       double avgTime = row.getAvgTime();
-      int y = y2 - (int) (dotH * avgTime);
+      int y = chartBottomY - (int) (dotH * avgTime);
+
+      if (y < chartTopY)
+      {
+         y = chartTopY;
+      }
 
       g.setColor(row.getColor());
       g.fillOval(x - radius, y - radius, (radius) * 2, (radius) * 2);
@@ -238,12 +280,16 @@ public class DotChart
    private void drawThreadsAverage(DotChartModel p_model, DotChartColoredRow row, Graphics g)
    {
       if (row.getCount() < 1)
+      {
          return;
+      }
 
       int maxThreads = p_model.getMaxThreads();
       long maxTime = p_model.getMaxTime();
       if (maxThreads < 1 || maxTime < 1)
+      {
          return;
+      }
 
       calculateGraphCoords(maxThreads, maxTime);
 
@@ -254,13 +300,20 @@ public class DotChart
       for (int threads = 0; threads < avgTimeByThreads.size(); threads++)
       {
          if (avgTimeByThreads.elementAt(threads) == null)
+         {
             continue;
+         }
 
          double avgTime = ((DotChartAverageValues) avgTimeByThreads.get(threads)).getAvgTime();
 
-         int x = x1 + (int) (dotW * (double) threads);
+         int x = chartLeftX + (int) (dotW * (double) threads);
 
-         int y = y2 - (int) (dotH * avgTime);
+         int y = chartBottomY - (int) (dotH * avgTime);
+
+         if (y < chartTopY)
+         {
+            y = chartTopY;
+         }
 
          g.setColor(row.getColor());
          //if (prevX > 0)
@@ -320,26 +373,26 @@ public class DotChart
 
       // clear bg
       g.setColor(Color.white);
-      g.fillRect(x1, y1, x2, y2);
+      g.fillRect(chartLeftX, chartTopY, chartRightX, chartBottomY);
 
       // lets draw the grid
       FontMetrics fm = g.getFontMetrics(g.getFont());
 
-      drawYAxis(g, maxTime, y1, x1, x2, fm);
+      drawYAxis(g, maxTime, chartTopY, chartLeftX, chartRightX, fm);
 
-      drawXAxis(g, maxThreads, x1, y1, y2, fm);
+      drawXAxis(g, maxThreads, chartLeftX, chartTopY, chartBottomY, fm);
 
       // current threads line
       g.setColor(Color.GRAY);
-      int coordX = x1 +  (int) ((double) currentThreads * dotW);
-      g.drawLine(coordX, y1, coordX, y2);
+      int coordX = chartLeftX + (int) ((double) currentThreads * dotW);
+      g.drawLine(coordX, chartTopY, coordX, chartBottomY);
 
       // bounds
       g.setColor(Color.black);
-      g.drawLine(x1, y1, x1, y2);
-      g.drawLine(x1, y1, x2, y1);
-      g.drawLine(x2, y1, x2, y2);
-      g.drawLine(x1, y2, x2, y2);
+      g.drawLine(chartLeftX, chartTopY, chartLeftX, chartBottomY);
+      g.drawLine(chartLeftX, chartTopY, chartRightX, chartTopY);
+      g.drawLine(chartRightX, chartTopY, chartRightX, chartBottomY);
+      g.drawLine(chartLeftX, chartBottomY, chartRightX, chartBottomY);
    }
 
    void setDrawSamples(boolean b)
@@ -393,5 +446,10 @@ public class DotChart
    void setCurrentThreads(int allThreads)
    {
       currentThreads = allThreads;
+   }
+
+   void setYAxisLimit(int i)
+   {
+      yAxisLimit = i;
    }
 }

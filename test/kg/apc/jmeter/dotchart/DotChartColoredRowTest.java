@@ -20,19 +20,20 @@ import static org.junit.Assert.*;
  */
 public class DotChartColoredRowTest
 {
+
    public DotChartColoredRowTest()
    {
    }
 
    @BeforeClass
    public static void setUpClass()
-        throws Exception
+      throws Exception
    {
    }
 
    @AfterClass
    public static void tearDownClass()
-        throws Exception
+      throws Exception
    {
    }
 
@@ -143,11 +144,9 @@ public class DotChartColoredRowTest
       System.out.println("getAvgTime");
       DotChartColoredRow instance = new DotChartColoredRow("TEST", Color.BLACK);
 
-      SampleResult res1 = new SampleResult();
-      res1.setTime(1);
+      SampleResult res1 = new SampleResult(1, 1);
       instance.addSample(res1);
-      SampleResult res2 = new SampleResult();
-      res2.setTime(2);
+      SampleResult res2 = new SampleResult(2, 2);
       instance.addSample(res2);
 
       double expResult = 1.5;
@@ -156,7 +155,7 @@ public class DotChartColoredRowTest
    }
 
    /**
-    * Test of getAvgTimeByThreads method, of class DotChartColoredRow.
+    * Test of getAveragesByThreads method, of class DotChartColoredRow.
     */
    @Test
    public void testGetAvgTimeByThreads()
@@ -166,7 +165,7 @@ public class DotChartColoredRowTest
 
       add6Samples(instance);
 
-      Vector result = instance.getAvgTimeByThreads();
+      Vector result = instance.getAveragesByThreads();
       assertEquals(6, result.size());
 
       assertEquals(2, ((DotChartAverageValues) result.elementAt(2)).getCount());
@@ -178,36 +177,70 @@ public class DotChartColoredRowTest
       assertEquals(4.5, ((DotChartAverageValues) result.elementAt(1)).getAvgTime(), 0.01);
    }
 
-   private void add6Samples(DotChartColoredRow i1)
+   private void add6Samples(DotChartColoredRow row)
    {
-      SampleResult res1 = new SampleResult();
-      res1.setTime(1);
+      SampleResult res1 = new SampleResult(1, 1);
       res1.setAllThreads(2);
-      i1.addSample(res1);
+      row.addSample(res1);
 
-      SampleResult res2 = new SampleResult();
+      SampleResult res2 = new SampleResult(2, 2);
       res2.setAllThreads(2);
-      res2.setTime(2);
-      i1.addSample(res2);
+      row.addSample(res2);
 
-      SampleResult res3 = new SampleResult();
+      SampleResult res3 = new SampleResult(3, 3);
       res3.setAllThreads(5);
-      res3.setTime(3);
-      i1.addSample(res3);
+      row.addSample(res3);
 
-      SampleResult res4 = new SampleResult();
+      SampleResult res4 = new SampleResult(4, 4);
       res4.setAllThreads(5);
-      res4.setTime(4);
-      i1.addSample(res4);
+      row.addSample(res4);
 
-      SampleResult res5 = new SampleResult();
+      SampleResult res5 = new SampleResult(5, 5);
       res5.setAllThreads(1);
-      res5.setTime(5);
-      i1.addSample(res5);
+      row.addSample(res5);
 
-      SampleResult res6 = new SampleResult();
+      SampleResult res6 = new SampleResult(6, 4);
       res6.setAllThreads(1);
-      res6.setTime(4);
-      i1.addSample(res6);
+      row.addSample(res6);
+   }
+
+   /**
+    * Test of getAveragesByThreads method, of class DotChartColoredRow.
+    */
+   @Test
+   public void testGetAveragesByThreads()
+   {
+      System.out.println("getAveragesByThreads");
+      DotChartColoredRow instance = new DotChartColoredRow("TEST", Color.BLACK);
+      Vector result = instance.getAveragesByThreads();
+      assertNotNull(result);
+
+      add6Samples(instance);
+      result = instance.getAveragesByThreads();
+      assertNotNull(result);
+      DotChartAverageValues val = (DotChartAverageValues) result.elementAt(5);
+      assertNotNull(val);
+      assertEquals(1458.333, val.getAvgThroughput(), 0.01);
+      assertEquals(3.5, val.getAvgTime(), 0.01);
+   }
+
+   /**
+    * Test of getAvgThoughput method, of class DotChartColoredRow.
+    */
+   @Test
+   public void testGetAvgThoughput()
+   {
+      System.out.println("getAvgThoughput");
+      DotChartColoredRow instance = new DotChartColoredRow("TEST", Color.BLACK);
+
+      double expResult = 0.0;
+      double result = instance.getAvgThoughput();
+      assertEquals(expResult, result, 0.0);
+
+      double expResult2 = 1061.1111;
+      add6Samples(instance);
+      double result2 = instance.getAvgThoughput();
+      assertEquals(expResult2, result2, 0.01);
+
    }
 }

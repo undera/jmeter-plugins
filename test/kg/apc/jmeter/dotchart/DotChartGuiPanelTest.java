@@ -71,4 +71,28 @@ public class DotChartGuiPanelTest
       KeyEvent event = new KeyEvent(new JTextField(), KeyEvent.KEY_TYPED, 1, 0, KeyEvent.VK_UNDEFINED, (char) 200);
       instance.keyTyped(event);
    }
+
+   /**
+    * Test of keyPressed method, of class DotChartGuiPanel.
+    */
+   @Test
+   public void testKeyPressed()
+   {
+   }
+
+   /**
+    * Test of keyReleased method, of class DotChartGuiPanel.
+    */
+   @Test
+   public void testKeyReleased()
+   {
+   }
+
+   /**
+    * Test of actionPerformed method, of class DotChartGuiPanel.
+    */
+   @Test
+   public void testActionPerformed()
+   {
+   }
 }

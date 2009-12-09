@@ -13,19 +13,20 @@ import static org.junit.Assert.*;
 
 public class DotChartTest
 {
+
    public DotChartTest()
    {
    }
 
    @BeforeClass
    public static void setUpClass()
-        throws Exception
+      throws Exception
    {
    }
 
    @AfterClass
    public static void tearDownClass()
-        throws Exception
+      throws Exception
    {
    }
 
@@ -149,28 +150,24 @@ public class DotChartTest
 
    private void fillSamples(DotChartModel model)
    {
-      SampleResult sr = new SampleResult();
-      sr.setTime(100);
+      SampleResult sr = new SampleResult(1, 100);
       sr.setSampleLabel("Test1");
       sr.setAllThreads(1);
       sr.setGroupThreads(1);
       model.addSample(sr);
 
-      sr = new SampleResult();
-      sr.setTime(110);
+      sr = new SampleResult(2, 110);
       sr.setSampleLabel("Test1");
       sr.setAllThreads(3);
       sr.setGroupThreads(1);
       model.addSample(sr);
 
-      sr = new SampleResult();
-      sr.setTime(90);
+      sr = new SampleResult(3, 90);
       sr.setSampleLabel("Test1");
       sr.setAllThreads(2);
       model.addSample(sr);
 
-      sr = new SampleResult();
-      sr.setTime(0);
+      sr = new SampleResult(4, 0);
       sr.setSampleLabel("Test1");
       model.addSample(sr);
    }
@@ -236,15 +233,39 @@ public class DotChartTest
       assertEquals(drawAverages, instance.isDrawAverages());
    }
 
-    /**
-     * Test of setCurrentThreads method, of class DotChart.
-     */
-    @Test
-    public void testSetCurrentThreads()
-    {
-        System.out.println("setCurrentThreads");
-        int allThreads = 15;
-        DotChart instance = new DotChart();
-        instance.setCurrentThreads(allThreads);
-    }
+   /**
+    * Test of setCurrentThreads method, of class DotChart.
+    */
+   @Test
+   public void testSetCurrentThreads()
+   {
+      System.out.println("setCurrentThreads");
+      int allThreads = 15;
+      DotChart instance = new DotChart();
+      instance.setCurrentThreads(allThreads);
+   }
+
+   /**
+    * Test of setYAxisLimit method, of class DotChart.
+    */
+   @Test
+   public void testSetYAxisLimit()
+   {
+      System.out.println("setYAxisLimit");
+      int i = 100;
+      DotChart instance = new DotChart();
+      instance.setYAxisLimit(i);
+   }
+
+   /**
+    * Test of setDisplayMode method, of class DotChart.
+    */
+   @Test
+   public void testSetDisplayMode()
+   {
+      System.out.println("setDisplayMode");
+      int mode = 0;
+      DotChart instance = new DotChart();
+      instance.setDisplayMode(mode);
+   }
 }

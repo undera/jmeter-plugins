@@ -3,6 +3,7 @@ package kg.apc.jmeter.dotchart;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 
@@ -62,12 +63,12 @@ public class DotChartVisualizer
 
       if (graph.getWidth() != newWidth || graph.getHeight() != newHeight)
       {
-         graph.setPreferredSize(newWidth, newHeight);
+         graph.setPreferredSize(new Dimension(newWidth, newHeight));
+         //controlsPanel.setPreferredSize(new Dimension(50, Integer.MAX_VALUE));
       }
 
       graphPanel.updateUI();
       graph.repaint();
-
    }
 
    public synchronized void updateGui(Sample s)
@@ -92,7 +93,7 @@ public class DotChartVisualizer
    @Override
    public String getStaticLabel()
    {
-      return "Response Times vs Active Threads";
+      return "Samples vs Active Threads";
    }
 
    public String getLabelResource()
@@ -120,8 +121,8 @@ public class DotChartVisualizer
    {
       setLayout(new BorderLayout());
       add(makeTitlePanel(), BorderLayout.NORTH);
-      add(makeControlsPanel(), BorderLayout.SOUTH);
       add(createGraphPanel(), BorderLayout.CENTER);
+      add(makeControlsPanel(), BorderLayout.SOUTH);
    }
 
    private Component makeControlsPanel()
@@ -133,7 +134,7 @@ public class DotChartVisualizer
       JPanel topPanel = new JPanel();
       topPanel.add(guiPanel);
 
-      return topPanel;
+      return controlsPanel;
    }
 
    // Methods used in creating the GUI

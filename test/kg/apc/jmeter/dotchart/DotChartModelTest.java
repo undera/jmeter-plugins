@@ -19,19 +19,20 @@ import static org.junit.Assert.*;
  */
 public class DotChartModelTest
 {
+
    public DotChartModelTest()
    {
    }
 
    @BeforeClass
    public static void setUpClass()
-        throws Exception
+      throws Exception
    {
    }
 
    @AfterClass
    public static void tearDownClass()
-        throws Exception
+      throws Exception
    {
    }
 
@@ -110,7 +111,7 @@ public class DotChartModelTest
       sampleResult.setSampleLabel("TEST");
       sampleResult.setGroupThreads(1);
       instance.addSample(sampleResult);
-      
+
       DotChartColoredRow result = instance.get("TEST");
       assertTrue(result instanceof DotChartColoredRow);
    }
@@ -146,12 +147,10 @@ public class DotChartModelTest
       System.out.println("getMaxTime");
       DotChartModel instance = new DotChartModel();
 
-      SampleResult res1 = new SampleResult();
-      res1.setTime(1);
+      SampleResult res1 = new SampleResult(1, 1);
       res1.setGroupThreads(1);
       instance.addSample(res1);
-      SampleResult res2 = new SampleResult();
-      res2.setTime(2);
+      SampleResult res2 = new SampleResult(2, 2);
       res2.setGroupThreads(2);
       instance.addSample(res2);
 
@@ -178,5 +177,28 @@ public class DotChartModelTest
       instance.clear();
       assertEquals(0, instance.getMaxThreads());
       assertEquals(0, instance.getMaxTime());
+   }
+
+   /**
+    * Test of getMaxThroughput method, of class DotChartModel.
+    */
+   @Test
+   public void testGetMaxThroughput()
+   {
+      System.out.println("getMaxThroughput");
+      DotChartModel instance = new DotChartModel();
+
+      SampleResult res1 = new SampleResult(1, 100);
+      res1.setAllThreads(5);
+      res1.setGroupThreads(5);
+      instance.addSample(res1);
+      SampleResult res2 = new SampleResult(2, 50);
+      res2.setAllThreads(4);
+      res2.setGroupThreads(4);
+      instance.addSample(res2);
+
+      double expResult = 80;
+      double result = instance.getMaxThroughput();
+      assertEquals(expResult, result, 0.0);
    }
 }

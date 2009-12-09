@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author apc
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DotChartModelTest.class, DotChartAverageValuesTest.class, DotChartVisualizerTest.class, DotChartTest.class, DotChartSampleResultTest.class, DotChartGuiPanelTest.class, DotChartColoredRowTest.class})
+@Suite.SuiteClasses({DotChartModelTest.class, DotChartAverageValuesTest.class, DotChartVisualizerTest.class, DotChartTest.class, DotChartGuiPanelTest.class, DotChartSampleResultTest.class, DotChartColoredRowTest.class})
 public class DotchartSuite {
 
     @BeforeClass

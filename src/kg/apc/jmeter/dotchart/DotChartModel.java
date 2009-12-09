@@ -7,16 +7,17 @@ import org.apache.jmeter.gui.util.JMeterColor;
 import org.apache.jmeter.samplers.SampleResult;
 
 public class DotChartModel
-     extends HashMap
+   extends HashMap
 {
+
    private int maxThreads;
    private long maxTime;
+   private double maxThroughput;
    private final Color[] fixedColors =
    {
       Color.RED,
       Color.GREEN,
       Color.BLUE,
-
       JMeterColor.purple,
       Color.ORANGE,
       Color.CYAN,
@@ -40,22 +41,7 @@ public class DotChartModel
          return;
 
       String label = res.getSampleLabel();
-      DotChartColoredRow row;
-      Color color;
-      if (containsKey(label))
-         row = (DotChartColoredRow) get(label);
-      else
-      {
-         if (size() >= fixedColors.length)
-         {
-            Random r = new Random();
-            color = new Color(r.nextInt(0xFFFFFF));
-         }
-         else
-            color = fixedColors[size()];
-         row = new DotChartColoredRow(label, color);
-         put(label, row);
-      }
+      DotChartColoredRow row = putSampleIntoRowAndGetThatRow(label);
 
       row.addSample(res);
       calculateAggregates(res);
@@ -80,19 +66,64 @@ public class DotChartModel
    {
       int threads = res.getAllThreads();
       if (threads > maxThreads)
+      {
          maxThreads = threads;
-      //avgThreads = (avgThreads * count + threads) / (count + 1);
+      }
+
       long time = res.getTime();
       if (time > maxTime)
+      {
          maxTime = time;
-      //avgTime = (avgTime * count + time) / (count + 1);
-      //count++;
+      }
+
+      double throughput = 0;
+      if (res.getTime() > 0)
+      {
+         throughput = 1000 * (double) res.getAllThreads() / (double) res.getTime();
+      }
+
+      if (throughput > maxThroughput)
+      {
+         maxThroughput = throughput;
+      }
    }
 
+   @Override
    public void clear()
    {
       super.clear();
       maxThreads = 0;
       maxTime = 0;
+      maxThroughput = 0;
+   }
+
+   double getMaxThroughput()
+   {
+      return maxThroughput;
+   }
+
+   private DotChartColoredRow putSampleIntoRowAndGetThatRow(String label)
+   {
+      DotChartColoredRow row;
+      Color color;
+      if (containsKey(label))
+      {
+         row = (DotChartColoredRow) get(label);
+      }
+      else
+      {
+         if (size() >= fixedColors.length)
+         {
+            Random r = new Random();
+            color = new Color(r.nextInt(0xFFFFFF));
+         }
+         else
+         {
+            color = fixedColors[size()];
+         }
+         row = new DotChartColoredRow(label, color);
+         put(label, row);
+      }
+      return row;
    }
 }

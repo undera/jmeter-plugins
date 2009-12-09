@@ -2,8 +2,10 @@ package kg.apc.jmeter.dotchart;
 
 class DotChartAverageValues
 {
+
    private int count;
    private double avgTime;
+   private double avgThroughput;
 
    public DotChartAverageValues()
    {
@@ -26,8 +28,18 @@ class DotChartAverageValues
       return avgTime;
    }
 
+   public double getAvgThroughput()
+   {
+      return avgThroughput;
+   }
+
    void addCount()
    {
       count++;
+   }
+
+   void setAvgThroughput(double newAvgThroughput)
+   {
+      avgThroughput = newAvgThroughput;
    }
 }

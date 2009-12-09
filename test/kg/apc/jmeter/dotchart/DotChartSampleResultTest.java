@@ -5,6 +5,7 @@
 
 package kg.apc.jmeter.dotchart;
 
+import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -107,4 +108,37 @@ public class DotChartSampleResultTest {
         instance.addRepeat();
         assertEquals(3, instance.getRepeatCount());
     }
+
+   /**
+    * Test of getThroughput method, of class DotChartSampleResult.
+    */
+   @Test
+   public void testGetThroughputSingle()
+   {
+      System.out.println("getThroughput");
+
+      SampleResult res=new SampleResult(1, 25);
+      res.setAllThreads(1);
+      System.out.println(res.getAllThreads());
+      DotChartSampleResult instance = new DotChartSampleResult(res);
+      double expResult = 40;
+      double result = instance.getThroughput();
+      assertEquals(expResult, result, 0.0);
+   }
+
+   /**
+    * Test of getThroughput method, of class DotChartSampleResult.
+    */
+   @Test
+   public void testGetThroughputMany()
+   {
+      System.out.println("getThroughput");
+
+      SampleResult res=new SampleResult(1, 25);
+      res.setAllThreads(5);
+      DotChartSampleResult instance = new DotChartSampleResult(res);
+      double expResult = 200;
+      double result = instance.getThroughput();
+      assertEquals(expResult, result, 0.0);
+   }
 }

@@ -137,7 +137,7 @@ public class DotChartSampleResultTest {
       SampleResult res=new SampleResult(1, 25);
       res.setAllThreads(5);
       DotChartSampleResult instance = new DotChartSampleResult(res);
-      double expResult = 200;
+      double expResult = 40;
       double result = instance.getThroughput();
       assertEquals(expResult, result, 0.0);
    }

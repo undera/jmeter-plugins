@@ -25,7 +25,7 @@ public class DotChartSampleResult
 
       if ((res.getTime() > 0))
       {
-         throughput = 1000 * ((double) res.getAllThreads() / (double) res.getTime());
+         throughput = 1000 * ((double) 1 / (double) time);
       }
       else
       {

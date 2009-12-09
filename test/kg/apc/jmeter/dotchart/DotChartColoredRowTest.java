@@ -220,7 +220,7 @@ public class DotChartColoredRowTest
       assertNotNull(result);
       DotChartAverageValues val = (DotChartAverageValues) result.elementAt(5);
       assertNotNull(val);
-      assertEquals(1458.333, val.getAvgThroughput(), 0.01);
+      assertEquals(291.66, val.getAvgThroughput(), 0.01);
       assertEquals(3.5, val.getAvgTime(), 0.01);
    }
 
@@ -237,7 +237,7 @@ public class DotChartColoredRowTest
       double result = instance.getAvgThoughput();
       assertEquals(expResult, result, 0.0);
 
-      double expResult2 = 1061.1111;
+      double expResult2 = 422.22;
       add6Samples(instance);
       double result2 = instance.getAvgThoughput();
       assertEquals(expResult2, result2, 0.01);

@@ -197,7 +197,7 @@ public class DotChartModelTest
       res2.setGroupThreads(4);
       instance.addSample(res2);
 
-      double expResult = 80;
+      double expResult = 20;
       double result = instance.getMaxThroughput();
       assertEquals(expResult, result, 0.0);
    }

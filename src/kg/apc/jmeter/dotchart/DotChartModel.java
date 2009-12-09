@@ -38,13 +38,15 @@ public class DotChartModel
    public void addSample(SampleResult res)
    {
       if (res.getGroupThreads() == 0)
+      {
          return;
+      }
 
       String label = res.getSampleLabel();
       DotChartColoredRow row = putSampleIntoRowAndGetThatRow(label);
 
       row.addSample(res);
-      calculateAggregates(res);
+      calculateMaxValues(res);
    }
 
    public DotChartColoredRow get(String key)
@@ -62,24 +64,25 @@ public class DotChartModel
       return maxTime;
    }
 
-   private void calculateAggregates(SampleResult res)
+   private void calculateMaxValues(SampleResult res)
    {
       int threads = res.getAllThreads();
+      long time = res.getTime();
+      double throughput = 0;
+
       if (threads > maxThreads)
       {
          maxThreads = threads;
       }
 
-      long time = res.getTime();
       if (time > maxTime)
       {
          maxTime = time;
       }
 
-      double throughput = 0;
-      if (res.getTime() > 0)
+      if (time > 0)
       {
-         throughput = 1000 * (double) res.getAllThreads() / (double) res.getTime();
+         throughput = 1000 * (double) 1 / (double) time;
       }
 
       if (throughput > maxThroughput)

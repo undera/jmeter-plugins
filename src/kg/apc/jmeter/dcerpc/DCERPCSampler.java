@@ -19,13 +19,14 @@ public class DCERPCSampler
    private static final Logger log = LoggingManager.getLoggerForClass();
    private String InterfaceUUID;
    private String TransferSyntax;
-   private int ReadLimit = -1;
+   private int ReadLimit;
 
    public DCERPCSampler()
    {
       super();
       InterfaceUUID = "c2ce97a0-8b15-11d1-96ab-00a0c9103fcf";
       TransferSyntax = UUID.randomUUID().toString();
+      resetReadLimit();
    }
 
    public void write(OutputStream os, InputStream is)
@@ -78,11 +79,26 @@ public class DCERPCSampler
 
       final String hexString = JOrphanUtils.baToHexString(w.toByteArray());
       log.debug("Read: " + w.size() + ": " + hexString);
+
+      resetReadLimit();
       return hexString;
    }
 
    public void write(OutputStream os, String s)
    {
       throw new UnsupportedOperationException("Not applicable");
+   }
+
+   private void resetReadLimit()
+   {
+      setReadLimit(-1);
+   }
+
+   /**
+    * @param ReadLimit the ReadLimit to set
+    */
+   public void setReadLimit(int ReadLimit)
+   {
+      this.ReadLimit = ReadLimit;
    }
 }

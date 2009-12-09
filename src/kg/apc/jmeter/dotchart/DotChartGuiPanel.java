@@ -11,6 +11,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 public class DotChartGuiPanel
    extends JPanel
@@ -29,23 +30,20 @@ public class DotChartGuiPanel
 
       chart = achart;
 
-      JLabel selectGraphsLabel = new JLabel("Draw: ");
       drawSamples = createChooseCheckBox("Response Times", chart.isDrawSamples());
       drawThreadAverages = createChooseCheckBox("Response Time Averages vs Active Threads", chart.isDrawThreadAverages());
       drawAverages = createChooseCheckBox("Overall Response Time Averages", chart.isDrawAverages());
 
-      JLabel yAxisLimitLabel = new JLabel("  Y axis limit: ");
+      JPanel drawSelectionPanel = new JPanel();
+      drawSelectionPanel.setBorder(new TitledBorder("Draw"));
+      drawSelectionPanel.add(drawSamples);
+      drawSelectionPanel.add(drawThreadAverages);
+      drawSelectionPanel.add(drawAverages);
+      add(drawSelectionPanel);
+
+      add(new JLabel("  Y axis limit: "));
       yAxisLimit = createTextField(5);
-
-      add(selectGraphsLabel, BorderLayout.CENTER);
-      add(drawSamples, BorderLayout.CENTER);
-      add(drawThreadAverages, BorderLayout.CENTER);
-      add(drawAverages, BorderLayout.CENTER);
-
-      add(yAxisLimitLabel, BorderLayout.CENTER);
-      add(yAxisLimit, BorderLayout.CENTER);
-
-      validate();
+      add(yAxisLimit);
    }
 
    private JCheckBox createChooseCheckBox(String labelResourceName, boolean state)

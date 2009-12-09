@@ -395,7 +395,7 @@ public class DotChart
       g.drawLine(chartLeftX, chartBottomY, chartRightX, chartBottomY);
    }
 
-   void setDrawSamples(boolean b)
+   public void setDrawSamples(boolean b)
    {
       drawSamples = b;
       repaint();
@@ -443,13 +443,18 @@ public class DotChart
       repaint();
    }
 
-   void setCurrentThreads(int allThreads)
+   public void setCurrentThreads(int allThreads)
    {
       currentThreads = allThreads;
    }
 
-   void setYAxisLimit(int i)
+   public void setYAxisLimit(int i)
    {
       yAxisLimit = i;
+   }
+
+   public void setPreferredSize(int newWidth, int newHeight)
+   {
+      super.setPreferredSize(new Dimension(newWidth, newHeight));
    }
 }

@@ -126,6 +126,7 @@ public class DCERPCSamplerTest
       instance.write(os, is);
 
       String expResult = "05000c03100000003c00000001000000d016d0162b9c874705003230303000370100000000000000045d888aeb1cc9119fe808002b10486002000000";
+      instance.setReadLimit(60);
       String result = instance.read(is);
       System.out.println(expResult);
       System.out.println(result);

@@ -3,15 +3,13 @@ package kg.apc.jmeter.dotchart;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.samplers.SampleResult;
@@ -30,6 +28,7 @@ public class DotChartVisualizer
    private DotChart graph;
    private int delay = 50;
    private long lastRepaint = 0;
+   private DotChartGuiPanel controlsPanel;
 
    public DotChartVisualizer()
    {
@@ -58,12 +57,17 @@ public class DotChartVisualizer
 
    public synchronized void updateGui()
    {
-      if (graph.getWidth() < 10)
+      int newWidth = graph.getParent().getWidth() - 50;
+      int newHeight = graph.getParent().getHeight() - 50;
+
+      if (graph.getWidth() != newWidth || graph.getHeight() != newHeight)
       {
-         graph.setPreferredSize(new Dimension(getWidth() - 40, getHeight() - 160));
+         graph.setPreferredSize(newWidth, newHeight);
       }
+
       graphPanel.updateUI();
       graph.repaint();
+
    }
 
    public synchronized void updateGui(Sample s)
@@ -114,21 +118,22 @@ public class DotChartVisualizer
     */
    private void init()
    {
-      JPanel lgraphPanel = new JPanel(new BorderLayout());
-      lgraphPanel.add(createGraphPanel(), BorderLayout.CENTER);
+      setLayout(new BorderLayout());
+      add(makeTitlePanel(), BorderLayout.NORTH);
+      add(makeControlsPanel(), BorderLayout.SOUTH);
+      add(createGraphPanel(), BorderLayout.CENTER);
+   }
 
-      JPanel guiPanel = new JPanel(new BorderLayout());
-      guiPanel.add(new DotChartGuiPanel(graph));
+   private Component makeControlsPanel()
+   {
+      JPanel guiPanel = new JPanel(new FlowLayout());
+      controlsPanel = new DotChartGuiPanel(graph);
+      guiPanel.add(controlsPanel);
 
-      JPanel topPanel = new JPanel(new BorderLayout());
-      topPanel.add(makeTitlePanel(), BorderLayout.NORTH);
-      topPanel.add(guiPanel, BorderLayout.SOUTH);
+      JPanel topPanel = new JPanel();
+      topPanel.add(guiPanel);
 
-      this.setLayout(new BorderLayout());
-      Border margin = new EmptyBorder(10, 10, 5, 10);
-      this.setBorder(margin);
-      this.add(topPanel, BorderLayout.NORTH);
-      this.add(lgraphPanel, BorderLayout.CENTER);
+      return topPanel;
    }
 
    // Methods used in creating the GUI
@@ -139,9 +144,9 @@ public class DotChartVisualizer
     */
    private Component createGraphPanel()
    {
-      graphPanel = new JPanel();
+      graphPanel = new JPanel(new BorderLayout());
       graphPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.lightGray, Color.darkGray));
-      graphPanel.add(graph);
+      graphPanel.add(graph, BorderLayout.CENTER);
       graphPanel.setBackground(Color.white);
       return graphPanel;
    }
@@ -154,6 +159,6 @@ public class DotChartVisualizer
    @Override
    public JComponent getPrintableComponent()
    {
-      return this.graphPanel;
+      return this.graph;
    }
 }

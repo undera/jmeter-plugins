@@ -45,8 +45,6 @@ public class DCERPCSamplerTest
    public void setUp()
    {
       instance = new DCERPCSampler();
-      instance.setInterfaceUUID(IF_UUID);
-      instance.setTransferSyntax(TRANS_SYNTAX);
 
       try
       {
@@ -99,7 +97,15 @@ public class DCERPCSamplerTest
    public void testWrite_OutputStream_InputStream()
    {
       System.out.println("write");
-      instance.write(os, is);
+      try
+      {
+         instance.write(os, is);
+         fail("Operation must throw exception!");
+      }
+      catch (UnsupportedOperationException e)
+      {
+         System.out.println("Ok, we got our exception");
+      }
    }
 
    /**
@@ -109,16 +115,10 @@ public class DCERPCSamplerTest
    public void testWrite_OutputStream_String()
    {
       System.out.println("write");
-
-      try
-      {
-         instance.write(os, "");
-         fail("Operation must throw exception!");
-      }
-      catch (UnsupportedOperationException e)
-      {
-         System.out.println("Ok, we got our exception");
-      }
+      String str = "bind\n" +
+         "c2ce97a0-8b15-11d1-96ab-00a0c9103fcf\n" +
+         "8a885d04-1ceb-11c9-9fe8-08002b104860";
+      instance.write(os, str);
    }
 
    /**
@@ -129,9 +129,36 @@ public class DCERPCSamplerTest
    {
       System.out.println("read");
 
-      instance.write(os, is);
+      String str = "bind\n" +
+         "c2ce97a0-8b15-11d1-96ab-00a0c9103fcf\n" +
+         "8a885d04-1ceb-11c9-9fe8-08002b104860";
+      instance.write(os, str);
 
-      instance.setReadLimit(28);
       String result = instance.read(is);
+      assertEquals(120, result.length());
+   }
+
+   @Test
+   public void testSequence()
+   {
+      String str = "bind\n" +
+         "c2ce97a0-8b15-11d1-96ab-00a0c9103fcf\n" +
+         "8a885d04-1ceb-11c9-9fe8-08002b104860";
+      instance.write(os, str);
+
+      String result = instance.read(is);
+      assertEquals(120, result.length());
+
+      str = "1\n0\n00000000";
+      instance.write(os, str);
+      result = instance.read(is);
+      assertEquals(56, result.length());
+
+      str = "2\n" +
+         "9\n" +
+         "25000000000000002500000065313861626235632d396136642d343264662d393034352d65656332326530386534353000005c000a000000000000000a00000046494e4f464649434500650008000000000000000800000046494e2d4150430002000000000000000200000043007300080000000000000008000000742d61646d2d3100";
+      instance.write(os, str);
+      result = instance.read(is);
+      assertEquals(48, result.length());
    }
 }

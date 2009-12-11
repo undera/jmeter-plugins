@@ -68,7 +68,7 @@ public abstract class RPCRequest
    abstract protected byte[] getBodyBytes();
 
    // took here http://snippets.dzone.com/posts/show/93
-   protected final byte[] intToByteArray(int value)
+   public static byte[] intToByteArray(int value)
    {
       byte[] result = new byte[4];
       result[3] = (byte) (value >>> 24);
@@ -78,7 +78,7 @@ public abstract class RPCRequest
       return result;
    }
 
-   protected final byte[] shortToByteArray(short value)
+   public static byte[] shortToByteArray(short value)
    {
       byte[] result = new byte[2];
       result[1] = (byte) (value >>> 8);
@@ -86,7 +86,7 @@ public abstract class RPCRequest
       return result;
    }
 
-   protected final byte[] UUIDToByteArray(String ainterfaceUUID)
+   public static byte[] UUIDToByteArray(String ainterfaceUUID)
    {
       byte[] result = new byte[16];
       // allow the "-" in UUID
@@ -129,6 +129,17 @@ public abstract class RPCRequest
       result[14] = (byte) i;
       i = Integer.decode("0x" + chars[30] + chars[31]);
       result[15] = (byte) i;
+
+      return result;
+   }
+
+   public static short fragLenFromRPCHeader(byte[] buffer)
+   {
+      short result = 0;
+      short byte1 = (short) (buffer[8] & 0xFF); // God knows, how long I searched for this...
+      short byte2 = (short) (buffer[9] & 0xFF);
+
+      result = (short) ((byte2 << 8) | byte1);
 
       return result;
    }

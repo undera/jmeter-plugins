@@ -5,23 +5,42 @@ public class RPCCallRequest
 {
 
    protected int allocHint;
-   protected int contextID;
-   protected int opNum;
+   protected short contextID;
+   protected short opNum;
+   private byte[] stubData;
 
-   public RPCCallRequest()
+   public RPCCallRequest(int acallID, short aOpnum, byte[] aStubData)
    {
-      packetType=PACKET_TYPE_REQUEST;
+      if (aStubData == null)
+      {
+         throw new IllegalArgumentException("Stub data cannot be null");
+      }
+
+      packetType = PACKET_TYPE_REQUEST;
+      callID = acallID;
+      opNum = aOpnum;
+      stubData = aStubData;
    }
 
    @Override
    protected byte[] getBodyBytes()
    {
-      throw new UnsupportedOperationException("Not supported yet.");
+      return stubData;
    }
 
    @Override
    protected byte[] getHeaderBytes()
    {
-      throw new UnsupportedOperationException("Not supported yet.");
+      byte[] result = new byte[8];
+
+      int curPos = 0;
+      System.arraycopy(intToByteArray(stubData.length), 0, result, curPos, 4);
+      curPos += 4;
+      System.arraycopy(shortToByteArray(contextID), 0, result, curPos, 2);
+      curPos += 2;
+      System.arraycopy(shortToByteArray(opNum), 0, result, curPos, 2);
+      curPos += 2;
+
+      return result;
    }
 }

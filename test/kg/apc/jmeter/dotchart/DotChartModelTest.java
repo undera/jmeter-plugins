@@ -4,7 +4,6 @@ package kg.apc.jmeter.dotchart;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,20 +18,19 @@ import static org.junit.Assert.*;
  */
 public class DotChartModelTest
 {
-
    public DotChartModelTest()
    {
    }
 
    @BeforeClass
    public static void setUpClass()
-      throws Exception
+         throws Exception
    {
    }
 
    @AfterClass
    public static void tearDownClass()
-      throws Exception
+         throws Exception
    {
    }
 
@@ -53,7 +51,7 @@ public class DotChartModelTest
    public void testAddSampleSuccess()
    {
       System.out.println("addSample");
-      SampleResult res = new HTTPSampleResult();
+      SampleResult res = new SampleResult();
       res.setSampleLabel("Test1");
       res.setBytes(200);
       res.setGroupThreads(1);

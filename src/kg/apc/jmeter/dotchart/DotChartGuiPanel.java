@@ -1,5 +1,4 @@
-// TODO сделать вертикальный лимит отображения
-// TODO сделать отключение отображения столбцов
+// TODO сделать отключение отображения рядов
 package kg.apc.jmeter.dotchart;
 
 import java.awt.event.ActionEvent;
@@ -16,10 +15,9 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 public class DotChartGuiPanel
-   extends JPanel
-   implements ItemListener, KeyListener, ActionListener
+      extends JPanel
+      implements ItemListener, KeyListener, ActionListener
 {
-
    private final DotChart chart;
    private JCheckBox drawSamples;
    private JCheckBox drawThreadAverages;

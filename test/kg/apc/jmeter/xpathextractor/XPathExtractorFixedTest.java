@@ -21,9 +21,8 @@ Maybe there's more beautiful solution, but I don't know it yet.
 "Use namespaces" flag should somehow affect this problem, but it has no visible effect...
  */
 public class XPathExtractorFixedTest
-   extends TestCase
+      extends TestCase
 {
-
    XPathExtractorFixed extractor;
    SampleResult result;
    JMeterVariables vars;
@@ -75,7 +74,7 @@ public class XPathExtractorFixedTest
       jmctx.setPreviousResult(result);
    }
 
-   // this test succeeds when fage www.w3.org used, fails otherwise
+   // this test succeeds when fake www.w3.org used, fails otherwise
    public void testAttributeExtraction_NotTolerant_NotNamespace() throws Exception
    {
       extractor.setTolerant(false); // this test not using tidy, tidy is greedy
@@ -88,7 +87,7 @@ public class XPathExtractorFixedTest
       assertNull(vars.get(VAL_NAME + "_2"));
    }
 
-   // this tests fails always
+   // this test will fail always
    public void testAttributeExtraction_NotTolerant_UseNamespace() throws Exception
    {
       extractor.setTolerant(false); // this test not using tidy, tidy is greedy
@@ -104,7 +103,8 @@ public class XPathExtractorFixedTest
    // this one should succeed anyway, because of tidy usage
    public void testAttributeExtraction_Tolerant() throws Exception
    {
-      extractor.setTolerant(true); 
+      extractor.setTolerant(true);
+      extractor.setNameSpace(true);
       extractor.setXPathQuery("//input[@id='ctl00_BCT_CACHE']/@value");
       extractor.process();
       assertEquals("3c03c150d3da47afac1626cfd4fb4346", vars.get(VAL_NAME));

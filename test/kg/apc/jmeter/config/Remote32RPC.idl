@@ -1,0 +1,11 @@
+interface Server32rpc
+	{
+		typedef error_status_t _stdcall  RPCALL;
+		typedef const char * BPP_USERID;
+		typedef unsigned int * BPP_RCODE;
+
+		#include "..\Bank32flds.h"
+		#include "..\Bank32stru.h"
+																		  
+    RPCALL IsServerListening ();
+}

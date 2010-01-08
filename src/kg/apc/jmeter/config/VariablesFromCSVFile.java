@@ -67,7 +67,7 @@ public class VariablesFromCSVFile
       if (iterEvent.getIteration() > 1)
          return;
 
-      log.info("Vars from CSV started");
+      //log.debug("Vars from CSV started");
 
       JMeterVariables variables = JMeterContextService.getContext().getVariables();
       String _fileName = getFilename();
@@ -90,7 +90,7 @@ public class VariablesFromCSVFile
          log.error(e.toString());
       }
 
-      log.info("Vars from CSV finished");
+      //log.info("Vars from CSV finished");
    }
 
    private void processCSVFileLine(String line, String delim, JMeterVariables variables)
@@ -103,7 +103,7 @@ public class VariablesFromCSVFile
       }
       else
       {
-         log.info("Variable: " + getVariablesPrefix() + lineValues[0] + "=" + lineValues[1] + " was: " + variables.get(getVariablesPrefix() + lineValues[0]));
+         //log.info("Variable: " + getVariablesPrefix() + lineValues[0] + "=" + lineValues[1] + " was: " + variables.get(getVariablesPrefix() + lineValues[0]));
          variables.put(getVariablesPrefix() + lineValues[0], lineValues[1]);
       }
    }
@@ -120,7 +120,7 @@ public class VariablesFromCSVFile
             delim = ",";
          }
 
-      log.debug("Delimiter: " + delim);
+      //log.debug("Delimiter: " + delim);
       return delim;
    }
 }

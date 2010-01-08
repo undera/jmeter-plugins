@@ -1,6 +1,5 @@
 // todo: add column numbers selection
 // todo: use all CSV parsing options
-
 package kg.apc.jmeter.config;
 
 import java.io.IOException;
@@ -81,21 +80,21 @@ public class VariablesFromCSVFile
       try
       {
          String line;
-         while ((line = server.readLine(_fileName, false))!=null)
+         while ((line = server.readLine(_fileName, false)) != null)
          {
             String[] lineValues = JOrphanUtils.split(line, delim, false);
             if (lineValues.length < 2)
             {
-               log.warn("Less than 2 columns at line: "+line);
+               log.warn("Less than 2 columns at line: " + line);
                break;
             }
 
-            log.debug("Variable: "+getVariablesPrefix() + lineValues[0]+"="+lineValues[1]);
+            log.debug("Variable: " + getVariablesPrefix() + lineValues[0] + "=" + lineValues[1]);
             variables.put(getVariablesPrefix() + lineValues[0], lineValues[1]);
          }
       }
       catch (IOException e)
-      {// TODO - should the error be indicated in the variables?
+      {
          log.error(e.toString());
       }
    }
@@ -112,7 +111,7 @@ public class VariablesFromCSVFile
             delim = ",";
          }
 
-      log.debug("Delimiter: "+delim);
+      log.debug("Delimiter: " + delim);
       return delim;
    }
 }

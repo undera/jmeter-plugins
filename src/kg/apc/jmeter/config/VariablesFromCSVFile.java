@@ -1,5 +1,5 @@
-// todo: add column numbers selection
-// todo: use all CSV parsing options
+// TODO: add column numbers selection
+// TODO: use all CSV parsing options
 package kg.apc.jmeter.config;
 
 import java.io.IOException;
@@ -20,7 +20,6 @@ public class VariablesFromCSVFile
      implements TestBean, LoopIterationListener, NoThreadClone
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
-   private boolean isVariablesPrepared = false;
    private String variablesPrefix;
    private String delimiter;
    private String filename;
@@ -65,37 +64,47 @@ public class VariablesFromCSVFile
    public void iterationStart(LoopIterationEvent iterEvent)
    {
       // once only
-      if (isVariablesPrepared)
+      if (iterEvent.getIteration() > 1)
          return;
-      else
-         isVariablesPrepared = true;
+
+      log.info("Vars from CSV started");
 
       JMeterVariables variables = JMeterContextService.getContext().getVariables();
       String _fileName = getFilename();
       FileServer server = FileServer.getFileServer();
       server.reserveFile(_fileName);
-
       String delim = getResultingDelimiter();
 
       try
       {
-         String line;
+         String line = null;
          while ((line = server.readLine(_fileName, false)) != null)
          {
-            String[] lineValues = JOrphanUtils.split(line, delim, false);
-            if (lineValues.length < 2)
-            {
-               log.warn("Less than 2 columns at line: " + line);
-               break;
-            }
-
-            log.debug("Variable: " + getVariablesPrefix() + lineValues[0] + "=" + lineValues[1]);
-            variables.put(getVariablesPrefix() + lineValues[0], lineValues[1]);
+            processCSVFileLine(line, delim, variables);
          }
+
+         server.closeFile(_fileName);
       }
       catch (IOException e)
       {
          log.error(e.toString());
+      }
+
+      log.info("Vars from CSV finished");
+   }
+
+   private void processCSVFileLine(String line, String delim, JMeterVariables variables)
+   {
+      String[] lineValues = JOrphanUtils.split(line, delim, false);
+      if (lineValues.length < 2)
+      {
+         log.warn("Less than 2 columns at line: " + line);
+         variables.put(getVariablesPrefix() + lineValues[0], "");
+      }
+      else
+      {
+         log.info("Variable: " + getVariablesPrefix() + lineValues[0] + "=" + lineValues[1] + " was: " + variables.get(getVariablesPrefix() + lineValues[0]));
+         variables.put(getVariablesPrefix() + lineValues[0], lineValues[1]);
       }
    }
 

@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
@@ -31,7 +30,7 @@ public class VariablesFromCSVFileTest
 
    @BeforeClass
    public static void setUpClass()
-        throws Exception
+         throws Exception
    {
       File propsFile = null;
       try
@@ -43,13 +42,11 @@ public class VariablesFromCSVFileTest
       {
          Logger.getLogger(VariablesFromCSVFile.class.getName()).log(Level.SEVERE, null, ex);
       }
-
-      JMeterUtils.setLocale(new Locale("ignoreResources"));
    }
 
    @AfterClass
    public static void tearDownClass()
-        throws Exception
+         throws Exception
    {
    }
 

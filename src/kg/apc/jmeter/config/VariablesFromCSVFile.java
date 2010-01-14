@@ -1,5 +1,4 @@
 // TODO: add column numbers selection
-// TODO: use all CSV parsing options
 package kg.apc.jmeter.config;
 
 import java.io.IOException;
@@ -16,8 +15,10 @@ import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 
 public class VariablesFromCSVFile
-     extends ConfigTestElement
-     implements TestBean, LoopIterationListener, NoThreadClone
+      extends ConfigTestElement
+      implements TestBean,
+                 LoopIterationListener,
+                 NoThreadClone
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
    private String variablesPrefix;
@@ -34,18 +35,11 @@ public class VariablesFromCSVFile
       this.filename = filename;
    }
 
-   /**
-    * @return Returns the variableNames.
-    */
    public String getVariablesPrefix()
    {
       return variablesPrefix;
    }
 
-   /**
-    * @param variableNames
-    *            The variableNames to set.
-    */
    public void setVariablesPrefix(String variableNames)
    {
       this.variablesPrefix = variableNames;
@@ -63,34 +57,39 @@ public class VariablesFromCSVFile
 
    public void iterationStart(LoopIterationEvent iterEvent)
    {
+      int report = JMeterContextService.getContext().getThreadNum();
       // once only
       if (iterEvent.getIteration() > 1)
+      {
+         log.debug("Variables already loaded " + Integer.toString(report));
          return;
+      }
 
-      //log.debug("Vars from CSV started");
+      log.debug("Started loading variables from CSV " + Integer.toString(report));
 
       JMeterVariables variables = JMeterContextService.getContext().getVariables();
-      String _fileName = getFilename();
+      String alias = this.getClass().getName() + Integer.toString(report);
       FileServer server = FileServer.getFileServer();
-      server.reserveFile(_fileName);
+      server.reserveFile(getFilename(), "UTF-8", alias);
+      // TODO: use all CSV parsing options
       String delim = getResultingDelimiter();
 
       try
       {
          String line = null;
-         while ((line = server.readLine(_fileName, false)) != null)
+         while ((line = server.readLine(alias, false)) != null)
          {
             processCSVFileLine(line, delim, variables);
          }
 
-         server.closeFile(_fileName);
+         server.closeFile(alias);
       }
       catch (IOException e)
       {
          log.error(e.toString());
       }
 
-      //log.info("Vars from CSV finished");
+      log.debug("Finished loading variables from CSV " + Integer.toString(report));
    }
 
    private void processCSVFileLine(String line, String delim, JMeterVariables variables)
@@ -112,13 +111,14 @@ public class VariablesFromCSVFile
    {
       String delim = delimiter;
       if (delim.equals("\\t"))
+      {
          delim = "\t";
-      else
-         if (delim.length() == 0)
-         {
-            log.warn("Empty delimiter converted to ','");
-            delim = ",";
-         }
+      }
+      else if (delim.length() == 0)
+      {
+         log.warn("Empty delimiter converted to ','");
+         delim = ",";
+      }
 
       //log.debug("Delimiter: " + delim);
       return delim;

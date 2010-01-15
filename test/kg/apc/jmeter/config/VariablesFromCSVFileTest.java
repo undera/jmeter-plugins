@@ -139,4 +139,52 @@ public class VariablesFromCSVFileTest
       assertNull(variables.get("testvar2"));
       assertNull(variables.get("testvar1"));
    }
+
+   /**
+    * Test of getFilename method, of class VariablesFromCSVFile.
+    */
+   @Test
+   public void testGetFilename()
+   {
+   }
+
+   /**
+    * Test of setFilename method, of class VariablesFromCSVFile.
+    */
+   @Test
+   public void testSetFilename()
+   {
+   }
+
+   /**
+    * Test of getVariablesPrefix method, of class VariablesFromCSVFile.
+    */
+   @Test
+   public void testGetVariablesPrefix()
+   {
+   }
+
+   /**
+    * Test of setVariablesPrefix method, of class VariablesFromCSVFile.
+    */
+   @Test
+   public void testSetVariablesPrefix()
+   {
+   }
+
+   /**
+    * Test of getDelimiter method, of class VariablesFromCSVFile.
+    */
+   @Test
+   public void testGetDelimiter()
+   {
+   }
+
+   /**
+    * Test of setDelimiter method, of class VariablesFromCSVFile.
+    */
+   @Test
+   public void testSetDelimiter()
+   {
+   }
 }

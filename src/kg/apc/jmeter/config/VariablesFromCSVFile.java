@@ -57,18 +57,18 @@ public class VariablesFromCSVFile
 
    public void iterationStart(LoopIterationEvent iterEvent)
    {
-      int report = JMeterContextService.getContext().getThreadNum();
+      int threanNo = JMeterContextService.getContext().getThreadNum();
       // once only
       if (iterEvent.getIteration() > 1)
       {
-         log.debug("Variables already loaded " + Integer.toString(report));
+         log.debug("Variables already loaded for thread " + Integer.toString(threanNo));
          return;
       }
 
-      log.debug("Started loading variables from CSV " + Integer.toString(report));
+      log.debug("Started loading variables from CSV for thread " + Integer.toString(threanNo));
 
       JMeterVariables variables = JMeterContextService.getContext().getVariables();
-      String alias = this.getClass().getName() + Integer.toString(report);
+      String alias = this.getClass().getName() + Integer.toString(threanNo);
       FileServer server = FileServer.getFileServer();
       server.reserveFile(getFilename(), "UTF-8", alias);
       // TODO: use all CSV parsing options
@@ -89,7 +89,7 @@ public class VariablesFromCSVFile
          log.error(e.toString());
       }
 
-      log.debug("Finished loading variables from CSV " + Integer.toString(report));
+      log.debug("Finished loading variables from CSV for thread " + Integer.toString(threanNo));
    }
 
    private void processCSVFileLine(String line, String delim, JMeterVariables variables)

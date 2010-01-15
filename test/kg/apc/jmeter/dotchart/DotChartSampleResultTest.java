@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.dotchart;
 
 import org.apache.jmeter.samplers.SampleResult;
@@ -13,10 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author APC
- */
 public class DotChartSampleResultTest {
 
     public DotChartSampleResultTest() {
@@ -126,9 +117,6 @@ public class DotChartSampleResultTest {
       assertEquals(expResult, result, 0.0);
    }
 
-   /**
-    * Test of getThroughput method, of class DotChartSampleResult.
-    */
    @Test
    public void testGetThroughputMany()
    {
@@ -138,6 +126,16 @@ public class DotChartSampleResultTest {
       res.setAllThreads(5);
       DotChartSampleResult instance = new DotChartSampleResult(res);
       double expResult = 40;
+      double result = instance.getThroughput();
+      assertEquals(expResult, result, 0.0);
+   }
+
+   @Test
+   public void testGetThroughput()
+   {
+      System.out.println("getThroughput");
+      DotChartSampleResult instance = new DotChartSampleResult();
+      double expResult = 0.0;
       double result = instance.getThroughput();
       assertEquals(expResult, result, 0.0);
    }

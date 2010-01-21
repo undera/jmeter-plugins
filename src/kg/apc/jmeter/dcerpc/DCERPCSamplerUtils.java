@@ -1,7 +1,6 @@
 package kg.apc.jmeter.dcerpc;
 
 import java.util.Iterator;
-import org.apache.commons.lang.StringUtils;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
@@ -10,32 +9,29 @@ import org.apache.log.Logger;
 
 public class DCERPCSamplerUtils
 {
-   public static short getOpNum(String[] fields)
+   public static short getOpNum(String paramStr)
    {
-      if (fields.length < 2)
-         throw new IllegalArgumentException("Opnum must be in second line of text");
-
       short opNum;
       try
       {
-         opNum = Short.parseShort(fields[1]);
+         opNum = Short.parseShort(paramStr);
       }
       catch (NumberFormatException e)
       {
          opNum = Short.MAX_VALUE;
+
          int report = JMeterContextService.getContext().getThreadNum();
-         String var = fields[1];
-         var = var.replace("${", "");
-         var = var.replace("}", "");
-         JMeterVariables vars = JMeterContextService.getContext().getVariables();
          Logger log = LoggingManager.getLoggerForClass();
-         log.error(Integer.toString(report) + " Wrong OpNum supplied: " + fields[1] + "=" + vars.get(var), e);
+         log.error(Integer.toString(report) + " Wrong OpNum supplied: " + paramStr + "=", e);
+         
+         JMeterVariables vars = JMeterContextService.getContext().getVariables();
          Iterator it = vars.getIterator();
          while (it.hasNext())
          {
             log.info(it.next().toString());
          }
       }
+
       return opNum;
    }
 
@@ -104,31 +100,29 @@ public class DCERPCSamplerUtils
       return stubDataHex;
    }
 
-   public static RPCPacket[] getRequestsArrayByString(String s)
+   public static RPCPacket[] getRequestsArrayByString(String paramsStr, String dataStr)
    {
       RPCPacket[] result;
 
-      String[] fields = s.split("\n");
-      if (fields.length < 3)
-      {
-         throw new IllegalArgumentException("Request must contain at least 3 parameter lines");
-      }
-
+      String[] fields = paramsStr.split("[\t ]");
       short opNum;
       if (fields[0].toLowerCase().trim().equals("bind"))
       {
+         if (fields.length < 3)
+            throw new IllegalArgumentException("Bind request requires 2 params: Interface UUID and Transfer Syntax");
+
          result = new RPCBindRequest[1];
          result[0] = new RPCBindRequest(fields[1], fields[2]);
       }
       else
       {
-         final int callID = Integer.parseInt(fields[0]);
-         fields[0] = "";
-         opNum = getOpNum(fields);
-         fields[1] = "";
+         if (fields.length < 2)
+            throw new IllegalArgumentException("Call requires 2 params: CallID and OpNum");
 
-         String joinedStr = StringUtils.join(fields, "\n");
-         String stubDataHex = getStubDataHex(joinedStr);
+         final int callID = Integer.parseInt(fields[0]);
+         opNum = getOpNum(fields[1]);
+
+         String stubDataHex = getStubDataHex(dataStr);
 
          final byte[] stubDataByteArray = BinaryTCPClientImpl.hexStringToByteArray(stubDataHex);
          result = getPacketsArray(stubDataByteArray, callID, opNum);

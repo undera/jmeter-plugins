@@ -14,6 +14,7 @@ public class DCERPCSampler
      extends AbstractTCPClient
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
+   private String unmarshalOptions = "";
 
    public void write(OutputStream os, InputStream is)
    {
@@ -47,12 +48,12 @@ public class DCERPCSampler
             stubDataStream.write(packetWithoutHeader);
          }
 
-         hexString = DCERPCMarshalling.unmarshalData(stubDataStream.toByteArray(), "");
+         hexString = DCERPCMarshalling.unmarshalData(stubDataStream.toByteArray(), unmarshalOptions);
       }
       catch (RPCMarshallingException ex)
       {
          log.error("Unmarshal error: ", ex);
-         hexString="";
+         hexString = "";
       }
       catch (SocketTimeoutException e)
       {
@@ -115,7 +116,23 @@ public class DCERPCSampler
 
    public void write(OutputStream os, String paramsdata)
    {
-      RPCPacket[] callReq = DCERPCSamplerUtils.getRequestsArrayByString(paramsdata);
+      String callParams;
+      String stubData;
+      int pos = paramsdata.indexOf('\n');
+      if (pos < 0)
+      {
+         callParams = paramsdata;
+         stubData = "";
+      }
+      else
+      {
+         stubData = paramsdata.substring(pos);
+         callParams = paramsdata.substring(0, pos);
+      }
+
+      setReadParams(callParams);
+
+      RPCPacket[] callReq = DCERPCSamplerUtils.getRequestsArrayByString(callParams, stubData);
       byte[] reqBytes;
       int packetNum;
       for (packetNum = 0; packetNum < callReq.length; packetNum++)
@@ -131,6 +148,15 @@ public class DCERPCSampler
          {
             log.error("Request error", ex);
          }
+      }
+   }
+
+   private void setReadParams(String callParams)
+   {
+      String[] fields = callParams.split("[\t ]");
+      if (fields.length > 2)
+      {
+         unmarshalOptions = fields[2];
       }
    }
 }

@@ -47,12 +47,12 @@ public class DCERPCSamplerUtilsTest
    public void testGetRequestByString()
    {
       System.out.println("getRequestByString");
-      String str = "bind\n"
-           + SERVER_UUID + "\n"
+      String str = "bind "
+           + SERVER_UUID + "\t"
            + ABSTRACT_SYNTAX;
 
       String expResult = "05000b03100000004800000001000000d016d0160000000001000000000001002a86d78060619645aaa91743e4c2763801000000045d888aeb1cc9119fe808002b10486002000000";
-      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString(str);
+      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString(str, "");
       assertEquals(1, result.length);
       assertEquals(expResult, JOrphanUtils.baToHexString(result[0].getBytes()));
    }
@@ -61,12 +61,8 @@ public class DCERPCSamplerUtilsTest
    public void testGetRequestByString2()
    {
       System.out.println("getRequestByString2");
-      String str = "1\n"
-           + "0\n"
-           + "00000000";
-
       String expResult = "05000003100000001c00000001000000040000000000000000000000";
-      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString(str);
+      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1 0", "00000000");
       assertEquals(1, result.length);
       assertEquals(expResult, JOrphanUtils.baToHexString(result[0].getBytes()));
    }
@@ -75,12 +71,8 @@ public class DCERPCSamplerUtilsTest
    public void testGetRequestByString3()
    {
       System.out.println("getRequestByString3");
-      String str = "1\n"
-           + "0\n"
-           + "00{TEST}\r\n0000";
-
       String expResult = "05000003100000001f00000001000000070000000000000000544553540000";
-      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString(str);
+      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1 0", "00{TEST}\r\n0000");
       assertEquals(1, result.length);
       assertEquals(expResult, JOrphanUtils.baToHexString(result[0].getBytes()));
    }
@@ -93,7 +85,7 @@ public class DCERPCSamplerUtilsTest
       for (int n = 0; n < 15; n++)
          large += large;
 
-      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1\n1\n" + large);
+      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1 1", large);
       assertEquals(6, result.length);
    }
 
@@ -106,7 +98,7 @@ public class DCERPCSamplerUtilsTest
       // border condition 0
       String large = JOrphanUtils.baToHexString(new byte[len]);
 
-      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1\n1\n" + large);
+      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1\t1", large);
       assertEquals(1, result.length);
    }
 
@@ -119,7 +111,7 @@ public class DCERPCSamplerUtilsTest
       // border condition +1
       String large = JOrphanUtils.baToHexString(new byte[len]);
 
-      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1\n1\n" + large);
+      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1 1", large);
       assertEquals(2, result.length);
    }
 
@@ -131,7 +123,7 @@ public class DCERPCSamplerUtilsTest
       // border condition -1
       String large = JOrphanUtils.baToHexString(new byte[len]);
 
-      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1\n1\n" + large);
+      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1 1", large);
       assertEquals(1, result.length);
    }
 
@@ -142,10 +134,9 @@ public class DCERPCSamplerUtilsTest
    public void testGetOpNum()
    {
       System.out.println("getOpNum");
-      String str = "1\n23456\n";
-      String[] fields = str.split("\n");
+      String str = "23456";
       short expResult = 23456;
-      short result = DCERPCSamplerUtils.getOpNum(fields);
+      short result = DCERPCSamplerUtils.getOpNum(str);
       assertEquals(expResult, result);
    }
 
@@ -197,9 +188,9 @@ public class DCERPCSamplerUtilsTest
    public void testGetRequestsArrayByString()
    {
       System.out.println("getRequestsArrayByString");
-      String s = "1\n1\n55{TEST}66";
+      String s = "55{TEST}66";
       String expResult = "05000003100000001e000000010000000600000000000100555445535466";
-      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString(s);
-      assertEquals(expResult, JOrphanUtils.baToHexString( result[0].getBytes()));
+      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1 1", s);
+      assertEquals(expResult, JOrphanUtils.baToHexString(result[0].getBytes()));
    }
 }

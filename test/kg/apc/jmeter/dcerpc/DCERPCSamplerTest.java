@@ -78,8 +78,8 @@ public class DCERPCSamplerTest
    public void testWrite_OutputStream_String()
    {
       System.out.println("write");
-      String str = "bind\n"
-           + SERVER_UUID + "\n"
+      String str = "bind "
+           + SERVER_UUID + " "
            + ABSTRACT_SYNTAX;
 
       instance.write(os, str);
@@ -97,8 +97,7 @@ public class DCERPCSamplerTest
       for (int n = 0; n < 13; n++)
          large += large;
 
-      String str = "1\n"
-           + "0\n"
+      String str = "1 0\n"
            + large;
 
       instance.write(os, str);
@@ -116,5 +115,17 @@ public class DCERPCSamplerTest
       is.setBytesToRead(BinaryTCPClientImpl.hexStringToByteArray(header + expStr));
       String result = instance.read(is);
       assertEquals(expStr, result);
+   }
+
+   @Test
+   public void testRead_WithUnmarshal_strings()
+   {
+      System.out.println("read unm strs");
+      instance.write(os, "1 1 S:3\n00");
+
+      String expStr = "05000203100000003000000042000000180000000000000000000000e903000000000000040000004b47530000000000";
+      is.setBytesToRead(BinaryTCPClientImpl.hexStringToByteArray(expStr));
+      String result = instance.read(is);
+      assertEquals("00000000e90300000000000004000000{KGS}0000000000", result);
    }
 }

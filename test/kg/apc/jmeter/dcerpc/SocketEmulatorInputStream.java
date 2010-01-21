@@ -12,6 +12,7 @@ class SocketEmulatorInputStream
    void setBytesToRead(byte[] hexStringToByteArray)
    {
       bytes = hexStringToByteArray;
+      System.out.println("Set bytes to read: "+Integer.toString(bytes.length));
    }
 
    @Override

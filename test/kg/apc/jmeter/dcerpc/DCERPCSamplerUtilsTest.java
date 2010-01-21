@@ -1,5 +1,6 @@
 package kg.apc.jmeter.dcerpc;
 
+import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -8,10 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author APC
- */
 public class DCERPCSamplerUtilsTest
 {
    private static String SERVER_UUID = "80d7862a-6160-4596-aaa9-1743e4c27638";
@@ -136,5 +133,73 @@ public class DCERPCSamplerUtilsTest
 
       RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString("1\n1\n" + large);
       assertEquals(1, result.length);
+   }
+
+   /**
+    * Test of getOpNum method, of class DCERPCSamplerUtils.
+    */
+   @Test
+   public void testGetOpNum()
+   {
+      System.out.println("getOpNum");
+      String str = "1\n23456\n";
+      String[] fields = str.split("\n");
+      short expResult = 23456;
+      short result = DCERPCSamplerUtils.getOpNum(fields);
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of getPacketsArray method, of class DCERPCSamplerUtils.
+    */
+   @Test
+   public void testGetPacketsArray()
+   {
+      System.out.println("getPacketsArray");
+      byte[] stubDataByteArray = BinaryTCPClientImpl.hexStringToByteArray(new String("123456"));
+      int callID = 345;
+      short opNum = 21554;
+      String expResult = "05000003100000001b000000590100000300000000003254123456";
+      RPCPacket[] result = DCERPCSamplerUtils.getPacketsArray(stubDataByteArray, callID, opNum);
+      assertEquals(1, result.length);
+      assertEquals(expResult, JOrphanUtils.baToHexString(result[0].getBytes()));
+   }
+
+   /**
+    * Test of getPacketFlags method, of class DCERPCSamplerUtils.
+    */
+   @Test
+   public void testGetPacketFlags()
+   {
+      System.out.println("getPacketFlags");
+      assertEquals(1, DCERPCSamplerUtils.getPacketFlags(0, 3));
+      assertEquals(0, DCERPCSamplerUtils.getPacketFlags(1, 3));
+      assertEquals(2, DCERPCSamplerUtils.getPacketFlags(2, 3));
+   }
+
+   /**
+    * Test of getStubDataHex method, of class DCERPCSamplerUtils.
+    */
+   @Test
+   public void testGetStubDataHex()
+   {
+      System.out.println("getStubDataHex");
+      String joinedStr = "{F:32:somedata!}";
+      String expResult = "736f6d6564617461210000000000000000000000000000000000000000000000";
+      String result = DCERPCSamplerUtils.getStubDataHex(joinedStr);
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of getRequestsArrayByString method, of class DCERPCSamplerUtils.
+    */
+   @Test
+   public void testGetRequestsArrayByString()
+   {
+      System.out.println("getRequestsArrayByString");
+      String s = "1\n1\n55{TEST}66";
+      String expResult = "05000003100000001e000000010000000600000000000100555445535466";
+      RPCPacket[] result = DCERPCSamplerUtils.getRequestsArrayByString(s);
+      assertEquals(expResult, JOrphanUtils.baToHexString( result[0].getBytes()));
    }
 }

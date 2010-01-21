@@ -46,8 +46,13 @@ public class DCERPCSampler
             }
             stubDataStream.write(packetWithoutHeader);
          }
-         hexString = BinaryUtils.baToHexStringWithText(stubDataStream.toByteArray());
-         //log.info(hexString);
+
+         hexString = DCERPCMarshalling.unmarshalData(stubDataStream.toByteArray(), "");
+      }
+      catch (RPCMarshallingException ex)
+      {
+         log.error("Unmarshal error: ", ex);
+         hexString="";
       }
       catch (SocketTimeoutException e)
       {
@@ -65,7 +70,6 @@ public class DCERPCSampler
          hexString = "";
       }
 
-      log.debug("Read total: " + hexString.length() / 2 + " bytes");
       return hexString;
    }
 

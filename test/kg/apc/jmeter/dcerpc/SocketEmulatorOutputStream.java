@@ -6,22 +6,24 @@ import java.io.OutputStream;
 class SocketEmulatorOutputStream
      extends OutputStream
 {
-   private String buffer;
+   private StringBuffer buffer;
 
    public SocketEmulatorOutputStream()
    {
-      buffer="";
+      buffer=new StringBuffer();
    }
 
    @Override
    public void write(int b)
         throws IOException
    {
-      buffer+=(b>10?"":"0")+Integer.toHexString(b);
+      buffer.append((b>10?"":"0")+Integer.toHexString(b));
    }
 
    String getWrittenBytes()
    {
-      return buffer;
+      final String toString = buffer.toString();
+      buffer.setLength(0);
+      return toString;
    }
 }

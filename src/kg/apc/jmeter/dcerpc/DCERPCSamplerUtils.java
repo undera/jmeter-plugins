@@ -12,6 +12,9 @@ public class DCERPCSamplerUtils
 {
    public static short getOpNum(String[] fields)
    {
+      if (fields.length < 2)
+         throw new IllegalArgumentException("Opnum must be in second line of text");
+
       short opNum;
       try
       {
@@ -84,7 +87,7 @@ public class DCERPCSamplerUtils
       String stubDataHex = null;
       try
       {
-         stubDataHex = BinaryUtils.hexEncodeTextParts(joinedStr);
+         stubDataHex = DCERPCMarshalling.marshalData(joinedStr);
       }
       catch (RPCMarshallingException ex)
       {

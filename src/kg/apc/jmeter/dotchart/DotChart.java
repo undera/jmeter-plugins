@@ -43,7 +43,7 @@ public class DotChart
 
    public DotChart()
    {
-      setSize(100, 100); // this is for unit tests
+      setSize(100, 100); // this is default, for unit tests
       displayMode = DM_TIMES;
       init();
       rateRenderer = new RateRenderer("#.0");

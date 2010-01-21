@@ -1,15 +1,14 @@
 package kg.apc.jmeter.dotchart;
 
 import java.awt.Color;
-import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 import org.apache.jmeter.gui.util.JMeterColor;
 import org.apache.jmeter.samplers.SampleResult;
 
 public class DotChartModel
-   extends HashMap
+     extends ConcurrentHashMap
 {
-
    private int maxThreads;
    private long maxTime;
    private double maxThroughput;

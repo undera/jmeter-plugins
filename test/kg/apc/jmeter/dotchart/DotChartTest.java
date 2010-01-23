@@ -1,5 +1,6 @@
 package kg.apc.jmeter.dotchart;
 
+import kg.apc.jmeter.util.TestGraphics;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Graphics;

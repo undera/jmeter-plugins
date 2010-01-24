@@ -4,6 +4,8 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.Sample;
@@ -48,6 +50,8 @@ public class ThreadsStateOverTimeGuiTest
    public void setUp()
    {
       instance = new ThreadsStateOverTimeGui();
+      instance.getLabelResource();
+      instance.getStaticLabel();
    }
 
    @After
@@ -63,6 +67,22 @@ public class ThreadsStateOverTimeGuiTest
    {
       System.out.println("add");
       SampleResult res = new SampleResult();
+      res.setAllThreads(1);
+      res.setThreadName("test 1-2");
+      instance.add(res);
+      
+      try
+      {
+         Thread.sleep(2000);
+      }
+      catch (InterruptedException ex)
+      {
+         Logger.getLogger(ThreadsStateOverTimeGuiTest.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      
+      SampleResult res2 = new SampleResult();
+      res2.setAllThreads(1);
+      res2.setThreadName("test 1-2");
       instance.add(res);
    }
 

@@ -5,25 +5,26 @@ import java.util.concurrent.ConcurrentHashMap;
 
 class GraphPanelChartRow
 {
-   private ConcurrentHashMap<Double, GraphPanelChartElement> values;
+   private ConcurrentHashMap<Long, GraphPanelChartElement> values;
+   public static final int MARKER_SIZE_NONE = 0;
    public static final int MARKER_SIZE_SMALL = 3;
    private boolean drawLine;
-   private int markerSize;
-   private double maxX;
+   private int markerSize=MARKER_SIZE_NONE;
+   private long maxX;
+   private long minX=System.currentTimeMillis();
    private double maxY;
-   private double minX;
-   private double minY;
+   private double minY=System.currentTimeMillis();
    private Color color;
    private final String label;
 
    GraphPanelChartRow(String threadName, Color nextColor)
    {
-      values = new ConcurrentHashMap<Double, GraphPanelChartElement>();
+      values = new ConcurrentHashMap<Long, GraphPanelChartElement>();
       color=nextColor;
       label=threadName;
    }
 
-   void add(double xVal, double yVal)
+   void add(long xVal, double yVal)
    {
       if (xVal>maxX) maxX=xVal;
       if (yVal>maxY) maxY=yVal;
@@ -69,7 +70,7 @@ class GraphPanelChartRow
    /**
     * @return the maxX
     */
-   public double getMaxX()
+   public long getMaxX()
    {
       return maxX;
    }
@@ -85,7 +86,7 @@ class GraphPanelChartRow
    /**
     * @return the minX
     */
-   public double getMinX()
+   public long getMinX()
    {
       return minX;
    }

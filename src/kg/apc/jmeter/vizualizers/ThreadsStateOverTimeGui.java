@@ -26,7 +26,7 @@ public class ThreadsStateOverTimeGui
    public ThreadsStateOverTimeGui()
    {
       model = new ConcurrentHashMap<String, GraphPanelChartRow>();
-      colors=new ColorsDispatcher();
+      colors = new ColorsDispatcher();
       initGui();
    }
 
@@ -35,12 +35,12 @@ public class ThreadsStateOverTimeGui
       setLayout(new BorderLayout());
       add(makeTitlePanel(), BorderLayout.NORTH);
       add(createGraphPanel(), BorderLayout.CENTER);
-      //add(makeControlsPanel(), BorderLayout.SOUTH);
    }
 
    private GraphPanel createGraphPanel()
    {
       graphPanel = new GraphPanel(model);
+      graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
       return graphPanel;
    }
 
@@ -58,8 +58,8 @@ public class ThreadsStateOverTimeGui
    public void add(SampleResult res)
    {
       String threadName = res.getThreadName();
-      threadName=threadName.substring(0, threadName.lastIndexOf(" "));
-      
+      threadName = threadName.substring(0, threadName.lastIndexOf(" "));
+
       GraphPanelChartRow row;
       if (!model.containsKey(threadName))
       {
@@ -70,31 +70,13 @@ public class ThreadsStateOverTimeGui
       }
       else
       {
-         row=model.get(threadName);
+         row = model.get(threadName);
       }
 
-      row.add(System.currentTimeMillis(), res.getGroupThreads());
+      long xVal = System.currentTimeMillis();
+      //log.info("Adding: "+Long.toString(xVal));
+      row.add(xVal, res.getGroupThreads());
       updateGui(null);
-      /*
-      current time
-      group name
-      samples count
-      average active threads in group
-      inactive threads (max threads in group - active)
-       
-
-      //model.addSample(res);
-      log.info(threadName.substring(0, threadName.lastIndexOf(" ")));
-      log.info(threadName);
-      log.info(Integer.toString(res.getAllThreads()));
-      log.info(Integer.toString());
-
-      ThreadGroup group = JMeterContextService.getContext().getThreadGroup();
-      log.info(group.getName());
-      log.info(Integer.toString(group.getNumThreads()));
-      log.info(Integer.toString(group.getNumberOfThreads()));
-       * 
-       */
    }
 
    public void clearData()

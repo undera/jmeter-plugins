@@ -75,4 +75,12 @@ public class GraphPanel
 
       return result;
    }
+
+   /**
+    * @return the graphTab
+    */
+   public GraphPanelChart getGraphObject()
+   {
+      return graphTab;
+   }
 }

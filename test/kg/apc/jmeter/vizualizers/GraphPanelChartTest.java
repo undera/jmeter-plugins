@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.Color;
@@ -15,14 +10,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- *
- * @author APC
- */
-public class GraphPanelChartTest {
-
-    public GraphPanelChartTest() {
-    }
+public class GraphPanelChartTest
+{
+   public GraphPanelChartTest()
+   {
+   }
 
    @BeforeClass
    public static void setUpClass()
@@ -36,13 +28,15 @@ public class GraphPanelChartTest {
    {
    }
 
-    @Before
-    public void setUp() {
-    }
+   @Before
+   public void setUp()
+   {
+   }
 
-    @After
-    public void tearDown() {
-    }
+   @After
+   public void tearDown()
+   {
+   }
 
    /**
     * Test of paintComponent method, of class GraphPanelChart.
@@ -53,12 +47,18 @@ public class GraphPanelChartTest {
       System.out.println("paintComponent");
       Graphics g = new TestGraphics();
       GraphPanelChart instance = new GraphPanelChart();
+      instance.setSize(500, 500);
+
       final ConcurrentHashMap<String, GraphPanelChartRow> rows = new ConcurrentHashMap<String, GraphPanelChartRow>();
       instance.setRows(rows);
       final GraphPanelChartRow row1 = new GraphPanelChartRow("test", Color.black);
       rows.put("test 1", row1);
-      row1.add(10, 20);
-      instance.setSize(500, 500);
+      row1.add(System.currentTimeMillis(), 20);
+
+      instance.paintComponent(g);
+
+      row1.add(System.currentTimeMillis(), 40);
+      instance.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
       instance.paintComponent(g);
    }
 }

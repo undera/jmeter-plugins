@@ -3,6 +3,9 @@ package kg.apc.jmeter.vizualizers;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.border.BevelBorder;
@@ -19,6 +22,7 @@ public class GraphPanelChart
    private Rectangle yAxisRect;
    private Rectangle chartRect;
    private static final Rectangle zeroRect = new Rectangle();
+   private ConcurrentHashMap<String, GraphPanelChartRow> rows;
 
    public GraphPanelChart()
    {
@@ -116,6 +120,12 @@ public class GraphPanelChart
    {
       g.setColor(Color.yellow);
       g.fillRect(chartRect.x, chartRect.y, chartRect.width, chartRect.height);
+      Iterator<Entry<String, GraphPanelChartRow>> it = rows.entrySet().iterator();
+      while(it.hasNext())
+      {
+         Entry<String, GraphPanelChartRow> row = it.next();
+         log.info(row.getKey());
+      }
    }
 
    private void logRect(String prefix, Rectangle r)
@@ -126,5 +136,10 @@ public class GraphPanelChart
            + Integer.toString(r.width) + " "
            + Integer.toString(r.height) + " "
            + " ");
+   }
+
+   public void setRows(ConcurrentHashMap<String, GraphPanelChartRow> aRows)
+   {
+      rows=aRows;
    }
 }

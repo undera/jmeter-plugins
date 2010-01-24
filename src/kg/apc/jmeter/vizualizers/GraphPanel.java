@@ -1,9 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Image;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -18,10 +16,10 @@ public class GraphPanel
    private GraphPanelChart graphTab;
    private JComponent rowsTab;
 
-   public GraphPanel()
+   public GraphPanel(ConcurrentHashMap<String, GraphPanelChartRow> model)
    {
       super();
-      addGraphTab();
+      addGraphTab(model);
       addRowsTab();
    }
 
@@ -32,14 +30,11 @@ public class GraphPanel
       addTab("Rows", rowsIcon, rowsTab, "Select rows to display");
    }
 
-   private void addGraphTab()
+   private void addGraphTab(ConcurrentHashMap<String, GraphPanelChartRow> model)
    {
       ImageIcon graphIcon = createImageIcon("graph.png");
       graphTab = new GraphPanelChart();
-
-//      JPanel panel = new JPanel(new BorderLayout());
-//      panel.add(graphTab, BorderLayout.CENTER);
-
+      graphTab.setRows(model);
       addTab("Chart", graphIcon, graphTab, "View chart");
    }
 
@@ -66,20 +61,6 @@ public class GraphPanel
 
          graphTab.updateUI();
          graphTab.repaint();
-      }
-   }
-
-   private void autoSizeGraph()
-   {
-      final Container p = graphTab.getParent();
-      int newWidth = p.getWidth() - 50;
-      int newHeight = p.getHeight() - 50;
-      if (graphTab.getWidth() != newWidth || graphTab.getHeight() != newHeight)
-      {
-         graphTab.setSize(new Dimension(newWidth, newHeight));
-         log.info("Autosize dimensions: "
-              + Integer.toString(p.getWidth()) + " "
-              + Integer.toString(p.getHeight()) + " ");
       }
    }
 

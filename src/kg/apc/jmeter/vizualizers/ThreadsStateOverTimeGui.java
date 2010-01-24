@@ -19,7 +19,8 @@ public class ThreadsStateOverTimeGui
    private static final Logger log = LoggingManager.getLoggerForClass();
    private final ConcurrentHashMap<String, GraphPanelChartRow> model;
    private long lastRepaint = 0;
-   private static long delay = 500;
+   private long lastSample = 0;
+   private static long delay = 100;
    private GraphPanel graphPanel;
    private final ColorsDispatcher colors;
 
@@ -63,10 +64,8 @@ public class ThreadsStateOverTimeGui
       GraphPanelChartRow row;
       if (!model.containsKey(threadName))
       {
-         row = new GraphPanelChartRow(threadName, colors.getNextColor());
+         row = new GraphPanelChartRow(threadName, colors.getNextColor(), false, GraphPanelChartRow.MARKER_SIZE_SMALL);
          model.put(threadName, row);
-         row.setDrawLine(true);
-         row.setMarkerSize(GraphPanelChartRow.MARKER_SIZE_SMALL);
       }
       else
       {
@@ -74,7 +73,6 @@ public class ThreadsStateOverTimeGui
       }
 
       long xVal = System.currentTimeMillis();
-      //log.info("Adding: "+Long.toString(xVal));
       row.add(xVal, res.getGroupThreads());
       updateGui(null);
    }
@@ -93,7 +91,6 @@ public class ThreadsStateOverTimeGui
 
    public void updateGui(Sample sample)
    {
-      // We have received one more sample
       long time = System.currentTimeMillis();
       if (time - lastRepaint >= delay)
       {

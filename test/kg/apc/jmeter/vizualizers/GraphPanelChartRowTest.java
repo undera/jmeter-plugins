@@ -31,7 +31,7 @@ public class GraphPanelChartRowTest
    @Before
    public void setUp()
    {
-      instance = new GraphPanelChartRow("test", Color.black);
+      instance = new GraphPanelChartRow("test", Color.black, true, 5);
    }
 
    @After

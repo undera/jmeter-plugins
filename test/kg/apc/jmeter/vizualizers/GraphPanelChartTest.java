@@ -52,14 +52,16 @@ public class GraphPanelChartTest
 
       final ConcurrentHashMap<String, GraphPanelChartRow> rows = new ConcurrentHashMap<String, GraphPanelChartRow>();
       instance.setRows(rows);
-      final GraphPanelChartRow row1 = new GraphPanelChartRow("test", Color.black);
+      final GraphPanelChartRow row1 = new GraphPanelChartRow("test", Color.black, true, 10);
       rows.put("test 1", row1);
       row1.add(System.currentTimeMillis(), 20);
-
       instance.paintComponent(g);
 
       row1.add(System.currentTimeMillis(), 40);
       instance.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
+      instance.paintComponent(g);
+
+      row1.add(System.currentTimeMillis(), 30);
       instance.paintComponent(g);
    }
 

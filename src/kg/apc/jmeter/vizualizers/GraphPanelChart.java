@@ -103,7 +103,7 @@ public class GraphPanelChart
       // we need to handle this and make Y axis wider
       int axisHeight = fm.getHeight() + spacing;
       xAxisLabelRenderer.setValue(maxXVal);
-      int axisEndSpace = fm.stringWidth(xAxisLabelRenderer.getText()) / 2 + spacing;
+      int axisEndSpace = fm.stringWidth(xAxisLabelRenderer.getText()) / 2;
       xAxisRect.setBounds(chartRect.x, chartRect.y + chartRect.height - axisHeight, chartRect.width, axisHeight);
       chartRect.setBounds(chartRect.x, chartRect.y, chartRect.width - axisEndSpace, chartRect.height - axisHeight);
       yAxisRect.setBounds(yAxisRect.x, yAxisRect.y, yAxisRect.width, chartRect.height);
@@ -234,7 +234,44 @@ public class GraphPanelChart
       while (it.hasNext())
       {
          Entry<String, GraphPanelChartRow> row = it.next();
-         //log.info(row.getKey());
+         paintRow(g, row.getValue());
+      }
+   }
+
+   private void paintRow(Graphics g, GraphPanelChartRow row)
+   {
+      Iterator<Entry<Long, GraphPanelChartElement>> it = row.iterator();
+      Entry<Long, GraphPanelChartElement> element;
+      int radius = row.getMarkerSize();
+      int x, y;
+      int prevX = chartRect.x;
+      int prevY = chartRect.y + chartRect.height;
+      final double dxForDVal = (maxXVal <= minXVal) ? 0 : (double) chartRect.width / (maxXVal - minXVal);
+      final double dyForDVal = maxYVal <= 0 ? 0 : (double) chartRect.height / (maxYVal);
+      while (it.hasNext())
+      {
+         element = it.next();
+
+         x = chartRect.x + (int) ((element.getKey() - minXVal) * dxForDVal);
+         y = chartRect.y + chartRect.height - (int) (element.getValue().getAvgValue() * dyForDVal);
+
+         // draw lines
+         if (row.isDrawLine() && x>=prevX)
+         {
+            g.setColor(row.getColor());
+            g.drawLine(prevX, prevY, x, y);
+            prevX = x;
+            prevY = y;
+         }
+
+         // draw markers
+         if (radius != GraphPanelChartRow.MARKER_SIZE_NONE)
+         {
+            g.setColor(row.getColor());
+            g.fillOval(x - radius, y - radius, (radius) * 2, (radius) * 2);
+            g.setColor(Color.black);
+            g.drawOval(x - radius, y - radius, radius * 2, radius * 2);
+         }
       }
    }
 

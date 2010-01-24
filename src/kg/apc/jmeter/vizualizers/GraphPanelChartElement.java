@@ -14,4 +14,9 @@ class GraphPanelChartElement
    {
       avgValue = (avgValue * count + yVal) / (++count);
    }
+
+   public double getAvgValue()
+   {
+      return avgValue;
+   }
 }

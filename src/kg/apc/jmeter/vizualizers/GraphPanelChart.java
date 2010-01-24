@@ -1,6 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.Color;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Iterator;
@@ -34,15 +35,7 @@ public class GraphPanelChart
       xAxisRect = new Rectangle();
       chartRect = new Rectangle();
 
-      calculateDimensions();
-   }
-
-   private void calculateDimensions()
-   {
       setDefaultDimensions();
-      calculateLegendDimensions();
-      calculateYAxisDimensions();
-      calculateXAxisDimensions();
    }
 
    private void setDefaultDimensions()
@@ -51,13 +44,6 @@ public class GraphPanelChart
       legendRect.setBounds(zeroRect);
       xAxisRect.setBounds(zeroRect);
       yAxisRect.setBounds(zeroRect);
-   }
-
-   private void calculateLegendDimensions()
-   {
-      final int legendHeight = 20;
-      legendRect.setBounds(chartRect.x, chartRect.y, chartRect.width, legendHeight);
-      chartRect.setBounds(chartRect.x, chartRect.y + legendHeight+spacing, chartRect.width, chartRect.height - legendHeight-spacing);
    }
 
    private void calculateYAxisDimensions()
@@ -83,13 +69,15 @@ public class GraphPanelChart
       g.setColor(Color.white);
       g.fillRect(0, 0, getWidth(), getHeight());
 
-      calculateDimensions();
+      setDefaultDimensions();
 
       try
       {
          paintLegend(g);
-         paintXAxis(g);
+         calculateYAxisDimensions();
          paintYAxis(g);
+         calculateXAxisDimensions();
+         paintXAxis(g);
          paintChart(g);
       }
       catch (Exception e)
@@ -100,8 +88,41 @@ public class GraphPanelChart
 
    private void paintLegend(Graphics g)
    {
-      g.setColor(Color.red);
-      g.fillRect(legendRect.x, legendRect.y, legendRect.width, legendRect.height);
+      FontMetrics fm = g.getFontMetrics(g.getFont());
+      int rectH = fm.getHeight();
+      int rectW = rectH;
+
+      Iterator<Entry<String, GraphPanelChartRow>> it = rows.entrySet().iterator();
+      Entry<String, GraphPanelChartRow> row;
+      int currentX = chartRect.x;
+      int currentY = chartRect.y;
+      int legendHeight = it.hasNext() ? rectH + spacing : 0;
+      while (it.hasNext())
+      {
+         row = it.next();
+
+         // wrap row if overflowed
+         if (currentX + rectW + spacing / 2 + fm.stringWidth(row.getKey()) > getWidth())
+         {
+            currentY += rectH + spacing / 2;
+            legendHeight += rectH + spacing;
+            currentX = chartRect.x;
+         }
+
+         // draw legend color box
+         g.setColor(row.getValue().getColor());
+         g.fillRect(currentX, currentY, rectW, rectH);
+         g.setColor(Color.black);
+         g.drawRect(currentX, currentY, rectW, rectH);
+
+         // draw legend item label
+         currentX += rectW + spacing / 2;
+         g.drawString(row.getKey(), currentX, (int) (currentY + rectH * 0.9));
+         currentX += fm.stringWidth(row.getKey()) + spacing;
+      }
+
+      legendRect.setBounds(chartRect.x, chartRect.y, chartRect.width, legendHeight);
+      chartRect.setBounds(chartRect.x, chartRect.y + legendHeight, chartRect.width, chartRect.height - legendHeight - spacing);
    }
 
    private void paintXAxis(Graphics g)
@@ -121,7 +142,7 @@ public class GraphPanelChart
       g.setColor(Color.yellow);
       g.fillRect(chartRect.x, chartRect.y, chartRect.width, chartRect.height);
       Iterator<Entry<String, GraphPanelChartRow>> it = rows.entrySet().iterator();
-      while(it.hasNext())
+      while (it.hasNext())
       {
          Entry<String, GraphPanelChartRow> row = it.next();
          log.info(row.getKey());
@@ -140,6 +161,6 @@ public class GraphPanelChart
 
    public void setRows(ConcurrentHashMap<String, GraphPanelChartRow> aRows)
    {
-      rows=aRows;
+      rows = aRows;
    }
 }

@@ -21,10 +21,12 @@ public class ThreadsStateOverTimeGui
    private long lastRepaint = 0;
    private static long delay = 500;
    private GraphPanel graphPanel;
+   private final ColorsDispatcher colors;
 
    public ThreadsStateOverTimeGui()
    {
       model = new ConcurrentHashMap<String, GraphPanelChartRow>();
+      colors=new ColorsDispatcher();
       initGui();
    }
 
@@ -61,7 +63,7 @@ public class ThreadsStateOverTimeGui
       GraphPanelChartRow row;
       if (!model.containsKey(threadName))
       {
-         row = new GraphPanelChartRow();
+         row = new GraphPanelChartRow(threadName, colors.getNextColor());
          model.put(threadName, row);
          row.setDrawLine(true);
          row.setMarkerSize(GraphPanelChartRow.MARKER_SIZE_SMALL);
@@ -72,6 +74,7 @@ public class ThreadsStateOverTimeGui
       }
 
       row.add(System.currentTimeMillis(), res.getGroupThreads());
+      updateGui(null);
       /*
       current time
       group name

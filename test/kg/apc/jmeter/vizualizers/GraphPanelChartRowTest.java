@@ -1,25 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-/**
- *
- * @author APC
- */
-public class GraphPanelChartRowTest {
-
-    public GraphPanelChartRowTest() {
-    }
+public class GraphPanelChartRowTest
+{
+   public GraphPanelChartRowTest()
+   {
+   }
 
    @BeforeClass
    public static void setUpClass()
@@ -33,13 +25,15 @@ public class GraphPanelChartRowTest {
    {
    }
 
-    @Before
-    public void setUp() {
-    }
+   @Before
+   public void setUp()
+   {
+   }
 
-    @After
-    public void tearDown() {
-    }
+   @After
+   public void tearDown()
+   {
+   }
 
    /**
     * Test of add method, of class GraphPanelChartRow.
@@ -50,7 +44,7 @@ public class GraphPanelChartRowTest {
       System.out.println("add");
       double xVal = 1.0;
       double yVal = 1.0;
-      GraphPanelChartRow instance = new GraphPanelChartRow();
+      GraphPanelChartRow instance = new GraphPanelChartRow("test", Color.black);
       instance.add(xVal, yVal);
    }
 }

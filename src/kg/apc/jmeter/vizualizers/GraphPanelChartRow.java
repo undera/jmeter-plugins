@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
 import java.util.concurrent.ConcurrentHashMap;
 
 class GraphPanelChartRow
@@ -12,10 +13,14 @@ class GraphPanelChartRow
    private double maxY;
    private double minX;
    private double minY;
+   private Color color;
+   private final String label;
 
-   public GraphPanelChartRow()
+   GraphPanelChartRow(String threadName, Color nextColor)
    {
       values = new ConcurrentHashMap<Double, GraphPanelChartElement>();
+      color=nextColor;
+      label=threadName;
    }
 
    void add(double xVal, double yVal)
@@ -91,5 +96,15 @@ class GraphPanelChartRow
    public double getMinY()
    {
       return minY;
+   }
+
+   public Color getColor()
+   {
+      return color;
+   }
+
+   void setColor(Color nextColor)
+   {
+      color=nextColor;
    }
 }

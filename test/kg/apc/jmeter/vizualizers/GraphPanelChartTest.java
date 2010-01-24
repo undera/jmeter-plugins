@@ -5,6 +5,7 @@
 
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.concurrent.ConcurrentHashMap;
 import kg.apc.jmeter.util.TestGraphics;
@@ -54,7 +55,7 @@ public class GraphPanelChartTest {
       GraphPanelChart instance = new GraphPanelChart();
       final ConcurrentHashMap<String, GraphPanelChartRow> rows = new ConcurrentHashMap<String, GraphPanelChartRow>();
       instance.setRows(rows);
-      final GraphPanelChartRow row1 = new GraphPanelChartRow();
+      final GraphPanelChartRow row1 = new GraphPanelChartRow("test", Color.black);
       rows.put("test 1", row1);
       row1.add(10, 20);
       instance.setSize(500, 500);

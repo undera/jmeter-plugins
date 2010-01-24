@@ -3,11 +3,11 @@ package kg.apc.jmeter.vizualizers;
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 class GraphPanelChartRow
 {
-   private ConcurrentHashMap<Long, GraphPanelChartElement> values;
+   private ConcurrentSkipListMap<Long, GraphPanelChartElement> values;
    public static final int MARKER_SIZE_NONE = 0;
    public static final int MARKER_SIZE_SMALL = 2;
    public static final int MARKER_SIZE_BIG = 4;
@@ -22,7 +22,7 @@ class GraphPanelChartRow
 
    GraphPanelChartRow(String threadName, Color nextColor, boolean aDrawLine, int aMarkerSize)
    {
-      values = new ConcurrentHashMap<Long, GraphPanelChartElement>();
+      values = new ConcurrentSkipListMap<Long, GraphPanelChartElement>();
       color = nextColor;
       label = threadName;
       drawLine = aDrawLine;
@@ -40,7 +40,7 @@ class GraphPanelChartRow
       if (yVal < minY)
          minY = yVal;
 
-      if (values.contains(xVal))
+      if (values.containsKey(xVal))
       {
          values.get(xVal).add(yVal);
       }

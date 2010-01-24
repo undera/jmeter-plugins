@@ -19,8 +19,7 @@ public class ThreadsStateOverTimeGui
    private static final Logger log = LoggingManager.getLoggerForClass();
    private final ConcurrentHashMap<String, GraphPanelChartRow> model;
    private long lastRepaint = 0;
-   private long lastSample = 0;
-   private static long delay = 100;
+   private static long delay = 500;
    private GraphPanel graphPanel;
    private final ColorsDispatcher colors;
 
@@ -29,6 +28,22 @@ public class ThreadsStateOverTimeGui
       model = new ConcurrentHashMap<String, GraphPanelChartRow>();
       colors = new ColorsDispatcher();
       initGui();
+   }
+
+   private void addThreadGroupRecord(String threadGroupName, long time, int numThreads)
+   {
+      GraphPanelChartRow row;
+      if (!model.containsKey(threadGroupName))
+      {
+         row = new GraphPanelChartRow(threadGroupName, colors.getNextColor(), true, GraphPanelChartRow.MARKER_SIZE_SMALL);
+         model.put(threadGroupName, row);
+      }
+      else
+      {
+         row = model.get(threadGroupName);
+      }
+
+      row.add(time, numThreads);
    }
 
    private void initGui()
@@ -42,6 +57,7 @@ public class ThreadsStateOverTimeGui
    {
       graphPanel = new GraphPanel(model);
       graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
+      graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
       return graphPanel;
    }
 
@@ -53,7 +69,7 @@ public class ThreadsStateOverTimeGui
    @Override
    public String getStaticLabel()
    {
-      return this.getClass().getSimpleName();
+      return "Active Threads Over Time";
    }
 
    public void add(SampleResult res)
@@ -61,25 +77,15 @@ public class ThreadsStateOverTimeGui
       String threadName = res.getThreadName();
       threadName = threadName.substring(0, threadName.lastIndexOf(" "));
 
-      GraphPanelChartRow row;
-      if (!model.containsKey(threadName))
-      {
-         row = new GraphPanelChartRow(threadName, colors.getNextColor(), false, GraphPanelChartRow.MARKER_SIZE_SMALL);
-         model.put(threadName, row);
-      }
-      else
-      {
-         row = model.get(threadName);
-      }
-
-      long xVal = System.currentTimeMillis();
-      row.add(xVal, res.getGroupThreads());
+      addThreadGroupRecord(threadName, res.getStartTime() - res.getStartTime() % delay, res.getGroupThreads());
+      addThreadGroupRecord(threadName, res.getEndTime() - res.getEndTime() % delay, res.getGroupThreads());
       updateGui(null);
    }
 
    public void clearData()
    {
       model.clear();
+      colors.reset();
       updateGui();
       repaint();
    }
@@ -92,7 +98,7 @@ public class ThreadsStateOverTimeGui
    public void updateGui(Sample sample)
    {
       long time = System.currentTimeMillis();
-      if (time - lastRepaint >= delay)
+      if ((time - lastRepaint) >= delay)
       {
          updateGui();
          repaint();

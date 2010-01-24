@@ -39,7 +39,7 @@ public class GraphPanel
    }
 
    /** Returns an ImageIcon, or null if the path was invalid. */
-   protected static ImageIcon createImageIcon(String path)
+   private static ImageIcon createImageIcon(String path)
    {
       java.net.URL imgURL = GraphPanel.class.getResource(path);
       if (imgURL != null)

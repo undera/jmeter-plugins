@@ -28,9 +28,10 @@ public class GraphPanelChart
    private double maxYVal;
    private long maxXVal;
    private long minXVal;
-   private static final int gridLinesCount = 5;
+   private static final int gridLinesCount = 10;
    private NumberRenderer yAxisLabelRenderer;
    private NumberRenderer xAxisLabelRenderer;
+   private boolean drawFinalZeroingLines = false;
 
    public GraphPanelChart()
    {
@@ -70,14 +71,6 @@ public class GraphPanelChart
          if (rowValue.getMinX() < minXVal)
             minXVal = rowValue.getMinX();
       }
-
-      /*
-      xAxisLabelRenderer.setValue(minXVal);
-      log.info("Min X: " + xAxisLabelRenderer.getText() + " " + Double.toString(minXVal));
-      xAxisLabelRenderer.setValue(maxXVal);
-      log.info("Max X: " + xAxisLabelRenderer.getText() + " " + Double.toString(maxXVal));
-       * 
-       */
    }
 
    private void setDefaultDimensions()
@@ -99,7 +92,7 @@ public class GraphPanelChart
 
    private void calculateXAxisDimensions(FontMetrics fm)
    {
-      // TODO: first value on X axis may take negative X coord, 
+      // FIXME: first value on X axis may take negative X coord,
       // we need to handle this and make Y axis wider
       int axisHeight = fm.getHeight() + spacing;
       xAxisLabelRenderer.setValue(maxXVal);
@@ -184,7 +177,7 @@ public class GraphPanelChart
 
       for (int n = 0; n <= gridLinesCount; n++)
       {
-         gridLineY = chartRect.y + (gridLinesCount - n) * chartRect.height / gridLinesCount;
+         gridLineY = chartRect.y + (int) ((gridLinesCount - n) * (double) chartRect.height / gridLinesCount);
 
          // draw grid line with tick
          g.setColor(Color.lightGray);
@@ -201,7 +194,6 @@ public class GraphPanelChart
 
    private void paintXAxis(Graphics g)
    {
-      //log.debug("Painting X axis");
       FontMetrics fm = g.getFontMetrics(g.getFont());
 
       String valueLabel;
@@ -210,7 +202,7 @@ public class GraphPanelChart
 
       for (int n = 0; n <= gridLinesCount; n++)
       {
-         gridLineX = chartRect.x + n * (chartRect.width / gridLinesCount);
+         gridLineX = chartRect.x + (int) (n * ((double) chartRect.width / gridLinesCount));
 
          // draw grid line with tick
          g.setColor(Color.lightGray);
@@ -223,7 +215,6 @@ public class GraphPanelChart
          labelXPos = gridLineX - fm.stringWidth(valueLabel) / 2;
          g.drawString(valueLabel, labelXPos, xAxisRect.y + fm.getAscent() + spacing);
       }
-      //log.debug("Painting X axis finished");
    }
 
    private void paintChart(Graphics g)
@@ -256,7 +247,7 @@ public class GraphPanelChart
          y = chartRect.y + chartRect.height - (int) (element.getValue().getAvgValue() * dyForDVal);
 
          // draw lines
-         if (row.isDrawLine() && x>=prevX)
+         if (row.isDrawLine() /* && x >= prevX */)
          {
             g.setColor(row.getColor());
             g.drawLine(prevX, prevY, x, y);
@@ -272,6 +263,13 @@ public class GraphPanelChart
             g.setColor(Color.black);
             g.drawOval(x - radius, y - radius, radius * 2, radius * 2);
          }
+      }
+
+      // draw final lines
+      if (row.isDrawLine() && drawFinalZeroingLines)
+      {
+         g.setColor(row.getColor());
+         g.drawLine(prevX, prevY, (int) (prevX + dxForDVal), chartRect.y + chartRect.height);
       }
    }
 
@@ -294,5 +292,13 @@ public class GraphPanelChart
    public void setxAxisLabelRenderer(NumberRenderer xAxisLabelRenderer)
    {
       this.xAxisLabelRenderer = xAxisLabelRenderer;
+   }
+
+   /**
+    * @param drawFinalZeroingLines the drawFinalZeroingLines to set
+    */
+   public void setDrawFinalZeroingLines(boolean drawFinalZeroingLines)
+   {
+      this.drawFinalZeroingLines = drawFinalZeroingLines;
    }
 }

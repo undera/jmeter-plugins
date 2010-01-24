@@ -42,4 +42,9 @@ public class ColorsDispatcher
          return fixedColors[spentColors];
       }
    }
+
+   void reset()
+   {
+      spentColors=0;
+   }
 }

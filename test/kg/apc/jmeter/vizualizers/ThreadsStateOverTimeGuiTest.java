@@ -146,7 +146,7 @@ public class ThreadsStateOverTimeGuiTest
    public void testGetStaticLabel()
    {
       System.out.println("getStaticLabel");
-      String expResult = "ThreadsStateOverTimeGui";
+      String expResult = "Active Threads Over Time";
       String result = instance.getStaticLabel();
       assertEquals(expResult, result);
    }

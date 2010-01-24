@@ -7,10 +7,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class GraphPanelChartElementTest {
-
-    public GraphPanelChartElementTest() {
-    }
+public class GraphPanelChartElementTest
+{
+   public GraphPanelChartElementTest()
+   {
+   }
 
    @BeforeClass
    public static void setUpClass()
@@ -24,13 +25,15 @@ public class GraphPanelChartElementTest {
    {
    }
 
-    @Before
-    public void setUp() {
-    }
+   @Before
+   public void setUp()
+   {
+   }
 
-    @After
-    public void tearDown() {
-    }
+   @After
+   public void tearDown()
+   {
+   }
 
    /**
     * Test of add method, of class GraphPanelChartElement.
@@ -44,4 +47,16 @@ public class GraphPanelChartElementTest {
       instance.add(yVal);
    }
 
+   /**
+    * Test of getAvgValue method, of class GraphPanelChartElement.
+    */
+   @Test
+   public void testGetAvgValue()
+   {
+      System.out.println("getAvgValue");
+      double expResult = 0.0;
+      GraphPanelChartElement instance = new GraphPanelChartElement(expResult);
+      double result = instance.getAvgValue();
+      assertEquals(expResult, result, 0.0);
+   }
 }

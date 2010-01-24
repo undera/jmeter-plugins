@@ -46,8 +46,8 @@ public class GraphPanelChartRowTest
    public void testAdd()
    {
       System.out.println("add");
-      long xVal = System.currentTimeMillis();
-      double yVal = 1.0;
+      long xVal = 10;
+      double yVal = 5.0;
       instance.add(xVal, yVal);
       assertEquals(xVal, instance.getMinX());
       assertEquals(xVal, instance.getMaxX());
@@ -84,7 +84,7 @@ public class GraphPanelChartRowTest
    public void testIsDrawLine()
    {
       System.out.println("isDrawLine");
-      boolean expResult = false;
+      boolean expResult = true;
       boolean result = instance.isDrawLine();
       assertEquals(expResult, result);
    }
@@ -96,7 +96,7 @@ public class GraphPanelChartRowTest
    public void testGetMarkerSize()
    {
       System.out.println("getMarkerSize");
-      int expResult = 0;
+      int expResult = 5;
       int result = instance.getMarkerSize();
       assertEquals(expResult, result);
    }

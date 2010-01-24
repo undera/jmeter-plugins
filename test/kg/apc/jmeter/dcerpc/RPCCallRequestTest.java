@@ -87,4 +87,17 @@ public class RPCCallRequestTest
       {
       }
    }
+
+   /**
+    * Test of setAllocHint method, of class RPCCallRequest.
+    */
+   @Test
+   public void testSetAllocHint()
+   {
+      System.out.println("setAllocHint");
+      int allocHint = 0;
+      byte flags=0;
+      RPCCallRequest instance = new RPCCallRequest(15, (short) 123, new byte[0], flags);
+      instance.setAllocHint(allocHint);
+   }
 }

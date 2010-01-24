@@ -50,8 +50,6 @@ public class ThreadsStateOverTimeGuiTest
    public void setUp()
    {
       instance = new ThreadsStateOverTimeGui();
-      instance.getLabelResource();
-      instance.getStaticLabel();
    }
 
    @After
@@ -127,5 +125,29 @@ public class ThreadsStateOverTimeGuiTest
    {
       System.out.println("updateGui");
       instance.updateGui();
+   }
+
+   /**
+    * Test of getLabelResource method, of class ThreadsStateOverTimeGui.
+    */
+   @Test
+   public void testGetLabelResource()
+   {
+      System.out.println("getLabelResource");
+      String expResult = "ThreadsStateOverTimeGui";
+      String result = instance.getLabelResource();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of getStaticLabel method, of class ThreadsStateOverTimeGui.
+    */
+   @Test
+   public void testGetStaticLabel()
+   {
+      System.out.println("getStaticLabel");
+      String expResult = "ThreadsStateOverTimeGui";
+      String result = instance.getStaticLabel();
+      assertEquals(expResult, result);
    }
 }

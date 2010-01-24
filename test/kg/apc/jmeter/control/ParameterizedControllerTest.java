@@ -1,6 +1,8 @@
 package kg.apc.jmeter.control;
 
 import org.apache.jmeter.config.Arguments;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
+import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.After;
@@ -73,5 +75,48 @@ public class ParameterizedControllerTest
       // FIXME: need to find a way to tell JMeter functions that we are in running state
       if (!vars.get("var2").equals("val1"))
          System.err.println("Failed to set var...");
+   }
+
+   /**
+    * Test of setUserDefinedVariables method, of class ParameterizedController.
+    */
+   @Test
+   public void testSetUserDefinedVariables()
+   {
+      System.out.println("setUserDefinedVariables");
+      Arguments vars = null;
+      ParameterizedController instance = new ParameterizedController();
+      instance.setUserDefinedVariables(vars);
+      // TODO review the generated test code and remove the default call to fail.
+      fail("The test case is a prototype.");
+   }
+
+   /**
+    * Test of getUserDefinedVariablesAsProperty method, of class ParameterizedController.
+    */
+   @Test
+   public void testGetUserDefinedVariablesAsProperty()
+   {
+      System.out.println("getUserDefinedVariablesAsProperty");
+      ParameterizedController instance = new ParameterizedController();
+      JMeterProperty expResult = null;
+      JMeterProperty result = instance.getUserDefinedVariablesAsProperty();
+      assertEquals(expResult, result);
+      // TODO review the generated test code and remove the default call to fail.
+      fail("The test case is a prototype.");
+   }
+
+   /**
+    * Test of iterationStart method, of class ParameterizedController.
+    */
+   @Test
+   public void testIterationStart()
+   {
+      System.out.println("iterationStart");
+      LoopIterationEvent lie = null;
+      ParameterizedController instance = new ParameterizedController();
+      instance.iterationStart(lie);
+      // TODO review the generated test code and remove the default call to fail.
+      fail("The test case is a prototype.");
    }
 }

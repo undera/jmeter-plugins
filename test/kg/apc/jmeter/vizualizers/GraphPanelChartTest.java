@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.concurrent.ConcurrentHashMap;
 import kg.apc.jmeter.util.TestGraphics;
+import org.apache.jorphan.gui.NumberRenderer;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -60,5 +61,41 @@ public class GraphPanelChartTest
       row1.add(System.currentTimeMillis(), 40);
       instance.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
       instance.paintComponent(g);
+   }
+
+   /**
+    * Test of setRows method, of class GraphPanelChart.
+    */
+   @Test
+   public void testSetRows()
+   {
+      System.out.println("setRows");
+      ConcurrentHashMap<String, GraphPanelChartRow> aRows = null;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setRows(aRows);
+   }
+
+   /**
+    * Test of setyAxisLabelRenderer method, of class GraphPanelChart.
+    */
+   @Test
+   public void testSetyAxisLabelRenderer()
+   {
+      System.out.println("setyAxisLabelRenderer");
+      NumberRenderer yAxisLabelRenderer = null;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setyAxisLabelRenderer(yAxisLabelRenderer);
+   }
+
+   /**
+    * Test of setxAxisLabelRenderer method, of class GraphPanelChart.
+    */
+   @Test
+   public void testSetxAxisLabelRenderer()
+   {
+      System.out.println("setxAxisLabelRenderer");
+      NumberRenderer xAxisLabelRenderer = null;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setxAxisLabelRenderer(xAxisLabelRenderer);
    }
 }

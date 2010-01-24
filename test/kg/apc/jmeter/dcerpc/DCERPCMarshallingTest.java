@@ -292,4 +292,33 @@ public class DCERPCMarshallingTest
       }
       assertEquals(expResult, result);
    }
+
+   /**
+    * Test of unmarshalData method, of class DCERPCMarshalling.
+    */
+   @Test
+   public void testUnmarshalData()
+        throws Exception
+   {
+      System.out.println("unmarshalData");
+      byte[] ba = new byte[0];
+      String unmarshalOptions = "";
+      String expResult = "";
+      String result = DCERPCMarshalling.unmarshalData(ba, unmarshalOptions);
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of marshalData method, of class DCERPCMarshalling.
+    */
+   @Test
+   public void testMarshalData()
+        throws Exception
+   {
+      System.out.println("marshalData");
+      String in_str = "";
+      String expResult = "";
+      String result = DCERPCMarshalling.marshalData(in_str);
+      assertEquals(expResult, result);
+   }
 }

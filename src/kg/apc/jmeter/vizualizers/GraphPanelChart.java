@@ -10,11 +10,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.border.BevelBorder;
+import org.apache.jmeter.samplers.Clearable;
+import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 public class GraphPanelChart
-     extends JComponent //implements Scrollable
+     extends JComponent
 {
    private static final int spacing = 5;
    private static final Logger log = LoggingManager.getLoggerForClass();
@@ -24,18 +26,41 @@ public class GraphPanelChart
    private Rectangle chartRect;
    private static final Rectangle zeroRect = new Rectangle();
    private ConcurrentHashMap<String, GraphPanelChartRow> rows;
+   private double maxYVal;
+   private double maxXVal;
+   private double minXVal;
+   private static final int gridLinesCount = 10;
+   private NumberRenderer renderer;
 
    public GraphPanelChart()
    {
       setBackground(Color.white);
       setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.lightGray, Color.darkGray));
 
+      renderer = new NumberRenderer("#.#");
       legendRect = new Rectangle();
       yAxisRect = new Rectangle();
       xAxisRect = new Rectangle();
       chartRect = new Rectangle();
 
       setDefaultDimensions();
+   }
+
+   private void getMinMaxDataValues()
+   {
+      maxXVal = maxYVal = minXVal = 0;
+      Iterator<Entry<String, GraphPanelChartRow>> it = rows.entrySet().iterator();
+      Entry<String, GraphPanelChartRow> row;
+      while (it.hasNext())
+      {
+         row = it.next();
+         if (row.getValue().getMaxY() > maxYVal)
+            maxYVal = row.getValue().getMaxY();
+         if (row.getValue().getMaxX() > maxXVal)
+            maxXVal = row.getValue().getMaxX();
+         if (row.getValue().getMinX() > minXVal)
+            minXVal = row.getValue().getMinX();
+      }
    }
 
    private void setDefaultDimensions()
@@ -46,19 +71,21 @@ public class GraphPanelChart
       yAxisRect.setBounds(zeroRect);
    }
 
-   private void calculateYAxisDimensions()
+   private void calculateYAxisDimensions(FontMetrics fm)
    {
-      int axisWidth = 20;
+      renderer.setValue(maxYVal);
+      int axisWidth = fm.stringWidth(renderer.getText()) + spacing * 3;
       yAxisRect.setBounds(chartRect.x, chartRect.y, axisWidth, chartRect.height);
       chartRect.setBounds(chartRect.x + axisWidth, chartRect.y, chartRect.width - axisWidth, chartRect.height);
    }
 
-   private void calculateXAxisDimensions()
+   private void calculateXAxisDimensions(FontMetrics fm)
    {
-      int axisHeight = 20;
-      int axisEndSpace = 20;
+      int axisHeight = fm.getHeight() + spacing;
+      int axisEndSpace = fm.stringWidth(Double.toString(maxXVal)) + spacing;
       xAxisRect.setBounds(chartRect.x, chartRect.y + chartRect.height - axisHeight, chartRect.width, axisHeight);
       chartRect.setBounds(chartRect.x, chartRect.y, chartRect.width - axisEndSpace, chartRect.height - axisHeight);
+      yAxisRect.setBounds(yAxisRect.x, yAxisRect.y, yAxisRect.width, chartRect.height);
    }
 
    @Override
@@ -70,13 +97,14 @@ public class GraphPanelChart
       g.fillRect(0, 0, getWidth(), getHeight());
 
       setDefaultDimensions();
+      getMinMaxDataValues();
 
       try
       {
          paintLegend(g);
-         calculateYAxisDimensions();
+         calculateYAxisDimensions(g.getFontMetrics(g.getFont()));
+         calculateXAxisDimensions(g.getFontMetrics(g.getFont()));
          paintYAxis(g);
-         calculateXAxisDimensions();
          paintXAxis(g);
          paintChart(g);
       }
@@ -122,7 +150,7 @@ public class GraphPanelChart
       }
 
       legendRect.setBounds(chartRect.x, chartRect.y, chartRect.width, legendHeight);
-      chartRect.setBounds(chartRect.x, chartRect.y + legendHeight, chartRect.width, chartRect.height - legendHeight - spacing);
+      chartRect.setBounds(chartRect.x, chartRect.y + legendHeight + spacing, chartRect.width, chartRect.height - legendHeight - spacing);
    }
 
    private void paintXAxis(Graphics g)
@@ -133,8 +161,27 @@ public class GraphPanelChart
 
    private void paintYAxis(Graphics g)
    {
-      g.setColor(Color.blue);
-      g.fillRect(yAxisRect.x, yAxisRect.y, yAxisRect.width, yAxisRect.height);
+      FontMetrics fm = g.getFontMetrics(g.getFont());
+
+      String valueLabel;
+      int labelXPos;
+      int gridLineY;
+
+      for (int y = 0; y <= gridLinesCount; y++)
+      {
+         gridLineY = yAxisRect.y + (gridLinesCount - y) * yAxisRect.height / gridLinesCount;
+
+         // draw grid line with tick
+         g.setColor(Color.lightGray);
+         g.drawLine(chartRect.x - spacing, gridLineY, chartRect.x + chartRect.width, gridLineY);
+         g.setColor(Color.black);
+
+         // draw label
+         renderer.setValue(y * maxYVal / gridLinesCount);
+         valueLabel = renderer.getText();
+         labelXPos = yAxisRect.x + yAxisRect.width - fm.stringWidth(valueLabel) - spacing - spacing / 2;
+         g.drawString(valueLabel, labelXPos > 0 ? labelXPos : 0, gridLineY + fm.getAscent() / 2);
+      }
    }
 
    private void paintChart(Graphics g)
@@ -147,16 +194,6 @@ public class GraphPanelChart
          Entry<String, GraphPanelChartRow> row = it.next();
          log.info(row.getKey());
       }
-   }
-
-   private void logRect(String prefix, Rectangle r)
-   {
-      log.info(prefix + ": "
-           + Integer.toString(r.x) + " "
-           + Integer.toString(r.y) + " "
-           + Integer.toString(r.width) + " "
-           + Integer.toString(r.height) + " "
-           + " ");
    }
 
    public void setRows(ConcurrentHashMap<String, GraphPanelChartRow> aRows)

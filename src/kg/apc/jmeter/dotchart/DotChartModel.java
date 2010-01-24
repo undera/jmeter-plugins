@@ -1,9 +1,7 @@
 package kg.apc.jmeter.dotchart;
 
-import java.awt.Color;
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
-import org.apache.jmeter.gui.util.JMeterColor;
+import kg.apc.jmeter.vizualizers.ColorsDispatcher;
 import org.apache.jmeter.samplers.SampleResult;
 
 public class DotChartModel
@@ -12,26 +10,12 @@ public class DotChartModel
    private int maxThreads;
    private long maxTime;
    private double maxThroughput;
-   private final Color[] fixedColors =
-   {
-      Color.RED,
-      Color.GREEN,
-      Color.BLUE,
-      JMeterColor.purple,
-      Color.ORANGE,
-      Color.CYAN,
-      Color.MAGENTA,
-      Color.PINK,
-      Color.YELLOW,
-      JMeterColor.LAVENDER,
-      JMeterColor.dark_green,
-      Color.GRAY,
-      Color.LIGHT_GRAY,
-   };
+   private ColorsDispatcher colors;
 
    public DotChartModel()
    {
       super(0);
+      colors=new ColorsDispatcher();
    }
 
    public void addSample(SampleResult res)
@@ -107,23 +91,13 @@ public class DotChartModel
    private DotChartColoredRow putSampleIntoRowAndGetThatRow(String label)
    {
       DotChartColoredRow row;
-      Color color;
       if (containsKey(label))
       {
          row = (DotChartColoredRow) get(label);
       }
       else
       {
-         if (size() >= fixedColors.length)
-         {
-            Random r = new Random();
-            color = new Color(r.nextInt(0xFFFFFF));
-         }
-         else
-         {
-            color = fixedColors[size()];
-         }
-         row = new DotChartColoredRow(label, color);
+         row = new DotChartColoredRow(label, colors.getNextColor());
          put(label, row);
       }
       return row;

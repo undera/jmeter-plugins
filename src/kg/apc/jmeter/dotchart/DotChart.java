@@ -17,10 +17,9 @@ import org.apache.jorphan.gui.RateRenderer;
 
 // TODO needs strong refactoring
 public class DotChart
-   extends JComponent
-   implements Scrollable, Clearable
+     extends JComponent
+     implements Scrollable, Clearable
 {
-
    public static final int DM_TIMES = 0;
    public static final int DM_THROUGHPUT = 1;
    private DotChartModel model;

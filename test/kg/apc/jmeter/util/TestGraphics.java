@@ -69,7 +69,7 @@ public class TestGraphics
    @Override
    public void drawString(String str, int x, int y)
    {
-      log.debug(str + " " + x + " " + y);
+      log.debug("drawString: "+str + " " + x + " " + y);
    }
 
    @Override

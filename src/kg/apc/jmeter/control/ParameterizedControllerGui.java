@@ -66,13 +66,14 @@ public class ParameterizedControllerGui
    @Override
    public void clearGui()
    {
-      argsPanel.clear();
       super.clearGui();
+      argsPanel.clear();
    }
 
    @Override
    public void configure(TestElement te)
    {
+      super.configure(te);
       ParameterizedController controller = (ParameterizedController) te;
       final JMeterProperty udv = controller.getUserDefinedVariablesAsProperty();
       if (udv != null)

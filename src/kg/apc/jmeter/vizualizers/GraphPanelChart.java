@@ -1,3 +1,4 @@
+// TODO: Y top must be more than max value
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.Color;
@@ -71,6 +72,8 @@ public class GraphPanelChart
          if (rowValue.getMinX() < minXVal)
             minXVal = rowValue.getMinX();
       }
+
+      maxYVal *= 1 + (double) 1 / (double) gridLinesCount;
    }
 
    private void setDefaultDimensions()

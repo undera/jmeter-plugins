@@ -1,13 +1,10 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.Sample;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -27,17 +24,7 @@ public class ThreadsStateOverTimeGuiTest
    public static void setUpClass()
         throws Exception
    {
-        File propsFile = null;
-        try
-        {
-            propsFile = File.createTempFile("jmeter-plugins", "testProps");
-        }
-        catch (IOException ex)
-        {
-        }
-
-        JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
-        JMeterUtils.setLocale(new Locale("ignoreResources"));
+      TestJMeterUtils.createJmeterEnv();
    }
 
    @AfterClass

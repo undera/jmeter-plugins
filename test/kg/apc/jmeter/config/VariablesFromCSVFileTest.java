@@ -6,11 +6,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
-import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,16 +32,7 @@ public class VariablesFromCSVFileTest
    public static void setUpClass()
          throws Exception
    {
-      File propsFile = null;
-      try
-      {
-         propsFile = File.createTempFile("jmeter-plugins", "testProps");
-         JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
-      }
-      catch (IOException ex)
-      {
-         Logger.getLogger(VariablesFromCSVFile.class.getName()).log(Level.SEVERE, null, ex);
-      }
+      TestJMeterUtils.createJmeterEnv();
    }
 
    @AfterClass

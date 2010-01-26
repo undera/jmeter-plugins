@@ -1,5 +1,7 @@
 package kg.apc.jmeter.dcerpc;
 
+import kg.apc.jmeter.util.SocketEmulatorInputStream;
+import kg.apc.jmeter.util.SocketEmulatorOutputStream;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
@@ -83,7 +85,11 @@ public class DCERPCSamplerTest
            + ABSTRACT_SYNTAX;
 
       instance.write(os, str);
-      String expBytes = "0500b031000000048000000010000000ffffffd0160ffffffd0160000000001000000000001002a0ffffff860ffffffd70ffffff8060610ffffff96450ffffffaa0ffffffa917430ffffffe40ffffffc2763801000000045d0ffffff880ffffff8a0ffffffeb1c0ffffffc9110ffffff9f0ffffffe808002b10486002000000";
+      String expBytes = "0500b031000000048000000010000000ffffffd0160fffff" +
+           "fd0160000000001000000000001002a0ffffff860ffffffd70ffffff8060610" +
+           "ffffff96450ffffffaa0ffffffa917430ffffffe40ffffffc27638010000000" +
+           "45d0ffffff880ffffff8a0ffffffeb1c0ffffffc9110ffffff9f0ffffffe8080" +
+           "02b10486002000000";
       String gotBytes = os.getWrittenBytes();
       assertEquals(expBytes, gotBytes);
    }
@@ -91,18 +97,18 @@ public class DCERPCSamplerTest
    @Test
    public void testWrite_OutputStream_MultiPDU()
    {
-      System.out.println("write large");
+      System.out.println("write MultiPDU");
 
-      String large = "ff";
-      for (int n = 0; n < 13; n++)
-         large += large;
+      StringBuffer buf=new StringBuffer();
+      for (int n = 0; n < 10000; n++)
+         buf.append("ff");
 
       String str = "1 0\n"
-           + large;
+           + buf.toString();
 
       instance.write(os, str);
       String gotBytes = os.getWrittenBytes();
-      assertEquals(73838, gotBytes.length());
+      assertEquals(90110, gotBytes.length());
    }
 
    @Test
@@ -110,7 +116,11 @@ public class DCERPCSamplerTest
    {
       System.out.println("read");
       String header = "05000203100000009c0000000b0000008400000000000000";
-      String expStr = "00000000630000006300000000000200630000003c3f786d6c2076657273696f6e3d22312e30223f3e0d0a3c526573706f6e643e3c6e466f756e643e2020202020202020202020303c2f6e466f756e643e3c737472526573706f6e643e3c2f737472526573706f6e643e3c2f526573706f6e643e0d0a0000000000000000000000000000";
+      String expStr = "00000000630000006300000000000200630000003" +
+           "c3f786d6c2076657273696f6e3d22312e30223f3e0d0a3c526573706f6e" +
+           "643e3c6e466f756e643e2020202020202020202020303c2f6e466f756e643" +
+           "e3c737472526573706f6e643e3c2f737472526573706f6e643e3c2f52657370" +
+           "6f6e643e0d0a0000000000000000000000000000";
 
       is.setBytesToRead(BinaryTCPClientImpl.hexStringToByteArray(header + expStr));
       String result = instance.read(is);

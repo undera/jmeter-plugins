@@ -164,8 +164,6 @@ public class RPCPacketTest
       {
          fail(ex.getMessage());
       }
-      System.out.println(expStr);
-      System.out.println(JOrphanUtils.baToHexString(result));
       assertArrayEquals(expResult, result);
    }
 
@@ -187,8 +185,6 @@ public class RPCPacketTest
       {
          fail(ex.getMessage());
       }
-      System.out.println(expStr);
-      System.out.println(JOrphanUtils.baToHexString(result));
       assertArrayEquals(expResult, result);
    }
 

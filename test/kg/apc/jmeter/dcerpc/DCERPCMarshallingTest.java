@@ -9,10 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author APC
- */
 public class DCERPCMarshallingTest
 {
    public DCERPCMarshallingTest()
@@ -244,12 +240,12 @@ public class DCERPCMarshallingTest
    public void testBaToHexString_russian()
    {
       System.out.println("baToHexString русский");
-      byte[] ba = BinaryTCPClientImpl.hexStringToByteArray("00f2e5f1f2f2e5f1f202");
-      String expResult = "00{тесттест}02";
+      byte[] ba = BinaryTCPClientImpl.hexStringToByteArray("00f2e5f1f2f202");
+      String expResult = "00{тестт}02";
       String result = null;
       try
       {
-         result = DCERPCMarshalling.unmarshalData(ba, "S");
+         result = DCERPCMarshalling.unmarshalData(ba, "S:1");
       }
       catch (RPCMarshallingException ex)
       {
@@ -271,7 +267,6 @@ public class DCERPCMarshallingTest
       }
       String result = DCERPCMarshalling.unmarshalData(ASCII, "");
       String baCheck = DCERPCMarshalling.marshalData(result);
-      //System.out.println(result);
       assertEquals(JOrphanUtils.baToHexString(ASCII), baCheck);
    }
 

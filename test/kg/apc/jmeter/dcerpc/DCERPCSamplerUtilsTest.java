@@ -181,6 +181,16 @@ public class DCERPCSamplerUtilsTest
       assertEquals(expResult, result);
    }
 
+   @Test
+   public void testGetStubDataHex_broken()
+   {
+      System.out.println("getStubDataHex");
+      String joinedStr = "{head${somevar}tail}";
+      String expResult = "68656164247b736f6d657661722121214441544120574153205452494d4d4544212121";
+      String result = DCERPCSamplerUtils.getStubDataHex(joinedStr);
+      assertEquals(expResult, result);
+   }
+
    /**
     * Test of getRequestsArrayByString method, of class DCERPCSamplerUtils.
     */

@@ -20,7 +20,7 @@ public class GraphPanel
    {
       super();
       addGraphTab(model);
-      addRowsTab();
+      //addRowsTab();
    }
 
    private void addRowsTab()
@@ -55,10 +55,8 @@ public class GraphPanel
 
    public void updateGui()
    {
-      //if (getSelectedComponent() == graphTab)
+      if (getSelectedComponent() == graphTab)
       {
-         //autoSizeGraph();
-
          graphTab.updateUI();
          graphTab.repaint();
       }

@@ -5,10 +5,13 @@ import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
+import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 
 public class DCERPCSamplerUtils
 {
+   private static final Logger log = LoggingManager.getLoggerForClass();
+
    public static short getOpNum(String paramStr)
    {
       short opNum;
@@ -21,9 +24,8 @@ public class DCERPCSamplerUtils
          opNum = Short.MAX_VALUE;
 
          int report = JMeterContextService.getContext().getThreadNum();
-         Logger log = LoggingManager.getLoggerForClass();
          log.error(Integer.toString(report) + " Wrong OpNum supplied: " + paramStr + "=", e);
-         
+
          JMeterVariables vars = JMeterContextService.getContext().getVariables();
          Iterator it = vars.getIterator();
          while (it.hasNext())
@@ -87,15 +89,16 @@ public class DCERPCSamplerUtils
       }
       catch (RPCMarshallingException ex)
       {
-         Logger log = LoggingManager.getLoggerForClass();
          log.error("Error in hexEncodeTextParts", ex);
       }
-      stubDataHex = stubDataHex.replace("\n", "");
-      stubDataHex = stubDataHex.replace("\r", "");
+      stubDataHex = stubDataHex.replaceAll("[^0-9^a-f^A-F]", "");
+
+      // God save the Queen! (and request)
       if (stubDataHex.length() % 2 != 0)
       {
-         Logger log = LoggingManager.getLoggerForClass();
-         log.warn("Uneven HEX: " + stubDataHex);
+         log.warn("Uneven hex, data will be trimmed to even: " + stubDataHex);
+         stubDataHex = stubDataHex.substring(0, stubDataHex.length() - 1);
+         stubDataHex += JOrphanUtils.baToHexString(new String("!!!DATA WAS TRIMMED!!!").getBytes());
       }
       return stubDataHex;
    }
@@ -124,7 +127,7 @@ public class DCERPCSamplerUtils
 
          String stubDataHex = getStubDataHex(dataStr);
 
-         final byte[] stubDataByteArray = BinaryTCPClientImpl.hexStringToByteArray(stubDataHex);
+         byte[] stubDataByteArray = stubDataByteArray = BinaryTCPClientImpl.hexStringToByteArray(stubDataHex);
          result = getPacketsArray(stubDataByteArray, callID, opNum);
       }
 

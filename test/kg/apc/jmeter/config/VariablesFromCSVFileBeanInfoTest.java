@@ -4,16 +4,12 @@
  */
 package kg.apc.jmeter.config;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-import org.apache.jmeter.util.JMeterUtils;
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -29,18 +25,7 @@ public class VariablesFromCSVFileBeanInfoTest
    public static void setUpClass()
         throws Exception
    {
-      File propsFile = null;
-      try
-      {
-         propsFile = File.createTempFile("jmeter-plugins", "testProps");
-         JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
-      }
-      catch (IOException ex)
-      {
-         fail("err");
-      }
-
-      JMeterUtils.setLocale(new Locale("ignoreResources"));
+      TestJMeterUtils.createJmeterEnv();
    }
 
    @AfterClass

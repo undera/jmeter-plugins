@@ -84,11 +84,8 @@ public class ParameterizedControllerTest
    public void testSetUserDefinedVariables()
    {
       System.out.println("setUserDefinedVariables");
-      Arguments vars = null;
-      ParameterizedController instance = new ParameterizedController();
+      Arguments vars = new Arguments();
       instance.setUserDefinedVariables(vars);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
    }
 
    /**
@@ -98,12 +95,11 @@ public class ParameterizedControllerTest
    public void testGetUserDefinedVariablesAsProperty()
    {
       System.out.println("getUserDefinedVariablesAsProperty");
-      ParameterizedController instance = new ParameterizedController();
-      JMeterProperty expResult = null;
+      Arguments vars = new Arguments();
+      vars.addArgument("key", "value");
+      instance.setUserDefinedVariables(vars);
       JMeterProperty result = instance.getUserDefinedVariablesAsProperty();
-      assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 
    /**
@@ -114,9 +110,6 @@ public class ParameterizedControllerTest
    {
       System.out.println("iterationStart");
       LoopIterationEvent lie = null;
-      ParameterizedController instance = new ParameterizedController();
       instance.iterationStart(lie);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
    }
 }

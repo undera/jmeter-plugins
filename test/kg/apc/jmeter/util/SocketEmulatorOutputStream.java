@@ -1,9 +1,9 @@
-package kg.apc.jmeter.dcerpc;
+package kg.apc.jmeter.util;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-class SocketEmulatorOutputStream
+public class SocketEmulatorOutputStream
      extends OutputStream
 {
    private StringBuffer buffer;
@@ -20,7 +20,7 @@ class SocketEmulatorOutputStream
       buffer.append((b>10?"":"0")+Integer.toHexString(b));
    }
 
-   String getWrittenBytes()
+   public String getWrittenBytes()
    {
       final String toString = buffer.toString();
       buffer.setLength(0);

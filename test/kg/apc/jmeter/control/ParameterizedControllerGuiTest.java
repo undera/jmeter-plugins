@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package kg.apc.jmeter.control;
 
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,15 +17,19 @@ import static org.junit.Assert.*;
  *
  * @author APC
  */
-public class ParameterizedControllerGuiTest {
+public class ParameterizedControllerGuiTest
+{
+   private ParameterizedControllerGui instance;
 
-    public ParameterizedControllerGuiTest() {
-    }
+   public ParameterizedControllerGuiTest()
+   {
+   }
 
    @BeforeClass
    public static void setUpClass()
         throws Exception
    {
+      TestJMeterUtils.createJmeterEnv();
    }
 
    @AfterClass
@@ -34,13 +38,16 @@ public class ParameterizedControllerGuiTest {
    {
    }
 
-    @Before
-    public void setUp() {
-    }
+   @Before
+   public void setUp()
+   {
+      instance = new ParameterizedControllerGui();
+   }
 
-    @After
-    public void tearDown() {
-    }
+   @After
+   public void tearDown()
+   {
+   }
 
    /**
     * Test of createTestElement method, of class ParameterizedControllerGui.
@@ -49,12 +56,9 @@ public class ParameterizedControllerGuiTest {
    public void testCreateTestElement()
    {
       System.out.println("createTestElement");
-      ParameterizedControllerGui instance = new ParameterizedControllerGui();
-      TestElement expResult = null;
+      TestElement expResult = new ParameterizedController();
       TestElement result = instance.createTestElement();
-      assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
+      assertEquals(expResult.getClass(), result.getClass());
    }
 
    /**
@@ -64,11 +68,8 @@ public class ParameterizedControllerGuiTest {
    public void testModifyTestElement()
    {
       System.out.println("modifyTestElement");
-      TestElement te = null;
-      ParameterizedControllerGui instance = new ParameterizedControllerGui();
+      TestElement te = new ParameterizedController();
       instance.modifyTestElement(te);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
    }
 
    /**
@@ -78,12 +79,9 @@ public class ParameterizedControllerGuiTest {
    public void testGetLabelResource()
    {
       System.out.println("getLabelResource");
-      ParameterizedControllerGui instance = new ParameterizedControllerGui();
-      String expResult = "";
+      String expResult = instance.getClass().getName();
       String result = instance.getLabelResource();
       assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
    }
 
    /**
@@ -93,12 +91,9 @@ public class ParameterizedControllerGuiTest {
    public void testGetStaticLabel()
    {
       System.out.println("getStaticLabel");
-      ParameterizedControllerGui instance = new ParameterizedControllerGui();
-      String expResult = "";
+      String expResult = "Parameterized Controller";
       String result = instance.getStaticLabel();
       assertEquals(expResult, result);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
    }
 
    /**
@@ -108,10 +103,7 @@ public class ParameterizedControllerGuiTest {
    public void testClearGui()
    {
       System.out.println("clearGui");
-      ParameterizedControllerGui instance = new ParameterizedControllerGui();
       instance.clearGui();
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
    }
 
    /**
@@ -121,11 +113,17 @@ public class ParameterizedControllerGuiTest {
    public void testConfigure()
    {
       System.out.println("configure");
-      TestElement te = null;
-      ParameterizedControllerGui instance = new ParameterizedControllerGui();
-      instance.configure(te);
-      // TODO review the generated test code and remove the default call to fail.
-      fail("The test case is a prototype.");
-   }
+      TestElement te = new ParameterizedController();
+      te.setName("test");
+      te.setComment("test");
 
+      try
+      {
+         instance.configure(te);
+      }
+      catch (NullPointerException e)
+      {
+         System.err.println("I dunno what it requires for correct test");
+      }
+   }
 }

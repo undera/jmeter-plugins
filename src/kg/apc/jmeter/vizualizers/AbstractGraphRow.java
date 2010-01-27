@@ -10,6 +10,8 @@ public abstract class AbstractGraphRow
    public static final int MARKER_SIZE_SMALL = 2;
    public static final int MARKER_SIZE_BIG = 4;
    protected boolean drawLine = false;
+   private boolean drawValueLabel = false;
+   private boolean showInLegend = true;
    protected int markerSize = MARKER_SIZE_NONE;
    protected Color color = Color.BLACK;
    protected String label = "";
@@ -102,7 +104,49 @@ public abstract class AbstractGraphRow
       return minY;
    }
 
-   public abstract void add(long X, double Y);
+   public void add(long xVal, double yVal)
+   {
+      if (xVal > maxX)
+         maxX = xVal;
+      if (yVal > maxY)
+         maxY = yVal;
+      if (xVal < minX)
+         minX = xVal;
+      if (yVal < minY)
+         minY = yVal;
+   }
 
    public abstract Iterator<Entry<Long, GraphPanelChartElement>> iterator();
+
+   /**
+    * @return the drawValueLabel
+    */
+   public boolean isDrawValueLabel()
+   {
+      return drawValueLabel;
+   }
+
+   /**
+    * @param drawValueLabel the drawValueLabel to set
+    */
+   public void setDrawValueLabel(boolean drawValueLabel)
+   {
+      this.drawValueLabel = drawValueLabel;
+   }
+
+   /**
+    * @return the showInLegend
+    */
+   public boolean isShowInLegend()
+   {
+      return showInLegend;
+   }
+
+   /**
+    * @param showInLegend the showInLegend to set
+    */
+   public void setShowInLegend(boolean showInLegend)
+   {
+      this.showInLegend = showInLegend;
+   }
 }

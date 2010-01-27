@@ -15,6 +15,7 @@ public class GraphRowAverages
       values = new ConcurrentSkipListMap<Long, GraphPanelChartElement>();
    }
 
+   @Override
    public void add(long xVal, double yVal)
    {
       GraphPanelChartElement el;
@@ -30,15 +31,7 @@ public class GraphRowAverages
          values.put(xVal, el);
       }
 
-      if (xVal > maxX)
-         maxX = xVal;
-      if (yVal > maxY)
-         maxY = yVal;
-      if (xVal < minX)
-         minX = xVal;
-      if (yVal < minY)
-         minY = yVal;
-
+      super.add(xVal, yVal);
    }
 
    public Iterator<Entry<Long, GraphPanelChartElement>> iterator()

@@ -31,7 +31,7 @@ public class TestGraphics
      extends Graphics2D
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
-   
+
    public TestGraphics()
    {
    }
@@ -69,7 +69,9 @@ public class TestGraphics
    @Override
    public void drawString(String str, int x, int y)
    {
-      log.debug("drawString: "+str + " " + x + " " + y);
+      log.debug("drawString: " + str + " " + x + " " + y);
+      if (x < 0 || y < 0)
+         System.err.println("Value below zero!");
    }
 
    @Override
@@ -347,18 +349,30 @@ public class TestGraphics
    public void drawLine(int x1, int y1, int x2, int y2)
    {
       log.debug("drawLine " + x1 + " " + y1 + " " + x2 + " " + y2);
+      if (x1 < 0 || y1 < 0)
+         System.err.println("Value below zero!");
+      if (x2 < 0 || y2 < 0)
+         System.err.println("Value below zero!");
    }
 
    @Override
    public void fillRect(int x, int y, int width, int height)
    {
       log.debug("fillRect " + x + " " + y + " " + width + " " + height);
+      if (x<0 || y <0)
+         System.err.println("Value below zero!");
+      if (width<=0 || height <=0)
+         System.err.println("Value is zero!");
    }
 
    @Override
    public void clearRect(int x, int y, int width, int height)
    {
       log.debug("clearRect " + x + " " + y + " " + width + " " + height);
+      if (x<0 || y <0)
+         System.err.println("Value below zero!");
+      if (width<=0 || height <=0)
+         System.err.println("Value is zero!");
    }
 
    @Override
@@ -377,12 +391,20 @@ public class TestGraphics
    public void drawOval(int x, int y, int width, int height)
    {
       log.debug("drawOval " + x + " " + y + " " + width + " " + height);
+      if (x<0 || y <0)
+         System.err.println("Value below zero!");
+      if (width<=0 || height <=0)
+         System.err.println("Value is zero!");
    }
 
    @Override
    public void fillOval(int x, int y, int width, int height)
    {
       log.debug("fillOval " + x + " " + y + " " + width + " " + height);
+      if (x<0 || y <0)
+         System.err.println("Value below zero!");
+      if (width<=0 || height <=0)
+         System.err.println("Value is zero!");
    }
 
    @Override

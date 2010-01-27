@@ -21,7 +21,7 @@ import org.apache.jmeter.visualizers.ImageVisualizer;
 import org.apache.jmeter.visualizers.Sample;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 
-public class DotChartVisualizer
+class DotChartVisualizer
    extends AbstractVisualizer
    implements ImageVisualizer, GraphListener, Clearable
 {
@@ -33,7 +33,7 @@ public class DotChartVisualizer
    private long lastRepaint = 0;
    private DotChartGuiPanel controlsPanel;
 
-   public DotChartVisualizer()
+   DotChartVisualizer()
    {
       model = new DotChartModel();
       graph = new DotChart(model);

@@ -1,4 +1,3 @@
-// TODO: Y top must be more than max value
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.Color;
@@ -29,10 +28,12 @@ public class GraphPanelChart
    private double maxYVal;
    private long maxXVal;
    private long minXVal;
+   private long currentXVal;
    private static final int gridLinesCount = 10;
    private NumberRenderer yAxisLabelRenderer;
    private NumberRenderer xAxisLabelRenderer;
-   private boolean drawFinalZeroingLines = false;
+   private boolean drawStartFinalZeroingLines = false;
+   private boolean drawCurrentX = false;
 
    public GraphPanelChart()
    {
@@ -113,6 +114,14 @@ public class GraphPanelChart
       g.setColor(Color.white);
       g.fillRect(0, 0, getWidth(), getHeight());
 
+      if (rows.isEmpty())
+      {
+         String msg = "Waiting for samples...";
+         g.setColor(Color.BLACK);
+         g.drawString(msg, getWidth() / 2 - g.getFontMetrics(g.getFont()).stringWidth(msg) / 2, getHeight() / 2);
+         return;
+      }
+
       setDefaultDimensions();
       getMinMaxDataValues();
 
@@ -145,6 +154,9 @@ public class GraphPanelChart
       while (it.hasNext())
       {
          row = it.next();
+
+         if (!row.getValue().isShowInLegend())
+            continue;
 
          // wrap row if overflowed
          if (currentX + rectW + spacing / 2 + fm.stringWidth(row.getKey()) > getWidth())
@@ -218,6 +230,14 @@ public class GraphPanelChart
          labelXPos = gridLineX - fm.stringWidth(valueLabel) / 2;
          g.drawString(valueLabel, labelXPos, xAxisRect.y + fm.getAscent() + spacing);
       }
+
+      if (drawCurrentX)
+      {
+         gridLineX = chartRect.x + (int) ((currentXVal - minXVal) * (double) chartRect.width / (maxXVal - minXVal));
+         g.setColor(Color.GRAY);
+         g.drawLine(gridLineX, chartRect.y, gridLineX, chartRect.y + chartRect.height);
+         g.setColor(Color.black);
+      }
    }
 
    private void paintChart(Graphics g)
@@ -234,11 +254,12 @@ public class GraphPanelChart
 
    private void paintRow(Graphics g, AbstractGraphRow row)
    {
+      FontMetrics fm = g.getFontMetrics(g.getFont());
       Iterator<Entry<Long, GraphPanelChartElement>> it = row.iterator();
       Entry<Long, GraphPanelChartElement> element;
       int radius = row.getMarkerSize();
       int x, y;
-      int prevX = chartRect.x;
+      int prevX = drawStartFinalZeroingLines ? chartRect.x : -1;
       int prevY = chartRect.y + chartRect.height;
       final double dxForDVal = (maxXVal <= minXVal) ? 0 : (double) chartRect.width / (maxXVal - minXVal);
       final double dyForDVal = maxYVal <= 0 ? 0 : (double) chartRect.height / (maxYVal);
@@ -250,12 +271,23 @@ public class GraphPanelChart
          y = chartRect.y + chartRect.height - (int) (element.getValue().getAvgValue() * dyForDVal);
 
          // draw lines
-         if (row.isDrawLine() /* && x >= prevX */)
+         if (row.isDrawLine())
          {
-            g.setColor(row.getColor());
-            g.drawLine(prevX, prevY, x, y);
+            if (prevX > 0)
+            {
+               g.setColor(row.getColor());
+               g.drawLine(prevX, prevY, x, y);
+            }
             prevX = x;
             prevY = y;
+         }
+
+         if (row.isDrawValueLabel())
+         {
+            yAxisLabelRenderer.setValue(element.getValue().getAvgValue());
+            g.drawString(yAxisLabelRenderer.getText(),
+                 x + row.getMarkerSize() + spacing,
+                 y + fm.getAscent() / 2);
          }
 
          // draw markers
@@ -269,7 +301,7 @@ public class GraphPanelChart
       }
 
       // draw final lines
-      if (row.isDrawLine() && drawFinalZeroingLines)
+      if (row.isDrawLine() && drawStartFinalZeroingLines)
       {
          g.setColor(row.getColor());
          g.drawLine(prevX, prevY, (int) (prevX + dxForDVal), chartRect.y + chartRect.height);
@@ -302,6 +334,22 @@ public class GraphPanelChart
     */
    public void setDrawFinalZeroingLines(boolean drawFinalZeroingLines)
    {
-      this.drawFinalZeroingLines = drawFinalZeroingLines;
+      this.drawStartFinalZeroingLines = drawFinalZeroingLines;
+   }
+
+   /**
+    * @param drawCurrentX the drawCurrentX to set
+    */
+   public void setDrawCurrentX(boolean drawCurrentX)
+   {
+      this.drawCurrentX = drawCurrentX;
+   }
+
+   /**
+    * @param currentX the currentX to set
+    */
+   public void setCurrentX(long currentX)
+   {
+      this.currentXVal = currentX;
    }
 }

@@ -1,6 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
-class GraphPanelChartElement
+public class GraphPanelChartElement
 {
    private int count = 0;
    private double avgValue = 0;
@@ -8,6 +8,10 @@ class GraphPanelChartElement
    public GraphPanelChartElement(double yVal)
    {
       add(yVal);
+   }
+
+   GraphPanelChartElement()
+   {
    }
 
    public void add(double yVal)
@@ -18,5 +22,13 @@ class GraphPanelChartElement
    public double getAvgValue()
    {
       return avgValue;
+   }
+
+   /**
+    * @return the count
+    */
+   public int getCount()
+   {
+      return count;
    }
 }

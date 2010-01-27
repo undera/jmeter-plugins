@@ -46,4 +46,19 @@ public class ColorsDispatcherTest {
       assertEquals(Color.blue, instance.getNextColor());
    }
 
+   /**
+    * Test of reset method, of class ColorsDispatcher.
+    */
+   @Test
+   public void testReset()
+   {
+      System.out.println("reset");
+      ColorsDispatcher instance = new ColorsDispatcher();
+      assertEquals(Color.red, instance.getNextColor());
+      instance.getNextColor();
+      instance.getNextColor();
+      instance.reset();
+      assertEquals(Color.red, instance.getNextColor());
+   }
+
 }

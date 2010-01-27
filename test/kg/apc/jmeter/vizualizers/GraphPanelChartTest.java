@@ -50,9 +50,9 @@ public class GraphPanelChartTest
       GraphPanelChart instance = new GraphPanelChart();
       instance.setSize(500, 500);
 
-      final ConcurrentHashMap<String, GraphPanelChartRow> rows = new ConcurrentHashMap<String, GraphPanelChartRow>();
+      final ConcurrentHashMap<String, AbstractGraphRow> rows = new ConcurrentHashMap<String, AbstractGraphRow>();
       instance.setRows(rows);
-      final GraphPanelChartRow row1 = new GraphPanelChartRow("test", Color.black, true, 10);
+      final GraphRowAverages row1 = new GraphRowAverages();
       rows.put("test 1", row1);
       row1.add(System.currentTimeMillis(), 20);
       instance.paintComponent(g);
@@ -72,7 +72,7 @@ public class GraphPanelChartTest
    public void testSetRows()
    {
       System.out.println("setRows");
-      ConcurrentHashMap<String, GraphPanelChartRow> aRows = null;
+      ConcurrentHashMap<String, AbstractGraphRow> aRows = null;
       GraphPanelChart instance = new GraphPanelChart();
       instance.setRows(aRows);
    }
@@ -99,5 +99,17 @@ public class GraphPanelChartTest
       NumberRenderer xAxisLabelRenderer = null;
       GraphPanelChart instance = new GraphPanelChart();
       instance.setxAxisLabelRenderer(xAxisLabelRenderer);
+   }
+
+   /**
+    * Test of setDrawFinalZeroingLines method, of class GraphPanelChart.
+    */
+   @Test
+   public void testSetDrawFinalZeroingLines()
+   {
+      System.out.println("setDrawFinalZeroingLines");
+      boolean drawFinalZeroingLines = false;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setDrawFinalZeroingLines(drawFinalZeroingLines);
    }
 }

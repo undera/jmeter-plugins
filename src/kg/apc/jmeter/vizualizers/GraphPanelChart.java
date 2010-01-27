@@ -25,7 +25,7 @@ public class GraphPanelChart
    private Rectangle yAxisRect;
    private Rectangle chartRect;
    private static final Rectangle zeroRect = new Rectangle();
-   private ConcurrentHashMap<String, GraphPanelChartRow> rows;
+   private ConcurrentHashMap<String, AbstractGraphRow> rows;
    private double maxYVal;
    private long maxXVal;
    private long minXVal;
@@ -55,9 +55,9 @@ public class GraphPanelChart
       maxYVal = 0;
       minXVal = Long.MAX_VALUE;
 
-      Iterator<Entry<String, GraphPanelChartRow>> it = rows.entrySet().iterator();
-      Entry<String, GraphPanelChartRow> row;
-      GraphPanelChartRow rowValue;
+      Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
+      Entry<String, AbstractGraphRow> row;
+      AbstractGraphRow rowValue;
       while (it.hasNext())
       {
          row = it.next();
@@ -137,8 +137,8 @@ public class GraphPanelChart
       int rectH = fm.getHeight();
       int rectW = rectH;
 
-      Iterator<Entry<String, GraphPanelChartRow>> it = rows.entrySet().iterator();
-      Entry<String, GraphPanelChartRow> row;
+      Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
+      Entry<String, AbstractGraphRow> row;
       int currentX = chartRect.x;
       int currentY = chartRect.y;
       int legendHeight = it.hasNext() ? rectH + spacing : 0;
@@ -224,15 +224,15 @@ public class GraphPanelChart
    {
       g.setColor(Color.yellow);
       //g.fillRect(chartRect.x, chartRect.y, chartRect.width, chartRect.height);
-      Iterator<Entry<String, GraphPanelChartRow>> it = rows.entrySet().iterator();
+      Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
       while (it.hasNext())
       {
-         Entry<String, GraphPanelChartRow> row = it.next();
+         Entry<String, AbstractGraphRow> row = it.next();
          paintRow(g, row.getValue());
       }
    }
 
-   private void paintRow(Graphics g, GraphPanelChartRow row)
+   private void paintRow(Graphics g, AbstractGraphRow row)
    {
       Iterator<Entry<Long, GraphPanelChartElement>> it = row.iterator();
       Entry<Long, GraphPanelChartElement> element;
@@ -259,7 +259,7 @@ public class GraphPanelChart
          }
 
          // draw markers
-         if (radius != GraphPanelChartRow.MARKER_SIZE_NONE)
+         if (radius != AbstractGraphRow.MARKER_SIZE_NONE)
          {
             g.setColor(row.getColor());
             g.fillOval(x - radius, y - radius, (radius) * 2, (radius) * 2);
@@ -276,7 +276,7 @@ public class GraphPanelChart
       }
    }
 
-   public void setRows(ConcurrentHashMap<String, GraphPanelChartRow> aRows)
+   public void setRows(ConcurrentHashMap<String, AbstractGraphRow> aRows)
    {
       rows = aRows;
    }

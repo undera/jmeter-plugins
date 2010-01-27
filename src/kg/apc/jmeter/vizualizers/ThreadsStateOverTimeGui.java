@@ -14,10 +14,14 @@ public class ThreadsStateOverTimeGui
 
    private void addThreadGroupRecord(String threadGroupName, long time, int numThreads)
    {
-      GraphPanelChartRow row;
+      AbstractGraphRow row;
       if (!model.containsKey(threadGroupName))
       {
-         row = new GraphPanelChartRow(threadGroupName, colors.getNextColor(), true, GraphPanelChartRow.MARKER_SIZE_SMALL);
+         row = new GraphRowAverages();
+         row.setLabel(threadGroupName);
+         row.setColor(colors.getNextColor());
+         row.setDrawLine(true);
+         row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
          model.put(threadGroupName, row);
       }
       else

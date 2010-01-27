@@ -13,7 +13,7 @@ public abstract class AbstractGraphPanelVisualizer
      extends AbstractVisualizer
      implements Clearable, GraphListener, ImageVisualizer
 {
-   protected ConcurrentHashMap<String, GraphPanelChartRow> model;
+   protected ConcurrentHashMap<String, AbstractGraphRow> model;
    protected long lastRepaint = 0;
    protected long delay = 500;
    protected GraphPanel graphPanel;
@@ -21,7 +21,7 @@ public abstract class AbstractGraphPanelVisualizer
 
    public AbstractGraphPanelVisualizer()
    {
-      model = new ConcurrentHashMap<String, GraphPanelChartRow>();
+      model = new ConcurrentHashMap<String, AbstractGraphRow>();
       colors = new ColorsDispatcher();
       initGui();
    }

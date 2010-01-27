@@ -24,7 +24,7 @@ public class GraphRowOverallAverages
       avgX = (avgX * element.getCount() + xVal) / (element.getCount() + 1);
       element.add(yVal);
 
-      super.add(maxX, maxY);
+      super.add((long) avgX, element.getAvgValue());
    }
 
    public Iterator<Entry<Long, GraphPanelChartElement>> iterator()

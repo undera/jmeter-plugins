@@ -46,7 +46,7 @@ public class SamplesVsThreadsGui
       }
 
       row.add(res.getAllThreads(), res.getTime());
-      //avgRow.add(res.getAllThreads(), res.getTime());
+      avgRow.add(res.getAllThreads(), res.getTime());
 
       graphPanel.getGraphObject().setCurrentX(res.getAllThreads());
       updateGui(null);

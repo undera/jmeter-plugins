@@ -284,6 +284,7 @@ public class GraphPanelChart
 
          if (row.isDrawValueLabel())
          {
+            g.setColor(Color.DARK_GRAY);
             yAxisLabelRenderer.setValue(element.getValue().getAvgValue());
             g.drawString(yAxisLabelRenderer.getText(),
                  x + row.getMarkerSize() + spacing,

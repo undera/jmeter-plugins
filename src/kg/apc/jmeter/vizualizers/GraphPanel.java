@@ -1,3 +1,5 @@
+// TODO: add slider to zoom Y axis
+
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.Image;
@@ -11,7 +13,6 @@ import org.apache.log.Logger;
 public class GraphPanel
      extends JTabbedPane
 {
-   private static final Logger log = LoggingManager.getLoggerForClass();
    private GraphPanelChart graphTab;
    private JComponent rowsTab;
 

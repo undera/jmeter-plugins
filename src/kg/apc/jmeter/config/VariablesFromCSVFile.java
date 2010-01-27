@@ -64,6 +64,11 @@ public class VariablesFromCSVFile
          log.debug("Variables already loaded for thread " + Integer.toString(threanNo));
          return;
       }
+      
+      if (getFilename().length()==0)
+      {
+         return;
+      }
 
       log.debug("Started loading variables from CSV for thread " + Integer.toString(threanNo));
 

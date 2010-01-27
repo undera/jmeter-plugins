@@ -2,18 +2,16 @@ package kg.apc.jmeter.vizualizers;
 
 import java.awt.Color;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.apache.jorphan.gui.RateRenderer;
 
-public class SamplesVsThreadsGui
+public class ThroughputVsThreadsGui
      extends AbstractGraphPanelVisualizer
 {
-   private static final Logger log = LoggingManager.getLoggerForClass();
-
-   public SamplesVsThreadsGui()
+   public ThroughputVsThreadsGui()
    {
       super();
       graphPanel.getGraphObject().setDrawCurrentX(true);
+      graphPanel.getGraphObject().setyAxisLabelRenderer(new RateRenderer("#.0"));
    }
 
    public String getLabelResource()
@@ -24,7 +22,7 @@ public class SamplesVsThreadsGui
    @Override
    public String getStaticLabel()
    {
-      return "Samples vs Threads";
+      return "Transaction Throughput vs Threads";
    }
 
    public void add(SampleResult res)
@@ -45,10 +43,11 @@ public class SamplesVsThreadsGui
          avgRow = (GraphRowOverallAverages) model.get(averageLabel);
       }
 
-      row.add(res.getAllThreads(), res.getTime());
-      avgRow.add(res.getAllThreads(), res.getTime());
-
-      graphPanel.getGraphObject().setCurrentX(res.getAllThreads());
+      int allThreads = res.getAllThreads();
+      double throughput = (double) allThreads * 1000 / res.getTime();
+      row.add(allThreads, throughput);
+      avgRow.add(allThreads, throughput);
+      graphPanel.getGraphObject().setCurrentX(allThreads);
       updateGui(null);
    }
 

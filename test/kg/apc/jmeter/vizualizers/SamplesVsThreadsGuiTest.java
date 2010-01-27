@@ -39,40 +39,40 @@ public class SamplesVsThreadsGuiTest
    }
 
    /**
-    * Test of getLabelResource method, of class SamplesVsThreadsGui.
+    * Test of getLabelResource method, of class TimesVsThreadsGui.
     */
    @Test
    public void testGetLabelResource()
    {
       System.out.println("getLabelResource");
-      SamplesVsThreadsGui instance = new SamplesVsThreadsGui();
-      String expResult = "SamplesVsThreadsGui";
+      TimesVsThreadsGui instance = new TimesVsThreadsGui();
+      String expResult = "TimesVsThreadsGui";
       String result = instance.getLabelResource();
       assertEquals(expResult, result);
    }
 
    /**
-    * Test of getStaticLabel method, of class SamplesVsThreadsGui.
+    * Test of getStaticLabel method, of class TimesVsThreadsGui.
     */
    @Test
    public void testGetStaticLabel()
    {
       System.out.println("getStaticLabel");
-      SamplesVsThreadsGui instance = new SamplesVsThreadsGui();
-      String expResult = "Samples vs Threads";
+      TimesVsThreadsGui instance = new TimesVsThreadsGui();
+      String expResult = "Response Times vs Threads";
       String result = instance.getStaticLabel();
       assertEquals(expResult, result);
    }
 
    /**
-    * Test of add method, of class SamplesVsThreadsGui.
+    * Test of add method, of class TimesVsThreadsGui.
     */
    @Test
    public void testAdd()
    {
       System.out.println("add");
       SampleResult res = new SampleResult();
-      SamplesVsThreadsGui instance = new SamplesVsThreadsGui();
+      TimesVsThreadsGui instance = new TimesVsThreadsGui();
       instance.add(res);
    }
 }

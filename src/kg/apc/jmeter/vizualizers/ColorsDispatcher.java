@@ -33,7 +33,7 @@ public class ColorsDispatcher
 
    public Color getNextColor()
    {
-      if (spentColors++ >= fixedColors.length)
+      if (++spentColors > fixedColors.length)
       {
          return new Color(rnd.nextInt(0xFFFFFF));
       }
@@ -45,6 +45,6 @@ public class ColorsDispatcher
 
    void reset()
    {
-      spentColors=0;
+      spentColors = 0;
    }
 }

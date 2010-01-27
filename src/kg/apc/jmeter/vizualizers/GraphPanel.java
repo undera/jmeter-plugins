@@ -1,7 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.Image;
-import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -16,10 +15,10 @@ public class GraphPanel
    private GraphPanelChart graphTab;
    private JComponent rowsTab;
 
-   public GraphPanel(ConcurrentHashMap<String, GraphPanelChartRow> model)
+   public GraphPanel()
    {
       super();
-      addGraphTab(model);
+      addGraphTab();
       //addRowsTab();
    }
 
@@ -30,11 +29,10 @@ public class GraphPanel
       addTab("Rows", rowsIcon, rowsTab, "Select rows to display");
    }
 
-   private void addGraphTab(ConcurrentHashMap<String, GraphPanelChartRow> model)
+   private void addGraphTab()
    {
       ImageIcon graphIcon = createImageIcon("graph.png");
       graphTab = new GraphPanelChart();
-      graphTab.setRows(model);
       addTab("Chart", graphIcon, graphTab, "View chart");
    }
 

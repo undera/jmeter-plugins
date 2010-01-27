@@ -31,7 +31,7 @@ public class GraphPanelTest
    @Before
    public void setUp()
    {
-      instance = new GraphPanel(null);
+      instance = new GraphPanel();
    }
 
    @After

@@ -5,7 +5,7 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.gui.RateRenderer;
 
 public class ThroughputVsThreadsGui
-     extends AbstractGraphPanelVisualizer
+      extends AbstractGraphPanelVisualizer
 {
    public ThroughputVsThreadsGui()
    {
@@ -27,6 +27,12 @@ public class ThroughputVsThreadsGui
 
    public void add(SampleResult res)
    {
+      long time = res.getTime();
+      if (time < 1)
+      {
+         return;
+      }
+
       String label = res.getSampleLabel();
       String averageLabel = "Average " + res.getSampleLabel();
       GraphRowAverages row;
@@ -44,7 +50,7 @@ public class ThroughputVsThreadsGui
       }
 
       int allThreads = res.getAllThreads();
-      double throughput = (double) allThreads * 1000 / res.getTime();
+      double throughput = (double) allThreads * 1000 / time;
       row.add(allThreads, throughput);
       avgRow.add(allThreads, throughput);
       graphPanel.getGraphObject().setCurrentX(allThreads);

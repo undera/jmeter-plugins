@@ -46,7 +46,7 @@ public class ThreadsStateOverTimeGui
    public void add(SampleResult res)
    {
       String threadName = res.getThreadName();
-      threadName = threadName.substring(0, threadName.lastIndexOf(" "));
+      threadName = threadName.lastIndexOf(" ")>=0?threadName.substring(0, threadName.lastIndexOf(" ")):"???";
 
       addThreadGroupRecord(threadName, res.getStartTime() - res.getStartTime() % delay, res.getGroupThreads());
       addThreadGroupRecord(threadName, res.getEndTime() - res.getEndTime() % delay, res.getGroupThreads());

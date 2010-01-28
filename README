@@ -2,8 +2,6 @@
 
 1. What is it?
 This library contains additional plugins for Apache JMeter Tool.
-For now, there is one plugin "Response Times vs Active Threads"
-in Listeners category.
 
 2. Installation
 Just copy the JAR file into JMeter's lib/ext directory.

@@ -162,7 +162,7 @@ public class GraphPanelChart
          if (currentX + rectW + spacing / 2 + fm.stringWidth(row.getKey()) > getWidth())
          {
             currentY += rectH + spacing / 2;
-            legendHeight += rectH + spacing;
+            legendHeight += rectH + spacing / 2;
             currentX = chartRect.x;
          }
 

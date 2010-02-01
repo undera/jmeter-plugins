@@ -1,6 +1,7 @@
 // TODO: add slider to zoom Y axis
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -10,11 +11,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import org.apache.jmeter.config.Argument;
-import org.apache.jmeter.gui.util.HeaderAsPropertyRenderer;
 import org.apache.jorphan.gui.ObjectTableModel;
 import org.apache.jorphan.reflect.Functor;
-import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 public class GraphPanel
      extends JTabbedPane
@@ -34,8 +32,8 @@ public class GraphPanel
    private void addRowsTab()
    {
       ImageIcon rowsIcon = createImageIcon("checks.png");
-      rowsTab = new JPanel();
-      rowsTab.add(makeTable());
+      rowsTab = new JPanel(new BorderLayout());
+      rowsTab.add(makeTable(), BorderLayout.CENTER);
       addTab("Rows", rowsIcon, rowsTab, "Select rows to display");
    }
 
@@ -43,7 +41,7 @@ public class GraphPanel
    {
       initializeTableModel();
       table = new JTable(tableModel);
-      table.getTableHeader().setDefaultRenderer(new DefaultTableCellHeaderRenderer());
+      table.getTableHeader().setDefaultRenderer(new HeaderAsTextRenderer());
       table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       return makeScrollPane(table);
    }
@@ -59,23 +57,23 @@ public class GraphPanel
    {
       tableModel = new ObjectTableModel(new String[]
            {
-              "Row name",
-              "display?"
+              "",
+              "Row name"
            },
            AbstractGraphRow.class,
            new Functor[]
            {
-              new Functor("getName"), // $NON-NLS-1$
-              new Functor("getValue")
+              new Functor("isDrawOnChart"),
+              new Functor("getLabel"), // $NON-NLS-1$
            }, // $NON-NLS-1$
            new Functor[]
            {
+              new Functor("setDrawOnChart"),
               null, // $NON-NLS-1$
-              new Functor("setValue")
            }, // $NON-NLS-1$
            new Class[]
            {
-              String.class,
+              Boolean.class,
               String.class
            });
    }
@@ -129,5 +127,10 @@ public class GraphPanel
    public GraphPanelChart getGraphObject()
    {
       return graphTab;
+   }
+
+   public void addRow(AbstractGraphRow row)
+   {
+      tableModel.addRow(row);
    }
 }

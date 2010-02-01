@@ -51,9 +51,9 @@ public class DateTimeRendererTest
       instance.setValue(null);
       assertEquals("", instance.getText());
 
-      instance.setValue(0);
+      instance.setValue(1000000);
       String text = instance.getText();
-      assertEquals("06:00:00", text);
+      assertEquals("03:16:40", text);
    }
 
 

@@ -19,6 +19,7 @@ public abstract class AbstractGraphRow
    protected long minX = Long.MAX_VALUE;
    protected double maxY = Double.MIN_VALUE;
    protected double minY = Double.MAX_VALUE;
+   private boolean drawOnChart=true;
 
    void setDrawLine(boolean b)
    {
@@ -148,5 +149,21 @@ public abstract class AbstractGraphRow
    public void setShowInLegend(boolean showInLegend)
    {
       this.showInLegend = showInLegend;
+   }
+
+   /**
+    * @return the drawOnChart
+    */
+   public boolean isDrawOnChart()
+   {
+      return drawOnChart;
+   }
+
+   /**
+    * @param drawOnChart the drawOnChart to set
+    */
+   public void setDrawOnChart(boolean drawOnChart)
+   {
+      this.drawOnChart = drawOnChart;
    }
 }

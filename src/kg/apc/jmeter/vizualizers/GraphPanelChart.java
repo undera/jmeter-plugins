@@ -64,6 +64,9 @@ public class GraphPanelChart
          row = it.next();
          rowValue = row.getValue();
 
+         if (!rowValue.isDrawOnChart())
+            continue;
+
          if (rowValue.getMaxY() > maxYVal)
             maxYVal = rowValue.getMaxY();
 
@@ -155,7 +158,7 @@ public class GraphPanelChart
       {
          row = it.next();
 
-         if (!row.getValue().isShowInLegend())
+         if (!row.getValue().isShowInLegend() || !row.getValue().isDrawOnChart())
             continue;
 
          // wrap row if overflowed
@@ -243,12 +246,12 @@ public class GraphPanelChart
    private void paintChart(Graphics g)
    {
       g.setColor(Color.yellow);
-      //g.fillRect(chartRect.x, chartRect.y, chartRect.width, chartRect.height);
       Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
       while (it.hasNext())
       {
          Entry<String, AbstractGraphRow> row = it.next();
-         paintRow(g, row.getValue());
+         if (row.getValue().isDrawOnChart())
+            paintRow(g, row.getValue());
       }
    }
 
@@ -266,6 +269,9 @@ public class GraphPanelChart
       while (it.hasNext())
       {
          element = it.next();
+
+         if (!row.isDrawOnChart())
+            continue;
 
          x = chartRect.x + (int) ((element.getKey() - minXVal) * dxForDVal);
          y = chartRect.y + chartRect.height - (int) (element.getValue().getAvgValue() * dyForDVal);

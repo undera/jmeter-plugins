@@ -42,6 +42,7 @@ public class ThroughputVsThreadsGui
          final Color nextColor = colors.getNextColor();
          row = getNewRow(label, nextColor);
          avgRow = getNewAveragesRow(averageLabel, nextColor);
+         graphPanel.addRow(row);
       }
       else
       {

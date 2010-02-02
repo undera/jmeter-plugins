@@ -5,13 +5,14 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.gui.RateRenderer;
 
 public class ThroughputVsThreadsGui
-      extends AbstractGraphPanelVisualizer
+     extends AbstractGraphPanelVisualizer
 {
    public ThroughputVsThreadsGui()
    {
       super();
       graphPanel.getGraphObject().setDrawCurrentX(true);
       graphPanel.getGraphObject().setyAxisLabelRenderer(new RateRenderer("#.0"));
+      graphPanel.getGraphObject().setForcedMinX(0);
    }
 
    public String getLabelResource()

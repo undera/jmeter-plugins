@@ -34,6 +34,7 @@ public class GraphPanelChart
    private NumberRenderer xAxisLabelRenderer;
    private boolean drawStartFinalZeroingLines = false;
    private boolean drawCurrentX = false;
+   private int forcedMinX = -1;
 
    public GraphPanelChart()
    {
@@ -78,6 +79,9 @@ public class GraphPanelChart
       }
 
       maxYVal *= 1 + (double) 1 / (double) gridLinesCount;
+
+      if (forcedMinX >= 0)
+         minXVal = forcedMinX;
    }
 
    private void setDefaultDimensions()
@@ -358,5 +362,10 @@ public class GraphPanelChart
    public void setCurrentX(long currentX)
    {
       this.currentXVal = currentX;
+   }
+
+   void setForcedMinX(int i)
+   {
+      forcedMinX = i;
    }
 }

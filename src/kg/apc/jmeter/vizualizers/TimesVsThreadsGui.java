@@ -10,6 +10,7 @@ public class TimesVsThreadsGui
    {
       super();
       graphPanel.getGraphObject().setDrawCurrentX(true);
+      graphPanel.getGraphObject().setForcedMinX(0);
    }
 
    public String getLabelResource()

@@ -1,6 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.Image;
+import javax.swing.event.ChangeEvent;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -70,5 +71,27 @@ public class GraphPanelTest
       System.out.println("getGraphObject");
       GraphPanelChart result = instance.getGraphObject();
       assertEquals(GraphPanelChart.class.getName(), result.getClass().getName());
+   }
+
+   /**
+    * Test of addRow method, of class GraphPanel.
+    */
+   @Test
+   public void testAddRow()
+   {
+      System.out.println("addRow");
+      AbstractGraphRow row = new GraphRowOverallAverages();
+      instance.addRow(row);
+   }
+
+   /**
+    * Test of stateChanged method, of class GraphPanel.
+    */
+   @Test
+   public void testStateChanged()
+   {
+      System.out.println("stateChanged");
+      ChangeEvent e = null;
+      instance.stateChanged(e);
    }
 }

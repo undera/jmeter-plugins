@@ -1,6 +1,5 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.concurrent.ConcurrentHashMap;
 import kg.apc.jmeter.util.TestGraphics;
@@ -111,5 +110,29 @@ public class GraphPanelChartTest
       boolean drawFinalZeroingLines = false;
       GraphPanelChart instance = new GraphPanelChart();
       instance.setDrawFinalZeroingLines(drawFinalZeroingLines);
+   }
+
+   /**
+    * Test of setDrawCurrentX method, of class GraphPanelChart.
+    */
+   @Test
+   public void testSetDrawCurrentX()
+   {
+      System.out.println("setDrawCurrentX");
+      boolean drawCurrentX = false;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setDrawCurrentX(drawCurrentX);
+   }
+
+   /**
+    * Test of setCurrentX method, of class GraphPanelChart.
+    */
+   @Test
+   public void testSetCurrentX()
+   {
+      System.out.println("setCurrentX");
+      long currentX = 0L;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setCurrentX(currentX);
    }
 }

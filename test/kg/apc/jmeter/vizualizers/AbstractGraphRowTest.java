@@ -219,13 +219,84 @@ public class AbstractGraphRowTest
    public class AbstractGraphRowImpl
         extends AbstractGraphRow
    {
-      public void add(long X, double Y)
-      {
-      }
-
       public Iterator<Entry<Long, GraphPanelChartElement>> iterator()
       {
          return null;
       }
+   }
+
+   /**
+    * Test of isDrawValueLabel method, of class AbstractGraphRow.
+    */
+   @Test
+   public void testIsDrawValueLabel()
+   {
+      System.out.println("isDrawValueLabel");
+      AbstractGraphRow instance = new AbstractGraphRowImpl();
+      boolean expResult = false;
+      boolean result = instance.isDrawValueLabel();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of setDrawValueLabel method, of class AbstractGraphRow.
+    */
+   @Test
+   public void testSetDrawValueLabel()
+   {
+      System.out.println("setDrawValueLabel");
+      boolean drawValueLabel = false;
+      AbstractGraphRow instance = new AbstractGraphRowImpl();
+      instance.setDrawValueLabel(drawValueLabel);
+   }
+
+   /**
+    * Test of isShowInLegend method, of class AbstractGraphRow.
+    */
+   @Test
+   public void testIsShowInLegend()
+   {
+      System.out.println("isShowInLegend");
+      AbstractGraphRow instance = new AbstractGraphRowImpl();
+      boolean expResult = true;
+      boolean result = instance.isShowInLegend();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of setShowInLegend method, of class AbstractGraphRow.
+    */
+   @Test
+   public void testSetShowInLegend()
+   {
+      System.out.println("setShowInLegend");
+      boolean showInLegend = false;
+      AbstractGraphRow instance = new AbstractGraphRowImpl();
+      instance.setShowInLegend(showInLegend);
+   }
+
+   /**
+    * Test of isDrawOnChart method, of class AbstractGraphRow.
+    */
+   @Test
+   public void testIsDrawOnChart()
+   {
+      System.out.println("isDrawOnChart");
+      AbstractGraphRow instance = new AbstractGraphRowImpl();
+      boolean expResult = true;
+      boolean result = instance.isDrawOnChart();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of setDrawOnChart method, of class AbstractGraphRow.
+    */
+   @Test
+   public void testSetDrawOnChart()
+   {
+      System.out.println("setDrawOnChart");
+      boolean drawOnChart = false;
+      AbstractGraphRow instance = new AbstractGraphRowImpl();
+      instance.setDrawOnChart(drawOnChart);
    }
 }

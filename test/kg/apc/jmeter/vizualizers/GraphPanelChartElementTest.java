@@ -59,4 +59,17 @@ public class GraphPanelChartElementTest
       double result = instance.getAvgValue();
       assertEquals(expResult, result, 0.0);
    }
+
+   /**
+    * Test of getCount method, of class GraphPanelChartElement.
+    */
+   @Test
+   public void testGetCount()
+   {
+      System.out.println("getCount");
+      GraphPanelChartElement instance = new GraphPanelChartElement();
+      int expResult = 0;
+      int result = instance.getCount();
+      assertEquals(expResult, result);
+   }
 }

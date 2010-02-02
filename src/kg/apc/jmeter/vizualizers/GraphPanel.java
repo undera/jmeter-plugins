@@ -9,24 +9,23 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import org.apache.jorphan.gui.ObjectTableModel;
-import org.apache.jorphan.reflect.Functor;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class GraphPanel
      extends JTabbedPane
+     implements ChangeListener
 {
    private GraphPanelChart graphTab;
    private JComponent rowsTab;
-   private JTable table;
-   private ObjectTableModel tableModel;
+   private ChartRowsTable table;
 
    public GraphPanel()
    {
       super();
       addGraphTab();
       addRowsTab();
+      addChangeListener(this);
    }
 
    private void addRowsTab()
@@ -39,10 +38,7 @@ public class GraphPanel
 
    private Component makeTable()
    {
-      initializeTableModel();
-      table = new JTable(tableModel);
-      table.getTableHeader().setDefaultRenderer(new HeaderAsTextRenderer());
-      table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+      table = new ChartRowsTable();
       return makeScrollPane(table);
    }
 
@@ -51,31 +47,6 @@ public class GraphPanel
       JScrollPane pane = new JScrollPane(comp);
       pane.setPreferredSize(pane.getMinimumSize());
       return pane;
-   }
-
-   private void initializeTableModel()
-   {
-      tableModel = new ObjectTableModel(new String[]
-           {
-              "",
-              "Row name"
-           },
-           AbstractGraphRow.class,
-           new Functor[]
-           {
-              new Functor("isDrawOnChart"),
-              new Functor("getLabel"), // $NON-NLS-1$
-           }, // $NON-NLS-1$
-           new Functor[]
-           {
-              new Functor("setDrawOnChart"),
-              null, // $NON-NLS-1$
-           }, // $NON-NLS-1$
-           new Class[]
-           {
-              Boolean.class,
-              String.class
-           });
    }
 
    private void addGraphTab()
@@ -107,6 +78,12 @@ public class GraphPanel
          graphTab.updateUI();
          graphTab.repaint();
       }
+
+      if (getSelectedComponent() == rowsTab)
+      {
+         rowsTab.updateUI();
+         rowsTab.repaint();
+      }
    }
 
    Image getGraphImage()
@@ -131,6 +108,11 @@ public class GraphPanel
 
    public void addRow(AbstractGraphRow row)
    {
-      tableModel.addRow(row);
+      table.addRow(row);
+   }
+
+   public void stateChanged(ChangeEvent e)
+   {
+      updateGui();
    }
 }

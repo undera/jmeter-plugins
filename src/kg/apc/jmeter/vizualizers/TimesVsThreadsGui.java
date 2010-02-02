@@ -35,6 +35,7 @@ public class TimesVsThreadsGui
          row = getNewRow(label, nextColor);
          avgRow = getNewAveragesRow(averageLabel, nextColor);
          graphPanel.addRow(row);
+         graphPanel.addRow(avgRow);
       }
       else
       {

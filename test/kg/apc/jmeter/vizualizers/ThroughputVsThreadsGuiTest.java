@@ -71,8 +71,9 @@ public class ThroughputVsThreadsGuiTest
    public void testAdd()
    {
       System.out.println("add");
-      SampleResult res = new SampleResult();
       ThroughputVsThreadsGui instance = new ThroughputVsThreadsGui();
-      instance.add(res);
+      instance.add(new SampleResult());
+      instance.add(new SampleResult(0, 100));
+      instance.add(new SampleResult(0, 100));
    }
 }

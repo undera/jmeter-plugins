@@ -44,7 +44,7 @@ public class HeaderClickCheckAllListenerTest
    {
       System.out.println("mouseClicked");
       JTable table=new JTable();
-      MouseEvent evt = new MouseEvent(table.getTableHeader(), 0, 0, 0, 0, 0, 0, true);
+      MouseEvent evt = new MouseEvent(table.getTableHeader(), 1, 1, 1, 10, 10, 1, true);
       HeaderClickCheckAllListener instance = new HeaderClickCheckAllListener();
       instance.mouseClicked(evt);
    }

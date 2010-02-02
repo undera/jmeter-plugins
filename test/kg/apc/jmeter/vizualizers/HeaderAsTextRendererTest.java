@@ -44,8 +44,8 @@ public class HeaderAsTextRendererTest
    public void testGetTableCellRendererComponent()
    {
       System.out.println("getTableCellRendererComponent");
-      JTable table = null;
-      Object value = null;
+      JTable table = new ChartRowsTable();
+      Object value = new String();
       boolean isSelected = false;
       boolean hasFocus = false;
       int row = 0;

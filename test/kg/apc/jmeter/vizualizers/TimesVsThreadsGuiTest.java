@@ -74,5 +74,6 @@ public class TimesVsThreadsGuiTest
       SampleResult res = new SampleResult();
       TimesVsThreadsGui instance = new TimesVsThreadsGui();
       instance.add(res);
+      instance.add(res);
    }
 }

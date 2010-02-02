@@ -48,9 +48,23 @@ public class ColorRendererTest {
       boolean hasFocus = false;
       int row = 0;
       int column = 0;
-      ColorRenderer instance = new ColorRenderer(isSelected);
+      ColorRenderer instance = new ColorRenderer(true);
       Component result = instance.getTableCellRendererComponent(table, color, isSelected, hasFocus, row, column);
       assertNotNull(result);
    }
 
+   @Test
+   public void testGetTableCellRendererComponent_2()
+   {
+      System.out.println("getTableCellRendererComponent");
+      JTable table = new JTable();
+      Object color = Color.red;
+      boolean isSelected = false;
+      boolean hasFocus = false;
+      int row = 0;
+      int column = 0;
+      ColorRenderer instance = new ColorRenderer(false);
+      Component result = instance.getTableCellRendererComponent(table, color, isSelected, hasFocus, row, column);
+      assertNotNull(result);
+   }
 }

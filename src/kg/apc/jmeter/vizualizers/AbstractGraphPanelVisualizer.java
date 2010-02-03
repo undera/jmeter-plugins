@@ -2,7 +2,7 @@ package kg.apc.jmeter.vizualizers;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.visualizers.GraphListener;
 import org.apache.jmeter.visualizers.ImageVisualizer;
@@ -13,7 +13,7 @@ public abstract class AbstractGraphPanelVisualizer
      extends AbstractVisualizer
      implements Clearable, GraphListener, ImageVisualizer
 {
-   protected ConcurrentHashMap<String, AbstractGraphRow> model;
+   protected ConcurrentSkipListMap<String, AbstractGraphRow> model;
    protected long lastRepaint = 0;
    protected long delay = 500;
    protected GraphPanel graphPanel;
@@ -21,7 +21,7 @@ public abstract class AbstractGraphPanelVisualizer
 
    public AbstractGraphPanelVisualizer()
    {
-      model = new ConcurrentHashMap<String, AbstractGraphRow>();
+      model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
       colors = new ColorsDispatcher();
       initGui();
    }

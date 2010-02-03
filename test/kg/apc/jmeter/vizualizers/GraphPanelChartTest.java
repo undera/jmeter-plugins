@@ -2,6 +2,7 @@ package kg.apc.jmeter.vizualizers;
 
 import java.awt.Graphics;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.util.TestGraphics;
 import org.apache.jorphan.gui.NumberRenderer;
 import org.junit.After;
@@ -49,7 +50,7 @@ public class GraphPanelChartTest
       GraphPanelChart instance = new GraphPanelChart();
       instance.setSize(500, 500);
 
-      final ConcurrentHashMap<String, AbstractGraphRow> rows = new ConcurrentHashMap<String, AbstractGraphRow>();
+      final ConcurrentSkipListMap<String, AbstractGraphRow> rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
       instance.setRows(rows);
       final GraphRowAverages row1 = new GraphRowAverages();
       rows.put("test 1", row1);
@@ -71,7 +72,7 @@ public class GraphPanelChartTest
    public void testSetRows()
    {
       System.out.println("setRows");
-      ConcurrentHashMap<String, AbstractGraphRow> aRows = null;
+      ConcurrentSkipListMap<String, AbstractGraphRow> aRows = null;
       GraphPanelChart instance = new GraphPanelChart();
       instance.setRows(aRows);
    }

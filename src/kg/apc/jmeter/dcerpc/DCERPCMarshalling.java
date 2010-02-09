@@ -1,3 +1,4 @@
+// TODO добавить каскадный демаршалинг, чтобы можно было одновременно инты и стринги иметь
 package kg.apc.jmeter.dcerpc;
 
 import java.io.ByteArrayOutputStream;
@@ -16,13 +17,14 @@ public abstract class DCERPCMarshalling
    private static final char MARSHAL_BPP_INVOKE_XML = 'X';
    private static final char MARSHAL_FIXED_LENGTH = 'F';
    private static final char MARSHAL_INTEGER = 'I';
+   private static final char UNMARSHAL_INTEGERS = 'I';
    private static final char UNMARSHAL_STRING_PARTS = 'S';
    private static final char UNMARSHAL_SINGLE_XML = 'X';
    private static final char UNMARSHAL_NONE = 'N';
    private static final int DEFAULT_UNMARSHAL_STRING_LEN = 5;
 
    public static String unmarshalData(byte ba[], String unmarshalOptions)
-        throws RPCMarshallingException
+         throws RPCMarshallingException
    {
       char unmarshalMode = UNMARSHAL_NONE;
       String[] options = unmarshalOptions.split(":");
@@ -33,6 +35,22 @@ public abstract class DCERPCMarshalling
 
       switch (unmarshalMode)
       {
+         case UNMARSHAL_INTEGERS:
+            int limit;
+            if (options.length < 2)
+            {
+               limit = 0;
+            }
+            else
+            {
+               limit = Integer.decode(options[1]);
+               if (limit < 1)
+               {
+                  throw new RPCMarshallingException("Invalid limit: " + unmarshalOptions);
+               }
+            }
+            return unmarshalConvertIntegers(ba, limit);
+
          case UNMARSHAL_STRING_PARTS:
             int len;
             if (options.length < 2)
@@ -109,7 +127,7 @@ public abstract class DCERPCMarshalling
    }
 
    public static String marshalData(String in_str)
-        throws RPCMarshallingException
+         throws RPCMarshallingException
    {
       Pattern patt = Pattern.compile("\\{([^\\}]*)\\}");
       Matcher m = patt.matcher(in_str);
@@ -141,7 +159,7 @@ public abstract class DCERPCMarshalling
    }
 
    private static String marshalAs(char marshalMode, String txt)
-        throws RPCMarshallingException
+         throws RPCMarshallingException
    {
       switch (marshalMode)
       {
@@ -162,22 +180,22 @@ public abstract class DCERPCMarshalling
          case MARSHAL_DOUBLE_LENGTH_PREFIXED_NULL_TERMINATED:
             txt += (char) 0;
             return BinaryUtils.intToHexString(txt.length())
-                 + BinaryUtils.intToHexString(0)
-                 + BinaryUtils.intToHexString(txt.length())
-                 + JOrphanUtils.baToHexString(txt.getBytes());
+                  + BinaryUtils.intToHexString(0)
+                  + BinaryUtils.intToHexString(txt.length())
+                  + JOrphanUtils.baToHexString(txt.getBytes());
 
          case MARSHAL_BPP_INVOKE_XML:
             return BinaryUtils.intToHexString(txt.length() + 1)
-                 + BinaryUtils.intToHexString(txt.length())
-                 + BinaryUtils.intToHexString(txt.length())
-                 + JOrphanUtils.baToHexString(txt.getBytes());
+                  + BinaryUtils.intToHexString(txt.length())
+                  + BinaryUtils.intToHexString(txt.length())
+                  + JOrphanUtils.baToHexString(txt.getBytes());
 
          case MARSHAL_QUARTER_LENGTH_PREFIXED:
             return BinaryUtils.intToHexString(txt.length())
-                 + BinaryUtils.intToHexString(txt.length())
-                 + BinaryUtils.intToHexString(txt.length())
-                 + BinaryUtils.intToHexString(txt.length())
-                 + JOrphanUtils.baToHexString(txt.getBytes());
+                  + BinaryUtils.intToHexString(txt.length())
+                  + BinaryUtils.intToHexString(txt.length())
+                  + BinaryUtils.intToHexString(txt.length())
+                  + JOrphanUtils.baToHexString(txt.getBytes());
 
          case MARSHAL_INTEGER:
             int value = Integer.valueOf(txt);
@@ -192,7 +210,7 @@ public abstract class DCERPCMarshalling
    }
 
    private static String marshalAsFixedLength(String txt)
-        throws RPCMarshallingException
+         throws RPCMarshallingException
    {
       int pos = txt.indexOf(':');
       if (pos < 1)
@@ -212,5 +230,28 @@ public abstract class DCERPCMarshalling
          txt += (char) 0;
       }
       return JOrphanUtils.baToHexString(txt.getBytes());
+   }
+
+   private static String unmarshalConvertIntegers(byte[] ba, int limit)
+   {
+      String integers = "";
+      int count = 0;
+      int pos = 0;
+      while (pos < ba.length - ba.length % 4)
+      {
+         integers += Integer.toString(BinaryUtils.fourBytesToIntVal(ba[pos], ba[pos + 1], ba[pos + 2], ba[pos + 3])) + ",";
+         pos += 4;
+         
+         if (limit > 0 && ++count >= limit)
+         {
+            break;
+         }
+      }
+
+      byte[] tail = new byte[ba.length - pos];
+      System.arraycopy(ba, pos, tail, 0, tail.length);
+      System.err.println(tail);
+
+      return (integers.length() > 0 ? "{" + integers + "}" : "") + JOrphanUtils.baToHexString(tail);
    }
 }

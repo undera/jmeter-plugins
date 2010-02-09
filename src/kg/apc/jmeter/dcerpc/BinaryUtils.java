@@ -82,4 +82,14 @@ public abstract class BinaryUtils
    {
       return JOrphanUtils.baToHexString(intToByteArray(i));
    }
+
+   public static int fourBytesToIntVal(byte byte1, byte byte2, byte byte3, byte byte4)
+   {
+      int i = 0;
+      i += (byte4 & 0xFF) << 24;
+      i += (byte3 & 0xFF) << 16;
+      i += (byte2 & 0xFF) << 8;
+      i += (byte1 & 0xFF) << 0;
+      return i;
+   }
 }

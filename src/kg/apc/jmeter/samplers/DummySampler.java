@@ -14,14 +14,10 @@ public class DummySampler
    public static String RESPONSE_CODE = "Response Code (e.g. 200)";
    public static String RESPONSE_MESSAGE = "Response Message (e.g. OK)";
    public static String RESPONSE_DATA = "Response Data";
-   private boolean successfull = true;
-   private String responseCode = "";
-   private String responseMessage = "";
-   private String responseData = "";
 
    public SampleResult sample(Entry e)
    {
-      log.info(responseData);
+      log.info(getResponseData());
 
       SampleResult res = new SampleResult();
       res.setSampleLabel(getName());
@@ -33,13 +29,13 @@ public class DummySampler
       res.setSamplerData("");
 
       // response code
-      res.setResponseCode(responseCode);
-      res.setResponseMessage(responseMessage);
-      res.setSuccessful(successfull);
+      res.setResponseCode(getResponseCode());
+      res.setResponseMessage(getResponseMessage());
+      res.setSuccessful(isSuccessfull());
 
       // responde data
       res.setDataType(SampleResult.TEXT);
-      res.setResponseData(responseData.getBytes());
+      res.setResponseData(getResponseData().getBytes());
 
       res.sampleEnd();
 
@@ -49,24 +45,52 @@ public class DummySampler
    public void setSuccessful(boolean selected)
    {
       setProperty(IS_SUCCESSFUL, selected);
-      successfull = selected;
    }
 
    public void setResponseCode(String text)
    {
       setProperty(RESPONSE_CODE, text);
-      responseCode = text;
    }
 
    public void setResponseMessage(String text)
    {
       setProperty(RESPONSE_MESSAGE, text);
-      responseMessage = text;
    }
 
    public void setResponseData(String text)
    {
       setProperty(RESPONSE_DATA, text);
-      responseData = text;
+   }
+
+   /**
+    * @return the successfull
+    */
+   public boolean isSuccessfull()
+   {
+      return getPropertyAsBoolean(IS_SUCCESSFUL);
+   }
+
+   /**
+    * @return the responseCode
+    */
+   public String getResponseCode()
+   {
+      return getPropertyAsString(RESPONSE_CODE);
+   }
+
+   /**
+    * @return the responseMessage
+    */
+   public String getResponseMessage()
+   {
+      return getPropertyAsString(RESPONSE_MESSAGE);
+   }
+
+   /**
+    * @return the responseData
+    */
+   public String getResponseData()
+   {
+      return getPropertyAsString(RESPONSE_DATA);
    }
 }

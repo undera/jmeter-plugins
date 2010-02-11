@@ -8,15 +8,19 @@ import org.apache.jorphan.util.JOrphanUtils;
 
 public abstract class DCERPCMarshalling
 {
+   // marshal
    private static final char MARSHAL_REGULAR = ' ';
    private static final char MARSHAL_LENGTH_PREFIXED = 'L';
    private static final char MARSHAL_NULL_TERMINATED = 'Z';
    private static final char MARSHAL_LENGTH_PREFIXED_NULL_TERMINATED = 'N';
    private static final char MARSHAL_DOUBLE_LENGTH_PREFIXED_NULL_TERMINATED = 'D';
    private static final char MARSHAL_QUARTER_LENGTH_PREFIXED = 'Q';
+   private static final char MARSHAL_BPP_PREPARE_TRANS = 'P';
    private static final char MARSHAL_BPP_INVOKE_XML = 'X';
    private static final char MARSHAL_FIXED_LENGTH = 'F';
    private static final char MARSHAL_INTEGER = 'I';
+   private static final char MARSHAL_DOUBLE = 'B';
+   // unmarshal
    private static final char UNMARSHAL_INTEGERS = 'I';
    private static final char UNMARSHAL_STRING_PARTS = 'S';
    private static final char UNMARSHAL_SINGLE_XML = 'X';
@@ -197,9 +201,18 @@ public abstract class DCERPCMarshalling
                   + BinaryUtils.intToHexString(txt.length())
                   + JOrphanUtils.baToHexString(txt.getBytes());
 
+         case MARSHAL_BPP_PREPARE_TRANS:
+            return BinaryUtils.intToHexString(txt.length())
+                  + BinaryUtils.intToHexString(txt.length())
+                  + BinaryUtils.intToHexString(200000)
+                  + BinaryUtils.intToHexString(txt.length())
+                  + JOrphanUtils.baToHexString(txt.getBytes());
+
          case MARSHAL_INTEGER:
-            int value = Integer.valueOf(txt);
-            return BinaryUtils.intToHexString(value);
+            return BinaryUtils.intToHexString(Integer.valueOf(txt));
+
+         case MARSHAL_DOUBLE:
+            return BinaryUtils.doubleToHexString(Double.valueOf(txt));
 
          case MARSHAL_REGULAR:
             return JOrphanUtils.baToHexString(txt.getBytes());

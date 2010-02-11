@@ -92,4 +92,12 @@ public abstract class BinaryUtils
       i += (byte1 & 0xFF) << 0;
       return i;
    }
+
+   static String doubleToHexString(double val)
+   {
+      long reversed=Long.reverseBytes(Double.doubleToLongBits(val));
+      String res=Long.toHexString(reversed);
+      res=new String("0000000000000000").substring(res.length())+res;
+      return res;
+   }
 }

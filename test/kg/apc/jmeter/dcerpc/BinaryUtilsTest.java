@@ -18,13 +18,13 @@ public class BinaryUtilsTest
 
    @BeforeClass
    public static void setUpClass()
-        throws Exception
+         throws Exception
    {
    }
 
    @AfterClass
    public static void tearDownClass()
-        throws Exception
+         throws Exception
    {
    }
 
@@ -150,11 +150,11 @@ public class BinaryUtilsTest
    }
 
    private static String readFileAsString(String filePath)
-        throws java.io.IOException
+         throws java.io.IOException
    {
       StringBuffer fileData = new StringBuffer(1000);
       BufferedReader reader = new BufferedReader(
-           new FileReader(filePath));
+            new FileReader(filePath));
       char[] buf = new char[1024];
       int numRead = 0;
       while ((numRead = reader.read(buf)) != -1)
@@ -177,5 +177,27 @@ public class BinaryUtilsTest
       String test = "00000000\r\n11";
       assertTrue(test1.matches(pat));
       assertTrue(test.matches(pat));
+   }
+
+   /**
+    * Test of fourBytesToIntVal method, of class BinaryUtils.
+    */
+   @Test
+   public void testFourBytesToIntVal()
+   {
+      System.out.println("fourBytesToIntVal");
+      assertEquals(0, BinaryUtils.fourBytesToIntVal((byte) 0, (byte) 0, (byte) 0, (byte) 0));
+      assertEquals(1, BinaryUtils.fourBytesToIntVal((byte) 1, (byte) 0, (byte) 0, (byte) 0));
+      assertEquals(256, BinaryUtils.fourBytesToIntVal((byte) 0, (byte) 1, (byte) 0, (byte) 0));
+      assertEquals(65536, BinaryUtils.fourBytesToIntVal((byte) 0, (byte) 0, (byte) 1, (byte) 0));
+      assertEquals(16777216, BinaryUtils.fourBytesToIntVal((byte) 0, (byte) 0, (byte) 0, (byte) 1));
+      assertEquals(16843009, BinaryUtils.fourBytesToIntVal((byte) 1, (byte) 1, (byte) 1, (byte) 1));
+   }
+
+   @Test
+   public void testDoubleToHexString()
+   {
+      System.out.println("fourBytesToIntVal");
+      assertEquals("0000006012db6541", BinaryUtils.doubleToHexString(11458707.00));
    }
 }

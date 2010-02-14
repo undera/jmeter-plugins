@@ -61,4 +61,9 @@ public class ChartRowsTable
       }
       return super.getCellRenderer(row, column);
    }
+
+   public void clear()
+   {
+      initializeTableModel();
+   }
 }

@@ -115,4 +115,9 @@ public class GraphPanel
    {
       updateGui();
    }
+
+   public void clearRowsTab()
+   {
+      table.clear();
+   }
 }

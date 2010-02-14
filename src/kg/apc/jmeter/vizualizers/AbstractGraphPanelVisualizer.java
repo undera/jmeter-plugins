@@ -60,6 +60,7 @@ public abstract class AbstractGraphPanelVisualizer
    {
       model.clear();
       colors.reset();
+      graphPanel.clearRowsTab();
       updateGui();
       repaint();
    }

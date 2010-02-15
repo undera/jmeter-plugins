@@ -1,3 +1,5 @@
+// TODO: add response time
+
 package kg.apc.jmeter.samplers;
 
 import org.apache.jmeter.samplers.AbstractSampler;
@@ -17,8 +19,6 @@ public class DummySampler
 
    public SampleResult sample(Entry e)
    {
-      log.info(getResponseData());
-
       SampleResult res = new SampleResult();
       res.setSampleLabel(getName());
 
@@ -26,7 +26,7 @@ public class DummySampler
       res.sampleStart();
 
       // source data
-      res.setSamplerData("");
+      res.setSamplerData(getResponseData());
 
       // response code
       res.setResponseCode(getResponseCode());

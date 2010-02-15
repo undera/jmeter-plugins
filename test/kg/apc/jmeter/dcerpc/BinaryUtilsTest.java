@@ -197,7 +197,12 @@ public class BinaryUtilsTest
    @Test
    public void testDoubleToHexString()
    {
-      System.out.println("fourBytesToIntVal");
       assertEquals("0000006012db6541", BinaryUtils.doubleToHexString(11458707.00));
+   }
+
+   @Test
+   public void testHexToDouble()
+   {
+      assertEquals(11458707.00, BinaryUtils.hexToDouble("0000006012db6541"), 0.001);
    }
 }

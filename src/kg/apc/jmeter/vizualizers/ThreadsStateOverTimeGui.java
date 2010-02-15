@@ -15,8 +15,8 @@ public class ThreadsStateOverTimeGui
 
    private void addThreadGroupRecord(String threadGroupName, long time, int numThreads)
    {
-      AbstractGraphRow row;
-      if (!model.containsKey(threadGroupName))
+      AbstractGraphRow row = model.get(threadGroupName);
+      if (row==null)
       {
          row = new GraphRowAverages();
          row.setLabel(threadGroupName);
@@ -25,10 +25,6 @@ public class ThreadsStateOverTimeGui
          row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
          model.put(threadGroupName, row);
          graphPanel.addRow(row);
-      }
-      else
-      {
-         row = model.get(threadGroupName);
       }
 
       row.add(time, numThreads);

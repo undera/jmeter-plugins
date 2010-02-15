@@ -1,3 +1,5 @@
+// TODO: сделать прореживание рядов вдвое
+
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.BorderLayout;

@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 public abstract class AbstractGraphRow
 {
    public static final int MARKER_SIZE_NONE = 0;
-   public static final int MARKER_SIZE_SMALL = 2;
-   public static final int MARKER_SIZE_BIG = 4;
+   public static final int MARKER_SIZE_SMALL = 3;
+   public static final int MARKER_SIZE_BIG = 5;
    protected boolean drawLine = false;
    private boolean drawValueLabel = false;
    private boolean showInLegend = true;

@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -79,7 +78,7 @@ public class GraphPanelChart
             minXVal = rowValue.getMinX();
       }
 
-      maxYVal *= 1 + (double) 1 / (double) gridLinesCount;
+      //maxYVal *= 1 + (double) 1 / (double) gridLinesCount;
 
       if (forcedMinX >= 0)
          minXVal = forcedMinX;
@@ -307,8 +306,8 @@ public class GraphPanelChart
          {
             g.setColor(row.getColor());
             g.fillOval(x - radius, y - radius, (radius) * 2, (radius) * 2);
-            g.setColor(Color.black);
-            g.drawOval(x - radius, y - radius, radius * 2, radius * 2);
+            //g.setColor(Color.black);
+            //g.drawOval(x - radius, y - radius, radius * 2, radius * 2);
          }
       }
 

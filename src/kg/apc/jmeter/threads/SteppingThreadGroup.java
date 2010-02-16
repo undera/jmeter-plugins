@@ -6,6 +6,13 @@ import org.apache.jmeter.threads.JMeterThread;
 public class SteppingThreadGroup
      extends AbstractThreadGroup
 {
+   public static final String THREAD_GROUP_DELAY="Threads initial delay";
+   public static final String INC_USER_PERIOD="Start users period";
+   public static final String INC_USER_COUNT="Start users count";
+   public static final String DEC_USER_PERIOD="Stop users period";
+   public static final String DEC_USER_COUNT="Stop users count";
+   public static final String FLIGHT_TIME="flighttime";
+
    public SteppingThreadGroup()
    {
       super();
@@ -37,33 +44,33 @@ public class SteppingThreadGroup
       thread.setScheduled(true);
    }
 
-   private int getThreadGroupDelay()
+   public int getThreadGroupDelay()
    {
-      throw new UnsupportedOperationException("Not yet implemented");
+      return getPropertyAsInt(THREAD_GROUP_DELAY, 0);
    }
 
-   private int getInUserPeriod()
+   public int getInUserPeriod()
    {
-      throw new UnsupportedOperationException("Not yet implemented");
+      return getPropertyAsInt(INC_USER_PERIOD, 0);
    }
 
-   private int getInUserCount()
+   public int getInUserCount()
    {
-      throw new UnsupportedOperationException("Not yet implemented");
+      return getPropertyAsInt(INC_USER_COUNT, 1);
    }
 
-   private int getFlightTime()
+   public int getFlightTime()
    {
-      throw new UnsupportedOperationException("Not yet implemented");
+      return getPropertyAsInt(FLIGHT_TIME, 0);
    }
 
-   private int getOutUserPeriod()
+   public int getOutUserPeriod()
    {
-      throw new UnsupportedOperationException("Not yet implemented");
+      return getPropertyAsInt(DEC_USER_PERIOD, 0);
    }
 
-   private int getOutUserCount()
+   public int getOutUserCount()
    {
-      throw new UnsupportedOperationException("Not yet implemented");
+      return getPropertyAsInt(DEC_USER_COUNT, 1);
    }
 }

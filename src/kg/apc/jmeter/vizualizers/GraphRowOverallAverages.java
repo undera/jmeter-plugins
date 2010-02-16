@@ -11,7 +11,7 @@ public class GraphRowOverallAverages
    private GraphPanelChartElement element;
    private double avgX = 0;
 
-   GraphRowOverallAverages()
+   public GraphRowOverallAverages()
    {
       super();
       element = new GraphPanelChartElement();

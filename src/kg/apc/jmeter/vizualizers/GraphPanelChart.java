@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.AbstractMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentSkipListMap;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.border.BevelBorder;
@@ -24,7 +24,7 @@ public class GraphPanelChart
    private Rectangle yAxisRect;
    private Rectangle chartRect;
    private static final Rectangle zeroRect = new Rectangle();
-   private ConcurrentSkipListMap<String, AbstractGraphRow> rows;
+   private AbstractMap<String, AbstractGraphRow> rows;
    private double maxYVal;
    private long maxXVal;
    private long minXVal;
@@ -319,7 +319,7 @@ public class GraphPanelChart
       }
    }
 
-   public void setRows(ConcurrentSkipListMap<String, AbstractGraphRow> aRows)
+   public void setRows(AbstractMap<String, AbstractGraphRow> aRows)
    {
       rows = aRows;
    }

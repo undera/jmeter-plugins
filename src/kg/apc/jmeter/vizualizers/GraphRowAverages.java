@@ -9,7 +9,7 @@ public class GraphRowAverages
 {
    private ConcurrentSkipListMap<Long, GraphPanelChartElement> values;
 
-   GraphRowAverages()
+   public GraphRowAverages()
    {
       super();
       values = new ConcurrentSkipListMap<Long, GraphPanelChartElement>();

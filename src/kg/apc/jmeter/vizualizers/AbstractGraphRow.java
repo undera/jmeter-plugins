@@ -21,12 +21,12 @@ public abstract class AbstractGraphRow
    protected double minY = Double.MAX_VALUE;
    private boolean drawOnChart=true;
 
-   void setDrawLine(boolean b)
+   public void setDrawLine(boolean b)
    {
       drawLine = b;
    }
 
-   void setMarkerSize(int aMarkerSize)
+   public void setMarkerSize(int aMarkerSize)
    {
       markerSize = aMarkerSize;
    }

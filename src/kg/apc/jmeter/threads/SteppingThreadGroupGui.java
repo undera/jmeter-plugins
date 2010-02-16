@@ -2,6 +2,7 @@ package kg.apc.jmeter.threads;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,6 +32,7 @@ public class SteppingThreadGroupGui
    private JTextField flightTime;
    private JTextField decUserCount;
    private JTextField decUserPeriod;
+   private JTextField totalThreads;
 
    public SteppingThreadGroupGui()
    {
@@ -42,12 +44,12 @@ public class SteppingThreadGroupGui
    {
       super.init();
 
-      JPanel containerPanel=new JPanel(new BorderLayout());
+      JPanel containerPanel = new JPanel(new BorderLayout());
 
       containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
 
-      chart=new GraphPanelChart();
-      model=new ConcurrentHashMap<String, AbstractGraphRow>();
+      chart = new GraphPanelChart();
+      model = new ConcurrentHashMap<String, AbstractGraphRow>();
       chart.setRows(model);
       chart.setDrawFinalZeroingLines(true);
       chart.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
@@ -56,47 +58,58 @@ public class SteppingThreadGroupGui
       add(containerPanel, BorderLayout.CENTER);
    }
 
-    private JPanel createParamsPanel() {
-        JPanel panel = new JPanel(new VerticalLayout(0, VerticalLayout.LEFT));
-        panel.setBorder(BorderFactory.createTitledBorder("Threads Scheduling Parameters"));
+   private JPanel createParamsPanel()
+   {
+      JPanel panel = new JPanel(new VerticalLayout(0, VerticalLayout.LEFT));
+      panel.setBorder(BorderFactory.createTitledBorder("Threads Scheduling Parameters"));
 
-        JPanel panel1=new JPanel();
-        panel1.add(new JLabel("First, wait for ", JLabel.RIGHT));
-        initialDelay=new JTextField("0", 5);
-        panel1.add(initialDelay);
-        panel1.add(new JLabel(" seconds.", JLabel.LEFT));
-        panel.add(panel1);
+      JPanel panel0 = new JPanel();
+      panel0.add(new JLabel("This group will start ", JLabel.LEFT));
+      totalThreads = new JTextField("1", 5);
+      panel0.add(totalThreads);
+      panel0.add(new JLabel(" threads by following schedule: ", JLabel.RIGHT));
+      panel.add(panel0);
 
-        JPanel panel2=new JPanel();
-        panel2.add(new JLabel("Then start ", JLabel.RIGHT));
-        incUserCount=new JTextField("1", 5);
-        panel2.add(incUserCount);
-        panel2.add(new JLabel("threads every ", JLabel.LEFT));
-        incUserPeriod=new JTextField("1", 5);
-        panel2.add(incUserPeriod);
-        panel2.add(new JLabel(" seconds.", JLabel.LEFT));
-        panel.add(panel2);
+      final FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 50, 0);
+
+      JPanel panel1 = new JPanel(flowLayout);
+      panel1.add(new JLabel("First, wait for ", JLabel.LEFT));
+      initialDelay = new JTextField("0", 5);
+      panel1.add(initialDelay);
+      panel1.add(new JLabel(" seconds.", JLabel.RIGHT));
+      panel.add(panel1);
+
+      JPanel panel2 = new JPanel(flowLayout);
+      panel2.add(new JLabel("Then start ", JLabel.LEFT));
+      incUserCount = new JTextField("1", 5);
+      panel2.add(incUserCount);
+      panel2.add(new JLabel("threads every ", JLabel.RIGHT));
+      incUserPeriod = new JTextField("1", 5);
+      panel2.add(incUserPeriod);
+      panel2.add(new JLabel(" seconds.", JLabel.RIGHT));
+      panel.add(panel2);
 
 
-        JPanel panel3=new JPanel();
-        panel3.add(new JLabel("Then work for ", JLabel.RIGHT));
-        flightTime=new JTextField("60", 5);
-        panel3.add(flightTime);
-        panel3.add(new JLabel(" seconds. ", JLabel.LEFT));
-        panel.add(panel3);
+      JPanel panel3 = new JPanel(flowLayout);
+      panel3.add(new JLabel("Then work for ", JLabel.LEFT));
+      flightTime = new JTextField("60", 5);
+      panel3.add(flightTime);
+      panel3.add(new JLabel(" seconds. ", JLabel.RIGHT));
+      panel.add(panel3);
 
-        JPanel panel4=new JPanel();
-        panel4.add(new JLabel("Finally, stop ", JLabel.RIGHT));
-        decUserCount=new JTextField("1", 5);
-        panel4.add(decUserCount);
-        panel4.add(new JLabel(" threads every ", JLabel.LEFT));
-        decUserPeriod=new JTextField("1", 5);
-        panel4.add(decUserPeriod);
-        panel4.add(new JLabel(" seconds.", JLabel.LEFT));
-        panel.add(panel4);
+      JPanel panel4 = new JPanel(flowLayout);
+      panel4.add(new JLabel("Finally, stop ", JLabel.LEFT));
+      decUserCount = new JTextField("1", 5);
+      panel4.add(decUserCount);
+      panel4.add(new JLabel(" threads every ", JLabel.RIGHT));
+      decUserPeriod = new JTextField("1", 5);
+      panel4.add(decUserPeriod);
+      panel4.add(new JLabel(" seconds.", JLabel.RIGHT));
+      panel.add(panel4);
 
-        return panel;
-    }
+      return panel;
+   }
+
    public String getLabelResource()
    {
       return this.getClass().getSimpleName();
@@ -118,6 +131,14 @@ public class SteppingThreadGroupGui
    public void modifyTestElement(TestElement tg)
    {
       super.configureTestElement(tg);
+
+      tg.setProperty(SteppingThreadGroup.NUM_THREADS, totalThreads.getText());
+      tg.setProperty(SteppingThreadGroup.THREAD_GROUP_DELAY, initialDelay.getText());
+      tg.setProperty(SteppingThreadGroup.INC_USER_COUNT, incUserCount.getText());
+      tg.setProperty(SteppingThreadGroup.INC_USER_PERIOD, incUserPeriod.getText());
+      tg.setProperty(SteppingThreadGroup.DEC_USER_COUNT, decUserCount.getText());
+      tg.setProperty(SteppingThreadGroup.DEC_USER_PERIOD, decUserPeriod.getText());
+      tg.setProperty(SteppingThreadGroup.FLIGHT_TIME, flightTime.getText());
       if (tg instanceof SteppingThreadGroup)
       {
          updateChart((SteppingThreadGroup) tg);
@@ -128,12 +149,19 @@ public class SteppingThreadGroupGui
    public void configure(TestElement tg)
    {
       super.configure(tg);
+      totalThreads.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.NUM_THREADS)));
+      initialDelay.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.THREAD_GROUP_DELAY)));
+      incUserCount.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.INC_USER_COUNT)));
+      incUserPeriod.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.INC_USER_PERIOD)));
+      decUserCount.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.DEC_USER_COUNT)));
+      decUserPeriod.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.DEC_USER_PERIOD)));
+      flightTime.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.FLIGHT_TIME)));
    }
 
    private void updateChart(SteppingThreadGroup tg)
    {
       model.clear();
-      GraphRowAverages row=new GraphRowAverages();
+      GraphRowAverages row = new GraphRowAverages();
       row.setColor(Color.RED);
       row.setDrawLine(true);
       row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
@@ -142,30 +170,34 @@ public class SteppingThreadGroupGui
       hashTree.add(new LoopController());
       JMeterThread thread = new JMeterThread(hashTree, null, null);
 
-      HashMap<Long, Long> counts=new HashMap<Long, Long>();
+      HashMap<Long, Long> counts = new HashMap<Long, Long>();
 
-      for (int n=0; n<tg.getNumThreads(); n++)
+      // test start
+      row.add(System.currentTimeMillis(), 0);
+      row.add(System.currentTimeMillis()+tg.getThreadGroupDelay()-1, 0);
+      for (int n = 0; n < tg.getNumThreads(); n++)
       {
          thread.setThreadNum(n);
          tg.scheduleThread(thread);
-         addCount(counts, thread.getStartTime());
-         addCount(counts, thread.getEndTime());
+         row.add(thread.getStartTime(), n);
+         row.add(thread.getEndTime(), tg.getNumThreads()-n);
       }
 
-      Iterator it=counts.keySet().iterator();
+      Iterator it = counts.keySet().iterator();
       while (it.hasNext())
       {
          Long time = (Long) it.next();
          row.add(time, counts.get(time));
       }
       model.put("Expected parallel users count", row);
+      chart.repaint();
    }
 
    private void addCount(HashMap<Long, Long> counts, long xVal)
    {
       if (counts.containsKey(xVal))
       {
-         counts.put(xVal, counts.get(xVal)+1);
+         counts.put(xVal, counts.get(xVal) + 1);
       }
       else
       {

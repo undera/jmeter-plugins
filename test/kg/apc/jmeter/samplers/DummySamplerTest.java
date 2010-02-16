@@ -97,4 +97,56 @@ public class DummySamplerTest
       DummySampler instance = new DummySampler();
       instance.setResponseData(text);
    }
+
+   /**
+    * Test of isSuccessfull method, of class DummySampler.
+    */
+   @Test
+   public void testIsSuccessfull()
+   {
+      System.out.println("isSuccessfull");
+      DummySampler instance = new DummySampler();
+      boolean expResult = false;
+      boolean result = instance.isSuccessfull();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of getResponseCode method, of class DummySampler.
+    */
+   @Test
+   public void testGetResponseCode()
+   {
+      System.out.println("getResponseCode");
+      DummySampler instance = new DummySampler();
+      String expResult = "";
+      String result = instance.getResponseCode();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of getResponseMessage method, of class DummySampler.
+    */
+   @Test
+   public void testGetResponseMessage()
+   {
+      System.out.println("getResponseMessage");
+      DummySampler instance = new DummySampler();
+      String expResult = "";
+      String result = instance.getResponseMessage();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of getResponseData method, of class DummySampler.
+    */
+   @Test
+   public void testGetResponseData()
+   {
+      System.out.println("getResponseData");
+      DummySampler instance = new DummySampler();
+      String expResult = "";
+      String result = instance.getResponseData();
+      assertEquals(expResult, result);
+   }
 }

@@ -61,4 +61,15 @@ public class ChartRowsTableTest
       assertTrue(instance.getCellRenderer(1, 1) instanceof ColorRenderer);
       assertFalse(instance.getCellRenderer(1, 0) instanceof ColorRenderer);
    }
+
+   /**
+    * Test of clear method, of class ChartRowsTable.
+    */
+   @Test
+   public void testClear()
+   {
+      System.out.println("clear");
+      ChartRowsTable instance = new ChartRowsTable();
+      instance.clear();
+   }
 }

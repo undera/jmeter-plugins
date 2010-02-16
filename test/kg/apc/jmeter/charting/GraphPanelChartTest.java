@@ -1,10 +1,6 @@
 package kg.apc.jmeter.charting;
 
-import kg.apc.jmeter.charting.GraphPanelChart;
-import kg.apc.jmeter.charting.GraphRowAverages;
-import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Graphics;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.util.TestGraphics;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
@@ -139,5 +135,17 @@ public class GraphPanelChartTest
       long currentX = 0L;
       GraphPanelChart instance = new GraphPanelChart();
       instance.setCurrentX(currentX);
+   }
+
+   /**
+    * Test of setForcedMinX method, of class GraphPanelChart.
+    */
+   @Test
+   public void testSetForcedMinX()
+   {
+      System.out.println("setForcedMinX");
+      int i = 0;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setForcedMinX(i);
    }
 }

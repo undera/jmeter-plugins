@@ -101,4 +101,14 @@ public class GraphPanelTest
       ChangeEvent e = null;
       instance.stateChanged(e);
    }
+
+   /**
+    * Test of clearRowsTab method, of class GraphPanel.
+    */
+   @Test
+   public void testClearRowsTab()
+   {
+      System.out.println("clearRowsTab");
+      instance.clearRowsTab();
+   }
 }

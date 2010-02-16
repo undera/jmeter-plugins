@@ -67,4 +67,41 @@ public class GraphRowExactValuesTest
       assertEquals(2, ((AbstractGraphPanelChartElement) result.next().getValue()).getValue(), 0.001);
       assertEquals(3, ((AbstractGraphPanelChartElement) result.next().getValue()).getValue(), 0.001);
    }
+
+   /**
+    * Test of hasNext method, of class GraphRowExactValues.
+    */
+   @Test
+   public void testHasNext()
+   {
+      System.out.println("hasNext");
+      GraphRowExactValues instance = new GraphRowExactValues();
+      boolean expResult = false;
+      boolean result = instance.hasNext();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of next method, of class GraphRowExactValues.
+    */
+   @Test
+   public void testNext()
+   {
+      System.out.println("next");
+      GraphRowExactValues instance = new GraphRowExactValues();
+      Entry expResult = null;
+      Entry result = instance.next();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of remove method, of class GraphRowExactValues.
+    */
+   @Test
+   public void testRemove()
+   {
+      System.out.println("remove");
+      GraphRowExactValues instance = new GraphRowExactValues();
+      instance.remove();
+   }
 }

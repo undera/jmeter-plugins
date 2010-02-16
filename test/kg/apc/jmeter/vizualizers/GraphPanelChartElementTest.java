@@ -36,38 +36,38 @@ public class GraphPanelChartElementTest
    }
 
    /**
-    * Test of add method, of class GraphPanelChartElement.
+    * Test of add method, of class GraphPanelChartAverageElement.
     */
    @Test
    public void testAdd()
    {
       System.out.println("add");
       double yVal = 0.0;
-      GraphPanelChartElement instance = new GraphPanelChartElement(yVal);
+      GraphPanelChartAverageElement instance = new GraphPanelChartAverageElement(yVal);
       instance.add(yVal);
    }
 
    /**
-    * Test of getAvgValue method, of class GraphPanelChartElement.
+    * Test of getAvgValue method, of class GraphPanelChartAverageElement.
     */
    @Test
    public void testGetAvgValue()
    {
       System.out.println("getAvgValue");
       double expResult = 0.0;
-      GraphPanelChartElement instance = new GraphPanelChartElement(expResult);
-      double result = instance.getAvgValue();
+      GraphPanelChartAverageElement instance = new GraphPanelChartAverageElement(expResult);
+      double result = instance.getValue();
       assertEquals(expResult, result, 0.0);
    }
 
    /**
-    * Test of getCount method, of class GraphPanelChartElement.
+    * Test of getCount method, of class GraphPanelChartAverageElement.
     */
    @Test
    public void testGetCount()
    {
       System.out.println("getCount");
-      GraphPanelChartElement instance = new GraphPanelChartElement();
+      GraphPanelChartAverageElement instance = new GraphPanelChartAverageElement();
       int expResult = 0;
       int result = instance.getCount();
       assertEquals(expResult, result);

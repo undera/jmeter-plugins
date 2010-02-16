@@ -7,34 +7,34 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class GraphRowAverages
      extends AbstractGraphRow
 {
-   private ConcurrentSkipListMap<Long, GraphPanelChartElement> values;
+   private ConcurrentSkipListMap<Long, GraphPanelChartAverageElement> values;
 
    public GraphRowAverages()
    {
       super();
-      values = new ConcurrentSkipListMap<Long, GraphPanelChartElement>();
+      values = new ConcurrentSkipListMap<Long, GraphPanelChartAverageElement>();
    }
 
    @Override
    public void add(long xVal, double yVal)
    {
-      GraphPanelChartElement el;
+      GraphPanelChartAverageElement el;
       if (values.containsKey(xVal))
       {
          el = values.get(xVal);
          el.add(yVal);
-         yVal = el.getAvgValue();
+         yVal = el.getValue();
       }
       else
       {
-         el = new GraphPanelChartElement(yVal);
+         el = new GraphPanelChartAverageElement(yVal);
          values.put(xVal, el);
       }
 
       super.add(xVal, yVal);
    }
 
-   public Iterator<Entry<Long, GraphPanelChartElement>> iterator()
+   public Iterator iterator()
    {
       return values.entrySet().iterator();
    }

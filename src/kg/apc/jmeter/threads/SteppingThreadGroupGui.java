@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import kg.apc.jmeter.vizualizers.AbstractGraphRow;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
 import kg.apc.jmeter.vizualizers.GraphPanelChart;
-import kg.apc.jmeter.vizualizers.GraphRowAverages;
+import kg.apc.jmeter.vizualizers.GraphRowExactValues;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.threads.JMeterThread;
@@ -161,7 +161,7 @@ public class SteppingThreadGroupGui
    private void updateChart(SteppingThreadGroup tg)
    {
       model.clear();
-      GraphRowAverages row = new GraphRowAverages();
+      GraphRowExactValues row = new GraphRowExactValues();
       row.setColor(Color.RED);
       row.setDrawLine(true);
       row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);

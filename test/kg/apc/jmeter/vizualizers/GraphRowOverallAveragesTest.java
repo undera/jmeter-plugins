@@ -46,19 +46,19 @@ public class GraphRowOverallAveragesTest
       GraphRowOverallAverages instance = new GraphRowOverallAverages();
       instance.add(0, 0);
       assertEquals(0, instance.getKey(), 0.01);
-      assertEquals(0, instance.getValue().getAvgValue(), 0.01);
+      assertEquals(0, instance.getValue().getValue(), 0.01);
 
       instance.add(1, 1);
       assertEquals(1, instance.getKey(), 0.01);
-      assertEquals(0.5, instance.getValue().getAvgValue(), 0.01);
+      assertEquals(0.5, instance.getValue().getValue(), 0.01);
 
       instance.add(1, 1);
       assertEquals(1, instance.getKey(), 0.01);
-      assertEquals(0.66, instance.getValue().getAvgValue(), 0.01);
+      assertEquals(0.66, instance.getValue().getValue(), 0.01);
 
       instance.add(5, 10);
       assertEquals(2, instance.getKey(), 0.01);
-      assertEquals(3, instance.getValue().getAvgValue(), 0.01);
+      assertEquals(3, instance.getValue().getValue(), 0.01);
    }
 
    /**
@@ -137,8 +137,8 @@ public class GraphRowOverallAveragesTest
    {
       System.out.println("getValue");
       GraphRowOverallAverages instance = new GraphRowOverallAverages();
-      GraphPanelChartElement result = instance.getValue();
-      assertEquals(0, result.getAvgValue(), 0.01);
+      GraphPanelChartAverageElement result = instance.getValue();
+      assertEquals(0, result.getValue(), 0.01);
    }
 
    /**
@@ -148,11 +148,11 @@ public class GraphRowOverallAveragesTest
    public void testSetValue()
    {
       System.out.println("setValue");
-      GraphPanelChartElement value = null;
+      GraphPanelChartAverageElement value = null;
       GraphRowOverallAverages instance = new GraphRowOverallAverages();
       try
       {
-         GraphPanelChartElement result = instance.setValue(value);
+         GraphPanelChartAverageElement result = instance.setValue(value);
          fail("Exception expected");
       }
       catch (UnsupportedOperationException e)

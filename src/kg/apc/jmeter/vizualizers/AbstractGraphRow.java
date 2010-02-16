@@ -117,7 +117,7 @@ public abstract class AbstractGraphRow
          minY = yVal;
    }
 
-   public abstract Iterator<Entry<Long, GraphPanelChartElement>> iterator();
+   public abstract Iterator<Entry<Long, Object>> iterator();
 
    /**
     * @return the drawValueLabel

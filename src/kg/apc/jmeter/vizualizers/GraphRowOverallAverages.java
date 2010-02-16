@@ -5,16 +5,16 @@ import java.util.Map.Entry;
 
 public class GraphRowOverallAverages
      extends AbstractGraphRow
-     implements Iterator, Entry<Long, GraphPanelChartElement>
+     implements Iterator, Entry<Long, GraphPanelChartAverageElement>
 {
    private boolean hasNext;
-   private GraphPanelChartElement element;
+   private GraphPanelChartAverageElement element;
    private double avgX = 0;
 
    public GraphRowOverallAverages()
    {
       super();
-      element = new GraphPanelChartElement();
+      element = new GraphPanelChartAverageElement();
       hasNext = true;
    }
 
@@ -24,10 +24,10 @@ public class GraphRowOverallAverages
       avgX = (avgX * element.getCount() + xVal) / (element.getCount() + 1);
       element.add(yVal);
 
-      super.add((long) avgX, element.getAvgValue());
+      super.add((long) avgX, element.getValue());
    }
 
-   public Iterator<Entry<Long, GraphPanelChartElement>> iterator()
+   public Iterator iterator()
    {
       hasNext = true;
       return this;
@@ -54,12 +54,12 @@ public class GraphRowOverallAverages
       return Math.round(avgX);
    }
 
-   public GraphPanelChartElement getValue()
+   public GraphPanelChartAverageElement getValue()
    {
       return element;
    }
 
-   public GraphPanelChartElement setValue(GraphPanelChartElement value)
+   public GraphPanelChartAverageElement setValue(GraphPanelChartAverageElement value)
    {
       throw new UnsupportedOperationException("Not supported yet.");
    }

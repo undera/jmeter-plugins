@@ -262,8 +262,8 @@ public class GraphPanelChart
    private void paintRow(Graphics g, AbstractGraphRow row)
    {
       FontMetrics fm = g.getFontMetrics(g.getFont());
-      Iterator<Entry<Long, GraphPanelChartElement>> it = row.iterator();
-      Entry<Long, GraphPanelChartElement> element;
+      Iterator<Entry<Long, Object>> it = row.iterator();
+      Entry<Long, Object> element;
       int radius = row.getMarkerSize();
       int x, y;
       int prevX = drawStartFinalZeroingLines ? chartRect.x : -1;
@@ -278,7 +278,8 @@ public class GraphPanelChart
             continue;
 
          x = chartRect.x + (int) ((element.getKey() - minXVal) * dxForDVal);
-         y = chartRect.y + chartRect.height - (int) (element.getValue().getAvgValue() * dyForDVal);
+         AbstractGraphPanelChartElement elementValue = (AbstractGraphPanelChartElement) element.getValue();
+         y = chartRect.y + chartRect.height - (int) (elementValue.getValue() * dyForDVal);
 
          // draw lines
          if (row.isDrawLine())
@@ -295,7 +296,7 @@ public class GraphPanelChart
          if (row.isDrawValueLabel())
          {
             g.setColor(Color.DARK_GRAY);
-            yAxisLabelRenderer.setValue(element.getValue().getAvgValue());
+            yAxisLabelRenderer.setValue(elementValue.getValue());
             g.drawString(yAxisLabelRenderer.getText(),
                  x + row.getMarkerSize() + spacing,
                  y + fm.getAscent() / 2);

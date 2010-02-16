@@ -1,5 +1,6 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.charting;
 
+import kg.apc.jmeter.charting.GraphPanelChartAverageElement;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

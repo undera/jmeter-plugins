@@ -1,5 +1,8 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.charting.GraphRowAverages;
+import kg.apc.jmeter.charting.GraphRowOverallAverages;
+import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Color;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.gui.RateRenderer;

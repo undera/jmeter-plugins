@@ -5,6 +5,7 @@ package kg.apc.jmeter.vizualizers;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.util.concurrent.ConcurrentSkipListMap;
+import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.visualizers.GraphListener;
 import org.apache.jmeter.visualizers.ImageVisualizer;

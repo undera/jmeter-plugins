@@ -1,5 +1,7 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.charting;
 
+import kg.apc.jmeter.charting.GraphRowExactValues;
+import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import org.junit.After;

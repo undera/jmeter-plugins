@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;

@@ -1,4 +1,6 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.charting;
+
+import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 
 public class GraphPanelChartAverageElement
       extends AbstractGraphPanelChartElement

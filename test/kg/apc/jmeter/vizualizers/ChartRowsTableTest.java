@@ -1,6 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
-import javax.swing.table.TableCellRenderer;
+import kg.apc.jmeter.charting.GraphRowOverallAverages;
+import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

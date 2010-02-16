@@ -1,7 +1,14 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.charting.GraphPanelChart;
+import kg.apc.jmeter.vizualizers.GraphPanel;
+import kg.apc.jmeter.charting.GraphRowOverallAverages;
+import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Image;
 import javax.swing.event.ChangeEvent;
+import kg.apc.jmeter.charting.AbstractGraphRow;
+import kg.apc.jmeter.charting.GraphPanelChart;
+import kg.apc.jmeter.charting.GraphRowOverallAverages;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

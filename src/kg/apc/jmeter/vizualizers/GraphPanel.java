@@ -1,6 +1,7 @@
 // TODO: add slider to zoom Y axis
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Image;
@@ -11,6 +12,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import kg.apc.jmeter.charting.AbstractGraphRow;
+import kg.apc.jmeter.charting.GraphPanelChart;
+import kg.apc.jmeter.vizualizers.ChartRowsTable;
 
 public class GraphPanel
      extends JTabbedPane

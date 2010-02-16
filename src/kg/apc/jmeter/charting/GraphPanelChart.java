@@ -1,5 +1,7 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.charting;
 
+import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
+import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -365,7 +367,7 @@ public class GraphPanelChart
       this.currentXVal = currentX;
    }
 
-   void setForcedMinX(int i)
+   public void setForcedMinX(int i)
    {
       forcedMinX = i;
    }

@@ -1,7 +1,5 @@
 package kg.apc.jmeter.charting;
 
-import kg.apc.jmeter.charting.GraphRowExactValues;
-import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import org.junit.After;
@@ -89,9 +87,10 @@ public class GraphRowExactValuesTest
    {
       System.out.println("next");
       GraphRowExactValues instance = new GraphRowExactValues();
-      Entry expResult = null;
-      Entry result = instance.next();
-      assertEquals(expResult, result);
+      instance.add(1, 1);
+      Iterator it = instance.iterator();
+      Entry result = (Entry) it.next();
+      assertEquals(1L, result.getKey());
    }
 
    /**
@@ -102,6 +101,14 @@ public class GraphRowExactValuesTest
    {
       System.out.println("remove");
       GraphRowExactValues instance = new GraphRowExactValues();
-      instance.remove();
+      try
+      {
+         instance.remove();
+         fail("Exception expected");
+      }
+      catch (UnsupportedOperationException e)
+      {
+      }
+
    }
 }

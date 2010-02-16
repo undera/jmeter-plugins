@@ -33,10 +33,16 @@ public class SteppingThreadGroupGui
    private JTextField decUserCount;
    private JTextField decUserPeriod;
    private JTextField totalThreads;
+   private final LoopController controller;
+   //private LoopControlPanel loopPanel;
 
    public SteppingThreadGroupGui()
    {
+      super();
       init();
+      //add(createControllerPanel(), BorderLayout.SOUTH);
+      controller = new LoopController();
+      controller.setLoops(10);
    }
 
    @Override
@@ -124,6 +130,7 @@ public class SteppingThreadGroupGui
    public TestElement createTestElement()
    {
       SteppingThreadGroup tg = new SteppingThreadGroup();
+      tg.setSamplerController(controller);
       modifyTestElement(tg);
       return tg;
    }
@@ -156,6 +163,8 @@ public class SteppingThreadGroupGui
       decUserCount.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.DEC_USER_COUNT)));
       decUserPeriod.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.DEC_USER_PERIOD)));
       flightTime.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.FLIGHT_TIME)));
+
+      //loopPanel.configure((TestElement) tg.getProperty(AbstractThreadGroup.MAIN_CONTROLLER).getObjectValue());
    }
 
    private void updateChart(SteppingThreadGroup tg)
@@ -174,13 +183,13 @@ public class SteppingThreadGroupGui
 
       // test start
       row.add(System.currentTimeMillis(), 0);
-      row.add(System.currentTimeMillis()+tg.getThreadGroupDelay()-1, 0);
+      row.add(System.currentTimeMillis() + tg.getThreadGroupDelay() - 1, 0);
       for (int n = 0; n < tg.getNumThreads(); n++)
       {
          thread.setThreadNum(n);
          tg.scheduleThread(thread);
-         row.add(thread.getStartTime(), n);
-         row.add(thread.getEndTime(), tg.getNumThreads()-n);
+         row.add(thread.getStartTime(), n + 1);
+         row.add(thread.getEndTime(), tg.getNumThreads() - n);
       }
 
       Iterator it = counts.keySet().iterator();
@@ -193,15 +202,15 @@ public class SteppingThreadGroupGui
       chart.repaint();
    }
 
-   private void addCount(HashMap<Long, Long> counts, long xVal)
+   /*
+   private JPanel createControllerPanel()
    {
-      if (counts.containsKey(xVal))
-      {
-         counts.put(xVal, counts.get(xVal) + 1);
-      }
-      else
-      {
-         counts.put(xVal, 1L);
-      }
+   loopPanel = new LoopControlPanel(false);
+   LoopController looper = (LoopController) loopPanel.createTestElement();
+   looper.setLoops(1);
+   loopPanel.configure(looper);
+   return loopPanel;
    }
+    * 
+    */
 }

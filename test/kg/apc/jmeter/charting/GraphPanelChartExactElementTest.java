@@ -40,8 +40,8 @@ public class GraphPanelChartExactElementTest
    public void testGetValue()
    {
       System.out.println("getValue");
-      GraphPanelChartExactElement instance = null;
-      double expResult = 0.0;
+      GraphPanelChartExactElement instance = new GraphPanelChartExactElement(1, 1);
+      double expResult = 1.0;
       double result = instance.getValue();
       assertEquals(expResult, result, 0.0);
    }
@@ -53,8 +53,8 @@ public class GraphPanelChartExactElementTest
    public void testGetX()
    {
       System.out.println("getX");
-      GraphPanelChartExactElement instance = null;
-      long expResult = 0L;
+      GraphPanelChartExactElement instance = new GraphPanelChartExactElement(1, 1);
+      long expResult = 1L;
       long result = instance.getX();
       assertEquals(expResult, result);
    }

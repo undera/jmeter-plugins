@@ -1,7 +1,5 @@
 package kg.apc.jmeter.charting;
 
-import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
-import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;

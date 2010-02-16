@@ -1,8 +1,6 @@
 package kg.apc.jmeter.charting;
 
-import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public class GraphRowAverages

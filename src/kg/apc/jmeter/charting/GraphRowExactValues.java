@@ -1,23 +1,20 @@
 package kg.apc.jmeter.charting;
 
-import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.Vector;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class GraphRowExactValues
       extends AbstractGraphRow
       implements Iterator<Entry<Long, Object>>
 {
-   //private ConcurrentSkipListMap<Long, GraphPanelChartAverageElement> values;
-   private Vector<GraphPanelChartExactElement> values;
-   private Iterator<GraphPanelChartExactElement> iterator;
+   private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> values;
+   private Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator;
 
    public GraphRowExactValues()
    {
       super();
-      //values = new ConcurrentSkipListMap<Long, GraphPanelChartAverageElement>();
-      values = new Vector<GraphPanelChartExactElement>();
+      values = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
    }
 
    @Override
@@ -25,7 +22,7 @@ public class GraphRowExactValues
    {
       GraphPanelChartExactElement el;
       el = new GraphPanelChartExactElement(xVal, yVal);
-      values.add(el);
+      values.put((long) values.size(), el);
 
       super.add(xVal, yVal);
    }
@@ -33,18 +30,18 @@ public class GraphRowExactValues
    @Override
    public Iterator<Entry<Long, Object>> iterator()
    {
-      iterator = values.iterator();
+      iterator = values.entrySet().iterator();
       return this;
    }
 
    public boolean hasNext()
    {
-      return iterator.hasNext();
+      return iterator==null?false:iterator.hasNext();
    }
 
    public Entry<Long, Object> next()
    {
-      GraphPanelChartExactElement el = iterator.next();
+      GraphPanelChartExactElement el = (GraphPanelChartExactElement) iterator.next().getValue();
       return new ExactEntry(el.getX(), el);
    }
 

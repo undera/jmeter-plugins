@@ -1,7 +1,5 @@
 package kg.apc.jmeter.charting;
 
-import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
-
 public class GraphPanelChartExactElement
       extends AbstractGraphPanelChartElement
 {

@@ -4,7 +4,9 @@
  */
 package kg.apc.jmeter.threads;
 
+import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.threads.JMeterThread;
+import org.apache.jorphan.collections.HashTree;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,7 +51,9 @@ public class SteppingThreadGroupTest
    public void testScheduleThread()
    {
       System.out.println("scheduleThread");
-      JMeterThread thread = null;
+      HashTree hashtree = new HashTree();
+      hashtree.add(new LoopController());
+      JMeterThread thread = new JMeterThread(hashtree, null, null);
       SteppingThreadGroup instance = new SteppingThreadGroup();
       instance.scheduleThread(thread);
    }
@@ -88,7 +92,7 @@ public class SteppingThreadGroupTest
    {
       System.out.println("getInUserCount");
       SteppingThreadGroup instance = new SteppingThreadGroup();
-      int expResult = 0;
+      int expResult = 1;
       int result = instance.getInUserCount();
       assertEquals(expResult, result);
    }
@@ -127,7 +131,7 @@ public class SteppingThreadGroupTest
    {
       System.out.println("getOutUserCount");
       SteppingThreadGroup instance = new SteppingThreadGroup();
-      int expResult = 0;
+      int expResult = 1;
       int result = instance.getOutUserCount();
       assertEquals(expResult, result);
    }

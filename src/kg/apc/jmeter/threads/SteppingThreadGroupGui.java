@@ -5,6 +5,10 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import kg.apc.jmeter.vizualizers.AbstractGraphRow;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
 import kg.apc.jmeter.vizualizers.GraphPanelChart;
@@ -14,12 +18,19 @@ import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
 import org.apache.jorphan.collections.HashTree;
+import org.apache.jorphan.gui.layout.VerticalLayout;
 
 public class SteppingThreadGroupGui
       extends AbstractThreadGroupGui
 {
    protected ConcurrentHashMap<String, AbstractGraphRow> model;
    private GraphPanelChart chart;
+   private JTextField initialDelay;
+   private JTextField incUserCount;
+   private JTextField incUserPeriod;
+   private JTextField flightTime;
+   private JTextField decUserCount;
+   private JTextField decUserPeriod;
 
    public SteppingThreadGroupGui()
    {
@@ -30,14 +41,62 @@ public class SteppingThreadGroupGui
    protected void init()
    {
       super.init();
+
+      JPanel containerPanel=new JPanel(new BorderLayout());
+
+      containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
+
       chart=new GraphPanelChart();
       model=new ConcurrentHashMap<String, AbstractGraphRow>();
       chart.setRows(model);
       chart.setDrawFinalZeroingLines(true);
       chart.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
-      add(chart, BorderLayout.CENTER);
+      containerPanel.add(chart, BorderLayout.CENTER);
+
+      add(containerPanel, BorderLayout.CENTER);
    }
 
+    private JPanel createParamsPanel() {
+        JPanel panel = new JPanel(new VerticalLayout(0, VerticalLayout.LEFT));
+        panel.setBorder(BorderFactory.createTitledBorder("Threads Scheduling Parameters"));
+
+        JPanel panel1=new JPanel();
+        panel1.add(new JLabel("First, wait for ", JLabel.RIGHT));
+        initialDelay=new JTextField("0", 5);
+        panel1.add(initialDelay);
+        panel1.add(new JLabel(" seconds.", JLabel.LEFT));
+        panel.add(panel1);
+
+        JPanel panel2=new JPanel();
+        panel2.add(new JLabel("Then start ", JLabel.RIGHT));
+        incUserCount=new JTextField("1", 5);
+        panel2.add(incUserCount);
+        panel2.add(new JLabel("threads every ", JLabel.LEFT));
+        incUserPeriod=new JTextField("1", 5);
+        panel2.add(incUserPeriod);
+        panel2.add(new JLabel(" seconds.", JLabel.LEFT));
+        panel.add(panel2);
+
+
+        JPanel panel3=new JPanel();
+        panel3.add(new JLabel("Then work for ", JLabel.RIGHT));
+        flightTime=new JTextField("60", 5);
+        panel3.add(flightTime);
+        panel3.add(new JLabel(" seconds. ", JLabel.LEFT));
+        panel.add(panel3);
+
+        JPanel panel4=new JPanel();
+        panel4.add(new JLabel("Finally, stop ", JLabel.RIGHT));
+        decUserCount=new JTextField("1", 5);
+        panel4.add(decUserCount);
+        panel4.add(new JLabel(" threads every ", JLabel.LEFT));
+        decUserPeriod=new JTextField("1", 5);
+        panel4.add(decUserPeriod);
+        panel4.add(new JLabel(" seconds.", JLabel.LEFT));
+        panel.add(panel4);
+
+        return panel;
+    }
    public String getLabelResource()
    {
       return this.getClass().getSimpleName();

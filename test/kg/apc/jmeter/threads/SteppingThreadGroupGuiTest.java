@@ -106,6 +106,7 @@ public class SteppingThreadGroupGuiTest
       System.out.println("configure");
       TestElement tg = new SteppingThreadGroup();
       SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
+      instance.createTestElement();
       instance.configure(tg);
    }
 }

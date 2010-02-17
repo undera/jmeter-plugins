@@ -1,10 +1,9 @@
+// TODO: fix start time when test was started
 package kg.apc.jmeter.threads;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -15,7 +14,9 @@ import kg.apc.jmeter.vizualizers.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowExactValues;
 import org.apache.jmeter.control.LoopController;
+import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
 import org.apache.jorphan.collections.HashTree;
@@ -33,16 +34,12 @@ public class SteppingThreadGroupGui
    private JTextField decUserCount;
    private JTextField decUserPeriod;
    private JTextField totalThreads;
-   private final LoopController controller;
-   //private LoopControlPanel loopPanel;
+   private LoopControlPanel loopPanel;
 
    public SteppingThreadGroupGui()
    {
       super();
       init();
-      //add(createControllerPanel(), BorderLayout.SOUTH);
-      controller = new LoopController();
-      controller.setLoops(10);
    }
 
    @Override
@@ -62,10 +59,15 @@ public class SteppingThreadGroupGui
       containerPanel.add(chart, BorderLayout.CENTER);
 
       add(containerPanel, BorderLayout.CENTER);
+
+      // this magic LoopPanel provides functionality for thread loops
+      // TODO: find a way without magic
+      createControllerPanel();
    }
 
    private JPanel createParamsPanel()
    {
+      // TODO arrange controls in better way
       JPanel panel = new JPanel(new VerticalLayout(0, VerticalLayout.LEFT));
       panel.setBorder(BorderFactory.createTitledBorder("Threads Scheduling Parameters"));
 
@@ -130,7 +132,6 @@ public class SteppingThreadGroupGui
    public TestElement createTestElement()
    {
       SteppingThreadGroup tg = new SteppingThreadGroup();
-      tg.setSamplerController(controller);
       modifyTestElement(tg);
       return tg;
    }
@@ -149,6 +150,7 @@ public class SteppingThreadGroupGui
       if (tg instanceof SteppingThreadGroup)
       {
          updateChart((SteppingThreadGroup) tg);
+         ((AbstractThreadGroup) tg).setSamplerController((LoopController) loopPanel.createTestElement());
       }
    }
 
@@ -164,7 +166,11 @@ public class SteppingThreadGroupGui
       decUserPeriod.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.DEC_USER_PERIOD)));
       flightTime.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.FLIGHT_TIME)));
 
-      //loopPanel.configure((TestElement) tg.getProperty(AbstractThreadGroup.MAIN_CONTROLLER).getObjectValue());
+      TestElement te = (TestElement) tg.getProperty(AbstractThreadGroup.MAIN_CONTROLLER).getObjectValue();
+      if (te != null)
+      {
+         loopPanel.configure(te);
+      }
    }
 
    private void updateChart(SteppingThreadGroup tg)
@@ -200,21 +206,19 @@ public class SteppingThreadGroupGui
       }
 
       // final point
-      row.add(thread.getEndTime()+tg.getOutUserPeriod()*1000, 0);
+      row.add(thread.getEndTime() + tg.getOutUserPeriod() * 1000, 0);
 
       model.put("Expected parallel users count", row);
       chart.repaint();
    }
 
-   /*
    private JPanel createControllerPanel()
    {
-   loopPanel = new LoopControlPanel(false);
-   LoopController looper = (LoopController) loopPanel.createTestElement();
-   looper.setLoops(1);
-   loopPanel.configure(looper);
-   return loopPanel;
+      loopPanel = new LoopControlPanel(false);
+      LoopController looper = (LoopController) loopPanel.createTestElement();
+      looper.setLoops(-1);
+      looper.setContinueForever(true);
+      loopPanel.configure(looper);
+      return loopPanel;
    }
-    * 
-    */
 }

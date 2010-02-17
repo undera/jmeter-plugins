@@ -1,6 +1,9 @@
 package kg.apc.jmeter.dcerpc;
 
 // this class holds common knowlege for rpc requests
+
+import org.apache.jorphan.util.JOrphanUtils;
+
 public abstract class RPCPacket
 {
    /* packet types */
@@ -102,7 +105,7 @@ public abstract class RPCPacket
             break;
 
          default:
-            throw new UnsupportedOperationException("Unsupported packet type: " + Byte.toString(packetType));
+            throw new UnsupportedOperationException("Unsupported packet type: " + Byte.toString(packetType) + ", full HEX: " +JOrphanUtils.baToHexString(resultBytes));
       }
 
       returnBytes = new byte[resultBytes.length - offset];

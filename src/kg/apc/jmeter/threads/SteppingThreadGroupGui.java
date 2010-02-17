@@ -179,25 +179,29 @@ public class SteppingThreadGroupGui
       hashTree.add(new LoopController());
       JMeterThread thread = new JMeterThread(hashTree, null, null);
 
-      HashMap<Long, Long> counts = new HashMap<Long, Long>();
-
       // test start
       row.add(System.currentTimeMillis(), 0);
-      row.add(System.currentTimeMillis() + tg.getThreadGroupDelay() - 1, 0);
+      row.add(System.currentTimeMillis() + tg.getThreadGroupDelay(), 0);
+
+      // users in
       for (int n = 0; n < tg.getNumThreads(); n++)
       {
          thread.setThreadNum(n);
          tg.scheduleThread(thread);
          row.add(thread.getStartTime(), n + 1);
+      }
+
+      // users out
+      for (int n = 0; n < tg.getNumThreads(); n++)
+      {
+         thread.setThreadNum(n);
+         tg.scheduleThread(thread);
          row.add(thread.getEndTime(), tg.getNumThreads() - n);
       }
 
-      Iterator it = counts.keySet().iterator();
-      while (it.hasNext())
-      {
-         Long time = (Long) it.next();
-         row.add(time, counts.get(time));
-      }
+      // final point
+      row.add(thread.getEndTime()+tg.getOutUserPeriod()*1000, 0);
+
       model.put("Expected parallel users count", row);
       chart.repaint();
    }

@@ -4,6 +4,7 @@ package kg.apc.jmeter.threads;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ItemEvent;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -42,11 +43,8 @@ public class SteppingThreadGroupGui
       init();
    }
 
-   @Override
    protected void init()
    {
-      super.init();
-
       JPanel containerPanel = new JPanel(new BorderLayout());
 
       containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
@@ -220,5 +218,10 @@ public class SteppingThreadGroupGui
       looper.setContinueForever(true);
       loopPanel.configure(looper);
       return loopPanel;
+   }
+
+   public void itemStateChanged(ItemEvent e)
+   {
+      throw new UnsupportedOperationException("Not supported yet.");
    }
 }

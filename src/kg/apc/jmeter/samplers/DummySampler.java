@@ -1,5 +1,3 @@
-// TODO: add response time
-
 package kg.apc.jmeter.samplers;
 
 import org.apache.jmeter.samplers.AbstractSampler;
@@ -12,10 +10,11 @@ public class DummySampler
       extends AbstractSampler
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
-   public static String IS_SUCCESSFUL = "Successful";
-   public static String RESPONSE_CODE = "Response Code (e.g. 200)";
-   public static String RESPONSE_MESSAGE = "Response Message (e.g. OK)";
-   public static String RESPONSE_DATA = "Response Data";
+   public static final String IS_SUCCESSFUL = "SUCCESFULL";
+   public static final String RESPONSE_CODE = "RESPONSE_CODE";
+   public static final String RESPONSE_MESSAGE = "RESPONSE_MESSAGE";
+   public static final String RESPONSE_DATA = "RESPONSE_DATA";
+   public static final String RESPONSE_TIME = "RESPONSE_TIME";
 
    public SampleResult sample(Entry e)
    {
@@ -23,7 +22,7 @@ public class DummySampler
       res.setSampleLabel(getName());
 
       // response time
-      res.sampleStart();
+      res.setStampAndTime(System.currentTimeMillis(), getResponseTime());
 
       // source data
       res.setSamplerData(getResponseData());
@@ -92,5 +91,15 @@ public class DummySampler
    public String getResponseData()
    {
       return getPropertyAsString(RESPONSE_DATA);
+   }
+
+   public int getResponseTime()
+   {
+      return getPropertyAsInt(RESPONSE_TIME);
+   }
+
+   public void setResponseTime(int time)
+   {
+      setProperty(RESPONSE_TIME, time);
    }
 }

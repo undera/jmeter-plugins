@@ -1,9 +1,8 @@
-// TODO: fix start time when test was started
 package kg.apc.jmeter.threads;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
@@ -21,7 +20,6 @@ import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
 import org.apache.jorphan.collections.HashTree;
-import org.apache.jorphan.gui.layout.VerticalLayout;
 
 public class SteppingThreadGroupGui
       extends AbstractThreadGroupGui
@@ -65,53 +63,45 @@ public class SteppingThreadGroupGui
 
    private JPanel createParamsPanel()
    {
-      // TODO arrange controls in better way
-      JPanel panel = new JPanel(new VerticalLayout(0, VerticalLayout.LEFT));
+      JPanel panel = new JPanel(new GridLayout(0, 5, 5, 5));
       panel.setBorder(BorderFactory.createTitledBorder("Threads Scheduling Parameters"));
 
-      JPanel panel0 = new JPanel();
-      panel0.add(new JLabel("This group will start ", JLabel.LEFT));
+      panel.add(new JLabel());
+      panel.add(new JLabel("This group will start", JLabel.RIGHT));
       totalThreads = new JTextField("1", 5);
-      panel0.add(totalThreads);
-      panel0.add(new JLabel(" threads by following schedule: ", JLabel.RIGHT));
-      panel.add(panel0);
+      panel.add(totalThreads);
+      panel.add(new JLabel("threads:", JLabel.LEFT));
+      panel.add(new JLabel());
 
-      final FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT, 50, 0);
-
-      JPanel panel1 = new JPanel(flowLayout);
-      panel1.add(new JLabel("First, wait for ", JLabel.LEFT));
+      panel.add(new JLabel("First, wait for", JLabel.RIGHT));
       initialDelay = new JTextField("0", 5);
-      panel1.add(initialDelay);
-      panel1.add(new JLabel(" seconds.", JLabel.RIGHT));
-      panel.add(panel1);
+      panel.add(initialDelay);
+      panel.add(new JLabel("seconds.", JLabel.LEFT));
+      panel.add(new JLabel());
+      panel.add(new JLabel());
 
-      JPanel panel2 = new JPanel(flowLayout);
-      panel2.add(new JLabel("Then start ", JLabel.LEFT));
+      panel.add(new JLabel("Then start", JLabel.RIGHT));
       incUserCount = new JTextField("1", 5);
-      panel2.add(incUserCount);
-      panel2.add(new JLabel("threads every ", JLabel.RIGHT));
+      panel.add(incUserCount);
+      panel.add(new JLabel("threads every", JLabel.CENTER));
       incUserPeriod = new JTextField("1", 5);
-      panel2.add(incUserPeriod);
-      panel2.add(new JLabel(" seconds.", JLabel.RIGHT));
-      panel.add(panel2);
+      panel.add(incUserPeriod);
+      panel.add(new JLabel("seconds.", JLabel.LEFT));
 
-
-      JPanel panel3 = new JPanel(flowLayout);
-      panel3.add(new JLabel("Then work for ", JLabel.LEFT));
+      panel.add(new JLabel("Then work for", JLabel.RIGHT));
       flightTime = new JTextField("60", 5);
-      panel3.add(flightTime);
-      panel3.add(new JLabel(" seconds. ", JLabel.RIGHT));
-      panel.add(panel3);
+      panel.add(flightTime);
+      panel.add(new JLabel("seconds.", JLabel.LEFT));
+      panel.add(new JLabel());
+      panel.add(new JLabel());
 
-      JPanel panel4 = new JPanel(flowLayout);
-      panel4.add(new JLabel("Finally, stop ", JLabel.LEFT));
+      panel.add(new JLabel("Finally, stop", JLabel.RIGHT));
       decUserCount = new JTextField("1", 5);
-      panel4.add(decUserCount);
-      panel4.add(new JLabel(" threads every ", JLabel.RIGHT));
+      panel.add(decUserCount);
+      panel.add(new JLabel("threads every", JLabel.CENTER));
       decUserPeriod = new JTextField("1", 5);
-      panel4.add(decUserPeriod);
-      panel4.add(new JLabel(" seconds.", JLabel.RIGHT));
-      panel.add(panel4);
+      panel.add(decUserPeriod);
+      panel.add(new JLabel("seconds.", JLabel.LEFT));
 
       return panel;
    }

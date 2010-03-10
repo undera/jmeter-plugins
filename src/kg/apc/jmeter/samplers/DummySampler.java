@@ -3,13 +3,10 @@ package kg.apc.jmeter.samplers;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 public class DummySampler
       extends AbstractSampler
 {
-   private static final Logger log = LoggingManager.getLoggerForClass();
    public static final String IS_SUCCESSFUL = "SUCCESFULL";
    public static final String RESPONSE_CODE = "RESPONSE_CODE";
    public static final String RESPONSE_MESSAGE = "RESPONSE_MESSAGE";
@@ -19,10 +16,18 @@ public class DummySampler
    public SampleResult sample(Entry e)
    {
       SampleResult res = new SampleResult();
-      res.setSampleLabel(getName());
-
       // response time
-      res.setStampAndTime(System.currentTimeMillis(), getResponseTime());
+      res.sampleStart();
+      try
+      {
+         Thread.sleep(getResponseTime());
+      }
+      catch (InterruptedException ex)
+      {
+      }
+      res.sampleEnd();
+
+      res.setSampleLabel(getName());
 
       // source data
       res.setSamplerData(getResponseData());
@@ -35,8 +40,6 @@ public class DummySampler
       // responde data
       res.setDataType(SampleResult.TEXT);
       res.setResponseData(getResponseData().getBytes());
-
-      res.sampleEnd();
 
       return res;
    }

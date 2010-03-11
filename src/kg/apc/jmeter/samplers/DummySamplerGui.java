@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -109,58 +110,37 @@ public class DummySamplerGui
       JPanel mainPanel = new JPanel(new GridBagLayout());
 
       GridBagConstraints labelConstraints = new GridBagConstraints();
-      labelConstraints.anchor=GridBagConstraints.FIRST_LINE_END;
+      labelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
 
       GridBagConstraints editConstraints = new GridBagConstraints();
-      editConstraints.anchor=GridBagConstraints.FIRST_LINE_START;
-      editConstraints.weightx=1.0;
-      editConstraints.fill=GridBagConstraints.HORIZONTAL;
+      editConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+      editConstraints.weightx = 1.0;
+      editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-      labelConstraints.gridx=0;
-      labelConstraints.gridy=0;
-      mainPanel.add(new JLabel("Successfull sample: ", JLabel.RIGHT), labelConstraints);
-      isSuccessful = new JCheckBox();
-      editConstraints.gridx=1;
-      editConstraints.gridy=0;
-      mainPanel.add(isSuccessful, editConstraints);
+      addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Successfull sample: ", JLabel.RIGHT));
+      addToPanel(mainPanel, editConstraints, 1, 0, isSuccessful = new JCheckBox());
+      addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Response Code (eg 200): ", JLabel.RIGHT));
+      addToPanel(mainPanel, editConstraints, 1, 1, responseCode = new JTextField());
+      addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Response Message (eg OK): ", JLabel.RIGHT));
+      addToPanel(mainPanel, editConstraints, 1, 2, responseMessage = new JTextField());
+      addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Response Time (milliseconds): ", JLabel.RIGHT));
+      addToPanel(mainPanel, editConstraints, 1, 3, responseTime = new JTextField());
+      addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Response Data: ", JLabel.RIGHT));
 
-      labelConstraints.gridx=0;
-      labelConstraints.gridy=1;
-      mainPanel.add(new JLabel("Response Code (eg 200): ", JLabel.RIGHT), labelConstraints);
-      responseCode = new JTextField();
-      editConstraints.gridx=1;
-      editConstraints.gridy=1;
-      mainPanel.add(responseCode, editConstraints);
-
-      labelConstraints.gridx=0;
-      labelConstraints.gridy=2;
-      mainPanel.add(new JLabel("Response Message (eg OK): ", JLabel.RIGHT), labelConstraints);
-      responseMessage = new JTextField();
-      editConstraints.gridx=1;
-      editConstraints.gridy=2;
-      mainPanel.add(responseMessage, editConstraints);
-
-      labelConstraints.gridx=0;
-      labelConstraints.gridy=3;
-      mainPanel.add(new JLabel("Response Time (milliseconds): ", JLabel.RIGHT), labelConstraints);
-      responseTime = new JTextField();
-      editConstraints.gridx=1;
-      editConstraints.gridy=3;
-      mainPanel.add(responseTime, editConstraints);
-
-      labelConstraints.gridx=0;
-      labelConstraints.gridy=4;
-      mainPanel.add(new JLabel("Response Data: ", JLabel.RIGHT), labelConstraints);
-      responseData = new JTextArea();
+      editConstraints.fill = GridBagConstraints.BOTH;
+      addToPanel(mainPanel, editConstraints, 1, 4, responseData = new JTextArea());
       responseData.setRows(10);
       responseData.setBorder(new BevelBorder(BevelBorder.LOWERED));
-      editConstraints.gridx=1;
-      editConstraints.gridy=4;
-      editConstraints.fill=GridBagConstraints.BOTH;
-      mainPanel.add(responseData, editConstraints);
 
-      JPanel container=new JPanel(new BorderLayout());
+      JPanel container = new JPanel(new BorderLayout());
       container.add(mainPanel, BorderLayout.NORTH);
       add(container, BorderLayout.CENTER);
+   }
+
+   private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component)
+   {
+      constraints.gridx = col;
+      constraints.gridy = row;
+      panel.add(component, constraints);
    }
 }

@@ -209,9 +209,4 @@ public class SteppingThreadGroupGui
       loopPanel.configure(looper);
       return loopPanel;
    }
-
-   public void itemStateChanged(ItemEvent e)
-   {
-      throw new UnsupportedOperationException("Not supported yet.");
-   }
 }

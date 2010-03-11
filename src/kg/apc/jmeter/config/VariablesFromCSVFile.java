@@ -1,4 +1,5 @@
 // TODO: add column numbers selection
+// TODO: use rich gui with preview instead of Bean
 package kg.apc.jmeter.config;
 
 import java.io.IOException;

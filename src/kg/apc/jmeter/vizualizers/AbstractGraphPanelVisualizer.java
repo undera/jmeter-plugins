@@ -1,4 +1,5 @@
 // TODO: сделать прореживание рядов вдвое
+// TODO: сделать загрузку данных из файла
 
 package kg.apc.jmeter.vizualizers;
 

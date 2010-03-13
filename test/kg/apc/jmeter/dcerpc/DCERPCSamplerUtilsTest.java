@@ -1,6 +1,8 @@
 package kg.apc.jmeter.dcerpc;
 
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
+import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -136,6 +138,19 @@ public class DCERPCSamplerUtilsTest
       System.out.println("getOpNum");
       String str = "23456";
       short expResult = 23456;
+      short result = DCERPCSamplerUtils.getOpNum(str);
+      assertEquals(expResult, result);
+   }
+
+   @Test
+   public void testGetOpNum_exception()
+   {
+      System.out.println("getOpNum");
+      JMeterVariables vars = new JMeterVariables();
+      vars.put("test", "test");
+      JMeterContextService.getContext().setVariables(vars);
+      String str = "error!";
+      short expResult = Short.MAX_VALUE;
       short result = DCERPCSamplerUtils.getOpNum(str);
       assertEquals(expResult, result);
    }

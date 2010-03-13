@@ -2,6 +2,7 @@ package kg.apc.jmeter.vizualizers;
 
 import java.awt.event.MouseEvent;
 import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,6 +45,20 @@ public class HeaderClickCheckAllListenerTest
    {
       System.out.println("mouseClicked");
       JTable table=new JTable();
+      MouseEvent evt = new MouseEvent(table.getTableHeader(), 1, 1, 1, 10, 10, 1, true);
+      HeaderClickCheckAllListener instance = new HeaderClickCheckAllListener();
+      instance.mouseClicked(evt);
+   }
+
+   /**
+    * Test of mouseClicked method, of class HeaderClickCheckAllListener.
+    */
+   @Test
+   public void testMouseClicked_work()
+   {
+      System.out.println("mouseClicked");
+      JTable table=new JTable();
+      table.addColumn(new TableColumn());
       MouseEvent evt = new MouseEvent(table.getTableHeader(), 1, 1, 1, 10, 10, 1, true);
       HeaderClickCheckAllListener instance = new HeaderClickCheckAllListener();
       instance.mouseClicked(evt);

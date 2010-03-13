@@ -149,4 +149,29 @@ public class DummySamplerTest
       String result = instance.getResponseData();
       assertEquals(expResult, result);
    }
+
+   /**
+    * Test of getResponseTime method, of class DummySampler.
+    */
+   @Test
+   public void testGetResponseTime()
+   {
+      System.out.println("getResponseTime");
+      DummySampler instance = new DummySampler();
+      int expResult = 0;
+      int result = instance.getResponseTime();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of setResponseTime method, of class DummySampler.
+    */
+   @Test
+   public void testSetResponseTime()
+   {
+      System.out.println("setResponseTime");
+      int time = 0;
+      DummySampler instance = new DummySampler();
+      instance.setResponseTime(time);
+   }
 }

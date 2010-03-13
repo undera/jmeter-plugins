@@ -49,10 +49,15 @@ public class GraphPanelChartTest
       Graphics g = new TestGraphics();
       GraphPanelChart instance = new GraphPanelChart();
       instance.setSize(500, 500);
+      instance.setDrawFinalZeroingLines(true);
+      instance.setDrawCurrentX(true);
 
       final ConcurrentSkipListMap<String, AbstractGraphRow> rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
       instance.setRows(rows);
       final GraphRowAverages row1 = new GraphRowAverages();
+      row1.setDrawLine(true);
+      row1.setDrawValueLabel(true);
+      row1.setMarkerSize(AbstractGraphRow.MARKER_SIZE_BIG);
       rows.put("test 1", row1);
       row1.add(System.currentTimeMillis(), 20);
       instance.paintComponent(g);
@@ -62,6 +67,20 @@ public class GraphPanelChartTest
       instance.paintComponent(g);
 
       row1.add(System.currentTimeMillis(), 30);
+      instance.paintComponent(g);
+   }
+
+   @Test
+   public void testPaintComponent_empty()
+   {
+      System.out.println("paintComponent");
+      Graphics g = new TestGraphics();
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setSize(500, 500);
+      instance.setDrawFinalZeroingLines(false);
+
+      final ConcurrentSkipListMap<String, AbstractGraphRow> rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
+      instance.setRows(rows);
       instance.paintComponent(g);
    }
 

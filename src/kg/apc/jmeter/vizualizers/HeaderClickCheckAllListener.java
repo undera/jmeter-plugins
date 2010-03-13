@@ -21,7 +21,7 @@ class HeaderClickCheckAllListener
 
       // The index of the column whose header was clicked
       int vColIndex = colModel.getColumnIndexAtX(evt.getX());
-      int mColIndex = table.convertColumnIndexToModel(vColIndex);
+      //int mColIndex = table.convertColumnIndexToModel(vColIndex);
 
       // Return if not clicked on any column header
       if (vColIndex == -1)

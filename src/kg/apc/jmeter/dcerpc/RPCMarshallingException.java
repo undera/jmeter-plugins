@@ -1,6 +1,6 @@
 package kg.apc.jmeter.dcerpc;
 
-class RPCMarshallingException
+public class RPCMarshallingException
       extends Exception
 {
 

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Locale;
 import org.apache.jmeter.util.JMeterUtils;
 
-public abstract class TestJMeterUtils
+public class TestJMeterUtils
 {
    public static void createJmeterEnv()
    {

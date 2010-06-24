@@ -14,7 +14,7 @@ import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 
 public class DummySamplerGui
-      extends AbstractSamplerGui
+     extends AbstractSamplerGui
 {
    private JCheckBox isSuccessful;
    private JTextField responseCode;
@@ -80,9 +80,6 @@ public class DummySamplerGui
       }
    }
 
-   /**
-    * Implements JMeterGUIComponent.clearGui
-    */
    @Override
    public void clearGui()
    {

@@ -47,6 +47,6 @@ public class VariablesFromCSVFileBeanInfoTest
    @Test
    public void testConstructor()
    {
-      VariablesFromCSVFileBeanInfo instance = new VariablesFromCSVFileBeanInfo();
+      new VariablesFromCSVFileBeanInfo();
    }
 }

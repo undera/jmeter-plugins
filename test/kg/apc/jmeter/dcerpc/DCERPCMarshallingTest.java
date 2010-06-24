@@ -206,7 +206,7 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
-      @Test
+   @Test
    public void testHexEncodeTextParts_DOUBLE()
         throws RPCMarshallingException
    {
@@ -327,7 +327,7 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
-      /**
+   /**
     * Test of unmarshalData method, of class DCERPCMarshalling.
     */
    @Test
@@ -335,7 +335,7 @@ public class DCERPCMarshallingTest
         throws Exception
    {
       System.out.println("unmarshalData int");
-      byte[] ba = BinaryTCPClientImpl.hexStringToByteArray("01000000"+"01000000"+"010000");
+      byte[] ba = BinaryTCPClientImpl.hexStringToByteArray("01000000" + "01000000" + "010000");
       String unmarshalOptions = "I";
       String expResult = "{1,1,}010000";
       String result = DCERPCMarshalling.unmarshalData(ba, unmarshalOptions);
@@ -347,12 +347,13 @@ public class DCERPCMarshallingTest
         throws Exception
    {
       System.out.println("unmarshalData int");
-      byte[] ba = BinaryTCPClientImpl.hexStringToByteArray("01000000"+"01000000"+"01000000"+"01000000");
+      byte[] ba = BinaryTCPClientImpl.hexStringToByteArray("01000000" + "01000000" + "01000000" + "01000000");
       String unmarshalOptions = "I:3";
       String expResult = "{1,1,1,}01000000";
       String result = DCERPCMarshalling.unmarshalData(ba, unmarshalOptions);
       assertEquals(expResult, result);
    }
+
    /**
     * Test of marshalData method, of class DCERPCMarshalling.
     */

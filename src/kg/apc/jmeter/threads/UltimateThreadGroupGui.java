@@ -5,13 +5,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableCellEditor;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
@@ -34,6 +38,8 @@ public class UltimateThreadGroupGui
    private LoopControlPanel loopPanel;
    private PowerTableModel tableModel;
    private JTable paramTable;
+   private JButton addRowButton;
+   private JButton deleteRowButton;
 
    public UltimateThreadGroupGui()
    {
@@ -46,7 +52,7 @@ public class UltimateThreadGroupGui
       JPanel containerPanel = new VerticalPanel();
 
       containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
-      //containerPanel.add(createChart(), BorderLayout.CENTER);
+      containerPanel.add(createChart(), BorderLayout.CENTER);
       add(containerPanel, BorderLayout.CENTER);
 
       // this magic LoopPanel provides functionality for thread loops
@@ -57,11 +63,13 @@ public class UltimateThreadGroupGui
    private JPanel createParamsPanel()
    {
       JPanel panel = new JPanel(new BorderLayout(5, 5));
-      panel.setBorder(BorderFactory.createTitledBorder("Threads Scheduling Parameters"));
+      panel.setBorder(BorderFactory.createTitledBorder("Threads Schedule"));
+      panel.setPreferredSize(new Dimension(200, 200));
 
       JScrollPane scroll = new JScrollPane(createGrid());
       scroll.setPreferredSize(scroll.getMinimumSize());
       panel.add(scroll, BorderLayout.CENTER);
+      panel.add(createButtons(), BorderLayout.SOUTH);
 
       return panel;
    }
@@ -212,5 +220,83 @@ public class UltimateThreadGroupGui
       chart.setDrawFinalZeroingLines(true);
       chart.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
       return chart;
+   }
+
+   private Component createButtons()
+   {
+      JPanel buttonPanel = new JPanel();
+      buttonPanel.setLayout(new GridLayout(1, 2));
+
+      addRowButton = new JButton("Add Row");
+      deleteRowButton = new JButton("Delete Row"); 
+
+      buttonPanel.add(addRowButton);
+      buttonPanel.add(deleteRowButton);
+
+      addRowButton.addActionListener(new AddRowAction());
+      deleteRowButton.addActionListener(new DeleteRowAction());
+
+      return buttonPanel;
+   }
+
+   private class AddRowAction
+         implements ActionListener
+   {
+      public void actionPerformed(ActionEvent e)
+      {
+         if (paramTable.isEditing())
+         {
+            TableCellEditor cellEditor = paramTable.getCellEditor(paramTable.getEditingRow(), paramTable.getEditingColumn());
+            cellEditor.stopCellEditing();
+         }
+
+         tableModel.addNewRow();
+         tableModel.fireTableDataChanged();
+
+         // Enable DELETE (which may already be enabled, but it won't hurt)
+         deleteRowButton.setEnabled(true);
+
+         // Highlight (select) the appropriate row.
+         int rowToSelect = tableModel.getRowCount() - 1;
+         paramTable.setRowSelectionInterval(rowToSelect, rowToSelect);
+      }
+   }
+
+   private class DeleteRowAction
+         implements ActionListener
+   {
+      public void actionPerformed(ActionEvent e)
+      {
+         if (paramTable.isEditing())
+         {
+            TableCellEditor cellEditor = paramTable.getCellEditor(paramTable.getEditingRow(), paramTable.getEditingColumn());
+            cellEditor.cancelCellEditing();
+         }
+
+         int rowSelected = paramTable.getSelectedRow();
+         if (rowSelected >= 0)
+         {
+            tableModel.removeRow(rowSelected);
+            tableModel.fireTableDataChanged();
+
+            // Disable DELETE if there are no rows in the table to delete.
+            if (tableModel.getRowCount() == 0)
+            {
+               deleteRowButton.setEnabled(false);
+            } // Table still contains one or more rows, so highlight (select)
+            // the appropriate one.
+            else
+            {
+               int rowToSelect = rowSelected;
+
+               if (rowSelected >= tableModel.getRowCount())
+               {
+                  rowToSelect = rowSelected - 1;
+               }
+
+               paramTable.setRowSelectionInterval(rowToSelect, rowToSelect);
+            }
+         }
+      }
    }
 }

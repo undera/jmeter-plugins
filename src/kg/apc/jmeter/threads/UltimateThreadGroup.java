@@ -1,19 +1,20 @@
 // TODO: сделать плагин с гридовым указанием юзеров
 package kg.apc.jmeter.threads;
 
+import java.io.Serializable;
+import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
-import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 public class UltimateThreadGroup
       extends AbstractThreadGroup
+      implements Serializable
 {
-   public static final String THREAD_GROUP_DELAY = "Threads initial delay";
-   public static final String INC_USER_PERIOD = "Start users period";
-   public static final String INC_USER_COUNT = "Start users count";
-   public static final String DEC_USER_PERIOD = "Stop users period";
-   public static final String DEC_USER_COUNT = "Stop users count";
-   public static final String FLIGHT_TIME = "flighttime";
+   private static final Logger log = LoggingManager.getLoggerForClass();
+   public static final String DATA_PROPERTY = "ultimatethreadgroupdata";
 
    public UltimateThreadGroup()
    {
@@ -22,13 +23,7 @@ public class UltimateThreadGroup
 
    public void scheduleThread(JMeterThread thread)
    {
-      int additionalRampUp = 0;
-      String rampupProperty = JMeterUtils.getProperty("steppingthreadgroup.additionalrampup");
-      if (rampupProperty != null)
-      {
-         additionalRampUp = Integer.parseInt(rampupProperty);
-      }
-
+      /*
       int threadGroupDelay = getThreadGroupDelay();
 
       int inUserPeriod = getInUserPeriod();
@@ -44,36 +39,37 @@ public class UltimateThreadGroup
 
       thread.setStartTime(ascentPoint + 1000 * inUserPeriod * (int) Math.floor((double) thread.getThreadNum() / inUserCount) + additionalRampUp * thread.getThreadNum());
       thread.setEndTime(descentPoint + 1000 * outUserPeriod * (int) Math.floor((double) thread.getThreadNum() / outUserCount));
+       *
+       */
       thread.setScheduled(true);
    }
 
-   public int getThreadGroupDelay()
+   public JMeterProperty getData()
    {
-      return getPropertyAsInt(THREAD_GROUP_DELAY, 0);
+      JMeterProperty prop = getProperty(DATA_PROPERTY);
+      return prop;
    }
 
-   public int getInUserPeriod()
+   void setData(CollectionProperty rows)
    {
-      return getPropertyAsInt(INC_USER_PERIOD, 0);
+      setProperty(rows);
    }
 
-   public int getInUserCount()
+   @Override
+   public int getNumThreads()
    {
-      return getPropertyAsInt(INC_USER_COUNT, 1);
-   }
+      int result = 0;
 
-   public int getFlightTime()
-   {
-      return getPropertyAsInt(FLIGHT_TIME, 0);
-   }
+      /*
+      List data = model.getColumnData(model.getColumnName(0));
+      Iterator it = data.iterator();
+      while (it.hasNext())
+      {
+      result += (Integer) it.next();
+      }
+       * 
+       */
 
-   public int getOutUserPeriod()
-   {
-      return getPropertyAsInt(DEC_USER_PERIOD, 0);
-   }
-
-   public int getOutUserCount()
-   {
-      return getPropertyAsInt(DEC_USER_COUNT, 1);
+      return result;
    }
 }

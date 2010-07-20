@@ -1,4 +1,3 @@
-// TODO: сделать чтобы при переходе между контролами обновлялся график
 package kg.apc.jmeter.threads;
 
 import java.awt.BorderLayout;
@@ -8,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -25,16 +26,31 @@ import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.testelement.property.NullProperty;
+import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
 import org.apache.jorphan.collections.HashTree;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 public class UltimateThreadGroupGui
       extends AbstractThreadGroupGui
 {
+   private static final Logger log = LoggingManager.getLoggerForClass();
    protected ConcurrentHashMap<String, AbstractGraphRow> model;
    private GraphPanelChart chart;
+   public static final String[] columnIdentifiers = new String[]
+   {
+      "Start Threads Count", "Initial Delay, sec", "RampUp Time, sec", "Hold Load For, sec"
+   };
+   public static final Class[] columnClasses = new Class[]
+   {
+      Integer.class, Integer.class, Integer.class, Integer.class
+   };
    private LoopControlPanel loopPanel;
    private PowerTableModel tableModel;
    JTable grid;
@@ -90,17 +106,7 @@ public class UltimateThreadGroupGui
 
    protected void initTableModel()
    {
-      tableModel = new PowerTableModel(
-            // column names
-            new String[]
-            {
-               "Start Threads Count", "Initial Delay, sec", "RampUp Time, sec", "Hold Load For, sec"
-            },
-            // column classes
-            new Class[]
-            {
-               Integer.class, Integer.class, Integer.class, Integer.class
-            });
+      tableModel = new PowerTableModel(columnIdentifiers, columnClasses);
    }
 
    public String getLabelResource()
@@ -116,6 +122,7 @@ public class UltimateThreadGroupGui
 
    public TestElement createTestElement()
    {
+      log.info("Create test element");
       UltimateThreadGroup tg = new UltimateThreadGroup();
       modifyTestElement(tg);
       return tg;
@@ -123,38 +130,53 @@ public class UltimateThreadGroupGui
 
    public void modifyTestElement(TestElement tg)
    {
-      super.configureTestElement(tg);
-      /*
-      tg.setProperty(SteppingThreadGroup.NUM_THREADS, totalThreads.getText());
-      tg.setProperty(SteppingThreadGroup.THREAD_GROUP_DELAY, initialDelay.getText());
-      tg.setProperty(SteppingThreadGroup.INC_USER_COUNT, incUserCount.getText());
-      tg.setProperty(SteppingThreadGroup.INC_USER_PERIOD, incUserPeriod.getText());
-      tg.setProperty(SteppingThreadGroup.DEC_USER_COUNT, decUserCount.getText());
-      tg.setProperty(SteppingThreadGroup.DEC_USER_PERIOD, decUserPeriod.getText());
-      tg.setProperty(SteppingThreadGroup.FLIGHT_TIME, flightTime.getText());
-       *
-       */
+      log.info("Modify test element");
+      if (grid.isEditing())
+      {
+         grid.getCellEditor().stopCellEditing();
+      }
+
       if (tg instanceof UltimateThreadGroup)
       {
-         updateChart((UltimateThreadGroup) tg);
-         ((AbstractThreadGroup) tg).setSamplerController((LoopController) loopPanel.createTestElement());
+         UltimateThreadGroup utg = (UltimateThreadGroup) tg;
+         CollectionProperty rows = new CollectionProperty(UltimateThreadGroup.class.getSimpleName(),
+               new ArrayList<Object>());
+         for (int col = 1; col < tableModel.getColumnCount(); col++)
+         {
+            rows.addItem(tableModel.getColumnData(tableModel.getColumnName(col)));
+         }
+         utg.setData(rows);
+
+         updateChart(utg);
+         utg.setSamplerController((LoopController) loopPanel.createTestElement());
       }
+      super.configureTestElement(tg);
    }
 
    @Override
    public void configure(TestElement tg)
    {
+      log.info("Configure");
       super.configure(tg);
-      /*
-      totalThreads.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.NUM_THREADS)));
-      initialDelay.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.THREAD_GROUP_DELAY)));
-      incUserCount.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.INC_USER_COUNT)));
-      incUserPeriod.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.INC_USER_PERIOD)));
-      decUserCount.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.DEC_USER_COUNT)));
-      decUserPeriod.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.DEC_USER_PERIOD)));
-      flightTime.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.FLIGHT_TIME)));
-       *
-       */
+      UltimateThreadGroup params = (UltimateThreadGroup) tg;
+      JMeterProperty threadValues = params.getData();
+      if (!(threadValues instanceof NullProperty))
+      {
+         CollectionProperty columns = (CollectionProperty) threadValues;
+         PropertyIterator iter = columns.iterator();
+         int count = 0;
+         while (iter.hasNext())
+         {
+            String colName = columnIdentifiers[count];
+            tableModel.addNewColumn(colName, String.class);
+            tableModel.setColumnData(count, (List<?>) iter.next().getObjectValue());
+            count++;
+         }
+      }
+      else
+      {
+         log.warn("Received null property instead of collection");
+      }
 
       TestElement te = (TestElement) tg.getProperty(AbstractThreadGroup.MAIN_CONTROLLER).getObjectValue();
       if (te != null)
@@ -177,10 +199,10 @@ public class UltimateThreadGroupGui
 
       // test start
       row.add(System.currentTimeMillis(), 0);
-      row.add(System.currentTimeMillis() + tg.getThreadGroupDelay(), 0);
 
       // users in
-      for (int n = 0; n < tg.getNumThreads(); n++)
+      int numThreads = tg.getNumThreads();
+      for (int n = 0; n < numThreads; n++)
       {
          thread.setThreadNum(n);
          tg.scheduleThread(thread);
@@ -194,9 +216,6 @@ public class UltimateThreadGroupGui
          tg.scheduleThread(thread);
          row.add(thread.getEndTime(), tg.getNumThreads() - n);
       }
-
-      // final point
-      row.add(thread.getEndTime() + tg.getOutUserPeriod() * 1000, 0);
 
       model.put("Expected parallel users count", row);
       chart.repaint();
@@ -252,7 +271,7 @@ public class UltimateThreadGroupGui
 
          tableModel.addRow(new Object[]
                {
-                  1, 1, 1, 1
+                  100, 0, 30, 60
                });
          tableModel.fireTableDataChanged();
 
@@ -263,6 +282,12 @@ public class UltimateThreadGroupGui
          int rowToSelect = tableModel.getRowCount() - 1;
          grid.setRowSelectionInterval(rowToSelect, rowToSelect);
       }
+   }
+
+   @Override
+   public void clearGui()
+   {
+      tableModel.clearData();
    }
 
    private class DeleteRowAction

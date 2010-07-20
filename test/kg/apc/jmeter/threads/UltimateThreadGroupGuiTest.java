@@ -1,7 +1,11 @@
 package kg.apc.jmeter.threads;
 
+import java.util.ArrayList;
+import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.apache.jmeter.threads.AbstractThreadGroup;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.testelement.property.ObjectProperty;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -95,8 +99,11 @@ public class UltimateThreadGroupGuiTest
    public void testConfigure()
    {
       System.out.println("configure");
-      TestElement tg = new UltimateThreadGroup();
+      UltimateThreadGroup tg = new UltimateThreadGroup();
+      CollectionProperty rows = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY,
+            new ArrayList<Object>());
       UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
+      tg.setProperty(new ObjectProperty(AbstractThreadGroup.MAIN_CONTROLLER, tg));
       instance.configure(tg);
    }
 

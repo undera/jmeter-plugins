@@ -1,3 +1,4 @@
+// TODO: сделать чтобы при переходе между контролами обновлялся график
 package kg.apc.jmeter.threads;
 
 import java.awt.BorderLayout;
@@ -40,7 +41,7 @@ public class SteppingThreadGroupGui
       init();
    }
 
-   protected void init()
+   protected final void init()
    {
       JPanel containerPanel = new JPanel(new BorderLayout());
 

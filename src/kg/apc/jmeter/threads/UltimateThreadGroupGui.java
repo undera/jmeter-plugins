@@ -3,6 +3,8 @@ package kg.apc.jmeter.threads;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -29,13 +31,6 @@ public class UltimateThreadGroupGui
 {
    protected ConcurrentHashMap<String, AbstractGraphRow> model;
    private GraphPanelChart chart;
-   private JTextField initialDelay;
-   private JTextField incUserCount;
-   private JTextField incUserPeriod;
-   private JTextField flightTime;
-   private JTextField decUserCount;
-   private JTextField decUserPeriod;
-   private JTextField totalThreads;
    private LoopControlPanel loopPanel;
    private PowerTableModel tableModel;
    private JTable paramTable;
@@ -51,15 +46,9 @@ public class UltimateThreadGroupGui
       JPanel containerPanel = new VerticalPanel();
 
       containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
-
-      chart = new GraphPanelChart();
-      model = new ConcurrentHashMap<String, AbstractGraphRow>();
-      chart.setRows(model);
-      chart.setDrawFinalZeroingLines(true);
-      chart.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
-      containerPanel.add(chart, BorderLayout.CENTER);
+      //containerPanel.add(createChart(), BorderLayout.CENTER);
       add(containerPanel, BorderLayout.CENTER);
-      
+
       // this magic LoopPanel provides functionality for thread loops
       // TODO: find a way without magic
       createControllerPanel();
@@ -74,7 +63,6 @@ public class UltimateThreadGroupGui
       scroll.setPreferredSize(scroll.getMinimumSize());
       panel.add(scroll, BorderLayout.CENTER);
 
-
       return panel;
    }
 
@@ -87,7 +75,7 @@ public class UltimateThreadGroupGui
       paramTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       // paramTable.setCellSelectionEnabled(true);
       //paramTable.setFillsViewportHeight(true);
-      //paramTable.setMinimumSize(new Dimension(100, 70));
+      paramTable.setMinimumSize(new Dimension(200, 100));
 
       return paramTable;
    }
@@ -214,5 +202,15 @@ public class UltimateThreadGroupGui
       looper.setContinueForever(true);
       loopPanel.configure(looper);
       return loopPanel;
+   }
+
+   private Component createChart()
+   {
+      chart = new GraphPanelChart();
+      model = new ConcurrentHashMap<String, AbstractGraphRow>();
+      chart.setRows(model);
+      chart.setDrawFinalZeroingLines(true);
+      chart.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
+      return chart;
    }
 }

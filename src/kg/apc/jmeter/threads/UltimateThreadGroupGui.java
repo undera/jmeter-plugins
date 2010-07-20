@@ -37,9 +37,9 @@ public class UltimateThreadGroupGui
    private GraphPanelChart chart;
    private LoopControlPanel loopPanel;
    private PowerTableModel tableModel;
-   private JTable paramTable;
-   private JButton addRowButton;
-   private JButton deleteRowButton;
+   JTable grid;
+   JButton addRowButton;
+   JButton deleteRowButton;
 
    public UltimateThreadGroupGui()
    {
@@ -77,15 +77,15 @@ public class UltimateThreadGroupGui
    private JTable createGrid()
    {
       initTableModel();
-      paramTable = new JTable(tableModel);
-      // paramTable.setRowSelectionAllowed(true);
-      // paramTable.setColumnSelectionAllowed(true);
-      paramTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-      // paramTable.setCellSelectionEnabled(true);
-      //paramTable.setFillsViewportHeight(true);
-      paramTable.setMinimumSize(new Dimension(200, 100));
+      grid = new JTable(tableModel);
+      // grid.setRowSelectionAllowed(true);
+      // grid.setColumnSelectionAllowed(true);
+      grid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+      // grid.setCellSelectionEnabled(true);
+      //grid.setFillsViewportHeight(true);
+      grid.setMinimumSize(new Dimension(200, 100));
 
-      return paramTable;
+      return grid;
    }
 
    protected void initTableModel()
@@ -116,7 +116,7 @@ public class UltimateThreadGroupGui
 
    public TestElement createTestElement()
    {
-      SteppingThreadGroup tg = new SteppingThreadGroup();
+      UltimateThreadGroup tg = new UltimateThreadGroup();
       modifyTestElement(tg);
       return tg;
    }
@@ -132,13 +132,13 @@ public class UltimateThreadGroupGui
       tg.setProperty(SteppingThreadGroup.DEC_USER_COUNT, decUserCount.getText());
       tg.setProperty(SteppingThreadGroup.DEC_USER_PERIOD, decUserPeriod.getText());
       tg.setProperty(SteppingThreadGroup.FLIGHT_TIME, flightTime.getText());
-      if (tg instanceof SteppingThreadGroup)
-      {
-      updateChart((SteppingThreadGroup) tg);
-      ((AbstractThreadGroup) tg).setSamplerController((LoopController) loopPanel.createTestElement());
-      }
-       * 
+       *
        */
+      if (tg instanceof UltimateThreadGroup)
+      {
+         updateChart((UltimateThreadGroup) tg);
+         ((AbstractThreadGroup) tg).setSamplerController((LoopController) loopPanel.createTestElement());
+      }
    }
 
    @Override
@@ -163,7 +163,7 @@ public class UltimateThreadGroupGui
       }
    }
 
-   private void updateChart(SteppingThreadGroup tg)
+   private void updateChart(UltimateThreadGroup tg)
    {
       model.clear();
       GraphRowExactValues row = new GraphRowExactValues();
@@ -228,7 +228,7 @@ public class UltimateThreadGroupGui
       buttonPanel.setLayout(new GridLayout(1, 2));
 
       addRowButton = new JButton("Add Row");
-      deleteRowButton = new JButton("Delete Row"); 
+      deleteRowButton = new JButton("Delete Row");
 
       buttonPanel.add(addRowButton);
       buttonPanel.add(deleteRowButton);
@@ -244,13 +244,16 @@ public class UltimateThreadGroupGui
    {
       public void actionPerformed(ActionEvent e)
       {
-         if (paramTable.isEditing())
+         if (grid.isEditing())
          {
-            TableCellEditor cellEditor = paramTable.getCellEditor(paramTable.getEditingRow(), paramTable.getEditingColumn());
+            TableCellEditor cellEditor = grid.getCellEditor(grid.getEditingRow(), grid.getEditingColumn());
             cellEditor.stopCellEditing();
          }
 
-         tableModel.addNewRow();
+         tableModel.addRow(new Object[]
+               {
+                  1, 1, 1, 1
+               });
          tableModel.fireTableDataChanged();
 
          // Enable DELETE (which may already be enabled, but it won't hurt)
@@ -258,7 +261,7 @@ public class UltimateThreadGroupGui
 
          // Highlight (select) the appropriate row.
          int rowToSelect = tableModel.getRowCount() - 1;
-         paramTable.setRowSelectionInterval(rowToSelect, rowToSelect);
+         grid.setRowSelectionInterval(rowToSelect, rowToSelect);
       }
    }
 
@@ -267,13 +270,13 @@ public class UltimateThreadGroupGui
    {
       public void actionPerformed(ActionEvent e)
       {
-         if (paramTable.isEditing())
+         if (grid.isEditing())
          {
-            TableCellEditor cellEditor = paramTable.getCellEditor(paramTable.getEditingRow(), paramTable.getEditingColumn());
+            TableCellEditor cellEditor = grid.getCellEditor(grid.getEditingRow(), grid.getEditingColumn());
             cellEditor.cancelCellEditing();
          }
 
-         int rowSelected = paramTable.getSelectedRow();
+         int rowSelected = grid.getSelectedRow();
          if (rowSelected >= 0)
          {
             tableModel.removeRow(rowSelected);
@@ -294,7 +297,7 @@ public class UltimateThreadGroupGui
                   rowToSelect = rowSelected - 1;
                }
 
-               paramTable.setRowSelectionInterval(rowToSelect, rowToSelect);
+               grid.setRowSelectionInterval(rowToSelect, rowToSelect);
             }
          }
       }

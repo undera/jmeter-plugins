@@ -1,7 +1,10 @@
 package kg.apc.jmeter.threads;
 
+import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
@@ -49,14 +52,6 @@ public class UltimateThreadGroupGuiTest
    }
 
    @Test
-   public void testInitTableModel()
-   {
-      System.out.println("initTableModel");
-      UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
-      instance.initTableModel();
-   }
-
-   @Test
    public void testGetLabelResource()
    {
       System.out.println("getLabelResource");
@@ -89,10 +84,13 @@ public class UltimateThreadGroupGuiTest
    public void testModifyTestElement()
    {
       System.out.println("modifyTestElement");
-      TestElement tg = new UltimateThreadGroup();
+      UltimateThreadGroup tg = new UltimateThreadGroup();
       UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
       instance.addRowButton.doClick();
       instance.modifyTestElement(tg);
+      CollectionProperty data = (CollectionProperty) tg.getData();
+      assertEquals(instance.grid.getModel().getColumnCount(), data.size());
+      assertEquals(instance.grid.getModel().getRowCount(), ((List<?>) data.get(0).getObjectValue()).size());
    }
 
    @Test
@@ -100,8 +98,15 @@ public class UltimateThreadGroupGuiTest
    {
       System.out.println("configure");
       UltimateThreadGroup tg = new UltimateThreadGroup();
+      List<Integer> list = new ArrayList();
+      list.add(1);
       CollectionProperty rows = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY,
             new ArrayList<Object>());
+      rows.addItem(list);
+      rows.addItem(list);
+      rows.addItem(list);
+      rows.addItem(list);
+      tg.setData(rows);
       UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
       tg.setProperty(new ObjectProperty(AbstractThreadGroup.MAIN_CONTROLLER, tg));
       instance.configure(tg);

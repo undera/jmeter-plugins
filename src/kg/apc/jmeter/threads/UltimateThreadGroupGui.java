@@ -92,7 +92,7 @@ public class UltimateThreadGroupGui
 
    private JTable createGrid()
    {
-      initTableModel();
+      tableModel = new PowerTableModel(columnIdentifiers, columnClasses);
       grid = new JTable(tableModel);
       // grid.setRowSelectionAllowed(true);
       // grid.setColumnSelectionAllowed(true);
@@ -102,11 +102,6 @@ public class UltimateThreadGroupGui
       grid.setMinimumSize(new Dimension(200, 100));
 
       return grid;
-   }
-
-   protected void initTableModel()
-   {
-      tableModel = new PowerTableModel(columnIdentifiers, columnClasses);
    }
 
    public String getLabelResource()
@@ -139,9 +134,8 @@ public class UltimateThreadGroupGui
       if (tg instanceof UltimateThreadGroup)
       {
          UltimateThreadGroup utg = (UltimateThreadGroup) tg;
-         CollectionProperty rows = new CollectionProperty(UltimateThreadGroup.class.getSimpleName(),
-               new ArrayList<Object>());
-         for (int col = 1; col < tableModel.getColumnCount(); col++)
+         CollectionProperty rows = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new ArrayList<Object>());
+         for (int col = 0; col < tableModel.getColumnCount(); col++)
          {
             rows.addItem(tableModel.getColumnData(tableModel.getColumnName(col)));
          }
@@ -163,15 +157,17 @@ public class UltimateThreadGroupGui
       if (!(threadValues instanceof NullProperty))
       {
          CollectionProperty columns = (CollectionProperty) threadValues;
+         log.info("Received colimns collection with no columns " + columns.size());
          PropertyIterator iter = columns.iterator();
          int count = 0;
          while (iter.hasNext())
          {
-            String colName = columnIdentifiers[count];
-            tableModel.addNewColumn(colName, String.class);
-            tableModel.setColumnData(count, (List<?>) iter.next().getObjectValue());
+            List<?> list = (List<?>) iter.next().getObjectValue();
+            log.info("Rows: "+list.size());
+            tableModel.setColumnData(count, list);
             count++;
          }
+         log.info("Table rows after: " + tableModel.getRowCount());
       }
       else
       {

@@ -1,7 +1,6 @@
 package kg.apc.jmeter.threads;
 
 import java.util.ArrayList;
-import java.util.List;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -74,7 +73,7 @@ public class UltimateThreadGroupTest
    public void testSetData()
    {
       System.out.println("setSchedule");
-      CollectionProperty prop = new CollectionProperty("test", new ArrayList<Object>());
+      CollectionProperty prop = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new ArrayList<Object>());
       instance.setData(prop);
    }
 
@@ -82,7 +81,7 @@ public class UltimateThreadGroupTest
    public void testGetData()
    {
       System.out.println("getSchedule");
-      CollectionProperty prop = new CollectionProperty("test", new ArrayList<Object>());
+      CollectionProperty prop = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new ArrayList<Object>());
       prop.addItem(dataModel.getColumnData(dataModel.getColumnName(0)));
       CollectionProperty expResult = prop;
       instance.setData(prop);
@@ -95,6 +94,10 @@ public class UltimateThreadGroupTest
    public void testGetNumThreads()
    {
       System.out.println("getNumThreads");
+      CollectionProperty prop = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new ArrayList<Object>());
+      prop.addItem(dataModel.getColumnData(dataModel.getColumnName(0)));
+      instance.setData(prop);
+
       int expResult = 15;
       int result = instance.getNumThreads();
       assertEquals(expResult, result);

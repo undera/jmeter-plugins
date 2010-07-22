@@ -1,9 +1,12 @@
-// TODO: сделать плагин с гридовым указанием юзеров
 package kg.apc.jmeter.threads;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.testelement.property.NullProperty;
+import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jorphan.logging.LoggingManager;
@@ -60,15 +63,18 @@ public class UltimateThreadGroup
    {
       int result = 0;
 
-      /*
-      List data = model.getColumnData(model.getColumnName(0));
-      Iterator it = data.iterator();
-      while (it.hasNext())
+      JMeterProperty threadValues = getData();
+      if (!(threadValues instanceof NullProperty))
       {
-      result += (Integer) it.next();
+         CollectionProperty columns = (CollectionProperty) threadValues;
+         List<?> col = (List<?>) columns.get(0).getObjectValue();
+         Iterator<?> iter = col.iterator();
+         while (iter.hasNext())
+         {
+            StringProperty prop = (StringProperty) iter.next();
+            result += prop.getIntValue();
+         }
       }
-       * 
-       */
 
       return result;
    }

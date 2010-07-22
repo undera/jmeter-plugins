@@ -2,9 +2,7 @@ package kg.apc.jmeter.threads;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import org.apache.jmeter.testelement.property.CollectionProperty;
-import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
@@ -130,5 +128,13 @@ public class UltimateThreadGroupGuiTest
       instance.grid.editCellAt(0, 0);
       instance.deleteRowButton.doClick();
       instance.deleteRowButton.doClick();
+   }
+
+   @Test
+   public void testClearGui()
+   {
+      System.out.println("clearGui");
+      UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
+      instance.clearGui();
    }
 }

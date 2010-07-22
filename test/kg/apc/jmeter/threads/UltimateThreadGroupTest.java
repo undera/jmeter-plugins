@@ -1,6 +1,5 @@
 package kg.apc.jmeter.threads;
 
-import java.util.ArrayList;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -66,14 +65,38 @@ public class UltimateThreadGroupTest
       hashtree.add(new LoopController());
       JMeterThread thread = new JMeterThread(hashtree, null, null);
 
+      CollectionProperty prop = UltimateThreadGroup.tableModelToCollectionProperty(dataModel);
+      instance.setData(prop);
+
       instance.scheduleThread(thread);
+
+      assertTrue(thread.getStartTime() > 0);
+      assertTrue(thread.getEndTime() > thread.getStartTime());
+   }
+
+   @Test
+   public void testScheduleThreadAll()
+   {
+      System.out.println("scheduleThreadAll");
+      HashTree hashtree = new HashTree();
+      hashtree.add(new LoopController());
+
+      CollectionProperty prop = UltimateThreadGroup.tableModelToCollectionProperty(dataModel);
+      instance.setData(prop);
+
+      for (int n = 0; n < instance.getNumThreads(); n++)
+      {
+         JMeterThread thread = new JMeterThread(hashtree, null, null);
+         thread.setThreadNum(n);
+         instance.scheduleThread(thread);
+      }
    }
 
    @Test
    public void testSetData()
    {
       System.out.println("setSchedule");
-      CollectionProperty prop = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new ArrayList<Object>());
+      CollectionProperty prop = UltimateThreadGroup.tableModelToCollectionProperty(dataModel);
       instance.setData(prop);
    }
 
@@ -81,25 +104,30 @@ public class UltimateThreadGroupTest
    public void testGetData()
    {
       System.out.println("getSchedule");
-      CollectionProperty prop = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new ArrayList<Object>());
-      prop.addItem(dataModel.getColumnData(dataModel.getColumnName(0)));
-      CollectionProperty expResult = prop;
+      CollectionProperty prop = UltimateThreadGroup.tableModelToCollectionProperty(dataModel);
       instance.setData(prop);
       JMeterProperty result = instance.getData();
       assertFalse(result instanceof NullProperty);
-      assertEquals(expResult.getStringValue(), result.getStringValue());
+      assertEquals(prop.getStringValue(), result.getStringValue());
    }
 
    @Test
    public void testGetNumThreads()
    {
       System.out.println("getNumThreads");
-      CollectionProperty prop = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new ArrayList<Object>());
-      prop.addItem(dataModel.getColumnData(dataModel.getColumnName(0)));
+      CollectionProperty prop = UltimateThreadGroup.tableModelToCollectionProperty(dataModel);
       instance.setData(prop);
 
       int expResult = 15;
       int result = instance.getNumThreads();
       assertEquals(expResult, result);
+   }
+
+   @Test
+   public void testTableModelToCollectionProperty()
+   {
+      System.out.println("tableModelToCollectionProperty");
+      CollectionProperty result = UltimateThreadGroup.tableModelToCollectionProperty(dataModel);
+      assertTrue(result instanceof CollectionProperty);
    }
 }

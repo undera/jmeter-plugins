@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
@@ -16,6 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellEditor;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
@@ -23,6 +26,7 @@ import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowExactValues;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
+import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
@@ -39,6 +43,7 @@ import org.apache.log.Logger;
 
 public class UltimateThreadGroupGui
       extends AbstractThreadGroupGui
+      implements TableModelListener, CellEditorListener 
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
    protected ConcurrentHashMap<String, AbstractGraphRow> model;
@@ -92,8 +97,9 @@ public class UltimateThreadGroupGui
 
    private JTable createGrid()
    {
-      tableModel = new PowerTableModel(columnIdentifiers, columnClasses);
-      grid = new JTable(tableModel);
+      grid = new JTable();
+      grid.getDefaultEditor(Integer.class).addCellEditorListener(this);
+      createTableModel();
       // grid.setRowSelectionAllowed(true);
       // grid.setColumnSelectionAllowed(true);
       grid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -117,7 +123,7 @@ public class UltimateThreadGroupGui
 
    public TestElement createTestElement()
    {
-      log.info("Create test element");
+      //log.info("Create test element");
       UltimateThreadGroup tg = new UltimateThreadGroup();
       modifyTestElement(tg);
       return tg;
@@ -125,7 +131,7 @@ public class UltimateThreadGroupGui
 
    public void modifyTestElement(TestElement tg)
    {
-      log.info("Modify test element");
+      //log.info("Modify test element");
       if (grid.isEditing())
       {
          grid.getCellEditor().stopCellEditing();
@@ -134,11 +140,7 @@ public class UltimateThreadGroupGui
       if (tg instanceof UltimateThreadGroup)
       {
          UltimateThreadGroup utg = (UltimateThreadGroup) tg;
-         CollectionProperty rows = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new ArrayList<Object>());
-         for (int col = 0; col < tableModel.getColumnCount(); col++)
-         {
-            rows.addItem(tableModel.getColumnData(tableModel.getColumnName(col)));
-         }
+         CollectionProperty rows = UltimateThreadGroup.tableModelToCollectionProperty(tableModel);
          utg.setData(rows);
 
          updateChart(utg);
@@ -150,24 +152,26 @@ public class UltimateThreadGroupGui
    @Override
    public void configure(TestElement tg)
    {
-      log.info("Configure");
+      //log.info("Configure");
       super.configure(tg);
-      UltimateThreadGroup params = (UltimateThreadGroup) tg;
-      JMeterProperty threadValues = params.getData();
+      createTableModel();
+      UltimateThreadGroup utg = (UltimateThreadGroup) tg;
+      JMeterProperty threadValues = utg.getData();
       if (!(threadValues instanceof NullProperty))
       {
          CollectionProperty columns = (CollectionProperty) threadValues;
-         log.info("Received colimns collection with no columns " + columns.size());
+         //log.info("Received colimns collection with no columns " + columns.size());
          PropertyIterator iter = columns.iterator();
          int count = 0;
          while (iter.hasNext())
          {
             List<?> list = (List<?>) iter.next().getObjectValue();
-            log.info("Rows: "+list.size());
+            //log.info("Rows: " + list.size());
             tableModel.setColumnData(count, list);
             count++;
          }
-         log.info("Table rows after: " + tableModel.getRowCount());
+         //log.info("Table rows after: " + tableModel.getRowCount());
+         updateChart(utg);
       }
       else
       {
@@ -252,6 +256,35 @@ public class UltimateThreadGroupGui
       deleteRowButton.addActionListener(new DeleteRowAction());
 
       return buttonPanel;
+   }
+
+   public void tableChanged(TableModelEvent e)
+   {
+      //log.info("Model changed");
+      updateChart();
+   }
+
+   private void createTableModel()
+   {
+      tableModel = new PowerTableModel(columnIdentifiers, columnClasses);
+      tableModel.addTableModelListener(this);
+      grid.setModel(tableModel);
+   }
+
+   public void editingStopped(ChangeEvent e)
+   {
+      //log.info("Editing stopped");
+      updateChart();
+   }
+
+   public void editingCanceled(ChangeEvent e)
+   {
+      // no action needed
+   }
+
+   private void updateChart()
+   {
+      GuiPackage.getInstance().updateCurrentGui();
    }
 
    private class AddRowAction

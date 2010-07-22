@@ -89,7 +89,7 @@ public class DummySamplerGui
       responseCode.setText("200");
       responseMessage.setText("OK");
       responseData.setText("");
-      responseTime.setText("1");
+      responseTime.setText("100");
    }
 
    public String getLabelResource()

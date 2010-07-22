@@ -2,6 +2,8 @@ package kg.apc.jmeter.threads;
 
 import java.util.List;
 import java.util.ArrayList;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.TableModelEvent;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import kg.apc.jmeter.util.TestJMeterUtils;
@@ -104,6 +106,7 @@ public class UltimateThreadGroupGuiTest
       rows.addItem(list);
       rows.addItem(list);
       rows.addItem(list);
+      rows.addItem(list);
       tg.setData(rows);
       UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
       tg.setProperty(new ObjectProperty(AbstractThreadGroup.MAIN_CONTROLLER, tg));
@@ -136,5 +139,32 @@ public class UltimateThreadGroupGuiTest
       System.out.println("clearGui");
       UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
       instance.clearGui();
+   }
+
+   @Test
+   public void testTableChanged()
+   {
+      System.out.println("tableChanged");
+      TableModelEvent e = null;
+      UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
+      instance.tableChanged(e);
+   }
+
+   @Test
+   public void testEditingStopped()
+   {
+      System.out.println("editingStopped");
+      ChangeEvent e = null;
+      UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
+      instance.editingStopped(e);
+   }
+
+   @Test
+   public void testEditingCanceled()
+   {
+      System.out.println("editingCanceled");
+      ChangeEvent e = null;
+      UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
+      instance.editingCanceled(e);
    }
 }

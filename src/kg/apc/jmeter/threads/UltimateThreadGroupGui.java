@@ -7,7 +7,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,10 +22,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellEditor;
+import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
-import kg.apc.jmeter.charting.GraphRowExactValues;
+import kg.apc.jmeter.charting.GraphRowSumValues;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.gui.GuiPackage;
@@ -43,18 +46,23 @@ import org.apache.log.Logger;
 
 public class UltimateThreadGroupGui
       extends AbstractThreadGroupGui
-      implements TableModelListener, CellEditorListener 
+      implements TableModelListener,
+                 CellEditorListener
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
    protected ConcurrentHashMap<String, AbstractGraphRow> model;
    private GraphPanelChart chart;
    public static final String[] columnIdentifiers = new String[]
    {
-      "Start Threads Count", "Initial Delay, sec", "RampUp Time, sec", "Hold Load For, sec"
+      "Start Threads Count", "Initial Delay, sec", "Startup Time, sec", "Hold Load For, sec", "Shutdown Time"
    };
    public static final Class[] columnClasses = new Class[]
    {
-      Integer.class, Integer.class, Integer.class, Integer.class
+      Integer.class, Integer.class, Integer.class, Integer.class, Integer.class
+   };
+   private static Integer[] defaultValues = new Integer[]
+   {
+      100, 0, 30, 60, 10
    };
    private LoopControlPanel loopPanel;
    private PowerTableModel tableModel;
@@ -79,6 +87,21 @@ public class UltimateThreadGroupGui
       // this magic LoopPanel provides functionality for thread loops
       // TODO: find a way without magic
       createControllerPanel();
+   }
+
+   private void calculateRowMaxY(GraphRowSumValues row)
+   {
+      double max = Double.MIN_VALUE;
+      Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = row.iterator();
+      while (it.hasNext())
+      {
+         double el = it.next().getValue().getValue();
+         if (el > max)
+         {
+            max = el;
+         }
+      }
+      row.setMaxY(max);
    }
 
    private JPanel createParamsPanel()
@@ -188,7 +211,7 @@ public class UltimateThreadGroupGui
    private void updateChart(UltimateThreadGroup tg)
    {
       model.clear();
-      GraphRowExactValues row = new GraphRowExactValues();
+      GraphRowSumValues row = new GraphRowSumValues();
       row.setColor(Color.RED);
       row.setDrawLine(true);
       row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
@@ -197,16 +220,14 @@ public class UltimateThreadGroupGui
       hashTree.add(new LoopController());
       JMeterThread thread = new JMeterThread(hashTree, null, null);
 
-      // test start
-      row.add(System.currentTimeMillis(), 0);
-
       // users in
       int numThreads = tg.getNumThreads();
       for (int n = 0; n < numThreads; n++)
       {
          thread.setThreadNum(n);
          tg.scheduleThread(thread);
-         row.add(thread.getStartTime(), n + 1);
+         row.add(thread.getStartTime() - 1, 0);
+         row.add(thread.getStartTime(), 1);
       }
 
       // users out
@@ -214,8 +235,11 @@ public class UltimateThreadGroupGui
       {
          thread.setThreadNum(n);
          tg.scheduleThread(thread);
-         row.add(thread.getEndTime(), tg.getNumThreads() - n);
+         row.add(thread.getEndTime() - 1, 0);
+         row.add(thread.getEndTime(), -1);
       }
+
+      calculateRowMaxY(row);
 
       model.put("Expected parallel users count", row);
       chart.repaint();
@@ -298,10 +322,7 @@ public class UltimateThreadGroupGui
             cellEditor.stopCellEditing();
          }
 
-         tableModel.addRow(new Object[]
-               {
-                  100, 0, 30, 60
-               });
+         tableModel.addRow(defaultValues);
          tableModel.fireTableDataChanged();
 
          // Enable DELETE (which may already be enabled, but it won't hurt)

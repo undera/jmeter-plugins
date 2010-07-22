@@ -220,7 +220,7 @@ public class AbstractGraphRowTest
    public class AbstractGraphRowImpl
         extends AbstractGraphRow
    {
-      public Iterator<Entry<Long, Object>> iterator()
+      public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
       {
          return null;
       }

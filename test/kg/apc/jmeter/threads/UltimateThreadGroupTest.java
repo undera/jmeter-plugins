@@ -40,15 +40,15 @@ public class UltimateThreadGroupTest
       dataModel = new PowerTableModel(UltimateThreadGroupGui.columnIdentifiers, UltimateThreadGroupGui.columnClasses);
       dataModel.addRow(new Integer[]
             {
-               1, 2, 3, 4
+               1, 2, 3, 4, 44
             });
       dataModel.addRow(new Integer[]
             {
-               5, 6, 7, 8
+               5, 6, 7, 8, 88
             });
       dataModel.addRow(new Integer[]
             {
-               9, 10, 11, 12
+               9, 10, 11, 12, 122
             });
    }
 

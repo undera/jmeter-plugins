@@ -18,9 +18,8 @@ public class UltimateThreadGroup
       extends AbstractThreadGroup
       implements Serializable
 {
-   private static final Logger log = LoggingManager.getLoggerForClass();
+   //private static final Logger log = LoggingManager.getLoggerForClass();
    public static final String DATA_PROPERTY = "ultimatethreadgroupdata";
-   private JMeterThread currentThread;
 
    public UltimateThreadGroup()
    {
@@ -40,17 +39,15 @@ public class UltimateThreadGroup
    // FIXME: too inefficient
    public void scheduleThread(JMeterThread thread)
    {
-      currentThread = thread;
+      ThreadScheduleParams params = new ThreadScheduleParams(thread, getData());
 
-      int threadGroupDelay = getThreadGroupDelay();
-      int userCount = getUserCount();
-      int inUserPeriod = getInUserPeriod();
-      int flightTime = getFlightTime();
-      long ascentPoint = System.currentTimeMillis() + 1000 * threadGroupDelay;
-      long descentPoint = ascentPoint + 1000 * inUserPeriod * (int) Math.floor((double) getNumThreads() / userCount) + 1000 * flightTime;
+      long ascentPoint = System.currentTimeMillis() + 1000 * params.initialDelay;
+      final int rampUpDelayForThread = (int) Math.floor(1000 * params.startRampUp * (double) params.threadSeqNum / params.numThreads);
+      long startTime = ascentPoint + rampUpDelayForThread;
+      long descentPoint = startTime + 1000 * params.flightTime + 1000 * params.startRampUp - rampUpDelayForThread;
 
-      thread.setStartTime(ascentPoint + 1000 * inUserPeriod * (int) Math.floor((double) thread.getThreadNum() / userCount));
-      thread.setEndTime(descentPoint);
+      thread.setStartTime(startTime);
+      thread.setEndTime(descentPoint+(int) Math.floor(1000 * params.endRampUp * (double) params.threadSeqNum / params.numThreads));
 
       thread.setScheduled(true);
    }
@@ -87,56 +84,5 @@ public class UltimateThreadGroup
       }
 
       return result;
-   }
-
-   private int getCell(int col)
-   {
-      JMeterProperty threadValues = getData();
-      if (threadValues instanceof NullProperty)
-      {
-         throw new IllegalArgumentException("Received null property instead of collection");
-      }
-
-      CollectionProperty columns = (CollectionProperty) threadValues;
-      List<?> column = (List<?>) columns.get(col).getObjectValue();
-
-      Iterator it = ((List<?>) columns.get(0).getObjectValue()).iterator();
-      int row = 0;
-      int threadNo = currentThread.getThreadNum();
-      while (it.hasNext())
-      {
-         int threads = ((StringProperty) it.next()).getIntValue();
-
-         if (threads > threadNo)
-         {
-            JMeterProperty cell = (JMeterProperty) column.get(row);
-            return cell.getIntValue() < 0 ? 0 : cell.getIntValue();
-         }
-
-         threadNo -= threads;
-         row++;
-      }
-
-      throw new IllegalArgumentException("Thread record not found for col " + col);
-   }
-
-   private int getUserCount()
-   {
-      return getCell(0);
-   }
-
-   private int getThreadGroupDelay()
-   {
-      return getCell(1);
-   }
-
-   private int getInUserPeriod()
-   {
-      return getCell(2);
-   }
-
-   private int getFlightTime()
-   {
-      return getCell(3);
    }
 }

@@ -3,46 +3,68 @@ package kg.apc.jmeter.charting;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
+//import org.apache.jorphan.logging.LoggingManager;
+//import org.apache.log.Logger;
 
-public class GraphRowExactValues
+public class GraphRowSumValues
       extends AbstractGraphRow
       implements Iterator<Entry<Long, AbstractGraphPanelChartElement>>
 {
-   private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> values;
-   private Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator;
+   //private static final Logger log = LoggingManager.getLoggerForClass();
+   private ConcurrentSkipListMap<Long, GraphPanelChartSumElement> values;
+   private double rollingSum;
+   private Iterator<Entry<Long, GraphPanelChartSumElement>> iterator;
 
-   public GraphRowExactValues()
+   public GraphRowSumValues()
    {
       super();
-      values = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
+      values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
+   }
+
+   public void setMaxY(double val)
+   {
+      maxY = val;
    }
 
    @Override
    public void add(long xVal, double yVal)
    {
-      GraphPanelChartExactElement el;
-      el = new GraphPanelChartExactElement(xVal, yVal);
-      values.put((long) values.size(), el);
+      GraphPanelChartSumElement el;
+      if (values.containsKey(xVal))
+      {
+         el = values.get(xVal);
+         el.add(yVal);
+         yVal = el.getValue();
+      }
+      else
+      {
+         el = new GraphPanelChartSumElement(yVal);
+         values.put(xVal, el);
+      }
 
       super.add(xVal, yVal);
    }
 
-   @Override
    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
    {
+      rollingSum = 0;
       iterator = values.entrySet().iterator();
       return this;
    }
 
    public boolean hasNext()
    {
-      return iterator==null?false:iterator.hasNext();
+      return iterator.hasNext();
    }
 
    public Entry<Long, AbstractGraphPanelChartElement> next()
    {
-      GraphPanelChartExactElement el = (GraphPanelChartExactElement) iterator.next().getValue();
-      return new ExactEntry(el.getX(), el);
+      Entry<Long, GraphPanelChartSumElement> entry = iterator.next();
+      GraphPanelChartSumElement ret = entry.getValue();
+      rollingSum += ret.getValue();
+      //log.info("Rolling: " + entry.getKey() + " " + rollingSum);
+
+      return new ExactEntry(entry.getKey(), new GraphPanelChartSumElement(rollingSum));
    }
 
    public void remove()

@@ -60,7 +60,7 @@ public class GraphRowExactValuesTest
       instance.add(1, 1);
       instance.add(1, 2);
       instance.add(1, 3);
-      Iterator<Entry<Long, Object>> result = instance.iterator();
+      Iterator<Entry<Long, AbstractGraphPanelChartElement>> result = instance.iterator();
       assertEquals(1, ((AbstractGraphPanelChartElement) result.next().getValue()).getValue(), 0.001);
       assertEquals(2, ((AbstractGraphPanelChartElement) result.next().getValue()).getValue(), 0.001);
       assertEquals(3, ((AbstractGraphPanelChartElement) result.next().getValue()).getValue(), 0.001);

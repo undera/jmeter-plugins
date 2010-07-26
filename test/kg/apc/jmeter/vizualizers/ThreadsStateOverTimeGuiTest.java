@@ -13,13 +13,24 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author apc
+ */
 public class ThreadsStateOverTimeGuiTest
 {
    private ThreadsStateOverTimeGui instance;
+   /**
+    *
+    */
    public ThreadsStateOverTimeGuiTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
         throws Exception
@@ -27,18 +38,28 @@ public class ThreadsStateOverTimeGuiTest
       TestJMeterUtils.createJmeterEnv();
    }
 
+   /**
+    * 
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
       instance = new ThreadsStateOverTimeGui();
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {

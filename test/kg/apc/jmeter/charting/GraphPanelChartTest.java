@@ -11,29 +11,50 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+/**
+ *
+ * @author apc
+ */
 public class GraphPanelChartTest
 {
+   /**
+    *
+    */
    public GraphPanelChartTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {
@@ -70,6 +91,9 @@ public class GraphPanelChartTest
       instance.paintComponent(g);
    }
 
+   /**
+    *
+    */
    @Test
    public void testPaintComponent_empty()
    {

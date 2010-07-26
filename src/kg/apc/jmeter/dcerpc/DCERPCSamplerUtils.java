@@ -8,10 +8,19 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 
+/**
+ *
+ * @author apc
+ */
 public class DCERPCSamplerUtils
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
 
+   /**
+    *
+    * @param paramStr
+    * @return
+    */
    public static short getOpNum(String paramStr)
    {
       short opNum;
@@ -37,6 +46,13 @@ public class DCERPCSamplerUtils
       return opNum;
    }
 
+   /**
+    *
+    * @param stubDataByteArray
+    * @param callID
+    * @param opNum
+    * @return
+    */
    public static RPCPacket[] getPacketsArray(final byte[] stubDataByteArray, final int callID, short opNum)
    {
       final int chunkLenLimit = RPCBindRequest.maxXmitFrag - RPCCallRequest.HEADER_LENGTH;
@@ -66,6 +82,12 @@ public class DCERPCSamplerUtils
       return result;
    }
 
+   /**
+    *
+    * @param packetNum
+    * @param numPackets
+    * @return
+    */
    public static byte getPacketFlags(int packetNum, int numPackets)
    {
       byte packetFlags = 0;
@@ -80,6 +102,11 @@ public class DCERPCSamplerUtils
       return packetFlags;
    }
 
+   /**
+    *
+    * @param joinedStr
+    * @return
+    */
    public static String getStubDataHex(String joinedStr)
    {
       String stubDataHex = null;
@@ -103,6 +130,12 @@ public class DCERPCSamplerUtils
       return stubDataHex;
    }
 
+   /**
+    *
+    * @param paramsStr
+    * @param dataStr
+    * @return
+    */
    public static RPCPacket[] getRequestsArrayByString(String paramsStr, String dataStr)
    {
       RPCPacket[] result;

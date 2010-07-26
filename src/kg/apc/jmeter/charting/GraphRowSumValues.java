@@ -6,6 +6,10 @@ import java.util.concurrent.ConcurrentSkipListMap;
 //import org.apache.jorphan.logging.LoggingManager;
 //import org.apache.log.Logger;
 
+/**
+ *
+ * @author apc
+ */
 public class GraphRowSumValues
       extends AbstractGraphRow
       implements Iterator<Entry<Long, AbstractGraphPanelChartElement>>
@@ -15,17 +19,29 @@ public class GraphRowSumValues
    private double rollingSum;
    private Iterator<Entry<Long, GraphPanelChartSumElement>> iterator;
 
+   /**
+    *
+    */
    public GraphRowSumValues()
    {
       super();
       values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
    }
 
+   /**
+    *
+    * @param val
+    */
    public void setMaxY(double val)
    {
       maxY = val;
    }
 
+   /**
+    *
+    * @param xVal
+    * @param yVal
+    */
    @Override
    public void add(long xVal, double yVal)
    {
@@ -45,6 +61,10 @@ public class GraphRowSumValues
       super.add(xVal, yVal);
    }
 
+   /**
+    *
+    * @return
+    */
    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
    {
       rollingSum = 0;

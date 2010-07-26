@@ -6,6 +6,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.jorphan.util.JOrphanUtils;
 
+/**
+ *
+ * @author apc
+ */
 public class DCERPCMarshalling
 {
    // marshal
@@ -27,6 +31,13 @@ public class DCERPCMarshalling
    private static final char UNMARSHAL_NONE = 'N';
    private static final int DEFAULT_UNMARSHAL_STRING_LEN = 5;
 
+   /**
+    *
+    * @param ba
+    * @param unmarshalOptions
+    * @return
+    * @throws RPCMarshallingException
+    */
    public static String unmarshalData(byte ba[], String unmarshalOptions)
         throws RPCMarshallingException
    {
@@ -130,6 +141,12 @@ public class DCERPCMarshalling
       }
    }
 
+   /**
+    *
+    * @param in_str
+    * @return
+    * @throws RPCMarshallingException
+    */
    public static String marshalData(String in_str)
         throws RPCMarshallingException
    {

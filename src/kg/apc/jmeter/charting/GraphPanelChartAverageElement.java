@@ -1,11 +1,16 @@
 package kg.apc.jmeter.charting;
 
+/** {@inheritDoc} */
 public class GraphPanelChartAverageElement
       extends AbstractGraphPanelChartElement
 {
    private int count = 0;
    private double avgValue = 0;
 
+   /**
+    *
+    * @param yVal
+    */
    public GraphPanelChartAverageElement(double yVal)
    {
       add(yVal);
@@ -15,11 +20,16 @@ public class GraphPanelChartAverageElement
    {
    }
 
+   /**
+    *
+    * @param yVal
+    */
    public void add(double yVal)
    {
       avgValue = (avgValue * count + yVal) / (++count);
    }
 
+   /** {@inheritDoc} */
    public double getValue()
    {
       return avgValue;

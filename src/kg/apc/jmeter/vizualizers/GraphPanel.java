@@ -14,6 +14,10 @@ import javax.swing.event.ChangeListener;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 
+/**
+ *
+ * @author apc
+ */
 public class GraphPanel
      extends JTabbedPane
      implements ChangeListener
@@ -22,6 +26,9 @@ public class GraphPanel
    private JComponent rowsTab;
    private ChartRowsTable table;
 
+   /**
+    *
+    */
    public GraphPanel()
    {
       super();
@@ -73,6 +80,9 @@ public class GraphPanel
       }
    }
 
+   /**
+    *
+    */
    public void updateGui()
    {
       if (getSelectedComponent() == graphTab)
@@ -108,6 +118,10 @@ public class GraphPanel
       return graphTab;
    }
 
+   /**
+    *
+    * @param row
+    */
    public void addRow(AbstractGraphRow row)
    {
       table.addRow(row);
@@ -118,6 +132,9 @@ public class GraphPanel
       updateGui();
    }
 
+   /**
+    * 
+    */
    public void clearRowsTab()
    {
       table.clear();

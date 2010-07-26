@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.util.Random;
 import org.apache.jmeter.gui.util.JMeterColor;
 
+/**
+ *
+ * @author apc
+ */
 public class ColorsDispatcher
 {
    private final Color[] fixedColors =
@@ -26,11 +30,18 @@ public class ColorsDispatcher
    private int spentColors = 0;
    private final Random rnd;
 
+   /**
+    *
+    */
    public ColorsDispatcher()
    {
       rnd = new Random();
    }
 
+   /**
+    *
+    * @return
+    */
    public Color getNextColor()
    {
       if (++spentColors > fixedColors.length-1)

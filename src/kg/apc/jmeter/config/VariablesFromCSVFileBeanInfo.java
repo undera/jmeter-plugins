@@ -4,6 +4,10 @@ import java.beans.PropertyDescriptor;
 
 import org.apache.jmeter.testbeans.BeanInfoSupport;
 
+/**
+ *
+ * @author apc
+ */
 public class VariablesFromCSVFileBeanInfo
      extends BeanInfoSupport
 {
@@ -12,6 +16,9 @@ public class VariablesFromCSVFileBeanInfo
    private static final String VARIABLES_PREFIX = "variablesPrefix";    //$NON-NLS-1$
    private static final String DELIMITER = "delimiter";             //$NON-NLS-1$
 
+   /**
+    * 
+    */
    public VariablesFromCSVFileBeanInfo()
    {
       super(VariablesFromCSVFile.class);

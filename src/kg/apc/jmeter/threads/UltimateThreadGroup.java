@@ -14,18 +14,33 @@ import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+/**
+ *
+ * @author apc
+ */
 public class UltimateThreadGroup
       extends AbstractThreadGroup
       implements Serializable
 {
    //private static final Logger log = LoggingManager.getLoggerForClass();
+   /**
+    *
+    */
    public static final String DATA_PROPERTY = "ultimatethreadgroupdata";
 
+   /**
+    *
+    */
    public UltimateThreadGroup()
    {
       super();
    }
 
+   /**
+    *
+    * @param model
+    * @return
+    */
    public static CollectionProperty tableModelToCollectionProperty(PowerTableModel model)
    {
       CollectionProperty rows = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new ArrayList<Object>());
@@ -37,6 +52,10 @@ public class UltimateThreadGroup
    }
 
    // FIXME: too inefficient
+   /**
+    *
+    * @param thread
+    */
    public void scheduleThread(JMeterThread thread)
    {
       ThreadScheduleParams params = new ThreadScheduleParams(thread, getData());
@@ -52,6 +71,10 @@ public class UltimateThreadGroup
       thread.setScheduled(true);
    }
 
+   /**
+    *
+    * @return
+    */
    public JMeterProperty getData()
    {
       //log.info("getData");

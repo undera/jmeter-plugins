@@ -3,9 +3,17 @@ package kg.apc.jmeter.util;
 import java.awt.Font;
 import java.awt.FontMetrics;
 
+/**
+ * 
+ * @author apc
+ */
 public class TestFontMetrics
      extends FontMetrics
 {
+   /**
+    *
+    * @param f
+    */
    public TestFontMetrics(Font f)
    {
       super(f);

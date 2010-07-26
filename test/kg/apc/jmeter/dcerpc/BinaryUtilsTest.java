@@ -10,29 +10,50 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author apc
+ */
 public class BinaryUtilsTest
 {
+   /**
+    *
+    */
    public BinaryUtilsTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
          throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
          throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {
@@ -78,6 +99,9 @@ public class BinaryUtilsTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testTwoHexCharsToIntVal_Exception()
    {
@@ -194,12 +218,18 @@ public class BinaryUtilsTest
       assertEquals(16843009, BinaryUtils.fourBytesToIntVal((byte) 1, (byte) 1, (byte) 1, (byte) 1));
    }
 
+   /**
+    *
+    */
    @Test
    public void testDoubleToHexString()
    {
       assertEquals("0000006012db6541", BinaryUtils.doubleToHexString(11458707.00));
    }
 
+   /**
+    *
+    */
    @Test
    public void testHexToDouble()
    {

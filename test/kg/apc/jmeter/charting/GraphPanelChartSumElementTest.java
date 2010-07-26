@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package kg.apc.jmeter.charting;
 
 import org.junit.After;
@@ -16,29 +15,52 @@ import static org.junit.Assert.*;
  *
  * @author apc
  */
-public class GraphPanelChartSumElementTest {
+public class GraphPanelChartSumElementTest
+{
+   /**
+    * 
+    */
+   public GraphPanelChartSumElementTest()
+   {
+   }
 
-    public GraphPanelChartSumElementTest() {
-    }
-
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass() throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass() throws Exception
    {
    }
 
-    @Before
-    public void setUp() {
-    }
+   /**
+    *
+    */
+   @Before
+   public void setUp()
+   {
+   }
 
-    @After
-    public void tearDown() {
-    }
+   /**
+    *
+    */
+   @After
+   public void tearDown()
+   {
+   }
 
+   /**
+    * Test of add method, of class GraphPanelChartAverageElement.
+    */
    @Test
    public void testAdd()
    {
@@ -46,9 +68,11 @@ public class GraphPanelChartSumElementTest {
       double yVal = 0.0;
       GraphPanelChartSumElement instance = new GraphPanelChartSumElement();
       instance.add(yVal);
-      fail("The test case is a prototype.");
    }
 
+   /**
+    * Test of getValue method, of class GraphPanelChartAverageElement.
+    */
    @Test
    public void testGetValue()
    {
@@ -57,9 +81,11 @@ public class GraphPanelChartSumElementTest {
       double expResult = 0.0;
       double result = instance.getValue();
       assertEquals(expResult, result, 0.0);
-      fail("The test case is a prototype.");
    }
 
+   /**
+    * Test of getCount method, of class GraphPanelChartAverageElement.
+    */
    @Test
    public void testGetCount()
    {
@@ -68,7 +94,5 @@ public class GraphPanelChartSumElementTest {
       int expResult = 0;
       int result = instance.getCount();
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
    }
-
 }

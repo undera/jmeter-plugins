@@ -4,17 +4,31 @@ import java.text.SimpleDateFormat;
 
 import org.apache.jorphan.gui.NumberRenderer;
 
+/**
+ *
+ * @author apc
+ */
 public class DateTimeRenderer
      extends NumberRenderer
 {
+   /**
+    *
+    */
    protected final SimpleDateFormat dateFormatter;
 
+   /**
+    *
+    */
    public DateTimeRenderer()
    {
       super();
       dateFormatter = (SimpleDateFormat) SimpleDateFormat.getInstance();
    }
 
+   /**
+    *
+    * @param format
+    */
    public DateTimeRenderer(String format)
    {
       super();

@@ -9,11 +9,18 @@ import org.apache.jmeter.gui.tree.JMeterTreeModel;
 import org.apache.jmeter.util.JMeterUtils;
 import org.junit.Test;
 
+/**
+ *
+ * @author apc
+ */
 public class TestJMeterUtils
 {
    private static JMeterTreeListener jMeterTreeListener;
    private static JMeterTreeModel jMeterTreeModel;
 
+   /**
+    *
+    */
    public static void createJmeterEnv()
    {
       File propsFile = null;
@@ -34,6 +41,9 @@ public class TestJMeterUtils
       GuiPackage.getInstance(jMeterTreeListener, jMeterTreeModel);
    }
 
+   /**
+    *
+    */
    @Test
    public void testEnv()
    {

@@ -13,6 +13,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author apc
+ */
 public class RPCPacketTest
 {
    class RPCRequestImpl
@@ -41,32 +45,52 @@ public class RPCPacketTest
       }
    }
 
+   /**
+    *
+    */
    public RPCPacketTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
          throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
          throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetCommonHeaderBytes()
    {
@@ -77,6 +101,9 @@ public class RPCPacketTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetBytes()
    {
@@ -87,6 +114,9 @@ public class RPCPacketTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetHeaderBytes()
    {
@@ -97,6 +127,9 @@ public class RPCPacketTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetBodyBytes()
    {
@@ -107,6 +140,9 @@ public class RPCPacketTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testFragLenFromRPCHeader()
    {
@@ -117,6 +153,9 @@ public class RPCPacketTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testFragLenFromRPCHeader_2()
    {
@@ -142,6 +181,9 @@ public class RPCPacketTest
       return resultsStream;
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetPacketWithoutHeader()
    {
@@ -163,6 +205,9 @@ public class RPCPacketTest
       assertArrayEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetPacketWithoutHeader_Response()
    {
@@ -208,6 +253,9 @@ public class RPCPacketTest
     * 
     */
 
+   /**
+    *
+    */
    @Test
    public void testGetPacketWithoutHeader_Unsupported()
    {
@@ -229,6 +277,9 @@ public class RPCPacketTest
       }
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetPacketWithoutHeader_BindNack()
    {
@@ -251,6 +302,9 @@ public class RPCPacketTest
       }
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetPacketWithoutHeader_Fault()
    {

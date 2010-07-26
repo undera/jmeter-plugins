@@ -14,25 +14,43 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author apc
+ */
 public class UltimateThreadGroupTest
 {
    private UltimateThreadGroup instance;
    private PowerTableModel dataModel;
 
+   /**
+    *
+    */
    public UltimateThreadGroupTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass() throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass() throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
@@ -52,11 +70,17 @@ public class UltimateThreadGroupTest
             });
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {
    }
 
+   /**
+    *
+    */
    @Test
    public void testScheduleThread()
    {
@@ -74,6 +98,9 @@ public class UltimateThreadGroupTest
       assertTrue(thread.getEndTime() > thread.getStartTime());
    }
 
+   /**
+    *
+    */
    @Test
    public void testScheduleThreadAll()
    {
@@ -92,6 +119,9 @@ public class UltimateThreadGroupTest
       }
    }
 
+   /**
+    *
+    */
    @Test
    public void testSetData()
    {
@@ -100,6 +130,9 @@ public class UltimateThreadGroupTest
       instance.setData(prop);
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetData()
    {
@@ -111,6 +144,9 @@ public class UltimateThreadGroupTest
       assertEquals(prop.getStringValue(), result.getStringValue());
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetNumThreads()
    {
@@ -123,6 +159,9 @@ public class UltimateThreadGroupTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testTableModelToCollectionProperty()
    {

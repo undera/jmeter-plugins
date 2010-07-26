@@ -2,9 +2,18 @@ package kg.apc.jmeter.dcerpc;
 
 import org.apache.jorphan.util.JOrphanUtils;
 
+/**
+ *
+ * @author apc
+ */
 public class BinaryUtils
 {
    // took here http://snippets.dzone.com/posts/show/93
+   /**
+    *
+    * @param value
+    * @return
+    */
    public static byte[] intToByteArray(int value)
    {
       byte[] result = new byte[4];
@@ -15,6 +24,11 @@ public class BinaryUtils
       return result;
    }
 
+   /**
+    *
+    * @param value
+    * @return
+    */
    public static byte[] shortToByteArray(short value)
    {
       byte[] result = new byte[2];
@@ -23,6 +37,12 @@ public class BinaryUtils
       return result;
    }
 
+   /**
+    *
+    * @param byte1
+    * @param byte2
+    * @return
+    */
    public static int twoHexCharsToIntVal(char byte1, char byte2)
    {
       int nibble0 = Character.digit(byte1, 16);
@@ -35,11 +55,22 @@ public class BinaryUtils
       return (int) ((nibble0 << 4) | (nibble1));
    }
 
+   /**
+    *
+    * @param c
+    * @param c0
+    * @return
+    */
    public static byte twoHexCharsToByteVal(char c, char c0)
    {
       return (byte) twoHexCharsToIntVal(c, c0);
    }
 
+   /**
+    *
+    * @param ainterfaceUUID
+    * @return
+    */
    public static byte[] UUIDToByteArray(String ainterfaceUUID)
    {
       byte[] result = new byte[16];
@@ -70,6 +101,12 @@ public class BinaryUtils
       return result;
    }
 
+   /**
+    *
+    * @param byte1
+    * @param byte2
+    * @return
+    */
    public static short twoBytesToShortVal(byte byte1, byte byte2)
    {
       short short1 = (short) (byte1 & 0xFF); // God knows, how long I searched for this...
@@ -78,11 +115,24 @@ public class BinaryUtils
       return (short) ((short2 << 8) | short1);
    }
 
+   /**
+    *
+    * @param i
+    * @return
+    */
    public static String intToHexString(int i)
    {
       return JOrphanUtils.baToHexString(intToByteArray(i));
    }
 
+   /**
+    *
+    * @param byte1
+    * @param byte2
+    * @param byte3
+    * @param byte4
+    * @return
+    */
    public static int fourBytesToIntVal(byte byte1, byte byte2, byte byte3, byte byte4)
    {
       int i = 0;
@@ -93,6 +143,11 @@ public class BinaryUtils
       return i;
    }
 
+   /**
+    *
+    * @param val
+    * @return
+    */
    public static String doubleToHexString(double val)
    {
       long reversed = Long.reverseBytes(Double.doubleToLongBits(val));
@@ -101,6 +156,11 @@ public class BinaryUtils
       return res;
    }
 
+   /**
+    *
+    * @param val
+    * @return
+    */
    public static double hexToDouble(String val)
    {
       long reversed = Long.reverseBytes(Long.decode("0x" + val));

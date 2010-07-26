@@ -13,6 +13,10 @@ import javax.swing.border.BevelBorder;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 
+/**
+ *
+ * @author apc
+ */
 public class DummySamplerGui
      extends AbstractSamplerGui
 {
@@ -22,6 +26,9 @@ public class DummySamplerGui
    private JTextField responseTime;
    private JTextArea responseData;
 
+   /**
+    *
+    */
    public DummySamplerGui()
    {
       init();
@@ -55,6 +62,7 @@ public class DummySamplerGui
    /**
     * Modifies a given TestElement to mirror the data in the gui components.
     *
+    * @param sampler
     * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
     */
    public void modifyTestElement(TestElement sampler)

@@ -1,5 +1,9 @@
 package kg.apc.jmeter.dcerpc;
 
+/**
+ *
+ * @author apc
+ */
 public class RPCMarshallingException
       extends Exception
 {

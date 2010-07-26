@@ -11,12 +11,23 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author apc
+ */
 public class AbstractGraphPanelVisualizerTest
 {
+   /**
+    *
+    */
    public AbstractGraphPanelVisualizerTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
         throws Exception
@@ -24,17 +35,27 @@ public class AbstractGraphPanelVisualizerTest
       TestJMeterUtils.createJmeterEnv();
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
    }
 
+   /**
+    * 
+    */
    @After
    public void tearDown()
    {
@@ -98,6 +119,9 @@ public class AbstractGraphPanelVisualizerTest
       assertNull(result); // in unit test we'll have null here
    }
 
+   /**
+    *
+    */
    public class AbstractGraphPanelVisualizerImpl
         extends AbstractGraphPanelVisualizer
    {

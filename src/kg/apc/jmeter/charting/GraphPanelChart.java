@@ -14,6 +14,10 @@ import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+/**
+ *
+ * @author apc
+ */
 public class GraphPanelChart
      extends JComponent
 {
@@ -36,6 +40,9 @@ public class GraphPanelChart
    private boolean drawCurrentX = false;
    private int forcedMinX = -1;
 
+   /**
+    *
+    */
    public GraphPanelChart()
    {
       setBackground(Color.white);
@@ -320,6 +327,10 @@ public class GraphPanelChart
       }
    }
 
+   /**
+    *
+    * @param aRows
+    */
    public void setRows(AbstractMap<String, AbstractGraphRow> aRows)
    {
       rows = aRows;
@@ -365,6 +376,10 @@ public class GraphPanelChart
       this.currentXVal = currentX;
    }
 
+   /**
+    *
+    * @param i
+    */
    public void setForcedMinX(int i)
    {
       forcedMinX = i;

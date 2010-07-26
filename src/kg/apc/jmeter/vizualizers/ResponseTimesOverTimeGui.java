@@ -4,10 +4,17 @@ import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
 
+/**
+ *
+ * @author apc
+ */
 public class ResponseTimesOverTimeGui
       extends AbstractGraphPanelVisualizer
 {
    //private static final Logger log = LoggingManager.getLoggerForClass();
+   /**
+    *
+    */
    public ResponseTimesOverTimeGui()
    {
       super();

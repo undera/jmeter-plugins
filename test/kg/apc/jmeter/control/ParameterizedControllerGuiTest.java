@@ -21,10 +21,17 @@ public class ParameterizedControllerGuiTest
 {
    private ParameterizedControllerGui instance;
 
+   /**
+    *
+    */
    public ParameterizedControllerGuiTest()
    {
    }
 
+   /**
+    * 
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
         throws Exception
@@ -32,18 +39,28 @@ public class ParameterizedControllerGuiTest
       TestJMeterUtils.createJmeterEnv();
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
       instance = new ParameterizedControllerGui();
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {

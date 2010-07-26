@@ -15,6 +15,10 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 
+/**
+ *
+ * @author apc
+ */
 public class VariablesFromCSVFile
       extends ConfigTestElement
       implements TestBean,
@@ -26,31 +30,55 @@ public class VariablesFromCSVFile
    private String delimiter;
    private String filename;
 
+   /**
+    * 
+    * @return
+    */
    public String getFilename()
    {
       return filename;
    }
 
+   /**
+    *
+    * @param filename
+    */
    public void setFilename(String filename)
    {
       this.filename = filename;
    }
 
+   /**
+    *
+    * @return
+    */
    public String getVariablesPrefix()
    {
       return variablesPrefix;
    }
 
+   /**
+    *
+    * @param variableNames
+    */
    public void setVariablesPrefix(String variableNames)
    {
       this.variablesPrefix = variableNames;
    }
 
+   /**
+    *
+    * @return
+    */
    public String getDelimiter()
    {
       return delimiter;
    }
 
+   /**
+    *
+    * @param delimiter
+    */
    public void setDelimiter(String delimiter)
    {
       this.delimiter = delimiter;

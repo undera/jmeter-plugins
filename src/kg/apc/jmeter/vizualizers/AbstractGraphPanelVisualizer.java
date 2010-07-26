@@ -14,16 +14,38 @@ import org.apache.jmeter.visualizers.ImageVisualizer;
 import org.apache.jmeter.visualizers.Sample;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 
+/**
+ *
+ * @author apc
+ */
 public abstract class AbstractGraphPanelVisualizer
      extends AbstractVisualizer
      implements Clearable, GraphListener, ImageVisualizer
 {
+   /**
+    *
+    */
    protected ConcurrentSkipListMap<String, AbstractGraphRow> model;
+   /**
+    *
+    */
    protected long lastRepaint = 0;
+   /**
+    *
+    */
    protected long delay = 500;
+   /**
+    *
+    */
    protected GraphPanel graphPanel;
+   /**
+    *
+    */
    protected ColorsDispatcher colors;
 
+   /**
+    *
+    */
    public AbstractGraphPanelVisualizer()
    {
       model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
@@ -38,6 +60,10 @@ public abstract class AbstractGraphPanelVisualizer
       add(createGraphPanel(), BorderLayout.CENTER);
    }
 
+   /**
+    *
+    * @return
+    */
    protected GraphPanel createGraphPanel()
    {
       graphPanel = new GraphPanel();
@@ -45,6 +71,10 @@ public abstract class AbstractGraphPanelVisualizer
       return graphPanel;
    }
 
+   /**
+    *
+    * @param sample
+    */
    public void updateGui(Sample sample)
    {
       long time = System.currentTimeMillis();
@@ -56,6 +86,9 @@ public abstract class AbstractGraphPanelVisualizer
       }
    }
 
+   /**
+    *
+    */
    public void updateGui()
    {
       graphPanel.updateGui();
@@ -70,6 +103,10 @@ public abstract class AbstractGraphPanelVisualizer
       repaint();
    }
 
+   /**
+    *
+    * @return
+    */
    public Image getImage()
    {
       return graphPanel.getGraphImage();

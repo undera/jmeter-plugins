@@ -16,33 +16,57 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author apc
+ */
 public class UltimateThreadGroupGuiTest
 {
+   /**
+    *
+    */
    public UltimateThreadGroupGuiTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass() throws Exception
    {
       TestJMeterUtils.createJmeterEnv();
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass() throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {
    }
 
+   /**
+    *
+    */
    @Test
    public void testInit()
    {
@@ -51,6 +75,9 @@ public class UltimateThreadGroupGuiTest
       instance.init();
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetLabelResource()
    {
@@ -61,6 +88,9 @@ public class UltimateThreadGroupGuiTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetStaticLabel()
    {
@@ -71,6 +101,9 @@ public class UltimateThreadGroupGuiTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testCreateTestElement()
    {
@@ -80,6 +113,9 @@ public class UltimateThreadGroupGuiTest
       assertTrue(result instanceof UltimateThreadGroup);
    }
 
+   /**
+    *
+    */
    @Test
    public void testModifyTestElement()
    {
@@ -93,6 +129,9 @@ public class UltimateThreadGroupGuiTest
       assertEquals(instance.grid.getModel().getRowCount(), ((List<?>) data.get(0).getObjectValue()).size());
    }
 
+   /**
+    *
+    */
    @Test
    public void testConfigure()
    {
@@ -113,6 +152,9 @@ public class UltimateThreadGroupGuiTest
       instance.configure(tg);
    }
 
+   /**
+    *
+    */
    @Test
    public void testAddRow()
    {
@@ -122,6 +164,9 @@ public class UltimateThreadGroupGuiTest
       instance.addRowButton.doClick();
    }
 
+   /**
+    *
+    */
    @Test
    public void testDeleteRow()
    {
@@ -133,6 +178,9 @@ public class UltimateThreadGroupGuiTest
       instance.deleteRowButton.doClick();
    }
 
+   /**
+    *
+    */
    @Test
    public void testClearGui()
    {
@@ -141,6 +189,9 @@ public class UltimateThreadGroupGuiTest
       instance.clearGui();
    }
 
+   /**
+    *
+    */
    @Test
    public void testTableChanged()
    {
@@ -150,6 +201,9 @@ public class UltimateThreadGroupGuiTest
       instance.tableChanged(e);
    }
 
+   /**
+    *
+    */
    @Test
    public void testEditingStopped()
    {
@@ -159,6 +213,9 @@ public class UltimateThreadGroupGuiTest
       instance.editingStopped(e);
    }
 
+   /**
+    *
+    */
    @Test
    public void testEditingCanceled()
    {

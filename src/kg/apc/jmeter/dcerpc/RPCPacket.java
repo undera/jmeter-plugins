@@ -4,33 +4,101 @@ package kg.apc.jmeter.dcerpc;
 
 import org.apache.jorphan.util.JOrphanUtils;
 
+/**
+ *
+ * @author apc
+ */
 public abstract class RPCPacket
 {
    /* packet types */
+   /**
+    *
+    */
    public static final byte PACKET_TYPE_UNKNOWN = -1;
+   /**
+    *
+    */
    public static final byte PACKET_TYPE_REQUEST = 0;
+   /**
+    *
+    */
    public static final byte PACKET_TYPE_RESPONSE = 2;
+   /**
+    *
+    */
    public static final byte PACKET_TYPE_FAULT = 3;
+   /**
+    *
+    */
    public static final byte PACKET_TYPE_BIND = 11;
+   /**
+    *
+    */
    public static final byte PACKET_TYPE_BINDACK = 12;
+   /**
+    *
+    */
    public static final byte PACKET_TYPE_BINDNACK = 13;
    // packet flags
+   /**
+    *
+    */
    public static final byte PACKET_FLAG_FIRST = 0x1;
+   /**
+    *
+    */
    public static final byte PACKET_FLAG_LAST = 0x2;
    /* packet offsets */
+   /**
+    *
+    */
    public static final short COMMONHEADERLENGTH = 16;
    /* common packet fields */
+   /**
+    *
+    */
    protected static byte version = 5;
+   /**
+    *
+    */
    protected static byte versionminor = 0;
+   /**
+    *
+    */
    protected byte packetType = PACKET_TYPE_UNKNOWN;
+   /**
+    *
+    */
    protected byte packetFlags = PACKET_FLAG_FIRST | PACKET_FLAG_LAST;
+   /**
+    *
+    */
    protected static byte byteOrder = 16;
+   /**
+    *
+    */
    protected static byte character = 0;
+   /**
+    *
+    */
    protected static byte floatingPoint = 0;
+   /**
+    *
+    */
    protected short fragLength;
+   /**
+    *
+    */
    protected static short authLength = 0;
+   /**
+    *
+    */
    protected int callID = 1;
 
+   /**
+    *
+    * @return
+    */
    protected final byte[] getCommonHeaderBytes()
    {
       byte[] header =
@@ -56,6 +124,10 @@ public abstract class RPCPacket
       return header;
    }
 
+   /**
+    *
+    * @return
+    */
    public final byte[] getBytes()
    {
       byte[] body = getBodyBytes();
@@ -74,15 +146,34 @@ public abstract class RPCPacket
       return result;
    }
 
+   /**
+    *
+    * @return
+    */
    abstract protected byte[] getHeaderBytes();
 
+   /**
+    *
+    * @return
+    */
    abstract protected byte[] getBodyBytes();
 
+   /**
+    *
+    * @param toByteArray
+    * @return
+    */
    public static byte getPacketFlags(byte[] toByteArray)
    {
       return toByteArray[3];
    }
 
+   /**
+    *
+    * @param resultBytes
+    * @return
+    * @throws RPCCallException
+    */
    public static byte[] getPacketWithoutHeader(byte[] resultBytes) throws RPCCallException
    {
       final byte packetType = resultBytes[2];
@@ -115,6 +206,11 @@ public abstract class RPCPacket
       return returnBytes;
    }
 
+   /**
+    *
+    * @param buffer
+    * @return
+    */
    public static short fragLenFromRPCHeader(byte[] buffer)
    {
       return BinaryUtils.twoBytesToShortVal(buffer[8], buffer[9]);

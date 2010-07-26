@@ -3,17 +3,29 @@ package kg.apc.jmeter.charting;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
 
+/**
+ *
+ * @author apc
+ */
 public class GraphRowAverages
      extends AbstractGraphRow
 {
    private ConcurrentSkipListMap<Long, GraphPanelChartAverageElement> values;
 
+   /**
+    *
+    */
    public GraphRowAverages()
    {
       super();
       values = new ConcurrentSkipListMap<Long, GraphPanelChartAverageElement>();
    }
 
+   /**
+    *
+    * @param xVal
+    * @param yVal
+    */
    @Override
    public void add(long xVal, double yVal)
    {
@@ -33,6 +45,10 @@ public class GraphRowAverages
       super.add(xVal, yVal);
    }
 
+   /**
+    *
+    * @return
+    */
    public Iterator iterator()
    {
       return values.entrySet().iterator();

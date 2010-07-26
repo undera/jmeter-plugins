@@ -6,9 +6,16 @@ import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Color;
 import org.apache.jmeter.samplers.SampleResult;
 
+/**
+ *
+ * @author apc
+ */
 public class TimesVsThreadsGui
      extends AbstractGraphPanelVisualizer
 {
+   /**
+    *
+    */
    public TimesVsThreadsGui()
    {
       super();

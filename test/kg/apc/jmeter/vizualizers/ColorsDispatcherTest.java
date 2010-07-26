@@ -8,27 +8,50 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ColorsDispatcherTest {
+/**
+ *
+ * @author apc
+ */
+public class ColorsDispatcherTest
+{
 
-    public ColorsDispatcherTest() {
+   /**
+    * 
+    */
+   public ColorsDispatcherTest()
+   {
     }
 
+   /**
+    * 
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
-    @Before
+   /**
+    *
+    */
+   @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }

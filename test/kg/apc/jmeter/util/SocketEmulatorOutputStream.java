@@ -3,11 +3,18 @@ package kg.apc.jmeter.util;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ *
+ * @author apc
+ */
 public class SocketEmulatorOutputStream
      extends OutputStream
 {
    private StringBuffer buffer;
 
+   /**
+    *
+    */
    public SocketEmulatorOutputStream()
    {
       buffer=new StringBuffer();
@@ -20,6 +27,10 @@ public class SocketEmulatorOutputStream
       buffer.append((b>10?"":"0")+Integer.toHexString(b));
    }
 
+   /**
+    * 
+    * @return
+    */
    public String getWrittenBytes()
    {
       final String toString = buffer.toString();

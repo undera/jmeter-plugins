@@ -4,10 +4,17 @@ import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
 
+/**
+ *
+ * @author apc
+ */
 public class ThroughputOverTimeGui
       extends AbstractGraphPanelVisualizer
 {
    //private static final Logger log = LoggingManager.getLoggerForClass();
+   /**
+    *
+    */
    public ThroughputOverTimeGui()
    {
       super();
@@ -47,8 +54,8 @@ public class ThroughputOverTimeGui
 
    public void add(SampleResult res)
    {
-      addThreadGroupRecord(res.getSampleLabel(),
-            res.getEndTime() - res.getEndTime() % delay, 1000 / res.getTime());
+      long val = res.getTime() == 0 ? 0 : 1000 / res.getTime();
+      addThreadGroupRecord(res.getSampleLabel(), res.getEndTime() - res.getEndTime() % delay, val);
       updateGui(null);
    }
 }

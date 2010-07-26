@@ -1,20 +1,62 @@
 package kg.apc.jmeter.dcerpc;
 
+/**
+ *
+ * @author apc
+ */
 public class RPCBindRequest
       extends RPCPacket
 {
+   /**
+    *
+    */
    public static final short maxXmitFrag = 5840;
+   /**
+    *
+    */
    public static final short maxRecvFrag = 5840;
+   /**
+    *
+    */
    protected static int assocGroup = 0;
+   /**
+    *
+    */
    protected static int numCtxItems = 1; // handling only one item
+   /**
+    *
+    */
    protected static short contextID = 0;
+   /**
+    *
+    */
    protected static byte numTransItems = 1;
+   /**
+    *
+    */
    protected byte[] interfaceUUID;
+   /**
+    *
+    */
    protected static short interfaceVer = 1;
+   /**
+    *
+    */
    protected static short interfaceVerMinor = 0;
+   /**
+    *
+    */
    protected byte[] transferSyntax;
+   /**
+    *
+    */
    protected static int transferSyntaxVer = 2;
 
+   /**
+    *
+    * @param ainterfaceUUID
+    * @param atransferSyntax
+    */
    public RPCBindRequest(String ainterfaceUUID, String atransferSyntax)
    {
       packetType = RPCPacket.PACKET_TYPE_BIND;
@@ -22,6 +64,10 @@ public class RPCBindRequest
       transferSyntax = BinaryUtils.UUIDToByteArray(atransferSyntax);
    }
 
+   /**
+    *
+    * @return
+    */
    @Override
    protected byte[] getHeaderBytes()
    {
@@ -56,6 +102,10 @@ public class RPCBindRequest
       return header;
    }
 
+   /**
+    *
+    * @return
+    */
    @Override
    protected byte[] getBodyBytes()
    {

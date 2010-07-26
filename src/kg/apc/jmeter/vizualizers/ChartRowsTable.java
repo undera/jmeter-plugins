@@ -8,11 +8,18 @@ import javax.swing.table.TableCellRenderer;
 import org.apache.jorphan.gui.ObjectTableModel;
 import org.apache.jorphan.reflect.Functor;
 
+/**
+ *
+ * @author apc
+ */
 public class ChartRowsTable
      extends JTable
 {
    TableCellRenderer colorRenderer = new ColorRenderer(false);
 
+   /**
+    *
+    */
    public ChartRowsTable()
    {
       super();
@@ -48,6 +55,10 @@ public class ChartRowsTable
       setModel(model);
    }
 
+   /**
+    *
+    * @param row
+    */
    public void addRow(AbstractGraphRow row)
    {
       ((ObjectTableModel) dataModel).addRow(row);
@@ -63,6 +74,9 @@ public class ChartRowsTable
       return super.getCellRenderer(row, column);
    }
 
+   /**
+    * 
+    */
    public void clear()
    {
       initializeTableModel();

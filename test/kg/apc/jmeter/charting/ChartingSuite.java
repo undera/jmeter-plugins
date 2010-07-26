@@ -17,24 +17,40 @@ import org.junit.runners.Suite;
  * @author apc
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.charting.GraphPanelChartSumElementTest.class,kg.apc.jmeter.charting.GraphPanelChartExactElementTest.class,kg.apc.jmeter.charting.AbstractGraphRowTest.class,kg.apc.jmeter.charting.GraphPanelChartAverageElementTest.class,kg.apc.jmeter.charting.GraphPanelChartTest.class,kg.apc.jmeter.charting.GraphRowAveragesTest.class,kg.apc.jmeter.charting.GraphRowSumValuesTest.class,kg.apc.jmeter.charting.GraphRowExactValuesTest.class,kg.apc.jmeter.charting.GraphRowOverallAveragesTest.class,kg.apc.jmeter.charting.AbstractGraphPanelChartElementTest.class})
+@Suite.SuiteClasses({GraphRowOverallAveragesTest.class, GraphPanelChartSumElementTest.class, GraphPanelChartExactElementTest.class, GraphPanelChartAverageElementTest.class, AbstractGraphRowTest.class, GraphPanelChartTest.class, GraphRowSumValuesTest.class, GraphRowAveragesTest.class, GraphRowExactValuesTest.class, AbstractGraphPanelChartElementTest.class})
 public class ChartingSuite {
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass() throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass() throws Exception
    {
    }
 
+   /**
+    * 
+    * @throws Exception
+    */
    @Before
    public void setUp() throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @After
    public void tearDown() throws Exception
    {

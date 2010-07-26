@@ -10,26 +10,44 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author apc
+ */
 public class GraphRowAveragesTest
 {
    private GraphRowAverages instance;
 
+   /**
+    *
+    */
    public GraphRowAveragesTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
@@ -38,6 +56,9 @@ public class GraphRowAveragesTest
       instance.setMarkerSize(AbstractGraphRow.MARKER_SIZE_BIG);
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {

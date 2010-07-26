@@ -4,6 +4,10 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
 
+/**
+ *
+ * @author apc
+ */
 public class GraphRowExactValues
       extends AbstractGraphRow
       implements Iterator<Entry<Long, AbstractGraphPanelChartElement>>
@@ -11,12 +15,20 @@ public class GraphRowExactValues
    private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> values;
    private Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator;
 
+   /**
+    * 
+    */
    public GraphRowExactValues()
    {
       super();
       values = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
    }
 
+   /**
+    *
+    * @param xVal
+    * @param yVal
+    */
    @Override
    public void add(long xVal, double yVal)
    {
@@ -27,6 +39,10 @@ public class GraphRowExactValues
       super.add(xVal, yVal);
    }
 
+   /**
+    *
+    * @return
+    */
    @Override
    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
    {

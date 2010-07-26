@@ -14,6 +14,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+/**
+ *
+ * @author apc
+ */
 public class DCERPCSamplerTest
 {
    private SocketEmulatorOutputStream os;
@@ -22,22 +26,36 @@ public class DCERPCSamplerTest
    private static String SERVER_UUID = "80d7862a-6160-4596-aaa9-1743e4c27638";
    private static String ABSTRACT_SYNTAX = "8a885d04-1ceb-11c9-9fe8-08002b104860";
 
+   /**
+    *
+    */
    public DCERPCSamplerTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
@@ -47,6 +65,9 @@ public class DCERPCSamplerTest
       is = new SocketEmulatorInputStream();
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {
@@ -61,6 +82,9 @@ public class DCERPCSamplerTest
       }
    }
 
+   /**
+    *
+    */
    @Test
    public void testWrite_OutputStream_InputStream()
    {
@@ -76,6 +100,9 @@ public class DCERPCSamplerTest
       }
    }
 
+   /**
+    *
+    */
    @Test
    public void testWrite_OutputStream_String()
    {
@@ -94,6 +121,9 @@ public class DCERPCSamplerTest
       assertEquals(expBytes, gotBytes);
    }
 
+   /**
+    *
+    */
    @Test
    public void testWrite_OutputStream_MultiPDU()
    {
@@ -111,6 +141,9 @@ public class DCERPCSamplerTest
       assertEquals(90110, gotBytes.length());
    }
 
+   /**
+    *
+    */
    @Test
    public void testRead()
    {
@@ -127,6 +160,9 @@ public class DCERPCSamplerTest
       assertEquals(expStr, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testRead_WithUnmarshal_strings()
    {

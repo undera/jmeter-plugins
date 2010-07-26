@@ -4,13 +4,32 @@ import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 
+/**
+ *
+ * @author apc
+ */
 public class DummySampler
       extends AbstractSampler
 {
+   /**
+    *
+    */
    public static final String IS_SUCCESSFUL = "SUCCESFULL";
+   /**
+    *
+    */
    public static final String RESPONSE_CODE = "RESPONSE_CODE";
+   /**
+    *
+    */
    public static final String RESPONSE_MESSAGE = "RESPONSE_MESSAGE";
+   /**
+    *
+    */
    public static final String RESPONSE_DATA = "RESPONSE_DATA";
+   /**
+    *
+    */
    public static final String RESPONSE_TIME = "RESPONSE_TIME";
 
    public SampleResult sample(Entry e)
@@ -44,21 +63,37 @@ public class DummySampler
       return res;
    }
 
+   /**
+    *
+    * @param selected
+    */
    public void setSuccessful(boolean selected)
    {
       setProperty(IS_SUCCESSFUL, selected);
    }
 
+   /**
+    *
+    * @param text
+    */
    public void setResponseCode(String text)
    {
       setProperty(RESPONSE_CODE, text);
    }
 
+   /**
+    *
+    * @param text
+    */
    public void setResponseMessage(String text)
    {
       setProperty(RESPONSE_MESSAGE, text);
    }
 
+   /**
+    *
+    * @param text
+    */
    public void setResponseData(String text)
    {
       setProperty(RESPONSE_DATA, text);
@@ -96,11 +131,19 @@ public class DummySampler
       return getPropertyAsString(RESPONSE_DATA);
    }
 
+   /**
+    *
+    * @return
+    */
    public int getResponseTime()
    {
       return getPropertyAsInt(RESPONSE_TIME);
    }
 
+   /**
+    *
+    * @param time
+    */
    public void setResponseTime(int time)
    {
       setProperty(RESPONSE_TIME, time);

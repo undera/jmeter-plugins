@@ -44,13 +44,22 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.Color;
 import java.awt.Component;
 
+/**
+ *
+ * @author apc
+ */
 public class ColorRenderer extends JLabel
                            implements TableCellRenderer {
     Border unselectedBorder = null;
     Border selectedBorder = null;
     boolean isBordered = true;
 
-    public ColorRenderer(boolean isBordered) {
+    /**
+     * 
+     * @param isBordered
+     */
+    public ColorRenderer(boolean isBordered)
+    {
         this.isBordered = isBordered;
         setOpaque(true); //MUST do this for background to show up.
     }

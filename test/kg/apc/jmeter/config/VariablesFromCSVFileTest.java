@@ -18,16 +18,27 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author apc
+ */
 public class VariablesFromCSVFileTest
 {
    private VariablesFromCSVFile instance;
    private JMeterVariables variables;
    private LoopIterationEvent iterEvent;
 
+   /**
+    *
+    */
    public VariablesFromCSVFileTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
          throws Exception
@@ -35,12 +46,19 @@ public class VariablesFromCSVFileTest
       TestJMeterUtils.createJmeterEnv();
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
          throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
@@ -82,6 +100,9 @@ public class VariablesFromCSVFileTest
       iterEvent = new LoopIterationEvent(null, 1);
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {
@@ -104,6 +125,9 @@ public class VariablesFromCSVFileTest
       assertNull(variables.get("prefixedtestvar1"));
    }
 
+   /**
+    *
+    */
    @Test
    public void testIterationStart_prefixed()
    {
@@ -118,6 +142,9 @@ public class VariablesFromCSVFileTest
       assertNull(variables.get("testvar1"));
    }
 
+   /**
+    *
+    */
    @Test
    public void testIterationStart_lessthan2()
    {

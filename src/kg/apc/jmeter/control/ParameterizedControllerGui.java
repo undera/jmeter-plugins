@@ -10,11 +10,18 @@ import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.util.JMeterUtils;
 
+/**
+ *
+ * @author apc
+ */
 public class ParameterizedControllerGui
      extends AbstractControllerGui
 {
    private ArgumentsPanel argsPanel;
 
+   /**
+    *
+    */
    public ParameterizedControllerGui()
    {
       init();

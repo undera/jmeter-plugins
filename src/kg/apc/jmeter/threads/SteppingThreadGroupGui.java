@@ -21,9 +21,16 @@ import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
 import org.apache.jorphan.collections.HashTree;
 
+/**
+ *
+ * @author apc
+ */
 public class SteppingThreadGroupGui
       extends AbstractThreadGroupGui
 {
+   /**
+    *
+    */
    protected ConcurrentHashMap<String, AbstractGraphRow> model;
    private GraphPanelChart chart;
    private JTextField initialDelay;
@@ -35,12 +42,18 @@ public class SteppingThreadGroupGui
    private JTextField totalThreads;
    private LoopControlPanel loopPanel;
 
+   /**
+    *
+    */
    public SteppingThreadGroupGui()
    {
       super();
       init();
    }
 
+   /**
+    *
+    */
    protected final void init()
    {
       JPanel containerPanel = new JPanel(new BorderLayout());

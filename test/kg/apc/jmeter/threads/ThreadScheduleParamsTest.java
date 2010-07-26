@@ -18,28 +18,49 @@ import static org.junit.Assert.*;
  */
 public class ThreadScheduleParamsTest {
 
-    public ThreadScheduleParamsTest() {
+   /**
+    * 
+    */
+   public ThreadScheduleParamsTest()
+   {
     }
 
+   /**
+    * 
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass() throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass() throws Exception
    {
    }
 
-    @Before
+   /**
+    *
+    */
+   @Before
     public void setUp() {
     }
 
-    @After
+   /**
+    *
+    */
+   @After
     public void tearDown() {
     }
 
-   @Test
+    /**
+     *
+     */
+    @Test
    public void testSomeMethod()
    {
    }

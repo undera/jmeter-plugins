@@ -17,6 +17,10 @@ import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+/**
+ * 
+ * @author apc
+ */
 public class ParameterizedController
      extends GenericController
      implements Serializable, LoopIterationListener
@@ -25,6 +29,9 @@ public class ParameterizedController
    private boolean processed = false;
    private ValueReplacer replacer;
 
+   /**
+    *
+    */
    public ParameterizedController()
    {
       replacer = new ValueReplacer();
@@ -68,11 +75,19 @@ public class ParameterizedController
       return super.next();
    }
 
+   /**
+    *
+    * @param vars
+    */
    public void setUserDefinedVariables(Arguments vars)
    {
       setProperty(new TestElementProperty(this.getClass().getSimpleName(), vars));
    }
 
+   /**
+    *
+    * @return
+    */
    public JMeterProperty getUserDefinedVariablesAsProperty()
    {
       return getProperty(this.getClass().getSimpleName());

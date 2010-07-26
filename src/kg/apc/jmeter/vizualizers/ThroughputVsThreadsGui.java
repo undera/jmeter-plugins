@@ -7,9 +7,16 @@ import java.awt.Color;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.gui.RateRenderer;
 
+/**
+ * 
+ * @author apc
+ */
 public class ThroughputVsThreadsGui
      extends AbstractGraphPanelVisualizer
 {
+   /**
+    *
+    */
    public ThroughputVsThreadsGui()
    {
       super();

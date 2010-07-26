@@ -11,29 +11,50 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author apc
+ */
 public class AbstractGraphRowTest
 {
+   /**
+    *
+    */
    public AbstractGraphRowTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {
@@ -217,9 +238,16 @@ public class AbstractGraphRowTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    public class AbstractGraphRowImpl
         extends AbstractGraphRow
    {
+      /**
+       *
+       * @return
+       */
       public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
       {
          return null;

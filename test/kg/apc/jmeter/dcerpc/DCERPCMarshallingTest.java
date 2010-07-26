@@ -9,29 +9,50 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author apc
+ */
 public class DCERPCMarshallingTest
 {
+   /**
+    *
+    */
    public DCERPCMarshallingTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {
@@ -39,6 +60,7 @@ public class DCERPCMarshallingTest
 
    /**
     * Test of marshalData method, of class DCERPCSampler.
+    * @throws RPCMarshallingException
     */
    @Test
    public void testHexEncodeTextParts()
@@ -51,6 +73,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts2()
         throws RPCMarshallingException
@@ -62,6 +88,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_empty()
         throws RPCMarshallingException
@@ -73,6 +103,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_russian()
         throws RPCMarshallingException
@@ -84,6 +118,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_empty2()
         throws RPCMarshallingException
@@ -95,6 +133,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_marshal_length_prefixed()
         throws RPCMarshallingException
@@ -106,6 +148,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_marshal_null_terminated()
         throws RPCMarshallingException
@@ -117,6 +163,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_marshal_length_prefixed_null_terminated()
         throws RPCMarshallingException
@@ -128,6 +178,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_marshal_bpp_invoke_xml()
         throws RPCMarshallingException
@@ -139,6 +193,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_marshal_fixed_length()
         throws RPCMarshallingException
@@ -150,6 +208,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_marshal_fixed_length2()
         throws RPCMarshallingException
@@ -161,6 +223,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_marshal_integer()
         throws RPCMarshallingException
@@ -172,6 +238,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_marshal_integer2()
         throws RPCMarshallingException
@@ -183,6 +253,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_MARSHAL_DOUBLE_LENGTH_PREFIXED_NULL_TERMINATED()
         throws RPCMarshallingException
@@ -194,6 +268,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_PREPARE_TRANS()
         throws RPCMarshallingException
@@ -206,6 +284,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testHexEncodeTextParts_DOUBLE()
         throws RPCMarshallingException
@@ -239,6 +321,9 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testBaToHexString_tabs_newlines()
    {
@@ -260,6 +345,9 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testBaToHexString_russian()
    {
@@ -278,6 +366,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws RPCMarshallingException
+    */
    @Test
    public void testBaToHexString_ASCII()
         throws RPCMarshallingException
@@ -294,6 +386,9 @@ public class DCERPCMarshallingTest
       assertEquals(JOrphanUtils.baToHexString(ASCII), baCheck);
    }
 
+   /**
+    *
+    */
    @Test
    public void testBaToHexString_shorts()
    {
@@ -314,6 +409,7 @@ public class DCERPCMarshallingTest
 
    /**
     * Test of unmarshalData method, of class DCERPCMarshalling.
+    * @throws Exception
     */
    @Test
    public void testUnmarshalData()
@@ -329,6 +425,7 @@ public class DCERPCMarshallingTest
 
    /**
     * Test of unmarshalData method, of class DCERPCMarshalling.
+    * @throws Exception
     */
    @Test
    public void testUnmarshalData_Integer()
@@ -342,6 +439,10 @@ public class DCERPCMarshallingTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @Test
    public void testUnmarshalData_Integer_Limited()
         throws Exception
@@ -356,6 +457,7 @@ public class DCERPCMarshallingTest
 
    /**
     * Test of marshalData method, of class DCERPCMarshalling.
+    * @throws Exception
     */
    @Test
    public void testMarshalData()

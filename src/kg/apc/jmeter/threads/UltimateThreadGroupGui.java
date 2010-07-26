@@ -44,18 +44,31 @@ import org.apache.jorphan.collections.HashTree;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+/**
+ *
+ * @author apc
+ */
 public class UltimateThreadGroupGui
       extends AbstractThreadGroupGui
       implements TableModelListener,
                  CellEditorListener
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
+   /**
+    *
+    */
    protected ConcurrentHashMap<String, AbstractGraphRow> model;
    private GraphPanelChart chart;
+   /**
+    *
+    */
    public static final String[] columnIdentifiers = new String[]
    {
       "Start Threads Count", "Initial Delay, sec", "Startup Time, sec", "Hold Load For, sec", "Shutdown Time"
    };
+   /**
+    *
+    */
    public static final Class[] columnClasses = new Class[]
    {
       Integer.class, Integer.class, Integer.class, Integer.class, Integer.class
@@ -70,12 +83,18 @@ public class UltimateThreadGroupGui
    JButton addRowButton;
    JButton deleteRowButton;
 
+   /**
+    *
+    */
    public UltimateThreadGroupGui()
    {
       super();
       init();
    }
 
+   /**
+    *
+    */
    protected final void init()
    {
       JPanel containerPanel = new VerticalPanel();

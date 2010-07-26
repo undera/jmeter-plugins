@@ -10,6 +10,10 @@ import org.apache.jmeter.protocol.tcp.sampler.AbstractTCPClient;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+/**
+ *
+ * @author apc
+ */
 public class DCERPCSampler
      extends AbstractTCPClient
 {

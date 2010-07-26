@@ -11,32 +11,53 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author apc
+ */
 public class DCERPCSamplerUtilsTest
 {
    private static String SERVER_UUID = "80d7862a-6160-4596-aaa9-1743e4c27638";
    private static String ABSTRACT_SYNTAX = "8a885d04-1ceb-11c9-9fe8-08002b104860";
 
+   /**
+    *
+    */
    public DCERPCSamplerUtilsTest()
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
+   /**
+    *
+    */
    @Before
    public void setUp()
    {
    }
 
+   /**
+    *
+    */
    @After
    public void tearDown()
    {
@@ -59,6 +80,9 @@ public class DCERPCSamplerUtilsTest
       assertEquals(expResult, JOrphanUtils.baToHexString(result[0].getBytes()));
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetRequestByString2()
    {
@@ -69,6 +93,9 @@ public class DCERPCSamplerUtilsTest
       assertEquals(expResult, JOrphanUtils.baToHexString(result[0].getBytes()));
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetRequestByString3()
    {
@@ -79,6 +106,9 @@ public class DCERPCSamplerUtilsTest
       assertEquals(expResult, JOrphanUtils.baToHexString(result[0].getBytes()));
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetRequestByString_large1()
    {
@@ -91,6 +121,9 @@ public class DCERPCSamplerUtilsTest
       assertEquals(6, result.length);
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetRequestByString_large2()
    {
@@ -104,6 +137,9 @@ public class DCERPCSamplerUtilsTest
       assertEquals(1, result.length);
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetRequestByString_large3()
    {
@@ -117,6 +153,9 @@ public class DCERPCSamplerUtilsTest
       assertEquals(2, result.length);
    }
 
+   /**
+    *
+    */
    public void testGetRequestByString_large4()
    {
       System.out.println("getRequestByString_large");
@@ -142,6 +181,9 @@ public class DCERPCSamplerUtilsTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetOpNum_exception()
    {
@@ -196,6 +238,9 @@ public class DCERPCSamplerUtilsTest
       assertEquals(expResult, result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetStubDataHex_broken()
    {

@@ -1,5 +1,6 @@
 package kg.apc.jmeter.charting;
 
+/** {@inheritDoc} */
 public class GraphPanelChartExactElement
       extends AbstractGraphPanelChartElement
 {
@@ -12,11 +13,16 @@ public class GraphPanelChartExactElement
       y = yVal;
    }
 
+   /** {@inheritDoc} */
    public double getValue()
    {
       return y;
    }
 
+   /**
+    *
+    * @return
+    */
    public long getX()
    {
       return x;

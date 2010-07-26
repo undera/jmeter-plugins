@@ -5,6 +5,10 @@ import java.io.InputStream;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+/**
+ *
+ * @author apc
+ */
 public class SocketEmulatorInputStream
      extends InputStream
 {
@@ -12,18 +16,29 @@ public class SocketEmulatorInputStream
    private byte[] bytes;
    private int pos = 0;
 
+   /**
+    *
+    * @param hexStringToByteArray
+    */
    public SocketEmulatorInputStream(byte[] hexStringToByteArray)
    {
       this();
       setBytesToRead(hexStringToByteArray);
    }
 
+   /**
+    *
+    */
    public SocketEmulatorInputStream()
    {
       bytes=null;
       pos=0;
    }
 
+   /**
+    *
+    * @param hexStringToByteArray
+    */
    public void setBytesToRead(byte[] hexStringToByteArray)
    {
       bytes = hexStringToByteArray;

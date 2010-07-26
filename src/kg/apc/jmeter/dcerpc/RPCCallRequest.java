@@ -1,14 +1,34 @@
 package kg.apc.jmeter.dcerpc;
 
+/**
+ *
+ * @author apc
+ */
 public class RPCCallRequest
       extends RPCPacket
 {
+   /**
+    *
+    */
    public static final short HEADER_LENGTH = 24; // that's not good, but I dont know the case when header is different
    private int allocHint;
+   /**
+    *
+    */
    protected short contextID;
+   /**
+    *
+    */
    protected short opNum;
    private byte[] stubData;
    
+   /**
+    *
+    * @param acallID
+    * @param aOpnum
+    * @param aStubData
+    * @param aPacketFlags
+    */
    public RPCCallRequest(int acallID, short aOpnum, byte[] aStubData, byte aPacketFlags)
    {
       if (aStubData == null)
@@ -24,12 +44,20 @@ public class RPCCallRequest
       allocHint=stubData.length;
    }
 
+   /**
+    *
+    * @return
+    */
    @Override
    protected byte[] getBodyBytes()
    {
       return stubData;
    }
 
+   /**
+    *
+    * @return
+    */
    @Override
    protected byte[] getHeaderBytes()
    {

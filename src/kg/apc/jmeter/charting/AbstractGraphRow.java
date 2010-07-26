@@ -4,28 +4,73 @@ import java.awt.Color;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+/**
+ *
+ * @author apc
+ */
 public abstract class AbstractGraphRow
 {
+   /**
+    *
+    */
    public static final int MARKER_SIZE_NONE = 0;
+   /**
+    *
+    */
    public static final int MARKER_SIZE_SMALL = 3;
+   /**
+    *
+    */
    public static final int MARKER_SIZE_BIG = 5;
+   /**
+    *
+    */
    protected boolean drawLine = false;
    private boolean drawValueLabel = false;
    private boolean showInLegend = true;
+   /**
+    *
+    */
    protected int markerSize = MARKER_SIZE_NONE;
+   /**
+    *
+    */
    protected Color color = Color.BLACK;
+   /**
+    *
+    */
    protected String label = "";
+   /**
+    *
+    */
    protected long maxX = Long.MIN_VALUE;
+   /**
+    *
+    */
    protected long minX = Long.MAX_VALUE;
+   /**
+    *
+    */
    protected double maxY = Double.MIN_VALUE;
+   /**
+    *
+    */
    protected double minY = Double.MAX_VALUE;
    private boolean drawOnChart=true;
 
+   /**
+    *
+    * @param b
+    */
    public void setDrawLine(boolean b)
    {
       drawLine = b;
    }
 
+   /**
+    *
+    * @param aMarkerSize
+    */
    public void setMarkerSize(int aMarkerSize)
    {
       markerSize = aMarkerSize;
@@ -47,11 +92,19 @@ public abstract class AbstractGraphRow
       return markerSize;
    }
 
+   /**
+    *
+    * @return
+    */
    public Color getColor()
    {
       return color;
    }
 
+   /**
+    *
+    * @param nextColor
+    */
    public void setColor(Color nextColor)
    {
       color = nextColor;
@@ -105,6 +158,11 @@ public abstract class AbstractGraphRow
       return minY;
    }
 
+   /**
+    *
+    * @param xVal
+    * @param yVal
+    */
    public void add(long xVal, double yVal)
    {
       if (xVal > maxX)
@@ -117,6 +175,10 @@ public abstract class AbstractGraphRow
          minY = yVal;
    }
 
+   /**
+    *
+    * @return
+    */
    public abstract Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator();
 
    /**

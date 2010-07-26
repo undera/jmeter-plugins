@@ -3,6 +3,10 @@ package kg.apc.jmeter.charting;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+/**
+ *
+ * @author apc
+ */
 public class GraphRowOverallAverages
      extends AbstractGraphRow
      implements Iterator, Entry<Long, GraphPanelChartAverageElement>
@@ -11,6 +15,9 @@ public class GraphRowOverallAverages
    private GraphPanelChartAverageElement element;
    private double avgX = 0;
 
+   /**
+    *
+    */
    public GraphRowOverallAverages()
    {
       super();
@@ -18,6 +25,11 @@ public class GraphRowOverallAverages
       hasNext = true;
    }
 
+   /**
+    *
+    * @param xVal
+    * @param yVal
+    */
    @Override
    public void add(long xVal, double yVal)
    {
@@ -27,6 +39,10 @@ public class GraphRowOverallAverages
       super.add((long) avgX, element.getValue());
    }
 
+   /**
+    *
+    * @return
+    */
    public Iterator iterator()
    {
       hasNext = true;

@@ -7,32 +7,58 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class RPCCallExceptionTest {
+/**
+ *
+ * @author apc
+ */
+public class RPCCallExceptionTest
+{
 
-    public RPCCallExceptionTest() {
+   /**
+    * 
+    */
+   public RPCCallExceptionTest()
+   {
     }
 
-   @BeforeClass
+    /**
+     *
+     * @throws Exception
+     */
+    @BeforeClass
    public static void setUpClass()
         throws Exception
    {
    }
 
-   @AfterClass
+    /**
+     *
+     * @throws Exception
+     */
+    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
 
-   @Test
+    /**
+     *
+     */
+    @Test
    public void testSomeMethod()
    {
      RPCCallException e=new RPCCallException("TEST");

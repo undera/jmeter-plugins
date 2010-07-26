@@ -1,5 +1,11 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package kg.apc.jmeter.vizualizers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
@@ -13,12 +19,12 @@ import static org.junit.Assert.*;
  *
  * @author apc
  */
-public class ThroughputVsThreadsGuiTest
+public class ThroughputOverTimeGuiTest
 {
    /**
-    *
+    * 
     */
-   public ThroughputVsThreadsGuiTest()
+   public ThroughputOverTimeGuiTest()
    {
    }
 
@@ -27,8 +33,7 @@ public class ThroughputVsThreadsGuiTest
     * @throws Exception
     */
    @BeforeClass
-   public static void setUpClass()
-        throws Exception
+   public static void setUpClass() throws Exception
    {
       TestJMeterUtils.createJmeterEnv();
    }
@@ -38,8 +43,7 @@ public class ThroughputVsThreadsGuiTest
     * @throws Exception
     */
    @AfterClass
-   public static void tearDownClass()
-        throws Exception
+   public static void tearDownClass() throws Exception
    {
    }
 
@@ -60,41 +64,52 @@ public class ThroughputVsThreadsGuiTest
    }
 
    /**
-    * Test of getLabelResource method, of class ThroughputVsThreadsGui.
+    *
     */
    @Test
    public void testGetLabelResource()
    {
       System.out.println("getLabelResource");
-      ThroughputVsThreadsGui instance = new ThroughputVsThreadsGui();
-      String expResult = "ThroughputVsThreadsGui";
+      ThroughputOverTimeGui instance = new ThroughputOverTimeGui();
+      String expResult = "ThroughputOverTimeGui";
       String result = instance.getLabelResource();
       assertEquals(expResult, result);
    }
 
    /**
-    * Test of getStaticLabel method, of class ThroughputVsThreadsGui.
+    *
     */
    @Test
    public void testGetStaticLabel()
    {
       System.out.println("getStaticLabel");
-      ThroughputVsThreadsGui instance = new ThroughputVsThreadsGui();
-      String expResult = "Transaction Throughput vs Threads";
+      ThroughputOverTimeGui instance = new ThroughputOverTimeGui();
+      String expResult = "Transaction Throughput Over Time";
       String result = instance.getStaticLabel();
       assertEquals(expResult, result);
    }
 
    /**
-    * Test of add method, of class ThroughputVsThreadsGui.
+    *
     */
    @Test
    public void testAdd()
    {
       System.out.println("add");
-      ThroughputVsThreadsGui instance = new ThroughputVsThreadsGui();
-      instance.add(new SampleResult());
-      instance.add(new SampleResult(0, 100));
-      instance.add(new SampleResult(0, 100));
+      SampleResult res = new SampleResult();
+      res.setAllThreads(1);
+      res.setThreadName("test 1-2");
+      ThroughputOverTimeGui instance = new ThroughputOverTimeGui();
+      instance.add(res);
+      res.sampleStart();
+      try
+      {
+         Thread.sleep(10);
+      }
+      catch (InterruptedException ex)
+      {
+      }
+      res.sampleEnd();
+      instance.add(res);
    }
 }

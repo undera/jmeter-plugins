@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package kg.apc.jmeter.charting;
 
 import org.junit.After;
@@ -16,28 +15,48 @@ import static org.junit.Assert.*;
  *
  * @author apc
  */
-public class AbstractGraphPanelChartElementTest {
+public class AbstractGraphPanelChartElementTest
+{
+   /**
+    * 
+    */
+   public AbstractGraphPanelChartElementTest()
+   {
+   }
 
-    public AbstractGraphPanelChartElementTest() {
-    }
-
+   /**
+    *
+    * @throws Exception
+    */
    @BeforeClass
    public static void setUpClass() throws Exception
    {
    }
 
+   /**
+    *
+    * @throws Exception
+    */
    @AfterClass
    public static void tearDownClass() throws Exception
    {
    }
 
-    @Before
-    public void setUp() {
-    }
+   /**
+    *
+    */
+   @Before
+   public void setUp()
+   {
+   }
 
-    @After
-    public void tearDown() {
-    }
+   /**
+    *
+    */
+   @After
+   public void tearDown()
+   {
+   }
 
    /**
     * Test of getValue method, of class AbstractGraphPanelChartElement.
@@ -52,13 +71,14 @@ public class AbstractGraphPanelChartElementTest {
       assertEquals(expResult, result, 0.0);
    }
 
+   /** {@inheritDoc} */
    public class AbstractGraphPanelChartElementImpl
          extends AbstractGraphPanelChartElement
    {
+      /** {@inheritDoc} */
       public double getValue()
       {
          return 0.0;
       }
    }
-
 }

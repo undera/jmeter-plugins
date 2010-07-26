@@ -10,27 +10,50 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ColorRendererTest {
+/**
+ *
+ * @author apc
+ */
+public class ColorRendererTest
+{
 
-    public ColorRendererTest() {
+   /**
+    * 
+    */
+   public ColorRendererTest()
+   {
     }
 
-   @BeforeClass
+    /**
+     *
+     * @throws Exception
+     */
+    @BeforeClass
    public static void setUpClass()
         throws Exception
    {
    }
 
-   @AfterClass
+    /**
+     *
+     * @throws Exception
+     */
+    @AfterClass
    public static void tearDownClass()
         throws Exception
    {
    }
 
-    @Before
+   /**
+    *
+    */
+   @Before
     public void setUp() {
     }
 
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
@@ -53,6 +76,9 @@ public class ColorRendererTest {
       assertNotNull(result);
    }
 
+   /**
+    *
+    */
    @Test
    public void testGetTableCellRendererComponent_2()
    {

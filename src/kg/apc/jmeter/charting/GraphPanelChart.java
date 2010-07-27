@@ -4,12 +4,22 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.AbstractMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.border.BevelBorder;
 import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.logging.LoggingManager;
@@ -21,6 +31,7 @@ import org.apache.log.Logger;
  */
 public class GraphPanelChart
       extends JComponent
+      implements ClipboardOwner
 {
    private static final String AD_TEXT = "http://apc.kg";
    private static final int spacing = 5;
@@ -58,6 +69,8 @@ public class GraphPanelChart
       chartRect = new Rectangle();
 
       setDefaultDimensions();
+
+      registerPopup();
    }
 
    private void getMinMaxDataValues()
@@ -413,5 +426,66 @@ public class GraphPanelChart
             getWidth() - g.getFontMetrics().stringWidth(AD_TEXT) - spacing,
             g.getFontMetrics().getHeight() - spacing + 1);
       g.setFont(tmp);
+   }
+
+   // Adding a popup menu to copy image in clipboard
+   @Override
+   public void lostOwnership(Clipboard clipboard, Transferable contents)
+   {
+      // do nothing
+   }
+
+   private Image getImage()
+   {
+      BufferedImage image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+      this.paintAll(image.getGraphics());
+      return image;
+   }
+
+   /**
+    * Thanks to stephane.hoblingre
+    */
+   private void registerPopup()
+   {
+      JPopupMenu popup = new JPopupMenu();
+      this.setComponentPopupMenu(popup);
+      JMenuItem item = new JMenuItem("Copy Image to Clipboard");
+
+      item.addActionListener(new CopyAction());
+      popup.add(item);
+   }
+
+   private class CopyAction
+         implements ActionListener
+   {
+      public void actionPerformed(final ActionEvent e)
+      {
+         Clipboard clipboard = getToolkit().getSystemClipboard();
+         Transferable transferable = new Transferable()
+         {
+            public Object getTransferData(DataFlavor flavor)
+            {
+               if (isDataFlavorSupported(flavor))
+               {
+                  return getImage();
+               }
+               return null;
+            }
+
+            public DataFlavor[] getTransferDataFlavors()
+            {
+               return new DataFlavor[]
+                     {
+                        DataFlavor.imageFlavor
+                     };
+            }
+
+            public boolean isDataFlavorSupported(DataFlavor flavor)
+            {
+               return DataFlavor.imageFlavor.equals(flavor);
+            }
+         };
+         clipboard.setContents(transferable, GraphPanelChart.this);
+      }
    }
 }

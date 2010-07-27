@@ -306,7 +306,7 @@ public class TestGraphics
    @Override
    public void setFont(Font font)
    {
-      throw new UnsupportedOperationException("Not supported yet.");
+      log.debug("Set font: "+font.getFontName());
    }
 
    @Override

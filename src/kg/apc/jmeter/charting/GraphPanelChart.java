@@ -1,6 +1,7 @@
 package kg.apc.jmeter.charting;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -19,8 +20,9 @@ import org.apache.log.Logger;
  * @author apc
  */
 public class GraphPanelChart
-     extends JComponent
+      extends JComponent
 {
+   private static final String AD_TEXT = "http://apc.kg";
    private static final int spacing = 5;
    private static final Logger log = LoggingManager.getLoggerForClass();
    private Rectangle legendRect;
@@ -41,7 +43,7 @@ public class GraphPanelChart
    private int forcedMinX = -1;
 
    /**
-    *
+    * Creates new chart object with default parameters
     */
    public GraphPanelChart()
    {
@@ -73,22 +75,32 @@ public class GraphPanelChart
          rowValue = row.getValue();
 
          if (!rowValue.isDrawOnChart())
+         {
             continue;
+         }
 
          if (rowValue.getMaxY() > maxYVal)
+         {
             maxYVal = rowValue.getMaxY();
+         }
 
          if (rowValue.getMaxX() > maxXVal)
+         {
             maxXVal = rowValue.getMaxX();
+         }
 
          if (rowValue.getMinX() < minXVal)
+         {
             minXVal = rowValue.getMinX();
+         }
       }
 
       //maxYVal *= 1 + (double) 1 / (double) gridLinesCount;
 
       if (forcedMinX >= 0)
+      {
          minXVal = forcedMinX;
+      }
    }
 
    private void setDefaultDimensions()
@@ -127,6 +139,7 @@ public class GraphPanelChart
 
       g.setColor(Color.white);
       g.fillRect(0, 0, getWidth(), getHeight());
+      paintAd(g);
 
       if (rows.isEmpty())
       {
@@ -170,7 +183,9 @@ public class GraphPanelChart
          row = it.next();
 
          if (!row.getValue().isShowInLegend() || !row.getValue().isDrawOnChart())
+         {
             continue;
+         }
 
          // wrap row if overflowed
          if (currentX + rectW + spacing / 2 + fm.stringWidth(row.getKey()) > getWidth())
@@ -262,7 +277,9 @@ public class GraphPanelChart
       {
          Entry<String, AbstractGraphRow> row = it.next();
          if (row.getValue().isDrawOnChart())
+         {
             paintRow(g, row.getValue());
+         }
       }
    }
 
@@ -282,7 +299,9 @@ public class GraphPanelChart
          element = it.next();
 
          if (!row.isDrawOnChart())
+         {
             continue;
+         }
 
          x = chartRect.x + (int) ((element.getKey() - minXVal) * dxForDVal);
          AbstractGraphPanelChartElement elementValue = (AbstractGraphPanelChartElement) element.getValue();
@@ -305,8 +324,8 @@ public class GraphPanelChart
             g.setColor(Color.DARK_GRAY);
             yAxisLabelRenderer.setValue(elementValue.getValue());
             g.drawString(yAxisLabelRenderer.getText(),
-                 x + row.getMarkerSize() + spacing,
-                 y + fm.getAscent() / 2);
+                  x + row.getMarkerSize() + spacing,
+                  y + fm.getAscent() / 2);
          }
 
          // draw markers
@@ -383,5 +402,16 @@ public class GraphPanelChart
    public void setForcedMinX(int i)
    {
       forcedMinX = i;
+   }
+
+   private void paintAd(Graphics g)
+   {
+      Font tmp = g.getFont();
+      g.setFont(g.getFont().deriveFont(10F));
+      g.setColor(new Color(0x00DDDDDD));
+      g.drawString(AD_TEXT,
+            getWidth() - g.getFontMetrics().stringWidth(AD_TEXT) - spacing,
+            g.getFontMetrics().getHeight() - spacing + 1);
+      g.setFont(tmp);
    }
 }

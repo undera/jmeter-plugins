@@ -447,7 +447,8 @@ public class TestGraphics
    @Override
    public boolean drawImage(Image img, int x, int y, ImageObserver observer)
    {
-      throw new UnsupportedOperationException("Not supported yet.");
+      log.debug("Draw image");
+      return true;
    }
 
    @Override

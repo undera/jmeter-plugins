@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
@@ -21,6 +23,7 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.border.BevelBorder;
+
 import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -34,6 +37,7 @@ public class GraphPanelChart
       implements ClipboardOwner
 {
    private static final String AD_TEXT = "http://apc.kg";
+   private static final String NO_SAMPLES = "Waiting for samples...";
    private static final int spacing = 5;
    private static final Logger log = LoggingManager.getLoggerForClass();
    private Rectangle legendRect;
@@ -150,15 +154,25 @@ public class GraphPanelChart
    {
       super.paintComponent(g);
 
+      BufferedImage image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+      Graphics2D g2d = image.createGraphics();
+      g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      drawPanel(g2d);
+      g.drawImage(image, 0, 0, this);
+   }
+
+   private void drawPanel(Graphics2D g)
+   {
       g.setColor(Color.white);
       g.fillRect(0, 0, getWidth(), getHeight());
       paintAd(g);
 
       if (rows.isEmpty())
       {
-         String msg = "Waiting for samples...";
          g.setColor(Color.BLACK);
-         g.drawString(msg, getWidth() / 2 - g.getFontMetrics(g.getFont()).stringWidth(msg) / 2, getHeight() / 2);
+         g.drawString(NO_SAMPLES,
+               getWidth() / 2 - g.getFontMetrics(g.getFont()).stringWidth(NO_SAMPLES) / 2,
+               getHeight() / 2);
          return;
       }
 

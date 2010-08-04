@@ -17,11 +17,11 @@ public abstract class AbstractGraphRow
    /**
     *
     */
-   public static final int MARKER_SIZE_SMALL = 3;
+   public static final int MARKER_SIZE_SMALL = 2;
    /**
     *
     */
-   public static final int MARKER_SIZE_BIG = 5;
+   public static final int MARKER_SIZE_BIG = 4;
    /**
     *
     */
@@ -56,7 +56,7 @@ public abstract class AbstractGraphRow
     *
     */
    protected double minY = Double.MAX_VALUE;
-   private boolean drawOnChart=true;
+   private boolean drawOnChart = true;
 
    /**
     *
@@ -166,13 +166,21 @@ public abstract class AbstractGraphRow
    public void add(long xVal, double yVal)
    {
       if (xVal > maxX)
+      {
          maxX = xVal;
+      }
       if (yVal > maxY)
+      {
          maxY = yVal;
+      }
       if (xVal < minX)
+      {
          minX = xVal;
+      }
       if (yVal < minY)
+      {
          minY = yVal;
+      }
    }
 
    /**

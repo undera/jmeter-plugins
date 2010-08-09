@@ -4,15 +4,22 @@ package kg.apc.jmeter.threads;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
+import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 import kg.apc.jmeter.charting.GraphPanelChart;
-import kg.apc.jmeter.charting.GraphRowExactValues;
+import kg.apc.jmeter.charting.GraphRowSumValues;
+
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.testelement.TestElement;
@@ -20,6 +27,8 @@ import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
 import org.apache.jorphan.collections.HashTree;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  *
@@ -31,6 +40,7 @@ public class SteppingThreadGroupGui
    /**
     *
     */
+   private static final Logger log = LoggingManager.getLoggerForClass();
    protected ConcurrentHashMap<String, AbstractGraphRow> model;
    private GraphPanelChart chart;
    private JTextField initialDelay;
@@ -116,6 +126,14 @@ public class SteppingThreadGroupGui
       panel.add(decUserPeriod);
       panel.add(new JLabel("seconds.", JLabel.LEFT));
 
+      registerJTextfieldForGraphRefresh(totalThreads);
+      registerJTextfieldForGraphRefresh(initialDelay);
+      registerJTextfieldForGraphRefresh(incUserCount);
+      registerJTextfieldForGraphRefresh(incUserPeriod);
+      registerJTextfieldForGraphRefresh(flightTime);
+      registerJTextfieldForGraphRefresh(decUserCount);
+      registerJTextfieldForGraphRefresh(decUserPeriod);
+
       return panel;
    }
 
@@ -174,10 +192,18 @@ public class SteppingThreadGroupGui
       }
    }
 
+   private void updateChart()
+   {
+      log.debug("Updating chart...");
+      TestElement tg = createTestElement();
+      updateChart((SteppingThreadGroup) tg);
+   }
+
    private void updateChart(SteppingThreadGroup tg)
    {
       model.clear();
-      GraphRowExactValues row = new GraphRowExactValues();
+
+      GraphRowSumValues row = new GraphRowSumValues();
       row.setColor(Color.RED);
       row.setDrawLine(true);
       row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
@@ -190,27 +216,45 @@ public class SteppingThreadGroupGui
       row.add(System.currentTimeMillis(), 0);
       row.add(System.currentTimeMillis() + tg.getThreadGroupDelay(), 0);
 
+      int numThreads = tg.getNumThreads();
+
       // users in
-      for (int n = 0; n < tg.getNumThreads(); n++)
+      for (int n = 0; n < numThreads; n++)
       {
          thread.setThreadNum(n);
          tg.scheduleThread(thread);
-         row.add(thread.getStartTime(), n + 1);
+         row.add(thread.getStartTime() - 1, 0);
+         row.add(thread.getStartTime(), 1);
       }
 
       // users out
-      for (int n = 0; n < tg.getNumThreads(); n++)
+      for (int n = 0; n < numThreads; n++)
       {
          thread.setThreadNum(n);
          tg.scheduleThread(thread);
-         row.add(thread.getEndTime(), tg.getNumThreads() - n);
+         row.add(thread.getEndTime() - 1, 0);
+         row.add(thread.getEndTime(), -1);
       }
 
-      // final point
-      row.add(thread.getEndTime() + tg.getOutUserPeriod() * 1000, 0);
+      calculateRowMaxY(row);
 
       model.put("Expected parallel users count", row);
       chart.repaint();
+   }
+
+   private void calculateRowMaxY(GraphRowSumValues row)
+   {
+      double max = Double.MIN_VALUE;
+      Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = row.iterator();
+      while (it.hasNext())
+      {
+         double el = it.next().getValue().getValue();
+         if (el > max)
+         {
+            max = el;
+         }
+      }
+      row.setMaxY(max);
    }
 
    private JPanel createControllerPanel()
@@ -221,5 +265,29 @@ public class SteppingThreadGroupGui
       looper.setContinueForever(true);
       loopPanel.configure(looper);
       return loopPanel;
+   }
+
+   private void registerJTextfieldForGraphRefresh(JTextField tf)
+   {
+      tf.getDocument().addDocumentListener(new DocumentListener()
+      {
+         @Override
+         public void changedUpdate(DocumentEvent arg0)
+         {
+            updateChart();
+         }
+
+         @Override
+         public void insertUpdate(DocumentEvent arg0)
+         {
+            updateChart();
+         }
+
+         @Override
+         public void removeUpdate(DocumentEvent arg0)
+         {
+            updateChart();
+         }
+      });
    }
 }

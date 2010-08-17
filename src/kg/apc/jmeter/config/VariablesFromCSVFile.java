@@ -129,16 +129,21 @@ public class VariablesFromCSVFile
    private void processCSVFileLine(String line, String delim, JMeterVariables variables)
    {
       String[] lineValues = JOrphanUtils.split(line, delim, false);
-      if (lineValues.length < 2)
-      {
-         log.warn("Less than 2 columns at line: " + line);
-         variables.put(getVariablesPrefix() + lineValues[0], "");
-      }
-      else
-      {
-         //log.info("Variable: " + getVariablesPrefix() + lineValues[0] + "=" + lineValues[1] + " was: " + variables.get(getVariablesPrefix() + lineValues[0]));
-         variables.put(getVariablesPrefix() + lineValues[0], lineValues[1]);
-      }
+
+       //REV SH - Issue 3: Blank lines cause Java Exception
+       switch (lineValues.length) {
+           case 1:
+               log.warn("Less than 2 columns at line: " + line);
+               variables.put(getVariablesPrefix() + lineValues[0], "");
+               break;
+           case 2:
+               //log.info("Variable: " + getVariablesPrefix() + lineValues[0] + "=" + lineValues[1] + " was: " + variables.get(getVariablesPrefix() + lineValues[0]));
+               variables.put(getVariablesPrefix() + lineValues[0], lineValues[1]);
+               break;
+           default:
+               log.warn("Bad format for line: " + line);
+               break;
+       }
    }
 
    private String getResultingDelimiter()

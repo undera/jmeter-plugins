@@ -77,11 +77,16 @@ public class VariablesFromCSVFileTest
       testFile.deleteOnExit();
 
       // Write to temp file
+      // REV SH - Issue 3: Blank lines cause Java Exception
+      // Simulate the problem, and add on bad formatted line
       try
       {
          BufferedWriter out = new BufferedWriter(new FileWriter(testFile));
          out.write("testvar1\ttestval1\n");
+         out.write("\n");
          out.write("testvar2\ttestval2\n");
+         out.write("\n");
+         out.write("badvar\tcontain\tbad\tchars\n");
          out.close();
       }
       catch (IOException ex)
@@ -122,6 +127,7 @@ public class VariablesFromCSVFileTest
       assertEquals("testval1", variables.get("testvar1"));
       assertEquals("testval2", variables.get("testvar2"));
       assertNull(variables.get("testvar3"));
+      assertNull(variables.get("badvar"));
       assertNull(variables.get("prefixedtestvar1"));
    }
 

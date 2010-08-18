@@ -1,5 +1,6 @@
 package kg.apc.jmeter.charting;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -8,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
@@ -56,6 +58,14 @@ public class GraphPanelChart
    private boolean drawStartFinalZeroingLines = false;
    private boolean drawCurrentX = false;
    private int forcedMinX = -1;
+
+   private Stroke dashStroke = new BasicStroke(
+		   1.0f,   				// Width
+           BasicStroke.CAP_SQUARE,    			// End cap
+           BasicStroke.JOIN_MITER,    			// Join style
+           10.0f,                     			// Miter limit
+           new float[] {1.0f,4.0f}, 			// Dash pattern
+           0.0f);                     			// Dash phase
 
    /**
     * Creates new chart object with default parameters
@@ -246,13 +256,32 @@ public class GraphPanelChart
       int labelXPos;
       int gridLineY;
 
+      // shift 2nd and more lines
+      int shift = 0;
+      // for strokes swapping
+      Stroke oldStroke = ((Graphics2D) g).getStroke();
+
+      //draw markers
+      g.setColor(Color.lightGray);
       for (int n = 0; n <= gridLinesCount; n++)
       {
+    	  gridLineY = chartRect.y + (int) ((gridLinesCount - n) * (double) chartRect.height / gridLinesCount);
+    	  g.drawLine(chartRect.x - 3, gridLineY, chartRect.x + 3, gridLineY);
+      }
+
+      for (int n = 0; n <= gridLinesCount; n++)
+      {
+         //draw 2nd and more axis dashed and shifted
+         if(n!=0) {
+    		 ((Graphics2D) g).setStroke(dashStroke);
+    		 shift = 7;
+    	 }
+
          gridLineY = chartRect.y + (int) ((gridLinesCount - n) * (double) chartRect.height / gridLinesCount);
 
          // draw grid line with tick
          g.setColor(Color.lightGray);
-         g.drawLine(chartRect.x - spacing, gridLineY, chartRect.x + chartRect.width, gridLineY);
+         g.drawLine(chartRect.x + shift, gridLineY, chartRect.x + chartRect.width, gridLineY);
          g.setColor(Color.black);
 
          // draw label
@@ -261,6 +290,8 @@ public class GraphPanelChart
          labelXPos = yAxisRect.x + yAxisRect.width - fm.stringWidth(valueLabel) - spacing - spacing / 2;
          g.drawString(valueLabel, labelXPos, gridLineY + fm.getAscent() / 2);
       }
+      //restore stroke
+      ((Graphics2D) g).setStroke(oldStroke);
    }
 
    private void paintXAxis(Graphics g)
@@ -271,13 +302,32 @@ public class GraphPanelChart
       int labelXPos;
       int gridLineX;
 
+      // shift 2nd and more lines
+      int shift = 0;
+      // for strokes swapping
+      Stroke oldStroke = ((Graphics2D) g).getStroke();
+
+      g.setColor(Color.lightGray);
+      //draw markers
       for (int n = 0; n <= gridLinesCount; n++)
       {
+    	  gridLineX = chartRect.x + (int) (n * ((double) chartRect.width / gridLinesCount));
+    	  g.drawLine(gridLineX, chartRect.y + chartRect.height - 3, gridLineX, chartRect.y + chartRect.height + 3);
+      }
+
+      for (int n = 0; n <= gridLinesCount; n++)
+      {
+         //draw 2nd and more axis dashed and shifted
+         if(n!=0) {
+    		 ((Graphics2D) g).setStroke(dashStroke);
+    		 shift = 7;
+    	 }
+
          gridLineX = chartRect.x + (int) (n * ((double) chartRect.width / gridLinesCount));
 
          // draw grid line with tick
          g.setColor(Color.lightGray);
-         g.drawLine(gridLineX, chartRect.y, gridLineX, chartRect.y + chartRect.height + spacing);
+         g.drawLine(gridLineX, chartRect.y + chartRect.height - shift, gridLineX, chartRect.y);
          g.setColor(Color.black);
 
          // draw label
@@ -286,6 +336,9 @@ public class GraphPanelChart
          labelXPos = gridLineX - fm.stringWidth(valueLabel) / 2;
          g.drawString(valueLabel, labelXPos, xAxisRect.y + fm.getAscent() + spacing);
       }
+
+      //restore stroke
+      ((Graphics2D) g).setStroke(oldStroke);
 
       if (drawCurrentX)
       {
@@ -452,7 +505,10 @@ public class GraphPanelChart
    private Image getImage()
    {
       BufferedImage image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
-      this.paintAll(image.getGraphics());
+      Graphics2D g2 = image.createGraphics();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      this.drawPanel(g2);
+
       return image;
    }
 

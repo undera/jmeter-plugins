@@ -233,7 +233,8 @@ public class UltimateThreadGroupGui
       GraphRowSumValues row = new GraphRowSumValues();
       row.setColor(Color.RED);
       row.setDrawLine(true);
-      row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
+      row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
+      row.setDrawThickLines(true);
 
       final HashTree hashTree = new HashTree();
       hashTree.add(new LoopController());

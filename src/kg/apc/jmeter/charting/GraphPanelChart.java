@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -25,6 +26,7 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.border.BevelBorder;
+import org.apache.jmeter.util.JMeterUtils;
 
 import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.logging.LoggingManager;
@@ -66,6 +68,26 @@ public class GraphPanelChart
            10.0f,                     			// Miter limit
            new float[] {1.0f,4.0f}, 			// Dash pattern
            0.0f);                     			// Dash phase
+
+   private Stroke thickStroke = new BasicStroke(
+		   AbstractGraphRow.LINE_THICKNESS_BIG,
+		   BasicStroke.CAP_BUTT,
+		   BasicStroke.JOIN_BEVEL);
+
+   // Draw options - these are default values if no property is entered in user.properties
+   // List of possible properties (TODO: The explaination must be written in readme file
+   // jmeterPlugin.drawGradient=(true/false)
+   // note to Andrey: Feel free to decide the default value!
+
+   private static boolean drawGradient = true;
+
+   // If user entered configuration items in user.properties, overide default values.
+   static {
+       String cfgDrawGradient = JMeterUtils.getProperty("jmeterPlugin.drawGradient");
+       if(cfgDrawGradient != null) {
+           GraphPanelChart.drawGradient = "true".equalsIgnoreCase(cfgDrawGradient);
+       }
+   }
 
    /**
     * Creates new chart object with default parameters
@@ -174,6 +196,13 @@ public class GraphPanelChart
    private void drawPanel(Graphics2D g)
    {
       g.setColor(Color.white);
+
+      
+      if(GraphPanelChart.drawGradient) {
+          GradientPaint gdp = new GradientPaint(0,0, Color.white, 0, getHeight(), new Color(229,236,246));
+          g.setPaint(gdp);
+       }
+
       g.fillRect(0, 0, getWidth(), getHeight());
       paintAd(g);
 
@@ -374,6 +403,13 @@ public class GraphPanelChart
       int prevY = chartRect.y + chartRect.height;
       final double dxForDVal = (maxXVal <= minXVal) ? 0 : (double) chartRect.width / (maxXVal - minXVal);
       final double dyForDVal = maxYVal <= 0 ? 0 : (double) chartRect.height / (maxYVal);
+
+      Stroke oldStroke = null;
+
+      if(row.isDrawThickLines()) {
+    	  oldStroke = ((Graphics2D) g).getStroke();
+      }
+
       while (it.hasNext())
       {
          element = it.next();
@@ -387,6 +423,10 @@ public class GraphPanelChart
          AbstractGraphPanelChartElement elementValue = (AbstractGraphPanelChartElement) element.getValue();
          y = chartRect.y + chartRect.height - (int) (elementValue.getValue() * dyForDVal);
 
+         if(row.isDrawThickLines()) {
+        	 ((Graphics2D) g).setStroke(thickStroke);
+         }
+
          // draw lines
          if (row.isDrawLine())
          {
@@ -397,6 +437,10 @@ public class GraphPanelChart
             }
             prevX = x;
             prevY = y;
+         }
+
+         if(row.isDrawThickLines()) {
+        	 ((Graphics2D) g).setStroke(oldStroke);
          }
 
          if (row.isDrawValueLabel())
@@ -421,8 +465,14 @@ public class GraphPanelChart
       // draw final lines
       if (row.isDrawLine() && drawStartFinalZeroingLines)
       {
+          if(row.isDrawThickLines()) {
+         	 ((Graphics2D) g).setStroke(thickStroke);
+          }
          g.setColor(row.getColor());
          g.drawLine(prevX, prevY, (int) (prevX + dxForDVal), chartRect.y + chartRect.height);
+         if(row.isDrawThickLines()) {
+         	 ((Graphics2D) g).setStroke(oldStroke);
+          }
       }
    }
 

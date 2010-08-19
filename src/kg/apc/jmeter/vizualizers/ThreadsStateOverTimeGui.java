@@ -19,7 +19,7 @@ public class ThreadsStateOverTimeGui
    {
       super();
       graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
-      graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
+      graphPanel.getGraphObject().setDrawFinalZeroingLines(false);
    }
 
    private void addThreadGroupRecord(String threadGroupName, long time, int numThreads)

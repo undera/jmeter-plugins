@@ -20,7 +20,7 @@ public class ResponseTimesOverTimeGui
       super();
       graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(
             "HH:mm:ss"));
-      graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
+      graphPanel.getGraphObject().setDrawFinalZeroingLines(false);
    }
 
    private void addThreadGroupRecord(String threadGroupName, long time,

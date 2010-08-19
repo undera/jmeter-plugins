@@ -22,12 +22,19 @@ public abstract class AbstractGraphRow
     *
     */
    public static final int MARKER_SIZE_BIG = 4;
+
+   /**
+    *
+    */
+   public static final float LINE_THICKNESS_BIG = 3.0f;
+
    /**
     *
     */
    protected boolean drawLine = false;
    private boolean drawValueLabel = false;
    private boolean showInLegend = true;
+   private boolean drawThickLines = false;
    /**
     *
     */
@@ -57,6 +64,17 @@ public abstract class AbstractGraphRow
     */
    protected double minY = Double.MAX_VALUE;
    private boolean drawOnChart = true;
+
+
+   public void setDrawThickLines(boolean isThickLine)
+   {
+     drawThickLines = isThickLine;
+   }
+
+   public boolean isDrawThickLines()
+   {
+      return drawThickLines;
+   }
 
    /**
     *

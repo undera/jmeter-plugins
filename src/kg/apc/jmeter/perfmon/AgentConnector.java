@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- *
+ * This class is used to connect to the remote server Agent and get the metrics
  * @author Stephane Hoblingre
  */
 public class AgentConnector
@@ -23,6 +23,7 @@ public class AgentConnector
     private Socket socket = null;
     private PrintWriter out = null;
     private BufferedReader in = null;
+    private String remoteServerName = null;
 
     /**
      * The constructor.
@@ -46,6 +47,8 @@ public class AgentConnector
         socket = new Socket(host, port);
         out = new PrintWriter(socket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        remoteServerName = getData("name");
     }
 
     /**
@@ -68,8 +71,8 @@ public class AgentConnector
     /**
      * Generic method to query the Agent.
      * @param data the element to retrieve, eg "mem" or "cpu".
-     * @return a String of the following format: hostname;value, eg. myserver;0.023500025
-     * @throws IOException
+     * @return a String containing the numbered value
+     * @throws IOException if a communication problem occurred
      */
     private String getData(String data) throws IOException
     {
@@ -79,17 +82,17 @@ public class AgentConnector
 
     /**
      * Get the current total memory used on the server
-     * @return a String of the following format: hostname;totalMem_as_long or null if any error occurred
+     * @return the total memory in bytes or -1 if any error occurred
      */
-    public String getMem() {
-        String ret;
+    public long getMem() {
+        long ret;
 
         try
         {
-            ret = getData("mem");
+            ret = Long.parseLong(getData("mem"));
         } catch (IOException ioex)
         {
-            ret = null;
+            ret = -1;
         }
 
         return ret;
@@ -97,19 +100,27 @@ public class AgentConnector
 
     /**
      * Get the current cpu load on the server
-     * @return a String of the following format: hostname;totalCPU_in_percent_as_double or null if any error occurred
+     * @return the current cpu load % on the server or -1 if a problem occurred.
      */
-    public String getCpu() {
-        String ret;
+    public double getCpu() {
+        double ret;
 
         try
         {
-            ret = getData("cpu");
+            ret = Double.parseDouble(getData("cpu"));
         } catch (IOException ioex)
         {
-            ret = null;
+            ret = -1;
         }
 
         return ret;
+    }
+
+    /**
+     * Get the remote server name.
+     * @return the name of the remote server.
+     */
+    public String getRemoteServerName() {
+        return remoteServerName;
     }
 }

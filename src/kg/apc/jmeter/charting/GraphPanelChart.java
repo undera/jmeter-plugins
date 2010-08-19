@@ -62,7 +62,7 @@ public class GraphPanelChart
    private int forcedMinX = -1;
 
    private Stroke dashStroke = new BasicStroke(
-		   1.0f,   				// Width
+           1.0f,   				        // Width
            BasicStroke.CAP_SQUARE,    			// End cap
            BasicStroke.JOIN_MITER,    			// Join style
            10.0f,                     			// Miter limit
@@ -73,6 +73,12 @@ public class GraphPanelChart
 		   AbstractGraphRow.LINE_THICKNESS_BIG,
 		   BasicStroke.CAP_BUTT,
 		   BasicStroke.JOIN_BEVEL);
+
+   // Chart's gradient background end color
+   private Color gradientColor = new Color(229,236,246);
+
+   // Chart's Axis Color. For good results, use gradient color - (30, 30, 30)
+   private Color axisColor = new Color(199,206,216);
 
    // Draw options - these are default values if no property is entered in user.properties
    // List of possible properties (TODO: The explaination must be written in readme file
@@ -199,7 +205,7 @@ public class GraphPanelChart
 
       
       if(GraphPanelChart.drawGradient) {
-          GradientPaint gdp = new GradientPaint(0,0, Color.white, 0, getHeight(), new Color(229,236,246));
+          GradientPaint gdp = new GradientPaint(0,0, Color.white, 0, getHeight(), gradientColor);
           g.setPaint(gdp);
        }
 
@@ -291,7 +297,7 @@ public class GraphPanelChart
       Stroke oldStroke = ((Graphics2D) g).getStroke();
 
       //draw markers
-      g.setColor(Color.lightGray);
+      g.setColor(axisColor);
       for (int n = 0; n <= gridLinesCount; n++)
       {
     	  gridLineY = chartRect.y + (int) ((gridLinesCount - n) * (double) chartRect.height / gridLinesCount);
@@ -309,7 +315,7 @@ public class GraphPanelChart
          gridLineY = chartRect.y + (int) ((gridLinesCount - n) * (double) chartRect.height / gridLinesCount);
 
          // draw grid line with tick
-         g.setColor(Color.lightGray);
+         g.setColor(axisColor);
          g.drawLine(chartRect.x + shift, gridLineY, chartRect.x + chartRect.width, gridLineY);
          g.setColor(Color.black);
 
@@ -336,7 +342,7 @@ public class GraphPanelChart
       // for strokes swapping
       Stroke oldStroke = ((Graphics2D) g).getStroke();
 
-      g.setColor(Color.lightGray);
+      g.setColor(axisColor);
       //draw markers
       for (int n = 0; n <= gridLinesCount; n++)
       {
@@ -355,7 +361,7 @@ public class GraphPanelChart
          gridLineX = chartRect.x + (int) (n * ((double) chartRect.width / gridLinesCount));
 
          // draw grid line with tick
-         g.setColor(Color.lightGray);
+         g.setColor(axisColor);
          g.drawLine(gridLineX, chartRect.y + chartRect.height - shift, gridLineX, chartRect.y);
          g.setColor(Color.black);
 
@@ -538,7 +544,7 @@ public class GraphPanelChart
    {
       Font tmp = g.getFont();
       g.setFont(g.getFont().deriveFont(10F));
-      g.setColor(new Color(0x00DDDDDD));
+      g.setColor(axisColor);
       g.drawString(AD_TEXT,
             getWidth() - g.getFontMetrics().stringWidth(AD_TEXT) - spacing,
             g.getFontMetrics().getHeight() - spacing + 1);

@@ -328,4 +328,29 @@ public class AbstractGraphRowTest
       AbstractGraphRow instance = new AbstractGraphRowImpl();
       instance.setDrawOnChart(drawOnChart);
    }
+
+    /**
+     * Test of setDrawThickLines method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testSetDrawThickLines()
+    {
+        System.out.println("setDrawThickLines");
+        boolean isThickLine = false;
+        AbstractGraphRow instance = new AbstractGraphRowImpl();
+        instance.setDrawThickLines(isThickLine);
+    }
+
+    /**
+     * Test of isDrawThickLines method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testIsDrawThickLines()
+    {
+        System.out.println("isDrawThickLines");
+        AbstractGraphRow instance = new AbstractGraphRowImpl();
+        boolean expResult = false;
+        boolean result = instance.isDrawThickLines();
+        assertEquals(expResult, result);
+    }
 }

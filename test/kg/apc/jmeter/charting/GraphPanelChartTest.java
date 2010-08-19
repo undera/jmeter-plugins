@@ -1,6 +1,8 @@
 package kg.apc.jmeter.charting;
 
 import java.awt.Graphics;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.Transferable;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.util.TestGraphics;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
@@ -191,4 +193,18 @@ public class GraphPanelChartTest
       GraphPanelChart instance = new GraphPanelChart();
       instance.setForcedMinX(i);
    }
+
+    /**
+     * Test of lostOwnership method, of class GraphPanelChart.
+     */
+    @Test
+    public void testLostOwnership()
+    {
+        System.out.println("lostOwnership");
+        Clipboard clipboard = null;
+        Transferable contents = null;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.lostOwnership(clipboard, contents);
+        // TODO review the generated test code and remove the default call to fail.
+    }
 }

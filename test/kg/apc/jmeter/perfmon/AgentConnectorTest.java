@@ -13,7 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * For this JUnit test to work, the Agent must be started locally on port 4444!!!
+ * For this JUnit test to work, the Agent must be started locally on port 4444.
  * Orders of test is important
  * A better test class should be written which simulate the agent...
  * @author Stephane Hoblingre
@@ -61,9 +61,9 @@ public class AgentConnectorTest {
     public void testGetMem()
     {
         System.out.println("getMem");
-        String result = instance.getMem();
+        long result = instance.getMem();
         System.out.println(result);
-        assertNotNull(result);
+        assertTrue(result != -1);
     }
 
     /**
@@ -73,7 +73,19 @@ public class AgentConnectorTest {
     public void testGetCpu()
     {
         System.out.println("getCpu");
-        String result = instance.getCpu();
+        double result = instance.getCpu();
+        System.out.println(result);
+        assertTrue(result != -1);
+    }
+
+    /**
+     * Test of getRemoteServerName method, of class AgentConnector.
+     */
+    @Test
+    public void testGetRemoteServerName()
+    {
+        System.out.println("getRemoteServerName");
+        String result = instance.getRemoteServerName();
         System.out.println(result);
         assertNotNull(result);
     }

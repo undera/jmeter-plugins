@@ -87,7 +87,7 @@ public class GraphPanelChart
    // Draw options - these are default values if no property is entered in user.properties
    // List of possible properties (TODO: The explaination must be written in readme file)
    // jmeterPlugin.drawGradient=(true/false)
-   // jmeterPlugin.showAd=(true/false)
+   // jmeterPlugin.neverDrawFinalZeroingLines=(true/false)
    // note to Andrey: Feel free to decide the default value!
 
    private static boolean drawGradient = true;

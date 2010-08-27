@@ -1,7 +1,9 @@
 package kg.apc.jmeter.charting;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
@@ -61,6 +63,7 @@ public class GraphPanelChart
    private boolean drawCurrentX = false;
    private int forcedMinX = -1;
 
+   // The stroke used to paint Graph's dashed lines
    private Stroke dashStroke = new BasicStroke(
            1.0f,   				        // Width
            BasicStroke.CAP_SQUARE,    			// End cap
@@ -69,6 +72,7 @@ public class GraphPanelChart
            new float[] {1.0f,4.0f}, 			// Dash pattern
            0.0f);                     			// Dash phase
 
+   // The stroke to paint thick Graph rows
    private Stroke thickStroke = new BasicStroke(
 		   AbstractGraphRow.LINE_THICKNESS_BIG,
 		   BasicStroke.CAP_BUTT,
@@ -81,17 +85,23 @@ public class GraphPanelChart
    private Color axisColor = new Color(199,206,216);
 
    // Draw options - these are default values if no property is entered in user.properties
-   // List of possible properties (TODO: The explaination must be written in readme file
+   // List of possible properties (TODO: The explaination must be written in readme file)
    // jmeterPlugin.drawGradient=(true/false)
+   // jmeterPlugin.showAd=(true/false)
    // note to Andrey: Feel free to decide the default value!
 
    private static boolean drawGradient = true;
+   private static boolean neverDrawFinalZeroingLines = false;
 
    // If user entered configuration items in user.properties, overide default values.
    static {
        String cfgDrawGradient = JMeterUtils.getProperty("jmeterPlugin.drawGradient");
        if(cfgDrawGradient != null) {
            GraphPanelChart.drawGradient = "true".equalsIgnoreCase(cfgDrawGradient);
+       }
+       String cfgNeverDrawFinalZeroingLines = JMeterUtils.getProperty("jmeterPlugin.neverDrawFinalZeroingLines");
+       if(cfgNeverDrawFinalZeroingLines != null) {
+           GraphPanelChart.neverDrawFinalZeroingLines = "true".equalsIgnoreCase(cfgNeverDrawFinalZeroingLines);
        }
    }
 
@@ -512,7 +522,7 @@ public class GraphPanelChart
     */
    public void setDrawFinalZeroingLines(boolean drawFinalZeroingLines)
    {
-      this.drawStartFinalZeroingLines = drawFinalZeroingLines;
+      this.drawStartFinalZeroingLines = drawFinalZeroingLines && !neverDrawFinalZeroingLines;
    }
 
    /**
@@ -540,15 +550,20 @@ public class GraphPanelChart
       forcedMinX = i;
    }
 
-   private void paintAd(Graphics g)
+   //Paint the add the same color of the axis but with transparency
+   private void paintAd(Graphics2D g)
    {
-      Font tmp = g.getFont();
+      Font oldFont = g.getFont();
       g.setFont(g.getFont().deriveFont(10F));
       g.setColor(axisColor);
+      Composite oldComposite = g.getComposite();
+      g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+
       g.drawString(AD_TEXT,
             getWidth() - g.getFontMetrics().stringWidth(AD_TEXT) - spacing,
             g.getFontMetrics().getHeight() - spacing + 1);
-      g.setFont(tmp);
+      g.setComposite(oldComposite);
+      g.setFont(oldFont);
    }
 
    // Adding a popup menu to copy image in clipboard
@@ -584,11 +599,13 @@ public class GraphPanelChart
    private class CopyAction
          implements ActionListener
    {
+      @Override
       public void actionPerformed(final ActionEvent e)
       {
          Clipboard clipboard = getToolkit().getSystemClipboard();
          Transferable transferable = new Transferable()
          {
+            @Override
             public Object getTransferData(DataFlavor flavor)
             {
                if (isDataFlavorSupported(flavor))
@@ -598,6 +615,7 @@ public class GraphPanelChart
                return null;
             }
 
+            @Override
             public DataFlavor[] getTransferDataFlavors()
             {
                return new DataFlavor[]
@@ -606,6 +624,7 @@ public class GraphPanelChart
                      };
             }
 
+            @Override
             public boolean isDataFlavorSupported(DataFlavor flavor)
             {
                return DataFlavor.imageFlavor.equals(flavor);

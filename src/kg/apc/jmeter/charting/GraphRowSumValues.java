@@ -18,6 +18,7 @@ public class GraphRowSumValues
    private ConcurrentSkipListMap<Long, GraphPanelChartSumElement> values;
    private double rollingSum;
    private Iterator<Entry<Long, GraphPanelChartSumElement>> iterator;
+   private boolean isRollingSum = true;
 
    /**
     *
@@ -26,6 +27,13 @@ public class GraphRowSumValues
    {
       super();
       values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
+   }
+
+   public GraphRowSumValues(boolean doRollingSum)
+   {
+      super();
+      values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
+      isRollingSum = doRollingSum;
    }
 
    /**
@@ -81,10 +89,16 @@ public class GraphRowSumValues
    {
       Entry<Long, GraphPanelChartSumElement> entry = iterator.next();
       GraphPanelChartSumElement ret = entry.getValue();
-      rollingSum += ret.getValue();
+      
       //log.info("Rolling: " + entry.getKey() + " " + rollingSum);
-
-      return new ExactEntry(entry.getKey(), new GraphPanelChartSumElement(rollingSum));
+      ExactEntry retValue = null;
+      if(isRollingSum) {
+         rollingSum += ret.getValue();
+         retValue = new ExactEntry(entry.getKey(), new GraphPanelChartSumElement(rollingSum));
+       } else {
+          retValue = new ExactEntry(entry.getKey(), new GraphPanelChartSumElement(ret.getValue()));
+       }
+      return retValue;
    }
 
    public void remove()

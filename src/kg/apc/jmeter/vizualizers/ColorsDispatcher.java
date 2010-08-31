@@ -54,7 +54,7 @@ public class ColorsDispatcher
       }
    }
 
-   void reset()
+   public void reset()
    {
       spentColors = 0;
    }

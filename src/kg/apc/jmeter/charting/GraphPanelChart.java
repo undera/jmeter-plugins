@@ -78,6 +78,9 @@ public class GraphPanelChart
 		   BasicStroke.CAP_BUTT,
 		   BasicStroke.JOIN_BEVEL);
 
+   // Message display in graphs. Used for perfmon error messages
+   private String errorMessage = null;
+
    // Chart's gradient background end color
    private Color gradientColor = new Color(229,236,246);
 
@@ -166,6 +169,12 @@ public class GraphPanelChart
       {
          minXVal = forcedMinX;
       }
+
+      //prevent y axis with only 0 values. We may have values such as 4.9E-324
+      //so we don't test =0 directly
+      if (maxYVal < 0.001) {
+          maxYVal = 1;
+      } 
    }
 
    private void setDefaultDimensions()
@@ -221,6 +230,14 @@ public class GraphPanelChart
 
       g.fillRect(0, 0, getWidth(), getHeight());
       paintAd(g);
+
+      if (errorMessage != null) {
+          g.setColor(Color.RED);
+          g.drawString(errorMessage,
+               getWidth() / 2 - g.getFontMetrics(g.getFont()).stringWidth(errorMessage) / 2,
+               getHeight() / 2);
+         return;
+      }
 
       if (rows.isEmpty())
       {
@@ -328,7 +345,7 @@ public class GraphPanelChart
          g.setColor(axisColor);
          g.drawLine(chartRect.x + shift, gridLineY, chartRect.x + chartRect.width, gridLineY);
          g.setColor(Color.black);
-
+         
          // draw label
          yAxisLabelRenderer.setValue(n * maxYVal / gridLinesCount);
          valueLabel = yAxisLabelRenderer.getText();
@@ -565,6 +582,24 @@ public class GraphPanelChart
       g.setComposite(oldComposite);
       g.setFont(oldFont);
    }
+
+   /*
+    * Clear error messages
+    */
+   public void clearErrorMessage() {
+       errorMessage = null;
+   }
+
+   /*
+    * Set error message if not null and not empty
+    * @param msg the error message to set
+    */
+   public void setErrorMessage(String msg) {
+       if(msg != null && msg.trim().length()>0) {
+           errorMessage = msg;
+       }
+   }
+
 
    // Adding a popup menu to copy image in clipboard
    @Override

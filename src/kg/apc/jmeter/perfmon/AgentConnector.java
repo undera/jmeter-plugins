@@ -56,10 +56,9 @@ public class AgentConnector
      */
     public void disconnect()
     {
-        out.println("bye");
-        out.close();
         try
-        {
+        {   out.println("bye");
+            out.close();
             in.close();
             socket.close();
         } catch (IOException e)
@@ -122,5 +121,13 @@ public class AgentConnector
      */
     public String getRemoteServerName() {
         return remoteServerName;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public int getPort() {
+        return port;
     }
 }

@@ -5,6 +5,9 @@
 
 package kg.apc.jmeter.perfmon;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import kg.apc.jmeter.perfmon.agent.ServerAgent;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,26 +16,31 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * For this JUnit test to work, the Agent must be started locally on port 4444.
- * Orders of test is important
- * A better test class should be written which simulate the agent...
+ * Orders of tests is important
  * @author Stephane Hoblingre
  */
 public class AgentConnectorTest {
 
+    private static AgentConnector instance;
+    private static ServerAgent agent;
+    private static int testPort = 4567;
+
     public AgentConnectorTest() {
     }
-
-    private static AgentConnector instance = null;
 
     @BeforeClass
     public static void setUpClass() throws Exception
     {
+        agent = new ServerAgent(testPort);
+        agent.startServiceAsThread();
+        //wait the Server Agent starts
+        Thread.sleep(2000);
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception
     {
+        agent.stopService();
     }
 
     @Before
@@ -50,7 +58,7 @@ public class AgentConnectorTest {
     public void testConnect() throws Exception
     {
         System.out.println("connect");
-        instance = new AgentConnector("localhost", 4444);
+        instance = new AgentConnector("localhost", testPort);
         instance.connect();
     }
 
@@ -87,7 +95,18 @@ public class AgentConnectorTest {
         System.out.println("getRemoteServerName");
         String result = instance.getRemoteServerName();
         System.out.println(result);
-        assertNotNull(result);
+
+        String hostname = null;
+        try
+        {
+            hostname = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException ex)
+        {
+            //should never happen, localhost is always known...
+            hostname = "unknown";
+        }
+
+        assertEquals(result, hostname);
     }
 
     /**

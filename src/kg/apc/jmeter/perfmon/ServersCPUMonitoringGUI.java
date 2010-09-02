@@ -130,9 +130,14 @@ public class ServersCPUMonitoringGUI extends AbstractPerformanceMonitoringGui im
             {
                 for (int i = 0; i < connectors.length; i++)
                 {
-                    long now = System.currentTimeMillis();
-                    addCpuPerfRecord(connectors[i].getRemoteServerName(), now - now
-                            % delay, 100 * connectors[i].getCpu());
+                    double value = connectors[i].getCpu();
+                    if(value != -1) {
+                        long now = System.currentTimeMillis();
+                        addCpuPerfRecord(connectors[i].getRemoteServerName(), now - now
+                                % delay, 100 * value);
+                    } else {
+                        graphPanel.getGraphObject().setErrorMessage("Connection lost with '" + connectors[i].getHost() + "'!");
+                    }
                 }
                 updateGui();
                 Thread.sleep(delay);
@@ -144,14 +149,4 @@ public class ServersCPUMonitoringGUI extends AbstractPerformanceMonitoringGui im
         }
 
     }
-
-
-    @Override
-   public void clearData()
-   {
-        super.clearData();
-        // not called by clearAll...
-        System.out.println("CLEAR DATA");
-
-   }
 }

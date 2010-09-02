@@ -88,7 +88,12 @@ public class AgentConnector
 
         try
         {
-            ret = Long.parseLong(getData("mem"));
+            String value = getData("mem");
+            if(value != null) {
+                ret = Long.parseLong(value);
+            } else {
+                ret = -1;
+            }
         } catch (IOException ioex)
         {
             ret = -1;
@@ -106,7 +111,12 @@ public class AgentConnector
 
         try
         {
-            ret = Double.parseDouble(getData("cpu"));
+            String value = getData("cpu");
+            if(value != null) {
+                ret = Double.parseDouble(value);
+            } else {
+                ret = -1;
+            }
         } catch (IOException ioex)
         {
             ret = -1;

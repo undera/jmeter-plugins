@@ -135,7 +135,7 @@ public class GraphPanelChart
       minXVal = Long.MAX_VALUE;
 
       Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
-      Entry<String, AbstractGraphRow> row;
+      Entry<String, AbstractGraphRow> row = null;
       AbstractGraphRow rowValue;
       while (it.hasNext())
       {
@@ -170,11 +170,18 @@ public class GraphPanelChart
          minXVal = forcedMinX;
       }
 
-      //prevent y axis with only 0 values. We may have values such as 4.9E-324
+      //prevent Y axis with only 0 values. We may have values such as 4.9E-324
       //so we don't test =0 directly
       if (maxYVal < 0.001) {
           maxYVal = 1;
-      } 
+      }
+
+      //prevent X axis not initialized in case of no row displayed
+      //we use last known row
+      if(minXVal == Long.MAX_VALUE && maxXVal == 0 && row != null) {
+          maxXVal = row.getValue().getMaxX();
+          minXVal = row.getValue().getMinX();
+      }
    }
 
    private void setDefaultDimensions()

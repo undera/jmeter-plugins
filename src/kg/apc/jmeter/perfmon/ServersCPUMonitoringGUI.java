@@ -7,8 +7,6 @@ package kg.apc.jmeter.perfmon;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import org.apache.jmeter.engine.StandardJMeterEngine;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.apache.jmeter.testelement.TestListener;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphRowExactValues;
 
@@ -16,7 +14,7 @@ import kg.apc.jmeter.charting.GraphRowExactValues;
  *
  * @author Stephane Hoblingre
  */
-public class ServersCPUMonitoringGUI extends AbstractPerformanceMonitoringGui implements TestListener, Runnable
+public class ServersCPUMonitoringGUI extends AbstractPerformanceMonitoringGui implements Runnable
 {
 
     private boolean testIsRunning = false;
@@ -89,12 +87,6 @@ public class ServersCPUMonitoringGUI extends AbstractPerformanceMonitoringGui im
     }
 
     @Override
-    public void testStarted(String string)
-    {
-        //do nothing
-    }
-
-    @Override
     public void testEnded()
     {
         StandardJMeterEngine.register(this);
@@ -106,19 +98,7 @@ public class ServersCPUMonitoringGUI extends AbstractPerformanceMonitoringGui im
                 connectors[i].disconnect();
             }
         }
-        
-    }
 
-    @Override
-    public void testEnded(String string)
-    {
-        //do nothing
-    }
-
-    @Override
-    public void testIterationStart(LoopIterationEvent lie)
-    {
-        //do nothing
     }
 
     @Override
@@ -131,11 +111,13 @@ public class ServersCPUMonitoringGUI extends AbstractPerformanceMonitoringGui im
                 for (int i = 0; i < connectors.length; i++)
                 {
                     double value = connectors[i].getCpu();
-                    if(value != -1) {
+                    if (value != -1)
+                    {
                         long now = System.currentTimeMillis();
                         addCpuPerfRecord(connectors[i].getRemoteServerName(), now - now
                                 % delay, 100 * value);
-                    } else {
+                    } else
+                    {
                         graphPanel.getGraphObject().setErrorMessage("Connection lost with '" + connectors[i].getHost() + "'!");
                     }
                 }

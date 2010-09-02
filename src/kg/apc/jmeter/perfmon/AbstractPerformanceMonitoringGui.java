@@ -4,7 +4,6 @@
  */
 package kg.apc.jmeter.perfmon;
 
-import kg.apc.jmeter.perfmon.*;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -37,7 +36,9 @@ import java.util.List;
 import kg.apc.jmeter.vizualizers.ColorsDispatcher;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
 import kg.apc.jmeter.vizualizers.GraphPanel;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.gui.UnsharedComponent;
+import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.visualizers.GraphListener;
 import org.apache.jmeter.visualizers.Sample;
@@ -48,7 +49,7 @@ import org.apache.log.Logger;
  *
  * @author Stephane Hoblingre
  */
-public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerGui implements Clearable, TableModelListener, CellEditorListener, GraphListener, UnsharedComponent
+public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerGui implements Clearable, TableModelListener, CellEditorListener, GraphListener, UnsharedComponent, TestListener
 {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -84,11 +85,13 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         initGui();
     }
 
-    public boolean isConnectorsValid() {
+    public boolean isConnectorsValid()
+    {
         return connectors != null && connectors.length > 0;
     }
 
-    protected void updateAgentConnectors() {
+    protected void updateAgentConnectors()
+    {
         JMeterProperty props = ((PerformanceMonitoringTestElement) createTestElement()).getData();
 
         if (!(props instanceof NullProperty))
@@ -107,10 +110,12 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
                     StringProperty port = (StringProperty) ports.get(i);
                     connectors[i] = new AgentConnector(host.getStringValue(), Integer.valueOf(port.getStringValue()));
                 }
-            } else {
+            } else
+            {
                 connectors = new AgentConnector[0];
             }
-        } else {
+        } else
+        {
             connectors = null;
         }
     }
@@ -199,84 +204,82 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     @Override
     public abstract String getStaticLabel();
 
-
     @Override
     public TestElement createTestElement()
     {
-      PerformanceMonitoringTestElement pmte = new PerformanceMonitoringTestElement();
-      modifyTestElement(pmte);
-      return pmte;
+        PerformanceMonitoringTestElement pmte = new PerformanceMonitoringTestElement();
+        modifyTestElement(pmte);
+        return pmte;
     }
 
     @Override
-   public void modifyTestElement(TestElement te)
-   {
-      //log.info("Modify test element");
-      if (grid.isEditing())
-      {
-         grid.getCellEditor().stopCellEditing();
-      }
+    public void modifyTestElement(TestElement te)
+    {
+        //log.info("Modify test element");
+        if (grid.isEditing())
+        {
+            grid.getCellEditor().stopCellEditing();
+        }
 
-      if (te instanceof PerformanceMonitoringTestElement)
-      {
-         PerformanceMonitoringTestElement pmte = (PerformanceMonitoringTestElement) te;
-         CollectionProperty rows = PerformanceMonitoringTestElement.tableModelToCollectionProperty(tableModel);
-         pmte.setData(rows);
+        if (te instanceof PerformanceMonitoringTestElement)
+        {
+            PerformanceMonitoringTestElement pmte = (PerformanceMonitoringTestElement) te;
+            CollectionProperty rows = PerformanceMonitoringTestElement.tableModelToCollectionProperty(tableModel);
+            pmte.setData(rows);
 
-      }
-      super.configureTestElement(te);
-   }
-
-    @Override
-   public void configure(TestElement te)
-   {
-      //log.info("Configure");
-      super.configure(te);
-      createTableModel();
-      PerformanceMonitoringTestElement pmte = (PerformanceMonitoringTestElement) te;
-      JMeterProperty perfmonValues = pmte.getData();
-      if (!(perfmonValues instanceof NullProperty))
-      {
-         CollectionProperty columns = (CollectionProperty) perfmonValues;
-         //log.info("Received colimns collection with no columns " + columns.size());
-         PropertyIterator iter = columns.iterator();
-         int count = 0;
-         while (iter.hasNext())
-         {
-            List<?> list = (List<?>) iter.next().getObjectValue();
-            //log.info("Rows: " + list.size());
-            tableModel.setColumnData(count, list);
-            count++;
-         }
-      }
-      else
-      {
-         log.warn("Received null property instead of collection");
-      }
-   }
+        }
+        super.configureTestElement(te);
+    }
 
     @Override
-   public void updateGui()
-   {
-      graphPanel.updateGui();
-   }
-
-     @Override
-   public void updateGui(Sample sample)
-   {
-      graphPanel.updateGui();
-   }
+    public void configure(TestElement te)
+    {
+        //log.info("Configure");
+        super.configure(te);
+        createTableModel();
+        PerformanceMonitoringTestElement pmte = (PerformanceMonitoringTestElement) te;
+        JMeterProperty perfmonValues = pmte.getData();
+        if (!(perfmonValues instanceof NullProperty))
+        {
+            CollectionProperty columns = (CollectionProperty) perfmonValues;
+            //log.info("Received colimns collection with no columns " + columns.size());
+            PropertyIterator iter = columns.iterator();
+            int count = 0;
+            while (iter.hasNext())
+            {
+                List<?> list = (List<?>) iter.next().getObjectValue();
+                //log.info("Rows: " + list.size());
+                tableModel.setColumnData(count, list);
+                count++;
+            }
+        } else
+        {
+            log.warn("Received null property instead of collection");
+        }
+    }
 
     @Override
-   public void clearData()
-   {
-      model.clear();
-      colors.reset();
-      graphPanel.clearRowsTab();
-      graphPanel.getGraphObject().clearErrorMessage();
-      updateGui();
-      repaint();
-   }
+    public void updateGui()
+    {
+        graphPanel.updateGui();
+    }
+
+    @Override
+    public void updateGui(Sample sample)
+    {
+        graphPanel.updateGui();
+    }
+
+    @Override
+    public void clearData()
+    {
+        model.clear();
+        colors.reset();
+        graphPanel.clearRowsTab();
+        graphPanel.getGraphObject().clearErrorMessage();
+        updateGui();
+        repaint();
+    }
 
     @Override
     public void tableChanged(TableModelEvent e)
@@ -292,8 +295,6 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     public void editingCanceled(ChangeEvent e)
     {
     }
-
-
 
     private class AddRowAction
             implements ActionListener
@@ -358,5 +359,23 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
                 }
             }
         }
+    }
+
+    @Override
+    public void testEnded(String string)
+    {
+        //do nothing
+    }
+
+    @Override
+    public void testIterationStart(LoopIterationEvent lie)
+    {
+        //do nothing
+    }
+
+    @Override
+    public void testStarted(String string)
+    {
+        //do nothing
     }
 }

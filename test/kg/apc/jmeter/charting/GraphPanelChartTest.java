@@ -207,4 +207,31 @@ public class GraphPanelChartTest
         instance.lostOwnership(clipboard, contents);
         // TODO review the generated test code and remove the default call to fail.
     }
+
+    /**
+     * Test of clearErrorMessage method, of class GraphPanelChart.
+     */
+    @Test
+    public void testClearErrorMessage()
+    {
+        System.out.println("clearErrorMessage");
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.clearErrorMessage();
+    }
+
+    /**
+     * Test of setErrorMessage method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetErrorMessage()
+    {
+        System.out.println("setErrorMessage");
+        String msg = "error";
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setErrorMessage(msg);
+        msg = "";
+        instance.setErrorMessage(msg);
+        msg = null;
+        instance.setErrorMessage(msg);
+    }
 }

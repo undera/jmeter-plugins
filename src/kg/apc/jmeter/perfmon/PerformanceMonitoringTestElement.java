@@ -19,6 +19,7 @@ import org.apache.jmeter.testelement.property.JMeterProperty;
 public class PerformanceMonitoringTestElement extends AbstractTestElement implements Serializable
 {
     public static final String DATA_PROPERTY = "perfomdata";
+    public static final String MONITORING_TYPE = "monitoringType";
 
     public PerformanceMonitoringTestElement () {
         super();
@@ -45,6 +46,14 @@ public class PerformanceMonitoringTestElement extends AbstractTestElement implem
    {
       //log.info("setData");
       setProperty(rows);
+   }
+
+   public int getType() {
+       return super.getPropertyAsInt(MONITORING_TYPE, 0);
+   }
+
+   public void setType(int type) {
+       super.setProperty(MONITORING_TYPE, type);
    }
 
 }

@@ -7,6 +7,7 @@ package kg.apc.jmeter.perfmon;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +34,8 @@ import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 import java.util.List;
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButton;
 import kg.apc.jmeter.vizualizers.ColorsDispatcher;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
 import kg.apc.jmeter.vizualizers.GraphPanel;
@@ -77,6 +80,18 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         "localhost", 4444
     };
 
+    private ButtonGroup group = new ButtonGroup();
+
+    private JRadioButton[] types = new JRadioButton[] {
+        new JRadioButton("CPU"),
+        new JRadioButton("Memory")
+    };
+
+    public static int PERFMON_CPU = 0;
+    public static int PERFMON_MEM = 1;
+
+    protected int selectedPerfMonType = -1;
+
     public AbstractPerformanceMonitoringGui()
     {
         super();
@@ -110,6 +125,8 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
                     StringProperty port = (StringProperty) ports.get(i);
                     connectors[i] = new AgentConnector(host.getStringValue(), Integer.valueOf(port.getStringValue()));
                 }
+
+                selectedPerfMonType = getSelectedTypeIndex();
             } else
             {
                 connectors = new AgentConnector[0];
@@ -126,6 +143,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
 
         containerPanel.add(makeTitlePanel(), BorderLayout.NORTH);
         containerPanel.add(createParamsPanel(), BorderLayout.CENTER);
+        containerPanel.add(createMonitoringTypePanel(), BorderLayout.SOUTH);
 
 
         setLayout(new BorderLayout());
@@ -144,6 +162,34 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         scroll.setPreferredSize(scroll.getMinimumSize());
         panel.add(scroll, BorderLayout.CENTER);
         panel.add(createButtons(), BorderLayout.SOUTH);
+
+        return panel;
+    }
+
+    private int getSelectedTypeIndex() {
+        for (int i = 0; i < types.length; i++)
+        {
+            if(types[i].isSelected()) return i;
+        }
+        return -1;
+    }
+
+    private void setSelectedType(int type) {
+        types[type].setSelected(true);
+    }
+
+    private JPanel createMonitoringTypePanel()
+    {
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.setBorder(BorderFactory.createTitledBorder("Metrics to monitor"));
+        for (int i = 0; i < types.length; i++)
+        {
+            group.add(types[i]);
+            panel.add(types[i]);
+            
+        }
+
+        types[0].setSelected(true);
 
         return panel;
     }
@@ -226,6 +272,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
             PerformanceMonitoringTestElement pmte = (PerformanceMonitoringTestElement) te;
             CollectionProperty rows = PerformanceMonitoringTestElement.tableModelToCollectionProperty(tableModel);
             pmte.setData(rows);
+            pmte.setType(getSelectedTypeIndex());
 
         }
         super.configureTestElement(te);
@@ -252,6 +299,8 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
                 tableModel.setColumnData(count, list);
                 count++;
             }
+
+            setSelectedType(pmte.getType());
         } else
         {
             log.warn("Received null property instead of collection");

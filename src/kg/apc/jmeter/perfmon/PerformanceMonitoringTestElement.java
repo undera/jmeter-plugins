@@ -8,6 +8,7 @@ package kg.apc.jmeter.perfmon;
 import java.io.Serializable;
 import java.util.ArrayList;
 import org.apache.jmeter.gui.util.PowerTableModel;
+import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
@@ -16,7 +17,7 @@ import org.apache.jmeter.testelement.property.JMeterProperty;
  *
  * @author Stephane Hoblingre
  */
-public class PerformanceMonitoringTestElement extends AbstractTestElement implements Serializable
+public class PerformanceMonitoringTestElement extends AbstractTestElement implements Serializable, Clearable
 {
     public static final String DATA_PROPERTY = "perfomdata";
     public static final String MONITORING_TYPE = "monitoringType";
@@ -56,4 +57,6 @@ public class PerformanceMonitoringTestElement extends AbstractTestElement implem
        super.setProperty(MONITORING_TYPE, type);
    }
 
+    public void clearData() {
+    }
 }

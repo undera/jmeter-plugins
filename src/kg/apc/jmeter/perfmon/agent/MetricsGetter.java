@@ -71,7 +71,7 @@ public class MetricsGetter
 
     /**
      * Get the current memory usage in bytes
-     * @return the memory size or -1 if a problem occured
+     * @return the memory size or -1 if a problem occurred
      */
     private long getUsedMem()
     {
@@ -84,7 +84,10 @@ public class MetricsGetter
             return -1;
         }
     }
-
+/**
+     * Get the current swap usage in number of pages in and number of pages out
+     * @return [page in][page out]
+     */
     private long[] getSwap() {
         long[] ret = new long[2];
         try

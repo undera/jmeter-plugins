@@ -6,6 +6,7 @@ package kg.apc.jmeter.perfmon;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphRowExactValues;
@@ -19,6 +20,9 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
 
     private boolean testIsRunning = false;
     private int delay = 1000;
+
+    //for delta calculation
+    private HashMap<String, Long> oldValues = new HashMap<String, Long>();
 
     public ServerPerfMonitoringGUI()
     {
@@ -58,6 +62,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
     {
 
         graphPanel.getGraphObject().clearErrorMessage();
+        oldValues.clear();
         updateAgentConnectors();
 
         if (isConnectorsValid())
@@ -128,9 +133,19 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
                     } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_SWAP)
                     {
                         long[] values = connectors[i].getSwap();
-                        if(values[0] < 0 || values[1] < 0) value = -1;
-                        addPerfRecord(connectors[i].getRemoteServerName() + " page IN", values[0]);
-                        addPerfRecord(connectors[i].getRemoteServerName() + " page OUT", values[1]);
+                        if(values[0] < 0 || values[1] < 0) {
+                            value = -1;
+                        } else {
+                            value = values[0];
+                        }
+                            String keyPageIn = connectors[i].getRemoteServerName() + " page IN";
+                            String keyPageOut = connectors[i].getRemoteServerName() + " page OUT";
+                            if(oldValues.containsKey(keyPageIn) && oldValues.containsKey(keyPageOut)) {
+                                addPerfRecord(keyPageIn, values[0] - oldValues.get(keyPageIn).longValue());
+                                addPerfRecord(keyPageOut, values[1] - oldValues.get(keyPageOut).longValue());
+                            }
+                            oldValues.put(keyPageIn, new Long(values[0]));
+                            oldValues.put(keyPageOut, new Long(values[1]));
                     }
 
                     if (value < 0)

@@ -85,6 +85,23 @@ public class MetricsGetter
         }
     }
 
+    private long[] getSwap() {
+        long[] ret = new long[2];
+        try
+        {
+            ret[0] = sigarProxy.getSwap().getPageIn();
+            ret[1] = sigarProxy.getSwap().getPageOut();
+        } catch (SigarException e)
+        {
+            ServerAgent.logMessage(e.getMessage());
+            ret[0] = -1;
+            ret[1] = -1;
+        }
+
+        return ret;
+
+    }
+
     /**
      * Get the server name
      * @return the server name retrieved by Sigar
@@ -110,6 +127,13 @@ public class MetricsGetter
         } else if (value.equals("mem"))
         {
             buff.append(getUsedMem());
+        } else if (value.equals("swp"))
+        {
+            long[] values = getSwap();
+            buff.append(values[0]);
+            buff.append(":");
+            buff.append(values[1]);
+
         } else if (value.equals("name"))
         {
             buff.append(getServerName());

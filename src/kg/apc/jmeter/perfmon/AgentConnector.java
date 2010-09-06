@@ -125,6 +125,27 @@ public class AgentConnector
         return ret;
     }
 
+    public long[] getSwap() {
+        long[] ret = new long[2];
+        try
+        {
+            String value = getData("swp");
+            if(value != null) {
+                ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
+                ret[1] = Long.parseLong(value.substring(value.indexOf(':')+1));
+            } else {
+                ret[0] = -1;
+                ret[1] = -1;
+            }
+        } catch (IOException ioex)
+        {
+            ret[0] = -1;
+            ret[1] = -1;
+        }
+
+        return ret;
+    }
+
     /**
      * Get the remote server name.
      * @return the name of the remote server.

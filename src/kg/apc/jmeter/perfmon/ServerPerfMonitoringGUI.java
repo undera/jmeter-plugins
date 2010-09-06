@@ -32,7 +32,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
         return "Servers Performance Monitoring";
     }
 
-    private void addPerfRecord(String serverName, long time, long value)
+    private void addPerfRecord(String serverName, long value)
     {
         AbstractGraphRow row = (AbstractGraphRow) model.get(serverName);
         if (row == null)
@@ -45,8 +45,12 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
             model.put(serverName, row);
             graphPanel.addRow(row);
         }
-
-        row.add(time, value);
+        long now = System.currentTimeMillis();
+        long time = now - now % delay;
+        if (value != -1)
+        {
+            row.add(time, value);
+        }
     }
 
     @Override
@@ -112,18 +116,24 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
                 {
                     //we cast as long as anyway the GraphRowExactValue uses Long type
                     long value = -1;
-                    if(selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_CPU) {
-                        value =  (long)(100 * connectors[i].getCpu());
-                    } else if(selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_MEM) {
-                        value = connectors[i].getMem()/(1024L*1024L);
+
+                    if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_CPU)
+                    {
+                        value = (long) (100 * connectors[i].getCpu());
+                        addPerfRecord(connectors[i].getRemoteServerName(), value);
+                    } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_MEM)
+                    {
+                        value = connectors[i].getMem() / (1024L * 1024L);
+                        addPerfRecord(connectors[i].getRemoteServerName(), value);
+                    } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_SWAP)
+                    {
+                        long[] values = connectors[i].getSwap();
+                        if(values[0] < 0 || values[1] < 0) value = -1;
+                        addPerfRecord(connectors[i].getRemoteServerName() + " page IN", values[0]);
+                        addPerfRecord(connectors[i].getRemoteServerName() + " page OUT", values[1]);
                     }
 
-                    if (value != -1)
-                    {
-                        long now = System.currentTimeMillis();
-                        addPerfRecord(connectors[i].getRemoteServerName(), now - now
-                                % delay, value);
-                    } else
+                    if (value < 0)
                     {
                         graphPanel.getGraphObject().setErrorMessage("Connection lost with '" + connectors[i].getHost() + "'!");
                     }

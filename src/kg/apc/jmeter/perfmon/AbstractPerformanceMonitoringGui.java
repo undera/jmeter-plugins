@@ -84,11 +84,13 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
 
     private JRadioButton[] types = new JRadioButton[] {
         new JRadioButton("CPU"),
-        new JRadioButton("Memory")
+        new JRadioButton("Memory"),
+        new JRadioButton("Swap")
     };
 
     public static int PERFMON_CPU = 0;
     public static int PERFMON_MEM = 1;
+    public static int PERFMON_SWAP = 2;
 
     protected int selectedPerfMonType = -1;
 
@@ -181,7 +183,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     private JPanel createMonitoringTypePanel()
     {
         JPanel panel = new JPanel(new FlowLayout());
-        panel.setBorder(BorderFactory.createTitledBorder("Metrics to monitor"));
+        panel.setBorder(BorderFactory.createTitledBorder("Metrics to collect"));
         for (int i = 0; i < types.length; i++)
         {
             group.add(types[i]);

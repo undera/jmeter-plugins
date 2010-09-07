@@ -2,6 +2,11 @@ package kg.apc.jmeter.perfmon.agent;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.hyperic.sigar.FileSystem;
 
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
@@ -29,6 +34,10 @@ public class MetricsGetter
      */
     private SigarProxy sigarProxy = null;
 
+    /*
+     * contains the list of drives for I/O metrics
+     */
+    private FileSystem[] fileSystems = null;
     /**
      * The constructor which instanciates the Sigar service
      */
@@ -38,6 +47,7 @@ public class MetricsGetter
         {
             hostName = InetAddress.getLocalHost().getHostName();
             sigarProxy = SigarProxyCache.newInstance(new Sigar(), 500);
+            initFileSystems();
         } catch (UnknownHostException e)
         {
             ServerAgent.logMessage(e.getMessage());
@@ -54,6 +64,36 @@ public class MetricsGetter
     }
 
     /**
+     * Get list of FileSystems for I/O monitoring
+     */
+    public final void initFileSystems() {
+        try
+        {
+            ArrayList<FileSystem> tmp = new ArrayList<FileSystem>();
+            FileSystem[] fs = sigarProxy.getFileSystemList();
+            for (int i = 0; i < fs.length; i++)
+            {
+                FileSystem fileSystem = fs[i];
+                if(fileSystem.getType() == FileSystem.TYPE_LOCAL_DISK) {
+                    tmp.add(fileSystem);
+                }
+            }
+
+            fileSystems = new FileSystem[tmp.size()];
+
+            for (int i = 0; i < tmp.size(); i++)
+            {
+                fileSystems[i] = tmp.get(i);
+            }
+
+        } catch (SigarException ex)
+        {
+            fileSystems = new FileSystem[0];
+            ServerAgent.logMessage("Error while getting disks: " + ex.getMessage());
+        }
+    }
+
+    /**
      * Get the current cpu load in percent
      * @return the cpu load, or -1 if a problem occurred
      */
@@ -65,7 +105,7 @@ public class MetricsGetter
         } catch (SigarException e)
         {
             ServerAgent.logMessage(e.getMessage());
-            return -1;
+            return -2;
         }
     }
 
@@ -81,10 +121,10 @@ public class MetricsGetter
         } catch (SigarException e)
         {
             ServerAgent.logMessage(e.getMessage());
-            return -1;
+            return -2;
         }
     }
-/**
+    /**
      * Get the current swap usage in number of pages in and number of pages out
      * @return [page in][page out]
      */
@@ -97,8 +137,41 @@ public class MetricsGetter
         } catch (SigarException e)
         {
             ServerAgent.logMessage(e.getMessage());
-            ret[0] = -1;
-            ret[1] = -1;
+            ret[0] = -2;
+            ret[1] = -2;
+        }
+
+        return ret;
+
+    }
+
+    /**
+     * Get the current swap usage in number of pages in and number of pages out
+     * @return [page in][page out]
+     */
+    private long[] getDisksIO() {
+        long[] ret = {0L, 0L};
+        try
+        {
+            for (int i = 0; i < fileSystems.length; i++)
+            {
+                //if sigar failed to get metrics (without exception)
+                long reads = sigarProxy.getFileSystemUsage(fileSystems[i].getDevName()).getDiskReads();
+                long writes = sigarProxy.getFileSystemUsage(fileSystems[i].getDevName()).getDiskWrites();
+
+                if(reads == -1L || writes == -1L) {
+                    long[] sigarFailure = {-1L, -1L};
+                    return sigarFailure;
+                } else {
+                    ret[0] = ret[0] + reads;
+                    ret[1] = ret[1] + writes;
+                }
+            }
+        } catch (SigarException e)
+        {
+            ServerAgent.logMessage(e.getMessage());
+            ret[0] = -2;
+            ret[1] = -2;
         }
 
         return ret;
@@ -137,7 +210,14 @@ public class MetricsGetter
             buff.append(":");
             buff.append(values[1]);
 
-        } else if (value.equals("name"))
+        } else if (value.equals("dio"))
+        {
+            long[] values = getDisksIO();
+            buff.append(values[0]);
+            buff.append(":");
+            buff.append(values[1]);
+
+        }else if (value.equals("name"))
         {
             buff.append(getServerName());
         } else

@@ -170,8 +170,8 @@ public class GraphPanelChart
          minXVal = forcedMinX;
       }
 
-      //prevent Y axis with only 0 values.
-      if (maxYVal == 0L) {
+      //prevent Y axis with only 0.0 values.
+      if (maxYVal < 0.1) {
           maxYVal = 1L;
       }
 

@@ -85,12 +85,14 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     private JRadioButton[] types = new JRadioButton[] {
         new JRadioButton("CPU"),
         new JRadioButton("Memory"),
-        new JRadioButton("Swap")
+        new JRadioButton("Swap"),
+        new JRadioButton("Disks I/O")
     };
 
     public static int PERFMON_CPU = 0;
     public static int PERFMON_MEM = 1;
     public static int PERFMON_SWAP = 2;
+    public static int PERFMON_DISKS_IO = 3;
 
     protected int selectedPerfMonType = -1;
 

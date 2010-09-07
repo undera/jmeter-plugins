@@ -57,6 +57,7 @@ public class PerformanceMonitoringTestElement extends AbstractTestElement implem
        super.setProperty(MONITORING_TYPE, type);
    }
 
+    @Override
     public void clearData() {
     }
 }

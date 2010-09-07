@@ -120,7 +120,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
                 for (int i = 0; i < connectors.length; i++)
                 {
                     //we cast as long as anyway the GraphRowExactValue uses Long type
-                    long value = -1;
+                    long value = -2;
 
                     if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_CPU)
                     {
@@ -133,8 +133,8 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
                     } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_SWAP)
                     {
                         long[] values = connectors[i].getSwap();
-                        if(values[0] < 0 || values[1] < 0) {
-                            value = -1;
+                        if(values[0] < -1 || values[1] < -1) {
+                            value = -2;
                         } else {
                             value = values[0];
                         }
@@ -146,9 +146,25 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
                             }
                             oldValues.put(keyPageIn, new Long(values[0]));
                             oldValues.put(keyPageOut, new Long(values[1]));
+                    } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO)
+                    {
+                        long[] values = connectors[i].getDisksIO();
+                        if(values[0] < -1 || values[1] < -1) {
+                            value = -2;
+                        } else {
+                            value = values[0];
+                        }
+                            String keyReads = connectors[i].getRemoteServerName() + " READS";
+                            String keyWrites = connectors[i].getRemoteServerName() + " WRITES";
+                            if(oldValues.containsKey(keyReads) && oldValues.containsKey(keyWrites)) {
+                                addPerfRecord(keyReads, values[0] - oldValues.get(keyReads).longValue());
+                                addPerfRecord(keyWrites, values[1] - oldValues.get(keyWrites).longValue());
+                            }
+                            oldValues.put(keyReads, new Long(values[0]));
+                            oldValues.put(keyWrites, new Long(values[1]));
                     }
 
-                    if (value < 0)
+                    if (value < -1)
                     {
                         graphPanel.getGraphObject().setErrorMessage("Connection lost with '" + connectors[i].getHost() + "'!");
                     }

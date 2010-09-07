@@ -154,8 +154,6 @@ public class AgentConnector
             if(value != null) {
                 ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
                 ret[1] = Long.parseLong(value.substring(value.indexOf(':')+1));
-                System.out.println(ret[0]);
-                System.out.println(ret[1]);
             } else {
                 ret[0] = -2;
                 ret[1] = -2;

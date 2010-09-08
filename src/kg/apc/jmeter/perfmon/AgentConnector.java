@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import kg.apc.jmeter.perfmon.agent.MetricsGetter;
 
 /**
  * This class is used to connect to the remote server Agent and get the metrics
@@ -92,11 +93,11 @@ public class AgentConnector
             if(value != null) {
                 ret = Long.parseLong(value);
             } else {
-                ret = -2;
+                ret = MetricsGetter.AGENT_ERROR;
             }
         } catch (IOException ioex)
         {
-            ret = -2;
+            ret = MetricsGetter.AGENT_ERROR;
         }
 
         return ret;
@@ -115,11 +116,11 @@ public class AgentConnector
             if(value != null) {
                 ret = Double.parseDouble(value);
             } else {
-                ret = -2;
+                ret = MetricsGetter.AGENT_ERROR;
             }
         } catch (IOException ioex)
         {
-            ret = -2;
+            ret = MetricsGetter.AGENT_ERROR;
         }
 
         return ret;
@@ -134,13 +135,11 @@ public class AgentConnector
                 ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
                 ret[1] = Long.parseLong(value.substring(value.indexOf(':')+1));
             } else {
-                ret[0] = -2;
-                ret[1] = -2;
+                ret = MetricsGetter.AGENT_ERROR_ARRAY;
             }
         } catch (IOException ioex)
         {
-            ret[0] = -2;
-            ret[1] = -2;
+            ret = MetricsGetter.AGENT_ERROR_ARRAY;
         }
 
         return ret;
@@ -155,13 +154,30 @@ public class AgentConnector
                 ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
                 ret[1] = Long.parseLong(value.substring(value.indexOf(':')+1));
             } else {
-                ret[0] = -2;
-                ret[1] = -2;
+                ret = MetricsGetter.AGENT_ERROR_ARRAY;
             }
         } catch (IOException ioex)
         {
-            ret[0] = -2;
-            ret[1] = -2;
+            ret = MetricsGetter.AGENT_ERROR_ARRAY;
+        }
+
+        return ret;
+    }
+
+     public long[] getNetIO() {
+        long[] ret = new long[2];
+        try
+        {
+            String value = getData("nio");
+            if(value != null) {
+                ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
+                ret[1] = Long.parseLong(value.substring(value.indexOf(':')+1));
+            } else {
+                ret = MetricsGetter.AGENT_ERROR_ARRAY;
+            }
+        } catch (IOException ioex)
+        {
+            ret = MetricsGetter.AGENT_ERROR_ARRAY;
         }
 
         return ret;

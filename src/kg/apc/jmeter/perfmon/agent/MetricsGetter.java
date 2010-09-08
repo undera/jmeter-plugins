@@ -3,10 +3,9 @@ package kg.apc.jmeter.perfmon.agent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.hyperic.sigar.FileSystem;
+import org.hyperic.sigar.FileSystemUsage;
+import org.hyperic.sigar.NetInterfaceStat;
 
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
@@ -21,6 +20,18 @@ import org.hyperic.sigar.SigarProxyCache;
  */
 public class MetricsGetter
 {
+
+    public final static long SIGAR_ERROR = -1L;
+    public final static long AGENT_ERROR = -2L;
+    public final static long[] SIGAR_ERROR_ARRAY =
+    {
+        -1L, -1L
+    };
+    public final static long[] AGENT_ERROR_ARRAY =
+    {
+        -2L, -2L
+    };
+
     /*
      * The unic instance
      */
@@ -38,6 +49,8 @@ public class MetricsGetter
      * contains the list of drives for I/O metrics
      */
     private FileSystem[] fileSystems = null;
+    private String[] networkInterfaces = null;
+
     /**
      * The constructor which instanciates the Sigar service
      */
@@ -48,6 +61,7 @@ public class MetricsGetter
             hostName = InetAddress.getLocalHost().getHostName();
             sigarProxy = SigarProxyCache.newInstance(new Sigar(), 500);
             initFileSystems();
+            initNetworkInterfaces();
         } catch (UnknownHostException e)
         {
             ServerAgent.logMessage(e.getMessage());
@@ -63,18 +77,32 @@ public class MetricsGetter
         return instance;
     }
 
+    public final void initNetworkInterfaces()
+    {
+        try
+        {
+            networkInterfaces = sigarProxy.getNetInterfaceList();
+        } catch (SigarException ex)
+        {
+            networkInterfaces = new String[0];
+            ServerAgent.logMessage("Error while getting network interfaces: " + ex.getMessage());
+        }
+    }
+
     /**
      * Get list of FileSystems for I/O monitoring
      */
-    public final void initFileSystems() {
+    public final void initFileSystems()
+    {
         try
         {
-            ArrayList<FileSystem> tmp = new ArrayList<FileSystem>();
+            ArrayList tmp = new ArrayList();
             FileSystem[] fs = sigarProxy.getFileSystemList();
             for (int i = 0; i < fs.length; i++)
             {
                 FileSystem fileSystem = fs[i];
-                if(fileSystem.getType() == FileSystem.TYPE_LOCAL_DISK) {
+                if (fileSystem.getType() == FileSystem.TYPE_LOCAL_DISK)
+                {
                     tmp.add(fileSystem);
                 }
             }
@@ -83,7 +111,7 @@ public class MetricsGetter
 
             for (int i = 0; i < tmp.size(); i++)
             {
-                fileSystems[i] = tmp.get(i);
+                fileSystems[i] = (FileSystem) tmp.get(i);
             }
 
         } catch (SigarException ex)
@@ -105,7 +133,7 @@ public class MetricsGetter
         } catch (SigarException e)
         {
             ServerAgent.logMessage(e.getMessage());
-            return -2;
+            return MetricsGetter.AGENT_ERROR;
         }
     }
 
@@ -121,14 +149,16 @@ public class MetricsGetter
         } catch (SigarException e)
         {
             ServerAgent.logMessage(e.getMessage());
-            return -2;
+            return MetricsGetter.AGENT_ERROR;
         }
     }
+
     /**
      * Get the current swap usage in number of pages in and number of pages out
      * @return [page in][page out]
      */
-    private long[] getSwap() {
+    private long[] getSwap()
+    {
         long[] ret = new long[2];
         try
         {
@@ -137,45 +167,88 @@ public class MetricsGetter
         } catch (SigarException e)
         {
             ServerAgent.logMessage(e.getMessage());
-            ret[0] = -2;
-            ret[1] = -2;
+            ret = MetricsGetter.AGENT_ERROR_ARRAY;
         }
 
         return ret;
 
     }
 
+    private long[] getNetIO()
+    {
+
+        if (networkInterfaces.length == 0)
+        {
+            return MetricsGetter.SIGAR_ERROR_ARRAY;
+        }
+
+        long[] ret =
+        {
+            0L, 0L
+        };
+
+        try
+        {
+            for (int i = 0; i < networkInterfaces.length; i++)
+            {
+                NetInterfaceStat metrics = sigarProxy.getNetInterfaceStat(networkInterfaces[i]);
+                long rxBytes = metrics.getRxBytes();
+                long txBytes = metrics.getTxBytes();
+                if (rxBytes == -1 || txBytes == -1)
+                {
+                    return MetricsGetter.SIGAR_ERROR_ARRAY;
+                } else
+                {
+                    ret[0] = ret[0] + rxBytes;
+                    ret[1] = ret[1] + txBytes;
+                }
+            }
+        } catch (SigarException ex)
+        {
+            ret = MetricsGetter.AGENT_ERROR_ARRAY;
+        }
+        return ret;
+    }
+
     /**
      * Get the current swap usage in number of pages in and number of pages out
      * @return [page in][page out]
      */
-    private long[] getDisksIO() {
-        long[] ret = {0L, 0L};
+    private long[] getDisksIO()
+    {
+        if (fileSystems.length == 0)
+        {
+            return MetricsGetter.SIGAR_ERROR_ARRAY;
+        }
+
+        long[] ret =
+        {
+            0L, 0L
+        };
         try
         {
             for (int i = 0; i < fileSystems.length; i++)
             {
-                //if sigar failed to get metrics (without exception)
-                long reads = sigarProxy.getFileSystemUsage(fileSystems[i].getDevName()).getDiskReads();
-                long writes = sigarProxy.getFileSystemUsage(fileSystems[i].getDevName()).getDiskWrites();
 
-                if(reads == -1L || writes == -1L) {
-                    long[] sigarFailure = {-1L, -1L};
-                    return sigarFailure;
-                } else {
+                //if sigar failed to get metrics (without exception)
+                FileSystemUsage metrics = sigarProxy.getFileSystemUsage(fileSystems[i].getDevName());
+                long reads = metrics.getDiskReads();
+                long writes = metrics.getDiskWrites();
+                if (reads == -1L || writes == -1L)
+                {
+                    return MetricsGetter.SIGAR_ERROR_ARRAY;
+                } else
+                {
                     ret[0] = ret[0] + reads;
                     ret[1] = ret[1] + writes;
                 }
             }
-        } catch (SigarException e)
+        } catch (SigarException ex)
         {
-            ServerAgent.logMessage(e.getMessage());
-            ret[0] = -2;
-            ret[1] = -2;
+            ret = MetricsGetter.AGENT_ERROR_ARRAY;
         }
 
         return ret;
-
     }
 
     /**
@@ -217,13 +290,19 @@ public class MetricsGetter
             buff.append(":");
             buff.append(values[1]);
 
-        }else if (value.equals("name"))
+        } else if (value.equals("nio"))
+        {
+            long[] values = getNetIO();
+            buff.append(values[0]);
+            buff.append(":");
+            buff.append(values[1]);
+
+        } else if (value.equals("name"))
         {
             buff.append(getServerName());
         } else
         {
-            buff.append("badCmd:");
-            buff.append(value);
+            buff.append("badCmd");
         }
         return buff.toString();
     }

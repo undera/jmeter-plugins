@@ -10,6 +10,7 @@ import java.util.HashMap;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphRowExactValues;
+import kg.apc.jmeter.perfmon.agent.MetricsGetter;
 
 /**
  *
@@ -149,8 +150,8 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
                     } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO)
                     {
                         long[] values = connectors[i].getDisksIO();
-                        if(values[0] < -1 || values[1] < -1) {
-                            value = -2;
+                        if(values[0] == MetricsGetter.AGENT_ERROR || values[1] == MetricsGetter.AGENT_ERROR) {
+                            value = MetricsGetter.AGENT_ERROR;
                         } else {
                             value = values[0];
                         }
@@ -162,9 +163,26 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
                             }
                             oldValues.put(keyReads, new Long(values[0]));
                             oldValues.put(keyWrites, new Long(values[1]));
+                    } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO)
+                    {
+                        long[] values = connectors[i].getNetIO();
+                        System.out.println(values[0]);
+                        if(values[0] == MetricsGetter.AGENT_ERROR || values[1] == MetricsGetter.AGENT_ERROR) {
+                            value = MetricsGetter.AGENT_ERROR;
+                        } else {
+                            value = values[0];
+                        }
+                            String keyReads = connectors[i].getRemoteServerName() + " RECEIVED";
+                            String keyWrites = connectors[i].getRemoteServerName() + " TRANSFERED";
+                            if(oldValues.containsKey(keyReads) && oldValues.containsKey(keyWrites)) {
+                                addPerfRecord(keyReads, (values[0] - oldValues.get(keyReads).longValue())/1024);
+                                addPerfRecord(keyWrites, (values[1] - oldValues.get(keyWrites).longValue())/1024);
+                            }
+                            oldValues.put(keyReads, new Long(values[0]));
+                            oldValues.put(keyWrites, new Long(values[1]));
                     }
 
-                    if (value < -1)
+                    if (value == MetricsGetter.AGENT_ERROR)
                     {
                         graphPanel.getGraphObject().setErrorMessage("Connection lost with '" + connectors[i].getHost() + "'!");
                     }

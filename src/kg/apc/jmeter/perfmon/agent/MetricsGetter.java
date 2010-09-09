@@ -11,6 +11,7 @@ import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarProxy;
 import org.hyperic.sigar.SigarProxyCache;
+import org.hyperic.sigar.Swap;
 
 /**
  * This class will do the Sigar calls. It is a singleton and will be shared
@@ -162,8 +163,9 @@ public class MetricsGetter
         long[] ret = new long[2];
         try
         {
-            ret[0] = sigarProxy.getSwap().getPageIn();
-            ret[1] = sigarProxy.getSwap().getPageOut();
+            Swap metrics = sigarProxy.getSwap();
+            ret[0] = metrics.getPageIn();
+            ret[1] = metrics.getPageOut();
         } catch (SigarException e)
         {
             ServerAgent.logMessage(e.getMessage());
@@ -194,10 +196,7 @@ public class MetricsGetter
                 NetInterfaceStat metrics = sigarProxy.getNetInterfaceStat(networkInterfaces[i]);
                 long rxBytes = metrics.getRxBytes();
                 long txBytes = metrics.getTxBytes();
-                if (rxBytes == -1 || txBytes == -1)
-                {
-                    return MetricsGetter.SIGAR_ERROR_ARRAY;
-                } else
+                if (rxBytes != -1 && txBytes != -1)
                 {
                     ret[0] = ret[0] + rxBytes;
                     ret[1] = ret[1] + txBytes;

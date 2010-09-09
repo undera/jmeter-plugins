@@ -166,7 +166,6 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
                     } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO)
                     {
                         long[] values = connectors[i].getNetIO();
-                        System.out.println(values[0]);
                         if(values[0] == MetricsGetter.AGENT_ERROR || values[1] == MetricsGetter.AGENT_ERROR) {
                             value = MetricsGetter.AGENT_ERROR;
                         } else {

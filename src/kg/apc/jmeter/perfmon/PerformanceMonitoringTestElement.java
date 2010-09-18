@@ -7,9 +7,11 @@ package kg.apc.jmeter.perfmon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.testelement.AbstractTestElement;
+import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 
@@ -17,10 +19,12 @@ import org.apache.jmeter.testelement.property.JMeterProperty;
  *
  * @author Stephane Hoblingre
  */
-public class PerformanceMonitoringTestElement extends AbstractTestElement implements Serializable, Clearable
+public class PerformanceMonitoringTestElement extends AbstractTestElement implements Serializable, Clearable, TestListener
 {
     public static final String DATA_PROPERTY = "perfomdata";
     public static final String MONITORING_TYPE = "monitoringType";
+
+    public AbstractPerformanceMonitoringGui gui = null;
 
     public PerformanceMonitoringTestElement () {
         super();
@@ -59,5 +63,40 @@ public class PerformanceMonitoringTestElement extends AbstractTestElement implem
 
     @Override
     public void clearData() {
+    }
+
+    public void register(AbstractPerformanceMonitoringGui gui) {
+        this.gui = gui;
+    }
+
+    @Override
+    public Object clone() {
+        Object clone = super.clone();
+        ((PerformanceMonitoringTestElement) clone).register(gui);
+        return clone;
+    }
+
+    public void testStarted() {
+        if(gui != null) {
+            gui.testStarted();
+        }
+    }
+
+    public void testStarted(String string) {
+        //do nothing in no gui mode
+    }
+
+    public void testEnded() {
+        if(gui != null) {
+            gui.testEnded();
+        }
+    }
+
+    public void testEnded(String string) {
+        //do nothing in no gui mode
+    }
+
+    public void testIterationStart(LoopIterationEvent lie) {
+        //do nothing during test
     }
 }

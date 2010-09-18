@@ -7,7 +7,6 @@ package kg.apc.jmeter.perfmon;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
-import org.apache.jmeter.engine.StandardJMeterEngine;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphRowExactValues;
 import kg.apc.jmeter.perfmon.agent.MetricsGetter;
@@ -28,7 +27,6 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
     public ServerPerfMonitoringGUI()
     {
         super();
-        StandardJMeterEngine.register(this);
     }
 
     @Override
@@ -99,7 +97,6 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
     @Override
     public void testEnded()
     {
-        StandardJMeterEngine.register(this);
         testIsRunning = false;
         if (isConnectorsValid())
         {

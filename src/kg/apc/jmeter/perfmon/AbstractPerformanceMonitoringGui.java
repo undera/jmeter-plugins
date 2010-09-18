@@ -39,9 +39,7 @@ import javax.swing.JRadioButton;
 import kg.apc.jmeter.vizualizers.ColorsDispatcher;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
 import kg.apc.jmeter.vizualizers.GraphPanel;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.gui.UnsharedComponent;
-import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.visualizers.GraphListener;
 import org.apache.jmeter.visualizers.Sample;
@@ -52,7 +50,7 @@ import org.apache.log.Logger;
  *
  * @author Stephane Hoblingre
  */
-public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerGui implements Clearable, TableModelListener, CellEditorListener, GraphListener, UnsharedComponent, TestListener
+public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerGui implements Clearable, TableModelListener, CellEditorListener, GraphListener, UnsharedComponent
 {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -291,6 +289,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         super.configure(te);
         createTableModel();
         PerformanceMonitoringTestElement pmte = (PerformanceMonitoringTestElement) te;
+        pmte.register(this);
         JMeterProperty perfmonValues = pmte.getData();
         if (!(perfmonValues instanceof NullProperty))
         {
@@ -416,21 +415,6 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         }
     }
 
-    @Override
-    public void testEnded(String string)
-    {
-        //do nothing
-    }
-
-    @Override
-    public void testIterationStart(LoopIterationEvent lie)
-    {
-        //do nothing
-    }
-
-    @Override
-    public void testStarted(String string)
-    {
-        //do nothing
-    }
+    public abstract void testStarted();
+    public abstract void testEnded();
 }

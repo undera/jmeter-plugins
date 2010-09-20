@@ -234,4 +234,16 @@ public class GraphPanelChartTest
         msg = null;
         instance.setErrorMessage(msg);
     }
+
+    /**
+     * Test of setChartType method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetChartType()
+    {
+        System.out.println("setChartType");
+        int type = 1;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setChartType(type);
+    }
 }

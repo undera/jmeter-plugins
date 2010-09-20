@@ -45,6 +45,12 @@ public class GraphPanelChart
    private static final String AD_TEXT = "http://apc.kg";
    private static final String NO_SAMPLES = "Waiting for samples...";
    private static final int spacing = 5;
+   /*
+    * Special type of graph were minY is forced to 0 and maxY is forced to 100
+    * to display percentage charts (eg cpu monitoring)
+    */
+   public static final int CHART_PERCENTAGE = 0;
+   public static final int CHART_DEFAULT = -1;
    private static final Logger log = LoggingManager.getLoggerForClass();
    private Rectangle legendRect;
    private Rectangle xAxisRect;
@@ -53,6 +59,7 @@ public class GraphPanelChart
    private static final Rectangle zeroRect = new Rectangle();
    private AbstractMap<String, AbstractGraphRow> rows;
    private double maxYVal;
+   private double minYVal;
    private long maxXVal;
    private long minXVal;
    private long currentXVal;
@@ -62,6 +69,7 @@ public class GraphPanelChart
    private boolean drawStartFinalZeroingLines = false;
    private boolean drawCurrentX = false;
    private int forcedMinX = -1;
+   private int chartType = CHART_DEFAULT;
 
    // The stroke used to paint Graph's dashed lines
    private Stroke dashStroke = new BasicStroke(
@@ -91,10 +99,12 @@ public class GraphPanelChart
    // List of possible properties (TODO: The explaination must be written in readme file)
    // jmeterPlugin.drawGradient=(true/false)
    // jmeterPlugin.neverDrawFinalZeroingLines=(true/false)
+   // jmeterPlugin.optimizeYAxis=(true/false)
    // note to Andrey: Feel free to decide the default value!
 
    private static boolean drawGradient = true;
    private static boolean neverDrawFinalZeroingLines = false;
+   private static boolean optimizeYAxis = true;
 
    // If user entered configuration items in user.properties, overide default values.
    static {
@@ -106,6 +116,10 @@ public class GraphPanelChart
        if(cfgNeverDrawFinalZeroingLines != null) {
            GraphPanelChart.neverDrawFinalZeroingLines = "true".equalsIgnoreCase(cfgNeverDrawFinalZeroingLines);
        }
+       String cfgOptimizeYAxis = JMeterUtils.getProperty("jmeterPlugin.optimizeYAxis");
+       if(cfgOptimizeYAxis != null) {
+           GraphPanelChart.optimizeYAxis = "true".equalsIgnoreCase(cfgOptimizeYAxis);
+       }
    }
 
    /**
@@ -113,7 +127,7 @@ public class GraphPanelChart
     */
    public GraphPanelChart()
    {
-      setBackground(Color.white);
+            setBackground(Color.white);
       setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.lightGray, Color.darkGray));
 
       yAxisLabelRenderer = new NumberRenderer("#.#");
@@ -128,11 +142,16 @@ public class GraphPanelChart
       registerPopup();
    }
 
+   public void setChartType(int type) {
+       chartType = type;
+   }
+
    private void getMinMaxDataValues()
    {
       maxXVal = 0L;
       maxYVal = 0L;
       minXVal = Long.MAX_VALUE;
+      minYVal = Double.MAX_VALUE;
 
       Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
       Entry<String, AbstractGraphRow> row = null;
@@ -161,6 +180,12 @@ public class GraphPanelChart
          {
             minXVal = rowValue.getMinX();
          }
+
+         if(rowValue.getMinY() < minYVal)
+         {
+             //we draw only positives values
+             minYVal = rowValue.getMinY() >= 0 ? rowValue.getMinY() : 0;
+         }
       }
 
       //maxYVal *= 1 + (double) 1 / (double) gridLinesCount;
@@ -170,17 +195,98 @@ public class GraphPanelChart
          minXVal = forcedMinX;
       }
 
-      //prevent Y axis with only 0.0 values.
-      if (maxYVal < 0.1) {
-          maxYVal = 1L;
-      }
-
       //prevent X axis not initialized in case of no row displayed
       //we use last known row
       if(minXVal == Long.MAX_VALUE && maxXVal == 0L && row != null) {
           maxXVal = row.getValue().getMaxX();
           minXVal = row.getValue().getMinX();
+          minYVal = 0;
+          maxYVal = 10;
+      } else if(optimizeYAxis)
+      {
+          computeChartSteps();
+      } else
+      {
+          minYVal = 0;
       }
+      
+   }
+
+   /**
+    * compute minY and step value to have better readable charts
+    */
+   private void computeChartSteps() {
+      //if special type
+       if(chartType == GraphPanelChart.CHART_PERCENTAGE) {
+           minYVal = 0;
+           maxYVal = 100;
+           return;
+       }
+
+       //try to find the best range...
+       //first, avoid special cases where maxY equal or close to minY
+       if (maxYVal - minYVal < 0.1)
+       {
+           maxYVal = minYVal + 1;
+       }
+
+       //real step
+       double step = (maxYVal - minYVal) / gridLinesCount;
+
+       int pow = -1;
+       double factor = -1;
+       boolean found = false;
+
+       double testStep;
+       double testFactor;
+
+       //find a step close to the real one
+       while(!found)
+       {
+           pow++;
+           //for small range (<10), don't use .5 factor.
+           //we try to find integer steps as it is more easy to read
+           if(pow > 0)
+           {
+               testFactor = 0.5;
+           } else
+           {
+               testFactor = 1;
+           }
+     
+            for (double f = 0; f <= 5; f = f + testFactor) {
+                testStep = Math.pow(10, pow) * f;
+                if(testStep >= step) {
+                    factor = f;
+                    found = true;
+                    break;
+                }
+            }
+       }
+
+       //first proposal
+       double foundStep = Math.pow(10, pow) * factor;
+
+       //we shit to the closest lower minval to align with the step
+       minYVal = minYVal - minYVal % foundStep;
+
+       //check if step is still good with minY trimed. If not, use next factor.
+       if(minYVal + foundStep * gridLinesCount < maxYVal)
+       {
+           foundStep = Math.pow(10, pow) * (factor + (pow > 0 ? 0.5:1));
+       }
+
+       //last visual optimization: find the optimal minYVal
+       double trim = 10;
+
+       while((minYVal-minYVal%trim) + foundStep * gridLinesCount >= maxYVal && minYVal > 0)
+       {
+           minYVal = minYVal-minYVal%trim;
+           trim = trim*10;
+       }
+
+       //final calculation
+       maxYVal = minYVal + foundStep * gridLinesCount;
    }
 
    private void setDefaultDimensions()
@@ -351,9 +457,9 @@ public class GraphPanelChart
          g.setColor(axisColor);
          g.drawLine(chartRect.x + shift, gridLineY, chartRect.x + chartRect.width, gridLineY);
          g.setColor(Color.black);
-         
+
          // draw label
-         yAxisLabelRenderer.setValue(n * maxYVal / gridLinesCount);
+         yAxisLabelRenderer.setValue((minYVal * gridLinesCount + n * (maxYVal-minYVal)) / gridLinesCount);
          valueLabel = yAxisLabelRenderer.getText();
          labelXPos = yAxisRect.x + yAxisRect.width - fm.stringWidth(valueLabel) - spacing - spacing / 2;
          g.drawString(valueLabel, labelXPos, gridLineY + fm.getAscent() / 2);
@@ -441,7 +547,7 @@ public class GraphPanelChart
       int prevX = drawStartFinalZeroingLines ? chartRect.x : -1;
       int prevY = chartRect.y + chartRect.height;
       final double dxForDVal = (maxXVal <= minXVal) ? 0 : (double) chartRect.width / (maxXVal - minXVal);
-      final double dyForDVal = maxYVal <= 0 ? 0 : (double) chartRect.height / (maxYVal);
+      final double dyForDVal = (maxYVal <= minYVal)  ? 0 : (double) chartRect.height / (maxYVal - minYVal);
 
       Stroke oldStroke = null;
 
@@ -460,7 +566,7 @@ public class GraphPanelChart
 
          x = chartRect.x + (int) ((element.getKey() - minXVal) * dxForDVal);
          AbstractGraphPanelChartElement elementValue = (AbstractGraphPanelChartElement) element.getValue();
-         y = chartRect.y + chartRect.height - (int) (elementValue.getValue() * dyForDVal);
+         y = chartRect.y + chartRect.height - (int) ((elementValue.getValue() - minYVal) * dyForDVal);
 
          if(row.isDrawThickLines()) {
         	 ((Graphics2D) g).setStroke(thickStroke);

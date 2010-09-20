@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import kg.apc.jmeter.charting.AbstractGraphRow;
+import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowExactValues;
 import kg.apc.jmeter.perfmon.agent.MetricsGetter;
 
@@ -113,6 +114,13 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
     {
         while (testIsRunning)
         {
+            //set special chart type
+            if(selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_CPU) {
+                graphPanel.getGraphObject().setChartType(GraphPanelChart.CHART_PERCENTAGE);
+            } else {
+                graphPanel.getGraphObject().setChartType(GraphPanelChart.CHART_DEFAULT);
+            }
+
             try
             {
                 for (int i = 0; i < connectors.length; i++)

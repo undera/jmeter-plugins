@@ -11,6 +11,8 @@ import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowExactValues;
 import kg.apc.jmeter.perfmon.agent.MetricsGetter;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  *
@@ -19,6 +21,8 @@ import kg.apc.jmeter.perfmon.agent.MetricsGetter;
 public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui implements Runnable
 {
 
+    private static final Logger log = LoggingManager.getLoggerForClass();
+    
     private boolean testIsRunning = false;
     private int delay = 1000;
 
@@ -50,11 +54,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
             graphPanel.addRow(row);
         }
         long now = System.currentTimeMillis();
-        long time = now - now % delay;
-        if (value != -1)
-        {
-            row.add(time, value);
-        }
+        row.add(now - now % delay, value);
     }
 
     @Override
@@ -125,25 +125,30 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
             {
                 for (int i = 0; i < connectors.length; i++)
                 {
-                    //we cast as long as anyway the GraphRowExactValue uses Long type
-                    long value = -2;
+                    boolean success = true;
 
                     if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_CPU)
                     {
-                        value = (long) (100 * connectors[i].getCpu());
-                        addPerfRecord(connectors[i].getRemoteServerName(), value);
+                        long value = (long) (100 * connectors[i].getCpu());
+                        if(value >= 0) {
+                            addPerfRecord(connectors[i].getRemoteServerName(), value);
+                        } else {
+                            success = false;
+                        }
                     } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_MEM)
                     {
-                        value = connectors[i].getMem() / (1024L * 1024L);
-                        addPerfRecord(connectors[i].getRemoteServerName(), value);
+                        long value = connectors[i].getMem() / (1024L * 1024L);
+                        if(value >= 0) {
+                            addPerfRecord(connectors[i].getRemoteServerName(), value);
+                        } else {
+                            success = false;
+                        }
                     } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_SWAP)
                     {
                         long[] values = connectors[i].getSwap();
-                        if(values[0] < -1 || values[1] < -1) {
-                            value = -2;
+                        if(values[0] == MetricsGetter.AGENT_ERROR || values[1] == MetricsGetter.AGENT_ERROR) {
+                            success = false;
                         } else {
-                            value = values[0];
-                        }
                             String keyPageIn = connectors[i].getRemoteServerName() + " page IN";
                             String keyPageOut = connectors[i].getRemoteServerName() + " page OUT";
                             if(oldValues.containsKey(keyPageIn) && oldValues.containsKey(keyPageOut)) {
@@ -152,14 +157,13 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
                             }
                             oldValues.put(keyPageIn, new Long(values[0]));
                             oldValues.put(keyPageOut, new Long(values[1]));
+                        }
                     } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO)
                     {
                         long[] values = connectors[i].getDisksIO();
                         if(values[0] == MetricsGetter.AGENT_ERROR || values[1] == MetricsGetter.AGENT_ERROR) {
-                            value = MetricsGetter.AGENT_ERROR;
+                            success = false;
                         } else {
-                            value = values[0];
-                        }
                             String keyReads = connectors[i].getRemoteServerName() + " READS";
                             String keyWrites = connectors[i].getRemoteServerName() + " WRITES";
                             if(oldValues.containsKey(keyReads) && oldValues.containsKey(keyWrites)) {
@@ -168,14 +172,13 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
                             }
                             oldValues.put(keyReads, new Long(values[0]));
                             oldValues.put(keyWrites, new Long(values[1]));
+                        }
                     } else if (selectedPerfMonType == AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO)
                     {
                         long[] values = connectors[i].getNetIO();
                         if(values[0] == MetricsGetter.AGENT_ERROR || values[1] == MetricsGetter.AGENT_ERROR) {
-                            value = MetricsGetter.AGENT_ERROR;
+                            success = false;
                         } else {
-                            value = values[0];
-                        }
                             String keyReads = connectors[i].getRemoteServerName() + " RECEIVED";
                             String keyWrites = connectors[i].getRemoteServerName() + " TRANSFERED";
                             if(oldValues.containsKey(keyReads) && oldValues.containsKey(keyWrites)) {
@@ -184,21 +187,24 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui im
                             }
                             oldValues.put(keyReads, new Long(values[0]));
                             oldValues.put(keyWrites, new Long(values[1]));
+                        }
                     }
 
-                    if (value == MetricsGetter.AGENT_ERROR)
+                    if (!success)
                     {
-                        graphPanel.getGraphObject().setErrorMessage("Connection lost with '" + connectors[i].getHost() + "'!");
+                        //don't display error message if test is stopping
+                        if(testIsRunning)
+                        {
+                            graphPanel.getGraphObject().setErrorMessage("Connection lost with '" + connectors[i].getHost() + "'!");
+                        }
                     }
                 }
                 updateGui();
                 Thread.sleep(delay);
             } catch (Exception e)
             {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                log.error("Error in ServerPerfMonitoringGUI loop thread: ", e);
             }
         }
-
     }
 }

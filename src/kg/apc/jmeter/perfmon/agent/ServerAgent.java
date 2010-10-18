@@ -125,8 +125,8 @@ public class ServerAgent implements Runnable
         agent.startServie();
         
     }
-
-    @Override
+    //Need to remove annotation for Java 1.4 compilation
+    //@Override
     public void run()
     {
        startServie();

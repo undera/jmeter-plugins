@@ -111,17 +111,33 @@
         </macrodef>
 
         <javacAgent/>
-        
+
         <copy todir="${build.dir}/agent/classes">
             <fileset dir="${src.dir}" excludes="${build.classes.excludes},${excludes}" includes="**/*.class"/>
         </copy>
-        
+
     </target>
 
     <target name="-post-jar">
         <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/ServerAgent.jar">
             <fileset dir="${build.dir}/agent/classes"/>
         </jar>
+    </target>
+
+    <target depends="init,clean,compile,jar" name="create-distribution-package">
+        <property location="C:/Java/hyperic-sigar-1.6.3" name="sigar.dir"/>
+        <property location="C:/Java/jmeterplugin/svnGoogle" name="svn.dir"/>
+        <zip destfile="${dist.dir}/UniversalAgent.zip">
+            <zipfileset dir="${sigar.dir}/sigar-bin/lib" includes="*.*" excludes="log4j.jar, junit.jar, .sigar_shellrc" prefix="serverAgent"/>
+            <zipfileset dir="${sigar.dir}" includes="COPYING EXCEPTIONS" prefix="serverAgent"/>
+            <zipfileset dir="${svn.dir}/agent" includes="startAgent.*" prefix="serverAgent"/>
+            <zipfileset dir="${svn.dir}" includes="LICENSE README" prefix="serverAgent"/>
+            <zipfileset dir="${dist.dir}" includes="ServerAgent.jar" prefix="serverAgent"/>
+        </zip>
+        <zip destfile="${dist.dir}/JMeterPlugins.zip">
+            <zipfileset dir="${svn.dir}" includes="LICENSE README"/>
+            <zipfileset dir="${dist.dir}" includes="JMeterPlugins.jar"/>
+        </zip>
     </target>
 
 </project>

@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.perfmon;
 
 import java.net.InetAddress;
@@ -118,5 +113,60 @@ public class AgentConnectorTest {
         System.out.println("disconnect");
         instance.disconnect();
     }
+
+   @Test
+   public void testGetSwap()
+   {
+      System.out.println("getSwap");
+      AgentConnector instance = null;
+      long[] expResult = null;
+      long[] result = instance.getSwap();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testGetDisksIO()
+   {
+      System.out.println("getDisksIO");
+      AgentConnector instance = null;
+      long[] expResult = null;
+      long[] result = instance.getDisksIO();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testGetNetIO()
+   {
+      System.out.println("getNetIO");
+      AgentConnector instance = null;
+      long[] expResult = null;
+      long[] result = instance.getNetIO();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testGetHost()
+   {
+      System.out.println("getHost");
+      AgentConnector instance = null;
+      String expResult = "";
+      String result = instance.getHost();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testGetPort()
+   {
+      System.out.println("getPort");
+      AgentConnector instance = null;
+      int expResult = 0;
+      int result = instance.getPort();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
 
 }

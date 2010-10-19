@@ -66,7 +66,7 @@ public class AgentConnectorTest {
         System.out.println("getMem");
         long result = instance.getMem();
         System.out.println(result);
-        assertTrue(result != -1);
+        assertTrue(result >= 0);
     }
 
     /**
@@ -78,7 +78,7 @@ public class AgentConnectorTest {
         System.out.println("getCpu");
         double result = instance.getCpu();
         System.out.println(result);
-        assertTrue(result != -1);
+        assertTrue(result >= 0);
     }
 
     /**
@@ -104,6 +104,51 @@ public class AgentConnectorTest {
         assertEquals(result, hostname);
     }
 
+       @Test
+   public void testGetSwap()
+   {
+      System.out.println("getSwap");
+      long[] result = instance.getSwap();
+      assertTrue(result[0] >= 0);
+      assertTrue(result[1] >= 0);
+   }
+
+   @Test
+   public void testGetDisksIO()
+   {
+      System.out.println("getDisksIO");
+      long[] result = instance.getDisksIO();
+      assertTrue(result[0] >= 0);
+      assertTrue(result[1] >= 0);
+   }
+
+   @Test
+   public void testGetNetIO()
+   {
+      System.out.println("getNetIO");
+      long[] result = instance.getNetIO();
+      assertTrue(result[0] >= 0);
+      assertTrue(result[1] >= 0);
+   }
+
+   @Test
+   public void testGetHost()
+   {
+      System.out.println("getHost");
+      String expResult = "localhost";
+      String result = instance.getHost();
+      assertEquals(expResult, result);
+   }
+
+   @Test
+   public void testGetPort()
+   {
+      System.out.println("getPort");
+      int expResult = testPort;
+      int result = instance.getPort();
+      assertEquals(expResult, result);
+   }
+
     /**
      * Test of disconnect method, of class AgentConnector.
      */
@@ -114,59 +159,6 @@ public class AgentConnectorTest {
         instance.disconnect();
     }
 
-   @Test
-   public void testGetSwap()
-   {
-      System.out.println("getSwap");
-      AgentConnector instance = null;
-      long[] expResult = null;
-      long[] result = instance.getSwap();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
-   }
 
-   @Test
-   public void testGetDisksIO()
-   {
-      System.out.println("getDisksIO");
-      AgentConnector instance = null;
-      long[] expResult = null;
-      long[] result = instance.getDisksIO();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
-   }
-
-   @Test
-   public void testGetNetIO()
-   {
-      System.out.println("getNetIO");
-      AgentConnector instance = null;
-      long[] expResult = null;
-      long[] result = instance.getNetIO();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
-   }
-
-   @Test
-   public void testGetHost()
-   {
-      System.out.println("getHost");
-      AgentConnector instance = null;
-      String expResult = "";
-      String result = instance.getHost();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
-   }
-
-   @Test
-   public void testGetPort()
-   {
-      System.out.println("getPort");
-      AgentConnector instance = null;
-      int expResult = 0;
-      int result = instance.getPort();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
-   }
 
 }

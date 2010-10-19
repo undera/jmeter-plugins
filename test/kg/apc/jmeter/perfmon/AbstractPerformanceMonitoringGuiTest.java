@@ -5,10 +5,14 @@
 
 package kg.apc.jmeter.perfmon;
 
+import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
+import kg.apc.jmeter.util.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.GraphPanel;
+import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.visualizers.Sample;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -29,6 +33,7 @@ public class AbstractPerformanceMonitoringGuiTest {
    @BeforeClass
    public static void setUpClass() throws Exception
    {
+       TestJMeterUtils.createJmeterEnv();
    }
 
    @AfterClass
@@ -52,7 +57,6 @@ public class AbstractPerformanceMonitoringGuiTest {
       boolean expResult = false;
       boolean result = instance.isConnectorsValid();
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -60,8 +64,10 @@ public class AbstractPerformanceMonitoringGuiTest {
    {
       System.out.println("updateAgentConnectors");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+      assertEquals(false, instance.isConnectorsValid());
+      instance.addRowButton.doClick();
       instance.updateAgentConnectors();
-      fail("The test case is a prototype.");
+      assertEquals(true, instance.isConnectorsValid());
    }
 
    @Test
@@ -69,10 +75,8 @@ public class AbstractPerformanceMonitoringGuiTest {
    {
       System.out.println("createGraphPanel");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      GraphPanel expResult = null;
       GraphPanel result = instance.createGraphPanel();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 
    @Test
@@ -80,10 +84,9 @@ public class AbstractPerformanceMonitoringGuiTest {
    {
       System.out.println("getLabelResource");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      String expResult = "";
+      String expResult = "performanceMonitoring";
       String result = instance.getLabelResource();
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -91,10 +94,9 @@ public class AbstractPerformanceMonitoringGuiTest {
    {
       System.out.println("getStaticLabel");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      String expResult = "";
+      String expResult = "test";
       String result = instance.getStaticLabel();
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -102,30 +104,32 @@ public class AbstractPerformanceMonitoringGuiTest {
    {
       System.out.println("createTestElement");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      TestElement expResult = null;
       TestElement result = instance.createTestElement();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertTrue(result instanceof PerformanceMonitoringTestElement);
    }
 
    @Test
    public void testModifyTestElement()
    {
       System.out.println("modifyTestElement");
-      TestElement te = null;
+      PerformanceMonitoringTestElement te = new PerformanceMonitoringTestElement();
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+      instance.addRowButton.doClick();
       instance.modifyTestElement(te);
-      fail("The test case is a prototype.");
+ 
+      CollectionProperty data = (CollectionProperty) te.tableModelToCollectionProperty((PowerTableModel)instance.grid.getModel());
+      assertEquals(instance.grid.getModel().getColumnCount(), data.size());
+      assertEquals(instance.grid.getModel().getRowCount(), ((List<?>) data.get(0).getObjectValue()).size());
    }
 
    @Test
    public void testConfigure()
    {
       System.out.println("configure");
-      TestElement te = null;
+      PerformanceMonitoringTestElement pte = new PerformanceMonitoringTestElement();
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      instance.configure(te);
-      fail("The test case is a prototype.");
+      instance.configure(pte);
+      assertNotNull(pte.gui);
    }
 
    @Test
@@ -134,7 +138,6 @@ public class AbstractPerformanceMonitoringGuiTest {
       System.out.println("updateGui");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.updateGui();
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -144,7 +147,6 @@ public class AbstractPerformanceMonitoringGuiTest {
       Sample sample = null;
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.updateGui(sample);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -153,7 +155,6 @@ public class AbstractPerformanceMonitoringGuiTest {
       System.out.println("clearData");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.clearData();
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -163,7 +164,6 @@ public class AbstractPerformanceMonitoringGuiTest {
       TableModelEvent e = null;
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.tableChanged(e);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -173,7 +173,6 @@ public class AbstractPerformanceMonitoringGuiTest {
       ChangeEvent e = null;
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.editingStopped(e);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -183,7 +182,6 @@ public class AbstractPerformanceMonitoringGuiTest {
       ChangeEvent e = null;
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.editingCanceled(e);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -192,7 +190,6 @@ public class AbstractPerformanceMonitoringGuiTest {
       System.out.println("testStarted");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.testStarted();
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -201,7 +198,6 @@ public class AbstractPerformanceMonitoringGuiTest {
       System.out.println("testEnded");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.testEnded();
-      fail("The test case is a prototype.");
    }
 
    public class AbstractPerformanceMonitoringGuiImpl
@@ -209,7 +205,7 @@ public class AbstractPerformanceMonitoringGuiTest {
    {
       public String getStaticLabel()
       {
-         return "";
+         return "test";
       }
 
       public void testStarted()

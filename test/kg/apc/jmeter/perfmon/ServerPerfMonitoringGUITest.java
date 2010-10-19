@@ -5,6 +5,7 @@
 
 package kg.apc.jmeter.perfmon;
 
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,6 +25,7 @@ public class ServerPerfMonitoringGUITest {
    @BeforeClass
    public static void setUpClass() throws Exception
    {
+       TestJMeterUtils.createJmeterEnv();
    }
 
    @AfterClass
@@ -44,10 +46,9 @@ public class ServerPerfMonitoringGUITest {
    {
       System.out.println("getStaticLabel");
       ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
-      String expResult = "";
+      String expResult = "Servers Performance Monitoring";
       String result = instance.getStaticLabel();
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -56,7 +57,6 @@ public class ServerPerfMonitoringGUITest {
       System.out.println("testStarted");
       ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
       instance.testStarted();
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -65,7 +65,6 @@ public class ServerPerfMonitoringGUITest {
       System.out.println("testEnded");
       ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
       instance.testEnded();
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -74,7 +73,6 @@ public class ServerPerfMonitoringGUITest {
       System.out.println("run");
       ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
       instance.run();
-      fail("The test case is a prototype.");
    }
 
 }

@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- You may freely edit this file. See commented blocks below for -->
-<!-- some examples of how to customize the build. -->
-<!-- (If you delete it and reopen the project it will be recreated.) -->
-<!-- By default, only the Clean and Build commands use this build script. -->
-<!-- Commands such as Run, Debug, and Test only use this build script if -->
-<!-- the Compile on Save feature is turned off for the project. -->
-<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
-<!-- in the project's Project Properties dialog box.-->
 <project name="JMeterPlugins" default="default" basedir=".">
-    <description>Builds, tests, and runs the project JMeterPlugins.</description>
-    <import file="nbproject/build-impl.xml"/>
+   <description>Contains specific for JMeterPlugins build steps, all other steps are managed by NetBeans.</description>
+
+   <!-- We rely on NetBeans build instructions file -->
+   <import file="nbproject/build-impl.xml"/>
+   
     <!--
 
     There exist several targets which are by default empty and which can be
@@ -72,79 +67,105 @@
 
     -->
 
-    <target name="-post-clean">
-        <mkdir dir="${build.dir}/agent"/>
-        <mkdir dir="${build.dir}/agent/classes"/>
-        <mkdir dir="${build.dir}/agent/generated-sources/ap-source-output"/>
-    </target>
+   <target name="-post-clean">
+      <mkdir dir="${build.dir}/agent"/>
+      <mkdir dir="${build.dir}/agent/classes"/>
+      <mkdir dir="${build.dir}/agent/generated-sources/ap-source-output"/>
+   </target>
 
-    <target name="-post-compile">
-        <macrodef name="javacAgent">
-            <attribute default="src/kg/apc/jmeter/perfmon/agent" name="srcdir"/>
-            <attribute default="${build.dir}/agent/classes" name="destdir"/>
-            <attribute default="${javac.classpath}" name="classpath"/>
-            <attribute default="${javac.processorpath}" name="processorpath"/>
-            <attribute default="${build.dir}/agent/generated-sources/ap-source-output" name="apgeneratedsrcdir"/>
-            <attribute default="${includes}" name="includes"/>
-            <attribute default="${excludes}" name="excludes"/>
-            <attribute default="${javac.debug}" name="debug"/>
-            <attribute default="${empty.dir}" name="sourcepath"/>
-            <attribute default="${empty.dir}" name="gensrcdir"/>
-            <element name="customize" optional="true"/>
-            <sequential>
-                <property location="${build.dir}/agent/empty" name="empty.dir"/>
-                <mkdir dir="${empty.dir}"/>
-                <mkdir dir="${java.io.tmpdir}"/>
-                <javac debug="@{debug}" deprecation="${javac.deprecation}" 
+   <target name="-post-compile">
+      <macrodef name="javacAgent">
+         <attribute default="src/kg/apc/jmeter/perfmon/agent" name="srcdir"/>
+         <attribute default="${build.dir}/agent/classes" name="destdir"/>
+         <attribute default="${javac.classpath}" name="classpath"/>
+         <attribute default="${javac.processorpath}" name="processorpath"/>
+         <attribute default="${build.dir}/agent/generated-sources/ap-source-output" name="apgeneratedsrcdir"/>
+         <attribute default="${includes}" name="includes"/>
+         <attribute default="${excludes}" name="excludes"/>
+         <attribute default="${javac.debug}" name="debug"/>
+         <attribute default="${empty.dir}" name="sourcepath"/>
+         <attribute default="${empty.dir}" name="gensrcdir"/>
+         <element name="customize" optional="true"/>
+         <sequential>
+            <property location="${build.dir}/agent/empty" name="empty.dir"/>
+            <mkdir dir="${empty.dir}"/>
+            <mkdir dir="${java.io.tmpdir}"/>
+            <javac debug="@{debug}" deprecation="${javac.deprecation}"
                         destdir="@{destdir}" encoding="${source.encoding}"
                         excludes="@{excludes}" fork="${javac.fork}"
                         includeantruntime="false" includes="@{includes}"
                         source="1.4" sourcepath="@{sourcepath}"
                         srcdir="@{srcdir}" target="1.4"
                         tempdir="${java.io.tmpdir}">
-                    <src>
-                        <dirset dir="@{gensrcdir}" erroronmissingdir="false">
-                            <include name="*"/>
-                        </dirset>
-                    </src>
-                    <classpath>
-                        <path path="@{classpath}"/>
-                    </classpath>
-                    <compilerarg line="${endorsed.classpath.cmd.line.arg}"/>
-                    <compilerarg line="${javac.compilerargs}"/>
-                    <customize/>
-                </javac>
-            </sequential>
-        </macrodef>
+               <src>
+                  <dirset dir="@{gensrcdir}" erroronmissingdir="false">
+                     <include name="*"/>
+                  </dirset>
+               </src>
+               <classpath>
+                  <path path="@{classpath}"/>
+               </classpath>
+               <compilerarg line="${endorsed.classpath.cmd.line.arg}"/>
+               <compilerarg line="${javac.compilerargs}"/>
+               <customize/>
+            </javac>
+         </sequential>
+      </macrodef>
 
-        <javacAgent/>
+      <javacAgent/>
 
-        <copy todir="${build.dir}/agent/classes">
-            <fileset dir="${src.dir}" excludes="${build.classes.excludes},${excludes}" includes="**/*.class"/>
-        </copy>
+      <copy todir="${build.dir}/agent/classes">
+         <fileset dir="${src.dir}" excludes="${build.classes.excludes},${excludes}" includes="**/*.class"/>
+      </copy>
 
-    </target>
+   </target>
 
-    <target name="-post-jar">
-        <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/ServerAgent.jar">
-            <fileset dir="${build.dir}/agent/classes"/>
-        </jar>
-    </target>
+   <!-- APC: before making main jar we make agent's jar -->
+   <target name="-pre-jar">
+      <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/ServerAgent.jar">
+         <fileset dir="${build.dir}/agent/classes"/>
+      </jar>
+   </target>
 
-    <target depends="init,clean,compile,jar" name="create-distribution-package">
-        <property location="src/sigar" name="sigar.dir"/>
-        <property location="./" name="svn.dir"/>
-        <zip destfile="${dist.dir}/UniversalAgent.zip">
-            <zipfileset dir="${sigar.dir}/sigar-bin/lib" includes="*.*" excludes="log4j.jar, junit.jar, .sigar_shellrc" prefix="serverAgent"/>
-            <zipfileset dir="${sigar.dir}" includes="COPYING EXCEPTIONS" prefix="serverAgent"/>
-            <zipfileset dir="${svn.dir}" includes="startAgent.*" prefix="serverAgent"/>
-            <zipfileset dir="${svn.dir}" includes="LICENSE README" prefix="serverAgent"/>
-            <zipfileset dir="${dist.dir}" includes="ServerAgent.jar" prefix="serverAgent"/>
-        </zip>
-        <zip destfile="${dist.dir}/JMeterPlugins.zip">
-            <zipfileset dir="${svn.dir}" includes="LICENSE README"/>
-            <zipfileset dir="${dist.dir}" includes="JMeterPlugins.jar"/>
-        </zip>
-    </target>
+   <!-- APC: I see no problems in making package always. It is quick enough now. -->
+   <target name="-post-jar">
+      <!-- APC: I believe that it is much simplier to require Sigar
+           to be placed in sigar subdirectory, not requiring editing of build.xml
+           by each contributor... -->
+      <property location="sigar" name="sigar.dir"/>
+
+      <!-- APC: what is svn.dir for us? it is just current dir!
+           and again build.xml should be rarely modified file... -->
+      <property location="./" name="svn.dir"/>
+      
+      <!-- APC: we should provide one package, that includes all of the stuff
+           to use most of our project -->
+      <zip destfile="${dist.dir}/JMeterPlugins.zip">
+         <!-- JmeterPlugins files -->
+         <zipfileset dir="${svn.dir}" includes="LICENSE README"/>
+         <zipfileset dir="${dist.dir}" includes="JMeterPlugins.jar"/>
+         <!-- agent files -->
+         <zipfileset dir="${dist.dir}" includes="ServerAgent.jar" prefix="serverAgent"/>
+         <zipfileset dir="${svn.dir}/agent" includes="startAgent.*" prefix="serverAgent"/>
+         <!-- sigar files -->
+         <zipfileset dir="${sigar.dir}/sigar-bin/lib" includes="*.*" excludes="log4j.jar, junit.jar, .sigar_shellrc" prefix="serverAgent"/>
+         <zipfileset dir="${sigar.dir}" includes="COPYING EXCEPTIONS" prefix="serverAgent"/>
+         <zipfileset dir="${sigar.dir}" includes="LICENSES README" prefix="serverAgent"/>
+      </zip>
+
+      <!-- APC: fore easy debugging environment we copy files
+           for agent start to dist dir -->
+      <copy todir="${dist.dir}">
+         <fileset dir="${svn.dir}/agent" includes="startAgent.*" />
+         <fileset dir="${sigar.dir}/sigar-bin/lib" includes="*.*" excludes="log4j.jar, junit.jar, .sigar_shellrc"/>
+      </copy>
+
+      <!-- APC: fore easy debugging environment we copy JmeterPlugins.jar
+           to jmeter/lib/ext, defined by property jmeter.lib.ext
+           in project.properties files -->
+      <copy todir="${jmeter.lib.ext}">
+         <fileset file="${dist.jar}"/>
+      </copy>
+   </target>
 
 </project>

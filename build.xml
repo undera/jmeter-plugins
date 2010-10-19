@@ -12,9 +12,9 @@
     <import file="nbproject/build-impl.xml"/>
     <!--
 
-    There exist several targets which are by default empty and which can be 
-    used for execution of your tasks. These targets are usually executed 
-    before and after some main targets. They are: 
+    There exist several targets which are by default empty and which can be
+    used for execution of your tasks. These targets are usually executed
+    before and after some main targets. They are:
 
       -pre-init:                 called before initialization of project properties
       -post-init:                called after initialization of project properties
@@ -40,12 +40,12 @@
             </obfuscate>
         </target>
 
-    For list of available properties check the imported 
-    nbproject/build-impl.xml file. 
+    For list of available properties check the imported
+    nbproject/build-impl.xml file.
 
 
     Another way to customize the build is by overriding existing main targets.
-    The targets of interest are: 
+    The targets of interest are:
 
       -init-macrodef-javac:     defines macro for javac compilation
       -init-macrodef-junit:     defines macro for junit execution
@@ -53,7 +53,7 @@
       -init-macrodef-java:      defines macro for class execution
       -do-jar-with-manifest:    JAR building (if you are using a manifest)
       -do-jar-without-manifest: JAR building (if you are not using a manifest)
-      run:                      execution of project 
+      run:                      execution of project
       -javadoc-build:           Javadoc generation
       test-report:              JUnit report generation
 
@@ -65,14 +65,14 @@
             </exec>
         </target>
 
-    Notice that the overridden target depends on the jar target and not only on 
-    the compile target as the regular run target does. Again, for a list of available 
+    Notice that the overridden target depends on the jar target and not only on
+    the compile target as the regular run target does. Again, for a list of available
     properties which you can use, check the target you are overriding in the
-    nbproject/build-impl.xml file. 
+    nbproject/build-impl.xml file.
 
     -->
 
-<target name="-post-clean">
+    <target name="-post-clean">
         <mkdir dir="${build.dir}/agent"/>
         <mkdir dir="${build.dir}/agent/classes"/>
         <mkdir dir="${build.dir}/agent/generated-sources/ap-source-output"/>
@@ -94,7 +94,14 @@
             <sequential>
                 <property location="${build.dir}/agent/empty" name="empty.dir"/>
                 <mkdir dir="${empty.dir}"/>
-                <javac debug="@{debug}" deprecation="${javac.deprecation}" destdir="@{destdir}" encoding="${source.encoding}" excludes="@{excludes}" fork="${javac.fork}" includeantruntime="false" includes="@{includes}" source="1.4" sourcepath="@{sourcepath}" srcdir="@{srcdir}" target="1.4" tempdir="${java.io.tmpdir}">
+                <mkdir dir="${java.io.tmpdir}"/>
+                <javac debug="@{debug}" deprecation="${javac.deprecation}" 
+                        destdir="@{destdir}" encoding="${source.encoding}"
+                        excludes="@{excludes}" fork="${javac.fork}"
+                        includeantruntime="false" includes="@{includes}"
+                        source="1.4" sourcepath="@{sourcepath}"
+                        srcdir="@{srcdir}" target="1.4"
+                        tempdir="${java.io.tmpdir}">
                     <src>
                         <dirset dir="@{gensrcdir}" erroronmissingdir="false">
                             <include name="*"/>
@@ -125,17 +132,16 @@
     </target>
 
     <target depends="init,clean,compile,jar" name="create-distribution-package">
-        <property location="C:/Java/hyperic-sigar-1.6.3" name="sigar.dir"/>
-        <property location="C:/Java/jmeterplugin/svnGoogle" name="svn.dir"/>
-        <tstamp/>
-        <zip destfile="${dist.dir}/UniversalAgent_${DSTAMP}-${TSTAMP}.zip">
+        <property location="src/sigar" name="sigar.dir"/>
+        <property location="./" name="svn.dir"/>
+        <zip destfile="${dist.dir}/UniversalAgent.zip">
             <zipfileset dir="${sigar.dir}/sigar-bin/lib" includes="*.*" excludes="log4j.jar, junit.jar, .sigar_shellrc" prefix="serverAgent"/>
             <zipfileset dir="${sigar.dir}" includes="COPYING EXCEPTIONS" prefix="serverAgent"/>
-            <zipfileset dir="${svn.dir}/agent" includes="startAgent.*" prefix="serverAgent"/>
+            <zipfileset dir="${svn.dir}" includes="startAgent.*" prefix="serverAgent"/>
             <zipfileset dir="${svn.dir}" includes="LICENSE README" prefix="serverAgent"/>
             <zipfileset dir="${dist.dir}" includes="ServerAgent.jar" prefix="serverAgent"/>
         </zip>
-        <zip destfile="${dist.dir}/JMeterPlugins_${DSTAMP}-${TSTAMP}.zip">
+        <zip destfile="${dist.dir}/JMeterPlugins.zip">
             <zipfileset dir="${svn.dir}" includes="LICENSE README"/>
             <zipfileset dir="${dist.dir}" includes="JMeterPlugins.jar"/>
         </zip>

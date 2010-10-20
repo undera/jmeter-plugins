@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.perfmon;
 
 import kg.apc.jmeter.util.TestJMeterUtils;
@@ -22,18 +17,19 @@ import static org.junit.Assert.*;
  *
  * @author APC
  */
-public class PerformanceMonitoringTestElementTest {
+public class PerformanceMonitoringTestElementTest
+{
+   private PerformanceMonitoringTestElement instance;
+   private PowerTableModel dataModel;
 
-    private PerformanceMonitoringTestElement instance;
-    private PowerTableModel dataModel;
-
-    public PerformanceMonitoringTestElementTest() {
-    }
+   public PerformanceMonitoringTestElementTest()
+   {
+   }
 
    @BeforeClass
    public static void setUpClass() throws Exception
    {
-       TestJMeterUtils.createJmeterEnv();
+      TestJMeterUtils.createJmeterEnv();
    }
 
    @AfterClass
@@ -41,9 +37,12 @@ public class PerformanceMonitoringTestElementTest {
    {
    }
 
-    @Before
-    public void setUp() {
-              instance = new PerformanceMonitoringTestElement();
+   @Before
+   public void setUp()
+   {
+      instance = new PerformanceMonitoringTestElement();
+      instance.setType(2);
+
       dataModel = new PowerTableModel(AbstractPerformanceMonitoringGui.columnIdentifiers, AbstractPerformanceMonitoringGui.columnClasses);
       dataModel.addRow(new Object[]
             {
@@ -57,12 +56,12 @@ public class PerformanceMonitoringTestElementTest {
             {
                "server2", 6666
             });
-      instance.setType(2);
-    }
+   }
 
-    @After
-    public void tearDown() {
-    }
+   @After
+   public void tearDown()
+   {
+   }
 
    @Test
    public void testTableModelToCollectionProperty()
@@ -129,7 +128,7 @@ public class PerformanceMonitoringTestElementTest {
    {
       System.out.println("clone");
       Object result = instance.clone();
-      assertTrue(instance.gui == ((PerformanceMonitoringTestElement)result).gui);
+      assertTrue(instance.gui == ((PerformanceMonitoringTestElement) result).gui);
    }
 
    @Test
@@ -170,7 +169,7 @@ public class PerformanceMonitoringTestElementTest {
       instance.testIterationStart(lie);
    }
 
-      public class AbstractPerformanceMonitoringGuiImpl
+   public class AbstractPerformanceMonitoringGuiImpl
          extends AbstractPerformanceMonitoringGui
    {
       public String getStaticLabel()

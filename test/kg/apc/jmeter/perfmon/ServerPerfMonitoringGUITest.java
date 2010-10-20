@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.perfmon;
 
+import org.apache.jmeter.gui.util.PowerTableModel;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,15 +13,18 @@ import static org.junit.Assert.*;
  *
  * @author APC
  */
-public class ServerPerfMonitoringGUITest {
+public class ServerPerfMonitoringGUITest
+{
+   private PerformanceMonitoringTestElement testElementWithConnectors;
 
-    public ServerPerfMonitoringGUITest() {
-    }
+   public ServerPerfMonitoringGUITest()
+   {
+   }
 
    @BeforeClass
    public static void setUpClass() throws Exception
    {
-       TestJMeterUtils.createJmeterEnv();
+      TestJMeterUtils.createJmeterEnv();
    }
 
    @AfterClass
@@ -33,13 +32,31 @@ public class ServerPerfMonitoringGUITest {
    {
    }
 
-    @Before
-    public void setUp() {
-    }
+   @Before
+   public void setUp()
+   {
+      PowerTableModel dataModel = new PowerTableModel(AbstractPerformanceMonitoringGui.columnIdentifiers, AbstractPerformanceMonitoringGui.columnClasses);
+      dataModel.addRow(new Object[]
+            {
+               "localhost", 4444
+            });
+      dataModel.addRow(new Object[]
+            {
+               "server1", 5555
+            });
+      dataModel.addRow(new Object[]
+            {
+               "server2", 6666
+            });
 
-    @After
-    public void tearDown() {
-    }
+      testElementWithConnectors = new PerformanceMonitoringTestElement();
+      testElementWithConnectors.setData(PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel));
+   }
+
+   @After
+   public void tearDown()
+   {
+   }
 
    @Test
    public void testGetStaticLabel()
@@ -56,6 +73,7 @@ public class ServerPerfMonitoringGUITest {
    {
       System.out.println("testStarted");
       ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+      instance.configure(testElementWithConnectors);
       instance.testStarted();
    }
 
@@ -64,6 +82,7 @@ public class ServerPerfMonitoringGUITest {
    {
       System.out.println("testEnded");
       ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+      instance.configure(testElementWithConnectors);
       instance.testEnded();
    }
 
@@ -72,7 +91,7 @@ public class ServerPerfMonitoringGUITest {
    {
       System.out.println("run");
       ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+      instance.configure(testElementWithConnectors);
       instance.run();
    }
-
 }

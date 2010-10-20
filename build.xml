@@ -67,7 +67,7 @@
 
     -->
 
-   <target name="-post-clean">
+   <target name="-pre-compile">
       <mkdir dir="${build.dir}/agent"/>
       <mkdir dir="${build.dir}/agent/classes"/>
       <mkdir dir="${build.dir}/agent/generated-sources/ap-source-output"/>

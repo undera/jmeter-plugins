@@ -22,6 +22,8 @@ import static org.junit.Assert.*;
  */
 public class AbstractPerformanceMonitoringGuiTest
 {
+   private PowerTableModel dataModel;
+
    public AbstractPerformanceMonitoringGuiTest()
    {
    }
@@ -40,6 +42,19 @@ public class AbstractPerformanceMonitoringGuiTest
    @Before
    public void setUp()
    {
+      dataModel = new PowerTableModel(AbstractPerformanceMonitoringGui.columnIdentifiers, AbstractPerformanceMonitoringGui.columnClasses);
+      dataModel.addRow(new Object[]
+            {
+               "localhost", 4444
+            });
+      dataModel.addRow(new Object[]
+            {
+               "server1", 5555
+            });
+      dataModel.addRow(new Object[]
+            {
+               "server2", 6666
+            });
    }
 
    @After
@@ -115,7 +130,7 @@ public class AbstractPerformanceMonitoringGuiTest
       instance.addRowButton.doClick();
       instance.modifyTestElement(te);
 
-      CollectionProperty data = (CollectionProperty) te.tableModelToCollectionProperty((PowerTableModel) instance.grid.getModel());
+      CollectionProperty data = (CollectionProperty) PerformanceMonitoringTestElement.tableModelToCollectionProperty((PowerTableModel) instance.grid.getModel());
       assertEquals(instance.grid.getModel().getColumnCount(), data.size());
       assertEquals(instance.grid.getModel().getRowCount(), ((List<?>) data.get(0).getObjectValue()).size());
    }
@@ -125,6 +140,17 @@ public class AbstractPerformanceMonitoringGuiTest
    {
       System.out.println("configure");
       PerformanceMonitoringTestElement pte = new PerformanceMonitoringTestElement();
+      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+      instance.configure(pte);
+      assertNotNull(pte.gui);
+   }
+
+   @Test
+   public void testConfigure_NonEmpty()
+   {
+      System.out.println("configure");
+      PerformanceMonitoringTestElement pte = new PerformanceMonitoringTestElement();
+      pte.setData(PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel));
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.configure(pte);
       assertNotNull(pte.gui);
@@ -197,7 +223,6 @@ public class AbstractPerformanceMonitoringGuiTest
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.testEnded();
    }
-
 
    @Test
    public void testAddRow()

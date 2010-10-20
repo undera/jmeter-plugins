@@ -39,7 +39,7 @@ public class SocketEmulatorInputStream
     *
     * @param hexStringToByteArray
     */
-   public void setBytesToRead(byte[] hexStringToByteArray)
+   public final void setBytesToRead(byte[] hexStringToByteArray)
    {
       bytes = hexStringToByteArray;
       System.out.println("Set bytes to read: "+Integer.toString(bytes.length));
@@ -50,7 +50,7 @@ public class SocketEmulatorInputStream
         throws IOException
    {
       if (bytes == null)
-         throw new IOException("Expected data was not set");
+         throw new IOException("Expected emulator data was not set");
 
       if (pos >= bytes.length)
       {

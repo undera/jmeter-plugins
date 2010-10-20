@@ -1,5 +1,4 @@
 // TODO: сделать прореживание рядов вдвое
-// TODO: сделать загрузку данных из файла
 // todo: add spacing around panel
 
 package kg.apc.jmeter.vizualizers;

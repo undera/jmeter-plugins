@@ -505,7 +505,8 @@ public class GraphPanelChart
          g.setColor(Color.black);
 
          // draw label
-         xAxisLabelRenderer.setValue(minXVal + n * (maxXVal - minXVal) / gridLinesCount);
+         xAxisLabelRenderer.setValue(minXVal + n * (double)(maxXVal - minXVal) / gridLinesCount);
+
          valueLabel = xAxisLabelRenderer.getText();
          labelXPos = gridLineX - fm.stringWidth(valueLabel) / 2;
          g.drawString(valueLabel, labelXPos, xAxisRect.y + fm.getAscent() + spacing);

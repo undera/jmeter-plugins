@@ -10,7 +10,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -18,6 +17,8 @@ import static org.junit.Assert.*;
  */
 public class ServerAgentTest {
 
+    private static int testPort = 4567;
+    
     public ServerAgentTest() {
     }
 
@@ -43,54 +44,51 @@ public class ServerAgentTest {
    public void testLogMessage()
    {
       System.out.println("logMessage");
-      String message = "";
+      String message = "test message";
       ServerAgent.logMessage(message);
-      fail("The test case is a prototype.");
    }
 
    @Test
    public void testStopService()
    {
       System.out.println("stopService");
-      ServerAgent instance = null;
+      ServerAgent instance = new ServerAgent(testPort);
+      instance.startServiceAsThread();
       instance.stopService();
-      fail("The test case is a prototype.");
    }
 
    @Test
    public void testStartServiceAsThread()
    {
       System.out.println("startServiceAsThread");
-      ServerAgent instance = null;
+      ServerAgent instance = new ServerAgent(testPort);
       instance.startServiceAsThread();
-      fail("The test case is a prototype.");
+      instance.stopService();
    }
 
    @Test
    public void testStartServie()
    {
       System.out.println("startServie");
-      ServerAgent instance = null;
-      instance.startServie();
-      fail("The test case is a prototype.");
+      ServerAgent instance = new ServerAgent(testPort);
+      instance.startServiceAsThread();
+      instance.stopService();
    }
 
    @Test
    public void testMain()
    {
       System.out.println("main");
-      String[] args = null;
-      ServerAgent.main(args);
-      fail("The test case is a prototype.");
+      //no test as not multithreaded...
    }
 
    @Test
    public void testRun()
    {
-      System.out.println("run");
-      ServerAgent instance = null;
-      instance.run();
-      fail("The test case is a prototype.");
+      System.out.println("startServie");
+      ServerAgent instance = new ServerAgent(testPort);
+      instance.startServiceAsThread();
+      instance.stopService();
    }
 
 }

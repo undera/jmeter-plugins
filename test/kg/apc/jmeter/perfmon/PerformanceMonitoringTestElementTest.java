@@ -5,10 +5,12 @@
 
 package kg.apc.jmeter.perfmon;
 
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.testelement.property.NullProperty;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,12 +24,16 @@ import static org.junit.Assert.*;
  */
 public class PerformanceMonitoringTestElementTest {
 
+    private PerformanceMonitoringTestElement instance;
+    private PowerTableModel dataModel;
+
     public PerformanceMonitoringTestElementTest() {
     }
 
    @BeforeClass
    public static void setUpClass() throws Exception
    {
+       TestJMeterUtils.createJmeterEnv();
    }
 
    @AfterClass
@@ -37,6 +43,21 @@ public class PerformanceMonitoringTestElementTest {
 
     @Before
     public void setUp() {
+              instance = new PerformanceMonitoringTestElement();
+      dataModel = new PowerTableModel(AbstractPerformanceMonitoringGui.columnIdentifiers, AbstractPerformanceMonitoringGui.columnClasses);
+      dataModel.addRow(new Object[]
+            {
+               "localhost", 4444
+            });
+      dataModel.addRow(new Object[]
+            {
+               "server1", 5555
+            });
+      dataModel.addRow(new Object[]
+            {
+               "server2", 6666
+            });
+      instance.setType(2);
     }
 
     @After
@@ -47,121 +68,98 @@ public class PerformanceMonitoringTestElementTest {
    public void testTableModelToCollectionProperty()
    {
       System.out.println("tableModelToCollectionProperty");
-      PowerTableModel model = null;
-      CollectionProperty expResult = null;
-      CollectionProperty result = PerformanceMonitoringTestElement.tableModelToCollectionProperty(model);
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      CollectionProperty result = PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel);
+      assertTrue(result instanceof CollectionProperty);
    }
 
    @Test
    public void testGetData()
    {
       System.out.println("getData");
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
-      JMeterProperty expResult = null;
+      CollectionProperty prop = PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel);
+      instance.setData(prop);
       JMeterProperty result = instance.getData();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertFalse(result instanceof NullProperty);
+      assertEquals(prop.getStringValue(), result.getStringValue());
    }
 
    @Test
    public void testSetData()
    {
       System.out.println("setData");
-      CollectionProperty rows = null;
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
-      instance.setData(rows);
-      fail("The test case is a prototype.");
+      CollectionProperty prop = PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel);
+      instance.setData(prop);
    }
 
    @Test
    public void testGetType()
    {
       System.out.println("getType");
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
-      int expResult = 0;
+      int expResult = 2;
       int result = instance.getType();
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
    }
 
    @Test
    public void testSetType()
    {
       System.out.println("setType");
-      int type = 0;
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
+      int type = 3;
       instance.setType(type);
-      fail("The test case is a prototype.");
    }
 
    @Test
    public void testClearData()
    {
       System.out.println("clearData");
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
       instance.clearData();
-      fail("The test case is a prototype.");
    }
 
    @Test
    public void testRegister()
    {
       System.out.println("register");
-      AbstractPerformanceMonitoringGui gui = null;
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
+      AbstractPerformanceMonitoringGui gui = new AbstractPerformanceMonitoringGuiImpl();
       instance.register(gui);
-      fail("The test case is a prototype.");
+      assertTrue(gui == instance.gui);
    }
 
    @Test
    public void testClone()
    {
       System.out.println("clone");
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
-      Object expResult = null;
       Object result = instance.clone();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertTrue(instance.gui == ((PerformanceMonitoringTestElement)result).gui);
    }
 
    @Test
    public void testTestStarted_0args()
    {
       System.out.println("testStarted");
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
       instance.testStarted();
-      fail("The test case is a prototype.");
    }
 
    @Test
    public void testTestStarted_String()
    {
       System.out.println("testStarted");
-      String string = "";
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
+      String string = "host";
       instance.testStarted(string);
-      fail("The test case is a prototype.");
    }
 
    @Test
    public void testTestEnded_0args()
    {
       System.out.println("testEnded");
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
       instance.testEnded();
-      fail("The test case is a prototype.");
    }
 
    @Test
    public void testTestEnded_String()
    {
       System.out.println("testEnded");
-      String string = "";
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
+      String string = "host";
       instance.testEnded(string);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -169,9 +167,23 @@ public class PerformanceMonitoringTestElementTest {
    {
       System.out.println("testIterationStart");
       LoopIterationEvent lie = null;
-      PerformanceMonitoringTestElement instance = new PerformanceMonitoringTestElement();
       instance.testIterationStart(lie);
-      fail("The test case is a prototype.");
    }
 
+      public class AbstractPerformanceMonitoringGuiImpl
+         extends AbstractPerformanceMonitoringGui
+   {
+      public String getStaticLabel()
+      {
+         return "test";
+      }
+
+      public void testStarted()
+      {
+      }
+
+      public void testEnded()
+      {
+      }
+   }
 }

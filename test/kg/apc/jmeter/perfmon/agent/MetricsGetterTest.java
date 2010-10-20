@@ -43,40 +43,42 @@ public class MetricsGetterTest {
    public void testGetInstance()
    {
       System.out.println("getInstance");
-      MetricsGetter expResult = null;
       MetricsGetter result = MetricsGetter.getInstance();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 
    @Test
    public void testInitNetworkInterfaces()
    {
       System.out.println("initNetworkInterfaces");
-      MetricsGetter instance = null;
+      MetricsGetter instance = MetricsGetter.getInstance();
       instance.initNetworkInterfaces();
-      fail("The test case is a prototype.");
    }
 
    @Test
    public void testInitFileSystems()
    {
       System.out.println("initFileSystems");
-      MetricsGetter instance = null;
+      MetricsGetter instance = MetricsGetter.getInstance();
       instance.initFileSystems();
-      fail("The test case is a prototype.");
    }
 
    @Test
    public void testGetValues()
    {
       System.out.println("getValues");
-      String value = "";
-      MetricsGetter instance = null;
-      String expResult = "";
-      String result = instance.getValues(value);
+
+      MetricsGetter instance = MetricsGetter.getInstance();
+      String expResult = "badCmd";
+      String result = instance.getValues("invalidCmd");
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      result = instance.getValues("mem");
+      System.out.println("memory: " + result);
+      assertNotNull(result);
+      //assume more than 100 mb ram (value is in bytes)
+      assertTrue(!"badCmd".equals(result));
+      assertTrue(result.length() > 5);
+      
    }
 
 }

@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.perfmon;
 
 import java.util.List;
@@ -25,15 +20,16 @@ import static org.junit.Assert.*;
  *
  * @author APC
  */
-public class AbstractPerformanceMonitoringGuiTest {
-
-    public AbstractPerformanceMonitoringGuiTest() {
-    }
+public class AbstractPerformanceMonitoringGuiTest
+{
+   public AbstractPerformanceMonitoringGuiTest()
+   {
+   }
 
    @BeforeClass
    public static void setUpClass() throws Exception
    {
-       TestJMeterUtils.createJmeterEnv();
+      TestJMeterUtils.createJmeterEnv();
    }
 
    @AfterClass
@@ -41,13 +37,15 @@ public class AbstractPerformanceMonitoringGuiTest {
    {
    }
 
-    @Before
-    public void setUp() {
-    }
+   @Before
+   public void setUp()
+   {
+   }
 
-    @After
-    public void tearDown() {
-    }
+   @After
+   public void tearDown()
+   {
+   }
 
    @Test
    public void testIsConnectorsValid()
@@ -116,8 +114,8 @@ public class AbstractPerformanceMonitoringGuiTest {
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.addRowButton.doClick();
       instance.modifyTestElement(te);
- 
-      CollectionProperty data = (CollectionProperty) te.tableModelToCollectionProperty((PowerTableModel)instance.grid.getModel());
+
+      CollectionProperty data = (CollectionProperty) te.tableModelToCollectionProperty((PowerTableModel) instance.grid.getModel());
       assertEquals(instance.grid.getModel().getColumnCount(), data.size());
       assertEquals(instance.grid.getModel().getRowCount(), ((List<?>) data.get(0).getObjectValue()).size());
    }
@@ -200,6 +198,29 @@ public class AbstractPerformanceMonitoringGuiTest {
       instance.testEnded();
    }
 
+
+   @Test
+   public void testAddRow()
+   {
+      // Just do like UltimateThreadGroup test does
+      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+      instance.addRowButton.doClick();
+      instance.grid.editCellAt(0, 0);
+      instance.addRowButton.doClick();
+   }
+
+   @Test
+   public void testDeleteRow()
+   {
+      // Just do like UltimateThreadGroup test does
+      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+      instance.addRowButton.doClick();
+      instance.addRowButton.doClick();
+      instance.grid.editCellAt(0, 0);
+      instance.deleteRowButton.doClick();
+      instance.deleteRowButton.doClick();
+   }
+
    public class AbstractPerformanceMonitoringGuiImpl
          extends AbstractPerformanceMonitoringGui
    {
@@ -216,5 +237,4 @@ public class AbstractPerformanceMonitoringGuiTest {
       {
       }
    }
-
 }

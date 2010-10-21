@@ -3,6 +3,7 @@ package kg.apc.jmeter.perfmon.agent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import kg.apc.jmeter.perfmon.AgentConnector;
 import org.hyperic.sigar.FileSystem;
 import org.hyperic.sigar.FileSystemUsage;
 import org.hyperic.sigar.NetInterfaceStat;
@@ -276,17 +277,17 @@ public class MetricsGetter
    public String getValues(String value)
    {
 
-      StringBuffer buff = new StringBuffer();
+      StringBuilder buff = new StringBuilder();
 
-      if (value.equals("cpu"))
+      if (value.equals(AgentConnector.CPU))
       {
          buff.append(getCpuUsage());
       }
-      else if (value.equals("mem"))
+      else if (value.equals(AgentConnector.MEMORY))
       {
          buff.append(getUsedMem());
       }
-      else if (value.equals("swp"))
+      else if (value.equals(AgentConnector.SWAP))
       {
          long[] values = getSwap();
          buff.append(values[0]);
@@ -294,7 +295,7 @@ public class MetricsGetter
          buff.append(values[1]);
 
       }
-      else if (value.equals("dio"))
+      else if (value.equals(AgentConnector.DISKIO))
       {
          long[] values = getDisksIO();
          buff.append(values[0]);
@@ -302,7 +303,7 @@ public class MetricsGetter
          buff.append(values[1]);
 
       }
-      else if (value.equals("nio"))
+      else if (value.equals(AgentConnector.NETWORK))
       {
          long[] values = getNetIO();
          buff.append(values[0]);
@@ -310,7 +311,7 @@ public class MetricsGetter
          buff.append(values[1]);
 
       }
-      else if (value.equals("name"))
+      else if (value.equals(AgentConnector.NAME))
       {
          buff.append(getServerName());
       }

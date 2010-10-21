@@ -16,6 +16,15 @@ import org.apache.log.Logger;
  */
 public class AgentConnector
 {
+   // maybe this constants should be placed in MetricsGetter...
+   public static final String BYE = "bye";
+   public static final String CPU = "cpu";
+   public static final String DISKIO = "dio";
+   public static final String MEMORY = "mem";
+   public static final String NAME = "name";
+   public static final String NETWORK = "nio";
+   public static final String SWAP = "swp";
+
    private static final Logger log = LoggingManager.getLoggerForClass();
    private String host;
    private int port;
@@ -47,7 +56,7 @@ public class AgentConnector
       out = new PrintWriter(socket.getOutputStream(), true);
       in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-      remoteServerName = getData("name");
+      remoteServerName = getData(NAME);
    }
 
    /**
@@ -59,7 +68,7 @@ public class AgentConnector
       {
          //this is a command sent to the server agent, must not be changed
          //it is used to exit the thread loop
-         out.println("bye");
+         out.println(BYE);
          out.close();
          in.close();
          socket.close();
@@ -99,7 +108,7 @@ public class AgentConnector
    {
       long ret;
 
-      String value = getData("mem");
+      String value = getData(MEMORY);
       if (value != null)
       {
          ret = Long.parseLong(value);
@@ -120,7 +129,7 @@ public class AgentConnector
    {
       double ret;
 
-      String value = getData("cpu");
+      String value = getData(CPU);
       if (value != null)
       {
          ret = Double.parseDouble(value);
@@ -136,7 +145,7 @@ public class AgentConnector
    public long[] getSwap()
    {
       long[] ret = new long[2];
-      String value = getData("swp");
+      String value = getData(SWAP);
       if (value != null)
       {
          ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
@@ -153,7 +162,7 @@ public class AgentConnector
    public long[] getDisksIO()
    {
       long[] ret = new long[2];
-      String value = getData("dio");
+      String value = getData(DISKIO);
       if (value != null)
       {
          ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
@@ -169,7 +178,7 @@ public class AgentConnector
    public long[] getNetIO()
    {
       long[] ret = new long[2];
-      String value = getData("nio");
+      String value = getData(NETWORK);
       if (value != null)
       {
          ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));

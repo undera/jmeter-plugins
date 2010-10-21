@@ -41,7 +41,6 @@ public class ConnectionThread
    /**
     * The main loop which will wait for AgentConnector orders
     */
-   @Override
    public void run()
    {
       MetricsGetter data = MetricsGetter.getInstance();

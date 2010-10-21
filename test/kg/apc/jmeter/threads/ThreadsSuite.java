@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.threads.SteppingThreadGroupTest.class,kg.apc.jmeter.threads.ThreadScheduleParamsTest.class,kg.apc.jmeter.threads.SteppingThreadGroupGuiTest.class,kg.apc.jmeter.threads.UltimateThreadGroupTest.class,kg.apc.jmeter.threads.UltimateThreadGroupGuiTest.class})
+@Suite.SuiteClasses({SteppingThreadGroupTest.class, SteppingThreadGroupGuiTest.class, ThreadScheduleParamsTest.class, UltimateThreadGroupTest.class, UltimateThreadGroupGuiTest.class})
 public class ThreadsSuite {
 
    @BeforeClass

@@ -100,11 +100,13 @@ public class GraphPanelChart
    // jmeterPlugin.drawGradient=(true/false)
    // jmeterPlugin.neverDrawFinalZeroingLines=(true/false)
    // jmeterPlugin.optimizeYAxis=(true/false)
+   // jmeterPlugin.neverDrawCurrentX=(true/false)
    // note to Andrey: Feel free to decide the default value!
 
    private static boolean drawGradient = true;
    private static boolean neverDrawFinalZeroingLines = false;
    private static boolean optimizeYAxis = true;
+   private static boolean neverDrawCurrentX = false;
 
    // If user entered configuration items in user.properties, overide default values.
    static {
@@ -119,6 +121,10 @@ public class GraphPanelChart
        String cfgOptimizeYAxis = JMeterUtils.getProperty("jmeterPlugin.optimizeYAxis");
        if(cfgOptimizeYAxis != null) {
            GraphPanelChart.optimizeYAxis = "true".equalsIgnoreCase(cfgOptimizeYAxis);
+       }
+       String cfgNeverDrawFinalCurrentX = JMeterUtils.getProperty("jmeterPlugin.neverDrawCurrentX");
+       if(cfgNeverDrawFinalCurrentX != null) {
+           GraphPanelChart.neverDrawCurrentX = "true".equalsIgnoreCase(cfgNeverDrawFinalCurrentX);
        }
    }
 
@@ -515,7 +521,7 @@ public class GraphPanelChart
       //restore stroke
       ((Graphics2D) g).setStroke(oldStroke);
 
-      if (drawCurrentX)
+      if (drawCurrentX && !neverDrawCurrentX)
       {
          gridLineX = chartRect.x + (int) ((currentXVal - minXVal) * (double) chartRect.width / (maxXVal - minXVal));
          g.setColor(Color.GRAY);

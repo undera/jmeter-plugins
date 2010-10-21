@@ -9,54 +9,69 @@ import org.apache.jmeter.samplers.SampleResult;
  * @author apc
  */
 public class ThreadsStateOverTimeGui
-     extends AbstractGraphPanelVisualizer
+        extends AbstractGraphPanelVisualizer
 {
-   //private static final Logger log = LoggingManager.getLoggerForClass();
-   /**
-    *
-    */
-   public ThreadsStateOverTimeGui()
-   {
-      super();
-      graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
-      graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
-   }
+    //private static final Logger log = LoggingManager.getLoggerForClass();
 
-   private void addThreadGroupRecord(String threadGroupName, long time, int numThreads)
-   {
-      AbstractGraphRow row = model.get(threadGroupName);
-      if (row==null)
-      {
-         row = new GraphRowAverages();
-         row.setLabel(threadGroupName);
-         row.setColor(colors.getNextColor());
-         row.setDrawLine(true);
-         row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
-         model.put(threadGroupName, row);
-         graphPanel.addRow(row);
-      }
+    /**
+     *
+     */
+    public ThreadsStateOverTimeGui()
+    {
+        super();
+        graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
+        graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
+    }
 
-      row.add(time, numThreads);
-   }
+    private synchronized AbstractGraphRow getNewRow(String label)
+    {
+        AbstractGraphRow row = null;
+        if (!model.containsKey(label))
+        {
+            row = new GraphRowAverages();
+            row.setLabel(label);
+            row.setColor(colors.getNextColor());
+            row.setDrawLine(true);
+            row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
+            model.put(label, row);
+            graphPanel.addRow(row);
+        } else
+        {
+            row = model.get(label);
+        }
 
-   public String getLabelResource()
-   {
-      return this.getClass().getSimpleName();
-   }
+        return row;
+    }
 
-   @Override
-   public String getStaticLabel()
-   {
-      return "Active Threads Over Time";
-   }
+    private void addThreadGroupRecord(String threadGroupName, long time, int numThreads)
+    {
+        AbstractGraphRow row = model.get(threadGroupName);
+        if (row == null)
+        {
+            row = getNewRow(threadGroupName);
+        }
 
-   public void add(SampleResult res)
-   {
-      String threadName = res.getThreadName();
-      threadName = threadName.lastIndexOf(" ") >= 0 ? threadName.substring(0, threadName.lastIndexOf(" ")) : threadName;
+        row.add(time, numThreads);
+    }
 
-      //addThreadGroupRecord(threadName, res.getStartTime() - res.getStartTime() % delay, res.getGroupThreads());
-      addThreadGroupRecord(threadName, res.getEndTime() - res.getEndTime() % delay, res.getGroupThreads());
-      updateGui(null);
-   }
+    public String getLabelResource()
+    {
+        return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public String getStaticLabel()
+    {
+        return "Active Threads Over Time";
+    }
+
+    public void add(SampleResult res)
+    {
+        String threadName = res.getThreadName();
+        threadName = threadName.lastIndexOf(" ") >= 0 ? threadName.substring(0, threadName.lastIndexOf(" ")) : threadName;
+
+        //addThreadGroupRecord(threadName, res.getStartTime() - res.getStartTime() % delay, res.getGroupThreads());
+        addThreadGroupRecord(threadName, res.getEndTime() - res.getEndTime() % delay, res.getGroupThreads());
+        updateGui(null);
+    }
 }

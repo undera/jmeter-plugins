@@ -12,84 +12,97 @@ import org.apache.jorphan.gui.RateRenderer;
  * @author apc
  */
 public class ThroughputVsThreadsGui
-     extends AbstractGraphPanelVisualizer
+        extends AbstractGraphPanelVisualizer
 {
-   /**
-    *
-    */
-   public ThroughputVsThreadsGui()
-   {
-      super();
-      graphPanel.getGraphObject().setDrawCurrentX(true);
-      graphPanel.getGraphObject().setyAxisLabelRenderer(new RateRenderer("#.0"));
-      graphPanel.getGraphObject().setForcedMinX(0);
-   }
 
-   public String getLabelResource()
-   {
-      return this.getClass().getSimpleName();
-   }
+    /**
+     *
+     */
+    public ThroughputVsThreadsGui()
+    {
+        super();
+        graphPanel.getGraphObject().setDrawCurrentX(true);
+        graphPanel.getGraphObject().setyAxisLabelRenderer(new RateRenderer("#.0"));
+        graphPanel.getGraphObject().setForcedMinX(0);
+    }
 
-   @Override
-   public String getStaticLabel()
-   {
-      return "Transaction Throughput vs Threads";
-   }
+    public String getLabelResource()
+    {
+        return this.getClass().getSimpleName();
+    }
 
-   public void add(SampleResult res)
-   {
-      long time = res.getTime();
-      if (time < 1)
-      {
-         return;
-      }
+    @Override
+    public String getStaticLabel()
+    {
+        return "Transaction Throughput vs Threads";
+    }
 
-      String label = res.getSampleLabel();
-      String averageLabel = "Average " + res.getSampleLabel();
-      GraphRowAverages row;
-      GraphRowOverallAverages avgRow;
-      if (!model.containsKey(label))
-      {
-         final Color nextColor = colors.getNextColor();
-         row = getNewRow(label, nextColor);
-         avgRow = getNewAveragesRow(averageLabel, nextColor);
-         graphPanel.addRow(row);
-         graphPanel.addRow(avgRow);
-      }
-      else
-      {
-         row = (GraphRowAverages) model.get(label);
-         avgRow = (GraphRowOverallAverages) model.get(averageLabel);
-      }
+    public void add(SampleResult res)
+    {
+        long time = res.getTime();
+        if (time < 1)
+        {
+            return;
+        }
 
-      int allThreads = res.getAllThreads();
-      double throughput = (double) allThreads * 1000 / time;
-      row.add(allThreads, throughput);
-      avgRow.add(allThreads, throughput);
-      graphPanel.getGraphObject().setCurrentX(allThreads);
-      updateGui(null);
-   }
+        String label = res.getSampleLabel();
+        String averageLabel = "Average " + res.getSampleLabel();
+        GraphRowAverages row;
+        GraphRowOverallAverages avgRow;
+        if (!model.containsKey(label) || !model.containsKey(averageLabel))
+        {
+            row = getNewRow(label);
+            avgRow = getNewAveragesRow(averageLabel, row.getColor());
+        } else
+        {
+            row = (GraphRowAverages) model.get(label);
+            avgRow = (GraphRowOverallAverages) model.get(averageLabel);
+        }
 
-   private GraphRowOverallAverages getNewAveragesRow(String averageLabel, final Color nextColor)
-   {
-      GraphRowOverallAverages avgRow = new GraphRowOverallAverages();
-      avgRow.setLabel(averageLabel);
-      avgRow.setColor(nextColor);
-      avgRow.setMarkerSize(AbstractGraphRow.MARKER_SIZE_BIG);
-      avgRow.setDrawValueLabel(true);
-      avgRow.setShowInLegend(false);
-      model.put(averageLabel, avgRow);
-      return avgRow;
-   }
+        int allThreads = res.getAllThreads();
+        double throughput = (double) allThreads * 1000.0d / time;
+        row.add(allThreads, throughput);
+        avgRow.add(allThreads, throughput);
+        graphPanel.getGraphObject().setCurrentX(allThreads);
+        updateGui(null);
+    }
 
-   private GraphRowAverages getNewRow(String label, final Color nextColor)
-   {
-      GraphRowAverages row = new GraphRowAverages();
-      row.setLabel(label);
-      row.setColor(nextColor);
-      row.setDrawLine(true);
-      row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
-      model.put(label, row);
-      return row;
-   }
+    private synchronized GraphRowOverallAverages getNewAveragesRow(String averageLabel, Color color)
+    {
+        GraphRowOverallAverages avgRow = null;
+        if (!model.containsKey(averageLabel))
+        {
+            avgRow = new GraphRowOverallAverages();
+            avgRow.setLabel(averageLabel);
+            avgRow.setColor(color);
+            avgRow.setMarkerSize(AbstractGraphRow.MARKER_SIZE_BIG);
+            avgRow.setDrawValueLabel(true);
+            avgRow.setShowInLegend(false);
+            model.put(averageLabel, avgRow);
+            graphPanel.addRow(avgRow);
+        } else
+        {
+            avgRow = (GraphRowOverallAverages) model.get(averageLabel);
+        }
+        return avgRow;
+    }
+
+    private synchronized GraphRowAverages getNewRow(String label)
+    {
+        GraphRowAverages row = null;
+        if (!model.containsKey(label))
+        {
+            row = new GraphRowAverages();
+            row.setLabel(label);
+            row.setColor(colors.getNextColor());
+            row.setDrawLine(true);
+            row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
+            model.put(label, row);
+            graphPanel.addRow(row);
+        } else
+        {
+            row = (GraphRowAverages) model.get(label);
+        }
+        return row;
+    }
 }

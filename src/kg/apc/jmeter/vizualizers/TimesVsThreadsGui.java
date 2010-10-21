@@ -41,7 +41,7 @@ public class TimesVsThreadsGui
         String averageLabel = "Average " + res.getSampleLabel();
         GraphRowAverages row;
         GraphRowOverallAverages avgRow;
-        if (!model.containsKey(label))
+        if (!model.containsKey(label) || !model.containsKey(averageLabel))
         {
             row = getNewRow(label);
             avgRow = getNewAveragesRow(averageLabel, row.getColor());

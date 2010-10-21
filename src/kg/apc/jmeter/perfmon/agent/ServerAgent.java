@@ -2,7 +2,6 @@ package kg.apc.jmeter.perfmon.agent;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import kg.apc.jmeter.perfmon.AgentConnector;
 
 /**
  * The main Agent class which starts the socket server and listen to
@@ -64,7 +63,7 @@ public class ServerAgent implements Runnable
     public void startServie() {
         listening = true;
         ServerSocket serverSocket = null;
-        MetricsGetter.getInstance().getValues(AgentConnector.CPU);
+        MetricsGetter.getInstance().getValues(MetricsGetter.CPU);
 
         try
         {

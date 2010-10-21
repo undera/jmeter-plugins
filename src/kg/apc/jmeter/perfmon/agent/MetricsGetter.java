@@ -3,7 +3,6 @@ package kg.apc.jmeter.perfmon.agent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import kg.apc.jmeter.perfmon.AgentConnector;
 import org.hyperic.sigar.FileSystem;
 import org.hyperic.sigar.FileSystemUsage;
 import org.hyperic.sigar.NetInterfaceStat;
@@ -22,6 +21,15 @@ import org.hyperic.sigar.Swap;
  */
 public class MetricsGetter
 {
+   public static final String BADCMD = "badCmd";
+   public static final String BYE = "bye";
+   public static final String CPU = "cpu";
+   public static final String DISKIO = "dio";
+   public static final String MEMORY = "mem";
+   public static final String NAME = "name";
+   public static final String NETWORK = "nio";
+   public static final String SWAP = "swp";
+
    //FIXME: APC: why don't use custom exceptions instead of error constants?
    public final static long SIGAR_ERROR = -1L;
    public final static long AGENT_ERROR = -2L;
@@ -279,15 +287,15 @@ public class MetricsGetter
 
       StringBuilder buff = new StringBuilder();
 
-      if (value.equals(AgentConnector.CPU))
+      if (value.equals(CPU))
       {
          buff.append(getCpuUsage());
       }
-      else if (value.equals(AgentConnector.MEMORY))
+      else if (value.equals(MEMORY))
       {
          buff.append(getUsedMem());
       }
-      else if (value.equals(AgentConnector.SWAP))
+      else if (value.equals(SWAP))
       {
          long[] values = getSwap();
          buff.append(values[0]);
@@ -295,7 +303,7 @@ public class MetricsGetter
          buff.append(values[1]);
 
       }
-      else if (value.equals(AgentConnector.DISKIO))
+      else if (value.equals(DISKIO))
       {
          long[] values = getDisksIO();
          buff.append(values[0]);
@@ -303,7 +311,7 @@ public class MetricsGetter
          buff.append(values[1]);
 
       }
-      else if (value.equals(AgentConnector.NETWORK))
+      else if (value.equals(NETWORK))
       {
          long[] values = getNetIO();
          buff.append(values[0]);
@@ -311,13 +319,13 @@ public class MetricsGetter
          buff.append(values[1]);
 
       }
-      else if (value.equals(AgentConnector.NAME))
+      else if (value.equals(NAME))
       {
          buff.append(getServerName());
       }
       else
       {
-         buff.append("badCmd");
+         buff.append(BADCMD);
       }
       return buff.toString();
    }

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import kg.apc.jmeter.perfmon.AgentConnector;
 
 /**
  * This class will handle one connection with the remote JMeter plugin AgentConnector
@@ -54,7 +53,7 @@ public class ConnectionThread
 
          while ((inputLine = in.readLine()) != null)
          {
-            if (inputLine.equals(AgentConnector.BYE))
+            if (inputLine.equals(MetricsGetter.BYE))
             {
                break;
             }

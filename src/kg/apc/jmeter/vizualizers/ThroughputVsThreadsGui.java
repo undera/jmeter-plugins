@@ -5,7 +5,6 @@ import kg.apc.jmeter.charting.GraphRowOverallAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Color;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jorphan.gui.RateRenderer;
 
 /**
  * 
@@ -22,7 +21,7 @@ public class ThroughputVsThreadsGui
     {
         super();
         graphPanel.getGraphObject().setDrawCurrentX(true);
-        graphPanel.getGraphObject().setyAxisLabelRenderer(new RateRenderer("#.0"));
+        graphPanel.getGraphObject().setyAxisLabelRenderer(new CustomRateRenderer("#.0"));
         graphPanel.getGraphObject().setForcedMinX(0);
     }
 
@@ -104,5 +103,27 @@ public class ThroughputVsThreadsGui
             row = (GraphRowAverages) model.get(label);
         }
         return row;
+    }
+
+    private class CustomRateRenderer
+            extends org.apache.jorphan.gui.RateRenderer
+    {
+
+        public CustomRateRenderer(String format)
+        {
+            super(format);
+        }
+
+        @Override
+        public void setValue(Object value)
+        {
+            if (value != null && (value instanceof Double) && ((Double)value).doubleValue() == 0)
+            {
+                setText("0.0/sec");
+            } else
+            {
+                super.setValue(value);
+            }
+        }
     }
 }

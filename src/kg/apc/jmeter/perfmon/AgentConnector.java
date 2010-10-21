@@ -88,6 +88,7 @@ public class AgentConnector
       {
          log.error("Error receiving data", ex);
       }
+      log.debug("Read " + data + "=" + ret);
       return ret;
    }
 

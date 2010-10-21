@@ -5,6 +5,7 @@
 
 package kg.apc.jmeter.perfmon;
 
+import kg.apc.jmeter.perfmon.agent.AgentSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,7 +18,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.perfmon.PerformanceMonitoringTestElementTest.class,kg.apc.jmeter.perfmon.AgentConnectorTest.class,kg.apc.jmeter.perfmon.AbstractPerformanceMonitoringGuiTest.class,kg.apc.jmeter.perfmon.agent.AgentSuite.class,kg.apc.jmeter.perfmon.ServerPerfMonitoringGUITest.class})
+@Suite.SuiteClasses({PerformanceMonitoringTestElementTest.class, AgentConnectorTest.class, TCPSocketFactoryTest.class, AbstractPerformanceMonitoringGuiTest.class, AgentSuite.class, ServerPerfMonitoringGUITest.class})
 public class PerfmonSuite {
 
    @BeforeClass

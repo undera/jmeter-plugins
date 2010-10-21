@@ -47,14 +47,6 @@ public class AbstractPerformanceMonitoringGuiTest
             {
                "localhost", 4444
             });
-      dataModel.addRow(new Object[]
-            {
-               "server1", 5555
-            });
-      dataModel.addRow(new Object[]
-            {
-               "server2", 6666
-            });
    }
 
    @After

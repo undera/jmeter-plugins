@@ -57,7 +57,9 @@ public class AgentConnector
    {
       try
       {
-         out.println("Bye!");
+         //this is a command sent to the server agent, must not be changed
+         //it is used to exit the thread loop
+         out.println("bye");
          out.close();
          in.close();
          socket.close();

@@ -544,6 +544,25 @@ public class GraphPanelChart
       }
    }
 
+    /*
+     * Check if the point (x,y) is contained in the chart area
+     * This is done to prevent line out of range if new point is added
+     * during chart paint.
+     */
+    private boolean isChartPointValid(int x, int y) {
+        boolean ret = true;
+
+        //check x
+        if (x < chartRect.x || x > chartRect.x + chartRect.width) {
+            ret = false;
+        } else //check y
+        if (y < chartRect.y || y > chartRect.y + chartRect.height) {
+            ret = false;
+        }
+
+        return ret;
+    }
+
    private void paintRow(Graphics g, AbstractGraphRow row)
    {
       FontMetrics fm = g.getFontMetrics(g.getFont());
@@ -585,7 +604,10 @@ public class GraphPanelChart
             if (prevX > 0)
             {
                g.setColor(row.getColor());
-               g.drawLine(prevX, prevY, x, y);
+               if(isChartPointValid(x, y))
+               {
+                   g.drawLine(prevX, prevY, x, y);
+               }
             }
             prevX = x;
             prevY = y;
@@ -608,9 +630,12 @@ public class GraphPanelChart
          if (radius != AbstractGraphRow.MARKER_SIZE_NONE)
          {
             g.setColor(row.getColor());
-            g.fillOval(x - radius, y - radius, (radius) * 2, (radius) * 2);
-            //g.setColor(Color.black);
-            //g.drawOval(x - radius, y - radius, radius * 2, radius * 2);
+            if(isChartPointValid(x, y))
+            {
+                g.fillOval(x - radius, y - radius, (radius) * 2, (radius) * 2);
+                //g.setColor(Color.black);
+                //g.drawOval(x - radius, y - radius, radius * 2, radius * 2);
+            }
          }
       }
 

@@ -56,6 +56,7 @@ public class ThroughputOverTimeGui
         row.add(time, rTime);
     }
 
+    @Override
     public String getLabelResource()
     {
         return this.getClass().getSimpleName();
@@ -67,10 +68,12 @@ public class ThroughputOverTimeGui
         return "Transaction Throughput Over Time";
     }
 
+    @Override
     public void add(SampleResult res)
     {
-        //change precision to double for accurate results
-        double val = res.getTime() == 0 ? 0 : 1000.0d / res.getTime();
+        //change precision to double for accurate results and change calculation
+        //to same as throughput vs thread
+        double val = res.getTime() == 0 ? 0 : 1000.0d * res.getAllThreads() / res.getTime();
         addThreadGroupRecord(res.getSampleLabel(), res.getEndTime() - res.getEndTime() % delay, val);
         updateGui(null);
     }

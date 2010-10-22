@@ -4,7 +4,9 @@ import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.GraphRowOverallAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Color;
+import java.text.DecimalFormatSymbols;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jorphan.gui.RateRenderer;
 
 /**
  * 
@@ -25,6 +27,7 @@ public class ThroughputVsThreadsGui
         graphPanel.getGraphObject().setForcedMinX(0);
     }
 
+    @Override
     public String getLabelResource()
     {
         return this.getClass().getSimpleName();
@@ -36,6 +39,7 @@ public class ThroughputVsThreadsGui
         return "Transaction Throughput vs Threads";
     }
 
+    @Override
     public void add(SampleResult res)
     {
         long time = res.getTime();
@@ -106,12 +110,15 @@ public class ThroughputVsThreadsGui
     }
 
     private class CustomRateRenderer
-            extends org.apache.jorphan.gui.RateRenderer
+            extends RateRenderer
     {
+
+        private String zeroLabel;
 
         public CustomRateRenderer(String format)
         {
             super(format);
+            zeroLabel = "0" + new DecimalFormatSymbols().getDecimalSeparator() + "0/sec";
         }
 
         @Override
@@ -119,7 +126,7 @@ public class ThroughputVsThreadsGui
         {
             if (value != null && (value instanceof Double) && ((Double)value).doubleValue() == 0)
             {
-                setText("0.0/sec");
+                setText(zeroLabel);
             } else
             {
                 super.setValue(value);

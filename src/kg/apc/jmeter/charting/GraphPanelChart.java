@@ -20,14 +20,20 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.jmeter.util.JMeterUtils;
 
 import org.apache.jorphan.gui.NumberRenderer;
@@ -94,6 +100,9 @@ public class GraphPanelChart
 
    // Chart's Axis Color. For good results, use gradient color - (30, 30, 30)
    private Color axisColor = new Color(199,206,216);
+
+   //save file path. We remember last folder used.
+   private static String savePath = null;
 
    // Draw options - these are default values if no property is entered in user.properties
    // List of possible properties (TODO: The explaination must be written in readme file)
@@ -754,6 +763,11 @@ public class GraphPanelChart
 
    private Image getImage()
    {
+      return (Image) getBufferedImage();
+   }
+
+   private BufferedImage getBufferedImage()
+   {
       BufferedImage image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
       Graphics2D g2 = image.createGraphics();
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -769,10 +783,13 @@ public class GraphPanelChart
    {
       JPopupMenu popup = new JPopupMenu();
       this.setComponentPopupMenu(popup);
-      JMenuItem item = new JMenuItem("Copy Image to Clipboard");
-
-      item.addActionListener(new CopyAction());
-      popup.add(item);
+      JMenuItem itemCopy = new JMenuItem("Copy Image to Clipboard");
+      JMenuItem itemSave = new JMenuItem("Save Image as...");
+      itemCopy.addActionListener(new CopyAction());
+      itemSave.addActionListener(new SaveAction());
+      popup.add(itemCopy);
+      //popup.addSeparator();
+      popup.add(itemSave);
    }
 
    private class CopyAction
@@ -812,4 +829,44 @@ public class GraphPanelChart
          clipboard.setContents(transferable, GraphPanelChart.this);
       }
    }
+
+    private class SaveAction
+            implements ActionListener
+    {
+
+        @Override
+        public void actionPerformed(final ActionEvent e)
+        {
+            JFileChooser chooser = savePath != null ? new JFileChooser(new File(savePath)) : new JFileChooser();
+            chooser.setFileFilter(new FileNameExtensionFilter("PNG Images", "png"));
+
+            int returnVal = chooser.showSaveDialog(GraphPanelChart.this);
+            if (returnVal == JFileChooser.APPROVE_OPTION)
+            {
+                File file = chooser.getSelectedFile();
+                if(!file.getAbsolutePath().toUpperCase().endsWith(".PNG"))
+                {
+                    file = new File(file.getAbsolutePath() + ".png");
+                }
+                savePath = file.getParent();
+                boolean doSave = true;
+                if (file.exists())
+                {
+                    int choice = JOptionPane.showConfirmDialog(GraphPanelChart.this, "Do you want to overwrite " + file.getAbsolutePath() + " ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    doSave = (choice == JOptionPane.YES_OPTION);
+                }
+
+                if (doSave)
+                {
+                    try
+                    {
+                        ImageIO.write(getBufferedImage(), "png", file);
+                    } catch (IOException ex)
+                    {
+                        JOptionPane.showConfirmDialog(GraphPanelChart.this, "Impossible to write " + file.getAbsolutePath() + ".\nError is: " + ex.getMessage(), "Error writing file", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        }
+    }
 }

@@ -863,6 +863,8 @@ public class GraphPanelChart
                     {
                         FileOutputStream fos = new FileOutputStream(file);
                         ImageIO.write(getBufferedImage(), "png", fos);
+                        fos.flush();
+                        fos.close();
                     } catch (IOException ex)
                     {
                         JOptionPane.showConfirmDialog(GraphPanelChart.this, "Impossible to write '" + file.getAbsolutePath() + "' file. Problem is:\n" + ex.getClass().getName() + ": " + ex.getMessage(), "Error writing file", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);

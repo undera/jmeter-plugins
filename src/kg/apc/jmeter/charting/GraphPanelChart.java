@@ -21,7 +21,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -861,7 +860,7 @@ public class GraphPanelChart
                     try
                     {
                         ImageIO.write(getBufferedImage(), "png", file);
-                    } catch (IOException ex)
+                    } catch (Exception ex)
                     {
                         JOptionPane.showConfirmDialog(GraphPanelChart.this, "Impossible to write " + file.getAbsolutePath() + ".\nError is: " + ex.getMessage(), "Error writing file", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                     }

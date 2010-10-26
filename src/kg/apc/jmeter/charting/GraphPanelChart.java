@@ -21,6 +21,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -859,10 +861,11 @@ public class GraphPanelChart
                 {
                     try
                     {
-                        ImageIO.write(getBufferedImage(), "png", file);
-                    } catch (Exception ex)
+                        FileOutputStream fos = new FileOutputStream(file);
+                        ImageIO.write(getBufferedImage(), "png", fos);
+                    } catch (IOException ex)
                     {
-                        JOptionPane.showConfirmDialog(GraphPanelChart.this, "Impossible to write " + file.getAbsolutePath() + ".\nError is: " + ex.getMessage(), "Error writing file", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showConfirmDialog(GraphPanelChart.this, "Impossible to write '" + file.getAbsolutePath() + "' file. Problem is:\n" + ex.getClass().getName() + ": " + ex.getMessage(), "Error writing file", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }

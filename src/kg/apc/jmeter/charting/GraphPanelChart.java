@@ -853,7 +853,7 @@ public class GraphPanelChart
                 boolean doSave = true;
                 if (file.exists())
                 {
-                    int choice = JOptionPane.showConfirmDialog(GraphPanelChart.this, "Do you want to overwrite " + file.getAbsolutePath() + " ?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    int choice = JOptionPane.showConfirmDialog(GraphPanelChart.this, "Do you want to overwrite " + file.getAbsolutePath() + "?", "Save Image as", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     doSave = (choice == JOptionPane.YES_OPTION);
                 }
 
@@ -867,7 +867,7 @@ public class GraphPanelChart
                         fos.close();
                     } catch (IOException ex)
                     {
-                        JOptionPane.showConfirmDialog(GraphPanelChart.this, "Impossible to write '" + file.getAbsolutePath() + "' file. Problem is:\n" + ex.getClass().getName() + ": " + ex.getMessage(), "Error writing file", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showConfirmDialog(GraphPanelChart.this, "Impossible to write the image to the file:\n" + ex.getMessage(), "Save Image as", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }

@@ -22,12 +22,10 @@ public abstract class AbstractGraphRow
     *
     */
    public static final int MARKER_SIZE_BIG = 4;
-
    /**
     *
     */
    public static final float LINE_THICKNESS_BIG = 3.0f;
-
    /**
     *
     */
@@ -64,11 +62,12 @@ public abstract class AbstractGraphRow
     */
    protected double minY = Double.MAX_VALUE;
    private boolean drawOnChart = true;
-
+   private boolean drawBar = false;
+   private long totalCount = 0;
 
    public void setDrawThickLines(boolean isThickLine)
    {
-     drawThickLines = isThickLine;
+      drawThickLines = isThickLine;
    }
 
    public boolean isDrawThickLines()
@@ -199,6 +198,7 @@ public abstract class AbstractGraphRow
       {
          minY = yVal;
       }
+      totalCount++;
    }
 
    /**
@@ -253,5 +253,29 @@ public abstract class AbstractGraphRow
    public void setDrawOnChart(boolean drawOnChart)
    {
       this.drawOnChart = drawOnChart;
+   }
+
+   public void setDrawBar(boolean b)
+   {
+      this.drawBar = b;
+   }
+
+   /**
+    * @return the drawBar
+    */
+   public boolean isDrawBar()
+   {
+      return drawBar;
+   }
+
+   /**
+    * @return the totalCount
+    */
+   /**
+    * @return the totalCount
+    */
+   public long getTotalCount()
+   {
+      return totalCount;
    }
 }

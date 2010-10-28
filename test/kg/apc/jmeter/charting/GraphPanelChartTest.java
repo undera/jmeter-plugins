@@ -32,7 +32,7 @@ public class GraphPanelChartTest
     */
    @BeforeClass
    public static void setUpClass()
-        throws Exception
+         throws Exception
    {
    }
 
@@ -42,7 +42,7 @@ public class GraphPanelChartTest
     */
    @AfterClass
    public static void tearDownClass()
-        throws Exception
+         throws Exception
    {
    }
 
@@ -74,11 +74,14 @@ public class GraphPanelChartTest
       instance.setSize(500, 500);
       instance.setDrawFinalZeroingLines(true);
       instance.setDrawCurrentX(true);
+      instance.setDrawCurrentX(true);
 
       final ConcurrentSkipListMap<String, AbstractGraphRow> rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
       instance.setRows(rows);
       final GraphRowAverages row1 = new GraphRowAverages();
+      row1.setDrawThickLines(true);
       row1.setDrawLine(true);
+      row1.setDrawBar(true);
       row1.setDrawValueLabel(true);
       row1.setMarkerSize(AbstractGraphRow.MARKER_SIZE_BIG);
       rows.put("test 1", row1);
@@ -194,56 +197,55 @@ public class GraphPanelChartTest
       instance.setForcedMinX(i);
    }
 
-    /**
-     * Test of lostOwnership method, of class GraphPanelChart.
-     */
-    @Test
-    public void testLostOwnership()
-    {
-        System.out.println("lostOwnership");
-        Clipboard clipboard = null;
-        Transferable contents = null;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.lostOwnership(clipboard, contents);
-        // TODO review the generated test code and remove the default call to fail.
-    }
+   /**
+    * Test of lostOwnership method, of class GraphPanelChart.
+    */
+   @Test
+   public void testLostOwnership()
+   {
+      System.out.println("lostOwnership");
+      Clipboard clipboard = null;
+      Transferable contents = null;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.lostOwnership(clipboard, contents);
+   }
 
-    /**
-     * Test of clearErrorMessage method, of class GraphPanelChart.
-     */
-    @Test
-    public void testClearErrorMessage()
-    {
-        System.out.println("clearErrorMessage");
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.clearErrorMessage();
-    }
+   /**
+    * Test of clearErrorMessage method, of class GraphPanelChart.
+    */
+   @Test
+   public void testClearErrorMessage()
+   {
+      System.out.println("clearErrorMessage");
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.clearErrorMessage();
+   }
 
-    /**
-     * Test of setErrorMessage method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetErrorMessage()
-    {
-        System.out.println("setErrorMessage");
-        String msg = "error";
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setErrorMessage(msg);
-        msg = "";
-        instance.setErrorMessage(msg);
-        msg = null;
-        instance.setErrorMessage(msg);
-    }
+   /**
+    * Test of setErrorMessage method, of class GraphPanelChart.
+    */
+   @Test
+   public void testSetErrorMessage()
+   {
+      System.out.println("setErrorMessage");
+      String msg = "error";
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setErrorMessage(msg);
+      msg = "";
+      instance.setErrorMessage(msg);
+      msg = null;
+      instance.setErrorMessage(msg);
+   }
 
-    /**
-     * Test of setChartType method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetChartType()
-    {
-        System.out.println("setChartType");
-        int type = 1;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setChartType(type);
-    }
+   /**
+    * Test of setChartType method, of class GraphPanelChart.
+    */
+   @Test
+   public void testSetChartType()
+   {
+      System.out.println("setChartType");
+      int type = GraphPanelChart.CHART_PERCENTAGE;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setChartType(type);
+   }
 }

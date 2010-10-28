@@ -135,16 +135,25 @@ public class DummySampler
     *
     * @return
     */
+   // FIXME: functions does not work in this field...
    public int getResponseTime()
    {
-      return getPropertyAsInt(RESPONSE_TIME);
+      int time = 0;
+      try
+      {
+         time = Integer.valueOf(getPropertyAsString(RESPONSE_TIME));
+      }
+      catch (NumberFormatException e)
+      {
+      }
+      return time;
    }
 
    /**
     *
     * @param time
     */
-   public void setResponseTime(int time)
+   public void setResponseTime(String time)
    {
       setProperty(RESPONSE_TIME, time);
    }

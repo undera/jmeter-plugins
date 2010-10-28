@@ -1,8 +1,15 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.AWTEvent;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import javax.swing.JComponent;
+import javax.swing.JTextField;
 import kg.apc.jmeter.util.TestJMeterUtils;
+import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.testelement.property.LongProperty;
 import org.apache.jmeter.visualizers.Sample;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -30,7 +37,7 @@ public class AbstractGraphPanelVisualizerTest
     */
    @BeforeClass
    public static void setUpClass()
-        throws Exception
+         throws Exception
    {
       TestJMeterUtils.createJmeterEnv();
    }
@@ -41,7 +48,7 @@ public class AbstractGraphPanelVisualizerTest
     */
    @AfterClass
    public static void tearDownClass()
-        throws Exception
+         throws Exception
    {
    }
 
@@ -123,7 +130,7 @@ public class AbstractGraphPanelVisualizerTest
     *
     */
    public class AbstractGraphPanelVisualizerImpl
-        extends AbstractGraphPanelVisualizer
+         extends AbstractGraphPanelVisualizer
    {
       public String getLabelResource()
       {
@@ -134,5 +141,99 @@ public class AbstractGraphPanelVisualizerTest
       {
          return;
       }
+
+      public JTextField getIntervalField()
+      {
+         return intervalField;
+      }
+   }
+
+   @Test
+   public void testGetGraphSettingsPanel()
+   {
+      System.out.println("getGraphSettingsPanel");
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      JComponent result = instance.getGraphSettingsPanel();
+      assertNotNull(result);
+   }
+
+   @Test
+   public void testGetGranulation()
+   {
+      System.out.println("getGranulation");
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      long result = instance.getGranulation();
+      assertTrue(result > 0);
+   }
+
+   @Test
+   public void testGetGranulation_2()
+   {
+      System.out.println("getGranulation");
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      try
+      {
+         instance.setGranulation(0);
+         fail("Exception expected");
+      }
+      catch (IllegalArgumentException e)
+      {
+      }
+   }
+
+   @Test
+   public void testSetGranulation()
+   {
+      System.out.println("setGranulation");
+      int i = 100;
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      instance.setGranulation(i);
+   }
+
+   @Test
+   public void testSetGranulation_GUI() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException
+   {
+      System.out.println("setGranulation");
+      
+      AbstractGraphPanelVisualizerImpl instance = new AbstractGraphPanelVisualizerImpl();
+      KeyEvent event = new KeyEvent(instance.getIntervalField(),
+            KeyEvent.KEY_RELEASED,
+            System.currentTimeMillis(), 0,
+            KeyEvent.VK_ENTER,
+            KeyEvent.CHAR_UNDEFINED);
+
+      java.lang.reflect.Field f = AWTEvent.class.getDeclaredField("focusManagerIsDispatching");
+      f.setAccessible(true);
+      f.set(event, Boolean.TRUE);
+
+      instance.getIntervalField().dispatchEvent(event);
+   }
+
+   @Test
+   public void testCreateTestElement()
+   {
+      System.out.println("createTestElement");
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      TestElement result = instance.createTestElement();
+      assertNotNull(result);
+   }
+
+   @Test
+   public void testModifyTestElement()
+   {
+      System.out.println("modifyTestElement");
+      TestElement c = new ResultCollector();
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      instance.modifyTestElement(c);
+   }
+
+   @Test
+   public void testConfigure()
+   {
+      System.out.println("configure");
+      TestElement el = new ResultCollector();
+      el.setProperty(new LongProperty(AbstractGraphPanelVisualizer.INTERVAL_PROPERTY, 10000));
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      instance.configure(el);
    }
 }

@@ -5,6 +5,8 @@ import kg.apc.jmeter.charting.GraphRowOverallAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Color;
 import java.text.DecimalFormatSymbols;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.gui.RateRenderer;
 
@@ -133,4 +135,11 @@ public class ThroughputVsThreadsGui
             }
         }
     }
+
+   @Override
+   protected JComponent getGraphSettingsPanel()
+   {
+      return new JLabel("This graph has no settings to change", JLabel.CENTER);
+   }
+
 }

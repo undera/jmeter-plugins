@@ -22,7 +22,7 @@ public class TotalTransactionsPerSecondGui
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(
                 "HH:mm:ss"));
         graphPanel.getGraphObject().setDrawFinalZeroingLines(false);
-        delay = 1000;
+        setGranulation(1000);
     }
 
     private synchronized AbstractGraphRow getNewRow(String label)
@@ -70,11 +70,11 @@ public class TotalTransactionsPerSecondGui
         //always add 0 failed transactions
         if (res.isSuccessful())
         {
-            addTransaction("Total Failed Transactions", res.getEndTime() - res.getEndTime() % delay, 0);
-            addTransaction("Total Successful Transactions", res.getEndTime() - res.getEndTime() % delay, 1);
+            addTransaction("Total Failed Transactions", res.getEndTime() - res.getEndTime() % getGranulation(), 0);
+            addTransaction("Total Successful Transactions", res.getEndTime() - res.getEndTime() % getGranulation(), 1);
         } else
         {
-            addTransaction("Total Failed Transactions", res.getEndTime() - res.getEndTime() % delay, 1);
+            addTransaction("Total Failed Transactions", res.getEndTime() - res.getEndTime() % getGranulation(), 1);
         }
         updateGui(null);
     }

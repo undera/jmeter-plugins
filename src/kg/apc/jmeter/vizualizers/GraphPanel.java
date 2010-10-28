@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -19,11 +20,12 @@ import kg.apc.jmeter.charting.GraphPanelChart;
  * @author apc
  */
 public class GraphPanel
-     extends JTabbedPane
-     implements ChangeListener
+      extends JTabbedPane
+      implements ChangeListener
 {
    private GraphPanelChart graphTab;
    private JComponent rowsTab;
+   private JComponent settingsTab;
    private ChartRowsTable table;
 
    /**
@@ -34,6 +36,7 @@ public class GraphPanel
       super();
       addGraphTab();
       addRowsTab();
+      addOptionsTab();
       addChangeListener(this);
    }
 
@@ -43,6 +46,13 @@ public class GraphPanel
       rowsTab = new JPanel(new BorderLayout());
       rowsTab.add(makeTable(), BorderLayout.CENTER);
       addTab("Rows", rowsIcon, rowsTab, "Select rows to display");
+   }
+
+   private void addOptionsTab()
+   {
+      ImageIcon icon = createImageIcon("settings.png");
+      settingsTab = new JPanel(new BorderLayout());
+      addTab("Settings", icon, settingsTab, "Graph options");
    }
 
    private Component makeTable()
@@ -85,17 +95,9 @@ public class GraphPanel
     */
    public void updateGui()
    {
-      if (getSelectedComponent() == graphTab)
-      {
-         graphTab.updateUI();
-         graphTab.repaint();
-      }
-
-      if (getSelectedComponent() == rowsTab)
-      {
-         rowsTab.updateUI();
-         rowsTab.repaint();
-      }
+      JComponent selectedTab = (JComponent) getSelectedComponent();
+      selectedTab.updateUI();
+      selectedTab.repaint();
    }
 
    Image getGraphImage()
@@ -138,5 +140,10 @@ public class GraphPanel
    public void clearRowsTab()
    {
       table.clear();
+   }
+
+   JComponent getSettingsTab()
+   {
+      return settingsTab;
    }
 }

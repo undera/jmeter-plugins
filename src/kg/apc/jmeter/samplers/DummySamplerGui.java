@@ -76,15 +76,7 @@ public class DummySamplerGui
          dummySampler.setResponseCode(responseCode.getText());
          dummySampler.setResponseMessage(responseMessage.getText());
          dummySampler.setResponseData(responseData.getText());
-         int time = 0;
-         try
-         {
-            time = Integer.valueOf(responseTime.getText());
-         }
-         catch (NumberFormatException e)
-         {
-         }
-         dummySampler.setResponseTime(time);
+         dummySampler.setResponseTime(responseTime.getText());
       }
    }
 

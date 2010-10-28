@@ -1,5 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import org.apache.jmeter.reporters.ResultCollector;
+import org.apache.jmeter.testelement.TestElement;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
@@ -96,5 +98,32 @@ public class ThroughputVsThreadsGuiTest
       instance.add(new SampleResult());
       instance.add(new SampleResult(0, 100));
       instance.add(new SampleResult(0, 100));
+   }
+
+   @Test
+   public void testCreateTestElement()
+   {
+      System.out.println("createTestElement");
+      ThroughputVsThreadsGui instance = new ThroughputVsThreadsGui();
+      TestElement result = instance.createTestElement();
+      assertNotNull(result);
+   }
+
+   @Test
+   public void testModifyTestElement()
+   {
+      System.out.println("modifyTestElement");
+      TestElement c = new ResultCollector();
+      ThroughputVsThreadsGui instance = new ThroughputVsThreadsGui();
+      instance.modifyTestElement(c);
+   }
+
+   @Test
+   public void testConfigure()
+   {
+      System.out.println("configure");
+      TestElement el = new ResultCollector();
+      ThroughputVsThreadsGui instance = new ThroughputVsThreadsGui();
+      instance.configure(el);
    }
 }

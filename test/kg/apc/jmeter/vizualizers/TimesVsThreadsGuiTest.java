@@ -1,5 +1,9 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizerTest.AbstractGraphPanelVisualizerImpl;
+import org.apache.jmeter.reporters.ResultCollector;
+import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.testelement.property.LongProperty;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
@@ -96,5 +100,32 @@ public class TimesVsThreadsGuiTest
       TimesVsThreadsGui instance = new TimesVsThreadsGui();
       instance.add(res);
       instance.add(res);
+   }
+
+   @Test
+   public void testCreateTestElement()
+   {
+      System.out.println("createTestElement");
+      TimesVsThreadsGui instance = new TimesVsThreadsGui();
+      TestElement result = instance.createTestElement();
+      assertNotNull(result);
+   }
+
+   @Test
+   public void testModifyTestElement()
+   {
+      System.out.println("modifyTestElement");
+      TestElement c = new ResultCollector();
+      TimesVsThreadsGui instance = new TimesVsThreadsGui();
+      instance.modifyTestElement(c);
+   }
+
+   @Test
+   public void testConfigure()
+   {
+      System.out.println("configure");
+      TestElement el = new ResultCollector();
+      TimesVsThreadsGui instance = new TimesVsThreadsGui();
+      instance.configure(el);
    }
 }

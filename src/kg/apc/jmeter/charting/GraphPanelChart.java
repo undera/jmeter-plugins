@@ -642,7 +642,8 @@ public class GraphPanelChart
 
          x = chartRect.x + (int) ((element.getKey() - minXVal) * dxForDVal);
          AbstractGraphPanelChartElement elementValue = (AbstractGraphPanelChartElement) element.getValue();
-         y = chartRect.y + chartRect.height - (int) ((elementValue.getValue() - minYVal) * dyForDVal);
+         int yHeight = (int) ((elementValue.getValue() - minYVal) * dyForDVal);
+         y = chartRect.y + chartRect.height - yHeight;
 
          if (row.isDrawThickLines())
          {
@@ -670,7 +671,8 @@ public class GraphPanelChart
             g.setColor(row.getColor());
             if (isChartPointValid(x, y))
             {
-               g.fillRect(x - 1, y, 2, chartRect.y + chartRect.height - y);
+               g.fillRect(x - (chartRect.width / gridLinesCount / 2) - 1, y,
+                     chartRect.width / gridLinesCount - 2, yHeight);
             }
          }
 

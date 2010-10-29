@@ -18,7 +18,7 @@ public class ResponseTimesDistributionGui
    public ResponseTimesDistributionGui()
    {
       super();
-      graphPanel.getGraphObject().setChartType(GraphPanelChart.CHART_PERCENTAGE);
+      //graphPanel.getGraphObject().setChartType(GraphPanelChart.CHART_PERCENTAGE);
    }
 
    private synchronized AbstractGraphRow getNewRow(String label)

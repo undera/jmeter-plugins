@@ -43,7 +43,7 @@ public class TotalTransactionsPerSecondGui
         return row;
     }
 
-    private void addTransaction(String threadGroupName, long time, int count)
+    private void addTransaction(String threadGroupName, long time, double count)
     {
         AbstractGraphRow row = model.get(threadGroupName);
         if (row == null)
@@ -51,7 +51,12 @@ public class TotalTransactionsPerSecondGui
             row = getNewRow(threadGroupName);
         }
 
-        row.add(time, count);
+        //fix to have trans/sec values in all cases
+        //has strange values for granulation < 1000
+        if (getGranulation() > 0)
+        {
+            row.add(time, count * 1000.0d / getGranulation());
+        }
     }
 
     public String getLabelResource()

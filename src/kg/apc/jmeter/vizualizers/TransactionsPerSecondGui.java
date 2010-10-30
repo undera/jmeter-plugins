@@ -45,16 +45,21 @@ public class TransactionsPerSecondGui
       return row;
    }
 
-   private void addOneTransaction(String threadGroupName, long time)
-   {
-      AbstractGraphRow row = model.get(threadGroupName);
-      if (row == null)
-      {
-         row = getNewRow(threadGroupName);
-      }
+    private void addOneTransaction(String threadGroupName, long time)
+    {
+        AbstractGraphRow row = model.get(threadGroupName);
+        if (row == null)
+        {
+            row = getNewRow(threadGroupName);
+        }
 
-      row.add(time, 1);
-   }
+        //fix to have trans/sec values in all cases
+        //has strange values for granulation < 1000
+        if (getGranulation() > 0)
+        {
+            row.add(time, 1000.0d / getGranulation());
+        }
+    }
 
    public String getLabelResource()
    {

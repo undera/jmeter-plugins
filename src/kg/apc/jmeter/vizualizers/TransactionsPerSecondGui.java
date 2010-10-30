@@ -54,7 +54,6 @@ public class TransactionsPerSecondGui
         }
 
         //fix to have trans/sec values in all cases
-        //has strange values for granulation < 1000
         if (getGranulation() > 0)
         {
             row.add(time, 1000.0d / getGranulation());

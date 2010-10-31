@@ -1,10 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.awt.AWTEvent;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
 import javax.swing.JComponent;
-import javax.swing.JTextField;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
@@ -141,11 +138,6 @@ public class AbstractGraphPanelVisualizerTest
       {
          return;
       }
-
-      public JTextField getIntervalField()
-      {
-         return intervalField;
-      }
    }
 
    @Test
@@ -188,25 +180,6 @@ public class AbstractGraphPanelVisualizerTest
       int i = 100;
       AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
       instance.setGranulation(i);
-   }
-
-   @Test
-   public void testSetGranulation_GUI() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException
-   {
-      System.out.println("setGranulation");
-      
-      AbstractGraphPanelVisualizerImpl instance = new AbstractGraphPanelVisualizerImpl();
-      KeyEvent event = new KeyEvent(instance.getIntervalField(),
-            KeyEvent.KEY_RELEASED,
-            System.currentTimeMillis(), 0,
-            KeyEvent.VK_ENTER,
-            KeyEvent.CHAR_UNDEFINED);
-
-      java.lang.reflect.Field f = AWTEvent.class.getDeclaredField("focusManagerIsDispatching");
-      f.setAccessible(true);
-      f.set(event, Boolean.TRUE);
-
-      instance.getIntervalField().dispatchEvent(event);
    }
 
    @Test

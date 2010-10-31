@@ -2,16 +2,9 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.concurrent.ConcurrentSkipListMap;
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.testelement.TestElement;
@@ -54,9 +47,10 @@ public abstract class AbstractGraphPanelVisualizer
     *
     */
    protected ColorsDispatcher colors;
-   protected JTextField intervalField;
    private static final long REPAINT_INTERVAL = 500;
    public static final String INTERVAL_PROPERTY = "interval_grouping";
+
+   private JSettingsPanel settingsPanel = null;
 
    /**
     *
@@ -73,7 +67,8 @@ public abstract class AbstractGraphPanelVisualizer
       setLayout(new BorderLayout());
       add(makeTitlePanel(), BorderLayout.NORTH);
       add(createGraphPanel(), BorderLayout.CENTER);
-      graphPanel.getSettingsTab().add(getGraphSettingsPanel(), BorderLayout.CENTER);
+      settingsPanel = new JSettingsPanel(this);
+      graphPanel.getSettingsTab().add(settingsPanel, BorderLayout.CENTER);
    }
 
    /**
@@ -128,52 +123,24 @@ public abstract class AbstractGraphPanelVisualizer
       return graphPanel.getGraphImage();
    }
 
-   protected JComponent getGraphSettingsPanel()
-   {
-      JPanel panel = new JPanel(new FlowLayout());
-      panel.setBorder(BorderFactory.createTitledBorder("Timeline settings"));
-      panel.add(new JLabel("Group values for (msec):"));
-      intervalField = new JTextField(Long.toString(interval), 10);
-      intervalField.addKeyListener(new IntervalChangeListener());
-      panel.add(intervalField);
-      return panel;
-   }
-
    protected long getGranulation()
    {
       return interval;
    }
 
-   protected void setGranulation(long i)
-   {
-      if (i < 1)
-      {
-         throw new IllegalArgumentException("Interval cannot be less than zero");
-      }
-      interval = i;
-      if (intervalField != null)
-      {
-         intervalField.setText(Long.toString(interval));
-      }
-   }
+    public void setGranulation(long i)
+    {
+        if (i < 1)
+        {
+            throw new IllegalArgumentException("Interval cannot be less than zero");
+        }
+        interval = i;
+        settingsPanel.setGranulationValue((int) i);
+    }
 
-   private class IntervalChangeListener
-         implements KeyListener
-   {
-      public void keyTyped(KeyEvent e)
-      {
-      }
-
-      public void keyPressed(KeyEvent e)
-      {
-      }
-
-      public void keyReleased(KeyEvent e)
-      {
-         long i = Long.parseLong(intervalField.getText());
-         interval = i > 0 ? i : 1;
-      }
-   }
+    protected JComponent getGraphSettingsPanel() {
+        return settingsPanel;
+    }
 
    @Override
    public TestElement createTestElement()

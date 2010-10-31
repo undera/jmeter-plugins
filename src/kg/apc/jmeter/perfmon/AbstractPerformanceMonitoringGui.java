@@ -235,7 +235,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
 
     protected GraphPanel createGraphPanel()
     {
-        graphPanel = new GraphPanel();
+        graphPanel = new GraphPanel(false);
         graphPanel.getGraphObject().setRows(model);
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
         return graphPanel;

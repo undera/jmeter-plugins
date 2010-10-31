@@ -40,6 +40,18 @@ public class GraphPanel
       addChangeListener(this);
    }
 
+    public GraphPanel(boolean showOptionsTab)
+    {
+        super();
+        addGraphTab();
+        addRowsTab();
+        if (showOptionsTab)
+        {
+            addOptionsTab();
+        }
+        addChangeListener(this);
+    }
+
    private void addRowsTab()
    {
       ImageIcon rowsIcon = createImageIcon("checks.png");

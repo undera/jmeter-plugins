@@ -65,9 +65,9 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jTextFieldGranulation.setEditable(false);
         jTextFieldGranulation.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldGranulation.setText("1000");
-        jTextFieldGranulation.setMaximumSize(new java.awt.Dimension(40, 20));
-        jTextFieldGranulation.setMinimumSize(new java.awt.Dimension(40, 20));
-        jTextFieldGranulation.setPreferredSize(new java.awt.Dimension(40, 20));
+        jTextFieldGranulation.setMaximumSize(new java.awt.Dimension(50, 20));
+        jTextFieldGranulation.setMinimumSize(new java.awt.Dimension(50, 20));
+        jTextFieldGranulation.setPreferredSize(new java.awt.Dimension(50, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;

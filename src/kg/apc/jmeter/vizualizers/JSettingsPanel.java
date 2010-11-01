@@ -15,9 +15,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
     }
 
     public void setGranulationValue(int value) {
-        if(value == 500) jSliderGranulation.setValue(0);
-        else if(value <= 5000) jSliderGranulation.setValue(value / 1000);
-        else jSliderGranulation.setValue((value / 10000) + 5);
+        jComboBoxGranulation.setSelectedItem(Integer.toString(value));
     }
 
     /** This method is called from within the constructor to
@@ -35,10 +33,9 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldGranulation = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jSliderGranulation = new javax.swing.JSlider();
         jPanel4 = new javax.swing.JPanel();
+        jComboBoxGranulation = new javax.swing.JComboBox();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -62,43 +59,12 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jPanel3.add(jLabel2, gridBagConstraints);
 
-        jTextFieldGranulation.setEditable(false);
-        jTextFieldGranulation.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextFieldGranulation.setText("1000");
-        jTextFieldGranulation.setMaximumSize(new java.awt.Dimension(50, 20));
-        jTextFieldGranulation.setMinimumSize(new java.awt.Dimension(50, 20));
-        jTextFieldGranulation.setPreferredSize(new java.awt.Dimension(50, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanel3.add(jTextFieldGranulation, gridBagConstraints);
-
         jLabel3.setText("ms.");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 2);
         jPanel3.add(jLabel3, gridBagConstraints);
-
-        jSliderGranulation.setMaximum(11);
-        jSliderGranulation.setMinorTickSpacing(1);
-        jSliderGranulation.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jSliderGranulationMouseReleased(evt);
-            }
-        });
-        jSliderGranulation.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSliderGranulationStateChanged(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        jPanel3.add(jSliderGranulation, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -108,9 +74,23 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         jPanel3.add(jPanel4, gridBagConstraints);
 
+        jComboBoxGranulation.setEditable(true);
+        jComboBoxGranulation.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "500", "1000", "2000", "3000", "4000", "5000", "10000", "20000", "30000", "40000", "50000", "60000" }));
+        jComboBoxGranulation.setPreferredSize(new java.awt.Dimension(80, 20));
+        jComboBoxGranulation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxGranulationActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        jPanel3.add(jComboBoxGranulation, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -119,27 +99,23 @@ public class JSettingsPanel extends javax.swing.JPanel {
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jSliderGranulationMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jSliderGranulationMouseReleased
-    {//GEN-HEADEREND:event_jSliderGranulationMouseReleased
-        parent.setGranulation(getGranulationFromSliderValue(jSliderGranulation.getValue()));
-    }//GEN-LAST:event_jSliderGranulationMouseReleased
-
-    private int getGranulationFromSliderValue(int value) {
-        int grpValue = 0;
-        if( value == 0) grpValue = 500;
-        else if(value < 6) grpValue = 1000*value;
-        else grpValue = 10000*(value-5);
-
-        return grpValue;
-    }
-
-    private void jSliderGranulationStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_jSliderGranulationStateChanged
-    {//GEN-HEADEREND:event_jSliderGranulationStateChanged
-        jTextFieldGranulation.setText(Integer.toString(getGranulationFromSliderValue(jSliderGranulation.getValue())));
-    }//GEN-LAST:event_jSliderGranulationStateChanged
-
+    private void jComboBoxGranulationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBoxGranulationActionPerformed
+    {//GEN-HEADEREND:event_jComboBoxGranulationActionPerformed
+        //notify parent if value changed and valid
+        long newValue;
+        try {
+            newValue = Long.parseLong((String)jComboBoxGranulation.getSelectedItem());
+        } catch (NumberFormatException nbfe) {
+            newValue = -1;
+        }
+        if(newValue != -1 && parent.getGranulation() != newValue)
+        {
+            parent.setGranulation(newValue);
+        }
+    }//GEN-LAST:event_jComboBoxGranulationActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox jComboBoxGranulation;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -147,8 +123,6 @@ public class JSettingsPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JSlider jSliderGranulation;
-    private javax.swing.JTextField jTextFieldGranulation;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -1,7 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.Image;
-import javax.swing.JComponent;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
@@ -144,15 +143,6 @@ public class AbstractGraphPanelVisualizerTest
         {
             return new JSettingsPanel(this, true, true, true, true, true);
         }
-   }
-
-   @Test
-   public void testGetGraphSettingsPanel()
-   {
-      System.out.println("getGraphSettingsPanel");
-      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-      JComponent result = instance.getGraphSettingsPanel();
-      assertNotNull(result);
    }
 
    @Test

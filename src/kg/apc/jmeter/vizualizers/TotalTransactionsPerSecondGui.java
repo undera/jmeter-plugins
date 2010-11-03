@@ -82,4 +82,10 @@ public class TotalTransactionsPerSecondGui
         }
         updateGui(null);
     }
+
+    @Override
+    protected JSettingsPanel getSettingsPanel()
+    {
+        return new JSettingsPanel(this, true, true, false, true, true);
+    }
 }

@@ -80,4 +80,10 @@ public class ResponseTimesOverTimeGui
    {
       return super.getGraphSettingsPanel();
    }
+
+    @Override
+    protected JSettingsPanel getSettingsPanel()
+    {
+        return new JSettingsPanel(this, true, true, false, true, true);
+    }
 }

@@ -25,7 +25,8 @@ public abstract class AbstractGraphPanelVisualizer
       extends AbstractVisualizer
       implements Clearable,
                  GraphListener,
-                 ImageVisualizer
+                 ImageVisualizer,
+                 SettingsInterface
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
    /**
@@ -39,7 +40,7 @@ public abstract class AbstractGraphPanelVisualizer
    /**
     *
     */
-   private long interval = 500;
+   private int interval = 500;
    /**
     *
     */
@@ -63,12 +64,14 @@ public abstract class AbstractGraphPanelVisualizer
       initGui();
    }
 
+   protected abstract JSettingsPanel getSettingsPanel();
+
    private void initGui()
    {
       setLayout(new BorderLayout());
       add(makeTitlePanel(), BorderLayout.NORTH);
       add(createGraphPanel(), BorderLayout.CENTER);
-      settingsPanel = new JSettingsPanel(this);
+      settingsPanel = getSettingsPanel();
       graphPanel.getSettingsTab().add(settingsPanel, BorderLayout.CENTER);
    }
 
@@ -124,19 +127,19 @@ public abstract class AbstractGraphPanelVisualizer
       return graphPanel.getGraphImage();
    }
 
-   protected long getGranulation()
+   public int getGranulation()
    {
       return interval;
    }
 
-    public void setGranulation(long i)
+    public void setGranulation(int granulation)
     {
-        if (i < 1)
+        if (granulation < 1)
         {
-            throw new IllegalArgumentException("Interval cannot be less than zero");
+            throw new IllegalArgumentException("Interval cannot be less than 1");
         }
-        interval = i;
-        settingsPanel.setGranulationValue((int) i);
+        interval = granulation;
+        settingsPanel.setGranulationValue(granulation);
     }
 
     protected JComponent getGraphSettingsPanel() {
@@ -161,7 +164,7 @@ public abstract class AbstractGraphPanelVisualizer
    public void configure(TestElement el)
    {
       super.configure(el);
-      long intervalProp = el.getPropertyAsLong(INTERVAL_PROPERTY);
+      int intervalProp = el.getPropertyAsInt(INTERVAL_PROPERTY);
       if (intervalProp > 0)
       {
          setGranulation(intervalProp);

@@ -74,4 +74,10 @@ public class ThreadsStateOverTimeGui
       addThreadGroupRecord(threadName, res.getEndTime() - res.getEndTime() % getGranulation(), res.getGroupThreads());
       updateGui(null);
    }
+
+    @Override
+    protected JSettingsPanel getSettingsPanel()
+    {
+        return new JSettingsPanel(this, true, true, false, true, true);
+    }
 }

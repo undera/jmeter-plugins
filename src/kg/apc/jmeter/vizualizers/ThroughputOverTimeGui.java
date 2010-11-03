@@ -77,4 +77,10 @@ public class ThroughputOverTimeGui
         addThreadGroupRecord(res.getSampleLabel(), res.getEndTime() - res.getEndTime() % getGranulation(), val);
         updateGui(null);
     }
+
+    @Override
+    protected JSettingsPanel getSettingsPanel()
+    {
+        return new JSettingsPanel(this, true, true, false, true, true);
+    }
 }

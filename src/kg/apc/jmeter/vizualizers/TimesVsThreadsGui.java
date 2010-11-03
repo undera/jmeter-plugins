@@ -1,11 +1,9 @@
 package kg.apc.jmeter.vizualizers;
 
-import javax.swing.JComponent;
 import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.GraphRowOverallAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Color;
-import javax.swing.JLabel;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**
@@ -98,9 +96,9 @@ public class TimesVsThreadsGui
         return row;
     }
 
-   @Override
-   protected JComponent getGraphSettingsPanel()
-   {
-      return new JLabel("This graph has no settings to change", JLabel.CENTER);
-   }
+    @Override
+    protected JSettingsPanel getSettingsPanel()
+    {
+        return new JSettingsPanel(this, false, true, true, false, false);
+    }
 }

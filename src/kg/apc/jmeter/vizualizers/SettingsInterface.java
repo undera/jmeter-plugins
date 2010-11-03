@@ -1,0 +1,13 @@
+package kg.apc.jmeter.vizualizers;
+
+import kg.apc.jmeter.charting.GraphPanelChart;
+
+/**
+ *
+ * @author Stephane Hoblingre
+ */
+public interface SettingsInterface {
+    public int getGranulation();
+    public void setGranulation(int granulation);
+    public GraphPanelChart getGraphPanelChart();
+}

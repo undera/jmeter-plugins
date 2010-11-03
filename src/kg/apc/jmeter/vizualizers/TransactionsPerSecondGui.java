@@ -76,4 +76,10 @@ public class TransactionsPerSecondGui
       addOneTransaction(res.getSampleLabel(), res.getEndTime() - res.getEndTime() % getGranulation());
       updateGui(null);
    }
+
+    @Override
+    protected JSettingsPanel getSettingsPanel()
+    {
+        return new JSettingsPanel(this, true, true, false, true, true);
+    }
 }

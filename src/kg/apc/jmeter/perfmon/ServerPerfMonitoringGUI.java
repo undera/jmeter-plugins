@@ -8,6 +8,7 @@ import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowExactValues;
 import kg.apc.jmeter.perfmon.agent.MetricsGetter;
+import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -287,4 +288,10 @@ public class ServerPerfMonitoringGUI
    {
       socketFactory = sf;
    }
+
+    @Override
+    protected JSettingsPanel getSettingsPanel()
+    {
+        return new JSettingsPanel(this, false, true, false, false, true);
+    }
 }

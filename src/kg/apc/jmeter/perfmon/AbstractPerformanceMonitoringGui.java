@@ -32,9 +32,12 @@ import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
+import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.vizualizers.ColorsDispatcher;
 import kg.apc.jmeter.vizualizers.DateTimeRenderer;
 import kg.apc.jmeter.vizualizers.GraphPanel;
+import kg.apc.jmeter.vizualizers.JSettingsPanel;
+import kg.apc.jmeter.vizualizers.SettingsInterface;
 import org.apache.jmeter.gui.UnsharedComponent;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.visualizers.GraphListener;
@@ -46,9 +49,8 @@ import org.apache.log.Logger;
  *
  * @author Stephane Hoblingre
  */
-public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerGui implements Clearable, TableModelListener, CellEditorListener, GraphListener, UnsharedComponent
+public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerGui implements Clearable, TableModelListener, CellEditorListener, GraphListener, UnsharedComponent, SettingsInterface
 {
-
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected GraphPanel graphPanel;
     protected ConcurrentSkipListMap<String, AbstractGraphRow> model;
@@ -91,6 +93,8 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     public final static int PERFMON_NETWORKS_IO = 4;
 
     protected int selectedPerfMonType = -1;
+
+    private JSettingsPanel settingsPanel = null;
 
     public AbstractPerformanceMonitoringGui()
     {
@@ -137,6 +141,8 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         }
     }
 
+    protected abstract JSettingsPanel getSettingsPanel();
+
     private void initGui()
     {
         JPanel containerPanel = new VerticalPanel();
@@ -148,8 +154,10 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
 
         setLayout(new BorderLayout());
         add(containerPanel, BorderLayout.NORTH);
-
         add(createGraphPanel(), BorderLayout.CENTER);
+
+        settingsPanel = getSettingsPanel();
+        graphPanel.getSettingsTab().add(settingsPanel, BorderLayout.CENTER);
     }
 
     private JPanel createParamsPanel()
@@ -235,7 +243,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
 
     protected GraphPanel createGraphPanel()
     {
-        graphPanel = new GraphPanel(false);
+        graphPanel = new GraphPanel();
         graphPanel.getGraphObject().setRows(model);
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
         return graphPanel;
@@ -413,4 +421,20 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
 
     public abstract void testStarted();
     public abstract void testEnded();
+
+    //not used for now, but needed for settings tab
+    public int getGranulation()
+    {
+        return 500;
+    }
+
+    //not used for now, but needed for settings tab
+    public void setGranulation(int granulation)
+    {
+        //do nothing here
+    }
+    public GraphPanelChart getGraphPanelChart()
+    {
+        return graphPanel.getGraphObject();
+    }
 }

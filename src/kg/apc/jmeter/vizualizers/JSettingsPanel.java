@@ -6,19 +6,32 @@ package kg.apc.jmeter.vizualizers;
  */
 public class JSettingsPanel extends javax.swing.JPanel {
 
-    private AbstractGraphPanelVisualizer parent = null;
+    private SettingsInterface parent = null;
 
     /** Creates new form JSettingsPanel */
-    public JSettingsPanel(AbstractGraphPanelVisualizer parent) {
+    public JSettingsPanel(SettingsInterface parent,
+            boolean showTimelinePanel,
+            boolean showGradientOption,
+            boolean showCurrentXOption,
+            boolean showFinalZeroingLinesOption,
+            boolean showLimitPointOption) {
         initComponents();
         this.parent = parent;
+
+        jPanelTimeLine.setVisible(showTimelinePanel);
+        jCheckBoxPaintGradient.setVisible(showGradientOption);
+        jCheckBoxDrawCurrentX.setVisible(showCurrentXOption);
+        jCheckBoxDrawFinalZeroingLines.setVisible(showFinalZeroingLinesOption);
+        jCheckBoxMaxPoints.setVisible(showLimitPointOption);
+        jComboBoxMaxPoints.setVisible(showLimitPointOption);
+        jLabelMaxPoints.setVisible(showLimitPointOption);
     }
 
     private int getValueFromString(String sValue) {
         int ret;
         try {
             ret = Integer.valueOf(sValue);
-            if(ret < -1)
+            if(ret <= 0)
             {
                 ret = -1;
             }
@@ -46,7 +59,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanelTimeLine = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -55,9 +68,9 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jCheckBoxPaintGradient = new javax.swing.JCheckBox();
         jCheckBoxDrawFinalZeroingLines = new javax.swing.JCheckBox();
         jPanel6 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBoxDrawCurrentX = new javax.swing.JCheckBox();
         jCheckBoxMaxPoints = new javax.swing.JCheckBox();
-        jLabel4 = new javax.swing.JLabel();
+        jLabelMaxPoints = new javax.swing.JLabel();
         jComboBoxMaxPoints = new javax.swing.JComboBox();
 
         setLayout(new java.awt.BorderLayout());
@@ -72,22 +85,22 @@ public class JSettingsPanel extends javax.swing.JPanel {
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Timeline Settings"));
-        jPanel3.setLayout(new java.awt.GridBagLayout());
+        jPanelTimeLine.setBorder(javax.swing.BorderFactory.createTitledBorder("Timeline Settings"));
+        jPanelTimeLine.setLayout(new java.awt.GridBagLayout());
 
         jLabel2.setText("Group values for:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanel3.add(jLabel2, gridBagConstraints);
+        jPanelTimeLine.add(jLabel2, gridBagConstraints);
 
         jLabel3.setText("ms.");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 2);
-        jPanel3.add(jLabel3, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        jPanelTimeLine.add(jLabel3, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -95,10 +108,10 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        jPanel3.add(jPanel4, gridBagConstraints);
+        jPanelTimeLine.add(jPanel4, gridBagConstraints);
 
         jComboBoxGranulation.setEditable(true);
-        jComboBoxGranulation.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "500", "1000", "2000", "3000", "4000", "5000", "10000", "20000", "30000", "40000", "50000", "60000" }));
+        jComboBoxGranulation.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "500", "1000", "2000", "5000", "10000", "30000", "60000" }));
         jComboBoxGranulation.setPreferredSize(new java.awt.Dimension(80, 20));
         jComboBoxGranulation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,7 +122,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanel3.add(jComboBoxGranulation, gridBagConstraints);
+        jPanelTimeLine.add(jComboBoxGranulation, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -117,7 +130,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        jPanel2.add(jPanel3, gridBagConstraints);
+        jPanel2.add(jPanelTimeLine, gridBagConstraints);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Rendering Options"));
         jPanel5.setLayout(new java.awt.GridBagLayout());
@@ -156,18 +169,18 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         jPanel5.add(jPanel6, gridBagConstraints);
 
-        jCheckBox1.setText("Draw current X");
-        jCheckBox1.setEnabled(false);
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxDrawCurrentX.setText("Draw current X");
+        jCheckBoxDrawCurrentX.setEnabled(false);
+        jCheckBoxDrawCurrentX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                jCheckBoxDrawCurrentXActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel5.add(jCheckBox1, gridBagConstraints);
+        jPanel5.add(jCheckBoxDrawCurrentX, gridBagConstraints);
 
         jCheckBoxMaxPoints.setText("Limit raws number of points to:");
         jCheckBoxMaxPoints.addActionListener(new java.awt.event.ActionListener() {
@@ -181,12 +194,12 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel5.add(jCheckBoxMaxPoints, gridBagConstraints);
 
-        jLabel4.setText("points");
+        jLabelMaxPoints.setText("points");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 2);
-        jPanel5.add(jLabel4, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        jPanel5.add(jLabelMaxPoints, gridBagConstraints);
 
         jComboBoxMaxPoints.setEditable(true);
         jComboBoxMaxPoints.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20", "50", "100", "150", "200" }));
@@ -200,6 +213,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jPanel5.add(jComboBoxMaxPoints, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -216,7 +230,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
     private void jComboBoxGranulationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBoxGranulationActionPerformed
     {//GEN-HEADEREND:event_jComboBoxGranulationActionPerformed
         //notify parent if value changed and valid
-        long newValue = getValueFromString((String)jComboBoxGranulation.getSelectedItem());
+        int newValue = getValueFromString((String)jComboBoxGranulation.getSelectedItem());
         if(newValue != -1 && parent.getGranulation() != newValue)
         {
             parent.setGranulation(newValue);
@@ -233,10 +247,10 @@ public class JSettingsPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxDrawFinalZeroingLinesActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBox1ActionPerformed
-    {//GEN-HEADEREND:event_jCheckBox1ActionPerformed
+    private void jCheckBoxDrawCurrentXActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxDrawCurrentXActionPerformed
+    {//GEN-HEADEREND:event_jCheckBoxDrawCurrentXActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_jCheckBoxDrawCurrentXActionPerformed
 
     private void jCheckBoxMaxPointsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxMaxPointsActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxMaxPointsActionPerformed
@@ -255,7 +269,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBoxMaxPointsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBoxDrawCurrentX;
     private javax.swing.JCheckBox jCheckBoxDrawFinalZeroingLines;
     private javax.swing.JCheckBox jCheckBoxMaxPoints;
     private javax.swing.JCheckBox jCheckBoxPaintGradient;
@@ -264,13 +278,13 @@ public class JSettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelMaxPoints;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanelTimeLine;
     // End of variables declaration//GEN-END:variables
 
 }

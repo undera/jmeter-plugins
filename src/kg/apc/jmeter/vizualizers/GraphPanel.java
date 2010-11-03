@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -39,18 +38,6 @@ public class GraphPanel
       addOptionsTab();
       addChangeListener(this);
    }
-
-    public GraphPanel(boolean showOptionsTab)
-    {
-        super();
-        addGraphTab();
-        addRowsTab();
-        if (showOptionsTab)
-        {
-            addOptionsTab();
-        }
-        addChangeListener(this);
-    }
 
    private void addRowsTab()
    {
@@ -154,7 +141,7 @@ public class GraphPanel
       table.clear();
    }
 
-   JComponent getSettingsTab()
+   public JComponent getSettingsTab()
    {
       return settingsTab;
    }

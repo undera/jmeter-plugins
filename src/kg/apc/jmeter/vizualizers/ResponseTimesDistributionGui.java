@@ -70,4 +70,10 @@ public class ResponseTimesDistributionGui
       addThreadGroupRecord(res.getSampleLabel(), res.getTime() - res.getTime() % getGranulation());
       updateGui(null);
    }
+
+    @Override
+    protected JSettingsPanel getSettingsPanel()
+    {
+        return new JSettingsPanel(this, true, true, true, true, true);
+    }
 }

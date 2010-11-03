@@ -64,6 +64,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jComboBoxGranulation = new javax.swing.JComboBox();
+        jLabelInfoGrpValues = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jCheckBoxPaintGradient = new javax.swing.JCheckBox();
         jCheckBoxDrawFinalZeroingLines = new javax.swing.JCheckBox();
@@ -72,6 +73,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jCheckBoxMaxPoints = new javax.swing.JCheckBox();
         jLabelMaxPoints = new javax.swing.JLabel();
         jComboBoxMaxPoints = new javax.swing.JComboBox();
+        jLabelInfoMaxPoint = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -123,6 +125,14 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jPanelTimeLine.add(jComboBoxGranulation, gridBagConstraints);
+
+        jLabelInfoGrpValues.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
+        jLabelInfoGrpValues.setToolTipText("<html>this is<br>\na test!");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanelTimeLine.add(jLabelInfoGrpValues, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -216,6 +226,14 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jPanel5.add(jComboBoxMaxPoints, gridBagConstraints);
 
+        jLabelInfoMaxPoint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
+        jLabelInfoMaxPoint.setToolTipText("<html>this is<br> a test!");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel5.add(jLabelInfoMaxPoint, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -278,6 +296,8 @@ public class JSettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelInfoGrpValues;
+    private javax.swing.JLabel jLabelInfoMaxPoint;
     private javax.swing.JLabel jLabelMaxPoints;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

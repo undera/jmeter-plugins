@@ -1,5 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import javax.swing.ToolTipManager;
+
 /**
  *
  * @author Stéphane Hoblingre
@@ -7,6 +9,7 @@ package kg.apc.jmeter.vizualizers;
 public class JSettingsPanel extends javax.swing.JPanel {
 
     private SettingsInterface parent = null;
+    private int originalTooltipDisplayTime = 0;
 
     /** Creates new form JSettingsPanel */
     public JSettingsPanel(SettingsInterface parent,
@@ -25,6 +28,9 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jCheckBoxMaxPoints.setVisible(showLimitPointOption);
         jComboBoxMaxPoints.setVisible(showLimitPointOption);
         jLabelMaxPoints.setVisible(showLimitPointOption);
+        jLabelInfoMaxPoint.setVisible(showLimitPointOption);
+
+        originalTooltipDisplayTime=ToolTipManager.sharedInstance().getDismissDelay();
     }
 
     private int getValueFromString(String sValue) {
@@ -97,7 +103,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jPanelTimeLine.add(jLabel2, gridBagConstraints);
 
-        jLabel3.setText("ms.");
+        jLabel3.setText("ms");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -127,11 +133,20 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jPanelTimeLine.add(jComboBoxGranulation, gridBagConstraints);
 
         jLabelInfoGrpValues.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
-        jLabelInfoGrpValues.setToolTipText("<html>this is<br>\na test!");
+        jLabelInfoGrpValues.setToolTipText("<html>this is<br>\na <b>test</b>!");
+        jLabelInfoGrpValues.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                infoLabelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                infoLabelMouseExited(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jPanelTimeLine.add(jLabelInfoGrpValues, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -227,11 +242,20 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jPanel5.add(jComboBoxMaxPoints, gridBagConstraints);
 
         jLabelInfoMaxPoint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
-        jLabelInfoMaxPoint.setToolTipText("<html>this is<br> a test!");
+        jLabelInfoMaxPoint.setToolTipText("<html>this is<br> a <b>test</b>!");
+        jLabelInfoMaxPoint.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                infoLabelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                infoLabelMouseExited(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jPanel5.add(jLabelInfoMaxPoint, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -285,6 +309,17 @@ public class JSettingsPanel extends javax.swing.JPanel {
             parent.getGraphPanelChart().setMaxPoints(getValueFromString((String)jComboBoxMaxPoints.getSelectedItem()));
         } 
     }//GEN-LAST:event_jComboBoxMaxPointsActionPerformed
+
+    private void infoLabelMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_infoLabelMouseEntered
+    {//GEN-HEADEREND:event_infoLabelMouseEntered
+        //increase tooltip display duration
+        ToolTipManager.sharedInstance().setDismissDelay(60000);
+    }//GEN-LAST:event_infoLabelMouseEntered
+
+    private void infoLabelMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_infoLabelMouseExited
+    {//GEN-HEADEREND:event_infoLabelMouseExited
+        ToolTipManager.sharedInstance().setDismissDelay(originalTooltipDisplayTime);
+    }//GEN-LAST:event_infoLabelMouseExited
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBoxDrawCurrentX;

@@ -138,6 +138,12 @@ public class AbstractGraphPanelVisualizerTest
       {
          return;
       }
+
+        @Override
+        protected JSettingsPanel getSettingsPanel()
+        {
+            return new JSettingsPanel(this, true, true, true, true, true);
+        }
    }
 
    @Test

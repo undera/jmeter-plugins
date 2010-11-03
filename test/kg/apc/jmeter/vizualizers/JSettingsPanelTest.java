@@ -50,7 +50,7 @@ public class JSettingsPanelTest {
     {
         System.out.println("setGranulationValue");
         int value = 1000;
-        JSettingsPanel instance = new JSettingsPanel(new AbstractGraphPanelVisualizerImpl());
+        JSettingsPanel instance = new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), true, true, true, true, true);
         instance.setGranulationValue(value);
     }
 
@@ -66,6 +66,12 @@ public class JSettingsPanelTest {
       {
          return;
       }
+
+        @Override
+        protected JSettingsPanel getSettingsPanel()
+        {
+            return new JSettingsPanel(this, true, true, true, true, true);
+        }
    }
 
 }

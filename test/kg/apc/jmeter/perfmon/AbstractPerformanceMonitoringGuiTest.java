@@ -5,6 +5,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.GraphPanel;
+import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -253,5 +254,11 @@ public class AbstractPerformanceMonitoringGuiTest
       public void testEnded()
       {
       }
+
+        @Override
+        protected JSettingsPanel getSettingsPanel()
+        {
+            return new JSettingsPanel(this, true, true, true, true, true);
+        }
    }
 }

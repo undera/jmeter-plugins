@@ -1,6 +1,7 @@
 package kg.apc.jmeter.perfmon;
 
 import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -184,5 +185,11 @@ public class PerformanceMonitoringTestElementTest
       public void testEnded()
       {
       }
+
+        @Override
+        protected JSettingsPanel getSettingsPanel()
+        {
+            return new JSettingsPanel(this, true, true, true, true, true);
+        }
    }
 }

@@ -252,6 +252,12 @@ public class AbstractGraphRowTest
       {
          return null;
       }
+
+        @Override
+        public int size()
+        {
+            return 1;
+        }
    }
 
    /**

@@ -101,7 +101,12 @@ public class GraphPanelChart
    private Color axisColor = new Color(199, 206, 216);
    //save file path. We remember last folder used.
    private static String savePath = null;
-   // Draw options - these are default values if no property is entered in user.properties
+
+   //limit the maximum number of points when drawing a line, by averaging values
+   //if necessary. If -1 is assigned, no limit.
+   private int maxPoints = -1;
+
+   // Default draw options - these are default values if no property is entered in user.properties
    // List of possible properties (TODO: The explaination must be written in readme file)
    // jmeterPlugin.drawGradient=(true/false)
    // jmeterPlugin.neverDrawFinalZeroingLines=(true/false)
@@ -579,12 +584,15 @@ public class GraphPanelChart
    {
       g.setColor(Color.yellow);
       Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
+      
+      int biggestRowSize = getBiggestRowSize();
+
       while (it.hasNext())
       {
          Entry<String, AbstractGraphRow> row = it.next();
          if (row.getValue().isDrawOnChart())
          {
-            paintRow(g, row.getValue());
+            paintRow(g, row.getValue(), biggestRowSize);
          }
       }
    }
@@ -612,8 +620,44 @@ public class GraphPanelChart
       return ret;
    }
 
-   private void paintRow(Graphics g, AbstractGraphRow row)
+   public void setMaxPoints(int maxPoints)
    {
+       this.maxPoints = maxPoints;
+   }
+
+    private int getBiggestRowSize()
+    {
+        int max = 1;
+        Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Entry<String, AbstractGraphRow> row = it.next();
+            if (row.getValue().isDrawOnChart())
+            {
+                int size = row.getValue().size();
+                if ( size > max)
+                {
+                    max = size;
+                }
+            }
+        }
+
+        return max;
+    }
+
+   private void paintRow(Graphics g, AbstractGraphRow row, int biggestRowSize)
+   {
+      //how many points to average?
+      int factor;
+
+      if (maxPoints > 0)
+      {
+          factor = (biggestRowSize / maxPoints) + 1;
+      } else
+      {
+          factor = 1;
+      }
+
       FontMetrics fm = g.getFontMetrics(g.getFont());
       Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = row.iterator();
       Entry<Long, AbstractGraphPanelChartElement> element;
@@ -631,18 +675,46 @@ public class GraphPanelChart
          oldStroke = ((Graphics2D) g).getStroke();
       }
 
+      //for better display, we always draw the first point
+      boolean firstPoint = true;
+
+      //how many actual points were averaged (basically, to handle last points of the collection)
+      int nbAveragedValues = 0;
+
       while (it.hasNext())
       {
-         element = it.next();
+          if (!row.isDrawOnChart())
+          {
+             continue;
+          }
+          double calcPointX = 0;
+          double calcPointY = 0;
 
-         if (!row.isDrawOnChart())
-         {
-            continue;
-         }
+          if (factor == 1 || firstPoint)
+          {
+              firstPoint = false;
+              element = it.next();
+              calcPointX = element.getKey().doubleValue();
+              calcPointY = ((AbstractGraphPanelChartElement) element.getValue()).getValue();
+          } else
+          {
+              nbAveragedValues = 0;
+              for (int i = 0; i < factor; i++)
+              {
+                  if (it.hasNext())
+                  {
+                      nbAveragedValues++;
+                      element = it.next();
+                      calcPointX = calcPointX + element.getKey().doubleValue();
+                      calcPointY = calcPointY + ((AbstractGraphPanelChartElement) element.getValue()).getValue();
+                  }
+              }
+              calcPointX = calcPointX / nbAveragedValues;
+              calcPointY = calcPointY / nbAveragedValues;
+          }
 
-         x = chartRect.x + (int) ((element.getKey() - minXVal) * dxForDVal);
-         AbstractGraphPanelChartElement elementValue = (AbstractGraphPanelChartElement) element.getValue();
-         int yHeight = (int) ((elementValue.getValue() - minYVal) * dyForDVal);
+         x = chartRect.x + (int) ((calcPointX - minXVal) * dxForDVal);
+         int yHeight = (int) ((calcPointY - minYVal) * dyForDVal);
          y = chartRect.y + chartRect.height - yHeight;
 
          if (row.isDrawThickLines())
@@ -684,7 +756,7 @@ public class GraphPanelChart
          if (row.isDrawValueLabel())
          {
             g.setColor(Color.DARK_GRAY);
-            yAxisLabelRenderer.setValue(elementValue.getValue());
+            yAxisLabelRenderer.setValue(calcPointY);
             g.drawString(yAxisLabelRenderer.getText(),
                   x + row.getMarkerSize() + spacing,
                   y + fm.getAscent() / 2);

@@ -133,4 +133,10 @@ public class GraphRowSumValues
          throw new UnsupportedOperationException("Not supported yet.");
       }
    }
+
+    @Override
+    public int size()
+    {
+        return values.size();
+    }
 }

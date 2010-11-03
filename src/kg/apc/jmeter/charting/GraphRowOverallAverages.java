@@ -79,4 +79,10 @@ public class GraphRowOverallAverages
    {
       throw new UnsupportedOperationException("Not supported yet.");
    }
+
+    @Override
+    public int size()
+    {
+        return 1;
+    }
 }

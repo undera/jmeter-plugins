@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.util.concurrent.ConcurrentSkipListMap;
 import javax.swing.JComponent;
 import kg.apc.jmeter.charting.AbstractGraphRow;
+import kg.apc.jmeter.charting.GraphPanelChart;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.LongProperty;
@@ -165,5 +166,9 @@ public abstract class AbstractGraphPanelVisualizer
       {
          setGranulation(intervalProp);
       }
+   }
+
+   public GraphPanelChart getGraphPanelChart() {
+       return graphPanel.getGraphObject();
    }
 }

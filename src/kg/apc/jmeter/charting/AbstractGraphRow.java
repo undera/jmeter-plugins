@@ -63,7 +63,6 @@ public abstract class AbstractGraphRow
    protected double minY = Double.MAX_VALUE;
    private boolean drawOnChart = true;
    private boolean drawBar = false;
-   private long totalCount = 0;
 
    public void setDrawThickLines(boolean isThickLine)
    {
@@ -198,7 +197,6 @@ public abstract class AbstractGraphRow
       {
          minY = yVal;
       }
-      totalCount++;
    }
 
    /**
@@ -268,14 +266,5 @@ public abstract class AbstractGraphRow
       return drawBar;
    }
 
-   /**
-    * @return the totalCount
-    */
-   /**
-    * @return the totalCount
-    */
-   public long getTotalCount()
-   {
-      return totalCount;
-   }
+   public abstract int size();
 }

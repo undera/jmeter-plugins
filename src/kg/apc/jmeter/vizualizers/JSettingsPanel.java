@@ -14,6 +14,21 @@ public class JSettingsPanel extends javax.swing.JPanel {
         this.parent = parent;
     }
 
+    private int getValueFromString(String sValue) {
+        int ret;
+        try {
+            ret = Integer.valueOf(sValue);
+            if(ret < -1)
+            {
+                ret = -1;
+            }
+        } catch (NumberFormatException ex) {
+            ret = -1;
+        }
+
+        return ret;
+    }
+
     public void setGranulationValue(int value) {
         jComboBoxGranulation.setSelectedItem(Integer.toString(value));
     }
@@ -36,6 +51,14 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jComboBoxGranulation = new javax.swing.JComboBox();
+        jPanel5 = new javax.swing.JPanel();
+        jCheckBoxPaintGradient = new javax.swing.JCheckBox();
+        jCheckBoxDrawFinalZeroingLines = new javax.swing.JCheckBox();
+        jPanel6 = new javax.swing.JPanel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBoxMaxPoints = new javax.swing.JCheckBox();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBoxMaxPoints = new javax.swing.JComboBox();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -96,33 +119,158 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         jPanel2.add(jPanel3, gridBagConstraints);
 
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Rendering Options"));
+        jPanel5.setLayout(new java.awt.GridBagLayout());
+
+        jCheckBoxPaintGradient.setText("Paint gradient");
+        jCheckBoxPaintGradient.setEnabled(false);
+        jCheckBoxPaintGradient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxPaintGradientActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel5.add(jCheckBoxPaintGradient, gridBagConstraints);
+
+        jCheckBoxDrawFinalZeroingLines.setText("Draw final zeroing lines");
+        jCheckBoxDrawFinalZeroingLines.setEnabled(false);
+        jCheckBoxDrawFinalZeroingLines.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxDrawFinalZeroingLinesActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel5.add(jCheckBoxDrawFinalZeroingLines, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel5.add(jPanel6, gridBagConstraints);
+
+        jCheckBox1.setText("Draw current X");
+        jCheckBox1.setEnabled(false);
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel5.add(jCheckBox1, gridBagConstraints);
+
+        jCheckBoxMaxPoints.setText("Limit raws number of points to:");
+        jCheckBoxMaxPoints.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMaxPointsActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel5.add(jCheckBoxMaxPoints, gridBagConstraints);
+
+        jLabel4.setText("points");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 2);
+        jPanel5.add(jLabel4, gridBagConstraints);
+
+        jComboBoxMaxPoints.setEditable(true);
+        jComboBoxMaxPoints.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20", "50", "100", "150", "200" }));
+        jComboBoxMaxPoints.setSelectedIndex(1);
+        jComboBoxMaxPoints.setPreferredSize(new java.awt.Dimension(50, 20));
+        jComboBoxMaxPoints.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxMaxPointsActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        jPanel5.add(jComboBoxMaxPoints, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel2.add(jPanel5, gridBagConstraints);
+
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBoxGranulationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBoxGranulationActionPerformed
     {//GEN-HEADEREND:event_jComboBoxGranulationActionPerformed
         //notify parent if value changed and valid
-        long newValue;
-        try {
-            newValue = Long.parseLong((String)jComboBoxGranulation.getSelectedItem());
-        } catch (NumberFormatException nbfe) {
-            newValue = -1;
-        }
+        long newValue = getValueFromString((String)jComboBoxGranulation.getSelectedItem());
         if(newValue != -1 && parent.getGranulation() != newValue)
         {
             parent.setGranulation(newValue);
         }
     }//GEN-LAST:event_jComboBoxGranulationActionPerformed
 
+    private void jCheckBoxPaintGradientActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxPaintGradientActionPerformed
+    {//GEN-HEADEREND:event_jCheckBoxPaintGradientActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxPaintGradientActionPerformed
+
+    private void jCheckBoxDrawFinalZeroingLinesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxDrawFinalZeroingLinesActionPerformed
+    {//GEN-HEADEREND:event_jCheckBoxDrawFinalZeroingLinesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxDrawFinalZeroingLinesActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBox1ActionPerformed
+    {//GEN-HEADEREND:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jCheckBoxMaxPointsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxMaxPointsActionPerformed
+    {//GEN-HEADEREND:event_jCheckBoxMaxPointsActionPerformed
+        if(jCheckBoxMaxPoints.isSelected()) {
+            parent.getGraphPanelChart().setMaxPoints(getValueFromString((String)jComboBoxMaxPoints.getSelectedItem()));
+        } else {
+            parent.getGraphPanelChart().setMaxPoints(-1);
+        }
+    }//GEN-LAST:event_jCheckBoxMaxPointsActionPerformed
+
+    private void jComboBoxMaxPointsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBoxMaxPointsActionPerformed
+    {//GEN-HEADEREND:event_jComboBoxMaxPointsActionPerformed
+        if(jCheckBoxMaxPoints.isSelected()) {
+            parent.getGraphPanelChart().setMaxPoints(getValueFromString((String)jComboBoxMaxPoints.getSelectedItem()));
+        } 
+    }//GEN-LAST:event_jComboBoxMaxPointsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBoxDrawFinalZeroingLines;
+    private javax.swing.JCheckBox jCheckBoxMaxPoints;
+    private javax.swing.JCheckBox jCheckBoxPaintGradient;
     private javax.swing.JComboBox jComboBoxGranulation;
+    private javax.swing.JComboBox jComboBoxMaxPoints;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -53,4 +53,10 @@ public class GraphRowAverages
    {
       return values.entrySet().iterator();
    }
+
+    @Override
+    public int size()
+    {
+        return values.size();
+    }
 }

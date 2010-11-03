@@ -93,4 +93,10 @@ public class GraphRowExactValues
          throw new UnsupportedOperationException("Not supported yet.");
       }
    }
+
+    @Override
+    public int size()
+    {
+        return values.size();
+    }
 }

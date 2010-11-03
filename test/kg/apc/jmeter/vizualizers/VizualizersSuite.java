@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.vizualizers.ThreadsStateOverTimeGuiTest.class,kg.apc.jmeter.vizualizers.GraphPanelTest.class,kg.apc.jmeter.vizualizers.HeaderClickCheckAllListenerTest.class,kg.apc.jmeter.vizualizers.TransactionsPerSecondGuiTest.class,kg.apc.jmeter.vizualizers.ThroughputOverTimeGuiTest.class,kg.apc.jmeter.vizualizers.ResponseTimesOverTimeGuiTest.class,kg.apc.jmeter.vizualizers.ColorsDispatcherTest.class,kg.apc.jmeter.vizualizers.TotalTransactionsPerSecondGuiTest.class,kg.apc.jmeter.vizualizers.ThroughputVsThreadsGuiTest.class,kg.apc.jmeter.vizualizers.TimesVsThreadsGuiTest.class,kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizerTest.class,kg.apc.jmeter.vizualizers.HeaderAsTextRendererTest.class,kg.apc.jmeter.vizualizers.ChartRowsTableTest.class,kg.apc.jmeter.vizualizers.DateTimeRendererTest.class,kg.apc.jmeter.vizualizers.ColorRendererTest.class})
+@Suite.SuiteClasses({ColorsDispatcherTest.class, JSettingsPanelTest.class, ThroughputVsThreadsGuiTest.class, HeaderClickCheckAllListenerTest.class, ThroughputOverTimeGuiTest.class, ResponseTimesDistributionGuiTest.class, GraphPanelTest.class, ChartRowsTableTest.class, TotalTransactionsPerSecondGuiTest.class, TimesVsThreadsGuiTest.class, TransactionsPerSecondGuiTest.class, ResponseTimesOverTimeGuiTest.class, SettingsInterfaceTest.class, ColorRendererTest.class, AbstractGraphPanelVisualizerTest.class, DateTimeRendererTest.class, ThreadsStateOverTimeGuiTest.class, HeaderAsTextRendererTest.class})
 public class VizualizersSuite {
 
    @BeforeClass

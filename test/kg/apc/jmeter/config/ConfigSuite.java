@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.config.VariablesFromCSVFileTest.class,kg.apc.jmeter.config.VariablesFromCSVFileBeanInfoTest.class})
+@Suite.SuiteClasses({VariablesFromCSVFileBeanInfoTest.class, VariablesFromCSVFileTest.class})
 public class ConfigSuite {
 
    @BeforeClass

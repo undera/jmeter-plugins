@@ -92,4 +92,15 @@ public class TransactionsPerSecondGuiTest {
         instance.add(res);
     }
 
+   @Test
+   public void testGetSettingsPanel()
+   {
+      System.out.println("getSettingsPanel");
+      TransactionsPerSecondGui instance = new TransactionsPerSecondGui();
+      JSettingsPanel expResult = null;
+      JSettingsPanel result = instance.getSettingsPanel();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
+
 }

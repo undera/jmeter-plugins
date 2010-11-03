@@ -359,4 +359,36 @@ public class AbstractGraphRowTest
         boolean result = instance.isDrawThickLines();
         assertEquals(expResult, result);
     }
+
+   @Test
+   public void testSetDrawBar()
+   {
+      System.out.println("setDrawBar");
+      boolean b = false;
+      AbstractGraphRow instance = new AbstractGraphRowImpl();
+      instance.setDrawBar(b);
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testIsDrawBar()
+   {
+      System.out.println("isDrawBar");
+      AbstractGraphRow instance = new AbstractGraphRowImpl();
+      boolean expResult = false;
+      boolean result = instance.isDrawBar();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testSize()
+   {
+      System.out.println("size");
+      AbstractGraphRow instance = new AbstractGraphRowImpl();
+      int expResult = 0;
+      int result = instance.size();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
 }

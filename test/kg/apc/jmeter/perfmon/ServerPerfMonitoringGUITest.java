@@ -3,6 +3,7 @@ package kg.apc.jmeter.perfmon;
 import java.io.IOException;
 import javax.net.SocketFactory;
 import kg.apc.jmeter.util.SocketEmulatorInputStream;
+import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import kg.apc.jmeter.util.TestSocketFactory;
@@ -171,5 +172,16 @@ public class ServerPerfMonitoringGUITest
       SocketFactory socketFactory = new TestSocketFactory();
       ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
       instance.setSocketFactory(socketFactory);
+   }
+
+   @Test
+   public void testGetSettingsPanel()
+   {
+      System.out.println("getSettingsPanel");
+      ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+      JSettingsPanel expResult = null;
+      JSettingsPanel result = instance.getSettingsPanel();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
    }
 }

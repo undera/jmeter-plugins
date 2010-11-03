@@ -3,6 +3,7 @@ package kg.apc.jmeter.perfmon;
 import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
+import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.GraphPanel;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
@@ -260,5 +261,48 @@ public class AbstractPerformanceMonitoringGuiTest
         {
             return new JSettingsPanel(this, true, true, true, true, true);
         }
+   }
+
+   @Test
+   public void testGetSettingsPanel()
+   {
+      System.out.println("getSettingsPanel");
+      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+      JSettingsPanel expResult = null;
+      JSettingsPanel result = instance.getSettingsPanel();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testGetGranulation()
+   {
+      System.out.println("getGranulation");
+      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+      int expResult = 0;
+      int result = instance.getGranulation();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testSetGranulation()
+   {
+      System.out.println("setGranulation");
+      int granulation = 0;
+      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+      instance.setGranulation(granulation);
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testGetGraphPanelChart()
+   {
+      System.out.println("getGraphPanelChart");
+      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+      GraphPanelChart expResult = null;
+      GraphPanelChart result = instance.getGraphPanelChart();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
    }
 }

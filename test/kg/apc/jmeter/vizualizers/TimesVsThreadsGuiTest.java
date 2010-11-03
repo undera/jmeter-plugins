@@ -128,4 +128,15 @@ public class TimesVsThreadsGuiTest
       TimesVsThreadsGui instance = new TimesVsThreadsGui();
       instance.configure(el);
    }
+
+   @Test
+   public void testGetSettingsPanel()
+   {
+      System.out.println("getSettingsPanel");
+      TimesVsThreadsGui instance = new TimesVsThreadsGui();
+      JSettingsPanel expResult = null;
+      JSettingsPanel result = instance.getSettingsPanel();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
 }

@@ -93,4 +93,15 @@ public class TotalTransactionsPerSecondGuiTest
         res.sampleEnd();
         instance.add(res);
     }
+
+   @Test
+   public void testGetSettingsPanel()
+   {
+      System.out.println("getSettingsPanel");
+      TotalTransactionsPerSecondGui instance = new TotalTransactionsPerSecondGui();
+      JSettingsPanel expResult = null;
+      JSettingsPanel result = instance.getSettingsPanel();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
 }

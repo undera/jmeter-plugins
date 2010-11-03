@@ -1,6 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.Image;
+import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
@@ -204,5 +205,27 @@ public class AbstractGraphPanelVisualizerTest
       el.setProperty(new LongProperty(AbstractGraphPanelVisualizer.INTERVAL_PROPERTY, 10000));
       AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
       instance.configure(el);
+   }
+
+   @Test
+   public void testGetSettingsPanel()
+   {
+      System.out.println("getSettingsPanel");
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      JSettingsPanel expResult = null;
+      JSettingsPanel result = instance.getSettingsPanel();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testGetGraphPanelChart()
+   {
+      System.out.println("getGraphPanelChart");
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      GraphPanelChart expResult = null;
+      GraphPanelChart result = instance.getGraphPanelChart();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
    }
 }

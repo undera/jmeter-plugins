@@ -132,4 +132,15 @@ public class GraphRowExactValuesTest
       }
 
    }
+
+   @Test
+   public void testSize()
+   {
+      System.out.println("size");
+      GraphRowExactValues instance = new GraphRowExactValues();
+      int expResult = 0;
+      int result = instance.size();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
 }

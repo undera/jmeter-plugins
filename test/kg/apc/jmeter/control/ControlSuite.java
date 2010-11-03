@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.control.ParameterizedControllerTest.class,kg.apc.jmeter.control.ParameterizedControllerGuiTest.class})
+@Suite.SuiteClasses({ParameterizedControllerGuiTest.class, ParameterizedControllerTest.class})
 public class ControlSuite {
 
    @BeforeClass

@@ -248,4 +248,13 @@ public class GraphPanelChartTest
       GraphPanelChart instance = new GraphPanelChart();
       instance.setChartType(type);
    }
+
+   @Test
+   public void testSetMaxPoints()
+   {
+      System.out.println("setMaxPoints");
+      int maxPoints = 0;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setMaxPoints(maxPoints);
+   }
 }

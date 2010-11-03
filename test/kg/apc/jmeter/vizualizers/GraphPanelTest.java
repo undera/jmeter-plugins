@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import javax.swing.JComponent;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.vizualizers.GraphPanel;
 import kg.apc.jmeter.charting.GraphRowOverallAverages;
@@ -136,5 +137,25 @@ public class GraphPanelTest
    {
       System.out.println("clearRowsTab");
       instance.clearRowsTab();
+   }
+
+   @Test
+   public void testUpdateGui()
+   {
+      System.out.println("updateGui");
+      GraphPanel instance = new GraphPanel();
+      instance.updateGui();
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testGetSettingsTab()
+   {
+      System.out.println("getSettingsTab");
+      GraphPanel instance = new GraphPanel();
+      JComponent expResult = null;
+      JComponent result = instance.getSettingsTab();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
    }
 }

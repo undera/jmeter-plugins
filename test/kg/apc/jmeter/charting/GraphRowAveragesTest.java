@@ -90,4 +90,15 @@ public class GraphRowAveragesTest
       Iterator result = instance.iterator();
       assertNotNull(result);
    }
+
+   @Test
+   public void testSize()
+   {
+      System.out.println("size");
+      GraphRowAverages instance = new GraphRowAverages();
+      int expResult = 0;
+      int result = instance.size();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
 }

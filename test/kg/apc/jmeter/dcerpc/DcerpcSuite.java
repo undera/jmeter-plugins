@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.dcerpc.RPCCallRequestTest.class,kg.apc.jmeter.dcerpc.DCERPCSamplerTest.class,kg.apc.jmeter.dcerpc.RPCPacketTest.class,kg.apc.jmeter.dcerpc.RPCBindRequestTest.class,kg.apc.jmeter.dcerpc.DCERPCSamplerUtilsTest.class,kg.apc.jmeter.dcerpc.DCERPCMarshallingTest.class,kg.apc.jmeter.dcerpc.RPCCallExceptionTest.class,kg.apc.jmeter.dcerpc.RPCMarshallingExceptionTest.class,kg.apc.jmeter.dcerpc.BinaryUtilsTest.class})
+@Suite.SuiteClasses({RPCCallRequestTest.class, RPCBindRequestTest.class, DCERPCSamplerUtilsTest.class, RPCMarshallingExceptionTest.class, RPCCallExceptionTest.class, BinaryUtilsTest.class, RPCPacketTest.class, DCERPCMarshallingTest.class, DCERPCSamplerTest.class})
 public class DcerpcSuite {
 
    @BeforeClass

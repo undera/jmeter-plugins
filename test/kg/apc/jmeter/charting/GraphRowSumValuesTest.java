@@ -147,4 +147,15 @@ public class GraphRowSumValuesTest
       {
       }
    }
+
+   @Test
+   public void testSize()
+   {
+      System.out.println("size");
+      GraphRowSumValues instance = new GraphRowSumValues();
+      int expResult = 0;
+      int result = instance.size();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
 }

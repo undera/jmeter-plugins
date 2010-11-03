@@ -142,10 +142,6 @@ public abstract class AbstractGraphPanelVisualizer
         settingsPanel.setGranulationValue(granulation);
     }
 
-    protected JComponent getGraphSettingsPanel() {
-        return settingsPanel;
-    }
-
    @Override
    public TestElement createTestElement()
    {

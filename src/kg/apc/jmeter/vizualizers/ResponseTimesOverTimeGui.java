@@ -1,6 +1,5 @@
 package kg.apc.jmeter.vizualizers;
 
-import javax.swing.JComponent;
 import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
@@ -73,12 +72,6 @@ public class ResponseTimesOverTimeGui
       addThreadGroupRecord(res.getSampleLabel(),
             res.getEndTime() - res.getEndTime() % getGranulation(), res.getTime());
       updateGui(null);
-   }
-
-   @Override
-   protected JComponent getGraphSettingsPanel()
-   {
-      return super.getGraphSettingsPanel();
    }
 
     @Override

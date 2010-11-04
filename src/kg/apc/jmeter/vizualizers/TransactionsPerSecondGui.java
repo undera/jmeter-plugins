@@ -20,7 +20,7 @@ public class TransactionsPerSecondGui
       super();
       graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(
             "HH:mm:ss"));
-      graphPanel.getGraphObject().setDrawFinalZeroingLines(false);
+      graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
       setGranulation(1000);
    }
 

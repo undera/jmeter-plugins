@@ -170,7 +170,6 @@
             <Component class="javax.swing.JCheckBox" name="jCheckBoxDrawFinalZeroingLines">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Draw final zeroing lines"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxDrawFinalZeroingLinesActionPerformed"/>
@@ -193,7 +192,6 @@
             <Component class="javax.swing.JCheckBox" name="jCheckBoxDrawCurrentX">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Draw current X"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxDrawCurrentXActionPerformed"/>
@@ -207,7 +205,6 @@
             <Component class="javax.swing.JCheckBox" name="jCheckBoxMaxPoints">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Limit nuber of point in row to"/>
-                <Property name="actionCommand" type="java.lang.String" value="Limit nuber of points in row to"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxMaxPointsActionPerformed"/>

@@ -73,7 +73,6 @@ public class GraphPanelChart
    private static final int gridLinesCount = 10;
    private NumberRenderer yAxisLabelRenderer;
    private NumberRenderer xAxisLabelRenderer;
-   private boolean drawStartFinalZeroingLines = false;
    private boolean drawCurrentX = false;
    private int forcedMinX = -1;
    private int chartType = CHART_DEFAULT;
@@ -122,21 +121,6 @@ public class GraphPanelChart
    private boolean settingsDrawGradient;
    private boolean settingsDrawFinalZeroingLines;
    private boolean settingsDrawCurrentX;
-
-    public static boolean isGlobalDrawGradient()
-    {
-        return drawGradient;
-    }
-
-    public static boolean isGlobalDrawCurrentX()
-    {
-        return !neverDrawCurrentX;
-    }
-
-    public static boolean isGlobalDrawFinalZeroingLines()
-    {
-        return !neverDrawFinalZeroingLines;
-    }
 
     public void setSettingsDrawCurrentX(boolean settingsDrawCurrentX)
     {
@@ -225,7 +209,7 @@ public class GraphPanelChart
    private void drawFinalLines(AbstractGraphRow row, Graphics g, int prevX, int prevY, final double dxForDVal, Stroke oldStroke)
    {
       // draw final lines
-      if (row.isDrawLine() && drawStartFinalZeroingLines)
+      if (row.isDrawLine() && settingsDrawFinalZeroingLines)
       {
          if (row.isDrawThickLines())
          {
@@ -625,7 +609,7 @@ public class GraphPanelChart
       //restore stroke
       ((Graphics2D) g).setStroke(oldStroke);
 
-      if (drawCurrentX && !neverDrawCurrentX)
+      if (drawCurrentX && settingsDrawCurrentX)
       {
          gridLineX = chartRect.x + (int) ((currentXVal - minXVal) * (double) chartRect.width / (maxXVal - minXVal));
          g.setColor(Color.GRAY);
@@ -717,7 +701,7 @@ public class GraphPanelChart
       Entry<Long, AbstractGraphPanelChartElement> element;
       int radius = row.getMarkerSize();
       int x, y;
-      int prevX = drawStartFinalZeroingLines ? chartRect.x : -1;
+      int prevX = settingsDrawFinalZeroingLines ? chartRect.x : -1;
       int prevY = chartRect.y + chartRect.height;
       final double dxForDVal = (maxXVal <= minXVal) ? 0 : (double) chartRect.width / (maxXVal - minXVal);
       final double dyForDVal = (maxYVal <= minYVal) ? 0 : (double) chartRect.height / (maxYVal - minYVal);
@@ -862,7 +846,7 @@ public class GraphPanelChart
     */
    public void setDrawFinalZeroingLines(boolean drawFinalZeroingLines)
    {
-      this.drawStartFinalZeroingLines = drawFinalZeroingLines && !neverDrawFinalZeroingLines;
+      settingsDrawFinalZeroingLines = drawFinalZeroingLines && !neverDrawFinalZeroingLines;
    }
 
    /**

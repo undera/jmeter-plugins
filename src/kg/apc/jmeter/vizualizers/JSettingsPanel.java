@@ -202,7 +202,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         jPanel5.add(jPanel6, gridBagConstraints);
 
-        jCheckBoxDrawCurrentX.setText("Draw current X");
+        jCheckBoxDrawCurrentX.setText("Draw current X line");
         jCheckBoxDrawCurrentX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxDrawCurrentXActionPerformed(evt);
@@ -214,7 +214,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel5.add(jCheckBoxDrawCurrentX, gridBagConstraints);
 
-        jCheckBoxMaxPoints.setText("Limit nuber of point in row to");
+        jCheckBoxMaxPoints.setText("Limit number of points in row to");
         jCheckBoxMaxPoints.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxMaxPointsActionPerformed(evt);

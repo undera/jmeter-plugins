@@ -191,7 +191,7 @@
             </Container>
             <Component class="javax.swing.JCheckBox" name="jCheckBoxDrawCurrentX">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Draw current X"/>
+                <Property name="text" type="java.lang.String" value="Draw current X line"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxDrawCurrentXActionPerformed"/>
@@ -204,7 +204,7 @@
             </Component>
             <Component class="javax.swing.JCheckBox" name="jCheckBoxMaxPoints">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Limit nuber of point in row to"/>
+                <Property name="text" type="java.lang.String" value="Limit number of points in row to"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxMaxPointsActionPerformed"/>

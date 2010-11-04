@@ -143,7 +143,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jPanelTimeLine.add(jComboBoxGranulation, gridBagConstraints);
 
         jLabelInfoGrpValues.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
-        jLabelInfoGrpValues.setToolTipText("<html>this is<br>\na <b>test</b>!");
+        jLabelInfoGrpValues.setToolTipText("<html>You can specify here the duration used internally<br>\nby the plugin to combine the values received during<br>\nthe test. This will result in <b>more readable graphs</b> and<br>\n<b>less resources needs</b>. It <b>cannot be undo</b>.<br>\nThis parameter is saved with the test plan.");
         jLabelInfoGrpValues.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 infoLabelMouseEntered(evt);
@@ -249,7 +249,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jPanel5.add(jComboBoxMaxPoints, gridBagConstraints);
 
         jLabelInfoMaxPoint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
-        jLabelInfoMaxPoint.setToolTipText("<html>this is<br> a <b>test</b>!");
+        jLabelInfoMaxPoint.setToolTipText("<html>This option will <b>dynamically</b> adjust the graph<br>\nrendering so it is <b>more readable</b>. It <b>can be undo</b>.<br>\nThis parameter is not saved with the test plan.<br>");
         jLabelInfoMaxPoint.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 infoLabelMouseEntered(evt);

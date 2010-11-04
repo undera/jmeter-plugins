@@ -124,7 +124,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/kg/apc/jmeter/vizualizers/information.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;this is&lt;br&gt;&#xa;a &lt;b&gt;test&lt;/b&gt;!"/>
+                <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;You can specify here the duration used internally&lt;br&gt;&#xa;by the plugin to combine the values received during&lt;br&gt;&#xa;the test. This will result in &lt;b&gt;more readable graphs&lt;/b&gt; and&lt;br&gt;&#xa;&lt;b&gt;less resources needs&lt;/b&gt;. It &lt;b&gt;cannot be undo&lt;/b&gt;.&lt;br&gt;&#xa;This parameter is saved with the test plan."/>
               </Properties>
               <Events>
                 <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="infoLabelMouseEntered"/>
@@ -256,7 +256,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/kg/apc/jmeter/vizualizers/information.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;this is&lt;br&gt; a &lt;b&gt;test&lt;/b&gt;!"/>
+                <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;This option will &lt;b&gt;dynamically&lt;/b&gt; adjust the graph&lt;br&gt;&#xa;rendering so it is &lt;b&gt;more readable&lt;/b&gt;. It &lt;b&gt;can be undo&lt;/b&gt;.&lt;br&gt;&#xa;This parameter is not saved with the test plan.&lt;br&gt;"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="infoLabelMouseEntered"/>

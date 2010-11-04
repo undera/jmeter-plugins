@@ -268,10 +268,8 @@ public class AbstractPerformanceMonitoringGuiTest
    {
       System.out.println("getSettingsPanel");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      JSettingsPanel expResult = null;
       JSettingsPanel result = instance.getSettingsPanel();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 
    @Test
@@ -279,10 +277,9 @@ public class AbstractPerformanceMonitoringGuiTest
    {
       System.out.println("getGranulation");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      int expResult = 0;
+      int expResult = 500;
       int result = instance.getGranulation();
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -292,7 +289,6 @@ public class AbstractPerformanceMonitoringGuiTest
       int granulation = 0;
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
       instance.setGranulation(granulation);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -300,9 +296,7 @@ public class AbstractPerformanceMonitoringGuiTest
    {
       System.out.println("getGraphPanelChart");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      GraphPanelChart expResult = null;
       GraphPanelChart result = instance.getGraphPanelChart();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 }

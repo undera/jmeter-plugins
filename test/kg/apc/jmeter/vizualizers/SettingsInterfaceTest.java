@@ -5,6 +5,7 @@
 
 package kg.apc.jmeter.vizualizers;
 
+import javax.swing.JPanel;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -48,7 +49,6 @@ public class SettingsInterfaceTest {
       int expResult = 0;
       int result = instance.getGranulation();
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -58,7 +58,6 @@ public class SettingsInterfaceTest {
       int granulation = 0;
       SettingsInterface instance = new SettingsInterfaceImpl();
       instance.setGranulation(granulation);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -66,10 +65,8 @@ public class SettingsInterfaceTest {
    {
       System.out.println("getGraphPanelChart");
       SettingsInterface instance = new SettingsInterfaceImpl();
-      GraphPanelChart expResult = null;
       GraphPanelChart result = instance.getGraphPanelChart();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 
    public class SettingsInterfaceImpl
@@ -86,7 +83,7 @@ public class SettingsInterfaceTest {
 
       public GraphPanelChart getGraphPanelChart()
       {
-         return null;
+         return new GraphPanelChart();
       }
    }
 

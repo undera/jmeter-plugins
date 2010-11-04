@@ -132,9 +132,7 @@ public class ThroughputVsThreadsGuiTest
    {
       System.out.println("getSettingsPanel");
       ThroughputVsThreadsGui instance = new ThroughputVsThreadsGui();
-      JSettingsPanel expResult = null;
       JSettingsPanel result = instance.getSettingsPanel();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 }

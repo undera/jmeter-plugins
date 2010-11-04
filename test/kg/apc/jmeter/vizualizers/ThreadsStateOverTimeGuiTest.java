@@ -163,10 +163,7 @@ public class ThreadsStateOverTimeGuiTest
    public void testGetSettingsPanel()
    {
       System.out.println("getSettingsPanel");
-      ThreadsStateOverTimeGui instance = new ThreadsStateOverTimeGui();
-      JSettingsPanel expResult = null;
       JSettingsPanel result = instance.getSettingsPanel();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 }

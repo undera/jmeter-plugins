@@ -134,9 +134,7 @@ public class TimesVsThreadsGuiTest
    {
       System.out.println("getSettingsPanel");
       TimesVsThreadsGui instance = new TimesVsThreadsGui();
-      JSettingsPanel expResult = null;
       JSettingsPanel result = instance.getSettingsPanel();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 }

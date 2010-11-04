@@ -118,9 +118,7 @@ public class ThroughputOverTimeGuiTest
    {
       System.out.println("getSettingsPanel");
       ThroughputOverTimeGui instance = new ThroughputOverTimeGui();
-      JSettingsPanel expResult = null;
       JSettingsPanel result = instance.getSettingsPanel();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 }

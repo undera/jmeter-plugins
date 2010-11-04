@@ -179,9 +179,7 @@ public class ServerPerfMonitoringGUITest
    {
       System.out.println("getSettingsPanel");
       ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
-      JSettingsPanel expResult = null;
       JSettingsPanel result = instance.getSettingsPanel();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 }

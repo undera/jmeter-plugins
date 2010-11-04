@@ -212,10 +212,8 @@ public class AbstractGraphPanelVisualizerTest
    {
       System.out.println("getSettingsPanel");
       AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-      JSettingsPanel expResult = null;
       JSettingsPanel result = instance.getSettingsPanel();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 
    @Test
@@ -223,9 +221,7 @@ public class AbstractGraphPanelVisualizerTest
    {
       System.out.println("getGraphPanelChart");
       AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-      GraphPanelChart expResult = null;
       GraphPanelChart result = instance.getGraphPanelChart();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 }

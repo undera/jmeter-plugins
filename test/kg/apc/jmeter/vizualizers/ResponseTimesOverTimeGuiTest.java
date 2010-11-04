@@ -74,9 +74,7 @@ public class ResponseTimesOverTimeGuiTest
    {
       System.out.println("getSettingsPanel");
       ResponseTimesOverTimeGui instance = new ResponseTimesOverTimeGui();
-      JSettingsPanel expResult = null;
       JSettingsPanel result = instance.getSettingsPanel();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 }

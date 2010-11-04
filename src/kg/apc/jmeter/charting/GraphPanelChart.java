@@ -118,6 +118,56 @@ public class GraphPanelChart
    private static boolean optimizeYAxis = true;
    private static boolean neverDrawCurrentX = false;
 
+   //some of these preference can be overidden by the preference tab:
+   private boolean settingsDrawGradient;
+   private boolean settingsDrawFinalZeroingLines;
+   private boolean settingsDrawCurrentX;
+
+    public static boolean isGlobalDrawGradient()
+    {
+        return drawGradient;
+    }
+
+    public static boolean isGlobalDrawCurrentX()
+    {
+        return !neverDrawCurrentX;
+    }
+
+    public static boolean isGlobalDrawFinalZeroingLines()
+    {
+        return !neverDrawFinalZeroingLines;
+    }
+
+    public void setSettingsDrawCurrentX(boolean settingsDrawCurrentX)
+    {
+        this.settingsDrawCurrentX = settingsDrawCurrentX;
+    }
+
+    public void setSettingsDrawFinalZeroingLines(boolean settingsDrawFinalZeroingLines)
+    {
+        this.settingsDrawFinalZeroingLines = settingsDrawFinalZeroingLines;
+    }
+
+    public void setSettingsDrawGradient(boolean settingsDrawGradient)
+    {
+        this.settingsDrawGradient = settingsDrawGradient;
+    }
+
+    public boolean isSettingsDrawCurrentX()
+    {
+        return settingsDrawCurrentX;
+    }
+
+    public boolean isSettingsDrawFinalZeroingLines()
+    {
+        return settingsDrawFinalZeroingLines;
+    }
+
+    public boolean isSettingsDrawGradient()
+    {
+        return settingsDrawGradient;
+    }
+
    // If user entered configuration items in user.properties, overide default values.
    static
    {
@@ -161,6 +211,10 @@ public class GraphPanelChart
       setDefaultDimensions();
 
       registerPopup();
+
+      settingsDrawCurrentX = !neverDrawCurrentX;
+      settingsDrawGradient = drawGradient;
+      settingsDrawFinalZeroingLines = !neverDrawFinalZeroingLines;
    }
 
    public void setChartType(int type)
@@ -400,7 +454,7 @@ public class GraphPanelChart
       g.setColor(Color.white);
 
 
-      if (GraphPanelChart.drawGradient)
+      if (settingsDrawGradient)
       {
          GradientPaint gdp = new GradientPaint(0, 0, Color.white, 0, getHeight(), gradientColor);
          g.setPaint(gdp);

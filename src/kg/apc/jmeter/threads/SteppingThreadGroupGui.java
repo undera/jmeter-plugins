@@ -91,23 +91,23 @@ public class SteppingThreadGroupGui
 
       panel.add(new JLabel());
       panel.add(new JLabel("This group will start", JLabel.RIGHT));
-      totalThreads = new JTextField("1", 5);
+      totalThreads = new JTextField("100", 5);
       panel.add(totalThreads);
       panel.add(new JLabel("threads:", JLabel.LEFT));
       panel.add(new JLabel());
 
       panel.add(new JLabel("First, wait for", JLabel.RIGHT));
-      initialDelay = new JTextField("0", 5);
+      initialDelay = new JTextField("5", 5);
       panel.add(initialDelay);
       panel.add(new JLabel("seconds.", JLabel.LEFT));
       panel.add(new JLabel());
       panel.add(new JLabel());
 
       panel.add(new JLabel("Then start", JLabel.RIGHT));
-      incUserCount = new JTextField("1", 5);
+      incUserCount = new JTextField("10", 5);
       panel.add(incUserCount);
       panel.add(new JLabel("threads every", JLabel.CENTER));
-      incUserPeriod = new JTextField("1", 5);
+      incUserPeriod = new JTextField("30", 5);
       panel.add(incUserPeriod);
       panel.add(new JLabel("seconds.", JLabel.LEFT));
 
@@ -119,7 +119,7 @@ public class SteppingThreadGroupGui
       panel.add(new JLabel());
 
       panel.add(new JLabel("Finally, stop", JLabel.RIGHT));
-      decUserCount = new JTextField("1", 5);
+      decUserCount = new JTextField("5", 5);
       panel.add(decUserCount);
       panel.add(new JLabel("threads every", JLabel.CENTER));
       decUserPeriod = new JTextField("1", 5);

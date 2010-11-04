@@ -260,42 +260,6 @@ public class GraphPanelChartTest
    }
 
     /**
-     * Test of isGlobalDrawGradient method, of class GraphPanelChart.
-     */
-    @Test
-    public void testIsGlobalDrawGradient()
-    {
-        System.out.println("isGlobalDrawGradient");
-        boolean expResult = true;
-        boolean result = GraphPanelChart.isGlobalDrawGradient();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of isGlobalDrawCurrentX method, of class GraphPanelChart.
-     */
-    @Test
-    public void testIsGlobalDrawCurrentX()
-    {
-        System.out.println("isGlobalDrawCurrentX");
-        boolean expResult = true;
-        boolean result = GraphPanelChart.isGlobalDrawCurrentX();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of isGlobalDrawFinalZeroingLines method, of class GraphPanelChart.
-     */
-    @Test
-    public void testIsGlobalDrawFinalZeroingLines()
-    {
-        System.out.println("isGlobalDrawFinalZeroingLines");
-        boolean expResult = true;
-        boolean result = GraphPanelChart.isGlobalDrawFinalZeroingLines();
-        assertEquals(expResult, result);
-    }
-
-    /**
      * Test of setSettingsDrawCurrentX method, of class GraphPanelChart.
      */
     @Test

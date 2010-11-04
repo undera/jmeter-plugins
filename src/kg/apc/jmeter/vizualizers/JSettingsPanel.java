@@ -143,7 +143,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jPanelTimeLine.add(jComboBoxGranulation, gridBagConstraints);
 
         jLabelInfoGrpValues.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
-        jLabelInfoGrpValues.setToolTipText("<html>You can specify here the duration used internally<br>\nby the plugin to combine the values received during<br>\nthe test. This will result in <b>more readable graphs</b> and<br>\n<b>less resources needs</b>. It <b>cannot be undo</b>.<br>\nThis parameter is saved with the test plan.");
+        jLabelInfoGrpValues.setToolTipText("<html>You can specify here the duration used internally<br>\nby the plugin to combine the values received during<br>\nthe test. This will result in <b>more readable graphs</b> and<br>\n<b>less resources needs</b>. It <b>cannot be undo</b>.<br>\nYou should only use values <b>greater than 500</b> for good results.<br>\nThis parameter is saved with the test plan.");
         jLabelInfoGrpValues.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 infoLabelMouseEntered(evt);

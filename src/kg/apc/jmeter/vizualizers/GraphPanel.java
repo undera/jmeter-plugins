@@ -51,7 +51,7 @@ public class GraphPanel
    {
       ImageIcon icon = createImageIcon("settings.png");
       settingsTab = new JPanel(new BorderLayout());
-      addTab("Settings", icon, settingsTab, "Graph options");
+      addTab("Settings", icon, settingsTab, "Chart plot settings");
    }
 
    private Component makeTable()

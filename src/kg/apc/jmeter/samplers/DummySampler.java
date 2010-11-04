@@ -135,7 +135,6 @@ public class DummySampler
     *
     * @return
     */
-   // FIXME: functions does not work in this field...
    public int getResponseTime()
    {
       int time = 0;

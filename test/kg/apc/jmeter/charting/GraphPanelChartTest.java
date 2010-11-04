@@ -12,6 +12,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -257,4 +258,115 @@ public class GraphPanelChartTest
       GraphPanelChart instance = new GraphPanelChart();
       instance.setMaxPoints(maxPoints);
    }
+
+    /**
+     * Test of isGlobalDrawGradient method, of class GraphPanelChart.
+     */
+    @Test
+    public void testIsGlobalDrawGradient()
+    {
+        System.out.println("isGlobalDrawGradient");
+        boolean expResult = true;
+        boolean result = GraphPanelChart.isGlobalDrawGradient();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of isGlobalDrawCurrentX method, of class GraphPanelChart.
+     */
+    @Test
+    public void testIsGlobalDrawCurrentX()
+    {
+        System.out.println("isGlobalDrawCurrentX");
+        boolean expResult = true;
+        boolean result = GraphPanelChart.isGlobalDrawCurrentX();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of isGlobalDrawFinalZeroingLines method, of class GraphPanelChart.
+     */
+    @Test
+    public void testIsGlobalDrawFinalZeroingLines()
+    {
+        System.out.println("isGlobalDrawFinalZeroingLines");
+        boolean expResult = true;
+        boolean result = GraphPanelChart.isGlobalDrawFinalZeroingLines();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setSettingsDrawCurrentX method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetSettingsDrawCurrentX()
+    {
+        System.out.println("setSettingsDrawCurrentX");
+        boolean settingsDrawCurrentX = false;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setSettingsDrawCurrentX(settingsDrawCurrentX);
+    }
+
+    /**
+     * Test of setSettingsDrawnalZeroingLines method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetSettingsDrawFinalZeroingLines()
+    {
+        System.out.println("setSettingsDrawFinalZeroingLines");
+        boolean settingsDrawFinalZeroingLines = false;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setSettingsDrawFinalZeroingLines(settingsDrawFinalZeroingLines);
+    }
+
+    /**
+     * Test of setSettingsDrawGradient method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetSettingsDrawGradient()
+    {
+        System.out.println("setSettingsDrawGradient");
+        boolean settingsDrawGradient = false;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setSettingsDrawGradient(settingsDrawGradient);
+    }
+
+    /**
+     * Test of isSettingsDrawCurrentX method, of class GraphPanelChart.
+     */
+    @Test
+    public void testIsSettingsDrawCurrentX()
+    {
+        System.out.println("isSettingsDrawCurrentX");
+        GraphPanelChart instance = new GraphPanelChart();
+        boolean expResult = true;
+        boolean result = instance.isSettingsDrawCurrentX();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of isSettingsDrawFinalZeroingLines method, of class GraphPanelChart.
+     */
+    @Test
+    public void testIsSettingsDrawFinalZeroingLines()
+    {
+        System.out.println("isSettingsDrawFinalZeroingLines");
+        GraphPanelChart instance = new GraphPanelChart();
+        boolean expResult = true;
+        boolean result = instance.isSettingsDrawFinalZeroingLines();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of isSettingsDrawGradient method, of class GraphPanelChart.
+     */
+    @Test
+    public void testIsSettingsDrawGradient()
+    {
+        System.out.println("isSettingsDrawGradient");
+        GraphPanelChart instance = new GraphPanelChart();
+        boolean expResult = true;
+        boolean result = instance.isSettingsDrawGradient();
+        assertEquals(expResult, result);
+    }
 }

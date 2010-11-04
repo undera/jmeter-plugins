@@ -95,8 +95,31 @@ public class GraphRowAveragesTest
    public void testSize()
    {
       System.out.println("size");
-      int expResult = 0;
+      int expResult = 2;
+      instance.add(1000, 3);
+      instance.add(1000, 2);
+      instance.add(2000, 1);
+
       int result = instance.size();
+
       assertEquals(expResult, result);
    }
+
+    /**
+     * Test of getMaxY method, of class GraphRowAverages.
+     */
+    @Test
+    public void testGetMaxY()
+    {
+        System.out.println("getMaxY");
+        GraphRowAverages instance = new GraphRowAverages();
+
+        instance.add(1000, 3);
+        instance.add(1000, 2);
+        instance.add(1000, 1);
+
+        double expResult = 2.0;
+        double result = instance.getMaxY();
+        assertEquals(expResult, result, 0.0);
+    }
 }

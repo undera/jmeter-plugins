@@ -142,15 +142,16 @@ public class GraphPanelChart
         return settingsDrawCurrentX;
     }
 
-    public boolean isSettingsDrawFinalZeroingLines()
-    {
-        return settingsDrawFinalZeroingLines;
-    }
-
     public boolean isSettingsDrawGradient()
     {
         return settingsDrawGradient;
     }
+    
+    public static boolean isGlobalDrawFinalZeroingLines()
+    {
+        return !neverDrawFinalZeroingLines;
+    }
+
 
    // If user entered configuration items in user.properties, overide default values.
    static
@@ -198,7 +199,7 @@ public class GraphPanelChart
 
       settingsDrawCurrentX = !neverDrawCurrentX;
       settingsDrawGradient = drawGradient;
-      settingsDrawFinalZeroingLines = !neverDrawFinalZeroingLines;
+      settingsDrawFinalZeroingLines = false;
    }
 
    public void setChartType(int type)

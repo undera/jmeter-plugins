@@ -1,6 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
 import javax.swing.ToolTipManager;
+import kg.apc.jmeter.charting.GraphPanelChart;
 
 /**
  *
@@ -37,9 +38,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jCheckBoxDrawCurrentX.setSelected(parent.getGraphPanelChart().isSettingsDrawCurrentX());
         if(showFinalZeroingLinesOption)
         {
-            jCheckBoxDrawFinalZeroingLines.setSelected(parent.getGraphPanelChart().isSettingsDrawFinalZeroingLines());
-        } else {
-            parent.getGraphPanelChart().setSettingsDrawFinalZeroingLines(false);
+            jCheckBoxDrawFinalZeroingLines.setSelected(GraphPanelChart.isGlobalDrawFinalZeroingLines());
         }
     }
 

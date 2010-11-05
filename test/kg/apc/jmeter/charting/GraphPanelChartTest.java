@@ -309,19 +309,6 @@ public class GraphPanelChartTest
     }
 
     /**
-     * Test of isSettingsDrawFinalZeroingLines method, of class GraphPanelChart.
-     */
-    @Test
-    public void testIsSettingsDrawFinalZeroingLines()
-    {
-        System.out.println("isSettingsDrawFinalZeroingLines");
-        GraphPanelChart instance = new GraphPanelChart();
-        boolean expResult = true;
-        boolean result = instance.isSettingsDrawFinalZeroingLines();
-        assertEquals(expResult, result);
-    }
-
-    /**
      * Test of isSettingsDrawGradient method, of class GraphPanelChart.
      */
     @Test
@@ -331,6 +318,18 @@ public class GraphPanelChartTest
         GraphPanelChart instance = new GraphPanelChart();
         boolean expResult = true;
         boolean result = instance.isSettingsDrawGradient();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of isGlobalDrawFinalZeroingLines method, of class GraphPanelChart.
+     */
+    @Test
+    public void testIsGlobalDrawFinalZeroingLines()
+    {
+        System.out.println("isGlobalDrawFinalZeroingLines");
+        boolean expResult = true;
+        boolean result = GraphPanelChart.isGlobalDrawFinalZeroingLines();
         assertEquals(expResult, result);
     }
 }

@@ -27,6 +27,11 @@ public class ChartRowsTable
       setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       getTableHeader().setDefaultRenderer(new HeaderAsTextRenderer());
       getTableHeader().addMouseListener(new HeaderClickCheckAllListener());
+      getTableHeader().setReorderingAllowed(false);
+      getColumnModel().getColumn(0).setPreferredWidth(100);
+      getColumnModel().getColumn(1).setPreferredWidth(100);
+      getColumnModel().getColumn(2).setPreferredWidth(500);
+
    }
 
    private void initializeTableModel()

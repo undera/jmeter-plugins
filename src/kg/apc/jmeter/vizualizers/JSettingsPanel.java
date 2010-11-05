@@ -90,6 +90,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jComboBoxMaxPoints = new javax.swing.JComboBox();
         jLabelInfoMaxPoint = new javax.swing.JLabel();
 
+        setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));

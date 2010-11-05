@@ -28,6 +28,7 @@ public class ChartRowsTable
       getTableHeader().setDefaultRenderer(new HeaderAsTextRenderer());
       getTableHeader().addMouseListener(new HeaderClickCheckAllListener());
       getTableHeader().setReorderingAllowed(false);
+      getTableHeader().setResizingAllowed(false);
       getColumnModel().getColumn(0).setPreferredWidth(100);
       getColumnModel().getColumn(1).setPreferredWidth(100);
       getColumnModel().getColumn(2).setPreferredWidth(500);

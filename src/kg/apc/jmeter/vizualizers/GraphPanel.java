@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -44,6 +45,17 @@ public class GraphPanel
       ImageIcon rowsIcon = createImageIcon("checks.png");
       rowsTab = new JPanel(new BorderLayout());
       rowsTab.add(makeTable(), BorderLayout.CENTER);
+
+      JPanel logoPanel = new JPanel();
+      JLabel logoLabel = new JLabel();
+      logoPanel.setLayout(new java.awt.GridLayout(1, 0));
+      logoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+      logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
+      logoPanel.add(logoLabel);
+
+      rowsTab.add(logoPanel, BorderLayout.SOUTH);
+      rowsTab.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
       addTab("Rows", rowsIcon, rowsTab, "Select rows to display");
    }
 
@@ -64,6 +76,7 @@ public class GraphPanel
    {
       JScrollPane pane = new JScrollPane(comp);
       pane.setPreferredSize(pane.getMinimumSize());
+      pane.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
       return pane;
    }
 
@@ -71,6 +84,7 @@ public class GraphPanel
    {
       ImageIcon graphIcon = createImageIcon("graph.png");
       graphTab = new GraphPanelChart();
+      graphTab.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
       addTab("Chart", graphIcon, graphTab, "View chart");
    }
 

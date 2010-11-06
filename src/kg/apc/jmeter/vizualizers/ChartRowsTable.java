@@ -29,10 +29,14 @@ public class ChartRowsTable
       getTableHeader().addMouseListener(new HeaderClickCheckAllListener());
       getTableHeader().setReorderingAllowed(false);
       getTableHeader().setResizingAllowed(false);
+
+      setCollumnsSize();
+   }
+
+   private void setCollumnsSize() {
       getColumnModel().getColumn(0).setPreferredWidth(100);
       getColumnModel().getColumn(1).setPreferredWidth(100);
       getColumnModel().getColumn(2).setPreferredWidth(500);
-
    }
 
    private void initializeTableModel()
@@ -86,5 +90,6 @@ public class ChartRowsTable
    public void clear()
    {
       initializeTableModel();
+      setCollumnsSize();
    }
 }

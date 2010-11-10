@@ -62,8 +62,6 @@ public class GraphRowPercentiles extends AbstractGraphRow
         }
 
         virtualSize++;
-
-        System.out.println(values.size() + "/" + virtualSize);
     }
 
     private void calculatePercentiles()

@@ -5,12 +5,12 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
- * The algorithm used is the one from org.apache.commons.math.stat.descriptive.rank.Percentile
+ * The algorithm used for percentiles calculation is the one from
+ * org.apache.commons.math.stat.descriptive.rank.Percentile
  * @author Stephane Hoblingre
  */
 public class GraphRowPercentiles extends AbstractGraphRow
 {
-
     /*
      * The calculated percentiles
      */
@@ -21,17 +21,15 @@ public class GraphRowPercentiles extends AbstractGraphRow
      * Contains as key the response time, as value the occurence count
      */
     private ConcurrentSkipListMap<Long, GraphPanelChartPercentileElement> values;
-    private long virtualSize = 0;
+    private long virtualSize = 0L;
     private long minRespTime = Long.MAX_VALUE;
     private long maxRespTime = 0L;
-
-    private static long REDUCTION_FACTOR = 10;
 
     public GraphRowPercentiles()
     {
         super();
         values = new ConcurrentSkipListMap<Long, GraphPanelChartPercentileElement>();
-        //init percentiles
+        //create percentiles objects, and reuse them to avoid GC
         for (long p = 1; p < 101; p++)
         {
             percentiles.put(p, new GraphPanelChartPercentileElement(100));
@@ -40,8 +38,6 @@ public class GraphRowPercentiles extends AbstractGraphRow
 
     public void addResponseTime(long respTime)
     {
-        respTime = respTime - respTime % REDUCTION_FACTOR;
-
         if (values.containsKey(respTime))
         {
             values.get(respTime).incValue();

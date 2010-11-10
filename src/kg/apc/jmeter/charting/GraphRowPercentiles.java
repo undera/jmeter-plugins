@@ -23,7 +23,7 @@ public class GraphRowPercentiles extends AbstractGraphRow
     private ConcurrentSkipListMap<Long, GraphPanelChartPercentileElement> values;
     private long virtualSize = 0;
     private long minRespTime = Long.MAX_VALUE;
-    private long maxRespTime = Long.MIN_VALUE;
+    private long maxRespTime = 0L;
 
     public GraphRowPercentiles()
     {

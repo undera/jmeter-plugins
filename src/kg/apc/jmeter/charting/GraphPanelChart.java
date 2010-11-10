@@ -293,10 +293,17 @@ public class GraphPanelChart
 
       //prevent X axis not initialized in case of no row displayed
       //we use last known row
-      if (minXVal == Long.MAX_VALUE && maxXVal == 0L && row != null)
+      if ((minXVal == Long.MAX_VALUE && maxXVal == 0L && row != null) ||
+          (forcedMinX >= 0L && maxXVal == 0L && row != null))
       {
          maxXVal = row.getValue().getMaxX();
-         minXVal = row.getValue().getMinX();
+         if(forcedMinX >= 0L)
+         {
+             minXVal = forcedMinX;
+         } else
+         {
+             minXVal = row.getValue().getMinX();
+         }
          minYVal = 0;
          maxYVal = 10;
       }

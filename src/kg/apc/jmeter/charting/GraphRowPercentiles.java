@@ -22,17 +22,17 @@ public class GraphRowPercentiles extends AbstractGraphRow
      */
     private ConcurrentSkipListMap<Long, GraphPanelChartPercentileElement> values;
     private long virtualSize = 0;
-    private long min = Long.MAX_VALUE;
-    private long max = Long.MIN_VALUE;
+    private long minRespTime = Long.MAX_VALUE;
+    private long maxRespTime = Long.MIN_VALUE;
 
     public GraphRowPercentiles()
     {
         super();
         values = new ConcurrentSkipListMap<Long, GraphPanelChartPercentileElement>();
         //init percentiles
-        for (long p = 0; p < 100; p++)
+        for (long p = 1; p < 101; p++)
         {
-            percentiles.put(p, new GraphPanelChartPercentileElement(0));
+            percentiles.put(p, new GraphPanelChartPercentileElement(100));
         }
     }
 
@@ -43,16 +43,18 @@ public class GraphRowPercentiles extends AbstractGraphRow
             values.get(respTime).incValue();
         } else
         {
-            values.put(respTime, new GraphPanelChartPercentileElement(respTime));
+            values.put(respTime, new GraphPanelChartPercentileElement(1));
         }
 
-        if (min > respTime)
+        if (minRespTime > respTime)
         {
-            min = respTime;
+            minRespTime = respTime;
+            super.add(1, minRespTime);
         }
-        if (max < respTime)
+        if (maxRespTime < respTime)
         {
-            max = respTime;
+            maxRespTime = respTime;
+            super.add(100, maxRespTime);
         }
 
         virtualSize++;
@@ -71,48 +73,49 @@ public class GraphRowPercentiles extends AbstractGraphRow
         {
             for (long p = 1; p < 101; p++)
             {
-                percentiles.get(p).setValue(min);
+                percentiles.get(p).setValue(minRespTime);
             }
         } else
         {
             Iterator<Entry<Long, GraphPanelChartPercentileElement>> iter = values.entrySet().iterator();
             Entry<Long, GraphPanelChartPercentileElement> entry = iter.next();
-            double currentVirtualIndex = entry.getValue().getValue();
+            long currentVirtualIndex = (long)entry.getValue().getValue();
 
-            percentiles.get(1l).setValue(min); //1 in long, not 11 !!!
-
-            for (long p = 2; p < 100; p++)
+            for (long p = 1; p < 100; p++)
             {
                 double pos = p * (count + 1) / 100;
                 double fpos = Math.floor(pos);
                 int intPos = (int) fpos;
                 double dif = pos - fpos;
-
-                long upper = -1;
-                long lower = -1;
-
-                while (lower == -1 && upper == -1)
+                if (pos < 1)
                 {
-                    if (intPos - 1 <= currentVirtualIndex && lower == -1)
+                    percentiles.get(p).setValue(minRespTime);
+                } else
+                {
+                    long upper = -1;
+                    long lower = -1;
+
+                    while (upper == -1)
                     {
-                        lower = entry.getKey();
+                        if (intPos - 1 <= currentVirtualIndex && lower == -1)
+                        {
+                            lower = entry.getKey();
+                        }
+                        if (intPos <= currentVirtualIndex)
+                        {
+                            upper = entry.getKey();
+                        }
+                        if (upper == -1)
+                        {
+                            entry = iter.next();
+                            currentVirtualIndex += entry.getValue().getValue();
+                        }
                     }
-                    if (intPos <= currentVirtualIndex)
-                    {
-                        upper = entry.getKey();
-                    }
-                    if (upper == -1)
-                    {
-                        entry = iter.next();
-                        currentVirtualIndex += entry.getValue().getValue();
-                    }
+                   percentiles.get(p).setValue((double) lower + dif * (upper - lower));
                 }
-
-                percentiles.get(p).setValue((double)lower + dif * (upper - lower));
-
             }
 
-            percentiles.get(100l).setValue(max); //100 in long, not 1001 !!!
+            percentiles.get(100l).setValue(maxRespTime); //100 in long, not 1001 !!!
         }
     }
 

@@ -25,6 +25,8 @@ public class GraphRowPercentiles extends AbstractGraphRow
     private long minRespTime = Long.MAX_VALUE;
     private long maxRespTime = 0L;
 
+    private static long REDUCTION_FACTOR = 10;
+
     public GraphRowPercentiles()
     {
         super();
@@ -38,6 +40,8 @@ public class GraphRowPercentiles extends AbstractGraphRow
 
     public void addResponseTime(long respTime)
     {
+        respTime = respTime - respTime % REDUCTION_FACTOR;
+
         if (values.containsKey(respTime))
         {
             values.get(respTime).incValue();
@@ -58,6 +62,8 @@ public class GraphRowPercentiles extends AbstractGraphRow
         }
 
         virtualSize++;
+
+        System.out.println(values.size() + "/" + virtualSize);
     }
 
     private void calculatePercentiles()

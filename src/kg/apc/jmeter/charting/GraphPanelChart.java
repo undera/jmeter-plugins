@@ -289,13 +289,14 @@ public class GraphPanelChart
          }
       }
 
-      if(barValue > 0)
-      {
-          maxXVal += barValue;
-          //long width = maxXVal - minXVal;
-
-          
-      }
+       if (barValue > 0)
+       {
+           maxXVal += barValue;
+           //find nice X steps
+           double barPerSquare = (double) (maxXVal - minXVal) / (barValue * gridLinesCount);
+           double step = Math.floor(barPerSquare)+1;
+           maxXVal = (long) (minXVal + step * barValue * gridLinesCount);
+       }
       
       //maxYVal *= 1 + (double) 1 / (double) gridLinesCount;
 

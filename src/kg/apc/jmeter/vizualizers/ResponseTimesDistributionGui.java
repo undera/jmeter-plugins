@@ -1,7 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
 import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowSumValues;
 import org.apache.jmeter.samplers.SampleResult;
 
@@ -43,7 +42,7 @@ public class ResponseTimesDistributionGui
       return row;
    }
 
-   private void addThreadGroupRecord(String threadGroupName, long time)
+   private void addThreadGroupRecord(String threadGroupName, long time, int granulation)
    {
       AbstractGraphRow row = model.get(threadGroupName);
       if (row == null)
@@ -52,6 +51,7 @@ public class ResponseTimesDistributionGui
       }
 
       row.add(time, 1);
+      row.setGranulationValue(granulation);
    }
 
    public String getLabelResource()
@@ -67,7 +67,8 @@ public class ResponseTimesDistributionGui
 
    public void add(SampleResult res)
    {
-      addThreadGroupRecord(res.getSampleLabel(), res.getTime() - res.getTime() % getGranulation());
+      int granulation = getGranulation();
+      addThreadGroupRecord(res.getSampleLabel(), res.getTime() - res.getTime() % granulation, granulation);
       updateGui(null);
    }
 

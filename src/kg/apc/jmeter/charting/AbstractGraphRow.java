@@ -63,6 +63,7 @@ public abstract class AbstractGraphRow
    protected double minY = Double.MAX_VALUE;
    private boolean drawOnChart = true;
    private boolean drawBar = false;
+   private int granulation = 0;
 
    public void setDrawThickLines(boolean isThickLine)
    {
@@ -265,6 +266,23 @@ public abstract class AbstractGraphRow
    {
       return drawBar;
    }
+
+   /**
+    * @return the granulation value for drawbar width
+    */
+   public int getGranulationValue()
+   {
+      return granulation;
+   }
+
+   /**
+    * set the granulation value for drawbar width
+    */
+   public void setGranulationValue(int value)
+   {
+      this.granulation = value;
+   }
+
 
    public abstract int size();
 }

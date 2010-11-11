@@ -252,6 +252,7 @@ public class GraphPanelChart
       Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
       Entry<String, AbstractGraphRow> row = null;
       AbstractGraphRow rowValue;
+      int barValue = 0;
       while (it.hasNext())
       {
          row = it.next();
@@ -282,8 +283,20 @@ public class GraphPanelChart
             //we draw only positives values
             minYVal = rowValue.getMinY() >= 0 ? rowValue.getMinY() : 0;
          }
+
+         if(rowValue.isDrawBar()) {
+            barValue =  rowValue.getGranulationValue();
+         }
       }
 
+      if(barValue > 0)
+      {
+          maxXVal += barValue;
+          //long width = maxXVal - minXVal;
+
+          
+      }
+      
       //maxYVal *= 1 + (double) 1 / (double) gridLinesCount;
 
       if (forcedMinX >= 0L)
@@ -315,6 +328,7 @@ public class GraphPanelChart
       {
          minYVal = 0;
       }
+
 
    }
 
@@ -784,15 +798,19 @@ public class GraphPanelChart
          }
 
          // draw bars
-         if (row.isDrawBar())
-         {
-            g.setColor(row.getColor());
-            if (isChartPointValid(x, y))
-            {
-               g.fillRect(x - (chartRect.width / gridLinesCount / 2) - 1, y,
-                     chartRect.width / gridLinesCount - 2, yHeight);
-            }
-         }
+          if (row.isDrawBar())
+          {
+              g.setColor(row.getColor());
+              if (isChartPointValid(x, y))
+              {
+                  g.drawRect(x, y, (int) (dxForDVal * row.getGranulationValue()) - 2, yHeight);
+                  Composite oldComposite = ((Graphics2D) g).getComposite();
+                  ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+
+                  g.fillRect(x, y, (int) (dxForDVal * row.getGranulationValue()) - 2, yHeight);
+                  ((Graphics2D) g).setComposite(oldComposite);
+              }
+          }
 
          if (row.isDrawThickLines())
          {

@@ -14,7 +14,7 @@ public class ServerAgent implements Runnable
     /**
      * The version of the Agent
      */
-    private static String version = "1.3";
+    private static String version = "1.3.1";
 
     /**
      * The default port

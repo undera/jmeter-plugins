@@ -19,29 +19,8 @@ import org.hyperic.sigar.Swap;
  * This class is based on Sigar API: http://www.hyperic.com/products/sigar
  * @author Stephane Hoblingre
  */
-public class MetricsGetter
+public class MetricsGetter implements AgentCommandsInterface
 {
-   public static final String BADCMD = "badCmd";
-   public static final String BYE = "bye";
-   public static final String CPU = "cpu";
-   public static final String DISKIO = "dio";
-   public static final String MEMORY = "mem";
-   public static final String NAME = "name";
-   public static final String NETWORK = "nio";
-   public static final String SWAP = "swp";
-
-   //FIXME: APC: why don't use custom exceptions instead of error constants?
-   public final static long SIGAR_ERROR = -1L;
-   public final static long AGENT_ERROR = -2L;
-   public final static long[] SIGAR_ERROR_ARRAY =
-   {
-      -1L, -1L
-   };
-   public final static long[] AGENT_ERROR_ARRAY =
-   {
-      -2L, -2L
-   };
-
    /*
     * The unic instance
     */
@@ -147,7 +126,7 @@ public class MetricsGetter
       catch (SigarException e)
       {
          ServerAgent.logMessage(e.getMessage());
-         return MetricsGetter.AGENT_ERROR;
+         return AGENT_ERROR;
       }
    }
 
@@ -164,7 +143,7 @@ public class MetricsGetter
       catch (SigarException e)
       {
          ServerAgent.logMessage(e.getMessage());
-         return MetricsGetter.AGENT_ERROR;
+         return AGENT_ERROR;
       }
    }
 
@@ -184,7 +163,7 @@ public class MetricsGetter
       catch (SigarException e)
       {
          ServerAgent.logMessage(e.getMessage());
-         ret = MetricsGetter.AGENT_ERROR_ARRAY;
+         ret = AGENT_ERROR_ARRAY;
       }
 
       return ret;
@@ -220,7 +199,7 @@ public class MetricsGetter
       }
       catch (SigarException ex)
       {
-         ret = MetricsGetter.AGENT_ERROR_ARRAY;
+         ret = AGENT_ERROR_ARRAY;
       }
       return ret;
    }
@@ -233,7 +212,7 @@ public class MetricsGetter
    {
       if (fileSystems.length == 0)
       {
-         return MetricsGetter.SIGAR_ERROR_ARRAY;
+         return SIGAR_ERROR_ARRAY;
       }
 
       long[] ret =
@@ -251,7 +230,7 @@ public class MetricsGetter
             long writes = metrics.getDiskWrites();
             if (reads == -1L || writes == -1L)
             {
-               return MetricsGetter.SIGAR_ERROR_ARRAY;
+               return SIGAR_ERROR_ARRAY;
             }
             else
             {
@@ -262,7 +241,7 @@ public class MetricsGetter
       }
       catch (SigarException ex)
       {
-         ret = MetricsGetter.AGENT_ERROR_ARRAY;
+         ret = AGENT_ERROR_ARRAY;
       }
 
       return ret;

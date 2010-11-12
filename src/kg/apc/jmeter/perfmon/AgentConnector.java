@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import kg.apc.jmeter.perfmon.agent.MetricsGetter;
+import kg.apc.jmeter.perfmon.agent.AgentCommandsInterface;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -14,7 +14,7 @@ import org.apache.log.Logger;
  * This class is used to connect to the remote server Agent and get the metrics
  * @author Stephane Hoblingre
  */
-public class AgentConnector
+public class AgentConnector implements AgentCommandsInterface
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
    private String host;
@@ -47,7 +47,7 @@ public class AgentConnector
       out = new PrintWriter(socket.getOutputStream(), true);
       in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-      remoteServerName = getData(MetricsGetter.NAME);
+      remoteServerName = getData(NAME);
    }
 
    /**
@@ -59,7 +59,7 @@ public class AgentConnector
       {
          //this is a command sent to the server agent, must not be changed
          //it is used to exit the thread loop
-         out.println(MetricsGetter.BYE);
+         out.println(BYE);
          out.close();
          in.close();
          socket.close();
@@ -100,14 +100,14 @@ public class AgentConnector
    {
       long ret;
 
-      String value = getData(MetricsGetter.MEMORY);
+      String value = getData(MEMORY);
       if (value != null)
       {
          ret = Long.parseLong(value);
       }
       else
       {
-         ret = MetricsGetter.AGENT_ERROR;
+         ret = AGENT_ERROR;
       }
 
       return ret;
@@ -121,14 +121,14 @@ public class AgentConnector
    {
       double ret;
 
-      String value = getData(MetricsGetter.CPU);
+      String value = getData(CPU);
       if (value != null)
       {
          ret = Double.parseDouble(value);
       }
       else
       {
-         ret = MetricsGetter.AGENT_ERROR;
+         ret = AGENT_ERROR;
       }
 
       return ret;
@@ -137,7 +137,7 @@ public class AgentConnector
    public long[] getSwap()
    {
       long[] ret = new long[2];
-      String value = getData(MetricsGetter.SWAP);
+      String value = getData(SWAP);
       if (value != null)
       {
          ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
@@ -145,7 +145,7 @@ public class AgentConnector
       }
       else
       {
-         ret = MetricsGetter.AGENT_ERROR_ARRAY;
+         ret = AGENT_ERROR_ARRAY;
       }
 
       return ret;
@@ -154,7 +154,7 @@ public class AgentConnector
    public long[] getDisksIO()
    {
       long[] ret = new long[2];
-      String value = getData(MetricsGetter.DISKIO);
+      String value = getData(DISKIO);
       if (value != null)
       {
          ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
@@ -162,7 +162,7 @@ public class AgentConnector
       }
       else
       {
-         ret = MetricsGetter.AGENT_ERROR_ARRAY;
+         ret = AGENT_ERROR_ARRAY;
       }
       return ret;
    }
@@ -170,7 +170,7 @@ public class AgentConnector
    public long[] getNetIO()
    {
       long[] ret = new long[2];
-      String value = getData(MetricsGetter.NETWORK);
+      String value = getData(NETWORK);
       if (value != null)
       {
          ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
@@ -178,7 +178,7 @@ public class AgentConnector
       }
       else
       {
-         ret = MetricsGetter.AGENT_ERROR_ARRAY;
+         ret = AGENT_ERROR_ARRAY;
       }
 
       return ret;

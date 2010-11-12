@@ -823,7 +823,7 @@ public class GraphPanelChart
                   Composite oldComposite = ((Graphics2D) g).getComposite();
                   ((Graphics2D) g).setComposite(barComposite);
 
-                  g.fillRect(x, y, x2 , yHeight);
+                  g.fillRect(x, y-1, x2 , yHeight+1);
                   ((Graphics2D) g).setComposite(oldComposite);
               }
           }

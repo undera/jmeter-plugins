@@ -804,10 +804,10 @@ public class GraphPanelChart
               g.setColor(row.getColor());
               if (isChartPointValid(x, y))
               {   //x = chartRect.x + (int) ((calcPointX - minXVal) * dxForDVal);
-                  int x2 = chartRect.x + (int) ((calcPointX + row.getGranulationValue() - minXVal) * dxForDVal) - x -2;
-                  g.drawRect(x, y, x2, yHeight);
+                  int x2 = chartRect.x + (int) ((calcPointX + row.getGranulationValue() - minXVal) * dxForDVal) - x -1;
+                  //g.drawRect(x, y, x2, yHeight);
                   Composite oldComposite = ((Graphics2D) g).getComposite();
-                  ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+                  ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
 
                   g.fillRect(x, y, x2 , yHeight);
                   ((Graphics2D) g).setComposite(oldComposite);

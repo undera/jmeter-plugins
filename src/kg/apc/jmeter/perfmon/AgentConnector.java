@@ -79,7 +79,7 @@ public class AgentConnector
    private String getData(String data)
    {
       out.println(data);
-      String ret = Long.toString(MetricsGetter.AGENT_ERROR);
+      String ret = null;
       try
       {
          ret = in.readLine();

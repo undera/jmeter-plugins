@@ -98,6 +98,10 @@ public class GraphPanelChart
    private Color gradientColor = new Color(229, 236, 246);
    // Chart's Axis Color. For good results, use gradient color - (30, 30, 30)
    private Color axisColor = new Color(199, 206, 216);
+   
+   //the composite used to draw bars
+   AlphaComposite barComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+
    //save file path. We remember last folder used.
    private static String savePath = null;
 
@@ -523,7 +527,17 @@ public class GraphPanelChart
 
          // draw legend color box
          g.setColor(row.getValue().getColor());
+         Composite oldComposite = null;
+         if (row.getValue().isDrawBar())
+         {
+            oldComposite =  ((Graphics2D) g).getComposite();
+            ((Graphics2D) g).setComposite(barComposite);
+         }
          g.fillRect(currentX, currentY, rectW, rectH);
+         if (row.getValue().isDrawBar())
+         {
+             ((Graphics2D) g).setComposite(oldComposite);
+         }
          g.setColor(Color.black);
          g.drawRect(currentX, currentY, rectW, rectH);
 
@@ -807,7 +821,7 @@ public class GraphPanelChart
                   int x2 = chartRect.x + (int) ((calcPointX + row.getGranulationValue() - minXVal) * dxForDVal) - x -1;
                   //g.drawRect(x, y, x2, yHeight);
                   Composite oldComposite = ((Graphics2D) g).getComposite();
-                  ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+                  ((Graphics2D) g).setComposite(barComposite);
 
                   g.fillRect(x, y, x2 , yHeight);
                   ((Graphics2D) g).setComposite(oldComposite);

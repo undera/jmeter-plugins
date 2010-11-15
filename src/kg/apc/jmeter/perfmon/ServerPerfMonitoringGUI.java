@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import javax.net.SocketFactory;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowExactValues;
@@ -31,6 +33,16 @@ public class ServerPerfMonitoringGUI
    {
       super();
       socketFactory = new TCPSocketFactory();
+      registerSpecificPopup();
+   }
+
+   private void registerSpecificPopup()
+   {
+      JPopupMenu popup = graphPanel.getGraphObject().getComponentPopupMenu();
+      popup.addSeparator();
+      JMenuItem menu = new JMenuItem("Load PerfMon File...");
+      menu.setEnabled(false);
+      popup.add(menu);
    }
 
    @Override

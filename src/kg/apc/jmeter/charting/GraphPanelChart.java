@@ -674,6 +674,8 @@ public class GraphPanelChart
 
    /*
     * Check if the point (x,y) is contained in the chart area
+    * We check only minX, maxX, and maxY to avoid flickering.
+    * We take max(chartRect.y, y) as redering value
     * This is done to prevent line out of range if new point is added
     * during chart paint.
     */
@@ -687,7 +689,7 @@ public class GraphPanelChart
          ret = false;
       }
       else //check y
-      if (y < chartRect.y || y > chartRect.y + chartRect.height)
+      if (y > chartRect.y + chartRect.height)
       {
          ret = false;
       }
@@ -791,6 +793,11 @@ public class GraphPanelChart
          x = chartRect.x + (int) ((calcPointX - minXVal) * dxForDVal);
          int yHeight = (int) ((calcPointY - minYVal) * dyForDVal);
          y = chartRect.y + chartRect.height - yHeight;
+         //fix flickering
+         if( y < chartRect.y)
+         {
+             y = chartRect.y;
+         }
 
          if (row.isDrawThickLines())
          {

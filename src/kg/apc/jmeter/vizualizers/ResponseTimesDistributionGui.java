@@ -17,6 +17,7 @@ public class ResponseTimesDistributionGui
    public ResponseTimesDistributionGui()
    {
       super();
+      setGranulation(100);
       //graphPanel.getGraphObject().setChartType(GraphPanelChart.CHART_PERCENTAGE);
    }
 
@@ -75,6 +76,6 @@ public class ResponseTimesDistributionGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, true, true, true, true, true);
+        return new JSettingsPanel(this, true, true, false, false, false);
     }
 }

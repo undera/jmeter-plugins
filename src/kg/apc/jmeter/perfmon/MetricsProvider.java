@@ -3,14 +3,12 @@ package kg.apc.jmeter.perfmon;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.logging.Level;
 import javax.net.SocketFactory;
 import kg.apc.jmeter.perfmon.agent.AgentCommandsInterface;
 import org.apache.jorphan.logging.LoggingManager;
@@ -80,10 +78,8 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         }
     }
 
-    public void loadFile(int monitorType, File file)
+    public void loadFile(File file)
     {
-        this.monitorType = monitorType;
-        //gui.setChartType(monitorType);
         BufferedReader reader = null;
         try
         {
@@ -94,10 +90,13 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
                 reportError(file.getAbsolutePath() + " is not a valid PerfMon file.");
             } else
             {
+                gui.clearData();
+                gui.clearErrorMessage();
                 line = reader.readLine();
                 while (line != null)
                 {
-                    //process
+                    addLine(line);
+                    line = reader.readLine();
                 }
             }
         } catch (Exception ex)

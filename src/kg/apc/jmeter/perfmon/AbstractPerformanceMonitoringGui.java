@@ -135,7 +135,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         return panel;
     }
 
-    private int getSelectedTypeIndex() {
+    protected int getSelectedTypeIndex() {
         for (int i = 0; i < types.length; i++)
         {
             if(types[i].isSelected()) return i;

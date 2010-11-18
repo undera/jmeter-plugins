@@ -1,7 +1,16 @@
 package kg.apc.jmeter.perfmon;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowExactValues;
@@ -16,6 +25,7 @@ import org.apache.log.Logger;
 public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
+   private static String loadPath = null;
 
    public ServerPerfMonitoringGUI()
    {
@@ -28,7 +38,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
       JPopupMenu popup = graphPanel.getGraphObject().getComponentPopupMenu();
       popup.addSeparator();
       JMenuItem menu = new JMenuItem("Load PerfMon File...");
-      menu.setEnabled(false);
+      menu.addActionListener(new LoadAction());
       popup.add(menu);
    }
 
@@ -107,14 +117,29 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
       }
    }
 
-   public void clearGUI() {
-       graphPanel.getGraphObject().clearErrorMessage();
-   }
-   
-
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
         return new JSettingsPanel(this, false, true, false, false, true);
     }
+
+       private class LoadAction
+         implements ActionListener
+   {
+      @Override
+      public void actionPerformed(final ActionEvent e)
+      {
+         JFileChooser chooser = loadPath != null ? new JFileChooser(new File(loadPath)) : new JFileChooser();
+         chooser.setFileFilter(new FileNameExtensionFilter("PerfMon files", "jppm"));
+
+         int returnVal = chooser.showOpenDialog(ServerPerfMonitoringGUI.this);
+         if (returnVal == JFileChooser.APPROVE_OPTION)
+         {
+            File file = chooser.getSelectedFile();
+            loadPath = file.getParent();
+            MetricsProvider loader = new MetricsProvider(getSelectedTypeIndex(), ServerPerfMonitoringGUI.this, null);
+            loader.loadFile(file);
+         }
+      }
+   }
 }

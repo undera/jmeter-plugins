@@ -37,7 +37,6 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
     {
         socketFactory = new TCPSocketFactory();
         this.gui = gui;
-        outWriter = null;
         this.connectors = connectors;
         this.monitorType = monitorType;
     }
@@ -117,7 +116,6 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
     public MetricsProvider(int monitorType, AgentConnector[] connectors)
     {
         socketFactory = new TCPSocketFactory();
-        this.gui = null;
         this.connectors = connectors;
         this.monitorType = monitorType;
         openOutputFile();

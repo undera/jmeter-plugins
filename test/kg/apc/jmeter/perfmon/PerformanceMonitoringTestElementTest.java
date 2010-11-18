@@ -204,5 +204,10 @@ public class PerformanceMonitoringTestElementTest
         {
             return new JSettingsPanel(this, true, true, true, true, true);
         }
+
+        @Override
+        public void setLoadMenuEnabled(boolean enabled)
+        {
+        }
     }
 }

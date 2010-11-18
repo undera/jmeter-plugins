@@ -233,6 +233,11 @@ public class AbstractPerformanceMonitoringGuiTest
         {
         }
 
+         @Override
+        public void setLoadMenuEnabled(boolean enabled)
+        {
+        }
+
         @Override
         protected JSettingsPanel getSettingsPanel()
         {

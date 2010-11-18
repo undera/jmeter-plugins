@@ -39,7 +39,6 @@ import kg.apc.jmeter.vizualizers.GraphPanel;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import kg.apc.jmeter.vizualizers.SettingsInterface;
 import org.apache.jmeter.gui.UnsharedComponent;
-import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.visualizers.GraphListener;
 import org.apache.jmeter.visualizers.Sample;
 import org.apache.jorphan.logging.LoggingManager;
@@ -59,7 +58,6 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     JTable grid;
     JButton addRowButton;
     JButton deleteRowButton;
-    protected AgentConnector[] connectors = null;
     public static final String[] columnIdentifiers = new String[]
     {
         "Host / IP", "Port"
@@ -102,43 +100,6 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         colors = new ColorsDispatcher();
         initGui();
-    }
-
-    public boolean isConnectorsValid()
-    {
-        return connectors != null && connectors.length > 0;
-    }
-
-    protected void updateAgentConnectors()
-    {
-        JMeterProperty props = ((PerformanceMonitoringTestElement) createTestElement()).getData();
-
-        if (!(props instanceof NullProperty))
-        {
-            CollectionProperty columns = (CollectionProperty) props;
-            //log.info("Received colimns collection with no columns " + columns.size());
-            PropertyIterator iter = columns.iterator();
-            List<?> hosts = (List<?>) iter.next().getObjectValue();
-            List<?> ports = (List<?>) iter.next().getObjectValue();
-            if (hosts.size() > 0)
-            {
-                connectors = new AgentConnector[hosts.size()];
-                for (int i = 0; i < hosts.size(); i++)
-                {
-                    StringProperty host = (StringProperty) hosts.get(i);
-                    StringProperty port = (StringProperty) ports.get(i);
-                    connectors[i] = new AgentConnector(host.getStringValue(), Integer.valueOf(port.getStringValue()));
-                }
-
-                selectedPerfMonType = getSelectedTypeIndex();
-            } else
-            {
-                connectors = new AgentConnector[0];
-            }
-        } else
-        {
-            connectors = null;
-        }
     }
 
     protected abstract JSettingsPanel getSettingsPanel();
@@ -419,22 +380,28 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         }
     }
 
-    public abstract void testStarted();
-    public abstract void testEnded();
-
     //not used for now, but needed for settings tab
+    @Override
     public int getGranulation()
     {
         return 500;
     }
 
     //not used for now, but needed for settings tab
+    @Override
     public void setGranulation(int granulation)
     {
         //do nothing here
     }
+    @Override
     public GraphPanelChart getGraphPanelChart()
     {
         return graphPanel.getGraphObject();
     }
-}
+
+    public abstract void addPerfRecord(String serverName, double value);
+    public abstract void addPerfRecord(String serverName, double value, long time);
+    public abstract void setErrorMessage(String msg);
+    public abstract void clearErrorMessage();
+    public abstract void setChartType(int monitorType);
+ }

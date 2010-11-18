@@ -322,6 +322,10 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
                     Thread t = new Thread(this);
                     testIsRunning = true;
                     t.start();
+                    if(gui != null)
+                    {
+                        gui.setLoadMenuEnabled(false);
+                    }
                 }
             } catch (UnknownHostException e)
             {
@@ -336,6 +340,10 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
     public void testEnded()
     {
         testIsRunning = false;
+        if(gui != null)
+        {
+            gui.setLoadMenuEnabled(true);
+        }
         if (connectors != null)
         {
             for (int i = 0; i < connectors.length; i++)

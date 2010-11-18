@@ -404,4 +404,5 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     public abstract void setErrorMessage(String msg);
     public abstract void clearErrorMessage();
     public abstract void setChartType(int monitorType);
+    public abstract void setLoadMenuEnabled(boolean enabled);
  }

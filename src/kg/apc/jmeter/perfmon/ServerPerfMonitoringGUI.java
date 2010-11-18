@@ -3,12 +3,8 @@ package kg.apc.jmeter.perfmon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import kg.apc.jmeter.charting.AbstractGraphRow;
@@ -26,6 +22,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
    private static String loadPath = null;
+   JMenuItem loadMenu = null;
 
    public ServerPerfMonitoringGUI()
    {
@@ -37,9 +34,14 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
    {
       JPopupMenu popup = graphPanel.getGraphObject().getComponentPopupMenu();
       popup.addSeparator();
-      JMenuItem menu = new JMenuItem("Load PerfMon File...");
-      menu.addActionListener(new LoadAction());
-      popup.add(menu);
+      loadMenu = new JMenuItem("Load PerfMon File...");
+      loadMenu.addActionListener(new LoadAction());
+      popup.add(loadMenu);
+   }
+
+   public void setLoadMenuEnabled(boolean enabled)
+   {
+       loadMenu.setEnabled(enabled);
    }
 
    @Override

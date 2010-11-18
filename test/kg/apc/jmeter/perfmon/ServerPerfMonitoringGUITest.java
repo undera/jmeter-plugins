@@ -64,7 +64,7 @@ public class ServerPerfMonitoringGUITest
       String result = instance.getStaticLabel();
       assertEquals(expResult, result);
    }
-
+/*TODO: to be put in AgentMetricsGetter!
    @Test
    public void testTestStarted()
    {
@@ -173,7 +173,7 @@ public class ServerPerfMonitoringGUITest
       ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
       instance.setSocketFactory(socketFactory);
    }
-
+*/
    @Test
    public void testGetSettingsPanel()
    {
@@ -182,4 +182,89 @@ public class ServerPerfMonitoringGUITest
       JSettingsPanel result = instance.getSettingsPanel();
       assertNotNull(result);
    }
+
+    /**
+     * Test of addPerfRecord method, of class ServerPerfMonitoringGUI.
+     */
+    @Test
+    public void testAddPerfRecord_String_double()
+    {
+        System.out.println("addPerfRecord");
+        String serverName = "";
+        double value = 0.0;
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+        instance.addPerfRecord(serverName, value);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of addPerfRecord method, of class ServerPerfMonitoringGUI.
+     */
+    @Test
+    public void testAddPerfRecord_3args()
+    {
+        System.out.println("addPerfRecord");
+        String serverName = "";
+        double value = 0.0;
+        long time = 0L;
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+        instance.addPerfRecord(serverName, value, time);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setErrorMessage method, of class ServerPerfMonitoringGUI.
+     */
+    @Test
+    public void testSetErrorMessage()
+    {
+        System.out.println("setErrorMessage");
+        String msg = "";
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+        instance.setErrorMessage(msg);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of clearErrorMessage method, of class ServerPerfMonitoringGUI.
+     */
+    @Test
+    public void testClearErrorMessage()
+    {
+        System.out.println("clearErrorMessage");
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+        instance.clearErrorMessage();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setChartType method, of class ServerPerfMonitoringGUI.
+     */
+    @Test
+    public void testSetChartType()
+    {
+        System.out.println("setChartType");
+        int monitorType = 0;
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+        instance.setChartType(monitorType);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of clearGUI method, of class ServerPerfMonitoringGUI.
+     */
+    @Test
+    public void testClearGUI()
+    {
+        System.out.println("clearGUI");
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+        instance.clearGUI();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

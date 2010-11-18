@@ -171,25 +171,38 @@ public class PerformanceMonitoringTestElementTest
    }
 
    public class AbstractPerformanceMonitoringGuiImpl
-         extends AbstractPerformanceMonitoringGui
-   {
-      public String getStaticLabel()
-      {
-         return "test";
-      }
+            extends AbstractPerformanceMonitoringGui
+    {
 
-      public void testStarted()
-      {
-      }
+        public String getStaticLabel()
+        {
+            return "test";
+        }
 
-      public void testEnded()
-      {
-      }
+        public void addPerfRecord(String serverName, double value)
+        {
+        }
+
+        public void addPerfRecord(String serverName, double value, long time)
+        {
+        }
+
+        public void setErrorMessage(String msg)
+        {
+        }
+
+        public void clearErrorMessage()
+        {
+        }
+
+        public void setChartType(int monitorType)
+        {
+        }
 
         @Override
         protected JSettingsPanel getSettingsPanel()
         {
             return new JSettingsPanel(this, true, true, true, true, true);
         }
-   }
+    }
 }

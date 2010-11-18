@@ -57,27 +57,6 @@ public class AbstractPerformanceMonitoringGuiTest
    }
 
    @Test
-   public void testIsConnectorsValid()
-   {
-      System.out.println("isConnectorsValid");
-      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      boolean expResult = false;
-      boolean result = instance.isConnectorsValid();
-      assertEquals(expResult, result);
-   }
-
-   @Test
-   public void testUpdateAgentConnectors()
-   {
-      System.out.println("updateAgentConnectors");
-      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      assertEquals(false, instance.isConnectorsValid());
-      instance.addRowButton.doClick();
-      instance.updateAgentConnectors();
-      assertEquals(true, instance.isConnectorsValid());
-   }
-
-   @Test
    public void testCreateGraphPanel()
    {
       System.out.println("createGraphPanel");
@@ -202,21 +181,6 @@ public class AbstractPerformanceMonitoringGuiTest
       instance.editingCanceled(e);
    }
 
-   @Test
-   public void testTestStarted()
-   {
-      System.out.println("testStarted");
-      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      instance.testStarted();
-   }
-
-   @Test
-   public void testTestEnded()
-   {
-      System.out.println("testEnded");
-      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      instance.testEnded();
-   }
 
    @Test
    public void testAddRow()
@@ -241,27 +205,40 @@ public class AbstractPerformanceMonitoringGuiTest
    }
 
    public class AbstractPerformanceMonitoringGuiImpl
-         extends AbstractPerformanceMonitoringGui
-   {
-      public String getStaticLabel()
-      {
-         return "test";
-      }
+            extends AbstractPerformanceMonitoringGui
+    {
 
-      public void testStarted()
-      {
-      }
+        public String getStaticLabel()
+        {
+            return "test";
+        }
 
-      public void testEnded()
-      {
-      }
+        public void addPerfRecord(String serverName, double value)
+        {
+        }
+
+        public void addPerfRecord(String serverName, double value, long time)
+        {
+        }
+
+        public void setErrorMessage(String msg)
+        {
+        }
+
+        public void clearErrorMessage()
+        {
+        }
+
+        public void setChartType(int monitorType)
+        {
+        }
 
         @Override
         protected JSettingsPanel getSettingsPanel()
         {
             return new JSettingsPanel(this, true, true, true, true, true);
         }
-   }
+    }
 
    @Test
    public void testGetSettingsPanel()
@@ -299,4 +276,66 @@ public class AbstractPerformanceMonitoringGuiTest
       GraphPanelChart result = instance.getGraphPanelChart();
       assertNotNull(result);
    }
+
+    /**
+     * Test of addPerfRecord method, of class AbstractPerformanceMonitoringGui.
+     */
+    @Test
+    public void testAddPerfRecord_String_double()
+    {
+        System.out.println("addPerfRecord");
+        String serverName = "localhost";
+        double value = 0.0;
+        AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+        instance.addPerfRecord(serverName, value);
+    }
+
+    /**
+     * Test of addPerfRecord method, of class AbstractPerformanceMonitoringGui.
+     */
+    @Test
+    public void testAddPerfRecord_3args()
+    {
+        System.out.println("addPerfRecord");
+        String serverName = "localhost";
+        double value = 0.0;
+        long time = 100000L;
+        AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+        instance.addPerfRecord(serverName, value, time);
+    }
+
+    /**
+     * Test of setErrorMessage method, of class AbstractPerformanceMonitoringGui.
+     */
+    @Test
+    public void testSetErrorMessage()
+    {
+        System.out.println("setErrorMessage");
+        String msg = "";
+        AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+        instance.setErrorMessage(msg);
+    }
+
+    /**
+     * Test of clearErrorMessage method, of class AbstractPerformanceMonitoringGui.
+     */
+    @Test
+    public void testClearErrorMessage()
+    {
+        System.out.println("clearErrorMessage");
+        AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+        instance.clearErrorMessage();
+    }
+
+    /**
+     * Test of setChartType method, of class AbstractPerformanceMonitoringGui.
+     */
+    @Test
+    public void testSetChartType()
+    {
+        System.out.println("setChartType");
+        int monitorType = 0;
+        AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+        instance.setChartType(monitorType);
+    }
 }

@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import javax.net.SocketFactory;
 import kg.apc.jmeter.perfmon.agent.AgentCommandsInterface;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -45,7 +46,10 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         if(outWriter == null)
         {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
-            File f = new File("perfmon_" + formatter.format(System.currentTimeMillis()) + ".jppm");
+            
+            String fileName = JMeterUtils.getPropDefault("jppmfile", "perfmon_" + formatter.format(System.currentTimeMillis()) + ".jppm");
+            File f = new File(fileName);
+            
             try
             {
                 outWriter = new BufferedWriter(new FileWriter(f));

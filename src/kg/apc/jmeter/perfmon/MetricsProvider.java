@@ -45,7 +45,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         if(outWriter == null)
         {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
-            File f = new File("Perfmon_" + formatter.format(System.currentTimeMillis()) + ".jppm");
+            File f = new File("perfmon_" + formatter.format(System.currentTimeMillis()) + ".jppm");
             try
             {
                 outWriter = new BufferedWriter(new FileWriter(f));

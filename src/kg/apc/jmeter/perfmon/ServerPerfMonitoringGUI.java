@@ -140,6 +140,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
             File file = chooser.getSelectedFile();
             loadPath = file.getParent();
             MetricsProvider loader = new MetricsProvider(getSelectedTypeIndex(), ServerPerfMonitoringGUI.this, null);
+            setChartType(getSelectedTypeIndex());
             loader.loadFile(file);
          }
       }

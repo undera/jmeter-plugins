@@ -59,10 +59,16 @@ public class AgentConnector implements AgentCommandsInterface
       {
          //this is a command sent to the server agent, must not be changed
          //it is used to exit the thread loop
-         out.println(BYE);
-         out.close();
-         in.close();
-         socket.close();
+
+         //we need to test if out is null, in case of connection broke during test
+         //or agent was not started
+         if(out != null)
+         {
+             out.println(BYE);
+             out.close();
+             in.close();
+             socket.close();
+         }
       }
       catch (IOException e)
       {

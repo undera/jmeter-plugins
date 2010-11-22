@@ -57,6 +57,8 @@ public class PerformanceMonitoringTestElementTest
             {
                "server2", 6666
             });
+
+      instance.setData(PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel));
    }
 
    @After

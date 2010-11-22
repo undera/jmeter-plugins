@@ -5,6 +5,7 @@
 
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -25,6 +26,7 @@ public class ResponseTimesDistributionGuiTest {
    @BeforeClass
    public static void setUpClass() throws Exception
    {
+       TestJMeterUtils.createJmeterEnv();
    }
 
    @AfterClass
@@ -45,10 +47,9 @@ public class ResponseTimesDistributionGuiTest {
    {
       System.out.println("getLabelResource");
       ResponseTimesDistributionGui instance = new ResponseTimesDistributionGui();
-      String expResult = "";
+      String expResult = "ResponseTimesDistributionGui";
       String result = instance.getLabelResource();
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -56,20 +57,21 @@ public class ResponseTimesDistributionGuiTest {
    {
       System.out.println("getStaticLabel");
       ResponseTimesDistributionGui instance = new ResponseTimesDistributionGui();
-      String expResult = "";
+      String expResult = "Response Times Distribution";
       String result = instance.getStaticLabel();
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
    }
 
    @Test
    public void testAdd()
    {
       System.out.println("add");
-      SampleResult res = null;
+      SampleResult res = new SampleResult();
+      res.setAllThreads(1);
+      res.setThreadName("test 1-2");
+      res.setStampAndTime(System.currentTimeMillis(), 1000);
       ResponseTimesDistributionGui instance = new ResponseTimesDistributionGui();
       instance.add(res);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -77,10 +79,8 @@ public class ResponseTimesDistributionGuiTest {
    {
       System.out.println("getSettingsPanel");
       ResponseTimesDistributionGui instance = new ResponseTimesDistributionGui();
-      JSettingsPanel expResult = null;
       JSettingsPanel result = instance.getSettingsPanel();
-      assertEquals(expResult, result);
-      fail("The test case is a prototype.");
+      assertNotNull(result);
    }
 
 }

@@ -42,6 +42,14 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         this.monitorType = monitorType;
     }
 
+    public MetricsProvider(int monitorType, AgentConnector[] connectors)
+    {
+        socketFactory = new TCPSocketFactory();
+        this.connectors = connectors;
+        this.monitorType = monitorType;
+        MetricsProvider.openOutputFile();
+    }
+
     private static synchronized void openOutputFile() {
         if(outWriter == null)
         {
@@ -96,10 +104,20 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
                 gui.clearData();
                 gui.clearErrorMessage();
                 line = reader.readLine();
+                boolean isFileEmpty = true;
                 while (line != null)
                 {
-                    addLine(line);
+                    if(line.length()>0)
+                    {
+                        isFileEmpty = false;
+                        addLine(line);
+                    }
                     line = reader.readLine();
+                }
+
+                if(isFileEmpty)
+                {
+                    reportError(file.getAbsolutePath() + " is empty.");
                 }
             }
         } catch (Exception ex)
@@ -115,14 +133,6 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
                 reportError("Failed to close " + file.getAbsolutePath());
             }
         }
-    }
-
-    public MetricsProvider(int monitorType, AgentConnector[] connectors)
-    {
-        socketFactory = new TCPSocketFactory();
-        this.connectors = connectors;
-        this.monitorType = monitorType;
-        openOutputFile();
     }
 
     private synchronized static void writeRecord(String line) {
@@ -148,7 +158,15 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         } else
         {
             long now = System.currentTimeMillis();
-            writeRecord("" + (now - now % DELAY) + ";" + monitorType + ";"  + label + ";" + value );
+            StringBuilder builder = new StringBuilder();
+            builder.append(now - now % DELAY);
+            builder.append(";");
+            builder.append(monitorType);
+            builder.append(";");
+            builder.append(label);
+            builder.append(";");
+            builder.append(value);
+            writeRecord(builder.toString());
         }
     }
 

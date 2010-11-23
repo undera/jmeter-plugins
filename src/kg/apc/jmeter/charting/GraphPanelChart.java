@@ -823,10 +823,9 @@ public class GraphPanelChart
           if (row.isDrawBar())
           {
               g.setColor(row.getColor());
-              if (isChartPointValid(x, y))
-              {   //x = chartRect.x + (int) ((calcPointX - minXVal) * dxForDVal);
+              if (isChartPointValid(x+1, y)) //as we draw bars, xMax values must be rejected
+              {   
                   int x2 = chartRect.x + (int) ((calcPointX + row.getGranulationValue() - minXVal) * dxForDVal) - x -1;
-                  //g.drawRect(x, y, x2, yHeight);
                   Composite oldComposite = ((Graphics2D) g).getComposite();
                   ((Graphics2D) g).setComposite(barComposite);
 

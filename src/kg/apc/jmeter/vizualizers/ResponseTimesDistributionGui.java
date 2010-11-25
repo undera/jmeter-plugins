@@ -40,7 +40,7 @@ public class ResponseTimesDistributionGui
          row = model.get(label);
       }
       //for testing of X Axis out of range prevention, uncomment following line
-      row.add(30000, 1);
+      //row.add(30000, 1);
       return row;
    }
 

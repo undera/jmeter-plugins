@@ -109,6 +109,8 @@ public class GraphPanelChart
    //if necessary. If -1 is assigned, no limit.
    private int maxPoints = -1;
 
+   private boolean preventXAxisOverScaling = false;
+
    // Default draw options - these are default values if no property is entered in user.properties
    // List of possible properties (TODO: The explaination must be written in readme file)
    // jmeterPlugin.drawGradient=(true/false)
@@ -125,6 +127,12 @@ public class GraphPanelChart
    private boolean settingsDrawGradient;
    private boolean settingsDrawFinalZeroingLines;
    private boolean settingsDrawCurrentX;
+
+
+    public void setPreventXAxisOverScaling(boolean preventXAxisOverScaling)
+    {
+        this.preventXAxisOverScaling = preventXAxisOverScaling;
+    }
 
     public void setSettingsDrawCurrentX(boolean settingsDrawCurrentX)
     {
@@ -266,6 +274,8 @@ public class GraphPanelChart
          {
             continue;
          }
+
+         rowValue.setExcludeOutOfRangeValues(preventXAxisOverScaling);
 
          if (rowValue.getMaxY() > maxYVal)
          {

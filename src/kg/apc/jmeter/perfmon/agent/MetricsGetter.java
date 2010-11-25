@@ -199,6 +199,7 @@ public class MetricsGetter implements AgentCommandsInterface
       }
       catch (SigarException ex)
       {
+         ServerAgent.logMessage(ex.getMessage());
          ret = AGENT_ERROR_ARRAY;
       }
       return ret;
@@ -241,6 +242,7 @@ public class MetricsGetter implements AgentCommandsInterface
       }
       catch (SigarException ex)
       {
+         ServerAgent.logMessage(ex.getMessage());
          ret = AGENT_ERROR_ARRAY;
       }
 

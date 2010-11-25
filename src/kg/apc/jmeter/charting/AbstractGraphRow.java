@@ -283,6 +283,13 @@ public abstract class AbstractGraphRow
       this.granulation = value;
    }
 
+   /**
+    * For bar chart x axis too big prevention. Must be overriden if necessary.
+    * @param excludeOutOfRangeValues
+    */
+    public void setExcludeOutOfRangeValues(boolean excludeOutOfRangeValues)
+    {
+    }
 
    public abstract int size();
 }

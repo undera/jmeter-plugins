@@ -39,7 +39,8 @@ public class ResponseTimesDistributionGui
       {
          row = model.get(label);
       }
-
+      //for testing of X Axis out of range prevention, uncomment following line
+      row.add(30000, 1);
       return row;
    }
 
@@ -76,6 +77,6 @@ public class ResponseTimesDistributionGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, true, true, false, false, false);
+        return new JSettingsPanel(this, true, true, false, false, false, true);
     }
 }

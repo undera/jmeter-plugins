@@ -7,7 +7,8 @@ import kg.apc.jmeter.charting.GraphPanelChart;
  *
  * @author Stéphane Hoblingre
  */
-public class JSettingsPanel extends javax.swing.JPanel {
+public class JSettingsPanel extends javax.swing.JPanel
+{
 
     private SettingsInterface parent = null;
     private int originalTooltipDisplayTime = 0;
@@ -18,9 +19,34 @@ public class JSettingsPanel extends javax.swing.JPanel {
             boolean showGradientOption,
             boolean showCurrentXOption,
             boolean showFinalZeroingLinesOption,
-            boolean showLimitPointOption) {
+            boolean showLimitPointOption,
+            boolean showBarChartXAxisLimit)
+    {
         initComponents();
         this.parent = parent;
+        postInitComponents(showTimelinePanel, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit);
+    }
+
+    public JSettingsPanel(SettingsInterface parent,
+            boolean showTimelinePanel,
+            boolean showGradientOption,
+            boolean showCurrentXOption,
+            boolean showFinalZeroingLinesOption,
+            boolean showLimitPointOption)
+    {
+
+        initComponents();
+        this.parent = parent;
+        postInitComponents(showTimelinePanel, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, false);
+    }
+
+    private void postInitComponents(boolean showTimelinePanel,
+            boolean showGradientOption,
+            boolean showCurrentXOption,
+            boolean showFinalZeroingLinesOption,
+            boolean showLimitPointOption,
+            boolean showBarChartXAxisLimit)
+    {
 
         jPanelTimeLine.setVisible(showTimelinePanel);
         jCheckBoxPaintGradient.setVisible(showGradientOption);
@@ -31,33 +57,39 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jLabelMaxPoints.setVisible(showLimitPointOption);
         jLabelInfoMaxPoint.setVisible(showLimitPointOption);
 
-        originalTooltipDisplayTime=ToolTipManager.sharedInstance().getDismissDelay();
+        originalTooltipDisplayTime = ToolTipManager.sharedInstance().getDismissDelay();
 
         //init default values from global config
         jCheckBoxPaintGradient.setSelected(parent.getGraphPanelChart().isSettingsDrawGradient());
         jCheckBoxDrawCurrentX.setSelected(parent.getGraphPanelChart().isSettingsDrawCurrentX());
-        if(showFinalZeroingLinesOption)
+        if (showFinalZeroingLinesOption)
         {
             jCheckBoxDrawFinalZeroingLines.setSelected(GraphPanelChart.isGlobalDrawFinalZeroingLines());
         }
+
+        jCheckBoxLimitMaxXValue.setVisible(showBarChartXAxisLimit);
     }
 
-    private int getValueFromString(String sValue) {
+    private int getValueFromString(String sValue)
+    {
         int ret;
-        try {
+        try
+        {
             ret = Integer.valueOf(sValue);
-            if(ret <= 0)
+            if (ret <= 0)
             {
                 ret = -1;
             }
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex)
+        {
             ret = -1;
         }
 
         return ret;
     }
 
-    public void setGranulationValue(int value) {
+    public void setGranulationValue(int value)
+    {
         jComboBoxGranulation.setSelectedItem(Integer.toString(value));
     }
 
@@ -89,6 +121,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jLabelMaxPoints = new javax.swing.JLabel();
         jComboBoxMaxPoints = new javax.swing.JComboBox();
         jLabelInfoMaxPoint = new javax.swing.JLabel();
+        jCheckBoxLimitMaxXValue = new javax.swing.JCheckBox();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setLayout(new java.awt.BorderLayout());
@@ -195,7 +228,7 @@ public class JSettingsPanel extends javax.swing.JPanel {
         jPanel5.add(jCheckBoxDrawFinalZeroingLines, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
@@ -265,6 +298,19 @@ public class JSettingsPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jPanel5.add(jLabelInfoMaxPoint, gridBagConstraints);
 
+        jCheckBoxLimitMaxXValue.setText("Prevent X axis to adapt to out of range values");
+        jCheckBoxLimitMaxXValue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxLimitMaxXValueActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel5.add(jCheckBoxLimitMaxXValue, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -279,8 +325,8 @@ public class JSettingsPanel extends javax.swing.JPanel {
     private void jComboBoxGranulationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBoxGranulationActionPerformed
     {//GEN-HEADEREND:event_jComboBoxGranulationActionPerformed
         //notify parent if value changed and valid
-        int newValue = getValueFromString((String)jComboBoxGranulation.getSelectedItem());
-        if(newValue != -1 && parent.getGranulation() != newValue)
+        int newValue = getValueFromString((String) jComboBoxGranulation.getSelectedItem());
+        if (newValue != -1 && parent.getGranulation() != newValue)
         {
             parent.setGranulation(newValue);
         }
@@ -303,18 +349,21 @@ public class JSettingsPanel extends javax.swing.JPanel {
 
     private void jCheckBoxMaxPointsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxMaxPointsActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxMaxPointsActionPerformed
-        if(jCheckBoxMaxPoints.isSelected()) {
-            parent.getGraphPanelChart().setMaxPoints(getValueFromString((String)jComboBoxMaxPoints.getSelectedItem()));
-        } else {
+        if (jCheckBoxMaxPoints.isSelected())
+        {
+            parent.getGraphPanelChart().setMaxPoints(getValueFromString((String) jComboBoxMaxPoints.getSelectedItem()));
+        } else
+        {
             parent.getGraphPanelChart().setMaxPoints(-1);
         }
     }//GEN-LAST:event_jCheckBoxMaxPointsActionPerformed
 
     private void jComboBoxMaxPointsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBoxMaxPointsActionPerformed
     {//GEN-HEADEREND:event_jComboBoxMaxPointsActionPerformed
-        if(jCheckBoxMaxPoints.isSelected()) {
-            parent.getGraphPanelChart().setMaxPoints(getValueFromString((String)jComboBoxMaxPoints.getSelectedItem()));
-        } 
+        if (jCheckBoxMaxPoints.isSelected())
+        {
+            parent.getGraphPanelChart().setMaxPoints(getValueFromString((String) jComboBoxMaxPoints.getSelectedItem()));
+        }
     }//GEN-LAST:event_jComboBoxMaxPointsActionPerformed
 
     private void infoLabelMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_infoLabelMouseEntered
@@ -328,9 +377,15 @@ public class JSettingsPanel extends javax.swing.JPanel {
         ToolTipManager.sharedInstance().setDismissDelay(originalTooltipDisplayTime);
     }//GEN-LAST:event_infoLabelMouseExited
 
+    private void jCheckBoxLimitMaxXValueActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxLimitMaxXValueActionPerformed
+    {//GEN-HEADEREND:event_jCheckBoxLimitMaxXValueActionPerformed
+        parent.getGraphPanelChart().setPreventXAxisOverScaling(jCheckBoxLimitMaxXValue.isSelected());
+    }//GEN-LAST:event_jCheckBoxLimitMaxXValueActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBoxDrawCurrentX;
     private javax.swing.JCheckBox jCheckBoxDrawFinalZeroingLines;
+    private javax.swing.JCheckBox jCheckBoxLimitMaxXValue;
     private javax.swing.JCheckBox jCheckBoxMaxPoints;
     private javax.swing.JCheckBox jCheckBoxPaintGradient;
     private javax.swing.JComboBox jComboBoxGranulation;
@@ -348,5 +403,4 @@ public class JSettingsPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelTimeLine;
     // End of variables declaration//GEN-END:variables
-
 }

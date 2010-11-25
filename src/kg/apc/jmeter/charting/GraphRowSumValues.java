@@ -11,132 +11,176 @@ import java.util.concurrent.ConcurrentSkipListMap;
  * @author apc
  */
 public class GraphRowSumValues
-      extends AbstractGraphRow
-      implements Iterator<Entry<Long, AbstractGraphPanelChartElement>>
+        extends AbstractGraphRow
+        implements Iterator<Entry<Long, AbstractGraphPanelChartElement>>
 {
-   //private static final Logger log = LoggingManager.getLoggerForClass();
-   private ConcurrentSkipListMap<Long, GraphPanelChartSumElement> values;
-   private double rollingSum;
-   private Iterator<Entry<Long, GraphPanelChartSumElement>> iterator;
-   private boolean isRollingSum = true;
+    //private static final Logger log = LoggingManager.getLoggerForClass();
 
-   /**
-    *
-    */
-   public GraphRowSumValues()
-   {
-      super();
-      values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
-   }
+    private ConcurrentSkipListMap<Long, GraphPanelChartSumElement> values;
+    private double rollingSum;
+    private Iterator<Entry<Long, GraphPanelChartSumElement>> iterator;
+    private boolean isRollingSum = true;
+    private boolean excludeOutOfRangeValues = false;
+    private final static long excludeCount = 15; //we don't take in account for max x if more than 15 empty bars
+    private int countX = 0;
 
-   public GraphRowSumValues(boolean doRollingSum)
-   {
-      super();
-      values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
-      isRollingSum = doRollingSum;
-   }
+    @Override
+    public void setExcludeOutOfRangeValues(boolean excludeOutOfRangeValues)
+    {
+        this.excludeOutOfRangeValues = excludeOutOfRangeValues;
+    }
 
-   /**
-    *
-    * @param val
-    */
-   public void setMaxY(double val)
-   {
-      maxY = val;
-   }
+    /**
+     *
+     */
+    public GraphRowSumValues()
+    {
+        super();
+        values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
+    }
 
-   /**
-    *
-    * @param xVal
-    * @param yVal
-    */
-   @Override
-   public void add(long xVal, double yVal)
-   {
-      GraphPanelChartSumElement el;
-      if (values.containsKey(xVal))
-      {
-         el = values.get(xVal);
-         el.add(yVal);
-         yVal = el.getValue();
-      }
-      else
-      {
-         el = new GraphPanelChartSumElement(yVal);
-         values.put(xVal, el);
-      }
+    public GraphRowSumValues(boolean doRollingSum)
+    {
+        super();
+        values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
+        isRollingSum = doRollingSum;
+    }
 
-      super.add(xVal, yVal);
-   }
+    /**
+     *
+     * @param val
+     */
+    public void setMaxY(double val)
+    {
+        maxY = val;
+    }
 
-   /**
-    *
-    * @return
-    */
-   public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
-   {
-      rollingSum = 0;
-      iterator = values.entrySet().iterator();
-      return this;
-   }
+    /**
+     *
+     * @param xVal
+     * @param yVal
+     */
+    @Override
+    public void add(long xVal, double yVal)
+    {
+        GraphPanelChartSumElement el;
+        if (values.containsKey(xVal))
+        {
+            el = values.get(xVal);
+            el.add(yVal);
+            yVal = el.getValue();
+        } else
+        {
+            el = new GraphPanelChartSumElement(yVal);
+            values.put(xVal, el);
+            countX++;
+        }
+       super.add(xVal, yVal);
+    }
 
-   public boolean hasNext()
-   {
-      return iterator.hasNext();
-   }
+    /**
+     *
+     * @return
+     */
+    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
+    {
+        rollingSum = 0;
+        iterator = values.entrySet().iterator();
+        return this;
+    }
 
-   public Entry<Long, AbstractGraphPanelChartElement> next()
-   {
-      Entry<Long, GraphPanelChartSumElement> entry = iterator.next();
-      GraphPanelChartSumElement ret = entry.getValue();
-      
-      //log.info("Rolling: " + entry.getKey() + " " + rollingSum);
-      ExactEntry retValue = null;
-      if(isRollingSum) {
-         rollingSum += ret.getValue();
-         retValue = new ExactEntry(entry.getKey(), new GraphPanelChartSumElement(rollingSum));
-       } else {
-          retValue = new ExactEntry(entry.getKey(), new GraphPanelChartSumElement(ret.getValue()));
-       }
-      return retValue;
-   }
+    public boolean hasNext()
+    {
+        return iterator.hasNext();
+    }
 
-   public void remove()
-   {
-      throw new UnsupportedOperationException("Not supported yet.");
-   }
+    public Entry<Long, AbstractGraphPanelChartElement> next()
+    {
+        Entry<Long, GraphPanelChartSumElement> entry = iterator.next();
+        GraphPanelChartSumElement ret = entry.getValue();
 
-   private class ExactEntry
-         implements Entry<Long, AbstractGraphPanelChartElement>
-   {
-      private long key;
-      private final AbstractGraphPanelChartElement value;
+        //log.info("Rolling: " + entry.getKey() + " " + rollingSum);
+        ExactEntry retValue = null;
+        if (isRollingSum)
+        {
+            rollingSum += ret.getValue();
+            retValue = new ExactEntry(entry.getKey(), new GraphPanelChartSumElement(rollingSum));
+        } else
+        {
+            retValue = new ExactEntry(entry.getKey(), new GraphPanelChartSumElement(ret.getValue()));
+        }
+        return retValue;
+    }
 
-      public ExactEntry(long aKey, AbstractGraphPanelChartElement aValue)
-      {
-         key = aKey;
-         value = aValue;
-      }
+    public void remove()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-      public Long getKey()
-      {
-         return key;
-      }
+    private class ExactEntry
+            implements Entry<Long, AbstractGraphPanelChartElement>
+    {
 
-      public AbstractGraphPanelChartElement getValue()
-      {
-         return value;
-      }
+        private long key;
+        private final AbstractGraphPanelChartElement value;
 
-      public AbstractGraphPanelChartElement setValue(AbstractGraphPanelChartElement value)
-      {
-         throw new UnsupportedOperationException("Not supported yet.");
-      }
-   }
+        public ExactEntry(long aKey, AbstractGraphPanelChartElement aValue)
+        {
+            key = aKey;
+            value = aValue;
+        }
+
+        public Long getKey()
+        {
+            return key;
+        }
+
+        public AbstractGraphPanelChartElement getValue()
+        {
+            return value;
+        }
+
+        public AbstractGraphPanelChartElement setValue(AbstractGraphPanelChartElement value)
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }
 
     @Override
     public int size()
     {
-        return values.size();
+        return countX;
+    }
+
+    @Override
+    /**
+     * Method used to getMaxX without taking in account out of range
+     * values. I.E. we don't take in account on value if the distance
+     * with the last point is > getGranulationValue() * excludeCount.
+     * @return the evaluated MaxX
+     */
+    public long getMaxX()
+    {
+        if (!excludeOutOfRangeValues)
+        {
+            return super.getMaxX();
+        } else
+        {
+            long retMax = 0;
+            Iterator<Long> iter = values.keySet().iterator();
+            while (iter.hasNext())
+            {
+                long value = iter.next();
+                long excludeValue = getGranulationValue() * excludeCount;
+                if (value > retMax)
+                {
+                    if ((value - retMax) < excludeValue)
+                    {
+                        retMax = value;
+                    }
+                }
+            }
+            return retMax;
+        }
     }
 }

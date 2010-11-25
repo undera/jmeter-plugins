@@ -278,7 +278,7 @@
             </Component>
             <Component class="javax.swing.JCheckBox" name="jCheckBoxLimitMaxXValue">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Prevent X axis to adapt to out of range values"/>
+                <Property name="text" type="java.lang.String" value="Prevent X axis range to adapt to outliers"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxLimitMaxXValueActionPerformed"/>

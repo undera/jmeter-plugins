@@ -298,7 +298,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jPanel5.add(jLabelInfoMaxPoint, gridBagConstraints);
 
-        jCheckBoxLimitMaxXValue.setText("Prevent X axis to adapt to out of range values");
+        jCheckBoxLimitMaxXValue.setText("Prevent X axis range to adapt to outliers");
         jCheckBoxLimitMaxXValue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxLimitMaxXValueActionPerformed(evt);

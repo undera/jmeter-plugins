@@ -1008,7 +1008,7 @@ public class GraphPanelChart
       this.setComponentPopupMenu(popup);
       JMenuItem itemCopy = new JMenuItem("Copy Image to Clipboard");
       JMenuItem itemSave = new JMenuItem("Save Image as...");
-      JMenuItem itemExport = new JMenuItem("Export to CSV File");
+      JMenuItem itemExport = new JMenuItem("Export to CSV...");
       itemCopy.addActionListener(new CopyAction());
       itemSave.addActionListener(new SaveAction());
       itemExport.addActionListener(new CsvExportAction());

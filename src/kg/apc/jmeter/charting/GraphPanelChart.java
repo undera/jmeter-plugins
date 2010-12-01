@@ -20,9 +20,12 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.AbstractMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -122,6 +125,7 @@ public class GraphPanelChart
    private static boolean neverDrawFinalZeroingLines = false;
    private static boolean optimizeYAxis = true;
    private static boolean neverDrawCurrentX = false;
+   private static String csvSeparator = ",";
 
    //some of these preference can be overidden by the preference tab:
    private boolean settingsDrawGradient;
@@ -187,6 +191,11 @@ public class GraphPanelChart
       if (cfgNeverDrawFinalCurrentX != null)
       {
          GraphPanelChart.neverDrawCurrentX = "true".equalsIgnoreCase(cfgNeverDrawFinalCurrentX);
+      }
+      String cfgCsvSeparator = JMeterUtils.getProperty("jmeterPlugin.csvSeparator");
+      if (cfgCsvSeparator != null)
+      {
+         GraphPanelChart.csvSeparator = cfgCsvSeparator;
       }
    }
 
@@ -999,11 +1008,14 @@ public class GraphPanelChart
       this.setComponentPopupMenu(popup);
       JMenuItem itemCopy = new JMenuItem("Copy Image to Clipboard");
       JMenuItem itemSave = new JMenuItem("Save Image as...");
+      JMenuItem itemExport = new JMenuItem("Export to CSV File");
       itemCopy.addActionListener(new CopyAction());
       itemSave.addActionListener(new SaveAction());
+      itemExport.addActionListener(new CsvExportAction());
       popup.add(itemCopy);
-      //popup.addSeparator();
       popup.add(itemSave);
+      popup.addSeparator();
+      popup.add(itemExport);
    }
 
    private class CopyAction
@@ -1082,6 +1094,86 @@ public class GraphPanelChart
                {
                   JOptionPane.showConfirmDialog(GraphPanelChart.this, "Impossible to write the image to the file:\n" + ex.getMessage(), "Save Image as", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                }
+            }
+         }
+      }
+   }
+
+   private boolean isDateValue(long value)
+   {
+       return value > 1000000000000L;
+   }
+
+   private void exportModelToCSV(File dest)
+    {
+       final SimpleDateFormat formatter = new SimpleDateFormat("d MMM yyyy HH:mm:ss.S");
+
+       try
+        {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(dest));
+
+            Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
+
+            writer.write("Row Name,Category,Value");
+            writer.newLine();
+            writer.flush();
+
+            while (it.hasNext())
+            {
+                Entry<String, AbstractGraphRow> row = it.next();
+                String rowName = row.getKey();
+                Iterator<Entry<Long, AbstractGraphPanelChartElement>> itRow = row.getValue().iterator();
+                while (itRow.hasNext())
+                {
+                    Entry<Long, AbstractGraphPanelChartElement> element = itRow.next();
+                    long xValue = element.getKey();
+                    if(isDateValue(xValue))
+                    {
+                        writer.write(rowName + csvSeparator + formatter.format(xValue) + csvSeparator + element.getValue().getValue());
+                    } else
+                    {
+                        writer.write(rowName + csvSeparator + xValue + csvSeparator + element.getValue().getValue());
+                    }
+                    
+                    writer.newLine();
+                    writer.flush();
+                }
+            }
+            writer.close();
+        } catch (IOException ex)
+        {
+            JOptionPane.showConfirmDialog(GraphPanelChart.this, "Impossible to write the CSV file:\n" + ex.getMessage(), "Export to CSV File", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+   private class CsvExportAction
+         implements ActionListener
+   {
+      @Override
+      public void actionPerformed(final ActionEvent e)
+      {
+         JFileChooser chooser = savePath != null ? new JFileChooser(new File(savePath)) : new JFileChooser();
+         chooser.setFileFilter(new FileNameExtensionFilter("CSV Files", "csv"));
+
+         int returnVal = chooser.showSaveDialog(GraphPanelChart.this);
+         if (returnVal == JFileChooser.APPROVE_OPTION)
+         {
+            File file = chooser.getSelectedFile();
+            if (!file.getAbsolutePath().toUpperCase().endsWith(".CSV"))
+            {
+               file = new File(file.getAbsolutePath() + ".csv");
+            }
+            savePath = file.getParent();
+            boolean doSave = true;
+            if (file.exists())
+            {
+               int choice = JOptionPane.showConfirmDialog(GraphPanelChart.this, "Do you want to overwrite " + file.getAbsolutePath() + "?", "Export to CSV File", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+               doSave = (choice == JOptionPane.YES_OPTION);
+            }
+
+            if (doSave)
+            {
+               exportModelToCSV(file);
             }
          }
       }

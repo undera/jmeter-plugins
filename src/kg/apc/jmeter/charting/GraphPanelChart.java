@@ -1114,7 +1114,7 @@ public class GraphPanelChart
 
             Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
 
-            writer.write("Row Name,Category,Value");
+            writer.write("Row Name" + csvSeparator + "Category" + csvSeparator + "Value");
             writer.newLine();
             writer.flush();
 

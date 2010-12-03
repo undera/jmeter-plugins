@@ -771,9 +771,6 @@ public class GraphPanelChart
          oldStroke = ((Graphics2D) g).getStroke();
       }
 
-      //for better display, we always draw the first point
-      boolean firstPoint = true;
-
       //how many actual points were averaged (basically, to handle last points of the collection)
       int nbAveragedValues = 0;
 
@@ -786,9 +783,8 @@ public class GraphPanelChart
           double calcPointX = 0;
           double calcPointY = 0;
 
-          if (factor == 1 || firstPoint)
+          if (factor == 1)
           {
-              firstPoint = false;
               element = it.next();
               calcPointX = element.getKey().doubleValue();
               calcPointY = ((AbstractGraphPanelChartElement) element.getValue()).getValue();

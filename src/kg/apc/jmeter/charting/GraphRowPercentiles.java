@@ -115,7 +115,7 @@ public class GraphRowPercentiles extends AbstractGraphRow
                 }
             }
 
-            percentiles.get(100l).setValue(maxRespTime); //100 in long, not 1001 !!!
+            percentiles.get(100L).setValue(maxRespTime);
         }
     }
 

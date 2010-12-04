@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.AbstractMap;
 import java.util.Iterator;
@@ -125,7 +126,7 @@ public class GraphPanelChart
    private static boolean neverDrawFinalZeroingLines = false;
    private static boolean optimizeYAxis = true;
    private static boolean neverDrawCurrentX = false;
-   private static String csvSeparator = ",";
+   private static String csvSeparator = null;
 
    //some of these preference can be overidden by the preference tab:
    private boolean settingsDrawGradient;
@@ -196,6 +197,15 @@ public class GraphPanelChart
       if (cfgCsvSeparator != null)
       {
          GraphPanelChart.csvSeparator = cfgCsvSeparator;
+      } else
+      {
+         if(new DecimalFormatSymbols().getDecimalSeparator() == '.')
+         {
+             GraphPanelChart.csvSeparator = ",";
+         } else
+         {
+             GraphPanelChart.csvSeparator = ";";
+         }
       }
    }
 
@@ -1102,7 +1112,7 @@ public class GraphPanelChart
 
    private void exportModelToCSV(File dest)
     {
-       final SimpleDateFormat formatter = new SimpleDateFormat("d MMM yyyy HH:mm:ss.S");
+       final SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss" + new DecimalFormatSymbols().getDecimalSeparator() + "S");
 
        try
         {
@@ -1110,7 +1120,7 @@ public class GraphPanelChart
 
             Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
 
-            writer.write("Row Name" + csvSeparator + "Category" + csvSeparator + "Value");
+            writer.write("Serie" + csvSeparator + "X Axis" + csvSeparator + "Value");
             writer.newLine();
             writer.flush();
 

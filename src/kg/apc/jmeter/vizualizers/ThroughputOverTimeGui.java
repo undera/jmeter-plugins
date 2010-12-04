@@ -1,8 +1,10 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.text.DecimalFormatSymbols;
 import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jorphan.gui.RateRenderer;
 
 /**
  *
@@ -21,6 +23,7 @@ public class ThroughputOverTimeGui
         super();
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(
                 "HH:mm:ss"));
+        graphPanel.getGraphObject().setyAxisLabelRenderer(new CustomRateRenderer("#.0"));
         graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
     }
 
@@ -82,5 +85,30 @@ public class ThroughputOverTimeGui
     protected JSettingsPanel getSettingsPanel()
     {
         return new JSettingsPanel(this, true, true, false, true, true);
+    }
+
+        private class CustomRateRenderer
+            extends RateRenderer
+    {
+
+        private String zeroLabel;
+
+        public CustomRateRenderer(String format)
+        {
+            super(format);
+            zeroLabel = "0" + new DecimalFormatSymbols().getDecimalSeparator() + "0/sec";
+        }
+
+        @Override
+        public void setValue(Object value)
+        {
+            if (value != null && (value instanceof Double) && ((Double)value).doubleValue() == 0)
+            {
+                setText(zeroLabel);
+            } else
+            {
+                super.setValue(value);
+            }
+        }
     }
 }

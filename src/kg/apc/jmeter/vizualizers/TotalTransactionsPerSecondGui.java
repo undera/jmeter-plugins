@@ -74,11 +74,11 @@ public class TotalTransactionsPerSecondGui
         //always add 0 failed transactions
         if (res.isSuccessful())
         {
-            addTransaction("Total Failed Transactions", res.getEndTime() - res.getEndTime() % getGranulation(), 0);
-            addTransaction("Total Successful Transactions", res.getEndTime() - res.getEndTime() % getGranulation(), 1);
+            addTransaction("Failed Transactions per Second", res.getEndTime() - res.getEndTime() % getGranulation(), 0);
+            addTransaction("Successful Transactions per Second", res.getEndTime() - res.getEndTime() % getGranulation(), 1);
         } else
         {
-            addTransaction("Total Failed Transactions", res.getEndTime() - res.getEndTime() % getGranulation(), 1);
+            addTransaction("Failed Transactions per Second", res.getEndTime() - res.getEndTime() % getGranulation(), 1);
         }
         updateGui(null);
     }

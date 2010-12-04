@@ -71,7 +71,7 @@ public class HitsPerSecondGui
 
     public void add(SampleResult res)
     {
-        addHit("Total Server Hits", res.getStartTime() - res.getStartTime() % getGranulation());
+        addHit("Server Hits per Second", res.getStartTime() - res.getStartTime() % getGranulation());
         updateGui(null);
     }
 

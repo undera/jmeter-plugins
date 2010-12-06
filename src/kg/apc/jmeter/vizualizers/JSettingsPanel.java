@@ -81,6 +81,7 @@ public class JSettingsPanel extends javax.swing.JPanel
 
         jComboBoxHideNonRepValLimit.setVisible(showHideNonRepValues);
         jCheckBoxHideNonRepValues.setVisible(showHideNonRepValues);
+        jLabelHideNonRepPoints.setVisible(showHideNonRepValues);
     }
 
     private int getValueFromString(String sValue)
@@ -137,7 +138,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         jCheckBoxLimitMaxXValue = new javax.swing.JCheckBox();
         jCheckBoxHideNonRepValues = new javax.swing.JCheckBox();
         jComboBoxHideNonRepValLimit = new javax.swing.JComboBox();
-        jLabel4 = new javax.swing.JLabel();
+        jLabelHideNonRepPoints = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setLayout(new java.awt.BorderLayout());
@@ -353,13 +354,13 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel5.add(jComboBoxHideNonRepValLimit, gridBagConstraints);
 
-        jLabel4.setText("occurences");
+        jLabelHideNonRepPoints.setText("occurences");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 5;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
-        jPanel5.add(jLabel4, gridBagConstraints);
+        jPanel5.add(jLabelHideNonRepPoints, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -464,7 +465,7 @@ public class JSettingsPanel extends javax.swing.JPanel
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelHideNonRepPoints;
     private javax.swing.JLabel jLabelInfoGrpValues;
     private javax.swing.JLabel jLabelInfoMaxPoint;
     private javax.swing.JLabel jLabelMaxPoints;

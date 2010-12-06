@@ -11,4 +11,9 @@ public abstract class AbstractGraphPanelChartElement
     * @return
     */
    public abstract double getValue();
+
+   public boolean isPointRepresentative(int limit)
+   {
+       return true;
+   }
 }

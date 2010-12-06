@@ -20,11 +20,12 @@ public class JSettingsPanel extends javax.swing.JPanel
             boolean showCurrentXOption,
             boolean showFinalZeroingLinesOption,
             boolean showLimitPointOption,
-            boolean showBarChartXAxisLimit)
+            boolean showBarChartXAxisLimit,
+            boolean showHideNonRepValues)
     {
         initComponents();
         this.parent = parent;
-        postInitComponents(showTimelinePanel, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit);
+        postInitComponents(showTimelinePanel, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues);
     }
 
     public JSettingsPanel(SettingsInterface parent,
@@ -34,10 +35,18 @@ public class JSettingsPanel extends javax.swing.JPanel
             boolean showFinalZeroingLinesOption,
             boolean showLimitPointOption)
     {
+        this(parent, showTimelinePanel, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, false, false);
+    }
 
-        initComponents();
-        this.parent = parent;
-        postInitComponents(showTimelinePanel, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, false);
+    public JSettingsPanel(SettingsInterface parent,
+            boolean showTimelinePanel,
+            boolean showGradientOption,
+            boolean showCurrentXOption,
+            boolean showFinalZeroingLinesOption,
+            boolean showLimitPointOption,
+            boolean showBarChartXAxisLimit)
+    {
+        this(parent, showTimelinePanel, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, false);
     }
 
     private void postInitComponents(boolean showTimelinePanel,
@@ -45,7 +54,8 @@ public class JSettingsPanel extends javax.swing.JPanel
             boolean showCurrentXOption,
             boolean showFinalZeroingLinesOption,
             boolean showLimitPointOption,
-            boolean showBarChartXAxisLimit)
+            boolean showBarChartXAxisLimit,
+            boolean showHideNonRepValues)
     {
 
         jPanelTimeLine.setVisible(showTimelinePanel);
@@ -68,6 +78,9 @@ public class JSettingsPanel extends javax.swing.JPanel
         }
 
         jCheckBoxLimitMaxXValue.setVisible(showBarChartXAxisLimit);
+
+        jComboBoxHideNonRepValLimit.setVisible(showHideNonRepValues);
+        jCheckBoxHideNonRepValues.setVisible(showHideNonRepValues);
     }
 
     private int getValueFromString(String sValue)
@@ -122,6 +135,8 @@ public class JSettingsPanel extends javax.swing.JPanel
         jComboBoxMaxPoints = new javax.swing.JComboBox();
         jLabelInfoMaxPoint = new javax.swing.JLabel();
         jCheckBoxLimitMaxXValue = new javax.swing.JCheckBox();
+        jCheckBoxHideNonRepValues = new javax.swing.JCheckBox();
+        jComboBoxHideNonRepValLimit = new javax.swing.JComboBox();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setLayout(new java.awt.BorderLayout());
@@ -228,8 +243,8 @@ public class JSettingsPanel extends javax.swing.JPanel
         jPanel5.add(jCheckBoxDrawFinalZeroingLines, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -311,6 +326,32 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel5.add(jCheckBoxLimitMaxXValue, gridBagConstraints);
 
+        jCheckBoxHideNonRepValues.setText("Hide non representative points, if occurence is less or equal than");
+        jCheckBoxHideNonRepValues.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxHideNonRepValuesActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 4;
+        jPanel5.add(jCheckBoxHideNonRepValues, gridBagConstraints);
+
+        jComboBoxHideNonRepValLimit.setEditable(true);
+        jComboBoxHideNonRepValLimit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "5", "10", "15", "20" }));
+        jComboBoxHideNonRepValLimit.setPreferredSize(new java.awt.Dimension(40, 20));
+        jComboBoxHideNonRepValLimit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxHideNonRepValLimitActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel5.add(jComboBoxHideNonRepValLimit, gridBagConstraints);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -382,13 +423,34 @@ public class JSettingsPanel extends javax.swing.JPanel
         parent.getGraphPanelChart().setPreventXAxisOverScaling(jCheckBoxLimitMaxXValue.isSelected());
     }//GEN-LAST:event_jCheckBoxLimitMaxXValueActionPerformed
 
+    private void jCheckBoxHideNonRepValuesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxHideNonRepValuesActionPerformed
+    {//GEN-HEADEREND:event_jCheckBoxHideNonRepValuesActionPerformed
+        if (jCheckBoxHideNonRepValues.isSelected())
+        {
+            parent.getGraphPanelChart().setSettingsHideNonRepValLimit(getValueFromString((String) jComboBoxHideNonRepValLimit.getSelectedItem()));
+        } else
+        {
+            parent.getGraphPanelChart().setSettingsHideNonRepValLimit(-1);
+        }
+    }//GEN-LAST:event_jCheckBoxHideNonRepValuesActionPerformed
+
+    private void jComboBoxHideNonRepValLimitActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBoxHideNonRepValLimitActionPerformed
+    {//GEN-HEADEREND:event_jComboBoxHideNonRepValLimitActionPerformed
+        if (jCheckBoxHideNonRepValues.isSelected())
+        {
+            parent.getGraphPanelChart().setSettingsHideNonRepValLimit(getValueFromString((String) jComboBoxHideNonRepValLimit.getSelectedItem()));
+        }
+    }//GEN-LAST:event_jComboBoxHideNonRepValLimitActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBoxDrawCurrentX;
     private javax.swing.JCheckBox jCheckBoxDrawFinalZeroingLines;
+    private javax.swing.JCheckBox jCheckBoxHideNonRepValues;
     private javax.swing.JCheckBox jCheckBoxLimitMaxXValue;
     private javax.swing.JCheckBox jCheckBoxMaxPoints;
     private javax.swing.JCheckBox jCheckBoxPaintGradient;
     private javax.swing.JComboBox jComboBoxGranulation;
+    private javax.swing.JComboBox jComboBoxHideNonRepValLimit;
     private javax.swing.JComboBox jComboBoxMaxPoints;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

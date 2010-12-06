@@ -99,6 +99,6 @@ public class TimesVsThreadsGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, false, true, true, false, false);
+        return new JSettingsPanel(this, false, true, true, false, false, false, true);
     }
 }

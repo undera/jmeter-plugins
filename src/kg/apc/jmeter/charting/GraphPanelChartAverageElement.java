@@ -42,4 +42,10 @@ public class GraphPanelChartAverageElement
    {
       return count;
    }
+
+    @Override
+    public boolean isPointRepresentative(int limit)
+    {
+        return count > limit;
+    }
 }

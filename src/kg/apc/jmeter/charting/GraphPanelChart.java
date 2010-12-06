@@ -129,7 +129,12 @@ public class GraphPanelChart
    private boolean settingsDrawGradient;
    private boolean settingsDrawFinalZeroingLines;
    private boolean settingsDrawCurrentX;
+   private int settingsHideNonRepValLimit = -1;
 
+    public void setSettingsHideNonRepValLimit(int limit)
+    {
+        this.settingsHideNonRepValLimit = limit;
+    }
 
     public void setPreventXAxisOverScaling(boolean preventXAxisOverScaling)
     {
@@ -792,9 +797,27 @@ public class GraphPanelChart
 
           if (factor == 1)
           {
+
               element = it.next();
+              AbstractGraphPanelChartElement elt = (AbstractGraphPanelChartElement) element.getValue();
+
+              //not compatible with factor != 1, ie cannot be used if limit nb of point is selected.
+              if (settingsHideNonRepValLimit > 0)
+              {
+                  while (!elt.isPointRepresentative(settingsHideNonRepValLimit) && it.hasNext())
+                  {
+                      element = it.next();
+                      elt = (AbstractGraphPanelChartElement) element.getValue();
+                  }
+
+                  if (!elt.isPointRepresentative(settingsHideNonRepValLimit))
+                  {
+                      break;
+                  }
+              }
+              
               calcPointX = element.getKey().doubleValue();
-              calcPointY = ((AbstractGraphPanelChartElement) element.getValue()).getValue();
+              calcPointY = elt.getValue();
           } else
           {
               nbAveragedValues = 0;

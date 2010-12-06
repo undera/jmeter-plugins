@@ -3,6 +3,7 @@ package kg.apc.jmeter.charting;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
+import org.apache.xmlgraphics.image.codec.tiff.TIFFDecodeParam;
 //import org.apache.jorphan.logging.LoggingManager;
 //import org.apache.log.Logger;
 
@@ -181,6 +182,35 @@ public class GraphRowSumValues
                 }
             }
             return retMax;
+        }
+    }
+    @Override
+    public AbstractGraphPanelChartElement getElement(long value)
+    {
+        if(!isRollingSum)
+        {
+            return values.get(value);
+        } else
+        {
+            if(!values.containsKey(value))
+            {
+                return null;
+            } else
+            {
+                long sum = 0;
+                Iterator<Entry<Long, GraphPanelChartSumElement>> it = values.entrySet().iterator();
+                boolean valueReached = false;
+                while(it.hasNext() && !valueReached)
+                {
+                    Entry<Long, GraphPanelChartSumElement> entry = it.next();
+                    sum += entry.getValue().getValue();
+                    if(entry.getKey() == value)
+                    {
+                        valueReached = true;
+                    }
+                }
+                return new GraphPanelChartSumElement(sum);
+            }
         }
     }
 }

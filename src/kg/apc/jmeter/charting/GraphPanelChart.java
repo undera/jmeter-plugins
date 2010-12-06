@@ -1130,8 +1130,7 @@ public class GraphPanelChart
 
                 if (doSave)
                 {
-
-                    GraphModelToCsvExporter exporter = new GraphModelToCsvExporter(GraphPanelChart.this, rows, file, csvSeparator);
+                    GraphModelToCsvExporter exporter = new GraphModelToCsvExporter(rows, file, csvSeparator);
                     try
                     {
                         exporter.writeCsvFile();

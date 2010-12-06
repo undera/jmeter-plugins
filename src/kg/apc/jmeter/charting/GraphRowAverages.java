@@ -75,4 +75,10 @@ public class GraphRowAverages
         }
         return max;
     }
+
+    @Override
+    public AbstractGraphPanelChartElement getElement(long value)
+    {
+        return values.get(value);
+    }
 }

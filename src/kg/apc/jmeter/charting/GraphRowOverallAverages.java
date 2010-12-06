@@ -85,4 +85,17 @@ public class GraphRowOverallAverages
     {
         return 1;
     }
+
+    @Override
+    public AbstractGraphPanelChartElement getElement(long value)
+    {
+        if(getKey() == value)
+        {
+            return element;
+        }
+        else
+        {
+            return null;
+        }
+    }
 }

@@ -284,12 +284,19 @@ public abstract class AbstractGraphRow
    }
 
    /**
-    * For bar chart x axis too big prevention. Must be overriden if necessary.
-    * @param excludeOutOfRangeValues
-    */
+     * For bar chart x axis too big prevention. Must be overridden if necessary.
+     * @param excludeOutOfRangeValues
+     */
     public void setExcludeOutOfRangeValues(boolean excludeOutOfRangeValues)
     {
     }
 
-   public abstract int size();
+    /**
+     * Needed for csv export.
+     * @param value the key to get the element
+     * @return the corresponding element
+     */
+    public abstract AbstractGraphPanelChartElement getElement(long value);
+
+    public abstract int size();
 }

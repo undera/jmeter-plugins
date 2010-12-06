@@ -99,4 +99,22 @@ public class GraphRowExactValues
     {
         return values.size();
     }
+
+    @Override
+    public AbstractGraphPanelChartElement getElement(long value)
+    {
+        AbstractGraphPanelChartElement ret = null;
+        Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = values.entrySet().iterator();
+
+        while(it.hasNext() && ret == null)
+        {
+            GraphPanelChartExactElement el = (GraphPanelChartExactElement) it.next().getValue();
+            if(el.getX() == value)
+            {
+                ret = el;
+            }
+        }
+
+        return ret;
+    }
 }

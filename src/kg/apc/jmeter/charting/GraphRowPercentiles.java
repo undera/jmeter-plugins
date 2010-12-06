@@ -137,4 +137,9 @@ public class GraphRowPercentiles extends AbstractGraphRow
             return 100;
         }
     }
+    @Override
+    public AbstractGraphPanelChartElement getElement(long value)
+    {
+        return percentiles.get(value);
+    }
 }

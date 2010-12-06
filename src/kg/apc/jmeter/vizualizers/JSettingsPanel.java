@@ -339,8 +339,8 @@ public class JSettingsPanel extends javax.swing.JPanel
         jPanel5.add(jCheckBoxHideNonRepValues, gridBagConstraints);
 
         jComboBoxHideNonRepValLimit.setEditable(true);
-        jComboBoxHideNonRepValLimit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "5", "10", "15", "20" }));
-        jComboBoxHideNonRepValLimit.setPreferredSize(new java.awt.Dimension(40, 20));
+        jComboBoxHideNonRepValLimit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "5", "10", "15", "20", "50", "100" }));
+        jComboBoxHideNonRepValLimit.setPreferredSize(new java.awt.Dimension(50, 20));
         jComboBoxHideNonRepValLimit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxHideNonRepValLimitActionPerformed(evt);

@@ -258,6 +258,12 @@ public class AbstractGraphRowTest
         {
             return 1;
         }
+
+        @Override
+        public AbstractGraphPanelChartElement getElement(long value)
+        {
+            return null;
+        }
    }
 
    /**

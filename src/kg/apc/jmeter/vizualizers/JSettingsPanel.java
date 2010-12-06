@@ -137,6 +137,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         jCheckBoxLimitMaxXValue = new javax.swing.JCheckBox();
         jCheckBoxHideNonRepValues = new javax.swing.JCheckBox();
         jComboBoxHideNonRepValLimit = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setLayout(new java.awt.BorderLayout());
@@ -244,7 +245,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridwidth = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -326,7 +327,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel5.add(jCheckBoxLimitMaxXValue, gridBagConstraints);
 
-        jCheckBoxHideNonRepValues.setText("Hide non representative points, if occurence is less or equal than");
+        jCheckBoxHideNonRepValues.setText("Hide non representative points, if count is less or equal than");
         jCheckBoxHideNonRepValues.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxHideNonRepValuesActionPerformed(evt);
@@ -351,6 +352,14 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanel5.add(jComboBoxHideNonRepValLimit, gridBagConstraints);
+
+        jLabel4.setText("occurences");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
+        jPanel5.add(jLabel4, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -455,6 +464,7 @@ public class JSettingsPanel extends javax.swing.JPanel
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelInfoGrpValues;
     private javax.swing.JLabel jLabelInfoMaxPoint;
     private javax.swing.JLabel jLabelMaxPoints;

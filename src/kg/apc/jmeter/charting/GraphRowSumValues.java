@@ -169,10 +169,16 @@ public class GraphRowSumValues
         {
             long retMax = 0;
             Iterator<Long> iter = values.keySet().iterator();
+            
+            if(iter.hasNext())
+            {
+                retMax = iter.next();
+            }
+            long excludeValue = getGranulationValue() * excludeCount;
             while (iter.hasNext())
             {
                 long value = iter.next();
-                long excludeValue = getGranulationValue() * excludeCount;
+                
                 if (value > retMax)
                 {
                     if ((value - retMax) < excludeValue)

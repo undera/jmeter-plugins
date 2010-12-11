@@ -3,7 +3,6 @@ package kg.apc.jmeter.charting;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
-import org.apache.xmlgraphics.image.codec.tiff.TIFFDecodeParam;
 //import org.apache.jorphan.logging.LoggingManager;
 //import org.apache.log.Logger;
 

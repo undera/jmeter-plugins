@@ -15,50 +15,62 @@ public class JSettingsPanel extends javax.swing.JPanel
 
     /** Creates new form JSettingsPanel */
     public JSettingsPanel(SettingsInterface parent,
-            boolean showTimelinePanel,
+            boolean showTimelineOption,
             boolean showGradientOption,
             boolean showCurrentXOption,
             boolean showFinalZeroingLinesOption,
             boolean showLimitPointOption,
             boolean showBarChartXAxisLimit,
-            boolean showHideNonRepValues)
+            boolean showHideNonRepValues,
+            boolean showAggregateOption)
     {
         initComponents();
         this.parent = parent;
-        postInitComponents(showTimelinePanel, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues);
+        postInitComponents(showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption);
     }
 
     public JSettingsPanel(SettingsInterface parent,
-            boolean showTimelinePanel,
+            boolean showTimelineOption,
             boolean showGradientOption,
             boolean showCurrentXOption,
             boolean showFinalZeroingLinesOption,
             boolean showLimitPointOption)
     {
-        this(parent, showTimelinePanel, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, false, false);
+        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, false, false, false);
     }
 
     public JSettingsPanel(SettingsInterface parent,
-            boolean showTimelinePanel,
+            boolean showTimelineOption,
             boolean showGradientOption,
             boolean showCurrentXOption,
             boolean showFinalZeroingLinesOption,
             boolean showLimitPointOption,
             boolean showBarChartXAxisLimit)
     {
-        this(parent, showTimelinePanel, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, false);
+        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, false, false);
     }
 
-    private void postInitComponents(boolean showTimelinePanel,
+    private void postInitComponents(boolean showTimelineOption,
             boolean showGradientOption,
             boolean showCurrentXOption,
             boolean showFinalZeroingLinesOption,
             boolean showLimitPointOption,
             boolean showBarChartXAxisLimit,
-            boolean showHideNonRepValues)
+            boolean showHideNonRepValues,
+            boolean showAggregateOption)
     {
+        boolean showGraphOptionPanel = showTimelineOption || showAggregateOption;
+        jPanelTimeLine.setVisible(showGraphOptionPanel);
 
-        jPanelTimeLine.setVisible(showTimelinePanel);
+        jLabelTimeline1.setVisible(showTimelineOption);
+        jLabelTimeline2.setVisible(showTimelineOption);
+        jComboBoxGranulation.setVisible(showTimelineOption);
+        jLabelInfoGrpValues.setVisible(showTimelineOption);
+
+        jRadioButtonGraphAggregated.setVisible(showAggregateOption);
+        jRadioButtonGraphDetailed.setVisible(showAggregateOption);
+        jLabelGraphType.setVisible(showAggregateOption);
+
         jCheckBoxPaintGradient.setVisible(showGradientOption);
         jCheckBoxDrawCurrentX.setVisible(showCurrentXOption);
         jCheckBoxDrawFinalZeroingLines.setVisible(showFinalZeroingLinesOption);
@@ -102,6 +114,17 @@ public class JSettingsPanel extends javax.swing.JPanel
         return ret;
     }
 
+    public void setAggregateMode(boolean aggregate)
+    {
+        if(aggregate)
+        {
+            jRadioButtonGraphAggregated.setSelected(true);
+        } else
+        {
+            jRadioButtonGraphDetailed.setSelected(true);
+        }
+    }
+
     public void setGranulationValue(int value)
     {
         jComboBoxGranulation.setSelectedItem(Integer.toString(value));
@@ -117,15 +140,20 @@ public class JSettingsPanel extends javax.swing.JPanel
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        buttonGroupGraphType = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanelTimeLine = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelTimeline1 = new javax.swing.JLabel();
+        jLabelTimeline2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jComboBoxGranulation = new javax.swing.JComboBox();
         jLabelInfoGrpValues = new javax.swing.JLabel();
+        jRadioButtonGraphAggregated = new javax.swing.JRadioButton();
+        jRadioButtonGraphDetailed = new javax.swing.JRadioButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabelGraphType = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jCheckBoxPaintGradient = new javax.swing.JCheckBox();
         jCheckBoxDrawFinalZeroingLines = new javax.swing.JCheckBox();
@@ -153,25 +181,25 @@ public class JSettingsPanel extends javax.swing.JPanel
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        jPanelTimeLine.setBorder(javax.swing.BorderFactory.createTitledBorder("Timeline Settings"));
+        jPanelTimeLine.setBorder(javax.swing.BorderFactory.createTitledBorder("Graph Settings"));
         jPanelTimeLine.setLayout(new java.awt.GridBagLayout());
 
-        jLabel2.setText("Group values for:");
+        jLabelTimeline1.setText("Group timeline values for:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanelTimeLine.add(jLabel2, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 8, 2);
+        jPanelTimeLine.add(jLabelTimeline1, gridBagConstraints);
 
-        jLabel3.setText("ms");
+        jLabelTimeline2.setText("ms");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanelTimeLine.add(jLabel3, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 8, 2);
+        jPanelTimeLine.add(jLabelTimeline2, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
@@ -189,7 +217,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 8, 2);
         jPanelTimeLine.add(jComboBoxGranulation, gridBagConstraints);
 
         jLabelInfoGrpValues.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
@@ -206,8 +234,49 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 8, 2);
         jPanelTimeLine.add(jLabelInfoGrpValues, gridBagConstraints);
+
+        buttonGroupGraphType.add(jRadioButtonGraphAggregated);
+        jRadioButtonGraphAggregated.setText("Aggregated display, all Samplers combined");
+        jRadioButtonGraphAggregated.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonGraphAggregatedActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanelTimeLine.add(jRadioButtonGraphAggregated, gridBagConstraints);
+
+        buttonGroupGraphType.add(jRadioButtonGraphDetailed);
+        jRadioButtonGraphDetailed.setSelected(true);
+        jRadioButtonGraphDetailed.setText("Detailed display, one row per Sampler");
+        jRadioButtonGraphDetailed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonGraphDetailedActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanelTimeLine.add(jRadioButtonGraphDetailed, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        jPanelTimeLine.add(jSeparator1, gridBagConstraints);
+
+        jLabelGraphType.setText("Type of graph:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 4, 2);
+        jPanelTimeLine.add(jLabelGraphType, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -452,7 +521,18 @@ public class JSettingsPanel extends javax.swing.JPanel
         }
     }//GEN-LAST:event_jComboBoxHideNonRepValLimitActionPerformed
 
+    private void jRadioButtonGraphAggregatedActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioButtonGraphAggregatedActionPerformed
+    {//GEN-HEADEREND:event_jRadioButtonGraphAggregatedActionPerformed
+        parent.switchModel(true);
+    }//GEN-LAST:event_jRadioButtonGraphAggregatedActionPerformed
+
+    private void jRadioButtonGraphDetailedActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioButtonGraphDetailedActionPerformed
+    {//GEN-HEADEREND:event_jRadioButtonGraphDetailedActionPerformed
+        parent.switchModel(false);
+    }//GEN-LAST:event_jRadioButtonGraphDetailedActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupGraphType;
     private javax.swing.JCheckBox jCheckBoxDrawCurrentX;
     private javax.swing.JCheckBox jCheckBoxDrawFinalZeroingLines;
     private javax.swing.JCheckBox jCheckBoxHideNonRepValues;
@@ -463,17 +543,21 @@ public class JSettingsPanel extends javax.swing.JPanel
     private javax.swing.JComboBox jComboBoxHideNonRepValLimit;
     private javax.swing.JComboBox jComboBoxMaxPoints;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelGraphType;
     private javax.swing.JLabel jLabelHideNonRepPoints;
     private javax.swing.JLabel jLabelInfoGrpValues;
     private javax.swing.JLabel jLabelInfoMaxPoint;
     private javax.swing.JLabel jLabelMaxPoints;
+    private javax.swing.JLabel jLabelTimeline1;
+    private javax.swing.JLabel jLabelTimeline2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelTimeLine;
+    private javax.swing.JRadioButton jRadioButtonGraphAggregated;
+    private javax.swing.JRadioButton jRadioButtonGraphDetailed;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

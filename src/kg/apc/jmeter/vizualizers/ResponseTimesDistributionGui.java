@@ -1,5 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
+import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphRowSumValues;
 import org.apache.jmeter.samplers.SampleResult;
@@ -21,14 +23,14 @@ public class ResponseTimesDistributionGui
       //graphPanel.getGraphObject().setChartType(GraphPanelChart.CHART_PERCENTAGE);
    }
 
-   private synchronized AbstractGraphRow getNewRow(String label)
+   private synchronized AbstractGraphRow getNewRow(ConcurrentSkipListMap<String, AbstractGraphRow> model, String label)
    {
       AbstractGraphRow row = null;
+      
       if (!model.containsKey(label))
       {
          row = new GraphRowSumValues(false);
          row.setLabel(label);
-         row.setColor(colors.getNextColor());
          row.setDrawLine(false);
          row.setDrawBar(true);
          row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
@@ -46,14 +48,24 @@ public class ResponseTimesDistributionGui
 
    private void addThreadGroupRecord(String threadGroupName, long time, int granulation)
    {
+      String aggLabel = "Aggregated Response Times";
       AbstractGraphRow row = model.get(threadGroupName);
+      AbstractGraphRow rowAgg = modelAggregate.get(aggLabel);
       if (row == null)
       {
-         row = getNewRow(threadGroupName);
+         row = getNewRow(model, threadGroupName);
+         row.setColor(colors.getNextColor());
+      }
+      if (rowAgg == null)
+      {
+         rowAgg = getNewRow(modelAggregate, aggLabel);
+         rowAgg.setColor(Color.RED);
       }
 
       row.add(time, 1);
       row.setGranulationValue(granulation);
+      rowAgg.add(time, 1);
+      rowAgg.setGranulationValue(granulation);
    }
 
    public String getLabelResource()
@@ -77,6 +89,6 @@ public class ResponseTimesDistributionGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, true, true, false, false, false, true);
+        return new JSettingsPanel(this, true, true, false, false, false, true, false, true);
     }
 }

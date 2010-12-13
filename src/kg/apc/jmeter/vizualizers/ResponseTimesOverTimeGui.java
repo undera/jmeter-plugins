@@ -1,5 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
+import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
@@ -23,14 +25,13 @@ public class ResponseTimesOverTimeGui
       graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
    }
 
-   private synchronized AbstractGraphRow getNewRow(String label)
+   private synchronized AbstractGraphRow getNewRow(ConcurrentSkipListMap<String, AbstractGraphRow> model, String label)
    {
       AbstractGraphRow row = null;
       if (!model.containsKey(label))
       {
          row = new GraphRowAverages();
          row.setLabel(label);
-         row.setColor(colors.getNextColor());
          row.setDrawLine(true);
          row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
          model.put(label, row);
@@ -47,13 +48,22 @@ public class ResponseTimesOverTimeGui
    private void addThreadGroupRecord(String threadGroupName, long time,
          long numThreads)
    {
+      String labelAgg = "Aggregated Response Times";
       AbstractGraphRow row = model.get(threadGroupName);
+      AbstractGraphRow rowAgg = modelAggregate.get(labelAgg);
       if (row == null)
       {
-         row = getNewRow(threadGroupName);
+         row = getNewRow(model, threadGroupName);
+         row.setColor(colors.getNextColor());
+      }
+      if (rowAgg == null)
+      {
+         rowAgg = getNewRow(modelAggregate, labelAgg);
+         rowAgg.setColor(Color.RED);
       }
 
       row.add(time, numThreads);
+      rowAgg.add(time, numThreads);
    }
 
    public String getLabelResource()
@@ -77,6 +87,6 @@ public class ResponseTimesOverTimeGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, true, true, false, true, true);
+        return new JSettingsPanel(this, true, true, false, true, true, false, false, true);
     }
 }

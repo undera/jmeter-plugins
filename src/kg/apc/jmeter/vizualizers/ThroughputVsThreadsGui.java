@@ -112,7 +112,7 @@ public class ThroughputVsThreadsGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, false, true, true, false, false, false, true);
+        return new JSettingsPanel(this, false, true, true, false, false, false, true, false);
     }
 
     private class CustomRateRenderer

@@ -399,6 +399,12 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         return graphPanel.getGraphObject();
     }
 
+    //not planned for these charts
+    @Override
+    public void switchModel(boolean aggregate)
+    {
+    }
+
     public abstract void addPerfRecord(String serverName, double value);
     public abstract void addPerfRecord(String serverName, double value, long time);
     public abstract void setErrorMessage(String msg);

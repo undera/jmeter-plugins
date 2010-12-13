@@ -235,6 +235,11 @@ public class GraphPanelChart
       settingsDrawFinalZeroingLines = false;
    }
 
+   public boolean isModelContainsRow(AbstractGraphRow row)
+   {
+       return rows.containsKey(row.getLabel());
+   }
+
    public void setChartType(int type)
    {
       chartType = type;

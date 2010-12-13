@@ -134,12 +134,15 @@ public class GraphPanel
    }
 
    /**
-    *
+    * check if the row bellows to the selected model and add it to the table
     * @param row
     */
    public void addRow(AbstractGraphRow row)
    {
-      table.addRow(row);
+      if(getGraphObject().isModelContainsRow(row))
+      {
+          table.addRow(row);
+      }
    }
 
    public void stateChanged(ChangeEvent e)

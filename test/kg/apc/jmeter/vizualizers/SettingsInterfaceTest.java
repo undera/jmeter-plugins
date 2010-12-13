@@ -85,6 +85,25 @@ public class SettingsInterfaceTest {
       {
          return new GraphPanelChart();
       }
+
+        @Override
+        public void switchModel(boolean aggregate)
+        {
+        }
    }
+
+    /**
+     * Test of switchModel method, of class SettingsInterface.
+     */
+    @Test
+    public void testSwitchModel()
+    {
+        System.out.println("switchModel");
+        boolean aggregate = false;
+        SettingsInterface instance = new SettingsInterfaceImpl();
+        instance.switchModel(aggregate);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
 }

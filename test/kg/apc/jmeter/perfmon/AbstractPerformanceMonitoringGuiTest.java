@@ -343,4 +343,47 @@ public class AbstractPerformanceMonitoringGuiTest
         AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
         instance.setChartType(monitorType);
     }
+
+    /**
+     * Test of getSelectedTypeIndex method, of class AbstractPerformanceMonitoringGui.
+     */
+    @Test
+    public void testGetSelectedTypeIndex()
+    {
+        System.out.println("getSelectedTypeIndex");
+        AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+        int expResult = 0;
+        int result = instance.getSelectedTypeIndex();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of switchModel method, of class AbstractPerformanceMonitoringGui.
+     */
+    @Test
+    public void testSwitchModel()
+    {
+        System.out.println("switchModel");
+        boolean aggregate = false;
+        AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+        instance.switchModel(aggregate);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setLoadMenuEnabled method, of class AbstractPerformanceMonitoringGui.
+     */
+    @Test
+    public void testSetLoadMenuEnabled()
+    {
+        System.out.println("setLoadMenuEnabled");
+        boolean enabled = false;
+        AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+        instance.setLoadMenuEnabled(enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

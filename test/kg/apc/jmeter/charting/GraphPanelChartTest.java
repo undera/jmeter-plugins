@@ -332,4 +332,48 @@ public class GraphPanelChartTest
         boolean result = GraphPanelChart.isGlobalDrawFinalZeroingLines();
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of setSettingsHideNonRepValLimit method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetSettingsHideNonRepValLimit()
+    {
+        System.out.println("setSettingsHideNonRepValLimit");
+        int limit = 0;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setSettingsHideNonRepValLimit(limit);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPreventXAxisOverScaling method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetPreventXAxisOverScaling()
+    {
+        System.out.println("setPreventXAxisOverScaling");
+        boolean preventXAxisOverScaling = false;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setPreventXAxisOverScaling(preventXAxisOverScaling);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isModelContainsRow method, of class GraphPanelChart.
+     */
+    @Test
+    public void testIsModelContainsRow()
+    {
+        System.out.println("isModelContainsRow");
+        AbstractGraphRow row = null;
+        GraphPanelChart instance = new GraphPanelChart();
+        boolean expResult = false;
+        boolean result = instance.isModelContainsRow(row);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

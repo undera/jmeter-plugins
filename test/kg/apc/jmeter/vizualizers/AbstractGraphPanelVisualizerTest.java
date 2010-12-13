@@ -224,4 +224,18 @@ public class AbstractGraphPanelVisualizerTest
       GraphPanelChart result = instance.getGraphPanelChart();
       assertNotNull(result);
    }
+
+    /**
+     * Test of switchModel method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testSwitchModel()
+    {
+        System.out.println("switchModel");
+        boolean aggregate = false;
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        instance.switchModel(aggregate);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

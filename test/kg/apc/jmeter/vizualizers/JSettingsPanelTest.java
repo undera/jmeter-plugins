@@ -74,4 +74,18 @@ public class JSettingsPanelTest {
         }
    }
 
+    /**
+     * Test of setAggregateMode method, of class JSettingsPanel.
+     */
+    @Test
+    public void testSetAggregateMode()
+    {
+        System.out.println("setAggregateMode");
+        boolean aggregate = false;
+        JSettingsPanel instance = null;
+        instance.setAggregateMode(aggregate);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

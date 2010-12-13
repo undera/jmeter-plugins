@@ -889,14 +889,26 @@ public class GraphPanelChart
             ((Graphics2D) g).setStroke(oldStroke);
          }
 
-         if (row.isDrawValueLabel())
-         {
-            g.setColor(Color.DARK_GRAY);
-            yAxisLabelRenderer.setValue(calcPointY);
-            g.drawString(yAxisLabelRenderer.getText(),
-                  x + row.getMarkerSize() + spacing,
-                  y + fm.getAscent() / 2);
-         }
+          if (row.isDrawValueLabel())
+          {
+              g.setColor(Color.DARK_GRAY);
+              yAxisLabelRenderer.setValue(calcPointY);
+
+              //if closer to end
+              if ((chartRect.x + chartRect.width - x) < (x - chartRect.x))
+              {
+                  int labelSize = g.getFontMetrics(g.getFont()).stringWidth(yAxisLabelRenderer.getText());
+
+                  g.drawString(yAxisLabelRenderer.getText(),
+                          x - row.getMarkerSize() - spacing - labelSize,
+                          y + fm.getAscent() / 2);
+              } else
+              {
+                  g.drawString(yAxisLabelRenderer.getText(),
+                          x + row.getMarkerSize() + spacing,
+                          y + fm.getAscent() / 2);
+              }
+          }
 
          // draw markers
          if (radius != AbstractGraphRow.MARKER_SIZE_NONE)

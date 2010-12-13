@@ -152,7 +152,6 @@ public class JSettingsPanel extends javax.swing.JPanel
         jLabelInfoGrpValues = new javax.swing.JLabel();
         jRadioButtonGraphAggregated = new javax.swing.JRadioButton();
         jRadioButtonGraphDetailed = new javax.swing.JRadioButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabelGraphType = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jCheckBoxPaintGradient = new javax.swing.JCheckBox();
@@ -265,10 +264,6 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanelTimeLine.add(jRadioButtonGraphDetailed, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        jPanelTimeLine.add(jSeparator1, gridBagConstraints);
 
         jLabelGraphType.setText("Type of graph:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -421,6 +416,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
         jPanel5.add(jComboBoxHideNonRepValLimit, gridBagConstraints);
 
         jLabelHideNonRepPoints.setText("occurences");
@@ -558,6 +554,5 @@ public class JSettingsPanel extends javax.swing.JPanel
     private javax.swing.JPanel jPanelTimeLine;
     private javax.swing.JRadioButton jRadioButtonGraphAggregated;
     private javax.swing.JRadioButton jRadioButtonGraphDetailed;
-    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

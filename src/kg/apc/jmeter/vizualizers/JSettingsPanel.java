@@ -183,7 +183,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         jPanelTimeLine.setBorder(javax.swing.BorderFactory.createTitledBorder("Graph Settings"));
         jPanelTimeLine.setLayout(new java.awt.GridBagLayout());
 
-        jLabelTimeline1.setText("Group timeline values for:");
+        jLabelTimeline1.setText("Group timeline values for");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;

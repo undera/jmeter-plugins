@@ -76,7 +76,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabelTimeline1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Group timeline values for:"/>
+                <Property name="text" type="java.lang.String" value="Group timeline values for"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

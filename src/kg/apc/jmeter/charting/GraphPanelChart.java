@@ -893,12 +893,10 @@ public class GraphPanelChart
           {
               g.setColor(Color.DARK_GRAY);
               yAxisLabelRenderer.setValue(calcPointY);
-
-              //if closer to end
-              if ((chartRect.x + chartRect.width - x) < (x - chartRect.x))
+              int labelSize = g.getFontMetrics(g.getFont()).stringWidth(yAxisLabelRenderer.getText());
+              //if close to end
+              if (x + row.getMarkerSize() + spacing + labelSize > chartRect.x + chartRect.width)
               {
-                  int labelSize = g.getFontMetrics(g.getFont()).stringWidth(yAxisLabelRenderer.getText());
-
                   g.drawString(yAxisLabelRenderer.getText(),
                           x - row.getMarkerSize() - spacing - labelSize,
                           y + fm.getAscent() / 2);

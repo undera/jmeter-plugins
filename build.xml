@@ -138,6 +138,9 @@
            and again build.xml should be rarely modified file... -->
       <property location="./" name="svn.dir"/>
       
+      <!-- APC: copying just in case -->
+      <copy todir="${dist.dir}" file="${dist.jar}" />
+
       <!-- APC: we should provide one package, that includes all of the stuff
            to use most of our project -->
       <zip destfile="${dist.dir}/JMeterPlugins.zip">

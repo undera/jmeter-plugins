@@ -3,6 +3,7 @@ package kg.apc.jmeter.vizualizers;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.charting.AbstractGraphRow;
@@ -27,7 +28,8 @@ public abstract class AbstractGraphPanelVisualizer
       implements Clearable,
                  GraphListener,
                  ImageVisualizer,
-                 SettingsInterface
+                 SettingsInterface,
+                 CompositeRowsProvider
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
    /**
@@ -212,4 +214,12 @@ public abstract class AbstractGraphPanelVisualizer
        isAggregate = aggregate;
        settingsPanel.setAggregateMode(aggregate);
    }
+
+    public Collection<String> getRowNames() {
+        return model.keySet();
+    }
+
+    public AbstractGraphRow getRowByName(String name) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

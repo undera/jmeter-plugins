@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
+import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.BooleanProperty;
@@ -28,8 +29,7 @@ public abstract class AbstractGraphPanelVisualizer
       implements Clearable,
                  GraphListener,
                  ImageVisualizer,
-                 SettingsInterface,
-                 CompositeRowsProvider
+                 SettingsInterface                 
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
    /**
@@ -66,9 +66,11 @@ public abstract class AbstractGraphPanelVisualizer
     */
    public AbstractGraphPanelVisualizer()
    {
+      super();
       model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
       modelAggregate = new ConcurrentSkipListMap<String, AbstractGraphRow>();
       colors = new ColorsDispatcher();
+      setModel(new RowsProviderResultCollector(model));
       initGui();
    }
 
@@ -160,8 +162,13 @@ public abstract class AbstractGraphPanelVisualizer
    @Override
    public TestElement createTestElement()
    {
-      TestElement el = super.createTestElement();
-      return el;
+        ResultCollector aModel = getModel();
+        if (aModel == null) {
+            aModel = new RowsProviderResultCollector(model);
+            setModel(aModel);
+        }
+        modifyTestElement(aModel);
+        return aModel;
    }
 
    @Override

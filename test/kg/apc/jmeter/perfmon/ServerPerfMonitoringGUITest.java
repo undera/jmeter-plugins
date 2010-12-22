@@ -123,4 +123,18 @@ public class ServerPerfMonitoringGUITest
         ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
         instance.setChartType(monitorType);
     }
+
+    /**
+     * Test of setLoadMenuEnabled method, of class ServerPerfMonitoringGUI.
+     */
+    @Test
+    public void testSetLoadMenuEnabled()
+    {
+        System.out.println("setLoadMenuEnabled");
+        boolean enabled = false;
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+        instance.setLoadMenuEnabled(enabled);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

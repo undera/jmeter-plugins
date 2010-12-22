@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author apc
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GraphPanelChartSumElementTest.class, GraphPanelChartTest.class, GraphRowAveragesTest.class, GraphRowExactValuesTest.class, GraphPanelChartAverageElementTest.class, GraphRowOverallAveragesTest.class, AbstractGraphRowTest.class, GraphPanelChartExactElementTest.class, GraphRowSumValuesTest.class, AbstractGraphPanelChartElementTest.class})
+@Suite.SuiteClasses({GraphRowSumValuesTest.class, GraphRowOverallAveragesTest.class, GraphPanelChartAverageElementTest.class, GraphPanelChartPercentileElementTest.class, GraphModelToCsvExporterTest.class, GraphPanelChartTest.class, AbstractGraphPanelChartElementTest.class, AbstractGraphRowTest.class, GraphRowExactValuesTest.class, GraphRowPercentilesTest.class, GraphRowAveragesTest.class, GraphPanelChartSumElementTest.class, GraphPanelChartExactElementTest.class})
 public class ChartingSuite {
 
    /**

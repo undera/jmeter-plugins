@@ -122,4 +122,20 @@ public class GraphRowAveragesTest
         double result = instance.getMaxY();
         assertEquals(expResult, result, 0.0);
     }
+
+    /**
+     * Test of getElement method, of class GraphRowAverages.
+     */
+    @Test
+    public void testGetElement()
+    {
+        System.out.println("getElement");
+        long value = 0L;
+        GraphRowAverages instance = new GraphRowAverages();
+        AbstractGraphPanelChartElement expResult = null;
+        AbstractGraphPanelChartElement result = instance.getElement(value);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

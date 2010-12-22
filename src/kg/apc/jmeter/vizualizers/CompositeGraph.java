@@ -2,7 +2,6 @@ package kg.apc.jmeter.vizualizers;
 
 import java.util.Iterator;
 import org.apache.jmeter.gui.GuiPackage;
-import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.collections.HashTree;
 import org.apache.jorphan.collections.SearchByClass;
@@ -28,8 +27,6 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer {
     }
 
     public void add(SampleResult sr) {
-        log.info("Adding: " + this.getClass().getName());
-
         GuiPackage gui = GuiPackage.getInstance();
         HashTree testTree = gui.getTreeModel().getTestPlan();
 

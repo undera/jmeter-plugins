@@ -142,4 +142,20 @@ public class GraphRowExactValuesTest
       int result = instance.size();
       assertEquals(expResult, result);
    }
+
+    /**
+     * Test of getElement method, of class GraphRowExactValues.
+     */
+    @Test
+    public void testGetElement()
+    {
+        System.out.println("getElement");
+        long value = 0L;
+        GraphRowExactValues instance = new GraphRowExactValues();
+        AbstractGraphPanelChartElement expResult = null;
+        AbstractGraphPanelChartElement result = instance.getElement(value);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

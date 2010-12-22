@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ColorsDispatcherTest.class, JSettingsPanelTest.class, ThroughputVsThreadsGuiTest.class, HeaderClickCheckAllListenerTest.class, ThroughputOverTimeGuiTest.class, GraphPanelTest.class, ChartRowsTableTest.class, TotalTransactionsPerSecondGuiTest.class, TimesVsThreadsGuiTest.class, TransactionsPerSecondGuiTest.class, ResponseTimesOverTimeGuiTest.class, SettingsInterfaceTest.class, ColorRendererTest.class, AbstractGraphPanelVisualizerTest.class, DateTimeRendererTest.class, ThreadsStateOverTimeGuiTest.class, HeaderAsTextRendererTest.class})
+@Suite.SuiteClasses({CompositeGraphTest.class, RowsProviderResultCollectorTest.class, DateTimeRendererTest.class, ResponseTimesPercentilesGuiTest.class, HitsPerSecondGuiTest.class, ThreadsStateOverTimeGuiTest.class, ColorRendererTest.class, ThroughputVsThreadsGuiTest.class, ResponseTimesOverTimeGuiTest.class, JSettingsPanelTest.class, TimesVsThreadsGuiTest.class, ThroughputOverTimeGuiTest.class, TransactionsPerSecondGuiTest.class, BytesThroughputOverTimeGuiTest.class, HeaderClickCheckAllListenerTest.class, GraphPanelTest.class, SettingsInterfaceTest.class, AbstractGraphPanelVisualizerTest.class, TotalTransactionsPerSecondGuiTest.class, ColorsDispatcherTest.class, ResponseTimesDistributionGuiTest.class, ChartRowsTableTest.class, HeaderAsTextRendererTest.class})
 public class VizualizersSuite {
 
    @BeforeClass

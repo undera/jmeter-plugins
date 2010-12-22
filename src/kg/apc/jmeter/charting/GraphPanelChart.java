@@ -131,45 +131,6 @@ public class GraphPanelChart
    private boolean settingsDrawCurrentX;
    private int settingsHideNonRepValLimit = -1;
 
-    public void setSettingsHideNonRepValLimit(int limit)
-    {
-        this.settingsHideNonRepValLimit = limit;
-    }
-
-    public void setPreventXAxisOverScaling(boolean preventXAxisOverScaling)
-    {
-        this.preventXAxisOverScaling = preventXAxisOverScaling;
-    }
-
-    public void setSettingsDrawCurrentX(boolean settingsDrawCurrentX)
-    {
-        this.settingsDrawCurrentX = settingsDrawCurrentX;
-    }
-
-    public void setSettingsDrawFinalZeroingLines(boolean settingsDrawFinalZeroingLines)
-    {
-        this.settingsDrawFinalZeroingLines = settingsDrawFinalZeroingLines;
-    }
-
-    public void setSettingsDrawGradient(boolean settingsDrawGradient)
-    {
-        this.settingsDrawGradient = settingsDrawGradient;
-    }
-
-    public boolean isSettingsDrawCurrentX()
-    {
-        return settingsDrawCurrentX;
-    }
-
-    public boolean isSettingsDrawGradient()
-    {
-        return settingsDrawGradient;
-    }
-    
-    public static boolean isGlobalDrawFinalZeroingLines()
-    {
-        return !neverDrawFinalZeroingLines;
-    }
 
 
    // If user entered configuration items in user.properties, overide default values.
@@ -234,6 +195,46 @@ public class GraphPanelChart
       settingsDrawGradient = drawGradient;
       settingsDrawFinalZeroingLines = false;
    }
+
+    public void setSettingsHideNonRepValLimit(int limit)
+    {
+        this.settingsHideNonRepValLimit = limit;
+    }
+
+    public void setPreventXAxisOverScaling(boolean preventXAxisOverScaling)
+    {
+        this.preventXAxisOverScaling = preventXAxisOverScaling;
+    }
+
+    public void setSettingsDrawCurrentX(boolean settingsDrawCurrentX)
+    {
+        this.settingsDrawCurrentX = settingsDrawCurrentX;
+    }
+
+    public void setSettingsDrawFinalZeroingLines(boolean settingsDrawFinalZeroingLines)
+    {
+        this.settingsDrawFinalZeroingLines = settingsDrawFinalZeroingLines;
+    }
+
+    public void setSettingsDrawGradient(boolean settingsDrawGradient)
+    {
+        this.settingsDrawGradient = settingsDrawGradient;
+    }
+
+    public boolean isSettingsDrawCurrentX()
+    {
+        return settingsDrawCurrentX;
+    }
+
+    public boolean isSettingsDrawGradient()
+    {
+        return settingsDrawGradient;
+    }
+
+    public static boolean isGlobalDrawFinalZeroingLines()
+    {
+        return !neverDrawFinalZeroingLines;
+    }
 
    public boolean isModelContainsRow(AbstractGraphRow row)
    {

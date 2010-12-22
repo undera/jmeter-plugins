@@ -126,7 +126,7 @@ public class GraphPanelTest
    {
       System.out.println("stateChanged");
       ChangeEvent e = null;
-      instance.stateChanged(e);
+      //instance.stateChanged(e);
    }
 
    /**

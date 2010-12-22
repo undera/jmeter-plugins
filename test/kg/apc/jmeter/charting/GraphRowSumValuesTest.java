@@ -157,4 +157,49 @@ public class GraphRowSumValuesTest
       int result = instance.size();
       assertEquals(expResult, result);
    }
+
+    /**
+     * Test of setExcludeOutOfRangeValues method, of class GraphRowSumValues.
+     */
+    @Test
+    public void testSetExcludeOutOfRangeValues()
+    {
+        System.out.println("setExcludeOutOfRangeValues");
+        boolean excludeOutOfRangeValues = false;
+        GraphRowSumValues instance = new GraphRowSumValues();
+        instance.setExcludeOutOfRangeValues(excludeOutOfRangeValues);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getMaxX method, of class GraphRowSumValues.
+     */
+    @Test
+    public void testGetMaxX()
+    {
+        System.out.println("getMaxX");
+        GraphRowSumValues instance = new GraphRowSumValues();
+        long expResult = 0L;
+        long result = instance.getMaxX();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getElement method, of class GraphRowSumValues.
+     */
+    @Test
+    public void testGetElement()
+    {
+        System.out.println("getElement");
+        long value = 0L;
+        GraphRowSumValues instance = new GraphRowSumValues();
+        AbstractGraphPanelChartElement expResult = null;
+        AbstractGraphPanelChartElement result = instance.getElement(value);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

@@ -14,152 +14,172 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  *
  * @author apc
  */
 public class GraphPanel
-      extends JTabbedPane
-      implements ChangeListener
+        extends JTabbedPane
 {
-   private GraphPanelChart graphTab;
-   private JComponent rowsTab;
-   private JComponent settingsTab;
-   private ChartRowsTable table;
 
-   /**
-    *
-    */
-   public GraphPanel()
-   {
-      super();
-      addGraphTab();
-      addRowsTab();
-      addOptionsTab();
-      addChangeListener(this);
-   }
+    private static final Logger log = LoggingManager.getLoggerForClass();
+    private GraphPanelChart graphPanelObject;
+    private JComponent rowsTab;
+    private JComponent settingsTab;
+    private ChartRowsTable table;
+    private JPanel graphTab;
 
-   private void addRowsTab()
-   {
-      ImageIcon rowsIcon = createImageIcon("checks.png");
-      rowsTab = new JPanel(new BorderLayout());
-      rowsTab.add(makeTable(), BorderLayout.CENTER);
+    /**
+     *
+     */
+    public GraphPanel()
+    {
+        super();
+        addGraphTab();
+        addRowsTab();
+        addOptionsTab();
+        addChangeListener(new TabsChangeListener());
+    }
 
-      JPanel logoPanel = new JPanel();
-      JLabel logoLabel = new JLabel();
-      logoPanel.setLayout(new java.awt.GridLayout(1, 0));
-      logoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-      logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
-      logoPanel.add(logoLabel);
+    private void addRowsTab()
+    {
+        ImageIcon rowsIcon = createImageIcon("checks.png");
+        rowsTab = new JPanel(new BorderLayout());
+        rowsTab.add(makeTable(), BorderLayout.CENTER);
 
-      rowsTab.add(logoPanel, BorderLayout.SOUTH);
-      rowsTab.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        JPanel logoPanel = new JPanel();
+        JLabel logoLabel = new JLabel();
+        logoPanel.setLayout(new java.awt.GridLayout(1, 0));
+        logoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
+        logoPanel.add(logoLabel);
 
-      addTab("Rows", rowsIcon, rowsTab, "Select rows to display");
-   }
+        rowsTab.add(logoPanel, BorderLayout.SOUTH);
+        rowsTab.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-   private void addOptionsTab()
-   {
-      ImageIcon icon = createImageIcon("settings.png");
-      settingsTab = new JPanel(new BorderLayout());
-      addTab("Settings", icon, settingsTab, "Chart plot settings");
-   }
+        addTab("Rows", rowsIcon, rowsTab, "Select rows to display");
+    }
 
-   private Component makeTable()
-   {
-      table = new ChartRowsTable();
-      return makeScrollPane(table);
-   }
+    private void addOptionsTab()
+    {
+        ImageIcon icon = createImageIcon("settings.png");
+        settingsTab = new JPanel(new BorderLayout());
+        addTab("Settings", icon, settingsTab, "Chart plot settings");
+    }
 
-   private JScrollPane makeScrollPane(Component comp)
-   {
-      JScrollPane pane = new JScrollPane(comp);
-      pane.setPreferredSize(pane.getMinimumSize());
-      pane.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-      return pane;
-   }
+    private Component makeTable()
+    {
+        table = new ChartRowsTable();
+        return makeScrollPane(table);
+    }
 
-   private void addGraphTab()
-   {
-      ImageIcon graphIcon = createImageIcon("graph.png");
-      graphTab = new GraphPanelChart();
-      graphTab.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-      addTab("Chart", graphIcon, graphTab, "View chart");
-   }
+    private JScrollPane makeScrollPane(Component comp)
+    {
+        JScrollPane pane = new JScrollPane(comp);
+        pane.setPreferredSize(pane.getMinimumSize());
+        pane.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        return pane;
+    }
 
-   /** Returns an ImageIcon, or null if the path was invalid. */
-   private static ImageIcon createImageIcon(String path)
-   {
-      java.net.URL imgURL = GraphPanel.class.getResource(path);
-      if (imgURL != null)
-      {
-         return new ImageIcon(imgURL);
-      }
-      else
-      {
-         System.err.println("Couldn't find file: " + path);
-         return null;
-      }
-   }
+    private void addGraphTab()
+    {
+        ImageIcon graphIcon = createImageIcon("graph.png");
+        graphPanelObject = new GraphPanelChart();
+        graphPanelObject.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        graphTab = new JPanel(new BorderLayout());
+        graphTab.add(graphPanelObject, BorderLayout.CENTER);
+        addTab("Chart", graphIcon, graphTab, "View chart");
+    }
 
-   /**
-    *
-    */
-   public void updateGui()
-   {
-      JComponent selectedTab = (JComponent) getSelectedComponent();
-      selectedTab.updateUI();
-      selectedTab.repaint();
-   }
+    /** Returns an ImageIcon, or null if the path was invalid. */
+    private static ImageIcon createImageIcon(String path)
+    {
+        java.net.URL imgURL = GraphPanel.class.getResource(path);
+        if (imgURL != null)
+            return new ImageIcon(imgURL);
+        else
+        {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
 
-   Image getGraphImage()
-   {
-      Image result = graphTab.createImage(graphTab.getWidth(), graphTab.getHeight());
+    /**
+     *
+     */
+    public void updateGui()
+    {
+        JComponent selectedTab = (JComponent) getSelectedComponent();
+        selectedTab.updateUI();
+        selectedTab.repaint();
+    }
 
-      if (result != null)
-      {
-         graphTab.paintComponent(result.getGraphics());
-      }
+    Image getGraphImage()
+    {
+        Image result = graphPanelObject.createImage(graphPanelObject.getWidth(), graphPanelObject.getHeight());
 
-      return result;
-   }
+        if (result != null)
+            graphPanelObject.paintComponent(result.getGraphics());
 
-   /**
-    * @return the graphTab
-    */
-   public GraphPanelChart getGraphObject()
-   {
-      return graphTab;
-   }
+        return result;
+    }
 
-   /**
-    * check if the row bellows to the selected model and add it to the table
-    * @param row
-    */
-   public void addRow(AbstractGraphRow row)
-   {
-      if(getGraphObject().isModelContainsRow(row))
-      {
-          table.addRow(row);
-      }
-   }
+    /**
+     * @return the graphTab
+     */
+    public GraphPanelChart getGraphObject()
+    {
+        return graphPanelObject;
+    }
 
-   public void stateChanged(ChangeEvent e)
-   {
-      updateGui();
-   }
+    /**
+     * check if the row bellows to the selected model and add it to the table
+     * @param row
+     */
+    public void addRow(AbstractGraphRow row)
+    {
+        if (getGraphObject().isModelContainsRow(row))
+            table.addRow(row);
+    }
 
-   /**
-    * 
-    */
-   public void clearRowsTab()
-   {
-      table.clear();
-   }
+    /**
+     *
+     */
+    public void clearRowsTab()
+    {
+        table.clear();
+    }
 
-   public JComponent getSettingsTab()
-   {
-      return settingsTab;
-   }
+    public JComponent getSettingsTab()
+    {
+        return settingsTab;
+    }
+
+    private class TabsChangeListener
+            implements ChangeListener
+    {
+
+        public void stateChanged(ChangeEvent e)
+        {
+            updateGui();
+
+            if (getParent() instanceof AbstractGraphPanelVisualizer)
+            {
+                AbstractGraphPanelVisualizer parentGui = (AbstractGraphPanelVisualizer) getParent();
+                // if graph panel is not selected - show small version of it anyway
+                if ((JComponent) getSelectedComponent() != graphTab)
+                {
+                    parentGui.addGraphPreview(graphPanelObject);
+
+                } else
+                {
+                    parentGui.hideGraphPreview();
+                    graphTab.add(graphPanelObject, BorderLayout.CENTER);
+                }
+            }
+        }
+    }
 }

@@ -4,6 +4,7 @@
  */
 package kg.apc.jmeter.perfmon;
 
+import java.io.File;
 import java.io.IOException;
 import javax.net.SocketFactory;
 import kg.apc.jmeter.util.SocketEmulatorInputStream;
@@ -231,4 +232,18 @@ public class MetricsProviderTest
             
         }
    }
+
+    /**
+     * Test of loadFile method, of class MetricsProvider.
+     */
+    @Test
+    public void testLoadFile()
+    {
+        System.out.println("loadFile");
+        File file = null;
+        MetricsProvider instance = null;
+        instance.loadFile(file);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

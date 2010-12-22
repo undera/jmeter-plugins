@@ -394,4 +394,63 @@ public class AbstractGraphRowTest
       int result = instance.size();
       assertEquals(expResult, result);
    }
+
+    /**
+     * Test of getGranulationValue method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testGetGranulationValue()
+    {
+        System.out.println("getGranulationValue");
+        AbstractGraphRow instance = new AbstractGraphRowImpl();
+        int expResult = 0;
+        int result = instance.getGranulationValue();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setGranulationValue method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testSetGranulationValue()
+    {
+        System.out.println("setGranulationValue");
+        int value = 0;
+        AbstractGraphRow instance = new AbstractGraphRowImpl();
+        instance.setGranulationValue(value);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setExcludeOutOfRangeValues method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testSetExcludeOutOfRangeValues()
+    {
+        System.out.println("setExcludeOutOfRangeValues");
+        boolean excludeOutOfRangeValues = false;
+        AbstractGraphRow instance = new AbstractGraphRowImpl();
+        instance.setExcludeOutOfRangeValues(excludeOutOfRangeValues);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getElement method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testGetElement()
+    {
+        System.out.println("getElement");
+        long value = 0L;
+        AbstractGraphRow instance = new AbstractGraphRowImpl();
+        AbstractGraphPanelChartElement expResult = null;
+        AbstractGraphPanelChartElement result = instance.getElement(value);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

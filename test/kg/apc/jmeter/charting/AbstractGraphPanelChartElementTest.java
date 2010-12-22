@@ -81,4 +81,20 @@ public class AbstractGraphPanelChartElementTest
          return 0.0;
       }
    }
+
+    /**
+     * Test of isPointRepresentative method, of class AbstractGraphPanelChartElement.
+     */
+    @Test
+    public void testIsPointRepresentative()
+    {
+        System.out.println("isPointRepresentative");
+        int limit = 0;
+        AbstractGraphPanelChartElement instance = new AbstractGraphPanelChartElementImpl();
+        boolean expResult = false;
+        boolean result = instance.isPointRepresentative(limit);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

@@ -84,4 +84,20 @@ public class GraphRowPercentilesTest {
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of getElement method, of class GraphRowPercentiles.
+     */
+    @Test
+    public void testGetElement()
+    {
+        System.out.println("getElement");
+        long value = 0L;
+        GraphRowPercentiles instance = new GraphRowPercentiles();
+        AbstractGraphPanelChartElement expResult = null;
+        AbstractGraphPanelChartElement result = instance.getElement(value);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

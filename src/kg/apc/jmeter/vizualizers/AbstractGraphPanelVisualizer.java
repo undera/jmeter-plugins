@@ -72,8 +72,8 @@ public abstract class AbstractGraphPanelVisualizer
         model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         modelAggregate = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         colors = new ColorsDispatcher();
-        setModel(new RowsProviderResultCollector());
-        //setModel(new ResultCollector());
+        RowsProviderResultCollector resCollector = new RowsProviderResultCollector();
+        setModel(resCollector);
         initGui();
     }
 
@@ -180,6 +180,8 @@ public abstract class AbstractGraphPanelVisualizer
         super.modifyTestElement(c);
         c.setProperty(new LongProperty(INTERVAL_PROPERTY, interval));
         c.setProperty(new BooleanProperty(GRAPH_AGGREGATED, isAggregate));
+
+        ((RowsProviderResultCollector) c).setModel(model);
     }
 
     @Override

@@ -1,4 +1,5 @@
 // todo: add spacing around panel
+// fixme: perhaps we should replace model via setModel and use ONE model...
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.BorderLayout;
@@ -33,7 +34,6 @@ public abstract class AbstractGraphPanelVisualizer
         ImageVisualizer,
         SettingsInterface
 {
-
     private static final Logger log = LoggingManager.getLoggerForClass();
     /**
      *
@@ -59,7 +59,7 @@ public abstract class AbstractGraphPanelVisualizer
     protected ColorsDispatcher colors;
     private static final long REPAINT_INTERVAL = 500;
     public static final String INTERVAL_PROPERTY = "interval_grouping";
-    public static final String GRAPH_AGGRAGATED = "graph_aggregated";
+    public static final String GRAPH_AGGREGATED = "graph_aggregated";
     private JSettingsPanel settingsPanel = null;
     private JPanel previewPanel;
 
@@ -72,7 +72,8 @@ public abstract class AbstractGraphPanelVisualizer
         model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         modelAggregate = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         colors = new ColorsDispatcher();
-        setModel(new RowsProviderResultCollector(model));
+        setModel(new RowsProviderResultCollector());
+        //setModel(new ResultCollector());
         initGui();
     }
 
@@ -164,15 +165,13 @@ public abstract class AbstractGraphPanelVisualizer
     @Override
     public TestElement createTestElement()
     {
-        ResultCollector aModel = getModel();
-        log.info("Create model: " + aModel);
-        if (aModel == null || !(aModel instanceof RowsProviderResultCollector))
-        {
-            aModel = new RowsProviderResultCollector(model);
-            setModel(aModel);
+        ResultCollector modelNew = getModel();
+        if (modelNew == null) {
+            modelNew = new RowsProviderResultCollector();
+            setModel(modelNew);
         }
-        modifyTestElement(aModel);
-        return aModel;
+        modifyTestElement(modelNew);
+        return modelNew;
     }
 
     @Override
@@ -180,7 +179,7 @@ public abstract class AbstractGraphPanelVisualizer
     {
         super.modifyTestElement(c);
         c.setProperty(new LongProperty(INTERVAL_PROPERTY, interval));
-        c.setProperty(new BooleanProperty(GRAPH_AGGRAGATED, isAggregate));
+        c.setProperty(new BooleanProperty(GRAPH_AGGREGATED, isAggregate));
     }
 
     @Override
@@ -188,7 +187,7 @@ public abstract class AbstractGraphPanelVisualizer
     {
         super.configure(el);
         int intervalProp = el.getPropertyAsInt(INTERVAL_PROPERTY);
-        boolean aggregatedProp = el.getPropertyAsBoolean(GRAPH_AGGRAGATED, false);
+        boolean aggregatedProp = el.getPropertyAsBoolean(GRAPH_AGGREGATED, false);
         if (intervalProp > 0)
             setGranulation(intervalProp);
         switchModel(aggregatedProp);

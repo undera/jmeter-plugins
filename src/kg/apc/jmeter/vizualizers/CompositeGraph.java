@@ -1,10 +1,8 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.util.Iterator;
 import org.apache.jmeter.gui.GuiPackage;
+import org.apache.jmeter.gui.tree.JMeterTreeModel;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jorphan.collections.HashTree;
-import org.apache.jorphan.collections.SearchByClass;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -28,18 +26,9 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer {
 
     public void add(SampleResult sr) {
         GuiPackage gui = GuiPackage.getInstance();
-        HashTree testTree = gui.getTreeModel().getTestPlan();
-
-        SearchByClass<RowsProviderResultCollector> searchRowProviders = new SearchByClass<RowsProviderResultCollector>(RowsProviderResultCollector.class);
+        JMeterTreeModel testTree = gui.getTreeModel();
         log.info("testTree: " + testTree);
-        testTree .traverse(searchRowProviders);
-
-        log.info("Size: " + searchRowProviders.getSearchResults().size());
-
-        Iterator it = searchRowProviders.getSearchResults().iterator();
-        while (it.hasNext()) {
-            RowsProviderResultCollector provider = (RowsProviderResultCollector) it.next();
-            log.info(Integer.toString(provider.getRowNames().size()));
-        }
+        log.info("Size: "+testTree.getNodesOfType(AbstractGraphPanelVisualizer.class).size());
     }
+
 }

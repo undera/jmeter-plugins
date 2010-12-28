@@ -238,31 +238,4 @@ public class AbstractGraphPanelVisualizerTest
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
-    /**
-     * Test of addGraphPreview method, of class AbstractGraphPanelVisualizer.
-     */
-    @Test
-    public void testAddGraphPreview()
-    {
-        System.out.println("addGraphPreview");
-        GraphPanelChart graphPanelObject = null;
-        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-        instance.addGraphPreview(graphPanelObject);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of hideGraphPreview method, of class AbstractGraphPanelVisualizer.
-     */
-    @Test
-    public void testHideGraphPreview()
-    {
-        System.out.println("hideGraphPreview");
-        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-        instance.hideGraphPreview();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 }

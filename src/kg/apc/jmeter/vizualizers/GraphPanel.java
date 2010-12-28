@@ -47,7 +47,7 @@ public class GraphPanel
     {
         ImageIcon rowsIcon = createImageIcon("checks.png");
         rowsTab = new JRowsSelectorPanel();
-        rowsTab.setTable(makeTable());
+        rowsTab.setTable(makeTable(rowsTab));
 
         addTab("Rows", rowsIcon, rowsTab, "Select rows to display");
     }
@@ -59,9 +59,9 @@ public class GraphPanel
         addTab("Settings", icon, settingsTab, "Chart plot settings");
     }
 
-    private Component makeTable()
+    private Component makeTable(JRowsSelectorPanel rowsTab)
     {
-        table = new ChartRowsTable();
+        table = new ChartRowsTable(rowsTab);
         return makeScrollPane(table);
     }
 

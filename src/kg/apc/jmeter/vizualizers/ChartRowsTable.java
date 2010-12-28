@@ -1,9 +1,11 @@
 package kg.apc.jmeter.vizualizers;
 
+import javax.swing.event.TableModelEvent;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellRenderer;
 import org.apache.jorphan.gui.ObjectTableModel;
 import org.apache.jorphan.reflect.Functor;
@@ -16,20 +18,21 @@ public class ChartRowsTable
      extends JTable
 {
    TableCellRenderer colorRenderer = new ColorRenderer(false);
+   JRowsSelectorPanel parentContainer = null;
 
    /**
     *
     */
-   public ChartRowsTable()
+   public ChartRowsTable(JRowsSelectorPanel parent)
    {
       super();
+      parentContainer = parent;
       initializeTableModel();
       setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       getTableHeader().setDefaultRenderer(new HeaderAsTextRenderer());
       getTableHeader().addMouseListener(new HeaderClickCheckAllListener());
       getTableHeader().setReorderingAllowed(false);
       getTableHeader().setResizingAllowed(false);
-
       setCollumnsSize();
    }
 
@@ -62,6 +65,16 @@ public class ChartRowsTable
               Color.class,
               String.class
            });
+
+      model.addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent e)
+            {
+                parentContainer.refreshPreview();
+            }
+        });
+
       setModel(model);
    }
 

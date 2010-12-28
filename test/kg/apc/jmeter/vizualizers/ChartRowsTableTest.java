@@ -66,7 +66,7 @@ public class ChartRowsTableTest
    {
       System.out.println("addRow");
       AbstractGraphRow row = new GraphRowOverallAverages();
-      ChartRowsTable instance = new ChartRowsTable();
+      ChartRowsTable instance = new ChartRowsTable(null);
       instance.addRow(row);
    }
 
@@ -77,7 +77,7 @@ public class ChartRowsTableTest
    public void testGetCellRenderer()
    {
       System.out.println("getCellRenderer");
-      ChartRowsTable instance = new ChartRowsTable();
+      ChartRowsTable instance = new ChartRowsTable(null);
       assertTrue(instance.getCellRenderer(0, 1) instanceof ColorRenderer);
       assertTrue(instance.getCellRenderer(1, 1) instanceof ColorRenderer);
       assertFalse(instance.getCellRenderer(1, 0) instanceof ColorRenderer);
@@ -90,7 +90,7 @@ public class ChartRowsTableTest
    public void testClear()
    {
       System.out.println("clear");
-      ChartRowsTable instance = new ChartRowsTable();
+      ChartRowsTable instance = new ChartRowsTable(null);
       instance.clear();
    }
 }

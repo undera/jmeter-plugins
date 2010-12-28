@@ -71,7 +71,10 @@ public class ChartRowsTable
             @Override
             public void tableChanged(TableModelEvent e)
             {
-                parentContainer.refreshPreview();
+                if(parentContainer != null)
+                {
+                    parentContainer.refreshPreview();
+                }
             }
         });
 

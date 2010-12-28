@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -27,11 +26,11 @@ public class GraphPanel
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private GraphPanelChart graphPanelObject;
-    private JComponent rowsTab;
+    private JRowsSelectorPanel rowsTab;
     private JComponent settingsTab;
     private ChartRowsTable table;
-    private JPanel graphTab;
-
+    private JGraphPanel graphTab;
+    
     /**
      *
      */
@@ -47,18 +46,8 @@ public class GraphPanel
     private void addRowsTab()
     {
         ImageIcon rowsIcon = createImageIcon("checks.png");
-        rowsTab = new JPanel(new BorderLayout());
-        rowsTab.add(makeTable(), BorderLayout.CENTER);
-
-        JPanel logoPanel = new JPanel();
-        JLabel logoLabel = new JLabel();
-        logoPanel.setLayout(new java.awt.GridLayout(1, 0));
-        logoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
-        logoPanel.add(logoLabel);
-
-        rowsTab.add(logoPanel, BorderLayout.SOUTH);
-        rowsTab.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        rowsTab = new JRowsSelectorPanel();
+        rowsTab.setTable(makeTable());
 
         addTab("Rows", rowsIcon, rowsTab, "Select rows to display");
     }
@@ -89,7 +78,7 @@ public class GraphPanel
         ImageIcon graphIcon = createImageIcon("graph.png");
         graphPanelObject = new GraphPanelChart();
         graphPanelObject.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        graphTab = new JPanel(new BorderLayout());
+        graphTab = new JGraphPanel();
         graphTab.add(graphPanelObject, BorderLayout.CENTER);
         addTab("Chart", graphIcon, graphTab, "View chart");
     }
@@ -158,28 +147,37 @@ public class GraphPanel
         return settingsTab;
     }
 
+    private class JGraphPanel extends JPanel implements GraphRendererInterface
+    {
+        public JGraphPanel()
+        {
+            super();
+            setLayout(new BorderLayout());
+        }
+        @Override
+        public JPanel getGraphDisplayPanel()
+        {
+            return this;
+        }
+    }
+
     private class TabsChangeListener
             implements ChangeListener
     {
 
+        @Override
         public void stateChanged(ChangeEvent e)
         {
             updateGui();
 
-            if (getParent() instanceof AbstractGraphPanelVisualizer)
+            JComponent selectedComponent = (JComponent) getSelectedComponent();
+            //settings panel is added to a top container panel, so we get it
+            //as selected component
+            if (selectedComponent == settingsTab)
             {
-                AbstractGraphPanelVisualizer parentGui = (AbstractGraphPanelVisualizer) getParent();
-                // if graph panel is not selected - show small version of it anyway
-                if ((JComponent) getSelectedComponent() != graphTab)
-                {
-                    parentGui.addGraphPreview(graphPanelObject);
-
-                } else
-                {
-                    parentGui.hideGraphPreview();
-                    graphTab.add(graphPanelObject, BorderLayout.CENTER);
-                }
+                selectedComponent = (JComponent) selectedComponent.getComponent(0);
             }
+            ((GraphRendererInterface) (selectedComponent)).getGraphDisplayPanel().add(graphPanelObject, BorderLayout.CENTER);
         }
     }
 }

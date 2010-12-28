@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
 import kg.apc.jmeter.charting.GraphPanelChart;
 
@@ -7,7 +8,7 @@ import kg.apc.jmeter.charting.GraphPanelChart;
  *
  * @author Stéphane Hoblingre
  */
-public class JSettingsPanel extends javax.swing.JPanel
+public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererInterface
 {
 
     private SettingsInterface parent = null;
@@ -60,7 +61,7 @@ public class JSettingsPanel extends javax.swing.JPanel
             boolean showAggregateOption)
     {
         boolean showGraphOptionPanel = showTimelineOption || showAggregateOption;
-        jPanelTimeLine.setVisible(showGraphOptionPanel);
+        jPanelTimeLineContainer.setVisible(showGraphOptionPanel);
 
         jLabelTimeline1.setVisible(showTimelineOption);
         jLabelTimeline2.setVisible(showTimelineOption);
@@ -94,6 +95,18 @@ public class JSettingsPanel extends javax.swing.JPanel
         jComboBoxHideNonRepValLimit.setVisible(showHideNonRepValues);
         jCheckBoxHideNonRepValues.setVisible(showHideNonRepValues);
         jLabelHideNonRepPoints.setVisible(showHideNonRepValues);
+    }
+
+    private void refreshGraphPreview()
+    {
+        jPanelGraphPreview.invalidate();
+        jPanelGraphPreview.repaint();
+    }
+
+    @Override
+    public JPanel getGraphDisplayPanel()
+    {
+        return jPanelGraphPreview;
     }
 
     private int getValueFromString(String sValue)
@@ -141,10 +154,10 @@ public class JSettingsPanel extends javax.swing.JPanel
         java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroupGraphType = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelLogo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanelTimeLine = new javax.swing.JPanel();
+        jPanelAllSettingsContainer = new javax.swing.JPanel();
+        jPanelTimeLineContainer = new javax.swing.JPanel();
         jLabelTimeline1 = new javax.swing.JLabel();
         jLabelTimeline2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -153,7 +166,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         jRadioButtonGraphAggregated = new javax.swing.JRadioButton();
         jRadioButtonGraphDetailed = new javax.swing.JRadioButton();
         jLabelGraphType = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        jPanelRenderingOptionsContainer = new javax.swing.JPanel();
         jCheckBoxPaintGradient = new javax.swing.JCheckBox();
         jCheckBoxDrawFinalZeroingLines = new javax.swing.JCheckBox();
         jPanel6 = new javax.swing.JPanel();
@@ -166,36 +179,39 @@ public class JSettingsPanel extends javax.swing.JPanel
         jCheckBoxHideNonRepValues = new javax.swing.JCheckBox();
         jComboBoxHideNonRepValLimit = new javax.swing.JComboBox();
         jLabelHideNonRepPoints = new javax.swing.JLabel();
+        jPanelGraphPreviewContainer = new javax.swing.JPanel();
+        jCheckBoxShowGraphPreview = new javax.swing.JCheckBox();
+        jPanelGraphPreview = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
+        jPanelLogo.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
-        jPanel1.add(jLabel1);
+        jPanelLogo.add(jLabel1);
 
-        add(jPanel1, java.awt.BorderLayout.PAGE_END);
+        add(jPanelLogo, java.awt.BorderLayout.PAGE_END);
 
-        jPanel2.setLayout(new java.awt.GridBagLayout());
+        jPanelAllSettingsContainer.setLayout(new java.awt.GridBagLayout());
 
-        jPanelTimeLine.setBorder(javax.swing.BorderFactory.createTitledBorder("Graph Settings"));
-        jPanelTimeLine.setLayout(new java.awt.GridBagLayout());
+        jPanelTimeLineContainer.setBorder(javax.swing.BorderFactory.createTitledBorder("Graph Settings"));
+        jPanelTimeLineContainer.setLayout(new java.awt.GridBagLayout());
 
         jLabelTimeline1.setText("Group timeline values for");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 8, 2);
-        jPanelTimeLine.add(jLabelTimeline1, gridBagConstraints);
+        jPanelTimeLineContainer.add(jLabelTimeline1, gridBagConstraints);
 
         jLabelTimeline2.setText("ms");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 8, 2);
-        jPanelTimeLine.add(jLabelTimeline2, gridBagConstraints);
+        jPanelTimeLineContainer.add(jLabelTimeline2, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -203,7 +219,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        jPanelTimeLine.add(jPanel4, gridBagConstraints);
+        jPanelTimeLineContainer.add(jPanel4, gridBagConstraints);
 
         jComboBoxGranulation.setEditable(true);
         jComboBoxGranulation.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "100", "500", "1000", "2000", "5000", "10000", "30000", "60000" }));
@@ -217,7 +233,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 8, 2);
-        jPanelTimeLine.add(jComboBoxGranulation, gridBagConstraints);
+        jPanelTimeLineContainer.add(jComboBoxGranulation, gridBagConstraints);
 
         jLabelInfoGrpValues.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
         jLabelInfoGrpValues.setToolTipText("<html>You can specify here the duration used internally<br>\nby the plugin to combine the values received during<br>\nthe test. This will result in <b>more readable graphs</b> and<br>\n<b>less resources needs</b>. It <b>cannot be undo</b>.<br>\nYou can change the value during the test, but it is not<br>\nrecomended as it may produce inconsistant graphs.<br>\nThis parameter is saved with the test plan.");
@@ -234,7 +250,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 8, 2);
-        jPanelTimeLine.add(jLabelInfoGrpValues, gridBagConstraints);
+        jPanelTimeLineContainer.add(jLabelInfoGrpValues, gridBagConstraints);
 
         buttonGroupGraphType.add(jRadioButtonGraphAggregated);
         jRadioButtonGraphAggregated.setText("Aggregated display, all Samplers combined");
@@ -248,7 +264,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelTimeLine.add(jRadioButtonGraphAggregated, gridBagConstraints);
+        jPanelTimeLineContainer.add(jRadioButtonGraphAggregated, gridBagConstraints);
 
         buttonGroupGraphType.add(jRadioButtonGraphDetailed);
         jRadioButtonGraphDetailed.setSelected(true);
@@ -263,7 +279,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelTimeLine.add(jRadioButtonGraphDetailed, gridBagConstraints);
+        jPanelTimeLineContainer.add(jRadioButtonGraphDetailed, gridBagConstraints);
 
         jLabelGraphType.setText("Type of graph:");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -271,18 +287,16 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 4, 2);
-        jPanelTimeLine.add(jLabelGraphType, gridBagConstraints);
+        jPanelTimeLineContainer.add(jLabelGraphType, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        jPanel2.add(jPanelTimeLine, gridBagConstraints);
+        jPanelAllSettingsContainer.add(jPanelTimeLineContainer, gridBagConstraints);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Rendering Options"));
-        jPanel5.setLayout(new java.awt.GridBagLayout());
+        jPanelRenderingOptionsContainer.setBorder(javax.swing.BorderFactory.createTitledBorder("Rendering Options"));
+        jPanelRenderingOptionsContainer.setLayout(new java.awt.GridBagLayout());
 
         jCheckBoxPaintGradient.setText("Paint gradient");
         jCheckBoxPaintGradient.addActionListener(new java.awt.event.ActionListener() {
@@ -294,7 +308,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel5.add(jCheckBoxPaintGradient, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jCheckBoxPaintGradient, gridBagConstraints);
 
         jCheckBoxDrawFinalZeroingLines.setText("Draw final zeroing lines");
         jCheckBoxDrawFinalZeroingLines.addActionListener(new java.awt.event.ActionListener() {
@@ -306,7 +320,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel5.add(jCheckBoxDrawFinalZeroingLines, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jCheckBoxDrawFinalZeroingLines, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -314,7 +328,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        jPanel5.add(jPanel6, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jPanel6, gridBagConstraints);
 
         jCheckBoxDrawCurrentX.setText("Draw current X line");
         jCheckBoxDrawCurrentX.addActionListener(new java.awt.event.ActionListener() {
@@ -326,7 +340,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel5.add(jCheckBoxDrawCurrentX, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jCheckBoxDrawCurrentX, gridBagConstraints);
 
         jCheckBoxMaxPoints.setText("Limit number of points in row to");
         jCheckBoxMaxPoints.addActionListener(new java.awt.event.ActionListener() {
@@ -338,14 +352,14 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel5.add(jCheckBoxMaxPoints, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jCheckBoxMaxPoints, gridBagConstraints);
 
         jLabelMaxPoints.setText("points");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanel5.add(jLabelMaxPoints, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jLabelMaxPoints, gridBagConstraints);
 
         jComboBoxMaxPoints.setEditable(true);
         jComboBoxMaxPoints.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20", "50", "100", "150", "200" }));
@@ -360,7 +374,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanel5.add(jComboBoxMaxPoints, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jComboBoxMaxPoints, gridBagConstraints);
 
         jLabelInfoMaxPoint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
         jLabelInfoMaxPoint.setToolTipText("<html>This option will <b>dynamically</b> adjust the graph<br>\nrendering so it is <b>more readable</b>. It <b>can be undo</b>.<br>\nYou can change the value during the test.<br>\nThis parameter is not saved with the test plan.<br>");
@@ -377,7 +391,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanel5.add(jLabelInfoMaxPoint, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jLabelInfoMaxPoint, gridBagConstraints);
 
         jCheckBoxLimitMaxXValue.setText("Prevent X axis range to adapt to outliers");
         jCheckBoxLimitMaxXValue.addActionListener(new java.awt.event.ActionListener() {
@@ -390,7 +404,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel5.add(jCheckBoxLimitMaxXValue, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jCheckBoxLimitMaxXValue, gridBagConstraints);
 
         jCheckBoxHideNonRepValues.setText("Hide non representative points, if count is less or equal than");
         jCheckBoxHideNonRepValues.addActionListener(new java.awt.event.ActionListener() {
@@ -402,7 +416,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 4;
-        jPanel5.add(jCheckBoxHideNonRepValues, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jCheckBoxHideNonRepValues, gridBagConstraints);
 
         jComboBoxHideNonRepValLimit.setEditable(true);
         jComboBoxHideNonRepValLimit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "5", "10", "15", "20", "50", "100" }));
@@ -417,7 +431,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        jPanel5.add(jComboBoxHideNonRepValLimit, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jComboBoxHideNonRepValLimit, gridBagConstraints);
 
         jLabelHideNonRepPoints.setText("occurences");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -425,17 +439,52 @@ public class JSettingsPanel extends javax.swing.JPanel
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
-        jPanel5.add(jLabelHideNonRepPoints, gridBagConstraints);
+        jPanelRenderingOptionsContainer.add(jLabelHideNonRepPoints, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        jPanel2.add(jPanel5, gridBagConstraints);
+        jPanelAllSettingsContainer.add(jPanelRenderingOptionsContainer, gridBagConstraints);
 
-        add(jPanel2, java.awt.BorderLayout.CENTER);
+        jPanelGraphPreviewContainer.setLayout(new java.awt.GridBagLayout());
+
+        jCheckBoxShowGraphPreview.setSelected(true);
+        jCheckBoxShowGraphPreview.setText("Show Graph Preview");
+        jCheckBoxShowGraphPreview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxShowGraphPreviewActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        jPanelGraphPreviewContainer.add(jCheckBoxShowGraphPreview, gridBagConstraints);
+
+        jPanelGraphPreview.setLayout(new java.awt.BorderLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 100.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 4, 4);
+        jPanelGraphPreviewContainer.add(jPanelGraphPreview, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanelAllSettingsContainer.add(jPanelGraphPreviewContainer, gridBagConstraints);
+
+        add(jPanelAllSettingsContainer, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBoxGranulationActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBoxGranulationActionPerformed
@@ -451,16 +500,19 @@ public class JSettingsPanel extends javax.swing.JPanel
     private void jCheckBoxPaintGradientActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxPaintGradientActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxPaintGradientActionPerformed
         parent.getGraphPanelChart().setSettingsDrawGradient(jCheckBoxPaintGradient.isSelected());
+        refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxPaintGradientActionPerformed
 
     private void jCheckBoxDrawFinalZeroingLinesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxDrawFinalZeroingLinesActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxDrawFinalZeroingLinesActionPerformed
         parent.getGraphPanelChart().setSettingsDrawFinalZeroingLines(jCheckBoxDrawFinalZeroingLines.isSelected());
+        refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxDrawFinalZeroingLinesActionPerformed
 
     private void jCheckBoxDrawCurrentXActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxDrawCurrentXActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxDrawCurrentXActionPerformed
         parent.getGraphPanelChart().setSettingsDrawCurrentX(jCheckBoxDrawCurrentX.isSelected());
+        refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxDrawCurrentXActionPerformed
 
     private void jCheckBoxMaxPointsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxMaxPointsActionPerformed
@@ -472,6 +524,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         {
             parent.getGraphPanelChart().setMaxPoints(-1);
         }
+        refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxMaxPointsActionPerformed
 
     private void jComboBoxMaxPointsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBoxMaxPointsActionPerformed
@@ -480,6 +533,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         {
             parent.getGraphPanelChart().setMaxPoints(getValueFromString((String) jComboBoxMaxPoints.getSelectedItem()));
         }
+        refreshGraphPreview();
     }//GEN-LAST:event_jComboBoxMaxPointsActionPerformed
 
     private void infoLabelMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_infoLabelMouseEntered
@@ -496,6 +550,7 @@ public class JSettingsPanel extends javax.swing.JPanel
     private void jCheckBoxLimitMaxXValueActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxLimitMaxXValueActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxLimitMaxXValueActionPerformed
         parent.getGraphPanelChart().setPreventXAxisOverScaling(jCheckBoxLimitMaxXValue.isSelected());
+        refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxLimitMaxXValueActionPerformed
 
     private void jCheckBoxHideNonRepValuesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxHideNonRepValuesActionPerformed
@@ -507,6 +562,7 @@ public class JSettingsPanel extends javax.swing.JPanel
         {
             parent.getGraphPanelChart().setSettingsHideNonRepValLimit(-1);
         }
+        refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxHideNonRepValuesActionPerformed
 
     private void jComboBoxHideNonRepValLimitActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBoxHideNonRepValLimitActionPerformed
@@ -515,17 +571,25 @@ public class JSettingsPanel extends javax.swing.JPanel
         {
             parent.getGraphPanelChart().setSettingsHideNonRepValLimit(getValueFromString((String) jComboBoxHideNonRepValLimit.getSelectedItem()));
         }
+        refreshGraphPreview();
     }//GEN-LAST:event_jComboBoxHideNonRepValLimitActionPerformed
 
     private void jRadioButtonGraphAggregatedActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioButtonGraphAggregatedActionPerformed
     {//GEN-HEADEREND:event_jRadioButtonGraphAggregatedActionPerformed
         parent.switchModel(true);
+        refreshGraphPreview();
     }//GEN-LAST:event_jRadioButtonGraphAggregatedActionPerformed
 
     private void jRadioButtonGraphDetailedActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioButtonGraphDetailedActionPerformed
     {//GEN-HEADEREND:event_jRadioButtonGraphDetailedActionPerformed
         parent.switchModel(false);
+        refreshGraphPreview();
     }//GEN-LAST:event_jRadioButtonGraphDetailedActionPerformed
+
+    private void jCheckBoxShowGraphPreviewActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxShowGraphPreviewActionPerformed
+    {//GEN-HEADEREND:event_jCheckBoxShowGraphPreviewActionPerformed
+        jPanelGraphPreview.setVisible(jCheckBoxShowGraphPreview.isSelected());
+    }//GEN-LAST:event_jCheckBoxShowGraphPreviewActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupGraphType;
@@ -535,6 +599,7 @@ public class JSettingsPanel extends javax.swing.JPanel
     private javax.swing.JCheckBox jCheckBoxLimitMaxXValue;
     private javax.swing.JCheckBox jCheckBoxMaxPoints;
     private javax.swing.JCheckBox jCheckBoxPaintGradient;
+    private javax.swing.JCheckBox jCheckBoxShowGraphPreview;
     private javax.swing.JComboBox jComboBoxGranulation;
     private javax.swing.JComboBox jComboBoxHideNonRepValLimit;
     private javax.swing.JComboBox jComboBoxMaxPoints;
@@ -546,12 +611,14 @@ public class JSettingsPanel extends javax.swing.JPanel
     private javax.swing.JLabel jLabelMaxPoints;
     private javax.swing.JLabel jLabelTimeline1;
     private javax.swing.JLabel jLabelTimeline2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanelTimeLine;
+    private javax.swing.JPanel jPanelAllSettingsContainer;
+    private javax.swing.JPanel jPanelGraphPreview;
+    private javax.swing.JPanel jPanelGraphPreviewContainer;
+    private javax.swing.JPanel jPanelLogo;
+    private javax.swing.JPanel jPanelRenderingOptionsContainer;
+    private javax.swing.JPanel jPanelTimeLineContainer;
     private javax.swing.JRadioButton jRadioButtonGraphAggregated;
     private javax.swing.JRadioButton jRadioButtonGraphDetailed;
     // End of variables declaration//GEN-END:variables

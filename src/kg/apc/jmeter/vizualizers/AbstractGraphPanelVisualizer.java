@@ -3,12 +3,9 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
-import javax.swing.JPanel;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -60,8 +57,7 @@ public abstract class AbstractGraphPanelVisualizer
     private static final long REPAINT_INTERVAL = 500;
     public static final String INTERVAL_PROPERTY = "interval_grouping";
     public static final String GRAPH_AGGREGATED = "graph_aggregated";
-    private JSettingsPanel settingsPanel = null;
-    private JPanel previewPanel;
+    public JSettingsPanel settingsPanel = null;
 
     /**
      *
@@ -83,7 +79,6 @@ public abstract class AbstractGraphPanelVisualizer
     {
         setLayout(new BorderLayout());
         add(makeTitlePanel(), BorderLayout.NORTH);
-        add(createPreviewPanel(), BorderLayout.SOUTH);
         add(createGraphPanel(), BorderLayout.CENTER);
     }
 
@@ -98,6 +93,7 @@ public abstract class AbstractGraphPanelVisualizer
         // should be placed after creating graph panel
         settingsPanel = getSettingsPanel();
         graphPanel.getSettingsTab().add(settingsPanel, BorderLayout.CENTER);
+        //graphPanel.setSettingsTabPanel(settingsPanel);
         return graphPanel;
     }
 
@@ -220,27 +216,5 @@ public abstract class AbstractGraphPanelVisualizer
 
         isAggregate = aggregate;
         settingsPanel.setAggregateMode(aggregate);
-    }
-
-    void addGraphPreview(GraphPanelChart graphPanelObject)
-    {
-        previewPanel.setVisible(true);
-        previewPanel.add(graphPanelObject);
-    }
-
-    void hideGraphPreview()
-    {
-        previewPanel.setVisible(false);
-        previewPanel.removeAll();
-    }
-
-    private Component createPreviewPanel()
-    {
-        previewPanel=new JPanel(new BorderLayout());
-        previewPanel.setVisible(false);
-        Dimension dim = new Dimension(200, 200);
-        previewPanel.setMinimumSize(dim);
-        previewPanel.setPreferredSize(dim);
-        return previewPanel;
     }
 }

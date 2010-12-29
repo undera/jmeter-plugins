@@ -180,8 +180,8 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jComboBoxHideNonRepValLimit = new javax.swing.JComboBox();
         jLabelHideNonRepPoints = new javax.swing.JLabel();
         jPanelGraphPreviewContainer = new javax.swing.JPanel();
-        jCheckBoxShowGraphPreview = new javax.swing.JCheckBox();
         jPanelGraphPreview = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setLayout(new java.awt.BorderLayout());
@@ -450,22 +450,6 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
         jPanelGraphPreviewContainer.setLayout(new java.awt.GridBagLayout());
 
-        jCheckBoxShowGraphPreview.setSelected(true);
-        jCheckBoxShowGraphPreview.setText("Show Graph Preview");
-        jCheckBoxShowGraphPreview.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxShowGraphPreviewActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        jPanelGraphPreviewContainer.add(jCheckBoxShowGraphPreview, gridBagConstraints);
-
         jPanelGraphPreview.setLayout(new java.awt.BorderLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -475,6 +459,12 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         gridBagConstraints.weighty = 100.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 4, 4);
         jPanelGraphPreviewContainer.add(jPanelGraphPreview, gridBagConstraints);
+
+        jLabel2.setText("Graph Preview:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        jPanelGraphPreviewContainer.add(jLabel2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -586,11 +576,6 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         refreshGraphPreview();
     }//GEN-LAST:event_jRadioButtonGraphDetailedActionPerformed
 
-    private void jCheckBoxShowGraphPreviewActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxShowGraphPreviewActionPerformed
-    {//GEN-HEADEREND:event_jCheckBoxShowGraphPreviewActionPerformed
-        jPanelGraphPreview.setVisible(jCheckBoxShowGraphPreview.isSelected());
-    }//GEN-LAST:event_jCheckBoxShowGraphPreviewActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupGraphType;
     private javax.swing.JCheckBox jCheckBoxDrawCurrentX;
@@ -599,11 +584,11 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     private javax.swing.JCheckBox jCheckBoxLimitMaxXValue;
     private javax.swing.JCheckBox jCheckBoxMaxPoints;
     private javax.swing.JCheckBox jCheckBoxPaintGradient;
-    private javax.swing.JCheckBox jCheckBoxShowGraphPreview;
     private javax.swing.JComboBox jComboBoxGranulation;
     private javax.swing.JComboBox jComboBoxHideNonRepValLimit;
     private javax.swing.JComboBox jComboBoxMaxPoints;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelGraphType;
     private javax.swing.JLabel jLabelHideNonRepPoints;
     private javax.swing.JLabel jLabelInfoGrpValues;

@@ -46,8 +46,8 @@ public class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRende
         jLabel1 = new javax.swing.JLabel();
         jPanelMain = new javax.swing.JPanel();
         jPanelRowsTable = new javax.swing.JPanel();
-        jCheckBoxShowGraphPreview = new javax.swing.JCheckBox();
         jPanelGraphPreview = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setLayout(new java.awt.BorderLayout());
@@ -71,42 +71,31 @@ public class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRende
         gridBagConstraints.weighty = 1.0;
         jPanelMain.add(jPanelRowsTable, gridBagConstraints);
 
-        jCheckBoxShowGraphPreview.setSelected(true);
-        jCheckBoxShowGraphPreview.setText("Show Graph Preview");
-        jCheckBoxShowGraphPreview.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxShowGraphPreviewActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        jPanelMain.add(jCheckBoxShowGraphPreview, gridBagConstraints);
-
         jPanelGraphPreview.setLayout(new java.awt.BorderLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jPanelMain.add(jPanelGraphPreview, gridBagConstraints);
 
+        jLabel2.setText("Graph Preview:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        jPanelMain.add(jLabel2, gridBagConstraints);
+
         add(jPanelMain, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBoxShowGraphPreviewActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxShowGraphPreviewActionPerformed
-    {//GEN-HEADEREND:event_jCheckBoxShowGraphPreviewActionPerformed
-        jPanelGraphPreview.setVisible(jCheckBoxShowGraphPreview.isSelected());
-}//GEN-LAST:event_jCheckBoxShowGraphPreviewActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBoxShowGraphPreview;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanelGraphPreview;
     private javax.swing.JPanel jPanelLogo;
     private javax.swing.JPanel jPanelMain;

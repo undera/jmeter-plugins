@@ -460,10 +460,10 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 4, 4);
         jPanelGraphPreviewContainer.add(jPanelGraphPreview, gridBagConstraints);
 
-        jLabel2.setText("Graph Preview:");
+        jLabel2.setText("Preview:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         jPanelGraphPreviewContainer.add(jLabel2, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();

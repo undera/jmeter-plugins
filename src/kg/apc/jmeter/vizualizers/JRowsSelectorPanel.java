@@ -81,12 +81,12 @@ public class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRende
         gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         jPanelMain.add(jPanelGraphPreview, gridBagConstraints);
 
-        jLabel2.setText("Graph Preview:");
+        jLabel2.setText("Preview:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 0);
         jPanelMain.add(jLabel2, gridBagConstraints);
 
         add(jPanelMain, java.awt.BorderLayout.CENTER);

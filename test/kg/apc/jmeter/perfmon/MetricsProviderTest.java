@@ -21,7 +21,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author z000205
+ * @author Stephane Hoblingre
  */
 public class MetricsProviderTest
 {
@@ -75,31 +75,31 @@ public class MetricsProviderTest
     @Test
     public void testRun_CPU() throws InterruptedException, IOException
     {
-        runWithType(ServerPerfMonitoringGUI.PERFMON_CPU, "test\n1\n2\n25\n3:4\n5:6\n7:8\n");
+        runWithType(ServerPerfMonitoringGui.PERFMON_CPU, "test\n1\n2\n25\n3:4\n5:6\n7:8\n");
     }
 
     @Test
     public void testRun_MEM() throws InterruptedException, IOException
     {
-        runWithType(ServerPerfMonitoringGUI.PERFMON_MEM, "test\n1\n2\n25\n3:4\n5:6\n7:8\n");
+        runWithType(ServerPerfMonitoringGui.PERFMON_MEM, "test\n1\n2\n25\n3:4\n5:6\n7:8\n");
     }
 
     @Test
     public void testRun_DISKS() throws InterruptedException, IOException
     {
-        runWithType(ServerPerfMonitoringGUI.PERFMON_DISKS_IO, "test\n3:4\n5:6\n7:8\n");
+        runWithType(ServerPerfMonitoringGui.PERFMON_DISKS_IO, "test\n3:4\n5:6\n7:8\n");
     }
 
     @Test
     public void testRun_SWAP() throws InterruptedException, IOException
     {
-        runWithType(ServerPerfMonitoringGUI.PERFMON_SWAP, "test\n3:4\n5:6\n7:8\n");
+        runWithType(ServerPerfMonitoringGui.PERFMON_SWAP, "test\n3:4\n5:6\n7:8\n");
     }
 
     @Test
     public void testRun_NET() throws InterruptedException, IOException
     {
-        runWithType(ServerPerfMonitoringGUI.PERFMON_NETWORKS_IO, "test\n3:4\n5:6\n7:8\n");
+        runWithType(ServerPerfMonitoringGui.PERFMON_NETWORKS_IO, "test\n3:4\n5:6\n7:8\n");
     }
 
     @Test

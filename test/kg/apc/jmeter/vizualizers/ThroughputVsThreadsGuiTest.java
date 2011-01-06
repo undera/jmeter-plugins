@@ -113,7 +113,7 @@ public class ThroughputVsThreadsGuiTest
    public void testModifyTestElement()
    {
       System.out.println("modifyTestElement");
-      TestElement c = new ResultCollector();
+      TestElement c = new RowsProviderResultCollector();
       ThroughputVsThreadsGui instance = new ThroughputVsThreadsGui();
       instance.modifyTestElement(c);
    }

@@ -192,7 +192,7 @@ public class AbstractGraphPanelVisualizerTest
    public void testModifyTestElement()
    {
       System.out.println("modifyTestElement");
-      TestElement c = new ResultCollector();
+      TestElement c = new RowsProviderResultCollector();
       AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
       instance.modifyTestElement(c);
    }
@@ -232,10 +232,8 @@ public class AbstractGraphPanelVisualizerTest
     public void testSwitchModel()
     {
         System.out.println("switchModel");
-        boolean aggregate = false;
+        boolean aggregate = true;
         AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
         instance.switchModel(aggregate);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

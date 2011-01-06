@@ -340,11 +340,9 @@ public class GraphPanelChartTest
     public void testSetSettingsHideNonRepValLimit()
     {
         System.out.println("setSettingsHideNonRepValLimit");
-        int limit = 0;
+        int limit = 5;
         GraphPanelChart instance = new GraphPanelChart();
         instance.setSettingsHideNonRepValLimit(limit);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -354,11 +352,9 @@ public class GraphPanelChartTest
     public void testSetPreventXAxisOverScaling()
     {
         System.out.println("setPreventXAxisOverScaling");
-        boolean preventXAxisOverScaling = false;
+        boolean preventXAxisOverScaling = true;
         GraphPanelChart instance = new GraphPanelChart();
         instance.setPreventXAxisOverScaling(preventXAxisOverScaling);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -368,12 +364,24 @@ public class GraphPanelChartTest
     public void testIsModelContainsRow()
     {
         System.out.println("isModelContainsRow");
-        AbstractGraphRow row = null;
+        
+        ConcurrentSkipListMap<String, AbstractGraphRow> testModel = new ConcurrentSkipListMap<String, AbstractGraphRow>();
+
+        AbstractGraphRow rowIncluded = new GraphRowAverages();
+        rowIncluded.setLabel("rowIncluded");
+        AbstractGraphRow rowExcluded = new GraphRowAverages();
+        rowExcluded.setLabel("rowExcluded");
+
+        testModel.put("rowIncluded", rowIncluded);
+
         GraphPanelChart instance = new GraphPanelChart();
-        boolean expResult = false;
-        boolean result = instance.isModelContainsRow(row);
+        instance.setRows(testModel);
+        boolean expResult = true;
+        boolean result = instance.isModelContainsRow(rowIncluded);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = false;
+        result = instance.isModelContainsRow(rowExcluded);
+        assertEquals(expResult, result);
     }
 }

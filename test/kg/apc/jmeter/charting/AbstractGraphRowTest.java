@@ -406,8 +406,6 @@ public class AbstractGraphRowTest
         int expResult = 0;
         int result = instance.getGranulationValue();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -417,11 +415,9 @@ public class AbstractGraphRowTest
     public void testSetGranulationValue()
     {
         System.out.println("setGranulationValue");
-        int value = 0;
+        int value = 500;
         AbstractGraphRow instance = new AbstractGraphRowImpl();
         instance.setGranulationValue(value);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -434,8 +430,6 @@ public class AbstractGraphRowTest
         boolean excludeOutOfRangeValues = false;
         AbstractGraphRow instance = new AbstractGraphRowImpl();
         instance.setExcludeOutOfRangeValues(excludeOutOfRangeValues);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -450,7 +444,5 @@ public class AbstractGraphRowTest
         AbstractGraphPanelChartElement expResult = null;
         AbstractGraphPanelChartElement result = instance.getElement(value);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

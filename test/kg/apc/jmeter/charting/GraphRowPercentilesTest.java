@@ -90,6 +90,7 @@ public class GraphRowPercentilesTest {
     @Test
     public void testGetElement()
     {
+        /*
         System.out.println("getElement");
         long value = 0L;
         GraphRowPercentiles instance = new GraphRowPercentiles();
@@ -98,6 +99,26 @@ public class GraphRowPercentilesTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+
+         */
+
+        System.out.println("getElement");
+
+        long value = 50L;
+        GraphRowPercentiles instance = new GraphRowPercentiles();
+        for(int i=0; i<100; i++)
+        {
+            instance.addResponseTime(20);
+            instance.addResponseTime(30);
+            instance.addResponseTime(40);
+        }
+
+        //force percentile calculation
+        instance.iterator();
+
+        AbstractGraphPanelChartElement result = instance.getElement(value);
+ 
+        assertTrue(instance.getElement(value).getValue() == 30);
     }
 
 }

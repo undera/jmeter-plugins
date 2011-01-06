@@ -82,10 +82,8 @@ public class JSettingsPanelTest {
     {
         System.out.println("setAggregateMode");
         boolean aggregate = false;
-        JSettingsPanel instance = null;
+        JSettingsPanel instance = new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), true, true, true, true, true);
         instance.setAggregateMode(aggregate);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

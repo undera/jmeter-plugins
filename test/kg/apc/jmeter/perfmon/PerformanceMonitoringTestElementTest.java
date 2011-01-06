@@ -59,6 +59,9 @@ public class PerformanceMonitoringTestElementTest
             });
 
       instance.setData(PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel));
+
+      AbstractPerformanceMonitoringGui gui = new AbstractPerformanceMonitoringGuiImpl();
+      instance.register(gui);
    }
 
    @After

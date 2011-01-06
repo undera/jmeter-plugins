@@ -1,15 +1,14 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.util.concurrent.ConcurrentSkipListMap;
+import kg.apc.jmeter.util.TestJMeterUtils;
 import javax.swing.JComponent;
-import kg.apc.jmeter.charting.GraphPanelChart;
-import kg.apc.jmeter.vizualizers.GraphPanel;
-import kg.apc.jmeter.charting.GraphRowOverallAverages;
-import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Image;
 import javax.swing.event.ChangeEvent;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowOverallAverages;
+import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,6 +39,7 @@ public class GraphPanelTest
    public static void setUpClass()
         throws Exception
    {
+       TestJMeterUtils.createJmeterEnv();
    }
 
    /**
@@ -59,6 +59,8 @@ public class GraphPanelTest
    public void setUp()
    {
       instance = new GraphPanel();
+      instance.getSettingsTab().add(new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), true, true, true, true, true));
+      instance.getGraphObject().setRows(new ConcurrentSkipListMap<String, AbstractGraphRow>());
    }
 
    /**
@@ -152,5 +154,25 @@ public class GraphPanelTest
       System.out.println("getSettingsTab");
       JComponent result = instance.getSettingsTab();
       assertNotNull(result);
+   }
+
+        public class AbstractGraphPanelVisualizerImpl
+         extends AbstractGraphPanelVisualizer
+   {
+      public String getLabelResource()
+      {
+         return "test";
+      }
+
+              @Override
+        protected JSettingsPanel getSettingsPanel()
+        {
+            return new JSettingsPanel(this, true, true, true, true, true);
+        }
+
+        @Override
+        public void add(SampleResult sr)
+        {
+        }
    }
 }

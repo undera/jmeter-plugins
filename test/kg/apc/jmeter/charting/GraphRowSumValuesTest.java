@@ -165,11 +165,9 @@ public class GraphRowSumValuesTest
     public void testSetExcludeOutOfRangeValues()
     {
         System.out.println("setExcludeOutOfRangeValues");
-        boolean excludeOutOfRangeValues = false;
+        boolean excludeOutOfRangeValues = true;
         GraphRowSumValues instance = new GraphRowSumValues();
         instance.setExcludeOutOfRangeValues(excludeOutOfRangeValues);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -180,11 +178,20 @@ public class GraphRowSumValuesTest
     {
         System.out.println("getMaxX");
         GraphRowSumValues instance = new GraphRowSumValues();
-        long expResult = 0L;
+        instance.setGranulationValue(100);
+        instance.setExcludeOutOfRangeValues(true);
+        instance.add(1000, 10);
+        instance.add(100000, 20);
+
+        long expResult = 1000L;
         long result = instance.getMaxX();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        instance.setExcludeOutOfRangeValues(false);
+        expResult = 100000;
+        result = instance.getMaxX();
+        assertEquals(expResult, result);
+
     }
 
     /**
@@ -194,12 +201,11 @@ public class GraphRowSumValuesTest
     public void testGetElement()
     {
         System.out.println("getElement");
-        long value = 0L;
+        long value = 100L;
         GraphRowSumValues instance = new GraphRowSumValues();
-        AbstractGraphPanelChartElement expResult = null;
+        AbstractGraphPanelChartElement expResult = new GraphPanelChartSumElement(10);
+        instance.add(value, 10);
         AbstractGraphPanelChartElement result = instance.getElement(value);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.getElement(value).getValue() == expResult.getValue());
     }
 }

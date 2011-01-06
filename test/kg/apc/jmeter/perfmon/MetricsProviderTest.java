@@ -237,13 +237,11 @@ public class MetricsProviderTest
      * Test of loadFile method, of class MetricsProvider.
      */
     @Test
-    public void testLoadFile()
+    public void testLoadFile() throws Exception
     {
         System.out.println("loadFile");
-        File file = null;
-        MetricsProvider instance = null;
+        File file = new File(MetricsProviderTest.class.getResource("test.jppm").toURI());
+        MetricsProvider instance = new MetricsProvider(AbstractPerformanceMonitoringGui.PERFMON_CPU, new AbstractPerformanceMonitoringGuiImpl(), null);
         instance.loadFile(file);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

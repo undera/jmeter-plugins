@@ -99,12 +99,22 @@ public class GraphPanelChartAverageElementTest
     public void testIsPointRepresentative()
     {
         System.out.println("isPointRepresentative");
-        int limit = 0;
+        int limit = 5;
         GraphPanelChartAverageElement instance = new GraphPanelChartAverageElement();
+        for(int i=0; i<3; i++)
+        {
+            instance.add(10);
+        }
         boolean expResult = false;
         boolean result = instance.isPointRepresentative(limit);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        for(int i=0; i<3; i++)
+        {
+            instance.add(10);
+        }
+        expResult = true;
+        result = instance.isPointRepresentative(limit);
+        assertEquals(expResult, result);
     }
 }

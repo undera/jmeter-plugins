@@ -115,7 +115,7 @@ public class TimesVsThreadsGuiTest
    public void testModifyTestElement()
    {
       System.out.println("modifyTestElement");
-      TestElement c = new ResultCollector();
+      TestElement c = new RowsProviderResultCollector();
       TimesVsThreadsGui instance = new TimesVsThreadsGui();
       instance.modifyTestElement(c);
    }

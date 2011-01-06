@@ -150,12 +150,12 @@ public class GraphRowExactValuesTest
     public void testGetElement()
     {
         System.out.println("getElement");
-        long value = 0L;
+        
+        long value = 100L;
         GraphRowExactValues instance = new GraphRowExactValues();
-        AbstractGraphPanelChartElement expResult = null;
+        AbstractGraphPanelChartElement expResult = new GraphPanelChartExactElement(value, 2);
+        instance.add(value, 2);
         AbstractGraphPanelChartElement result = instance.getElement(value);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.getElement(value).getValue() == expResult.getValue());
     }
 }

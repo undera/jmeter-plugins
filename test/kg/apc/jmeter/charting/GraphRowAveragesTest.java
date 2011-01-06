@@ -130,12 +130,11 @@ public class GraphRowAveragesTest
     public void testGetElement()
     {
         System.out.println("getElement");
-        long value = 0L;
+        long value = 100L;
         GraphRowAverages instance = new GraphRowAverages();
-        AbstractGraphPanelChartElement expResult = null;
+        AbstractGraphPanelChartElement expResult = new GraphPanelChartAverageElement(10);
+        instance.add(value, 10);
         AbstractGraphPanelChartElement result = instance.getElement(value);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.getElement(value).getValue() == expResult.getValue());
     }
 }

@@ -46,7 +46,7 @@ public class ServerPerfMonitoringGUITest
    public void testGetStaticLabel()
    {
       System.out.println("getStaticLabel");
-      ServerPerfMonitoringGui instance = new ServerPerfMonitoringGui();
+      ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
       String expResult = "Servers Performance Monitoring";
       String result = instance.getStaticLabel();
       assertEquals(expResult, result);
@@ -55,7 +55,7 @@ public class ServerPerfMonitoringGUITest
    public void testGetSettingsPanel()
    {
       System.out.println("getSettingsPanel");
-      ServerPerfMonitoringGui instance = new ServerPerfMonitoringGui();
+      ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
       JSettingsPanel result = instance.getSettingsPanel();
       assertNotNull(result);
    }
@@ -69,7 +69,7 @@ public class ServerPerfMonitoringGUITest
         System.out.println("addPerfRecord");
         String serverName = "test";
         double value = 3.0;
-        ServerPerfMonitoringGui instance = new ServerPerfMonitoringGui();
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
         instance.addPerfRecord(serverName, value);
     }
 
@@ -83,7 +83,7 @@ public class ServerPerfMonitoringGUITest
         String serverName = "test";
         double value = 3.0;
         long time = 100000L;
-        ServerPerfMonitoringGui instance = new ServerPerfMonitoringGui();
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
         instance.addPerfRecord(serverName, value, time);
     }
 
@@ -95,7 +95,7 @@ public class ServerPerfMonitoringGUITest
     {
         System.out.println("setErrorMessage");
         String msg = "Error message.";
-        ServerPerfMonitoringGui instance = new ServerPerfMonitoringGui();
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
         instance.setErrorMessage(msg);
     }
 
@@ -106,7 +106,7 @@ public class ServerPerfMonitoringGUITest
     public void testClearErrorMessage()
     {
         System.out.println("clearErrorMessage");
-        ServerPerfMonitoringGui instance = new ServerPerfMonitoringGui();
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
         String msg = "Error message.";
         instance.setErrorMessage(msg);
         instance.clearErrorMessage();
@@ -120,7 +120,7 @@ public class ServerPerfMonitoringGUITest
     {
         System.out.println("setChartType");
         int monitorType = GraphPanelChart.CHART_PERCENTAGE;
-        ServerPerfMonitoringGui instance = new ServerPerfMonitoringGui();
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
         instance.setChartType(monitorType);
     }
 
@@ -132,7 +132,7 @@ public class ServerPerfMonitoringGUITest
     {
         System.out.println("setLoadMenuEnabled");
         boolean enabled = false;
-        ServerPerfMonitoringGui instance = new ServerPerfMonitoringGui();
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
         instance.setLoadMenuEnabled(enabled);
     }
 }

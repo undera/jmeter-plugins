@@ -122,7 +122,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
             }
         } catch (Exception ex)
         {
-            reportError("Failed to read " + file.getAbsolutePath());
+            reportError("Failed to read " + file.getAbsolutePath() + ": " + ex.getMessage());
         } finally
         {
             try

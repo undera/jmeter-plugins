@@ -36,6 +36,17 @@ public class GraphModelToCsvExporter
         dateFormatter = new SimpleDateFormat("HH:mm:ss" + decimalSeparator + "S");
     }
 
+    //used for Unit Tests only as of now
+    public GraphModelToCsvExporter(
+            AbstractMap<String, AbstractGraphRow> rows,
+            File destFile,
+            String csvSeparator,
+            char decimalSeparator)
+    {
+        this(rows, destFile, csvSeparator);
+        this.decimalSeparator = decimalSeparator;
+    }
+
     private String xValueFormatter(long xValue)
     {
         if (xValue > 1000000000000L)

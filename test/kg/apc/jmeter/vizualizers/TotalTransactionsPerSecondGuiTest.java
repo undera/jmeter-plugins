@@ -66,7 +66,7 @@ public class TotalTransactionsPerSecondGuiTest
     {
         System.out.println("getStaticLabel");
         TotalTransactionsPerSecondGui instance = new TotalTransactionsPerSecondGui();
-        String expResult = "Total Transactions Per Second";
+        String expResult = "Total Transactions Per Second (obsolete)";
         String result = instance.getStaticLabel();
         assertEquals(expResult, result);
     }

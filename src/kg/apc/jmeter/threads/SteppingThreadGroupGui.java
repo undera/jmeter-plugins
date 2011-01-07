@@ -2,7 +2,6 @@
 package kg.apc.jmeter.threads;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -19,6 +18,7 @@ import kg.apc.jmeter.vizualizers.DateTimeRenderer;
 import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowSumValues;
+import kg.apc.jmeter.vizualizers.ColorsDispatcher;
 
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
@@ -204,7 +204,7 @@ public class SteppingThreadGroupGui
       model.clear();
 
       GraphRowSumValues row = new GraphRowSumValues();
-      row.setColor(Color.RED);
+      row.setColor(ColorsDispatcher.RED);
       row.setDrawLine(true);
       row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
       row.setDrawThickLines(true);

@@ -1,7 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
 import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.GraphRowSumValues;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**
@@ -25,30 +24,13 @@ public class BytesThroughputOverTimeGui
         setGranulation(1000);
     }
 
-    private synchronized AbstractGraphRow getNewRow(String label)
-    {
-        AbstractGraphRow row = null;
-        if(!model.containsKey(label)) {
-            row = new GraphRowSumValues(false);
-            row.setLabel(label);
-            row.setColor(colors.getNextColor());
-            row.setDrawLine(true);
-            row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
-            model.put(label, row);
-            graphPanel.addRow(row);
-        } else {
-            row = model.get(label);
-        }
-
-        return row;
-    }
-
     private void addBytes(String threadGroupName, long time, int value)
     {
         AbstractGraphRow row = model.get(threadGroupName);
+
         if (row == null)
         {
-            row = getNewRow(threadGroupName);
+         row = getNewRow(model, AbstractGraphRow.ROW_SUM_VALUES, threadGroupName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true);
         }
 
         //fix to have values/sec in all cases

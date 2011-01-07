@@ -3,11 +3,18 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Image;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
+import kg.apc.jmeter.charting.GraphRowAverages;
+import kg.apc.jmeter.charting.GraphRowExactValues;
+import kg.apc.jmeter.charting.GraphRowOverallAverages;
+import kg.apc.jmeter.charting.GraphRowPercentiles;
+import kg.apc.jmeter.charting.GraphRowSumValues;
+import kg.apc.jmeter.charting.RowsCollector;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.testelement.TestElement;
@@ -31,6 +38,7 @@ public abstract class AbstractGraphPanelVisualizer
         ImageVisualizer,
         SettingsInterface
 {
+
     private static final Logger log = LoggingManager.getLoggerForClass();
     /**
      *
@@ -153,7 +161,9 @@ public abstract class AbstractGraphPanelVisualizer
     public void setGranulation(int granulation)
     {
         if (granulation < 1)
+        {
             throw new IllegalArgumentException("Interval cannot be less than 1");
+        }
         interval = granulation;
         settingsPanel.setGranulationValue(granulation);
     }
@@ -162,7 +172,8 @@ public abstract class AbstractGraphPanelVisualizer
     public TestElement createTestElement()
     {
         ResultCollector modelNew = getModel();
-        if (modelNew == null) {
+        if (modelNew == null)
+        {
             modelNew = new RowsProviderResultCollector();
             setModel(modelNew);
         }
@@ -187,7 +198,9 @@ public abstract class AbstractGraphPanelVisualizer
         int intervalProp = el.getPropertyAsInt(INTERVAL_PROPERTY);
         boolean aggregatedProp = el.getPropertyAsBoolean(GRAPH_AGGREGATED, false);
         if (intervalProp > 0)
+        {
             setGranulation(intervalProp);
+        }
         switchModel(aggregatedProp);
     }
 
@@ -203,18 +216,96 @@ public abstract class AbstractGraphPanelVisualizer
 
         ConcurrentSkipListMap<String, AbstractGraphRow> selectedModel;
         if (aggregate)
+        {
             selectedModel = modelAggregate;
-        else
+        } else
+        {
             selectedModel = model;
+        }
 
         graphPanel.getGraphObject().setRows(selectedModel);
         graphPanel.clearRowsTab();
 
         Iterator<AbstractGraphRow> rowsIter = selectedModel.values().iterator();
         while (rowsIter.hasNext())
+        {
             graphPanel.addRow(rowsIter.next());
+        }
 
         isAggregate = aggregate;
         settingsPanel.setAggregateMode(aggregate);
+    }
+
+    private AbstractGraphRow instanciateNewRow(int rowType)
+    {
+        switch (rowType)
+        {
+            case AbstractGraphRow.ROW_AVERAGES:
+                return new GraphRowAverages();
+            case AbstractGraphRow.ROW_EXACT_VALUES:
+                return new GraphRowExactValues();
+            case AbstractGraphRow.ROW_OVERALL_AVERAGES:
+                return new GraphRowOverallAverages();
+            case AbstractGraphRow.ROW_PERCENTILES:
+                return new GraphRowPercentiles();
+            case AbstractGraphRow.ROW_SUM_VALUES:
+                return new GraphRowSumValues(false);
+            case AbstractGraphRow.ROW_ROLLING_SUM_VALUES:
+                return new GraphRowSumValues(true);
+            default:
+                return null;
+        }
+    }
+
+    protected synchronized AbstractGraphRow getNewRow(
+            ConcurrentSkipListMap<String, AbstractGraphRow> model,
+            int rowType,
+            String label,
+            int markerSize,
+            boolean isBarRow,
+            boolean displayLabel,
+            boolean thickLines,
+            boolean showInLegend,
+            Color color)
+    {
+        AbstractGraphRow row = null;
+        if (!model.containsKey(label))
+        {
+            row = instanciateNewRow(rowType);
+            row.setLabel(label);
+            row.setMarkerSize(markerSize);
+            row.setDrawBar(isBarRow);
+            row.setDrawLine(!isBarRow);
+            row.setDrawValueLabel(displayLabel);
+            row.setDrawThickLines(thickLines);
+            row.setShowInLegend(showInLegend);
+            if(color == null)
+            {
+                row.setColor(colors.getNextColor());
+            } else {
+                row.setColor(color);
+            }
+            model.put(label, row);
+            graphPanel.addRow(row);
+            RowsCollector.getInstance().addRow(getModel().getName(), row);
+        } else
+        {
+            row = model.get(label);
+        }
+
+        return row;
+    }
+
+    protected synchronized AbstractGraphRow getNewRow(
+            ConcurrentSkipListMap<String, AbstractGraphRow> model,
+            int rowType,
+            String label,
+            int markerSize,
+            boolean isBarRow,
+            boolean displayLabel,
+            boolean thickLines,
+            boolean showInLegend)
+    {
+        return getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, null);
     }
 }

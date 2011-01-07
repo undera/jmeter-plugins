@@ -1,9 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.awt.Color;
-import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.GraphRowSumValues;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**
@@ -30,37 +27,6 @@ public class TransactionsPerSecondGui
         setGranulation(1000);
     }
 
-    private synchronized AbstractGraphRow getNewRow(ConcurrentSkipListMap<String, AbstractGraphRow> model, String label, Color forcedColor)
-    {
-        AbstractGraphRow row = null;
-        if (!model.containsKey(label))
-        {
-            row = new GraphRowSumValues(false);
-            row.setLabel(label);
-            if(forcedColor == null)
-            {
-                row.setColor(colors.getNextColor());
-            } else
-            {
-                row.setColor(forcedColor);
-            }
-            row.setDrawLine(true);
-            row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
-            model.put(label, row);
-            graphPanel.addRow(row);
-        } else
-        {
-            row = model.get(label);
-        }
-
-        return row;
-    }
-
-    private AbstractGraphRow getNewRow(ConcurrentSkipListMap<String, AbstractGraphRow> model, String label)
-    {
-        return getNewRow(model, label, null);
-    }
-
     private void addTransaction(boolean isSuccess, String rowName, long time, double count)
     {
         String realRowName = null;
@@ -81,11 +47,12 @@ public class TransactionsPerSecondGui
 
         if (row == null)
         {
-            row = getNewRow(model, realRowName);
+            row = getNewRow(model, AbstractGraphRow.ROW_SUM_VALUES, realRowName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true);
         }
+
         if (rowAgg == null)
         {
-            rowAgg = getNewRow(modelAggregate, rowAggName, isSuccess ? Color.green : Color.red);
+            rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, rowAggName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, isSuccess ? ColorsDispatcher.GREEN : ColorsDispatcher.RED);
         }
 
         //fix to have trans/sec values in all cases

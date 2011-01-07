@@ -29,6 +29,18 @@ public abstract class AbstractGraphRow
    /**
     *
     */
+
+
+   /*
+    * rows types
+    */
+   public static final int ROW_AVERAGES = 0;
+   public static final int ROW_EXACT_VALUES = 1;
+   public static final int ROW_OVERALL_AVERAGES = 2;
+   public static final int ROW_PERCENTILES = 3;
+   public static final int ROW_SUM_VALUES = 4;
+   public static final int ROW_ROLLING_SUM_VALUES = 5;
+
    protected boolean drawLine = false;
    private boolean drawValueLabel = false;
    private boolean showInLegend = true;

@@ -3,8 +3,6 @@ package kg.apc.jmeter.vizualizers;
 import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.GraphRowOverallAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
-import java.awt.Color;
-import java.util.concurrent.ConcurrentSkipListMap;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**
@@ -42,30 +40,21 @@ public class TimesVsThreadsGui
         String averageLabel = "Average " + res.getSampleLabel();
         String aggLabel = "Aggregated Response Times";
         String avgAggLabel = "Average " + aggLabel;
-        GraphRowAverages row;
-        GraphRowOverallAverages avgRow;
-        GraphRowAverages rowAgg;
-        GraphRowOverallAverages avgRowAgg;
-        if (!model.containsKey(label) || !model.containsKey(averageLabel))
+        GraphRowAverages row = (GraphRowAverages) model.get(label);
+        GraphRowOverallAverages avgRow = (GraphRowOverallAverages) model.get(averageLabel);
+        GraphRowAverages rowAgg = (GraphRowAverages) modelAggregate.get(aggLabel);
+        GraphRowOverallAverages avgRowAgg = (GraphRowOverallAverages) modelAggregate.get(avgAggLabel);
+
+        if(row == null || avgRow == null)
         {
-            row = getNewRow(model, label);
-            row.setColor(colors.getNextColor());
-            avgRow = getNewAveragesRow(model, averageLabel, row.getColor());
-        } else
-        {
-            row = (GraphRowAverages) model.get(label);
-            avgRow = (GraphRowOverallAverages) model.get(averageLabel);
+            row = (GraphRowAverages) getNewRow(model, AbstractGraphRow.ROW_AVERAGES, label, AbstractGraphRow.MARKER_SIZE_SMALL , false, false, false, true);
+            avgRow = (GraphRowOverallAverages) getNewRow(model, AbstractGraphRow.ROW_OVERALL_AVERAGES, averageLabel, AbstractGraphRow.MARKER_SIZE_BIG , false, true, false, false, row.getColor());
         }
 
-        if (!modelAggregate.containsKey(aggLabel) || !modelAggregate.containsKey(avgAggLabel))
+        if(rowAgg == null || avgRowAgg == null)
         {
-            rowAgg = getNewRow(modelAggregate, aggLabel);
-            rowAgg.setColor(Color.RED);
-            avgRowAgg = getNewAveragesRow(modelAggregate, avgAggLabel, rowAgg.getColor());
-        } else
-        {
-            rowAgg = (GraphRowAverages) modelAggregate.get(aggLabel);
-            avgRowAgg = (GraphRowOverallAverages) modelAggregate.get(avgAggLabel);
+            rowAgg = (GraphRowAverages) getNewRow(modelAggregate, AbstractGraphRow.ROW_AVERAGES, aggLabel, AbstractGraphRow.MARKER_SIZE_SMALL , false, false, false, true, ColorsDispatcher.RED);
+            avgRowAgg = (GraphRowOverallAverages) getNewRow(modelAggregate, AbstractGraphRow.ROW_OVERALL_AVERAGES, avgAggLabel, AbstractGraphRow.MARKER_SIZE_BIG , false, true, false, false, ColorsDispatcher.RED);
         }
 
         row.add(res.getAllThreads(), res.getTime());
@@ -75,43 +64,6 @@ public class TimesVsThreadsGui
 
         graphPanel.getGraphObject().setCurrentX(res.getAllThreads());
         updateGui(null);
-    }
-
-    private synchronized GraphRowOverallAverages getNewAveragesRow(ConcurrentSkipListMap<String, AbstractGraphRow> model, String averageLabel, Color color)
-    {
-        GraphRowOverallAverages avgRow = null;
-        if (!model.containsKey(averageLabel))
-        {
-            avgRow = new GraphRowOverallAverages();
-            avgRow.setLabel(averageLabel);
-            avgRow.setColor(color);
-            avgRow.setMarkerSize(AbstractGraphRow.MARKER_SIZE_BIG);
-            avgRow.setDrawValueLabel(true);
-            avgRow.setShowInLegend(false);
-            model.put(averageLabel, avgRow);
-            graphPanel.addRow(avgRow);
-        } else {
-            avgRow = (GraphRowOverallAverages) model.get(averageLabel);
-        }
-        return avgRow;
-    }
-
-    private synchronized GraphRowAverages getNewRow(ConcurrentSkipListMap<String, AbstractGraphRow> model, String label)
-    {
-        GraphRowAverages row = null;
-        if (!model.containsKey(label))
-        {
-            row = new GraphRowAverages();
-            row.setLabel(label);
-            row.setDrawLine(true);
-            row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
-            model.put(label, row);
-            graphPanel.addRow(row);
-        } else
-        {
-            row = (GraphRowAverages) model.get(label);
-        }
-        return row;
     }
 
     @Override

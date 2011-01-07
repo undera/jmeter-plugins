@@ -10,6 +10,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowExactValues;
+import kg.apc.jmeter.charting.RowsCollector;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -62,6 +63,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
          row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
          model.put(label, row);
          graphPanel.addRow(row);
+         RowsCollector.getInstance().addRow(createTestElement().getName(), row);
       }
       else
       {

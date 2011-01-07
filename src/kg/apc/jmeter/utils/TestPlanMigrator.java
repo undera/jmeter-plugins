@@ -68,15 +68,19 @@ public class TestPlanMigrator
             }
         }
 
+        /*
+        // TotalTransactionsPerSecondGui removal, replaced with TransactionsPerSecondGui
         if (builder.indexOf("kg.apc.jmeter.vizualizers.TotalTransactionsPerSecondGui") != -1)
         {
             replaceOnce(builder, "kg.apc.jmeter.vizualizers.TotalTransactionsPerSecondGui", "kg.apc.jmeter.vizualizers.TransactionsPerSecondGui");
         }
 
+        // ServerPerfMonitoringGUI renamed to ServerPerfMonitoringGui
         if (builder.indexOf("kg.apc.jmeter.perfmon.ServerPerfMonitoringGUI") != -1)
         {
             replaceOnce(builder, "kg.apc.jmeter.perfmon.ServerPerfMonitoringGUI", "kg.apc.jmeter.perfmon.ServerPerfMonitoringGui");
         }
+        */
     }
 
     public void processFile(String fileName) throws FileNotFoundException, IOException

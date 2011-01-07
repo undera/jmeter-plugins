@@ -1,8 +1,5 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.awt.Color;
-import java.util.concurrent.ConcurrentSkipListMap;
-import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
 
@@ -25,26 +22,6 @@ public class ResponseTimesOverTimeGui
       graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
    }
 
-   private synchronized AbstractGraphRow getNewRow(ConcurrentSkipListMap<String, AbstractGraphRow> model, String label)
-   {
-      AbstractGraphRow row = null;
-      if (!model.containsKey(label))
-      {
-         row = new GraphRowAverages();
-         row.setLabel(label);
-         row.setDrawLine(true);
-         row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
-         model.put(label, row);
-         graphPanel.addRow(row);
-      }
-      else
-      {
-         row = model.get(label);
-      }
-
-      return row;
-   }
-
    private void addThreadGroupRecord(String threadGroupName, long time,
          long numThreads)
    {
@@ -53,13 +30,11 @@ public class ResponseTimesOverTimeGui
       AbstractGraphRow rowAgg = modelAggregate.get(labelAgg);
       if (row == null)
       {
-         row = getNewRow(model, threadGroupName);
-         row.setColor(colors.getNextColor());
+         row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, threadGroupName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true);
       }
       if (rowAgg == null)
       {
-         rowAgg = getNewRow(modelAggregate, labelAgg);
-         rowAgg.setColor(Color.RED);
+         rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_AVERAGES, labelAgg, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, ColorsDispatcher.RED);
       }
 
       row.add(time, numThreads);

@@ -1,7 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.text.DecimalFormatSymbols;
-import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.gui.RateRenderer;
@@ -27,33 +26,14 @@ public class ThroughputOverTimeGui
         graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
     }
 
-    private synchronized AbstractGraphRow getNewRow(String label)
-    {
-        AbstractGraphRow row = null;
-        if (!model.containsKey(label))
-        {
-            row = new GraphRowAverages();
-            row.setLabel(label);
-            row.setColor(colors.getNextColor());
-            row.setDrawLine(true);
-            row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_SMALL);
-            model.put(label, row);
-            graphPanel.addRow(row);
-        } else
-        {
-            row = model.get(label);
-        }
-
-        return row;
-    }
-
     private void addThreadGroupRecord(String threadGroupName, long time,
             double rTime)
     {
         AbstractGraphRow row = model.get(threadGroupName);
+
         if (row == null)
         {
-            row = getNewRow(threadGroupName);
+         row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, threadGroupName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true);
         }
 
         row.add(time, rTime);

@@ -30,6 +30,13 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
       super();
       registerSpecificPopup();
    }
+   
+   @Override
+   public void clearData()
+   {
+       super.clearData();
+       RowsCollector.getInstance().clearRows(createTestElement().getName());
+   }
 
    private void registerSpecificPopup()
    {

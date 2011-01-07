@@ -137,6 +137,7 @@ public abstract class AbstractGraphPanelVisualizer
         modelAggregate.clear();
         colors.reset();
         graphPanel.clearRowsTab();
+        RowsCollector.getInstance().clearRows(getModel().getName());
         updateGui();
         repaint();
     }

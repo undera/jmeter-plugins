@@ -38,4 +38,9 @@ public class RowsCollector {
         rows.add(row);
         System.out.println(vizualizerName + " has " + rows.size() + " row(s).");
     }
+
+    public synchronized void clearRows(String vizualizerName)
+    {
+        models.remove(vizualizerName);
+    }
 }

@@ -10,9 +10,9 @@ import org.apache.jmeter.gui.util.JMeterColor;
  */
 public class ColorsDispatcher
 {
-   private final Color[] fixedColors =
+
+    private final static Color[] fixedColors =
    {
-      Color.WHITE,
       Color.RED,
       Color.GREEN,
       Color.BLUE,
@@ -25,37 +25,41 @@ public class ColorsDispatcher
       JMeterColor.LAVENDER,
       JMeterColor.dark_green,
       Color.GRAY,
-      Color.LIGHT_GRAY,
+      Color.LIGHT_GRAY
    };
-   private int spentColors = 0;
-   private final Random rnd;
 
-   /**
-    *
-    */
-   public ColorsDispatcher()
-   {
-      rnd = new Random();
-   }
+    public static Color RED = fixedColors[0];
+    public static Color GREEN = fixedColors[1];
 
-   /**
-    *
-    * @return
-    */
-   public Color getNextColor()
-   {
-      if (++spentColors > fixedColors.length-1)
-      {
-         return new Color(rnd.nextInt(0xFFFFFF));
-      }
-      else
-      {
-         return fixedColors[spentColors];
-      }
-   }
+    private int index = -1;
+    private final Random rnd;
 
-   public void reset()
-   {
-      spentColors = 0;
-   }
+    /**
+     *
+     */
+    public ColorsDispatcher()
+    {
+        rnd = new Random();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Color getNextColor()
+    {
+        index++;
+        if (index < fixedColors.length)
+        {
+            return fixedColors[index];
+        } else
+        {
+            return new Color(rnd.nextInt(0xFFFFFF));
+        }
+    }
+
+    public void reset()
+    {
+        index = -1;
+    }
 }

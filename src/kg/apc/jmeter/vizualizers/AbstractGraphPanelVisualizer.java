@@ -137,6 +137,7 @@ public abstract class AbstractGraphPanelVisualizer
         modelAggregate.clear();
         colors.reset();
         graphPanel.clearRowsTab();
+        //disbaled for now
         RowsCollector.getInstance().clearRows(getModel().getName());
         updateGui();
         repaint();
@@ -288,6 +289,7 @@ public abstract class AbstractGraphPanelVisualizer
             }
             model.put(label, row);
             graphPanel.addRow(row);
+            //disbaled for now
             RowsCollector.getInstance().addRow(getModel().getName(), row);
         } else
         {

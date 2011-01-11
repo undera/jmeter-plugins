@@ -35,6 +35,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
    public void clearData()
    {
        super.clearData();
+       //disbaled for now
        RowsCollector.getInstance().clearRows(createTestElement().getName());
    }
 
@@ -70,6 +71,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
          row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
          model.put(label, row);
          graphPanel.addRow(row);
+         //disbaled for now
          RowsCollector.getInstance().addRow(createTestElement().getName(), row);
       }
       else

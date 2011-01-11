@@ -2,6 +2,7 @@ package kg.apc.jmeter.charting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *
@@ -27,7 +28,7 @@ public class RowsCollector {
         models.clear();
     }
 
-    public synchronized void addRow(String vizualizerName, AbstractGraphRow row)
+    public void addRow(String vizualizerName, AbstractGraphRow row)
     {
         ArrayList<AbstractGraphRow> rows = models.get(vizualizerName);
         if(rows == null)
@@ -36,11 +37,39 @@ public class RowsCollector {
             models.put(vizualizerName, rows);
         }
         rows.add(row);
-        System.out.println(vizualizerName + " has " + rows.size() + " row(s).");
     }
 
-    public synchronized void clearRows(String vizualizerName)
+    public void clearRows(String vizualizerName)
     {
         models.remove(vizualizerName);
+    }
+
+    public HashMap<String, ArrayList<AbstractGraphRow>> getMap()
+    {
+        return models;
+    }
+
+    public Iterator<String> getThreadSafeVizualizerNamesIterator()
+    {
+        Object clone = ((HashMap<String, ArrayList<AbstractGraphRow>>)models).clone();
+        if(clone != null)
+        {         
+            return ((HashMap<String, ArrayList<AbstractGraphRow>>)clone).keySet().iterator();
+        } else
+        {
+            return new HashMap<String, ArrayList<AbstractGraphRow>>().keySet().iterator();
+        }
+    }
+
+    public Iterator<AbstractGraphRow> getThreadSafeRowsIterator(String vizualizerNames)
+    {
+        Object clone = ((ArrayList<AbstractGraphRow>)models.get(vizualizerNames)).clone();
+        if(clone != null)
+        {
+            return ((ArrayList<AbstractGraphRow>)clone).iterator();
+        } else
+        {
+            return new ArrayList<AbstractGraphRow>().iterator();
+        }
     }
 }

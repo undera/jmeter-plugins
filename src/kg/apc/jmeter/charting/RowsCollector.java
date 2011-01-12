@@ -1,8 +1,7 @@
 package kg.apc.jmeter.charting;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  *
@@ -10,12 +9,14 @@ import java.util.Iterator;
  */
 public class RowsCollector {
 
-    private static HashMap<String, ArrayList<AbstractGraphRow>> models = null;
+    private ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>> models = null;
     private static RowsCollector instance = new RowsCollector();
+    private Iterator emptyIterator = null;
 
     private RowsCollector()
     {
-        models = new HashMap<String, ArrayList<AbstractGraphRow>>();
+        models = new ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>>();
+        emptyIterator = new ConcurrentSkipListMap<String, AbstractGraphRow>().values().iterator();
     }
 
     public static RowsCollector getInstance()
@@ -23,20 +24,20 @@ public class RowsCollector {
         return instance;
     }
 
-    public static void clear()
+    public void clear()
     {
         models.clear();
     }
 
     public void addRow(String vizualizerName, AbstractGraphRow row)
     {
-        ArrayList<AbstractGraphRow> rows = models.get(vizualizerName);
+        ConcurrentSkipListMap<String, AbstractGraphRow> rows = models.get(vizualizerName);
         if(rows == null)
         {
-            rows = new ArrayList<AbstractGraphRow>();
+            rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
             models.put(vizualizerName, rows);
         }
-        rows.add(row);
+        rows.put(row.getLabel(), row);
     }
 
     public void clearRows(String vizualizerName)
@@ -44,32 +45,25 @@ public class RowsCollector {
         models.remove(vizualizerName);
     }
 
-    public HashMap<String, ArrayList<AbstractGraphRow>> getMap()
+    public Iterator<String> getVizualizerNamesIterator()
     {
-        return models;
+        return models.keySet().iterator();
     }
 
-    public Iterator<String> getThreadSafeVizualizerNamesIterator()
+    public Iterator<AbstractGraphRow> getRowsIterator(String vizualizerNames)
     {
-        Object clone = ((HashMap<String, ArrayList<AbstractGraphRow>>)models).clone();
-        if(clone != null)
-        {         
-            return ((HashMap<String, ArrayList<AbstractGraphRow>>)clone).keySet().iterator();
+        ConcurrentSkipListMap<String, AbstractGraphRow> rows = models.get(vizualizerNames);
+        if(rows != null)
+        {
+            return rows.values().iterator();
         } else
         {
-            return new HashMap<String, ArrayList<AbstractGraphRow>>().keySet().iterator();
+            return emptyIterator;
         }
     }
 
-    public Iterator<AbstractGraphRow> getThreadSafeRowsIterator(String vizualizerNames)
+    public AbstractGraphRow getRow(String testName, String rowName)
     {
-        Object clone = ((ArrayList<AbstractGraphRow>)models.get(vizualizerNames)).clone();
-        if(clone != null)
-        {
-            return ((ArrayList<AbstractGraphRow>)clone).iterator();
-        } else
-        {
-            return new ArrayList<AbstractGraphRow>().iterator();
-        }
+        return models.get(testName).get(rowName);
     }
 }

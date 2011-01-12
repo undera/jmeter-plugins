@@ -47,14 +47,14 @@ public class TimesVsThreadsGui
 
         if(row == null || avgRow == null)
         {
-            row = (GraphRowAverages) getNewRow(model, AbstractGraphRow.ROW_AVERAGES, label, AbstractGraphRow.MARKER_SIZE_SMALL , false, false, false, true);
-            avgRow = (GraphRowOverallAverages) getNewRow(model, AbstractGraphRow.ROW_OVERALL_AVERAGES, averageLabel, AbstractGraphRow.MARKER_SIZE_BIG , false, true, false, false, row.getColor());
+            row = (GraphRowAverages) getNewRow(model, AbstractGraphRow.ROW_AVERAGES, label, AbstractGraphRow.MARKER_SIZE_SMALL , false, false, false, true, false);
+            avgRow = (GraphRowOverallAverages) getNewRow(model, AbstractGraphRow.ROW_OVERALL_AVERAGES, averageLabel, AbstractGraphRow.MARKER_SIZE_BIG , false, true, false, false, row.getColor(), false);
         }
 
         if(rowAgg == null || avgRowAgg == null)
         {
-            rowAgg = (GraphRowAverages) getNewRow(modelAggregate, AbstractGraphRow.ROW_AVERAGES, aggLabel, AbstractGraphRow.MARKER_SIZE_SMALL , false, false, false, true, ColorsDispatcher.RED);
-            avgRowAgg = (GraphRowOverallAverages) getNewRow(modelAggregate, AbstractGraphRow.ROW_OVERALL_AVERAGES, avgAggLabel, AbstractGraphRow.MARKER_SIZE_BIG , false, true, false, false, ColorsDispatcher.RED);
+            rowAgg = (GraphRowAverages) getNewRow(modelAggregate, AbstractGraphRow.ROW_AVERAGES, aggLabel, AbstractGraphRow.MARKER_SIZE_SMALL , false, false, false, true, ColorsDispatcher.RED, false);
+            avgRowAgg = (GraphRowOverallAverages) getNewRow(modelAggregate, AbstractGraphRow.ROW_OVERALL_AVERAGES, avgAggLabel, AbstractGraphRow.MARKER_SIZE_BIG , false, true, false, false, ColorsDispatcher.RED, false);
         }
 
         row.add(res.getAllThreads(), res.getTime());

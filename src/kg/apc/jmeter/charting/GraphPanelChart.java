@@ -19,6 +19,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,6 +37,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import kg.apc.jmeter.vizualizers.ColorsDispatcher;
 import org.apache.jmeter.util.JMeterUtils;
 
 import org.apache.jorphan.gui.NumberRenderer;
@@ -111,6 +113,16 @@ public class GraphPanelChart
    private int maxPoints = -1;
 
    private boolean preventXAxisOverScaling = false;
+
+   private boolean reSetColors = false;
+
+    public void setReSetColors(boolean reSetColors)
+    {
+        this.reSetColors = reSetColors;
+    }
+
+   private String xAxisLabel = "X axis label";
+   private String yAxisLabel = "Y axis label";
 
    // Default draw options - these are default values if no property is entered in user.properties
    // List of possible properties (TODO: The explaination must be written in readme file)
@@ -468,7 +480,7 @@ public class GraphPanelChart
    {
       // TODO: middle value labels often wider than max
       yAxisLabelRenderer.setValue(maxYVal);
-      int axisWidth = fm.stringWidth(yAxisLabelRenderer.getText()) + spacing * 3;
+      int axisWidth = fm.stringWidth(yAxisLabelRenderer.getText()) + spacing * 3 + fm.getHeight();
       yAxisRect.setBounds(chartRect.x, chartRect.y, axisWidth, chartRect.height);
       chartRect.setBounds(chartRect.x + axisWidth, chartRect.y, chartRect.width - axisWidth, chartRect.height);
    }
@@ -477,7 +489,7 @@ public class GraphPanelChart
    {
       // FIXME: first value on X axis may take negative X coord,
       // we need to handle this and make Y axis wider
-      int axisHeight = fm.getHeight() + spacing;
+      int axisHeight = 2 * fm.getHeight() + spacing; //labels plus name
       xAxisLabelRenderer.setValue(maxXVal);
       int axisEndSpace = fm.stringWidth(xAxisLabelRenderer.getText()) / 2;
       xAxisRect.setBounds(chartRect.x, chartRect.y + chartRect.height - axisHeight, chartRect.width, axisHeight);
@@ -545,9 +557,18 @@ public class GraphPanelChart
       int currentX = chartRect.x;
       int currentY = chartRect.y;
       int legendHeight = it.hasNext() ? rectH + spacing : 0;
+
+      ColorsDispatcher colors = null;
+
+      if(reSetColors)
+      {
+          colors = new ColorsDispatcher();
+      }
+
       while (it.hasNext())
       {
          row = it.next();
+         Color color = reSetColors ? colors.getNextColor() : row.getValue().getColor();
 
          if (!row.getValue().isShowInLegend() || !row.getValue().isDrawOnChart())
          {
@@ -563,7 +584,7 @@ public class GraphPanelChart
          }
 
          // draw legend color box
-         g.setColor(row.getValue().getColor());
+         g.setColor(color);
          Composite oldComposite = null;
          if (row.getValue().isDrawBar())
          {
@@ -631,6 +652,19 @@ public class GraphPanelChart
          labelXPos = yAxisRect.x + yAxisRect.width - fm.stringWidth(valueLabel) - spacing - spacing / 2;
          g.drawString(valueLabel, labelXPos, gridLineY + fm.getAscent() / 2);
       }
+
+      Font oldFont = g.getFont();
+      g.setFont(g.getFont().deriveFont(Font.ITALIC));
+
+      // Create a rotation transformation for the font.
+AffineTransform fontAT = new AffineTransform();
+int delta = g.getFontMetrics(g.getFont()).stringWidth(yAxisLabel);
+fontAT.rotate(-Math.PI/2d);
+g.setFont(g.getFont().deriveFont(fontAT));
+
+      g.drawString(yAxisLabel, yAxisRect.x+20, yAxisRect.y + yAxisRect.height / 2 + delta / 2);
+
+      g.setFont(oldFont);
       //restore stroke
       ((Graphics2D) g).setStroke(oldStroke);
    }
@@ -680,6 +714,23 @@ public class GraphPanelChart
          g.drawString(valueLabel, labelXPos, xAxisRect.y + fm.getAscent() + spacing);
       }
 
+      Font oldFont = g.getFont();
+      g.setFont(g.getFont().deriveFont(Font.ITALIC));
+
+      // Create a rotation transformation for the font.
+//AffineTransform fontAT = new AffineTransform();
+//fontAT.rotate(-Math.PI/2d);
+//g.setFont(g.getFont().deriveFont(fontAT));
+
+
+
+
+
+      //axis label
+      g.drawString(xAxisLabel, chartRect.x + chartRect.width / 2 - g.getFontMetrics(g.getFont()).stringWidth(xAxisLabel) / 2, xAxisRect.y + 2 * fm.getAscent() + spacing + 1);
+
+      g.setFont(oldFont);
+
       //restore stroke
       ((Graphics2D) g).setStroke(oldStroke);
 
@@ -696,15 +747,21 @@ public class GraphPanelChart
    {
       g.setColor(Color.yellow);
       Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
-      
-      int biggestRowSize = getBiggestRowSize();
+
+      ColorsDispatcher dispatcher = null;
+
+      if(reSetColors)
+      {
+          dispatcher = new ColorsDispatcher();
+      }
 
       while (it.hasNext())
       {
          Entry<String, AbstractGraphRow> row = it.next();
          if (row.getValue().isDrawOnChart())
          {
-            paintRow(g, row.getValue(), biggestRowSize);
+            Color color = reSetColors ? dispatcher.getNextColor() : row.getValue().getColor();
+            paintRow(g, row.getValue(), color);
          }
       }
    }
@@ -739,34 +796,14 @@ public class GraphPanelChart
        this.maxPoints = maxPoints;
    }
 
-    private int getBiggestRowSize()
-    {
-        int max = 1;
-        Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
-        while (it.hasNext())
-        {
-            Entry<String, AbstractGraphRow> row = it.next();
-            if (row.getValue().isDrawOnChart())
-            {
-                int size = row.getValue().size();
-                if ( size > max)
-                {
-                    max = size;
-                }
-            }
-        }
-
-        return max;
-    }
-
-   private void paintRow(Graphics g, AbstractGraphRow row, int biggestRowSize)
+   private void paintRow(Graphics g, AbstractGraphRow row, Color color)
    {
       //how many points to average?
       int factor;
 
       if (maxPoints > 0)
       {
-          factor = (biggestRowSize / maxPoints) + 1;
+          factor = (row.size() / maxPoints) + 1;
       } else
       {
           factor = 1;
@@ -860,7 +897,7 @@ public class GraphPanelChart
          {
             if (prevX > 0)
             {
-               g.setColor(row.getColor());
+               g.setColor(color);
                if (isChartPointValid(x, y))
                {
                   g.drawLine(prevX, prevY, x, y);
@@ -873,7 +910,7 @@ public class GraphPanelChart
          // draw bars
           if (row.isDrawBar())
           {
-              g.setColor(row.getColor());
+              g.setColor(color);
               if (isChartPointValid(x+1, y)) //as we draw bars, xMax values must be rejected
               {   
                   int x2 = chartRect.x + (int) ((calcPointX + row.getGranulationValue() - minXVal) * dxForDVal) - x -1;
@@ -912,7 +949,7 @@ public class GraphPanelChart
          // draw markers
          if (radius != AbstractGraphRow.MARKER_SIZE_NONE)
          {
-            g.setColor(row.getColor());
+            g.setColor(color);
             if (isChartPointValid(x, y))
             {
                g.fillOval(x - radius, y - radius, (radius) * 2, (radius) * 2);

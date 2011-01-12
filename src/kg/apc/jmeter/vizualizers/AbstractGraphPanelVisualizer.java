@@ -268,7 +268,8 @@ public abstract class AbstractGraphPanelVisualizer
             boolean displayLabel,
             boolean thickLines,
             boolean showInLegend,
-            Color color)
+            Color color,
+            boolean canCompose)
     {
         AbstractGraphRow row = null;
         if (!model.containsKey(label))
@@ -289,8 +290,10 @@ public abstract class AbstractGraphPanelVisualizer
             }
             model.put(label, row);
             graphPanel.addRow(row);
-            //disbaled for now
-            RowsCollector.getInstance().addRow(getModel().getName(), row);
+            if(canCompose)
+            {
+                RowsCollector.getInstance().addRow(getModel().getName(), row);
+            }
         } else
         {
             row = model.get(label);
@@ -307,8 +310,9 @@ public abstract class AbstractGraphPanelVisualizer
             boolean isBarRow,
             boolean displayLabel,
             boolean thickLines,
-            boolean showInLegend)
+            boolean showInLegend,
+            boolean canCompose)
     {
-        return getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, null);
+        return getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, null, canCompose);
     }
 }

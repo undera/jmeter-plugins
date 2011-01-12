@@ -24,7 +24,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         initComponents();
         root1 = new DefaultMutableTreeNode("Test Plan", true);
         model1 = new DefaultTreeModel(root1);
-        root2 = new DefaultMutableTreeNode("Test Plan", true);
+        root2 = new DefaultMutableTreeNode("Composite Graph", true);
         model2 = new DefaultTreeModel(root2);
         jTreeGraph1.setModel(model1);
         jTreeGraph2.setModel(model2);
@@ -53,7 +53,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
 
     private DefaultMutableTreeNode getNode(String nodeName, DefaultMutableTreeNode root)
     {
-         Enumeration children = root.children();
+        Enumeration children = root.children();
         while(children.hasMoreElements())
         {
             DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
@@ -68,19 +68,19 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
     public void clearData()
     {
         root1.removeAllChildren();
-        root2.removeAllChildren();
+        //root2.removeAllChildren();
         model1.nodeStructureChanged(root1);
-        model2.nodeStructureChanged(root2);
+        //model2.nodeStructureChanged(root2);
     }
 
-    public void updateTrees()
+    public void updateTree()
     {
         //rows will not disapear, only chart if cleared...
         RowsCollector rowsCollector = RowsCollector.getInstance();
         boolean chartsUpdated = false;
         boolean rowsUpdated = false;
         //first check if graph cleared
-        Iterator<String> chartsIter = rowsCollector.getThreadSafeVizualizerNamesIterator();
+        Iterator<String> chartsIter = rowsCollector.getVizualizerNamesIterator();
         while(chartsIter.hasNext())
         {
             String chartName = chartsIter.next();
@@ -88,21 +88,21 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
             {
                 chartsUpdated = true;
                 DefaultMutableTreeNode node1 = new DefaultMutableTreeNode(chartName, true);
-                DefaultMutableTreeNode node2 = new DefaultMutableTreeNode(chartName, true);
+                //DefaultMutableTreeNode node2 = new DefaultMutableTreeNode(chartName, true);
                 root1.add(node1);
-                root2.add(node2);
-                Iterator<AbstractGraphRow> rowsIter = rowsCollector.getThreadSafeRowsIterator(chartName);
+                //root2.add(node2);
+                Iterator<AbstractGraphRow> rowsIter = rowsCollector.getRowsIterator(chartName);
                 while(rowsIter.hasNext())
                 {
                     AbstractGraphRow row = rowsIter.next();
                     node1.add(new DefaultMutableTreeNode(row.getLabel(), false));
-                    node2.add(new DefaultMutableTreeNode(row.getLabel(), false));
+                    //node2.add(new DefaultMutableTreeNode(row.getLabel(), false));
                 }
             } else
             {
-                Iterator<AbstractGraphRow> rowsIter = rowsCollector.getThreadSafeRowsIterator(chartName);
+                Iterator<AbstractGraphRow> rowsIter = rowsCollector.getRowsIterator(chartName);
                 DefaultMutableTreeNode chartNode1 = getNode(chartName, root1);
-                DefaultMutableTreeNode chartNode2 = getNode(chartName, root2);
+                //DefaultMutableTreeNode chartNode2 = getNode(chartName, root2);
 
                 while(rowsIter.hasNext())
                 {
@@ -111,13 +111,13 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
                    {
                        rowsUpdated = true;
                        chartNode1.add(new DefaultMutableTreeNode(rowName, false));
-                       chartNode2.add(new DefaultMutableTreeNode(rowName, false));
+                       //chartNode2.add(new DefaultMutableTreeNode(rowName, false));
                    }
                 }
                 if(rowsUpdated)
                 {
                     model1.nodeStructureChanged(chartNode1);
-                    model1.nodeStructureChanged(chartNode2);
+                    //model1.nodeStructureChanged(chartNode2);
                 }
             }
         }
@@ -125,7 +125,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         if(chartsUpdated)
         {
             model1.nodeStructureChanged(root1);
-            model2.nodeStructureChanged(root2);
+            //model2.nodeStructureChanged(root2);
         }
     }
 
@@ -149,6 +149,9 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         jTreeGraph1 = new javax.swing.JTree();
         jScrollPaneGraph = new javax.swing.JScrollPane();
         jTreeGraph2 = new javax.swing.JTree();
+        jPanelButtons = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanelGraphPreview = new javax.swing.JPanel();
         jLabelPreview = new javax.swing.JLabel();
 
@@ -169,10 +172,10 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         jPanelRowsTable.setPreferredSize(new java.awt.Dimension(206, 23));
         jPanelRowsTable.setLayout(new java.awt.GridBagLayout());
 
-        jLabelGraph1.setText("First graph:");
-        jLabelGraph1.setMaximumSize(new java.awt.Dimension(100, 14));
-        jLabelGraph1.setMinimumSize(new java.awt.Dimension(100, 14));
-        jLabelGraph1.setPreferredSize(new java.awt.Dimension(100, 14));
+        jLabelGraph1.setText("Available Sources:");
+        jLabelGraph1.setMaximumSize(new java.awt.Dimension(120, 14));
+        jLabelGraph1.setMinimumSize(new java.awt.Dimension(120, 14));
+        jLabelGraph1.setPreferredSize(new java.awt.Dimension(120, 14));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -180,12 +183,12 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanelRowsTable.add(jLabelGraph1, gridBagConstraints);
 
-        jLabelGraph2.setText("Second graph:");
-        jLabelGraph2.setMaximumSize(new java.awt.Dimension(100, 14));
-        jLabelGraph2.setMinimumSize(new java.awt.Dimension(100, 14));
-        jLabelGraph2.setPreferredSize(new java.awt.Dimension(100, 14));
+        jLabelGraph2.setText("Composed Graph:");
+        jLabelGraph2.setMaximumSize(new java.awt.Dimension(120, 14));
+        jLabelGraph2.setMinimumSize(new java.awt.Dimension(120, 14));
+        jLabelGraph2.setPreferredSize(new java.awt.Dimension(120, 14));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -208,13 +211,36 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         jScrollPaneGraph.setViewportView(jTreeGraph2);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanelRowsTable.add(jScrollPaneGraph, gridBagConstraints);
+
+        jPanelButtons.setFocusable(false);
+        jPanelButtons.setLayout(new java.awt.GridLayout(0, 1, 0, 6));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/rightArrow.png"))); // NOI18N
+        jButton1.setFocusable(false);
+        jButton1.setMaximumSize(new java.awt.Dimension(30, 25));
+        jButton1.setMinimumSize(new java.awt.Dimension(30, 25));
+        jButton1.setPreferredSize(new java.awt.Dimension(30, 25));
+        jPanelButtons.add(jButton1);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/leftArrow.png"))); // NOI18N
+        jButton2.setFocusable(false);
+        jButton2.setMaximumSize(new java.awt.Dimension(30, 25));
+        jButton2.setMinimumSize(new java.awt.Dimension(30, 25));
+        jButton2.setPreferredSize(new java.awt.Dimension(30, 25));
+        jPanelButtons.add(jButton2);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        jPanelRowsTable.add(jPanelButtons, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -247,10 +273,13 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabelGraph1;
     private javax.swing.JLabel jLabelGraph2;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelPreview;
+    private javax.swing.JPanel jPanelButtons;
     private javax.swing.JPanel jPanelGraphPreview;
     private javax.swing.JPanel jPanelLogo;
     private javax.swing.JPanel jPanelMain;

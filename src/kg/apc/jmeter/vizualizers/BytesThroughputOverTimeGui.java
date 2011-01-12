@@ -30,7 +30,7 @@ public class BytesThroughputOverTimeGui
 
         if (row == null)
         {
-         row = getNewRow(model, AbstractGraphRow.ROW_SUM_VALUES, threadGroupName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true);
+         row = getNewRow(model, AbstractGraphRow.ROW_SUM_VALUES, threadGroupName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, true);
         }
 
         //fix to have values/sec in all cases

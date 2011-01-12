@@ -47,12 +47,12 @@ public class TransactionsPerSecondGui
 
         if (row == null)
         {
-            row = getNewRow(model, AbstractGraphRow.ROW_SUM_VALUES, realRowName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true);
+            row = getNewRow(model, AbstractGraphRow.ROW_SUM_VALUES, realRowName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, true);
         }
 
         if (rowAgg == null)
         {
-            rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, rowAggName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, isSuccess ? ColorsDispatcher.GREEN : ColorsDispatcher.RED);
+            rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, rowAggName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, isSuccess ? ColorsDispatcher.GREEN : ColorsDispatcher.RED, true);
         }
 
         //fix to have trans/sec values in all cases

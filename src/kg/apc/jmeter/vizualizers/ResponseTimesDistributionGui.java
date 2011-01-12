@@ -28,11 +28,11 @@ public class ResponseTimesDistributionGui
 
       if (row == null)
       {
-         row = getNewRow(model, AbstractGraphRow.ROW_SUM_VALUES, threadGroupName, AbstractGraphRow.MARKER_SIZE_NONE, true, false, false, true);
+         row = getNewRow(model, AbstractGraphRow.ROW_SUM_VALUES, threadGroupName, AbstractGraphRow.MARKER_SIZE_NONE, true, false, false, true, false);
       }
       if (rowAgg == null)
       {
-         rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, aggLabel, AbstractGraphRow.MARKER_SIZE_NONE, true, false, false, true, ColorsDispatcher.RED);
+         rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, aggLabel, AbstractGraphRow.MARKER_SIZE_NONE, true, false, false, true, ColorsDispatcher.RED, false);
       }
 
       row.add(time, 1);

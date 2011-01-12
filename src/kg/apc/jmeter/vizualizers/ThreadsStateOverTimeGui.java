@@ -26,7 +26,7 @@ public class ThreadsStateOverTimeGui
       AbstractGraphRow row = model.get(threadGroupName);
       if (row == null)
       {
-        row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, threadGroupName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true);
+        row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, threadGroupName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, true);
       }
 
       row.add(time, numThreads);

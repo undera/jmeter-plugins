@@ -6,9 +6,7 @@
 package kg.apc.jmeter.charting;
 
 import java.io.File;
-import java.net.URL;
 import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.AbstractMap;
 import java.util.Calendar;
 import kg.apc.jmeter.util.FilesTestTools;
 import org.junit.After;

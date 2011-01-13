@@ -24,6 +24,8 @@ public class ThroughputVsThreadsGui
         graphPanel.getGraphObject().setDrawCurrentX(true);
         graphPanel.getGraphObject().setyAxisLabelRenderer(new CustomRateRenderer("#.0"));
         graphPanel.getGraphObject().setForcedMinX(0);
+        graphPanel.getGraphObject().setxAxisLabel("Number or active threads");
+        graphPanel.getGraphObject().setyAxisLabel("Number of estimated transactions");
     }
 
     @Override

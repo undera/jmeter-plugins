@@ -20,6 +20,8 @@ public class LatenciesOverTimeGui
       graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(
             "HH:mm:ss"));
       graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
+      graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
+      graphPanel.getGraphObject().setyAxisLabel("Response latencies in ms");
    }
 
    private void addThreadGroupRecord(String threadGroupName, long time,

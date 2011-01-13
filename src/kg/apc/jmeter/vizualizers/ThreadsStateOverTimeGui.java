@@ -19,6 +19,8 @@ public class ThreadsStateOverTimeGui
       super();
       graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
       graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
+      graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
+      graphPanel.getGraphObject().setyAxisLabel("Number of active threads");
    }
 
    private void addThreadGroupRecord(String threadGroupName, long time, int numThreads)

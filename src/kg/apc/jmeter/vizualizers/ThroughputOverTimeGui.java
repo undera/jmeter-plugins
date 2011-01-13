@@ -24,6 +24,8 @@ public class ThroughputOverTimeGui
                 "HH:mm:ss"));
         graphPanel.getGraphObject().setyAxisLabelRenderer(new CustomRateRenderer("#.0"));
         graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
+        graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
+        graphPanel.getGraphObject().setyAxisLabel("Number of estimated transactions");
     }
 
     private void addThreadGroupRecord(String threadGroupName, long time,

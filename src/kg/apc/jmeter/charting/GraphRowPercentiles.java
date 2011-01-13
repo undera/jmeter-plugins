@@ -30,7 +30,7 @@ public class GraphRowPercentiles extends AbstractGraphRow
         super();
         values = new ConcurrentSkipListMap<Long, GraphPanelChartPercentileElement>();
         //create percentiles objects, and reuse them to avoid GC
-        for (long p = 1; p < 101; p++)
+        for (long p = 0; p < 101; p++)
         {
             percentiles.put(p, new GraphPanelChartPercentileElement(100));
         }
@@ -49,7 +49,7 @@ public class GraphRowPercentiles extends AbstractGraphRow
         if (minRespTime > respTime)
         {
             minRespTime = respTime;
-            super.add(1, minRespTime);
+            super.add(0, minRespTime);
         }
         if (maxRespTime < respTime)
         {
@@ -116,6 +116,7 @@ public class GraphRowPercentiles extends AbstractGraphRow
             }
 
             percentiles.get(100L).setValue(maxRespTime);
+            percentiles.get(0L).setValue(minRespTime);
         }
     }
 

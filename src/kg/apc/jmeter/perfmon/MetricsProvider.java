@@ -271,8 +271,8 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
             return false;
         }
 
-        String keyPageIn = agentConnector.getRemoteServerName() + " page IN";
-        String keyPageOut = agentConnector.getRemoteServerName() + " page OUT";
+        String keyPageIn = agentConnector.getRemoteServerName() + " (in)";
+        String keyPageOut = agentConnector.getRemoteServerName() + " (out)";
         if (oldValues.containsKey(keyPageIn) && oldValues.containsKey(keyPageOut))
         {
             addPerfRecord(keyPageIn, values[0] - oldValues.get(keyPageIn).longValue());
@@ -291,8 +291,8 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
             return false;
         }
 
-        String keyReads = agentConnector.getRemoteServerName() + " READS";
-        String keyWrites = agentConnector.getRemoteServerName() + " WRITES";
+        String keyReads = agentConnector.getRemoteServerName() + " (reads)";
+        String keyWrites = agentConnector.getRemoteServerName() + " (writes)";
         if (oldValues.containsKey(keyReads) && oldValues.containsKey(keyWrites))
         {
             addPerfRecord(keyReads, values[0] - oldValues.get(keyReads).longValue());
@@ -311,8 +311,8 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
             return false;
         }
 
-        String keyReads = agentConnector.getRemoteServerName() + " RECEIVED";
-        String keyWrites = agentConnector.getRemoteServerName() + " TRANSFERED";
+        String keyReads = agentConnector.getRemoteServerName() + " (received)";
+        String keyWrites = agentConnector.getRemoteServerName() + " (transfered)";
         if (oldValues.containsKey(keyReads) && oldValues.containsKey(keyWrites))
         {
             addPerfRecord(keyReads, (double) (values[0] - oldValues.get(keyReads).longValue()) / 1024.0d);

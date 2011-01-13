@@ -21,6 +21,8 @@ public class TimesVsThreadsGui
         super();
         graphPanel.getGraphObject().setDrawCurrentX(true);
         graphPanel.getGraphObject().setForcedMinX(0);
+        graphPanel.getGraphObject().setxAxisLabel("Number of active threads");
+        graphPanel.getGraphObject().setyAxisLabel("Response times in ms");
     }
 
     public String getLabelResource()

@@ -22,6 +22,8 @@ public class HitsPerSecondGui
                 "HH:mm:ss"));
         graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
         setGranulation(1000);
+        graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
+        graphPanel.getGraphObject().setyAxisLabel("Number of hits");
     }
 
     private void addHit(String threadGroupName, long time)

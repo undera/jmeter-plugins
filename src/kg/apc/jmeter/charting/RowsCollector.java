@@ -2,12 +2,15 @@ package kg.apc.jmeter.charting;
 
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
+import org.apache.jmeter.engine.StandardJMeterEngine;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
+import org.apache.jmeter.testelement.TestListener;
 
 /**
  *
  * @author Stephane Hoblingre
  */
-public class RowsCollector {
+public class RowsCollector implements TestListener {
 
     private ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>> models = null;
     private static RowsCollector instance = new RowsCollector();
@@ -17,6 +20,7 @@ public class RowsCollector {
     {
         models = new ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>>();
         emptyIterator = new ConcurrentSkipListMap<String, AbstractGraphRow>().values().iterator();
+        StandardJMeterEngine.register(this);
     }
 
     public static RowsCollector getInstance()
@@ -29,13 +33,23 @@ public class RowsCollector {
         models.clear();
     }
 
-    public void addRow(String vizualizerName, AbstractGraphRow row)
+    private synchronized ConcurrentSkipListMap<String, AbstractGraphRow> getRowsMap(String vizualizerName)
     {
         ConcurrentSkipListMap<String, AbstractGraphRow> rows = models.get(vizualizerName);
         if(rows == null)
         {
             rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
             models.put(vizualizerName, rows);
+        }
+        return rows;
+    }
+
+    public void addRow(String vizualizerName, AbstractGraphRow row)
+    {
+        ConcurrentSkipListMap<String, AbstractGraphRow> rows = models.get(vizualizerName);
+        if(rows == null)
+        {
+            rows = getRowsMap(vizualizerName);
         }
         rows.put(row.getLabel(), row);
     }
@@ -65,5 +79,36 @@ public class RowsCollector {
     public AbstractGraphRow getRow(String testName, String rowName)
     {
         return models.get(testName).get(rowName);
+    }
+
+    @Override
+    public void testStarted()
+    {
+        clear();
+        //must re-register
+        StandardJMeterEngine.register(this);
+    }
+
+    @Override
+    public void testStarted(String string)
+    {
+        clear();
+        //must re-register
+        StandardJMeterEngine.register(this);
+    }
+
+    @Override
+    public void testEnded()
+    {
+    }
+
+    @Override
+    public void testEnded(String string)
+    {
+    }
+
+    @Override
+    public void testIterationStart(LoopIterationEvent lie)
+    {
     }
 }

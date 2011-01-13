@@ -17,7 +17,8 @@ public class ResponseTimesDistributionGui
    {
       super();
       setGranulation(100);
-      //graphPanel.getGraphObject().setChartType(GraphPanelChart.CHART_PERCENTAGE);
+      graphPanel.getGraphObject().setxAxisLabel("Response times in ms");
+      graphPanel.getGraphObject().setyAxisLabel("Number of responses");
    }
 
    private void addThreadGroupRecord(String threadGroupName, long time, int granulation)

@@ -124,6 +124,16 @@ public class GraphPanelChart
    private String xAxisLabel = "X axis label";
    private String yAxisLabel = "Y axis label";
 
+    public void setxAxisLabel(String xAxisLabel)
+    {
+        this.xAxisLabel = xAxisLabel;
+    }
+
+    public void setyAxisLabel(String yAxisLabel)
+    {
+        this.yAxisLabel = yAxisLabel;
+    }
+
    // Default draw options - these are default values if no property is entered in user.properties
    // List of possible properties (TODO: The explaination must be written in readme file)
    // jmeterPlugin.drawGradient=(true/false)
@@ -657,12 +667,12 @@ public class GraphPanelChart
       g.setFont(g.getFont().deriveFont(Font.ITALIC));
 
       // Create a rotation transformation for the font.
-AffineTransform fontAT = new AffineTransform();
-int delta = g.getFontMetrics(g.getFont()).stringWidth(yAxisLabel);
-fontAT.rotate(-Math.PI/2d);
-g.setFont(g.getFont().deriveFont(fontAT));
+      AffineTransform fontAT = new AffineTransform();
+      int delta = g.getFontMetrics(g.getFont()).stringWidth(yAxisLabel);
+      fontAT.rotate(-Math.PI/2d);
+      g.setFont(g.getFont().deriveFont(fontAT));
 
-      g.drawString(yAxisLabel, yAxisRect.x+20, yAxisRect.y + yAxisRect.height / 2 + delta / 2);
+      g.drawString(yAxisLabel, yAxisRect.x+15, yAxisRect.y + yAxisRect.height / 2 + delta / 2);
 
       g.setFont(oldFont);
       //restore stroke
@@ -727,7 +737,7 @@ g.setFont(g.getFont().deriveFont(fontAT));
 
 
       //axis label
-      g.drawString(xAxisLabel, chartRect.x + chartRect.width / 2 - g.getFontMetrics(g.getFont()).stringWidth(xAxisLabel) / 2, xAxisRect.y + 2 * fm.getAscent() + spacing + 1);
+      g.drawString(xAxisLabel, chartRect.x + chartRect.width / 2 - g.getFontMetrics(g.getFont()).stringWidth(xAxisLabel) / 2, xAxisRect.y + 2 * fm.getAscent() + spacing + 3);
 
       g.setFont(oldFont);
 
@@ -895,7 +905,7 @@ g.setFont(g.getFont().deriveFont(fontAT));
          // draw lines
          if (row.isDrawLine())
          {
-            if (prevX > 0)
+            if (prevX >= 0)
             {
                g.setColor(color);
                if (isChartPointValid(x, y))
@@ -930,6 +940,9 @@ g.setFont(g.getFont().deriveFont(fontAT));
           if (row.isDrawValueLabel())
           {
               g.setColor(Color.DARK_GRAY);
+              Font oldFont = g.getFont();
+              g.setFont(g.getFont().deriveFont(Font.BOLD));
+
               yAxisLabelRenderer.setValue(calcPointY);
               int labelSize = g.getFontMetrics(g.getFont()).stringWidth(yAxisLabelRenderer.getText());
               //if close to end
@@ -944,6 +957,7 @@ g.setFont(g.getFont().deriveFont(fontAT));
                           x + row.getMarkerSize() + spacing,
                           y + fm.getAscent() / 2);
               }
+              g.setFont(oldFont);
           }
 
          // draw markers
@@ -1206,7 +1220,7 @@ g.setFont(g.getFont().deriveFont(fontAT));
 
                 if (doSave)
                 {
-                    GraphModelToCsvExporter exporter = new GraphModelToCsvExporter(rows, file, csvSeparator);
+                    GraphModelToCsvExporter exporter = new GraphModelToCsvExporter(rows, file, csvSeparator, xAxisLabel);
                     try
                     {
                         exporter.writeCsvFile();

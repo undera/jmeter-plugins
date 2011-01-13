@@ -15,7 +15,6 @@ import kg.apc.jmeter.charting.GraphRowOverallAverages;
 import kg.apc.jmeter.charting.GraphRowPercentiles;
 import kg.apc.jmeter.charting.GraphRowSumValues;
 import kg.apc.jmeter.charting.RowsCollector;
-import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.BooleanProperty;
@@ -76,8 +75,8 @@ public abstract class AbstractGraphPanelVisualizer
         model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         modelAggregate = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         colors = new ColorsDispatcher();
-        RowsProviderResultCollector resCollector = new RowsProviderResultCollector();
-        setModel(resCollector);
+        //RowsProviderResultCollector resCollector = new RowsProviderResultCollector();
+        //setModel(resCollector);
         initGui();
     }
 
@@ -173,14 +172,8 @@ public abstract class AbstractGraphPanelVisualizer
     @Override
     public TestElement createTestElement()
     {
-        ResultCollector modelNew = getModel();
-        if (modelNew == null)
-        {
-            modelNew = new RowsProviderResultCollector();
-            setModel(modelNew);
-        }
-        modifyTestElement(modelNew);
-        return modelNew;
+        TestElement el = super.createTestElement();
+        return el;
     }
 
     @Override
@@ -189,8 +182,6 @@ public abstract class AbstractGraphPanelVisualizer
         super.modifyTestElement(c);
         c.setProperty(new LongProperty(INTERVAL_PROPERTY, interval));
         c.setProperty(new BooleanProperty(GRAPH_AGGREGATED, isAggregate));
-
-        ((RowsProviderResultCollector) c).setModel(model);
     }
 
     @Override

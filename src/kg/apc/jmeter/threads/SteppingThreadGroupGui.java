@@ -75,6 +75,10 @@ public class SteppingThreadGroupGui
       chart.setRows(model);
       chart.setDrawFinalZeroingLines(true);
       chart.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
+
+      chart.setxAxisLabel("Elapsed time");
+      chart.setyAxisLabel("Number of active threads");
+
       containerPanel.add(chart, BorderLayout.CENTER);
 
       add(containerPanel, BorderLayout.CENTER);

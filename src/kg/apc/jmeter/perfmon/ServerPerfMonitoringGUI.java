@@ -35,8 +35,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
    public void clearData()
    {
        super.clearData();
-       //disbaled for now
-       RowsCollector.getInstance().clearRows(createTestElement().getName());
+       RowsCollector.getInstance().clearRows(createTestElement().getName());      
    }
 
    private void registerSpecificPopup()
@@ -71,7 +70,6 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
          row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
          model.put(label, row);
          graphPanel.addRow(row);
-         //disbaled for now
          RowsCollector.getInstance().addRow(createTestElement().getName(), row);
       }
       else
@@ -119,15 +117,32 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
     @Override
    public void setChartType(int monitorType)
    {
-       //set special chart type
-      if (monitorType == AbstractPerformanceMonitoringGui.PERFMON_CPU)
-      {
-         graphPanel.getGraphObject().setChartType(GraphPanelChart.CHART_PERCENTAGE);
-      }
-      else
-      {
-         graphPanel.getGraphObject().setChartType(GraphPanelChart.CHART_DEFAULT);
-      }
+        graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
+        int chartType = GraphPanelChart.CHART_DEFAULT;
+
+        switch(monitorType)
+        {
+            case AbstractPerformanceMonitoringGui.PERFMON_CPU:
+                graphPanel.getGraphObject().setyAxisLabel("Combined CPU usage in %");
+                chartType = GraphPanelChart.CHART_PERCENTAGE;
+                break;
+            case AbstractPerformanceMonitoringGui.PERFMON_MEM:
+                graphPanel.getGraphObject().setyAxisLabel("Memory used in MB");
+                break;
+            case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
+                graphPanel.getGraphObject().setyAxisLabel("Number of disks access");
+                break;
+            case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
+                graphPanel.getGraphObject().setyAxisLabel("Number of KBytes");
+                break;
+            case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
+                graphPanel.getGraphObject().setyAxisLabel("Number of pages");
+                break;
+            default:
+                graphPanel.getGraphObject().setyAxisLabel("Unknown moitoring metric");
+                break;
+        }
+        graphPanel.getGraphObject().setChartType(chartType);
    }
 
     @Override

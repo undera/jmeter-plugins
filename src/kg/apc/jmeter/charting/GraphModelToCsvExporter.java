@@ -23,17 +23,20 @@ public class GraphModelToCsvExporter
     private String csvSeparator;
     private char decimalSeparator;
     private SimpleDateFormat dateFormatter;
+    private String xAxisLabel;
 
     public GraphModelToCsvExporter(
             AbstractMap<String, AbstractGraphRow> rows,
             File destFile,
-            String csvSeparator)
+            String csvSeparator,
+            String xAxisLabel)
     {
         this.destFile = destFile;
         this.model = rows;
         this.csvSeparator = csvSeparator;
         this.decimalSeparator = new DecimalFormatSymbols().getDecimalSeparator();
         dateFormatter = new SimpleDateFormat("HH:mm:ss" + decimalSeparator + "S");
+        this.xAxisLabel = xAxisLabel;
     }
 
     //used for Unit Tests only as of now
@@ -43,7 +46,7 @@ public class GraphModelToCsvExporter
             String csvSeparator,
             char decimalSeparator)
     {
-        this(rows, destFile, csvSeparator);
+        this(rows, destFile, csvSeparator, "Elapsed time");
         this.decimalSeparator = decimalSeparator;
     }
 
@@ -79,7 +82,7 @@ public class GraphModelToCsvExporter
         //write file...
         //1st line
         BufferedWriter writer = new BufferedWriter(new FileWriter(destFile));
-        writer.write("Category (X) axis");
+        writer.write(xAxisLabel);
    
         for(int i=0; i<rawsName.size(); i++)
         {

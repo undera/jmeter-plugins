@@ -70,7 +70,7 @@ public class SteppingThreadGroupGui
 
       containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
 
-      chart = new GraphPanelChart();
+      chart = new GraphPanelChart(false);
       model = new ConcurrentHashMap<String, AbstractGraphRow>();
       chart.setRows(model);
       chart.setDrawFinalZeroingLines(true);

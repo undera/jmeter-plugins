@@ -130,13 +130,13 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
                 graphPanel.getGraphObject().setyAxisLabel("Memory used in MB");
                 break;
             case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
-                graphPanel.getGraphObject().setyAxisLabel("Number of disks access");
+                graphPanel.getGraphObject().setyAxisLabel("Number of disks access /sec");
                 break;
             case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
-                graphPanel.getGraphObject().setyAxisLabel("Number of KBytes");
+                graphPanel.getGraphObject().setyAxisLabel("Number of KBytes /sec");
                 break;
             case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
-                graphPanel.getGraphObject().setyAxisLabel("Number of pages");
+                graphPanel.getGraphObject().setyAxisLabel("Number of pages /sec");
                 break;
             default:
                 graphPanel.getGraphObject().setyAxisLabel("Unknown moitoring metric");

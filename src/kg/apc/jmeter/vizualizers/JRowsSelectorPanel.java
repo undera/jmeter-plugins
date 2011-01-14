@@ -108,4 +108,10 @@ public class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRende
         return jPanelGraphPreview;
     }
 
+    @Override
+    public boolean isPreview()
+    {
+        return true;
+    }
+
 }

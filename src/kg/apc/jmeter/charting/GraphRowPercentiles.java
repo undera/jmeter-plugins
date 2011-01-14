@@ -71,7 +71,7 @@ public class GraphRowPercentiles extends AbstractGraphRow
 
         if (count == 1)
         {
-            for (long p = 1; p < 101; p++)
+            for (long p = 0; p < 101; p++)
             {
                 percentiles.get(p).setValue(minRespTime);
             }
@@ -135,7 +135,7 @@ public class GraphRowPercentiles extends AbstractGraphRow
             return 0;
         } else
         {
-            return 100;
+            return 101;
         }
     }
     @Override

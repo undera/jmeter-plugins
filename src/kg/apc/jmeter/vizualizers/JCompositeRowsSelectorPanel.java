@@ -296,4 +296,10 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         return jPanelGraphPreview;
     }
 
+    @Override
+    public boolean isPreview()
+    {
+        return true;
+    }
+
 }

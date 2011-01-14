@@ -26,7 +26,7 @@ public class TransactionsPerSecondGui
         graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
         setGranulation(1000);
         graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
-        graphPanel.getGraphObject().setyAxisLabel("Number of transactions");
+        graphPanel.getGraphObject().setyAxisLabel("Number of transactions /sec");
     }
 
     private void addTransaction(boolean isSuccess, String rowName, long time, double count)

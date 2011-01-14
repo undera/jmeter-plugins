@@ -23,11 +23,14 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer {
 
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
         graphPanel.getGraphObject().setReSetColors(true);
+
+        graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
+        graphPanel.getGraphObject().setyAxisLabel("Scaled values");
     }
 
     @Override
     protected JSettingsPanel getSettingsPanel() {
-        return new JSettingsPanel(this, true, true, true, true, true, true, true, true);
+        return new JSettingsPanel(this, false, true, false, true, true, false, false, false);
     }
 
     @Override
@@ -74,7 +77,6 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer {
         long time = System.currentTimeMillis();
         
         if(time > lastUpdate + 1000) {
-            //System.out.println("---------------Models Dump----------------");
             lastUpdate = time;
             compositeRowsSelectorPanel.updateTree();
 
@@ -87,18 +89,19 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer {
             AbstractGraphRow row1 = RowsCollector.getInstance().getRow(viz1, rowName1);
             if(row1 != null)
             {
-                if(!model.containsKey("[" + viz1 + "]" + rowName1)) model.put("[" + viz1 + "]" + rowName1, row1);
+                if(!model.containsKey(viz1 + ">" + rowName1)) model.put(viz1 + ">" + rowName1, row1);
             }
 
             AbstractGraphRow row2 = RowsCollector.getInstance().getRow(viz2, rowName2);
             if(row2 != null)
             {
-                if(!model.containsKey("[" + viz2 + "]" + rowName2)) model.put("[" + viz2 + "]" + rowName2, row2);
+                if(!model.containsKey(viz2 + ">" + rowName2)) model.put(viz2 + ">" + rowName2, row2);
             }
 
             updateGui();
 
             /*
+            System.out.println("---------------Models Dump----------------");
             Iterator<String> testNames = RowsCollector.getInstance().getThreadSafeVizualizerNamesIterator();
             int i=1;
             while(testNames.hasNext())
@@ -113,8 +116,7 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer {
                 }
                 System.out.println("------------------------------------------");
             }
-             
-             */
+            */
         }
         
     }

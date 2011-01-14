@@ -20,7 +20,7 @@ public class ResponseTimesPercentilesGui
         super();
         graphPanel.getGraphObject().setForcedMinX(0);
         graphPanel.getGraphObject().setxAxisLabel("Percentiles");
-        graphPanel.getGraphObject().setyAxisLabel("Percentile value");
+        graphPanel.getGraphObject().setyAxisLabel("Percentile value in ms");
     }
 
     @Override

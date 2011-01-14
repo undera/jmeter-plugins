@@ -52,6 +52,7 @@ public class GraphPanelChart
       extends JComponent
       implements ClipboardOwner
 {
+   JPopupMenu popup = new JPopupMenu();
    private static final String AD_TEXT = "http://apc.kg";
    private static final String NO_SAMPLES = "Waiting for samples...";
    private static final int spacing = 5;
@@ -134,6 +135,20 @@ public class GraphPanelChart
         this.yAxisLabel = yAxisLabel;
     }
 
+    private boolean isPreview = false;
+
+    public void setIsPreview(boolean isPreview)
+    {
+        this.isPreview = isPreview;
+        if(!isPreview)
+        {
+            this.setComponentPopupMenu(popup);
+        } else {
+            this.setComponentPopupMenu(null);
+        }
+        
+    }
+
    // Default draw options - these are default values if no property is entered in user.properties
    // List of possible properties (TODO: The explaination must be written in readme file)
    // jmeterPlugin.drawGradient=(true/false)
@@ -197,7 +212,7 @@ public class GraphPanelChart
    /**
     * Creates new chart object with default parameters
     */
-   public GraphPanelChart()
+   public GraphPanelChart(boolean allowCsvExport)
    {
       setBackground(Color.white);
       setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.lightGray, Color.darkGray));
@@ -211,11 +226,16 @@ public class GraphPanelChart
 
       setDefaultDimensions();
 
-      registerPopup();
+      registerPopup(allowCsvExport);
 
       settingsDrawCurrentX = !neverDrawCurrentX;
       settingsDrawGradient = drawGradient;
       settingsDrawFinalZeroingLines = false;
+   }
+
+   public GraphPanelChart()
+   {
+       this(true);
    }
 
     public void setSettingsHideNonRepValLimit(int limit)
@@ -268,7 +288,7 @@ public class GraphPanelChart
       chartType = type;
    }
 
-   private void drawFinalLines(AbstractGraphRow row, Graphics g, int prevX, int prevY, final double dxForDVal, Stroke oldStroke)
+   private void drawFinalLines(AbstractGraphRow row, Graphics g, int prevX, int prevY, final double dxForDVal, Stroke oldStroke, Color color)
    {
       // draw final lines
       if (row.isDrawLine() && settingsDrawFinalZeroingLines)
@@ -277,7 +297,7 @@ public class GraphPanelChart
          {
             ((Graphics2D) g).setStroke(thickStroke);
          }
-         g.setColor(row.getColor());
+         g.setColor(color);
          g.drawLine(prevX, prevY, (int) (prevX + dxForDVal), chartRect.y + chartRect.height);
          if (row.isDrawThickLines())
          {
@@ -492,18 +512,31 @@ public class GraphPanelChart
       yAxisLabelRenderer.setValue(maxYVal);
       int axisWidth = fm.stringWidth(yAxisLabelRenderer.getText()) + spacing * 3 + fm.getHeight();
       yAxisRect.setBounds(chartRect.x, chartRect.y, axisWidth, chartRect.height);
-      chartRect.setBounds(chartRect.x + axisWidth, chartRect.y, chartRect.width - axisWidth, chartRect.height);
+      if(!isPreview)
+      {
+          chartRect.setBounds(chartRect.x + axisWidth, chartRect.y, chartRect.width - axisWidth, chartRect.height);
+      }       
    }
 
    private void calculateXAxisDimensions(FontMetrics fm)
    {
       // FIXME: first value on X axis may take negative X coord,
       // we need to handle this and make Y axis wider
-      int axisHeight = 2 * fm.getHeight() + spacing; //labels plus name
+      int axisHeight;
+      if(!isPreview)
+      {
+          axisHeight = 2 * fm.getHeight() + spacing;//labels plus name
+      } else
+      {
+          axisHeight = spacing;
+      }
       xAxisLabelRenderer.setValue(maxXVal);
       int axisEndSpace = fm.stringWidth(xAxisLabelRenderer.getText()) / 2;
       xAxisRect.setBounds(chartRect.x, chartRect.y + chartRect.height - axisHeight, chartRect.width, axisHeight);
-      chartRect.setBounds(chartRect.x, chartRect.y, chartRect.width - axisEndSpace, chartRect.height - axisHeight);
+      if(!isPreview)
+      {
+          chartRect.setBounds(chartRect.x, chartRect.y, chartRect.width - axisEndSpace, chartRect.height - axisHeight);
+      }
       yAxisRect.setBounds(yAxisRect.x, yAxisRect.y, yAxisRect.width, chartRect.height);
    }
 
@@ -657,24 +690,31 @@ public class GraphPanelChart
          g.setColor(Color.black);
 
          // draw label
-         yAxisLabelRenderer.setValue((minYVal * gridLinesCount + n * (maxYVal - minYVal)) / gridLinesCount);
-         valueLabel = yAxisLabelRenderer.getText();
-         labelXPos = yAxisRect.x + yAxisRect.width - fm.stringWidth(valueLabel) - spacing - spacing / 2;
-         g.drawString(valueLabel, labelXPos, gridLineY + fm.getAscent() / 2);
+         if(!isPreview)
+         {
+             yAxisLabelRenderer.setValue((minYVal * gridLinesCount + n * (maxYVal - minYVal)) / gridLinesCount);
+             valueLabel = yAxisLabelRenderer.getText();
+             labelXPos = yAxisRect.x + yAxisRect.width - fm.stringWidth(valueLabel) - spacing - spacing / 2;
+             g.drawString(valueLabel, labelXPos, gridLineY + fm.getAscent() / 2);
+         }
       }
 
-      Font oldFont = g.getFont();
-      g.setFont(g.getFont().deriveFont(Font.ITALIC));
+      if(!isPreview)
+      {
+          Font oldFont = g.getFont();
+          g.setFont(g.getFont().deriveFont(Font.ITALIC));
 
-      // Create a rotation transformation for the font.
-      AffineTransform fontAT = new AffineTransform();
-      int delta = g.getFontMetrics(g.getFont()).stringWidth(yAxisLabel);
-      fontAT.rotate(-Math.PI/2d);
-      g.setFont(g.getFont().deriveFont(fontAT));
+          // Create a rotation transformation for the font.
+          AffineTransform fontAT = new AffineTransform();
+          int delta = g.getFontMetrics(g.getFont()).stringWidth(yAxisLabel);
+          fontAT.rotate(-Math.PI/2d);
+          g.setFont(g.getFont().deriveFont(fontAT));
 
-      g.drawString(yAxisLabel, yAxisRect.x+15, yAxisRect.y + yAxisRect.height / 2 + delta / 2);
+          g.drawString(yAxisLabel, yAxisRect.x+15, yAxisRect.y + yAxisRect.height / 2 + delta / 2);
 
-      g.setFont(oldFont);
+          g.setFont(oldFont);
+      }
+      
       //restore stroke
       ((Graphics2D) g).setStroke(oldStroke);
    }
@@ -726,15 +766,6 @@ public class GraphPanelChart
 
       Font oldFont = g.getFont();
       g.setFont(g.getFont().deriveFont(Font.ITALIC));
-
-      // Create a rotation transformation for the font.
-//AffineTransform fontAT = new AffineTransform();
-//fontAT.rotate(-Math.PI/2d);
-//g.setFont(g.getFont().deriveFont(fontAT));
-
-
-
-
 
       //axis label
       g.drawString(xAxisLabel, chartRect.x + chartRect.width / 2 - g.getFontMetrics(g.getFont()).stringWidth(xAxisLabel) / 2, xAxisRect.y + 2 * fm.getAscent() + spacing + 3);
@@ -793,7 +824,7 @@ public class GraphPanelChart
          ret = false;
       }
       else //check y
-      if (y > chartRect.y + chartRect.height)
+      if (y > chartRect.y + chartRect.height || y < chartRect.y)
       {
          ret = false;
       }
@@ -973,7 +1004,7 @@ public class GraphPanelChart
          }
       }
 
-      drawFinalLines(row, g, prevX, prevY, dxForDVal, oldStroke);
+      drawFinalLines(row, g, prevX, prevY, dxForDVal, oldStroke, color);
    }
 
    /**
@@ -1095,9 +1126,8 @@ public class GraphPanelChart
    /**
     * Thanks to stephane.hoblingre
     */
-   private void registerPopup()
+   private void registerPopup(boolean allowCsvExport)
    {
-      JPopupMenu popup = new JPopupMenu();
       this.setComponentPopupMenu(popup);
       JMenuItem itemCopy = new JMenuItem("Copy Image to Clipboard");
       JMenuItem itemSave = new JMenuItem("Save Image as...");
@@ -1107,8 +1137,11 @@ public class GraphPanelChart
       itemExport.addActionListener(new CsvExportAction());
       popup.add(itemCopy);
       popup.add(itemSave);
-      popup.addSeparator();
-      popup.add(itemExport);
+      if(allowCsvExport)
+      {
+          popup.addSeparator();
+          popup.add(itemExport);
+      }
    }
 
    private class CopyAction

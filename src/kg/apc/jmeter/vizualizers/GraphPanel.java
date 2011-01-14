@@ -159,6 +159,12 @@ public class GraphPanel
         {
             return this;
         }
+
+        @Override
+        public boolean isPreview()
+        {
+            return false;
+        }
     }
 
     private class TabsChangeListener
@@ -177,7 +183,10 @@ public class GraphPanel
             {
                 selectedComponent = (JComponent) selectedComponent.getComponent(0);
             }
-            ((GraphRendererInterface) (selectedComponent)).getGraphDisplayPanel().add(graphPanelObject, BorderLayout.CENTER);
+
+            GraphRendererInterface renderer = (GraphRendererInterface) (selectedComponent);
+            renderer.getGraphDisplayPanel().add(graphPanelObject, BorderLayout.CENTER);
+            graphPanelObject.setIsPreview(renderer.isPreview());
         }
     }
 }

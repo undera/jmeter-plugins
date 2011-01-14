@@ -607,4 +607,10 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     private javax.swing.JRadioButton jRadioButtonGraphAggregated;
     private javax.swing.JRadioButton jRadioButtonGraphDetailed;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public boolean isPreview()
+    {
+        return true;
+    }
 }

@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.util.Iterator;
 import javax.swing.ImageIcon;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.RowsCollector;
@@ -7,11 +8,11 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-public class CompositeGraph extends AbstractGraphPanelVisualizer {
+public class CompositeGraph extends AbstractGraphPanelVisualizer
+{
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private long lastUpdate = 0;
-
     private JCompositeRowsSelectorPanel compositeRowsSelectorPanel;
 
     public CompositeGraph()
@@ -29,17 +30,20 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer {
     }
 
     @Override
-    protected JSettingsPanel getSettingsPanel() {
+    protected JSettingsPanel getSettingsPanel()
+    {
         return new JSettingsPanel(this, false, true, false, true, true, false, false, false);
     }
 
     @Override
-    public String getLabelResource() {
+    public String getLabelResource()
+    {
         return this.getClass().getSimpleName();
     }
 
     @Override
-    public String getStaticLabel() {
+    public String getStaticLabel()
+    {
         return "Composite Graph";
     }
 
@@ -51,73 +55,37 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer {
     }
 
     @Override
-    public void add(SampleResult sr) {
-        /*
-        GuiPackage gui = GuiPackage.getInstance();
-        JMeterTreeModel testTree = gui.getTreeModel();
+    public void updateGui()
+    {
+        model.clear();
 
-        Iterator it = testTree.getNodesOfType(RowsProviderResultCollector.class).iterator();
-        while (it.hasNext()) {
-            Object obj=it.next();
-            System.out.println(obj.getClass().getCanonicalName());
-            if (((JMeterTreeNode) obj).getTestElement() instanceof RowsProviderResultCollector)
+        Iterator<String[]> iter = compositeRowsSelectorPanel.getItems();
+        while (iter.hasNext())
+        {
+            String[] item = iter.next();
+            AbstractGraphRow row = RowsCollector.getInstance().getRow(item[0], item[1]);
+            if (row != null)
             {
-                RowsProviderResultCollector provider = (RowsProviderResultCollector)((JMeterTreeNode) obj).getTestElement();
-                System.out.println("Size: "+provider.getRowNames().size());
-
-                Iterator it2=provider.getRowNames().iterator();
-                while(it2.hasNext())
+                if (!model.containsKey(item[0] + ">" + item[1]))
                 {
-                    String rowName=(String) it2.next();
-                    System.out.println(rowName);
+                    model.put(item[0] + ">" + item[1], row);
                 }
             }
         }
-        */
+        super.updateGui();
+    }
+
+    @Override
+    public void add(SampleResult sr)
+    {
         long time = System.currentTimeMillis();
-        
-        if(time > lastUpdate + 1000) {
-            lastUpdate = time;
+
+        if (time > lastUpdate + 1000)
+        {
             compositeRowsSelectorPanel.updateTree();
-
-            String viz1 = "Active Threads Over Time";
-            String rowName1 = "Test all Graphs";
-
-            String viz2 = "Response Times Over Time";
-            String rowName2 = "Aggregated Response Times";
-
-            AbstractGraphRow row1 = RowsCollector.getInstance().getRow(viz1, rowName1);
-            if(row1 != null)
-            {
-                if(!model.containsKey(viz1 + ">" + rowName1)) model.put(viz1 + ">" + rowName1, row1);
-            }
-
-            AbstractGraphRow row2 = RowsCollector.getInstance().getRow(viz2, rowName2);
-            if(row2 != null)
-            {
-                if(!model.containsKey(viz2 + ">" + rowName2)) model.put(viz2 + ">" + rowName2, row2);
-            }
-
+            lastUpdate = time;
             updateGui();
-
-            /*
-            System.out.println("---------------Models Dump----------------");
-            Iterator<String> testNames = RowsCollector.getInstance().getThreadSafeVizualizerNamesIterator();
-            int i=1;
-            while(testNames.hasNext())
-            {
-                String testName = testNames.next();
-                System.out.println("Vizualiser (" + i++ + "): " + testName);
-                Iterator<AbstractGraphRow> rows = RowsCollector.getInstance().getThreadSafeRowsIterator(testName);
-                while(rows.hasNext())
-                {
-                    AbstractGraphRow row = rows.next();
-                    System.out.println(row.getLabel());
-                }
-                System.out.println("------------------------------------------");
-            }
-            */
         }
-        
+
     }
 }

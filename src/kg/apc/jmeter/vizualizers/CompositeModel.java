@@ -1,14 +1,14 @@
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.charting.*;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
+import kg.apc.jmeter.charting.AbstractGraphRow;
 
 /**
  *
  * @author Stephane Hoblingre
  */
-public class CompositeModel implements Cloneable {
+public class CompositeModel {
 
     private ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>> models = null;
     private Iterator emptyIterator = null;

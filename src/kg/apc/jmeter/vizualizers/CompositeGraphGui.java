@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.ImageIcon;
 import kg.apc.jmeter.charting.AbstractGraphRow;
@@ -85,19 +86,30 @@ public class CompositeGraphGui extends AbstractGraphPanelVisualizer
     @Override
     public void updateGui()
     {
-        model.clear();
-
         Iterator<String[]> iter = compositeRowsSelectorPanel.getItems();
+        HashSet<String> validRows = new HashSet<String>();
         while (iter.hasNext())
         {
             String[] item = iter.next();
             AbstractGraphRow row = compositeModel.getRow(item[0], item[1]);
             if (row != null)
             {
-                if (!model.containsKey(item[0] + ">" + item[1]))
+                String rowName = item[0] + ">" + item[1];
+                validRows.add(rowName);
+                if (!model.containsKey(rowName))
                 {
-                    model.put(item[0] + ">" + item[1], row);
+                    model.put(rowName, row);
                 }
+            }
+        }
+        //remove invalid rows
+        Iterator<String> iterModelRows = model.keySet().iterator();
+        while(iterModelRows.hasNext())
+        {
+            String rowName = iterModelRows.next();
+            if(!validRows.contains(rowName))
+            {
+                iterModelRows.remove();
             }
         }
         super.updateGui();

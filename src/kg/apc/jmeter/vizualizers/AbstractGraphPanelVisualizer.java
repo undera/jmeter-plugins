@@ -14,7 +14,9 @@ import kg.apc.jmeter.charting.GraphRowExactValues;
 import kg.apc.jmeter.charting.GraphRowOverallAverages;
 import kg.apc.jmeter.charting.GraphRowPercentiles;
 import kg.apc.jmeter.charting.GraphRowSumValues;
-import kg.apc.jmeter.charting.RowsCollector;
+import org.apache.jmeter.gui.GuiPackage;
+import org.apache.jmeter.gui.tree.JMeterTreeModel;
+import org.apache.jmeter.gui.tree.JMeterTreeNode;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.BooleanProperty;
@@ -132,12 +134,11 @@ public abstract class AbstractGraphPanelVisualizer
     @Override
     public void clearData()
     {
+        clearRowsFromCompositeModels(getModel().getName());
         model.clear();
         modelAggregate.clear();
         colors.reset();
         graphPanel.clearRowsTab();
-        //disbaled for now
-        RowsCollector.getInstance().clearRows(getModel().getName());
         updateGui();
         repaint();
     }
@@ -229,6 +230,34 @@ public abstract class AbstractGraphPanelVisualizer
         settingsPanel.setAggregateMode(aggregate);
     }
 
+    private void addRowToCompositeModels(String rowName, AbstractGraphRow row)
+    {
+        GuiPackage gui = GuiPackage.getInstance();
+        JMeterTreeModel testTree = gui.getTreeModel();
+
+        Iterator it = testTree.getNodesOfType(CompositeResultCollector.class).iterator();
+        while (it.hasNext()) {
+            //System.out.println("obj");
+            Object obj=it.next();
+            CompositeResultCollector compositeResultCollector = (CompositeResultCollector)((JMeterTreeNode) obj).getTestElement();
+            compositeResultCollector.getCompositeModel().addRow(rowName, row);
+        }
+    }
+
+    private void clearRowsFromCompositeModels(String vizualizerName)
+    {
+        GuiPackage gui = GuiPackage.getInstance();
+        JMeterTreeModel testTree = gui.getTreeModel();
+
+        Iterator it = testTree.getNodesOfType(CompositeResultCollector.class).iterator();
+        while (it.hasNext()) {
+            //System.out.println("obj");
+            Object obj=it.next();
+            CompositeResultCollector compositeResultCollector = (CompositeResultCollector)((JMeterTreeNode) obj).getTestElement();
+            compositeResultCollector.getCompositeModel().clearRows(vizualizerName);
+        }
+    }
+
     private AbstractGraphRow instanciateNewRow(int rowType)
     {
         switch (rowType)
@@ -283,7 +312,7 @@ public abstract class AbstractGraphPanelVisualizer
             graphPanel.addRow(row);
             if(canCompose)
             {
-                RowsCollector.getInstance().addRow(getModel().getName(), row);
+                addRowToCompositeModels(getModel().getName(), row);
             }
         } else
         {

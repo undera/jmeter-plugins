@@ -3,23 +3,26 @@ package kg.apc.jmeter.vizualizers;
 import java.util.Iterator;
 import javax.swing.ImageIcon;
 import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.RowsCollector;
+import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-public class CompositeGraph extends AbstractGraphPanelVisualizer
+public class CompositeGraphGui extends AbstractGraphPanelVisualizer
 {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private long lastUpdate = 0;
     private JCompositeRowsSelectorPanel compositeRowsSelectorPanel;
+    public CompositeModel compositeModel;
 
-    public CompositeGraph()
+    public CompositeGraphGui()
     {
-        ImageIcon rowsIcon = new ImageIcon(CompositeGraph.class.getResource("checks.png"));
+        compositeModel = new CompositeModel();
+        ImageIcon rowsIcon = new ImageIcon(CompositeGraphGui.class.getResource("checks.png"));
         graphPanel.remove(1);
-        compositeRowsSelectorPanel = new JCompositeRowsSelectorPanel(new CompositeModel());
+        compositeRowsSelectorPanel = new JCompositeRowsSelectorPanel(compositeModel);
         graphPanel.insertTab("Graphs", rowsIcon, compositeRowsSelectorPanel, "Select graphs/rows to display", 1);
 
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
@@ -27,6 +30,10 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer
 
         graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
         graphPanel.getGraphObject().setyAxisLabel("Scaled values");
+        
+        CompositeResultCollector compositeResultCollector = new CompositeResultCollector();
+        compositeResultCollector.setCompositeModel(compositeModel);
+        setModel(compositeResultCollector);
     }
 
     @Override
@@ -44,7 +51,7 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer
     @Override
     public String getStaticLabel()
     {
-        return "Composite Graph (old)";
+        return "Composite Graph";
     }
 
     @Override
@@ -52,6 +59,27 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer
     {
         super.clearData();
         compositeRowsSelectorPanel.clearData();
+    }
+
+    @Override
+   public TestElement createTestElement()
+   {
+        ResultCollector modelNew = getModel();
+        if (modelNew == null) {
+            modelNew = new CompositeResultCollector();
+            ((CompositeResultCollector)modelNew).setCompositeModel(compositeModel);
+            setModel(modelNew);
+        }
+        modifyTestElement(modelNew);
+        return modelNew;
+   }
+
+    @Override
+    public void configure(TestElement te)
+    {
+        //log.info("Configure");
+        super.configure(te);
+        ((CompositeResultCollector)te).setCompositeModel(compositeModel);
     }
 
     @Override
@@ -63,7 +91,7 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer
         while (iter.hasNext())
         {
             String[] item = iter.next();
-            AbstractGraphRow row = RowsCollector.getInstance().getRow(item[0], item[1]);
+            AbstractGraphRow row = compositeModel.getRow(item[0], item[1]);
             if (row != null)
             {
                 if (!model.containsKey(item[0] + ">" + item[1]))
@@ -86,6 +114,5 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer
             lastUpdate = time;
             updateGui();
         }
-
     }
 }

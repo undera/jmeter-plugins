@@ -14,7 +14,6 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.RowsCollector;
 
 /**
  *
@@ -22,6 +21,7 @@ import kg.apc.jmeter.charting.RowsCollector;
  */
 public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInterface
 {
+    private CompositeModel compositeModel;
 
     private DefaultMutableTreeNode root1;
     private DefaultMutableTreeNode root2;
@@ -32,8 +32,9 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
     private Icon leafIcon = new ImageIcon(JCompositeRowsSelectorPanel.class.getResource("treeLeaf.png"));
 
     /** Creates new form JRowsSelectorPanel */
-    public JCompositeRowsSelectorPanel()
+    public JCompositeRowsSelectorPanel(CompositeModel compositeModel)
     {
+        this.compositeModel = compositeModel;
         initComponents();
         root1 = new DefaultMutableTreeNode("Test Plan", true);
         model1 = new DefaultTreeModel(root1);
@@ -150,11 +151,11 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
     public void updateTree()
     {
         //rows will not disapear, only chart if cleared...
-        RowsCollector rowsCollector = RowsCollector.getInstance();
         boolean chartsUpdated = false;
         boolean rowsUpdated = false;
         //first check if graph cleared
-        Iterator<String> chartsIter = rowsCollector.getVizualizerNamesIterator();
+
+        Iterator<String> chartsIter = compositeModel.getVizualizerNamesIterator();
         while (chartsIter.hasNext())
         {
             String chartName = chartsIter.next();
@@ -165,7 +166,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
                 //DefaultMutableTreeNode node2 = new DefaultMutableTreeNode(chartName, true);
                 root1.add(node1);
                 //root2.add(node2);
-                Iterator<AbstractGraphRow> rowsIter = rowsCollector.getRowsIterator(chartName);
+                Iterator<AbstractGraphRow> rowsIter = compositeModel.getRowsIterator(chartName);
                 while (rowsIter.hasNext())
                 {
                     AbstractGraphRow row = rowsIter.next();
@@ -174,7 +175,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
                 }
             } else
             {
-                Iterator<AbstractGraphRow> rowsIter = rowsCollector.getRowsIterator(chartName);
+                Iterator<AbstractGraphRow> rowsIter = compositeModel.getRowsIterator(chartName);
                 DefaultMutableTreeNode chartNode1 = getNode(chartName, root1);
                 //DefaultMutableTreeNode chartNode2 = getNode(chartName, root2);
 
@@ -271,6 +272,12 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         jScrollPaneGraph1.setMaximumSize(new java.awt.Dimension(72, 64));
         jScrollPaneGraph1.setMinimumSize(new java.awt.Dimension(72, 64));
         jScrollPaneGraph1.setPreferredSize(new java.awt.Dimension(72, 64));
+
+        jTreeGraph1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTreeGraph1MouseClicked(evt);
+            }
+        });
         jScrollPaneGraph1.setViewportView(jTreeGraph1);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -282,6 +289,11 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanelRowsTable.add(jScrollPaneGraph1, gridBagConstraints);
 
+        jTreeGraph2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTreeGraph2MouseClicked(evt);
+            }
+        });
         jScrollPaneGraph.setViewportView(jTreeGraph2);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -355,14 +367,8 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         add(jPanelMain, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonAddActionPerformed
-    {//GEN-HEADEREND:event_jButtonAddActionPerformed
-        TreePath[] paths = jTreeGraph1.getSelectionPaths();
-        if (paths == null)
-        {
-            return;
-        }
-
+    private void addItemsToComposite(TreePath[] paths)
+    {
         for (int i = 0; i < paths.length; i++)
         {
             if (paths[i].getPath().length == 1)
@@ -417,19 +423,10 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
                 refreshPreview();
             }
         }
+    }
 
-
-
-    }//GEN-LAST:event_jButtonAddActionPerformed
-
-    private void jButtonRemoveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonRemoveActionPerformed
-    {//GEN-HEADEREND:event_jButtonRemoveActionPerformed
-        TreePath[] paths = jTreeGraph2.getSelectionPaths();
-        if (paths == null)
-        {
-            return;
-        }
-
+    private void removeItemFromComposite(TreePath[] paths)
+    {
         for (int i = 0; i < paths.length; i++)
         {
             if (paths[i].getPath().length == 1)
@@ -452,7 +449,57 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         }
         model2.nodeStructureChanged(root2);
         expandAll(jTreeGraph2, true);
+    }
+
+
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonAddActionPerformed
+    {//GEN-HEADEREND:event_jButtonAddActionPerformed
+        TreePath[] paths = jTreeGraph1.getSelectionPaths();
+        if(paths!= null)
+        {
+            addItemsToComposite(paths);
+        }
+    }//GEN-LAST:event_jButtonAddActionPerformed
+
+    private void jButtonRemoveActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButtonRemoveActionPerformed
+    {//GEN-HEADEREND:event_jButtonRemoveActionPerformed
+        TreePath[] paths = jTreeGraph2.getSelectionPaths();
+        if(paths!= null)
+        {
+            removeItemFromComposite(paths);
+        }
     }//GEN-LAST:event_jButtonRemoveActionPerformed
+
+    private void jTreeGraph1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jTreeGraph1MouseClicked
+    {//GEN-HEADEREND:event_jTreeGraph1MouseClicked
+        if(evt.getClickCount() == 2)
+        {
+            TreePath[] paths = jTreeGraph1.getSelectionPaths();
+            if(paths!= null && paths.length == 1)
+            {
+                if(paths[0].getPath().length == 3)
+                {
+                    addItemsToComposite(paths);
+                }
+            }
+        }
+    }//GEN-LAST:event_jTreeGraph1MouseClicked
+
+    private void jTreeGraph2MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jTreeGraph2MouseClicked
+    {//GEN-HEADEREND:event_jTreeGraph2MouseClicked
+        if(evt.getClickCount() == 2)
+        {
+            TreePath[] paths = jTreeGraph2.getSelectionPaths();
+            if(paths!= null && paths.length == 1)
+            {
+                if(paths[0].getPath().length == 3)
+                {
+                    removeItemFromComposite(paths);
+                }
+            }
+        }
+    }//GEN-LAST:event_jTreeGraph2MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonRemove;

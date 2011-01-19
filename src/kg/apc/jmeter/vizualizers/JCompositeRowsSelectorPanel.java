@@ -150,6 +150,9 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
 
     public void updateTree()
     {
+        //get previous selection
+        TreePath selection = jTreeGraph1.getSelectionPath();
+
         //rows will not disapear, only chart if cleared...
         boolean chartsUpdated = false;
         boolean rowsUpdated = false;
@@ -202,6 +205,8 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
             model1.nodeStructureChanged(root1);
             expandAll(jTreeGraph1, true);
         }
+        //restore selection
+        jTreeGraph1.setSelectionPath(selection);
     }
 
     /** This method is called from within the constructor to

@@ -166,6 +166,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jRadioButtonGraphAggregated = new javax.swing.JRadioButton();
         jRadioButtonGraphDetailed = new javax.swing.JRadioButton();
         jLabelGraphType = new javax.swing.JLabel();
+        jCheckBoxRelativeTime = new javax.swing.JCheckBox();
         jPanelRenderingOptionsContainer = new javax.swing.JPanel();
         jCheckBoxPaintGradient = new javax.swing.JCheckBox();
         jCheckBoxDrawFinalZeroingLines = new javax.swing.JCheckBox();
@@ -214,7 +215,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jPanelTimeLineContainer.add(jLabelTimeline2, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
@@ -288,6 +289,18 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 4, 2);
         jPanelTimeLineContainer.add(jLabelGraphType, gridBagConstraints);
+
+        jCheckBoxRelativeTime.setText("Use relative times");
+        jCheckBoxRelativeTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxRelativeTimeActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanelTimeLineContainer.add(jCheckBoxRelativeTime, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -576,6 +589,11 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         refreshGraphPreview();
     }//GEN-LAST:event_jRadioButtonGraphDetailedActionPerformed
 
+    private void jCheckBoxRelativeTimeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxRelativeTimeActionPerformed
+    {//GEN-HEADEREND:event_jCheckBoxRelativeTimeActionPerformed
+        parent.getGraphPanelChart().setUseRelativeTime(jCheckBoxRelativeTime.isSelected());
+    }//GEN-LAST:event_jCheckBoxRelativeTimeActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupGraphType;
     private javax.swing.JCheckBox jCheckBoxDrawCurrentX;
@@ -584,6 +602,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     private javax.swing.JCheckBox jCheckBoxLimitMaxXValue;
     private javax.swing.JCheckBox jCheckBoxMaxPoints;
     private javax.swing.JCheckBox jCheckBoxPaintGradient;
+    private javax.swing.JCheckBox jCheckBoxRelativeTime;
     private javax.swing.JComboBox jComboBoxGranulation;
     private javax.swing.JComboBox jComboBoxHideNonRepValLimit;
     private javax.swing.JComboBox jComboBoxMaxPoints;

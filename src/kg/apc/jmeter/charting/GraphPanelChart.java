@@ -122,6 +122,13 @@ public class GraphPanelChart
         this.reSetColors = reSetColors;
     }
 
+   private boolean useRelativeTime = false;
+
+   public void setUseRelativeTime(boolean isRelative)
+    {
+        this.useRelativeTime = isRelative;
+    }
+
    private String xAxisLabel = "X axis label";
    private String yAxisLabel = "Y axis label";
    private int precisionLabel = -1;

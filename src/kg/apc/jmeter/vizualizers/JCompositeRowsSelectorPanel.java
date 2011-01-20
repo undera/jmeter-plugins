@@ -130,13 +130,16 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
 
     private DefaultMutableTreeNode getNode(String nodeName, DefaultMutableTreeNode root)
     {
-        Enumeration children = root.children();
-        while (children.hasMoreElements())
+        if(root != null)
         {
-            DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
-            if (nodeName.equals(child.toString()))
+            Enumeration children = root.children();
+            while (children.hasMoreElements())
             {
-                return child;
+                DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
+                if (nodeName.equals(child.toString()))
+                {
+                    return child;
+                }
             }
         }
         return null;
@@ -213,9 +216,9 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         {
             model1.nodeStructureChanged(root1);
             expandAll(jTreeGraph1, true);
+            //restore selection
+            jTreeGraph1.setSelectionPath(selection);
         }
-        //restore selection
-        jTreeGraph1.setSelectionPath(selection);
     }
 
     /** This method is called from within the constructor to
@@ -454,10 +457,16 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
             {
                 TreeNode chartNode = getNode(paths[i].getPath()[1].toString(), root2);
                 TreeNode rowNode = getNode(paths[i].getPath()[2].toString(), (DefaultMutableTreeNode) chartNode);
-                model2.removeNodeFromParent((MutableTreeNode) rowNode);
-                if (chartNode.getChildCount() == 0)
+                if(rowNode != null)
                 {
-                    model2.removeNodeFromParent((MutableTreeNode) chartNode);
+                    model2.removeNodeFromParent((MutableTreeNode) rowNode);
+                }
+                if(chartNode != null)
+                {
+                    if (chartNode.getChildCount() == 0)
+                    {
+                        model2.removeNodeFromParent((MutableTreeNode) chartNode);
+                    }
                 }
             }
         }

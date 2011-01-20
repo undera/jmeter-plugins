@@ -19,7 +19,7 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer
     {
         ImageIcon rowsIcon = new ImageIcon(CompositeGraph.class.getResource("checks.png"));
         graphPanel.remove(1);
-        compositeRowsSelectorPanel = new JCompositeRowsSelectorPanel(new CompositeModel());
+        compositeRowsSelectorPanel = new JCompositeRowsSelectorPanel(new CompositeModel(), null);
         graphPanel.insertTab("Graphs", rowsIcon, compositeRowsSelectorPanel, "Select graphs/rows to display", 1);
 
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));

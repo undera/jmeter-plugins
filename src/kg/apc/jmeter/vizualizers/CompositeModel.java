@@ -50,14 +50,19 @@ public class CompositeModel {
         models.remove(vizualizerName);
     }
 
+    public boolean containsVisualizer(String vizualizerName)
+    {
+        return models.containsKey(vizualizerName);
+    }
+
     public Iterator<String> getVizualizerNamesIterator()
     {
         return models.keySet().iterator();
     }
 
-    public Iterator<AbstractGraphRow> getRowsIterator(String vizualizerNames)
+    public Iterator<AbstractGraphRow> getRowsIterator(String vizualizerName)
     {
-        ConcurrentSkipListMap<String, AbstractGraphRow> rows = models.get(vizualizerNames);
+        ConcurrentSkipListMap<String, AbstractGraphRow> rows = models.get(vizualizerName);
         if(rows != null)
         {
             return rows.values().iterator();

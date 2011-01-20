@@ -174,45 +174,6 @@ public class AbstractGraphRowTest
    }
 
    /**
-    * Test of getMaxY method, of class AbstractGraphRow.
-    */
-   @Test
-   public void testGetMaxY()
-   {
-      System.out.println("getMaxY");
-      AbstractGraphRow instance = new AbstractGraphRowImpl();
-      double expResult = Double.MIN_VALUE;
-      double result = instance.getMaxY();
-      assertEquals(expResult, result, 0.0);
-   }
-
-   /**
-    * Test of getMinX method, of class AbstractGraphRow.
-    */
-   @Test
-   public void testGetMinX()
-   {
-      System.out.println("getMinX");
-      AbstractGraphRow instance = new AbstractGraphRowImpl();
-      long expResult = Long.MAX_VALUE;
-      long result = instance.getMinX();
-      assertEquals(expResult, result);
-   }
-
-   /**
-    * Test of getMinY method, of class AbstractGraphRow.
-    */
-   @Test
-   public void testGetMinY()
-   {
-      System.out.println("getMinY");
-      AbstractGraphRow instance = new AbstractGraphRowImpl();
-      double expResult = Double.MAX_VALUE;
-      double result = instance.getMinY();
-      assertEquals(expResult, result, 0.0);
-   }
-
-   /**
     * Test of add method, of class AbstractGraphRow.
     */
    @Test
@@ -444,5 +405,36 @@ public class AbstractGraphRowTest
         AbstractGraphPanelChartElement expResult = null;
         AbstractGraphPanelChartElement result = instance.getElement(value);
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getMinMaxY method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testGetMinMaxY()
+    {
+        System.out.println("getMinMaxY");
+        int maxPoints = 0;
+        AbstractGraphRow instance = new AbstractGraphRowImpl();
+        double[] expResult = null;
+        double[] result = instance.getMinMaxY(maxPoints);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getMinX method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testGetMinX()
+    {
+        System.out.println("getMinX");
+        AbstractGraphRow instance = new AbstractGraphRowImpl();
+        long expResult = 0L;
+        long result = instance.getMinX();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

@@ -91,18 +91,6 @@ public class GraphRowSumValuesTest
    }
 
    /**
-    *
-    */
-   @Test
-   public void testSetMaxY()
-   {
-      System.out.println("setMaxY");
-      double val = 10.10;
-      GraphRowSumValues instance = new GraphRowSumValues();
-      instance.setMaxY(val);
-   }
-
-   /**
     * 
     */
    @Test

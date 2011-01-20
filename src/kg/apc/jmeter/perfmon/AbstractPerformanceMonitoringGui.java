@@ -207,6 +207,8 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         graphPanel = new GraphPanel();
         graphPanel.getGraphObject().setRows(model);
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
+        graphPanel.getGraphObject().setDisplayPrecision(true);
+        graphPanel.getGraphObject().setPrecisionLabel(1000);
         return graphPanel;
     }
 
@@ -384,7 +386,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     @Override
     public int getGranulation()
     {
-        return 500;
+        return 1000;
     }
 
     //not used for now, but needed for settings tab

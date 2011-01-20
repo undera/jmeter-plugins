@@ -241,25 +241,8 @@ public class SteppingThreadGroupGui
          row.add(thread.getEndTime(), -1);
       }
 
-      calculateRowMaxY(row);
-
       model.put("Expected parallel users count", row);
       chart.repaint();
-   }
-
-   private void calculateRowMaxY(GraphRowSumValues row)
-   {
-      double max = Double.MIN_VALUE;
-      Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = row.iterator();
-      while (it.hasNext())
-      {
-         double el = it.next().getValue().getValue();
-         if (el > max)
-         {
-            max = el;
-         }
-      }
-      row.setMaxY(max);
    }
 
    private JPanel createControllerPanel()

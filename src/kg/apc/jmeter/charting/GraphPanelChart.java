@@ -124,6 +124,14 @@ public class GraphPanelChart
 
    private String xAxisLabel = "X axis label";
    private String yAxisLabel = "Y axis label";
+   private int precisionLabel = -1;
+   private int factorInUse = 1;
+   private boolean displayPrecision = false;
+
+    public void setDisplayPrecision(boolean displayPrecision)
+    {
+        this.displayPrecision = displayPrecision;
+    }
 
     public void setxAxisLabel(String xAxisLabel)
     {
@@ -133,6 +141,28 @@ public class GraphPanelChart
     public void setyAxisLabel(String yAxisLabel)
     {
         this.yAxisLabel = yAxisLabel;
+    }
+
+    public void setPrecisionLabel(int precision)
+    {
+        this.precisionLabel = precision;
+    }
+
+    private String getXAxisLabel()
+    {
+        String label;
+        if(!displayPrecision)
+        {
+            label = xAxisLabel;
+        } else {
+            if(maxPoints <= 0)
+            {
+                label = xAxisLabel + " (granularity: " + precisionLabel + " ms)";
+            } else {
+                label = xAxisLabel + " (granularity: " + precisionLabel*factorInUse + " ms)";
+            }
+        }
+        return label;
     }
 
     private boolean isPreview = false;
@@ -345,10 +375,16 @@ public class GraphPanelChart
          }
 
          rowValue.setExcludeOutOfRangeValues(preventXAxisOverScaling);
+         double[] rowMinMaxY = rowValue.getMinMaxY(maxPoints);
 
-         if (rowValue.getMaxY() > maxYVal)
+         if (rowMinMaxY[1] > maxYVal)
          {
-            maxYVal = rowValue.getMaxY();
+            maxYVal = rowMinMaxY[1];
+         }
+         if (rowMinMaxY[0] < minYVal)
+         {
+            //we draw only positives values
+            minYVal = rowMinMaxY[0] >= 0 ? rowMinMaxY[0] : 0;
          }
 
          if (rowValue.getMaxX() > maxXVal)
@@ -361,11 +397,7 @@ public class GraphPanelChart
             minXVal = rowValue.getMinX();
          }
 
-         if (rowValue.getMinY() < minYVal)
-         {
-            //we draw only positives values
-            minYVal = rowValue.getMinY() >= 0 ? rowValue.getMinY() : 0;
-         }
+         
 
          if(rowValue.isDrawBar()) {
             barValue =  rowValue.getGranulationValue();
@@ -768,7 +800,7 @@ public class GraphPanelChart
       g.setFont(g.getFont().deriveFont(Font.ITALIC));
 
       //axis label
-      g.drawString(xAxisLabel, chartRect.x + chartRect.width / 2 - g.getFontMetrics(g.getFont()).stringWidth(xAxisLabel) / 2, xAxisRect.y + 2 * fm.getAscent() + spacing + 3);
+      g.drawString(getXAxisLabel(), chartRect.x + chartRect.width / 2 - g.getFontMetrics(g.getFont()).stringWidth(getXAxisLabel()) / 2, xAxisRect.y + 2 * fm.getAscent() + spacing + 3);
 
       g.setFont(oldFont);
 
@@ -844,7 +876,9 @@ public class GraphPanelChart
 
       if (maxPoints > 0)
       {
-          factor = (row.size() / maxPoints) + 1;
+          factor = row.size() / maxPoints;
+          if (factor < 1) factor = 1;
+          factorInUse = factor;
       } else
       {
           factor = 1;
@@ -866,9 +900,6 @@ public class GraphPanelChart
       {
          oldStroke = ((Graphics2D) g).getStroke();
       }
-
-      //how many actual points were averaged (basically, to handle last points of the collection)
-      int nbAveragedValues = 0;
 
       while (it.hasNext())
       {
@@ -904,19 +935,17 @@ public class GraphPanelChart
               calcPointY = elt.getValue();
           } else
           {
-              nbAveragedValues = 0;
               for (int i = 0; i < factor; i++)
               {
                   if (it.hasNext())
                   {
-                      nbAveragedValues++;
                       element = it.next();
                       calcPointX = calcPointX + element.getKey().doubleValue();
                       calcPointY = calcPointY + ((AbstractGraphPanelChartElement) element.getValue()).getValue();
                   }
               }
-              calcPointX = calcPointX / nbAveragedValues;
-              calcPointY = calcPointY / nbAveragedValues;
+              calcPointX = calcPointX / factor;
+              calcPointY = calcPointY / factor;
           }
 
          x = chartRect.x + (int) ((calcPointX - minXVal) * dxForDVal);

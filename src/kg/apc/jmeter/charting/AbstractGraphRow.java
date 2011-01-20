@@ -68,11 +68,6 @@ public abstract class AbstractGraphRow
    /**
     *
     */
-   protected double maxY = Double.MIN_VALUE;
-   /**
-    *
-    */
-   protected double minY = Double.MAX_VALUE;
    private boolean drawOnChart = true;
    private boolean drawBar = false;
    private int granulation = 0;
@@ -164,11 +159,61 @@ public abstract class AbstractGraphRow
    }
 
    /**
-    * @return the maxY
+    * @return the exact maxY, taking in account maxPoint limit
     */
-   public double getMaxY()
+   public double[] getMinMaxY(int maxPoints)
    {
-      return maxY;
+      int factor;
+      double[] minMax = new double[2];
+      minMax[0] = Double.MAX_VALUE;
+      minMax[1] = 0;
+      Entry<Long, AbstractGraphPanelChartElement> element;
+
+      if (maxPoints > 0)
+      {
+          factor = this.size() / maxPoints;
+          if (factor < 1) factor = 1;
+      } else
+      {
+          factor = 1;
+      }
+
+      Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = this.iterator();
+
+      double calcY;
+      boolean valid;
+
+      while (it.hasNext())
+      {
+          calcY = 0;
+          valid = true;
+
+          if (factor == 1)
+          {
+              element = it.next();
+              AbstractGraphPanelChartElement elt = (AbstractGraphPanelChartElement) element.getValue();
+              calcY = elt.getValue();
+          } else {
+              for (int i = 0; i < factor; i++)
+              {
+                  if (it.hasNext())
+                  {
+                      element = it.next();
+                      calcY = calcY + ((AbstractGraphPanelChartElement) element.getValue()).getValue();
+                  } else {
+                      valid = false;
+                  }
+              }
+              calcY = calcY / factor;
+          }
+
+          if(valid)
+          {
+              if(minMax[0] > calcY) minMax[0] = calcY;
+              if(minMax[1] < calcY) minMax[1] = calcY;
+          }
+       }
+      return minMax;
    }
 
    /**
@@ -177,14 +222,6 @@ public abstract class AbstractGraphRow
    public long getMinX()
    {
       return minX;
-   }
-
-   /**
-    * @return the minY
-    */
-   public double getMinY()
-   {
-      return minY;
    }
 
    /**
@@ -198,17 +235,9 @@ public abstract class AbstractGraphRow
       {
          maxX = xVal;
       }
-      if (yVal > maxY)
-      {
-         maxY = yVal;
-      }
       if (xVal < minX)
       {
          minX = xVal;
-      }
-      if (yVal < minY)
-      {
-         minY = yVal;
       }
    }
 

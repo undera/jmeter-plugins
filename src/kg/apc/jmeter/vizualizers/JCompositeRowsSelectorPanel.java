@@ -31,10 +31,13 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
     private Icon folderLinkIcon = new ImageIcon(JCompositeRowsSelectorPanel.class.getResource("folderLink.png"));
     private Icon leafIcon = new ImageIcon(JCompositeRowsSelectorPanel.class.getResource("treeLeaf.png"));
 
+    private CompositeGraphGui gui;
+
     /** Creates new form JRowsSelectorPanel */
-    public JCompositeRowsSelectorPanel(CompositeModel compositeModel)
+    public JCompositeRowsSelectorPanel(CompositeModel compositeModel, CompositeGraphGui gui)
     {
         this.compositeModel = compositeModel;
+        this.gui = gui;
         initComponents();
         root1 = new DefaultMutableTreeNode("Test Plan", true);
         model1 = new DefaultTreeModel(root1);
@@ -56,10 +59,9 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         jTreeGraph2.setCellRenderer(renderer2);
     }
 
-    public void refreshPreview()
+    public void updateGraph()
     {
-        jPanelGraphPreview.invalidate();
-        jPanelGraphPreview.repaint();
+        gui.updateGui();
     }
 
     public Iterator<String[]> getItems()
@@ -142,10 +144,12 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
 
     public void clearData()
     {
-        root1.removeAllChildren();
+        //root1.removeAllChildren();
         //root2.removeAllChildren();
-        model1.nodeStructureChanged(root1);
+        //model1.nodeStructureChanged(root1);
         //model2.nodeStructureChanged(root2);
+        updateTree();
+        gui.updateGui();
     }
 
     public void updateTree()
@@ -155,8 +159,18 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
 
         //rows will not disapear, only chart if cleared...
         boolean chartsUpdated = false;
-        boolean rowsUpdated = false;
-        //first check if graph cleared
+
+        //first, chaeck if we need to remove some visualizers
+        for(int i=0; i<root1.getChildCount(); i++)
+        {
+            TreeNode node = root1.getChildAt(i);
+            if(!compositeModel.containsVisualizer(node.toString()))
+            {
+                chartsUpdated = true;
+                model1.removeNodeFromParent((MutableTreeNode) node);
+                i--;
+            }
+        }
 
         Iterator<String> chartsIter = compositeModel.getVizualizerNamesIterator();
         while (chartsIter.hasNext())
@@ -187,15 +201,10 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
                     String rowName = rowsIter.next().getLabel();
                     if (!isNodeContained(rowName, chartNode1))
                     {
-                        rowsUpdated = true;
+                        chartsUpdated = true;
                         chartNode1.add(new DefaultMutableTreeNode(rowName, false));
                         //chartNode2.add(new DefaultMutableTreeNode(rowName, false));
                     }
-                }
-                if (rowsUpdated)
-                {
-                    model1.nodeStructureChanged(chartNode1);
-                    expandAll(jTreeGraph1, true);
                 }
             }
         }
@@ -425,9 +434,9 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
                     model2.nodeStructureChanged(root2);
                     expandAll(jTreeGraph2, true);
                 }
-                refreshPreview();
             }
         }
+        updateGraph();
     }
 
     private void removeItemFromComposite(TreePath[] paths)
@@ -454,6 +463,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         }
         model2.nodeStructureChanged(root2);
         expandAll(jTreeGraph2, true);
+        updateGraph();
     }
 
 

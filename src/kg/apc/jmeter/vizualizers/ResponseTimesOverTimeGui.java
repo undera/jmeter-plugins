@@ -1,9 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.util.Calendar;
-import java.util.TimeZone;
 import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.RowsCollector;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**
@@ -26,7 +23,7 @@ public class ResponseTimesOverTimeGui
       graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
       graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
       graphPanel.getGraphObject().setyAxisLabel("Response times in ms");
-
+      graphPanel.getGraphObject().setDisplayPrecision(true);
    }
 
    private void addThreadGroupRecord(String threadGroupName, long time,

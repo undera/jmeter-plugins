@@ -11,7 +11,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowExactValues;
-import kg.apc.jmeter.charting.RowsCollector;
 import kg.apc.jmeter.vizualizers.CompositeResultCollector;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.gui.GuiPackage;

@@ -168,6 +168,7 @@ public abstract class AbstractGraphPanelVisualizer
         }
         interval = granulation;
         settingsPanel.setGranulationValue(granulation);
+        graphPanel.getGraphObject().setPrecisionLabel(granulation);
     }
 
     @Override

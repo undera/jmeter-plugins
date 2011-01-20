@@ -48,15 +48,6 @@ public class GraphRowSumValues
 
     /**
      *
-     * @param val
-     */
-    public void setMaxY(double val)
-    {
-        maxY = val;
-    }
-
-    /**
-     *
      * @param xVal
      * @param yVal
      */

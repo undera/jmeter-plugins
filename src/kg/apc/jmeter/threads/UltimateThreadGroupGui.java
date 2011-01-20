@@ -108,21 +108,6 @@ public class UltimateThreadGroupGui
       createControllerPanel();
    }
 
-   private void calculateRowMaxY(GraphRowSumValues row)
-   {
-      double max = Double.MIN_VALUE;
-      Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = row.iterator();
-      while (it.hasNext())
-      {
-         double el = it.next().getValue().getValue();
-         if (el > max)
-         {
-            max = el;
-         }
-      }
-      row.setMaxY(max);
-   }
-
    private JPanel createParamsPanel()
    {
       JPanel panel = new JPanel(new BorderLayout(5, 5));
@@ -258,8 +243,6 @@ public class UltimateThreadGroupGui
          row.add(thread.getEndTime() - 1, 0);
          row.add(thread.getEndTime(), -1);
       }
-
-      calculateRowMaxY(row);
 
       model.put("Expected parallel users count", row);
       chart.repaint();

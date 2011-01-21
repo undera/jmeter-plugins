@@ -8,7 +8,7 @@ import org.apache.jmeter.samplers.SampleResult;
  * @author Stephane Hoblingre
  */
 public class BytesThroughputOverTimeGui
-        extends AbstractGraphPanelVisualizer
+        extends AbstractOverTimeVisualizer
 {
     //private static final Logger log = LoggingManager.getLoggerForClass();
 
@@ -18,13 +18,8 @@ public class BytesThroughputOverTimeGui
     public BytesThroughputOverTimeGui()
     {
         super();
-        graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(
-                "HH:mm:ss"));
-        graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
         setGranulation(1000);
-        graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
         graphPanel.getGraphObject().setyAxisLabel("Bytes received /sec");
-        graphPanel.getGraphObject().setDisplayPrecision(true);
     }
 
     private void addBytes(String threadGroupName, long time, int value)

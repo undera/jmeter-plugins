@@ -8,7 +8,7 @@ import org.apache.jmeter.samplers.SampleResult;
  * @author apc
  */
 public class ResponseTimesOverTimeGui
-      extends AbstractGraphPanelVisualizer
+      extends AbstractOverTimeVisualizer
 {
 
    /**
@@ -17,13 +17,7 @@ public class ResponseTimesOverTimeGui
    public ResponseTimesOverTimeGui()
    {
       super();
-
-      graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(
-            "HH:mm:ss"));
-      graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
-      graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
       graphPanel.getGraphObject().setyAxisLabel("Response times in ms");
-      graphPanel.getGraphObject().setDisplayPrecision(true);
    }
 
    private void addThreadGroupRecord(String threadGroupName, long time,

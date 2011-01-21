@@ -8,23 +8,16 @@ import org.apache.jmeter.samplers.SampleResult;
  * @author Stephane Hoblingre
  */
 public class HitsPerSecondGui
-        extends AbstractGraphPanelVisualizer
+        extends AbstractOverTimeVisualizer
 {
-    //private static final Logger log = LoggingManager.getLoggerForClass();
-
     /**
      *
      */
     public HitsPerSecondGui()
     {
         super();
-        graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(
-                "HH:mm:ss"));
-        graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
         setGranulation(1000);
-        graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
         graphPanel.getGraphObject().setyAxisLabel("Number of hits /sec");
-        graphPanel.getGraphObject().setDisplayPrecision(true);
     }
 
     private void addHit(String threadGroupName, long time)

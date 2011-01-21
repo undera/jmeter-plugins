@@ -10,7 +10,7 @@ import org.apache.jorphan.gui.RateRenderer;
  * @author apc
  */
 public class ThroughputOverTimeGui
-        extends AbstractGraphPanelVisualizer
+        extends AbstractOverTimeVisualizer
 {
     //private static final Logger log = LoggingManager.getLoggerForClass();
 
@@ -20,13 +20,8 @@ public class ThroughputOverTimeGui
     public ThroughputOverTimeGui()
     {
         super();
-        graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(
-                "HH:mm:ss"));
         graphPanel.getGraphObject().setyAxisLabelRenderer(new CustomRateRenderer("#.0"));
-        graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
-        graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
         graphPanel.getGraphObject().setyAxisLabel("Number of estimated transactions /sec");
-        graphPanel.getGraphObject().setDisplayPrecision(true);
     }
 
     private void addThreadGroupRecord(String threadGroupName, long time,

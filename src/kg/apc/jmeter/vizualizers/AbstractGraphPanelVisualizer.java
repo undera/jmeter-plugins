@@ -9,11 +9,6 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
-import kg.apc.jmeter.charting.GraphRowAverages;
-import kg.apc.jmeter.charting.GraphRowExactValues;
-import kg.apc.jmeter.charting.GraphRowOverallAverages;
-import kg.apc.jmeter.charting.GraphRowPercentiles;
-import kg.apc.jmeter.charting.GraphRowSumValues;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
 import org.apache.jmeter.gui.tree.JMeterTreeNode;
@@ -259,27 +254,6 @@ public abstract class AbstractGraphPanelVisualizer
         }
     }
 
-    private AbstractGraphRow instanciateNewRow(int rowType)
-    {
-        switch (rowType)
-        {
-            case AbstractGraphRow.ROW_AVERAGES:
-                return new GraphRowAverages();
-            case AbstractGraphRow.ROW_EXACT_VALUES:
-                return new GraphRowExactValues();
-            case AbstractGraphRow.ROW_OVERALL_AVERAGES:
-                return new GraphRowOverallAverages();
-            case AbstractGraphRow.ROW_PERCENTILES:
-                return new GraphRowPercentiles();
-            case AbstractGraphRow.ROW_SUM_VALUES:
-                return new GraphRowSumValues(false);
-            case AbstractGraphRow.ROW_ROLLING_SUM_VALUES:
-                return new GraphRowSumValues(true);
-            default:
-                return null;
-        }
-    }
-
     protected synchronized AbstractGraphRow getNewRow(
             ConcurrentSkipListMap<String, AbstractGraphRow> model,
             int rowType,
@@ -295,7 +269,7 @@ public abstract class AbstractGraphPanelVisualizer
         AbstractGraphRow row = null;
         if (!model.containsKey(label))
         {
-            row = instanciateNewRow(rowType);
+            row = AbstractGraphRow.instantiateNewRow(rowType);
             row.setLabel(label);
             row.setMarkerSize(markerSize);
             row.setDrawBar(isBarRow);

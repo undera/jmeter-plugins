@@ -8,7 +8,7 @@ import org.apache.jmeter.samplers.SampleResult;
  * @author apc
  */
 public class ThreadsStateOverTimeGui
-      extends AbstractGraphPanelVisualizer
+      extends AbstractOverTimeVisualizer
 {
    //private static final Logger log = LoggingManager.getLoggerForClass();
    /**
@@ -17,11 +17,7 @@ public class ThreadsStateOverTimeGui
    public ThreadsStateOverTimeGui()
    {
       super();
-      graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
-      graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
-      graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
       graphPanel.getGraphObject().setyAxisLabel("Number of active threads");
-      graphPanel.getGraphObject().setDisplayPrecision(true);
    }
 
    private void addThreadGroupRecord(String threadGroupName, long time, int numThreads)

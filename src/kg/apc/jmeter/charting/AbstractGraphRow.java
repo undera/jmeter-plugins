@@ -71,6 +71,7 @@ public abstract class AbstractGraphRow
    private boolean drawOnChart = true;
    private boolean drawBar = false;
    private int granulation = 0;
+   private long firstTime=Long.MIN_VALUE;
 
    public void setDrawThickLines(boolean isThickLine)
    {
@@ -231,6 +232,11 @@ public abstract class AbstractGraphRow
     */
    public void add(long xVal, double yVal)
    {
+      if (getFirstTime()==Long.MIN_VALUE)
+      {
+          firstTime=xVal;
+      }
+
       if (xVal > maxX)
       {
          maxX = xVal;
@@ -340,4 +346,34 @@ public abstract class AbstractGraphRow
     public abstract AbstractGraphPanelChartElement getElement(long value);
 
     public abstract int size();
+
+    public static AbstractGraphRow instantiateNewRow(int rowType)
+    {
+        switch (rowType)
+        {
+            case AbstractGraphRow.ROW_AVERAGES:
+                return new GraphRowAverages();
+            case AbstractGraphRow.ROW_EXACT_VALUES:
+                return new GraphRowExactValues();
+            case AbstractGraphRow.ROW_OVERALL_AVERAGES:
+                return new GraphRowOverallAverages();
+            case AbstractGraphRow.ROW_PERCENTILES:
+                return new GraphRowPercentiles();
+            case AbstractGraphRow.ROW_SUM_VALUES:
+                return new GraphRowSumValues(false);
+            case AbstractGraphRow.ROW_ROLLING_SUM_VALUES:
+                return new GraphRowSumValues(true);
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * @return the firstTime
+     */
+    public long getFirstTime()
+    {
+        return firstTime;
+    }
+
 }

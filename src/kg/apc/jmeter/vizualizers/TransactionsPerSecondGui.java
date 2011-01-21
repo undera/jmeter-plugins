@@ -8,7 +8,7 @@ import org.apache.jmeter.samplers.SampleResult;
  * @author Stephane hoblingre
  */
 public class TransactionsPerSecondGui
-        extends AbstractGraphPanelVisualizer
+        extends AbstractOverTimeVisualizer
 {
     //private static final Logger log = LoggingManager.getLoggerForClass();
 
@@ -21,13 +21,8 @@ public class TransactionsPerSecondGui
     public TransactionsPerSecondGui()
     {
         super();
-        graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(
-                "HH:mm:ss"));
-        graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
         setGranulation(1000);
-        graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
         graphPanel.getGraphObject().setyAxisLabel("Number of transactions /sec");
-        graphPanel.getGraphObject().setDisplayPrecision(true);
     }
 
     private void addTransaction(boolean isSuccess, String rowName, long time, double count)

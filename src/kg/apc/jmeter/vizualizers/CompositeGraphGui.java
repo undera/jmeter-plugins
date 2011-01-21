@@ -31,6 +31,8 @@ public class CompositeGraphGui extends AbstractGraphPanelVisualizer
 
         graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
         graphPanel.getGraphObject().setyAxisLabel("Scaled values");
+
+        graphPanel.getGraphObject().setExpendRows(true);
         
         CompositeResultCollector compositeResultCollector = new CompositeResultCollector();
         compositeResultCollector.setCompositeModel(compositeModel);

@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormatSymbols;
 import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.imageio.ImageIO;
@@ -245,6 +246,16 @@ public class GraphPanelChart
          }
       }
    }
+
+   //row zooming
+   private HashMap<String, Integer> rowsZoomFactor = new HashMap<String, Integer>();
+   private boolean expendRows = false;
+
+    public void setExpendRows(boolean expendRows)
+    {
+        this.expendRows = expendRows;
+    }
+
 
    /**
     * Creates new chart object with default parameters
@@ -613,6 +624,28 @@ public class GraphPanelChart
       setDefaultDimensions();
       getMinMaxDataValues();
 
+      //row zooming
+      if(expendRows)
+      {
+          Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
+          while(it.hasNext())
+          {
+              Entry<String, AbstractGraphRow> row = it.next();
+              double[] minMax = row.getValue().getMinMaxY(maxPoints);
+              if(minMax[1] > 0)
+              {
+                  int zoomFactor = 1;
+                  while(minMax[1]*zoomFactor <= maxYVal)
+                  {
+                      rowsZoomFactor.put(row.getKey(), zoomFactor);
+                      zoomFactor = zoomFactor * 10;
+                  }
+              } else {
+                  rowsZoomFactor.put(row.getKey(), 1);
+              }
+          }
+      }
+
       try
       {
          paintLegend(g);
@@ -657,8 +690,18 @@ public class GraphPanelChart
             continue;
          }
 
+         String rowLabel = row.getKey();
+         if(expendRows && rowsZoomFactor.get(row.getKey()) != null)
+         {
+             int zoomFactor = rowsZoomFactor.get(row.getKey());
+             if(zoomFactor != 1)
+             {
+                 rowLabel = rowLabel + " (x" + zoomFactor + ")";
+             }
+         }
+
          // wrap row if overflowed
-         if (currentX + rectW + spacing / 2 + fm.stringWidth(row.getKey()) > getWidth())
+         if (currentX + rectW + spacing / 2 + fm.stringWidth(rowLabel) > getWidth())
          {
             currentY += rectH + spacing / 2;
             legendHeight += rectH + spacing / 2;
@@ -683,8 +726,8 @@ public class GraphPanelChart
 
          // draw legend item label
          currentX += rectW + spacing / 2;
-         g.drawString(row.getKey(), currentX, (int) (currentY + rectH * 0.9));
-         currentX += fm.stringWidth(row.getKey()) + spacing;
+         g.drawString(rowLabel, currentX, (int) (currentY + rectH * 0.9));
+         currentX += fm.stringWidth(rowLabel) + spacing;
       }
 
       legendRect.setBounds(chartRect.x, chartRect.y, chartRect.width, legendHeight);
@@ -826,7 +869,7 @@ public class GraphPanelChart
    private void paintChart(Graphics g)
    {
       g.setColor(Color.yellow);
-      Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
+      Iterator<Entry<String, AbstractGraphRow>> it;
 
       ColorsDispatcher dispatcher = null;
 
@@ -835,13 +878,28 @@ public class GraphPanelChart
           dispatcher = new ColorsDispatcher();
       }
 
+      //first we get the aggregate point factor if maxpoint is > 0;
+      factorInUse = 1;
+      if (maxPoints > 0)
+      {
+          it = rows.entrySet().iterator();
+          while (it.hasNext())
+          {
+              Entry<String, AbstractGraphRow> row = it.next();
+              int rowFactor = (int)Math.floor(row.getValue().size() / maxPoints) + 1;
+              if(rowFactor > factorInUse) factorInUse = rowFactor;
+          }
+       }
+
+      //paint rows
+      it = rows.entrySet().iterator();
       while (it.hasNext())
       {
          Entry<String, AbstractGraphRow> row = it.next();
          if (row.getValue().isDrawOnChart())
          {
             Color color = reSetColors ? dispatcher.getNextColor() : row.getValue().getColor();
-            paintRow(g, row.getValue(), color);
+            paintRow(g, row.getValue(), row.getKey(), color);
          }
       }
    }
@@ -876,21 +934,8 @@ public class GraphPanelChart
        this.maxPoints = maxPoints;
    }
 
-   private void paintRow(Graphics g, AbstractGraphRow row, Color color)
+   private void paintRow(Graphics g, AbstractGraphRow row, String rowLabel, Color color)
    {
-      //how many points to average?
-      int factor;
-
-      if (maxPoints > 0)
-      {
-          factor = row.size() / maxPoints;
-          if (factor < 1) factor = 1;
-          factorInUse = factor;
-      } else
-      {
-          factor = 1;
-      }
-
       FontMetrics fm = g.getFontMetrics(g.getFont());
       Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = row.iterator();
       Entry<Long, AbstractGraphPanelChartElement> element;
@@ -917,7 +962,7 @@ public class GraphPanelChart
           double calcPointX = 0;
           double calcPointY = 0;
 
-          if (factor == 1)
+          if (factorInUse == 1)
           {
 
               element = it.next();
@@ -942,17 +987,25 @@ public class GraphPanelChart
               calcPointY = elt.getValue();
           } else
           {
-              for (int i = 0; i < factor; i++)
+              int nbPointProcessed = 0;
+              for (int i = 0; i < factorInUse; i++)
               {
                   if (it.hasNext())
                   {
                       element = it.next();
                       calcPointX = calcPointX + element.getKey().doubleValue();
                       calcPointY = calcPointY + ((AbstractGraphPanelChartElement) element.getValue()).getValue();
+                      nbPointProcessed++;
                   }
               }
-              calcPointX = calcPointX / factor;
-              calcPointY = calcPointY / factor;
+              calcPointX = calcPointX / (double)nbPointProcessed;
+              calcPointY = calcPointY / (double)factorInUse;
+
+          }
+
+          if(expendRows)
+          {
+              calcPointY = calcPointY * rowsZoomFactor.get(rowLabel);
           }
 
          x = chartRect.x + (int) ((calcPointX - minXVal) * dxForDVal);
@@ -978,10 +1031,11 @@ public class GraphPanelChart
                if (isChartPointValid(x, y))
                {
                   g.drawLine(prevX, prevY, x, y);
+                  prevX = x;
+                  prevY = y;
                }
             }
-            prevX = x;
-            prevY = y;
+            
          }
 
          // draw bars
@@ -1224,7 +1278,7 @@ public class GraphPanelChart
       @Override
       public void actionPerformed(final ActionEvent e)
       {
-         JFileChooser chooser = savePath != null ? new JFileChooser(new File(savePath)) : new JFileChooser();
+         JFileChooser chooser = savePath != null ? new JFileChooser(new File(savePath)) : new JFileChooser(new File("."));
          chooser.setFileFilter(new FileNameExtensionFilter("PNG Images", "png"));
 
          int returnVal = chooser.showSaveDialog(GraphPanelChart.this);
@@ -1268,7 +1322,7 @@ public class GraphPanelChart
         @Override
         public void actionPerformed(final ActionEvent e)
         {
-            JFileChooser chooser = savePath != null ? new JFileChooser(new File(savePath)) : new JFileChooser();
+            JFileChooser chooser = savePath != null ? new JFileChooser(new File(savePath)) : new JFileChooser(new File("."));
             chooser.setFileFilter(new FileNameExtensionFilter("CSV Files", "csv"));
 
             int returnVal = chooser.showSaveDialog(GraphPanelChart.this);

@@ -1023,19 +1023,23 @@ public class GraphPanelChart
          }
 
          // draw lines
-         if (row.isDrawLine())
-         {
-            if (prevX >= 0)
-            {
-               g.setColor(color);
-               if (isChartPointValid(x, y))
-               {
-                  g.drawLine(prevX, prevY, x, y);
-               }
-            }
-            prevX = x;
-            prevY = y;
-         }
+          if (row.isDrawLine())
+          {
+              boolean valid = isChartPointValid(x, y);
+              if (prevX >= 0)
+              {
+                  g.setColor(color);
+                  if (valid)
+                  {
+                      g.drawLine(prevX, prevY, x, y);
+                  }
+              }
+              if(valid)
+              {
+                  prevX = x;
+                  prevY = y;
+              }
+          }
 
          // draw bars
           if (row.isDrawBar())

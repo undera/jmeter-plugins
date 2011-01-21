@@ -172,8 +172,7 @@ public abstract class AbstractGraphRow
 
       if (maxPoints > 0)
       {
-          factor = this.size() / maxPoints;
-          if (factor < 1) factor = 1;
+          factor = (int)Math.floor(this.size() / maxPoints) + 1;
       } else
       {
           factor = 1;

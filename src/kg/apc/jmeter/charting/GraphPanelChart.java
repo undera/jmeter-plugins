@@ -1031,11 +1031,10 @@ public class GraphPanelChart
                if (isChartPointValid(x, y))
                {
                   g.drawLine(prevX, prevY, x, y);
-                  prevX = x;
-                  prevY = y;
                }
             }
-            
+            prevX = x;
+            prevY = y;
          }
 
          // draw bars

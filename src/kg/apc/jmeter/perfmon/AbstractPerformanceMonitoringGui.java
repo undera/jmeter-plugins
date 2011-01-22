@@ -124,7 +124,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     private JPanel createParamsPanel()
     {
         JPanel panel = new JPanel(new BorderLayout(5, 5));
-        panel.setBorder(BorderFactory.createTitledBorder("Servers to monitor (must have started ServerAgent!)"));
+        panel.setBorder(BorderFactory.createTitledBorder("Servers to monitor (ServerAgent must be started!)"));
         panel.setPreferredSize(new Dimension(150, 150));
 
         JScrollPane scroll = new JScrollPane(createGrid());

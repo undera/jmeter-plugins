@@ -10,7 +10,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
-import kg.apc.jmeter.charting.GraphRowExactValues;
 import kg.apc.jmeter.vizualizers.CompositeResultCollector;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.gui.GuiPackage;
@@ -70,7 +69,6 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
 
         Iterator it = testTree.getNodesOfType(CompositeResultCollector.class).iterator();
         while (it.hasNext()) {
-            //System.out.println("obj");
             Object obj=it.next();
             CompositeResultCollector compositeResultCollector = (CompositeResultCollector)((JMeterTreeNode) obj).getTestElement();
             compositeResultCollector.getCompositeModel().addRow(rowName, row);
@@ -84,7 +82,6 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
 
         Iterator it = testTree.getNodesOfType(CompositeResultCollector.class).iterator();
         while (it.hasNext()) {
-            //System.out.println("obj");
             Object obj=it.next();
             CompositeResultCollector compositeResultCollector = (CompositeResultCollector)((JMeterTreeNode) obj).getTestElement();
             compositeResultCollector.getCompositeModel().clearRows(vizualizerName);
@@ -96,7 +93,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
       AbstractGraphRow row = null;
       if (!model.containsKey(label))
       {
-         row = new GraphRowExactValues();
+         row = AbstractGraphRow.instantiateNewRow(AbstractGraphRow.ROW_EXACT_VALUES);
          row.setLabel(label);
          row.setColor(colors.getNextColor());
          row.setDrawLine(true);
@@ -190,7 +187,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
       @Override
       public void actionPerformed(final ActionEvent e)
       {
-         JFileChooser chooser = loadPath != null ? new JFileChooser(new File(loadPath)) : new JFileChooser();
+         JFileChooser chooser = loadPath != null ? new JFileChooser(new File(loadPath)) : new JFileChooser(".");
          chooser.setFileFilter(new FileNameExtensionFilter("PerfMon files", "jppm"));
 
          int returnVal = chooser.showOpenDialog(ServerPerfMonitoringGUI.this);

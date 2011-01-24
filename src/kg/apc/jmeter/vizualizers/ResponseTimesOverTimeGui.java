@@ -50,8 +50,10 @@ public class ResponseTimesOverTimeGui
       return "Response Times Over Time";
    }
 
+   @Override
    public void add(SampleResult res)
    {
+        super.add(res);
       addThreadGroupRecord(res.getSampleLabel(),
             res.getEndTime() - res.getEndTime() % getGranulation(), res.getTime());
       updateGui(null);

@@ -1,11 +1,14 @@
 package kg.apc.jmeter.vizualizers;
 
+import org.apache.jmeter.samplers.SampleResult;
+
 /**
  *
  * @author apc
  */
 abstract class AbstractOverTimeVisualizer extends AbstractGraphPanelVisualizer {
     private boolean useRelativeTime;
+    private boolean isRelativeTimeSet;
 
     public AbstractOverTimeVisualizer()
     {
@@ -18,5 +21,14 @@ abstract class AbstractOverTimeVisualizer extends AbstractGraphPanelVisualizer {
     void setUseRelativeTime(boolean selected)
     {
         useRelativeTime=selected;
+    }
+
+    public void add(SampleResult sample)
+    {
+        if (useRelativeTime && !isRelativeTimeSet)
+        {
+            graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss", sample.getStartTime()));
+            isRelativeTimeSet=true;
+        }
     }
 }

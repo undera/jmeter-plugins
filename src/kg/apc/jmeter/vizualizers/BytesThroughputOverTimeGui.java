@@ -49,8 +49,10 @@ public class BytesThroughputOverTimeGui
         return "Bytes Throughput Over Time";
     }
 
-    public void add(SampleResult res)
-    {
+   @Override
+   public void add(SampleResult res)
+   {
+        super.add(res);
         addBytes("Bytes Received per Second", res.getEndTime() - res.getEndTime() % getGranulation(), res.getBytes());
         updateGui(null);
     }

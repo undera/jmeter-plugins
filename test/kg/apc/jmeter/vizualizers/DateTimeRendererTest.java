@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.vizualizers;
 
 import java.util.Calendar;
@@ -18,6 +14,7 @@ import static org.junit.Assert.*;
  */
 public class DateTimeRendererTest
 {
+    private static final String HHMMSS = "HH:mm:ss";
    /**
     *
     */
@@ -68,7 +65,7 @@ public class DateTimeRendererTest
    public void testSetValue()
    {
       System.out.println("setValue");
-      DateTimeRenderer instance = new DateTimeRenderer("HH:mm:ss");
+      DateTimeRenderer instance = new DateTimeRenderer(HHMMSS);
 
       Calendar test = Calendar.getInstance();
 
@@ -77,9 +74,6 @@ public class DateTimeRendererTest
       test.set(Calendar.SECOND, 40);
       test.set(Calendar.MILLISECOND, 0);
       
-      instance.setValue(null);
-      assertEquals("", instance.getText());
-
       instance.setValue(test.getTimeInMillis());
       String text = instance.getText();
       assertEquals("03:16:40", text);
@@ -90,9 +84,40 @@ public class DateTimeRendererTest
     *
     */
    @Test
-   public void testConstructors()
+   public void testConstructor_null()
    {
-      DateTimeRenderer i1=new DateTimeRenderer();
-      DateTimeRenderer i2=new DateTimeRenderer("HH");
+      DateTimeRenderer instance=new DateTimeRenderer();
+      instance.setValue(null);
+      assertEquals("", instance.getText());
+   }
+
+   @Test
+   public void testConstructor2()
+   {
+      assertNotNull(new DateTimeRenderer(HHMMSS));
+   }
+
+   @Test
+   public void testConstructor3()
+   {
+      System.out.println("relTime");
+      Calendar test = Calendar.getInstance();
+
+      test.set(Calendar.HOUR_OF_DAY, 3);
+      test.set(Calendar.MINUTE, 16);
+      test.set(Calendar.SECOND, 40);
+      test.set(Calendar.MILLISECOND, 0);
+      Long end=test.getTimeInMillis();
+
+      test.set(Calendar.MINUTE, 6);
+      test.set(Calendar.SECOND, 40);
+      Long start=test.getTimeInMillis();
+
+      DateTimeRenderer instance=new DateTimeRenderer( HHMMSS, start);
+
+      instance.setValue(end);
+      String text = instance.getText();
+      System.out.println(text);
+      assertEquals("10:00", text.substring(3));
    }
 }

@@ -49,8 +49,10 @@ public class LatenciesOverTimeGui
       return "Response Latencies Over Time";
    }
 
+   @Override
    public void add(SampleResult res)
    {
+        super.add(res);
       addThreadGroupRecord(res.getSampleLabel(),
             res.getEndTime() - res.getEndTime() % getGranulation(), res.getLatency());
       updateGui(null);

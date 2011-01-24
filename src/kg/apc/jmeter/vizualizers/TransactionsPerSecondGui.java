@@ -73,9 +73,10 @@ public class TransactionsPerSecondGui
         return "Transactions per Second";
     }
 
-    @Override
-    public void add(SampleResult res)
-    {
+   @Override
+   public void add(SampleResult res)
+   {
+        super.add(res);
         //always add 0 failed transactions
         if (res.isSuccessful())
         {

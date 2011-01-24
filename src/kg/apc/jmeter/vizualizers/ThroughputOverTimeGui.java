@@ -49,9 +49,10 @@ public class ThroughputOverTimeGui
         return "Transaction Throughput Over Time";
     }
 
-    @Override
-    public void add(SampleResult res)
-    {
+   @Override
+   public void add(SampleResult res)
+   {
+        super.add(res);
         //change precision to double for accurate results and change calculation
         //to same as throughput vs thread
         double val = res.getTime() == 0 ? 0 : 1000.0d * res.getAllThreads() / res.getTime();

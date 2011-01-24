@@ -42,8 +42,10 @@ public class ThreadsStateOverTimeGui
       return "Active Threads Over Time";
    }
 
+   @Override
    public void add(SampleResult res)
    {
+        super.add(res);
       String threadName = res.getThreadName();
       threadName = threadName.lastIndexOf(" ") >= 0 ? threadName.substring(0, threadName.lastIndexOf(" ")) : threadName;
 

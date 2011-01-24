@@ -192,7 +192,7 @@ public class AbstractGraphPanelVisualizerTest
    public void testModifyTestElement()
    {
       System.out.println("modifyTestElement");
-      TestElement c = new RowsProviderResultCollector();
+      TestElement c = new ResultCollector();
       AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
       instance.modifyTestElement(c);
    }

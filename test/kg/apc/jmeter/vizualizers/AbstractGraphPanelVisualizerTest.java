@@ -1,6 +1,9 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
 import java.awt.Image;
+import java.util.concurrent.ConcurrentSkipListMap;
+import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -235,5 +238,54 @@ public class AbstractGraphPanelVisualizerTest
         boolean aggregate = true;
         AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
         instance.switchModel(aggregate);
+    }
+
+    /**
+     * Test of getNewRow method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testGetNewRow_10args()
+    {
+        System.out.println("getNewRow");
+        ConcurrentSkipListMap<String, AbstractGraphRow> model = null;
+        int rowType = 0;
+        String label = "";
+        int markerSize = 0;
+        boolean isBarRow = false;
+        boolean displayLabel = false;
+        boolean thickLines = false;
+        boolean showInLegend = false;
+        Color color = null;
+        boolean canCompose = false;
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        AbstractGraphRow expResult = null;
+        AbstractGraphRow result = instance.getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, color, canCompose);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getNewRow method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testGetNewRow_9args()
+    {
+        System.out.println("getNewRow");
+        ConcurrentSkipListMap<String, AbstractGraphRow> model = null;
+        int rowType = 0;
+        String label = "";
+        int markerSize = 0;
+        boolean isBarRow = false;
+        boolean displayLabel = false;
+        boolean thickLines = false;
+        boolean showInLegend = false;
+        boolean canCompose = false;
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        AbstractGraphRow expResult = null;
+        AbstractGraphRow result = instance.getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, canCompose);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

@@ -3,8 +3,6 @@ package kg.apc.jmeter.vizualizers;
 import java.text.SimpleDateFormat;
 
 import org.apache.jorphan.gui.NumberRenderer;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 /**
  *
@@ -13,13 +11,10 @@ import org.apache.log.Logger;
 public class DateTimeRenderer
         extends NumberRenderer
 {
-   private static final Logger log = LoggingManager.getLoggerForClass();
-
     /**
      *
      */
     protected final SimpleDateFormat dateFormatter;
-    private boolean isRelative = false;
     private long relativeStartTime = 0;
     private static final String EMPTY = "";
 
@@ -50,7 +45,6 @@ public class DateTimeRenderer
     public DateTimeRenderer(String format, long aRelativeStartTime)
     {
         this(format);
-        isRelative = true;
         relativeStartTime = aRelativeStartTime;
     }
 

@@ -135,4 +135,17 @@ public class ServerPerfMonitoringGUITest
         ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
         instance.setLoadMenuEnabled(enabled);
     }
+
+    /**
+     * Test of clearData method, of class ServerPerfMonitoringGUI.
+     */
+    @Test
+    public void testClearData()
+    {
+        System.out.println("clearData");
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+        instance.clearData();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

@@ -194,16 +194,15 @@ public class AbstractGraphRowTest
    {
       System.out.println("iterator");
       AbstractGraphRow instance = new AbstractGraphRowImpl();
-      Iterator expResult = null;
       Iterator result = instance.iterator();
-      assertEquals(expResult, result);
+      assertNotNull(result);
    }
 
    /**
     *
     */
    public class AbstractGraphRowImpl
-        extends AbstractGraphRow
+        extends AbstractGraphRow implements Iterator<Entry<Long, AbstractGraphPanelChartElement>>
    {
       /**
        *
@@ -211,7 +210,7 @@ public class AbstractGraphRowTest
        */
       public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
       {
-         return null;
+         return this;
       }
 
         @Override
@@ -223,7 +222,22 @@ public class AbstractGraphRowTest
         @Override
         public AbstractGraphPanelChartElement getElement(long value)
         {
+            return new GraphPanelChartExactElement(0, 0);
+        }
+
+        public boolean hasNext()
+        {
+            return false;
+        }
+
+        public Entry<Long, AbstractGraphPanelChartElement> next()
+        {
             return null;
+        }
+
+        public void remove()
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
         }
    }
 
@@ -402,9 +416,8 @@ public class AbstractGraphRowTest
         System.out.println("getElement");
         long value = 0L;
         AbstractGraphRow instance = new AbstractGraphRowImpl();
-        AbstractGraphPanelChartElement expResult = null;
         AbstractGraphPanelChartElement result = instance.getElement(value);
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 
     /**
@@ -416,11 +429,8 @@ public class AbstractGraphRowTest
         System.out.println("getMinMaxY");
         int maxPoints = 0;
         AbstractGraphRow instance = new AbstractGraphRowImpl();
-        double[] expResult = null;
         double[] result = instance.getMinMaxY(maxPoints);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -431,10 +441,33 @@ public class AbstractGraphRowTest
     {
         System.out.println("getMinX");
         AbstractGraphRow instance = new AbstractGraphRowImpl();
-        long expResult = 0L;
+        long expResult = Long.MAX_VALUE;
         long result = instance.getMinX();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of instantiateNewRow method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testInstantiateNewRow()
+    {
+        System.out.println("instantiateNewRow");
+        int rowType = 0;
+        AbstractGraphRow result = AbstractGraphRow.instantiateNewRow(rowType);
+        assertNotNull(result);
+    }
+
+    /**
+     * Test of getFirstTime method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testGetFirstTime()
+    {
+        System.out.println("getFirstTime");
+        AbstractGraphRow instance = new AbstractGraphRowImpl();
+        long expResult = Long.MIN_VALUE;
+        long result = instance.getFirstTime();
+        assertEquals(expResult, result);
     }
 }

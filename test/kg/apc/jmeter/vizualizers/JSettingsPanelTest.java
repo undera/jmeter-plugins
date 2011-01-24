@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import javax.swing.JPanel;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
@@ -79,6 +80,36 @@ public class JSettingsPanelTest {
         boolean aggregate = false;
         JSettingsPanel instance = new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), true, true, true, true, true);
         instance.setAggregateMode(aggregate);
+    }
+
+    /**
+     * Test of getGraphDisplayPanel method, of class JSettingsPanel.
+     */
+    @Test
+    public void testGetGraphDisplayPanel()
+    {
+        System.out.println("getGraphDisplayPanel");
+        JSettingsPanel instance = null;
+        JPanel expResult = null;
+        JPanel result = instance.getGraphDisplayPanel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of isPreview method, of class JSettingsPanel.
+     */
+    @Test
+    public void testIsPreview()
+    {
+        System.out.println("isPreview");
+        JSettingsPanel instance = null;
+        boolean expResult = false;
+        boolean result = instance.isPreview();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

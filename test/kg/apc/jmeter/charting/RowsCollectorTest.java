@@ -6,6 +6,7 @@
 package kg.apc.jmeter.charting;
 
 import java.util.Iterator;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -140,6 +141,74 @@ public class RowsCollectorTest {
         AbstractGraphRow expResult = null;
         AbstractGraphRow result = instance.getRow(testName, rowName);
         assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of testStarted method, of class RowsCollector.
+     */
+    @Test
+    public void testTestStarted_0args()
+    {
+        System.out.println("testStarted");
+        RowsCollector instance = null;
+        instance.testStarted();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of testStarted method, of class RowsCollector.
+     */
+    @Test
+    public void testTestStarted_String()
+    {
+        System.out.println("testStarted");
+        String string = "";
+        RowsCollector instance = null;
+        instance.testStarted(string);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of testEnded method, of class RowsCollector.
+     */
+    @Test
+    public void testTestEnded_0args()
+    {
+        System.out.println("testEnded");
+        RowsCollector instance = null;
+        instance.testEnded();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of testEnded method, of class RowsCollector.
+     */
+    @Test
+    public void testTestEnded_String()
+    {
+        System.out.println("testEnded");
+        String string = "";
+        RowsCollector instance = null;
+        instance.testEnded(string);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of testIterationStart method, of class RowsCollector.
+     */
+    @Test
+    public void testTestIterationStart()
+    {
+        System.out.println("testIterationStart");
+        LoopIterationEvent lie = null;
+        RowsCollector instance = null;
+        instance.testIterationStart(lie);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

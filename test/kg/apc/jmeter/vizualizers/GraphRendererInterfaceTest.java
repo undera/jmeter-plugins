@@ -1,8 +1,11 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 package kg.apc.jmeter.vizualizers;
 
-import java.awt.Component;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -12,11 +15,11 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author z000205
+ * @author undera
  */
-public class JRowsSelectorPanelTest {
+public class GraphRendererInterfaceTest {
 
-    public JRowsSelectorPanelTest() {
+    public GraphRendererInterfaceTest() {
     }
 
     @BeforeClass
@@ -38,53 +41,47 @@ public class JRowsSelectorPanelTest {
     }
 
     /**
-     * Test of setTable method, of class JRowsSelectorPanel.
-     */
-    @Test
-    public void testSetTable()
-    {
-        System.out.println("setTable");
-        Component table = new JTable();
-        JRowsSelectorPanel instance = new JRowsSelectorPanel();
-        instance.setTable(table);
-    }
-
-    /**
-     * Test of refreshPreview method, of class JRowsSelectorPanel.
-     */
-    @Test
-    public void testRefreshPreview()
-    {
-        System.out.println("refreshPreview");
-        JRowsSelectorPanel instance = new JRowsSelectorPanel();
-        instance.refreshPreview();
-    }
-
-    /**
-     * Test of getGraphDisplayPanel method, of class JRowsSelectorPanel.
+     * Test of getGraphDisplayPanel method, of class GraphRendererInterface.
      */
     @Test
     public void testGetGraphDisplayPanel()
     {
         System.out.println("getGraphDisplayPanel");
-        JRowsSelectorPanel instance = new JRowsSelectorPanel();
+        GraphRendererInterface instance = new GraphRendererInterfaceImpl();
+        JPanel expResult = null;
         JPanel result = instance.getGraphDisplayPanel();
-        assertNotNull(result);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of isPreview method, of class JRowsSelectorPanel.
+     * Test of isPreview method, of class GraphRendererInterface.
      */
     @Test
     public void testIsPreview()
     {
         System.out.println("isPreview");
-        JRowsSelectorPanel instance = new JRowsSelectorPanel();
+        GraphRendererInterface instance = new GraphRendererInterfaceImpl();
         boolean expResult = false;
         boolean result = instance.isPreview();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    public class GraphRendererInterfaceImpl implements GraphRendererInterface
+    {
+
+        public JPanel getGraphDisplayPanel()
+        {
+            return null;
+        }
+
+        public boolean isPreview()
+        {
+            return false;
+        }
     }
 
 }

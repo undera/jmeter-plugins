@@ -384,4 +384,102 @@ public class GraphPanelChartTest
         result = instance.isModelContainsRow(rowExcluded);
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of setReSetColors method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetReSetColors()
+    {
+        System.out.println("setReSetColors");
+        boolean reSetColors = false;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setReSetColors(reSetColors);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setDisplayPrecision method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetDisplayPrecision()
+    {
+        System.out.println("setDisplayPrecision");
+        boolean displayPrecision = false;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setDisplayPrecision(displayPrecision);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setxAxisLabel method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetxAxisLabel()
+    {
+        System.out.println("setxAxisLabel");
+        String xAxisLabel = "";
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setxAxisLabel(xAxisLabel);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setyAxisLabel method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetyAxisLabel()
+    {
+        System.out.println("setyAxisLabel");
+        String yAxisLabel = "";
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setyAxisLabel(yAxisLabel);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPrecisionLabel method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetPrecisionLabel()
+    {
+        System.out.println("setPrecisionLabel");
+        int precision = 0;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setPrecisionLabel(precision);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setIsPreview method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetIsPreview()
+    {
+        System.out.println("setIsPreview");
+        boolean isPreview = false;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setIsPreview(isPreview);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setExpendRows method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetExpendRows()
+    {
+        System.out.println("setExpendRows");
+        boolean expendRows = false;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setExpendRows(expendRows);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

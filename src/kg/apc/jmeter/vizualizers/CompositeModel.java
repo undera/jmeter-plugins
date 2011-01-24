@@ -12,11 +12,18 @@ public class CompositeModel {
 
     private ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>> models = null;
     private Iterator emptyIterator = null;
+    private CompositeNotifierInterface notifier = null;
 
     public CompositeModel()
     {
         models = new ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>>();
         emptyIterator = new ConcurrentSkipListMap<String, AbstractGraphRow>().values().iterator();
+    }
+
+    //needed to refresh tree if row model changed
+    public void setNotifier(CompositeNotifierInterface notifier)
+    {
+        this.notifier = notifier;
     }
 
     public void clear()
@@ -43,11 +50,13 @@ public class CompositeModel {
             rows = getRowsMap(vizualizerName);
         }
         rows.put(row.getLabel(), row);
+        notifier.refresh();
     }
 
     public void clearRows(String vizualizerName)
     {
         models.remove(vizualizerName);
+        notifier.refresh();
     }
 
     public boolean containsVisualizer(String vizualizerName)

@@ -19,7 +19,7 @@ import kg.apc.jmeter.charting.AbstractGraphRow;
  *
  * @author Stephane Hoblingre
  */
-public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInterface
+public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInterface, CompositeNotifierInterface
 {
     private CompositeModel compositeModel;
 
@@ -151,11 +151,11 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         //root2.removeAllChildren();
         //model1.nodeStructureChanged(root1);
         //model2.nodeStructureChanged(root2);
-        updateTree();
+        //updateTree();
         gui.updateGui();
     }
 
-    public void updateTree()
+    private void updateTree()
     {
         //get previous selection
         TreePath selection = jTreeGraph1.getSelectionPath();
@@ -552,5 +552,11 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
     public boolean isPreview()
     {
         return true;
+    }
+
+    @Override
+    public void refresh()
+    {
+        updateTree();
     }
 }

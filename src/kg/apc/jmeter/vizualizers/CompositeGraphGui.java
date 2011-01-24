@@ -7,16 +7,12 @@ import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 public class CompositeGraphGui extends AbstractGraphPanelVisualizer
 {
-
-    private static final Logger log = LoggingManager.getLoggerForClass();
-    private long lastUpdate = 0;
     private JCompositeRowsSelectorPanel compositeRowsSelectorPanel;
     public CompositeModel compositeModel;
+    private long lastUpdate = 0;
 
     public CompositeGraphGui()
     {
@@ -24,6 +20,7 @@ public class CompositeGraphGui extends AbstractGraphPanelVisualizer
         ImageIcon rowsIcon = new ImageIcon(CompositeGraphGui.class.getResource("checks.png"));
         graphPanel.remove(1);
         compositeRowsSelectorPanel = new JCompositeRowsSelectorPanel(compositeModel, this);
+        compositeModel.setNotifier((CompositeNotifierInterface)compositeRowsSelectorPanel);
         graphPanel.insertTab("Graphs", rowsIcon, compositeRowsSelectorPanel, "Select graphs/rows to display", 1);
 
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
@@ -57,14 +54,7 @@ public class CompositeGraphGui extends AbstractGraphPanelVisualizer
         return "Composite Graph";
     }
 
-    @Override
-    public void clearData()
-    {
-        super.clearData();
-        compositeRowsSelectorPanel.clearData();
-    }
-
-    @Override
+   @Override
    public TestElement createTestElement()
    {
         ResultCollector modelNew = getModel();
@@ -124,7 +114,6 @@ public class CompositeGraphGui extends AbstractGraphPanelVisualizer
 
         if (time > lastUpdate + 1000)
         {
-            compositeRowsSelectorPanel.updateTree();
             lastUpdate = time;
             updateGui();
         }

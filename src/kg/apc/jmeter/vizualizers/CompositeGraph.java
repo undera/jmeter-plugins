@@ -82,10 +82,8 @@ public class CompositeGraph extends AbstractGraphPanelVisualizer
 
         if (time > lastUpdate + 1000)
         {
-            compositeRowsSelectorPanel.updateTree();
             lastUpdate = time;
             updateGui();
         }
-
     }
 }

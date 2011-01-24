@@ -9,7 +9,7 @@ import org.apache.jmeter.samplers.SampleResult;
 public class TotalTransactionsPerSecondGui
         extends AbstractGraphPanelVisualizer
 {
-    private static String obsoleteMsg = "This chart is obsolete. Please replace it with the standard \"Transactions per Seconds\" one.";
+    private static String obsoleteMsg = "This chart is obsolete. Please replace it with \"Transactions per Seconds\", and select \"Aggregated display\" in the settings panel.";
 
     /**
      *

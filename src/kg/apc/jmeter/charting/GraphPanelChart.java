@@ -156,12 +156,32 @@ public class GraphPanelChart
         {
             label = xAxisLabel;
         } else {
+            long granularity;
             if(maxPoints <= 0)
             {
-                label = xAxisLabel + " (granularity: " + precisionLabel + " ms)";
+                granularity = precisionLabel;
+                
             } else {
-                label = xAxisLabel + " (granularity: " + precisionLabel*factorInUse + " ms)";
+                granularity = precisionLabel*factorInUse;
             }
+           
+            long min = granularity/60000;
+            long sec = (granularity%60000)/1000;
+            long ms  = (granularity%60000)%1000;
+
+            label = xAxisLabel + " (granularity:";
+
+            if(min>0) label += " " + min + " min";
+            if(sec>0 || (min>0 && ms>0)) {
+                if(min > 0) label += ",";
+                label += " " + sec + " sec";
+            }
+            if(ms>0) {
+                if(sec>0 || min>0) label += ",";
+                label += " " + ms + " ms";
+            }
+
+            label += ")";           
         }
         return label;
     }

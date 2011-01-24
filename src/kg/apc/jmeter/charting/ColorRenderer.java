@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.charting;
 
 /*
  * ColorRenderer.java (compiles with releases 1.2, 1.3, and 1.4) is used by

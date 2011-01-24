@@ -2,6 +2,7 @@
 // fixme: perhaps we should replace model via setModel and use ONE model...
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.charting.ColorsDispatcher;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;

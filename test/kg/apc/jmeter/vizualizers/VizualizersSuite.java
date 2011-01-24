@@ -5,6 +5,10 @@
 
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.charting.DateTimeRendererTest;
+import kg.apc.jmeter.charting.ColorsDispatcherTest;
+import kg.apc.jmeter.charting.ColorRendererTest;
+import kg.apc.jmeter.charting.ChartRowsTableTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,7 +21,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({LatenciesOverTimeGuiTest.class, DateTimeRendererTest.class, HitsPerSecondGuiTest.class, ResponseTimesPercentilesGuiTest.class, ThreadsStateOverTimeGuiTest.class, JRowsSelectorPanelTest.class, ColorRendererTest.class, ThroughputVsThreadsGuiTest.class, ResponseTimesOverTimeGuiTest.class, AbstractOverTimeVisualizerTest.class, JSettingsPanelTest.class, TimesVsThreadsGuiTest.class, CompositeNotifierInterfaceTest.class, ThroughputOverTimeGuiTest.class, TransactionsPerSecondGuiTest.class, BytesThroughputOverTimeGuiTest.class, CompositeGraphGuiTest.class, CompositeModelTest.class, HeaderClickCheckAllListenerTest.class, GraphPanelTest.class, SettingsInterfaceTest.class, AbstractGraphPanelVisualizerTest.class, TotalTransactionsPerSecondGuiTest.class, JCompositeRowsSelectorPanelTest.class, GraphRendererInterfaceTest.class, ColorsDispatcherTest.class, ResponseTimesDistributionGuiTest.class, CompositeResultCollectorTest.class, ChartRowsTableTest.class, HeaderAsTextRendererTest.class})
+@Suite.SuiteClasses({LatenciesOverTimeGuiTest.class, HitsPerSecondGuiTest.class, ResponseTimesPercentilesGuiTest.class, ThreadsStateOverTimeGuiTest.class, JRowsSelectorPanelTest.class, ThroughputVsThreadsGuiTest.class, ResponseTimesOverTimeGuiTest.class, AbstractOverTimeVisualizerTest.class, JSettingsPanelTest.class, TimesVsThreadsGuiTest.class, CompositeNotifierInterfaceTest.class, ThroughputOverTimeGuiTest.class, TransactionsPerSecondGuiTest.class, BytesThroughputOverTimeGuiTest.class, CompositeGraphGuiTest.class, CompositeModelTest.class, HeaderClickCheckAllListenerTest.class, GraphPanelTest.class, SettingsInterfaceTest.class, AbstractGraphPanelVisualizerTest.class, TotalTransactionsPerSecondGuiTest.class, JCompositeRowsSelectorPanelTest.class, GraphRendererInterfaceTest.class, ResponseTimesDistributionGuiTest.class, CompositeResultCollectorTest.class, kg.apc.jmeter.vizualizers.ChartRowsTableTest.class, HeaderAsTextRendererTest.class})
 public class VizualizersSuite {
 
    @BeforeClass

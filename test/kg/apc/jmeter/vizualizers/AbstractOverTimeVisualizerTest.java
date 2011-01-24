@@ -1,12 +1,12 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -20,6 +20,7 @@ public class AbstractOverTimeVisualizerTest {
     @BeforeClass
     public static void setUpClass() throws Exception
     {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
@@ -42,11 +43,11 @@ public class AbstractOverTimeVisualizerTest {
     public void testSetUseRelativeTime()
     {
         System.out.println("setUseRelativeTime");
-        boolean selected = false;
+        boolean selected = true;
         AbstractOverTimeVisualizer instance = new AbstractOverTimeVisualizerImpl();
         instance.setUseRelativeTime(selected);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("and add");
+        instance.add(new SampleResult());
     }
 
     /**
@@ -56,11 +57,9 @@ public class AbstractOverTimeVisualizerTest {
     public void testAdd()
     {
         System.out.println("add");
-        SampleResult sample = null;
+        SampleResult sample = new SampleResult();
         AbstractOverTimeVisualizer instance = new AbstractOverTimeVisualizerImpl();
         instance.add(sample);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     public class AbstractOverTimeVisualizerImpl extends AbstractOverTimeVisualizer
@@ -69,13 +68,19 @@ public class AbstractOverTimeVisualizerTest {
         @Override
         protected JSettingsPanel getSettingsPanel()
         {
-            return null;
+            return new JSettingsPanel(this, isStats, isStats, isStats, isStats, isStats);
         }
 
         public String getLabelResource()
         {
-            return "test";
+            return "";
         }
-    }
+
+        @Override
+        public String getStaticLabel()
+        {
+            return "TEST";
+        }
+   }
 
 }

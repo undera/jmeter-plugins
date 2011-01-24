@@ -1,5 +1,6 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.charting;
 
+import kg.apc.jmeter.charting.DateTimeRenderer;
 import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;

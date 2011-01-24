@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.charting.DateTimeRenderer;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**
@@ -8,7 +9,7 @@ import org.apache.jmeter.samplers.SampleResult;
  */
 abstract class AbstractOverTimeVisualizer extends AbstractGraphPanelVisualizer {
     private boolean useRelativeTime;
-    private boolean isRelativeTimeSet;
+    private long relativeStartTime=0;
 
     public AbstractOverTimeVisualizer()
     {
@@ -25,10 +26,12 @@ abstract class AbstractOverTimeVisualizer extends AbstractGraphPanelVisualizer {
 
     public void add(SampleResult sample)
     {
-        if (useRelativeTime && !isRelativeTimeSet)
+        if (relativeStartTime==0)
         {
-            graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss", sample.getStartTime()));
-            isRelativeTimeSet=true;
+            relativeStartTime=sample.getStartTime();
+
+            if (useRelativeTime)
+                graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss", relativeStartTime));
         }
     }
 }

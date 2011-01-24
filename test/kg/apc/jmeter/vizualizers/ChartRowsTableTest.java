@@ -1,6 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.charting.GraphRowOverallAverages;
+import javax.swing.table.TableCellRenderer;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,86 +11,73 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author apc
+ * @author undera
  */
-public class ChartRowsTableTest
-{
-   /**
-    *
-    */
-   public ChartRowsTableTest()
-   {
-   }
+public class ChartRowsTableTest {
 
-   /**
-    *
-    * @throws Exception
-    */
-   @BeforeClass
-   public static void setUpClass()
-        throws Exception
-   {
-   }
+    public ChartRowsTableTest() {
+    }
 
-   /**
-    *
-    * @throws Exception
-    */
-   @AfterClass
-   public static void tearDownClass()
-        throws Exception
-   {
-   }
+    @BeforeClass
+    public static void setUpClass() throws Exception
+    {
+    }
 
-   /**
-    *
-    */
-   @Before
-   public void setUp()
-   {
-   }
+    @AfterClass
+    public static void tearDownClass() throws Exception
+    {
+    }
 
-   /**
-    *
-    */
-   @After
-   public void tearDown()
-   {
-   }
+    @Before
+    public void setUp() {
+    }
 
-   /**
-    * Test of addRow method, of class ChartRowsTable.
-    */
-   @Test
-   public void testAddRow()
-   {
-      System.out.println("addRow");
-      AbstractGraphRow row = new GraphRowOverallAverages();
-      ChartRowsTable instance = new ChartRowsTable(null);
-      instance.addRow(row);
-   }
+    @After
+    public void tearDown() {
+    }
 
-   /**
-    * Test of getCellRenderer method, of class ChartRowsTable.
-    */
-   @Test
-   public void testGetCellRenderer()
-   {
-      System.out.println("getCellRenderer");
-      ChartRowsTable instance = new ChartRowsTable(null);
-      assertTrue(instance.getCellRenderer(0, 1) instanceof ColorRenderer);
-      assertTrue(instance.getCellRenderer(1, 1) instanceof ColorRenderer);
-      assertFalse(instance.getCellRenderer(1, 0) instanceof ColorRenderer);
-   }
+    /**
+     * Test of addRow method, of class ChartRowsTable.
+     */
+    @Test
+    public void testAddRow()
+    {
+        System.out.println("addRow");
+        AbstractGraphRow row = null;
+        ChartRowsTable instance = null;
+        instance.addRow(row);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 
-   /**
-    * Test of clear method, of class ChartRowsTable.
-    */
-   @Test
-   public void testClear()
-   {
-      System.out.println("clear");
-      ChartRowsTable instance = new ChartRowsTable(null);
-      instance.clear();
-   }
+    /**
+     * Test of getCellRenderer method, of class ChartRowsTable.
+     */
+    @Test
+    public void testGetCellRenderer()
+    {
+        System.out.println("getCellRenderer");
+        int row = 0;
+        int column = 0;
+        ChartRowsTable instance = null;
+        TableCellRenderer expResult = null;
+        TableCellRenderer result = instance.getCellRenderer(row, column);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of clear method, of class ChartRowsTable.
+     */
+    @Test
+    public void testClear()
+    {
+        System.out.println("clear");
+        ChartRowsTable instance = null;
+        instance.clear();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

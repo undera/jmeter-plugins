@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.charting.DateTimeRenderer;
 import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.ImageIcon;

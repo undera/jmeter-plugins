@@ -1,5 +1,6 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.charting;
 
+import kg.apc.jmeter.charting.ColorRenderer;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JTable;

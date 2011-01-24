@@ -1,4 +1,4 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.charting;
 
 import java.awt.Color;
 import java.util.Random;

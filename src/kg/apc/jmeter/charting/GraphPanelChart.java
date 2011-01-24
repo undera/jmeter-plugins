@@ -38,7 +38,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import kg.apc.jmeter.vizualizers.ColorsDispatcher;
 import org.apache.jmeter.util.JMeterUtils;
 
 import org.apache.jorphan.gui.NumberRenderer;

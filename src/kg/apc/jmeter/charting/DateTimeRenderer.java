@@ -1,8 +1,10 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.charting;
 
 import java.text.SimpleDateFormat;
 
 import org.apache.jorphan.gui.NumberRenderer;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  *
@@ -14,6 +16,7 @@ public class DateTimeRenderer
     /**
      *
      */
+   private static final Logger log = LoggingManager.getLoggerForClass();
     protected final SimpleDateFormat dateFormatter;
     private long relativeStartTime = 0;
     private static final String EMPTY = "";
@@ -25,6 +28,7 @@ public class DateTimeRenderer
     {
         super();
         dateFormatter = (SimpleDateFormat) SimpleDateFormat.getInstance();
+        log.info("Simple inst");
     }
 
     /**
@@ -35,6 +39,7 @@ public class DateTimeRenderer
     {
         super();
         dateFormatter = new SimpleDateFormat(format);
+        log.info("Format inst "+format);
     }
 
     /**
@@ -46,6 +51,7 @@ public class DateTimeRenderer
     {
         this(format);
         relativeStartTime = aRelativeStartTime;
+        log.info("Relative inst "+format+" "+aRelativeStartTime);
     }
 
     /**
@@ -59,6 +65,7 @@ public class DateTimeRenderer
             setText(EMPTY);
         else
         {
+        log.info(value.toString());
             long val = (Long) value;
             setText(dateFormatter.format(val - relativeStartTime));
         }

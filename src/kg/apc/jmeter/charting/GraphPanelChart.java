@@ -211,7 +211,7 @@ public class GraphPanelChart
    private static boolean neverDrawFinalZeroingLines = false;
    private static boolean optimizeYAxis = true;
    private static boolean neverDrawCurrentX = false;
-   private static boolean useRelativeTime = true;
+   private static boolean useRelativeTime = false;
    private static String csvSeparator = null;
 
    //some of these preference can be overidden by the preference tab:

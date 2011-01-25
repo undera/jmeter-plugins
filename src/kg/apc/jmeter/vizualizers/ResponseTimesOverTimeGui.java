@@ -63,6 +63,6 @@ public class ResponseTimesOverTimeGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, true, true, false, true, true, false, false, true);
+        return new JSettingsPanel(this, true, true, false, true, true, false, false, true, true);
     }
 }

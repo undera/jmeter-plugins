@@ -60,6 +60,6 @@ public class BytesThroughputOverTimeGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, true, true, false, true, true, false);
+        return new JSettingsPanel(this, true, true, false, true, true, false, false, false, true);
     }
 }

@@ -40,7 +40,7 @@ public class CompositeGraphGui extends AbstractGraphPanelVisualizer
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, false, true, false, true, true, false, false, false);
+        return new JSettingsPanel(this, false, true, false, true, true, false, false, false, true);
     }
 
     @Override

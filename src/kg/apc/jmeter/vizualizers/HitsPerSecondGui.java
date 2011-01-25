@@ -58,6 +58,6 @@ public class HitsPerSecondGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, true, true, false, true, true);
+        return new JSettingsPanel(this, true, true, false, true, true,false, false, false, true);
     }
 }

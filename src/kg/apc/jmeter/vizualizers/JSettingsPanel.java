@@ -23,11 +23,12 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showLimitPointOption,
             boolean showBarChartXAxisLimit,
             boolean showHideNonRepValues,
-            boolean showAggregateOption)
+            boolean showAggregateOption,
+            boolean showRelativeTimeOption)
     {
         initComponents();
         this.parent = parent;
-        postInitComponents(showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption);
+        postInitComponents(showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption, showRelativeTimeOption);
     }
 
     public JSettingsPanel(SettingsInterface parent,
@@ -37,7 +38,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showFinalZeroingLinesOption,
             boolean showLimitPointOption)
     {
-        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, false, false, false);
+        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, false, false, false, false);
     }
 
     public JSettingsPanel(SettingsInterface parent,
@@ -48,7 +49,20 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showLimitPointOption,
             boolean showBarChartXAxisLimit)
     {
-        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, false, false);
+        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, false, false, false);
+    }
+
+    public JSettingsPanel(SettingsInterface parent,
+            boolean showTimelineOption,
+            boolean showGradientOption,
+            boolean showCurrentXOption,
+            boolean showFinalZeroingLinesOption,
+            boolean showLimitPointOption,
+            boolean showBarChartXAxisLimit,
+            boolean showHideNonRepValues,
+            boolean showAggregateOption)
+    {
+        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption, false);
     }
 
     private void postInitComponents(boolean showTimelineOption,
@@ -58,15 +72,18 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showLimitPointOption,
             boolean showBarChartXAxisLimit,
             boolean showHideNonRepValues,
-            boolean showAggregateOption)
+            boolean showAggregateOption,
+            boolean showRelativeTimeOption)
     {
         boolean showGraphOptionPanel = showTimelineOption || showAggregateOption;
-        jPanelTimeLineContainer.setVisible(showGraphOptionPanel);
+        jPanelTimeLineContainer.setVisible(showGraphOptionPanel || showRelativeTimeOption || showAggregateOption);
 
         jLabelTimeline1.setVisible(showTimelineOption);
         jLabelTimeline2.setVisible(showTimelineOption);
         jComboBoxGranulation.setVisible(showTimelineOption);
         jLabelInfoGrpValues.setVisible(showTimelineOption);
+
+        jCheckBoxRelativeTime.setVisible(showRelativeTimeOption);
 
         jRadioButtonGraphAggregated.setVisible(showAggregateOption);
         jRadioButtonGraphDetailed.setVisible(showAggregateOption);

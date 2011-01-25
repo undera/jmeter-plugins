@@ -102,6 +102,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         //init default values from global config
         jCheckBoxPaintGradient.setSelected(parent.getGraphPanelChart().isSettingsDrawGradient());
         jCheckBoxDrawCurrentX.setSelected(parent.getGraphPanelChart().isSettingsDrawCurrentX());
+        jCheckBoxRelativeTime.setSelected(parent.getGraphPanelChart().isUseRelativeTime());
         if (showFinalZeroingLinesOption)
         {
             jCheckBoxDrawFinalZeroingLines.setSelected(GraphPanelChart.isGlobalDrawFinalZeroingLines());

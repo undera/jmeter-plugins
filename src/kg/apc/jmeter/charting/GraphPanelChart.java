@@ -116,7 +116,7 @@ public class GraphPanelChart
    private boolean preventXAxisOverScaling = false;
 
    private boolean reSetColors = false;
-   private boolean useRelativeTime=false;
+   
 
     public void setReSetColors(boolean reSetColors)
     {
@@ -211,6 +211,7 @@ public class GraphPanelChart
    private static boolean neverDrawFinalZeroingLines = false;
    private static boolean optimizeYAxis = true;
    private static boolean neverDrawCurrentX = false;
+   private static boolean useRelativeTime = true;
    private static String csvSeparator = null;
 
    //some of these preference can be overidden by the preference tab:
@@ -218,6 +219,7 @@ public class GraphPanelChart
    private boolean settingsDrawFinalZeroingLines;
    private boolean settingsDrawCurrentX;
    private int settingsHideNonRepValLimit = -1;
+   private boolean settingsUseRelativeTime = false;
 
 
 
@@ -257,6 +259,11 @@ public class GraphPanelChart
          {
              GraphPanelChart.csvSeparator = ";";
          }
+      }
+      String cfgUseRelativeTime = JMeterUtils.getProperty("jmeterPlugin.useRelativeTime");
+      if (cfgUseRelativeTime != null)
+      {
+         GraphPanelChart.useRelativeTime = "true".equalsIgnoreCase(cfgUseRelativeTime);
       }
    }
 
@@ -1254,7 +1261,7 @@ public class GraphPanelChart
 
     public void setUseRelativeTime(boolean selected)
     {
-        useRelativeTime=selected;
+        settingsUseRelativeTime=selected;
     }
 
     public boolean isUseRelativeTime()

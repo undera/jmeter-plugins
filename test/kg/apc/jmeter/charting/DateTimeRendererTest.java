@@ -94,7 +94,10 @@ public class DateTimeRendererTest
    @Test
    public void testConstructor2()
    {
-      assertNotNull(new DateTimeRenderer(HHMMSS));
+        DateTimeRenderer instance = new DateTimeRenderer(HHMMSS);
+        //instance.setValue(Double.valueOf(0.1d));
+
+        assertNotNull(instance.getText());
    }
 
    @Test

@@ -58,20 +58,23 @@ public class DateTimeRenderer
         log.info("Relative inst "+format+" "+aRelativeStartTime);
     }
 
+    @Override
+    public void setValue(Object value)
+    {
+        if (value==null)
+            setText(EMPTY);
+        else
+            setLongValue((Long) value);
+    }
+
     /**
      * Sets value to render
      * @param value
      */
-    @Override
-    public void setValue(Object value)
+    private void setLongValue(Long value)
     {
-        if (!(value instanceof Long))
-            setText(EMPTY);
-        else
-        {
-            log.info(relativeStartTime+" "+value.toString()+" "+dateFormatter.format((Long)value - relativeStartTime));
-            long val = (Long) value;
-            setText(dateFormatter.format(val - relativeStartTime));
-        }
+            String res=dateFormatter.format(value - relativeStartTime);
+            log.info(relativeStartTime+" "+value.toString()+" "+res);
+            setText(res);
     }
 }

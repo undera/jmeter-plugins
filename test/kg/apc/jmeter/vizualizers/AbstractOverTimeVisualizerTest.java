@@ -37,20 +37,6 @@ public class AbstractOverTimeVisualizerTest {
     }
 
     /**
-     * Test of setUseRelativeTime method, of class AbstractOverTimeVisualizer.
-     */
-    @Test
-    public void testSetUseRelativeTime()
-    {
-        System.out.println("setUseRelativeTime");
-        boolean selected = true;
-        AbstractOverTimeVisualizer instance = new AbstractOverTimeVisualizerImpl();
-        instance.setUseRelativeTime(selected);
-        System.out.println("and add");
-        instance.add(new SampleResult());
-    }
-
-    /**
      * Test of add method, of class AbstractOverTimeVisualizer.
      */
     @Test

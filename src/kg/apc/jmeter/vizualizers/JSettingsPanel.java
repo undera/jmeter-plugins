@@ -608,11 +608,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
     private void jCheckBoxRelativeTimeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxRelativeTimeActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxRelativeTimeActionPerformed
-        if (parent instanceof AbstractOverTimeVisualizer)
-        {
-            AbstractOverTimeVisualizer overTime=(AbstractOverTimeVisualizer) parent;
-            overTime.setUseRelativeTime(jCheckBoxRelativeTime.isSelected());
-        }
+        parent.getGraphPanelChart().setUseRelativeTime(jCheckBoxRelativeTime.isSelected());
     }//GEN-LAST:event_jCheckBoxRelativeTimeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -116,6 +116,7 @@ public class GraphPanelChart
    private boolean preventXAxisOverScaling = false;
 
    private boolean reSetColors = false;
+   private boolean useRelativeTime=false;
 
     public void setReSetColors(boolean reSetColors)
     {
@@ -851,9 +852,11 @@ public class GraphPanelChart
          g.setColor(Color.black);
 
          // draw label
-         xAxisLabelRenderer.setValue(minXVal + n * (double) (maxXVal - minXVal) / gridLinesCount);
+         long labelValue=(long) (minXVal + n * (double) (maxXVal - minXVal) / gridLinesCount);
+         xAxisLabelRenderer.setValue(labelValue);
 
          valueLabel = xAxisLabelRenderer.getText();
+         log.info("Text: "+valueLabel);
          labelXPos = gridLineX - fm.stringWidth(valueLabel) / 2;
          g.drawString(valueLabel, labelXPos, xAxisRect.y + fm.getAscent() + spacing);
       }
@@ -1248,6 +1251,16 @@ public class GraphPanelChart
           popup.add(itemExport);
       }
    }
+
+    public void setUseRelativeTime(boolean selected)
+    {
+        useRelativeTime=selected;
+    }
+
+    public boolean isUseRelativeTime()
+    {
+        return useRelativeTime;
+    }
 
    private class CopyAction
          implements ActionListener

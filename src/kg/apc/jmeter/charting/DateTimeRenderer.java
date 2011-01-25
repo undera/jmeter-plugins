@@ -1,6 +1,7 @@
 package kg.apc.jmeter.charting;
 
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.logging.LoggingManager;
@@ -50,6 +51,9 @@ public class DateTimeRenderer
     public DateTimeRenderer(String format, long aRelativeStartTime)
     {
         this(format);
+        TimeZone utc=TimeZone.getTimeZone("UTC");
+        dateFormatter.setTimeZone(utc);
+
         relativeStartTime = aRelativeStartTime;
         log.info("Relative inst "+format+" "+aRelativeStartTime);
     }
@@ -65,7 +69,7 @@ public class DateTimeRenderer
             setText(EMPTY);
         else
         {
-        log.info(value.toString());
+            log.info(relativeStartTime+" "+value.toString()+" "+dateFormatter.format((Long)value - relativeStartTime));
             long val = (Long) value;
             setText(dateFormatter.format(val - relativeStartTime));
         }

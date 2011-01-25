@@ -14,30 +14,30 @@ import org.junit.runners.Suite;
 
 /**
  *
- * @author undera
+ * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.utils.TestPlanMigratorTest.class})
+@Suite.SuiteClasses({})
 public class UtilsSuite {
 
-    @BeforeClass
-    public static void setUpClass() throws Exception
-    {
-    }
+   @BeforeClass
+   public static void setUpClass() throws Exception
+   {
+   }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception
-    {
-    }
+   @AfterClass
+   public static void tearDownClass() throws Exception
+   {
+   }
 
-    @Before
-    public void setUp() throws Exception
-    {
-    }
+   @Before
+   public void setUp() throws Exception
+   {
+   }
 
-    @After
-    public void tearDown() throws Exception
-    {
-    }
+   @After
+   public void tearDown() throws Exception
+   {
+   }
 
 }

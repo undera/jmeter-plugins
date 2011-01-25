@@ -69,4 +69,13 @@ public class AbstractOverTimeVisualizerTest {
         }
    }
 
+   @Test
+   public void testClearData()
+   {
+      System.out.println("clearData");
+      AbstractOverTimeVisualizer instance = new AbstractOverTimeVisualizerImpl();
+      instance.clearData();
+      fail("The test case is a prototype.");
+   }
+
 }

@@ -481,4 +481,25 @@ public class GraphPanelChartTest
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+
+   @Test
+   public void testSetUseRelativeTime()
+   {
+      System.out.println("setUseRelativeTime");
+      boolean selected = false;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setUseRelativeTime(selected);
+      fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testIsUseRelativeTime()
+   {
+      System.out.println("isUseRelativeTime");
+      GraphPanelChart instance = new GraphPanelChart();
+      boolean expResult = false;
+      boolean result = instance.isUseRelativeTime();
+      assertEquals(expResult, result);
+      fail("The test case is a prototype.");
+   }
 }

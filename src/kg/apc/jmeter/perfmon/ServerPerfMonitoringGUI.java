@@ -178,7 +178,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, false, true, false, false, true);
+        return new JSettingsPanel(this, false, true, false, false, true, false, false, false, true);
     }
 
        private class LoadAction

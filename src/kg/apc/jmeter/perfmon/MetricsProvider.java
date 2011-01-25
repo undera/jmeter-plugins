@@ -178,6 +178,8 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         } else
         {
             log.error(msg);
+            //add a console message for imediate user notice
+            System.out.println("Perfmon plugin error: " + msg);
         }
     }
 

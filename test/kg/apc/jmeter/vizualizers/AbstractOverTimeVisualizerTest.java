@@ -7,7 +7,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -76,7 +75,6 @@ public class AbstractOverTimeVisualizerTest {
       System.out.println("clearData");
       AbstractOverTimeVisualizer instance = new AbstractOverTimeVisualizerImpl();
       instance.clearData();
-      fail("The test case is a prototype.");
    }
 
 }

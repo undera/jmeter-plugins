@@ -7,6 +7,7 @@ package kg.apc.jmeter.vizualizers;
 
 import java.util.Iterator;
 import javax.swing.JPanel;
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -26,6 +27,7 @@ public class JCompositeRowsSelectorPanelTest {
     @BeforeClass
     public static void setUpClass() throws Exception
     {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
@@ -48,10 +50,8 @@ public class JCompositeRowsSelectorPanelTest {
     public void testUpdateGraph()
     {
         System.out.println("updateGraph");
-        JCompositeRowsSelectorPanel instance = null;
+        JCompositeRowsSelectorPanel instance = new JCompositeRowsSelectorPanel(new CompositeModel(), new CompositeGraphGui());
         instance.updateGraph();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -61,12 +61,9 @@ public class JCompositeRowsSelectorPanelTest {
     public void testGetItems()
     {
         System.out.println("getItems");
-        JCompositeRowsSelectorPanel instance = null;
-        Iterator expResult = null;
+        JCompositeRowsSelectorPanel instance = new JCompositeRowsSelectorPanel(new CompositeModel(), new CompositeGraphGui());
         Iterator result = instance.getItems();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -76,10 +73,8 @@ public class JCompositeRowsSelectorPanelTest {
     public void testClearData()
     {
         System.out.println("clearData");
-        JCompositeRowsSelectorPanel instance = null;
+        JCompositeRowsSelectorPanel instance = new JCompositeRowsSelectorPanel(new CompositeModel(), new CompositeGraphGui());
         instance.clearData();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -89,12 +84,9 @@ public class JCompositeRowsSelectorPanelTest {
     public void testGetGraphDisplayPanel()
     {
         System.out.println("getGraphDisplayPanel");
-        JCompositeRowsSelectorPanel instance = null;
-        JPanel expResult = null;
+        JCompositeRowsSelectorPanel instance = new JCompositeRowsSelectorPanel(new CompositeModel(), new CompositeGraphGui());
         JPanel result = instance.getGraphDisplayPanel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -104,12 +96,10 @@ public class JCompositeRowsSelectorPanelTest {
     public void testIsPreview()
     {
         System.out.println("isPreview");
-        JCompositeRowsSelectorPanel instance = null;
-        boolean expResult = false;
+        JCompositeRowsSelectorPanel instance = new JCompositeRowsSelectorPanel(new CompositeModel(), new CompositeGraphGui());
+        boolean expResult = true;
         boolean result = instance.isPreview();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -119,10 +109,8 @@ public class JCompositeRowsSelectorPanelTest {
     public void testRefresh()
     {
         System.out.println("refresh");
-        JCompositeRowsSelectorPanel instance = null;
+        JCompositeRowsSelectorPanel instance = new JCompositeRowsSelectorPanel(new CompositeModel(), new CompositeGraphGui());
         instance.refresh();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

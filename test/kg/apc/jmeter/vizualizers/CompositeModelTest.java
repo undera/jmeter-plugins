@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.vizualizers;
 
 import java.util.Iterator;
 import kg.apc.jmeter.charting.AbstractGraphRow;
+import kg.apc.jmeter.charting.GraphRowAverages;
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,13 +16,16 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class CompositeModelTest {
+    private CompositeNotifierInterface notifier;
 
     public CompositeModelTest() {
+        notifier = new JCompositeRowsSelectorPanel(new CompositeModel(), new CompositeGraphGui());
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception
     {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
@@ -48,11 +48,8 @@ public class CompositeModelTest {
     public void testSetNotifier()
     {
         System.out.println("setNotifier");
-        CompositeNotifierInterface notifier = null;
         CompositeModel instance = new CompositeModel();
         instance.setNotifier(notifier);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -64,8 +61,6 @@ public class CompositeModelTest {
         System.out.println("clear");
         CompositeModel instance = new CompositeModel();
         instance.clear();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -75,12 +70,11 @@ public class CompositeModelTest {
     public void testAddRow()
     {
         System.out.println("addRow");
-        String vizualizerName = "";
-        AbstractGraphRow row = null;
+        String vizualizerName = "Test";
+        AbstractGraphRow row = new GraphRowAverages();
         CompositeModel instance = new CompositeModel();
+        instance.setNotifier(notifier);
         instance.addRow(vizualizerName, row);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -92,9 +86,8 @@ public class CompositeModelTest {
         System.out.println("clearRows");
         String vizualizerName = "";
         CompositeModel instance = new CompositeModel();
+        instance.setNotifier(notifier);
         instance.clearRows(vizualizerName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -109,8 +102,6 @@ public class CompositeModelTest {
         boolean expResult = false;
         boolean result = instance.containsVisualizer(vizualizerName);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -121,11 +112,8 @@ public class CompositeModelTest {
     {
         System.out.println("getVizualizerNamesIterator");
         CompositeModel instance = new CompositeModel();
-        Iterator expResult = null;
         Iterator result = instance.getVizualizerNamesIterator();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -137,11 +125,8 @@ public class CompositeModelTest {
         System.out.println("getRowsIterator");
         String vizualizerName = "";
         CompositeModel instance = new CompositeModel();
-        Iterator expResult = null;
         Iterator result = instance.getRowsIterator(vizualizerName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -154,11 +139,13 @@ public class CompositeModelTest {
         String testName = "";
         String rowName = "";
         CompositeModel instance = new CompositeModel();
-        AbstractGraphRow expResult = null;
+        instance.setNotifier(notifier);
         AbstractGraphRow result = instance.getRow(testName, rowName);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNull(result);
+
+        instance.addRow(rowName, new GraphRowAverages());
+        result = instance.getRow(testName, rowName);
+        assertNotNull(result);
     }
 
 }

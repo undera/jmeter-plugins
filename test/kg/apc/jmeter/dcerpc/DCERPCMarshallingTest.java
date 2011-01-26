@@ -1,5 +1,7 @@
 package kg.apc.jmeter.dcerpc;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.junit.After;

@@ -1,6 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
 import javax.swing.JPanel;
+import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
@@ -89,12 +90,10 @@ public class JSettingsPanelTest {
     public void testGetGraphDisplayPanel()
     {
         System.out.println("getGraphDisplayPanel");
-        JSettingsPanel instance = null;
-        JPanel expResult = null;
+        SettingsInterfaceImpl parent = new SettingsInterfaceImpl();
+        JSettingsPanel instance = new JSettingsPanel(parent, true, true, true, true, true);
         JPanel result = instance.getGraphDisplayPanel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -104,12 +103,33 @@ public class JSettingsPanelTest {
     public void testIsPreview()
     {
         System.out.println("isPreview");
-        JSettingsPanel instance = null;
-        boolean expResult = false;
+        JSettingsPanel instance = new JSettingsPanel(new SettingsInterfaceImpl(), true, true, true, true, true);
+        boolean expResult = true;
         boolean result = instance.isPreview();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
+
+    private class SettingsInterfaceImpl implements SettingsInterface{
+
+        public int getGranulation()
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public void setGranulation(int granulation)
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public GraphPanelChart getGraphPanelChart()
+        {
+            return new GraphPanelChart();
+        }
+
+        public void switchModel(boolean aggregate)
+        {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }
 }

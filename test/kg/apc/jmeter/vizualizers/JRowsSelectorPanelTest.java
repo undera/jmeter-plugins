@@ -80,11 +80,9 @@ public class JRowsSelectorPanelTest {
     {
         System.out.println("isPreview");
         JRowsSelectorPanel instance = new JRowsSelectorPanel();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.isPreview();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

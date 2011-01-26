@@ -211,7 +211,7 @@ public class GraphPanelChart
    private static boolean neverDrawFinalZeroingLines = false;
    private static boolean optimizeYAxis = true;
    private static boolean neverDrawCurrentX = false;
-   private static boolean useRelativeTime = false;
+   private static boolean useRelativeTime = true;
    private static String csvSeparator = null;
 
    //some of these preference can be overidden by the preference tab:
@@ -298,7 +298,9 @@ public class GraphPanelChart
 
       settingsDrawCurrentX = !neverDrawCurrentX;
       settingsDrawGradient = drawGradient;
+      //default to false, will be initialized in each vizualiser
       settingsDrawFinalZeroingLines = false;
+      settingsUseRelativeTime = useRelativeTime;
    }
 
    public GraphPanelChart()

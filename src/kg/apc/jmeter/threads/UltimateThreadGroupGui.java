@@ -6,9 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,7 +19,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellEditor;
-import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
@@ -225,6 +222,8 @@ public class UltimateThreadGroupGui
       hashTree.add(new LoopController());
       JMeterThread thread = new JMeterThread(hashTree, null, null);
 
+      chart.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss", System.currentTimeMillis()));
+
       // users in
       int numThreads = tg.getNumThreads();
       for (int n = 0; n < numThreads; n++)
@@ -264,7 +263,6 @@ public class UltimateThreadGroupGui
       model = new ConcurrentHashMap<String, AbstractGraphRow>();
       chart.setRows(model);
       chart.setDrawFinalZeroingLines(true);
-      chart.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
       chart.setxAxisLabel("Elapsed time");
       chart.setyAxisLabel("Number of active threads");
       return chart;

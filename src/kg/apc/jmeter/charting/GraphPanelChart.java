@@ -863,7 +863,6 @@ public class GraphPanelChart
          xAxisLabelRenderer.setValue(labelValue);
 
          valueLabel = xAxisLabelRenderer.getText();
-         log.info("Text: "+valueLabel);
          labelXPos = gridLineX - fm.stringWidth(valueLabel) / 2;
          g.drawString(valueLabel, labelXPos, xAxisRect.y + fm.getAscent() + spacing);
       }
@@ -1266,7 +1265,7 @@ public class GraphPanelChart
 
     public boolean isUseRelativeTime()
     {
-        return useRelativeTime;
+        return settingsUseRelativeTime;
     }
 
    private class CopyAction

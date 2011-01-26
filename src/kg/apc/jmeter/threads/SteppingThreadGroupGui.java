@@ -3,8 +3,6 @@ package kg.apc.jmeter.threads;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -14,11 +12,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.DateTimeRenderer;
-import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowSumValues;
 import kg.apc.jmeter.charting.ColorsDispatcher;
+import kg.apc.jmeter.charting.DateTimeRenderer;
 
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
@@ -37,6 +34,7 @@ import org.apache.log.Logger;
 public class SteppingThreadGroupGui
       extends AbstractThreadGroupGui
 {
+    private static final String HHMMSS = "HH:mm:ss";
    /**
     *
     */
@@ -74,7 +72,6 @@ public class SteppingThreadGroupGui
       model = new ConcurrentHashMap<String, AbstractGraphRow>();
       chart.setRows(model);
       chart.setDrawFinalZeroingLines(true);
-      chart.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
 
       chart.setxAxisLabel("Elapsed time");
       chart.setyAxisLabel("Number of active threads");
@@ -218,6 +215,7 @@ public class SteppingThreadGroupGui
       JMeterThread thread = new JMeterThread(hashTree, null, null);
 
       // test start
+      chart.setxAxisLabelRenderer(new DateTimeRenderer(HHMMSS, System.currentTimeMillis()));
       row.add(System.currentTimeMillis(), 0);
       row.add(System.currentTimeMillis() + tg.getThreadGroupDelay(), 0);
 

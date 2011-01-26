@@ -247,7 +247,7 @@ public class AbstractGraphPanelVisualizerTest
     public void testGetNewRow_10args()
     {
         System.out.println("getNewRow");
-        ConcurrentSkipListMap<String, AbstractGraphRow> model = null;
+        ConcurrentSkipListMap<String, AbstractGraphRow> model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         int rowType = 0;
         String label = "";
         int markerSize = 0;
@@ -258,11 +258,8 @@ public class AbstractGraphPanelVisualizerTest
         Color color = null;
         boolean canCompose = false;
         AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-        AbstractGraphRow expResult = null;
         AbstractGraphRow result = instance.getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, color, canCompose);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -272,7 +269,7 @@ public class AbstractGraphPanelVisualizerTest
     public void testGetNewRow_9args()
     {
         System.out.println("getNewRow");
-        ConcurrentSkipListMap<String, AbstractGraphRow> model = null;
+        ConcurrentSkipListMap<String, AbstractGraphRow> model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         int rowType = 0;
         String label = "";
         int markerSize = 0;
@@ -282,10 +279,7 @@ public class AbstractGraphPanelVisualizerTest
         boolean showInLegend = false;
         boolean canCompose = false;
         AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-        AbstractGraphRow expResult = null;
         AbstractGraphRow result = instance.getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, canCompose);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 }

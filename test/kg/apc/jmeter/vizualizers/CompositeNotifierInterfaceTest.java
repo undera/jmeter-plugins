@@ -48,8 +48,6 @@ public class CompositeNotifierInterfaceTest {
         System.out.println("refresh");
         CompositeNotifierInterface instance = new CompositeNotifierInterfaceImpl();
         instance.refresh();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     public class CompositeNotifierInterfaceImpl implements CompositeNotifierInterface

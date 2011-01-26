@@ -259,7 +259,7 @@ public class AbstractPerformanceMonitoringGuiTest
    {
       System.out.println("getGranulation");
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      int expResult = 500;
+      int expResult = 1000;
       int result = instance.getGranulation();
       assertEquals(expResult, result);
    }

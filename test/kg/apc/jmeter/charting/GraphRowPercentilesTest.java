@@ -45,7 +45,7 @@ public class GraphRowPercentilesTest {
         long respTime = 1234L;
         GraphRowPercentiles instance = new GraphRowPercentiles();
         instance.addResponseTime(respTime);
-        int expResult = 100;
+        int expResult = 101;
         int result = instance.size();
         assertEquals(expResult, result);
     }
@@ -74,7 +74,7 @@ public class GraphRowPercentilesTest {
         int result = instance.size();
         assertEquals(expResult, result);
         instance.addResponseTime(1234L);
-        expResult=100;
+        expResult=101;
         result = instance.size();
         assertEquals(expResult, result);
     }

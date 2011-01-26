@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
@@ -26,6 +22,7 @@ public class CompositeGraphGuiTest {
     @BeforeClass
     public static void setUpClass() throws Exception
     {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
@@ -49,11 +46,8 @@ public class CompositeGraphGuiTest {
     {
         System.out.println("getSettingsPanel");
         CompositeGraphGui instance = new CompositeGraphGui();
-        JSettingsPanel expResult = null;
         JSettingsPanel result = instance.getSettingsPanel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -64,11 +58,8 @@ public class CompositeGraphGuiTest {
     {
         System.out.println("getLabelResource");
         CompositeGraphGui instance = new CompositeGraphGui();
-        String expResult = "";
         String result = instance.getLabelResource();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result.length()>0);
     }
 
     /**
@@ -79,11 +70,8 @@ public class CompositeGraphGuiTest {
     {
         System.out.println("getStaticLabel");
         CompositeGraphGui instance = new CompositeGraphGui();
-        String expResult = "";
         String result = instance.getStaticLabel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result.length()>0);
     }
 
     /**
@@ -94,11 +82,8 @@ public class CompositeGraphGuiTest {
     {
         System.out.println("createTestElement");
         CompositeGraphGui instance = new CompositeGraphGui();
-        TestElement expResult = null;
         TestElement result = instance.createTestElement();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result instanceof CompositeResultCollector);
     }
 
     /**
@@ -108,11 +93,9 @@ public class CompositeGraphGuiTest {
     public void testConfigure()
     {
         System.out.println("configure");
-        TestElement te = null;
+        TestElement te = new CompositeResultCollector();
         CompositeGraphGui instance = new CompositeGraphGui();
         instance.configure(te);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -124,8 +107,6 @@ public class CompositeGraphGuiTest {
         System.out.println("updateGui");
         CompositeGraphGui instance = new CompositeGraphGui();
         instance.updateGui();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -135,11 +116,9 @@ public class CompositeGraphGuiTest {
     public void testAdd()
     {
         System.out.println("add");
-        SampleResult sr = null;
+        SampleResult sr = new SampleResult();
         CompositeGraphGui instance = new CompositeGraphGui();
         instance.add(sr);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

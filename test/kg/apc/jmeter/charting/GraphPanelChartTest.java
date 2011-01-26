@@ -394,8 +394,6 @@ public class GraphPanelChartTest
         boolean reSetColors = false;
         GraphPanelChart instance = new GraphPanelChart();
         instance.setReSetColors(reSetColors);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -408,8 +406,6 @@ public class GraphPanelChartTest
         boolean displayPrecision = false;
         GraphPanelChart instance = new GraphPanelChart();
         instance.setDisplayPrecision(displayPrecision);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -422,8 +418,6 @@ public class GraphPanelChartTest
         String xAxisLabel = "";
         GraphPanelChart instance = new GraphPanelChart();
         instance.setxAxisLabel(xAxisLabel);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -436,8 +430,6 @@ public class GraphPanelChartTest
         String yAxisLabel = "";
         GraphPanelChart instance = new GraphPanelChart();
         instance.setyAxisLabel(yAxisLabel);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -450,8 +442,6 @@ public class GraphPanelChartTest
         int precision = 0;
         GraphPanelChart instance = new GraphPanelChart();
         instance.setPrecisionLabel(precision);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -464,8 +454,6 @@ public class GraphPanelChartTest
         boolean isPreview = false;
         GraphPanelChart instance = new GraphPanelChart();
         instance.setIsPreview(isPreview);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -478,8 +466,6 @@ public class GraphPanelChartTest
         boolean expendRows = false;
         GraphPanelChart instance = new GraphPanelChart();
         instance.setExpendRows(expendRows);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
    @Test
@@ -489,7 +475,6 @@ public class GraphPanelChartTest
       boolean selected = false;
       GraphPanelChart instance = new GraphPanelChart();
       instance.setUseRelativeTime(selected);
-      fail("The test case is a prototype.");
    }
 
    @Test
@@ -500,6 +485,5 @@ public class GraphPanelChartTest
       boolean expResult = false;
       boolean result = instance.isUseRelativeTime();
       assertEquals(expResult, result);
-      fail("The test case is a prototype.");
    }
 }

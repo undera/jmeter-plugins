@@ -1,7 +1,10 @@
 package kg.apc.jmeter.dcerpc;
 
-import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.junit.After;
@@ -351,11 +354,15 @@ public class DCERPCMarshallingTest
     *
     */
    @Test
-   public void testBaToHexString_russian()
+   public void testBaToHexString_russian() throws URISyntaxException, FileNotFoundException, IOException
    {
       System.out.println("baToHexString русский");
       byte[] ba = BinaryTCPClientImpl.hexStringToByteArray("00f2e5f1f2f202");
-      String expResult = "00{тестт}02";
+        
+      InputStream is = this.getClass().getResourceAsStream("/kg/apc/jmeter/dcerpc/russian.txt");
+        String cbuf = TestJMeterUtils.convertStreamToString(is);
+
+      String expResult = "00{"+cbuf+"}02";
       String result = null;
       try
       {

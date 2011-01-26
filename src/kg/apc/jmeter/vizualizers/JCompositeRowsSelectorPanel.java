@@ -147,15 +147,10 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
 
     public void clearData()
     {
-        //root1.removeAllChildren();
-        //root2.removeAllChildren();
-        //model1.nodeStructureChanged(root1);
-        //model2.nodeStructureChanged(root2);
-        //updateTree();
         gui.updateGui();
     }
 
-    private void updateTree()
+    private synchronized void updateTree()
     {
         //get previous selection
         TreePath selection = jTreeGraph1.getSelectionPath();
@@ -163,7 +158,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         //rows will not disapear, only chart if cleared...
         boolean chartsUpdated = false;
 
-        //first, chaeck if we need to remove some visualizers
+        //first, check if we need to remove some visualizers
         for(int i=0; i<root1.getChildCount(); i++)
         {
             TreeNode node = root1.getChildAt(i);
@@ -183,21 +178,17 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
             {
                 chartsUpdated = true;
                 DefaultMutableTreeNode node1 = new DefaultMutableTreeNode(chartName, true);
-                //DefaultMutableTreeNode node2 = new DefaultMutableTreeNode(chartName, true);
                 root1.add(node1);
-                //root2.add(node2);
                 Iterator<AbstractGraphRow> rowsIter = compositeModel.getRowsIterator(chartName);
                 while (rowsIter.hasNext())
                 {
                     AbstractGraphRow row = rowsIter.next();
                     node1.add(new DefaultMutableTreeNode(row.getLabel(), false));
-                    //node2.add(new DefaultMutableTreeNode(row.getLabel(), false));
                 }
             } else
             {
                 Iterator<AbstractGraphRow> rowsIter = compositeModel.getRowsIterator(chartName);
                 DefaultMutableTreeNode chartNode1 = getNode(chartName, root1);
-                //DefaultMutableTreeNode chartNode2 = getNode(chartName, root2);
 
                 while (rowsIter.hasNext())
                 {
@@ -206,7 +197,6 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
                     {
                         chartsUpdated = true;
                         chartNode1.add(new DefaultMutableTreeNode(rowName, false));
-                        //chartNode2.add(new DefaultMutableTreeNode(rowName, false));
                     }
                 }
             }

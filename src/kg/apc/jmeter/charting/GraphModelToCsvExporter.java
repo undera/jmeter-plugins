@@ -48,6 +48,7 @@ public class GraphModelToCsvExporter
     {
         this(rows, destFile, csvSeparator, "Elapsed time");
         this.decimalSeparator = decimalSeparator;
+        dateFormatter = new SimpleDateFormat("HH:mm:ss" + decimalSeparator + "S");
     }
 
     private String xValueFormatter(long xValue)

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -45,6 +46,7 @@ public class FilesTestTools {
             {
                 if (!line1.equals(line2))
                 {
+                    assertEquals(line1, line2);
                     return false;
                 }
                 line1 = reader1.readLine();
@@ -70,6 +72,7 @@ public class FilesTestTools {
             {
                 if (!line.trim().equals(""))
                 {
+                    System.err.println("Empty line");
                     return false;
                 }
                 line = reader.readLine();
@@ -83,6 +86,7 @@ public class FilesTestTools {
             return true;
         } catch (IOException ex)
         {
+             System.err.println("IOException:"+ex.getMessage());
             return false;
         }
     }

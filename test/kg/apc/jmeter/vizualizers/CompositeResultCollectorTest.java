@@ -5,6 +5,7 @@
 
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,6 +25,7 @@ public class CompositeResultCollectorTest {
     @BeforeClass
     public static void setUpClass() throws Exception
     {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
@@ -46,11 +48,9 @@ public class CompositeResultCollectorTest {
     public void testSetCompositeModel()
     {
         System.out.println("setCompositeModel");
-        CompositeModel model = null;
+        CompositeModel model = new CompositeModel();
         CompositeResultCollector instance = new CompositeResultCollector();
         instance.setCompositeModel(model);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -64,8 +64,6 @@ public class CompositeResultCollectorTest {
         CompositeModel expResult = null;
         CompositeModel result = instance.getCompositeModel();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

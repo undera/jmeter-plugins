@@ -14,113 +14,115 @@ import static org.junit.Assert.*;
  */
 public class DateTimeRendererTest
 {
+
     private static final String HHMMSS = "HH:mm:ss";
-   /**
-    *
-    */
-   public DateTimeRendererTest()
-   {
-   }
 
-   /**
-    *
-    * @throws Exception
-    */
-   @BeforeClass
-   public static void setUpClass()
-        throws Exception
-   {
-   }
+    /**
+     *
+     */
+    public DateTimeRendererTest()
+    {
+    }
 
-   /**
-    *
-    * @throws Exception
-    */
-   @AfterClass
-   public static void tearDownClass()
-        throws Exception
-   {
-   }
+    /**
+     *
+     * @throws Exception
+     */
+    @BeforeClass
+    public static void setUpClass()
+            throws Exception
+    {
+    }
 
-   /**
-    *
-    */
-   @Before
-   public void setUp()
-   {
-   }
+    /**
+     *
+     * @throws Exception
+     */
+    @AfterClass
+    public static void tearDownClass()
+            throws Exception
+    {
+    }
 
-   /**
-    *
-    */
-   @After
-   public void tearDown()
-   {
-   }
+    /**
+     *
+     */
+    @Before
+    public void setUp()
+    {
+    }
 
-   /**
-    * Test of setValue method, of class DateTimeRenderer.
-    */
-   @Test
-   public void testSetValue()
-   {
-      System.out.println("setValue");
-      DateTimeRenderer instance = new DateTimeRenderer(HHMMSS);
+    /**
+     *
+     */
+    @After
+    public void tearDown()
+    {
+    }
 
-      Calendar test = Calendar.getInstance();
-
-      test.set(Calendar.HOUR_OF_DAY, 3);
-      test.set(Calendar.MINUTE, 16);
-      test.set(Calendar.SECOND, 40);
-      test.set(Calendar.MILLISECOND, 0);
-      
-      instance.setValue(test.getTimeInMillis());
-      String text = instance.getText();
-      assertEquals("03:16:40", text);
-   }
-
-
-   /**
-    *
-    */
-   @Test
-   public void testConstructor_null()
-   {
-      DateTimeRenderer instance=new DateTimeRenderer();
-      instance.setValue(null);
-      assertEquals("", instance.getText());
-   }
-
-   @Test
-   public void testConstructor2()
-   {
+    /**
+     * Test of setValue method, of class DateTimeRenderer.
+     */
+    @Test
+    public void testSetValue()
+    {
+        System.out.println("setValue");
         DateTimeRenderer instance = new DateTimeRenderer(HHMMSS);
-        //instance.setValue(Double.valueOf(0.1d));
 
+        Calendar test = Calendar.getInstance();
+
+        test.set(Calendar.HOUR_OF_DAY, 3);
+        test.set(Calendar.MINUTE, 16);
+        test.set(Calendar.SECOND, 40);
+        test.set(Calendar.MILLISECOND, 0);
+
+        instance.setValue(test.getTimeInMillis());
+        String text = instance.getText();
+        assertEquals("03:16:40", text);
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testConstructor_null()
+    {
+        DateTimeRenderer instance = new DateTimeRenderer();
+        instance.setValue(null);
+        assertEquals("", instance.getText());
+    }
+
+    @Test
+    public void testConstructor2()
+    {
+        DateTimeRenderer instance = new DateTimeRenderer(HHMMSS);
+        instance.setValue(System.currentTimeMillis());
         assertNotNull(instance.getText());
-   }
+    }
 
-   @Test
-   public void testConstructor3()
-   {
-      System.out.println("relTime");
-      Calendar test = Calendar.getInstance();
+    @Test
+    public void testConstructor3()
+    {
+        System.out.println("relTime");
+        long start = System.currentTimeMillis();
+        DateTimeRenderer instance = new DateTimeRenderer(HHMMSS, start);
 
-      test.set(Calendar.HOUR_OF_DAY, 3);
-      test.set(Calendar.MINUTE, 16);
-      test.set(Calendar.SECOND, 40);
-      test.set(Calendar.MILLISECOND, 0);
-      Long end=test.getTimeInMillis();
+        instance.setValue(start + 600000);
+        String text = instance.getText();
+        System.out.println(text);
+        assertEquals("00:10:00", text);
+    }
 
-      test.set(Calendar.MINUTE, 6);
-      test.set(Calendar.SECOND, 40);
-      Long start=test.getTimeInMillis();
+    @Test
+    public void testConstructor_rel_below_zero()
+    {
+        System.out.println("relTime2");
+        long start = System.currentTimeMillis();
+        DateTimeRenderer instance = new DateTimeRenderer(HHMMSS, start);
 
-      DateTimeRenderer instance=new DateTimeRenderer( HHMMSS, start);
-
-      instance.setValue(end);
-      String text = instance.getText();
-      System.out.println(text);
-      assertEquals("10:00", text.substring(3));
-   }
+        instance.setValue(start-1);
+        String text = instance.getText();
+        System.out.println(text);
+        assertEquals("00:00:00", text);
+    }
 }

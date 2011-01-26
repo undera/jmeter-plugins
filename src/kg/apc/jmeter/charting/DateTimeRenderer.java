@@ -4,8 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 import org.apache.jorphan.gui.NumberRenderer;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 /**
  *
@@ -14,10 +12,11 @@ import org.apache.log.Logger;
 public class DateTimeRenderer
         extends NumberRenderer
 {
+
     /**
      *
      */
-   private static final Logger log = LoggingManager.getLoggerForClass();
+   // private static final Logger log = LoggingManager.getLoggerForClass();
     protected final SimpleDateFormat dateFormatter;
     private long relativeStartTime = 0;
     private static final String EMPTY = "";
@@ -29,7 +28,7 @@ public class DateTimeRenderer
     {
         super();
         dateFormatter = (SimpleDateFormat) SimpleDateFormat.getInstance();
-        log.info("Simple inst");
+        //log.info("Simple inst");
     }
 
     /**
@@ -40,7 +39,7 @@ public class DateTimeRenderer
     {
         super();
         dateFormatter = new SimpleDateFormat(format);
-        log.info("Format inst "+format);
+       // log.info("Format inst " + format);
     }
 
     /**
@@ -51,17 +50,16 @@ public class DateTimeRenderer
     public DateTimeRenderer(String format, long aRelativeStartTime)
     {
         this(format);
-        TimeZone utc=TimeZone.getTimeZone("UTC");
+        TimeZone utc = TimeZone.getTimeZone("UTC");
         dateFormatter.setTimeZone(utc);
 
         relativeStartTime = aRelativeStartTime;
-        log.info("Relative inst "+format+" "+aRelativeStartTime);
     }
 
     @Override
     public void setValue(Object value)
     {
-        if (value==null)
+        if (value == null)
             setText(EMPTY);
         else
             setLongValue((Long) value);
@@ -73,8 +71,10 @@ public class DateTimeRenderer
      */
     private void setLongValue(Long value)
     {
-            String res=dateFormatter.format(value - relativeStartTime);
-            log.info(relativeStartTime+" "+value.toString()+" "+res);
-            setText(res);
+        long tick = value - relativeStartTime;
+        // 500 means half a second.
+        // We allow to have half a second error with first label
+        String res = dateFormatter.format(tick > 500 ? tick : 0);
+        setText(res);
     }
 }

@@ -113,4 +113,17 @@ public class JCompositeRowsSelectorPanelTest {
         instance.refresh();
     }
 
+    /**
+     * Test of addItemsToComposite method, of class JCompositeRowsSelectorPanel.
+     */
+    @Test
+    public void testAddItemsToComposite()
+    {
+        System.out.println("addItemsToComposite");
+        String testplan = "testplan";
+        String row = "row";
+        JCompositeRowsSelectorPanel instance = new JCompositeRowsSelectorPanel(new CompositeModel(), new CompositeGraphGui());;
+        instance.addItemsToComposite(testplan, row);
+    }
+
 }

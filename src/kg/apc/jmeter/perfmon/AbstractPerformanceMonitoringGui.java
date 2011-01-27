@@ -39,6 +39,7 @@ import kg.apc.jmeter.vizualizers.GraphPanel;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import kg.apc.jmeter.vizualizers.SettingsInterface;
 import org.apache.jmeter.gui.UnsharedComponent;
+import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.visualizers.GraphListener;
 import org.apache.jmeter.visualizers.Sample;
 import org.apache.jorphan.logging.LoggingManager;
@@ -58,6 +59,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     JTable grid;
     JButton addRowButton;
     JButton deleteRowButton;
+    private long relativeStartTime=0;
     public static final String[] columnIdentifiers = new String[]
     {
         "Host / IP", "Port"
@@ -300,6 +302,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         graphPanel.getGraphObject().clearErrorMessage();
         updateGui();
         repaint();
+        relativeStartTime = 0;
     }
 
     @Override
@@ -407,8 +410,22 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     {
     }
 
+    public void addPerfRecord(String serverName, double value, long time)
+    {
+        if (relativeStartTime==0)
+        {
+            //relativeStartTime = JMeterUtils.getPropDefault("TESTSTART.MS", sample.getStartTime());
+            relativeStartTime = JMeterContextService.getTestStartTime();
+            if(relativeStartTime == 0) relativeStartTime = time;
+
+            if (graphPanel.getGraphObject().isUseRelativeTime())
+                graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, relativeStartTime));
+            graphPanel.getGraphObject().setTestStartTime(relativeStartTime);
+            graphPanel.getGraphObject().setForcedMinX(relativeStartTime);
+        }
+    }
+
     public abstract void addPerfRecord(String serverName, double value);
-    public abstract void addPerfRecord(String serverName, double value, long time);
     public abstract void setErrorMessage(String msg);
     public abstract void clearErrorMessage();
     public abstract void setChartType(int monitorType);

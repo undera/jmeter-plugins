@@ -120,6 +120,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
     @Override
    public void addPerfRecord(String serverName, double value, long time)
    {
+      super.addPerfRecord(serverName, value, time);
       AbstractGraphRow row = (AbstractGraphRow) model.get(serverName);
       if (row == null)
       {

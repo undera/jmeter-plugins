@@ -222,7 +222,12 @@ public class UltimateThreadGroupGui
       hashTree.add(new LoopController());
       JMeterThread thread = new JMeterThread(hashTree, null, null);
 
-      chart.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss", System.currentTimeMillis()));
+      long now = System.currentTimeMillis();
+
+      chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now));
+      chart.setForcedMinX(now);
+
+      row.add(now, 0);
 
       // users in
       int numThreads = tg.getNumThreads();

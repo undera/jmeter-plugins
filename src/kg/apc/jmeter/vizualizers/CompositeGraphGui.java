@@ -8,15 +8,21 @@ import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.testelement.property.NullProperty;
+import org.apache.jmeter.testelement.property.PropertyIterator;
 
-public class CompositeGraphGui extends AbstractGraphPanelVisualizer
+public class CompositeGraphGui extends AbstractOverTimeVisualizer
 {
     private JCompositeRowsSelectorPanel compositeRowsSelectorPanel;
     public CompositeModel compositeModel;
     private long lastUpdate = 0;
+    private static String CONFIG_PROPERTY = "COMPOSITE_CFG";
 
     public CompositeGraphGui()
     {
+        graphPanel.getGraphObject().setDisplayPrecision(false);
         compositeModel = new CompositeModel();
         ImageIcon rowsIcon = new ImageIcon(CompositeGraphGui.class.getResource("checks.png"));
         graphPanel.remove(1);
@@ -74,6 +80,63 @@ public class CompositeGraphGui extends AbstractGraphPanelVisualizer
         //log.info("Configure");
         super.configure(te);
         ((CompositeResultCollector)te).setCompositeModel(compositeModel);
+
+        JMeterProperty data = te.getProperty(CONFIG_PROPERTY);
+
+        if (!(data instanceof NullProperty))
+        {
+            setConfig((CollectionProperty)data);
+        }
+    }
+
+    @Override
+    public void modifyTestElement(TestElement c)
+    {
+        super.modifyTestElement(c);
+        c.setProperty(getConfig());
+    }
+
+    private CollectionProperty getConfig()
+    {
+        CollectionProperty ret = new CollectionProperty();
+        CollectionProperty testplans = new CollectionProperty();
+        CollectionProperty rows = new CollectionProperty();
+
+        ret.setName(CONFIG_PROPERTY);
+        Iterator<String[]> iter = compositeRowsSelectorPanel.getItems();
+
+        while(iter.hasNext())
+        {
+            String[] item = iter.next();
+            testplans.addItem(item[0]);
+            rows.addItem(item[1]);
+        }
+
+        ret.addItem(testplans);
+        ret.addItem(rows);
+        return ret;
+    }
+
+    private void setConfig(CollectionProperty properties)
+    {
+        PropertyIterator iter = properties.iterator();
+
+        CollectionProperty testplans = (CollectionProperty) iter.next();
+        CollectionProperty rows = (CollectionProperty) iter.next();
+
+        if(rows.size() > 0)
+        {
+            PropertyIterator iterTestplans = testplans.iterator();
+            PropertyIterator iterRows = rows.iterator();
+
+            while (iterTestplans.hasNext() && iterRows.hasNext())
+            {
+                String testplan = iterTestplans.next().getStringValue();
+                String row = iterRows.next().getStringValue();
+                compositeRowsSelectorPanel.addItemsToComposite(testplan, row);
+            }
+            
+        }
     }
 
     @Override
@@ -111,6 +174,7 @@ public class CompositeGraphGui extends AbstractGraphPanelVisualizer
     @Override
     public void add(SampleResult sr)
     {
+        super.add(sr);
         long time = System.currentTimeMillis();
 
         if (time > lastUpdate + 1000)

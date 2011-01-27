@@ -34,7 +34,6 @@ import org.apache.log.Logger;
 public class SteppingThreadGroupGui
       extends AbstractThreadGroupGui
 {
-    private static final String HHMMSS = "HH:mm:ss";
    /**
     *
     */
@@ -215,7 +214,7 @@ public class SteppingThreadGroupGui
       JMeterThread thread = new JMeterThread(hashTree, null, null);
 
       // test start
-      chart.setxAxisLabelRenderer(new DateTimeRenderer(HHMMSS, System.currentTimeMillis()));
+      chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, System.currentTimeMillis()));
       row.add(System.currentTimeMillis(), 0);
       row.add(System.currentTimeMillis() + tg.getThreadGroupDelay(), 0);
 

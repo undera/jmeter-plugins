@@ -121,4 +121,16 @@ public class CompositeGraphGuiTest {
         instance.add(sr);
     }
 
+    /**
+     * Test of modifyTestElement method, of class CompositeGraphGui.
+     */
+    @Test
+    public void testModifyTestElement()
+    {
+        System.out.println("modifyTestElement");
+        TestElement te = new CompositeResultCollector();
+        CompositeGraphGui instance = new CompositeGraphGui();
+        instance.modifyTestElement(te);
+    }
+
 }

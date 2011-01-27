@@ -482,8 +482,21 @@ public class GraphPanelChartTest
    {
       System.out.println("isUseRelativeTime");
       GraphPanelChart instance = new GraphPanelChart();
-      boolean expResult = false;
+      //default value is true
+      boolean expResult = true;
       boolean result = instance.isUseRelativeTime();
       assertEquals(expResult, result);
    }
+
+    /**
+     * Test of setTestStartTime method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetTestStartTime()
+    {
+        System.out.println("setTestStartTime");
+        long time = System.currentTimeMillis();
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setTestStartTime(time);
+    }
 }

@@ -11,6 +11,7 @@ import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.testelement.property.StringProperty;
+import org.apache.jmeter.util.JMeterUtils;
 
 /**
  *
@@ -131,9 +132,15 @@ public class PerformanceMonitoringTestElement extends AbstractTestElement implem
         }
     }
 
+    //enable perfmon in distributed test
+    //-Jjppmfile must be setted for the slave who will collect the metrics
     @Override
     public void testStarted(String string)
     {
+        if(JMeterUtils.getProperty("jppmfile") != null)
+        {
+            testStarted();
+        }
     }
 
     @Override
@@ -145,10 +152,15 @@ public class PerformanceMonitoringTestElement extends AbstractTestElement implem
         }
     }
 
+    //enable perfmon in distributed test
+    //-Jjppmfile must be setted for the slave who will collect the metrics
     @Override
     public void testEnded(String string)
     {
-        //do nothing in no gui mode
+        if(JMeterUtils.getProperty("jppmfile") != null)
+        {
+            testEnded();
+        }
     }
 
     @Override

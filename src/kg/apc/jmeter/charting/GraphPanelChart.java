@@ -78,7 +78,7 @@ public class GraphPanelChart
    private NumberRenderer yAxisLabelRenderer;
    private NumberRenderer xAxisLabelRenderer;
    private boolean drawCurrentX = false;
-   private int forcedMinX = -1;
+   private long forcedMinX = -1;
    private int chartType = CHART_DEFAULT;
    // The stroke used to paint Graph's dashed lines
    private Stroke dashStroke = new BasicStroke(
@@ -265,6 +265,13 @@ public class GraphPanelChart
       {
          GraphPanelChart.useRelativeTime = "true".equalsIgnoreCase(cfgUseRelativeTime);
       }
+   }
+
+   //relative time
+   private long testStartTime = 0;
+   public void setTestStartTime(long time)
+   {
+       testStartTime = time;
    }
 
    //row zooming
@@ -1176,9 +1183,9 @@ public class GraphPanelChart
     *
     * @param i
     */
-   public void setForcedMinX(int i)
+   public void setForcedMinX(long minX)
    {
-      forcedMinX = i;
+      forcedMinX = minX;
    }
 
    //Paint the add the same color of the axis but with transparency
@@ -1262,8 +1269,15 @@ public class GraphPanelChart
 
     public void setUseRelativeTime(boolean selected)
     {
-        settingsUseRelativeTime=selected;
+        settingsUseRelativeTime = selected;
         // TODO: we can't notify listener from here about relative time setting, this method should be placed somewhere else
+        if(selected)
+        {
+            setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, testStartTime));
+        } else
+        {
+            setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS));
+        }
     }
 
     public boolean isUseRelativeTime()

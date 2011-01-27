@@ -20,6 +20,7 @@ public class DateTimeRenderer
     protected final SimpleDateFormat dateFormatter;
     private long relativeStartTime = 0;
     private static final String EMPTY = "";
+    public static final String HHMMSS = "HH:mm:ss";
 
     /**
      *
@@ -45,7 +46,7 @@ public class DateTimeRenderer
     /**
      * Creates new instance
      * @param format - date/time format
-     * @param isRelative - use reative to test start time or not
+     * @param aRelativeStartTime - test start time
      */
     public DateTimeRenderer(String format, long aRelativeStartTime)
     {

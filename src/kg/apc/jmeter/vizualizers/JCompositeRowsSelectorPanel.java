@@ -31,6 +31,9 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
     private Icon folderLinkIcon = new ImageIcon(JCompositeRowsSelectorPanel.class.getResource("folderLink.png"));
     private Icon leafIcon = new ImageIcon(JCompositeRowsSelectorPanel.class.getResource("treeLeaf.png"));
 
+    private static String tree1RootName = "Test Plan";
+    private static String tree2RootName = "Composite Graph";
+
     private CompositeGraphGui gui;
 
     /** Creates new form JRowsSelectorPanel */
@@ -39,9 +42,9 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         this.compositeModel = compositeModel;
         this.gui = gui;
         initComponents();
-        root1 = new DefaultMutableTreeNode("Test Plan", true);
+        root1 = new DefaultMutableTreeNode(tree1RootName, true);
         model1 = new DefaultTreeModel(root1);
-        root2 = new DefaultMutableTreeNode("Composite Graph", true);
+        root2 = new DefaultMutableTreeNode(tree2RootName, true);
         model2 = new DefaultTreeModel(root2);
         jTreeGraph1.setModel(model1);
         jTreeGraph2.setModel(model2);
@@ -373,6 +376,18 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
 
         add(jPanelMain, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    public void addItemsToComposite(String testplan, String row)
+    {
+        String[] path = new String[3];
+        path[0] = tree2RootName;
+        path[1] = testplan;
+        path[2] = row;
+
+        TreePath[] tp = new TreePath[1];
+        tp[0] = new TreePath(path);
+        addItemsToComposite(tp);
+    }
 
     private void addItemsToComposite(TreePath[] paths)
     {

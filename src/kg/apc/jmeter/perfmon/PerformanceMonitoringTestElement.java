@@ -114,7 +114,6 @@ public class PerformanceMonitoringTestElement extends AbstractTestElement implem
     @Override
     public void testStarted()
     {
-
         AgentConnector[] connectors = getConnectors();
         if (connectors != null)
         {
@@ -122,11 +121,11 @@ public class PerformanceMonitoringTestElement extends AbstractTestElement implem
             {
                 gui.setChartType(getType());
                 gui.clearErrorMessage();
-                agentMetricsGetter = new MetricsProvider(getType(), gui, getConnectors());
+                agentMetricsGetter = new MetricsProvider(getType(), gui, connectors);
                 agentMetricsGetter.testStarted();
             } else
             {
-                agentMetricsGetter = new MetricsProvider(getType(), getConnectors());
+                agentMetricsGetter = new MetricsProvider(getType(), connectors);
                 agentMetricsGetter.testStarted();
             }
         }
@@ -139,7 +138,12 @@ public class PerformanceMonitoringTestElement extends AbstractTestElement implem
     {
         if(JMeterUtils.getProperty("jppmfile") != null)
         {
-            testStarted();
+            AgentConnector[] connectors = getConnectors();
+            if (connectors != null)
+            {
+                agentMetricsGetter = new MetricsProvider(getType(), connectors);
+                agentMetricsGetter.testStarted();
+            }
         }
     }
 

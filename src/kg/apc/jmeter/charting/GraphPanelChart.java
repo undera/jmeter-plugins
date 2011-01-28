@@ -81,7 +81,7 @@ public class GraphPanelChart
    private long forcedMinX = -1;
    private int chartType = CHART_DEFAULT;
    // The stroke used to paint Graph's dashed lines
-   private Stroke dashStroke = new BasicStroke(
+   private final static Stroke dashStroke = new BasicStroke(
          1.0f, // Width
          BasicStroke.CAP_SQUARE, // End cap
          BasicStroke.JOIN_MITER, // Join style
@@ -90,21 +90,21 @@ public class GraphPanelChart
          {
             1.0f, 4.0f
          }, // Dash pattern
-         0.0f);                     			// Dash phase
+         0.0f); // Dash phase
    // The stroke to paint thick Graph rows
-   private Stroke thickStroke = new BasicStroke(
+   private final static Stroke thickStroke = new BasicStroke(
          AbstractGraphRow.LINE_THICKNESS_BIG,
          BasicStroke.CAP_BUTT,
          BasicStroke.JOIN_BEVEL);
    // Message display in graphs. Used for perfmon error messages
    private String errorMessage = null;
    // Chart's gradient background end color
-   private Color gradientColor = new Color(229, 236, 246);
+   private final static Color gradientColor = new Color(229, 236, 246);
    // Chart's Axis Color. For good results, use gradient color - (30, 30, 30)
-   private Color axisColor = new Color(199, 206, 216);
+   private final static Color axisColor = new Color(199, 206, 216);
    
    //the composite used to draw bars
-   AlphaComposite barComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+   private final static AlphaComposite barComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
 
    //save file path. We remember last folder used.
    private static String savePath = null;

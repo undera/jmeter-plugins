@@ -36,6 +36,7 @@ public class HitsPerSecondGui
         }
     }
 
+    @Override
     public String getLabelResource()
     {
         return this.getClass().getSimpleName();
@@ -44,7 +45,7 @@ public class HitsPerSecondGui
     @Override
     public String getStaticLabel()
     {
-        return "Hits Per Second";
+        return "Hits per Second";
     }
 
     @Override

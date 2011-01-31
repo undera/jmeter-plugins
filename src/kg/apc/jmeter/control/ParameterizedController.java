@@ -27,21 +27,18 @@ public class ParameterizedController
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
    private boolean processed = false;
-   private ValueReplacer replacer;
-
    /**
     *
     */
    public ParameterizedController()
    {
-      replacer = new ValueReplacer();
    }
 
    private void processVariables()
    {
       log.debug("Replacing values");
-      replacer = new ValueReplacer();
-
+      ValueReplacer replacer = new ValueReplacer();
+      
       final Arguments args1 = (Arguments) this.getUserDefinedVariablesAsProperty().getObjectValue();
       Arguments args=(Arguments) args1.clone();
 

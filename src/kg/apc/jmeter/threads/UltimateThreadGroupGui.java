@@ -345,6 +345,7 @@ public class UltimateThreadGroupGui
    @Override
    public void clearGui()
    {
+      super.clearGui();
       tableModel.clearData();
    }
 

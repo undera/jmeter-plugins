@@ -25,7 +25,7 @@ import org.apache.log.Logger;
 public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
 {
    private static final Logger log = LoggingManager.getLoggerForClass();
-   private static String loadPath = null;
+   private static String loadedFile = null;
    JMenuItem loadMenu = null;
 
    public ServerPerfMonitoringGUI()
@@ -188,14 +188,18 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
       @Override
       public void actionPerformed(final ActionEvent e)
       {
-         JFileChooser chooser = loadPath != null ? new JFileChooser(new File(loadPath)) : new JFileChooser(".");
+         JFileChooser chooser = loadedFile != null ? new JFileChooser(new File(loadedFile)) : new JFileChooser(".");
          chooser.setFileFilter(new FileNameExtensionFilter("PerfMon files", "jppm"));
+         if(loadedFile != null)
+         {
+             chooser.setSelectedFile(new File(loadedFile));
+         }
 
          int returnVal = chooser.showOpenDialog(ServerPerfMonitoringGUI.this);
          if (returnVal == JFileChooser.APPROVE_OPTION)
          {
             File file = chooser.getSelectedFile();
-            loadPath = file.getParent();
+            loadedFile = file.getAbsolutePath();
             MetricsProvider loader = new MetricsProvider(getSelectedTypeIndex(), ServerPerfMonitoringGUI.this, null);
             setChartType(getSelectedTypeIndex());
             loader.loadFile(file);

@@ -344,6 +344,17 @@ public abstract class AbstractGraphRow
      */
     public abstract AbstractGraphPanelChartElement getElement(long value);
 
+    /**
+     * Needed for aggregate average rows witch need to be summed.
+     * Must be overridden in child class if needed
+     * @param value the upper key to get the floor element
+     * @return the floor element, null if not exist
+     */
+    public AbstractGraphPanelChartElement getFloorElement(long value)
+    {
+        return null;
+    }
+
     public abstract int size();
 
     public static AbstractGraphRow instantiateNewRow(int rowType)

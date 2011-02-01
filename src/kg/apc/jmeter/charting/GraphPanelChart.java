@@ -971,10 +971,18 @@ public class GraphPanelChart
       Entry<Long, AbstractGraphPanelChartElement> element;
       int radius = row.getMarkerSize();
       int x, y;
-      int prevX = settingsDrawFinalZeroingLines ? chartRect.x : -1;
+      int prevX;
       int prevY = chartRect.y + chartRect.height;
       final double dxForDVal = (maxXVal <= minXVal) ? 0 : (double) chartRect.width / (maxXVal - minXVal);
       final double dyForDVal = (maxYVal <= minYVal) ? 0 : (double) chartRect.height / (maxYVal - minYVal);
+
+      if(settingsDrawFinalZeroingLines)
+      {
+          prevX = chartRect.x + (int) ((row.getMinX() - minXVal) * dxForDVal);
+      } else
+      {
+          prevX = -1;
+      }
 
       Stroke oldStroke = null;
 

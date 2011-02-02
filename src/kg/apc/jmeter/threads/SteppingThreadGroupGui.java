@@ -231,10 +231,12 @@ public class SteppingThreadGroupGui
       hashTree.add(new LoopController());
       JMeterThread thread = new JMeterThread(hashTree, null, null);
 
+      long now = System.currentTimeMillis();
+
       // test start
-      chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, System.currentTimeMillis()));
-      row.add(System.currentTimeMillis(), 0);
-      row.add(System.currentTimeMillis() + tg.getThreadGroupDelay(), 0);
+      chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now-1));
+      row.add(now, 0);
+      row.add(now + tg.getThreadGroupDelay(), 0);
 
       int numThreads = tg.getNumThreads();
 

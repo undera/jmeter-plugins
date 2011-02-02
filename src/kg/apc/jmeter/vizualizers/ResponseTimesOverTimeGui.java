@@ -56,7 +56,7 @@ public class ResponseTimesOverTimeGui
    {
         super.add(res);
       addThreadGroupRecord(res.getSampleLabel(),
-            res.getEndTime() - res.getEndTime() % getGranulation(), res.getTime());
+            normalizeTime(res.getEndTime()), res.getTime());
       updateGui(null);
    }
 

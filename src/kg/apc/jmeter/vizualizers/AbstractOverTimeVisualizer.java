@@ -42,4 +42,9 @@ abstract class AbstractOverTimeVisualizer extends AbstractGraphPanelVisualizer {
         super.clearData();
         relativeStartTime=0;
     }
+
+    protected long normalizeTime(long time)
+    {
+        return time - time%getGranulation();
+    }
 }

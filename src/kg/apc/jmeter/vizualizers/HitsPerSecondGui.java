@@ -52,7 +52,7 @@ public class HitsPerSecondGui
     public void add(SampleResult res)
     {
         super.add(res);
-        addHit("Server Hits per Second", res.getStartTime() - res.getStartTime() % getGranulation());
+        addHit("Server Hits per Second", normalizeTime(res.getStartTime()));
         updateGui(null);
     }
 

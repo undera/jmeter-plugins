@@ -81,12 +81,12 @@ public class TransactionsPerSecondGui
         //always add 0 failed transactions
         if (res.isSuccessful())
         {
-            addTransaction(false, res.getSampleLabel(), res.getEndTime() - res.getEndTime() % getGranulation(), 0);
-            addTransaction(true, res.getSampleLabel(), res.getEndTime() - res.getEndTime() % getGranulation(), 1);
+            addTransaction(false, res.getSampleLabel(), normalizeTime(res.getEndTime()), 0);
+            addTransaction(true, res.getSampleLabel(), normalizeTime(res.getEndTime()), 1);
 
         } else
         {
-            addTransaction(false, res.getSampleLabel(), res.getEndTime() - res.getEndTime() % getGranulation(), 1);
+            addTransaction(false, res.getSampleLabel(), normalizeTime(res.getEndTime()), 1);
         }
         updateGui(null);
     }

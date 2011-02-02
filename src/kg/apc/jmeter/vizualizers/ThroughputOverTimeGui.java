@@ -56,7 +56,7 @@ public class ThroughputOverTimeGui
         //change precision to double for accurate results and change calculation
         //to same as throughput vs thread
         double val = res.getTime() == 0 ? 0 : 1000.0d * res.getAllThreads() / res.getTime();
-        addThreadGroupRecord(res.getSampleLabel(), res.getEndTime() - res.getEndTime() % getGranulation(), val);
+        addThreadGroupRecord(res.getSampleLabel(), normalizeTime(res.getEndTime()), val);
         updateGui(null);
     }
 

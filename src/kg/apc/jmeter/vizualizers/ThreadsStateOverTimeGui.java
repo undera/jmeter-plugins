@@ -102,7 +102,7 @@ public class ThreadsStateOverTimeGui
         String threadName = res.getThreadName();
         threadName = threadName.lastIndexOf(" ") >= 0 ? threadName.substring(0, threadName.lastIndexOf(" ")) : threadName;
 
-        addThreadGroupRecord(threadName, res.getEndTime() - res.getEndTime() % getGranulation(), res.getGroupThreads());
+        addThreadGroupRecord(threadName, normalizeTime(res.getEndTime()), res.getGroupThreads());
         updateGui(null);
     }
 

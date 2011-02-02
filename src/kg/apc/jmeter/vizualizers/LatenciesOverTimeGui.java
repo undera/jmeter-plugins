@@ -55,7 +55,7 @@ public class LatenciesOverTimeGui
    {
         super.add(res);
       addThreadGroupRecord(res.getSampleLabel(),
-            res.getEndTime() - res.getEndTime() % getGranulation(), res.getLatency());
+            normalizeTime(res.getEndTime()), res.getLatency());
       updateGui(null);
    }
 

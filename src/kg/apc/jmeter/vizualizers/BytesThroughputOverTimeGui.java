@@ -53,7 +53,7 @@ public class BytesThroughputOverTimeGui
    public void add(SampleResult res)
    {
         super.add(res);
-        addBytes("Bytes Received per Second", res.getEndTime() - res.getEndTime() % getGranulation(), res.getBytes());
+        addBytes("Bytes Received per Second", normalizeTime(res.getEndTime()), res.getBytes());
         updateGui(null);
     }
 

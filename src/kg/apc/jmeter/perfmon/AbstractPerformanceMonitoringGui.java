@@ -425,6 +425,11 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         }
     }
 
+    protected long normalizeTime(long time)
+    {
+        return time - time%MetricsProvider.DELAY;
+    }
+
     public abstract void addPerfRecord(String serverName, double value);
     public abstract void setErrorMessage(String msg);
     public abstract void clearErrorMessage();

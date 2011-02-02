@@ -114,7 +114,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
    public void addPerfRecord(String serverName, double value)
    {
       long now = System.currentTimeMillis();
-      addPerfRecord(serverName, value, now - now % MetricsProvider.DELAY);
+      addPerfRecord(serverName, value, normalizeTime(now));
    }
 
     @Override

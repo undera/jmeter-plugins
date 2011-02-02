@@ -234,7 +234,7 @@ public class SteppingThreadGroupGui
       long now = System.currentTimeMillis();
 
       // test start
-      chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now-1));
+      chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now-1)); //-1 because row.add(thread.getStartTime() - 1, 0)
       row.add(now, 0);
       row.add(now + tg.getThreadGroupDelay(), 0);
 

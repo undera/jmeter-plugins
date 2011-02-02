@@ -93,7 +93,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
       AbstractGraphRow row = null;
       if (!model.containsKey(label))
       {
-         row = AbstractGraphRow.instantiateNewRow(AbstractGraphRow.ROW_EXACT_VALUES);
+         row = AbstractGraphRow.instantiateNewRow(AbstractGraphRow.ROW_SIMPLE);
          row.setLabel(label);
          row.setColor(colors.getNextColor());
          row.setDrawLine(true);

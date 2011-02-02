@@ -7,18 +7,18 @@ import java.util.concurrent.ConcurrentSkipListMap;
  *
  * @author apc
  */
-public class GraphRowAverages
+public class GraphRowSimple
         extends AbstractGraphRow
 {
-    private ConcurrentSkipListMap<Long, GraphPanelChartAverageElement> values;
+    private ConcurrentSkipListMap<Long, GraphPanelChartSimpleElement> values;
 
     /**
      *
      */
-    public GraphRowAverages()
+    public GraphRowSimple()
     {
         super();
-        values = new ConcurrentSkipListMap<Long, GraphPanelChartAverageElement>();
+        values = new ConcurrentSkipListMap<Long, GraphPanelChartSimpleElement>();
     }
 
     /**
@@ -29,15 +29,14 @@ public class GraphRowAverages
     @Override
     public void add(long xVal, double yVal)
     {
-        GraphPanelChartAverageElement el;
+        GraphPanelChartSimpleElement el;
         if (values.containsKey(xVal))
         {
             el = values.get(xVal);
             el.add(yVal);
-            yVal = el.getValue();
         } else
         {
-            el = new GraphPanelChartAverageElement(yVal);
+            el = new GraphPanelChartSimpleElement(yVal);
             values.put(xVal, el);
         }
 
@@ -64,19 +63,5 @@ public class GraphRowAverages
     public AbstractGraphPanelChartElement getElement(long value)
     {
         return values.get(value);
-    }
-
-    @Override
-    public AbstractGraphPanelChartElement getLowerElement(long value)
-    {
-        Long lower = values.navigableKeySet().lower(value);
-
-        if (lower != null)
-        {
-            return getElement(lower);
-        } else
-        {
-            return null;
-        }
     }
 }

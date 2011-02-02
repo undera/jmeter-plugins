@@ -40,6 +40,7 @@ public abstract class AbstractGraphRow
    public static final int ROW_PERCENTILES = 3;
    public static final int ROW_SUM_VALUES = 4;
    public static final int ROW_ROLLING_SUM_VALUES = 5;
+   public static final int ROW_SIMPLE = 6;
 
    protected boolean drawLine = false;
    private boolean drawValueLabel = false;
@@ -350,9 +351,9 @@ public abstract class AbstractGraphRow
      * @param value the upper key to get the floor element
      * @return the floor element, null if not exist
      */
-    public AbstractGraphPanelChartElement getFloorElement(long value)
+    public AbstractGraphPanelChartElement getLowerElement(long value)
     {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public abstract int size();
@@ -373,6 +374,8 @@ public abstract class AbstractGraphRow
                 return new GraphRowSumValues(false);
             case AbstractGraphRow.ROW_ROLLING_SUM_VALUES:
                 return new GraphRowSumValues(true);
+            case AbstractGraphRow.ROW_SIMPLE:
+                return new GraphRowSimple();
             default:
                 return null;
         }

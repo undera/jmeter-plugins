@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.ColorsDispatcher;
+import kg.apc.jmeter.charting.GraphPanelChartSimpleElement;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**
@@ -24,59 +25,62 @@ public class ThreadsStateOverTimeGui
         graphPanel.getGraphObject().setyAxisLabel("Number of active threads");
     }
 
-    private int getAllThreadCount(long time)
+    private double getAllThreadCount(long time)
     {
-        int ret = 0;
+        double ret = 0;
         Iterator<AbstractGraphRow> rowsIter = model.values().iterator();
         while (rowsIter.hasNext())
         {
             AbstractGraphRow row = rowsIter.next();
-            AbstractGraphPanelChartElement element = row.getElement(time);
 
-            if (element == null)
+            //if the tg finished, last value = 0, else we take last known value
+            if (time <= (row.getMaxX() + row.getGranulationValue()))
             {
-                element = row.getFloorElement(time);
-            }
-            if (element != null)
-            {
-                ret += element.getValue();
+                AbstractGraphPanelChartElement element = row.getElement(time);
+
+                if (element == null)
+                {
+                    element = row.getLowerElement(time);
+                }
+                if (element != null)
+                {
+                    ret += element.getValue();
+                }
             }
         }
 
         return ret;
     }
 
+    private void rebuildAggRow(AbstractGraphRow row)
+    {
+        Iterator<Entry<Long, AbstractGraphPanelChartElement>> iter = row.iterator();
+        while(iter.hasNext())
+        {
+            Entry<Long, AbstractGraphPanelChartElement> entry = iter.next();
+            GraphPanelChartSimpleElement elt = (GraphPanelChartSimpleElement)entry.getValue();
+            elt.add(getAllThreadCount(entry.getKey()));
+        }
+    }
+
     private void addThreadGroupRecord(String threadGroupName, long time, int numThreads)
     {
-        String labelAgg = "Overall Active Threads ";
+        String labelAgg = "Overall Active Threads";
         AbstractGraphRow row = model.get(threadGroupName);
         AbstractGraphRow rowAgg = modelAggregate.get(labelAgg);
 
         if (row == null)
         {
             row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, threadGroupName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, true);
-            //remove all further aggValues - in case of jtl reload on distributed tests
-            //we will not loose data as the jtl have the same time period
-            if (rowAgg != null)
-            {
-                Iterator<Entry<Long, AbstractGraphPanelChartElement>> rowItems = rowAgg.iterator();
-                while (rowItems.hasNext())
-                {
-                    Entry<Long, AbstractGraphPanelChartElement> element = rowItems.next();
-                    if (element.getKey() >= time)
-                    {
-                        rowItems.remove();
-                    }
-                }
-            }
         }
         if (rowAgg == null)
         {
-            rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_AVERAGES, labelAgg, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, ColorsDispatcher.RED, true);
+            rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SIMPLE, labelAgg, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, ColorsDispatcher.RED, true);
         }
 
         row.add(time, numThreads);
-        rowAgg.add(time, getAllThreadCount(time));
+        rowAgg.add(time, 0);
+        rebuildAggRow(rowAgg);
     }
 
     @Override

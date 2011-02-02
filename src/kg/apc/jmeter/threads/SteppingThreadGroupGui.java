@@ -94,7 +94,7 @@ public class SteppingThreadGroupGui
    // Initialise the gui field values
     private void initGui(){
         totalThreads.setText("100");
-        initialDelay.setText("5");
+        initialDelay.setText("0");
         incUserCount.setText("10");
         incUserPeriod.setText("30");
         flightTime.setText("60");

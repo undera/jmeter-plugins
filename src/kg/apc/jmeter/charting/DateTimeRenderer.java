@@ -72,10 +72,6 @@ public class DateTimeRenderer
      */
     private void setLongValue(Long value)
     {
-        long tick = value - relativeStartTime;
-        // 500 means half a second.
-        // We allow to have half a second error with first label
-        String res = dateFormatter.format(tick > 500 ? tick : 0);
-        setText(res);
+        setText(dateFormatter.format(value - relativeStartTime));
     }
 }

@@ -113,8 +113,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
     @Override
    public void addPerfRecord(String serverName, double value)
    {
-      long now = System.currentTimeMillis();
-      addPerfRecord(serverName, value, normalizeTime(now));
+      addPerfRecord(serverName, value, System.currentTimeMillis());
    }
 
     @Override
@@ -126,7 +125,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
       {
          row = getNewRow(serverName);
       }
-      row.add(time, value);
+      row.add(normalizeTime(time), value);
 
       updateGui(null);
    }

@@ -427,7 +427,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
 
     protected long normalizeTime(long time)
     {
-        return time - time%MetricsProvider.DELAY;
+        return time - (time - relativeStartTime)%MetricsProvider.DELAY;
     }
 
     public abstract void addPerfRecord(String serverName, double value);

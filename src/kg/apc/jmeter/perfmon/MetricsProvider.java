@@ -159,7 +159,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         {
             long now = System.currentTimeMillis();
             StringBuilder builder = new StringBuilder();
-            builder.append(now - now % DELAY);
+            builder.append(now);
             builder.append(";");
             builder.append(monitorType);
             builder.append(";");

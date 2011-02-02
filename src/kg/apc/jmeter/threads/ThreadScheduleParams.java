@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
-import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.threads.JMeterThread;
 
 class ThreadScheduleParams
@@ -45,7 +44,7 @@ class ThreadScheduleParams
       int threadNo = currentThread.getThreadNum();
       while (it.hasNext())
       {
-         int threads = ((StringProperty) it.next()).getIntValue();
+         int threads = ((JMeterProperty) it.next()).getIntValue();
 
          if (threads > threadNo)
          {

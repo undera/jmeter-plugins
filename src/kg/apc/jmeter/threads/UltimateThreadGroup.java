@@ -8,7 +8,6 @@ import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
-import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
 
@@ -75,7 +74,7 @@ public class UltimateThreadGroup
     */
    public JMeterProperty getData()
    {
-      //log.info("getData");
+      //log.info("getData: "+getProperty(DATA_PROPERTY));
       JMeterProperty prop = getProperty(DATA_PROPERTY);
       return prop;
    }
@@ -99,7 +98,8 @@ public class UltimateThreadGroup
          Iterator<?> iter = col.iterator();
          while (iter.hasNext())
          {
-            StringProperty prop = (StringProperty) iter.next();
+            JMeterProperty prop = (JMeterProperty) iter.next();
+            //log.info(prop.getStringValue());
             result += prop.getIntValue();
          }
       }

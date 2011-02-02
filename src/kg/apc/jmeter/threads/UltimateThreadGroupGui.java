@@ -68,7 +68,7 @@ public class UltimateThreadGroupGui
     */
    public static final Class[] columnClasses = new Class[]
    {
-      Integer.class, Integer.class, Integer.class, Integer.class, Integer.class
+      String.class, String.class, String.class, String.class, String.class
    };
    private static Integer[] defaultValues = new Integer[]
    {

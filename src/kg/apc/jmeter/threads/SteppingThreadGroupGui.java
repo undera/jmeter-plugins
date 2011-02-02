@@ -195,13 +195,13 @@ public class SteppingThreadGroupGui
    public void configure(TestElement tg)
    {
       super.configure(tg);
-      totalThreads.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.NUM_THREADS)));
-      initialDelay.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.THREAD_GROUP_DELAY)));
-      incUserCount.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.INC_USER_COUNT)));
-      incUserPeriod.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.INC_USER_PERIOD)));
-      decUserCount.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.DEC_USER_COUNT)));
-      decUserPeriod.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.DEC_USER_PERIOD)));
-      flightTime.setText(Integer.toString(tg.getPropertyAsInt(SteppingThreadGroup.FLIGHT_TIME)));
+      totalThreads.setText(tg.getPropertyAsString(SteppingThreadGroup.NUM_THREADS));
+      initialDelay.setText(tg.getPropertyAsString(SteppingThreadGroup.THREAD_GROUP_DELAY));
+      incUserCount.setText(tg.getPropertyAsString(SteppingThreadGroup.INC_USER_COUNT));
+      incUserPeriod.setText(tg.getPropertyAsString(SteppingThreadGroup.INC_USER_PERIOD));
+      decUserCount.setText(tg.getPropertyAsString(SteppingThreadGroup.DEC_USER_COUNT));
+      decUserPeriod.setText(tg.getPropertyAsString(SteppingThreadGroup.DEC_USER_PERIOD));
+      flightTime.setText(tg.getPropertyAsString(SteppingThreadGroup.FLIGHT_TIME));
 
       TestElement te = (TestElement) tg.getProperty(AbstractThreadGroup.MAIN_CONTROLLER).getObjectValue();
       if (te != null)

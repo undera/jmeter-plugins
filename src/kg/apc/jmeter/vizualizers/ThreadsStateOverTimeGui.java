@@ -53,14 +53,16 @@ public class ThreadsStateOverTimeGui
         return ret;
     }
 
-    private void rebuildAggRow(AbstractGraphRow row)
+    private void rebuildAggRow(AbstractGraphRow row, long timeLimit)
     {
         Iterator<Entry<Long, AbstractGraphPanelChartElement>> iter = row.iterator();
-        while(iter.hasNext())
+        boolean canStop = false;
+        while(!canStop && iter.hasNext())
         {
             Entry<Long, AbstractGraphPanelChartElement> entry = iter.next();
             GraphPanelChartSimpleElement elt = (GraphPanelChartSimpleElement)entry.getValue();
             elt.add(getAllThreadCount(entry.getKey()));
+            if(entry.getKey() >= timeLimit) canStop = true;
         }
     }
 
@@ -78,13 +80,22 @@ public class ThreadsStateOverTimeGui
         {
             rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SIMPLE, labelAgg, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, ColorsDispatcher.RED, true);
         }
-        row.add(time, numThreads);
-        rowAgg.add(time, getAllThreadCount(time));
 
-        if(lastAggUpdateTime != time)
+        row.add(time, numThreads);
+
+        //rebuild is a heavy process, avoided if possible
+        if(model.size() == 1)
         {
-            rebuildAggRow(rowAgg);
-            lastAggUpdateTime = time;
+            rowAgg.add(time, row.getElement(time).getValue());
+        } else
+        {
+            rowAgg.add(time, getAllThreadCount(time));
+
+            if(lastAggUpdateTime != time)
+            {
+                rebuildAggRow(rowAgg, time);
+                lastAggUpdateTime = time;
+            }
         }
     }
 

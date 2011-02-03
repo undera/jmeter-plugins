@@ -122,7 +122,7 @@ public class UltimateThreadGroupGui
    private JTable createGrid()
    {
       grid = new JTable();
-      grid.getDefaultEditor(Integer.class).addCellEditorListener(this);
+      grid.getDefaultEditor(String.class).addCellEditorListener(this);
       createTableModel();
       // grid.setRowSelectionAllowed(true);
       // grid.setColumnSelectionAllowed(true);
@@ -224,7 +224,7 @@ public class UltimateThreadGroupGui
 
       long now = System.currentTimeMillis();
 
-      chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now));
+      chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now-1)); //-1 because row.add(thread.getStartTime() - 1, 0)
       chart.setForcedMinX(now);
 
       row.add(now, 0);

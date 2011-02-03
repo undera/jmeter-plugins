@@ -164,10 +164,12 @@ public class UltimateThreadGroupGui
       if (tg instanceof UltimateThreadGroup)
       {
          UltimateThreadGroup utg = (UltimateThreadGroup) tg;
+         UltimateThreadGroup utgForPreview = new UltimateThreadGroup();
          CollectionProperty rows = UltimateThreadGroup.tableModelToCollectionProperty(tableModel);
          utg.setData(rows);
+         utgForPreview.setData(UltimateThreadGroup.tableModelToCollectionPropertyEval(tableModel));
 
-         updateChart(utg);
+         updateChart(utgForPreview);
          utg.setSamplerController((LoopController) loopPanel.createTestElement());
       }
       super.configureTestElement(tg);
@@ -195,7 +197,7 @@ public class UltimateThreadGroupGui
             count++;
          }
          //log.info("Table rows after: " + tableModel.getRowCount());
-         updateChart(utg);
+         //updateChart(utg); //Not needed
       }
       else
       {

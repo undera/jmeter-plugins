@@ -19,9 +19,11 @@ import kg.apc.jmeter.charting.DateTimeRenderer;
 
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
+import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
+import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
 import org.apache.jorphan.collections.HashTree;
 import org.apache.jorphan.logging.LoggingManager;
@@ -177,6 +179,15 @@ public class SteppingThreadGroupGui
    {
       super.configureTestElement(tg);
 
+      SteppingThreadGroup tgForPreview = new SteppingThreadGroup();
+      tgForPreview.setProperty(SteppingThreadGroup.NUM_THREADS, new CompoundVariable(totalThreads.getText()).execute());
+      tgForPreview.setProperty(SteppingThreadGroup.THREAD_GROUP_DELAY, new CompoundVariable(initialDelay.getText()).execute());
+      tgForPreview.setProperty(SteppingThreadGroup.INC_USER_COUNT, new CompoundVariable(incUserCount.getText()).execute());
+      tgForPreview.setProperty(SteppingThreadGroup.INC_USER_PERIOD, new CompoundVariable(incUserPeriod.getText()).execute());
+      tgForPreview.setProperty(SteppingThreadGroup.DEC_USER_COUNT, new CompoundVariable(decUserCount.getText()).execute());
+      tgForPreview.setProperty(SteppingThreadGroup.DEC_USER_PERIOD, new CompoundVariable(decUserPeriod.getText()).execute());
+      tgForPreview.setProperty(SteppingThreadGroup.FLIGHT_TIME, new CompoundVariable(flightTime.getText()).execute());
+
       tg.setProperty(SteppingThreadGroup.NUM_THREADS, totalThreads.getText());
       tg.setProperty(SteppingThreadGroup.THREAD_GROUP_DELAY, initialDelay.getText());
       tg.setProperty(SteppingThreadGroup.INC_USER_COUNT, incUserCount.getText());
@@ -186,7 +197,7 @@ public class SteppingThreadGroupGui
       tg.setProperty(SteppingThreadGroup.FLIGHT_TIME, flightTime.getText());
       if (tg instanceof SteppingThreadGroup)
       {
-         updateChart((SteppingThreadGroup) tg);
+         updateChart(tgForPreview);
          ((AbstractThreadGroup) tg).setSamplerController((LoopController) loopPanel.createTestElement());
       }
    }

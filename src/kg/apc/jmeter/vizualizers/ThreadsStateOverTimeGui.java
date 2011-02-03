@@ -16,6 +16,7 @@ public class ThreadsStateOverTimeGui
         extends AbstractOverTimeVisualizer
 {
     //private static final Logger log = LoggingManager.getLoggerForClass();
+    private long lastAggUpdateTime = 0;
     /**
      *
      */
@@ -77,10 +78,14 @@ public class ThreadsStateOverTimeGui
         {
             rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SIMPLE, labelAgg, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, ColorsDispatcher.RED, true);
         }
-
         row.add(time, numThreads);
-        rowAgg.add(time, 0);
-        rebuildAggRow(rowAgg);
+        rowAgg.add(time, getAllThreadCount(time));
+
+        if(lastAggUpdateTime != time)
+        {
+            rebuildAggRow(rowAgg);
+            lastAggUpdateTime = time;
+        }
     }
 
     @Override

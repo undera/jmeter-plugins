@@ -40,7 +40,7 @@ public class ResponseTimesPercentilesGui
     public void add(SampleResult res)
     {
         String label = res.getSampleLabel();
-        String aggregateLabel = "Aggregated Response Times";
+        String aggregateLabel = "Overall Response Times";
         GraphRowPercentiles row = (GraphRowPercentiles) model.get(label);
         GraphRowPercentiles rowAgg = (GraphRowPercentiles) modelAggregate.get(label);
 

@@ -24,7 +24,7 @@ public class ResponseTimesDistributionGui
 
    private void addThreadGroupRecord(String threadGroupName, long time, int granulation)
    {
-      String aggLabel = "Aggregated Response Times";
+      String aggLabel = "Overall Response Times";
       AbstractGraphRow row = model.get(threadGroupName);
       AbstractGraphRow rowAgg = modelAggregate.get(aggLabel);
 

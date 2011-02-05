@@ -23,7 +23,7 @@ public class LatenciesOverTimeGui
    private void addThreadGroupRecord(String threadGroupName, long time,
          long numThreads)
    {
-      String labelAgg = "Aggregated Responses Latencies";
+      String labelAgg = "Overall Responses Latencies";
       AbstractGraphRow row = model.get(threadGroupName);
       AbstractGraphRow rowAgg = modelAggregate.get(labelAgg);
       if (row == null)

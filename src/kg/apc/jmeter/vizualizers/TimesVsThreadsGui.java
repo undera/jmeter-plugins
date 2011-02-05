@@ -41,7 +41,7 @@ public class TimesVsThreadsGui
     {
         String label = res.getSampleLabel();
         String averageLabel = "Average " + res.getSampleLabel();
-        String aggLabel = "Aggregated Response Times";
+        String aggLabel = "Overall Response Times";
         String avgAggLabel = "Average " + aggLabel;
         GraphRowAverages row = (GraphRowAverages) model.get(label);
         GraphRowOverallAverages avgRow = (GraphRowOverallAverages) model.get(averageLabel);

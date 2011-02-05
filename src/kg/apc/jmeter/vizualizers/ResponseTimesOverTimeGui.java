@@ -24,7 +24,7 @@ public class ResponseTimesOverTimeGui
    private void addThreadGroupRecord(String threadGroupName, long time,
          long numThreads)
    {
-      String labelAgg = "Aggregated Response Times";
+      String labelAgg = "Overall Response Times";
       AbstractGraphRow row = model.get(threadGroupName);
       AbstractGraphRow rowAgg = modelAggregate.get(labelAgg);
       if (row == null)

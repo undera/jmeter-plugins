@@ -41,6 +41,8 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer
         CompositeResultCollector compositeResultCollector = new CompositeResultCollector();
         compositeResultCollector.setCompositeModel(compositeModel);
         setModel(compositeResultCollector);
+
+        getFilePanel().setVisible(false);
     }
 
     @Override

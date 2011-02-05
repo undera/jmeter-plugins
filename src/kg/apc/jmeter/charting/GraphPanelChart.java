@@ -1059,8 +1059,7 @@ public class GraphPanelChart
           {
               boolean valid = isChartPointValid(x, y);
 
-              //test for 1st point validity removed here...
-              if(mustDrawFirstZeroingLine)
+              if(mustDrawFirstZeroingLine && valid)
               {
                   mustDrawFirstZeroingLine = false;
                   prevX = x;

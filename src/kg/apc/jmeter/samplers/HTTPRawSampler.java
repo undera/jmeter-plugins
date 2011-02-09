@@ -3,6 +3,9 @@ package kg.apc.jmeter.samplers;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
 import org.apache.jorphan.logging.LoggingManager;
@@ -20,12 +23,18 @@ public class HTTPRawSampler extends HTTPSampler {
     protected HTTPSampleResult sample(java.net.URL url, String method, boolean areFollowingRedirect, int frameDepth) {
         //return super.sample(url, method, areFollowingRedirect, frameDepth);
         HttpURLConnection conn = null;
-
+        try {
+            url = new URL("http://t80.tanks/");
+        } catch (MalformedURLException ex) {
+            log.error(method, ex);
+        }
         String urlStr = url.toString();
         log.debug("Start : sample " + urlStr);
 
         HTTPSampleResult res = new HTTPSampleResult();
         res.setMonitor(isMonitor());
+
+        method="GET";
 
         res.setSampleLabel(urlStr);
         res.setURL(url);
@@ -84,6 +93,6 @@ public class HTTPRawSampler extends HTTPSampler {
     }
 
     private String getRawRequest() {
-        return "request";
+        return "GET / HTTP/1.0\n\n";
     }
 }

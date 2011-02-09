@@ -10,8 +10,6 @@ import java.net.URL;
 import kg.apc.jmeter.util.SocketEmulatorInputStream;
 import kg.apc.jmeter.util.SocketEmulatorOutputStream;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
-import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
-import org.apache.jorphan.util.JOrphanUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -2,6 +2,7 @@ package kg.apc.jmeter.util;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 
 /**
  *
@@ -31,10 +32,16 @@ public class SocketEmulatorOutputStream
     * 
     * @return
     */
-   public String getWrittenBytes()
+   public String getWrittenBytesAsHexString()
    {
       final String toString = buffer.toString();
       buffer.setLength(0);
       return toString;
+   }
+
+   public String getWrittenBytesAsString()
+   {
+        byte[] res = BinaryTCPClientImpl.hexStringToByteArray(getWrittenBytesAsHexString());
+      return res.toString();
    }
 }

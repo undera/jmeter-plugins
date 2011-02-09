@@ -117,7 +117,7 @@ public class DCERPCSamplerTest
            "ffffff96450ffffffaa0ffffffa917430ffffffe40ffffffc27638010000000" +
            "45d0ffffff880ffffff8a0ffffffeb1c0ffffffc9110ffffff9f0ffffffe8080" +
            "02b10486002000000";
-      String gotBytes = os.getWrittenBytes();
+      String gotBytes = os.getWrittenBytesAsHexString();
       assertEquals(expBytes, gotBytes);
    }
 
@@ -137,7 +137,7 @@ public class DCERPCSamplerTest
            + buf.toString();
 
       instance.write(os, str);
-      String gotBytes = os.getWrittenBytes();
+      String gotBytes = os.getWrittenBytesAsHexString();
       assertEquals(90110, gotBytes.length());
    }
 

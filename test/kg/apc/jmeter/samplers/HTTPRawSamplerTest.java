@@ -7,7 +7,11 @@ package kg.apc.jmeter.samplers;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import kg.apc.jmeter.util.SocketEmulatorInputStream;
+import kg.apc.jmeter.util.SocketEmulatorOutputStream;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
+import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
+import org.apache.jorphan.util.JOrphanUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -50,11 +54,11 @@ public class HTTPRawSamplerTest {
         String method = "GET";
         HTTPRawSampler instance = new HTTPRawSampler();
         TestHttpURLConnection conn = new TestHttpURLConnection();
-        conn.socketEmulatorInputStream.setBytesToRead(("response").getBytes());
+        conn.setSocketEmulatorInputStream(new SocketEmulatorInputStream("response".getBytes()));
+        conn.setSocketEmulatorOutputStream(new SocketEmulatorOutputStream());
         instance.persistentConnection=conn;
         HTTPSampleResult result = instance.sample(url, method, false, 0);
-        assertEquals(("request").getBytes(), conn.socketEmulatorOutputStream.getWrittenBytes());
-        assertEquals("response!", result.getResponseDataAsString());
+        assertEquals("response", result.getResponseDataAsString());
     }
 
 }

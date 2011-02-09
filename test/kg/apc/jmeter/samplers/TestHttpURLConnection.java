@@ -17,8 +17,8 @@ import org.apache.log.Logger;
  */
 public class TestHttpURLConnection extends HttpURLConnection {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    public SocketEmulatorInputStream socketEmulatorInputStream = new SocketEmulatorInputStream();
-    public SocketEmulatorOutputStream socketEmulatorOutputStream = new SocketEmulatorOutputStream();
+    private SocketEmulatorInputStream socketEmulatorInputStream;
+    private SocketEmulatorOutputStream socketEmulatorOutputStream;
 
     public TestHttpURLConnection() throws MalformedURLException {
         super(new URL("http://localhost/"));
@@ -41,11 +41,39 @@ public class TestHttpURLConnection extends HttpURLConnection {
 
     @Override
     public OutputStream getOutputStream() throws IOException {
-        return socketEmulatorOutputStream;
+        return getSocketEmulatorOutputStream();
     }
 
     @Override
     public InputStream getInputStream() throws IOException {
+        return getSocketEmulatorInputStream();
+    }
+
+    /**
+     * @return the socketEmulatorInputStream
+     */
+    public SocketEmulatorInputStream getSocketEmulatorInputStream() {
         return socketEmulatorInputStream;
+    }
+
+    /**
+     * @return the socketEmulatorOutputStream
+     */
+    public SocketEmulatorOutputStream getSocketEmulatorOutputStream() {
+        return socketEmulatorOutputStream;
+    }
+
+    /**
+     * @param socketEmulatorInputStream the socketEmulatorInputStream to set
+     */
+    public void setSocketEmulatorInputStream(SocketEmulatorInputStream socketEmulatorInputStream) {
+        this.socketEmulatorInputStream = socketEmulatorInputStream;
+    }
+
+    /**
+     * @param socketEmulatorOutputStream the socketEmulatorOutputStream to set
+     */
+    public void setSocketEmulatorOutputStream(SocketEmulatorOutputStream socketEmulatorOutputStream) {
+        this.socketEmulatorOutputStream = socketEmulatorOutputStream;
     }
 }

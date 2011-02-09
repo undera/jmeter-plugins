@@ -84,6 +84,6 @@ public class HTTPRawSampler extends HTTPSampler {
     }
 
     private String getRawRequest() {
-        return "test";
+        return "request";
     }
 }

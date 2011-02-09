@@ -1,6 +1,7 @@
 package kg.apc.jmeter.samplers;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
@@ -12,9 +13,8 @@ import org.apache.log.Logger;
  * @author undera
  */
 public class HTTPRawSampler extends HTTPSampler {
-
+    protected HttpURLConnection persistentConnection;
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private String rawRequest;
 
     @Override
     protected HTTPSampleResult sample(java.net.URL url, String method, boolean areFollowingRedirect, int frameDepth) {
@@ -35,47 +35,11 @@ public class HTTPRawSampler extends HTTPSampler {
         res.sampleStart(); // Count the retries as well in the time
 
         try {
-            conn = setupConnection(url, method, res);
-            // Attempt the connection:
-            conn.connect();
-            sendRawData(conn);
-
-            // Request sent. Now get the response:
-            byte[] responseData = readResponse(conn, res);
-
-            res.sampleEnd();
-
-            // Now collect the results into the HTTPSampleResult:
-
-            res.setResponseData(responseData);
-
-            int errorLevel = conn.getResponseCode();
-            String respMsg = conn.getResponseMessage();
-            res.setResponseCode(Integer.toString(errorLevel));            
-            res.setSuccessful(isSuccessCode(errorLevel));
-            res.setResponseMessage(conn.getResponseMessage());
-
-            String ct = conn.getContentType();
-            if (ct != null) {
-                res.setContentType(ct);// e.g. text/html; charset=ISO-8859-1
-                res.setEncodingAndType(ct);
-            }
-
-            res.setResponseHeaders(getResponseHeaders(conn));
-            if (res.isRedirect()) {
-                res.setRedirectLocation(conn.getHeaderField(HEADER_LOCATION));
-            }
-
-            // If we redirected automatically, the URL may have changed
-            if (getAutoRedirects()) {
-                res.setURL(conn.getURL());
-            }
-
-            res = resultProcessing(areFollowingRedirect, frameDepth, res);
-
-            log.debug("End : sample");
+            conn = persistentConnection==null?setupConnection(url, method, res):persistentConnection;
+            makeHTTPRequest(res, conn);
             return res;
         } catch (IOException e) {
+            log.error("Error during request", e);
             res.sampleEnd();
             // We don't want to continue using this connection, even if KeepAlive is set
             if (conn != null) { // May not exist
@@ -84,18 +48,42 @@ public class HTTPRawSampler extends HTTPSampler {
             conn = null; // Don't process again
             return errorResult(e, res);
         } finally {
-            // calling disconnect doesn't close the connection immediately,
-            // but indicates we're through with it. The JVM should close
-            // it when necessary.
-            disconnect(conn); // Disconnect unless using KeepAlive
+            if (conn != null) { // May not exist
+                disconnect(conn); // Disconnect unless using KeepAlive
+            }
         }
     }
 
-    private void sendRawData(HttpURLConnection conn) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    private void makeHTTPRequest(HTTPSampleResult res, HttpURLConnection conn) throws IOException {
+        // Attempt the connection:
+        conn.connect();
+        sendRawData(conn);
+        // Request sent. Now get the response:
+        byte[] responseData = readResponse(conn, res);
+        res.sampleEnd();
+        // Now collect the results into the HTTPSampleResult:
+        res.setResponseData(responseData);
+        int errorLevel = conn.getResponseCode();
+        res.setResponseCode(Integer.toString(errorLevel));
+        res.setSuccessful(isSuccessCode(errorLevel));
+        res.setResponseMessage(conn.getResponseMessage());
+        res.setResponseHeaders(getResponseHeaders(conn));
+        log.debug("End : sample");
+    }
+
+    private void sendRawData(HttpURLConnection conn) throws IOException {
+        byte[] data = getRawRequest().getBytes();
+        OutputStream out = conn.getOutputStream();
+        try {
+            out.write(data);
+        } catch (IOException ex) {
+            out.close();
+        } finally {
+            out.close();
+        }
     }
 
     private String getRawRequest() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return "test";
     }
 }

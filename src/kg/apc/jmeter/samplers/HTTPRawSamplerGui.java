@@ -1,6 +1,6 @@
 package kg.apc.jmeter.samplers;
 
-import org.apache.jmeter.protocol.http.sampler.HTTPSamplerBase;
+import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 
@@ -14,7 +14,7 @@ public class HTTPRawSamplerGui extends AbstractSamplerGui
 
     @Override
     public TestElement createTestElement() {
-        HTTPSamplerBase sampler = new HTTPRawSampler();
+        AbstractSampler sampler = new HTTPRawSampler();
         modifyTestElement(sampler);
         return sampler;
     }

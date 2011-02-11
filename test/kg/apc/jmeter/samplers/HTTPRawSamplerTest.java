@@ -1,15 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.samplers;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import org.apache.jmeter.samplers.SampleResult;
 import java.net.MalformedURLException;
-import java.net.URL;
+import kg.apc.jmeter.util.SocketEmulator;
 import kg.apc.jmeter.util.SocketEmulatorInputStream;
-import kg.apc.jmeter.util.SocketEmulatorOutputStream;
-import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,7 +19,6 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class HTTPRawSamplerTest {
-
     public HTTPRawSamplerTest() {
     }
 
@@ -46,17 +42,16 @@ public class HTTPRawSamplerTest {
      * Test of sample method, of class HTTPRawSampler.
      */
     @Test
-    public void testSample() throws MalformedURLException {
+    public void testSample() throws MalformedURLException, IOException {
         System.out.println("sample");
-        URL url = new URL("http://localhost");
-        String method = "GET";
+        //HTTPRawSamplerEmul instance = new HTTPRawSamplerEmul();
+        //SocketEmulatorInputStream is = (SocketEmulatorInputStream) instance.sock.getInputStream();
+        //is.setBytesToRead("response");
         HTTPRawSampler instance = new HTTPRawSampler();
-        TestHttpURLConnection conn = new TestHttpURLConnection();
-        conn.setSocketEmulatorInputStream(new SocketEmulatorInputStream("response".getBytes()));
-        conn.setSocketEmulatorOutputStream(new SocketEmulatorOutputStream());
-        instance.persistentConnection=conn;
-        HTTPSampleResult result = instance.sample(url, method, false, 0);
-        assertEquals("response", result.getResponseDataAsString());
+        SampleResult result = instance.sample(null);
+        assertEquals("GET /", result.getSamplerData().substring(0, 5));
+        System.out.println(result.getResponseDataAsString());
+        assertEquals("HTTP/1.1 200 OK", result.getResponseDataAsString().substring(0, 15));
     }
 
 }

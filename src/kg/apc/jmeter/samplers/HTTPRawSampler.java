@@ -1,13 +1,16 @@
 package kg.apc.jmeter.samplers;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
 import java.util.logging.Level;
-import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
-import org.apache.jmeter.protocol.http.sampler.HTTPSampler;
+import org.apache.jmeter.samplers.AbstractSampler;
+import org.apache.jmeter.samplers.Entry;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -15,84 +18,71 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-public class HTTPRawSampler extends HTTPSampler {
-    protected HttpURLConnection persistentConnection;
+public class HTTPRawSampler extends AbstractSampler {
+
     private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final String hostname = "";
+    private String data = "GET / HTTP/1.1\r\nConnection: close\r\nUser-Agent: Jakarta Commons-HttpClient/3.1\r\nHost: :8080\r\n\r\n";
+    private SocketAddress addr=new InetSocketAddress(hostname, 8080);
 
-    @Override
-    protected HTTPSampleResult sample(java.net.URL url, String method, boolean areFollowingRedirect, int frameDepth) {
-        //return super.sample(url, method, areFollowingRedirect, frameDepth);
-        HttpURLConnection conn = null;
+    public SampleResult sample(Entry e) {
+        SampleResult res = new SampleResult();
+        res.setSampleLabel(NAME);
+        res.setSamplerData(getRawRequest());
+        res.sampleStart();
+        res.setSuccessful(true);
         try {
-            url = new URL("http://t80.tanks/");
-        } catch (MalformedURLException ex) {
-            log.error(method, ex);
-        }
-        String urlStr = url.toString();
-        log.debug("Start : sample " + urlStr);
-
-        HTTPSampleResult res = new HTTPSampleResult();
-        res.setMonitor(isMonitor());
-
-        method="GET";
-
-        res.setSampleLabel(urlStr);
-        res.setURL(url);
-        res.setHTTPMethod(method);
-        res.setQueryString(getRawRequest());
-
-        res.sampleStart(); // Count the retries as well in the time
-
-        try {
-            conn = persistentConnection==null?setupConnection(url, method, res):persistentConnection;
-            makeHTTPRequest(res, conn);
-            return res;
-        } catch (IOException e) {
-            log.error("Error during request", e);
+            res.setResponseData(processIO(res));
+        } catch (UnknownHostException ex) {
             res.sampleEnd();
-            // We don't want to continue using this connection, even if KeepAlive is set
-            if (conn != null) { // May not exist
-                conn.disconnect();
-            }
-            conn = null; // Don't process again
-            return errorResult(e, res);
-        } finally {
-            if (conn != null) { // May not exist
-                disconnect(conn); // Disconnect unless using KeepAlive
-            }
-        }
-    }
-
-    private void makeHTTPRequest(HTTPSampleResult res, HttpURLConnection conn) throws IOException {
-        // Attempt the connection:
-        conn.connect();
-        sendRawData(conn);
-        // Request sent. Now get the response:
-        byte[] responseData = readResponse(conn, res);
-        res.sampleEnd();
-        // Now collect the results into the HTTPSampleResult:
-        res.setResponseData(responseData);
-        int errorLevel = conn.getResponseCode();
-        res.setResponseCode(Integer.toString(errorLevel));
-        res.setSuccessful(isSuccessCode(errorLevel));
-        res.setResponseMessage(conn.getResponseMessage());
-        res.setResponseHeaders(getResponseHeaders(conn));
-        log.debug("End : sample");
-    }
-
-    private void sendRawData(HttpURLConnection conn) throws IOException {
-        byte[] data = getRawRequest().getBytes();
-        OutputStream out = conn.getOutputStream();
-        try {
-            out.write(data);
+            log.error(hostname, ex);
+            res.setSuccessful(false);
         } catch (IOException ex) {
-            out.close();
-        } finally {
-            out.close();
+            res.sampleEnd();
+            log.error("Exception in sampler", ex);
+            res.setSuccessful(false);
         }
+
+
+        return res;
     }
 
     private String getRawRequest() {
-        return "GET / HTTP/1.0\n\n";
+        return data;
+    }
+
+    private byte[] processIO(SampleResult res) throws UnknownHostException, IOException {
+        log.debug("HREF");
+        SocketChannel sock=SocketChannel.open();
+        sock.connect(addr);
+        sock.write(ByteBuffer.wrap(getRawRequest().getBytes()));
+        ByteBuffer buf = ByteBuffer.allocate(0);
+        sock.read(buf);
+        //sock.close();
+        log.debug("Test "+new String(buf.array()));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            java.util.logging.Logger.getLogger(HTTPRawSampler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /*
+        Socket sock = getSocket();
+        sock.setSoTimeout(1000);
+        OutputStream os = sock.getOutputStream();
+        os.write(getRawRequest().getBytes());
+        InputStream is = sock.getInputStream();
+        ByteArrayOutputStream buf = new ByteArrayOutputStream(0);
+        int b;
+        while ((b = is.read()) > 0) {
+            buf.write(b);
+        }
+        is.close();
+        os.close();
+         * 
+         */
+        sock.close();
+        res.sampleEnd();
+
+        return buf.array();
     }
 }

@@ -46,6 +46,11 @@ public class SocketEmulatorInputStream
       bytes = hexStringToByteArray;
    }
 
+   public final void setBytesToRead(String str)
+   {
+      setBytesToRead(str.getBytes());
+   }
+
    @Override
    public int read()
         throws IOException

@@ -1,12 +1,8 @@
 package kg.apc.jmeter.samplers;
 
 import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import org.apache.jmeter.samplers.SampleResult;
 import java.net.MalformedURLException;
-import kg.apc.jmeter.util.SocketEmulator;
-import kg.apc.jmeter.util.SocketEmulatorInputStream;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,9 +45,18 @@ public class HTTPRawSamplerTest {
         //is.setBytesToRead("response");
         HTTPRawSampler instance = new HTTPRawSampler();
         SampleResult result = instance.sample(null);
+        assertTrue(result.isSuccessful());
         assertEquals("GET /", result.getSamplerData().substring(0, 5));
         System.out.println(result.getResponseDataAsString());
-        assertEquals("HTTP/1.1 200 OK", result.getResponseDataAsString().substring(0, 15));
+        System.out.println(result.getTime());
+        assertEquals("HTTP/1.1 200 OK", result.getResponseDataAsString().length()>15?result.getResponseDataAsString().substring(0, 15):result.getResponseDataAsString());
     }
 
-}
+   @Test
+    public void testMultiSample()  {
+        HTTPRawSampler instance = new HTTPRawSampler();
+        SampleResult result1 = instance.sample(null);
+        SampleResult result2 = instance.sample(null);
+    }
+   }
+ 

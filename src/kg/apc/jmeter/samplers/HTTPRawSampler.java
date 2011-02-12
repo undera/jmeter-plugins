@@ -1,16 +1,14 @@
 package kg.apc.jmeter.samplers;
 
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.net.SocketAddress;
-import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.util.logging.Level;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -21,9 +19,36 @@ import org.apache.log.Logger;
 public class HTTPRawSampler extends AbstractSampler {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private static final String hostname = "";
-    private String data = "GET / HTTP/1.1\r\nConnection: close\r\nUser-Agent: Jakarta Commons-HttpClient/3.1\r\nHost: :8080\r\n\r\n";
-    private SocketAddress addr=new InetSocketAddress(hostname, 8080);
+    private String data = "GET / HTTP/1.1\r\n"
+            + "Connection: close\r\n"
+            + "User-Agent: Jakarta Commons-HttpClient/3.1\r\n"
+            + "Host: "+getHostName()+":"+getPort()+"\r\n\r\n";
+    private SocketAddress addr;
+    private ByteBuffer recvBuf=ByteBuffer.allocateDirect(1024*1);
+    private ByteBuffer sendBuf;
+    //private SocketChannel sock;
+
+    public HTTPRawSampler() {
+        super();
+        sendBuf=ByteBuffer.wrap(data.getBytes());
+        addr=new InetSocketAddress(getHostName(), getPort());
+    }
+
+    public final String getHostName()
+    {
+        String res = JMeterUtils.getPropDefault("host", "192.168.0.1");
+        if (res.length()<1) res="192.168.0.1";
+        //log.debug("Host:"+res);
+        return res;
+    }
+
+    private int getPort() {
+        int res = 80;
+        try { res=Integer.parseInt(JMeterUtils.getPropDefault("port", "80")); }
+        catch (Exception e) {
+        log.error("", e);}
+        return res;
+    }
 
     public SampleResult sample(Entry e) {
         SampleResult res = new SampleResult();
@@ -33,16 +58,11 @@ public class HTTPRawSampler extends AbstractSampler {
         res.setSuccessful(true);
         try {
             res.setResponseData(processIO(res));
-        } catch (UnknownHostException ex) {
+        } catch (Exception ex) {
+            log.error(getHostName(), ex);
             res.sampleEnd();
-            log.error(hostname, ex);
-            res.setSuccessful(false);
-        } catch (IOException ex) {
-            res.sampleEnd();
-            log.error("Exception in sampler", ex);
             res.setSuccessful(false);
         }
-
 
         return res;
     }
@@ -51,38 +71,28 @@ public class HTTPRawSampler extends AbstractSampler {
         return data;
     }
 
-    private byte[] processIO(SampleResult res) throws UnknownHostException, IOException {
-        log.debug("HREF");
-        SocketChannel sock=SocketChannel.open();
-        sock.connect(addr);
-        sock.write(ByteBuffer.wrap(getRawRequest().getBytes()));
-        ByteBuffer buf = ByteBuffer.allocate(0);
-        sock.read(buf);
-        //sock.close();
-        log.debug("Test "+new String(buf.array()));
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(HTTPRawSampler.class.getName()).log(Level.SEVERE, null, ex);
+    private byte[] processIO(SampleResult res) throws Exception {
+        log.info("Begin IO");
+        SocketChannel sock = SocketChannel.open(addr);
+        ByteArrayOutputStream response=new ByteArrayOutputStream();
+        //sock.connect(addr);
+        //sock.connect(addr);
+
+        sock.write(sendBuf);
+        int cnt=0;
+        recvBuf.clear();
+        while ((cnt=sock.read(recvBuf)) != -1) {
+            log.info("Read "+cnt);
+            recvBuf.flip();
+            byte[] bytes = new byte[cnt];
+            recvBuf.get(bytes);
+            response.write(bytes);
+            recvBuf.clear();
         }
-        /*
-        Socket sock = getSocket();
-        sock.setSoTimeout(1000);
-        OutputStream os = sock.getOutputStream();
-        os.write(getRawRequest().getBytes());
-        InputStream is = sock.getInputStream();
-        ByteArrayOutputStream buf = new ByteArrayOutputStream(0);
-        int b;
-        while ((b = is.read()) > 0) {
-            buf.write(b);
-        }
-        is.close();
-        os.close();
-         * 
-         */
-        sock.close();
         res.sampleEnd();
 
-        return buf.array();
+        sock.close();
+        log.info("End IO");
+        return response.toByteArray();
     }
 }

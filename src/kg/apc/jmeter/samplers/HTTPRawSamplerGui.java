@@ -1,5 +1,8 @@
 package kg.apc.jmeter.samplers;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
@@ -14,7 +17,8 @@ public class HTTPRawSamplerGui extends AbstractSamplerGui
 
     @Override
     public TestElement createTestElement() {
-        AbstractSampler sampler = new HTTPRawSampler();
+        AbstractSampler sampler = null;
+            sampler = new HTTPRawSampler();
         modifyTestElement(sampler);
         return sampler;
     }

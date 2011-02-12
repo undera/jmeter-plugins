@@ -72,17 +72,21 @@ public class HTTPRawSampler extends AbstractSampler {
     }
 
     private byte[] processIO(SampleResult res) throws Exception {
-        log.info("Begin IO");
-        SocketChannel sock = SocketChannel.open(addr);
+        //log.info("Begin IO");
         ByteArrayOutputStream response=new ByteArrayOutputStream();
+        //log.info("Open sock");
+        SocketChannel sock = SocketChannel.open(addr);
         //sock.connect(addr);
         //sock.connect(addr);
 
+        //log.info("send");
+        sendBuf.rewind();
         sock.write(sendBuf);
         int cnt=0;
         recvBuf.clear();
+
         while ((cnt=sock.read(recvBuf)) != -1) {
-            log.info("Read "+cnt);
+            //log.info("Read "+cnt);
             recvBuf.flip();
             byte[] bytes = new byte[cnt];
             recvBuf.get(bytes);
@@ -92,7 +96,7 @@ public class HTTPRawSampler extends AbstractSampler {
         res.sampleEnd();
 
         sock.close();
-        log.info("End IO");
+        //log.info("End IO");
         return response.toByteArray();
     }
 }

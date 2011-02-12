@@ -47,8 +47,8 @@ public class HTTPRawSamplerTest {
         SampleResult result = instance.sample(null);
         assertTrue(result.isSuccessful());
         assertEquals("GET /", result.getSamplerData().substring(0, 5));
-        System.out.println(result.getResponseDataAsString());
-        System.out.println(result.getTime());
+        //System.out.println(result.getResponseDataAsString());
+        //System.out.println(result.getTime());
         assertEquals("HTTP/1.1 200 OK", result.getResponseDataAsString().length()>15?result.getResponseDataAsString().substring(0, 15):result.getResponseDataAsString());
     }
 

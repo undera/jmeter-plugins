@@ -64,6 +64,6 @@ public class ResponseTimesDistributionGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, true, true, false, false, false, true, false, true);
+        return new JSettingsPanel(this, true, true, false, false, false, true, false, true, false, false);
     }
 }

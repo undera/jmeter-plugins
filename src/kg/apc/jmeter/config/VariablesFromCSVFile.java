@@ -1,5 +1,3 @@
-// TODO: add column numbers selection
-// TODO: use rich gui with preview instead of Bean
 package kg.apc.jmeter.config;
 
 import java.io.IOException;
@@ -105,7 +103,7 @@ public class VariablesFromCSVFile
       String alias = this.getClass().getName() + Integer.toString(threanNo);
       FileServer server = FileServer.getFileServer();
       server.reserveFile(getFilename(), "UTF-8", alias);
-      // TODO: use all CSV parsing options
+
       String delim = getResultingDelimiter();
 
       try

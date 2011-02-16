@@ -1,4 +1,3 @@
-// TODO: сделать плагин с гридовым указанием юзеров
 package kg.apc.jmeter.threads;
 
 import org.apache.jmeter.threads.AbstractThreadGroup;

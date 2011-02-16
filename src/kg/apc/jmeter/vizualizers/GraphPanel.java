@@ -1,4 +1,3 @@
-// TODO: add slider to zoom Y axis
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.BorderLayout;

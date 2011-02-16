@@ -56,6 +56,7 @@ public class GraphPanelChart
    private static final String AD_TEXT = "http://apc.kg";
    private static final String NO_SAMPLES = "Waiting for samples...";
    private static final int spacing = 5;
+   private static final int previewInset = 4;
    /*
     * Special type of graph were minY is forced to 0 and maxY is forced to 100
     * to display percentage charts (eg cpu monitoring)
@@ -79,6 +80,7 @@ public class GraphPanelChart
    private NumberRenderer xAxisLabelRenderer;
    private boolean drawCurrentX = false;
    private long forcedMinX = -1;
+   private long forcedMaxY = -1;
    private int chartType = CHART_DEFAULT;
    // The stroke used to paint Graph's dashed lines
    private final static Stroke dashStroke = new BasicStroke(
@@ -147,6 +149,16 @@ public class GraphPanelChart
     public void setPrecisionLabel(int precision)
     {
         this.precisionLabel = precision;
+    }
+
+    public void setForcedMaxY(long forcedMaxY)
+    {
+        this.forcedMaxY = forcedMaxY;
+    }
+
+    public long getForcedMaxY()
+    {
+        return forcedMaxY;
     }
 
     private String getXAxisLabel()
@@ -492,7 +504,10 @@ public class GraphPanelChart
          minYVal = 0;
       }
 
-
+      if(forcedMaxY > 0)
+      {
+          maxYVal = Math.max(forcedMaxY, minYVal + 1);
+      }
    }
 
    /**
@@ -523,24 +538,13 @@ public class GraphPanelChart
       boolean found = false;
 
       double testStep;
-      double testFactor;
 
       //find a step close to the real one
       while (!found)
       {
          pow++;
-         //for small range (<10), don't use .5 factor.
-         //we try to find integer steps as it is more easy to read
-         if (pow > 0)
-         {
-            testFactor = 0.5;
-         }
-         else
-         {
-            testFactor = 1;
-         }
 
-         for (double f = 0; f <= 5; f = f + testFactor)
+         for (double f = 0; f < 10; f++)
          {
             testStep = Math.pow(10, pow) * f;
             if (testStep >= step)
@@ -585,16 +589,30 @@ public class GraphPanelChart
       yAxisRect.setBounds(zeroRect);
    }
 
+   private int getYLabelsMaxWidth(FontMetrics fm)
+   {
+       int ret = 0;
+       for (int i=0; i<= gridLinesCount; i++)
+       {
+           yAxisLabelRenderer.setValue((minYVal * gridLinesCount + i * (maxYVal - minYVal)) / gridLinesCount);
+           int current = fm.stringWidth(yAxisLabelRenderer.getText());
+           if(current > ret) ret = current;
+       }
+       return ret;
+   }
+
+
    private void calculateYAxisDimensions(FontMetrics fm)
    {
-      // TODO: middle value labels often wider than max
-      yAxisLabelRenderer.setValue(maxYVal);
-      int axisWidth = fm.stringWidth(yAxisLabelRenderer.getText()) + spacing * 3 + fm.getHeight();
+      int axisWidth = getYLabelsMaxWidth(fm) + spacing * 3 + fm.getHeight();
       yAxisRect.setBounds(chartRect.x, chartRect.y, axisWidth, chartRect.height);
       if(!isPreview)
       {
           chartRect.setBounds(chartRect.x + axisWidth, chartRect.y, chartRect.width - axisWidth, chartRect.height);
-      }       
+      } else 
+      {
+          chartRect.setBounds(chartRect.x + previewInset, chartRect.y, chartRect.width, chartRect.height);
+      }
    }
 
    private void calculateXAxisDimensions(FontMetrics fm)
@@ -615,6 +633,9 @@ public class GraphPanelChart
       if(!isPreview)
       {
           chartRect.setBounds(chartRect.x, chartRect.y, chartRect.width - axisEndSpace, chartRect.height - axisHeight);
+      } else
+      {
+          chartRect.setBounds(chartRect.x, chartRect.y, chartRect.width - 2*previewInset, chartRect.height - (previewInset+1)); //+1 because layout take one pixel
       }
       yAxisRect.setBounds(yAxisRect.x, yAxisRect.y, yAxisRect.width, chartRect.height);
    }
@@ -985,6 +1006,8 @@ public class GraphPanelChart
          oldStroke = ((Graphics2D) g).getStroke();
       }
 
+      boolean isPointBellowForcedMaxY = true;
+
       while (it.hasNext())
       {
           if (!row.isDrawOnChart())
@@ -1031,8 +1054,7 @@ public class GraphPanelChart
                   }
               }
               calcPointX = calcPointX / (double)nbPointProcessed;
-              calcPointY = calcPointY / (double)factorInUse;
-
+              calcPointY = calcPointY / (double)nbPointProcessed;
           }
 
           if(expendRows)
@@ -1043,10 +1065,16 @@ public class GraphPanelChart
          x = chartRect.x + (int) ((calcPointX - minXVal) * dxForDVal);
          int yHeight = (int) ((calcPointY - minYVal) * dyForDVal);
          y = chartRect.y + chartRect.height - yHeight;
-         //fix flickering
+         //fix flickering and don't draw marker to indicate it is trimmed
+         
          if( y < chartRect.y)
          {
              y = chartRect.y;
+             isPointBellowForcedMaxY = false;
+         }
+         else
+         {
+             isPointBellowForcedMaxY = true;
          }
 
          if (row.isDrawThickLines())
@@ -1070,12 +1098,17 @@ public class GraphPanelChart
                   g.setColor(color);
                   if (valid)
                   {
+                      //we draw doted lines to show the graph is trimmed because of maxY forced
+                      if(!isPointBellowForcedMaxY)
+                      {
+                          x = x-2;
+                      }
                       g.drawLine(prevX, prevY, x, y);
                   }
               }
               if(valid)
               {
-                  prevX = x;
+                  prevX = isPointBellowForcedMaxY ? x : x+4;
                   prevY = y;
               }
           }
@@ -1124,7 +1157,7 @@ public class GraphPanelChart
           }
 
          // draw markers
-         if (radius != AbstractGraphRow.MARKER_SIZE_NONE)
+         if (radius != AbstractGraphRow.MARKER_SIZE_NONE && isPointBellowForcedMaxY)
          {
             g.setColor(color);
             if (isChartPointValid(x, y))

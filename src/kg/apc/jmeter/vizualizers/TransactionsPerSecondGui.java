@@ -59,6 +59,16 @@ public class TransactionsPerSecondGui
         {
             row.add(time, count * 1000.0d / getGranulation());
             rowAgg.add(time, count * 1000.0d / getGranulation());
+            //always add 0 to agg failure row
+            if(isSuccess)
+            {
+                rowAgg = modelAggregate.get(labelAggFailure);
+                if (rowAgg == null)
+                {
+                    rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, labelAggFailure, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, ColorsDispatcher.RED, true);
+                }
+                rowAgg.add(time, 0);
+            }
         }
     }
 
@@ -78,10 +88,8 @@ public class TransactionsPerSecondGui
    public void add(SampleResult res)
    {
         super.add(res);
-        //always add 0 failed transactions
         if (res.isSuccessful())
         {
-            addTransaction(false, res.getSampleLabel(), normalizeTime(res.getEndTime()), 0);
             addTransaction(true, res.getSampleLabel(), normalizeTime(res.getEndTime()), 1);
 
         } else

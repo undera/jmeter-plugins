@@ -1,7 +1,11 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.ToolTipManager;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import kg.apc.jmeter.charting.GraphPanelChart;
 
 /**
@@ -24,11 +28,27 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showBarChartXAxisLimit,
             boolean showHideNonRepValues,
             boolean showAggregateOption,
-            boolean showRelativeTimeOption)
+            boolean showRelativeTimeOption,
+            boolean showMaxYOption)
     {
         initComponents();
         this.parent = parent;
-        postInitComponents(showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption, showRelativeTimeOption);
+        postInitComponents(showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption, showRelativeTimeOption, showMaxYOption);
+        registerJTextfieldForRefresh(jTextFieldMaxY);
+    }
+
+    public JSettingsPanel(SettingsInterface parent,
+            boolean showTimelineOption,
+            boolean showGradientOption,
+            boolean showCurrentXOption,
+            boolean showFinalZeroingLinesOption,
+            boolean showLimitPointOption,
+            boolean showBarChartXAxisLimit,
+            boolean showHideNonRepValues,
+            boolean showAggregateOption,
+            boolean showRelativeTimeOption)
+    {
+        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption, showRelativeTimeOption, true);
     }
 
     public JSettingsPanel(SettingsInterface parent,
@@ -38,7 +58,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showFinalZeroingLinesOption,
             boolean showLimitPointOption)
     {
-        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, false, false, false, false);
+        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, false, false, false, false, true);
     }
 
     public JSettingsPanel(SettingsInterface parent,
@@ -49,7 +69,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showLimitPointOption,
             boolean showBarChartXAxisLimit)
     {
-        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, false, false, false);
+        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, false, false, false, true);
     }
 
     public JSettingsPanel(SettingsInterface parent,
@@ -62,7 +82,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showHideNonRepValues,
             boolean showAggregateOption)
     {
-        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption, false);
+        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption, false, true);
     }
 
     private void postInitComponents(boolean showTimelineOption,
@@ -73,7 +93,8 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showBarChartXAxisLimit,
             boolean showHideNonRepValues,
             boolean showAggregateOption,
-            boolean showRelativeTimeOption)
+            boolean showRelativeTimeOption,
+            boolean showMaxYOption)
     {
         boolean showGraphOptionPanel = showTimelineOption || showAggregateOption;
         jPanelTimeLineContainer.setVisible(showGraphOptionPanel || showRelativeTimeOption || showAggregateOption);
@@ -113,6 +134,9 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jComboBoxHideNonRepValLimit.setVisible(showHideNonRepValues);
         jCheckBoxHideNonRepValues.setVisible(showHideNonRepValues);
         jLabelHideNonRepPoints.setVisible(showHideNonRepValues);
+
+        jCheckBoxMaxY.setVisible(showMaxYOption);
+        jTextFieldMaxY.setVisible(showMaxYOption);
     }
 
     private void refreshGraphPreview()
@@ -147,7 +171,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
     public void setAggregateMode(boolean aggregate)
     {
-        if(aggregate)
+        if (aggregate)
         {
             jRadioButtonGraphAggregated.setSelected(true);
         } else
@@ -198,6 +222,8 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jCheckBoxHideNonRepValues = new javax.swing.JCheckBox();
         jComboBoxHideNonRepValLimit = new javax.swing.JComboBox();
         jLabelHideNonRepPoints = new javax.swing.JLabel();
+        jCheckBoxMaxY = new javax.swing.JCheckBox();
+        jTextFieldMaxY = new javax.swing.JTextField();
         jPanelGraphPreviewContainer = new javax.swing.JPanel();
         jPanelGraphPreview = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -354,7 +380,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jPanelRenderingOptionsContainer.add(jCheckBoxDrawFinalZeroingLines, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 6;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
@@ -471,6 +497,27 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
         jPanelRenderingOptionsContainer.add(jLabelHideNonRepPoints, gridBagConstraints);
+
+        jCheckBoxMaxY.setText("Force maximum Y axis value to");
+        jCheckBoxMaxY.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMaxYActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanelRenderingOptionsContainer.add(jCheckBoxMaxY, gridBagConstraints);
+
+        jTextFieldMaxY.setMinimumSize(new java.awt.Dimension(50, 20));
+        jTextFieldMaxY.setPreferredSize(new java.awt.Dimension(50, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        jPanelRenderingOptionsContainer.add(jTextFieldMaxY, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -612,6 +659,41 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         parent.getGraphPanelChart().setUseRelativeTime(jCheckBoxRelativeTime.isSelected());
     }//GEN-LAST:event_jCheckBoxRelativeTimeActionPerformed
 
+    private long getLongValue(String sLong)
+    {
+        long ret;
+        try
+        {
+            ret = Long.valueOf(sLong);
+        } catch (Exception ex)
+        {
+            ret = -1;
+        }
+        return Math.max(ret, -1);
+    }
+
+    private void jCheckBoxMaxYActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxMaxYActionPerformed
+    {//GEN-HEADEREND:event_jCheckBoxMaxYActionPerformed
+        long value = getLongValue(jTextFieldMaxY.getText());
+        long oldValue = parent.getGraphPanelChart().getForcedMaxY();
+        if (value == -1)
+        {
+            jTextFieldMaxY.setForeground(Color.red);
+        } else
+        {
+            jTextFieldMaxY.setForeground(Color.black);
+        }
+
+        if (jCheckBoxMaxY.isSelected())
+        {
+            parent.getGraphPanelChart().setForcedMaxY(value);
+            if(oldValue != value) refreshGraphPreview();
+        } else
+        {
+            parent.getGraphPanelChart().setForcedMaxY(-1);
+            if(oldValue != -1) refreshGraphPreview();
+        }
+    }//GEN-LAST:event_jCheckBoxMaxYActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupGraphType;
     private javax.swing.JCheckBox jCheckBoxDrawCurrentX;
@@ -619,6 +701,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     private javax.swing.JCheckBox jCheckBoxHideNonRepValues;
     private javax.swing.JCheckBox jCheckBoxLimitMaxXValue;
     private javax.swing.JCheckBox jCheckBoxMaxPoints;
+    private javax.swing.JCheckBox jCheckBoxMaxY;
     private javax.swing.JCheckBox jCheckBoxPaintGradient;
     private javax.swing.JCheckBox jCheckBoxRelativeTime;
     private javax.swing.JComboBox jComboBoxGranulation;
@@ -643,11 +726,46 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     private javax.swing.JPanel jPanelTimeLineContainer;
     private javax.swing.JRadioButton jRadioButtonGraphAggregated;
     private javax.swing.JRadioButton jRadioButtonGraphDetailed;
+    private javax.swing.JTextField jTextFieldMaxY;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public boolean isPreview()
     {
         return true;
+    }
+
+    private void registerJTextfieldForRefresh(final JTextField tf)
+    {
+        tf.getDocument().addDocumentListener(new DocumentListener()
+        {
+
+            @Override
+            public void changedUpdate(DocumentEvent arg0)
+            {
+                if (tf.hasFocus())
+                {
+                    jCheckBoxMaxYActionPerformed(null);
+                }
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent arg0)
+            {
+                if (tf.hasFocus())
+                {
+                    jCheckBoxMaxYActionPerformed(null);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent arg0)
+            {
+                if (tf.hasFocus())
+                {
+                    jCheckBoxMaxYActionPerformed(null);
+                }
+            }
+        });
     }
 }

@@ -354,7 +354,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
                 reportError("Unknown host exception occured. Please verify access to the server '" + connector.getHost() + "'.");
             } catch (IOException e)
             {
-                reportError("Enable to connect to server '" + connector.getHost() + "'. Please verify the agent is running on port " + connector.getPort() + ".");
+                reportError("Unable to connect to server '" + connector.getHost() + "'. Please verify the agent is running on port " + connector.getPort() + ".");
             }
         }
     }

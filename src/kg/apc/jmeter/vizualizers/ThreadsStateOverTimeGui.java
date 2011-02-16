@@ -1,11 +1,11 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.util.Iterator;
-import java.util.Map.Entry;
 import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.GraphPanelChartSimpleElement;
+import kg.apc.jmeter.charting.GraphRowSimple;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**
@@ -53,20 +53,27 @@ public class ThreadsStateOverTimeGui
         return ret;
     }
 
-    private void rebuildAggRow(AbstractGraphRow row, long timeLimit)
+    //perf fix: only process elements between time and last processed - sampler duration
+    private void rebuildAggRow(GraphRowSimple row, long time, long duration)
     {
-        Iterator<Entry<Long, AbstractGraphPanelChartElement>> iter = row.iterator();
-        boolean canStop = false;
-        while(!canStop && iter.hasNext())
+        long key = row.getHigherKey(lastAggUpdateTime - duration - 1);
+        while (key < time  && key != -1)
         {
-            Entry<Long, AbstractGraphPanelChartElement> entry = iter.next();
-            GraphPanelChartSimpleElement elt = (GraphPanelChartSimpleElement)entry.getValue();
-            elt.add(getAllThreadCount(entry.getKey()));
-            if(entry.getKey() >= timeLimit) canStop = true;
+            GraphPanelChartSimpleElement elt = (GraphPanelChartSimpleElement) row.getElement(key);
+            elt.add(getAllThreadCount(key));
+
+            Long nextKey = row.getHigherKey(key);
+            if (nextKey != null)
+            {
+                key = nextKey;
+            } else
+            {
+                key = -1;
+            }
         }
     }
 
-    private void addThreadGroupRecord(String threadGroupName, long time, int numThreads)
+    private void addThreadGroupRecord(String threadGroupName, long time, int numThreads, long duration)
     {
         String labelAgg = "Overall Active Threads";
         AbstractGraphRow row = model.get(threadGroupName);
@@ -91,11 +98,13 @@ public class ThreadsStateOverTimeGui
         {
             rowAgg.add(time, getAllThreadCount(time));
 
-            if(lastAggUpdateTime != time)
-            {
-                rebuildAggRow(rowAgg, time);
-                lastAggUpdateTime = time;
-            }
+            //handle 3rd and more jtl reload, the time are reset to start time, so we
+            //invalidate lastAggUpdateTime
+            if(time<lastAggUpdateTime) lastAggUpdateTime = time-duration;
+            
+            if(time != lastAggUpdateTime) rebuildAggRow((GraphRowSimple)rowAgg, time, duration); 
+
+            lastAggUpdateTime = time;
         }
     }
 
@@ -118,7 +127,9 @@ public class ThreadsStateOverTimeGui
         String threadName = res.getThreadName();
         threadName = threadName.lastIndexOf(" ") >= 0 ? threadName.substring(0, threadName.lastIndexOf(" ")) : threadName;
 
-        addThreadGroupRecord(threadName, normalizeTime(res.getEndTime()), res.getGroupThreads());
+        //fix response to fast can miss points
+        long timeForAgg = Math.max(getGranulation(), res.getTime());
+        addThreadGroupRecord(threadName, normalizeTime(res.getEndTime()), res.getGroupThreads(), timeForAgg);
         updateGui(null);
     }
 

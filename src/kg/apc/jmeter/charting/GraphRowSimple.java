@@ -64,4 +64,10 @@ public class GraphRowSimple
     {
         return values.get(value);
     }
+
+    @Override
+    public Long getHigherKey(long value)
+    {
+        return values.navigableKeySet().higher(value);
+    }
 }

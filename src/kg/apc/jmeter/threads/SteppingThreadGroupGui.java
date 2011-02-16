@@ -1,4 +1,3 @@
-// TODO: сделать чтобы при переходе между контролами обновлялся график
 package kg.apc.jmeter.threads;
 
 import java.awt.BorderLayout;
@@ -23,7 +22,6 @@ import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
-import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
 import org.apache.jorphan.collections.HashTree;
 import org.apache.jorphan.logging.LoggingManager;

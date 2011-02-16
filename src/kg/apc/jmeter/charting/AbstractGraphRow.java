@@ -182,12 +182,10 @@ public abstract class AbstractGraphRow
       Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = this.iterator();
 
       double calcY;
-      boolean valid;
 
       while (it.hasNext())
       {
           calcY = 0;
-          valid = true;
 
           if (factor == 1)
           {
@@ -195,25 +193,28 @@ public abstract class AbstractGraphRow
               AbstractGraphPanelChartElement elt = (AbstractGraphPanelChartElement) element.getValue();
               calcY = elt.getValue();
           } else {
+              double nbPointProcessed = 0;
               for (int i = 0; i < factor; i++)
               {
                   if (it.hasNext())
                   {
                       element = it.next();
                       calcY = calcY + ((AbstractGraphPanelChartElement) element.getValue()).getValue();
-                  } else {
-                      valid = false;
-                  }
+                      nbPointProcessed++;
+                  } 
               }
-              calcY = calcY / factor;
+              calcY = calcY / nbPointProcessed;
           }
 
-          if(valid)
-          {
-              if(minMax[0] > calcY) minMax[0] = calcY;
-              if(minMax[1] < calcY) minMax[1] = calcY;
-          }
+          if(minMax[0] > calcY) minMax[0] = calcY;
+          if(minMax[1] < calcY) minMax[1] = calcY;
        }
+
+      //if bars min always 0
+      if(isDrawBar())
+      {
+          minMax[0] = 0;
+      }
       return minMax;
    }
 
@@ -352,6 +353,11 @@ public abstract class AbstractGraphRow
      * @return the floor element, null if not exist
      */
     public AbstractGraphPanelChartElement getLowerElement(long value)
+    {
+        throw new UnsupportedOperationException();
+    }
+    
+    public Long getHigherKey(long value)
     {
         throw new UnsupportedOperationException();
     }

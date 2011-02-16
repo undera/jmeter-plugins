@@ -13,7 +13,9 @@ import kg.apc.jmeter.charting.GraphPanelChart;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
 import org.apache.jmeter.gui.tree.JMeterTreeNode;
+import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.Clearable;
+import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.BooleanProperty;
 import org.apache.jmeter.testelement.property.LongProperty;
@@ -141,8 +143,7 @@ public abstract class AbstractGraphPanelVisualizer
 
     /**
      *
-     * @return
-     */
+     * @retur     */
     @Override
     public Image getImage()
     {
@@ -171,6 +172,13 @@ public abstract class AbstractGraphPanelVisualizer
     public TestElement createTestElement()
     {
         TestElement el = super.createTestElement();
+        if (el instanceof ResultCollector)
+        {
+            ResultCollector rc = (ResultCollector) el;
+            SampleSaveConfiguration sc = rc.getSaveConfig();
+            sc.setThreadCounts(true);
+        }
+
         return el;
     }
 

@@ -113,16 +113,4 @@ public class DateTimeRendererTest
         assertEquals("00:10:00", text);
     }
 
-    @Test
-    public void testConstructor_rel_below_zero()
-    {
-        System.out.println("relTime2");
-        long start = System.currentTimeMillis();
-        DateTimeRenderer instance = new DateTimeRenderer(HHMMSS, start);
-
-        instance.setValue(start-1);
-        String text = instance.getText();
-        System.out.println(text);
-        assertEquals("00:00:00", text);
-    }
 }

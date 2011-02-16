@@ -1,6 +1,7 @@
 package kg.apc.jmeter.config;
 
 import java.io.IOException;
+import org.apache.jmeter.config.CSVDataSet;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
@@ -16,6 +17,7 @@ import org.apache.log.Logger;
 /**
  *
  * @author apc
+ * @see CSVDataSet
  */
 public class VariablesFromCSVFile
       extends ConfigTestElement

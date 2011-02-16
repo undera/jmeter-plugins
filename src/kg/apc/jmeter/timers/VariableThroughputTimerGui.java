@@ -24,9 +24,9 @@ import kg.apc.jmeter.charting.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowSumValues;
 import kg.apc.jmeter.charting.ColorsDispatcher;
+import kg.apc.jmeter.threads.UltimateThreadGroup;
 import kg.apc.jmeter.threads.UltimateThreadGroupGui;
 import org.apache.jmeter.control.LoopController;
-import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.gui.util.VerticalPanel;
@@ -35,9 +35,7 @@ import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
-import org.apache.jmeter.threads.AbstractThreadGroup;
-import org.apache.jmeter.threads.JMeterThread;
-import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
+import org.apache.jmeter.timers.gui.AbstractTimerGui;
 import org.apache.jorphan.collections.HashTree;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -48,7 +46,7 @@ import org.apache.log.Logger;
  * @see UltimateThreadGroupGui
  */
 public class VariableThroughputTimerGui
-      extends AbstractThreadGroupGui
+      extends AbstractTimerGui
       implements TableModelListener,
                  CellEditorListener
 {
@@ -63,20 +61,19 @@ public class VariableThroughputTimerGui
     */
    public static final String[] columnIdentifiers = new String[]
    {
-      "Start Threads Count", "Initial Delay, sec", "Startup Time, sec", "Hold Load For, sec", "Shutdown Time"
+      "Start RPS", "End RPS", "Duration, sec"
    };
    /**
     *
     */
    public static final Class[] columnClasses = new Class[]
    {
-      String.class, String.class, String.class, String.class, String.class
+      String.class, String.class, String.class
    };
    private static Integer[] defaultValues = new Integer[]
    {
-      100, 0, 30, 60, 10
+      0, 1000, 60
    };
-   private LoopControlPanel loopPanel;
    private PowerTableModel tableModel;
    JTable grid;
    JButton addRowButton;
@@ -101,10 +98,6 @@ public class VariableThroughputTimerGui
       containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
       containerPanel.add(createChart(), BorderLayout.CENTER);
       add(containerPanel, BorderLayout.CENTER);
-
-      // this magic LoopPanel provides functionality for thread loops
-      // TODO: find a way without magic
-      createControllerPanel();
    }
 
    private JPanel createParamsPanel()
@@ -144,7 +137,7 @@ public class VariableThroughputTimerGui
    @Override
    public String getStaticLabel()
    {
-      return "Ultimate Thread Group";
+      return "Variable Throughput Timer";
    }
 
    public TestElement createTestElement()
@@ -167,13 +160,13 @@ public class VariableThroughputTimerGui
       {
          VariableThroughputTimer utg = (VariableThroughputTimer) tg;
          VariableThroughputTimer utgForPreview = new VariableThroughputTimer();
-         CollectionProperty rows = VariableThroughputTimer.tableModelToCollectionProperty(tableModel);
+         CollectionProperty rows = UltimateThreadGroup.tableModelToCollectionProperty(tableModel);
          utg.setData(rows);
-         utgForPreview.setData(VariableThroughputTimer.tableModelToCollectionPropertyEval(tableModel));
+         utgForPreview.setData(UltimateThreadGroup.tableModelToCollectionPropertyEval(tableModel));
 
          updateChart(utgForPreview);
-         utg.setSamplerController((LoopController) loopPanel.createTestElement());
       }
+      
       super.configureTestElement(tg);
    }
 
@@ -188,28 +181,18 @@ public class VariableThroughputTimerGui
       if (!(threadValues instanceof NullProperty))
       {
          CollectionProperty columns = (CollectionProperty) threadValues;
-         //log.info("Received colimns collection with no columns " + columns.size());
          PropertyIterator iter = columns.iterator();
          int count = 0;
          while (iter.hasNext())
          {
             List<?> list = (List<?>) iter.next().getObjectValue();
-            //log.info("Rows: " + list.size());
             tableModel.setColumnData(count, list);
             count++;
          }
-         //log.info("Table rows after: " + tableModel.getRowCount());
-         //updateChart(utg); //Not needed
       }
       else
       {
          log.warn("Received null property instead of collection");
-      }
-
-      TestElement te = (TestElement) tg.getProperty(AbstractThreadGroup.MAIN_CONTROLLER).getObjectValue();
-      if (te != null)
-      {
-         loopPanel.configure(te);
       }
    }
 
@@ -224,7 +207,7 @@ public class VariableThroughputTimerGui
 
       final HashTree hashTree = new HashTree();
       hashTree.add(new LoopController());
-      JMeterThread thread = new JMeterThread(hashTree, null, null);
+      //JMeterThread thread = new JMeterThread(hashTree, null, null);
 
       long now = System.currentTimeMillis();
 
@@ -233,6 +216,7 @@ public class VariableThroughputTimerGui
 
       row.add(now, 0);
 
+      /*
       // users in
       int numThreads = tg.getNumThreads();
       for (int n = 0; n < numThreads; n++)
@@ -251,19 +235,9 @@ public class VariableThroughputTimerGui
          row.add(thread.getEndTime() - 1, 0);
          row.add(thread.getEndTime(), -1);
       }
-
+      */
       model.put("Expected parallel users count", row);
       chart.repaint();
-   }
-
-   private JPanel createControllerPanel()
-   {
-      loopPanel = new LoopControlPanel(false);
-      LoopController looper = (LoopController) loopPanel.createTestElement();
-      looper.setLoops(-1);
-      looper.setContinueForever(true);
-      loopPanel.configure(looper);
-      return loopPanel;
    }
 
    private Component createChart()

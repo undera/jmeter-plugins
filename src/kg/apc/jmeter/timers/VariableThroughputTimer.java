@@ -7,6 +7,8 @@ import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.timers.ConstantThroughputTimer;
 import org.apache.jmeter.timers.Timer;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  *
@@ -17,7 +19,9 @@ public class VariableThroughputTimer
         extends AbstractTestElement
         implements Timer, NoThreadClone
 {
-    private int cnt;
+   private static final Logger log= LoggingManager.getLoggerForClass();;
+
+   private int cnt;
     private long time=0;
     private long curTime; // put this in fields because we don't want create variables in tight loops
     private long secs;
@@ -33,14 +37,15 @@ public class VariableThroughputTimer
                 cnt=0;
             }
 
+            cnt++;
+
             if (cnt>=getCurrentRPS())
             {
-                return 1000-curTime%1000;
+               long d=1000*(cnt-getCurrentRPS());
+               log.info("delaying for "+d);
+                return d;
             }
-            else
-            {
-                cnt++;
-            }
+
         }
 
         return 0;
@@ -56,6 +61,6 @@ public class VariableThroughputTimer
     }
 
     private int getCurrentRPS() {
-        return 10;
+        return 50;
     }
 }

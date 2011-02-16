@@ -93,7 +93,9 @@ public class VariableThroughputTimerGui
     */
    protected final void init()
    {
-      JPanel containerPanel = new VerticalPanel();
+       setLayout(new BorderLayout());
+        add(makeTitlePanel(), BorderLayout.NORTH);
+        JPanel containerPanel = new VerticalPanel();
 
       containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
       containerPanel.add(createChart(), BorderLayout.CENTER);
@@ -103,7 +105,7 @@ public class VariableThroughputTimerGui
    private JPanel createParamsPanel()
    {
       JPanel panel = new JPanel(new BorderLayout(5, 5));
-      panel.setBorder(BorderFactory.createTitledBorder("Threads Schedule"));
+      panel.setBorder(BorderFactory.createTitledBorder("Request Per Second (RPS) Schedule"));
       panel.setPreferredSize(new Dimension(200, 200));
 
       JScrollPane scroll = new JScrollPane(createGrid());
@@ -236,7 +238,7 @@ public class VariableThroughputTimerGui
          row.add(thread.getEndTime(), -1);
       }
       */
-      model.put("Expected parallel users count", row);
+      model.put("Expected RPS", row);
       chart.repaint();
    }
 
@@ -247,7 +249,7 @@ public class VariableThroughputTimerGui
       chart.setRows(model);
       chart.setDrawFinalZeroingLines(true);
       chart.setxAxisLabel("Elapsed time");
-      chart.setyAxisLabel("Number of active threads");
+      chart.setyAxisLabel("RPS");
       return chart;
    }
 

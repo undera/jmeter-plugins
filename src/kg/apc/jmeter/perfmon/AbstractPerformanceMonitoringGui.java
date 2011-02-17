@@ -1,12 +1,15 @@
 package kg.apc.jmeter.perfmon;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ConcurrentSkipListMap;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -32,6 +35,7 @@ import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.DateTimeRenderer;
@@ -59,6 +63,8 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     JTable grid;
     JButton addRowButton;
     JButton deleteRowButton;
+    private JTextArea errorTextArea;
+    private JScrollPane scrollPan;
     private long relativeStartTime=0;
     public static final String[] columnIdentifiers = new String[]
     {
@@ -108,16 +114,36 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
 
     private void initGui()
     {
+        JPanel topContainer = new JPanel();
+        topContainer.setLayout(new BorderLayout());
+
+
         JPanel containerPanel = new VerticalPanel();
 
         containerPanel.add(makeTitlePanel(), BorderLayout.NORTH);
         containerPanel.add(createParamsPanel(), BorderLayout.CENTER);
         containerPanel.add(createMonitoringTypePanel(), BorderLayout.SOUTH);
 
+       
+
+        scrollPan = new JScrollPane();
+        scrollPan.setMinimumSize(new Dimension(100, 50));
+        scrollPan.setPreferredSize(new Dimension(100, 50));
+  
+        errorTextArea = new JTextArea();
+        errorTextArea.setForeground(Color.red);
+        errorTextArea.setEditable(false);
+        //errorTextArea.setText("Error!!!\nError!!!\nError!!!\nError!!!\nError!!!\n");
+        scrollPan.setViewportView(errorTextArea);
+
+        topContainer.add(containerPanel, BorderLayout.CENTER);
+        topContainer.add(scrollPan, BorderLayout.SOUTH);
 
         setLayout(new BorderLayout());
-        add(containerPanel, BorderLayout.NORTH);
+        add(topContainer, BorderLayout.NORTH);
         add(createGraphPanel(), BorderLayout.CENTER);
+
+        scrollPan.setVisible(false);
 
         settingsPanel = getSettingsPanel();
         graphPanel.getSettingsTab().add(settingsPanel, BorderLayout.CENTER);
@@ -299,7 +325,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         model.clear();
         colors.reset();
         graphPanel.clearRowsTab();
-        graphPanel.getGraphObject().clearErrorMessage();
+        clearErrorMessage();
         updateGui();
         repaint();
         relativeStartTime = 0;
@@ -430,9 +456,20 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         return time - (time - relativeStartTime)%MetricsProvider.DELAY;
     }
 
+    public void setErrorMessage(String msg)
+    {
+        scrollPan.setVisible(true);
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss - ");
+        errorTextArea.setText(errorTextArea.getText() + formatter.format(new Date()) + msg + "\n");
+    }
+
+    public void clearErrorMessage()
+    {
+        errorTextArea.setText("");
+        scrollPan.setVisible(false);
+    }
+
     public abstract void addPerfRecord(String serverName, double value);
-    public abstract void setErrorMessage(String msg);
-    public abstract void clearErrorMessage();
     public abstract void setChartType(int monitorType);
     public abstract void setLoadMenuEnabled(boolean enabled);
  }

@@ -130,19 +130,6 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
       updateGui(null);
    }
 
-    @Override
-   public void setErrorMessage(String msg)
-   {
-        graphPanel.getGraphObject().setErrorMessage(msg);
-        graphPanel.getGraphObject().repaint();
-   }
-
-    @Override
-   public void clearErrorMessage()
-   {
-       graphPanel.getGraphObject().clearErrorMessage();
-       graphPanel.getGraphObject().repaint();
-   }
 
     @Override
    public void setChartType(int monitorType)

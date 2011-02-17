@@ -50,14 +50,15 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         MetricsProvider.openOutputFile();
     }
 
-    private static synchronized void openOutputFile() {
-        if(outWriter == null)
+    private static synchronized void openOutputFile()
+    {
+        if (outWriter == null)
         {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
-            
+
             String fileName = JMeterUtils.getPropDefault("jppmfile", "perfmon_" + formatter.format(System.currentTimeMillis()) + ".jppm");
             File f = new File(fileName);
-            
+
             try
             {
                 outWriter = new BufferedWriter(new FileWriter(f));
@@ -71,7 +72,8 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         }
     }
 
-    private void addLine(String line) {
+    private void addLine(String line)
+    {
         try
         {
             String[] data = line.split(";");
@@ -79,7 +81,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
             int type = Integer.valueOf(data[1]);
             double value = Double.valueOf(data[3]);
 
-            if(type == monitorType)
+            if (type == monitorType)
             {
                 gui.addPerfRecord(data[2], value, time);
             }
@@ -107,7 +109,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
                 boolean isFileEmpty = true;
                 while (line != null)
                 {
-                    if(line.length()>0)
+                    if (line.length() > 0)
                     {
                         isFileEmpty = false;
                         addLine(line);
@@ -115,7 +117,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
                     line = reader.readLine();
                 }
 
-                if(isFileEmpty)
+                if (isFileEmpty)
                 {
                     reportError(file.getAbsolutePath() + " is empty.");
                 }
@@ -135,10 +137,11 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         }
     }
 
-    private synchronized static void writeRecord(String line) {
+    private synchronized static void writeRecord(String line)
+    {
         try
         {
-            if(outWriter != null)
+            if (outWriter != null)
             {
                 outWriter.write(line);
                 outWriter.newLine();
@@ -205,34 +208,37 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
     {
         for (int i = 0; i < connectors.length; i++)
         {
-            boolean success = true;
-            switch (monitorType)
+            if (connectors[i] != null)
             {
-                case AbstractPerformanceMonitoringGui.PERFMON_CPU:
-                    success = addCPURecord(connectors[i]);
-                    break;
-                case AbstractPerformanceMonitoringGui.PERFMON_MEM:
-                    success = addMemRecord(connectors[i]);
-                    break;
-                case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
-                    success = addSwapRecord(connectors[i]);
-                    break;
-                case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
-                    success = addDisksIORecord(connectors[i]);
-                    break;
-                case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
-                    success = addNetworkRecord(connectors[i]);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unhandled perfmon type:" + monitorType);
-            }
-            if (!success)
-            {
-                //don't display error message if test is stopping
-                if (testIsRunning)
+                boolean success = true;
+                switch (monitorType)
                 {
-                    reportError("Connection lost with '" + connectors[i].getHost() + "'!");
-                    testEnded();
+                    case AbstractPerformanceMonitoringGui.PERFMON_CPU:
+                        success = addCPURecord(connectors[i]);
+                        break;
+                    case AbstractPerformanceMonitoringGui.PERFMON_MEM:
+                        success = addMemRecord(connectors[i]);
+                        break;
+                    case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
+                        success = addSwapRecord(connectors[i]);
+                        break;
+                    case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
+                        success = addDisksIORecord(connectors[i]);
+                        break;
+                    case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
+                        success = addNetworkRecord(connectors[i]);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unhandled perfmon type:" + monitorType);
+                }
+                if (!success)
+                {
+                    //don't display error message if test is stopping
+                    if (testIsRunning)
+                    {
+                        reportError("Connection lost with '" + connectors[i].getHost() + "'!");
+                        connectors[i] = null;
+                    }
                 }
             }
         }
@@ -331,38 +337,43 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         {
             AgentConnector connector = null;
             oldValues.clear();
-            try
+
+            if (!testIsRunning)
             {
-                if (!testIsRunning)
+                //graphPanel.getGraphObject().clearForcedMessage();
+                for (int i = 0; i < connectors.length; i++)
                 {
-                    //graphPanel.getGraphObject().clearForcedMessage();
-                    for (int i = 0; i < connectors.length; i++)
+                    try
                     {
                         connector = connectors[i];
                         connector.connect(socketFactory.createSocket(connector.getHost(), connector.getPort()));
-                    }
-                    Thread t = new Thread(this);
-                    testIsRunning = true;
-                    t.start();
-                    if(gui != null)
+                    } catch (UnknownHostException e)
                     {
-                        gui.setLoadMenuEnabled(false);
+                        reportError("Unknown host exception occured. Please verify access to the server '" + connector.getHost() + "'.");
+                        connectors[i] = null;
+                    } catch (IOException e)
+                    {
+                        reportError("Unable to connect to server '" + connector.getHost() + "'. Please verify the agent is running on port " + connector.getPort() + ".");
+                        connectors[i] = null;
                     }
                 }
-            } catch (UnknownHostException e)
-            {
-                reportError("Unknown host exception occured. Please verify access to the server '" + connector.getHost() + "'.");
-            } catch (IOException e)
-            {
-                reportError("Unable to connect to server '" + connector.getHost() + "'. Please verify the agent is running on port " + connector.getPort() + ".");
+                Thread t = new Thread(this);
+                testIsRunning = true;
+                t.start();
+                if (gui != null)
+                {
+                    gui.setLoadMenuEnabled(false);
+                }
             }
         }
+
     }
 
     public void testEnded()
     {
         testIsRunning = false;
-        if(gui != null)
+
+        if (gui != null)
         {
             gui.setLoadMenuEnabled(true);
         }
@@ -373,7 +384,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
                 connectors[i].disconnect();
             }
         }
-        if(outWriter != null)
+        if (outWriter != null)
         {
             try
             {
@@ -390,5 +401,6 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
     void setSocketFactory(SocketFactory sf)
     {
         socketFactory = sf;
+
     }
 }

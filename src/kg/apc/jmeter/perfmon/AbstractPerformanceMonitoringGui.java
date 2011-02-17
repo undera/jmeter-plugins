@@ -35,7 +35,6 @@ import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.ColorsDispatcher;
@@ -133,6 +132,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
   
         errorTextArea = new JTextArea();
         errorTextArea.setForeground(Color.red);
+        errorTextArea.setBackground(new Color(255,255,153));
         errorTextArea.setEditable(false);
         //errorTextArea.setText("Error!!!\nError!!!\nError!!!\nError!!!\nError!!!\n");
         scrollPan.setViewportView(errorTextArea);

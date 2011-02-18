@@ -54,7 +54,10 @@ public class BytesThroughputOverTimeGui
    {
         super.add(res);
         addBytes("Bytes Received per Second", normalizeTime(res.getEndTime()), res.getBytes());
-        addBytes("Bytes Sent per Second", normalizeTime(res.getEndTime()), res.getSamplerData().length());
+        int sentBytes = 0;
+        String samplerData = res.getSamplerData();
+        if(samplerData != null) sentBytes = samplerData.length();
+        addBytes("Bytes Sent per Second", normalizeTime(res.getEndTime()), sentBytes);
         updateGui(null);
     }
 

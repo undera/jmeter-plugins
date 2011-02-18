@@ -34,6 +34,8 @@ import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 import java.util.List;
 import javax.swing.ButtonGroup;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import kg.apc.jmeter.charting.GraphPanelChart;
@@ -148,7 +150,17 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
 
         settingsPanel = getSettingsPanel();
         graphPanel.getSettingsTab().add(settingsPanel, BorderLayout.CENTER);
+        registerPopup();
     }
+
+    private void registerPopup()
+   {
+      JPopupMenu popup = new JPopupMenu();
+      JMenuItem hideMessagesMenu = new JMenuItem("Hide Error Panel");
+      hideMessagesMenu.addActionListener(new HideAction());
+      popup.add(hideMessagesMenu);
+      errorTextArea.setComponentPopupMenu(popup);
+   }
 
     private JPanel createParamsPanel()
     {
@@ -475,4 +487,17 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     public abstract void addPerfRecord(String serverName, double value);
     public abstract void setChartType(int monitorType);
     public abstract void setLoadMenuEnabled(boolean enabled);
+
+    private class HideAction
+         implements ActionListener
+   {
+
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            scrollPan.setVisible(false);
+            updateGui();
+        }
+        
+    }
  }

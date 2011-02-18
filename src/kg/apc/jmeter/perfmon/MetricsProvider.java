@@ -381,7 +381,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface
         {
             for (int i = 0; i < connectors.length; i++)
             {
-                connectors[i].disconnect();
+                if(connectors[i] != null) connectors[i].disconnect();
             }
         }
         if (outWriter != null)

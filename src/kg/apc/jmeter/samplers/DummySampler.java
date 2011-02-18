@@ -35,17 +35,6 @@ public class DummySampler
    public SampleResult sample(Entry e)
    {
       SampleResult res = new SampleResult();
-      // response time
-      res.sampleStart();
-      try
-      {
-         Thread.sleep(getResponseTime());
-      }
-      catch (InterruptedException ex)
-      {
-      }
-      res.sampleEnd();
-
       res.setSampleLabel(getName());
 
       // source data
@@ -59,6 +48,17 @@ public class DummySampler
       // responde data
       res.setDataType(SampleResult.TEXT);
       res.setResponseData(getResponseData().getBytes());
+
+      // response time
+      res.sampleStart();
+      try
+      {
+         Thread.sleep(getResponseTime());
+      }
+      catch (InterruptedException ex)
+      {
+      }
+      res.sampleEnd();
 
       return res;
    }

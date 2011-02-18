@@ -19,7 +19,7 @@ public class BytesThroughputOverTimeGui
     {
         super();
         setGranulation(1000);
-        graphPanel.getGraphObject().setyAxisLabel("Bytes received /sec");
+        graphPanel.getGraphObject().setyAxisLabel("Bytes /sec");
     }
 
     private void addBytes(String threadGroupName, long time, int value)

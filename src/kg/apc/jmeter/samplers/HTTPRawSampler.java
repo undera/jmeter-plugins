@@ -8,7 +8,6 @@ import java.nio.channels.SocketChannel;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -18,41 +17,65 @@ import org.apache.log.Logger;
  */
 public class HTTPRawSampler extends AbstractSampler {
 
+    static final String HOSTNAME = "hostname";
+    static final String PORT = "port";
+    static String BODY = "body";
+    // 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private String data = "GET / HTTP/1.1\r\n"
-            + "Connection: close\r\n"
-            + "User-Agent: Jakarta Commons-HttpClient/3.1\r\n"
-            + "Host: "+getHostName()+":"+getPort()+"\r\n\r\n";
-    private SocketAddress addr;
-    private ByteBuffer recvBuf=ByteBuffer.allocateDirect(1024*1);
+    private ByteBuffer recvBuf = ByteBuffer.allocateDirect(1024 * 1); // TODO: make benchmarks to know how it impacts sampler performance
     private ByteBuffer sendBuf;
+    private SocketAddress addr;
     //private SocketChannel sock;
 
     public HTTPRawSampler() {
         super();
-        sendBuf=ByteBuffer.wrap(data.getBytes());
-        addr=new InetSocketAddress(getHostName(), getPort());
     }
 
-    public final String getHostName()
-    {
-        String res = JMeterUtils.getPropDefault("host", "192.168.0.1");
-        if (res.length()<1) res="192.168.0.1";
-        //log.debug("Host:"+res);
-        return res;
+    public final String getHostName() {
+        return getPropertyAsString(HOSTNAME);
     }
 
-    private int getPort() {
-        int res = 80;
-        try { res=Integer.parseInt(JMeterUtils.getPropDefault("port", "80")); }
-        catch (Exception e) {
-        log.error("", e);}
-        return res;
+    void setHostName(String text) {
+        addr = null; // reset cached addr and SendBuf
+        setProperty(HOSTNAME, text);
+    }
+
+    public String getPort() {
+        return getPropertyAsString(PORT);
+    }
+
+    public void setPort(String value) {
+        addr = null; // reset cached addr and SendBuf
+        setProperty(PORT, value);
+    }
+
+    public String getRawRequest() {
+        return getPropertyAsString(HTTPRawSampler.BODY);
+    }
+
+    public void setRawRequest(String value) {
+        addr = null; // reset cached addr and SendBuf
+        setProperty(BODY, value);
     }
 
     public SampleResult sample(Entry e) {
+        if (addr == null) {
+            log.debug("Create cached values");
+            int port;
+            try {
+                port = Integer.parseInt(getPort());
+            } catch (NumberFormatException ex) {
+                log.warn("Wrong port number: " + getPort() + ", defaulting to 80", ex);
+                port=80;
+            }
+            //log.info("B "+getRawRequest().length());
+            sendBuf = ByteBuffer.wrap(getRawRequest().getBytes());
+            //log.info("A "+sendBuf.array().length);
+            addr = new InetSocketAddress(getHostName(), port);
+        }
+
         SampleResult res = new SampleResult();
-        res.setSampleLabel(NAME);
+        res.setSampleLabel(getName());
         res.setSamplerData(getRawRequest());
         res.sampleStart();
         res.setSuccessful(true);
@@ -67,13 +90,9 @@ public class HTTPRawSampler extends AbstractSampler {
         return res;
     }
 
-    private String getRawRequest() {
-        return data;
-    }
-
     private byte[] processIO(SampleResult res) throws Exception {
         //log.info("Begin IO");
-        ByteArrayOutputStream response=new ByteArrayOutputStream();
+        ByteArrayOutputStream response = new ByteArrayOutputStream();
         //log.info("Open sock");
         SocketChannel sock = SocketChannel.open(addr);
         //sock.connect(addr);
@@ -82,10 +101,10 @@ public class HTTPRawSampler extends AbstractSampler {
         //log.info("send");
         sendBuf.rewind();
         sock.write(sendBuf);
-        int cnt=0;
+        int cnt = 0;
         recvBuf.clear();
 
-        while ((cnt=sock.read(recvBuf)) != -1) {
+        while ((cnt = sock.read(recvBuf)) != -1) {
             //log.info("Read "+cnt);
             recvBuf.flip();
             byte[] bytes = new byte[cnt];

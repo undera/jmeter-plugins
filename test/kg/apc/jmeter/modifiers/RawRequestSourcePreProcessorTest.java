@@ -44,7 +44,7 @@ public class RawRequestSourcePreProcessorTest {
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
         instance.setFileName("/home/undera/bs0.ammo");
         instance.setRewindOnEOF(true);
-        for (int n=1; n<10; n++)
+        for (int n=1; n<100; n++)
         {
             instance.process();
             String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());

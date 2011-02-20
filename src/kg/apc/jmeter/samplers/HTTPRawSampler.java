@@ -68,9 +68,6 @@ public class HTTPRawSampler extends AbstractSampler {
                 log.warn("Wrong port number: " + getPort() + ", defaulting to 80", ex);
                 port=80;
             }
-            //log.info("B "+getRawRequest().length());
-            sendBuf = ByteBuffer.wrap(getRawRequest().getBytes());
-            //log.info("A "+sendBuf.array().length);
             addr = new InetSocketAddress(getHostName(), port);
         }
 
@@ -99,7 +96,7 @@ public class HTTPRawSampler extends AbstractSampler {
         //sock.connect(addr);
 
         //log.info("send");
-        sendBuf.rewind();
+        sendBuf = ByteBuffer.wrap(getRawRequest().getBytes());
         sock.write(sendBuf);
         int cnt = 0;
         recvBuf.clear();

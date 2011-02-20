@@ -12,6 +12,8 @@ import java.util.Locale;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeListener;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
+import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JMeterUtils;
 import org.junit.Test;
 
@@ -45,6 +47,7 @@ public abstract class TestJMeterUtils
       jMeterTreeListener = new JMeterTreeListener();
       jMeterTreeListener.setModel(jMeterTreeModel);
       GuiPackage.getInstance(jMeterTreeListener, jMeterTreeModel);
+      JMeterContextService.getContext().setVariables(new JMeterVariables());
    }
 
    /**

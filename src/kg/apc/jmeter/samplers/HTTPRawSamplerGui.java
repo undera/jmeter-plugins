@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  *
@@ -19,6 +21,7 @@ import org.apache.jmeter.testelement.TestElement;
 public class HTTPRawSamplerGui
      extends AbstractSamplerGui
 {
+    private static final Logger log = LoggingManager.getLoggerForClass();
    //private JCheckBox isSuccessful;
    private JTextField hostName;
    private JTextField port;
@@ -30,6 +33,7 @@ public class HTTPRawSamplerGui
     */
    public HTTPRawSamplerGui()
    {
+      log.debug("Creating");
       init();
       initFields();
    }
@@ -73,7 +77,7 @@ public class HTTPRawSamplerGui
          rawSampler.setHostName(hostName.getText());
          rawSampler.setPort(port.getText());
          // first replace removes old \r\n
-         // second eliminates orphan \rs
+         // second eliminates orphan \r
          // third make all newlines - old and new  like \r\n
          String data=requestData.getText().replace("\r\n", "\n").replace("\r", "").replace("\n", "\r\n");
          rawSampler.setRawRequest(data);

@@ -428,6 +428,16 @@ public class GraphPanelChart
          row = it.next();
          rowValue = row.getValue();
 
+         if (rowValue.getMaxX() > maxXVal)
+         {
+            maxXVal = rowValue.getMaxX();
+         }
+
+         if (rowValue.getMinX() < minXVal)
+         {
+            minXVal = rowValue.getMinX();
+         }
+
          if (!rowValue.isDrawOnChart())
          {
             continue;
@@ -445,18 +455,6 @@ public class GraphPanelChart
             //we draw only positives values
             minYVal = rowMinMaxY[0] >= 0 ? rowMinMaxY[0] : 0;
          }
-
-         if (rowValue.getMaxX() > maxXVal)
-         {
-            maxXVal = rowValue.getMaxX();
-         }
-
-         if (rowValue.getMinX() < minXVal)
-         {
-            minXVal = rowValue.getMinX();
-         }
-
-         
 
          if(rowValue.isDrawBar()) {
             barValue =  rowValue.getGranulationValue();

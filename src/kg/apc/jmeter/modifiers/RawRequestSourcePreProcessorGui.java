@@ -1,4 +1,5 @@
 // TODO: have "check file consistency" button
+// TODO: add "browse" button
 package kg.apc.jmeter.modifiers;
 
 import java.awt.BorderLayout;

@@ -52,10 +52,10 @@ public class VariableThroughputTimerTest {
     public void testDelay1000() throws InterruptedException {
         System.out.println("delay");
         VariableThroughputTimer instance = new VariableThroughputTimer();
-        for (int n=0; n<1500; n++)
+        for (int n=0; n<15000; n++)
         {
             long result = instance.delay();
-            //Thread.sleep(result/2);
+            Thread.sleep(result/100);
             //assertEquals(0, result);
         }
     }

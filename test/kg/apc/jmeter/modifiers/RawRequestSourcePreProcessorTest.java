@@ -102,7 +102,7 @@ public class RawRequestSourcePreProcessorTest {
             String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
             if(result.length()<1)
             {
-               assertEquals(1000, n);
+               assertEquals(154286, n);
                ok=true;
                break;
             }
@@ -110,4 +110,14 @@ public class RawRequestSourcePreProcessorTest {
         assertTrue(ok);
     }
 
-}
+   @Test
+    public void testProcess_file_not_found() {
+        System.out.println("file_not_found");
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.setFileName("/nofilefortest");
+            instance.process();
+            String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
+            assertTrue(result.length()==0);
+    }
+
+ }

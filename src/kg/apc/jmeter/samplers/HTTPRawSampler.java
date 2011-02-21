@@ -11,6 +11,7 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+// TODO: add keep-alive ability
 /**
  *
  * @author undera

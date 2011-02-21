@@ -17,47 +17,45 @@ import org.apache.log.Logger;
  */
 public class VariableThroughputTimer
         extends AbstractTestElement
-        implements Timer, NoThreadClone
-{
-   private static final Logger log= LoggingManager.getLoggerForClass();;
+        implements Timer, NoThreadClone {
 
+    private static final Logger log = LoggingManager.getLoggerForClass();
     private long cntSent;
     private long cntDelayed;
-    private long time=0;
+    private long time = 0;
     private long curTime; // put this in fields because we don't want create variables in tight loops
     private long secs;
     private long curRps;
     private double msecPerReq;
+    private long msecs;
 
     public long delay() {
         // FIXME: possible bottleneck, use more special mutex
-        synchronized(this)
-        {
-            curTime=System.currentTimeMillis();
-            secs=curTime-curTime%1000;
+        synchronized (this) {
+            curTime = System.currentTimeMillis();
+            msecs=curTime % 1000+1;
+            secs = curTime - msecs;
 
             // next second
-            if (time!=secs)
-            {
-                time=secs;
-                curRps=getCurrentRPS();
-                msecPerReq=1000/curRps;
-                cntSent=0;
-                cntDelayed=0;
-                //log.info("Second changed");
+            if (time != secs) {
+                time = secs;
+                curRps = getCurrentRPS();
+                msecPerReq = 1000d / curRps;
+                cntSent = 0; //cntDelayed > 0 ? 1 : 0; // if we have scheduled sample from previous second
+                if (cntDelayed > 0) {
+                    cntDelayed--; // reduce delayed samples count
+                }
+                log.info("Second changed");
             }
 
-            if ((curTime%1000)>(cntSent*msecPerReq))
-            {
+            if (msecs >= (int)(cntSent * msecPerReq)) {
+                //log.info("Sending\t"+msecs+"\t"+(int)(cntSent*msecPerReq)+"\t"+cntSent+"\t"+cntDelayed);
                 cntSent++;
-                //log.info("Sending "+curTime%1000+"/"+cntSent*msecPerReq);
                 return 0;
-            }
-            else
-            {
+            } else {
+                log.info("Delaying\t"+msecs+"\t"+(int)(cntSent*msecPerReq)+"\t"+cntSent+"\t"+cntDelayed);
                 cntDelayed++;
-                long d=1010*(cntDelayed);
-                //log.info("Delaying for "+d+"/"+cntDelayed+"/"+cntSent);
+                long d = 1001 * cntDelayed;
                 return d;
             }
         }
@@ -73,6 +71,6 @@ public class VariableThroughputTimer
     }
 
     private int getCurrentRPS() {
-        return 50;
+        return 1350;
     }
 }

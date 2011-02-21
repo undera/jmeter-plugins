@@ -971,8 +971,8 @@ public class GraphPanelChart
       {
          ret = false;
       }
-      else //check y
-      if (y > chartRect.y + chartRect.height || y < chartRect.y)
+      else //check y bellow x axis
+      if (y > chartRect.y + chartRect.height)
       {
          ret = false;
       }
@@ -1065,16 +1065,11 @@ public class GraphPanelChart
          x = chartRect.x + (int) ((calcPointX - minXVal) * dxForDVal);
          int yHeight = (int) ((calcPointY - minYVal) * dyForDVal);
          y = chartRect.y + chartRect.height - yHeight;
-         //fix flickering and don't draw marker to indicate it is trimmed
+         //fix bar flickering
          
-         if( y < chartRect.y)
+         if( y < chartRect.y && row.isDrawBar())
          {
              y = chartRect.y;
-             isPointBellowForcedMaxY = false;
-         }
-         else
-         {
-             isPointBellowForcedMaxY = true;
          }
 
          if (row.isDrawThickLines())
@@ -1098,17 +1093,28 @@ public class GraphPanelChart
                   g.setColor(color);
                   if (valid)
                   {
-                      //we draw doted lines to show the graph is trimmed because of maxY forced
-                      if(!isPointBellowForcedMaxY)
+                      if(prevY >= chartRect.y && y >= chartRect.y)
                       {
-                          x = x-2;
+                          g.drawLine(prevX, prevY, x, y);
+                          isPointBellowForcedMaxY = true;
                       }
-                      g.drawLine(prevX, prevY, x, y);
+                      else if(prevY >= chartRect.y && y < chartRect.y)
+                      {
+                          int x1 = (x - prevX)*(chartRect.y - prevY)/(y - prevY) + prevX;
+                          g.drawLine(prevX, prevY, x1, chartRect.y);
+                          isPointBellowForcedMaxY = false;
+                      }
+                      else if(prevY < chartRect.y && y >= chartRect.y)
+                      {
+                          int x1 = (x - prevX)*(chartRect.y - prevY)/(y - prevY) + prevX;
+                          g.drawLine(x1, chartRect.y, x, y);
+                          isPointBellowForcedMaxY = true;
+                      }
                   }
               }
               if(valid)
               {
-                  prevX = isPointBellowForcedMaxY ? x : x+4;
+                  prevX = x;
                   prevY = y;
               }
           }

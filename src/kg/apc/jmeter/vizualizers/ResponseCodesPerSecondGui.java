@@ -76,7 +76,7 @@ public class ResponseCodesPerSecondGui
         String respCode = res.getResponseCode();
         if(respCode == null || respCode.length() == 0)
         {
-            ret = ret + "Error";
+            ret = ret + "Transaction failed (no code)";
         }
         else
         {

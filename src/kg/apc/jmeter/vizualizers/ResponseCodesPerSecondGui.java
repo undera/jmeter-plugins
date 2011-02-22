@@ -73,7 +73,16 @@ public class ResponseCodesPerSecondGui
                 ret = "";
             }
         }
-        return ret + res.getResponseCode();
+        String respCode = res.getResponseCode();
+        if(respCode == null || respCode.length() == 0)
+        {
+            ret = ret + "Error";
+        }
+        else
+        {
+            ret = ret + respCode;
+        }
+        return ret;
     }
 
     @Override

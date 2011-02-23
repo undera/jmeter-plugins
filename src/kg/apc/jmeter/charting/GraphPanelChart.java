@@ -387,7 +387,7 @@ public class GraphPanelChart
             ((Graphics2D) g).setStroke(thickStroke);
          }
          g.setColor(color);
-         g.drawLine(prevX, prevY, (int) (prevX + dxForDVal), chartRect.y + chartRect.height);
+         g.drawLine(prevX, Math.max(prevY, chartRect.y), (int) (prevX + dxForDVal), chartRect.y + chartRect.height);
          if (row.isDrawThickLines())
          {
             ((Graphics2D) g).setStroke(oldStroke);

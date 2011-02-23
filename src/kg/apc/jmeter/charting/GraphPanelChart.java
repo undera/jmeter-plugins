@@ -1076,6 +1076,8 @@ public class GraphPanelChart
                   prevX = x;
               }
 
+              isPointBellowForcedMaxY = y >= chartRect.y;
+
               if (prevX >= 0)
               {
                   g.setColor(color);
@@ -1084,19 +1086,16 @@ public class GraphPanelChart
                       if(prevY >= chartRect.y && y >= chartRect.y)
                       {
                           g.drawLine(prevX, prevY, x, y);
-                          isPointBellowForcedMaxY = true;
                       }
                       else if(prevY >= chartRect.y && y < chartRect.y)
                       {
                           int x1 = (x - prevX)*(chartRect.y - prevY)/(y - prevY) + prevX;
                           g.drawLine(prevX, prevY, x1, chartRect.y);
-                          isPointBellowForcedMaxY = false;
                       }
                       else if(prevY < chartRect.y && y >= chartRect.y)
                       {
                           int x1 = (x - prevX)*(chartRect.y - prevY)/(y - prevY) + prevX;
                           g.drawLine(x1, chartRect.y, x, y);
-                          isPointBellowForcedMaxY = true;
                       }
                   }
               }

@@ -72,6 +72,12 @@ public class MetricsGetter implements AgentCommandsInterface
       try
       {
          networkInterfaces = sigarProxy.getNetInterfaceList();
+         ServerAgent.logMessage("--- Network Interfaces init: ---");
+         for(int i=0; i<networkInterfaces.length; i++)
+         {
+             ServerAgent.logMessage("Network interface detected: " + networkInterfaces[i]);
+         }
+         ServerAgent.logMessage("--------------------------------");
       }
       catch (SigarException ex)
       {
@@ -104,6 +110,13 @@ public class MetricsGetter implements AgentCommandsInterface
          {
             fileSystems[i] = (FileSystem) tmp.get(i);
          }
+         ServerAgent.logMessage("------ File Systems init: ------");
+         for(int i=0; i<fileSystems.length; i++)
+         {
+            ServerAgent.logMessage("File System detected: " + fileSystems[i].getDevName());
+         }
+
+         ServerAgent.logMessage("--------------------------------");
 
       }
       catch (SigarException ex)

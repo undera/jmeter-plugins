@@ -170,40 +170,45 @@ public class MetricsGetter implements AgentCommandsInterface
 
    }
 
-   private long[] getNetIO()
-   {
+    private long[] getNetIO()
+    {
 
-      if (networkInterfaces.length == 0)
-      {
-         return MetricsGetter.SIGAR_ERROR_ARRAY;
-      }
+        if (networkInterfaces.length == 0)
+        {
+            return MetricsGetter.SIGAR_ERROR_ARRAY;
+        }
 
-      long[] ret =
-      {
-         0L, 0L
-      };
+        long[] ret =
+        {
+            0L, 0L
+        };
 
-      try
-      {
-         for (int i = 0; i < networkInterfaces.length; i++)
-         {
-            NetInterfaceStat metrics = sigarProxy.getNetInterfaceStat(networkInterfaces[i]);
-            long rxBytes = metrics.getRxBytes();
-            long txBytes = metrics.getTxBytes();
-            if (rxBytes != -1 && txBytes != -1)
+        for (int i = 0; i < networkInterfaces.length; i++)
+        {
+            String interfaceName = networkInterfaces[i];
+            if (interfaceName != null)
             {
-               ret[0] = ret[0] + rxBytes;
-               ret[1] = ret[1] + txBytes;
+                try
+                {
+                    NetInterfaceStat metrics = sigarProxy.getNetInterfaceStat(interfaceName);
+                    long rxBytes = metrics.getRxBytes();
+                    long txBytes = metrics.getTxBytes();
+                    if (rxBytes != -1 && txBytes != -1)
+                    {
+                        ret[0] = ret[0] + rxBytes;
+                        ret[1] = ret[1] + txBytes;
+                    }
+                } catch (SigarException ex)
+                {
+                    ServerAgent.logMessage("WARNING: " + ex.getMessage() + ". " + networkInterfaces[i] + " is now removed from interface list.");
+                    networkInterfaces[i] = null;
+                }
             }
-         }
-      }
-      catch (SigarException ex)
-      {
-         ServerAgent.logMessage(ex.getMessage());
-         ret = AGENT_ERROR_ARRAY;
-      }
-      return ret;
-   }
+        }
+
+
+        return ret;
+    }
 
    /**
     * Get the current swap usage in number of pages in and number of pages out

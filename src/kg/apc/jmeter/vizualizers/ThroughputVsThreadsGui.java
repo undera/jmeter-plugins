@@ -4,6 +4,7 @@ import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.GraphRowOverallAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.text.DecimalFormatSymbols;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.gui.RateRenderer;
 
@@ -37,7 +38,7 @@ public class ThroughputVsThreadsGui
     @Override
     public String getStaticLabel()
     {
-        return "Transaction Throughput vs Threads";
+        return JMeterPluginsUtils.prefixLabel("Transaction Throughput vs Threads");
     }
 
     @Override

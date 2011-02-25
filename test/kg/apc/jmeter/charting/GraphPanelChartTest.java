@@ -499,4 +499,27 @@ public class GraphPanelChartTest
         GraphPanelChart instance = new GraphPanelChart();
         instance.setTestStartTime(time);
     }
+
+    /**
+     * Test of setForcedMaxY method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetForcedMaxY() {
+        System.out.println("setForcedMaxY");
+        long forcedMaxY = 0L;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setForcedMaxY(forcedMaxY);
+    }
+
+    /**
+     * Test of getForcedMaxY method, of class GraphPanelChart.
+     */
+    @Test
+    public void testGetForcedMaxY() {
+        System.out.println("getForcedMaxY");
+        GraphPanelChart instance = new GraphPanelChart();
+        long expResult = -1L;
+        long result = instance.getForcedMaxY();
+        assertEquals(expResult, result);
+    }
 }

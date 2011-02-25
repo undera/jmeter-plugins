@@ -2,6 +2,7 @@ package kg.apc.jmeter.control;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.config.gui.ArgumentsPanel;
 import org.apache.jmeter.control.gui.AbstractControllerGui;
@@ -52,7 +53,7 @@ public class ParameterizedControllerGui
    @Override
    public String getStaticLabel()
    {
-      return "Parameterized Controller";
+      return JMeterPluginsUtils.prefixLabel("Parameterized Controller");
    }
 
    private void init()

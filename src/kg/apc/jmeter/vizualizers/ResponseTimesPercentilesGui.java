@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphRowPercentiles;
@@ -33,7 +34,7 @@ public class ResponseTimesPercentilesGui
     @Override
     public String getStaticLabel()
     {
-        return "Response Times Percentiles";
+        return JMeterPluginsUtils.prefixLabel("Response Times Percentiles");
     }
 
     @Override

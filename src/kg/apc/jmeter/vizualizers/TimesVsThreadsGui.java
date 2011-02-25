@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.GraphRowOverallAverages;
@@ -34,7 +35,7 @@ public class TimesVsThreadsGui
     @Override
     public String getStaticLabel()
     {
-        return "Response Times vs Threads";
+        return JMeterPluginsUtils.prefixLabel("Response Times vs Threads");
     }
 
     public void add(SampleResult res)

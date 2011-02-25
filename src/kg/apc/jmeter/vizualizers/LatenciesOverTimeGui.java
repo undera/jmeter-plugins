@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
@@ -47,7 +48,7 @@ public class LatenciesOverTimeGui
    @Override
    public String getStaticLabel()
    {
-      return "Response Latencies Over Time";
+      return JMeterPluginsUtils.prefixLabel("Response Latencies Over Time");
    }
 
    @Override

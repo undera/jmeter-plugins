@@ -1,10 +1,10 @@
-package kg.apc.jmeter.modifiers;
+package kg.apc.jmeter;
 
 /**
  *
  * @author undera
  */
-class EndOfFileException extends Exception
+public class EndOfFileException extends Exception
 {
 
     public EndOfFileException(String string) {

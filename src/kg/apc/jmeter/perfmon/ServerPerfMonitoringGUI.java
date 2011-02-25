@@ -8,6 +8,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.vizualizers.CompositeResultCollector;
@@ -59,7 +60,7 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
    @Override
    public String getStaticLabel()
    {
-      return "Servers Performance Monitoring";
+      return JMeterPluginsUtils.prefixLabel("Servers Performance Monitoring");
    }
 
    private void addRowToCompositeModels(String rowName, AbstractGraphRow row)

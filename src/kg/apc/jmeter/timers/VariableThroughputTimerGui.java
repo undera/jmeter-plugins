@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
@@ -19,13 +20,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellEditor;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowSumValues;
 import kg.apc.jmeter.charting.ColorsDispatcher;
-import kg.apc.jmeter.threads.UltimateThreadGroup;
-import kg.apc.jmeter.threads.UltimateThreadGroupGui;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.util.PowerTableModel;
@@ -139,7 +139,7 @@ public class VariableThroughputTimerGui
    @Override
    public String getStaticLabel()
    {
-      return "Variable Throughput Timer";
+      return JMeterPluginsUtils.prefixLabel("Variable Throughput Timer");
    }
 
    public TestElement createTestElement()
@@ -162,14 +162,24 @@ public class VariableThroughputTimerGui
       {
          VariableThroughputTimer utg = (VariableThroughputTimer) tg;
          VariableThroughputTimer utgForPreview = new VariableThroughputTimer();
-         CollectionProperty rows = UltimateThreadGroup.tableModelToCollectionProperty(tableModel);
+         CollectionProperty rows = tableModelToCollectionProperty(tableModel);
          utg.setData(rows);
-         utgForPreview.setData(UltimateThreadGroup.tableModelToCollectionPropertyEval(tableModel));
+         utgForPreview.setData(rows);
 
          updateChart(utgForPreview);
       }
       
       super.configureTestElement(tg);
+   }
+
+   public static CollectionProperty tableModelToCollectionProperty(PowerTableModel model)
+   {
+      CollectionProperty rows = new CollectionProperty(VariableThroughputTimer.DATA_PROPERTY, new ArrayList<Object>());
+      for (int row = 0; row < model.getRowCount(); row++)
+      {
+         rows.addItem(model.getRowData(row));
+      }
+      return rows;
    }
 
    @Override

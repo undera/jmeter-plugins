@@ -58,9 +58,8 @@ public class BytesThroughputOverTimeGuiTest {
     {
         System.out.println("getStaticLabel");
         BytesThroughputOverTimeGui instance = new BytesThroughputOverTimeGui();
-        String expResult = "Bytes Throughput Over Time";
         String result = instance.getStaticLabel();
-        assertEquals(expResult, result);
+        assertTrue(result.length()>0);
     }
 
     /**

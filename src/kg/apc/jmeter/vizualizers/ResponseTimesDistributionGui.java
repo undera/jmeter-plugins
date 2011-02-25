@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
@@ -51,7 +52,7 @@ public class ResponseTimesDistributionGui
    @Override
    public String getStaticLabel()
    {
-      return "Response Times Distribution";
+      return JMeterPluginsUtils.prefixLabel("Response Times Distribution");
    }
 
    public void add(SampleResult res)

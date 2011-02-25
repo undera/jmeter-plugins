@@ -1,5 +1,6 @@
 package kg.apc.jmeter.timers;
 
+import org.apache.jmeter.gui.util.PowerTableModel;
 import java.util.LinkedList;
 import kg.apc.jmeter.threads.UltimateThreadGroup;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -16,6 +17,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class VariableThroughputTimerTest {
+    private PowerTableModel dataModel;
 
     public VariableThroughputTimerTest() {
     }
@@ -30,6 +32,19 @@ public class VariableThroughputTimerTest {
 
     @Before
     public void setUp() {
+      dataModel = new PowerTableModel(VariableThroughputTimerGui.columnIdentifiers, VariableThroughputTimerGui.columnClasses);
+      dataModel.addRow(new Integer[]
+            {
+               1, 2, 3
+            });
+      dataModel.addRow(new Integer[]
+            {
+               5, 6, 7
+            });
+      dataModel.addRow(new Integer[]
+            {
+               9, 10, 11
+            });
     }
 
     @After
@@ -52,11 +67,18 @@ public class VariableThroughputTimerTest {
     public void testDelay1000() throws InterruptedException {
         System.out.println("delay");
         VariableThroughputTimer instance = new VariableThroughputTimer();
-        for (int n=0; n<15000; n++)
+        CollectionProperty prop = VariableThroughputTimerGui.tableModelToCollectionProperty(dataModel);
+        instance.setData(prop);
+
+        long start=System.currentTimeMillis();
+        while ((System.currentTimeMillis()-start)<5000)
         {
             long result = instance.delay();
-            Thread.sleep(result/100);
-            //assertEquals(0, result);
+            if (result>0)
+            {
+                Thread.sleep(result/1000);
+                //System.out.println(result);
+            }
         }
     }
 
@@ -78,7 +100,7 @@ public class VariableThroughputTimerTest {
     public void testGetData() {
         System.out.println("getData");
         VariableThroughputTimer instance = new VariableThroughputTimer();
-        instance.setData(new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new LinkedList()));
+        instance.setData(new CollectionProperty(VariableThroughputTimer.DATA_PROPERTY, new LinkedList()));
         JMeterProperty result = instance.getData();
         //System.err.println(result.getClass().getCanonicalName());
         assertTrue(result instanceof CollectionProperty);

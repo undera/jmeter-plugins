@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
 
@@ -46,7 +47,7 @@ public class BytesThroughputOverTimeGui
     @Override
     public String getStaticLabel()
     {
-        return "Bytes Throughput Over Time";
+        return JMeterPluginsUtils.prefixLabel("Bytes Throughput Over Time");
     }
 
    @Override

@@ -63,9 +63,8 @@ public class ResponseCodesPerSecondGuiTest {
     {
         System.out.println("getStaticLabel");
         ResponseCodesPerSecondGui instance = new ResponseCodesPerSecondGui();
-        String expResult = "Response Codes per Second";
         String result = instance.getStaticLabel();
-        assertEquals(expResult, result);
+        assertTrue(result.length()>0);
     }
 
     /**
@@ -102,6 +101,16 @@ public class ResponseCodesPerSecondGuiTest {
         ResponseCodesPerSecondGui instance = new ResponseCodesPerSecondGui();
         JSettingsPanel result = instance.getSettingsPanel();
         assertNotNull(result);
+    }
+
+    /**
+     * Test of clearData method, of class ResponseCodesPerSecondGui.
+     */
+    @Test
+    public void testClearData() {
+        System.out.println("clearData");
+        ResponseCodesPerSecondGui instance = new ResponseCodesPerSecondGui();
+        instance.clearData();
     }
 
 }

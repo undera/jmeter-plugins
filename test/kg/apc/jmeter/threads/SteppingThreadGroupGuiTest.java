@@ -130,4 +130,14 @@ public class SteppingThreadGroupGuiTest
       instance.createTestElement();
       instance.configure(tg);
    }
+
+    /**
+     * Test of clearGui method, of class SteppingThreadGroupGui.
+     */
+    @Test
+    public void testClearGui() {
+        System.out.println("clearGui");
+        SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
+        instance.clearGui();
+    }
 }

@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.samplers.SampleResult;
@@ -48,7 +49,7 @@ public class ResponseCodesPerSecondGui
     @Override
     public String getStaticLabel()
     {
-        return "Response Codes per Second";
+        return JMeterPluginsUtils.prefixLabel("Response Codes per Second");
     }
 
     @Override

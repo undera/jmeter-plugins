@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.logging.LoggingManager;
@@ -41,7 +42,7 @@ public class HTTPRawSamplerGui
    @Override
    public String getStaticLabel()
    {
-      return "HTTP Raw Request";
+      return JMeterPluginsUtils.prefixLabel("HTTP Raw Request");
    }
 
    @Override

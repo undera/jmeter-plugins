@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.processor.gui.AbstractPreProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
@@ -31,7 +32,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
 
     @Override
     public String getStaticLabel() {
-        return "Raw Request Data Source PreProcessor";
+        return JMeterPluginsUtils.prefixLabel("Raw Request Data Source PreProcessor");
     }
 
     public String getLabelResource() {

@@ -1,6 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.util.Iterator;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.ColorsDispatcher;
@@ -117,7 +118,7 @@ public class ThreadsStateOverTimeGui
     @Override
     public String getStaticLabel()
     {
-        return "Active Threads Over Time";
+        return JMeterPluginsUtils.prefixLabel("Active Threads Over Time");
     }
 
     @Override

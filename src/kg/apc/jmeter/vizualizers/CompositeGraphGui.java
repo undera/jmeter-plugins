@@ -4,6 +4,7 @@ import kg.apc.jmeter.charting.DateTimeRenderer;
 import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.ImageIcon;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
@@ -60,7 +61,7 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer
     @Override
     public String getStaticLabel()
     {
-        return "Composite Graph";
+        return JMeterPluginsUtils.prefixLabel("Composite Graph");
     }
 
    @Override

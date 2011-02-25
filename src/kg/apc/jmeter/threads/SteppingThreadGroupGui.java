@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import kg.apc.jmeter.JMeterPluginsUtils;
 
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
@@ -163,7 +164,7 @@ public class SteppingThreadGroupGui
    @Override
    public String getStaticLabel()
    {
-      return "Stepping Thread Group";
+      return JMeterPluginsUtils.prefixLabel("Stepping Thread Group");
    }
 
    public TestElement createTestElement()

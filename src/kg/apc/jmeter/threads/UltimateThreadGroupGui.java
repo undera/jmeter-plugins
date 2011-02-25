@@ -19,6 +19,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellEditor;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
@@ -142,7 +143,7 @@ public class UltimateThreadGroupGui
    @Override
    public String getStaticLabel()
    {
-      return "Ultimate Thread Group";
+      return JMeterPluginsUtils.prefixLabel("Ultimate Thread Group");
    }
 
    public TestElement createTestElement()

@@ -120,4 +120,85 @@ public class RawRequestSourcePreProcessorTest {
             assertTrue(result.length()==0);
     }
 
+    /**
+     * Test of getVarName method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testGetVarName() {
+        System.out.println("getVarName");
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        String expResult = "";
+        String result = instance.getVarName();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setVarName method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testSetVarName() {
+        System.out.println("setVarName");
+        String name = "";
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.setVarName(name);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getFileName method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testGetFileName() {
+        System.out.println("getFileName");
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        String expResult = "";
+        String result = instance.getFileName();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setFileName method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testSetFileName() {
+        System.out.println("setFileName");
+        String filename = "";
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.setFileName(filename);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setRewindOnEOF method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testSetRewindOnEOF() {
+        System.out.println("setRewindOnEOF");
+        boolean isRew = false;
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.setRewindOnEOF(isRew);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getRewindOnEOF method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testGetRewindOnEOF() {
+        System.out.println("getRewindOnEOF");
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        boolean expResult = false;
+        boolean result = instance.getRewindOnEOF();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
  }

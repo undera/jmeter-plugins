@@ -3,7 +3,9 @@ package kg.apc.jmeter.timers;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import kg.apc.jmeter.util.TestJMeterUtils;
+import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -143,6 +145,17 @@ public class VariableThroughputTimerGuiTest {
         System.out.println("clearGui");
         VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
         instance.clearGui();
+    }
+
+    /**
+     * Test of tableModelToCollectionProperty method, of class VariableThroughputTimerGui.
+     */
+    @Test
+    public void testTableModelToCollectionProperty() {
+        System.out.println("tableModelToCollectionProperty");
+        PowerTableModel model = new PowerTableModel();
+        CollectionProperty result = VariableThroughputTimerGui.tableModelToCollectionProperty(model);
+        assertNotNull(result);
     }
 
 }

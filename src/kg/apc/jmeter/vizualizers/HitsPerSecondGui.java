@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
 
@@ -45,7 +46,7 @@ public class HitsPerSecondGui
     @Override
     public String getStaticLabel()
     {
-        return "Hits per Second";
+        return JMeterPluginsUtils.prefixLabel("Hits per Second");
     }
 
     @Override

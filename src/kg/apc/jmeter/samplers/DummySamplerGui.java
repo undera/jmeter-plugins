@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 
@@ -37,7 +38,7 @@ public class DummySamplerGui
    @Override
    public String getStaticLabel()
    {
-      return "Dummy Sampler";
+      return JMeterPluginsUtils.prefixLabel("Dummy Sampler");
    }
 
    @Override

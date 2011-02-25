@@ -7,6 +7,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -76,5 +77,18 @@ public class AbstractOverTimeVisualizerTest {
       AbstractOverTimeVisualizer instance = new AbstractOverTimeVisualizerImpl();
       instance.clearData();
    }
+
+    /**
+     * Test of normalizeTime method, of class AbstractOverTimeVisualizer.
+     */
+    @Test
+    public void testNormalizeTime() {
+        System.out.println("normalizeTime");
+        long time = 0L;
+        AbstractOverTimeVisualizer instance = new AbstractOverTimeVisualizerImpl();
+        long expResult = 0L;
+        long result = instance.normalizeTime(time);
+        assertEquals(expResult, result);
+    }
 
 }

@@ -141,7 +141,8 @@ public class PerformanceMonitoringTestElementTest
    public void testTestStarted_0args()
    {
       System.out.println("testStarted");
-      instance.testStarted();
+      //instance.testStarted();
+      fail("Infinite loop here!");
    }
 
    @Test

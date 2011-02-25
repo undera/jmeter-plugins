@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
@@ -76,6 +77,7 @@ public class HTTPRawSampler extends AbstractSampler {
         res.setSampleLabel(getName());
         res.setSamplerData(getRawRequest());
         res.sampleStart();
+        res.setDataType(SampleResult.TEXT);
         res.setSuccessful(true);
         try {
             res.setResponseData(processIO(res));
@@ -83,6 +85,8 @@ public class HTTPRawSampler extends AbstractSampler {
             log.error(getHostName(), ex);
             res.sampleEnd();
             res.setSuccessful(false);
+            res.setResponseMessage(ex.getMessage());
+            res.setSamplerData(JMeterPluginsUtils.getStackTrace(ex));
         }
 
         return res;

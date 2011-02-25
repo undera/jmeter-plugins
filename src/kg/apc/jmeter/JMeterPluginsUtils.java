@@ -11,4 +11,14 @@ public class JMeterPluginsUtils {
         return "JPGC - "+string;
     }
 
+    public static String getStackTrace(Exception ex) {
+        StackTraceElement[] stack = ex.getStackTrace();
+        String res = "";
+        for(int n=0; n<stack.length; n++)
+        {
+            res+=stack[n].toString()+"\n";
+        }
+        return res;
+    }
+
 }

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.logging.Level;
 import kg.apc.jmeter.EndOfFileException;
 import org.apache.commons.io.IOExceptionWithCause;
 import org.apache.jmeter.engine.util.NoThreadClone;
@@ -52,6 +53,16 @@ public class RawRequestSourcePreProcessor
             rawData = readNextChunk(getNextChunkSize());
         } catch (EndOfFileException ex) {
             log.info("End of file reached: " + getFileName());
+            if (getRewindOnEOF()) {
+                log.info("Rewind file");
+                try {
+                    file.position(0);
+                } catch (IOException ex1) {
+                    log.error("Cannot rewind", ex1);
+                }
+                process();
+                return;
+            }
         } catch (IOException ex) {
             log.error("Error reading next chunk", ex);
         }
@@ -60,15 +71,9 @@ public class RawRequestSourcePreProcessor
     }
 
     private synchronized String readNextChunk(int capacity)
-            throws IOException, EndOfFileException {
+            throws IOException {
         if (capacity == 0) {
-            if (getRewindOnEOF()) {
-                log.info("Rewind file");
-                file.position(0);
-                return readNextChunk(getNextChunkSize());
-            } else {
                 throw new EndOfFileException("Zero chunk size, possibly end of file reached.");
-            }
         }
 
         ByteBuffer buf = ByteBuffer.allocateDirect(capacity);
@@ -126,6 +131,14 @@ public class RawRequestSourcePreProcessor
         return res;
     }
 
+    private byte getOneByte() throws IOException {
+        oneByte.rewind();
+        if (file.read(oneByte) < 1) {
+            throw new EndOfFileException(getFileName());
+        }
+        return oneByte.get(0);
+    }
+
     public String getVarName() {
         return getPropertyAsString(VARIABLE_NAME);
     }
@@ -149,13 +162,5 @@ public class RawRequestSourcePreProcessor
 
     public boolean getRewindOnEOF() {
         return getPropertyAsBoolean(REWIND);
-    }
-
-    private byte getOneByte() throws IOException {
-        oneByte.rewind();
-        if (file.read(oneByte) < 1) {
-            throw new EndOfFileException(getFileName());
-        }
-        return oneByte.get(0);
     }
 }

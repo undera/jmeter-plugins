@@ -32,7 +32,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Raw Request Data Source PreProcessor");
+        return JMeterPluginsUtils.prefixLabel("Raw Data Source PreProcessor");
     }
 
     public String getLabelResource() {

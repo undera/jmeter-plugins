@@ -14,8 +14,11 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class RawRequestSourcePreProcessorTest {
+    private String basedir;
 
-    public RawRequestSourcePreProcessorTest() {
+    public RawRequestSourcePreProcessorTest()  {
+        String file=RawRequestSourcePreProcessorTest.class.getResource("rawdata_broken.txt").getPath();
+        basedir=file.substring(0, file.lastIndexOf("/"));
     }
 
     @BeforeClass
@@ -35,6 +38,23 @@ public class RawRequestSourcePreProcessorTest {
     public void tearDown() {
     }
 
+    @Test
+    public void testProcess_crlf_metaline() {
+        System.out.println("crlf_metaline");
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.setFileName(basedir+"/rawdata_crlf_metaline.txt");
+        instance.setRewindOnEOF(true);
+        for (int n=1; n<10; n++)
+        {
+            instance.process();
+            String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
+            System.out.println(n+"["+result+"]");
+            assertTrue(result.length()>0);
+            assertTrue(!(result.startsWith("\n")));
+            assertTrue(!(result.startsWith("\r")));
+        }
+    }
+
     /**
      * Test of process method, of class RawRequestSourcePreProcessor.
      */
@@ -42,7 +62,7 @@ public class RawRequestSourcePreProcessorTest {
     public void testProcess() {
         System.out.println("process zeroterm looped");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
-        instance.setFileName("/home/undera/bs0.ammo");
+        instance.setFileName(basedir+"/rawdata_zeroterm_looped.txt");
         instance.setRewindOnEOF(true);
         for (int n=1; n<100; n++)
         {
@@ -60,8 +80,8 @@ public class RawRequestSourcePreProcessorTest {
     public void testProcess_zeroterminated() {
         System.out.println("zeroterm");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
-        instance.setFileName("/home/undera/bs0.ammo");
-        for (int n=1; n<200000; n++)
+        instance.setFileName(basedir+"/rawdata_zeroterm_looped.txt");
+        for (int n=1; n<2000; n++)
         {
             instance.process();
             String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
@@ -77,13 +97,13 @@ public class RawRequestSourcePreProcessorTest {
     public void testProcess_nonzeroterminated() {
         System.out.println("nonzeroterm");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
-        instance.setFileName("/home/undera/bs.ammo");
-        for (int n=1; n<200000; n++)
+        instance.setFileName(basedir+"/rawdata_nonzeroterm.txt");
+        for (int n=1; n<2000; n++)
         {
             instance.process();
             String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
-            //System.out.println(n);
-            assertTrue(result.length()>0);
+            System.err.print(n);
+            assertTrue(result.length()>0 || n==7);
         }
     }
 
@@ -94,15 +114,15 @@ public class RawRequestSourcePreProcessorTest {
     public void testProcess_broken() {
         System.out.println("broken");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
-        instance.setFileName("/home/undera/0-bs.ammo");
+        instance.setFileName(basedir+"/rawdata_broken.txt");
         boolean ok=false;
-        for (int n=1; n<200000; n++)
+        for (int n=1; n<200; n++)
         {
             instance.process();
             String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
             if(result.length()<1)
             {
-               assertEquals(154286, n);
+               assertEquals(3, n);
                ok=true;
                break;
             }
@@ -130,8 +150,6 @@ public class RawRequestSourcePreProcessorTest {
         String expResult = "";
         String result = instance.getVarName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -143,8 +161,6 @@ public class RawRequestSourcePreProcessorTest {
         String name = "";
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
         instance.setVarName(name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -157,8 +173,6 @@ public class RawRequestSourcePreProcessorTest {
         String expResult = "";
         String result = instance.getFileName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -170,8 +184,6 @@ public class RawRequestSourcePreProcessorTest {
         String filename = "";
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
         instance.setFileName(filename);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -183,8 +195,6 @@ public class RawRequestSourcePreProcessorTest {
         boolean isRew = false;
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
         instance.setRewindOnEOF(isRew);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -197,8 +207,6 @@ public class RawRequestSourcePreProcessorTest {
         boolean expResult = false;
         boolean result = instance.getRewindOnEOF();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
  }

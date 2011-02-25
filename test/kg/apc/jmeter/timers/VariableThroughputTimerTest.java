@@ -2,7 +2,6 @@ package kg.apc.jmeter.timers;
 
 import org.apache.jmeter.gui.util.PowerTableModel;
 import java.util.LinkedList;
-import kg.apc.jmeter.threads.UltimateThreadGroup;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.junit.After;

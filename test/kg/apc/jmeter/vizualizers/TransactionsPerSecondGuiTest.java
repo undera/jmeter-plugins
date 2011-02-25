@@ -11,13 +11,11 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Stephane Hoblingre
+ * @author z000205
  */
-public class TotalTransactionsPerSecondGuiTest
-{
+public class TransactionsPerSecondGuiTest {
 
-    public TotalTransactionsPerSecondGuiTest()
-    {
+    public TransactionsPerSecondGuiTest() {
     }
 
     @BeforeClass
@@ -32,52 +30,51 @@ public class TotalTransactionsPerSecondGuiTest
     }
 
     @Before
-    public void setUp()
-    {
+    public void setUp() {
     }
 
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
     }
 
     /**
-     * Test of getLabelResource method, of class TotalTransactionsPerSecondGui.
+     * Test of getLabelResource method, of class TransactionsPerSecondGui.
      */
     @Test
     public void testGetLabelResource()
     {
         System.out.println("getLabelResource");
-        TotalTransactionsPerSecondGui instance = new TotalTransactionsPerSecondGui();
-        String expResult = "TotalTransactionsPerSecondGui";
+        TransactionsPerSecondGui instance = new TransactionsPerSecondGui();
+        String expResult = "TransactionsPerSecondGui";
         String result = instance.getLabelResource();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getStaticLabel method, of class TotalTransactionsPerSecondGui.
+     * Test of getStaticLabel method, of class TransactionsPerSecondGui.
      */
     @Test
     public void testGetStaticLabel()
     {
         System.out.println("getStaticLabel");
-        TotalTransactionsPerSecondGui instance = new TotalTransactionsPerSecondGui();
-        String expResult = "Total Transactions Per Second (obsolete)";
+        TransactionsPerSecondGui instance = new TransactionsPerSecondGui();
+        String expResult = "Transactions per Second";
         String result = instance.getStaticLabel();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of add method, of class TotalTransactionsPerSecondGui.
+     * Test of add method, of class TransactionsPerSecondGui.
      */
     @Test
     public void testAdd()
     {
         System.out.println("add");
+
         SampleResult res = new SampleResult();
         res.setAllThreads(1);
         res.setThreadName("test 1-2");
-        TotalTransactionsPerSecondGui instance = new TotalTransactionsPerSecondGui();
+        TransactionsPerSecondGui instance = new TransactionsPerSecondGui();
         instance.add(res);
         res.sampleStart();
         try
@@ -94,8 +91,9 @@ public class TotalTransactionsPerSecondGuiTest
    public void testGetSettingsPanel()
    {
       System.out.println("getSettingsPanel");
-      TotalTransactionsPerSecondGui instance = new TotalTransactionsPerSecondGui();
+      TransactionsPerSecondGui instance = new TransactionsPerSecondGui();
       JSettingsPanel result = instance.getSettingsPanel();
       assertNotNull(result);
    }
+
 }

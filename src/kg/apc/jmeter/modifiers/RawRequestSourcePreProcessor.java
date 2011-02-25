@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import kg.apc.jmeter.EndOfFileException;
+import org.apache.commons.io.IOExceptionWithCause;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.processor.PreProcessor;
 import org.apache.jmeter.testelement.AbstractTestElement;
@@ -26,7 +27,7 @@ public class RawRequestSourcePreProcessor
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String VARIABLE_NAME = "variable_name";
     public static final String FILENAME = "filename";
-    public static final String REWIND="rewind";
+    public static final String REWIND = "rewind";
     private FileChannel file;
     private final ByteBuffer metaBuf = ByteBuffer.allocateDirect(1024);
     private final ByteBuffer oneByte = ByteBuffer.allocateDirect(1);
@@ -35,7 +36,7 @@ public class RawRequestSourcePreProcessor
         super();
     }
 
-    public synchronized void process(){
+    public synchronized void process() {
         if (file == null) {
             log.info("Creating file object: " + getFileName());
             try {
@@ -45,35 +46,27 @@ public class RawRequestSourcePreProcessor
                 return;
             }
         }
-        String rawData="";
+        String rawData = "";
 
         try {
-            rawData=readNextChunk();
+            rawData = readNextChunk(getNextChunkSize());
+        } catch (EndOfFileException ex) {
+            log.info("End of file reached: " + getFileName());
         } catch (IOException ex) {
             log.error("Error reading next chunk", ex);
         }
-        catch (EndOfFileException ex)
-        {
-            log.info("End of file reached: "+getFileName());
-        }       
-            final JMeterVariables vars = JMeterContextService.getContext().getVariables();
+        final JMeterVariables vars = JMeterContextService.getContext().getVariables();
         vars.put(getVarName(), rawData);
-}
+    }
 
-    private synchronized String readNextChunk()
-            throws IOException, EndOfFileException
-    {
-        int capacity = getNextChunkSize();
-        if (capacity==0)
-        {
-            if (getRewindOnEOF())
-            {
+    private synchronized String readNextChunk(int capacity)
+            throws IOException, EndOfFileException {
+        if (capacity == 0) {
+            if (getRewindOnEOF()) {
                 log.info("Rewind file");
                 file.position(0);
-                return readNextChunk();
-            }
-            else
-            {
+                return readNextChunk(getNextChunkSize());
+            } else {
                 throw new EndOfFileException("Zero chunk size, possibly end of file reached.");
             }
         }
@@ -82,11 +75,10 @@ public class RawRequestSourcePreProcessor
         byte[] dst = new byte[capacity];
 
 
-        int cnt=file.read(buf);
+        int cnt = file.read(buf);
         //log.debug("Read " + cnt);
-        if (cnt!=capacity)
-        {
-            throw new IOException("Expected chunk size ("+capacity+") differs from read bytes count ("+cnt+")");
+        if (cnt != capacity) {
+            throw new IOException("Expected chunk size (" + capacity + ") differs from read bytes count (" + cnt + ")");
         }
 
         buf.flip();
@@ -97,37 +89,39 @@ public class RawRequestSourcePreProcessor
     private int getNextChunkSize() throws IOException {
         // FIXME: obviously inefficient
         metaBuf.rewind();
-        int count=0;
+        int count = 0;
         while (true) {
-            oneByte.rewind();
-            if (file.read(oneByte)<1)
-            {
-                return 0;
-            }
-            oneByte.rewind();
-            byte b = oneByte.get();
-            metaBuf.put(b);
-            //log.debug("B " + b+" "+metaBuf.remaining());
+            byte b = getOneByte();
             count++;
-            if (b == 13 || b==10) {
-                break;
+            if (b == 10 || b == 13) {
+                // if we have \r\n then skip \n
+                byte b2 = getOneByte();
+                if (b2 != 10) {
+                    file.position(file.position() - 1);
+                }
+
+                // ignore newlines before length marker
+                if (metaBuf.position() > 0) {
+                    break;
+                }
+            } else {
+                metaBuf.put(b);
             }
         }
         metaBuf.rewind();
 
-        byte[] bLine=new byte[count];
+        byte[] bLine = new byte[count];
         metaBuf.get(bLine);
-        String sLine=new String(bLine);
-        String[] ar = sLine.split("\\s");
+        String sLine = new String(bLine);
+        String[] ar = sLine.trim().split("\\s");
         //log.debug("Chunk size: "+ar[0]);
-        
-        int res=0;
+
+        int res = 0;
         try {
-            res=Integer.parseInt(ar[0]);
-        }
-        catch (NumberFormatException ex)
-        {
-            log.error("Error reading chunk size near: "+sLine, ex);
+            res = Integer.parseInt(ar[0]);
+        } catch (NumberFormatException ex) {
+            log.error("Error reading chunk size near: " + sLine, ex);
+            throw new IOExceptionWithCause(ex);
         }
         return res;
     }
@@ -149,13 +143,19 @@ public class RawRequestSourcePreProcessor
         file = null;
     }
 
-    public void setRewindOnEOF(boolean isRew)
-    {
+    public void setRewindOnEOF(boolean isRew) {
         setProperty(new BooleanProperty(REWIND, isRew));
     }
 
-    public boolean getRewindOnEOF()
-    {
+    public boolean getRewindOnEOF() {
         return getPropertyAsBoolean(REWIND);
+    }
+
+    private byte getOneByte() throws IOException {
+        oneByte.rewind();
+        if (file.read(oneByte) < 1) {
+            throw new EndOfFileException(getFileName());
+        }
+        return oneByte.get(0);
     }
 }

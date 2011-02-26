@@ -1,8 +1,11 @@
 package kg.apc.jmeter.config;
 
 import java.beans.PropertyDescriptor;
+import java.util.ResourceBundle;
+import kg.apc.jmeter.JMeterPluginsUtils;
 
 import org.apache.jmeter.testbeans.BeanInfoSupport;
+import org.apache.jmeter.util.JMeterUtils;
 
 /**
  *
@@ -45,5 +48,7 @@ public class VariablesFromCSVFileBeanInfo
       p.setValue(NOT_UNDEFINED, Boolean.TRUE);
       p.setValue(DEFAULT, ",");        //$NON-NLS-1$
       p.setValue(NOT_EXPRESSION, Boolean.TRUE);
+
+      getBeanDescriptor().setDisplayName(JMeterPluginsUtils.prefixLabel(getBeanDescriptor().getDisplayName()));
    }
 }

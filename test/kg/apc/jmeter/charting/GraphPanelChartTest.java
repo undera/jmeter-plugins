@@ -75,6 +75,7 @@ public class GraphPanelChartTest
       instance.setDrawFinalZeroingLines(true);
       instance.setDrawCurrentX(true);
       instance.setDrawCurrentX(true);
+      instance.setExpendRows(true);
 
       final ConcurrentSkipListMap<String, AbstractGraphRow> rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
       instance.setRows(rows);
@@ -88,11 +89,11 @@ public class GraphPanelChartTest
       row1.add(System.currentTimeMillis(), 20);
       instance.paintComponent(g);
 
-      row1.add(System.currentTimeMillis(), 40);
+      row1.add(System.currentTimeMillis(), 540);
       instance.setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
       instance.paintComponent(g);
 
-      row1.add(System.currentTimeMillis(), 30);
+      row1.add(System.currentTimeMillis(), 8530);
       instance.paintComponent(g);
    }
 

@@ -1,3 +1,4 @@
+//FIXME: extra bytes in response!!!
 package kg.apc.jmeter.samplers;
 
 import java.io.ByteArrayOutputStream;
@@ -85,8 +86,8 @@ public class HTTPRawSampler extends AbstractSampler {
             log.error(getHostName(), ex);
             res.sampleEnd();
             res.setSuccessful(false);
-            res.setResponseMessage(ex.getMessage());
-            res.setSamplerData(JMeterPluginsUtils.getStackTrace(ex));
+            res.setResponseMessage(ex.toString());
+            res.setResponseData(JMeterPluginsUtils.getStackTrace(ex).getBytes());
         }
 
         return res;
@@ -99,7 +100,7 @@ public class HTTPRawSampler extends AbstractSampler {
         SocketChannel sock = SocketChannel.open(addr);
         //sock.connect(addr);
         //sock.connect(addr);
-
+        // TODO: have timeouts
         //log.info("send");
         sendBuf = ByteBuffer.wrap(getRawRequest().getBytes());
         sock.write(sendBuf);

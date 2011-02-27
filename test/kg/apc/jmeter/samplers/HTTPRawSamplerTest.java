@@ -41,8 +41,12 @@ public class HTTPRawSamplerTest {
     public void testSample() throws MalformedURLException, IOException {
         System.out.println("sample");
         HTTPRawSampler instance = new HTTPRawSampler();
+        instance.setHostName("169.254.250.25");
+        instance.setPort("80");
+        instance.setRawRequest("GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n");
 
         SampleResult result = instance.sample(null);
+        //System.err.println(result.getResponseDataAsString().length());
         assertTrue(result.isSuccessful());
         assertEquals("GET /", result.getSamplerData().substring(0, 5));
         assertEquals("HTTP/1.1 200 OK", result.getResponseDataAsString().length()>15?result.getResponseDataAsString().substring(0, 15):result.getResponseDataAsString());

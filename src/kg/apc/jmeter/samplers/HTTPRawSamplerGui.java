@@ -141,7 +141,8 @@ public class HTTPRawSamplerGui
     private void initFields() {
       hostName.setText("localhost");
       port.setText("80");
-      requestData.setText("GET / HTTP/1.1\r\n"
+      requestData.setText("GET / HTTP/1.0\r\n"
+            + "Host: localhost\r\n"
             + "Connection: close\r\n"
             + "\r\n");
     }

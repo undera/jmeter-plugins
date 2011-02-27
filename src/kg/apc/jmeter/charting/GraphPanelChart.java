@@ -161,6 +161,60 @@ public class GraphPanelChart
         return forcedMaxY;
     }
 
+    private void autoZoom_orig() {
+        //row zooming
+        if (!expendRows) {
+            return;
+        }
+        
+        Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, AbstractGraphRow> row = it.next();
+            double[] minMax = row.getValue().getMinMaxY(maxPoints);
+            if (minMax[1] > 0) {
+                double zoomFactor = 1;
+                while (minMax[1] * zoomFactor <= maxYVal) {
+                    rowsZoomFactor.put(row.getKey(), zoomFactor);
+                    zoomFactor = zoomFactor * 10;
+                }
+            } else {
+                rowsZoomFactor.put(row.getKey(), 1.0);
+            }
+        }
+    }
+
+     private void autoZoom() {
+        //row zooming
+        double max = 0;
+        double maxPow = 0;
+
+        if (expendRows) {
+            Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, AbstractGraphRow> row = it.next();
+                double[] minMax = row.getValue().getMinMaxY(maxPoints);
+                double pow = Math.pow(10, Math.floor(Math.log10(minMax[1])));
+                double val = minMax[1] / pow;
+                if (val > max) {
+                    max = val;
+                    maxPow = pow;
+                }
+            }
+        }
+
+        //log.info("Got max value: "+max);
+        Iterator<Entry<String, AbstractGraphRow>> it2 = rows.entrySet().iterator();
+        while (it2.hasNext()) {
+            Entry<String, AbstractGraphRow> row = it2.next();
+            double[] minMax = row.getValue().getMinMaxY(maxPoints);
+            double pow = Math.pow(10, Math.floor(Math.log10(minMax[1])));
+            rowsZoomFactor.put(row.getKey(), expendRows?(maxPow / pow):1);
+            //log.info(row.getKey()+" Factor : "+(maxPow/pow));
+        }
+
+        // autoZoom_orig();
+    }
+
     private String getXAxisLabel()
     {
         String label;
@@ -287,7 +341,7 @@ public class GraphPanelChart
    }
 
    //row zooming
-   private HashMap<String, Integer> rowsZoomFactor = new HashMap<String, Integer>();
+   private HashMap<String, Double> rowsZoomFactor = new HashMap<String, Double>();
    private boolean expendRows = false;
 
     public void setExpendRows(boolean expendRows)
@@ -446,9 +500,9 @@ public class GraphPanelChart
          rowValue.setExcludeOutOfRangeValues(preventXAxisOverScaling);
          double[] rowMinMaxY = rowValue.getMinMaxY(maxPoints);
 
-         if (rowMinMaxY[1] > maxYVal)
+         if (rowMinMaxY[1]*rowsZoomFactor.get(row.getKey()) > maxYVal)
          {
-            maxYVal = rowMinMaxY[1];
+            maxYVal = rowMinMaxY[1]*rowsZoomFactor.get(row.getKey());
          }
          if (rowMinMaxY[0] < minYVal)
          {
@@ -660,29 +714,8 @@ public class GraphPanelChart
       }
 
       setDefaultDimensions();
+      autoZoom();
       getMinMaxDataValues();
-
-      //row zooming
-      if(expendRows)
-      {
-          Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
-          while(it.hasNext())
-          {
-              Entry<String, AbstractGraphRow> row = it.next();
-              double[] minMax = row.getValue().getMinMaxY(maxPoints);
-              if(minMax[1] > 0)
-              {
-                  int zoomFactor = 1;
-                  while(minMax[1]*zoomFactor <= maxYVal)
-                  {
-                      rowsZoomFactor.put(row.getKey(), zoomFactor);
-                      zoomFactor = zoomFactor * 10;
-                  }
-              } else {
-                  rowsZoomFactor.put(row.getKey(), 1);
-              }
-          }
-      }
 
       try
       {
@@ -731,7 +764,7 @@ public class GraphPanelChart
          String rowLabel = row.getKey();
          if(expendRows && rowsZoomFactor.get(row.getKey()) != null)
          {
-             int zoomFactor = rowsZoomFactor.get(row.getKey());
+             double zoomFactor = rowsZoomFactor.get(row.getKey());
              if(zoomFactor != 1)
              {
                  rowLabel = rowLabel + " (x" + zoomFactor + ")";

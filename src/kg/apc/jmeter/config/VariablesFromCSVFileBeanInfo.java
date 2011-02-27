@@ -1,11 +1,8 @@
 package kg.apc.jmeter.config;
 
 import java.beans.PropertyDescriptor;
-import java.util.ResourceBundle;
 import kg.apc.jmeter.JMeterPluginsUtils;
-
 import org.apache.jmeter.testbeans.BeanInfoSupport;
-import org.apache.jmeter.util.JMeterUtils;
 
 /**
  *

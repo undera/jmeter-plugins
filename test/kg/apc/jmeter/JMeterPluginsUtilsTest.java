@@ -45,7 +45,7 @@ public class JMeterPluginsUtilsTest {
         System.out.println("prefixLabel");
         String string = "TEST";
         String result = JMeterPluginsUtils.prefixLabel(string);
-        assertTrue(result.length()>0);
+        assertTrue(result.indexOf(string) != -1);
     }
 
 }

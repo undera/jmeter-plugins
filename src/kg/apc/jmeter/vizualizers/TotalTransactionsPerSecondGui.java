@@ -16,6 +16,7 @@ public class TotalTransactionsPerSecondGui extends TransactionsPerSecondGui {
         isAggregate = true;
     }
 
+    @Override
     public Collection<String> getMenuCategories()
     {
         return emptyCollection;

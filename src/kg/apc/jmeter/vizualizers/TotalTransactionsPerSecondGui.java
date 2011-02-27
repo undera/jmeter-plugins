@@ -16,6 +16,7 @@ public class TotalTransactionsPerSecondGui extends TransactionsPerSecondGui {
         isAggregate = true;
     }
 
+    //do not insert this vizualiser in any JMeter menu
     @Override
     public Collection<String> getMenuCategories()
     {

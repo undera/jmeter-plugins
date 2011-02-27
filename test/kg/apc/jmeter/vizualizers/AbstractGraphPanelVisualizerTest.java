@@ -282,4 +282,17 @@ public class AbstractGraphPanelVisualizerTest
         AbstractGraphRow result = instance.getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, canCompose);
         assertNotNull(result);
     }
+
+    /**
+     * Test of updateGui method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testUpdateGui_ErrorType() {
+        System.out.println("updateGui");
+        Sample sample = null;
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        instance.updateGui(sample);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

@@ -2,6 +2,7 @@ package kg.apc.jmeter.timers;
 
 import org.apache.jmeter.gui.util.PowerTableModel;
 import java.util.LinkedList;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.junit.After;
@@ -34,15 +35,15 @@ public class VariableThroughputTimerTest {
       dataModel = new PowerTableModel(VariableThroughputTimerGui.columnIdentifiers, VariableThroughputTimerGui.columnClasses);
       dataModel.addRow(new Integer[]
             {
-               1, 2, 3
+               1, 10, 5
             });
       dataModel.addRow(new Integer[]
             {
-               5, 6, 7
+               15, 15, 3
             });
       dataModel.addRow(new Integer[]
             {
-               9, 10, 11
+               15, 1, 10
             });
     }
 
@@ -64,13 +65,13 @@ public class VariableThroughputTimerTest {
 
     @Test
     public void testDelay1000() throws InterruptedException {
-        System.out.println("delay");
+        System.out.println("delay 1000");
         VariableThroughputTimer instance = new VariableThroughputTimer();
-        CollectionProperty prop = VariableThroughputTimerGui.tableModelToCollectionProperty(dataModel);
+        CollectionProperty prop = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
         instance.setData(prop);
 
         long start=System.currentTimeMillis();
-        while ((System.currentTimeMillis()-start)<5000)
+        while ((System.currentTimeMillis()-start)<20000)
         {
             long result = instance.delay();
             if (result>0)

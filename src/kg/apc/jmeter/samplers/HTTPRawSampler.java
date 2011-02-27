@@ -1,4 +1,3 @@
-//FIXME: extra bytes in response!!!
 package kg.apc.jmeter.samplers;
 
 import java.io.ByteArrayOutputStream;

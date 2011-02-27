@@ -1,4 +1,4 @@
-// TODO добавить каскадный демаршалинг, чтобы можно было одновременно инты и стринги иметь
+// идея - добавить каскадный демаршалинг, чтобы можно было одновременно инты и стринги иметь
 package kg.apc.jmeter.dcerpc;
 
 import java.io.ByteArrayOutputStream;
@@ -84,7 +84,7 @@ public class DCERPCMarshalling
 
          case UNMARSHAL_SINGLE_XML:
             String convertedText = unmarshalConvertStringParts(ba, 1);
-            // TODO: implement unmarshal xml
+            // идея -  implement unmarshal xml
             return convertedText;
 
          default:

@@ -23,7 +23,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
-    {TimersSuite.class, VizualizersSuite.class, ChartingSuite.class, ModifiersSuite.class, DcerpcSuite.class, ControlSuite.class, JMeterPluginsUtilsTest.class, PerfmonSuite.class, ConfigSuite.class, SamplersSuite.class, ThreadsSuite.class})
+    {TimersSuite.class, VizualizersSuite.class, ChartingSuite.class, ModifiersSuite.class, DcerpcSuite.class, ControlSuite.class, JMeterPluginsUtilsTest.class, PerfmonSuite.class, ConfigSuite.class, SamplersSuite.class, ThreadsSuite.class, EndOfFileExceptionTest.class})
 public class JmeterSuite
 {
 

@@ -166,9 +166,9 @@ public class UltimateThreadGroupGui
       {
          UltimateThreadGroup utg = (UltimateThreadGroup) tg;
          UltimateThreadGroup utgForPreview = new UltimateThreadGroup();
-         CollectionProperty rows = UltimateThreadGroup.tableModelToCollectionProperty(tableModel);
+         CollectionProperty rows = JMeterPluginsUtils.tableModelToCollectionProperty(tableModel, UltimateThreadGroup.DATA_PROPERTY);
          utg.setData(rows);
-         utgForPreview.setData(UltimateThreadGroup.tableModelToCollectionPropertyEval(tableModel));
+         utgForPreview.setData(JMeterPluginsUtils.tableModelToCollectionPropertyEval(tableModel, UltimateThreadGroup.DATA_PROPERTY));
 
          updateChart(utgForPreview);
          utg.setSamplerController((LoopController) loopPanel.createTestElement());

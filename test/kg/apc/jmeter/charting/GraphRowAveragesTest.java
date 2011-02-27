@@ -140,4 +140,19 @@ public class GraphRowAveragesTest
         AbstractGraphPanelChartElement result = instance.getElement(value);
         assertTrue(instance.getElement(value).getValue() == expResult.getValue());
     }
+
+    /**
+     * Test of getLowerElement method, of class GraphRowAverages.
+     */
+    @Test
+    public void testGetLowerElement() {
+        System.out.println("getLowerElement");
+        long value = 0L;
+        GraphRowAverages instance = new GraphRowAverages();
+        AbstractGraphPanelChartElement expResult = null;
+        AbstractGraphPanelChartElement result = instance.getLowerElement(value);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

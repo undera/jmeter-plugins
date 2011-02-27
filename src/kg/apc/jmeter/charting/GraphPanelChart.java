@@ -267,7 +267,7 @@ public class GraphPanelChart
     }
 
    // Default draw options - these are default values if no property is entered in user.properties
-   // List of possible properties (TODO: The explaination must be written in readme file)
+   // List of possible properties
    // jmeterPlugin.drawGradient=(true/false)
    // jmeterPlugin.neverDrawFinalZeroingLines=(true/false)
    // jmeterPlugin.optimizeYAxis=(true/false)
@@ -659,7 +659,6 @@ public class GraphPanelChart
 
    private void calculateXAxisDimensions(FontMetrics fm)
    {
-      // FIXME: first value on X axis may take negative X coord,
       // we need to handle this and make Y axis wider
       int axisHeight;
       if(!isPreview)

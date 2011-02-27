@@ -107,4 +107,19 @@ public class GraphRowSimpleTest {
         assertTrue(result.getValue() == expResult.getValue());
     }
 
+    /**
+     * Test of getHigherKey method, of class GraphRowSimple.
+     */
+    @Test
+    public void testGetHigherKey() {
+        System.out.println("getHigherKey");
+        long value = 0L;
+        GraphRowSimple instance = new GraphRowSimple();
+        Long expResult = null;
+        Long result = instance.getHigherKey(value);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

@@ -1,11 +1,8 @@
 package kg.apc.jmeter.threads;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.jmeter.engine.util.CompoundVariable;
-import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
@@ -32,44 +29,6 @@ public class UltimateThreadGroup
    public UltimateThreadGroup()
    {
       super();
-   }
-
-   /**
-    *
-    * @param model
-    * @return
-    */
-   public static CollectionProperty tableModelToCollectionProperty(PowerTableModel model)
-   {
-      CollectionProperty rows = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new ArrayList<Object>());
-      for (int col = 0; col < model.getColumnCount(); col++)
-      {
-         rows.addItem(model.getColumnData(model.getColumnName(col)));
-      }
-      return rows;
-   }
-
-   /**
-    *
-    * @param model
-    * @return
-    */
-   public static CollectionProperty tableModelToCollectionPropertyEval(PowerTableModel model)
-   {
-      CollectionProperty rows = new CollectionProperty(UltimateThreadGroup.DATA_PROPERTY, new ArrayList<Object>());
-      for (int col = 0; col < model.getColumnCount(); col++)
-      {
-         ArrayList<Object> tmp = new ArrayList<Object>();
-         Iterator iter = model.getColumnData(model.getColumnName(col)).iterator();
-         while(iter.hasNext())
-         {
-             String value = iter.next().toString();
-             tmp.add(new CompoundVariable(value).execute());
-         }
-
-         rows.addItem(tmp);
-      }
-      return rows;
    }
 
    // FIXME: too inefficient

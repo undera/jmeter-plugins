@@ -470,4 +470,34 @@ public class AbstractGraphRowTest
         long result = instance.getFirstTime();
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of getLowerElement method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testGetLowerElement() {
+        System.out.println("getLowerElement");
+        long value = 0L;
+        AbstractGraphRow instance = new AbstractGraphRowImpl();
+        AbstractGraphPanelChartElement expResult = null;
+        AbstractGraphPanelChartElement result = instance.getLowerElement(value);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getHigherKey method, of class AbstractGraphRow.
+     */
+    @Test
+    public void testGetHigherKey() {
+        System.out.println("getHigherKey");
+        long value = 0L;
+        AbstractGraphRow instance = new AbstractGraphRowImpl();
+        Long expResult = null;
+        Long result = instance.getHigherKey(value);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

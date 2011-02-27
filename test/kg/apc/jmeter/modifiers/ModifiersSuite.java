@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.EndOfFileExceptionTest.class,kg.apc.jmeter.modifiers.RawRequestSourcePreProcessorTest.class,kg.apc.jmeter.modifiers.RawRequestSourcePreProcessorGuiTest.class})
+@Suite.SuiteClasses({RawRequestSourcePreProcessorTest.class, RawRequestSourcePreProcessorGuiTest.class})
 public class ModifiersSuite {
 
     @BeforeClass

@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
@@ -26,6 +25,7 @@ import kg.apc.jmeter.charting.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowSumValues;
 import kg.apc.jmeter.charting.ColorsDispatcher;
+import kg.apc.jmeter.threads.UltimateThreadGroupGui;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.util.PowerTableModel;
@@ -70,10 +70,12 @@ public class VariableThroughputTimerGui
    {
       String.class, String.class, String.class
    };
+
    private static Integer[] defaultValues = new Integer[]
    {
       0, 1000, 60
    };
+   
    private PowerTableModel tableModel;
    JTable grid;
    JButton addRowButton;
@@ -162,24 +164,14 @@ public class VariableThroughputTimerGui
       {
          VariableThroughputTimer utg = (VariableThroughputTimer) tg;
          VariableThroughputTimer utgForPreview = new VariableThroughputTimer();
-         CollectionProperty rows = tableModelToCollectionProperty(tableModel);
+         CollectionProperty rows = JMeterPluginsUtils.tableModelToCollectionProperty(tableModel, VariableThroughputTimer.DATA_PROPERTY);
          utg.setData(rows);
-         utgForPreview.setData(rows);
+         utgForPreview.setData(JMeterPluginsUtils.tableModelToCollectionPropertyEval(tableModel, VariableThroughputTimer.DATA_PROPERTY));
 
          updateChart(utgForPreview);
       }
       
       super.configureTestElement(tg);
-   }
-
-   public static CollectionProperty tableModelToCollectionProperty(PowerTableModel model)
-   {
-      CollectionProperty rows = new CollectionProperty(VariableThroughputTimer.DATA_PROPERTY, new ArrayList<Object>());
-      for (int row = 0; row < model.getRowCount(); row++)
-      {
-         rows.addItem(model.getRowData(row));
-      }
-      return rows;
    }
 
    @Override
@@ -329,6 +321,7 @@ public class VariableThroughputTimerGui
          // Highlight (select) the appropriate row.
          int rowToSelect = tableModel.getRowCount() - 1;
          grid.setRowSelectionInterval(rowToSelect, rowToSelect);
+         updateUI();
       }
    }
 
@@ -373,6 +366,7 @@ public class VariableThroughputTimerGui
 
                grid.setRowSelectionInterval(rowToSelect, rowToSelect);
             }
+            updateUI();
          }
       }
    }

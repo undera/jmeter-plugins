@@ -380,4 +380,19 @@ public class AbstractPerformanceMonitoringGuiTest
         AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
         instance.setLoadMenuEnabled(enabled);
     }
+
+    /**
+     * Test of normalizeTime method, of class AbstractPerformanceMonitoringGui.
+     */
+    @Test
+    public void testNormalizeTime() {
+        System.out.println("normalizeTime");
+        long time = 0L;
+        AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+        long expResult = 0L;
+        long result = instance.normalizeTime(time);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

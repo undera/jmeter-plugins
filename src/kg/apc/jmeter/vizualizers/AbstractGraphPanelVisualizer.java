@@ -52,7 +52,7 @@ public abstract class AbstractGraphPanelVisualizer
      *
      */
     private int interval = 500;
-    private boolean isAggregate = false;
+    protected boolean isAggregate = false;
     /**
      *
      */

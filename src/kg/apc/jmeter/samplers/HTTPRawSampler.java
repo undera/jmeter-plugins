@@ -1,6 +1,7 @@
 package kg.apc.jmeter.samplers;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
@@ -12,7 +13,6 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-// TODO: add keep-alive ability
 /**
  *
  * @author undera
@@ -22,10 +22,10 @@ public class HTTPRawSampler extends AbstractSampler {
     static final String HOSTNAME = "hostname";
     static final String PORT = "port";
     static String BODY = "body";
+    private static final String SPACE = " ";
     // 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private ByteBuffer recvBuf = ByteBuffer.allocateDirect(1024 * 1); // TODO: make benchmarks to know how it impacts sampler performance
-    private ByteBuffer sendBuf;
     private SocketAddress addr;
     //private SocketChannel sock;
 
@@ -63,6 +63,7 @@ public class HTTPRawSampler extends AbstractSampler {
     public SampleResult sample(Entry e) {
         if (addr == null) {
             log.debug("Create cached values");
+            // TODO: can we get them from HTTP Config?
             int port;
             try {
                 port = Integer.parseInt(getPort());
@@ -79,8 +80,10 @@ public class HTTPRawSampler extends AbstractSampler {
         res.sampleStart();
         res.setDataType(SampleResult.TEXT);
         res.setSuccessful(true);
+        res.setResponseCode("-1");
         try {
             res.setResponseData(processIO(res));
+            parseResponse(res);
         } catch (Exception ex) {
             log.error(getHostName(), ex);
             res.sampleEnd();
@@ -92,20 +95,46 @@ public class HTTPRawSampler extends AbstractSampler {
         return res;
     }
 
+    private void parseResponse(SampleResult res) {
+        // TODO: make benchmarks - if this slows us - get rid of it
+        String[] parsed = res.getResponseDataAsString().split("\\r\\n");
+
+        if (parsed.length > 0) {
+            int s=parsed[0].indexOf(SPACE);
+            int e=parsed[0].indexOf(SPACE, s+1);
+            res.setResponseCode(parsed[0].substring(s, e).trim());
+            res.setResponseMessage(parsed[0].substring(e).trim());
+        }
+
+        if (parsed.length > 1) {
+            int n=1;
+            String headers="";
+            while(n<parsed.length && parsed[n].length()>0)
+            {
+                headers+=parsed[n]+"\r\n";
+                n++;
+            }
+            res.setResponseHeaders(headers);
+            String body="";
+            while(n<parsed.length)
+            {
+                body+=parsed[n]+"\r\n";
+                n++;
+            }
+            res.setResponseData(body.getBytes());
+        }
+    }
+
     private byte[] processIO(SampleResult res) throws Exception {
         //log.info("Begin IO");
+        SocketChannel sock = getSocketChannel(addr);
         ByteArrayOutputStream response = new ByteArrayOutputStream();
-        //log.info("Open sock");
-        SocketChannel sock = SocketChannel.open(addr);
-        //sock.connect(addr);
-        //sock.connect(addr);
-        // TODO: have timeouts
         //log.info("send");
-        sendBuf = ByteBuffer.wrap(getRawRequest().getBytes());
+        ByteBuffer sendBuf = ByteBuffer.wrap(getRawRequest().getBytes()); // cannot cache it because of variable processing
         sock.write(sendBuf);
+
         int cnt = 0;
         recvBuf.clear();
-
         while ((cnt = sock.read(recvBuf)) != -1) {
             //log.info("Read "+cnt);
             recvBuf.flip();
@@ -119,5 +148,14 @@ public class HTTPRawSampler extends AbstractSampler {
         sock.close();
         //log.info("End IO");
         return response.toByteArray();
+    }
+
+    protected SocketChannel getSocketChannel(SocketAddress address) throws IOException {
+        //log.info("Open sock");
+        // TODO: add keep-alive ability
+        SocketChannel sock = SocketChannel.open();
+        sock.connect(address);
+        // TODO: have timeouts
+        return sock;
     }
 }

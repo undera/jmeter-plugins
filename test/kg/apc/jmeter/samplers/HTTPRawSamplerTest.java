@@ -1,6 +1,9 @@
 package kg.apc.jmeter.samplers;
 
+import kg.apc.jmeter.util.SocketChannelEmul;
 import java.io.IOException;
+import java.net.SocketAddress;
+import java.nio.channels.SocketChannel;
 import org.apache.jmeter.samplers.SampleResult;
 import java.net.MalformedURLException;
 import org.junit.After;
@@ -15,6 +18,19 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class HTTPRawSamplerTest {
+
+    private HTTPRawSamplerEmul instance;
+
+    private class HTTPRawSamplerEmul extends HTTPRawSampler {
+
+        SocketChannelEmul sockEmul = new SocketChannelEmul();
+
+        @Override
+        protected SocketChannel getSocketChannel(SocketAddress address) throws IOException {
+            return sockEmul;
+        }
+    }
+
     public HTTPRawSamplerTest() {
     }
 
@@ -28,6 +44,7 @@ public class HTTPRawSamplerTest {
 
     @Before
     public void setUp() {
+        instance = new HTTPRawSamplerEmul();
     }
 
     @After
@@ -40,7 +57,6 @@ public class HTTPRawSamplerTest {
     @Test
     public void testSample() throws MalformedURLException, IOException {
         System.out.println("sample");
-        HTTPRawSampler instance = new HTTPRawSampler();
         instance.setHostName("169.254.250.25");
         instance.setPort("80");
         instance.setRawRequest("GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n");
@@ -49,12 +65,11 @@ public class HTTPRawSamplerTest {
         //System.err.println(result.getResponseDataAsString().length());
         assertTrue(result.isSuccessful());
         assertEquals("GET /", result.getSamplerData().substring(0, 5));
-        assertEquals("HTTP/1.1 200 OK", result.getResponseDataAsString().length()>15?result.getResponseDataAsString().substring(0, 15):result.getResponseDataAsString());
+        assertEquals("HTTP/1.1 200 OK", result.getResponseDataAsString().length() > 15 ? result.getResponseDataAsString().substring(0, 15) : result.getResponseDataAsString());
     }
 
-   @Test
-    public void testMultiSample()  {
-        HTTPRawSampler instance = new HTTPRawSampler();
+    @Test
+    public void testMultiSample() {
         SampleResult result1 = instance.sample(null);
         SampleResult result2 = instance.sample(null);
     }
@@ -65,7 +80,6 @@ public class HTTPRawSamplerTest {
     @Test
     public void testGetHostName() {
         System.out.println("getHostName");
-        HTTPRawSampler instance = new HTTPRawSampler();
         String expResult = "";
         String result = instance.getHostName();
         assertEquals(expResult, result);
@@ -78,7 +92,6 @@ public class HTTPRawSamplerTest {
     public void testSetHostName() {
         System.out.println("setHostName");
         String text = "";
-        HTTPRawSampler instance = new HTTPRawSampler();
         instance.setHostName(text);
     }
 
@@ -88,7 +101,6 @@ public class HTTPRawSamplerTest {
     @Test
     public void testGetPort() {
         System.out.println("getPort");
-        HTTPRawSampler instance = new HTTPRawSampler();
         String expResult = "";
         String result = instance.getPort();
         assertEquals(expResult, result);
@@ -101,7 +113,6 @@ public class HTTPRawSamplerTest {
     public void testSetPort() {
         System.out.println("setPort");
         String value = "";
-        HTTPRawSampler instance = new HTTPRawSampler();
         instance.setPort(value);
     }
 
@@ -111,7 +122,6 @@ public class HTTPRawSamplerTest {
     @Test
     public void testGetRawRequest() {
         System.out.println("getRawRequest");
-        HTTPRawSampler instance = new HTTPRawSampler();
         String expResult = "";
         String result = instance.getRawRequest();
         assertEquals(expResult, result);
@@ -124,8 +134,6 @@ public class HTTPRawSamplerTest {
     public void testSetRawRequest() {
         System.out.println("setRawRequest");
         String value = "";
-        HTTPRawSampler instance = new HTTPRawSampler();
         instance.setRawRequest(value);
     }
-   }
- 
+}

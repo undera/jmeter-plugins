@@ -962,12 +962,19 @@ public class GraphPanelChart
           }
        }
 
-      //paint rows
+      //paint rows in 2 phases. Raws with draw label are drawn after to have label on top
       it = rows.entrySet().iterator();
+      paintRow(g, dispatcher, it, false);
+      it = rows.entrySet().iterator();
+      paintRow(g, dispatcher, it, true);
+   }
+
+   private void paintRow(Graphics g, ColorsDispatcher dispatcher, Iterator<Entry<String, AbstractGraphRow>> it, boolean rowsWithLabel)
+   {
       while (it.hasNext())
       {
          Entry<String, AbstractGraphRow> row = it.next();
-         if (row.getValue().isDrawOnChart())
+         if (row.getValue().isDrawOnChart() && row.getValue().isDrawValueLabel() == rowsWithLabel)
          {
             Color color = reSetColors ? dispatcher.getNextColor() : row.getValue().getColor();
             paintRow(g, row.getValue(), row.getKey(), color);

@@ -964,12 +964,12 @@ public class GraphPanelChart
 
       //paint rows in 2 phases. Raws with draw label are drawn after to have label on top
       it = rows.entrySet().iterator();
-      paintRow(g, dispatcher, it, false);
+      paintRows(g, dispatcher, it, false);
       it = rows.entrySet().iterator();
-      paintRow(g, dispatcher, it, true);
+      paintRows(g, dispatcher, it, true);
    }
 
-   private void paintRow(Graphics g, ColorsDispatcher dispatcher, Iterator<Entry<String, AbstractGraphRow>> it, boolean rowsWithLabel)
+   private void paintRows(Graphics g, ColorsDispatcher dispatcher, Iterator<Entry<String, AbstractGraphRow>> it, boolean rowsWithLabel)
    {
       while (it.hasNext())
       {

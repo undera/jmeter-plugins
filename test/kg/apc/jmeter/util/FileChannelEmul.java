@@ -145,6 +145,6 @@ public class FileChannelEmul extends FileChannel {
 
     @Override
     protected void implCloseChannel() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        log.debug("Emulating close file channel");
     }
 }

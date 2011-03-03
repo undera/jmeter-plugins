@@ -1,3 +1,4 @@
+// TODO: add Copy Row button, here and in timer
 package kg.apc.jmeter.threads;
 
 import java.awt.BorderLayout;

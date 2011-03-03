@@ -1,5 +1,6 @@
 package kg.apc.jmeter;
 
+import java.nio.ByteBuffer;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.junit.After;
@@ -77,5 +78,32 @@ public class JMeterPluginsUtilsTest {
         PowerTableModel model = new PowerTableModel();
         CollectionProperty result = JMeterPluginsUtils.tableModelToCollectionPropertyEval(model, "");
         assertTrue(result instanceof CollectionProperty);
+    }
+
+    /**
+     * Test of byteBufferToString method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testByteBufferToString() {
+        System.out.println("byteBufferToString");
+        ByteBuffer buf = ByteBuffer.wrap("My Test".getBytes());
+        String expResult = "My Test";
+        String result = JMeterPluginsUtils.byteBufferToString(buf);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of replaceRNT method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testReplaceRNT() {
+        System.out.println("replaceRNT");
+        assertEquals("\t", JMeterPluginsUtils.replaceRNT("\\t"));
+        assertEquals("\t\t", JMeterPluginsUtils.replaceRNT("\\t\\t"));
+        assertEquals("-\t-", JMeterPluginsUtils.replaceRNT("-\\t-"));
+        System.out.println("\\\\t");
+        assertEquals("\\t", JMeterPluginsUtils.replaceRNT("\\\\t"));
+        assertEquals("\t\n\r", JMeterPluginsUtils.replaceRNT("\\t\\n\\r"));
+        assertEquals("\t\n\n\r", JMeterPluginsUtils.replaceRNT("\\t\\n\\n\\r"));
     }
 }

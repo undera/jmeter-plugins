@@ -3,6 +3,7 @@ package kg.apc.jmeter.reporters;
 import kg.apc.jmeter.util.FileChannelEmul;
 import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
@@ -17,17 +18,19 @@ import static org.junit.Assert.*;
  *
  * @author undera
  */
-public class FlexibleCSVWriterTest {
-    private class FlexibleCSVWriter extends kg.apc.jmeter.reporters.FlexibleCSVWriter
-    {
-        private FileChannelEmul fileEmul=new FileChannelEmul();
+public class FlexibleFileWriterTest {
+
+    private class FlexibleCSVWriter extends kg.apc.jmeter.reporters.FlexibleFileWriter {
+
+        private FileChannelEmul fileEmul = new FileChannelEmul();
+
         @Override
         protected void openFile() throws FileNotFoundException {
-            fileChannel=fileEmul;
+            fileChannel = fileEmul;
         }
     }
 
-    public FlexibleCSVWriterTest() {
+    public FlexibleFileWriterTest() {
     }
 
     @BeforeClass
@@ -52,14 +55,50 @@ public class FlexibleCSVWriterTest {
     @Test
     public void testSampleOccurred() {
         System.out.println("sampleOccurred");
-        String exp="4";
-        SampleResult res=new SampleResult();
+        SampleResult res = new SampleResult();
         res.setResponseData("test".getBytes());
         SampleEvent e = new SampleEvent(res, "Test");
         FlexibleCSVWriter instance = new FlexibleCSVWriter();
-        instance.sampleOccurred(e);
-        assertEquals(ByteBuffer.wrap(exp.getBytes()), instance.fileEmul.getWrittenBytes());
+        instance.setColumns("isSuccsessful|\\t|latency|");
+        instance.testStarted();
+        for (int n = 0; n < 10; n++) {
+            String exp = "0\t"+n;
+            System.out.println(exp);
+            res.setLatency(n);
+            res.setSampleLabel("n"+n);
+            instance.sampleOccurred(e);
+            ByteBuffer written = instance.fileEmul.getWrittenBytes();
+            assertEquals(exp, JMeterPluginsUtils.byteBufferToString(written));
+        }
+        instance.testEnded();
     }
+
+    /**
+     * Test of sampleOccurred method, of class FlexibleCSVWriter.
+     */
+    @Test
+    public void testSampleOccurred_phout() {
+        System.out.println("sampleOccurred");
+
+        SampleResult res = new SampleResult();
+        res.sampleStart();
+        res.setResponseData("test".getBytes());
+        res.setResponseCode("200");
+        res.setLatency(4);
+        res.setSuccessful(true);
+        res.sampleEnd();
+        SampleEvent e = new SampleEvent(res, "Test");
+
+        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        instance.setColumns("endTimeMillis|\\t\\t|responseTime|\\t|latency|\\t|sentBytes|\\t|receivedBytes|\\t|isSuccsessful|\\t|responseCode|\\r\\n");
+        instance.testStarted();
+        instance.sampleOccurred(e);
+        String written = JMeterPluginsUtils.byteBufferToString(instance.fileEmul.getWrittenBytes());
+        System.out.println(written);
+        assertEquals(8, written.split("\t").length);
+        instance.testEnded();
+    }
+
 
     /**
      * Test of sampleStarted method, of class FlexibleCSVWriter.

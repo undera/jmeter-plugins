@@ -1,5 +1,6 @@
 package kg.apc.jmeter;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.apache.jmeter.engine.util.CompoundVariable;
@@ -11,7 +12,7 @@ import org.apache.jmeter.util.JMeterUtils;
  *
  * @author undera
  */
-public class JMeterPluginsUtils
+public abstract class JMeterPluginsUtils
 {
     private static String pluginsPrefix = "jp@gc - ";
 
@@ -79,4 +80,27 @@ public class JMeterPluginsUtils
       return rows;
    }
 
+   public static String byteBufferToString(ByteBuffer buf)
+    {
+       ByteBuffer str=buf.duplicate();
+       //System.err.println(str);
+       str.rewind();
+       //System.err.println(str);
+       byte[] dst=new byte[str.limit()];
+       str.get(dst) ;
+       return new String(dst);
+   }
+
+    public static String replaceRNT(String str) {
+        str=str.replaceAll("\\\\\\\\", "VERY BAD WAY");
+        //System.err.println(str);
+        str=str.replaceAll("\\\\t", "\t");
+        //str=str.replaceAll("(^|[^\\\\])\\\\t", "$1\t");
+        //System.err.println(str);
+        str=str.replaceAll("\\\\n", "\n");
+        //System.err.println(str);
+        str=str.replaceAll("\\\\r", "\r");
+        str=str.replaceAll("VERY BAD WAY", "\\\\");
+        return str;
+    }
 }

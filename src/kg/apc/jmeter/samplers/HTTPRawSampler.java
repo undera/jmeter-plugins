@@ -112,7 +112,6 @@ public class HTTPRawSampler extends AbstractSampler {
     }
 
     private byte[] processIO(SampleResult res) throws Exception {
-        // TODO: implement latency?
         //log.info("Begin IO");
         ByteArrayOutputStream response = new ByteArrayOutputStream();
         //log.info("send");
@@ -122,7 +121,12 @@ public class HTTPRawSampler extends AbstractSampler {
 
         int cnt = 0;
         recvBuf.clear();
+        boolean firstPack = true;
         while ((cnt = sock.read(recvBuf)) != -1) {
+            if (firstPack) {
+                res.latencyEnd();
+                firstPack = false;
+            }
             //log.debug("Read " + recvBuf.toString());
             recvBuf.flip();
             byte[] bytes = new byte[cnt];

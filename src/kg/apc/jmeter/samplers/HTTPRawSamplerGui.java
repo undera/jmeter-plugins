@@ -21,138 +21,140 @@ import org.apache.log.Logger;
  * @author apc
  */
 public class HTTPRawSamplerGui
-     extends AbstractSamplerGui
-{
+        extends AbstractSamplerGui {
+
     private static final Logger log = LoggingManager.getLoggerForClass();
-   private JCheckBox keepAlive;
-   private JTextField hostName;
-   private JTextField port;
-   //private JTextField responseTime;
-   private JTextArea requestData;
+    private JTextField hostName;
+    private JTextField port;
+    private JTextField timeout;
+    private JCheckBox keepAlive;
+    //private JTextField responseTime;
+    private JTextArea requestData;
 
-   /**
-    *
-    */
-   public HTTPRawSamplerGui()
-   {
-      log.debug("Creating");
-      init();
-      initFields();
-   }
+    /**
+     *
+     */
+    public HTTPRawSamplerGui() {
+        log.debug("Creating");
+        init();
+        initFields();
+    }
 
-   @Override
-   public String getStaticLabel()
-   {
-      return JMeterPluginsUtils.prefixLabel("HTTP Raw Request");
-   }
+    @Override
+    public String getStaticLabel() {
+        return JMeterPluginsUtils.prefixLabel("HTTP Raw Request");
+    }
 
-   @Override
-   public void configure(TestElement element)
-   {
-      super.configure(element);
+    @Override
+    public void configure(TestElement element) {
+        super.configure(element);
 
-      keepAlive.setSelected(element.getPropertyAsBoolean(HTTPRawSampler.KEEPALIVE));
-      hostName.setText(element.getPropertyAsString(HTTPRawSampler.HOSTNAME));
-      port.setText(element.getPropertyAsString(HTTPRawSampler.PORT));
-      requestData.setText(element.getPropertyAsString(HTTPRawSampler.BODY));
-   }
+        hostName.setText(element.getPropertyAsString(HTTPRawSampler.HOSTNAME));
+        port.setText(element.getPropertyAsString(HTTPRawSampler.PORT));
+        timeout.setText(element.getPropertyAsString(HTTPRawSampler.TIMEOUT));
+        keepAlive.setSelected(element.getPropertyAsBoolean(HTTPRawSampler.KEEPALIVE));
+        requestData.setText(element.getPropertyAsString(HTTPRawSampler.BODY));
+    }
 
-   public TestElement createTestElement()
-   {
-      HTTPRawSampler sampler = new HTTPRawSampler();
-      modifyTestElement(sampler);
-      return sampler;
-   }
+    public TestElement createTestElement() {
+        HTTPRawSampler sampler = new HTTPRawSampler();
+        modifyTestElement(sampler);
+        return sampler;
+    }
 
-   /**
-    * Modifies a given TestElement to mirror the data in the gui components.
-    *
-    * @param sampler
-    * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
-    */
-   public void modifyTestElement(TestElement sampler)
-   {
-      super.configureTestElement(sampler);
+    /**
+     * Modifies a given TestElement to mirror the data in the gui components.
+     *
+     * @param sampler
+     * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
+     */
+    public void modifyTestElement(TestElement sampler) {
+        super.configureTestElement(sampler);
 
-      if (sampler instanceof HTTPRawSampler)
-      {
-         HTTPRawSampler rawSampler = (HTTPRawSampler) sampler;
-         rawSampler.setHostName(hostName.getText());
-         rawSampler.setPort(port.getText());
-         rawSampler.setUseKeepAlive(keepAlive.isSelected());
-         // first replace removes old \r\n
-         // second eliminates orphan \r
-         // third make all newlines - old and new  like \r\n
-         String data=requestData.getText().replace("\r\n", "\n").replace("\r", "").replace("\n", "\r\n");
-         rawSampler.setRawRequest(data);
-      }
-   }
+        if (sampler instanceof HTTPRawSampler) {
+            HTTPRawSampler rawSampler = (HTTPRawSampler) sampler;
+            rawSampler.setHostName(hostName.getText());
+            rawSampler.setPort(port.getText());
+            rawSampler.setUseKeepAlive(keepAlive.isSelected());
+            rawSampler.setTimeout(timeout.getText());
+            rawSampler.setRawRequest(transformCRLF(requestData.getText()));
+        }
+    }
 
-   @Override
-   public void clearGui()
-   {
-      super.clearGui();
+    /**
+     * first replace removes old \r\n
+     * second eliminates orphan \r
+     * third make all newlines - old and new  like \r\n
+     */
+    private String transformCRLF(String str) {
+        return str.replace("\r\n", "\n").replace("\r", "").replace("\n", "\r\n");
+    }
 
-      initFields();
-   }
+    @Override
+    public void clearGui() {
+        super.clearGui();
 
-   public String getLabelResource()
-   {
-      return this.getClass().getSimpleName();
-   }
+        initFields();
+    }
 
-   private void init()
-   {
-      setLayout(new BorderLayout(0, 5));
-      setBorder(makeBorder());
+    public String getLabelResource() {
+        return this.getClass().getSimpleName();
+    }
 
-      add(makeTitlePanel(), BorderLayout.NORTH);
+    private void init() {
+        setLayout(new BorderLayout(0, 5));
+        setBorder(makeBorder());
 
-      JPanel mainPanel = new JPanel(new GridBagLayout());
+        add(makeTitlePanel(), BorderLayout.NORTH);
 
-      GridBagConstraints labelConstraints = new GridBagConstraints();
-      labelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
+        JPanel mainPanel = new JPanel(new GridBagLayout());
 
-      GridBagConstraints editConstraints = new GridBagConstraints();
-      editConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
-      editConstraints.weightx = 1.0;
-      editConstraints.fill = GridBagConstraints.HORIZONTAL;
+        GridBagConstraints labelConstraints = new GridBagConstraints();
+        labelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
 
-      addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Hostname: ", JLabel.RIGHT));
-      addToPanel(mainPanel, editConstraints, 1, 1, hostName = new JTextField());
+        GridBagConstraints editConstraints = new GridBagConstraints();
+        editConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+        editConstraints.weightx = 1.0;
+        editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-      addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("TCP Port: ", JLabel.RIGHT));
-      addToPanel(mainPanel, editConstraints, 1, 2, port = new JTextField());
+        addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Hostname: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 1, hostName = new JTextField());
 
-      addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Keep-alive connection: ", JLabel.RIGHT));
-      addToPanel(mainPanel, editConstraints, 1, 3, keepAlive = new JCheckBox());
+        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("TCP Port: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 2, port = new JTextField());
 
-      addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Request Data: ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Timeout: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 3, timeout = new JTextField());
 
-      editConstraints.fill = GridBagConstraints.BOTH;
-      addToPanel(mainPanel, editConstraints, 1, 4, requestData = new JTextArea());
-      requestData.setRows(10);
-      requestData.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Keep-alive connection: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 4, keepAlive = new JCheckBox());
 
-      JPanel container = new JPanel(new BorderLayout());
-      container.add(mainPanel, BorderLayout.NORTH);
-      add(container, BorderLayout.CENTER);
-   }
+        addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Request Data: ", JLabel.RIGHT));
 
-   private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component)
-   {
-      constraints.gridx = col;
-      constraints.gridy = row;
-      panel.add(component, constraints);
-   }
+        editConstraints.fill = GridBagConstraints.BOTH;
+        addToPanel(mainPanel, editConstraints, 1, 5, requestData = new JTextArea());
+        requestData.setRows(10);
+        requestData.setBorder(new BevelBorder(BevelBorder.LOWERED));
+
+        JPanel container = new JPanel(new BorderLayout());
+        container.add(mainPanel, BorderLayout.NORTH);
+        add(container, BorderLayout.CENTER);
+    }
+
+    private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {
+        constraints.gridx = col;
+        constraints.gridy = row;
+        panel.add(component, constraints);
+    }
 
     private void initFields() {
+        hostName.setText("localhost");
+        port.setText("80");
+        timeout.setText("0");
         keepAlive.setSelected(false);
-      hostName.setText("localhost");
-      port.setText("80");
-      requestData.setText("GET / HTTP/1.0\r\n"
-            + "Host: localhost\r\n"
-            + "Connection: close\r\n"
-            + "\r\n");
+        requestData.setText("GET / HTTP/1.0\r\n"
+                + "Host: localhost\r\n"
+                + "Connection: close\r\n"
+                + "\r\n");
     }
 }

@@ -17,6 +17,7 @@ public class SocketChannelEmul extends SocketChannel {
     private ByteBuffer writtenBytes;
     private ByteBuffer bytesToRead;
     private static final Logger log = LoggingManager.getLoggerForClass();
+    private Socket socket=new SocketEmulator();
 
     public SocketChannelEmul() {
         super(null);
@@ -24,7 +25,7 @@ public class SocketChannelEmul extends SocketChannel {
 
     @Override
     public Socket socket() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return socket;
     }
 
     @Override
@@ -39,7 +40,8 @@ public class SocketChannelEmul extends SocketChannel {
 
     @Override
     public boolean connect(SocketAddress remote) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        log.debug("Emulating connect to "+remote.toString());
+        return true;
     }
 
     @Override

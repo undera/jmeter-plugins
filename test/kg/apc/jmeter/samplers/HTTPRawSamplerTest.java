@@ -26,7 +26,7 @@ public class HTTPRawSamplerTest {
         SocketChannelEmul sockEmul = new SocketChannelEmul();
 
         @Override
-        protected SocketChannel getSocketChannel() throws IOException {
+        protected SocketChannel getSocketChannelImpl() throws IOException {
             return sockEmul;
         }
     }
@@ -47,6 +47,7 @@ public class HTTPRawSamplerTest {
         instance = new HTTPRawSamplerEmul();
         instance.setHostName("169.254.250.25");
         instance.setPort("80");
+        instance.setTimeout("0");
 }
 
     @After
@@ -71,6 +72,29 @@ public class HTTPRawSamplerTest {
         assertTrue(result.isSuccessful());
         assertEquals("200", result.getResponseCode());
         assertEquals("TEST", result.getResponseDataAsString());
+        assertTrue(!instance.sockEmul.isOpen());
+    }
+
+    /**
+     * Test of sample method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testSample_keepalive() throws MalformedURLException, IOException {
+        System.out.println("sample");
+        String req="TEST";
+        String resp="TEST";
+        instance.setRawRequest(req);
+        instance.setUseKeepAlive(true);
+
+        instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
+
+        SampleResult result = instance.sample(null);
+        assertTrue(instance.sockEmul.isOpen());
+
+        instance.setUseKeepAlive(false);
+        instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
+        instance.sample(null);
+        assertFalse(instance.sockEmul.isOpen());
     }
 
     /**
@@ -132,5 +156,46 @@ public class HTTPRawSamplerTest {
         System.out.println("setRawRequest");
         String value = "";
         instance.setRawRequest(value);
+    }
+
+    /**
+     * Test of getSocketChannel method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testGetSocketChannelImpl() throws Exception {
+        System.out.println("getSocketChannel");
+        SocketChannel result = instance.getSocketChannelImpl();
+        assertTrue(result instanceof SocketChannelEmul);
+    }
+
+    /**
+     * Test of setUseKeepAlive method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testSetUseKeepAlive() {
+        System.out.println("setUseKeepAlive");
+        boolean selected = false;
+        instance.setUseKeepAlive(selected);
+    }
+
+    /**
+     * Test of getTimeout method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testGetTimeout() {
+        System.out.println("getTimeout");
+        String expResult = "0";
+        String result = instance.getTimeout();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setTimeout method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testSetTimeout() {
+        System.out.println("setTimeout");
+        String value = "";
+        instance.setTimeout(value);
     }
 }

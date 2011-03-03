@@ -23,10 +23,11 @@ public class HTTPRawSampler extends AbstractSampler {
     public static final String PORT = "port";
     public static final String KEEPALIVE = "keepalive";
     public static final String BODY = "body";
+    public static final String TIMEOUT = "timeout";
     private static final String SPACE = " ";
     // 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private ByteBuffer recvBuf = ByteBuffer.allocateDirect(1024 * 1); // TODO: make benchmarks to know how it impacts sampler performance
+    private ByteBuffer recvBuf = ByteBuffer.allocateDirect(1024 * 4); // TODO: make benchmarks to know how it impacts sampler performance
     private SocketChannel savedSock;
 
     public HTTPRawSampler() {
@@ -116,13 +117,13 @@ public class HTTPRawSampler extends AbstractSampler {
         ByteArrayOutputStream response = new ByteArrayOutputStream();
         //log.info("send");
         ByteBuffer sendBuf = ByteBuffer.wrap(getRawRequest().getBytes()); // cannot cache it because of variable processing
-        SocketChannel sock=getSocketChannel();
+        SocketChannel sock = getSocketChannel();
         sock.write(sendBuf);
 
         int cnt = 0;
         recvBuf.clear();
         while ((cnt = sock.read(recvBuf)) != -1) {
-            log.debug("Read " + recvBuf.toString());
+            //log.debug("Read " + recvBuf.toString());
             recvBuf.flip();
             byte[] bytes = new byte[cnt];
             recvBuf.get(bytes);
@@ -138,7 +139,7 @@ public class HTTPRawSampler extends AbstractSampler {
         return response.toByteArray();
     }
 
-    protected SocketChannel getSocketChannel() throws IOException {
+    private SocketChannel getSocketChannel() throws IOException {
         if (getUseKeepAlive() && savedSock != null) {
             return savedSock;
         }
@@ -154,9 +155,15 @@ public class HTTPRawSampler extends AbstractSampler {
         InetSocketAddress address = new InetSocketAddress(getHostName(), port);
 
         //log.info("Open sock");
-        // TODO: add keep-alive ability
-        savedSock = SocketChannel.open();
+        savedSock = getSocketChannelImpl();
         savedSock.connect(address);
+        int timeout = 0;
+        try {
+            timeout = Integer.parseInt(getTimeout());
+        } catch (NumberFormatException e) {
+            log.error("Wrong timeout: " + getTimeout(), e);
+        }
+        savedSock.socket().setSoTimeout(timeout);
         // TODO: have timeouts
         return savedSock;
     }
@@ -165,7 +172,19 @@ public class HTTPRawSampler extends AbstractSampler {
         return getPropertyAsBoolean(KEEPALIVE);
     }
 
-    void setUseKeepAlive(boolean selected) {
+    public void setUseKeepAlive(boolean selected) {
         setProperty(KEEPALIVE, selected);
+    }
+
+    public String getTimeout() {
+        return getPropertyAsString(TIMEOUT);
+    }
+
+    public void setTimeout(String value) {
+        setProperty(TIMEOUT, value);
+    }
+
+    protected SocketChannel getSocketChannelImpl() throws IOException {
+        return SocketChannel.open();
     }
 }

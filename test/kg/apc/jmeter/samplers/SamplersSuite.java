@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DummySamplerGuiTest.class, DummySamplerTest.class, HTTPRawSamplerGuiTest.class, HTTPRawSamplerTest.class})
+@Suite.SuiteClasses({DummySamplerTest.class, DummySamplerGuiTest.class, HTTPRawSamplerGuiTest.class, HTTPRawSamplerTest.class})
 public class SamplersSuite {
 
    @BeforeClass

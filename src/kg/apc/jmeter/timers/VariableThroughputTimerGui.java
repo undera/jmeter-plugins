@@ -220,6 +220,7 @@ public class VariableThroughputTimerGui
 
       row.add(now, 0);
 
+      // TODO: implement chart
       /*
       // users in
       int numThreads = tg.getNumThreads();

@@ -9,6 +9,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
+import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeListener;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
@@ -48,6 +49,7 @@ public abstract class TestJMeterUtils
       jMeterTreeListener.setModel(jMeterTreeModel);
       GuiPackage.getInstance(jMeterTreeListener, jMeterTreeModel);
       JMeterContextService.getContext().setVariables(new JMeterVariables());
+      JMeterContextService.getContext().setEngine(new StandardJMeterEngine());
    }
 
    /**

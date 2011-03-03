@@ -3,6 +3,7 @@ package kg.apc.jmeter.timers;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import java.util.LinkedList;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.junit.After;
@@ -24,6 +25,7 @@ public class VariableThroughputTimerTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass

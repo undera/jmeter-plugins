@@ -7,6 +7,7 @@ import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
+import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.timers.ConstantThroughputTimer;
 import org.apache.jmeter.timers.Timer;
 import org.apache.jorphan.logging.LoggingManager;
@@ -30,49 +31,67 @@ public class VariableThroughputTimer
     private long cntDelayed;
     private long time = 0;
     private double msecPerReq;
-    private long leftToSend;
-    private int sequenceSecond = 1; //FIXME: if thread waits more than a second, it breaks schedule
+    private long cntSent;
     private int rps;
+    private long startSec = 0;
 
     public long delay() {
         synchronized (this) {
-            long curTime = System.currentTimeMillis();
-            long msecs = curTime % 1000 + 1;
-            long secs = curTime - msecs;
-            checkNextSecond(secs);
-            doDelay(msecs);
+            int delay;
+
+            while (true) {
+                long curTime = System.currentTimeMillis();
+                long msecs = curTime % 1000;
+                long secs = curTime - msecs;
+                checkNextSecond(secs);
+                if (rps < 1) {
+                    notifyAll();
+                    break;
+                }
+
+                // FIXME: at high RPS we produce rps-1 
+
+                delay = getDelay(msecs);
+
+                if (delay < 1) {
+                    notify();
+                    break;
+                }
+                cntDelayed++;
+                try {
+                    log.debug("Waiting for " + delay);
+                    wait(delay);
+                } catch (InterruptedException ex) {
+                    log.error("Waiting thread was interrupted", ex);
+                }
+                cntDelayed--;
+            }
+            cntSent++;
         }
         return 0;
-    }
-
-    private void doDelay(long msecs) {
-        if (msecs < (1000 - leftToSend * msecPerReq)) {
-            double delay= (leftToSend > 0) ? (rps / (double) leftToSend) : 1;
-            log.info("Delaying " + cntDelayed + " for " + delay +" left "+leftToSend);
-            cntDelayed++;
-            try {
-                wait((long) (1000 * delay * cntDelayed+ 1));
-            } catch (InterruptedException ex) {
-                log.error("Waiting thread was interrupted", ex);
-            }
-            log.info("Woke up " + cntDelayed);
-            cntDelayed--;
-        }
-        leftToSend--;
     }
 
     private synchronized void checkNextSecond(long secs) {
         // next second
         if (time != secs) {
-            time = secs;
-            rps = getNextSecondRPS();
-            log.info("Second changed, left: " + leftToSend + " RPS: " + rps);
-            if (leftToSend > 0) {
-                notify();
+            if (startSec == 0) {
+                startSec = secs;
             }
-            leftToSend += rps;
-            msecPerReq = leftToSend > 0 ? (1000d / leftToSend) : 0;
+            time = secs;
+            rps = getNextSecondRPS((secs - startSec) / 1000);
+            log.info("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent "+cntSent+ " RPS: " + rps);
+            cntSent = 0;
+            msecPerReq = 1000d / rps;
         }
+    }
+
+    private int getDelay(long msecs) {
+        //log.info("Calculating "+msecs + " " + cntSent * msecPerReq+" "+cntSent);
+        if (msecs < (cntSent * msecPerReq)) {
+            int delay = 1+(int) (1000.0 * (cntDelayed+1)/ (double) rps);
+            return delay;
+        }
+        return 0;
     }
 
     void setData(CollectionProperty rows) {
@@ -83,7 +102,7 @@ public class VariableThroughputTimer
         return getProperty(DATA_PROPERTY);
     }
 
-    private int getNextSecondRPS() {
+    private int getNextSecondRPS(long sec) {
         JMeterProperty data = getData();
         if (data instanceof NullProperty) {
             log.error("Got NullProperty");
@@ -94,7 +113,6 @@ public class VariableThroughputTimer
         CollectionProperty columns = (CollectionProperty) data;
         List<?> col = (List<?>) columns.get(DURATION_FIELD_NO).getObjectValue();
         Iterator<?> iter = col.iterator();
-        int sec = sequenceSecond;
         int rowNo = 0;
         while (true) {
             JMeterProperty prop = (JMeterProperty) iter.next();
@@ -110,12 +128,13 @@ public class VariableThroughputTimer
             }
             rowNo++;
             if (!iter.hasNext()) {
+                log.info("Time to stop test");
+                JMeterContextService.getContext().getEngine().stopTest(false);
                 notifyAll();
                 break;
             }
         }
 
-        sequenceSecond++;
         return result;
     }
 

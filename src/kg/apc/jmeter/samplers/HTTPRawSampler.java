@@ -3,7 +3,6 @@ package kg.apc.jmeter.samplers;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -19,15 +18,16 @@ import org.apache.log.Logger;
  */
 public class HTTPRawSampler extends AbstractSampler {
 
-    static final String HOSTNAME = "hostname";
-    static final String PORT = "port";
-    static String BODY = "body";
+    public static final String CRLF = "\r\n";
+    public static final String HOSTNAME = "hostname";
+    public static final String PORT = "port";
+    public static final String KEEPALIVE = "keepalive";
+    public static final String BODY = "body";
     private static final String SPACE = " ";
     // 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private ByteBuffer recvBuf = ByteBuffer.allocateDirect(1024 * 1); // TODO: make benchmarks to know how it impacts sampler performance
-    private SocketAddress addr;
-    //private SocketChannel sock;
+    private SocketChannel savedSock;
 
     public HTTPRawSampler() {
         super();
@@ -38,7 +38,6 @@ public class HTTPRawSampler extends AbstractSampler {
     }
 
     void setHostName(String text) {
-        addr = null; // reset cached addr and SendBuf
         setProperty(HOSTNAME, text);
     }
 
@@ -47,7 +46,6 @@ public class HTTPRawSampler extends AbstractSampler {
     }
 
     public void setPort(String value) {
-        addr = null; // reset cached addr and SendBuf
         setProperty(PORT, value);
     }
 
@@ -56,24 +54,10 @@ public class HTTPRawSampler extends AbstractSampler {
     }
 
     public void setRawRequest(String value) {
-        addr = null; // reset cached addr and SendBuf
         setProperty(BODY, value);
     }
 
     public SampleResult sample(Entry e) {
-        if (addr == null) {
-            log.debug("Create cached values");
-            // TODO: can we get them from HTTP Config?
-            int port;
-            try {
-                port = Integer.parseInt(getPort());
-            } catch (NumberFormatException ex) {
-                log.warn("Wrong port number: " + getPort() + ", defaulting to 80", ex);
-                port=80;
-            }
-            addr = new InetSocketAddress(getHostName(), port);
-        }
-
         SampleResult res = new SampleResult();
         res.setSampleLabel(getName());
         res.setSamplerData(getRawRequest());
@@ -96,29 +80,30 @@ public class HTTPRawSampler extends AbstractSampler {
     }
 
     private void parseResponse(SampleResult res) {
-        // TODO: make benchmarks - if this slows us - get rid of it
+        // TODO: make benchmarks - if this slows us - get rid of it, or give checkbox
         String[] parsed = res.getResponseDataAsString().split("\\r\\n");
 
         if (parsed.length > 0) {
-            int s=parsed[0].indexOf(SPACE);
-            int e=parsed[0].indexOf(SPACE, s+1);
-            res.setResponseCode(parsed[0].substring(s, e).trim());
-            res.setResponseMessage(parsed[0].substring(e).trim());
+            int s = parsed[0].indexOf(SPACE);
+            int e = parsed[0].indexOf(SPACE, s + 1);
+            if (s < e) {
+                res.setResponseCode(parsed[0].substring(s, e).trim());
+                res.setResponseMessage(parsed[0].substring(e).trim());
+            }
         }
 
         if (parsed.length > 1) {
-            int n=1;
-            String headers="";
-            while(n<parsed.length && parsed[n].length()>0)
-            {
-                headers+=parsed[n]+"\r\n";
+            int n = 1;
+            String headers = "";
+            while (n < parsed.length && parsed[n].length() > 0) {
+                headers += parsed[n] + CRLF;
                 n++;
             }
             res.setResponseHeaders(headers);
-            String body="";
-            while(n<parsed.length)
-            {
-                body+=parsed[n]+"\r\n";
+            String body = "";
+            n++;
+            while (n < parsed.length) {
+                body += parsed[n] + (n + 1 < parsed.length ? CRLF : "");
                 n++;
             }
             res.setResponseData(body.getBytes());
@@ -126,17 +111,18 @@ public class HTTPRawSampler extends AbstractSampler {
     }
 
     private byte[] processIO(SampleResult res) throws Exception {
+        // TODO: implement latency?
         //log.info("Begin IO");
-        SocketChannel sock = getSocketChannel(addr);
         ByteArrayOutputStream response = new ByteArrayOutputStream();
         //log.info("send");
         ByteBuffer sendBuf = ByteBuffer.wrap(getRawRequest().getBytes()); // cannot cache it because of variable processing
+        SocketChannel sock=getSocketChannel();
         sock.write(sendBuf);
 
         int cnt = 0;
         recvBuf.clear();
         while ((cnt = sock.read(recvBuf)) != -1) {
-            //log.info("Read "+cnt);
+            log.debug("Read " + recvBuf.toString());
             recvBuf.flip();
             byte[] bytes = new byte[cnt];
             recvBuf.get(bytes);
@@ -145,17 +131,41 @@ public class HTTPRawSampler extends AbstractSampler {
         }
         res.sampleEnd();
 
-        sock.close();
+        if (!getUseKeepAlive()) {
+            sock.close();
+        }
         //log.info("End IO");
         return response.toByteArray();
     }
 
-    protected SocketChannel getSocketChannel(SocketAddress address) throws IOException {
+    protected SocketChannel getSocketChannel() throws IOException {
+        if (getUseKeepAlive() && savedSock != null) {
+            return savedSock;
+        }
+
+        // FIXME: moving address outside started samplerresult could improve timings
+        int port;
+        try {
+            port = Integer.parseInt(getPort());
+        } catch (NumberFormatException ex) {
+            log.warn("Wrong port number: " + getPort() + ", defaulting to 80", ex);
+            port = 80;
+        }
+        InetSocketAddress address = new InetSocketAddress(getHostName(), port);
+
         //log.info("Open sock");
         // TODO: add keep-alive ability
-        SocketChannel sock = SocketChannel.open();
-        sock.connect(address);
+        savedSock = SocketChannel.open();
+        savedSock.connect(address);
         // TODO: have timeouts
-        return sock;
+        return savedSock;
+    }
+
+    private boolean getUseKeepAlive() {
+        return getPropertyAsBoolean(KEEPALIVE);
+    }
+
+    void setUseKeepAlive(boolean selected) {
+        setProperty(KEEPALIVE, selected);
     }
 }

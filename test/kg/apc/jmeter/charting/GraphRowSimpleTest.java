@@ -100,7 +100,6 @@ public class GraphRowSimpleTest {
     {
         System.out.println("getElement");
         long value = 100L;
-        GraphRowAverages instance = new GraphRowAverages();
         AbstractGraphPanelChartElement expResult = new GraphPanelChartSimpleElement(10);
         instance.add(value, 10);
         AbstractGraphPanelChartElement result = instance.getElement(value);
@@ -114,12 +113,9 @@ public class GraphRowSimpleTest {
     public void testGetHigherKey() {
         System.out.println("getHigherKey");
         long value = 0L;
-        GraphRowSimple instance = new GraphRowSimple();
         Long expResult = null;
         Long result = instance.getHigherKey(value);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

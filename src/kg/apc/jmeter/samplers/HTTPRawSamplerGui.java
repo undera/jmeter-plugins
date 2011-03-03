@@ -3,6 +3,7 @@ package kg.apc.jmeter.samplers;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,7 +24,7 @@ public class HTTPRawSamplerGui
      extends AbstractSamplerGui
 {
     private static final Logger log = LoggingManager.getLoggerForClass();
-   //private JCheckBox isSuccessful;
+   private JCheckBox keepAlive;
    private JTextField hostName;
    private JTextField port;
    //private JTextField responseTime;
@@ -50,6 +51,7 @@ public class HTTPRawSamplerGui
    {
       super.configure(element);
 
+      keepAlive.setSelected(element.getPropertyAsBoolean(HTTPRawSampler.KEEPALIVE));
       hostName.setText(element.getPropertyAsString(HTTPRawSampler.HOSTNAME));
       port.setText(element.getPropertyAsString(HTTPRawSampler.PORT));
       requestData.setText(element.getPropertyAsString(HTTPRawSampler.BODY));
@@ -77,6 +79,7 @@ public class HTTPRawSamplerGui
          HTTPRawSampler rawSampler = (HTTPRawSampler) sampler;
          rawSampler.setHostName(hostName.getText());
          rawSampler.setPort(port.getText());
+         rawSampler.setUseKeepAlive(keepAlive.isSelected());
          // first replace removes old \r\n
          // second eliminates orphan \r
          // third make all newlines - old and new  like \r\n
@@ -117,8 +120,13 @@ public class HTTPRawSamplerGui
 
       addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Hostname: ", JLabel.RIGHT));
       addToPanel(mainPanel, editConstraints, 1, 1, hostName = new JTextField());
+
       addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("TCP Port: ", JLabel.RIGHT));
       addToPanel(mainPanel, editConstraints, 1, 2, port = new JTextField());
+
+      addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Keep-alive connection: ", JLabel.RIGHT));
+      addToPanel(mainPanel, editConstraints, 1, 3, keepAlive = new JCheckBox());
+
       addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Request Data: ", JLabel.RIGHT));
 
       editConstraints.fill = GridBagConstraints.BOTH;
@@ -139,6 +147,7 @@ public class HTTPRawSamplerGui
    }
 
     private void initFields() {
+        keepAlive.setSelected(false);
       hostName.setText("localhost");
       port.setText("80");
       requestData.setText("GET / HTTP/1.0\r\n"

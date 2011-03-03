@@ -10,6 +10,7 @@ import javax.net.SocketFactory;
  * This class used to separate real sockets from test sockets
  * @author APC
  */
+// FIXME: eliminate this class
 class TCPSocketFactory
       extends SocketFactory
 {

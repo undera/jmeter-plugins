@@ -1,6 +1,5 @@
 package kg.apc.jmeter.charting;
 
-import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -479,11 +478,12 @@ public class AbstractGraphRowTest
         System.out.println("getLowerElement");
         long value = 0L;
         AbstractGraphRow instance = new AbstractGraphRowImpl();
-        AbstractGraphPanelChartElement expResult = null;
+        try {
         AbstractGraphPanelChartElement result = instance.getLowerElement(value);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        fail("Exception expected");
+        }
+        catch(UnsupportedOperationException e)
+        {}
     }
 
     /**
@@ -495,9 +495,11 @@ public class AbstractGraphRowTest
         long value = 0L;
         AbstractGraphRow instance = new AbstractGraphRowImpl();
         Long expResult = null;
+        try{
         Long result = instance.getHigherKey(value);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        fail("Exception expected");
+        }
+        catch(UnsupportedOperationException e)
+        {}
     }
 }

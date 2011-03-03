@@ -85,13 +85,16 @@ public class DummySamplerGui
    public void clearGui()
    {
       super.clearGui();
-
-      isSuccessful.setSelected(true);
-      responseCode.setText("200");
-      responseMessage.setText("OK");
-      responseData.setText("");
-      responseTime.setText("${__Random(1,1000)}");
+        initFields();
    }
+
+    private void initFields() {
+        isSuccessful.setSelected(true);
+        responseCode.setText("200");
+        responseMessage.setText("OK");
+        responseData.setText("");
+        responseTime.setText("${__Random(1,1000)}");
+    }
 
    public String getLabelResource()
    {

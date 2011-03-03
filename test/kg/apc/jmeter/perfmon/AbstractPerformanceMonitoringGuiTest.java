@@ -217,14 +217,17 @@ public class AbstractPerformanceMonitoringGuiTest
         {
         }
 
+        @Override
         public void addPerfRecord(String serverName, double value, long time)
         {
         }
 
+        @Override
         public void setErrorMessage(String msg)
         {
         }
 
+        @Override
         public void clearErrorMessage()
         {
         }
@@ -392,7 +395,5 @@ public class AbstractPerformanceMonitoringGuiTest
         long expResult = 0L;
         long result = instance.normalizeTime(time);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

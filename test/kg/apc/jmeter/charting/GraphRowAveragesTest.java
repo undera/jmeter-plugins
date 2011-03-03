@@ -1,7 +1,5 @@
 package kg.apc.jmeter.charting;
 
-import kg.apc.jmeter.charting.GraphRowAverages;
-import kg.apc.jmeter.charting.AbstractGraphRow;
 import java.util.Iterator;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -115,7 +113,6 @@ public class GraphRowAveragesTest
     public void testGetMaxY()
     {
         System.out.println("getMaxY");
-        GraphRowAverages instance = new GraphRowAverages();
 
         instance.add(1000, 3);
         instance.add(1000, 2);
@@ -134,7 +131,6 @@ public class GraphRowAveragesTest
     {
         System.out.println("getElement");
         long value = 100L;
-        GraphRowAverages instance = new GraphRowAverages();
         AbstractGraphPanelChartElement expResult = new GraphPanelChartAverageElement(10);
         instance.add(value, 10);
         AbstractGraphPanelChartElement result = instance.getElement(value);
@@ -148,11 +144,8 @@ public class GraphRowAveragesTest
     public void testGetLowerElement() {
         System.out.println("getLowerElement");
         long value = 0L;
-        GraphRowAverages instance = new GraphRowAverages();
         AbstractGraphPanelChartElement expResult = null;
         AbstractGraphPanelChartElement result = instance.getLowerElement(value);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

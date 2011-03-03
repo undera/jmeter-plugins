@@ -2,10 +2,10 @@ package kg.apc.jmeter.samplers;
 
 import kg.apc.jmeter.util.SocketChannelEmul;
 import java.io.IOException;
-import java.net.SocketAddress;
 import java.nio.channels.SocketChannel;
 import org.apache.jmeter.samplers.SampleResult;
 import java.net.MalformedURLException;
+import java.nio.ByteBuffer;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -26,7 +26,7 @@ public class HTTPRawSamplerTest {
         SocketChannelEmul sockEmul = new SocketChannelEmul();
 
         @Override
-        protected SocketChannel getSocketChannel(SocketAddress address) throws IOException {
+        protected SocketChannel getSocketChannel() throws IOException {
             return sockEmul;
         }
     }
@@ -45,7 +45,9 @@ public class HTTPRawSamplerTest {
     @Before
     public void setUp() {
         instance = new HTTPRawSamplerEmul();
-    }
+        instance.setHostName("169.254.250.25");
+        instance.setPort("80");
+}
 
     @After
     public void tearDown() {
@@ -57,21 +59,18 @@ public class HTTPRawSamplerTest {
     @Test
     public void testSample() throws MalformedURLException, IOException {
         System.out.println("sample");
-        instance.setHostName("169.254.250.25");
-        instance.setPort("80");
-        instance.setRawRequest("GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n");
+        String req="GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
+        String resp="HTTP/1.1 200 OK\r\n\r\nTEST";
+        instance.setRawRequest(req);
+
+        instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
 
         SampleResult result = instance.sample(null);
         //System.err.println(result.getResponseDataAsString().length());
+        assertEquals(ByteBuffer.wrap(req.getBytes()), instance.sockEmul.getWrittenBytes());
         assertTrue(result.isSuccessful());
-        assertEquals("GET /", result.getSamplerData().substring(0, 5));
-        assertEquals("HTTP/1.1 200 OK", result.getResponseDataAsString().length() > 15 ? result.getResponseDataAsString().substring(0, 15) : result.getResponseDataAsString());
-    }
-
-    @Test
-    public void testMultiSample() {
-        SampleResult result1 = instance.sample(null);
-        SampleResult result2 = instance.sample(null);
+        assertEquals("200", result.getResponseCode());
+        assertEquals("TEST", result.getResponseDataAsString());
     }
 
     /**
@@ -80,9 +79,8 @@ public class HTTPRawSamplerTest {
     @Test
     public void testGetHostName() {
         System.out.println("getHostName");
-        String expResult = "";
         String result = instance.getHostName();
-        assertEquals(expResult, result);
+        assertTrue(result.length()>0);
     }
 
     /**
@@ -101,9 +99,8 @@ public class HTTPRawSamplerTest {
     @Test
     public void testGetPort() {
         System.out.println("getPort");
-        String expResult = "";
         String result = instance.getPort();
-        assertEquals(expResult, result);
+        assertTrue(result.length()>0);
     }
 
     /**

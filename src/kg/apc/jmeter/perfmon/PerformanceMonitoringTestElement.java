@@ -10,7 +10,6 @@ import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
-import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.util.JMeterUtils;
 
 /**
@@ -99,8 +98,8 @@ public class PerformanceMonitoringTestElement extends AbstractTestElement implem
 
             while (iterHosts.hasNext() && iterPorts.hasNext())
             {
-                StringProperty host = (StringProperty) iterHosts.next();
-                StringProperty port = (StringProperty) iterPorts.next();
+                JMeterProperty host = iterHosts.next();
+                JMeterProperty port = iterPorts.next();
 
                 connectors[i++] = new AgentConnector(host.getStringValue(), port.getIntValue());
             }

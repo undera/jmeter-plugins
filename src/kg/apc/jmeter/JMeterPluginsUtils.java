@@ -14,12 +14,13 @@ import org.apache.jmeter.util.JMeterUtils;
  */
 public abstract class JMeterPluginsUtils
 {
-    private static String pluginsPrefix = "jp@gc - ";
+    private static String PLUGINS_PREFIX = "jp@gc - ";
+    private static boolean prefixPlugins = true;
 
     // just prefix all the labels to be distinguished
     public static String prefixLabel(String label)
     {
-        return pluginsPrefix + label;
+        return prefixPlugins ? PLUGINS_PREFIX + label : label;
     }
 
     public static String getStackTrace(Exception ex)
@@ -36,10 +37,10 @@ public abstract class JMeterPluginsUtils
 
     static
     {
-        String pluginsPrefixCfg = JMeterUtils.getProperty("jmeterPlugin.pluginsPrefix");
-        if (pluginsPrefixCfg != null)
+        String prefixPluginsCfg = JMeterUtils.getProperty("jmeterPlugin.prefixPlugins");
+        if (prefixPluginsCfg != null)
         {
-            JMeterPluginsUtils.pluginsPrefix = pluginsPrefixCfg;
+            JMeterPluginsUtils.prefixPlugins = "true".equalsIgnoreCase(prefixPluginsCfg.trim());
         }
     }
 

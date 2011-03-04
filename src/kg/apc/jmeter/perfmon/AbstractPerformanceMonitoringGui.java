@@ -77,11 +77,11 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
      */
     public static final Class[] columnClasses = new Class[]
     {
-        String.class, Integer.class
+        String.class, String.class
     };
     private static Object[] defaultValues = new Object[]
     {
-        "localhost", 4444
+        "localhost", "4444"
     };
 
     private ButtonGroup group = new ButtonGroup();

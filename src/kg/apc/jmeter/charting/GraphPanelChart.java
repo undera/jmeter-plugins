@@ -279,6 +279,7 @@ public class GraphPanelChart
    private static boolean neverDrawCurrentX = false;
    private static boolean useRelativeTime = true;
    private static String csvSeparator = null;
+   private static boolean useNewZoomImplementation = true;
 
    //some of these preference can be overidden by the preference tab:
    private boolean settingsDrawGradient;
@@ -292,44 +293,50 @@ public class GraphPanelChart
    // If user entered configuration items in user.properties, overide default values.
    static
    {
+      //default configuration
+      if (new DecimalFormatSymbols().getDecimalSeparator() == '.')
+      {
+          GraphPanelChart.csvSeparator = ",";
+      } else
+      {
+          GraphPanelChart.csvSeparator = ";";
+      }
+
+      //properties from user.properties
       String cfgDrawGradient = JMeterUtils.getProperty("jmeterPlugin.drawGradient");
       if (cfgDrawGradient != null)
       {
-         GraphPanelChart.drawGradient = "true".equalsIgnoreCase(cfgDrawGradient);
+         GraphPanelChart.drawGradient = "true".equalsIgnoreCase(cfgDrawGradient.trim());
       }
       String cfgNeverDrawFinalZeroingLines = JMeterUtils.getProperty("jmeterPlugin.neverDrawFinalZeroingLines");
       if (cfgNeverDrawFinalZeroingLines != null)
       {
-         GraphPanelChart.neverDrawFinalZeroingLines = "true".equalsIgnoreCase(cfgNeverDrawFinalZeroingLines);
+         GraphPanelChart.neverDrawFinalZeroingLines = "true".equalsIgnoreCase(cfgNeverDrawFinalZeroingLines.trim());
       }
       String cfgOptimizeYAxis = JMeterUtils.getProperty("jmeterPlugin.optimizeYAxis");
       if (cfgOptimizeYAxis != null)
       {
-         GraphPanelChart.optimizeYAxis = "true".equalsIgnoreCase(cfgOptimizeYAxis);
+         GraphPanelChart.optimizeYAxis = "true".equalsIgnoreCase(cfgOptimizeYAxis.trim());
       }
       String cfgNeverDrawFinalCurrentX = JMeterUtils.getProperty("jmeterPlugin.neverDrawCurrentX");
       if (cfgNeverDrawFinalCurrentX != null)
       {
-         GraphPanelChart.neverDrawCurrentX = "true".equalsIgnoreCase(cfgNeverDrawFinalCurrentX);
+         GraphPanelChart.neverDrawCurrentX = "true".equalsIgnoreCase(cfgNeverDrawFinalCurrentX.trim());
       }
       String cfgCsvSeparator = JMeterUtils.getProperty("jmeterPlugin.csvSeparator");
       if (cfgCsvSeparator != null)
       {
          GraphPanelChart.csvSeparator = cfgCsvSeparator;
-      } else
-      {
-         if(new DecimalFormatSymbols().getDecimalSeparator() == '.')
-         {
-             GraphPanelChart.csvSeparator = ",";
-         } else
-         {
-             GraphPanelChart.csvSeparator = ";";
-         }
-      }
+      } 
       String cfgUseRelativeTime = JMeterUtils.getProperty("jmeterPlugin.useRelativeTime");
       if (cfgUseRelativeTime != null)
       {
-         GraphPanelChart.useRelativeTime = "true".equalsIgnoreCase(cfgUseRelativeTime);
+         GraphPanelChart.useRelativeTime = "true".equalsIgnoreCase(cfgUseRelativeTime.trim());
+      }
+      String cfgUseNewZoomImplementation = JMeterUtils.getProperty("jmeterPlugin.useNewZoomImplementation");
+      if (cfgUseNewZoomImplementation != null)
+      {
+         GraphPanelChart.useNewZoomImplementation = "true".equalsIgnoreCase(cfgUseNewZoomImplementation.trim());
       }
    }
 
@@ -500,9 +507,20 @@ public class GraphPanelChart
          rowValue.setExcludeOutOfRangeValues(preventXAxisOverScaling);
          double[] rowMinMaxY = rowValue.getMinMaxY(maxPoints);
 
-         if (rowMinMaxY[1]*rowsZoomFactor.get(row.getKey()) > maxYVal)
+         //fix old implementation compatibility, to remove if we drop one
+         double zoomFactor;
+         Double rowZoomFactor = rowsZoomFactor.get(row.getKey());
+         if(rowZoomFactor != null)
          {
-            maxYVal = rowMinMaxY[1]*rowsZoomFactor.get(row.getKey());
+             zoomFactor = rowZoomFactor;
+         } else
+         {
+             zoomFactor = 1;
+         }
+
+         if (rowMinMaxY[1]*zoomFactor > maxYVal)
+         {
+            maxYVal = rowMinMaxY[1]*zoomFactor;
          }
          if (rowMinMaxY[0] < minYVal)
          {
@@ -713,7 +731,15 @@ public class GraphPanelChart
       }
 
       setDefaultDimensions();
-      autoZoom();
+      if(useNewZoomImplementation)
+      {
+          autoZoom();
+      }
+      else
+      {
+          autoZoom_orig();
+      }
+      
       getMinMaxDataValues();
 
       try
@@ -766,7 +792,14 @@ public class GraphPanelChart
              double zoomFactor = rowsZoomFactor.get(row.getKey());
              if(zoomFactor != 1)
              {
-                 rowLabel = rowLabel + " (x" + zoomFactor + ")";
+                 if(zoomFactor>1)
+                 {
+                     int iZoomFactor = (int)zoomFactor;
+                     rowLabel = rowLabel + " (x" + iZoomFactor + ")";
+                 } else
+                 {
+                     rowLabel = rowLabel + " (x" + zoomFactor + ")";
+                 }
              }
          }
 
@@ -908,9 +941,16 @@ public class GraphPanelChart
          g.drawLine(gridLineX, chartRect.y + chartRect.height - shift, gridLineX, chartRect.y);
          g.setColor(Color.black);
 
-         // draw label
-         long labelValue=(long) (minXVal + n * (double) (maxXVal - minXVal) / gridLinesCount);
-         xAxisLabelRenderer.setValue(labelValue);
+         // draw label - keep decimal precision if range is too small
+         double labelValue = minXVal + n * (double) (maxXVal - minXVal) / gridLinesCount;
+         if(maxXVal - minXVal < 2 * gridLinesCount)
+         {
+             xAxisLabelRenderer.setValue(labelValue);
+         }
+         else
+         {
+             xAxisLabelRenderer.setValue((long)labelValue);
+         }
 
          valueLabel = xAxisLabelRenderer.getText();
          labelXPos = gridLineX - fm.stringWidth(valueLabel) / 2;

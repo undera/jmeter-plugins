@@ -59,7 +59,10 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
 
     private void initFields() {
         filename.setText("testResults.txt");
-        columns.setText("endTimeMillis|\\t\\t|responseTime|\\t|latency|\\t|sentBytes|\\t|receivedBytes|\\t|isFailed|\\t|responseCode|\\r\\n");
+        columns.setText("endTimeMillis|\\t\\t|"
+                + "responseTimeMicros|\\t|latencyMicros|\\t|"
+                + "sentBytes|\\t|receivedBytes|\\t|"
+                + "isFailed|\\t|responseCode|\\r\\n");
     }
 
     @Override

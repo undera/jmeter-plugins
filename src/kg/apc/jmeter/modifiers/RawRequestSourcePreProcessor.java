@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.logging.Level;
 import kg.apc.jmeter.EndOfFileException;
 import org.apache.commons.io.IOExceptionWithCause;
 import org.apache.jmeter.engine.util.NoThreadClone;

@@ -19,11 +19,15 @@ import org.apache.log.Logger;
 public class HTTPRawSampler extends AbstractSampler {
 
     public static final String CRLF = "\r\n";
+    public static final String EMPTY = "";
     public static final String HOSTNAME = "hostname";
     public static final String PORT = "port";
     public static final String KEEPALIVE = "keepalive";
     public static final String BODY = "body";
+    public static final String RC200 = "200";
+    public static final String RC500 = "500";
     public static final String TIMEOUT = "timeout";
+    private static final String RNpattern = "\\r\\n";
     private static final String SPACE = " ";
     // 
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -65,7 +69,7 @@ public class HTTPRawSampler extends AbstractSampler {
         res.sampleStart();
         res.setDataType(SampleResult.TEXT);
         res.setSuccessful(true);
-        res.setResponseCode("-1");
+        res.setResponseCode(RC200);
         try {
             res.setResponseData(processIO(res));
             parseResponse(res);
@@ -73,6 +77,7 @@ public class HTTPRawSampler extends AbstractSampler {
             log.error(getHostName(), ex);
             res.sampleEnd();
             res.setSuccessful(false);
+            res.setResponseCode(RC500);
             res.setResponseMessage(ex.toString());
             res.setResponseData(JMeterPluginsUtils.getStackTrace(ex).getBytes());
         }
@@ -82,7 +87,7 @@ public class HTTPRawSampler extends AbstractSampler {
 
     private void parseResponse(SampleResult res) {
         // TODO: make benchmarks - if this slows us - get rid of it, or give checkbox
-        String[] parsed = res.getResponseDataAsString().split("\\r\\n");
+        String[] parsed = res.getResponseDataAsString().split(RNpattern);
 
         if (parsed.length > 0) {
             int s = parsed[0].indexOf(SPACE);
@@ -95,16 +100,16 @@ public class HTTPRawSampler extends AbstractSampler {
 
         if (parsed.length > 1) {
             int n = 1;
-            String headers = "";
+            String headers = EMPTY;
             while (n < parsed.length && parsed[n].length() > 0) {
                 headers += parsed[n] + CRLF;
                 n++;
             }
             res.setResponseHeaders(headers);
-            String body = "";
+            String body = EMPTY;
             n++;
             while (n < parsed.length) {
-                body += parsed[n] + (n + 1 < parsed.length ? CRLF : "");
+                body += parsed[n] + (n + 1 < parsed.length ? CRLF : EMPTY);
                 n++;
             }
             res.setResponseData(body.getBytes());
@@ -167,8 +172,8 @@ public class HTTPRawSampler extends AbstractSampler {
         } catch (NumberFormatException e) {
             log.error("Wrong timeout: " + getTimeout(), e);
         }
-        savedSock.socket().setSoTimeout(timeout);
         // TODO: have timeouts
+        savedSock.socket().setSoTimeout(timeout);
         return savedSock;
     }
 

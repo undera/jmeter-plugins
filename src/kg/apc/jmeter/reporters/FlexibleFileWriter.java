@@ -39,6 +39,7 @@ public class FlexibleFileWriter
             + "isFailed " // surrogates
             +"threadName sampleLabel"
             + "startTimeMillis endTimeMillis "
+            + "responseTimeMicros latencyMicros "
             ;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String FILENAME = "filename";
@@ -46,7 +47,7 @@ public class FlexibleFileWriter
     protected FileChannel fileChannel;
     private int[] compiledFields;
     private ByteBuffer[] compiledConsts;
-    private ArrayList<String> availableFieldNames = new ArrayList<String>(Arrays.asList(AVAILABLE_FIELDS.split(" ")));
+    private ArrayList<String> availableFieldNames = new ArrayList<String>(Arrays.asList(AVAILABLE_FIELDS.trim().split(" ")));
     private static final byte[] b1 = "1".getBytes();
     private static final byte[] b0 = "0".getBytes();
 
@@ -220,9 +221,19 @@ public class FlexibleFileWriter
             case 12:
                 buf.put((String.valueOf(result.getStartTime()/1000)+'.'+String.valueOf(result.getStartTime() % 1000)).getBytes());
                 break;
+
             case 13:
                 buf.put((String.valueOf(result.getEndTime()/1000)+'.'+String.valueOf(result.getEndTime() % 1000)).getBytes());
                 break;
+
+            case 14:
+                buf.put(String.valueOf(result.getTime()*1000).getBytes());
+                break;
+
+            case 15:
+                buf.put(String.valueOf(result.getLatency()*1000).getBytes());
+                break;
+
             default:
                 throw new IllegalArgumentException("Unknown field ID: " + fieldID);
         }

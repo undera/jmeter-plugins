@@ -1,3 +1,5 @@
+// TODO: add to every plugin link to its help in description
+// TODO: add example test plans and source files at help pages
 package kg.apc.jmeter;
 
 import java.nio.ByteBuffer;
@@ -30,7 +32,7 @@ public abstract class JMeterPluginsUtils
         for(int n=0; n<stack.length; n++)
         {
             res.append(stack[n].toString());
-            res.append('\n');
+            res.append("\n");
         }
         return res.toString();
     }

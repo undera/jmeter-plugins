@@ -141,7 +141,7 @@ public class VariableThroughputTimerGui
    @Override
    public String getStaticLabel()
    {
-      return JMeterPluginsUtils.prefixLabel("Variable Throughput Timer");
+      return JMeterPluginsUtils.prefixLabel("Throughput Shaping Timer");
    }
 
    public TestElement createTestElement()

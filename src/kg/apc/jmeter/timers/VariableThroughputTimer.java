@@ -37,21 +37,25 @@ public class VariableThroughputTimer
 
     public long delay() {
         synchronized (this) {
-            int delay;
 
+            int retry=0;
             while (true) {
+                int delay = 0;
                 long curTime = System.currentTimeMillis();
                 long msecs = curTime % 1000;
                 long secs = curTime - msecs;
                 checkNextSecond(secs);
                 if (rps < 1) {
                     notifyAll();
-                    break;
+                    if (retry++<100) delay=50;
+                }
+                else
+                {
+                    delay = getDelay(msecs);
                 }
 
                 // FIXME: at high RPS we produce rps-1 
 
-                delay = getDelay(msecs);
 
                 if (delay < 1) {
                     notify();
@@ -79,7 +83,7 @@ public class VariableThroughputTimer
             }
             time = secs;
             rps = getNextSecondRPS((secs - startSec) / 1000);
-            log.info("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent "+cntSent+ " RPS: " + rps);
+            log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent "+cntSent+ " RPS: " + rps);
             cntSent = 0;
             msecPerReq = 1000d / rps;
         }
@@ -106,7 +110,7 @@ public class VariableThroughputTimer
         JMeterProperty data = getData();
         if (data instanceof NullProperty) {
             log.error("Got NullProperty");
-            return -1;
+            return 0;
         }
 
         int result = 0;
@@ -128,8 +132,8 @@ public class VariableThroughputTimer
             }
             rowNo++;
             if (!iter.hasNext()) {
-                log.info("Time to stop test");
-                JMeterContextService.getContext().getEngine().stopTest(false);
+                log.info("No further RPS schedule, asking threads to stop...");
+                JMeterContextService.getContext().getEngine().askThreadsToStop();
                 notifyAll();
                 break;
             }

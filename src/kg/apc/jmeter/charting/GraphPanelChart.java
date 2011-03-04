@@ -943,7 +943,7 @@ public class GraphPanelChart
 
          // draw label - keep decimal precision if range is too small
          double labelValue = minXVal + n * (double) (maxXVal - minXVal) / gridLinesCount;
-         if(maxXVal - minXVal < 2 * gridLinesCount)
+         if((maxXVal - minXVal < 2 * gridLinesCount) && (minXVal != maxXVal))
          {
              xAxisLabelRenderer.setValue(labelValue);
          }

@@ -37,10 +37,9 @@ public class FlexibleFileWriter
             + "responseTime latency "
             + "responseCode responseMessage "
             + "isFailed " // surrogates
-            +"threadName sampleLabel"
+            + "threadName sampleLabel "
             + "startTimeMillis endTimeMillis "
-            + "responseTimeMicros latencyMicros "
-            ;
+            + "responseTimeMicros latencyMicros ";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String FILENAME = "filename";
     private static final String COLUMNS = "columns";
@@ -50,6 +49,12 @@ public class FlexibleFileWriter
     private ArrayList<String> availableFieldNames = new ArrayList<String>(Arrays.asList(AVAILABLE_FIELDS.trim().split(" ")));
     private static final byte[] b1 = "1".getBytes();
     private static final byte[] b0 = "0".getBytes();
+
+    public FlexibleFileWriter() {
+        super();
+    }
+
+
 
     public void sampleStarted(SampleEvent e) {
     }
@@ -103,19 +108,19 @@ public class FlexibleFileWriter
      * in switch operators
      */
     private void compileColumns() {
-        //log.debug("Compiling columns string: " + getColumns());
+        //for (int k=0; k<availableFieldNames.size(); k++) log.debug(k+"-"+availableFieldNames.get(k));
+        log.debug("Compiling columns string: " + getColumns());
         // FIXME: no way to specify | as constant
         String[] chunks = JMeterPluginsUtils.replaceRNT(getColumns()).split("\\|");
         compiledFields = new int[chunks.length];
         compiledConsts = new ByteBuffer[chunks.length];
         for (int n = 0; n < chunks.length; n++) {
-            //log.debug("Chunk: " + chunks[n]);
             int fieldID = availableFieldNames.indexOf(chunks[n]);
             if (fieldID >= 0) {
-                //log.debug("Field id: "+fieldID);
+                log.debug(chunks[n] + " field id: " + fieldID);
                 compiledFields[n] = fieldID;
             } else {
-                //log.debug("Const");
+                log.debug(chunks[n] + " is const");
                 compiledConsts[n] = ByteBuffer.wrap(chunks[n].getBytes());
             }
         }
@@ -173,9 +178,11 @@ public class FlexibleFileWriter
             case 1:
                 buf.put(String.valueOf(result.getStartTime()).getBytes());
                 break;
+
             case 2:
                 buf.put(String.valueOf(result.getEndTime()).getBytes());
                 break;
+
             case 3:
                 if (result.getSamplerData() != null) {
                     buf.put(String.valueOf(result.getSamplerData().length()).getBytes());
@@ -183,6 +190,7 @@ public class FlexibleFileWriter
                     buf.put(b0);
                 }
                 break;
+
             case 4:
                 if (result.getResponseData() != null) {
                     buf.put(String.valueOf(result.getResponseData().length).getBytes());
@@ -190,6 +198,7 @@ public class FlexibleFileWriter
                     buf.put(b0);
                 }
                 break;
+
             case 5:
                 buf.put(String.valueOf(result.getTime()).getBytes());
                 break;
@@ -219,23 +228,24 @@ public class FlexibleFileWriter
                 break;
 
             case 12:
-                buf.put((String.valueOf(result.getStartTime()/1000)+'.'+String.valueOf(result.getStartTime() % 1000)).getBytes());
+                buf.put((String.valueOf(result.getStartTime() / 1000) + '.' + String.valueOf(result.getStartTime() % 1000)).getBytes());
                 break;
 
             case 13:
-                buf.put((String.valueOf(result.getEndTime()/1000)+'.'+String.valueOf(result.getEndTime() % 1000)).getBytes());
+                buf.put((String.valueOf(result.getEndTime() / 1000) + '.' + String.valueOf(result.getEndTime() % 1000)).getBytes());
                 break;
 
             case 14:
-                buf.put(String.valueOf(result.getTime()*1000).getBytes());
+                buf.put(String.valueOf(result.getTime() * 1000).getBytes());
                 break;
 
             case 15:
-                buf.put(String.valueOf(result.getLatency()*1000).getBytes());
+                buf.put(String.valueOf(result.getLatency() * 1000).getBytes());
                 break;
 
             default:
                 throw new IllegalArgumentException("Unknown field ID: " + fieldID);
         }
+        log.debug(fieldID + " " + JMeterPluginsUtils.byteBufferToString(buf));
     }
 }

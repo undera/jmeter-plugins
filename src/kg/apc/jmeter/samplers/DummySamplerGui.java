@@ -57,6 +57,7 @@ public class DummySamplerGui
    {
       DummySampler sampler = new DummySampler();
       modifyTestElement(sampler);
+      sampler.setComment(JMeterPluginsUtils.getWikiLinkText("DummySampler"));
       return sampler;
    }
 

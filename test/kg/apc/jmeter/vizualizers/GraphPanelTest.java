@@ -174,5 +174,10 @@ public class GraphPanelTest
         public void add(SampleResult sr)
         {
         }
+
+        @Override
+        protected String getWikiPage() {
+            return "";
+        }
    }
 }

@@ -171,6 +171,7 @@ public class SteppingThreadGroupGui
    {
       SteppingThreadGroup tg = new SteppingThreadGroup();
       modifyTestElement(tg);
+      tg.setComment(JMeterPluginsUtils.getWikiLinkText("SteppingThreadGroup"));
       return tg;
    }
 

@@ -99,4 +99,9 @@ public class ResponseCodesPerSecondGui
     {
         return new JSettingsPanel(this, true, true, false, true, true, false, false, false, true);
     }
+
+    @Override
+    protected String getWikiPage() {
+        return "ResponseCodesPerSecond";
+    }
 }

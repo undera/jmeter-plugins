@@ -170,6 +170,7 @@ public class MetricsProviderTest
     public class AbstractPerformanceMonitoringGuiImpl
          extends AbstractPerformanceMonitoringGui
    {
+        @Override
       public String getLabelResource()
       {
          return "test";
@@ -226,6 +227,11 @@ public class MetricsProviderTest
         public void setLoadMenuEnabled(boolean enabled)
         {
             
+        }
+
+        @Override
+        protected String getWikiPage() {
+            return "";
         }
    }
 

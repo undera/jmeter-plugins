@@ -95,6 +95,7 @@ public abstract class JMeterPluginsUtils
    }
 
     public static String replaceRNT(String str) {
+        // FIXME: stop using bad way...
         str=str.replaceAll("\\\\\\\\", "VERY BAD WAY");
         //System.err.println(str);
         str=str.replaceAll("\\\\t", "\t");
@@ -105,5 +106,9 @@ public abstract class JMeterPluginsUtils
         str=str.replaceAll("\\\\r", "\r");
         str=str.replaceAll("VERY BAD WAY", "\\\\");
         return str;
+    }
+
+    public static String getWikiLinkText(String wikiPage) {
+        return "Plugin help available here: http://code.google.com/p/jmeter-plugins/wiki/"+wikiPage;
     }
 }

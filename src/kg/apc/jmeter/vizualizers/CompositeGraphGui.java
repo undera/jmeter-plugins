@@ -186,4 +186,9 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer
             updateGui();
         }
     }
+
+    @Override
+    protected String getWikiPage() {
+        return "CompositeGraph";
+    }
 }

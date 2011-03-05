@@ -69,6 +69,11 @@ public class JSettingsPanelTest {
         {
             return new JSettingsPanel(this, true, true, true, true, true);
         }
+
+        @Override
+        protected String getWikiPage() {
+            return "";
+        }
    }
 
     /**

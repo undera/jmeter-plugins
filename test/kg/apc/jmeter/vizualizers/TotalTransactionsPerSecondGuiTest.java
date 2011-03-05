@@ -6,6 +6,7 @@ package kg.apc.jmeter.vizualizers;
 
 import kg.apc.jmeter.util.TestJMeterUtils;
 import java.util.Collection;
+import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -55,5 +56,16 @@ public class TotalTransactionsPerSecondGuiTest
         TotalTransactionsPerSecondGui instance = new TotalTransactionsPerSecondGui();
         Collection result = instance.getMenuCategories();
         assertTrue(result.isEmpty());
+    }
+
+    /**
+     * Test of createTestElement method, of class TotalTransactionsPerSecondGui.
+     */
+    @Test
+    public void testCreateTestElement() {
+        System.out.println("createTestElement");
+        TotalTransactionsPerSecondGui instance = new TotalTransactionsPerSecondGui();
+        TestElement result = instance.createTestElement();
+        assertNotNull(result);
     }
 }

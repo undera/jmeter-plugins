@@ -75,6 +75,11 @@ public class ThroughputVsThreadsGui
         return new JSettingsPanel(this, false, true, true, false, false, false, true, false);
     }
 
+    @Override
+    protected String getWikiPage() {
+        return "ThroughputVsThreads";
+    }
+
     private class CustomRateRenderer
             extends RateRenderer
     {

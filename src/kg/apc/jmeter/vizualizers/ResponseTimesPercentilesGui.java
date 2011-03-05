@@ -64,4 +64,9 @@ public class ResponseTimesPercentilesGui
     {
         return new JSettingsPanel(this, false, true, false, false, false, false, false, true);
     }
+
+    @Override
+    protected String getWikiPage() {
+        return "ResponseTimesPercentiles";
+    }
 }

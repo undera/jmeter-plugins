@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Image;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import org.apache.jmeter.gui.GuiPackage;
@@ -179,6 +180,7 @@ public abstract class AbstractGraphPanelVisualizer
             sc.setThreadCounts(true);
         }
 
+        el.setComment(JMeterPluginsUtils.getWikiLinkText(getWikiPage()));
         return el;
     }
 
@@ -319,4 +321,6 @@ public abstract class AbstractGraphPanelVisualizer
     {
         return getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, null, canCompose);
     }
+
+    protected abstract String getWikiPage();
 }

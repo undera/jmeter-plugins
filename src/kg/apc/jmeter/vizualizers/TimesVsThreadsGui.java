@@ -75,4 +75,9 @@ public class TimesVsThreadsGui
     {
         return new JSettingsPanel(this, false, true, true, false, false, false, true, true);
     }
+
+    @Override
+    protected String getWikiPage() {
+       return "ResponseTimesVsThreads";
+    }
 }

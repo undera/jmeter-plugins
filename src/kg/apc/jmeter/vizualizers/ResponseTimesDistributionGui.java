@@ -67,4 +67,9 @@ public class ResponseTimesDistributionGui
     {
         return new JSettingsPanel(this, true, true, false, false, false, true, false, true, false, false);
     }
+
+    @Override
+    protected String getWikiPage() {
+        return "ResponseTimesDistribution";
+    }
 }

@@ -152,6 +152,8 @@ public class UltimateThreadGroupGui
       //log.info("Create test element");
       UltimateThreadGroup tg = new UltimateThreadGroup();
       modifyTestElement(tg);
+      tg.setComment(JMeterPluginsUtils.getWikiLinkText("UltimateThreadGroup"));
+
       return tg;
    }
 

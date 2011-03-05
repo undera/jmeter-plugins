@@ -106,4 +106,15 @@ public class JMeterPluginsUtilsTest {
         assertEquals("\t\n\r", JMeterPluginsUtils.replaceRNT("\\t\\n\\r"));
         assertEquals("\t\n\n\r", JMeterPluginsUtils.replaceRNT("\\t\\n\\n\\r"));
     }
+
+    /**
+     * Test of getWikiLinkText method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testGetWikiLinkText() {
+        System.out.println("getWikiLinkText");
+        String wikiPage = "test";
+        String result = JMeterPluginsUtils.getWikiLinkText(wikiPage);
+        assertTrue(result.endsWith(wikiPage));
+    }
 }

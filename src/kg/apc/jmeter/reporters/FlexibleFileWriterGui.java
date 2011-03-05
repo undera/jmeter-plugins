@@ -39,6 +39,7 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
     public TestElement createTestElement() {
         TestElement te = new FlexibleFileWriter();
         modifyTestElement(te);
+        te.setComment(JMeterPluginsUtils.getWikiLinkText("FlexibleFileWriter"));
         return te;
     }
 

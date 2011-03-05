@@ -246,6 +246,11 @@ public class AbstractPerformanceMonitoringGuiTest
         {
             return new JSettingsPanel(this, true, true, true, true, true);
         }
+
+        @Override
+        protected String getWikiPage() {
+           return  "";
+        }
     }
 
    @Test
@@ -394,6 +399,18 @@ public class AbstractPerformanceMonitoringGuiTest
         AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
         long expResult = 0L;
         long result = instance.normalizeTime(time);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getWikiPage method, of class AbstractPerformanceMonitoringGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+        String expResult = "";
+        String result = instance.getWikiPage();
         assertEquals(expResult, result);
     }
 }

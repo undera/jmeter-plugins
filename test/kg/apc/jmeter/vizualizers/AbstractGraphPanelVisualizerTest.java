@@ -147,6 +147,11 @@ public class AbstractGraphPanelVisualizerTest
         {
             return new JSettingsPanel(this, true, true, true, true, true);
         }
+
+        @Override
+        protected String getWikiPage() {
+            return "";
+        }
    }
 
    @Test
@@ -292,5 +297,17 @@ public class AbstractGraphPanelVisualizerTest
         Sample sample = null;
         AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
         instance.updateGui(sample);
+    }
+
+    /**
+     * Test of getWikiPage method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        String expResult = "";
+        String result = instance.getWikiPage();
+        assertEquals(expResult, result);
     }
 }

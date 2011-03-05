@@ -169,6 +169,11 @@ public class ServerPerfMonitoringGUI extends AbstractPerformanceMonitoringGui
         return new JSettingsPanel(this, false, true, false, false, true, false, false, false, true);
     }
 
+    @Override
+    protected String getWikiPage() {
+        return "PerfMon";
+    }
+
        private class LoadAction
          implements ActionListener
    {

@@ -32,6 +32,7 @@ public class ParameterizedControllerGui
    {
       ParameterizedController tc = new ParameterizedController();
       modifyTestElement(tc);
+      tc.setComment(JMeterPluginsUtils.getWikiLinkText("ParameterizedController"));
       return tc;
    }
 

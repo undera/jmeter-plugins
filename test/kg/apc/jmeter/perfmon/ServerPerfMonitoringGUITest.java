@@ -145,4 +145,15 @@ public class ServerPerfMonitoringGUITest
         ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
         instance.clearData();
     }
+
+    /**
+     * Test of getWikiPage method, of class ServerPerfMonitoringGUI.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        ServerPerfMonitoringGUI instance = new ServerPerfMonitoringGUI();
+        String result = instance.getWikiPage();
+        assertTrue(result.length()>0);
+    }
 }

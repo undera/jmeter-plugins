@@ -189,14 +189,17 @@ public class PerformanceMonitoringTestElementTest
         {
         }
 
+        @Override
         public void addPerfRecord(String serverName, double value, long time)
         {
         }
 
+        @Override
         public void setErrorMessage(String msg)
         {
         }
 
+        @Override
         public void clearErrorMessage()
         {
         }
@@ -214,6 +217,11 @@ public class PerformanceMonitoringTestElementTest
         @Override
         public void setLoadMenuEnabled(boolean enabled)
         {
+        }
+
+        @Override
+        protected String getWikiPage() {
+            return "";
         }
     }
 }

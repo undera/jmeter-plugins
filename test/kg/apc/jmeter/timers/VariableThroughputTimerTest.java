@@ -108,4 +108,17 @@ public class VariableThroughputTimerTest {
         assertTrue(result instanceof CollectionProperty);
     }
 
+    /**
+     * Test of getRPSForSecond method, of class VariableThroughputTimer.
+     */
+    @Test
+    public void testGetRPSForSecond() {
+        System.out.println("getRPSForSecond");
+        long sec = 0L;
+        VariableThroughputTimer instance = new VariableThroughputTimer();
+        int expResult = 0;
+        int result = instance.getRPSForSecond(sec);
+        assertEquals(expResult, result);
+    }
+
 }

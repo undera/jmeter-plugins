@@ -68,6 +68,11 @@ public class AbstractOverTimeVisualizerTest {
         {
             return "TEST";
         }
+
+        @Override
+        protected String getWikiPage() {
+           return "";
+        }
    }
 
    @Test

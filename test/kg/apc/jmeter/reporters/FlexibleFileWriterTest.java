@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  */
 public class FlexibleFileWriterTest {
 
-    private class FlexibleCSVWriter extends kg.apc.jmeter.reporters.FlexibleFileWriter {
+    private class FlexibleFileWriter extends kg.apc.jmeter.reporters.FlexibleFileWriter {
 
         private FileChannelEmul fileEmul = new FileChannelEmul();
 
@@ -58,7 +58,7 @@ public class FlexibleFileWriterTest {
         SampleResult res = new SampleResult();
         res.setResponseData("test".getBytes());
         SampleEvent e = new SampleEvent(res, "Test");
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.setColumns("isSuccsessful|\\t|latency|");
         instance.testStarted();
         for (int n = 0; n < 10; n++) {
@@ -89,8 +89,8 @@ public class FlexibleFileWriterTest {
         res.sampleEnd();
         SampleEvent e = new SampleEvent(res, "Test");
 
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
-        instance.setColumns("endTimeMillis|\\t\\t|responseTime|\\t|latency|\\t|sentBytes|\\t|receivedBytes|\\t|isSuccsessful|\\t|responseCode|\\r\\n");
+        FlexibleFileWriter instance = new FlexibleFileWriter();
+        instance.setColumns("endTimeMillis|\\t\\t|responseTimeMicros|\\t|latencyMicros|\\t|sentBytes|\\t|receivedBytes|\\t|isSuccsessful|\\t|responseCode|\\r\\n");
         instance.testStarted();
         instance.sampleOccurred(e);
         String written = JMeterPluginsUtils.byteBufferToString(instance.fileEmul.getWrittenBytes());
@@ -107,7 +107,7 @@ public class FlexibleFileWriterTest {
     public void testSampleStarted() {
         System.out.println("sampleStarted");
         SampleEvent e = null;
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.sampleStarted(e);
     }
 
@@ -118,7 +118,7 @@ public class FlexibleFileWriterTest {
     public void testSampleStopped() {
         System.out.println("sampleStopped");
         SampleEvent e = null;
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.sampleStopped(e);
     }
 
@@ -128,7 +128,7 @@ public class FlexibleFileWriterTest {
     @Test
     public void testTestStarted_0args() {
         System.out.println("testStarted");
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.testStarted();
     }
 
@@ -139,7 +139,7 @@ public class FlexibleFileWriterTest {
     public void testTestStarted_String() {
         System.out.println("testStarted");
         String host = "";
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.testStarted(host);
     }
 
@@ -149,7 +149,7 @@ public class FlexibleFileWriterTest {
     @Test
     public void testTestEnded_0args() {
         System.out.println("testEnded");
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.testEnded();
     }
 
@@ -160,7 +160,7 @@ public class FlexibleFileWriterTest {
     public void testTestEnded_String() {
         System.out.println("testEnded");
         String host = "";
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.testEnded(host);
     }
 
@@ -171,7 +171,7 @@ public class FlexibleFileWriterTest {
     public void testTestIterationStart() {
         System.out.println("testIterationStart");
         LoopIterationEvent event = null;
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.testIterationStart(event);
     }
 
@@ -182,7 +182,7 @@ public class FlexibleFileWriterTest {
     public void testSetFilename() {
         System.out.println("setFilename");
         String name = "";
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.setFilename(name);
     }
 
@@ -192,7 +192,7 @@ public class FlexibleFileWriterTest {
     @Test
     public void testGetFilename() {
         System.out.println("getFilename");
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         String expResult = "";
         String result = instance.getFilename();
         assertEquals(expResult, result);
@@ -205,7 +205,7 @@ public class FlexibleFileWriterTest {
     public void testSetColumns() {
         System.out.println("setColumns");
         String cols = "";
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.setColumns(cols);
     }
 
@@ -215,9 +215,19 @@ public class FlexibleFileWriterTest {
     @Test
     public void testGetColumns() {
         System.out.println("getColumns");
-        FlexibleCSVWriter instance = new FlexibleCSVWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         String expResult = "";
         String result = instance.getColumns();
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of openFile method, of class FlexibleFileWriter.
+     */
+    @Test
+    public void testOpenFile() throws Exception {
+        System.out.println("openFile");
+        FlexibleFileWriter instance = new FlexibleFileWriter();
+        instance.openFile();
     }
 }

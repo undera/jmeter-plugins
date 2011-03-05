@@ -66,6 +66,7 @@ public class FlexibleFileWriterGuiTest {
         FlexibleFileWriterGui instance = new FlexibleFileWriterGui();
         TestElement result = instance.createTestElement();
         assertTrue(result instanceof FlexibleFileWriter);
+        assertTrue(result.getComment().length()>0);
     }
 
     /**

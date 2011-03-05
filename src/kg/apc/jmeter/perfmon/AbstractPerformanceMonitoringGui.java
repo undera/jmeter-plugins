@@ -38,6 +38,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.DateTimeRenderer;
@@ -267,6 +268,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     {
         PerformanceMonitoringTestElement pmte = new PerformanceMonitoringTestElement();
         modifyTestElement(pmte);
+        pmte.setComment(JMeterPluginsUtils.getWikiLinkText(getWikiPage()));
         return pmte;
     }
 
@@ -358,6 +360,8 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     public void editingCanceled(ChangeEvent e)
     {
     }
+
+    protected abstract String getWikiPage();
 
     private class AddRowAction
             implements ActionListener

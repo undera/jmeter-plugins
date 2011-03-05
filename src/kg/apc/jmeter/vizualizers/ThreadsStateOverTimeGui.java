@@ -139,4 +139,9 @@ public class ThreadsStateOverTimeGui
     {
         return new JSettingsPanel(this, true, true, false, true, true, false, false, true, true);
     }
+
+    @Override
+    protected String getWikiPage() {
+        return "ThreadsStateOverTimeGui";
+    }
 }

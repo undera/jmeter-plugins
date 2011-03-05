@@ -65,4 +65,9 @@ public class LatenciesOverTimeGui
     {
         return new JSettingsPanel(this, true, true, false, true, true, false, false, true, true);
     }
+
+    @Override
+    protected String getWikiPage() {
+       return "LatenciesOverTime";
+    }
 }

@@ -77,7 +77,7 @@ public class ThroughputVsThreadsGui
 
     @Override
     protected String getWikiPage() {
-        return "ThroughputVsThreads";
+        return "TransactionThroughputVsThreads";
     }
 
     private class CustomRateRenderer

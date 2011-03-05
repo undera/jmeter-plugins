@@ -50,7 +50,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
     public TestElement createTestElement() {
         RawRequestSourcePreProcessor preproc = new RawRequestSourcePreProcessor();
         modifyTestElement(preproc);
-        preproc.setComment(JMeterPluginsUtils.getWikiLinkText("RawRequestSource"));
+        preproc.setComment(JMeterPluginsUtils.getWikiLinkText("RawDataSource"));
         return preproc;
     }
 

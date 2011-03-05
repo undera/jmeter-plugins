@@ -118,7 +118,7 @@ public class ThreadsStateOverTimeGui
     @Override
     public String getStaticLabel()
     {
-        return JMeterPluginsUtils.prefixLabel("Active Threads Over Time");
+        return JMeterPluginsUtils.prefixLabel("ActiveThreadsOverTime");
     }
 
     @Override

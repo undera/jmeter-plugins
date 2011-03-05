@@ -67,6 +67,6 @@ public class ResponseTimesPercentilesGui
 
     @Override
     protected String getWikiPage() {
-        return "ResponseTimesPercentiles";
+        return "RespTimePercentiles";
     }
 }

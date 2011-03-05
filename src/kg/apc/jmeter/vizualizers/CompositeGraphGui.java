@@ -74,6 +74,7 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer
             setModel(modelNew);
         }
         modifyTestElement(modelNew);
+        modelNew.setComment(JMeterPluginsUtils.getWikiLinkText("CompositeGraph"));
         return modelNew;
    }
 

@@ -59,7 +59,7 @@ public class HTTPRawSamplerGui
     public TestElement createTestElement() {
         HTTPRawSampler sampler = new HTTPRawSampler();
         modifyTestElement(sampler);
-        sampler.setComment(JMeterPluginsUtils.getWikiLinkText("HTTPRawSampler"));
+        sampler.setComment(JMeterPluginsUtils.getWikiLinkText("RawRequest"));
         return sampler;
     }
 

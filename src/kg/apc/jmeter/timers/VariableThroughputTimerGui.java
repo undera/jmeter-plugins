@@ -147,6 +147,7 @@ public class VariableThroughputTimerGui
       //log.info("Create test element");
       VariableThroughputTimer tg = new VariableThroughputTimer();
       modifyTestElement(tg);
+      tg.setComment(JMeterPluginsUtils.getWikiLinkText("ThroughputShapingTimer"));
       return tg;
    }
 

@@ -70,6 +70,6 @@ public class BytesThroughputOverTimeGui
 
     @Override
     protected String getWikiPage() {
-        return "BytesThroughputOverTime";
+        return "BytesThroughput";
     }
 }

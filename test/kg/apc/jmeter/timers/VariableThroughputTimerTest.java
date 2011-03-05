@@ -37,7 +37,7 @@ public class VariableThroughputTimerTest {
       dataModel = new PowerTableModel(VariableThroughputTimerGui.columnIdentifiers, VariableThroughputTimerGui.columnClasses);
       dataModel.addRow(new Integer[]
             {
-               1, 10, 5
+               1, 10, 3
             });
       dataModel.addRow(new Integer[]
             {
@@ -45,7 +45,7 @@ public class VariableThroughputTimerTest {
             });
       dataModel.addRow(new Integer[]
             {
-               15, 1, 10
+               15, 1, 3
             });
     }
 
@@ -73,7 +73,7 @@ public class VariableThroughputTimerTest {
         instance.setData(prop);
 
         long start=System.currentTimeMillis();
-        while ((System.currentTimeMillis()-start)<20000)
+        while ((System.currentTimeMillis()-start)<10*1000) // 10 seconds test
         {
             long result = instance.delay();
             if (result>0)

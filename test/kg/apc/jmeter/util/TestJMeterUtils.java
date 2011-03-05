@@ -49,7 +49,8 @@ public abstract class TestJMeterUtils
       jMeterTreeListener.setModel(jMeterTreeModel);
       GuiPackage.getInstance(jMeterTreeListener, jMeterTreeModel);
       JMeterContextService.getContext().setVariables(new JMeterVariables());
-      JMeterContextService.getContext().setEngine(new StandardJMeterEngine());
+        StandardJMeterEngine engine = new StandardJMeterEngine();
+      JMeterContextService.getContext().setEngine(engine);
    }
 
    /**

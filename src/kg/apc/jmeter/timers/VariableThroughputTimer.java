@@ -1,3 +1,4 @@
+// TODO: implement load scheme reading from property
 package kg.apc.jmeter.timers;
 
 import java.util.Iterator;
@@ -38,24 +39,19 @@ public class VariableThroughputTimer
     public long delay() {
         synchronized (this) {
 
-            int retry=0;
             while (true) {
                 int delay = 0;
                 long curTime = System.currentTimeMillis();
                 long msecs = curTime % 1000;
                 long secs = curTime - msecs;
                 checkNextSecond(secs);
-                if (rps < 1) {
+                if (rps < 0) {
+                    log.info("No further RPS schedule, asking threads to stop...");
+                    JMeterContextService.getContext().getEngine().askThreadsToStop();
                     notifyAll();
-                    if (retry++<100) delay=50;
-                }
-                else
-                {
+                } else {
                     delay = getDelay(msecs);
                 }
-
-                // FIXME: at high RPS we produce rps-1 
-
 
                 if (delay < 1) {
                     notify();
@@ -82,8 +78,8 @@ public class VariableThroughputTimer
                 startSec = secs;
             }
             time = secs;
-            rps = getNextSecondRPS((secs - startSec) / 1000);
-            log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent "+cntSent+ " RPS: " + rps);
+            rps = getRPSForSecond((secs - startSec) / 1000);
+            log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent " + cntSent + " RPS: " + rps);
             cntSent = 0;
             msecPerReq = 1000d / rps;
         }
@@ -92,7 +88,7 @@ public class VariableThroughputTimer
     private int getDelay(long msecs) {
         //log.info("Calculating "+msecs + " " + cntSent * msecPerReq+" "+cntSent);
         if (msecs < (cntSent * msecPerReq)) {
-            int delay = 1+(int) (1000.0 * (cntDelayed+1)/ (double) rps);
+            int delay = 1 + (int) (1000.0 * (cntDelayed + 1) / (double) rps);
             return delay;
         }
         return 0;
@@ -106,7 +102,7 @@ public class VariableThroughputTimer
         return getProperty(DATA_PROPERTY);
     }
 
-    private int getNextSecondRPS(long sec) {
+    public int getRPSForSecond(long sec) {
         JMeterProperty data = getData();
         if (data instanceof NullProperty) {
             log.error("Got NullProperty");
@@ -116,6 +112,11 @@ public class VariableThroughputTimer
         int result = 0;
         CollectionProperty columns = (CollectionProperty) data;
         List<?> col = (List<?>) columns.get(DURATION_FIELD_NO).getObjectValue();
+        if (col.isEmpty())
+        {
+            return -1;
+        }
+        
         Iterator<?> iter = col.iterator();
         int rowNo = 0;
         while (true) {
@@ -132,10 +133,7 @@ public class VariableThroughputTimer
             }
             rowNo++;
             if (!iter.hasNext()) {
-                log.info("No further RPS schedule, asking threads to stop...");
-                JMeterContextService.getContext().getEngine().askThreadsToStop();
-                notifyAll();
-                break;
+                return -1;
             }
         }
 

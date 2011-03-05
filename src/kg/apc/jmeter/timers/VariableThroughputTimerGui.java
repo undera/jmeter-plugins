@@ -23,10 +23,9 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
-import kg.apc.jmeter.charting.GraphRowSumValues;
 import kg.apc.jmeter.charting.ColorsDispatcher;
+import kg.apc.jmeter.charting.GraphRowExactValues;
 import kg.apc.jmeter.threads.UltimateThreadGroupGui;
-import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.gui.util.VerticalPanel;
@@ -36,7 +35,6 @@ import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.timers.gui.AbstractTimerGui;
-import org.apache.jorphan.collections.HashTree;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -203,44 +201,25 @@ public class VariableThroughputTimerGui
    private void updateChart(VariableThroughputTimer tg)
    {
       model.clear();
-      GraphRowSumValues row = new GraphRowSumValues();
+      AbstractGraphRow row = new GraphRowExactValues();
       row.setColor(ColorsDispatcher.RED);
       row.setDrawLine(true);
       row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
       row.setDrawThickLines(true);
 
-      final HashTree hashTree = new HashTree();
-      hashTree.add(new LoopController());
-      //JMeterThread thread = new JMeterThread(hashTree, null, null);
-
       long now = System.currentTimeMillis();
 
       chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now-1)); //-1 because row.add(thread.getStartTime() - 1, 0)
       chart.setForcedMinX(now);
-
       row.add(now, 0);
 
-      // TODO: implement chart
-      /*
-      // users in
-      int numThreads = tg.getNumThreads();
-      for (int n = 0; n < numThreads; n++)
+      int n=0; int rps=0;
+      while((rps=tg.getRPSForSecond(n))>=0)
       {
-         thread.setThreadNum(n);
-         tg.scheduleThread(thread);
-         row.add(thread.getStartTime() - 1, 0);
-         row.add(thread.getStartTime(), 1);
+         row.add(now+n*1000, rps);
+         n++;
       }
 
-      // users out
-      for (int n = 0; n < tg.getNumThreads(); n++)
-      {
-         thread.setThreadNum(n);
-         tg.scheduleThread(thread);
-         row.add(thread.getEndTime() - 1, 0);
-         row.add(thread.getEndTime(), -1);
-      }
-      */
       model.put("Expected RPS", row);
       chart.repaint();
    }
@@ -251,8 +230,8 @@ public class VariableThroughputTimerGui
       model = new ConcurrentHashMap<String, AbstractGraphRow>();
       chart.setRows(model);
       chart.setDrawFinalZeroingLines(true);
-      chart.setxAxisLabel("Elapsed time");
-      chart.setyAxisLabel("RPS");
+      chart.setxAxisLabel("Elapsed Time");
+      chart.setyAxisLabel("Requests per Second");
       return chart;
    }
 

@@ -166,14 +166,6 @@ public class HTTPRawSampler extends AbstractSampler {
         //log.info("Open sock");
         savedSock = getSocketChannelImpl();
         savedSock.connect(address);
-        int timeout = 0;
-        try {
-            timeout = Integer.parseInt(getTimeout());
-        } catch (NumberFormatException e) {
-            log.error("Wrong timeout: " + getTimeout(), e);
-        }
-        // TODO: have timeouts
-        savedSock.socket().setSoTimeout(timeout);
         return savedSock;
     }
 
@@ -194,6 +186,24 @@ public class HTTPRawSampler extends AbstractSampler {
     }
 
     protected SocketChannel getSocketChannelImpl() throws IOException {
-        return SocketChannel.open();
+        int t = getTimeoutAsInt();
+        if (t > 0) {
+            SocketChannelWithTimeouts res = (SocketChannelWithTimeouts) SocketChannelWithTimeouts.open();
+            res.setConnectTimeout(t);
+            res.setReadTimeout(t);
+            return res;
+        } else {
+            return SocketChannel.open();
+        }
+    }
+
+    private int getTimeoutAsInt() {
+        int timeout = 0;
+        try {
+            timeout = Integer.parseInt(getTimeout());
+        } catch (NumberFormatException e) {
+            log.error("Wrong timeout: " + getTimeout(), e);
+        }
+        return timeout;
     }
 }

@@ -79,7 +79,7 @@ public class HTTPRawSampler extends AbstractSampler {
             res.setSuccessful(false);
             res.setResponseCode(RC500);
             res.setResponseMessage(ex.toString());
-            res.setResponseData(JMeterPluginsUtils.getStackTrace(ex).getBytes());
+            res.setResponseData((ex.toString()+CRLF+JMeterPluginsUtils.getStackTrace(ex)).getBytes());
         }
 
         return res;

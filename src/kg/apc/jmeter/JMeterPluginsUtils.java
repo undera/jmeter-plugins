@@ -31,6 +31,7 @@ public abstract class JMeterPluginsUtils
         StringBuilder res = new StringBuilder();
         for(int n=0; n<stack.length; n++)
         {
+            res.append("at ");
             res.append(stack[n].toString());
             res.append("\n");
         }

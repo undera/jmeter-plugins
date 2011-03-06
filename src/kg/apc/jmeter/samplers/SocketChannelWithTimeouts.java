@@ -46,7 +46,8 @@ public class SocketChannelWithTimeouts extends SocketChannel {
         long start = System.currentTimeMillis();
         //log.debug("trying to connect");
         socketChannel.connect(remote);
-        while (selector.select(connectTimeout) > 0 && !socketChannel.isConnected()) {
+        while (selector.select(connectTimeout) > 0) {
+            selector.selectedKeys().remove(channelKey);
             //log.debug("selected connect");
             //log.debug("Spent " + (System.currentTimeMillis() - start));
             if (!channelKey.isConnectable()) {
@@ -67,8 +68,6 @@ public class SocketChannelWithTimeouts extends SocketChannel {
 
     @Override
     public int read(ByteBuffer dst) throws IOException {
-        long start = System.currentTimeMillis();
-
         int bytesRead = 0;
         while (selector.select(readTimeout) > 0) {
             selector.selectedKeys().remove(channelKey);

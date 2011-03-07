@@ -292,5 +292,5 @@ public abstract class AbstractGraphPanelVisualizer
         return getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, null, canCompose);
     }
 
-    protected abstract String getWikiPage();
+    public abstract String getWikiPage();
 }

@@ -79,7 +79,7 @@ public class TimesVsThreadsGui
     }
 
     @Override
-    protected String getWikiPage() {
+    public String getWikiPage() {
        return "ResponseTimesVsThreads";
     }
 }

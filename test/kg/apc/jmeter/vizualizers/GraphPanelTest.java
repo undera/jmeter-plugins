@@ -176,7 +176,7 @@ public class GraphPanelTest
         }
 
         @Override
-        protected String getWikiPage() {
+        public String getWikiPage() {
             return "";
         }
    }

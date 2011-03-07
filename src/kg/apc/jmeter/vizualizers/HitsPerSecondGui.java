@@ -64,7 +64,7 @@ public class HitsPerSecondGui
     }
 
     @Override
-    protected String getWikiPage() {
+    public String getWikiPage() {
         return "HitsPerSecond";
     }
 }

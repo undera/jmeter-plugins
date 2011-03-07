@@ -68,7 +68,7 @@ public class ThroughputOverTimeGui
     }
 
     @Override
-    protected String getWikiPage() {
+    public String getWikiPage() {
        return "ThroughputOverTime";
     }
 

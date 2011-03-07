@@ -89,10 +89,10 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
 
       addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Rewind on end of file: ", JLabel.RIGHT));
       addToPanel(mainPanel, editConstraints, 1, 0, rewindOnEOF = new JCheckBox());
-      addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Variable name: ", JLabel.RIGHT));
-      addToPanel(mainPanel, editConstraints, 1, 1, variableName = new JTextField());
-      addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Data file name: ", JLabel.RIGHT));
-      addToPanel(mainPanel, editConstraints, 1, 2, fileName = new JTextField());
+      addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Data file path: ", JLabel.RIGHT));
+      addToPanel(mainPanel, editConstraints, 1, 1, fileName = new JTextField());
+      addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Variable name: ", JLabel.RIGHT));
+      addToPanel(mainPanel, editConstraints, 1, 2, variableName = new JTextField());
 
       JPanel container = new JPanel(new BorderLayout());
       container.add(mainPanel, BorderLayout.NORTH);

@@ -189,7 +189,13 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer
     }
 
     @Override
-    protected String getWikiPage() {
+    public String getWikiPage() {
         return "CompositeGraph";
+    }
+
+    @Override
+    public void clearData() {
+        super.clearData();
+        updateGui();
     }
 }

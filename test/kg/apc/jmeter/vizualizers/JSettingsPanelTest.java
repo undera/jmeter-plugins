@@ -71,7 +71,7 @@ public class JSettingsPanelTest {
         }
 
         @Override
-        protected String getWikiPage() {
+        public String getWikiPage() {
             return "";
         }
    }
@@ -134,6 +134,10 @@ public class JSettingsPanelTest {
 
         public void switchModel(boolean aggregate)
         {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public String getWikiPage() {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }

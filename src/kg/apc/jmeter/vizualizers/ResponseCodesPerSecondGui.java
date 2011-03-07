@@ -101,7 +101,7 @@ public class ResponseCodesPerSecondGui
     }
 
     @Override
-    protected String getWikiPage() {
+    public String getWikiPage() {
         return "ResponseCodesPerSecond";
     }
 }

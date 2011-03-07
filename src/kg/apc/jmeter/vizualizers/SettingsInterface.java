@@ -11,4 +11,5 @@ public interface SettingsInterface {
     public void setGranulation(int granulation);
     public GraphPanelChart getGraphPanelChart();
     public void switchModel(boolean aggregate);
+    public String getWikiPage();
 }

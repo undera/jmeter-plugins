@@ -100,7 +100,7 @@ public class AbstractVsThreadVisualizerTest {
         }
 
         @Override
-        protected String getWikiPage() {
+        public String getWikiPage() {
            return "";
         }
     }

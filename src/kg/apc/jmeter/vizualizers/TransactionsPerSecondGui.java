@@ -107,7 +107,7 @@ public class TransactionsPerSecondGui
     }
 
     @Override
-    protected String getWikiPage() {
+    public String getWikiPage() {
         return "TransactionsPerSecond";
     }
 }

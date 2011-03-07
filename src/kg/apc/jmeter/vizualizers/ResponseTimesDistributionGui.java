@@ -69,7 +69,7 @@ public class ResponseTimesDistributionGui
     }
 
     @Override
-    protected String getWikiPage() {
+    public String getWikiPage() {
         return "RespTimesDistribution";
     }
 }

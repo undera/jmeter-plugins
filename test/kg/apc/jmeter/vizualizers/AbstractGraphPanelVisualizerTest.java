@@ -149,7 +149,7 @@ public class AbstractGraphPanelVisualizerTest
         }
 
         @Override
-        protected String getWikiPage() {
+        public String getWikiPage() {
             return "";
         }
    }

@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 import javax.swing.ToolTipManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.GraphPanelChart;
 
 /**
@@ -235,6 +236,12 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         jPanelLogo.add(jLabel1);
 
         add(jPanelLogo, java.awt.BorderLayout.PAGE_END);
@@ -694,6 +701,11 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             if(oldValue != -1) refreshGraphPreview();
         }
     }//GEN-LAST:event_jCheckBoxMaxYActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaigh="+parent.getWikiPage());
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupGraphType;
     private javax.swing.JCheckBox jCheckBoxDrawCurrentX;

@@ -70,7 +70,7 @@ public class AbstractOverTimeVisualizerTest {
         }
 
         @Override
-        protected String getWikiPage() {
+        public String getWikiPage() {
            return "";
         }
    }

@@ -141,7 +141,7 @@ public class ThreadsStateOverTimeGui
     }
 
     @Override
-    protected String getWikiPage() {
+    public String getWikiPage() {
         return "ThreadsStateOverTimeGui";
     }
 }

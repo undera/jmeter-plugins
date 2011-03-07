@@ -67,7 +67,7 @@ public class LatenciesOverTimeGui
     }
 
     @Override
-    protected String getWikiPage() {
+    public String getWikiPage() {
        return "LatenciesOverTime";
     }
 }

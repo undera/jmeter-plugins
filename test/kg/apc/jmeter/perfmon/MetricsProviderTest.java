@@ -230,7 +230,7 @@ public class MetricsProviderTest
         }
 
         @Override
-        protected String getWikiPage() {
+        public String getWikiPage() {
             return "";
         }
    }

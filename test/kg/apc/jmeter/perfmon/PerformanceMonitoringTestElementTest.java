@@ -220,7 +220,7 @@ public class PerformanceMonitoringTestElementTest
         }
 
         @Override
-        protected String getWikiPage() {
+        public String getWikiPage() {
             return "";
         }
     }

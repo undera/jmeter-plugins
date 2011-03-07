@@ -5,7 +5,6 @@
 
 package kg.apc.jmeter.vizualizers;
 
-import javax.swing.JPanel;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -89,6 +88,10 @@ public class SettingsInterfaceTest {
         @Override
         public void switchModel(boolean aggregate)
         {
+        }
+
+        public String getWikiPage() {
+            throw new UnsupportedOperationException("Not supported yet.");
         }
    }
 

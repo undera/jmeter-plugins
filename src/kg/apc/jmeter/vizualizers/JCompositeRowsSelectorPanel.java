@@ -1,6 +1,5 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.net.URI;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -538,7 +537,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
     }//GEN-LAST:event_jTreeGraph2MouseClicked
 
     private void jLabelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelLogoMouseClicked
-        JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/");
+        JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaigh="+gui.getWikiPage());
     }//GEN-LAST:event_jLabelLogoMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -331,7 +331,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     public void editingCanceled(ChangeEvent e) {
     }
 
-    protected abstract String getWikiPage();
+    public abstract String getWikiPage();
 
     private class AddRowAction
             implements ActionListener {

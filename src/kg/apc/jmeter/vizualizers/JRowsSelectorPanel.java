@@ -9,6 +9,7 @@ package kg.apc.jmeter.vizualizers;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
+import kg.apc.jmeter.JMeterPluginsUtils;
 
 /**
  *
@@ -56,6 +57,12 @@ public class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRende
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         jPanelLogo.add(jLabel1);
 
         add(jPanelLogo, java.awt.BorderLayout.PAGE_END);
@@ -91,6 +98,10 @@ public class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRende
 
         add(jPanelMain, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaigh=row_selector");
+    }//GEN-LAST:event_jLabel1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

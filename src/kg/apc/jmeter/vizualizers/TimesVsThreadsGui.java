@@ -12,21 +12,18 @@ import org.apache.jmeter.samplers.SampleResult;
  * @author apc
  */
 public class TimesVsThreadsGui
-        extends AbstractGraphPanelVisualizer
+        extends AbstractVsThreadVisualizer
 {
-
     /**
      *
      */
     public TimesVsThreadsGui()
     {
         super();
-        graphPanel.getGraphObject().setDrawCurrentX(true);
-        graphPanel.getGraphObject().setForcedMinX(0);
-        graphPanel.getGraphObject().setxAxisLabel("Number of active threads");
         graphPanel.getGraphObject().setyAxisLabel("Response times in ms");
     }
 
+    @Override
     public String getLabelResource()
     {
         return this.getClass().getSimpleName();
@@ -38,8 +35,11 @@ public class TimesVsThreadsGui
         return JMeterPluginsUtils.prefixLabel("Response Times vs Threads");
     }
 
+    @Override
     public void add(SampleResult res)
     {
+        super.add(res);
+
         String label = res.getSampleLabel();
         String averageLabel = "Average " + res.getSampleLabel();
         String aggLabel = "Overall Response Times";
@@ -61,10 +61,12 @@ public class TimesVsThreadsGui
             avgRowAgg = (GraphRowOverallAverages) getNewRow(modelAggregate, AbstractGraphRow.ROW_OVERALL_AVERAGES, avgAggLabel, AbstractGraphRow.MARKER_SIZE_BIG , false, true, false, false, ColorsDispatcher.RED, false);
         }
 
-        row.add(res.getAllThreads(), res.getTime());
-        avgRow.add(res.getAllThreads(), res.getTime());
-        rowAgg.add(res.getAllThreads(), res.getTime());
-        avgRowAgg.add(res.getAllThreads(), res.getTime());
+        int threadsCount = getCurrentThreadCount(res);
+
+        row.add(threadsCount, res.getTime());
+        avgRow.add(threadsCount, res.getTime());
+        rowAgg.add(threadsCount, res.getTime());
+        avgRowAgg.add(threadsCount, res.getTime());
 
         graphPanel.getGraphObject().setCurrentX(res.getAllThreads());
         updateGui(null);

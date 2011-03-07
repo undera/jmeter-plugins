@@ -13,7 +13,7 @@ import org.apache.jorphan.gui.RateRenderer;
  * @author apc
  */
 public class ThroughputVsThreadsGui
-        extends AbstractGraphPanelVisualizer
+        extends AbstractVsThreadVisualizer
 {
 
     /**
@@ -22,10 +22,7 @@ public class ThroughputVsThreadsGui
     public ThroughputVsThreadsGui()
     {
         super();
-        graphPanel.getGraphObject().setDrawCurrentX(true);
         graphPanel.getGraphObject().setyAxisLabelRenderer(new CustomRateRenderer("#.0"));
-        graphPanel.getGraphObject().setForcedMinX(0);
-        graphPanel.getGraphObject().setxAxisLabel("Number of active threads");
         graphPanel.getGraphObject().setyAxisLabel("Number of estimated transactions /sec");
     }
 
@@ -50,6 +47,8 @@ public class ThroughputVsThreadsGui
             return;
         }
 
+        super.add(res);
+
         String label = res.getSampleLabel();
         String averageLabel = "Average " + res.getSampleLabel();
         GraphRowAverages row = (GraphRowAverages) model.get(label);
@@ -61,7 +60,7 @@ public class ThroughputVsThreadsGui
             avgRow = (GraphRowOverallAverages) getNewRow(model, AbstractGraphRow.ROW_OVERALL_AVERAGES, averageLabel, AbstractGraphRow.MARKER_SIZE_BIG , false, true, false, false, row.getColor(), false);
         }
 
-        int allThreads = res.getAllThreads();
+        int allThreads = getCurrentThreadCount(res);
         double throughput = (double) allThreads * 1000.0d / time;
         row.add(allThreads, throughput);
         avgRow.add(allThreads, throughput);

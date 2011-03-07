@@ -1,3 +1,4 @@
+// TODO: we need rich GUI to have links to wiki
 package kg.apc.jmeter.config;
 
 import java.io.IOException;

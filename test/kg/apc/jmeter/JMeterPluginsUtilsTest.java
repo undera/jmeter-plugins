@@ -1,6 +1,11 @@
 package kg.apc.jmeter;
 
+import javax.swing.BorderFactory;
+import org.apache.jmeter.gui.util.VerticalPanel;
+import java.awt.Component;
 import java.nio.ByteBuffer;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.junit.After;
@@ -115,6 +120,34 @@ public class JMeterPluginsUtilsTest {
         System.out.println("getWikiLinkText");
         String wikiPage = "test";
         String result = JMeterPluginsUtils.getWikiLinkText(wikiPage);
-        assertTrue(result.endsWith(wikiPage));
+        assertTrue(result.endsWith(wikiPage) || java.awt.Desktop.isDesktopSupported());
+    }
+
+    /**
+     * Test of openInBrowser method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testOpenInBrowser() {
+        System.out.println("openInBrowser");
+        String string = "";
+        JMeterPluginsUtils.openInBrowser("");
+    }
+
+    /**
+     * Test of addHelpLinkToPanel method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testAddHelpLinkToPanel() {
+        System.out.println("addHelpLinkToPanel");
+        VerticalPanel titlePanel = new VerticalPanel();
+        titlePanel.add(new JLabel("title"));
+        VerticalPanel contentPanel = new VerticalPanel();
+        contentPanel.setBorder(BorderFactory.createEtchedBorder());
+        contentPanel.add(new JPanel());
+        contentPanel.add(new JPanel());
+        contentPanel.setName("THIS");
+        titlePanel.add(contentPanel);
+        String helpPage = "";
+        Component result = JMeterPluginsUtils.addHelpLinkToPanel(titlePanel, helpPage);
     }
 }

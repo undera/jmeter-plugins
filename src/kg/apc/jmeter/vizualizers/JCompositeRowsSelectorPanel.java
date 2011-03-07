@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.net.URI;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -13,6 +14,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 
 /**
@@ -247,6 +249,12 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
 
         jLabelLogo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
+        jLabelLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelLogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelLogoMouseClicked(evt);
+            }
+        });
         jPanelLogo.add(jLabelLogo);
 
         add(jPanelLogo, java.awt.BorderLayout.PAGE_END);
@@ -528,6 +536,10 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
             }
         }
     }//GEN-LAST:event_jTreeGraph2MouseClicked
+
+    private void jLabelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelLogoMouseClicked
+        JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/");
+    }//GEN-LAST:event_jLabelLogoMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;

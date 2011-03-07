@@ -18,6 +18,7 @@ import org.apache.jmeter.util.JMeterUtils;
 public class ParameterizedControllerGui
      extends AbstractControllerGui
 {
+    public static final String WIKIPAGE = "ParameterizedController";
    private ArgumentsPanel argsPanel;
 
    /**
@@ -32,7 +33,7 @@ public class ParameterizedControllerGui
    {
       ParameterizedController tc = new ParameterizedController();
       modifyTestElement(tc);
-      tc.setComment(JMeterPluginsUtils.getWikiLinkText("ParameterizedController"));
+      tc.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
       return tc;
    }
 
@@ -61,7 +62,7 @@ public class ParameterizedControllerGui
    {
       setLayout(new BorderLayout());
       setBorder(makeBorder());
-      add(makeTitlePanel(), BorderLayout.NORTH);
+      add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
 
       add(createVariablePanel(), BorderLayout.CENTER);
    }

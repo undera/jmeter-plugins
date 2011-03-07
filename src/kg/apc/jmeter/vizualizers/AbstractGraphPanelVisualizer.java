@@ -1,4 +1,3 @@
-// todo: add spacing around panel
 // fixme: perhaps we should replace model via setModel and use ONE model...
 package kg.apc.jmeter.vizualizers;
 
@@ -36,8 +35,7 @@ public abstract class AbstractGraphPanelVisualizer
         implements Clearable,
         GraphListener,
         ImageVisualizer,
-        SettingsInterface
-{
+        SettingsInterface {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     /**
@@ -70,8 +68,7 @@ public abstract class AbstractGraphPanelVisualizer
     /**
      *
      */
-    public AbstractGraphPanelVisualizer()
-    {
+    public AbstractGraphPanelVisualizer() {
         super();
         model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         modelAggregate = new ConcurrentSkipListMap<String, AbstractGraphRow>();
@@ -83,10 +80,10 @@ public abstract class AbstractGraphPanelVisualizer
 
     protected abstract JSettingsPanel getSettingsPanel();
 
-    private void initGui()
-    {
+    private void initGui() {
+        setBorder(makeBorder());
         setLayout(new BorderLayout());
-        add(makeTitlePanel(), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), getWikiPage()), BorderLayout.NORTH);
         add(createGraphPanel(), BorderLayout.CENTER);
     }
 
@@ -94,8 +91,7 @@ public abstract class AbstractGraphPanelVisualizer
      *
      * @return
      */
-    protected GraphPanel createGraphPanel()
-    {
+    protected GraphPanel createGraphPanel() {
         graphPanel = new GraphPanel();
         graphPanel.getGraphObject().setRows(model);
         // should be placed after creating graph panel
@@ -110,11 +106,9 @@ public abstract class AbstractGraphPanelVisualizer
      * @param sample
      */
     @Override
-    public void updateGui(Sample sample)
-    {
+    public void updateGui(Sample sample) {
         long time = System.currentTimeMillis();
-        if ((time - lastRepaint) >= REPAINT_INTERVAL)
-        {
+        if ((time - lastRepaint) >= REPAINT_INTERVAL) {
             updateGui();
             repaint();
             lastRepaint = time;
@@ -125,14 +119,12 @@ public abstract class AbstractGraphPanelVisualizer
      *
      */
     @Override
-    public void updateGui()
-    {
+    public void updateGui() {
         graphPanel.updateGui();
     }
 
     @Override
-    public void clearData()
-    {
+    public void clearData() {
         clearRowsFromCompositeModels(getModel().getName());
         model.clear();
         modelAggregate.clear();
@@ -146,22 +138,18 @@ public abstract class AbstractGraphPanelVisualizer
      *
      * @retur     */
     @Override
-    public Image getImage()
-    {
+    public Image getImage() {
         return graphPanel.getGraphImage();
     }
 
     @Override
-    public int getGranulation()
-    {
+    public int getGranulation() {
         return interval;
     }
 
     @Override
-    public void setGranulation(int granulation)
-    {
-        if (granulation < 1)
-        {
+    public void setGranulation(int granulation) {
+        if (granulation < 1) {
             throw new IllegalArgumentException("Interval cannot be less than 1");
         }
         interval = granulation;
@@ -170,11 +158,9 @@ public abstract class AbstractGraphPanelVisualizer
     }
 
     @Override
-    public TestElement createTestElement()
-    {
+    public TestElement createTestElement() {
         TestElement el = super.createTestElement();
-        if (el instanceof ResultCollector)
-        {
+        if (el instanceof ResultCollector) {
             ResultCollector rc = (ResultCollector) el;
             SampleSaveConfiguration sc = rc.getSaveConfig();
             sc.setThreadCounts(true);
@@ -185,42 +171,35 @@ public abstract class AbstractGraphPanelVisualizer
     }
 
     @Override
-    public void modifyTestElement(TestElement c)
-    {
+    public void modifyTestElement(TestElement c) {
         super.modifyTestElement(c);
         c.setProperty(new LongProperty(INTERVAL_PROPERTY, interval));
         c.setProperty(new BooleanProperty(GRAPH_AGGREGATED, isAggregate));
     }
 
     @Override
-    public void configure(TestElement el)
-    {
+    public void configure(TestElement el) {
         super.configure(el);
         int intervalProp = el.getPropertyAsInt(INTERVAL_PROPERTY);
         boolean aggregatedProp = el.getPropertyAsBoolean(GRAPH_AGGREGATED, false);
-        if (intervalProp > 0)
-        {
+        if (intervalProp > 0) {
             setGranulation(intervalProp);
         }
         switchModel(aggregatedProp);
     }
 
     @Override
-    public GraphPanelChart getGraphPanelChart()
-    {
+    public GraphPanelChart getGraphPanelChart() {
         return graphPanel.getGraphObject();
     }
 
     @Override
-    public void switchModel(boolean aggregate)
-    {
+    public void switchModel(boolean aggregate) {
 
         ConcurrentSkipListMap<String, AbstractGraphRow> selectedModel;
-        if (aggregate)
-        {
+        if (aggregate) {
             selectedModel = modelAggregate;
-        } else
-        {
+        } else {
             selectedModel = model;
         }
 
@@ -228,8 +207,7 @@ public abstract class AbstractGraphPanelVisualizer
         graphPanel.clearRowsTab();
 
         Iterator<AbstractGraphRow> rowsIter = selectedModel.values().iterator();
-        while (rowsIter.hasNext())
-        {
+        while (rowsIter.hasNext()) {
             graphPanel.addRow(rowsIter.next());
         }
 
@@ -237,30 +215,28 @@ public abstract class AbstractGraphPanelVisualizer
         settingsPanel.setAggregateMode(aggregate);
     }
 
-    private void addRowToCompositeModels(String rowName, AbstractGraphRow row)
-    {
+    private void addRowToCompositeModels(String rowName, AbstractGraphRow row) {
         GuiPackage gui = GuiPackage.getInstance();
         JMeterTreeModel testTree = gui.getTreeModel();
 
         Iterator it = testTree.getNodesOfType(CompositeResultCollector.class).iterator();
         while (it.hasNext()) {
             //System.out.println("obj");
-            Object obj=it.next();
-            CompositeResultCollector compositeResultCollector = (CompositeResultCollector)((JMeterTreeNode) obj).getTestElement();
+            Object obj = it.next();
+            CompositeResultCollector compositeResultCollector = (CompositeResultCollector) ((JMeterTreeNode) obj).getTestElement();
             compositeResultCollector.getCompositeModel().addRow(rowName, row);
         }
     }
 
-    private void clearRowsFromCompositeModels(String vizualizerName)
-    {
+    private void clearRowsFromCompositeModels(String vizualizerName) {
         GuiPackage gui = GuiPackage.getInstance();
         JMeterTreeModel testTree = gui.getTreeModel();
 
         Iterator it = testTree.getNodesOfType(CompositeResultCollector.class).iterator();
         while (it.hasNext()) {
             //System.out.println("obj");
-            Object obj=it.next();
-            CompositeResultCollector compositeResultCollector = (CompositeResultCollector)((JMeterTreeNode) obj).getTestElement();
+            Object obj = it.next();
+            CompositeResultCollector compositeResultCollector = (CompositeResultCollector) ((JMeterTreeNode) obj).getTestElement();
             compositeResultCollector.getCompositeModel().clearRows(vizualizerName);
         }
     }
@@ -275,11 +251,9 @@ public abstract class AbstractGraphPanelVisualizer
             boolean thickLines,
             boolean showInLegend,
             Color color,
-            boolean canCompose)
-    {
+            boolean canCompose) {
         AbstractGraphRow row = null;
-        if (!model.containsKey(label))
-        {
+        if (!model.containsKey(label)) {
             row = AbstractGraphRow.instantiateNewRow(rowType);
             row.setLabel(label);
             row.setMarkerSize(markerSize);
@@ -288,20 +262,17 @@ public abstract class AbstractGraphPanelVisualizer
             row.setDrawValueLabel(displayLabel);
             row.setDrawThickLines(thickLines);
             row.setShowInLegend(showInLegend);
-            if(color == null)
-            {
+            if (color == null) {
                 row.setColor(colors.getNextColor());
             } else {
                 row.setColor(color);
             }
             model.put(label, row);
             graphPanel.addRow(row);
-            if(canCompose)
-            {
+            if (canCompose) {
                 addRowToCompositeModels(getModel().getName(), row);
             }
-        } else
-        {
+        } else {
             row = model.get(label);
         }
 
@@ -317,8 +288,7 @@ public abstract class AbstractGraphPanelVisualizer
             boolean displayLabel,
             boolean thickLines,
             boolean showInLegend,
-            boolean canCompose)
-    {
+            boolean canCompose) {
         return getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, null, canCompose);
     }
 

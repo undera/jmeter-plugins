@@ -52,6 +52,7 @@ public class UltimateThreadGroupGui
       implements TableModelListener,
                  CellEditorListener
 {
+    public static final String WIKIPAGE = "UltimateThreadGroup";
    private static final Logger log = LoggingManager.getLoggerForClass();
    /**
     *
@@ -96,6 +97,7 @@ public class UltimateThreadGroupGui
     */
    protected final void init()
    {
+      JMeterPluginsUtils.addHelpLinkToPanel(this, WIKIPAGE);
       JPanel containerPanel = new VerticalPanel();
 
       containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
@@ -152,7 +154,7 @@ public class UltimateThreadGroupGui
       //log.info("Create test element");
       UltimateThreadGroup tg = new UltimateThreadGroup();
       modifyTestElement(tg);
-      tg.setComment(JMeterPluginsUtils.getWikiLinkText("UltimateThreadGroup"));
+      tg.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
 
       return tg;
    }

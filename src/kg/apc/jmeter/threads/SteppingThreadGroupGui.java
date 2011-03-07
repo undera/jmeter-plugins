@@ -35,6 +35,7 @@ import org.apache.log.Logger;
 public class SteppingThreadGroupGui
       extends AbstractThreadGroupGui
 {
+    public static final String WIKIPAGE = "SteppingThreadGroup";
    /**
     *
     */
@@ -65,6 +66,7 @@ public class SteppingThreadGroupGui
     */
    protected final void init()
    {
+      JMeterPluginsUtils.addHelpLinkToPanel(this, WIKIPAGE);
       JPanel containerPanel = new JPanel(new BorderLayout());
 
       containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
@@ -171,7 +173,7 @@ public class SteppingThreadGroupGui
    {
       SteppingThreadGroup tg = new SteppingThreadGroup();
       modifyTestElement(tg);
-      tg.setComment(JMeterPluginsUtils.getWikiLinkText("SteppingThreadGroup"));
+      tg.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
       return tg;
    }
 

@@ -19,6 +19,7 @@ import org.apache.jmeter.testelement.TestElement;
  * @author undera
  */
 public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
+    public static final String WIKIPAGE = "RawDataSource";
 
     private JCheckBox rewindOnEOF;
     private JTextField variableName;
@@ -50,7 +51,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
     public TestElement createTestElement() {
         RawRequestSourcePreProcessor preproc = new RawRequestSourcePreProcessor();
         modifyTestElement(preproc);
-        preproc.setComment(JMeterPluginsUtils.getWikiLinkText("RawDataSource"));
+        preproc.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
         return preproc;
     }
 
@@ -74,7 +75,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
      setLayout(new BorderLayout(0, 5));
       setBorder(makeBorder());
 
-      add(makeTitlePanel(), BorderLayout.NORTH);
+      add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(),WIKIPAGE), BorderLayout.NORTH);
 
       JPanel mainPanel = new JPanel(new GridBagLayout());
 

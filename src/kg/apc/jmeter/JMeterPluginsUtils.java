@@ -1,36 +1,51 @@
-// TODO: add to every plugin link to its help in description
 // TODO: add example test plans and source files at help pages
 package kg.apc.jmeter;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import org.apache.jmeter.engine.util.CompoundVariable;
+import org.apache.jmeter.gui.AbstractJMeterGuiComponent;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.gui.layout.VerticalLayout;
 
 /**
  *
  * @author undera
  */
-public abstract class JMeterPluginsUtils
-{
+public abstract class JMeterPluginsUtils {
+
     private static String PLUGINS_PREFIX = "jp@gc - ";
     private static boolean prefixPlugins = true;
+    private static final String WIKI_BASE = "http://code.google.com/p/jmeter-plugins/wiki/";
 
     // just prefix all the labels to be distinguished
-    public static String prefixLabel(String label)
-    {
+    public static String prefixLabel(String label) {
         return prefixPlugins ? PLUGINS_PREFIX + label : label;
     }
 
-    public static String getStackTrace(Exception ex)
-    {
+    public static String getStackTrace(Exception ex) {
         StackTraceElement[] stack = ex.getStackTrace();
         StringBuilder res = new StringBuilder();
-        for(int n=0; n<stack.length; n++)
-        {
+        for (int n = 0; n < stack.length; n++) {
             res.append("at ");
             res.append(stack[n].toString());
             res.append("\n");
@@ -38,78 +53,159 @@ public abstract class JMeterPluginsUtils
         return res.toString();
     }
 
-    static
-    {
+    static {
         String prefixPluginsCfg = JMeterUtils.getProperty("jmeterPlugin.prefixPlugins");
-        if (prefixPluginsCfg != null)
-        {
+        if (prefixPluginsCfg != null) {
             JMeterPluginsUtils.prefixPlugins = "true".equalsIgnoreCase(prefixPluginsCfg.trim());
         }
     }
 
-   /**
-    *
-    * @param model
-    * @return
-    */
-   public static CollectionProperty tableModelToCollectionProperty(PowerTableModel model, String propname)
-   {
-      CollectionProperty rows = new CollectionProperty(propname, new ArrayList<Object>());
-      for (int col = 0; col < model.getColumnCount(); col++)
-      {
-         rows.addItem(model.getColumnData(model.getColumnName(col)));
-      }
-      return rows;
-   }
-  /**
-    *
-    * @param model
-    * @return
-    */
-   public static CollectionProperty tableModelToCollectionPropertyEval(PowerTableModel model, String propname)
-   {
-      CollectionProperty rows = new CollectionProperty(propname, new ArrayList<Object>());
-      for (int col = 0; col < model.getColumnCount(); col++)
-      {
-         ArrayList<Object> tmp = new ArrayList<Object>();
-         Iterator iter = model.getColumnData(model.getColumnName(col)).iterator();
-         while(iter.hasNext())
-         {
-             String value = iter.next().toString();
-             tmp.add(new CompoundVariable(value).execute());
-         }
+    /**
+     *
+     * @param model
+     * @return
+     */
+    public static CollectionProperty tableModelToCollectionProperty(PowerTableModel model, String propname) {
+        CollectionProperty rows = new CollectionProperty(propname, new ArrayList<Object>());
+        for (int col = 0; col < model.getColumnCount(); col++) {
+            rows.addItem(model.getColumnData(model.getColumnName(col)));
+        }
+        return rows;
+    }
 
-         rows.addItem(tmp);
-      }
-      return rows;
-   }
+    /**
+     *
+     * @param model
+     * @return
+     */
+    public static CollectionProperty tableModelToCollectionPropertyEval(PowerTableModel model, String propname) {
+        CollectionProperty rows = new CollectionProperty(propname, new ArrayList<Object>());
+        for (int col = 0; col < model.getColumnCount(); col++) {
+            ArrayList<Object> tmp = new ArrayList<Object>();
+            Iterator iter = model.getColumnData(model.getColumnName(col)).iterator();
+            while (iter.hasNext()) {
+                String value = iter.next().toString();
+                tmp.add(new CompoundVariable(value).execute());
+            }
 
-   public static String byteBufferToString(ByteBuffer buf)
-    {
-       ByteBuffer str=buf.duplicate();
-       //System.err.println(str);
-       str.rewind();
-       //System.err.println(str);
-       byte[] dst=new byte[str.limit()];
-       str.get(dst) ;
-       return new String(dst);
-   }
+            rows.addItem(tmp);
+        }
+        return rows;
+    }
+
+    public static String byteBufferToString(ByteBuffer buf) {
+        ByteBuffer str = buf.duplicate();
+        //System.err.println(str);
+        str.rewind();
+        //System.err.println(str);
+        byte[] dst = new byte[str.limit()];
+        str.get(dst);
+        return new String(dst);
+    }
 
     public static String replaceRNT(String str) {
         // FIXME: stop using bad way...
-        str=str.replaceAll("\\\\\\\\", "VERY BAD WAY");
+        str = str.replaceAll("\\\\\\\\", "VERY BAD WAY");
         //System.err.println(str);
-        str=str.replaceAll("\\\\t", "\t");
+        str = str.replaceAll("\\\\t", "\t");
         //str=str.replaceAll("(^|[^\\\\])\\\\t", "$1\t");
         //System.err.println(str);
-        str=str.replaceAll("\\\\n", "\n");
+        str = str.replaceAll("\\\\n", "\n");
         //System.err.println(str);
-        str=str.replaceAll("\\\\r", "\r");
-        str=str.replaceAll("VERY BAD WAY", "\\\\");
+        str = str.replaceAll("\\\\r", "\r");
+        str = str.replaceAll("VERY BAD WAY", "\\\\");
         return str;
     }
 
     public static String getWikiLinkText(String wikiPage) {
-        return "Plugin help available here: http://code.google.com/p/jmeter-plugins/wiki/"+wikiPage;
+        if (!java.awt.Desktop.isDesktopSupported()) {
+            return "Plugin help available here: " + WIKI_BASE + wikiPage;
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Find in panel appropriate place and put hyperlink there.
+     * I know that it is stupid way. But the result is so good!
+     * @param panel - supposed to be result of makeTitlePanel()
+     * @param helpPage wiki page name, not full URL
+     * @return original panel
+     * @see AbstractJMeterGuiComponent
+     */
+    public static Component addHelpLinkToPanel(Container panel, String helpPage) {
+        if (!java.awt.Desktop.isDesktopSupported()) {
+            return panel;
+        }
+
+        JLabel link = new JLabel("Help on this plugin");
+        link.setForeground(Color.blue);
+        link.setFont(link.getFont().deriveFont(Font.PLAIN));
+        link.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        link.addMouseListener(new URIOpener(WIKI_BASE + helpPage));
+        Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.blue);
+        link.setBorder(border);
+        link.setAlignmentY(JLabel.RIGHT_ALIGNMENT);
+
+        Container innerPanel = findComponentWithBorder((JComponent) panel, EtchedBorder.class);
+        //System.out.println(innerPanel.getName());
+        JPanel p=new JPanel(new VerticalLayout(1, VerticalLayout.LEFT));
+        p.add(link);
+        if (innerPanel != null) {
+            innerPanel.add(p);
+        } else {
+            panel.add(p);
+        }
+        return panel;
+    }
+
+    private static Container findComponentWithBorder(JComponent panel, Class aClass) {
+        for (int n = 0; n < panel.getComponentCount(); n++) {
+            if (panel.getComponent(n) instanceof JComponent) {
+                JComponent comp=(JComponent) panel.getComponent(n);
+                if (comp.getBorder()!=null && aClass.isAssignableFrom(comp.getBorder().getClass()))
+                    return comp;
+
+                Container con=findComponentWithBorder(comp, aClass);
+                if (con!=null)
+                    return con;
+            }
+        }
+        return null;
+    }
+
+    public static void openInBrowser(String string) {
+        if (java.awt.Desktop.isDesktopSupported()) {
+            try {
+                java.awt.Desktop.getDesktop().browse(new URI(string));
+            } catch (IOException ex) {
+            } catch (URISyntaxException ex) {
+            }
+        }
+    }
+
+    private static class URIOpener implements MouseListener {
+
+        private final String uri;
+
+        public URIOpener(String aURI) {
+            uri = aURI;
+        }
+
+        public void mouseClicked(MouseEvent e) {
+            openInBrowser(uri);
+        }
+
+        public void mousePressed(MouseEvent e) {
+        }
+
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        public void mouseExited(MouseEvent e) {
+        }
     }
 }

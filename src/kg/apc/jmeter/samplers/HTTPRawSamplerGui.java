@@ -22,6 +22,7 @@ import org.apache.log.Logger;
  */
 public class HTTPRawSamplerGui
         extends AbstractSamplerGui {
+    public static final String WIKIPAGE = "RawRequest";
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private JTextField hostName;
@@ -59,7 +60,7 @@ public class HTTPRawSamplerGui
     public TestElement createTestElement() {
         HTTPRawSampler sampler = new HTTPRawSampler();
         modifyTestElement(sampler);
-        sampler.setComment(JMeterPluginsUtils.getWikiLinkText("RawRequest"));
+        sampler.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
         return sampler;
     }
 
@@ -106,7 +107,7 @@ public class HTTPRawSamplerGui
         setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
 
-        add(makeTitlePanel(), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(),WIKIPAGE), BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
 

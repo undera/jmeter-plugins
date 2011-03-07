@@ -16,6 +16,7 @@ import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
  * @author undera
  */
 public class FlexibleFileWriterGui extends AbstractListenerGui {
+    public static final String WIKIPAGE = "FlexibleFileWriter";
 
     private JTextField filename;
     private JTextField columns;
@@ -39,7 +40,7 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
     public TestElement createTestElement() {
         TestElement te = new FlexibleFileWriter();
         modifyTestElement(te);
-        te.setComment(JMeterPluginsUtils.getWikiLinkText("FlexibleFileWriter"));
+        te.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
         return te;
     }
 
@@ -78,7 +79,7 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
         setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
 
-        add(makeTitlePanel(), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(),WIKIPAGE), BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
 

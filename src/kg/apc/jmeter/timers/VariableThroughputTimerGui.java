@@ -48,6 +48,7 @@ public class VariableThroughputTimerGui
       implements TableModelListener,
                  CellEditorListener
 {
+    public static final String WIKIPAGE = "ThroughputShapingTimer";
    private static final Logger log = LoggingManager.getLoggerForClass();
    /**
     *
@@ -93,8 +94,9 @@ public class VariableThroughputTimerGui
     */
    protected final void init()
    {
+       setBorder(makeBorder());
        setLayout(new BorderLayout());
-        add(makeTitlePanel(), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(),WIKIPAGE), BorderLayout.NORTH);
         JPanel containerPanel = new VerticalPanel();
 
       containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
@@ -147,7 +149,7 @@ public class VariableThroughputTimerGui
       //log.info("Create test element");
       VariableThroughputTimer tg = new VariableThroughputTimer();
       modifyTestElement(tg);
-      tg.setComment(JMeterPluginsUtils.getWikiLinkText("ThroughputShapingTimer"));
+      tg.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
       return tg;
    }
 

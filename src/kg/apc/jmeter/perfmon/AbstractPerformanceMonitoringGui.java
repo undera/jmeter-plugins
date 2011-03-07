@@ -56,8 +56,8 @@ import org.apache.log.Logger;
  *
  * @author Stephane Hoblingre
  */
-public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerGui implements Clearable, TableModelListener, CellEditorListener, GraphListener, UnsharedComponent, SettingsInterface
-{
+public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerGui implements Clearable, TableModelListener, CellEditorListener, GraphListener, UnsharedComponent, SettingsInterface {
+
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected GraphPanel graphPanel;
     protected ConcurrentSkipListMap<String, AbstractGraphRow> model;
@@ -68,45 +68,36 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     JButton deleteRowButton;
     private JTextArea errorTextArea;
     private JScrollPane scrollPan;
-    private long relativeStartTime=0;
-    public static final String[] columnIdentifiers = new String[]
-    {
+    private long relativeStartTime = 0;
+    public static final String[] columnIdentifiers = new String[]{
         "Host / IP", "Port"
     };
     /**
      *
      */
-    public static final Class[] columnClasses = new Class[]
-    {
+    public static final Class[] columnClasses = new Class[]{
         String.class, String.class
     };
-    private static Object[] defaultValues = new Object[]
-    {
+    private static Object[] defaultValues = new Object[]{
         "localhost", "4444"
     };
-
     private ButtonGroup group = new ButtonGroup();
-
-    private JRadioButton[] types = new JRadioButton[] {
+    private JRadioButton[] types = new JRadioButton[]{
         new JRadioButton("CPU"),
         new JRadioButton("Memory"),
         new JRadioButton("Swap"),
         new JRadioButton("Disks I/O"),
         new JRadioButton("Networks I/O")
     };
-
     public final static int PERFMON_CPU = 0;
     public final static int PERFMON_MEM = 1;
     public final static int PERFMON_SWAP = 2;
     public final static int PERFMON_DISKS_IO = 3;
     public final static int PERFMON_NETWORKS_IO = 4;
-
     protected int selectedPerfMonType = -1;
-
     private JSettingsPanel settingsPanel = null;
 
-    public AbstractPerformanceMonitoringGui()
-    {
+    public AbstractPerformanceMonitoringGui() {
         super();
         model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         colors = new ColorsDispatcher();
@@ -115,27 +106,28 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
 
     protected abstract JSettingsPanel getSettingsPanel();
 
-    private void initGui()
-    {
+    private void initGui() {
+        setBorder(makeBorder());
+
         JPanel topContainer = new JPanel();
         topContainer.setLayout(new BorderLayout());
 
 
         JPanel containerPanel = new VerticalPanel();
 
-        containerPanel.add(makeTitlePanel(), BorderLayout.NORTH);
+        containerPanel.add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), getWikiPage()), BorderLayout.NORTH);
         containerPanel.add(createParamsPanel(), BorderLayout.CENTER);
         containerPanel.add(createMonitoringTypePanel(), BorderLayout.SOUTH);
 
-       
+
 
         scrollPan = new JScrollPane();
         scrollPan.setMinimumSize(new Dimension(100, 50));
         scrollPan.setPreferredSize(new Dimension(100, 50));
-  
+
         errorTextArea = new JTextArea();
         errorTextArea.setForeground(Color.red);
-        errorTextArea.setBackground(new Color(255,255,153));
+        errorTextArea.setBackground(new Color(255, 255, 153));
         errorTextArea.setEditable(false);
         //errorTextArea.setText("Error!!!\nError!!!\nError!!!\nError!!!\nError!!!\n");
         scrollPan.setViewportView(errorTextArea);
@@ -154,17 +146,15 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         registerPopup();
     }
 
-    private void registerPopup()
-   {
-      JPopupMenu popup = new JPopupMenu();
-      JMenuItem hideMessagesMenu = new JMenuItem("Hide Error Panel");
-      hideMessagesMenu.addActionListener(new HideAction());
-      popup.add(hideMessagesMenu);
-      errorTextArea.setComponentPopupMenu(popup);
-   }
+    private void registerPopup() {
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem hideMessagesMenu = new JMenuItem("Hide Error Panel");
+        hideMessagesMenu.addActionListener(new HideAction());
+        popup.add(hideMessagesMenu);
+        errorTextArea.setComponentPopupMenu(popup);
+    }
 
-    private JPanel createParamsPanel()
-    {
+    private JPanel createParamsPanel() {
         JPanel panel = new JPanel(new BorderLayout(5, 5));
         panel.setBorder(BorderFactory.createTitledBorder("Servers to monitor (ServerAgent must be started!)"));
         panel.setPreferredSize(new Dimension(150, 150));
@@ -178,9 +168,10 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     }
 
     protected int getSelectedTypeIndex() {
-        for (int i = 0; i < types.length; i++)
-        {
-            if(types[i].isSelected()) return i;
+        for (int i = 0; i < types.length; i++) {
+            if (types[i].isSelected()) {
+                return i;
+            }
         }
         return -1;
     }
@@ -189,15 +180,13 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         types[type].setSelected(true);
     }
 
-    private JPanel createMonitoringTypePanel()
-    {
+    private JPanel createMonitoringTypePanel() {
         JPanel panel = new JPanel(new FlowLayout());
         panel.setBorder(BorderFactory.createTitledBorder("Metrics to collect"));
-        for (int i = 0; i < types.length; i++)
-        {
+        for (int i = 0; i < types.length; i++) {
             group.add(types[i]);
             panel.add(types[i]);
-            
+
         }
 
         types[0].setSelected(true);
@@ -205,8 +194,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         return panel;
     }
 
-    private JTable createGrid()
-    {
+    private JTable createGrid() {
         grid = new JTable();
         grid.getDefaultEditor(Integer.class).addCellEditorListener(this);
         createTableModel();
@@ -220,15 +208,13 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         return grid;
     }
 
-    private void createTableModel()
-    {
+    private void createTableModel() {
         tableModel = new PowerTableModel(columnIdentifiers, columnClasses);
         tableModel.addTableModelListener(this);
         grid.setModel(tableModel);
     }
 
-    private Component createButtons()
-    {
+    private Component createButtons() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 2));
 
@@ -244,8 +230,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         return buttonPanel;
     }
 
-    protected GraphPanel createGraphPanel()
-    {
+    protected GraphPanel createGraphPanel() {
         graphPanel = new GraphPanel();
         graphPanel.getGraphObject().setRows(model);
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
@@ -255,8 +240,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     }
 
     @Override
-    public String getLabelResource()
-    {
+    public String getLabelResource() {
         return "performanceMonitoring";
     }
 
@@ -264,8 +248,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     public abstract String getStaticLabel();
 
     @Override
-    public TestElement createTestElement()
-    {
+    public TestElement createTestElement() {
         PerformanceMonitoringTestElement pmte = new PerformanceMonitoringTestElement();
         modifyTestElement(pmte);
         pmte.setComment(JMeterPluginsUtils.getWikiLinkText(getWikiPage()));
@@ -273,16 +256,13 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     }
 
     @Override
-    public void modifyTestElement(TestElement te)
-    {
+    public void modifyTestElement(TestElement te) {
         //log.info("Modify test element");
-        if (grid.isEditing())
-        {
+        if (grid.isEditing()) {
             grid.getCellEditor().stopCellEditing();
         }
 
-        if (te instanceof PerformanceMonitoringTestElement)
-        {
+        if (te instanceof PerformanceMonitoringTestElement) {
             PerformanceMonitoringTestElement pmte = (PerformanceMonitoringTestElement) te;
             CollectionProperty rows = PerformanceMonitoringTestElement.tableModelToCollectionProperty(tableModel);
             pmte.setData(rows);
@@ -293,22 +273,19 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     }
 
     @Override
-    public void configure(TestElement te)
-    {
+    public void configure(TestElement te) {
         //log.info("Configure");
         super.configure(te);
         createTableModel();
         PerformanceMonitoringTestElement pmte = (PerformanceMonitoringTestElement) te;
         pmte.register(this);
         JMeterProperty perfmonValues = pmte.getData();
-        if (!(perfmonValues instanceof NullProperty))
-        {
+        if (!(perfmonValues instanceof NullProperty)) {
             CollectionProperty columns = (CollectionProperty) perfmonValues;
             //log.info("Received colimns collection with no columns " + columns.size());
             PropertyIterator iter = columns.iterator();
             int count = 0;
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 List<?> list = (List<?>) iter.next().getObjectValue();
                 //log.info("Rows: " + list.size());
                 tableModel.setColumnData(count, list);
@@ -316,27 +293,23 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
             }
 
             setSelectedType(pmte.getType());
-        } else
-        {
+        } else {
             log.warn("Received null property instead of collection");
         }
     }
 
     @Override
-    public void updateGui()
-    {
+    public void updateGui() {
         graphPanel.updateGui();
     }
 
     @Override
-    public void updateGui(Sample sample)
-    {
+    public void updateGui(Sample sample) {
         graphPanel.updateGui();
     }
 
     @Override
-    public void clearData()
-    {
+    public void clearData() {
         model.clear();
         colors.reset();
         graphPanel.clearRowsTab();
@@ -347,31 +320,25 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     }
 
     @Override
-    public void tableChanged(TableModelEvent e)
-    {
+    public void tableChanged(TableModelEvent e) {
     }
 
     @Override
-    public void editingStopped(ChangeEvent e)
-    {
+    public void editingStopped(ChangeEvent e) {
     }
 
     @Override
-    public void editingCanceled(ChangeEvent e)
-    {
+    public void editingCanceled(ChangeEvent e) {
     }
 
     protected abstract String getWikiPage();
 
     private class AddRowAction
-            implements ActionListener
-    {
+            implements ActionListener {
 
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            if (grid.isEditing())
-            {
+        public void actionPerformed(ActionEvent e) {
+            if (grid.isEditing()) {
                 TableCellEditor cellEditor = grid.getCellEditor(grid.getEditingRow(), grid.getEditingColumn());
                 cellEditor.stopCellEditing();
             }
@@ -389,36 +356,29 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     }
 
     private class DeleteRowAction
-            implements ActionListener
-    {
+            implements ActionListener {
 
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            if (grid.isEditing())
-            {
+        public void actionPerformed(ActionEvent e) {
+            if (grid.isEditing()) {
                 TableCellEditor cellEditor = grid.getCellEditor(grid.getEditingRow(), grid.getEditingColumn());
                 cellEditor.cancelCellEditing();
             }
 
             int rowSelected = grid.getSelectedRow();
-            if (rowSelected >= 0)
-            {
+            if (rowSelected >= 0) {
                 tableModel.removeRow(rowSelected);
                 tableModel.fireTableDataChanged();
 
                 // Disable DELETE if there are no rows in the table to delete.
-                if (tableModel.getRowCount() == 0)
-                {
+                if (tableModel.getRowCount() == 0) {
                     deleteRowButton.setEnabled(false);
                 } // Table still contains one or more rows, so highlight (select)
                 // the appropriate one.
-                else
-                {
+                else {
                     int rowToSelect = rowSelected;
 
-                    if (rowSelected >= tableModel.getRowCount())
-                    {
+                    if (rowSelected >= tableModel.getRowCount()) {
                         rowToSelect = rowSelected - 1;
                     }
 
@@ -430,51 +390,47 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
 
     //not used for now, but needed for settings tab
     @Override
-    public int getGranulation()
-    {
+    public int getGranulation() {
         return 1000;
     }
 
     //not used for now, but needed for settings tab
     @Override
-    public void setGranulation(int granulation)
-    {
+    public void setGranulation(int granulation) {
         //do nothing here
     }
+
     @Override
-    public GraphPanelChart getGraphPanelChart()
-    {
+    public GraphPanelChart getGraphPanelChart() {
         return graphPanel.getGraphObject();
     }
 
     //not planned for these charts
     @Override
-    public void switchModel(boolean aggregate)
-    {
+    public void switchModel(boolean aggregate) {
     }
 
-    public void addPerfRecord(String serverName, double value, long time)
-    {
-        if (relativeStartTime==0)
-        {
+    public void addPerfRecord(String serverName, double value, long time) {
+        if (relativeStartTime == 0) {
             //relativeStartTime = JMeterUtils.getPropDefault("TESTSTART.MS", sample.getStartTime());
             relativeStartTime = JMeterContextService.getTestStartTime();
-            if(relativeStartTime == 0) relativeStartTime = time;
+            if (relativeStartTime == 0) {
+                relativeStartTime = time;
+            }
 
-            if (graphPanel.getGraphObject().isUseRelativeTime())
+            if (graphPanel.getGraphObject().isUseRelativeTime()) {
                 graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, relativeStartTime));
+            }
             graphPanel.getGraphObject().setTestStartTime(relativeStartTime);
             graphPanel.getGraphObject().setForcedMinX(relativeStartTime);
         }
     }
 
-    protected long normalizeTime(long time)
-    {
-        return time - (time - relativeStartTime)%MetricsProvider.DELAY;
+    protected long normalizeTime(long time) {
+        return time - (time - relativeStartTime) % MetricsProvider.DELAY;
     }
 
-    public void setErrorMessage(String msg)
-    {
+    public void setErrorMessage(String msg) {
         scrollPan.setVisible(true);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         errorTextArea.setText(errorTextArea.getText() + formatter.format(new Date()) + " - ERROR: " + msg + "\n");
@@ -482,26 +438,24 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         updateGui();
     }
 
-    public void clearErrorMessage()
-    {
+    public void clearErrorMessage() {
         errorTextArea.setText("");
         scrollPan.setVisible(false);
     }
 
     public abstract void addPerfRecord(String serverName, double value);
+
     public abstract void setChartType(int monitorType);
+
     public abstract void setLoadMenuEnabled(boolean enabled);
 
     private class HideAction
-         implements ActionListener
-   {
+            implements ActionListener {
 
         @Override
-        public void actionPerformed(ActionEvent e)
-        {
+        public void actionPerformed(ActionEvent e) {
             scrollPan.setVisible(false);
             updateGui();
         }
-        
     }
- }
+}

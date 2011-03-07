@@ -21,6 +21,7 @@ import org.apache.jmeter.testelement.TestElement;
 public class DummySamplerGui
      extends AbstractSamplerGui
 {
+    public static final String WIKIPAGE = "DummySampler";
    private JCheckBox isSuccessful;
    private JTextField responseCode;
    private JTextField responseMessage;
@@ -57,7 +58,7 @@ public class DummySamplerGui
    {
       DummySampler sampler = new DummySampler();
       modifyTestElement(sampler);
-      sampler.setComment(JMeterPluginsUtils.getWikiLinkText("DummySampler"));
+      sampler.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
       return sampler;
    }
 
@@ -107,7 +108,7 @@ public class DummySamplerGui
       setLayout(new BorderLayout(0, 5));
       setBorder(makeBorder());
 
-      add(makeTitlePanel(), BorderLayout.NORTH);
+      add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(),WIKIPAGE), BorderLayout.NORTH);
 
       JPanel mainPanel = new JPanel(new GridBagLayout());
 

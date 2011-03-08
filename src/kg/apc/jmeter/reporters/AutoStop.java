@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.reporters;
 
 import java.io.Serializable;
@@ -12,6 +8,8 @@ import org.apache.jmeter.samplers.Remoteable;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleListener;
 import org.apache.jmeter.testelement.TestListener;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  *
@@ -22,12 +20,15 @@ class AutoStop
         implements SampleListener, Serializable,
         TestListener, Remoteable, NoThreadClone {
 
+    private static final Logger log = LoggingManager.getLoggerForClass();
     private final static String RESPONSE_TIME = "avg_response_time";
     private final static String ERROR_RATE = "error_rate";
     private final static String RESPONSE_TIME_SECS = "avg_response_time_length";
     private final static String ERROR_RATE_SECS = "error_rate_length";
 
     public AutoStop() {
+        super();
+        log.info("Create");
     }
 
     public void sampleOccurred(SampleEvent se) {

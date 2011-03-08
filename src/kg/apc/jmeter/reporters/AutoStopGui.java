@@ -7,10 +7,13 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  *
@@ -18,6 +21,7 @@ import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
  */
 public class AutoStopGui extends AbstractListenerGui {
 
+    private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String WIKIPAGE = "AutoStop";
     private JTextField responseTime;
     private JTextField responseTimeSecs;
@@ -40,6 +44,7 @@ public class AutoStopGui extends AbstractListenerGui {
     }
 
     public TestElement createTestElement() {
+        log.info("Create te");
         TestElement te = new AutoStop();
         modifyTestElement(te);
         te.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
@@ -47,24 +52,15 @@ public class AutoStopGui extends AbstractListenerGui {
     }
 
     public void modifyTestElement(TestElement te) {
+        log.info("Modify " + te);
         super.configureTestElement(te);
         if (te instanceof AutoStop) {
             AutoStop fw = (AutoStop) te;
             fw.setResponseTime(responseTime.getText());
             fw.setResponseTimeSecs(responseTimeSecs.getText());
-            fw.setErrorRate(responseTime.getText());
-            fw.setErrorRateSecs(responseTimeSecs.getText());
+            fw.setErrorRate(errorRate.getText());
+            fw.setErrorRateSecs(errorRateSecs.getText());
         }
-    }
-
-    @Override
-    public void configure(TestElement element) {
-        super.configure(element);
-        AutoStop fw = (AutoStop) element;
-        responseTime.setText(fw.getResponseTime());
-        responseTimeSecs.setText(fw.getResponseTimeSecs());
-        responseTime.setText(fw.getErrorRate());
-        responseTimeSecs.setText(fw.getErrorRateSecs());
     }
 
     @Override
@@ -80,6 +76,17 @@ public class AutoStopGui extends AbstractListenerGui {
         errorRateSecs.setText("10");
     }
 
+    @Override
+    public void configure(TestElement element) {
+        log.info("Configure " + element);
+        super.configure(element);
+        AutoStop fw = (AutoStop) element;
+        responseTime.setText(fw.getResponseTime());
+        responseTimeSecs.setText(fw.getResponseTimeSecs());
+        errorRate.setText(fw.getErrorRate());
+        errorRateSecs.setText(fw.getErrorRateSecs());
+    }
+
     private void init() {
         setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
@@ -87,7 +94,7 @@ public class AutoStopGui extends AbstractListenerGui {
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBorder(new TitledBorder("Shutdown test if"));
+        mainPanel.setBorder(new TitledBorder(new EmptyBorder(5, 5, 5, 5), "Shutdown test if"));
 
         GridBagConstraints labelConstraints = new GridBagConstraints();
         labelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
@@ -98,17 +105,17 @@ public class AutoStopGui extends AbstractListenerGui {
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Average response time is greater than ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 1, responseTime = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 1, responseTime = new JTextField(5));
         addToPanel(mainPanel, labelConstraints, 2, 1, new JLabel("ms for ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 3, 1, responseTimeSecs = new JTextField());
+        addToPanel(mainPanel, editConstraints, 3, 1, responseTimeSecs = new JTextField(3));
         addToPanel(mainPanel, labelConstraints, 4, 1, new JLabel("seconds", JLabel.RIGHT));
 
-        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("OR", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("OR", JLabel.LEFT));
 
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Error rate is greater than ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 3, errorRate = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 3, errorRate = new JTextField(5));
         addToPanel(mainPanel, labelConstraints, 2, 3, new JLabel("%  for ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 3, 3, errorRateSecs = new JTextField());
+        addToPanel(mainPanel, editConstraints, 3, 3, errorRateSecs = new JTextField(3));
         addToPanel(mainPanel, labelConstraints, 4, 3, new JLabel("seconds", JLabel.RIGHT));
 
         JPanel container = new JPanel(new BorderLayout());

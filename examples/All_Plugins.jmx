@@ -589,6 +589,13 @@ Connection: close&#xd;
         <boolProp name="graph_aggregated">false</boolProp>
       </ResultCollector>
       <hashTree/>
+      <kg.apc.jmeter.reporters.AutoStop guiclass="kg.apc.jmeter.reporters.AutoStopGui" testclass="kg.apc.jmeter.reporters.AutoStop" testname="jp@gc - AutoStop Listener" enabled="true">
+        <stringProp name="avg_response_time">50</stringProp>
+        <stringProp name="avg_response_time_length">50</stringProp>
+        <stringProp name="error_rate">1</stringProp>
+        <stringProp name="error_rate_length">50</stringProp>
+      </kg.apc.jmeter.reporters.AutoStop>
+      <hashTree/>
     </hashTree>
   </hashTree>
 </jmeterTestPlan>

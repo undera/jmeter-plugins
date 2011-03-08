@@ -60,6 +60,27 @@ public class AutoStopTest {
     }
 
     /**
+     * Test of sampleOccurred method, of class AutoStop.
+     */
+    @Test
+    public void testSampleOccurred_error() throws InterruptedException {
+        System.out.println("sampleOccurred error");
+        SampleResult res = new SampleResult();
+        SampleEvent se = new SampleEvent(res, "");
+        AutoStop instance = new AutoStop();
+        instance.setResponseTime("0");
+        instance.setErrorRate("60.6");
+        instance.setErrorRateSecs("3");
+        instance.sampleOccurred(se);
+        for (int n = 0; n < 5; n++) {
+            synchronized (this) {
+                wait(1000);
+            }
+            instance.sampleOccurred(se);
+        }
+    }
+
+    /**
      * Test of sampleStarted method, of class AutoStop.
      */
     @Test

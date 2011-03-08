@@ -16,7 +16,7 @@ public class GraphPanelChartAverageElement
       add(yVal);
    }
 
-   GraphPanelChartAverageElement()
+   public GraphPanelChartAverageElement()
    {
    }
 

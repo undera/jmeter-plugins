@@ -1,3 +1,4 @@
+// TODO: add latency and sampler data
 package kg.apc.jmeter.samplers;
 
 import java.awt.BorderLayout;

@@ -44,7 +44,6 @@ public class AutoStopGui extends AbstractListenerGui {
     }
 
     public TestElement createTestElement() {
-        log.info("Create te");
         TestElement te = new AutoStop();
         modifyTestElement(te);
         te.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
@@ -52,7 +51,6 @@ public class AutoStopGui extends AbstractListenerGui {
     }
 
     public void modifyTestElement(TestElement te) {
-        log.info("Modify " + te);
         super.configureTestElement(te);
         if (te instanceof AutoStop) {
             AutoStop fw = (AutoStop) te;
@@ -78,7 +76,6 @@ public class AutoStopGui extends AbstractListenerGui {
 
     @Override
     public void configure(TestElement element) {
-        log.info("Configure " + element);
         super.configure(element);
         if (element instanceof AutoStop){
         AutoStop fw = (AutoStop) element;
@@ -89,6 +86,7 @@ public class AutoStopGui extends AbstractListenerGui {
         }
     }
 
+    // TODO: provide checkbox to select latency/response time
     private void init() {
         setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
@@ -96,7 +94,7 @@ public class AutoStopGui extends AbstractListenerGui {
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBorder(new TitledBorder(new EmptyBorder(5, 5, 5, 5), "Shutdown test if"));
+        mainPanel.setBorder(new TitledBorder("Shutdown test if"));
 
         GridBagConstraints labelConstraints = new GridBagConstraints();
         labelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;

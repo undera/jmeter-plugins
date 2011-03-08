@@ -28,9 +28,10 @@ public class AutoStop
     private final static String RESPONSE_TIME_SECS = "avg_response_time_length";
     private final static String ERROR_RATE_SECS = "error_rate_length";
     private long curSec = 0L;
-    private GraphPanelChartAverageElement avgRespTime = new GraphPanelChartAverageElement(0);
-    private GraphPanelChartAverageElement errorRate = new GraphPanelChartAverageElement(0);
+    private GraphPanelChartAverageElement avgRespTime = new GraphPanelChartAverageElement();
+    private GraphPanelChartAverageElement errorRate = new GraphPanelChartAverageElement();
     private long respTimeExceededStart = 0;
+    private long errRateExceededStart=0;
 
     public AutoStop() {
         super();
@@ -54,23 +55,25 @@ public class AutoStop
             }
 
             if (getErrorRateAsFloat() > 0) {
-                //log.debug("Avg resp time: "+avgRespTime.getValue());
-                if (avgRespTime.getValue() > getResponseTimeAsInt()) {
-                    //log.debug((sec - respTimeExceededStart)+" "+getResponseTimeSecsAsInt());
-                    if (sec - respTimeExceededStart >= getResponseTimeSecsAsInt()) {
-                        log.info("Average latency more than " + getResponseTime() + " for " + getResponseTimeSecs() + "s. Auto-shutdown test...");
+                //log.debug("Error rate: "+errorRate.getValue());
+                if (errorRate.getValue() > getErrorRateAsFloat()) {
+                    //log.debug((sec - errRateExceededStart)+" "+getErrorRateSecsAsInt());
+                    if (sec - errRateExceededStart >= getErrorRateSecsAsInt()) {
+                        log.info("Error rate more than " + getErrorRate() + " for " + getErrorRateSecs() + "s. Auto-shutdown test...");
                         stopTest();
                     }
                 } else {
-                    respTimeExceededStart = sec;
+                    errRateExceededStart = sec;
                 }
             }
 
             curSec = sec;
-            avgRespTime = new GraphPanelChartAverageElement(0);
+            avgRespTime = new GraphPanelChartAverageElement();
+            errorRate = new GraphPanelChartAverageElement();
         }
 
         avgRespTime.add(se.getResult().getLatency());
+        errorRate.add(se.getResult().isSuccessful()?0:1);
     }
 
     public void sampleStarted(SampleEvent se) {
@@ -132,6 +135,7 @@ public class AutoStop
             res = Integer.parseInt(getResponseTime());
         } catch (NumberFormatException e) {
             log.error("Wrong response time: " + getResponseTime(), e);
+            setResponseTime("0");
         }
         return res;
     }
@@ -142,6 +146,7 @@ public class AutoStop
             res = Integer.parseInt(getResponseTimeSecs());
         } catch (NumberFormatException e) {
             log.error("Wrong response time period: " + getResponseTime(), e);
+            setResponseTimeSecs("1");
         }
         return res > 0 ? res : 1;
     }
@@ -149,9 +154,10 @@ public class AutoStop
     private float getErrorRateAsFloat() {
         float res = 0;
         try {
-            res = Float.parseFloat(getErrorRate());
+            res = Float.parseFloat(getErrorRate())/100;
         } catch (NumberFormatException e) {
             log.error("Wrong error rate: " + getErrorRate(), e);
+            setErrorRate("0");
         }
         return res;
     }
@@ -162,6 +168,7 @@ public class AutoStop
             res = Integer.parseInt(getErrorRateSecs());
         } catch (NumberFormatException e) {
             log.error("Wrong error rate period: " + getResponseTime(), e);
+            setErrorRateSecs("1");
         }
         return res > 0 ? res : 1;
     }

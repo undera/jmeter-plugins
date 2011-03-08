@@ -15,7 +15,7 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-class AutoStop
+public class AutoStop
         extends AbstractListenerElement
         implements SampleListener, Serializable,
         TestListener, Remoteable, NoThreadClone {

@@ -80,11 +80,13 @@ public class AutoStopGui extends AbstractListenerGui {
     public void configure(TestElement element) {
         log.info("Configure " + element);
         super.configure(element);
+        if (element instanceof AutoStop){
         AutoStop fw = (AutoStop) element;
         responseTime.setText(fw.getResponseTime());
         responseTimeSecs.setText(fw.getResponseTimeSecs());
         errorRate.setText(fw.getErrorRate());
         errorRateSecs.setText(fw.getErrorRateSecs());
+        }
     }
 
     private void init() {

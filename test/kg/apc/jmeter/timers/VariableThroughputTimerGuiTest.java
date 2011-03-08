@@ -36,7 +36,7 @@ public class VariableThroughputTimerGuiTest {
 
     @Before
     public void setUp() {
-      dataModel = new PowerTableModel(VariableThroughputTimerGui.columnIdentifiers, VariableThroughputTimerGui.columnClasses);
+      dataModel = new PowerTableModel(VariableThroughputTimer.columnIdentifiers, VariableThroughputTimer.columnClasses);
       dataModel.addRow(new Integer[]
             {
                1, 10, 3

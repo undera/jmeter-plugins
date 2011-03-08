@@ -3,7 +3,9 @@ package kg.apc.jmeter.timers;
 
 import java.util.Iterator;
 import java.util.List;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.util.NoThreadClone;
+import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
@@ -11,6 +13,7 @@ import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.timers.ConstantThroughputTimer;
 import org.apache.jmeter.timers.Timer;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -23,6 +26,12 @@ public class VariableThroughputTimer
         extends AbstractTestElement
         implements Timer, NoThreadClone {
 
+    public static final String[] columnIdentifiers = new String[]{
+        "Start RPS", "End RPS", "Duration, sec"
+    };
+    public static final Class[] columnClasses = new Class[]{
+        String.class, String.class, String.class
+    };
     public static final String DATA_PROPERTY = "load_profile";
     public static final int DURATION_FIELD_NO = 2;
     public static final int FROM_FIELD_NO = 0;
@@ -35,6 +44,12 @@ public class VariableThroughputTimer
     private long cntSent;
     private int rps;
     private long startSec = 0;
+    private CollectionProperty overrideProp;
+
+    public VariableThroughputTimer() {
+        super();
+        trySettingLoadFromProperty();
+    }
 
     public long delay() {
         synchronized (this) {
@@ -99,6 +114,9 @@ public class VariableThroughputTimer
     }
 
     JMeterProperty getData() {
+        if (overrideProp != null) {
+            return overrideProp;
+        }
         return getProperty(DATA_PROPERTY);
     }
 
@@ -112,11 +130,10 @@ public class VariableThroughputTimer
         int result = 0;
         CollectionProperty columns = (CollectionProperty) data;
         List<?> col = (List<?>) columns.get(DURATION_FIELD_NO).getObjectValue();
-        if (col.isEmpty())
-        {
+        if (col.isEmpty()) {
             return -1;
         }
-        
+
         Iterator<?> iter = col.iterator();
         int rowNo = 0;
         while (true) {
@@ -144,5 +161,67 @@ public class VariableThroughputTimer
         List<?> list = (List<?>) columns.get(col).getObjectValue();
         JMeterProperty prop = (JMeterProperty) list.get(rowNo);
         return prop.getIntValue();
+    }
+
+    private void trySettingLoadFromProperty() {
+        String loadProp = JMeterUtils.getProperty(DATA_PROPERTY);
+        log.debug("Load prop: " + loadProp);
+        if (loadProp != null && loadProp.length() > 0) {
+            log.info("GUI load profile will be ignored");
+            PowerTableModel dataModel = new PowerTableModel(VariableThroughputTimer.columnIdentifiers, VariableThroughputTimer.columnClasses);
+
+            String[] chunks = loadProp.split("\\)");
+
+            for (int c = 0; c < chunks.length; c++) {
+                try {
+                    parseChunk(chunks[c], dataModel);
+                } catch (RuntimeException e) {
+                    log.warn("Wrong load chunk ignored: " + chunks[c], e);
+                }
+            }
+
+            log.info("Setting load profile from property " + DATA_PROPERTY + ": " + loadProp);
+            overrideProp = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
+        }
+    }
+
+    private void parseChunk(String chunk, PowerTableModel model) {
+        log.debug("Parsing chunk: " + chunk);
+        String[] parts = chunk.split("[(,]");
+        String loadVar = parts[0].trim();
+
+        if (loadVar.equalsIgnoreCase("const")) {
+            int const_load = Integer.parseInt(parts[1].trim());
+            Integer[] row = new Integer[3];
+            row[FROM_FIELD_NO] = const_load;
+            row[TO_FIELD_NO] = const_load;
+            row[DURATION_FIELD_NO] = JMeterPluginsUtils.getSecondsForShortString(parts[2]);
+            model.addRow(row);
+
+        } else if (loadVar.equalsIgnoreCase("line")) {
+            Integer[] row = new Integer[3];
+            row[FROM_FIELD_NO] = Integer.parseInt(parts[1].trim());
+            row[TO_FIELD_NO] = Integer.parseInt(parts[2].trim());
+            row[DURATION_FIELD_NO] = JMeterPluginsUtils.getSecondsForShortString(parts[3]);
+            model.addRow(row);
+
+        } else if (loadVar.equalsIgnoreCase("step")) {
+            // FIXME: float (from-to)/inc will be stepped wrong
+            int from = Integer.parseInt(parts[1].trim());
+            int to = Integer.parseInt(parts[2].trim());
+            int inc = Integer.parseInt(parts[3].trim()) * (from > to ? -1 : 1);
+            //log.info(from + " " + to + " " + inc);
+            for (int n = from; (inc > 0 ? n <= to : n > to); n += inc) {
+                //log.info(" " + n);
+                Integer[] row = new Integer[3];
+                row[FROM_FIELD_NO] = n;
+                row[TO_FIELD_NO] = n;
+                row[DURATION_FIELD_NO] = JMeterPluginsUtils.getSecondsForShortString(parts[4]);
+                model.addRow(row);
+            }
+
+        } else {
+            throw new RuntimeException("Unknown load type: " + parts[0]);
+        }
     }
 }

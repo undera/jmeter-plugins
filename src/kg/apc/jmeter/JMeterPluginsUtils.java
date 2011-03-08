@@ -215,6 +215,54 @@ public abstract class JMeterPluginsUtils {
         }
     }
 
+    public static int getSecondsForShortString(String string) {
+        int res=0;
+        string=string.trim();
+
+        String c;
+        String curNum="";
+        for (int n=0; n<string.length(); n++)
+        {
+            c=String.valueOf(string.charAt(n));
+            if (c.matches("\\d"))
+            {
+                curNum+=c;
+            }
+            else
+            {
+                int mul;
+                switch(c.charAt(0))
+                {
+                    case 's':
+                    case 'S':
+                        mul=1;
+                        break;
+                    case 'm':
+                    case 'M':
+                        mul=60;
+                        break;
+                    case 'h':
+                    case 'H':
+                        mul=60*60;
+                        break;
+                    case 'd':
+                    case 'D':
+                        mul=60*60*24;
+                        break;
+                    default:
+                        throw new NumberFormatException("Shorthand string does not allow using '"+c+"'");
+                }
+                res+=Integer.parseInt(curNum)*mul;
+                curNum="";
+            }
+        }
+
+        if (!curNum.isEmpty())
+            res+=Integer.parseInt(curNum);
+
+        return res;
+    }
+
     private static class URIOpener implements MouseListener {
 
         private final String uri;

@@ -149,5 +149,19 @@ public class JMeterPluginsUtilsTest {
         titlePanel.add(contentPanel);
         String helpPage = "";
         Component result = JMeterPluginsUtils.addHelpLinkToPanel(titlePanel, helpPage);
+        assertNotNull(result);
+    }
+
+    /**
+     * Test of getSecondsForShort method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testGetSecondsForShort() {
+        System.out.println("getSecondsForShort");
+        assertEquals(105, JMeterPluginsUtils.getSecondsForShortString("105"));
+        assertEquals(105, JMeterPluginsUtils.getSecondsForShortString("105s"));
+        assertEquals(60*15, JMeterPluginsUtils.getSecondsForShortString("15m"));
+        assertEquals(60*60*4, JMeterPluginsUtils.getSecondsForShortString("4h"));
+        assertEquals(104025, JMeterPluginsUtils.getSecondsForShortString("27h103m645s"));
     }
 }

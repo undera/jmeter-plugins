@@ -6,6 +6,7 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.util.TestJMeterUtils;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,6 +19,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class VariableThroughputTimerTest {
+
     private PowerTableModel dataModel;
 
     public VariableThroughputTimerTest() {
@@ -34,19 +36,16 @@ public class VariableThroughputTimerTest {
 
     @Before
     public void setUp() {
-      dataModel = new PowerTableModel(VariableThroughputTimerGui.columnIdentifiers, VariableThroughputTimerGui.columnClasses);
-      dataModel.addRow(new Integer[]
-            {
-               1, 10, 3
-            });
-      dataModel.addRow(new Integer[]
-            {
-               15, 15, 3
-            });
-      dataModel.addRow(new Integer[]
-            {
-               15, 1, 3
-            });
+        dataModel = new PowerTableModel(VariableThroughputTimer.columnIdentifiers, VariableThroughputTimer.columnClasses);
+        dataModel.addRow(new Integer[]{
+                    1, 10, 3
+                });
+        dataModel.addRow(new Integer[]{
+                    15, 15, 3
+                });
+        dataModel.addRow(new Integer[]{
+                    15, 1, 3
+                });
     }
 
     @After
@@ -66,19 +65,32 @@ public class VariableThroughputTimerTest {
     }
 
     @Test
+    public void testDelay_Prop() {
+        System.out.println("delay from property");
+        String load="const(10,10s) line(10,100,1m) step(5,25,5,3600)";
+        JMeterUtils.setProperty(VariableThroughputTimer.DATA_PROPERTY, load);
+        VariableThroughputTimer instance = new VariableThroughputTimer();
+        JMeterUtils.setProperty(VariableThroughputTimer.DATA_PROPERTY, ""); // clear!
+        JMeterProperty result = instance.getData();
+        System.err.println(result);
+        assertEquals("[[10, 10, 5, 10, 15, 20, 25], [10, 100, 5, 10, 15, 20, 25], [10, 60, 60, 60, 60, 60, 60]]", result.toString());
+    }
+
+    @Test
     public void testDelay1000() throws InterruptedException {
         System.out.println("delay 1000");
         VariableThroughputTimer instance = new VariableThroughputTimer();
         CollectionProperty prop = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
         instance.setData(prop);
-
-        long start=System.currentTimeMillis();
-        while ((System.currentTimeMillis()-start)<10*1000) // 10 seconds test
+        fail("temp");
+        long start = System.currentTimeMillis();
+        while ((System.currentTimeMillis() - start) < 10 * 1000) // 10 seconds test
         {
             long result = instance.delay();
-            if (result>0)
-            {
-                Thread.sleep(result/1000);
+            if (result > 0) {
+                synchronized (this) {
+                    wait(result / 1000);
+                }
                 //System.out.println(result);
             }
         }
@@ -120,5 +132,4 @@ public class VariableThroughputTimerTest {
         int result = instance.getRPSForSecond(sec);
         assertEquals(expResult, result);
     }
-
 }

@@ -58,23 +58,9 @@ public class VariableThroughputTimerGui
    /**
     *
     */
-   public static final String[] columnIdentifiers = new String[]
-   {
-      "Start RPS", "End RPS", "Duration, sec"
-   };
-   /**
-    *
-    */
-   public static final Class[] columnClasses = new Class[]
-   {
-      String.class, String.class, String.class
-   };
-
-   private static Integer[] defaultValues = new Integer[]
-   {
-      0, 1000, 60
-   };
-   
+    private static Integer[] defaultValues = new Integer[]{
+        0, 1000, 60
+    };
    private PowerTableModel tableModel;
    JTable grid;
    JButton addRowButton;
@@ -263,7 +249,7 @@ public class VariableThroughputTimerGui
 
    private void createTableModel()
    {
-      tableModel = new PowerTableModel(columnIdentifiers, columnClasses);
+      tableModel = new PowerTableModel(VariableThroughputTimer. columnIdentifiers, VariableThroughputTimer.columnClasses);
       tableModel.addTableModelListener(this);
       grid.setModel(tableModel);
    }

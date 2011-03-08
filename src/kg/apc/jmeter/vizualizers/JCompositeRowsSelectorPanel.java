@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.event.InputEvent;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -227,6 +228,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
 
         jPanelLogo = new javax.swing.JPanel();
         jLabelLogo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jPanelMain = new javax.swing.JPanel();
         jPanelRowsTable = new javax.swing.JPanel();
         jLabelGraph1 = new javax.swing.JLabel();
@@ -244,7 +246,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setLayout(new java.awt.BorderLayout());
 
-        jPanelLogo.setLayout(new java.awt.GridLayout(1, 0));
+        jPanelLogo.setLayout(new java.awt.GridBagLayout());
 
         jLabelLogo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
@@ -254,7 +256,16 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
                 jLabelLogoMouseClicked(evt);
             }
         });
-        jPanelLogo.add(jLabelLogo);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jPanelLogo.add(jLabelLogo, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanelLogo.add(jPanel1, gridBagConstraints);
 
         add(jPanelLogo, java.awt.BorderLayout.PAGE_END);
 
@@ -537,7 +548,10 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
     }//GEN-LAST:event_jTreeGraph2MouseClicked
 
     private void jLabelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelLogoMouseClicked
-        JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaigh="+gui.getWikiPage());
+        if((evt.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK)
+        {
+            JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaigh="+gui.getWikiPage());
+        }
     }//GEN-LAST:event_jLabelLogoMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -547,6 +561,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
     private javax.swing.JLabel jLabelGraph2;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelPreview;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelButtons;
     private javax.swing.JPanel jPanelGraphPreview;
     private javax.swing.JPanel jPanelLogo;

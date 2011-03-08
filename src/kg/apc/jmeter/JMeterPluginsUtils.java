@@ -6,6 +6,9 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -25,7 +28,6 @@ import org.apache.jmeter.gui.AbstractJMeterGuiComponent;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.gui.layout.VerticalLayout;
 
 /**
  *
@@ -33,6 +35,7 @@ import org.apache.jorphan.gui.layout.VerticalLayout;
  */
 public abstract class JMeterPluginsUtils {
 
+    private static String PLUGINS_VERSION = "0.4.1";
     private static String PLUGINS_PREFIX = "jp@gc - ";
     private static boolean prefixPlugins = true;
     private static final String WIKI_BASE = "http://code.google.com/p/jmeter-plugins/wiki/";
@@ -137,6 +140,9 @@ public abstract class JMeterPluginsUtils {
         if (!java.awt.Desktop.isDesktopSupported()) {
             return panel;
         }
+        
+        JLabel icon = new JLabel();
+        icon.setIcon(new javax.swing.ImageIcon(JMeterPluginsUtils.class.getResource("/kg/apc/jmeter/vizualizers/information.png")));
 
         JLabel link = new JLabel("Help on this plugin");
         link.setForeground(Color.blue);
@@ -145,16 +151,41 @@ public abstract class JMeterPluginsUtils {
         link.addMouseListener(new URIOpener(WIKI_BASE + helpPage+"?utm_source=jmeter&utm_medium=helplink&utm_campaigh="+helpPage));
         Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.blue);
         link.setBorder(border);
-        link.setAlignmentY(JLabel.RIGHT_ALIGNMENT);
+
+        JLabel version = new JLabel("v" + PLUGINS_VERSION);
+        version.setFont(version.getFont().deriveFont(Font.PLAIN).deriveFont(11F));
+        version.setForeground(Color.GRAY);
 
         Container innerPanel = findComponentWithBorder((JComponent) panel, EtchedBorder.class);
-        //System.out.println(innerPanel.getName());
-        JPanel p=new JPanel(new VerticalLayout(1, VerticalLayout.LEFT));
-        p.add(link);
+
+        JPanel panelLink = new JPanel(new GridBagLayout());
+
+        GridBagConstraints gridBagConstraints;
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 1, 0, 0);
+        panelLink.add(icon, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 3, 0);
+        panelLink.add(link, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 4);
+        panelLink.add(version, gridBagConstraints);
+        
         if (innerPanel != null) {
-            innerPanel.add(p);
+            innerPanel.add(panelLink);
         } else {
-            panel.add(p);
+            panel.add(panelLink);
         }
         return panel;
     }
@@ -193,7 +224,7 @@ public abstract class JMeterPluginsUtils {
         }
 
         public void mouseClicked(MouseEvent e) {
-            openInBrowser(uri);
+            if((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) openInBrowser(uri);
         }
 
         public void mousePressed(MouseEvent e) {

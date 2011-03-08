@@ -1,6 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.awt.Color;
+import java.awt.event.InputEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ToolTipManager;
@@ -199,6 +200,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         buttonGroupGraphType = new javax.swing.ButtonGroup();
         jPanelLogo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jPanelAllSettingsContainer = new javax.swing.JPanel();
         jPanelTimeLineContainer = new javax.swing.JPanel();
         jLabelTimeline1 = new javax.swing.JLabel();
@@ -232,7 +234,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         setLayout(new java.awt.BorderLayout());
 
-        jPanelLogo.setLayout(new java.awt.GridLayout(1, 0));
+        jPanelLogo.setLayout(new java.awt.GridBagLayout());
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
@@ -242,7 +244,16 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
                 jLabel1MouseClicked(evt);
             }
         });
-        jPanelLogo.add(jLabel1);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jPanelLogo.add(jLabel1, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanelLogo.add(jPanel1, gridBagConstraints);
 
         add(jPanelLogo, java.awt.BorderLayout.PAGE_END);
 
@@ -703,7 +714,10 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     }//GEN-LAST:event_jCheckBoxMaxYActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaigh="+parent.getWikiPage());
+        if((evt.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK)
+        {
+            JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaigh="+parent.getWikiPage());
+        }
     }//GEN-LAST:event_jLabel1MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -728,6 +742,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     private javax.swing.JLabel jLabelMaxPoints;
     private javax.swing.JLabel jLabelTimeline1;
     private javax.swing.JLabel jLabelTimeline2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelAllSettingsContainer;

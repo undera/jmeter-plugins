@@ -67,13 +67,13 @@ public class VariableThroughputTimerTest {
     @Test
     public void testDelay_Prop() {
         System.out.println("delay from property");
-        String load="const(10,10s) line(10,100,1m) step(5,25,5,3600)";
+        String load="const(10,10s) line(10,100,1m) step(5,25,5,1h)";
         JMeterUtils.setProperty(VariableThroughputTimer.DATA_PROPERTY, load);
         VariableThroughputTimer instance = new VariableThroughputTimer();
         JMeterUtils.setProperty(VariableThroughputTimer.DATA_PROPERTY, ""); // clear!
         JMeterProperty result = instance.getData();
         System.err.println(result);
-        assertEquals("[[10, 10, 5, 10, 15, 20, 25], [10, 100, 5, 10, 15, 20, 25], [10, 60, 60, 60, 60, 60, 60]]", result.toString());
+        assertEquals("[[10, 10, 5, 10, 15, 20, 25], [10, 100, 5, 10, 15, 20, 25], [10, 60, 3600, 3600, 3600, 3600, 3600]]", result.toString());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class VariableThroughputTimerTest {
         VariableThroughputTimer instance = new VariableThroughputTimer();
         CollectionProperty prop = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
         instance.setData(prop);
-        fail("temp");
+        //fail("temp");
         long start = System.currentTimeMillis();
         while ((System.currentTimeMillis() - start) < 10 * 1000) // 10 seconds test
         {

@@ -1,5 +1,7 @@
 package kg.apc.jmeter.reporters;
 
+import kg.apc.jmeter.util.TestJMeterUtils;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.junit.After;
@@ -20,6 +22,7 @@ public class AutoStopTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
@@ -38,11 +41,22 @@ public class AutoStopTest {
      * Test of sampleOccurred method, of class AutoStop.
      */
     @Test
-    public void testSampleOccurred() {
+    public void testSampleOccurred() throws InterruptedException {
         System.out.println("sampleOccurred");
-        SampleEvent se = null;
+        SampleResult res = new SampleResult();
+        res.setLatency(500);
+        SampleEvent se = new SampleEvent(res, "");
         AutoStop instance = new AutoStop();
+        instance.setResponseTime("10");
+        instance.setResponseTimeSecs("3");
+        instance.setErrorRate("0");
         instance.sampleOccurred(se);
+        for (int n = 0; n < 5; n++) {
+            synchronized (this) {
+                wait(1000);
+            }
+            instance.sampleOccurred(se);
+        }
     }
 
     /**
@@ -211,5 +225,4 @@ public class AutoStopTest {
         String result = instance.getErrorRateSecs();
         assertEquals(expResult, result);
     }
-
 }

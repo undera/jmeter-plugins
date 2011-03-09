@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
@@ -18,7 +16,8 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableCellEditor;
+import kg.apc.jmeter.AddRowAction;
+import kg.apc.jmeter.DeleteRowAction;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.DateTimeRenderer;
@@ -235,8 +234,8 @@ public class VariableThroughputTimerGui
       buttonPanel.add(addRowButton);
       buttonPanel.add(deleteRowButton);
 
-      addRowButton.addActionListener(new AddRowAction());
-      deleteRowButton.addActionListener(new DeleteRowAction());
+      addRowButton.addActionListener(new AddRowAction(this, grid, tableModel, deleteRowButton, defaultValues));
+      deleteRowButton.addActionListener(new DeleteRowAction(this, grid, tableModel, deleteRowButton));
 
       return buttonPanel;
    }
@@ -270,73 +269,10 @@ public class VariableThroughputTimerGui
       GuiPackage.getInstance().updateCurrentGui();
    }
 
-   private class AddRowAction
-         implements ActionListener
-   {
-      public void actionPerformed(ActionEvent e)
-      {
-         if (grid.isEditing())
-         {
-            TableCellEditor cellEditor = grid.getCellEditor(grid.getEditingRow(), grid.getEditingColumn());
-            cellEditor.stopCellEditing();
-         }
-
-         tableModel.addRow(defaultValues);
-         tableModel.fireTableDataChanged();
-
-         // Enable DELETE (which may already be enabled, but it won't hurt)
-         deleteRowButton.setEnabled(true);
-
-         // Highlight (select) the appropriate row.
-         int rowToSelect = tableModel.getRowCount() - 1;
-         grid.setRowSelectionInterval(rowToSelect, rowToSelect);
-         updateUI();
-      }
-   }
-
    @Override
    public void clearGui()
    {
       super.clearGui();
       tableModel.clearData();
-   }
-
-   private class DeleteRowAction
-         implements ActionListener
-   {
-      public void actionPerformed(ActionEvent e)
-      {
-         if (grid.isEditing())
-         {
-            TableCellEditor cellEditor = grid.getCellEditor(grid.getEditingRow(), grid.getEditingColumn());
-            cellEditor.cancelCellEditing();
-         }
-
-         int rowSelected = grid.getSelectedRow();
-         if (rowSelected >= 0)
-         {
-            tableModel.removeRow(rowSelected);
-            tableModel.fireTableDataChanged();
-
-            // Disable DELETE if there are no rows in the table to delete.
-            if (tableModel.getRowCount() == 0)
-            {
-               deleteRowButton.setEnabled(false);
-            } // Table still contains one or more rows, so highlight (select)
-            // the appropriate one.
-            else
-            {
-               int rowToSelect = rowSelected;
-
-               if (rowSelected >= tableModel.getRowCount())
-               {
-                  rowToSelect = rowSelected - 1;
-               }
-
-               grid.setRowSelectionInterval(rowToSelect, rowToSelect);
-            }
-            updateUI();
-         }
-      }
    }
 }

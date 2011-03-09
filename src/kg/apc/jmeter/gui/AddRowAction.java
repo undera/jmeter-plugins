@@ -1,4 +1,4 @@
-package kg.apc.jmeter;
+package kg.apc.jmeter.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

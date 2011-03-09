@@ -3,11 +3,9 @@ package kg.apc.jmeter.timers;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,14 +14,13 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import kg.apc.jmeter.AddRowAction;
-import kg.apc.jmeter.DeleteRowAction;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.GraphRowExactValues;
+import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.threads.UltimateThreadGroupGui;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.util.PowerTableModel;
@@ -62,8 +59,6 @@ public class VariableThroughputTimerGui
     };
    private PowerTableModel tableModel;
    JTable grid;
-   JButton addRowButton;
-   JButton deleteRowButton;
 
    /**
     *
@@ -98,7 +93,7 @@ public class VariableThroughputTimerGui
       JScrollPane scroll = new JScrollPane(createGrid());
       scroll.setPreferredSize(scroll.getMinimumSize());
       panel.add(scroll, BorderLayout.CENTER);
-      panel.add(createButtons(), BorderLayout.SOUTH);
+      panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
 
       return panel;
    }
@@ -221,23 +216,6 @@ public class VariableThroughputTimerGui
       chart.setxAxisLabel("Elapsed Time");
       chart.setyAxisLabel("Requests per Second");
       return chart;
-   }
-
-   private Component createButtons()
-   {
-      JPanel buttonPanel = new JPanel();
-      buttonPanel.setLayout(new GridLayout(1, 2));
-
-      addRowButton = new JButton("Add Row");
-      deleteRowButton = new JButton("Delete Row");
-
-      buttonPanel.add(addRowButton);
-      buttonPanel.add(deleteRowButton);
-
-      addRowButton.addActionListener(new AddRowAction(this, grid, tableModel, deleteRowButton, defaultValues));
-      deleteRowButton.addActionListener(new DeleteRowAction(this, grid, tableModel, deleteRowButton));
-
-      return buttonPanel;
    }
 
    public void tableChanged(TableModelEvent e)

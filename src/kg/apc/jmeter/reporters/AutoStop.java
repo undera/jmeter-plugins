@@ -2,6 +2,7 @@ package kg.apc.jmeter.reporters;
 
 import java.io.Serializable;
 import kg.apc.jmeter.charting.GraphPanelChartAverageElement;
+import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.reporters.AbstractListenerElement;
@@ -31,7 +32,8 @@ public class AutoStop
     private GraphPanelChartAverageElement avgRespTime = new GraphPanelChartAverageElement();
     private GraphPanelChartAverageElement errorRate = new GraphPanelChartAverageElement();
     private long respTimeExceededStart = 0;
-    private long errRateExceededStart=0;
+    private long errRateExceededStart = 0;
+    private int stopTries = 0;
 
     public AutoStop() {
         super();
@@ -73,7 +75,7 @@ public class AutoStop
         }
 
         avgRespTime.add(se.getResult().getLatency());
-        errorRate.add(se.getResult().isSuccessful()?0:1);
+        errorRate.add(se.getResult().isSuccessful() ? 0 : 1);
     }
 
     public void sampleStarted(SampleEvent se) {
@@ -83,9 +85,16 @@ public class AutoStop
     }
 
     public void testStarted() {
+        avgRespTime = new GraphPanelChartAverageElement();
+        curSec = 0;
+        errRateExceededStart = 0;
+        errorRate = new GraphPanelChartAverageElement();
+        respTimeExceededStart = 0;
+        stopTries = 0;
     }
 
     public void testStarted(String string) {
+        testStarted();
     }
 
     public void testEnded() {
@@ -154,7 +163,7 @@ public class AutoStop
     private float getErrorRateAsFloat() {
         float res = 0;
         try {
-            res = Float.parseFloat(getErrorRate())/100;
+            res = Float.parseFloat(getErrorRate()) / 100;
         } catch (NumberFormatException e) {
             log.error("Wrong error rate: " + getErrorRate(), e);
             setErrorRate("0");
@@ -174,7 +183,15 @@ public class AutoStop
     }
 
     private void stopTest() {
-        // TODO: provide option for stop/stop now
-        JMeterContextService.getContext().getEngine().askThreadsToStop();
+        stopTries++;
+        if (stopTries > 10) {
+            log.info("Tries more than 10, stop it NOW!");
+            StandardJMeterEngine.stopEngineNow();
+        } else if (stopTries > 5) {
+            log.info("Tries more than 5, stop it!");
+            StandardJMeterEngine.stopEngine();
+        } else {
+            JMeterContextService.getContext().getEngine().askThreadsToStop();
+        }
     }
 }

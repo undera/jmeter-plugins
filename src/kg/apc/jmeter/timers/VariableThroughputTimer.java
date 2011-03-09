@@ -4,6 +4,7 @@ package kg.apc.jmeter.timers;
 import java.util.Iterator;
 import java.util.List;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.AbstractTestElement;
@@ -45,6 +46,7 @@ public class VariableThroughputTimer
     private int rps;
     private long startSec = 0;
     private CollectionProperty overrideProp;
+    private int stopTries;
 
     public VariableThroughputTimer() {
         super();
@@ -62,7 +64,7 @@ public class VariableThroughputTimer
                 checkNextSecond(secs);
                 if (rps < 0) {
                     log.info("No further RPS schedule, asking threads to stop...");
-                    JMeterContextService.getContext().getEngine().askThreadsToStop();
+                    stopTest();
                     notifyAll();
                 } else {
                     delay = getDelay(msecs);
@@ -185,7 +187,7 @@ public class VariableThroughputTimer
         }
     }
 
-    private void parseChunk(String chunk, PowerTableModel model) {
+    private static void parseChunk(String chunk, PowerTableModel model) {
         log.debug("Parsing chunk: " + chunk);
         String[] parts = chunk.split("[(,]");
         String loadVar = parts[0].trim();
@@ -222,6 +224,19 @@ public class VariableThroughputTimer
 
         } else {
             throw new RuntimeException("Unknown load type: " + parts[0]);
+        }
+    }
+
+    private void stopTest() {
+        stopTries++;
+        if (stopTries > 10) {
+            log.info("Tries more than 10, stop it NOW!");
+            StandardJMeterEngine.stopEngineNow();
+        } else if (stopTries > 5) {
+            log.info("Tries more than 5, stop it!");
+            StandardJMeterEngine.stopEngine();
+        } else {
+            JMeterContextService.getContext().getEngine().askThreadsToStop();
         }
     }
 }

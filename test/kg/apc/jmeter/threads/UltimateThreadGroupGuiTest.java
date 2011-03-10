@@ -6,7 +6,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.threads.AbstractThreadGroup;
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.ObjectProperty;
 import org.junit.After;

@@ -1,7 +1,7 @@
 package kg.apc.jmeter.dcerpc;
 
-import kg.apc.jmeter.util.SocketEmulatorInputStream;
-import kg.apc.jmeter.util.SocketEmulatorOutputStream;
+import kg.apc.emulators.SocketEmulatorInputStream;
+import kg.apc.emulators.SocketEmulatorOutputStream;
 import static org.junit.Assert.*;
 
 import java.io.IOException;

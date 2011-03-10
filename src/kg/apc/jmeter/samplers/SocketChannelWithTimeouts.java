@@ -21,11 +21,11 @@ import org.apache.log.Logger;
  */
 public class SocketChannelWithTimeouts extends SocketChannel {
 
-    private  SocketChannel socketChannel;
-    private  Selector selector;
+    protected  SocketChannel socketChannel;
+    protected  Selector selector;
     private long connectTimeout = 5000;
     private long readTimeout = 10000;
-    private SelectionKey channelKey;
+    protected SelectionKey channelKey;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private boolean fastFirstPacketRead;
 
@@ -65,9 +65,9 @@ public class SocketChannelWithTimeouts extends SocketChannel {
         throw new SocketTimeoutException("Failed to connect to " + remote.toString());
     }
 
-    private void createInnerObjects() throws IOException, ClosedChannelException {
+    protected void createInnerObjects() throws IOException, ClosedChannelException {
         selector = Selector.open();
-        socketChannel = getSocketChannel();
+        socketChannel = SocketChannel.open();
         socketChannel.configureBlocking(false);
         channelKey = socketChannel.register(selector, SelectionKey.OP_CONNECT);
     }
@@ -105,7 +105,8 @@ public class SocketChannelWithTimeouts extends SocketChannel {
     public int write(ByteBuffer src) throws IOException {
         fastFirstPacketRead = false;
         int res = 0;
-        while (src.hasRemaining()) {
+        int size = src.remaining();
+        while (res<size) {
             res += socketChannel.write(src);
         }
         return res;
@@ -152,9 +153,5 @@ public class SocketChannelWithTimeouts extends SocketChannel {
 
     public void setReadTimeout(int t) {
         readTimeout = t;
-    }
-
-    protected SocketChannel getSocketChannel() throws IOException {
-        return SocketChannel.open();
     }
 }

@@ -1,6 +1,6 @@
 package kg.apc.jmeter.perfmon;
 
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.gui.util.PowerTableModel;

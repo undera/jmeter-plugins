@@ -2,7 +2,7 @@ package kg.apc.jmeter.perfmon;
 
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -1,10 +1,18 @@
 package kg.apc.jmeter.samplers;
 
+import kg.apc.emulators.SelectionKeyEmul;
+import java.util.Set;
+import java.io.IOException;
+import java.nio.channels.ClosedChannelException;
+import kg.apc.emulators.SelectorEmul;
+import kg.apc.emulators.SocketChannelEmul;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.net.InetSocketAddress;
+import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
+import java.util.HashSet;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,6 +26,31 @@ import static org.junit.Assert.*;
  */
 public class SocketChannelWithTimeoutsTest {
 
+    private class SocketChannelWithTimeoutsEmul extends SocketChannelWithTimeouts {
+
+        protected SocketChannelWithTimeoutsEmul() throws IOException {
+            super();
+        }
+
+        @Override
+        protected void createInnerObjects() throws IOException, ClosedChannelException {
+            selector = new SelectorEmul();
+            SocketChannelEmul ce = new SocketChannelEmul();
+            ce.configureBlocking(false);
+            ce.setBytesToRead(ByteBuffer.wrap("test".getBytes()));
+            socketChannel = ce;
+            channelKey=new SelectionKeyEmul();
+        }
+
+        @Override
+        public boolean finishConnect() throws IOException {
+            return true;
+        }
+
+        private void setSelectedKeys(Set<SelectionKey> linkedList) {
+            ((SelectorEmul) selector).setSelectedKeys(linkedList);
+        }
+    }
 
     public SocketChannelWithTimeoutsTest() {
     }
@@ -44,7 +77,7 @@ public class SocketChannelWithTimeoutsTest {
     @Test
     public void testOpen() throws Exception {
         System.out.println("open");
-        SocketChannel result = SocketChannelWithTimeoutsEmul.open();
+        SocketChannel result = new SocketChannelWithTimeoutsEmul();
         assertTrue(result instanceof SocketChannel);
     }
 
@@ -55,8 +88,9 @@ public class SocketChannelWithTimeoutsTest {
     public void testConnect() throws Exception {
         System.out.println("connect");
         SocketAddress remote = new InetSocketAddress("localhost", 80);
-        SocketChannel instance = SocketChannelWithTimeoutsEmul.open();
-        boolean expResult = false;
+        SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
+        instance.setSelectedKeys(new HashSet<SelectionKey>());
+        boolean expResult = true;
         boolean result = instance.connect(remote);
         assertEquals(expResult, result);
     }
@@ -67,13 +101,11 @@ public class SocketChannelWithTimeoutsTest {
     @Test
     public void testRead_ByteBuffer() throws Exception {
         System.out.println("read");
-        ByteBuffer dst = null;
-        SocketChannelWithTimeoutsEmul instance = null;
-        int expResult = 0;
-        int result = instance.read(dst);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ByteBuffer dst = ByteBuffer.allocateDirect(1024);
+        SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
+        instance.setSelectedKeys(new HashSet<SelectionKey>());
+        assertEquals(4, instance.read(dst));
+        assertEquals(-1, instance.read(dst));
     }
 
     /**
@@ -85,12 +117,12 @@ public class SocketChannelWithTimeoutsTest {
         ByteBuffer[] dsts = null;
         int offset = 0;
         int length = 0;
-        SocketChannelWithTimeoutsEmul instance = null;
-        long expResult = 0L;
-        long result = instance.read(dsts, offset, length);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SocketChannel instance = new SocketChannelWithTimeoutsEmul();
+        try {
+            long result = instance.read(dsts, offset, length);
+            fail("Unimplemented expected");
+        } catch (UnsupportedOperationException e) {
+        }
     }
 
     /**
@@ -99,13 +131,11 @@ public class SocketChannelWithTimeoutsTest {
     @Test
     public void testWrite_ByteBuffer() throws Exception {
         System.out.println("write");
-        ByteBuffer src = null;
-        SocketChannelWithTimeoutsEmul instance = null;
-        int expResult = 0;
+        ByteBuffer src = ByteBuffer.wrap("TEST".getBytes());
+        SocketChannel instance = new SocketChannelWithTimeoutsEmul();
+        int expResult = 4;
         int result = instance.write(src);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -117,12 +147,12 @@ public class SocketChannelWithTimeoutsTest {
         ByteBuffer[] srcs = null;
         int offset = 0;
         int length = 0;
-        SocketChannelWithTimeoutsEmul instance = null;
-        long expResult = 0L;
-        long result = instance.write(srcs, offset, length);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SocketChannel instance = new SocketChannelWithTimeoutsEmul();
+        try {
+            long result = instance.write(srcs, offset, length);
+            fail("This function is unimplemented yet");
+        } catch (UnsupportedOperationException e) {
+        }
     }
 
     /**
@@ -131,10 +161,8 @@ public class SocketChannelWithTimeoutsTest {
     @Test
     public void testImplCloseSelectableChannel() throws Exception {
         System.out.println("implCloseSelectableChannel");
-        SocketChannelWithTimeoutsEmul instance = null;
+        SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         instance.implCloseSelectableChannel();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -144,52 +172,47 @@ public class SocketChannelWithTimeoutsTest {
     public void testImplConfigureBlocking() throws Exception {
         System.out.println("implConfigureBlocking");
         boolean block = false;
-        SocketChannelWithTimeoutsEmul instance = null;
-        instance.implConfigureBlocking(block);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
+        try {
+            instance.implConfigureBlocking(block);
+            fail("Exception expected");
+        } catch (UnsupportedOperationException e) {
+        }
     }
 
     /**
      * Test of socket method, of class SocketChannelWithTimeouts.
      */
     @Test
-    public void testSocket() {
+    public void testSocket() throws IOException {
         System.out.println("socket");
-        SocketChannelWithTimeoutsEmul instance = null;
-        Socket expResult = null;
+        SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         Socket result = instance.socket();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
      * Test of isConnected method, of class SocketChannelWithTimeouts.
      */
     @Test
-    public void testIsConnected() {
+    public void testIsConnected() throws IOException {
         System.out.println("isConnected");
-        SocketChannelWithTimeoutsEmul instance = null;
-        boolean expResult = false;
+        SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
+        boolean expResult = true;
         boolean result = instance.isConnected();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of isConnectionPending method, of class SocketChannelWithTimeouts.
      */
     @Test
-    public void testIsConnectionPending() {
+    public void testIsConnectionPending() throws IOException {
         System.out.println("isConnectionPending");
-        SocketChannelWithTimeoutsEmul instance = null;
+        SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         boolean expResult = false;
         boolean result = instance.isConnectionPending();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -198,37 +221,31 @@ public class SocketChannelWithTimeoutsTest {
     @Test
     public void testFinishConnect() throws Exception {
         System.out.println("finishConnect");
-        SocketChannelWithTimeoutsEmul instance = null;
-        boolean expResult = false;
+        SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
+        boolean expResult = true;
         boolean result = instance.finishConnect();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of setConnectTimeout method, of class SocketChannelWithTimeouts.
      */
     @Test
-    public void testSetConnectTimeout() {
+    public void testSetConnectTimeout() throws IOException {
         System.out.println("setConnectTimeout");
         int t = 0;
-        SocketChannelWithTimeoutsEmul instance = null;
+        SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         instance.setConnectTimeout(t);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of setReadTimeout method, of class SocketChannelWithTimeouts.
      */
     @Test
-    public void testSetReadTimeout() {
+    public void testSetReadTimeout() throws IOException {
         System.out.println("setReadTimeout");
         int t = 0;
-        SocketChannelWithTimeoutsEmul instance = null;
+        SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         instance.setReadTimeout(t);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

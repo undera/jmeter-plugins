@@ -1,6 +1,6 @@
 package kg.apc.jmeter.samplers;
 
-import kg.apc.jmeter.util.SocketChannelEmul;
+import kg.apc.emulators.SocketChannelEmul;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import org.apache.jmeter.samplers.SampleResult;

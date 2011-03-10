@@ -4,7 +4,7 @@ import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import kg.apc.jmeter.charting.GraphPanelChart;
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.GraphPanel;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.gui.util.PowerTableModel;

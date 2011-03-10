@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.junit.After;

@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;
 import java.util.concurrent.ConcurrentSkipListMap;
-import kg.apc.jmeter.util.TestGraphics;
+import kg.apc.emulators.TestGraphics;
 import org.apache.jorphan.gui.NumberRenderer;
 import org.junit.After;
 import org.junit.AfterClass;

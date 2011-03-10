@@ -1,7 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.util.concurrent.ConcurrentSkipListMap;
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import javax.swing.JComponent;
 import java.awt.Image;
 import javax.swing.event.ChangeEvent;

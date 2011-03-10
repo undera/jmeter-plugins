@@ -3,7 +3,7 @@ package kg.apc.jmeter.charting;
 import java.io.File;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.Calendar;
-import kg.apc.jmeter.util.FilesTestTools;
+import kg.apc.emulators.FilesTestTools;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

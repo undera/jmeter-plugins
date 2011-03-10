@@ -1,6 +1,6 @@
 package kg.apc.jmeter.samplers;
 
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
 import org.junit.AfterClass;

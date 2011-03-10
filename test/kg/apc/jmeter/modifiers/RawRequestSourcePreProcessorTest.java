@@ -1,7 +1,7 @@
 package kg.apc.jmeter.modifiers;
 
 import org.apache.jmeter.threads.JMeterContextService;
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

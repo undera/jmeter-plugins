@@ -7,7 +7,7 @@ package kg.apc.jmeter.vizualizers;
 
 import java.util.Iterator;
 import javax.swing.JPanel;
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -1,6 +1,6 @@
 package kg.apc.jmeter.reporters;
 
-import kg.apc.jmeter.util.FileChannelEmul;
+import kg.apc.emulators.FileChannelEmul;
 import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
 import kg.apc.jmeter.JMeterPluginsUtils;

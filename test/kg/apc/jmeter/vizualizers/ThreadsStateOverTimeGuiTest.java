@@ -3,7 +3,7 @@ package kg.apc.jmeter.vizualizers;
 import java.awt.Image;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.visualizers.Sample;
 import org.junit.After;

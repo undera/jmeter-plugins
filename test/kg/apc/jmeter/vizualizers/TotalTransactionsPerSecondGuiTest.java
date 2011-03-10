@@ -4,7 +4,7 @@
  */
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import java.util.Collection;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;

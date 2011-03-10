@@ -5,7 +5,7 @@ import java.awt.Image;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphPanelChart;
-import kg.apc.jmeter.util.TestJMeterUtils;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;

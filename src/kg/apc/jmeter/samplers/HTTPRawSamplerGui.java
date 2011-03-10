@@ -1,4 +1,3 @@
-// TODO: add checkbox to enable/disable parser
 package kg.apc.jmeter.samplers;
 
 import java.awt.BorderLayout;
@@ -23,21 +22,20 @@ import org.apache.log.Logger;
  */
 public class HTTPRawSamplerGui
         extends AbstractSamplerGui {
-    public static final String WIKIPAGE = "RawRequest";
 
+    public static final String WIKIPAGE = "RawRequest";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private JTextField hostName;
     private JTextField port;
     private JTextField timeout;
     private JCheckBox keepAlive;
-    //private JTextField responseTime;
+    private JCheckBox parseResult;
     private JTextArea requestData;
 
     /**
      *
      */
     public HTTPRawSamplerGui() {
-        log.debug("Creating");
         init();
         initFields();
     }
@@ -51,11 +49,15 @@ public class HTTPRawSamplerGui
     public void configure(TestElement element) {
         super.configure(element);
 
-        hostName.setText(element.getPropertyAsString(HTTPRawSampler.HOSTNAME));
-        port.setText(element.getPropertyAsString(HTTPRawSampler.PORT));
-        timeout.setText(element.getPropertyAsString(HTTPRawSampler.TIMEOUT));
-        keepAlive.setSelected(element.getPropertyAsBoolean(HTTPRawSampler.KEEPALIVE));
-        requestData.setText(element.getPropertyAsString(HTTPRawSampler.BODY));
+        if (element instanceof HTTPRawSampler) {
+            HTTPRawSampler rawSampler = (HTTPRawSampler) element;
+            hostName.setText(rawSampler.getHostName());
+            port.setText(rawSampler.getPort());
+            timeout.setText(rawSampler.getTimeout());
+            keepAlive.setSelected(rawSampler.isUseKeepAlive());
+            requestData.setText(rawSampler.getRawRequest());
+            parseResult.setSelected(rawSampler.isParseResult());
+        }
     }
 
     public TestElement createTestElement() {
@@ -81,6 +83,7 @@ public class HTTPRawSamplerGui
             rawSampler.setUseKeepAlive(keepAlive.isSelected());
             rawSampler.setTimeout(timeout.getText());
             rawSampler.setRawRequest(transformCRLF(requestData.getText()));
+            rawSampler.setParseResult(parseResult.isSelected());
         }
     }
 
@@ -108,7 +111,7 @@ public class HTTPRawSamplerGui
         setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
 
-        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(),WIKIPAGE), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
 
@@ -139,6 +142,9 @@ public class HTTPRawSamplerGui
         requestData.setRows(10);
         requestData.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
+        addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Parse result as HTTP: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 6, parseResult = new JCheckBox());
+
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
         add(container, BorderLayout.CENTER);
@@ -159,5 +165,6 @@ public class HTTPRawSamplerGui
                 + "Host: localhost\r\n"
                 + "Connection: close\r\n"
                 + "\r\n");
+        parseResult.setSelected(true);
     }
 }

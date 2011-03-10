@@ -66,12 +66,9 @@ public class BrowseActionTest {
     @Test
     public void testGetFileChooser() {
         System.out.println("getFileChooser");
-        BrowseAction instance = null;
-        JFileChooser expResult = null;
+        BrowseAction instance = new BrowseActionEmul(new JTextField());
         JFileChooser result = instance.getFileChooser();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
 }

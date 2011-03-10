@@ -198,4 +198,36 @@ public class HTTPRawSamplerTest {
         String value = "";
         instance.setTimeout(value);
     }
+
+    /**
+     * Test of isUseKeepAlive method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testIsUseKeepAlive() {
+        System.out.println("isUseKeepAlive");
+        boolean expResult = false;
+        boolean result = instance.isUseKeepAlive();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of isParseResult method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testIsParseResult() {
+        System.out.println("isParseResult");
+        boolean expResult = false;
+        boolean result = instance.isParseResult();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setParseResult method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testSetParseResult() {
+        System.out.println("setParseResult");
+        boolean selected = false;
+        instance.setParseResult(selected);
+    }
 }

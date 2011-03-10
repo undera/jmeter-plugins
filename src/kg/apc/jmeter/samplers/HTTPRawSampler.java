@@ -23,6 +23,7 @@ public class HTTPRawSampler extends AbstractSampler {
     public static final String HOSTNAME = "hostname";
     public static final String PORT = "port";
     public static final String KEEPALIVE = "keepalive";
+    public static final String PARSE = "parse";
     public static final String BODY = "body";
     public static final String RC200 = "200";
     public static final String RC500 = "500";
@@ -72,14 +73,16 @@ public class HTTPRawSampler extends AbstractSampler {
         res.setResponseCode(RC200);
         try {
             res.setResponseData(processIO(res));
-            parseResponse(res);
+            if (isParseResult()) {
+                parseResponse(res);
+            }
         } catch (Exception ex) {
             log.error(getHostName(), ex);
             res.sampleEnd();
             res.setSuccessful(false);
             res.setResponseCode(RC500);
             res.setResponseMessage(ex.toString());
-            res.setResponseData((ex.toString()+CRLF+JMeterPluginsUtils.getStackTrace(ex)).getBytes());
+            res.setResponseData((ex.toString() + CRLF + JMeterPluginsUtils.getStackTrace(ex)).getBytes());
         }
 
         return res;
@@ -140,7 +143,7 @@ public class HTTPRawSampler extends AbstractSampler {
         }
         res.sampleEnd();
 
-        if (!getUseKeepAlive()) {
+        if (!isUseKeepAlive()) {
             sock.close();
         }
         //log.info("End IO");
@@ -148,7 +151,7 @@ public class HTTPRawSampler extends AbstractSampler {
     }
 
     private SocketChannel getSocketChannel() throws IOException {
-        if (getUseKeepAlive() && savedSock != null) {
+        if (isUseKeepAlive() && savedSock != null) {
             return savedSock;
         }
 
@@ -168,7 +171,7 @@ public class HTTPRawSampler extends AbstractSampler {
         return savedSock;
     }
 
-    private boolean getUseKeepAlive() {
+    public boolean isUseKeepAlive() {
         return getPropertyAsBoolean(KEEPALIVE);
     }
 
@@ -204,5 +207,13 @@ public class HTTPRawSampler extends AbstractSampler {
             log.error("Wrong timeout: " + getTimeout(), e);
         }
         return timeout;
+    }
+
+    boolean isParseResult() {
+        return getPropertyAsBoolean(PARSE);
+    }
+
+    void setParseResult(boolean selected) {
+        setProperty(PARSE, selected);
     }
 }

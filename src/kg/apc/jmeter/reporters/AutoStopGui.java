@@ -1,4 +1,3 @@
-// TODO: add checbox to use latency/response time
 package kg.apc.jmeter.reporters;
 
 import java.awt.BorderLayout;

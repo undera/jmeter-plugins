@@ -19,6 +19,8 @@ public class BrowseAction implements ActionListener {
         String path = "";
         JFileChooser chooser = getFileChooser();
         if (chooser != null) {
+            //File f=new File(control.getText());
+            //chooser.setSelectedFile(f);
             File file = chooser.getSelectedFile();
             if (file != null) {
                 path = file.getPath();

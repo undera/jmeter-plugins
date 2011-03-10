@@ -28,12 +28,14 @@ public class AutoStop
     private final static String ERROR_RATE = "error_rate";
     private final static String RESPONSE_TIME_SECS = "avg_response_time_length";
     private final static String ERROR_RATE_SECS = "error_rate_length";
+    private final static String TIME_SETTING = "time_setting";
     private long curSec = 0L;
     private GraphPanelChartAverageElement avgRespTime = new GraphPanelChartAverageElement();
     private GraphPanelChartAverageElement errorRate = new GraphPanelChartAverageElement();
     private long respTimeExceededStart = 0;
     private long errRateExceededStart = 0;
     private int stopTries = 0;
+    private boolean useLatency;
 
     public AutoStop() {
         super();
@@ -74,7 +76,7 @@ public class AutoStop
             errorRate = new GraphPanelChartAverageElement();
         }
 
-        avgRespTime.add(se.getResult().getLatency());
+        avgRespTime.add(useLatency?se.getResult().getLatency():se.getResult().getTime());
         errorRate.add(se.getResult().isSuccessful() ? 0 : 1);
     }
 
@@ -91,6 +93,7 @@ public class AutoStop
         errorRate = new GraphPanelChartAverageElement();
         respTimeExceededStart = 0;
         stopTries = 0;
+        useLatency=getTimeSetting().equals("latency");
     }
 
     public void testStarted(String string) {
@@ -193,5 +196,13 @@ public class AutoStop
         } else {
             JMeterContextService.getContext().getEngine().askThreadsToStop();
         }
+    }
+
+    public void setTimeSetting(String selectedItem) {
+        setProperty(TIME_SETTING, selectedItem);
+    }
+
+    public String getTimeSetting() {
+        return getPropertyAsString(TIME_SETTING);
     }
 }

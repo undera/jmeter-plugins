@@ -317,12 +317,10 @@ public class AbstractGraphPanelVisualizerTest
     @Test
     public void testIsFromTransactionControler() {
         System.out.println("isFromTransactionControler");
-        SampleResult res = null;
+        SampleResult res = new SampleResult();
         AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
         boolean expResult = false;
         boolean result = instance.isFromTransactionControler(res);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

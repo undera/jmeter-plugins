@@ -92,6 +92,7 @@ Host: localhost&#xd;
 Connection: close&#xd;
 &#xd;
 </stringProp>
+            <boolProp name="parse">false</boolProp>
           </kg.apc.jmeter.samplers.HTTPRawSampler>
           <hashTree/>
         </hashTree>
@@ -596,8 +597,9 @@ Connection: close&#xd;
       <kg.apc.jmeter.reporters.AutoStop guiclass="kg.apc.jmeter.reporters.AutoStopGui" testclass="kg.apc.jmeter.reporters.AutoStop" testname="jp@gc - AutoStop Listener" enabled="true">
         <stringProp name="avg_response_time">50</stringProp>
         <stringProp name="avg_response_time_length">50</stringProp>
-        <stringProp name="error_rate">1</stringProp>
+        <stringProp name="error_rate">10.5</stringProp>
         <stringProp name="error_rate_length">50</stringProp>
+        <stringProp name="time_setting">latency</stringProp>
       </kg.apc.jmeter.reporters.AutoStop>
       <hashTree/>
     </hashTree>

@@ -3,11 +3,13 @@ package kg.apc.jmeter.reporters;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.gui.BrowseAction;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 
@@ -16,11 +18,12 @@ import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
  * @author undera
  */
 public class FlexibleFileWriterGui extends AbstractListenerGui {
+
     public static final String WIKIPAGE = "FlexibleFileWriter";
 
     private JTextField filename;
     private JTextField columns;
-    // TODO: add browse button
+    private JButton browseButton;
 
     public FlexibleFileWriterGui() {
         super();
@@ -79,7 +82,7 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
         setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
 
-        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(),WIKIPAGE), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
 
@@ -93,9 +96,12 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
 
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Filename: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 1, filename = new JTextField());
+        addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
+        browseButton.addActionListener(new BrowseAction(filename));
+
 
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Record each sample as: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, columns = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 2, columns = new JTextField(20));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

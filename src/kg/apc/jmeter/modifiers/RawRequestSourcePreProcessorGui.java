@@ -1,16 +1,17 @@
 // TODO: have "check file consistency" button
-// TODO: add "browse" button
 package kg.apc.jmeter.modifiers;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.gui.BrowseAction;
 import org.apache.jmeter.processor.gui.AbstractPreProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
@@ -24,6 +25,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
     private JCheckBox rewindOnEOF;
     private JTextField variableName;
     private JTextField fileName;
+    private JButton browseButton;
 
     public RawRequestSourcePreProcessorGui() {
         super();
@@ -91,7 +93,10 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
       addToPanel(mainPanel, editConstraints, 1, 0, rewindOnEOF = new JCheckBox());
       addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Data file path: ", JLabel.RIGHT));
       addToPanel(mainPanel, editConstraints, 1, 1, fileName = new JTextField());
-      addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Variable name: ", JLabel.RIGHT));
+      addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
+      browseButton.addActionListener(new BrowseAction(fileName));
+
+        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Variable name: ", JLabel.RIGHT));
       addToPanel(mainPanel, editConstraints, 1, 2, variableName = new JTextField());
 
       JPanel container = new JPanel(new BorderLayout());

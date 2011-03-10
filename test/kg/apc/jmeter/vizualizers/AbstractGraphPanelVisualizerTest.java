@@ -310,4 +310,19 @@ public class AbstractGraphPanelVisualizerTest
         String result = instance.getWikiPage();
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of isFromTransactionControler method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testIsFromTransactionControler() {
+        System.out.println("isFromTransactionControler");
+        SampleResult res = null;
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        boolean expResult = false;
+        boolean result = instance.isFromTransactionControler(res);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

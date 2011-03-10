@@ -86,7 +86,6 @@ public class HTTPRawSampler extends AbstractSampler {
     }
 
     private void parseResponse(SampleResult res) {
-        // TODO: make benchmarks - if this slows us - get rid of it, or give checkbox
         String[] parsed = res.getResponseDataAsString().split(RNpattern);
 
         if (parsed.length > 0) {

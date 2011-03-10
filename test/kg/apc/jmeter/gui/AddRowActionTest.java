@@ -1,11 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.gui;
 
-import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import kg.apc.jmeter.threads.UltimateThreadGroupGui;
+import org.apache.jmeter.gui.util.PowerTableModel;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,8 +43,12 @@ public class AddRowActionTest {
     @Test
     public void testActionPerformed() {
         System.out.println("actionPerformed");
-        ActionEvent e = null;
-        AddRowAction instance = null;
-        instance.actionPerformed(e);
+        AddRowAction instance = new AddRowAction(
+                new JPanel(),
+                new JTable(),
+                new PowerTableModel(UltimateThreadGroupGui.columnIdentifiers, UltimateThreadGroupGui.columnClasses),
+                new JButton(),
+                UltimateThreadGroupGui.defaultValues);
+        instance.actionPerformed(null);
     }
 }

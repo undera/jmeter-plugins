@@ -39,8 +39,8 @@ public class ButtonPanelAddCopyRemoveTest {
 
     @Test
     public void testSomeMethod() {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Object[] defaultValues=new String[]{"", "", ""};
+        ButtonPanelAddCopyRemove instance = new ButtonPanelAddCopyRemove(null, null, defaultValues);
     }
 
 }

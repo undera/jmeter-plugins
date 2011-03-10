@@ -26,7 +26,7 @@ public class AddRowAction
         this.tableModel = tableModel;
         this.deleteRowButton = deleteRowButton;
         this.defaultValues = defaultValues;
-        this.sender=aSender;
+        this.sender = aSender;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -43,7 +43,9 @@ public class AddRowAction
 
         // Highlight (select) the appropriate row.
         int rowToSelect = tableModel.getRowCount() - 1;
-        grid.setRowSelectionInterval(rowToSelect, rowToSelect);
+        if (rowToSelect < grid.getRowCount()) {
+            grid.setRowSelectionInterval(rowToSelect, rowToSelect);
+        }
         sender.updateUI();
     }
 }

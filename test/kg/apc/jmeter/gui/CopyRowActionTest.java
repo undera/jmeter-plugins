@@ -1,17 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.gui;
 
 import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import kg.apc.jmeter.threads.UltimateThreadGroupGui;
+import org.apache.jmeter.gui.util.PowerTableModel;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -45,10 +44,11 @@ public class CopyRowActionTest {
     public void testActionPerformed() {
         System.out.println("actionPerformed");
         ActionEvent e = null;
-        CopyRowAction instance = null;
-        instance.actionPerformed(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        CopyRowAction instance = new CopyRowAction(new JPanel(),
+                new JTable(),
+                new PowerTableModel(UltimateThreadGroupGui.columnIdentifiers, UltimateThreadGroupGui.columnClasses),
+                new JButton());
 
+        instance.actionPerformed(e);
+    }
 }

@@ -68,7 +68,7 @@ public class UltimateThreadGroupGui
    {
       String.class, String.class, String.class, String.class, String.class
    };
-   private static Integer[] defaultValues = new Integer[]
+   public static Integer[] defaultValues = new Integer[]
    {
       100, 0, 30, 60, 10
    };

@@ -91,6 +91,7 @@ public class MetricsGetter implements AgentCommandsInterface
     */
    public final void initFileSystems()
    {
+
       try
       {
          ArrayList tmp = new ArrayList();
@@ -98,9 +99,12 @@ public class MetricsGetter implements AgentCommandsInterface
          for (int i = 0; i < fs.length; i++)
          {
             FileSystem fileSystem = fs[i];
-            if (fileSystem.getType() == FileSystem.TYPE_LOCAL_DISK)
+            if (fileSystems!=null && fileSystem.getType() == FileSystem.TYPE_LOCAL_DISK)
             {
-               tmp.add(fileSystem);
+               if (!tmp.add(fileSystem))
+               {
+                   ServerAgent.logMessage("Error adding filesystem "+fileSystem.toString());
+               }
             }
          }
 

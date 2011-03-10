@@ -56,7 +56,7 @@ public class GraphPanelChartPercentileElementTest {
         System.out.println("setValue");
         double value = 0.0;
         GraphPanelChartPercentileElement instance = new GraphPanelChartPercentileElement(1);
-        instance.setValue(10);
+        instance.add(10);
         double expResult = 10.0;
         double result = instance.getValue();
         assertEquals(expResult, result, 0.0);
@@ -75,6 +75,17 @@ public class GraphPanelChartPercentileElementTest {
         double expResult = 4.0;
         double result = instance.getValue();
         assertEquals(expResult, result, 0.0);
+    }
+
+    /**
+     * Test of add method, of class GraphPanelChartPercentileElement.
+     */
+    @Test
+    public void testAdd() {
+        System.out.println("add");
+        double value = 0.0;
+        GraphPanelChartPercentileElement instance = new GraphPanelChartPercentileElement(2);
+        instance.add(value);
     }
 
 }

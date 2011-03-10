@@ -18,7 +18,7 @@ public class GraphPanelChartPercentileElement extends AbstractGraphPanelChartEle
         return value;
     }
 
-    public void setValue(double value)
+    public void add(double value)
     {
         this.value = value;
     }

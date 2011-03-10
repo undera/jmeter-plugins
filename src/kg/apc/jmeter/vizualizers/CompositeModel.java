@@ -11,7 +11,7 @@ import kg.apc.jmeter.charting.AbstractGraphRow;
 public class CompositeModel {
 
     private ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>> models = null;
-    private Iterator emptyIterator = null;
+    private Iterator<AbstractGraphRow> emptyIterator = null;
     private CompositeNotifierInterface notifier = null;
 
     public CompositeModel()

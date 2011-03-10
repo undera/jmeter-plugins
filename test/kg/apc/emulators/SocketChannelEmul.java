@@ -66,7 +66,7 @@ public class SocketChannelEmul extends SocketChannel {
         log.debug("Emulating read: " + getString(chunk));
         chunk.rewind();
         dst.put(chunk);
-        bytesToRead = null; // TODO: implement bigsize reads
+        bytesToRead = null;
         return cnt;
     }
 

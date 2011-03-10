@@ -27,4 +27,8 @@ public class GraphPanelChartExactElement
    {
       return x;
    }
+
+    public void add(double val) {
+        y=val;
+    }
 }

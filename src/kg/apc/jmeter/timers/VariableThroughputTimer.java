@@ -1,4 +1,3 @@
-// TODO: implement load scheme reading from property
 package kg.apc.jmeter.timers;
 
 import java.util.Iterator;

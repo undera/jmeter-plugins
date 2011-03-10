@@ -8,93 +8,80 @@ import java.util.Map.Entry;
  * @author apc
  */
 public class GraphRowOverallAverages
-     extends AbstractGraphRow
-     implements Iterator, Entry<Long, GraphPanelChartAverageElement>
-{
-   private boolean hasNext;
-   private GraphPanelChartAverageElement element;
-   private double avgX = 0;
+        extends AbstractGraphRow
+        implements Iterator<Entry<Long, AbstractGraphPanelChartElement>>,
+        Entry<Long, AbstractGraphPanelChartElement> {
 
-   /**
-    *
-    */
-   public GraphRowOverallAverages()
-   {
-      super();
-      element = new GraphPanelChartAverageElement();
-      hasNext = true;
-   }
+    private boolean hasNext;
+    private GraphPanelChartAverageElement element;
+    private double avgX = 0;
 
-   /**
-    *
-    * @param xVal
-    * @param yVal
-    */
-   @Override
-   public void add(long xVal, double yVal)
-   {
-      avgX = (avgX * element.getCount() + xVal) / (element.getCount() + 1);
-      element.add(yVal);
+    /**
+     *
+     */
+    public GraphRowOverallAverages() {
+        super();
+        element = new GraphPanelChartAverageElement();
+        hasNext = true;
+    }
 
-      super.add((long) avgX, element.getValue());
-   }
+    /**
+     *
+     * @param xVal
+     * @param yVal
+     */
+    @Override
+    public void add(long xVal, double yVal) {
+        avgX = (avgX * element.getCount() + xVal) / (element.getCount() + 1);
+        element.add(yVal);
 
-   /**
-    *
-    * @return
-    */
-   public Iterator iterator()
-   {
-      hasNext = true;
-      return this;
-   }
+        super.add((long) avgX, element.getValue());
+    }
 
-   public boolean hasNext()
-   {
-      return hasNext;
-   }
+    /**
+     *
+     * @return
+     */
+    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator() {
+        hasNext = true;
+        return this;
+    }
 
-   public Object next()
-   {
-      hasNext = false;
-      return this;
-   }
+    public boolean hasNext() {
+        return hasNext;
+    }
 
-   public void remove()
-   {
-      throw new UnsupportedOperationException("Not supported yet.");
-   }
+    public Entry<Long, AbstractGraphPanelChartElement> next() {
+        hasNext = false;
+        return this;
+    }
 
-   public Long getKey()
-   {
-      return Math.round(avgX);
-   }
+    public void remove() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-   public GraphPanelChartAverageElement getValue()
-   {
-      return element;
-   }
+    public Long getKey() {
+        return Math.round(avgX);
+    }
 
-   public GraphPanelChartAverageElement setValue(GraphPanelChartAverageElement value)
-   {
-      throw new UnsupportedOperationException("Not supported yet.");
-   }
+    public GraphPanelChartAverageElement getValue() {
+        return element;
+    }
+
+    public AbstractGraphPanelChartElement setValue(AbstractGraphPanelChartElement value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     @Override
-    public int size()
-    {
+    public int size() {
         return 1;
     }
 
     @Override
-    public AbstractGraphPanelChartElement getElement(long value)
-    {
-        if(getKey() == value)
-        {
+    public AbstractGraphPanelChartElement getElement(long value) {
+        if (getKey() == value) {
             return element;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }

@@ -14,13 +14,13 @@ public class GraphRowPercentiles extends AbstractGraphRow
     /*
      * The calculated percentiles
      */
-    private ConcurrentSkipListMap<Long, GraphPanelChartPercentileElement> percentiles = new ConcurrentSkipListMap<Long, GraphPanelChartPercentileElement>();
+    private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> percentiles = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
 
     /*
      * The data received from JMeter samples
      * Contains as key the response time, as value the occurence count
      */
-    private ConcurrentSkipListMap<Long, GraphPanelChartPercentileElement> values;
+    private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> values;
     private long virtualSize = 0L;
     private long minRespTime = Long.MAX_VALUE;
     private long maxRespTime = 0L;
@@ -28,7 +28,7 @@ public class GraphRowPercentiles extends AbstractGraphRow
     public GraphRowPercentiles()
     {
         super();
-        values = new ConcurrentSkipListMap<Long, GraphPanelChartPercentileElement>();
+        values = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
         //create percentiles objects, and reuse them to avoid GC
         for (long p = 0; p < 101; p++)
         {
@@ -40,7 +40,8 @@ public class GraphRowPercentiles extends AbstractGraphRow
     {
         if (values.containsKey(respTime))
         {
-            values.get(respTime).incValue();
+            GraphPanelChartPercentileElement el=(GraphPanelChartPercentileElement) values.get(respTime);
+            el.incValue();
         } else
         {
             values.put(respTime, new GraphPanelChartPercentileElement(1));
@@ -73,12 +74,12 @@ public class GraphRowPercentiles extends AbstractGraphRow
         {
             for (long p = 0; p < 101; p++)
             {
-                percentiles.get(p).setValue(minRespTime);
+                percentiles.get(p).add(minRespTime);
             }
         } else
         {
-            Iterator<Entry<Long, GraphPanelChartPercentileElement>> iter = values.entrySet().iterator();
-            Entry<Long, GraphPanelChartPercentileElement> entry = iter.next();
+            Iterator<Entry<Long, AbstractGraphPanelChartElement>> iter = values.entrySet().iterator();
+            Entry<Long, AbstractGraphPanelChartElement> entry = iter.next();
             long currentVirtualIndex = (long)entry.getValue().getValue();
 
             for (long p = 1; p < 100; p++)
@@ -89,7 +90,7 @@ public class GraphRowPercentiles extends AbstractGraphRow
                 double dif = pos - fpos;
                 if (pos < 1)
                 {
-                    percentiles.get(p).setValue(minRespTime);
+                    percentiles.get(p).add(minRespTime);
                 } else
                 {
                     long upper = -1;
@@ -111,17 +112,17 @@ public class GraphRowPercentiles extends AbstractGraphRow
                             currentVirtualIndex += entry.getValue().getValue();
                         }
                     }
-                   percentiles.get(p).setValue((double) lower + dif * (upper - lower));
+                   percentiles.get(p).add((double) lower + dif * (upper - lower));
                 }
             }
 
-            percentiles.get(100L).setValue(maxRespTime);
-            percentiles.get(0L).setValue(minRespTime);
+            percentiles.get(100L).add(maxRespTime);
+            percentiles.get(0L).add(minRespTime);
         }
     }
 
     @Override
-    public Iterator iterator()
+    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
     {
         calculatePercentiles();
         return percentiles.entrySet().iterator();

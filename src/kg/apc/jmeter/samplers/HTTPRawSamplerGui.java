@@ -1,3 +1,4 @@
+// TODO: add checkbox to enable/disable parser
 package kg.apc.jmeter.samplers;
 
 import java.awt.BorderLayout;

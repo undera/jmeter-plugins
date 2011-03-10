@@ -246,4 +246,27 @@ public class MetricsProviderTest
         MetricsProvider instance = new MetricsProvider(AbstractPerformanceMonitoringGui.PERFMON_CPU, new AbstractPerformanceMonitoringGuiImpl(), null);
         instance.loadFile(file);
     }
+
+    /**
+     * Test of getConnectTimeout method, of class MetricsProvider.
+     */
+    @Test
+    public void testGetConnectTimeout() {
+        System.out.println("getConnectTimeout");
+        MetricsProvider instance = new MetricsProvider(AbstractPerformanceMonitoringGui.PERFMON_CPU, connectors);
+        int expResult = 10000;
+        int result = instance.getConnectTimeout();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setConnectTimeout method, of class MetricsProvider.
+     */
+    @Test
+    public void testSetConnectTimeout() {
+        System.out.println("setConnectTimeout");
+        int connectTimeout = 0;
+        MetricsProvider instance = new MetricsProvider(AbstractPerformanceMonitoringGui.PERFMON_CPU, connectors);
+        instance.setConnectTimeout(connectTimeout);
+    }
 }

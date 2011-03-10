@@ -1,6 +1,7 @@
 package kg.apc.jmeter.charting;
 
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
@@ -8,17 +9,16 @@ import java.util.concurrent.ConcurrentSkipListMap;
  * @author apc
  */
 public class GraphRowAverages
-        extends AbstractGraphRow
-{
-    private ConcurrentSkipListMap<Long, GraphPanelChartAverageElement> values;
+        extends AbstractGraphRow {
+
+    private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> values;
 
     /**
      *
      */
-    public GraphRowAverages()
-    {
+    public GraphRowAverages() {
         super();
-        values = new ConcurrentSkipListMap<Long, GraphPanelChartAverageElement>();
+        values = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
     }
 
     /**
@@ -27,16 +27,13 @@ public class GraphRowAverages
      * @param yVal
      */
     @Override
-    public void add(long xVal, double yVal)
-    {
+    public void add(long xVal, double yVal) {
         GraphPanelChartAverageElement el;
-        if (values.containsKey(xVal))
-        {
-            el = values.get(xVal);
+        if (values.containsKey(xVal)) {
+            el = (GraphPanelChartAverageElement) values.get(xVal);
             el.add(yVal);
             yVal = el.getValue();
-        } else
-        {
+        } else {
             el = new GraphPanelChartAverageElement(yVal);
             values.put(xVal, el);
         }
@@ -49,33 +46,27 @@ public class GraphRowAverages
      * @return
      */
     @Override
-    public Iterator iterator()
-    {
+    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator() {
         return values.entrySet().iterator();
     }
 
     @Override
-    public int size()
-    {
+    public int size() {
         return values.size();
     }
 
     @Override
-    public AbstractGraphPanelChartElement getElement(long value)
-    {
+    public AbstractGraphPanelChartElement getElement(long value) {
         return values.get(value);
     }
 
     @Override
-    public AbstractGraphPanelChartElement getLowerElement(long value)
-    {
+    public AbstractGraphPanelChartElement getLowerElement(long value) {
         Long lower = values.navigableKeySet().lower(value);
 
-        if (lower != null)
-        {
+        if (lower != null) {
             return getElement(lower);
-        } else
-        {
+        } else {
             return null;
         }
     }

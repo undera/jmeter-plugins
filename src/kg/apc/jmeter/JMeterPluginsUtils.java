@@ -1,4 +1,3 @@
-// TODO: add example test plans and source files at help pages
 package kg.apc.jmeter;
 
 import java.awt.Color;

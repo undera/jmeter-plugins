@@ -248,4 +248,14 @@ public class SocketChannelWithTimeoutsTest {
         SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         instance.setReadTimeout(t);
     }
+
+    /**
+     * Test of createInnerObjects method, of class SocketChannelWithTimeouts.
+     */
+    @Test
+    public void testCreateInnerObjects() throws Exception {
+        System.out.println("createInnerObjects");
+        SocketChannelWithTimeouts instance = new SocketChannelWithTimeouts();
+        instance.createInnerObjects();
+    }
 }

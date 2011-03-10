@@ -1,7 +1,5 @@
 package kg.apc.jmeter.charting;
 
-import kg.apc.jmeter.charting.GraphPanelChartAverageElement;
-import kg.apc.jmeter.charting.GraphRowOverallAverages;
 import java.util.Iterator;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -175,7 +173,7 @@ public class GraphRowOverallAveragesTest
       GraphRowOverallAverages instance = new GraphRowOverallAverages();
       try
       {
-         GraphPanelChartAverageElement result = instance.setValue(value);
+         AbstractGraphPanelChartElement result = instance.setValue(value);
          fail("Exception expected");
       }
       catch (UnsupportedOperationException e)

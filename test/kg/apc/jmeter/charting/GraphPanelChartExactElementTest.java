@@ -79,4 +79,15 @@ public class GraphPanelChartExactElementTest
       long result = instance.getX();
       assertEquals(expResult, result);
    }
+
+    /**
+     * Test of add method, of class GraphPanelChartExactElement.
+     */
+    @Test
+    public void testAdd() {
+        System.out.println("add");
+        double val = 0.0;
+        GraphPanelChartExactElement instance = new GraphPanelChartExactElement(0, 0);
+        instance.add(val);
+    }
 }

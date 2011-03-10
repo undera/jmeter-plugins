@@ -91,7 +91,6 @@ public class RawRequestSourcePreProcessor
     }
 
     private int getNextChunkSize() throws IOException {
-        // FIXME: obviously inefficient
         metaBuf.rewind();
         int count = 0;
         while (true) {

@@ -169,7 +169,7 @@ public class FlexibleFileWriter
     }
 
     private void appendSampleResultField(ByteBuffer buf, SampleResult result, int fieldID) {
-        // TODO: optimize this as more as possible
+        // IMPORTANT: keep this as fast as possible
         switch (fieldID) {
             case 0:
                 buf.put(result.isSuccessful() ? b1 : b0);

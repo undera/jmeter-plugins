@@ -31,7 +31,6 @@ public class UltimateThreadGroup
       super();
    }
 
-   // FIXME: too inefficient
    /**
     *
     * @param thread

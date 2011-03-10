@@ -1,6 +1,7 @@
 package kg.apc.jmeter.charting;
 
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class GraphRowSimple
         extends AbstractGraphRow
 {
-    private ConcurrentSkipListMap<Long, GraphPanelChartSimpleElement> values;
+    private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> values;
 
     /**
      *
@@ -18,7 +19,7 @@ public class GraphRowSimple
     public GraphRowSimple()
     {
         super();
-        values = new ConcurrentSkipListMap<Long, GraphPanelChartSimpleElement>();
+        values = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
     }
 
     /**
@@ -32,7 +33,7 @@ public class GraphRowSimple
         GraphPanelChartSimpleElement el;
         if (values.containsKey(xVal))
         {
-            el = values.get(xVal);
+            el = (GraphPanelChartSimpleElement) values.get(xVal);
             el.add(yVal);
         } else
         {
@@ -48,7 +49,7 @@ public class GraphRowSimple
      * @return
      */
     @Override
-    public Iterator iterator()
+    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
     {
         return values.entrySet().iterator();
     }

@@ -21,7 +21,7 @@ public class HitsPerSecondGui
         graphPanel.getGraphObject().setyAxisLabel("Number of hits /sec");
     }
 
-    private void addHit(String threadGroupName, long time)
+    private void addHit(String threadGroupName, long time, int count)
     {
         AbstractGraphRow row = model.get(threadGroupName);
 
@@ -33,7 +33,7 @@ public class HitsPerSecondGui
         //fix to have trans/sec values in all cases
         if (getGranulation() > 0)
         {
-            row.add(time, 1 * 1000.0d / getGranulation());
+            row.add(time, count * 1000.0d / getGranulation());
         }
     }
 
@@ -53,7 +53,16 @@ public class HitsPerSecondGui
     public void add(SampleResult res)
     {
         super.add(res);
-        addHit("Server Hits per Second", normalizeTime(res.getStartTime()));
+
+        int count = res.getSubResults().length;
+        if(count == 0)
+        {
+            count++;
+        } else if(!isFromTransactionControler(res))
+        {
+            count++;
+        }
+        addHit("Server Hits per Second", normalizeTime(res.getStartTime()), count);
         updateGui(null);
     }
 

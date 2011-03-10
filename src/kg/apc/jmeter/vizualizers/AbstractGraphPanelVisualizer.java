@@ -15,6 +15,7 @@ import org.apache.jmeter.gui.tree.JMeterTreeModel;
 import org.apache.jmeter.gui.tree.JMeterTreeNode;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.Clearable;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.BooleanProperty;
@@ -290,6 +291,11 @@ public abstract class AbstractGraphPanelVisualizer
             boolean showInLegend,
             boolean canCompose) {
         return getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, null, canCompose);
+    }
+
+    protected boolean isFromTransactionControler(SampleResult res)
+    {
+        return res.getResponseMessage().startsWith("Number of samples in transaction");
     }
 
     public abstract String getWikiPage();

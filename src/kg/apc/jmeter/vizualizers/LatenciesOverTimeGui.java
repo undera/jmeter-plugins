@@ -54,9 +54,20 @@ public class LatenciesOverTimeGui
    @Override
    public void add(SampleResult res)
    {
-        super.add(res);
+      super.add(res);
+
+      long latency = res.getLatency();
+
+      if(isFromTransactionControler(res))
+      {
+          SampleResult[] subResults = res.getSubResults();
+          for(int i=0; i<subResults.length; i++)
+          {
+              latency += subResults[i].getLatency();
+          }
+      }
       addThreadGroupRecord(res.getSampleLabel(),
-            normalizeTime(res.getEndTime()), res.getLatency());
+            normalizeTime(res.getEndTime()), latency);
       updateGui(null);
    }
 

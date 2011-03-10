@@ -74,23 +74,26 @@ public class ResponseCodesPerSecondGui
                 ret = "";
             }
         }
-        String respCode = res.getResponseCode();
-        if(respCode == null || respCode.length() == 0)
-        {
-            ret = ret + "Transaction failed (no code)";
-        }
-        else
-        {
-            ret = ret + respCode;
-        }
-        return ret;
+        return ret + res.getResponseCode();
     }
 
     @Override
     public void add(SampleResult res)
     {
-        super.add(res); 
-        addResponse(getRespCodeLabel(res), normalizeTime(res.getEndTime()));
+        super.add(res);
+        SampleResult[] subResults = res.getSubResults();
+        if(subResults.length > 0)
+        {
+            for(int i=0; i<subResults.length; i++)
+            {
+                addResponse(getRespCodeLabel(subResults[i]), normalizeTime(subResults[i].getEndTime()));
+            }
+
+            if(!isFromTransactionControler(res)) addResponse(getRespCodeLabel(res), normalizeTime(res.getEndTime()));
+        } else
+        {
+            addResponse(getRespCodeLabel(res), normalizeTime(res.getEndTime()));
+        }
         updateGui(null);
     }
 

@@ -63,6 +63,7 @@ public class HTTPRawSamplerTest {
         String req="GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
         String resp="HTTP/1.1 200 OK\r\n\r\nTEST";
         instance.setRawRequest(req);
+        instance.setParseResult(true);
 
         instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
 

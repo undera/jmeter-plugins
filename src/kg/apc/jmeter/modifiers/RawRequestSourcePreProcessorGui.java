@@ -1,4 +1,3 @@
-// TODO: have "check file consistency" button
 package kg.apc.jmeter.modifiers;
 
 import java.awt.BorderLayout;
@@ -9,7 +8,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
 import org.apache.jmeter.processor.gui.AbstractPreProcessorGui;
@@ -20,12 +21,15 @@ import org.apache.jmeter.testelement.TestElement;
  * @author undera
  */
 public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
+
     public static final String WIKIPAGE = "RawDataSource";
 
     private JCheckBox rewindOnEOF;
     private JTextField variableName;
     private JTextField fileName;
     private JButton browseButton;
+    private JButton checkButton;
+    private JTextArea checkInfo;
 
     public RawRequestSourcePreProcessorGui() {
         super();
@@ -74,42 +78,46 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
     }
 
     private void init() {
-     setLayout(new BorderLayout(0, 5));
-      setBorder(makeBorder());
+        setLayout(new BorderLayout(0, 5));
+        setBorder(makeBorder());
 
-      add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(),WIKIPAGE), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
 
-      JPanel mainPanel = new JPanel(new GridBagLayout());
+        JPanel mainPanel = new JPanel(new GridBagLayout());
 
-      GridBagConstraints labelConstraints = new GridBagConstraints();
-      labelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
+        GridBagConstraints labelConstraints = new GridBagConstraints();
+        labelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
 
-      GridBagConstraints editConstraints = new GridBagConstraints();
-      editConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
-      editConstraints.weightx = 1.0;
-      editConstraints.fill = GridBagConstraints.HORIZONTAL;
+        GridBagConstraints editConstraints = new GridBagConstraints();
+        editConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+        editConstraints.weightx = 1.0;
+        editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-      addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Rewind on end of file: ", JLabel.RIGHT));
-      addToPanel(mainPanel, editConstraints, 1, 0, rewindOnEOF = new JCheckBox());
-      addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Data file path: ", JLabel.RIGHT));
-      addToPanel(mainPanel, editConstraints, 1, 1, fileName = new JTextField());
-      addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
-      browseButton.addActionListener(new BrowseAction(fileName));
+        addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Rewind on end of file: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 0, rewindOnEOF = new JCheckBox());
+        addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Data file path: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 1, fileName = new JTextField());
+        addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
+        browseButton.addActionListener(new BrowseAction(fileName));
 
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Variable name: ", JLabel.RIGHT));
-      addToPanel(mainPanel, editConstraints, 1, 2, variableName = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 2, variableName = new JTextField());
 
-      JPanel container = new JPanel(new BorderLayout());
-      container.add(mainPanel, BorderLayout.NORTH);
-      add(container, BorderLayout.CENTER);
-     }
+        addToPanel(mainPanel, labelConstraints, 0, 3, checkButton = new JButton("Check File Consistency"));
+        addToPanel(mainPanel, editConstraints, 1, 3, checkInfo = new JTextArea());
+        checkButton.addActionListener(new CheckConsistencyAction(fileName, checkInfo));
+        checkInfo.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
-    private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component)
-   {
-      constraints.gridx = col;
-      constraints.gridy = row;
-      panel.add(component, constraints);
-   }
+        JPanel container = new JPanel(new BorderLayout());
+        container.add(mainPanel, BorderLayout.NORTH);
+        add(container, BorderLayout.CENTER);
+    }
+
+    private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {
+        constraints.gridx = col;
+        constraints.gridy = row;
+        panel.add(component, constraints);
+    }
 
     private void initFields() {
         rewindOnEOF.setSelected(true);

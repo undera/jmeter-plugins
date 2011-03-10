@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import kg.apc.jmeter.EndOfFileException;
+import kg.apc.jmeter.RuntimeEOFException;
 import org.apache.commons.io.IOExceptionWithCause;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.processor.PreProcessor;
@@ -51,7 +52,6 @@ public class RawRequestSourcePreProcessor
         try {
             rawData = readNextChunk(getNextChunkSize());
         } catch (EndOfFileException ex) {
-            log.info("End of file reached: " + getFileName());
             if (getRewindOnEOF()) {
                 log.info("Rewind file");
                 try {
@@ -61,18 +61,24 @@ public class RawRequestSourcePreProcessor
                 }
                 process();
                 return;
+            } else {
+                log.info("End of file reached: " + getFileName());
+                throw new RuntimeEOFException("End of file reached");
             }
         } catch (IOException ex) {
             log.error("Error reading next chunk", ex);
+            throw new RuntimeException("Error reading next chunk", ex);
         }
         final JMeterVariables vars = JMeterContextService.getContext().getVariables();
-        vars.put(getVarName(), rawData);
+        if (vars != null) {
+            vars.put(getVarName(), rawData);
+        }
     }
 
     private synchronized String readNextChunk(int capacity)
             throws IOException {
         if (capacity == 0) {
-                throw new EndOfFileException("Zero chunk size, possibly end of file reached.");
+            throw new EndOfFileException("Zero chunk size, possibly end of file reached.");
         }
 
         ByteBuffer buf = ByteBuffer.allocateDirect(capacity);

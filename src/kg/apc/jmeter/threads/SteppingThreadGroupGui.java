@@ -84,7 +84,6 @@ public class SteppingThreadGroupGui
       add(containerPanel, BorderLayout.CENTER);
 
       // this magic LoopPanel provides functionality for thread loops
-      // TODO: find a way without magic
       createControllerPanel();
    }
 

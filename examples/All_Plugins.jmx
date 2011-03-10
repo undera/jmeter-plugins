@@ -73,7 +73,7 @@
         <kg.apc.jmeter.modifiers.RawRequestSourcePreProcessor guiclass="kg.apc.jmeter.modifiers.RawRequestSourcePreProcessorGui" testclass="kg.apc.jmeter.modifiers.RawRequestSourcePreProcessor" testname="jp@gc - Raw Data Source PreProcessor" enabled="true">
           <boolProp name="rewind">true</boolProp>
           <stringProp name="variable_name">rawData</stringProp>
-          <stringProp name="filename">All_Plugins.jmx</stringProp>
+          <stringProp name="filename">/home/undera/NetBeansProjects/Jmeter-plugins-trunk/test/kg/apc/jmeter/modifiers/rawdata_crlf_metaline.txt</stringProp>
         </kg.apc.jmeter.modifiers.RawRequestSourcePreProcessor>
         <hashTree/>
         <kg.apc.jmeter.control.ParameterizedController guiclass="kg.apc.jmeter.control.ParameterizedControllerGui" testclass="kg.apc.jmeter.control.ParameterizedController" testname="jp@gc - Parameterized Controller" enabled="true">

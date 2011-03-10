@@ -25,7 +25,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
-    {TimersSuite.class, VizualizersSuite.class, ChartingSuite.class, ModifiersSuite.class, DcerpcSuite.class, ReportersSuite.class, ControlSuite.class, JMeterPluginsUtilsTest.class, PerfmonSuite.class, GuiSuite.class, ConfigSuite.class, SamplersSuite.class, EndOfFileExceptionTest.class, ThreadsSuite.class})
+    {TimersSuite.class, RuntimeEOFExceptionTest.class, VizualizersSuite.class, ChartingSuite.class, ModifiersSuite.class, DcerpcSuite.class, ReportersSuite.class, ControlSuite.class, JMeterPluginsUtilsTest.class, PerfmonSuite.class, GuiSuite.class, ConfigSuite.class, SamplersSuite.class, EndOfFileExceptionTest.class, ThreadsSuite.class})
 public class JmeterSuite
 {
 

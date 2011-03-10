@@ -22,46 +22,41 @@ import org.junit.Test;
  *
  * @author apc
  */
-public abstract class TestJMeterUtils
-{
-   private static JMeterTreeListener jMeterTreeListener;
-   private static JMeterTreeModel jMeterTreeModel;
+public abstract class TestJMeterUtils {
 
-   /**
-    *
-    */
-   public static void createJmeterEnv()
-   {
-      File propsFile = null;
-      try
-      {
-         propsFile = File.createTempFile("jmeter-plugins", "testProps");
-      }
-      catch (IOException ex)
-      {
-      }
+    private static JMeterTreeListener jMeterTreeListener;
+    private static JMeterTreeModel jMeterTreeModel;
 
-      JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
-      JMeterUtils.setLocale(new Locale("ignoreResources"));
+    /**
+     *
+     */
+    public static void createJmeterEnv() {
+        File propsFile = null;
+        try {
+            propsFile = File.createTempFile("jmeter-plugins", "testProps");
+        } catch (IOException ex) {
+        }
 
-      jMeterTreeModel = new JMeterTreeModel();
-      jMeterTreeListener = new JMeterTreeListener();
-      jMeterTreeListener.setModel(jMeterTreeModel);
-      GuiPackage.getInstance(jMeterTreeListener, jMeterTreeModel);
-      JMeterContextService.getContext().setVariables(new JMeterVariables());
+        JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
+        JMeterUtils.setLocale(new Locale("ignoreResources"));
+
+        jMeterTreeModel = new JMeterTreeModel();
+        jMeterTreeListener = new JMeterTreeListener();
+        jMeterTreeListener.setModel(jMeterTreeModel);
+        GuiPackage.getInstance(jMeterTreeListener, jMeterTreeModel);
+        JMeterContextService.getContext().setVariables(new JMeterVariables());
         StandardJMeterEngine engine = new EmulatorJmeterEngine();
-      JMeterContextService.getContext().setEngine(engine);
-   }
+        JMeterContextService.getContext().setEngine(engine);
+    }
 
-   /**
-    *
-    */
-   @Test
-   public void testEnv()
-   {
-      TestJMeterUtils.createJmeterEnv();
-      GuiPackage.getInstance().updateCurrentNode();
-   }
+    /**
+     *
+     */
+    @Test
+    public void testEnv() {
+        TestJMeterUtils.createJmeterEnv();
+        GuiPackage.getInstance().updateCurrentNode();
+    }
 
     public static String convertStreamToString(InputStream is)
             throws IOException {

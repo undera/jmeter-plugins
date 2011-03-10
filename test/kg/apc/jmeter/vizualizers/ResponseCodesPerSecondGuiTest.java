@@ -113,4 +113,16 @@ public class ResponseCodesPerSecondGuiTest {
         instance.clearData();
     }
 
+    /**
+     * Test of getWikiPage method, of class ResponseCodesPerSecondGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        ResponseCodesPerSecondGui instance = new ResponseCodesPerSecondGui();
+        String expResult = "";
+        String result = instance.getWikiPage();
+        assertTrue(result.length()>0);
+    }
+
 }

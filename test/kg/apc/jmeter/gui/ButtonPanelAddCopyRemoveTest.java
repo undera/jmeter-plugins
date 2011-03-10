@@ -3,22 +3,23 @@
  * and open the template in the editor.
  */
 
-package kg.apc.jmeter.reporters;
+package kg.apc.jmeter.gui;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author undera
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({FlexibleFileWriterTest.class, AutoStopGuiTest.class, AutoStopTest.class, FlexibleFileWriterGuiTest.class})
-public class ReportersSuite {
+public class ButtonPanelAddCopyRemoveTest {
+
+    public ButtonPanelAddCopyRemoveTest() {
+    }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -29,11 +30,17 @@ public class ReportersSuite {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
+    }
+
+    @Test
+    public void testSomeMethod() {
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

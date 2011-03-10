@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package kg.apc.jmeter.reporters;
+package kg.apc.jmeter.gui;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,8 +17,8 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({FlexibleFileWriterTest.class, AutoStopGuiTest.class, AutoStopTest.class, FlexibleFileWriterGuiTest.class})
-public class ReportersSuite {
+@Suite.SuiteClasses({kg.apc.jmeter.gui.DeleteRowActionTest.class,kg.apc.jmeter.gui.ButtonPanelAddCopyRemoveTest.class,kg.apc.jmeter.gui.AddRowActionTest.class,kg.apc.jmeter.gui.CopyRowActionTest.class})
+public class GuiSuite {
 
     @BeforeClass
     public static void setUpClass() throws Exception {

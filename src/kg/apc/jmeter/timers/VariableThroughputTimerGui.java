@@ -160,7 +160,6 @@ public class VariableThroughputTimerGui
    {
       //log.info("Configure");
       super.configure(tg);
-      createTableModel();
       VariableThroughputTimer utg = (VariableThroughputTimer) tg;
       JMeterProperty threadValues = utg.getData();
       if (!(threadValues instanceof NullProperty))

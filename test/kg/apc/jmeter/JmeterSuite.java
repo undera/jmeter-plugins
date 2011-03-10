@@ -4,6 +4,7 @@ import kg.apc.jmeter.charting.ChartingSuite;
 import kg.apc.jmeter.config.ConfigSuite;
 import kg.apc.jmeter.control.ControlSuite;
 import kg.apc.jmeter.dcerpc.DcerpcSuite;
+import kg.apc.jmeter.gui.GuiSuite;
 import kg.apc.jmeter.modifiers.ModifiersSuite;
 import kg.apc.jmeter.perfmon.PerfmonSuite;
 import kg.apc.jmeter.reporters.ReportersSuite;
@@ -24,7 +25,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
-    {TimersSuite.class, VizualizersSuite.class, ChartingSuite.class, ModifiersSuite.class, DcerpcSuite.class, ReportersSuite.class, ControlSuite.class, JMeterPluginsUtilsTest.class, PerfmonSuite.class, ConfigSuite.class, SamplersSuite.class, EndOfFileExceptionTest.class, ThreadsSuite.class})
+    {TimersSuite.class, VizualizersSuite.class, ChartingSuite.class, ModifiersSuite.class, DcerpcSuite.class, ReportersSuite.class, ControlSuite.class, JMeterPluginsUtilsTest.class, PerfmonSuite.class, GuiSuite.class, ConfigSuite.class, SamplersSuite.class, EndOfFileExceptionTest.class, ThreadsSuite.class})
 public class JmeterSuite
 {
 

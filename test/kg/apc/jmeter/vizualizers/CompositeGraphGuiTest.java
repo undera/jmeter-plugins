@@ -20,14 +20,12 @@ public class CompositeGraphGuiTest {
     }
 
     @BeforeClass
-    public static void setUpClass() throws Exception
-    {
+    public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
-    public static void tearDownClass() throws Exception
-    {
+    public static void tearDownClass() throws Exception {
     }
 
     @Before
@@ -42,8 +40,7 @@ public class CompositeGraphGuiTest {
      * Test of getSettingsPanel method, of class CompositeGraphGui.
      */
     @Test
-    public void testGetSettingsPanel()
-    {
+    public void testGetSettingsPanel() {
         System.out.println("getSettingsPanel");
         CompositeGraphGui instance = new CompositeGraphGui();
         JSettingsPanel result = instance.getSettingsPanel();
@@ -54,32 +51,29 @@ public class CompositeGraphGuiTest {
      * Test of getLabelResource method, of class CompositeGraphGui.
      */
     @Test
-    public void testGetLabelResource()
-    {
+    public void testGetLabelResource() {
         System.out.println("getLabelResource");
         CompositeGraphGui instance = new CompositeGraphGui();
         String result = instance.getLabelResource();
-        assertTrue(result.length()>0);
+        assertTrue(result.length() > 0);
     }
 
     /**
      * Test of getStaticLabel method, of class CompositeGraphGui.
      */
     @Test
-    public void testGetStaticLabel()
-    {
+    public void testGetStaticLabel() {
         System.out.println("getStaticLabel");
         CompositeGraphGui instance = new CompositeGraphGui();
         String result = instance.getStaticLabel();
-        assertTrue(result.length()>0);
+        assertTrue(result.length() > 0);
     }
 
     /**
      * Test of createTestElement method, of class CompositeGraphGui.
      */
     @Test
-    public void testCreateTestElement()
-    {
+    public void testCreateTestElement() {
         System.out.println("createTestElement");
         CompositeGraphGui instance = new CompositeGraphGui();
         TestElement result = instance.createTestElement();
@@ -90,8 +84,7 @@ public class CompositeGraphGuiTest {
      * Test of configure method, of class CompositeGraphGui.
      */
     @Test
-    public void testConfigure()
-    {
+    public void testConfigure() {
         System.out.println("configure");
         TestElement te = new CompositeResultCollector();
         CompositeGraphGui instance = new CompositeGraphGui();
@@ -102,8 +95,7 @@ public class CompositeGraphGuiTest {
      * Test of updateGui method, of class CompositeGraphGui.
      */
     @Test
-    public void testUpdateGui()
-    {
+    public void testUpdateGui() {
         System.out.println("updateGui");
         CompositeGraphGui instance = new CompositeGraphGui();
         instance.updateGui();
@@ -113,8 +105,7 @@ public class CompositeGraphGuiTest {
      * Test of add method, of class CompositeGraphGui.
      */
     @Test
-    public void testAdd()
-    {
+    public void testAdd() {
         System.out.println("add");
         SampleResult sr = new SampleResult();
         CompositeGraphGui instance = new CompositeGraphGui();
@@ -125,12 +116,31 @@ public class CompositeGraphGuiTest {
      * Test of modifyTestElement method, of class CompositeGraphGui.
      */
     @Test
-    public void testModifyTestElement()
-    {
+    public void testModifyTestElement() {
         System.out.println("modifyTestElement");
         TestElement te = new CompositeResultCollector();
         CompositeGraphGui instance = new CompositeGraphGui();
         instance.modifyTestElement(te);
     }
 
+    /**
+     * Test of getWikiPage method, of class CompositeGraphGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        CompositeGraphGui instance = new CompositeGraphGui();
+        String result = instance.getWikiPage();
+        assertTrue(result.length() > 0);
+    }
+
+    /**
+     * Test of clearData method, of class CompositeGraphGui.
+     */
+    @Test
+    public void testClearData() {
+        System.out.println("clearData");
+        CompositeGraphGui instance = new CompositeGraphGui();
+        instance.clearData();
+    }
 }

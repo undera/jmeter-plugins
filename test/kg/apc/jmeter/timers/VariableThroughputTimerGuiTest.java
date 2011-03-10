@@ -112,7 +112,7 @@ public class VariableThroughputTimerGuiTest {
       System.out.println("modifyTestElement");
       VariableThroughputTimer tg = new VariableThroughputTimer();
       VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      instance.addRowButton.doClick();
+      //instance.addRowButton.doClick();
       instance.modifyTestElement(tg);
       CollectionProperty data = (CollectionProperty) tg.getData();
       assertEquals(instance.grid.getModel().getColumnCount(), data.size());
@@ -132,32 +132,6 @@ public class VariableThroughputTimerGuiTest {
       VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
       //tg.setProperty(new ObjectProperty(AbstractThreadGroup.MAIN_CONTROLLER, tg));
       instance.configure(tg);
-   }
-
-   /**
-    *
-    */
-   @Test
-   public void testAddRow()
-   {
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      instance.addRowButton.doClick();
-      instance.grid.editCellAt(0, 0);
-      instance.addRowButton.doClick();
-   }
-
-   /**
-    *
-    */
-   @Test
-   public void testDeleteRow()
-   {
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      instance.addRowButton.doClick();
-      instance.addRowButton.doClick();
-      instance.grid.editCellAt(0, 0);
-      instance.deleteRowButton.doClick();
-      instance.deleteRowButton.doClick();
    }
 
    /**

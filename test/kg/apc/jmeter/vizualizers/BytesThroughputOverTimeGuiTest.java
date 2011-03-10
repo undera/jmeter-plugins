@@ -98,4 +98,15 @@ public class BytesThroughputOverTimeGuiTest {
         assertNotNull(result);
     }
 
+    /**
+     * Test of getWikiPage method, of class BytesThroughputOverTimeGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        BytesThroughputOverTimeGui instance = new BytesThroughputOverTimeGui();
+        String result = instance.getWikiPage();
+        assertTrue(result.length()>0);
+    }
+
 }

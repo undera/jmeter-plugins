@@ -156,7 +156,7 @@ public class JMeterPluginsUtilsTest {
      * Test of getSecondsForShort method, of class JMeterPluginsUtils.
      */
     @Test
-    public void testGetSecondsForShort() {
+    public void testGetSecondsForShortString() {
         System.out.println("getSecondsForShort");
         assertEquals(105, JMeterPluginsUtils.getSecondsForShortString("105"));
         assertEquals(105, JMeterPluginsUtils.getSecondsForShortString("105s"));

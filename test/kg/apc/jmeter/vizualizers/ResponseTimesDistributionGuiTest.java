@@ -82,4 +82,16 @@ public class ResponseTimesDistributionGuiTest {
       assertNotNull(result);
    }
 
+    /**
+     * Test of getWikiPage method, of class ResponseTimesDistributionGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        ResponseTimesDistributionGui instance = new ResponseTimesDistributionGui();
+        String expResult = "";
+        String result = instance.getWikiPage();
+        assertTrue(result.length()>0);
+    }
+
 }

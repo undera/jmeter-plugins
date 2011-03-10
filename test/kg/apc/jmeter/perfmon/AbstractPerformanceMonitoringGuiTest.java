@@ -100,7 +100,7 @@ public class AbstractPerformanceMonitoringGuiTest
       System.out.println("modifyTestElement");
       PerformanceMonitoringTestElement te = new PerformanceMonitoringTestElement();
       AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      instance.addRowButton.doClick();
+      //instance.
       instance.modifyTestElement(te);
 
       CollectionProperty data = (CollectionProperty) PerformanceMonitoringTestElement.tableModelToCollectionProperty((PowerTableModel) instance.grid.getModel());
@@ -181,28 +181,6 @@ public class AbstractPerformanceMonitoringGuiTest
       instance.editingCanceled(e);
    }
 
-
-   @Test
-   public void testAddRow()
-   {
-      // Just do like UltimateThreadGroup test does
-      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      instance.addRowButton.doClick();
-      instance.grid.editCellAt(0, 0);
-      instance.addRowButton.doClick();
-   }
-
-   @Test
-   public void testDeleteRow()
-   {
-      // Just do like UltimateThreadGroup test does
-      AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
-      instance.addRowButton.doClick();
-      instance.addRowButton.doClick();
-      instance.grid.editCellAt(0, 0);
-      instance.deleteRowButton.doClick();
-      instance.deleteRowButton.doClick();
-   }
 
    public class AbstractPerformanceMonitoringGuiImpl
             extends AbstractPerformanceMonitoringGui

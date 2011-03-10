@@ -92,7 +92,7 @@ public class SocketChannelEmul extends SocketChannel {
 
     @Override
     protected void implConfigureBlocking(boolean block) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        log.debug("Configure blocking: "+block);
     }
 
     /**

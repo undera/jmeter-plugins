@@ -97,4 +97,15 @@ public class HitsPerSecondGuiTest {
       assertNotNull(result);
     }
 
+    /**
+     * Test of getWikiPage method, of class HitsPerSecondGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        HitsPerSecondGui instance = new HitsPerSecondGui();
+        String result = instance.getWikiPage();
+        assertTrue(result.length()>0);
+    }
+
 }

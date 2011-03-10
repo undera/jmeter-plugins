@@ -134,4 +134,16 @@ public class ThroughputVsThreadsGuiTest
       JSettingsPanel result = instance.getSettingsPanel();
       assertNotNull(result);
    }
+
+    /**
+     * Test of getWikiPage method, of class ThroughputVsThreadsGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        ThroughputVsThreadsGui instance = new ThroughputVsThreadsGui();
+        String expResult = "";
+        String result = instance.getWikiPage();
+        assertTrue(result.length()>0);
+    }
 }

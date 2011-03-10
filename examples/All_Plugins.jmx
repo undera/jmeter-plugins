@@ -478,8 +478,12 @@ Connection: close&#xd;
       <hashTree/>
       <kg.apc.jmeter.perfmon.PerformanceMonitoringTestElement guiclass="kg.apc.jmeter.perfmon.ServerPerfMonitoringGUI" testclass="kg.apc.jmeter.perfmon.PerformanceMonitoringTestElement" testname="jp@gc - Servers Performance Monitoring" enabled="true">
         <collectionProp name="perfomdata">
-          <collectionProp name="1"/>
-          <collectionProp name="1"/>
+          <collectionProp name="-1850417723">
+            <stringProp name="-1204607085">localhost</stringProp>
+          </collectionProp>
+          <collectionProp name="1494632332">
+            <stringProp name="1600768">4444</stringProp>
+          </collectionProp>
         </collectionProp>
         <intProp name="monitoringType">0</intProp>
       </kg.apc.jmeter.perfmon.PerformanceMonitoringTestElement>

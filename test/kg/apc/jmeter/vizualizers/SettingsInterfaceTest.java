@@ -91,7 +91,7 @@ public class SettingsInterfaceTest {
         }
 
         public String getWikiPage() {
-            throw new UnsupportedOperationException("Not supported yet.");
+           return "";
         }
    }
 
@@ -105,6 +105,18 @@ public class SettingsInterfaceTest {
         boolean aggregate = false;
         SettingsInterface instance = new SettingsInterfaceImpl();
         instance.switchModel(aggregate);
+    }
+
+    /**
+     * Test of getWikiPage method, of class SettingsInterface.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        SettingsInterface instance = new SettingsInterfaceImpl();
+        String expResult = "";
+        String result = instance.getWikiPage();
+        assertEquals(expResult, result);
     }
 
 }

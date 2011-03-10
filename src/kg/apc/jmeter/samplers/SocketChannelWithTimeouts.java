@@ -6,6 +6,7 @@ import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -20,21 +21,18 @@ import org.apache.log.Logger;
  */
 public class SocketChannelWithTimeouts extends SocketChannel {
 
-    private final SocketChannel socketChannel;
-    private final Selector selector;
+    private  SocketChannel socketChannel;
+    private  Selector selector;
     private long connectTimeout = 5000;
     private long readTimeout = 10000;
     private SelectionKey channelKey;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private boolean fastFirstPacketRead;
 
-    private SocketChannelWithTimeouts() throws IOException {
+    protected SocketChannelWithTimeouts() throws IOException {
         super(null);
         log.debug("Creating socketChannel");
-        selector = Selector.open();
-        socketChannel = SocketChannel.open();
-        socketChannel.configureBlocking(false);
-        channelKey = socketChannel.register(selector, SelectionKey.OP_CONNECT);
+        createInnerObjects();
     }
 
     public static SocketChannel open() throws IOException {
@@ -43,6 +41,7 @@ public class SocketChannelWithTimeouts extends SocketChannel {
 
     @Override
     public boolean connect(SocketAddress remote) throws IOException {
+
         long start = System.currentTimeMillis();
         //log.debug("trying to connect");
         socketChannel.connect(remote);
@@ -66,24 +65,29 @@ public class SocketChannelWithTimeouts extends SocketChannel {
         throw new SocketTimeoutException("Failed to connect to " + remote.toString());
     }
 
+    private void createInnerObjects() throws IOException, ClosedChannelException {
+        selector = Selector.open();
+        socketChannel = getSocketChannel();
+        socketChannel.configureBlocking(false);
+        channelKey = socketChannel.register(selector, SelectionKey.OP_CONNECT);
+    }
+
     @Override
     public int read(ByteBuffer dst) throws IOException {
         int bytesRead = 0;
         while (selector.select(readTimeout) > 0) {
             selector.selectedKeys().remove(channelKey);
-            int cnt=socketChannel.read(dst);
-            log.debug("Read "+cnt);
-            if (cnt<1)
-            {
-                if (bytesRead<1) bytesRead=-1;
+            int cnt = socketChannel.read(dst);
+            log.debug("Read " + cnt);
+            if (cnt < 1) {
+                if (bytesRead < 1) {
+                    bytesRead = -1;
+                }
                 return bytesRead;
-            }
-            else
-            {
+            } else {
                 bytesRead += cnt;
-                if (!fastFirstPacketRead)
-                {
-                    fastFirstPacketRead=true;
+                if (!fastFirstPacketRead) {
+                    fastFirstPacketRead = true;
                     return bytesRead;
                 }
             }
@@ -99,7 +103,7 @@ public class SocketChannelWithTimeouts extends SocketChannel {
 
     @Override
     public int write(ByteBuffer src) throws IOException {
-        fastFirstPacketRead=false;
+        fastFirstPacketRead = false;
         int res = 0;
         while (src.hasRemaining()) {
             res += socketChannel.write(src);
@@ -143,10 +147,14 @@ public class SocketChannelWithTimeouts extends SocketChannel {
     }
 
     public void setConnectTimeout(int t) {
-       connectTimeout=t;
+        connectTimeout = t;
     }
 
     public void setReadTimeout(int t) {
-        readTimeout=t;
+        readTimeout = t;
+    }
+
+    protected SocketChannel getSocketChannel() throws IOException {
+        return SocketChannel.open();
     }
 }

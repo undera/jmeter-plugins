@@ -18,205 +18,179 @@ import static org.junit.Assert.*;
  *
  * @author APC
  */
-public class PerformanceMonitoringTestElementTest
-{
-   private PerformanceMonitoringTestElement instance;
-   private PowerTableModel dataModel;
+public class PerformanceMonitoringTestElementTest {
 
-   public PerformanceMonitoringTestElementTest()
-   {
-   }
+    private PerformanceMonitoringTestElement instance;
+    private PowerTableModel dataModel;
 
-   @BeforeClass
-   public static void setUpClass() throws Exception
-   {
-      TestJMeterUtils.createJmeterEnv();
-   }
+    public PerformanceMonitoringTestElementTest() {
+    }
 
-   @AfterClass
-   public static void tearDownClass() throws Exception
-   {
-   }
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
+    }
 
-   @Before
-   public void setUp()
-   {
-      instance = new PerformanceMonitoringTestElement();
-      instance.setType(2);
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
 
-      dataModel = new PowerTableModel(AbstractPerformanceMonitoringGui.columnIdentifiers, AbstractPerformanceMonitoringGui.columnClasses);
-      dataModel.addRow(new Object[]
-            {
-               "localhost", 4444
-            });
-      dataModel.addRow(new Object[]
-            {
-               "server1", 5555
-            });
-      dataModel.addRow(new Object[]
-            {
-               "server2", 6666
-            });
+    @Before
+    public void setUp() {
+        instance = new PerformanceMonitoringTestElement();
+        instance.setType(2);
 
-      instance.setData(PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel));
+        dataModel = new PowerTableModel(AbstractPerformanceMonitoringGui.columnIdentifiers, AbstractPerformanceMonitoringGui.columnClasses);
+        dataModel.addRow(new Object[]{
+                    "localhost", 4444
+                });
+        dataModel.addRow(new Object[]{
+                    "server1", 5555
+                });
+        dataModel.addRow(new Object[]{
+                    "server2", 6666
+                });
 
-      AbstractPerformanceMonitoringGui gui = new AbstractPerformanceMonitoringGuiImpl();
-      instance.register(gui);
-   }
+        instance.setData(PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel));
 
-   @After
-   public void tearDown()
-   {
-   }
+        AbstractPerformanceMonitoringGui gui = new AbstractPerformanceMonitoringGuiImpl();
+        instance.register(gui);
+    }
 
-   @Test
-   public void testTableModelToCollectionProperty()
-   {
-      System.out.println("tableModelToCollectionProperty");
-      CollectionProperty result = PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel);
-      assertTrue(result instanceof CollectionProperty);
-   }
+    @After
+    public void tearDown() {
+    }
 
-   @Test
-   public void testGetData()
-   {
-      System.out.println("getData");
-      CollectionProperty prop = PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel);
-      instance.setData(prop);
-      JMeterProperty result = instance.getData();
-      assertFalse(result instanceof NullProperty);
-      assertEquals(prop.getStringValue(), result.getStringValue());
-   }
+    @Test
+    public void testTableModelToCollectionProperty() {
+        System.out.println("tableModelToCollectionProperty");
+        CollectionProperty result = PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel);
+        assertTrue(result instanceof CollectionProperty);
+    }
 
-   @Test
-   public void testSetData()
-   {
-      System.out.println("setData");
-      CollectionProperty prop = PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel);
-      instance.setData(prop);
-   }
+    @Test
+    public void testGetData() {
+        System.out.println("getData");
+        CollectionProperty prop = PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel);
+        instance.setData(prop);
+        JMeterProperty result = instance.getData();
+        assertFalse(result instanceof NullProperty);
+        assertEquals(prop.getStringValue(), result.getStringValue());
+    }
 
-   @Test
-   public void testGetType()
-   {
-      System.out.println("getType");
-      int expResult = 2;
-      int result = instance.getType();
-      assertEquals(expResult, result);
-   }
+    @Test
+    public void testSetData() {
+        System.out.println("setData");
+        CollectionProperty prop = PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel);
+        instance.setData(prop);
+    }
 
-   @Test
-   public void testSetType()
-   {
-      System.out.println("setType");
-      int type = 3;
-      instance.setType(type);
-   }
+    @Test
+    public void testGetType() {
+        System.out.println("getType");
+        int expResult = 2;
+        int result = instance.getType();
+        assertEquals(expResult, result);
+    }
 
-   @Test
-   public void testClearData()
-   {
-      System.out.println("clearData");
-      instance.clearData();
-   }
+    @Test
+    public void testSetType() {
+        System.out.println("setType");
+        int type = 3;
+        instance.setType(type);
+    }
 
-   @Test
-   public void testRegister()
-   {
-      System.out.println("register");
-      AbstractPerformanceMonitoringGui gui = new AbstractPerformanceMonitoringGuiImpl();
-      instance.register(gui);
-      assertTrue(gui == instance.gui);
-   }
+    @Test
+    public void testClearData() {
+        System.out.println("clearData");
+        instance.clearData();
+    }
 
-   @Test
-   public void testClone()
-   {
-      System.out.println("clone");
-      Object result = instance.clone();
-      assertTrue(instance.gui == ((PerformanceMonitoringTestElement) result).gui);
-   }
+    @Test
+    public void testRegister() {
+        System.out.println("register");
+        AbstractPerformanceMonitoringGui gui = new AbstractPerformanceMonitoringGuiImpl();
+        instance.register(gui);
+        assertTrue(gui == instance.gui);
+    }
 
-   @Test
-   public void testTestStarted_0args()
-   {
-      System.out.println("testStarted");
-      //instance.testStarted();
-      fail("Infinite loop here!");
-   }
+    @Test
+    public void testClone() {
+        System.out.println("clone");
+        Object result = instance.clone();
+        assertTrue(instance.gui == ((PerformanceMonitoringTestElement) result).gui);
+    }
 
-   @Test
-   public void testTestStarted_String()
-   {
-      System.out.println("testStarted");
-      String string = "host";
-      instance.testStarted(string);
-   }
+    @Test
+    public void testTestStarted_0args() {
+        System.out.println("testStarted");
+        dataModel.clearData();
+        dataModel.addRow(new Object[]{
+                    "localhost", 4444
+                });
+        instance.setData(PerformanceMonitoringTestElement.tableModelToCollectionProperty(dataModel));
+        instance.testStarted();
+    }
 
-   @Test
-   public void testTestEnded_0args()
-   {
-      System.out.println("testEnded");
-      instance.testEnded();
-   }
+    @Test
+    public void testTestStarted_String() {
+        System.out.println("testStarted");
+        String string = "host";
+        instance.testStarted(string);
+    }
 
-   @Test
-   public void testTestEnded_String()
-   {
-      System.out.println("testEnded");
-      String string = "host";
-      instance.testEnded(string);
-   }
+    @Test
+    public void testTestEnded_0args() {
+        System.out.println("testEnded");
+        instance.testEnded();
+    }
 
-   @Test
-   public void testTestIterationStart()
-   {
-      System.out.println("testIterationStart");
-      LoopIterationEvent lie = null;
-      instance.testIterationStart(lie);
-   }
+    @Test
+    public void testTestEnded_String() {
+        System.out.println("testEnded");
+        String string = "host";
+        instance.testEnded(string);
+    }
 
-   public class AbstractPerformanceMonitoringGuiImpl
-            extends AbstractPerformanceMonitoringGui
-    {
+    @Test
+    public void testTestIterationStart() {
+        System.out.println("testIterationStart");
+        LoopIterationEvent lie = null;
+        instance.testIterationStart(lie);
+    }
 
-        public String getStaticLabel()
-        {
+    public class AbstractPerformanceMonitoringGuiImpl
+            extends AbstractPerformanceMonitoringGui {
+
+        public String getStaticLabel() {
             return "test";
         }
 
-        public void addPerfRecord(String serverName, double value)
-        {
+        public void addPerfRecord(String serverName, double value) {
         }
 
         @Override
-        public void addPerfRecord(String serverName, double value, long time)
-        {
+        public void addPerfRecord(String serverName, double value, long time) {
         }
 
         @Override
-        public void setErrorMessage(String msg)
-        {
+        public void setErrorMessage(String msg) {
         }
 
         @Override
-        public void clearErrorMessage()
-        {
+        public void clearErrorMessage() {
         }
 
-        public void setChartType(int monitorType)
-        {
+        public void setChartType(int monitorType) {
         }
 
         @Override
-        protected JSettingsPanel getSettingsPanel()
-        {
+        protected JSettingsPanel getSettingsPanel() {
             return new JSettingsPanel(this, true, true, true, true, true);
         }
 
         @Override
-        public void setLoadMenuEnabled(boolean enabled)
-        {
+        public void setLoadMenuEnabled(boolean enabled) {
         }
 
         @Override

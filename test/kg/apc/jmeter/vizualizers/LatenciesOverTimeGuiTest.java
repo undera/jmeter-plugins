@@ -17,40 +17,33 @@ import static org.junit.Assert.*;
  *
  * @author z000205
  */
-public class LatenciesOverTimeGuiTest
-{
+public class LatenciesOverTimeGuiTest {
 
-    public LatenciesOverTimeGuiTest()
-    {
+    public LatenciesOverTimeGuiTest() {
     }
 
     @BeforeClass
-    public static void setUpClass() throws Exception
-    {
+    public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
-    public static void tearDownClass() throws Exception
-    {
+    public static void tearDownClass() throws Exception {
     }
 
     @Before
-    public void setUp()
-    {
+    public void setUp() {
     }
 
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
     }
 
     /**
      * Test of getLabelResource method, of class LatenciesOverTimeGui.
      */
     @Test
-    public void testGetLabelResource()
-    {
+    public void testGetLabelResource() {
         System.out.println("getLabelResource");
         LatenciesOverTimeGui instance = new LatenciesOverTimeGui();
         String expResult = "LatenciesOverTimeGui";
@@ -62,20 +55,18 @@ public class LatenciesOverTimeGuiTest
      * Test of getStaticLabel method, of class LatenciesOverTimeGui.
      */
     @Test
-    public void testGetStaticLabel()
-    {
+    public void testGetStaticLabel() {
         System.out.println("getStaticLabel");
         LatenciesOverTimeGui instance = new LatenciesOverTimeGui();
         String result = instance.getStaticLabel();
-        assertTrue(result.length()>0);
+        assertTrue(result.length() > 0);
     }
 
     /**
      * Test of add method, of class LatenciesOverTimeGui.
      */
     @Test
-    public void testAdd()
-    {
+    public void testAdd() {
         System.out.println("add");
         SampleResult res = new SampleResult();
         res.setAllThreads(1);
@@ -88,11 +79,22 @@ public class LatenciesOverTimeGuiTest
      * Test of getSettingsPanel method, of class LatenciesOverTimeGui.
      */
     @Test
-    public void testGetSettingsPanel()
-    {
+    public void testGetSettingsPanel() {
         System.out.println("getSettingsPanel");
         LatenciesOverTimeGui instance = new LatenciesOverTimeGui();
         JSettingsPanel result = instance.getSettingsPanel();
         assertNotNull(result);
+    }
+
+    /**
+     * Test of getWikiPage method, of class LatenciesOverTimeGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        LatenciesOverTimeGui instance = new LatenciesOverTimeGui();
+        String result = instance.getWikiPage();
+        assertTrue(result.length() > 0);
+
     }
 }

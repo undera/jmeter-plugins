@@ -121,7 +121,7 @@ public class UltimateThreadGroupGuiTest
       System.out.println("modifyTestElement");
       UltimateThreadGroup tg = new UltimateThreadGroup();
       UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
-      instance.addRowButton.doClick();
+      //instance.addRowButton.doClick();
       instance.modifyTestElement(tg);
       CollectionProperty data = (CollectionProperty) tg.getData();
       assertEquals(instance.grid.getModel().getColumnCount(), data.size());
@@ -151,32 +151,7 @@ public class UltimateThreadGroupGuiTest
       instance.configure(tg);
    }
 
-   /**
-    *
-    */
-   @Test
-   public void testAddRow()
-   {
-      UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
-      instance.addRowButton.doClick();
-      instance.grid.editCellAt(0, 0);
-      instance.addRowButton.doClick();
-   }
-
-   /**
-    *
-    */
-   @Test
-   public void testDeleteRow()
-   {
-      UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
-      instance.addRowButton.doClick();
-      instance.addRowButton.doClick();
-      instance.grid.editCellAt(0, 0);
-      instance.deleteRowButton.doClick();
-      instance.deleteRowButton.doClick();
-   }
-
+ 
    /**
     *
     */

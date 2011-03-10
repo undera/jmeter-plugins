@@ -95,4 +95,16 @@ public class TransactionsPerSecondGuiTest {
       assertNotNull(result);
    }
 
+    /**
+     * Test of getWikiPage method, of class TransactionsPerSecondGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        TransactionsPerSecondGui instance = new TransactionsPerSecondGui();
+        String expResult = "";
+        String result = instance.getWikiPage();
+        assertTrue(result.length()>0);
+    }
+
 }

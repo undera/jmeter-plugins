@@ -120,4 +120,16 @@ public class ThroughputOverTimeGuiTest
       JSettingsPanel result = instance.getSettingsPanel();
       assertNotNull(result);
    }
+
+    /**
+     * Test of getWikiPage method, of class ThroughputOverTimeGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        ThroughputOverTimeGui instance = new ThroughputOverTimeGui();
+        String expResult = "";
+        String result = instance.getWikiPage();
+        assertTrue(result.length()>0);
+    }
 }

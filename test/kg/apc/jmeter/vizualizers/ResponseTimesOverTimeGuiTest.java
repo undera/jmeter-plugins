@@ -76,4 +76,16 @@ public class ResponseTimesOverTimeGuiTest
       JSettingsPanel result = instance.getSettingsPanel();
       assertNotNull(result);
    }
+
+    /**
+     * Test of getWikiPage method, of class ResponseTimesOverTimeGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        ResponseTimesOverTimeGui instance = new ResponseTimesOverTimeGui();
+        String expResult = "";
+        String result = instance.getWikiPage();
+        assertTrue(result.length()>0);
+    }
 }

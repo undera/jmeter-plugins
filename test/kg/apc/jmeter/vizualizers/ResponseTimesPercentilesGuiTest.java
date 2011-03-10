@@ -93,4 +93,16 @@ public class ResponseTimesPercentilesGuiTest {
         assertNotNull(result);
     }
 
+    /**
+     * Test of getWikiPage method, of class ResponseTimesPercentilesGui.
+     */
+    @Test
+    public void testGetWikiPage() {
+        System.out.println("getWikiPage");
+        ResponseTimesPercentilesGui instance = new ResponseTimesPercentilesGui();
+        String expResult = "";
+        String result = instance.getWikiPage();
+        assertTrue(result.length()>0);
+    }
+
 }

@@ -272,14 +272,13 @@ public class GraphPanelChart
    // jmeterPlugin.neverDrawFinalZeroingLines=(true/false)
    // jmeterPlugin.optimizeYAxis=(true/false)
    // jmeterPlugin.neverDrawCurrentX=(true/false)
-   // note to Andrey: Feel free to decide the default value!
    private static boolean drawGradient = true;
    private static boolean neverDrawFinalZeroingLines = false;
    private static boolean optimizeYAxis = true;
    private static boolean neverDrawCurrentX = false;
    private static boolean useRelativeTime = true;
    private static String csvSeparator = null;
-   private static boolean useNewZoomImplementation = true;
+   private static boolean useNewZoomImplementation = false;
 
    //some of these preference can be overidden by the preference tab:
    private boolean settingsDrawGradient;

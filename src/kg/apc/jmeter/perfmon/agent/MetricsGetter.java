@@ -3,8 +3,10 @@ package kg.apc.jmeter.perfmon.agent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.FileSystem;
 import org.hyperic.sigar.FileSystemUsage;
+import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.NetInterfaceStat;
 
 import org.hyperic.sigar.Sigar;
@@ -99,12 +101,9 @@ public class MetricsGetter implements AgentCommandsInterface
          for (int i = 0; i < fs.length; i++)
          {
             FileSystem fileSystem = fs[i];
-            if (fileSystems!=null && fileSystem.getType() == FileSystem.TYPE_LOCAL_DISK)
+            if (fileSystem != null && fileSystem.getType() == FileSystem.TYPE_LOCAL_DISK)
             {
-               if (!tmp.add(fileSystem))
-               {
-                   ServerAgent.logMessage("Error adding filesystem "+fileSystem.toString());
-               }
+               tmp.add(fileSystem);
             }
          }
 
@@ -138,7 +137,8 @@ public class MetricsGetter implements AgentCommandsInterface
    {
       try
       {
-         return sigarProxy.getCpuPerc().getCombined();
+         CpuPerc cpuPerc = sigarProxy.getCpuPerc();
+         return cpuPerc != null ? cpuPerc.getCombined() : 0;
       }
       catch (SigarException e)
       {
@@ -155,7 +155,8 @@ public class MetricsGetter implements AgentCommandsInterface
    {
       try
       {
-         return sigarProxy.getMem().getUsed();
+         Mem mem = sigarProxy.getMem();
+         return mem != null ? mem.getUsed() : 0;
       }
       catch (SigarException e)
       {
@@ -173,9 +174,16 @@ public class MetricsGetter implements AgentCommandsInterface
       long[] ret = new long[2];
       try
       {
-         Swap metrics = sigarProxy.getSwap();
-         ret[0] = metrics.getPageIn();
-         ret[1] = metrics.getPageOut();
+         Swap swap = sigarProxy.getSwap();
+         if(swap != null)
+         {
+             ret[0] = swap.getPageIn();
+             ret[1] = swap.getPageOut();
+         } else
+         {
+             ret[0] = 0;
+             ret[1] = 0;
+         }
       }
       catch (SigarException e)
       {

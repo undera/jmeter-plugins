@@ -50,7 +50,7 @@ public class AutoStop
                 if (avgRespTime.getValue() > getResponseTimeAsInt()) {
                     //log.debug((sec - respTimeExceededStart)+" "+getResponseTimeSecsAsInt());
                     if (sec - respTimeExceededStart >= getResponseTimeSecsAsInt()) {
-                        log.info("Average latency more than " + getResponseTime() + " for " + getResponseTimeSecs() + "s. Auto-shutdown test...");
+                        log.info("Average "+getTimeSetting()+" more than " + getResponseTime() + " for " + getResponseTimeSecs() + "s. Auto-shutdown test...");
                         stopTest();
                     }
                 } else {
@@ -59,7 +59,7 @@ public class AutoStop
             }
 
             if (getErrorRateAsFloat() > 0) {
-                //log.debug("Error rate: "+errorRate.getValue());
+                //log.debug("Error rate: "+errorRate.getValue()+"/"+getErrorRateAsFloat());
                 if (errorRate.getValue() > getErrorRateAsFloat()) {
                     //log.debug((sec - errRateExceededStart)+" "+getErrorRateSecsAsInt());
                     if (sec - errRateExceededStart >= getErrorRateSecsAsInt()) {

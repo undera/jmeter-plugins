@@ -1,6 +1,7 @@
 package kg.apc.jmeter.timers;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.List;
@@ -202,6 +203,7 @@ public class VariableThroughputTimerGui
          n++;
       }
 
+      row.setColor(Color.blue);
       model.put("Expected RPS", row);
       chart.repaint();
    }

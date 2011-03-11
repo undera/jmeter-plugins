@@ -34,7 +34,7 @@ import org.apache.jmeter.util.JMeterUtils;
  */
 public abstract class JMeterPluginsUtils {
 
-    private static String PLUGINS_VERSION = "0.4.1";
+    private static String PLUGINS_VERSION = "0.4.1 snapshot";
     private static String PLUGINS_PREFIX = "jp@gc - ";
     private static boolean prefixPlugins = true;
     private static final String WIKI_BASE = "http://code.google.com/p/jmeter-plugins/wiki/";

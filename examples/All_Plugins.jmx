@@ -600,6 +600,7 @@ Connection: close&#xd;
         <stringProp name="error_rate">10.5</stringProp>
         <stringProp name="error_rate_length">50</stringProp>
         <stringProp name="time_setting">latency</stringProp>
+        <stringProp name="TestPlan.comments"> Stop test on runtime criteria</stringProp>
       </kg.apc.jmeter.reporters.AutoStop>
       <hashTree/>
     </hashTree>

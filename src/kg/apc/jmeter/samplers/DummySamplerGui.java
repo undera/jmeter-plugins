@@ -94,7 +94,7 @@ public class DummySamplerGui
         isSuccessful.setSelected(true);
         responseCode.setText("200");
         responseMessage.setText("OK");
-        responseData.setText("");
+        responseData.setText("Dummy Sampler used to simulate requests and responses\nwithout actual network activity. This helps debugging tests.");
         responseTime.setText("${__Random(1,1000)}");
     }
 

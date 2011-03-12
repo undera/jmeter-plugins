@@ -56,7 +56,7 @@ public class VariableThroughputTimerGui
     *
     */
     private static Integer[] defaultValues = new Integer[]{
-        0, 1000, 60
+        1, 1000, 60
     };
    private PowerTableModel tableModel;
    JTable grid;

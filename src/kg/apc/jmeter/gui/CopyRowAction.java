@@ -45,7 +45,7 @@ public class CopyRowAction
         deleteRowButton.setEnabled(true);
 
         // Highlight (select) the appropriate row.
-        int rowToSelect = selectedRow + 1;
+        int rowToSelect = tableModel.getRowCount() - 1;
         grid.setRowSelectionInterval(rowToSelect, rowToSelect);
         sender.updateUI();
     }

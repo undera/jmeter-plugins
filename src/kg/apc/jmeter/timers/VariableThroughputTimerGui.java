@@ -88,7 +88,7 @@ public class VariableThroughputTimerGui
    private JPanel createParamsPanel()
    {
       JPanel panel = new JPanel(new BorderLayout(5, 5));
-      panel.setBorder(BorderFactory.createTitledBorder("Request Per Second (RPS) Schedule"));
+      panel.setBorder(BorderFactory.createTitledBorder("Requests Per Second (RPS) Schedule"));
       panel.setPreferredSize(new Dimension(200, 200));
 
       JScrollPane scroll = new JScrollPane(createGrid());
@@ -215,7 +215,7 @@ public class VariableThroughputTimerGui
       chart.setRows(model);
       chart.setDrawFinalZeroingLines(true);
       chart.setxAxisLabel("Elapsed Time");
-      chart.setyAxisLabel("Requests per Second");
+      chart.setyAxisLabel("Number of requests /sec");
       return chart;
    }
 

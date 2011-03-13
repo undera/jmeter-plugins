@@ -21,7 +21,7 @@ public class ResponseCodesPerSecondGui
     {
         super();
         setGranulation(1000);
-        graphPanel.getGraphObject().setyAxisLabel("Number of Reponses /sec");
+        graphPanel.getGraphObject().setyAxisLabel("Number of reponses /sec");
     }
 
     private void addResponse(String threadGroupName, long time)

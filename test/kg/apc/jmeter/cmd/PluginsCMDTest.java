@@ -37,7 +37,7 @@ public class PluginsCMDTest {
      */
     @Test
     public void testMain() {
-        System.out.println("main");
+        System.out.println("main noparams");
         String[] args = null;
         PluginsCMDEmul.main(args);
     }
@@ -49,4 +49,15 @@ public class PluginsCMDTest {
         PluginsCMDEmul.main(args);
     }
 
+    @Test
+    public void test_Image() {
+        System.out.println("png");
+        String[] args = new String[] {
+            "--export-png",
+            "test.png",
+            "--jtl-file",
+            "/tmp/test.jtl"
+        };
+        PluginsCMDEmul.main(args);
+    }
 }

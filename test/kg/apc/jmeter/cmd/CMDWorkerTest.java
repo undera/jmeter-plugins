@@ -1,16 +1,5 @@
 package kg.apc.jmeter.cmd;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-import org.apache.jmeter.gui.GuiPackage;
-import org.apache.jmeter.gui.tree.JMeterTreeListener;
-import org.apache.jmeter.gui.tree.JMeterTreeModel;
-import org.apache.jmeter.threads.JMeterVariables;
-import org.apache.jmeter.util.JMeterUtils;
-import kg.apc.emulators.EmulatorJmeterEngine;
-import org.apache.jmeter.engine.StandardJMeterEngine;
-import org.apache.jmeter.threads.JMeterContextService;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -105,9 +94,12 @@ public class CMDWorkerTest {
     public void testDoJob() {
         System.out.println("doJob");
         CMDWorker instance = new CMDWorker();
-        int expResult = 0;
         instance.setInputFile("/home/undera/bench.jtl");
+        instance.setOutputPNGFile("/tmp/test.png");
+        instance.setGraphWidth(1000);
+        instance.setGraphHeight(500);
         int result = instance.doJob();
+        int expResult = 0;
         assertEquals(expResult, result);
     }
 

@@ -12,6 +12,8 @@ import org.apache.jmeter.util.JMeterUtils;
  * @author undera
  */
 class CMDWorker {
+    private int graphWidth=800;
+    private int graphHeight=600;
 
     public CMDWorker() {
         JMeterUtils.setLocale(new Locale("ignoreResources"));
@@ -60,11 +62,27 @@ class CMDWorker {
         checkParams();
 
         ThreadsStateOverTimeGui gui = new ThreadsStateOverTimeGui();
+        gui.setBounds(0, 0, graphWidth, graphHeight);
+
         ResultCollector rc = new ResultCollector();
         rc.setFilename(inputFile);
         rc.setListener(gui);
         rc.loadExistingFile();
+        try {
+            gui.getGraphPanelChart().saveGraphToFile(new File(outputPNG), graphWidth, graphHeight);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return 1;
+        }
 
         return 0;
+    }
+
+    void setGraphWidth(int i) {
+        graphWidth=i;
+    }
+
+    void setGraphHeight(int i) {
+        graphHeight=i;
     }
 }

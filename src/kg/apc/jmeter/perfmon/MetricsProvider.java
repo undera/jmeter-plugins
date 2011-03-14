@@ -54,6 +54,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
         if (outWriter == null) {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
 
+            // TODO: eliminate magic property, use TestElement property set via GUI
             String fileName = JMeterUtils.getPropDefault("jppmfile", "perfmon_" + formatter.format(System.currentTimeMillis()) + ".jppm");
             File f = new File(fileName);
 

@@ -159,7 +159,9 @@
       <!-- APC: fore easy debugging environment we copy files
            for agent start to dist dir -->
       <copy todir="${dist.dir}">
-         <fileset dir="${svn.dir}/agent" includes="startAgent.*" />
+         <fileset dir="${svn.dir}/agent" includes="*.sh" />
+         <fileset dir="${svn.dir}/agent" includes="*.bat" />
+         <fileset dir="${svn.dir}/agent" includes="*.cmd" />
          <fileset dir="${sigar.dir}/sigar-bin/lib" includes="*.*" excludes="log4j.jar, junit.jar, .sigar_shellrc"/>
       </copy>
 

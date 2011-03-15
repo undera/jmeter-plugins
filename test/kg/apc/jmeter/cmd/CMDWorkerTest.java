@@ -1,5 +1,8 @@
 package kg.apc.jmeter.cmd;
 
+import java.io.File;
+import java.io.IOException;
+import kg.apc.emulators.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -91,16 +94,15 @@ public class CMDWorkerTest {
      * Test of doJob method, of class CMDWorker.
      */
     @Test
-    public void testDoJob() {
+    public void testDoJob() throws IOException {
         System.out.println("doJob");
         CMDWorker instance = new CMDWorker();
         instance.setInputFile("/home/undera/short.jtl");
-        instance.setOutputPNGFile("/tmp/test.png");
-        instance.setGraphWidth(1000);
-        instance.setGraphHeight(500);
+        instance.setOutputPNGFile(File.createTempFile("test", ".png").getAbsolutePath());
+        instance.setOutputCSVFile(File.createTempFile("test", ".csv").getAbsolutePath());
         instance.setPluginType("ResponseTimesDistribution");
-        //instance.setPluginType("ResponseTimesOverTime");
         instance.addExportMode(CMDWorker.EXPORT_PNG);
+        instance.addExportMode(CMDWorker.EXPORT_CSV);
         int result = instance.doJob();
         int expResult = 0;
         assertEquals(expResult, result);

@@ -581,7 +581,7 @@ public class GraphPanelChart
     }
 
     private void calculateYAxisDimensions(Graphics g) {
-        FontMetrics fm=g.getFontMetrics(g.getFont());
+        FontMetrics fm = g.getFontMetrics(g.getFont());
         int axisWidth = getYLabelsMaxWidth(fm) + spacing * 3 + fm.getHeight();
         yAxisRect.setBounds(chartRect.x, chartRect.y, axisWidth, chartRect.height);
         if (!isPreview) {
@@ -592,7 +592,7 @@ public class GraphPanelChart
     }
 
     private void calculateXAxisDimensions(Graphics g) {
-        FontMetrics fm=g.getFontMetrics(g.getFont());
+        FontMetrics fm = g.getFontMetrics(g.getFont());
         // we need to handle this and make Y axis wider
         int axisHeight;
         if (!isPreview) {
@@ -976,7 +976,7 @@ public class GraphPanelChart
                 calcPointY = calcPointY / (double) nbPointProcessed;
             }
 
-            if (expendRows && rowsZoomFactor.get(rowLabel)!=null) {
+            if (expendRows && rowsZoomFactor.get(rowLabel) != null) {
                 calcPointY = calcPointY * rowsZoomFactor.get(rowLabel);
             }
 
@@ -1244,11 +1244,18 @@ public class GraphPanelChart
         }
     }
 
-    public void saveGraphToFile(File file, int w, int h) throws IOException {
+    public void saveGraphToPNG(File file, int w, int h) throws IOException {
+        log.info("Saving PNG to "+file.getAbsolutePath());
         FileOutputStream fos = new FileOutputStream(file);
         ImageIO.write(getBufferedImage(w, h), "png", fos);
         fos.flush();
         fos.close();
+    }
+
+    public void saveGraphToCSV(File file) throws IOException {
+        log.info("Saving CSV to "+file.getAbsolutePath());
+        GraphModelToCsvExporter exporter = new GraphModelToCsvExporter(rows, file, csvSeparator, xAxisLabel);
+        exporter.writeCsvFile();
     }
 
     private class SaveAction
@@ -1274,7 +1281,7 @@ public class GraphPanelChart
 
                 if (doSave) {
                     try {
-                        saveGraphToFile(file, getWidth(), getHeight());
+                        saveGraphToPNG(file, getWidth(), getHeight());
                     } catch (IOException ex) {
                         JOptionPane.showConfirmDialog(GraphPanelChart.this, "Impossible to write the image to the file:\n" + ex.getMessage(), "Save Image as", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                     }
@@ -1305,9 +1312,8 @@ public class GraphPanelChart
                 }
 
                 if (doSave) {
-                    GraphModelToCsvExporter exporter = new GraphModelToCsvExporter(rows, file, csvSeparator, xAxisLabel);
                     try {
-                        exporter.writeCsvFile();
+                        saveGraphToCSV(file);
                     } catch (IOException ex) {
                         JOptionPane.showConfirmDialog(GraphPanelChart.this, "Impossible to write the CSV file:\n" + ex.getMessage(), "Export to CSV File", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
                     }

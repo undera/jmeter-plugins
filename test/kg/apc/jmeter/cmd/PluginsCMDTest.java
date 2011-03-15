@@ -6,6 +6,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -18,6 +19,8 @@ public class PluginsCMDTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        String homeDir = "/home/undera/NetBeansProjects/jmeter/trunk";
+        System.setProperty("jmeter.home", homeDir);
     }
 
     @AfterClass
@@ -45,19 +48,17 @@ public class PluginsCMDTest {
     @Test
     public void testMainErr() {
         System.out.println("mainerr");
-        String[] args = new String[] {"err"};
-        PluginsCMDEmul.main(args);
+        String[] args = new String[]{"err"};
+        try {
+            PluginsCMDEmul.main(args);
+            fail("Exception expected");
+        } catch (RuntimeException e) {
+        }
     }
 
     @Test
     public void test_Image() {
         System.out.println("png");
-        String[] args = new String[] {
-            "--export-png",
-            "test.png",
-            "--jtl-file",
-            "/tmp/test.jtl"
-        };
-        PluginsCMDEmul.main(args);
+        PluginsCMDEmul.main("--generate-png test.png --input-jtl /home/undera/short.jtl --plugin-type ResponseTimesOverTime".split(" "));
     }
 }

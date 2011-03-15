@@ -12,6 +12,7 @@ import kg.apc.jmeter.cmd.PluginsCMD;
         @Override
         protected void exitWithCode(int i) {
             System.out.println("Exit with "+i);
+            if (i!=0)
+                throw new RuntimeException("Non-zero exit code "+i);
         }
-
     }

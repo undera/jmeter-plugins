@@ -9,6 +9,8 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeListener;
@@ -47,6 +49,16 @@ public abstract class TestJMeterUtils {
         JMeterContextService.getContext().setVariables(new JMeterVariables());
         StandardJMeterEngine engine = new EmulatorJmeterEngine();
         JMeterContextService.getContext().setEngine(engine);
+    }
+
+    public static String getTempDir() {
+       File f = null;
+        try {
+            f = File.createTempFile("jmeterplugins", ".tmp");
+        } catch (IOException ex) {
+            Logger.getLogger(TestJMeterUtils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       return f.getParent();
     }
 
     /**

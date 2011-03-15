@@ -47,7 +47,7 @@ class CMDWorker {
         throw new RuntimeException("Cannot create temporary SaveService properties file: "+ex.toString(), ex);
         }
         JMeterUtils.setJMeterHome(propsFile.getAbsolutePath());
-         * 
+         *
          */
     }
 
@@ -95,12 +95,19 @@ class CMDWorker {
 
         if ((exportMode & EXPORT_PNG) == EXPORT_PNG) {
             try {
-                gui.getGraphPanelChart().saveGraphToFile(new File(outputPNG), graphWidth, graphHeight);
+                gui.getGraphPanelChart().saveGraphToPNG(new File(outputPNG), graphWidth, graphHeight);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         }
 
+        if ((exportMode & EXPORT_CSV) == EXPORT_CSV) {
+            try {
+                gui.getGraphPanelChart().saveGraphToCSV(new File(outputCSV));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
         return 0;
     }
 
@@ -114,9 +121,9 @@ class CMDWorker {
             }
 
             if (!pluginType.startsWith("kg.apc.jmeter.vizualizers.")) {
-                return getGUIObject("kg.apc.jmeter.vizualizers."+pluginType);
+                return getGUIObject("kg.apc.jmeter.vizualizers." + pluginType);
             }
-            
+
             throw new RuntimeException(ex);
         }
 

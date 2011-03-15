@@ -87,6 +87,7 @@ public class GraphPanelChartTest
       row1.setMarkerSize(AbstractGraphRow.MARKER_SIZE_BIG);
       rows.put("test 1", row1);
       row1.add(System.currentTimeMillis(), 20);
+      
       instance.paintComponent(g);
 
       row1.add(System.currentTimeMillis(), 540);

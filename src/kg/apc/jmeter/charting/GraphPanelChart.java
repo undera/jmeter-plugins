@@ -22,7 +22,6 @@ import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormatSymbols;
@@ -410,12 +409,12 @@ public class GraphPanelChart
     private boolean drawMessages(Graphics2D g) {
         if (errorMessage != null) {
             g.setColor(Color.RED);
-            g.drawString(errorMessage, getWidth() / 2 - g.getFontMetrics(g.getFont()).stringWidth(errorMessage) / 2, getHeight() / 2);
+            g.drawString(errorMessage, g.getClipBounds().width / 2 - g.getFontMetrics(g.getFont()).stringWidth(errorMessage) / 2, g.getClipBounds().height / 2);
             return true;
         }
         if (rows.isEmpty()) {
             g.setColor(Color.BLACK);
-            g.drawString(NO_SAMPLES, getWidth() / 2 - g.getFontMetrics(g.getFont()).stringWidth(NO_SAMPLES) / 2, getHeight() / 2);
+            g.drawString(NO_SAMPLES, g.getClipBounds().width / 2 - g.getFontMetrics(g.getFont()).stringWidth(NO_SAMPLES) / 2, g.getClipBounds().height / 2);
             return true;
         }
         return false;
@@ -618,6 +617,7 @@ public class GraphPanelChart
 
         BufferedImage image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
+        g2d.setClip(0, 0, getWidth(), getHeight());
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         drawPanel(g2d);
         g.drawImage(image, 0, 0, this);
@@ -626,13 +626,12 @@ public class GraphPanelChart
     private void drawPanel(Graphics2D g) {
         g.setColor(Color.white);
 
-
         if (settingsDrawGradient) {
-            GradientPaint gdp = new GradientPaint(0, 0, Color.white, 0, getHeight(), gradientColor);
+            GradientPaint gdp = new GradientPaint(0, 0, Color.white, 0, g.getClipBounds().height, gradientColor);
             g.setPaint(gdp);
         }
 
-        g.fillRect(0, 0, getWidth(), getHeight());
+        g.fillRect(0, 0, g.getClipBounds().width, g.getClipBounds().height);
         paintAd(g);
 
         if (drawMessages(g)) {
@@ -648,16 +647,12 @@ public class GraphPanelChart
 
         getMinMaxDataValues();
 
-        try {
-            paintLegend(g);
-            calculateYAxisDimensions(g.getFontMetrics(g.getFont()));
-            calculateXAxisDimensions(g.getFontMetrics(g.getFont()));
-            paintYAxis(g);
-            paintXAxis(g);
-            paintChart(g);
-        } catch (Exception e) {
-            log.error("Error in paintComponent", e);
-        }
+        paintLegend(g);
+        calculateYAxisDimensions(g.getFontMetrics(g.getFont()));
+        calculateXAxisDimensions(g.getFontMetrics(g.getFont()));
+        paintYAxis(g);
+        paintXAxis(g);
+        paintChart(g);
     }
 
     private void paintLegend(Graphics g) {
@@ -699,7 +694,7 @@ public class GraphPanelChart
             }
 
             // wrap row if overflowed
-            if (currentX + rectW + spacing / 2 + fm.stringWidth(rowLabel) > getWidth()) {
+            if (currentX + rectW + spacing / 2 + fm.stringWidth(rowLabel) > g.getClipBounds().width) {
                 currentY += rectH + spacing / 2;
                 legendHeight += rectH + spacing / 2;
                 currentX = chartRect.x;
@@ -981,7 +976,7 @@ public class GraphPanelChart
                 calcPointY = calcPointY / (double) nbPointProcessed;
             }
 
-            if (expendRows) {
+            if (expendRows && rowsZoomFactor.get(rowLabel)!=null) {
                 calcPointY = calcPointY * rowsZoomFactor.get(rowLabel);
             }
 
@@ -1141,7 +1136,7 @@ public class GraphPanelChart
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
 
         g.drawString(AD_TEXT,
-                getWidth() - g.getFontMetrics().stringWidth(AD_TEXT) - spacing,
+                g.getClipBounds().width - g.getFontMetrics().stringWidth(AD_TEXT) - spacing,
                 g.getFontMetrics().getHeight() - spacing + 1);
         g.setComposite(oldComposite);
         g.setFont(oldFont);
@@ -1175,10 +1170,12 @@ public class GraphPanelChart
     }
 
     private BufferedImage getBufferedImage(int w, int h) {
-        BufferedImage image = new BufferedImage(w,h, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        log.debug("Created image: " + image);
         Graphics2D g2 = image.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        this.drawPanel(g2);
+        g2.setClip(0, 0, w, h);
+        drawPanel(g2);
 
         return image;
     }

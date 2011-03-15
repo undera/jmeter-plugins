@@ -94,7 +94,7 @@ public class CMDWorkerTest {
     public void testDoJob() {
         System.out.println("doJob");
         CMDWorker instance = new CMDWorker();
-        instance.setInputFile("/home/undera/bench.jtl");
+        instance.setInputFile("/home/undera/short.jtl");
         instance.setOutputPNGFile("/tmp/test.png");
         instance.setGraphWidth(1000);
         instance.setGraphHeight(500);

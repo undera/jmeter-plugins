@@ -29,23 +29,23 @@ class CMDWorker {
     }
 
     private void prepareJMeterEnv() {
-        String homeDir="/home/undera/NetBeansProjects/jmeter/trunk";
+        String homeDir = "/home/undera/NetBeansProjects/jmeter/trunk";
         JMeterUtils.setJMeterHome(homeDir);
         JMeterUtils.setLocale(new Locale("ignoreResources"));
-        JMeterUtils.loadJMeterProperties(homeDir+"/bin/jmeter.properties");
+        JMeterUtils.loadJMeterProperties(homeDir + "/bin/jmeter.properties");
 
         /*
         File savePropsFile = new File(propsFile.getParent() + "/bin");
         if (!savePropsFile.mkdirs())
         {
-            throw new RuntimeException("Cannot create SaveService properties dir: "+savePropsFile.getAbsolutePath());
+        throw new RuntimeException("Cannot create SaveService properties dir: "+savePropsFile.getAbsolutePath());
         }
 
         savePropsFile=new File(savePropsFile.getAbsolutePath()+"/saveservice.properties");
         try {
-            savePropsFile.createNewFile();
+        savePropsFile.createNewFile();
         } catch (IOException ex) {
-            throw new RuntimeException("Cannot create temporary SaveService properties file: "+ex.toString(), ex);
+        throw new RuntimeException("Cannot create temporary SaveService properties file: "+ex.toString(), ex);
         }
         JMeterUtils.setJMeterHome(propsFile.getAbsolutePath());
          * 
@@ -76,11 +76,18 @@ class CMDWorker {
         // TODO: check here that parameters are consistent
     }
 
+    void setGraphWidth(int i) {
+        graphWidth = i;
+    }
+
+    void setGraphHeight(int i) {
+        graphHeight = i;
+    }
+
     int doJob() {
         checkParams();
 
         AbstractGraphPanelVisualizer gui = new ResponseTimesOverTimeGui();
-        gui.setBounds(0, 0, graphWidth, graphHeight);
 
         ResultCollector rc = new ResultCollector();
         rc.setFilename(inputFile);
@@ -89,18 +96,9 @@ class CMDWorker {
         try {
             gui.getGraphPanelChart().saveGraphToFile(new File(outputPNG), graphWidth, graphHeight);
         } catch (IOException ex) {
-            ex.printStackTrace();
-            return 1;
+            throw new RuntimeException(ex);
         }
 
         return 0;
-    }
-
-    void setGraphWidth(int i) {
-        graphWidth = i;
-    }
-
-    void setGraphHeight(int i) {
-        graphHeight = i;
     }
 }

@@ -28,29 +28,40 @@ public class AutoStop
     private final static String ERROR_RATE = "error_rate";
     private final static String RESPONSE_TIME_SECS = "avg_response_time_length";
     private final static String ERROR_RATE_SECS = "error_rate_length";
-    private final static String TIME_SETTING = "time_setting";
+    private final static String RESPONSE_LATENCY = "avg_response_latency";
+    private final static String RESPONSE_LATENCY_SECS = "avg_response_latency_length";
     private long curSec = 0L;
     private GraphPanelChartAverageElement avgRespTime = new GraphPanelChartAverageElement();
+    private GraphPanelChartAverageElement avgRespLatency = new GraphPanelChartAverageElement();
     private GraphPanelChartAverageElement errorRate = new GraphPanelChartAverageElement();
     private long respTimeExceededStart = 0;
     private long errRateExceededStart = 0;
+    private long respLatencyExceededStart = 0;
     private int stopTries = 0;
-    private boolean useLatency;
+
+    //optimization: not convert String to number for each sample
+    private int testValueRespTime = 0;
+    private int testValueRespTimeSec = 0;
+    private int testValueRespLatency = 0;
+    private int testValueRespLatencySec = 0;
+    private float testValueError = 0;
+    private int testValueErrorSec = 0;
 
     public AutoStop() {
         super();
     }
 
+    @Override
     public void sampleOccurred(SampleEvent se) {
         long sec = System.currentTimeMillis() / 1000;
 
         if (curSec != sec) {
-            if (getResponseTimeAsInt() > 0) {
+            if (testValueRespTime > 0) {
                 //log.debug("Avg resp time: "+avgRespTime.getValue());
-                if (avgRespTime.getValue() > getResponseTimeAsInt()) {
+                if (avgRespTime.getValue() > testValueRespTime) {
                     //log.debug((sec - respTimeExceededStart)+" "+getResponseTimeSecsAsInt());
-                    if (sec - respTimeExceededStart >= getResponseTimeSecsAsInt()) {
-                        log.info("Average "+getTimeSetting()+" more than " + getResponseTime() + " for " + getResponseTimeSecs() + "s. Auto-shutdown test...");
+                    if (sec - respTimeExceededStart >= testValueRespTimeSec) {
+                        log.info("Average Response Time is more than " + getResponseTime() + " for " + getResponseTimeSecs() + "s. Auto-shutdown test...");
                         stopTest();
                     }
                 } else {
@@ -58,11 +69,24 @@ public class AutoStop
                 }
             }
 
-            if (getErrorRateAsFloat() > 0) {
+            if (testValueRespLatency > 0) {
+                //log.debug("Avg resp time: "+avgRespTime.getValue());
+                if (avgRespLatency.getValue() > testValueRespLatency) {
+                    //log.debug((sec - respTimeExceededStart)+" "+getResponseTimeSecsAsInt());
+                    if (sec - respLatencyExceededStart >= testValueRespLatencySec) {
+                        log.info("Average Latency Time is more than " + getResponseLatency() + " for " + getResponseLatencySecs() + "s. Auto-shutdown test...");
+                        stopTest();
+                    }
+                } else {
+                    respLatencyExceededStart = sec;
+                }
+            }
+
+            if (testValueError > 0) {
                 //log.debug("Error rate: "+errorRate.getValue()+"/"+getErrorRateAsFloat());
-                if (errorRate.getValue() > getErrorRateAsFloat()) {
+                if (errorRate.getValue() > testValueError) {
                     //log.debug((sec - errRateExceededStart)+" "+getErrorRateSecsAsInt());
-                    if (sec - errRateExceededStart >= getErrorRateSecsAsInt()) {
+                    if (sec - errRateExceededStart >= testValueErrorSec) {
                         log.info("Error rate more than " + getErrorRate() + " for " + getErrorRateSecs() + "s. Auto-shutdown test...");
                         stopTest();
                     }
@@ -73,44 +97,68 @@ public class AutoStop
 
             curSec = sec;
             avgRespTime = new GraphPanelChartAverageElement();
+            avgRespLatency = new GraphPanelChartAverageElement();
             errorRate = new GraphPanelChartAverageElement();
         }
 
-        avgRespTime.add(useLatency?se.getResult().getLatency():se.getResult().getTime());
+        avgRespTime.add(se.getResult().getTime());
+        avgRespLatency.add(se.getResult().getLatency());
         errorRate.add(se.getResult().isSuccessful() ? 0 : 1);
     }
 
+    @Override
     public void sampleStarted(SampleEvent se) {
     }
 
+    @Override
     public void sampleStopped(SampleEvent se) {
     }
 
+    @Override
     public void testStarted() {
-        avgRespTime = new GraphPanelChartAverageElement();
         curSec = 0;
-        errRateExceededStart = 0;
-        errorRate = new GraphPanelChartAverageElement();
-        respTimeExceededStart = 0;
         stopTries = 0;
-        useLatency=getTimeSetting().equals("latency");
+
+        avgRespTime = new GraphPanelChartAverageElement();
+        errorRate = new GraphPanelChartAverageElement();
+        avgRespLatency = new GraphPanelChartAverageElement();
+        
+        errRateExceededStart = 0;
+        respTimeExceededStart = 0;
+        respLatencyExceededStart = 0;
+        
+        //init test values
+        testValueError = getErrorRateAsFloat();
+        testValueErrorSec = getErrorRateSecsAsInt();
+        testValueRespLatency = getResponseLatencyAsInt();
+        testValueRespLatencySec = getResponseLatencySecsAsInt();
+        testValueRespTime = getResponseTimeAsInt();
+        testValueRespTimeSec = getResponseTimeSecsAsInt();
     }
 
+    @Override
     public void testStarted(String string) {
         testStarted();
     }
 
+    @Override
     public void testEnded() {
     }
 
+    @Override
     public void testEnded(String string) {
     }
 
+    @Override
     public void testIterationStart(LoopIterationEvent lie) {
     }
 
     void setResponseTime(String text) {
         setProperty(RESPONSE_TIME, text);
+    }
+
+    void setResponseLatency(String text) {
+        setProperty(RESPONSE_LATENCY, text);
     }
 
     void setErrorRate(String text) {
@@ -119,6 +167,10 @@ public class AutoStop
 
     void setResponseTimeSecs(String text) {
         setProperty(RESPONSE_TIME_SECS, text);
+    }
+
+    void setResponseLatencySecs(String text) {
+        setProperty(RESPONSE_LATENCY_SECS, text);
     }
 
     void setErrorRateSecs(String text) {
@@ -133,6 +185,14 @@ public class AutoStop
         return getPropertyAsString(RESPONSE_TIME_SECS);
     }
 
+    String getResponseLatency() {
+        return getPropertyAsString(RESPONSE_LATENCY);
+    }
+
+    String getResponseLatencySecs() {
+        return getPropertyAsString(RESPONSE_LATENCY_SECS);
+    }
+
     String getErrorRate() {
         return getPropertyAsString(ERROR_RATE);
     }
@@ -144,7 +204,7 @@ public class AutoStop
     private int getResponseTimeAsInt() {
         int res = 0;
         try {
-            res = Integer.parseInt(getResponseTime());
+            res = Integer.valueOf(getResponseTime());
         } catch (NumberFormatException e) {
             log.error("Wrong response time: " + getResponseTime(), e);
             setResponseTime("0");
@@ -155,7 +215,7 @@ public class AutoStop
     private int getResponseTimeSecsAsInt() {
         int res = 0;
         try {
-            res = Integer.parseInt(getResponseTimeSecs());
+            res = Integer.valueOf(getResponseTimeSecs());
         } catch (NumberFormatException e) {
             log.error("Wrong response time period: " + getResponseTime(), e);
             setResponseTimeSecs("1");
@@ -163,10 +223,32 @@ public class AutoStop
         return res > 0 ? res : 1;
     }
 
+    private int getResponseLatencyAsInt() {
+        int res = 0;
+        try {
+            res = Integer.valueOf(getResponseLatency());
+        } catch (NumberFormatException e) {
+            log.error("Wrong response time: " + getResponseLatency(), e);
+            setResponseLatency("0");
+        }
+        return res;
+    }
+
+    private int getResponseLatencySecsAsInt() {
+        int res = 0;
+        try {
+            res = Integer.valueOf(getResponseLatencySecs());
+        } catch (NumberFormatException e) {
+            log.error("Wrong response time period: " + getResponseLatencySecs(), e);
+            setResponseLatencySecs("1");
+        }
+        return res > 0 ? res : 1;
+    }
+
     private float getErrorRateAsFloat() {
         float res = 0;
         try {
-            res = Float.parseFloat(getErrorRate()) / 100;
+            res = Float.valueOf(getErrorRate()) / 100;
         } catch (NumberFormatException e) {
             log.error("Wrong error rate: " + getErrorRate(), e);
             setErrorRate("0");
@@ -177,7 +259,7 @@ public class AutoStop
     private int getErrorRateSecsAsInt() {
         int res = 0;
         try {
-            res = Integer.parseInt(getErrorRateSecs());
+            res = Integer.valueOf(getErrorRateSecs());
         } catch (NumberFormatException e) {
             log.error("Wrong error rate period: " + getResponseTime(), e);
             setErrorRateSecs("1");
@@ -196,13 +278,5 @@ public class AutoStop
         } else {
             JMeterContextService.getContext().getEngine().askThreadsToStop();
         }
-    }
-
-    public void setTimeSetting(String selectedItem) {
-        setProperty(TIME_SETTING, selectedItem);
-    }
-
-    public String getTimeSetting() {
-        return getPropertyAsString(TIME_SETTING);
     }
 }

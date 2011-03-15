@@ -218,6 +218,12 @@ public abstract class AbstractGraphPanelVisualizer
 
     private void addRowToCompositeModels(String rowName, AbstractGraphRow row) {
         GuiPackage gui = GuiPackage.getInstance();
+        if (gui==null)
+        {
+            log.warn("No GUI Package present, ignored adding to composite");
+            return;
+        }
+
         JMeterTreeModel testTree = gui.getTreeModel();
 
         Iterator it = testTree.getNodesOfType(CompositeResultCollector.class).iterator();
@@ -293,8 +299,7 @@ public abstract class AbstractGraphPanelVisualizer
         return getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, null, canCompose);
     }
 
-    protected boolean isFromTransactionControler(SampleResult res)
-    {
+    protected boolean isFromTransactionControler(SampleResult res) {
         return res.getResponseMessage().startsWith("Number of samples in transaction");
     }
 

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizer;
-import kg.apc.jmeter.vizualizers.ResponseTimesOverTimeGui;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.util.JMeterUtils;
 
@@ -29,11 +28,11 @@ class CMDWorker {
     }
 
     private void prepareJMeterEnv() {
+        // TODO: get jmeter home from current jar path
         String homeDir = "/home/undera/NetBeansProjects/jmeter/trunk";
         JMeterUtils.setJMeterHome(homeDir);
         JMeterUtils.setLocale(new Locale("ignoreResources"));
         JMeterUtils.loadJMeterProperties(homeDir + "/bin/jmeter.properties");
-
         /*
         File savePropsFile = new File(propsFile.getParent() + "/bin");
         if (!savePropsFile.mkdirs())
@@ -87,18 +86,52 @@ class CMDWorker {
     int doJob() {
         checkParams();
 
-        AbstractGraphPanelVisualizer gui = new ResponseTimesOverTimeGui();
+        AbstractGraphPanelVisualizer gui = getGUIObject(pluginType);
 
         ResultCollector rc = new ResultCollector();
         rc.setFilename(inputFile);
         rc.setListener(gui);
         rc.loadExistingFile();
-        try {
-            gui.getGraphPanelChart().saveGraphToFile(new File(outputPNG), graphWidth, graphHeight);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+
+        if ((exportMode & EXPORT_PNG) == EXPORT_PNG) {
+            try {
+                gui.getGraphPanelChart().saveGraphToFile(new File(outputPNG), graphWidth, graphHeight);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
 
         return 0;
+    }
+
+    private AbstractGraphPanelVisualizer getGUIObject(String pluginType) {
+        Class a;
+        try {
+            a = Class.forName(pluginType);
+        } catch (ClassNotFoundException ex) {
+            if (!pluginType.endsWith("Gui")) {
+                return getGUIObject(pluginType + "Gui");
+            }
+
+            if (!pluginType.startsWith("kg.apc.jmeter.vizualizers.")) {
+                return getGUIObject("kg.apc.jmeter.vizualizers."+pluginType);
+            }
+            
+            throw new RuntimeException(ex);
+        }
+
+
+        boolean isOur = AbstractGraphPanelVisualizer.class.isAssignableFrom(a);
+        if (!isOur) {
+            throw new RuntimeException("Class name " + pluginType + " cannot be used");
+        }
+
+        try {
+            return (AbstractGraphPanelVisualizer) a.newInstance();
+        } catch (InstantiationException ex) {
+            throw new RuntimeException(ex);
+        } catch (IllegalAccessException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

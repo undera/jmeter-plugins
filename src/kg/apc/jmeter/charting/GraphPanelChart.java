@@ -337,8 +337,6 @@ public class GraphPanelChart
         xAxisRect = new Rectangle();
         chartRect = new Rectangle();
 
-        setDefaultDimensions();
-
         registerPopup(allowCsvExport);
 
         settingsDrawCurrentX = !neverDrawCurrentX;
@@ -563,8 +561,8 @@ public class GraphPanelChart
         maxYVal = minYVal + foundStep * gridLinesCount;
     }
 
-    private void setDefaultDimensions() {
-        chartRect.setBounds(spacing, spacing, getWidth() - spacing * 2, getHeight() - spacing * 2);
+    private void setDefaultDimensions(Graphics g) {
+        chartRect.setBounds(spacing, spacing, g.getClipBounds().width - spacing * 2, g.getClipBounds().height - spacing * 2);
         legendRect.setBounds(zeroRect);
         xAxisRect.setBounds(zeroRect);
         yAxisRect.setBounds(zeroRect);
@@ -582,7 +580,8 @@ public class GraphPanelChart
         return ret;
     }
 
-    private void calculateYAxisDimensions(FontMetrics fm) {
+    private void calculateYAxisDimensions(Graphics g) {
+        FontMetrics fm=g.getFontMetrics(g.getFont());
         int axisWidth = getYLabelsMaxWidth(fm) + spacing * 3 + fm.getHeight();
         yAxisRect.setBounds(chartRect.x, chartRect.y, axisWidth, chartRect.height);
         if (!isPreview) {
@@ -592,7 +591,8 @@ public class GraphPanelChart
         }
     }
 
-    private void calculateXAxisDimensions(FontMetrics fm) {
+    private void calculateXAxisDimensions(Graphics g) {
+        FontMetrics fm=g.getFontMetrics(g.getFont());
         // we need to handle this and make Y axis wider
         int axisHeight;
         if (!isPreview) {
@@ -638,7 +638,7 @@ public class GraphPanelChart
             return;
         }
 
-        setDefaultDimensions();
+        setDefaultDimensions(g);
         if (useNewZoomImplementation) {
             autoZoom();
         } else {
@@ -648,8 +648,8 @@ public class GraphPanelChart
         getMinMaxDataValues();
 
         paintLegend(g);
-        calculateYAxisDimensions(g.getFontMetrics(g.getFont()));
-        calculateXAxisDimensions(g.getFontMetrics(g.getFont()));
+        calculateYAxisDimensions(g);
+        calculateXAxisDimensions(g);
         paintYAxis(g);
         paintXAxis(g);
         paintChart(g);
@@ -1171,7 +1171,6 @@ public class GraphPanelChart
 
     private BufferedImage getBufferedImage(int w, int h) {
         BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        log.debug("Created image: " + image);
         Graphics2D g2 = image.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setClip(0, 0, w, h);

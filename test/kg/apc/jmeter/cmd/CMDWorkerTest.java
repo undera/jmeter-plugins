@@ -98,6 +98,9 @@ public class CMDWorkerTest {
         instance.setOutputPNGFile("/tmp/test.png");
         instance.setGraphWidth(1000);
         instance.setGraphHeight(500);
+        instance.setPluginType("ResponseTimesDistribution");
+        //instance.setPluginType("ResponseTimesOverTime");
+        instance.addExportMode(CMDWorker.EXPORT_PNG);
         int result = instance.doJob();
         int expResult = 0;
         assertEquals(expResult, result);

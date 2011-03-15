@@ -3,7 +3,8 @@ package kg.apc.jmeter.cmd;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
-import kg.apc.jmeter.vizualizers.ThreadsStateOverTimeGui;
+import kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizer;
+import kg.apc.jmeter.vizualizers.ResponseTimesOverTimeGui;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.util.JMeterUtils;
 
@@ -12,20 +13,9 @@ import org.apache.jmeter.util.JMeterUtils;
  * @author undera
  */
 class CMDWorker {
-    private int graphWidth=800;
-    private int graphHeight=600;
 
-    public CMDWorker() {
-        JMeterUtils.setLocale(new Locale("ignoreResources"));
-        File propsFile = null;
-        try {
-            propsFile = File.createTempFile("jmeter-plugins", "testProps");
-        } catch (IOException ex) {
-        }
-
-        JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
-        JMeterUtils.setJMeterHome(".");
-    }
+    private int graphWidth = 800;
+    private int graphHeight = 600;
     static final int EXPORT_PNG = 2 ^ 0;
     static final int EXPORT_CSV = 2 ^ 1;
     private int exportMode = 0;
@@ -33,6 +23,34 @@ class CMDWorker {
     private String outputCSV;
     private String outputPNG;
     private String pluginType;
+
+    public CMDWorker() {
+        prepareJMeterEnv();
+    }
+
+    private void prepareJMeterEnv() {
+        String homeDir="/home/undera/NetBeansProjects/jmeter/trunk";
+        JMeterUtils.setJMeterHome(homeDir);
+        JMeterUtils.setLocale(new Locale("ignoreResources"));
+        JMeterUtils.loadJMeterProperties(homeDir+"/bin/jmeter.properties");
+
+        /*
+        File savePropsFile = new File(propsFile.getParent() + "/bin");
+        if (!savePropsFile.mkdirs())
+        {
+            throw new RuntimeException("Cannot create SaveService properties dir: "+savePropsFile.getAbsolutePath());
+        }
+
+        savePropsFile=new File(savePropsFile.getAbsolutePath()+"/saveservice.properties");
+        try {
+            savePropsFile.createNewFile();
+        } catch (IOException ex) {
+            throw new RuntimeException("Cannot create temporary SaveService properties file: "+ex.toString(), ex);
+        }
+        JMeterUtils.setJMeterHome(propsFile.getAbsolutePath());
+         * 
+         */
+    }
 
     void addExportMode(int mode) {
         exportMode |= mode;
@@ -61,7 +79,7 @@ class CMDWorker {
     int doJob() {
         checkParams();
 
-        ThreadsStateOverTimeGui gui = new ThreadsStateOverTimeGui();
+        AbstractGraphPanelVisualizer gui = new ResponseTimesOverTimeGui();
         gui.setBounds(0, 0, graphWidth, graphHeight);
 
         ResultCollector rc = new ResultCollector();
@@ -79,10 +97,10 @@ class CMDWorker {
     }
 
     void setGraphWidth(int i) {
-        graphWidth=i;
+        graphWidth = i;
     }
 
     void setGraphHeight(int i) {
-        graphHeight=i;
+        graphHeight = i;
     }
 }

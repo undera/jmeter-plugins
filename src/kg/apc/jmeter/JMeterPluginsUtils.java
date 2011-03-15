@@ -189,7 +189,7 @@ public abstract class JMeterPluginsUtils {
         return panel;
     }
 
-    private static Container findComponentWithBorder(JComponent panel, Class aClass) {
+    private static Container findComponentWithBorder(JComponent panel, Class<?> aClass) {
         for (int n = 0; n < panel.getComponentCount(); n++) {
             if (panel.getComponent(n) instanceof JComponent) {
                 JComponent comp=(JComponent) panel.getComponent(n);

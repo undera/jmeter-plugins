@@ -15,7 +15,16 @@ public class PluginsCMD {
     }
 
     private static void showHelp() {
-        System.out.println("Usage:\n <cmd> --help --generate-png <filename> --generate-csv <filename> --input-jtl <data file> --plugin-type <type>");
+        System.out.println("Usage:\n JMeterPluginsCMD "
+                + "--help "
+                + "--generate-png <filename> "
+                + "--generate-csv <filename> "
+                + "--input-jtl <data file> "
+                + "--plugin-type <type> "
+                + "--widtn <graph width> "
+                + "--height <graph height> "
+                + "--aggregate-rows "
+                );
 
     }
 
@@ -64,6 +73,7 @@ public class PluginsCMD {
 
                 worker.setPluginType(args[n]);
             } else {
+                System.out.println("Unrecognized option: "+args[n]);
                 showHelp();
                 return 1;
             }

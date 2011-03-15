@@ -246,27 +246,4 @@ public class AutoStopTest {
         String result = instance.getErrorRateSecs();
         assertEquals(expResult, result);
     }
-
-    /**
-     * Test of setTimeSetting method, of class AutoStop.
-     */
-    @Test
-    public void testSetTimeSetting() {
-        System.out.println("setTimeSetting");
-        String selectedItem = "";
-        AutoStop instance = new AutoStop();
-        instance.setTimeSetting(selectedItem);
-    }
-
-    /**
-     * Test of getTimeSetting method, of class AutoStop.
-     */
-    @Test
-    public void testGetTimeSetting() {
-        System.out.println("getTimeSetting");
-        AutoStop instance = new AutoStop();
-        String expResult = "";
-        String result = instance.getTimeSetting();
-        assertEquals(expResult, result);
-    }
 }

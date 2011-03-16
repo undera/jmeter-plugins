@@ -246,4 +246,58 @@ public class AutoStopTest {
         String result = instance.getErrorRateSecs();
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of setResponseLatency method, of class AutoStop.
+     */
+    @Test
+    public void testSetResponseLatency() {
+        System.out.println("setResponseLatency");
+        String text = "";
+        AutoStop instance = new AutoStop();
+        instance.setResponseLatency(text);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setResponseLatencySecs method, of class AutoStop.
+     */
+    @Test
+    public void testSetResponseLatencySecs() {
+        System.out.println("setResponseLatencySecs");
+        String text = "";
+        AutoStop instance = new AutoStop();
+        instance.setResponseLatencySecs(text);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getResponseLatency method, of class AutoStop.
+     */
+    @Test
+    public void testGetResponseLatency() {
+        System.out.println("getResponseLatency");
+        AutoStop instance = new AutoStop();
+        String expResult = "";
+        String result = instance.getResponseLatency();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getResponseLatencySecs method, of class AutoStop.
+     */
+    @Test
+    public void testGetResponseLatencySecs() {
+        System.out.println("getResponseLatencySecs");
+        AutoStop instance = new AutoStop();
+        String expResult = "";
+        String result = instance.getResponseLatencySecs();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

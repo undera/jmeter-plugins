@@ -53,7 +53,7 @@ public class GraphPanelChart
         implements ClipboardOwner {
 
     JPopupMenu popup = new JPopupMenu();
-    private static final String AD_TEXT = "http://apc.kg";
+    private static final String AD_TEXT = "http://apc.kg/plugins";
     private static final String NO_SAMPLES = "Waiting for samples...";
     private static final int spacing = 5;
     private static final int previewInset = 4;

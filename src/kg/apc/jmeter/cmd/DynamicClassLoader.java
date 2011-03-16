@@ -38,29 +38,27 @@ public class DynamicClassLoader extends URLClassLoader {
      *
      * @param urls - list of URLs to add to the thread's classloader
      */
-    public static void updateLoader(URL [] urls) {
-        DynamicClassLoader loader
-            = (DynamicClassLoader) Thread.currentThread().getContextClassLoader();
-        for(int i=0;i<urls.length;i++) {
+    public static void updateLoader(URL[] urls) {
+        DynamicClassLoader loader = (DynamicClassLoader) Thread.currentThread().getContextClassLoader();
+        for (int i = 0; i < urls.length; i++) {
             loader.addURL(urls[i]);
         }
     }
 
+    /*
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
-        Class<?> res=super.findClass(name);
-        //new Throwable(name).printStackTrace();
-        System.out.println("Find "+name+" "+res.toString());
-        return res;
+    Class<?> res=super.findClass(name);
+    //new Throwable(name).printStackTrace();
+    System.out.println("Find "+name+" "+res.toString());
+    return res;
     }
 
     @Override
     protected synchronized Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-        Class<?> res=super.loadClass(name, resolve);
-        System.out.println("Load "+name+" "+res.toString());
-        return res;
+    Class<?> res=super.loadClass(name, resolve);
+    System.out.println("Load "+name+" "+res.toString());
+    return res;
     }
-
-
-
+     */
 }

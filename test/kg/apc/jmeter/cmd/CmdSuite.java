@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package kg.apc.jmeter.reporters;
+package kg.apc.jmeter.cmd;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,8 +17,8 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({FlexibleFileWriterTest.class, JAutoStopPanelTest.class, AutoStopGuiTest.class, AutoStopTest.class, FlexibleFileWriterGuiTest.class})
-public class ReportersSuite {
+@Suite.SuiteClasses({kg.apc.jmeter.cmd.NewDriverTest.class,kg.apc.jmeter.cmd.DynamicClassLoaderTest.class})
+public class CmdSuite {
 
     @BeforeClass
     public static void setUpClass() throws Exception {

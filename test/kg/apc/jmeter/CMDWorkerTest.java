@@ -1,6 +1,5 @@
-package kg.apc.jmeter.cmd;
+package kg.apc.jmeter;
 
-import kg.apc.jmeter.PluginsCMDWorker;
 import java.io.File;
 import java.io.IOException;
 import kg.apc.emulators.TestJMeterUtils;

@@ -3,6 +3,7 @@ package kg.apc.jmeter.charting;
 import java.awt.Graphics;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;
+import java.io.File;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.emulators.TestGraphics;
 import org.apache.jorphan.gui.NumberRenderer;
@@ -523,5 +524,33 @@ public class GraphPanelChartTest
         long expResult = -1L;
         long result = instance.getForcedMaxY();
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of saveGraphToPNG method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSaveGraphToPNG() throws Exception {
+        System.out.println("saveGraphToPNG");
+        File file = null;
+        int w = 0;
+        int h = 0;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.saveGraphToPNG(file, w, h);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of saveGraphToCSV method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSaveGraphToCSV() throws Exception {
+        System.out.println("saveGraphToCSV");
+        File file = null;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.saveGraphToCSV(file);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

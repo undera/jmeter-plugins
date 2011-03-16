@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kg.apc.jmeter.cmd.NewDriver;
 import kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizer;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.util.JMeterUtils;
@@ -30,10 +31,10 @@ public class PluginsCMDWorker {
 
     private void prepareJMeterEnv() {
         // TODO: get jmeter home from current jar path
-        //String homeDir = "/home/undera/NetBeansProjects/jmeter/trunk";
-        //JMeterUtils.setJMeterHome(homeDir);
-        //JMeterUtils.setLocale(new Locale("ignoreResources"));
-        //JMeterUtils.loadJMeterProperties(homeDir + "/bin/jmeter.properties");
+        String homeDir = NewDriver.getJMeterDir();
+        JMeterUtils.setJMeterHome(homeDir);
+        JMeterUtils.setLocale(new Locale("ignoreResources"));
+        JMeterUtils.loadJMeterProperties(homeDir + "/bin/jmeter.properties");
         /*
         File savePropsFile = new File(propsFile.getParent() + "/bin");
         if (!savePropsFile.mkdirs())
@@ -52,23 +53,23 @@ public class PluginsCMDWorker {
          */
     }
 
-    void addExportMode(int mode) {
+    public void addExportMode(int mode) {
         exportMode |= mode;
     }
 
-    void setInputFile(String string) {
+    public void setInputFile(String string) {
         inputFile = string;
     }
 
-    void setOutputCSVFile(String string) {
+    public void setOutputCSVFile(String string) {
         outputCSV = string;
     }
 
-    void setOutputPNGFile(String string) {
+    public void setOutputPNGFile(String string) {
         outputPNG = string;
     }
 
-    void setPluginType(String string) {
+    public void setPluginType(String string) {
         pluginType = string;
     }
 
@@ -76,15 +77,15 @@ public class PluginsCMDWorker {
         // TODO: check here that parameters are consistent
     }
 
-    void setGraphWidth(int i) {
+    public void setGraphWidth(int i) {
         graphWidth = i;
     }
 
-    void setGraphHeight(int i) {
+    public void setGraphHeight(int i) {
         graphHeight = i;
     }
 
-    int doJob() {
+    public int doJob() {
         System.out.println();
         prepareJMeterEnv();
 

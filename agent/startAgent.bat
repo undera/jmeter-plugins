@@ -1,2 +1,2 @@
 @echo off
-java -cp ServerAgent.jar;sigar.jar kg.apc.jmeter.perfmon.agent.ServerAgent %1 
+java -jar $0\..\ServerAgent.jar %1

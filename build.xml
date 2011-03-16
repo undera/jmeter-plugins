@@ -127,7 +127,8 @@
 
    <!-- APC: before making main jar we make agent's jar -->
    <target name="-pre-jar">
-      <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/ServerAgent.jar">
+      <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/ServerAgent.jar"
+      manifest="${src.dir}/kg/apc/jmeter/perfmon/agent/manifest.mf">
          <fileset dir="${build.dir}/agent/classes"/>
       </jar>
       <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/JMeterPluginsCMD.jar"

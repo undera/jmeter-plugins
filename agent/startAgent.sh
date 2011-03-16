@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java -cp ServerAgent.jar:sigar.jar kg.apc.jmeter.perfmon.agent.ServerAgent $1 
+java -jar $(dirname $0)/ServerAgent.jar $1

@@ -2,7 +2,6 @@ package kg.apc.jmeter;
 
 import java.io.File;
 import java.io.IOException;
-import kg.apc.emulators.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -20,8 +20,6 @@ public class PluginsCMDTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        String homeDir = "/home/undera/NetBeansProjects/jmeter/trunk";
-        System.setProperty("jmeter.home", homeDir);
     }
 
     @AfterClass
@@ -60,7 +58,7 @@ public class PluginsCMDTest {
     @Test
     public void test_Image() {
         System.out.println("png");
-        String str="--generate-png "+TestJMeterUtils.getTempDir()+"/test.png --input-jtl /home/undera/short.jtl --plugin-type ResponseTimesOverTime";
+        String str="--help";
         PluginsCMDEmul.main(str.split(" "));
     }
 
@@ -71,10 +69,8 @@ public class PluginsCMDTest {
     public void testExitWithCode() {
         System.out.println("exitWithCode");
         int i = 0;
-        PluginsCMD instance = new PluginsCMD();
+        PluginsCMD instance = new PluginsCMDEmul();
         instance.exitWithCode(i);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -84,11 +80,9 @@ public class PluginsCMDTest {
     public void testProcessParams() {
         System.out.println("processParams");
         String[] args = null;
-        PluginsCMD instance = new PluginsCMD();
+        PluginsCMD instance = new PluginsCMDEmul();
         int expResult = 0;
         int result = instance.processParams(args);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

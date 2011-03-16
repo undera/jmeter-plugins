@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.cmd;
 
 import java.net.URL;
@@ -46,8 +41,6 @@ public class NewDriverTest {
         System.out.println("addURL");
         String path = "";
         NewDriver.addURL(path);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -58,8 +51,6 @@ public class NewDriverTest {
         System.out.println("addURL");
         URL url = null;
         NewDriver.addURL(url);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -70,8 +61,6 @@ public class NewDriverTest {
         System.out.println("addPath");
         String path = "";
         NewDriver.addPath(path);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -80,11 +69,8 @@ public class NewDriverTest {
     @Test
     public void testGetJMeterDir() {
         System.out.println("getJMeterDir");
-        String expResult = "";
         String result = NewDriver.getJMeterDir();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result.length()>0);
     }
 
     /**
@@ -95,8 +81,5 @@ public class NewDriverTest {
         System.out.println("main");
         String[] args = null;
         NewDriver.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-
 }

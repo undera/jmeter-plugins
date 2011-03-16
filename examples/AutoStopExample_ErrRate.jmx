@@ -18,6 +18,8 @@
         <stringProp name="error_rate_length">3</stringProp>
         <stringProp name="time_setting">response time</stringProp>
         <stringProp name="TestPlan.comments">Thread Group set to work for 60 seconds, but we&apos;ll stop earlier, because error rate will exceed limit that was set below.</stringProp>
+        <stringProp name="avg_response_latency">${car}</stringProp>
+        <stringProp name="avg_response_latency_length"></stringProp>
       </kg.apc.jmeter.reporters.AutoStop>
       <hashTree/>
       <ResultCollector guiclass="kg.apc.jmeter.vizualizers.TransactionsPerSecondGui" testclass="ResultCollector" testname="jp@gc - Transactions per Second" enabled="true">

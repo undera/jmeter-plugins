@@ -39,9 +39,12 @@ public class DynamicClassLoader extends URLClassLoader {
      * @param urls - list of URLs to add to the thread's classloader
      */
     public static void updateLoader(URL[] urls) {
-        DynamicClassLoader loader = (DynamicClassLoader) Thread.currentThread().getContextClassLoader();
-        for (int i = 0; i < urls.length; i++) {
-            loader.addURL(urls[i]);
+        ClassLoader l = Thread.currentThread().getContextClassLoader();
+        if (l instanceof DynamicClassLoader) {
+            DynamicClassLoader loader = (DynamicClassLoader) l;
+            for (int i = 0; i < urls.length; i++) {
+                loader.addURL(urls[i]);
+            }
         }
     }
 

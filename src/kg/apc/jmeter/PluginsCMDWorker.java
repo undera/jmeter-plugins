@@ -34,7 +34,16 @@ public class PluginsCMDWorker {
         String homeDir = NewDriver.getJMeterDir();
         JMeterUtils.setJMeterHome(homeDir);
         JMeterUtils.setLocale(new Locale("ignoreResources"));
-        JMeterUtils.loadJMeterProperties(homeDir + "/bin/jmeter.properties");
+        File props = new File(homeDir + "/bin/jmeter.properties");
+        if (!props.exists())
+        {
+            try {
+                props = File.createTempFile("jmeterplugins", ".properties");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+            JMeterUtils.loadJMeterProperties(props.getAbsolutePath());
         /*
         File savePropsFile = new File(propsFile.getParent() + "/bin");
         if (!savePropsFile.mkdirs())
@@ -86,14 +95,13 @@ public class PluginsCMDWorker {
     }
 
     public int doJob() {
-        System.out.println();
         prepareJMeterEnv();
 
         checkParams();
         try {
             Thread.currentThread().getContextClassLoader().loadClass(AbstractGraphPanelVisualizer.class.getCanonicalName());
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PluginsCMDWorker.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex);
         }
         AbstractGraphPanelVisualizer gui = getGUIObject(pluginType);
 

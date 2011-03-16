@@ -39,11 +39,9 @@ public class DynamicClassLoaderTest {
     @Test
     public void testAddURL() {
         System.out.println("addURL");
-        URL url = null;
-        DynamicClassLoader instance = null;
+        URL url = getClass().getResource(".");
+        DynamicClassLoader instance = new DynamicClassLoader(new URL[0]);
         instance.addURL(url);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -52,9 +50,7 @@ public class DynamicClassLoaderTest {
     @Test
     public void testUpdateLoader() {
         System.out.println("updateLoader");
-        URL[] urls = null;
+        URL[] urls = new URL[0];
         DynamicClassLoader.updateLoader(urls);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

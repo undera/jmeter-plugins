@@ -57,36 +57,4 @@ public class DynamicClassLoaderTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
-    /**
-     * Test of findClass method, of class DynamicClassLoader.
-     */
-    @Test
-    public void testFindClass() throws Exception {
-        System.out.println("findClass");
-        String name = "";
-        DynamicClassLoader instance = null;
-        Class expResult = null;
-        Class result = instance.findClass(name);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of loadClass method, of class DynamicClassLoader.
-     */
-    @Test
-    public void testLoadClass() throws Exception {
-        System.out.println("loadClass");
-        String name = "";
-        boolean resolve = false;
-        DynamicClassLoader instance = null;
-        Class expResult = null;
-        Class result = instance.loadClass(name, resolve);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
 }

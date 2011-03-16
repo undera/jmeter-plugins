@@ -1,10 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter;
 
+import java.io.File;
+import java.io.IOException;
+import kg.apc.emulators.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,7 +36,7 @@ public class PluginsCMDWorkerTest {
     }
 
     /**
-     * Test of addExportMode method, of class PluginsCMDWorker.
+     * Test of addExportMode method, of class CMDWorker.
      */
     @Test
     public void testAddExportMode() {
@@ -46,12 +44,10 @@ public class PluginsCMDWorkerTest {
         int mode = 0;
         PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.addExportMode(mode);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setInputFile method, of class PluginsCMDWorker.
+     * Test of setInputFile method, of class CMDWorker.
      */
     @Test
     public void testSetInputFile() {
@@ -59,12 +55,10 @@ public class PluginsCMDWorkerTest {
         String string = "";
         PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(string);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setOutputCSVFile method, of class PluginsCMDWorker.
+     * Test of setOutputCSVFile method, of class CMDWorker.
      */
     @Test
     public void testSetOutputCSVFile() {
@@ -72,12 +66,10 @@ public class PluginsCMDWorkerTest {
         String string = "";
         PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setOutputCSVFile(string);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setOutputPNGFile method, of class PluginsCMDWorker.
+     * Test of setOutputPNGFile method, of class CMDWorker.
      */
     @Test
     public void testSetOutputPNGFile() {
@@ -85,12 +77,10 @@ public class PluginsCMDWorkerTest {
         String string = "";
         PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setOutputPNGFile(string);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setPluginType method, of class PluginsCMDWorker.
+     * Test of setPluginType method, of class CMDWorker.
      */
     @Test
     public void testSetPluginType() {
@@ -98,48 +88,24 @@ public class PluginsCMDWorkerTest {
         String string = "";
         PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setPluginType(string);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setGraphWidth method, of class PluginsCMDWorker.
+     * Test of doJob method, of class CMDWorker.
      */
     @Test
-    public void testSetGraphWidth() {
-        System.out.println("setGraphWidth");
-        int i = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
-        instance.setGraphWidth(i);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setGraphHeight method, of class PluginsCMDWorker.
-     */
-    @Test
-    public void testSetGraphHeight() {
-        System.out.println("setGraphHeight");
-        int i = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
-        instance.setGraphHeight(i);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of doJob method, of class PluginsCMDWorker.
-     */
-    @Test
-    public void testDoJob() {
+    public void testDoJob() throws IOException {
         System.out.println("doJob");
         PluginsCMDWorker instance = new PluginsCMDWorker();
-        int expResult = 0;
+        instance.setInputFile("/home/undera/short.jtl");
+        instance.setOutputPNGFile(File.createTempFile("test", ".png").getAbsolutePath());
+        instance.setOutputCSVFile(File.createTempFile("test", ".csv").getAbsolutePath());
+        instance.setPluginType("ResponseTimesDistribution");
+        instance.addExportMode(PluginsCMDWorker.EXPORT_PNG);
+        instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);
         int result = instance.doJob();
+        int expResult = 0;
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

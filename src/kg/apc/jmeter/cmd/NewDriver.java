@@ -170,11 +170,6 @@ public final class NewDriver {
      */
     public static void main(String[] args) {
         Thread.currentThread().setContextClassLoader(loader);
-        if (System.getProperty("log4j.configuration") == null) {// $NON-NLS-1$ $NON-NLS-2$
-            File conf = new File(jmDir, "bin" + File.separator + "log4j.conf");// $NON-NLS-1$ $NON-NLS-2$
-            System.setProperty("log4j.configuration", "file:" + conf);
-        }
-
         try {
             Class<?> initialClass;
             initialClass = loader.loadClass("kg.apc.jmeter.PluginsCMD");// $NON-NLS-1$

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java -cp JMeterPlugins.jar kg.apc.jmeter.cmd.PluginsCMD $*
+java -jar $(dirname $0)/JMeterPluginsCMD.jar $*

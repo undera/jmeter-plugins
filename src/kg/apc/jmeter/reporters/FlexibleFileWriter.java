@@ -144,7 +144,7 @@ public class FlexibleFileWriter
 
     public void sampleOccurred(SampleEvent evt) {
         if (fileChannel == null || !fileChannel.isOpen()) {
-            log.warn("File writer is closed! Disable item or configure it properly");
+            if (log.isWarnEnabled()) log.warn("File writer is closed! Disable item or configure it properly");
             return;
         }
 
@@ -160,7 +160,7 @@ public class FlexibleFileWriter
         }
 
         buf.flip();
-        log.debug("Buf: " + buf.toString() + "/" + JMeterPluginsUtils.byteBufferToString(buf) + '.');
+
         try {
             fileChannel.write(buf);
         } catch (IOException ex) {
@@ -246,6 +246,5 @@ public class FlexibleFileWriter
             default:
                 throw new IllegalArgumentException("Unknown field ID: " + fieldID);
         }
-        log.debug(fieldID + " " + JMeterPluginsUtils.byteBufferToString(buf));
     }
 }

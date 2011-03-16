@@ -53,7 +53,7 @@ public class RawRequestSourcePreProcessor
             rawData = readNextChunk(getNextChunkSize());
         } catch (EndOfFileException ex) {
             if (getRewindOnEOF()) {
-                log.info("Rewind file");
+                if (log.isDebugEnabled()) log.debug("Rewind file");
                 try {
                     file.position(0);
                 } catch (IOException ex1) {

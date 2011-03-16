@@ -157,8 +157,10 @@
          <!-- JmeterPlugins files -->
          <zipfileset dir="${svn.dir}" includes="LICENSE README"/>
          <zipfileset dir="${dist.dir}" includes="JMeterPlugins.jar"/>
-         <!-- agent files -->
+         <!-- agent & CMD files -->
          <zipfileset dir="${dist.dir}" includes="ServerAgent.jar" prefix="serverAgent"/>
+         <zipfileset dir="${dist.dir}" includes="JMeterPluginsCMD.jar" prefix="cmd"/>
+         <zipfileset dir="${svn.dir}/agent" includes="JMeterPluginsCMD.*" prefix="cmd"/>
          <zipfileset dir="${svn.dir}/agent" includes="startAgent.*" prefix="serverAgent"/>
          <!-- sigar files -->
          <zipfileset dir="${sigar.dir}/sigar-bin/lib" includes="*.*" excludes="log4j.jar, junit.jar, .sigar_shellrc" prefix="serverAgent"/>
@@ -179,7 +181,8 @@
            to jmeter/lib/ext, defined by property jmeter.lib.ext
            in project.properties files -->
       <copy todir="${jmeter.lib.ext}">
-         <fileset file="${dist.jar}"/>
+         <fileset dir="${dist.dir}" includes="**/*.jar" />
+         <fileset dir="${svn.dir}/agent" includes="*.*" />
       </copy>
    </target>
 

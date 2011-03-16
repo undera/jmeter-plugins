@@ -1,7 +1,7 @@
 package kg.apc.emulators;
 
 
-import kg.apc.jmeter.cmd.PluginsCMD;
+import kg.apc.jmeter.PluginsCMD;
 
     public class PluginsCMDEmul extends PluginsCMD {
         public static void main(String[] args) {

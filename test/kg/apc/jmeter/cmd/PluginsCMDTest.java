@@ -1,6 +1,7 @@
 package kg.apc.jmeter.cmd;
 
 import kg.apc.emulators.PluginsCMDEmul;
+import kg.apc.emulators.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -59,6 +60,7 @@ public class PluginsCMDTest {
     @Test
     public void test_Image() {
         System.out.println("png");
-        PluginsCMDEmul.main("--generate-png test.png --input-jtl /home/undera/short.jtl --plugin-type ResponseTimesOverTime".split(" "));
+        String str="--generate-png "+TestJMeterUtils.getTempDir()+"/test.png --input-jtl /home/undera/short.jtl --plugin-type ResponseTimesOverTime";
+        PluginsCMDEmul.main(str.split(" "));
     }
 }

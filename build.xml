@@ -125,6 +125,10 @@
       <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/ServerAgent.jar">
          <fileset dir="${build.dir}/agent/classes"/>
       </jar>
+      <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/JMeterPluginsCMD.jar">
+         <fileset dir="${build.dir}/classes"/>
+          <include name="${build.dir}/classes/kg/apc/jmeter/cmd/*"/>
+      </jar>
    </target>
 
    <!-- APC: I see no problems in making package always. It is quick enough now. -->

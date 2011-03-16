@@ -1,5 +1,6 @@
 package kg.apc.jmeter.cmd;
 
+import kg.apc.jmeter.PluginsCMDWorker;
 import java.io.File;
 import java.io.IOException;
 import kg.apc.emulators.TestJMeterUtils;
@@ -42,7 +43,7 @@ public class CMDWorkerTest {
     public void testAddExportMode() {
         System.out.println("addExportMode");
         int mode = 0;
-        CMDWorker instance = new CMDWorker();
+        PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.addExportMode(mode);
     }
 
@@ -53,7 +54,7 @@ public class CMDWorkerTest {
     public void testSetInputFile() {
         System.out.println("setInputFile");
         String string = "";
-        CMDWorker instance = new CMDWorker();
+        PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(string);
     }
 
@@ -64,7 +65,7 @@ public class CMDWorkerTest {
     public void testSetOutputCSVFile() {
         System.out.println("setOutputCSVFile");
         String string = "";
-        CMDWorker instance = new CMDWorker();
+        PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setOutputCSVFile(string);
     }
 
@@ -75,7 +76,7 @@ public class CMDWorkerTest {
     public void testSetOutputPNGFile() {
         System.out.println("setOutputPNGFile");
         String string = "";
-        CMDWorker instance = new CMDWorker();
+        PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setOutputPNGFile(string);
     }
 
@@ -86,7 +87,7 @@ public class CMDWorkerTest {
     public void testSetPluginType() {
         System.out.println("setPluginType");
         String string = "";
-        CMDWorker instance = new CMDWorker();
+        PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setPluginType(string);
     }
 
@@ -96,13 +97,13 @@ public class CMDWorkerTest {
     @Test
     public void testDoJob() throws IOException {
         System.out.println("doJob");
-        CMDWorker instance = new CMDWorker();
+        PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile("/home/undera/short.jtl");
         instance.setOutputPNGFile(File.createTempFile("test", ".png").getAbsolutePath());
         instance.setOutputCSVFile(File.createTempFile("test", ".csv").getAbsolutePath());
         instance.setPluginType("ResponseTimesDistribution");
-        instance.addExportMode(CMDWorker.EXPORT_PNG);
-        instance.addExportMode(CMDWorker.EXPORT_CSV);
+        instance.addExportMode(PluginsCMDWorker.EXPORT_PNG);
+        instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);
         int result = instance.doJob();
         int expResult = 0;
         assertEquals(expResult, result);

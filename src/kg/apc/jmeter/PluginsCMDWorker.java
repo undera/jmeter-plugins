@@ -1,8 +1,10 @@
-package kg.apc.jmeter.cmd;
+package kg.apc.jmeter;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizer;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.util.JMeterUtils;
@@ -11,7 +13,7 @@ import org.apache.jmeter.util.JMeterUtils;
  *
  * @author undera
  */
-class CMDWorker {
+public class PluginsCMDWorker {
 
     private int graphWidth = 800;
     private int graphHeight = 600;
@@ -23,16 +25,15 @@ class CMDWorker {
     private String outputPNG;
     private String pluginType;
 
-    public CMDWorker() {
-        prepareJMeterEnv();
+    public PluginsCMDWorker() {
     }
 
     private void prepareJMeterEnv() {
         // TODO: get jmeter home from current jar path
-        String homeDir = "/home/undera/NetBeansProjects/jmeter/trunk";
-        JMeterUtils.setJMeterHome(homeDir);
-        JMeterUtils.setLocale(new Locale("ignoreResources"));
-        JMeterUtils.loadJMeterProperties(homeDir + "/bin/jmeter.properties");
+        //String homeDir = "/home/undera/NetBeansProjects/jmeter/trunk";
+        //JMeterUtils.setJMeterHome(homeDir);
+        //JMeterUtils.setLocale(new Locale("ignoreResources"));
+        //JMeterUtils.loadJMeterProperties(homeDir + "/bin/jmeter.properties");
         /*
         File savePropsFile = new File(propsFile.getParent() + "/bin");
         if (!savePropsFile.mkdirs())
@@ -84,8 +85,15 @@ class CMDWorker {
     }
 
     int doJob() {
-        checkParams();
+        System.out.println();
+        prepareJMeterEnv();
 
+        checkParams();
+        try {
+            Thread.currentThread().getContextClassLoader().loadClass(AbstractGraphPanelVisualizer.class.getCanonicalName());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PluginsCMDWorker.class.getName()).log(Level.SEVERE, null, ex);
+        }
         AbstractGraphPanelVisualizer gui = getGUIObject(pluginType);
 
         ResultCollector rc = new ResultCollector();
@@ -128,10 +136,10 @@ class CMDWorker {
         }
 
 
-        boolean isOur = AbstractGraphPanelVisualizer.class.isAssignableFrom(a);
-        if (!isOur) {
-            throw new RuntimeException("Class name " + pluginType + " cannot be used");
-        }
+        //boolean isOur = AbstractGraphPanelVisualizer.class.isAssignableFrom(a);
+        //if (!isOur) {
+        //    throw new RuntimeException("Class name " + pluginType + " cannot be used");
+        //}
 
         try {
             return (AbstractGraphPanelVisualizer) a.newInstance();

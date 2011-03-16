@@ -71,6 +71,8 @@
       <mkdir dir="${build.dir}/agent"/>
       <mkdir dir="${build.dir}/agent/classes"/>
       <mkdir dir="${build.dir}/agent/generated-sources/ap-source-output"/>
+      <mkdir dir="${build.dir}/cmd"/>
+      <mkdir dir="${build.dir}/cmd/classes"/>
    </target>
 
    <target name="-post-compile">
@@ -118,6 +120,9 @@
          <fileset dir="${src.dir}" excludes="${build.classes.excludes},${excludes}" includes="**/*.class"/>
       </copy>
 
+      <copy todir="${build.dir}/cmd/classes">
+         <fileset dir="${build.dir}/classes" includes="**/kg/apc/jmeter/cmd/*.class"/>
+      </copy>
    </target>
 
    <!-- APC: before making main jar we make agent's jar -->
@@ -125,9 +130,9 @@
       <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/ServerAgent.jar">
          <fileset dir="${build.dir}/agent/classes"/>
       </jar>
-      <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/JMeterPluginsCMD.jar">
-         <fileset dir="${build.dir}/classes"/>
-          <include name="${build.dir}/classes/kg/apc/jmeter/cmd/*"/>
+      <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/JMeterPluginsCMD.jar"
+      manifest="${src.dir}/kg/apc/jmeter/cmd/manifest.mf">
+         <fileset dir="${build.dir}/cmd/classes"/>
       </jar>
    </target>
 

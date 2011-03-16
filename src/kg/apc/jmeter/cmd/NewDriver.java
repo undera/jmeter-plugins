@@ -1,21 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-
 package kg.apc.jmeter.cmd;
 
 // N.B. this must only use standard Java packages
@@ -30,22 +12,17 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 /**
- * Main class for JMeter - sets up initial classpath and the loader.
- *
+ * Main class for CLI - sets up initial classpath and the loader.
+ * I took it from JMeter, yes
  */
 public final class NewDriver {
 
     private static final String CLASSPATH_SEPARATOR = System.getProperty("path.separator");// $NON-NLS-1$
-
     private static final String OS_NAME = System.getProperty("os.name");// $NON-NLS-1$
-
     private static final String OS_NAME_LC = OS_NAME.toLowerCase(java.util.Locale.ENGLISH);
-
     private static final String JAVA_CLASS_PATH = "java.class.path";// $NON-NLS-1$
-
     /** The class loader to use for loading JMeter classes. */
     private static final DynamicClassLoader loader;
-
     /** The directory JMeter is installed in. */
     private static final String jmDir;
 
@@ -55,26 +32,27 @@ public final class NewDriver {
         final String initial_classpath = System.getProperty(JAVA_CLASS_PATH);
 
         // Find JMeter home dir from the initial classpath
-        String tmpDir=null;
+        String tmpDir = null;
         StringTokenizer tok = new StringTokenizer(initial_classpath, File.pathSeparator);
         if (tok.countTokens() == 1
-                || (tok.countTokens()  == 2 // Java on Mac OS can add a second entry to the initial classpath
-                    && OS_NAME_LC.startsWith("mac os x")// $NON-NLS-1$
-                   )
-           ) {
+                || (tok.countTokens() == 2 // Java on Mac OS can add a second entry to the initial classpath
+                && OS_NAME_LC.startsWith("mac os x")// $NON-NLS-1$
+                )) {
             File jar = new File(tok.nextToken());
             try {
                 tmpDir = jar.getCanonicalFile().getParentFile().getParent();
             } catch (IOException e) {
             }
         } else {// e.g. started from IDE with full classpath
-            tmpDir = System.getProperty("jmeter.home","");// Allow override $NON-NLS-1$ $NON-NLS-2$
+            tmpDir = System.getProperty("jmeter.home", "");// Allow override $NON-NLS-1$ $NON-NLS-2$
             if (tmpDir.length() == 0) {
                 File userDir = new File(System.getProperty("user.dir"));// $NON-NLS-1$
                 tmpDir = userDir.getAbsoluteFile().getParent();
             }
         }
-        jmDir=tmpDir;
+        //jmDir=tmpDir;
+
+        jmDir = new File(tmpDir).getParent();
 
         /*
          * Does the system support UNC paths? If so, may need to fix them up
@@ -84,11 +62,12 @@ public final class NewDriver {
 
         // Add standard jar locations to initial classpath
         StringBuilder classpath = new StringBuilder();
-        File[] libDirs = new File[] { new File(jmDir + File.separator + "lib"),// $NON-NLS-1$ $NON-NLS-2$
-                new File(jmDir + File.separator + "lib" + File.separator + "ext"),// $NON-NLS-1$ $NON-NLS-2$
-                new File(jmDir + File.separator + "lib" + File.separator + "junit")};// $NON-NLS-1$ $NON-NLS-2$
+        File[] libDirs = new File[]{new File(jmDir + File.separator + "lib"),// $NON-NLS-1$ $NON-NLS-2$
+            new File(jmDir + File.separator + "lib" + File.separator + "ext"),// $NON-NLS-1$ $NON-NLS-2$
+            new File(jmDir + File.separator + "lib" + File.separator + "junit")};// $NON-NLS-1$ $NON-NLS-2$
         for (int a = 0; a < libDirs.length; a++) {
             File[] libJars = libDirs[a].listFiles(new FilenameFilter() {
+
                 public boolean accept(File dir, String name) {// only accept jar files
                     return name.endsWith(".jar");// $NON-NLS-1$
                 }
@@ -170,7 +149,7 @@ public final class NewDriver {
         sb.append(CLASSPATH_SEPARATOR);
         sb.append(path);
         // ClassFinder needs this
-        System.setProperty(JAVA_CLASS_PATH,sb.toString());
+        System.setProperty(JAVA_CLASS_PATH, sb.toString());
     }
 
     /**
@@ -198,12 +177,12 @@ public final class NewDriver {
 
         try {
             Class<?> initialClass;
-                initialClass = loader.loadClass("kg.apc.jmeter.PluginsCMD");// $NON-NLS-1$
+            initialClass = loader.loadClass("kg.apc.jmeter.PluginsCMD");// $NON-NLS-1$
             Object instance = initialClass.newInstance();
-            Method startup = initialClass.getMethod("processParams", new Class[] { (new String[0]).getClass() });// $NON-NLS-1$
-            startup.invoke(instance, new Object[] { args });
-        } catch(Throwable e){
-            System.err.println("JMeter home directory was detected as: "+jmDir);
+            Method startup = initialClass.getMethod("processParams", new Class[]{(new String[0]).getClass()});// $NON-NLS-1$
+            startup.invoke(instance, new Object[]{args});
+        } catch (Throwable e) {
+            System.err.println("JMeter home directory was detected as: " + jmDir);
             throw new RuntimeException(e);
         }
     }

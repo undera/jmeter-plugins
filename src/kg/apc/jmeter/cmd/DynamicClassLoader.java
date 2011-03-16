@@ -11,7 +11,7 @@ import java.net.URLStreamHandlerFactory;
  * It allows public access to the addURL() method.
  *
  * It also adds a convenience method to update the current thread classloader
- *
+ *  It was also borrowed from JMeter
  */
 public class DynamicClassLoader extends URLClassLoader {
 

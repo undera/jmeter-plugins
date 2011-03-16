@@ -3,8 +3,6 @@ package kg.apc.jmeter;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import kg.apc.jmeter.cmd.NewDriver;
 import kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizer;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -30,36 +28,18 @@ public class PluginsCMDWorker {
     }
 
     private void prepareJMeterEnv() {
-        // TODO: get jmeter home from current jar path
         String homeDir = NewDriver.getJMeterDir();
         JMeterUtils.setJMeterHome(homeDir);
         JMeterUtils.setLocale(new Locale("ignoreResources"));
         File props = new File(homeDir + "/bin/jmeter.properties");
-        if (!props.exists())
-        {
+        if (!props.exists()) {
             try {
                 props = File.createTempFile("jmeterplugins", ".properties");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         }
-            JMeterUtils.loadJMeterProperties(props.getAbsolutePath());
-        /*
-        File savePropsFile = new File(propsFile.getParent() + "/bin");
-        if (!savePropsFile.mkdirs())
-        {
-        throw new RuntimeException("Cannot create SaveService properties dir: "+savePropsFile.getAbsolutePath());
-        }
-
-        savePropsFile=new File(savePropsFile.getAbsolutePath()+"/saveservice.properties");
-        try {
-        savePropsFile.createNewFile();
-        } catch (IOException ex) {
-        throw new RuntimeException("Cannot create temporary SaveService properties file: "+ex.toString(), ex);
-        }
-        JMeterUtils.setJMeterHome(propsFile.getAbsolutePath());
-         *
-         */
+        JMeterUtils.loadJMeterProperties(props.getAbsolutePath());
     }
 
     public void addExportMode(int mode) {
@@ -83,7 +63,16 @@ public class PluginsCMDWorker {
     }
 
     private void checkParams() {
-        // TODO: check here that parameters are consistent
+        if (pluginType==null)
+        {
+            throw new IllegalArgumentException("Missing plugin type specification");
+        }
+
+        if (exportMode==0)
+            throw new IllegalArgumentException("Missing any export specification");
+
+        if (inputFile==null)
+            throw new IllegalArgumentException("Missing input JTL file specification");
     }
 
     public void setGraphWidth(int i) {
@@ -98,11 +87,7 @@ public class PluginsCMDWorker {
         prepareJMeterEnv();
 
         checkParams();
-        try {
-            Thread.currentThread().getContextClassLoader().loadClass(AbstractGraphPanelVisualizer.class.getCanonicalName());
-        } catch (ClassNotFoundException ex) {
-            throw new RuntimeException(ex);
-        }
+    
         AbstractGraphPanelVisualizer gui = getGUIObject(pluginType);
 
         ResultCollector rc = new ResultCollector();
@@ -125,6 +110,7 @@ public class PluginsCMDWorker {
                 throw new RuntimeException(ex);
             }
         }
+
         return 0;
     }
 

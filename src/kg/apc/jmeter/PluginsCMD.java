@@ -8,6 +8,7 @@ package kg.apc.jmeter;
  * @see CMDWorker
  */
 public class PluginsCMD {
+
     private static void showHelp() {
         System.out.println("Usage:\n JMeterPluginsCMD "
                 + "--help "
@@ -21,9 +22,6 @@ public class PluginsCMD {
                 //+ "--aggregate-rows " //TODO: implement option setting
                 + "]");
 
-    }
-
-    protected void exitWithCode(int i) {
     }
 
     public int processParams(String[] args) {
@@ -87,6 +85,16 @@ public class PluginsCMD {
                 return 1;
             }
         }
-        return worker.doJob();
+
+        try {
+            return worker.doJob();
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+            if (args.length<2)
+            {
+                showHelp();
+            }
+            return 1;
+        }
     }
 }

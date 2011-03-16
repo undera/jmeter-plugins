@@ -175,7 +175,8 @@ public final class NewDriver {
             initialClass = loader.loadClass("kg.apc.jmeter.PluginsCMD");// $NON-NLS-1$
             Object instance = initialClass.newInstance();
             Method startup = initialClass.getMethod("processParams", new Class[]{(new String[0]).getClass()});// $NON-NLS-1$
-            startup.invoke(instance, new Object[]{args});
+            Object res=startup.invoke(instance, new Object[]{args});
+            System.exit((Integer) res);
         } catch (Throwable e) {
             System.err.println("JMeter home directory was detected as: " + jmDir);
             throw new RuntimeException(e);

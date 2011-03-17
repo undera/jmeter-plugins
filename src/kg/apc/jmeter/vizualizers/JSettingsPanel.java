@@ -46,11 +46,22 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
         initComponents();
         this.parent = parent;
-        postInitComponents(showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption, showRelativeTimeOption, showMaxYOption);
+        postInitComponents(
+                showTimelineOption,
+                showGradientOption,
+                showCurrentXOption,
+                showFinalZeroingLinesOption,
+                showLimitPointOption,
+                showBarChartXAxisLimit,
+                showHideNonRepValues,
+                showAggregateOption,
+                showRelativeTimeOption,
+                showMaxYOption);
         registerJTextfieldForRefresh(jTextFieldMaxY);
     }
 
-    private void postInitComponents(boolean showTimelineOption,
+    private void postInitComponents(
+            boolean showTimelineOption,
             boolean showGradientOption,
             boolean showCurrentXOption,
             boolean showFinalZeroingLinesOption,
@@ -61,8 +72,18 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showRelativeTimeOption,
             boolean showMaxYOption)
     {
-        boolean showGraphOptionPanel = showTimelineOption || showAggregateOption;
-        jPanelTimeLineContainer.setVisible(showGraphOptionPanel || showRelativeTimeOption || showAggregateOption);
+        jPanelTimeLineContainer.setVisible(
+                showTimelineOption ||
+                showAggregateOption ||
+                showRelativeTimeOption);
+        jPanelRenderingOptionsContainer.setVisible(
+                showGradientOption ||
+                showCurrentXOption ||
+                showFinalZeroingLinesOption ||
+                showLimitPointOption ||
+                showBarChartXAxisLimit ||
+                showHideNonRepValues ||
+                showMaxYOption);
 
         jLabelTimeline1.setVisible(showTimelineOption);
         jLabelTimeline2.setVisible(showTimelineOption);

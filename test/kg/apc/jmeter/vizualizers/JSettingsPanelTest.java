@@ -47,7 +47,7 @@ public class JSettingsPanelTest {
     {
         System.out.println("setGranulationValue");
         int value = 1000;
-        JSettingsPanel instance = new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), true, true, true, true, true);
+        JSettingsPanel instance = new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), JSettingsPanel.GRADIENT_OPTION);
         instance.setGranulationValue(value);
     }
 
@@ -67,7 +67,7 @@ public class JSettingsPanelTest {
         @Override
         protected JSettingsPanel getSettingsPanel()
         {
-            return new JSettingsPanel(this, true, true, true, true, true);
+            return new JSettingsPanel(this, JSettingsPanel.GRADIENT_OPTION);
         }
 
         @Override
@@ -84,7 +84,7 @@ public class JSettingsPanelTest {
     {
         System.out.println("setAggregateMode");
         boolean aggregate = false;
-        JSettingsPanel instance = new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), true, true, true, true, true);
+        JSettingsPanel instance = new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), JSettingsPanel.GRADIENT_OPTION);
         instance.setAggregateMode(aggregate);
     }
 
@@ -96,7 +96,7 @@ public class JSettingsPanelTest {
     {
         System.out.println("getGraphDisplayPanel");
         SettingsInterfaceImpl parent = new SettingsInterfaceImpl();
-        JSettingsPanel instance = new JSettingsPanel(parent, true, true, true, true, true);
+        JSettingsPanel instance = new JSettingsPanel(parent, JSettingsPanel.GRADIENT_OPTION);
         JPanel result = instance.getGraphDisplayPanel();
         assertNotNull(result);
     }
@@ -108,7 +108,7 @@ public class JSettingsPanelTest {
     public void testIsPreview()
     {
         System.out.println("isPreview");
-        JSettingsPanel instance = new JSettingsPanel(new SettingsInterfaceImpl(), true, true, true, true, true);
+        JSettingsPanel instance = new JSettingsPanel(new SettingsInterfaceImpl(), JSettingsPanel.GRADIENT_OPTION);
         boolean expResult = true;
         boolean result = instance.isPreview();
         assertEquals(expResult, result);

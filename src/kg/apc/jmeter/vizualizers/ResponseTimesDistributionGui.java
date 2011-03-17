@@ -65,7 +65,11 @@ public class ResponseTimesDistributionGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, true, true, false, false, false, true, false, true, false, false);
+        return new JSettingsPanel(this,
+                JSettingsPanel.TIMELINE_OPTION |
+                JSettingsPanel.GRADIENT_OPTION |
+                JSettingsPanel.BAR_CHART_X_LIMIT_OPTION |
+                JSettingsPanel.AGGREGATE_OPTION);
     }
 
     @Override

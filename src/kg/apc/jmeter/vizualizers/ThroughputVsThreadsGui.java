@@ -71,7 +71,11 @@ public class ThroughputVsThreadsGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, false, true, true, false, false, false, true, false);
+        return new JSettingsPanel(this,
+                JSettingsPanel.GRADIENT_OPTION |
+                JSettingsPanel.CURRENTX_OPTION |
+                JSettingsPanel.MAXY_OPTION |
+                JSettingsPanel.HIDE_NON_REP_VALUES_OPTION);
     }
 
     @Override

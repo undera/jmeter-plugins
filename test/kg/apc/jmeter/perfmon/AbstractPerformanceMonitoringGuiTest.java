@@ -222,7 +222,7 @@ public class AbstractPerformanceMonitoringGuiTest
         @Override
         protected JSettingsPanel getSettingsPanel()
         {
-            return new JSettingsPanel(this, true, true, true, true, true);
+            return new JSettingsPanel(this, JSettingsPanel.GRADIENT_OPTION);
         }
 
         @Override

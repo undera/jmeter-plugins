@@ -75,7 +75,12 @@ public class TimesVsThreadsGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, false, true, true, false, false, false, true, true);
+        return new JSettingsPanel(this,
+                JSettingsPanel.GRADIENT_OPTION |
+                JSettingsPanel.CURRENTX_OPTION |
+                JSettingsPanel.HIDE_NON_REP_VALUES_OPTION |
+                JSettingsPanel.MAXY_OPTION |
+                JSettingsPanel.AGGREGATE_OPTION);
     }
 
     @Override

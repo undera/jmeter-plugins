@@ -31,7 +31,6 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         jTextFieldErrorSec.setText(testElement.getErrorRateSecs());
         jTextFieldRespLatency.setText(testElement.getResponseLatency());
         jTextFieldRespLatencySec.setText(testElement.getResponseLatencySecs());
-        processBullets();
     }
 
     public void modifyTestElement(AutoStop testElement) {
@@ -50,7 +49,6 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         jTextFieldErrorSec.setText("10");
         jTextFieldRespLatency.setText("50");
         jTextFieldRespLatencySec.setText("10");
-        processBullets();
     }
 
     private int getIntValue(JTextField tf) {
@@ -109,18 +107,14 @@ public class JAutoStopPanel extends javax.swing.JPanel {
 
             @Override
             public void insertUpdate(DocumentEvent arg0) {
-                if (tf.hasFocus()) {
-                    setJTextFieldColor(tf, isFloat);
-                    processBullets();
-                }
+                setJTextFieldColor(tf, isFloat);
+                processBullets();
             }
 
             @Override
             public void removeUpdate(DocumentEvent arg0) {
-                if (tf.hasFocus()) {
-                    setJTextFieldColor(tf, isFloat);
-                    processBullets();
-                }
+                setJTextFieldColor(tf, isFloat);
+                processBullets();
             }
         });
     }

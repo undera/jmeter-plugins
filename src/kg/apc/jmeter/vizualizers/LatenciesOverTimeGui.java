@@ -74,7 +74,14 @@ public class LatenciesOverTimeGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, true, true, false, true, true, false, false, true, true);
+        return new JSettingsPanel(this,
+                JSettingsPanel.TIMELINE_OPTION |
+                JSettingsPanel.GRADIENT_OPTION |
+                JSettingsPanel.FINAL_ZEROING_OPTION |
+                JSettingsPanel.LIMIT_POINT_OPTION |
+                JSettingsPanel.RELATIVE_TIME_OPTION |
+                JSettingsPanel.MAXY_OPTION |
+                JSettingsPanel.AGGREGATE_OPTION);
     }
 
     @Override

@@ -62,7 +62,10 @@ public class ResponseTimesPercentilesGui
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, false, true, false, false, false, false, false, true);
+        return new JSettingsPanel(this,
+                JSettingsPanel.GRADIENT_OPTION |
+                JSettingsPanel.MAXY_OPTION |
+                JSettingsPanel.AGGREGATE_OPTION);
     }
 
     @Override

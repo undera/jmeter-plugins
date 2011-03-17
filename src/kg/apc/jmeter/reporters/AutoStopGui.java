@@ -1,8 +1,6 @@
 package kg.apc.jmeter.reporters;
 
 import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.testelement.TestElement;

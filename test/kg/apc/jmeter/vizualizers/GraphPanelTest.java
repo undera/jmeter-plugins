@@ -59,7 +59,7 @@ public class GraphPanelTest
    public void setUp()
    {
       instance = new GraphPanel();
-      instance.getSettingsTab().add(new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), true, true, true, true, true));
+      instance.getSettingsTab().add(new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), JSettingsPanel.GRADIENT_OPTION));
       instance.getGraphObject().setRows(new ConcurrentSkipListMap<String, AbstractGraphRow>());
    }
 
@@ -167,7 +167,7 @@ public class GraphPanelTest
               @Override
         protected JSettingsPanel getSettingsPanel()
         {
-            return new JSettingsPanel(this, true, true, true, true, true);
+            return new JSettingsPanel(this, JSettingsPanel.GRADIENT_OPTION);
         }
 
         @Override

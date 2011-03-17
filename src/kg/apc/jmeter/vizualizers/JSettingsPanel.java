@@ -16,75 +16,38 @@ import kg.apc.jmeter.charting.GraphPanelChart;
  */
 public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererInterface
 {
+    public final static int TIMELINE_OPTION = 1;
+    public final static int GRADIENT_OPTION = 1 << 1;
+    public final static int CURRENTX_OPTION = 1 << 2;
+    public final static int FINAL_ZEROING_OPTION = 1 << 3;
+    public final static int LIMIT_POINT_OPTION = 1 << 4;
+    public final static int BAR_CHART_X_LIMIT_OPTION = 1 << 5;
+    public final static int HIDE_NON_REP_VALUES_OPTION = 1 << 6;
+    public final static int AGGREGATE_OPTION = 1 << 7;
+    public final static int RELATIVE_TIME_OPTION = 1 << 8;
+    public final static int MAXY_OPTION = 1 << 9;
 
     private SettingsInterface parent = null;
     private int originalTooltipDisplayTime = 0;
 
     /** Creates new form JSettingsPanel */
-    public JSettingsPanel(SettingsInterface parent,
-            boolean showTimelineOption,
-            boolean showGradientOption,
-            boolean showCurrentXOption,
-            boolean showFinalZeroingLinesOption,
-            boolean showLimitPointOption,
-            boolean showBarChartXAxisLimit,
-            boolean showHideNonRepValues,
-            boolean showAggregateOption,
-            boolean showRelativeTimeOption,
-            boolean showMaxYOption)
+    public JSettingsPanel(SettingsInterface parent, int options)
     {
+        boolean showTimelineOption = (options & TIMELINE_OPTION) != 0;
+        boolean showGradientOption = (options & GRADIENT_OPTION) != 0;
+        boolean showCurrentXOption = (options & CURRENTX_OPTION) != 0;
+        boolean showFinalZeroingLinesOption = (options & FINAL_ZEROING_OPTION) != 0;
+        boolean showLimitPointOption = (options & LIMIT_POINT_OPTION) != 0;
+        boolean showBarChartXAxisLimit = (options & BAR_CHART_X_LIMIT_OPTION) != 0;
+        boolean showHideNonRepValues = (options & HIDE_NON_REP_VALUES_OPTION) != 0;
+        boolean showAggregateOption = (options & AGGREGATE_OPTION) != 0;
+        boolean showRelativeTimeOption = (options & RELATIVE_TIME_OPTION) != 0;
+        boolean showMaxYOption = (options & MAXY_OPTION) != 0;
+
         initComponents();
         this.parent = parent;
         postInitComponents(showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption, showRelativeTimeOption, showMaxYOption);
         registerJTextfieldForRefresh(jTextFieldMaxY);
-    }
-
-    public JSettingsPanel(SettingsInterface parent,
-            boolean showTimelineOption,
-            boolean showGradientOption,
-            boolean showCurrentXOption,
-            boolean showFinalZeroingLinesOption,
-            boolean showLimitPointOption,
-            boolean showBarChartXAxisLimit,
-            boolean showHideNonRepValues,
-            boolean showAggregateOption,
-            boolean showRelativeTimeOption)
-    {
-        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption, showRelativeTimeOption, true);
-    }
-
-    public JSettingsPanel(SettingsInterface parent,
-            boolean showTimelineOption,
-            boolean showGradientOption,
-            boolean showCurrentXOption,
-            boolean showFinalZeroingLinesOption,
-            boolean showLimitPointOption)
-    {
-        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, false, false, false, false, true);
-    }
-
-    public JSettingsPanel(SettingsInterface parent,
-            boolean showTimelineOption,
-            boolean showGradientOption,
-            boolean showCurrentXOption,
-            boolean showFinalZeroingLinesOption,
-            boolean showLimitPointOption,
-            boolean showBarChartXAxisLimit)
-    {
-        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, false, false, false, true);
-    }
-
-    public JSettingsPanel(SettingsInterface parent,
-            boolean showTimelineOption,
-            boolean showGradientOption,
-            boolean showCurrentXOption,
-            boolean showFinalZeroingLinesOption,
-            boolean showLimitPointOption,
-            boolean showBarChartXAxisLimit,
-            boolean showHideNonRepValues,
-            boolean showAggregateOption)
-    {
-        this(parent, showTimelineOption, showGradientOption, showCurrentXOption, showFinalZeroingLinesOption, showLimitPointOption, showBarChartXAxisLimit, showHideNonRepValues, showAggregateOption, false, true);
     }
 
     private void postInitComponents(boolean showTimelineOption,
@@ -705,21 +668,26 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         if (jCheckBoxMaxY.isSelected())
         {
             parent.getGraphPanelChart().setForcedMaxY(value);
-            if(oldValue != value) refreshGraphPreview();
+            if (oldValue != value)
+            {
+                refreshGraphPreview();
+            }
         } else
         {
             parent.getGraphPanelChart().setForcedMaxY(-1);
-            if(oldValue != -1) refreshGraphPreview();
+            if (oldValue != -1)
+            {
+                refreshGraphPreview();
+            }
         }
     }//GEN-LAST:event_jCheckBoxMaxYActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        if((evt.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK)
+        if ((evt.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK)
         {
-            JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaigh="+parent.getWikiPage());
+            JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaigh=" + parent.getWikiPage());
         }
     }//GEN-LAST:event_jLabel1MouseClicked
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupGraphType;
     private javax.swing.JCheckBox jCheckBoxDrawCurrentX;

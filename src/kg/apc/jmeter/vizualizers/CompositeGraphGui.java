@@ -49,7 +49,12 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer
     @Override
     protected JSettingsPanel getSettingsPanel()
     {
-        return new JSettingsPanel(this, false, true, false, true, true, false, false, false, true);
+        return new JSettingsPanel(this,
+                JSettingsPanel.GRADIENT_OPTION |
+                JSettingsPanel.FINAL_ZEROING_OPTION |
+                JSettingsPanel.LIMIT_POINT_OPTION |
+                JSettingsPanel.MAXY_OPTION |
+                JSettingsPanel.RELATIVE_TIME_OPTION);
     }
 
     @Override

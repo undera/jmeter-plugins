@@ -84,7 +84,7 @@ public class AbstractVsThreadVisualizerTest {
         @Override
         protected JSettingsPanel getSettingsPanel()
         {
-            return new JSettingsPanel(this, isStats, isStats, isStats, isStats, isStats);
+            return new JSettingsPanel(this, JSettingsPanel.GRADIENT_OPTION);
         }
 
         @Override

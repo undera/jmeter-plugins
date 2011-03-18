@@ -19,7 +19,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
-import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.GraphRowExactValues;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.threads.UltimateThreadGroupGui;
@@ -185,7 +184,7 @@ public class VariableThroughputTimerGui
    {
       model.clear();
       AbstractGraphRow row = new GraphRowExactValues();
-      row.setColor(ColorsDispatcher.RED);
+      row.setColor(Color.RED);
       row.setDrawLine(true);
       row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
       row.setDrawThickLines(true);

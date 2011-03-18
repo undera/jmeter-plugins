@@ -1,7 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
 
@@ -52,7 +52,7 @@ public class TransactionsPerSecondGui
 
         if (rowAgg == null)
         {
-            rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, rowAggName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, isSuccess ? ColorsDispatcher.GREEN : ColorsDispatcher.RED, true);
+            rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, rowAggName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, isSuccess ? Color.GREEN : Color.RED, true);
         }
 
         //fix to have trans/sec values in all cases
@@ -66,7 +66,7 @@ public class TransactionsPerSecondGui
                 rowAgg = modelAggregate.get(labelAggFailure);
                 if (rowAgg == null)
                 {
-                    rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, labelAggFailure, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, ColorsDispatcher.RED, true);
+                    rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, labelAggFailure, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, Color.RED, true);
                 }
                 rowAgg.add(time, 0);
             }

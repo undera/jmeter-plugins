@@ -1,10 +1,10 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
 import java.util.Iterator;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
 import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.GraphPanelChartSimpleElement;
 import kg.apc.jmeter.charting.GraphRowSimple;
 import org.apache.jmeter.samplers.SampleResult;
@@ -86,7 +86,6 @@ public class ThreadsStateOverTimeGui
         }
         if (rowAgg == null)
         {
-            rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SIMPLE, labelAgg, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, ColorsDispatcher.RED, true);
         }
 
         row.add(time, numThreads);

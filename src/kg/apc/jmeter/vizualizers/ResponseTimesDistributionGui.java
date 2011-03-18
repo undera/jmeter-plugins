@@ -1,7 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
 
@@ -35,7 +35,7 @@ public class ResponseTimesDistributionGui
       }
       if (rowAgg == null)
       {
-         rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, aggLabel, AbstractGraphRow.MARKER_SIZE_NONE, true, false, false, true, ColorsDispatcher.RED, false);
+         rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_SUM_VALUES, aggLabel, AbstractGraphRow.MARKER_SIZE_NONE, true, false, false, true, Color.RED, false);
       }
 
       row.add(time, 1);

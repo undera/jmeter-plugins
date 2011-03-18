@@ -10,6 +10,7 @@ package kg.apc.jmeter;
 public class PluginsCMD {
 
     private static void showHelp() {
+        System.out.println("JMeter Plugins at Google Code Command-Line Tool "+JMeterPluginsUtils.PLUGINS_VERSION);
         System.out.println("Usage:\n JMeterPluginsCMD "
                 + "--help "
                 + "--generate-png <filename> "
@@ -19,9 +20,10 @@ public class PluginsCMD {
                 + "["
                 + "--width <graph width> "
                 + "--height <graph height> "
-                //+ "--aggregate-rows " //TODO: implement option setting
+                + "--aggregate-rows "
+                // TODO: add more options
                 + "]");
-
+        System.out.println("For help and support please visit "+JMeterPluginsUtils.WIKI_BASE+"JMeterPluginsCMD");
     }
 
     public int processParams(String[] args) {
@@ -79,6 +81,8 @@ public class PluginsCMD {
                 }
 
                 worker.setGraphHeight(Integer.parseInt(args[n]));
+            } else if (args[n].equalsIgnoreCase("--aggregate-rows")) {
+                worker.setAggregate(true);
             } else {
                 System.out.println("Unrecognized option: " + args[n]);
                 showHelp();

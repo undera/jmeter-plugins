@@ -1,7 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
 
@@ -33,7 +33,7 @@ public class LatenciesOverTimeGui
       }
       if (rowAgg == null)
       {
-         rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_AVERAGES, labelAgg, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, ColorsDispatcher.RED, true);
+         rowAgg = getNewRow(modelAggregate, AbstractGraphRow.ROW_AVERAGES, labelAgg, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, Color.RED, true);
       }
 
       row.add(time, numThreads);

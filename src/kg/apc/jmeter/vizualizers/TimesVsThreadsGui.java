@@ -1,7 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.GraphRowAverages;
 import kg.apc.jmeter.charting.GraphRowOverallAverages;
 import kg.apc.jmeter.charting.AbstractGraphRow;
@@ -57,8 +57,8 @@ public class TimesVsThreadsGui
 
         if(rowAgg == null || avgRowAgg == null)
         {
-            rowAgg = (GraphRowAverages) getNewRow(modelAggregate, AbstractGraphRow.ROW_AVERAGES, aggLabel, AbstractGraphRow.MARKER_SIZE_SMALL , false, false, false, true, ColorsDispatcher.RED, false);
-            avgRowAgg = (GraphRowOverallAverages) getNewRow(modelAggregate, AbstractGraphRow.ROW_OVERALL_AVERAGES, avgAggLabel, AbstractGraphRow.MARKER_SIZE_BIG , false, true, false, false, ColorsDispatcher.RED, false);
+            rowAgg = (GraphRowAverages) getNewRow(modelAggregate, AbstractGraphRow.ROW_AVERAGES, aggLabel, AbstractGraphRow.MARKER_SIZE_SMALL , false, false, false, true, Color.RED, false);
+            avgRowAgg = (GraphRowOverallAverages) getNewRow(modelAggregate, AbstractGraphRow.ROW_OVERALL_AVERAGES, avgAggLabel, AbstractGraphRow.MARKER_SIZE_BIG , false, true, false, false, Color.RED, false);
         }
 
         int threadsCount = getCurrentThreadCount(res);

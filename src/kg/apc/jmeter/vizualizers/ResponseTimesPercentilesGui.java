@@ -1,7 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.awt.Color;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.GraphRowPercentiles;
 import org.apache.jmeter.samplers.SampleResult;
@@ -51,7 +51,7 @@ public class ResponseTimesPercentilesGui
         }
         if (rowAgg == null)
         {
-            rowAgg = (GraphRowPercentiles) getNewRow(modelAggregate, AbstractGraphRow.ROW_PERCENTILES, aggregateLabel, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, ColorsDispatcher.RED, false);
+            rowAgg = (GraphRowPercentiles) getNewRow(modelAggregate, AbstractGraphRow.ROW_PERCENTILES, aggregateLabel, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, Color.RED, false);
         }
 
         row.addResponseTime(res.getTime());

@@ -1,6 +1,7 @@
 package kg.apc.jmeter.threads;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.List;
@@ -19,7 +20,6 @@ import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.charting.DateTimeRenderer;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.charting.GraphRowSumValues;
-import kg.apc.jmeter.charting.ColorsDispatcher;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
@@ -212,7 +212,7 @@ public class UltimateThreadGroupGui
    {
       model.clear();
       GraphRowSumValues row = new GraphRowSumValues();
-      row.setColor(ColorsDispatcher.RED);
+      row.setColor(Color.RED);
       row.setDrawLine(true);
       row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
       row.setDrawThickLines(true);

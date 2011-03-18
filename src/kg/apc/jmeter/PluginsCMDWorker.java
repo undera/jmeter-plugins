@@ -23,6 +23,7 @@ public class PluginsCMDWorker {
     private String outputCSV;
     private String outputPNG;
     private String pluginType;
+    private boolean isAggregate = false;
 
     public PluginsCMDWorker() {
     }
@@ -63,16 +64,17 @@ public class PluginsCMDWorker {
     }
 
     private void checkParams() {
-        if (pluginType==null)
-        {
+        if (pluginType == null) {
             throw new IllegalArgumentException("Missing plugin type specification");
         }
 
-        if (exportMode==0)
+        if (exportMode == 0) {
             throw new IllegalArgumentException("Missing any export specification");
+        }
 
-        if (inputFile==null)
+        if (inputFile == null) {
             throw new IllegalArgumentException("Missing input JTL file specification");
+        }
     }
 
     public void setGraphWidth(int i) {
@@ -83,12 +85,18 @@ public class PluginsCMDWorker {
         graphHeight = i;
     }
 
+    public void setAggregate(boolean b) {
+        isAggregate = b;
+    }
+
     public int doJob() {
         prepareJMeterEnv();
 
         checkParams();
-    
+
         AbstractGraphPanelVisualizer gui = getGUIObject(pluginType);
+
+        setOptions(gui);
 
         ResultCollector rc = new ResultCollector();
         rc.setFilename(inputFile);
@@ -130,12 +138,6 @@ public class PluginsCMDWorker {
             throw new RuntimeException(ex);
         }
 
-
-        //boolean isOur = AbstractGraphPanelVisualizer.class.isAssignableFrom(a);
-        //if (!isOur) {
-        //    throw new RuntimeException("Class name " + pluginType + " cannot be used");
-        //}
-
         try {
             return (AbstractGraphPanelVisualizer) a.newInstance();
         } catch (InstantiationException ex) {
@@ -143,5 +145,9 @@ public class PluginsCMDWorker {
         } catch (IllegalAccessException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    private void setOptions(AbstractGraphPanelVisualizer gui) {
+        gui.switchModel(isAggregate);
     }
 }

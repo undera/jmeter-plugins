@@ -3,8 +3,8 @@ package kg.apc.jmeter.charting;
 import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Random;
-import org.apache.jmeter.gui.util.JMeterColor;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  *
@@ -12,33 +12,25 @@ import org.apache.jmeter.gui.util.JMeterColor;
  */
 public class ColorsDispatcher implements Serializable {
 
-    private final static Color[] fixedColors = {
-        Color.RED,
-        Color.GREEN,
-        Color.BLUE,
-        JMeterColor.purple,
-        Color.ORANGE,
-        Color.CYAN,
-        Color.MAGENTA,
-        Color.PINK,
-        Color.YELLOW,
-        JMeterColor.LAVENDER,
-        JMeterColor.dark_green,
-        Color.GRAY,
-        Color.LIGHT_GRAY
-    };
-    private static ArrayList<Color> randomColors = new ArrayList<Color>();
-    public final static Color RED = fixedColors[0];
-    public final static Color GREEN = fixedColors[1];
-    private int index = -1;
-    private final Random rnd;
+    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static ArrayList<Color> assignedColors = new ArrayList<Color>();
+    private final static int LEVEL_MAX = 256;
+    private int level;
+    private int bits;
+    private int increment;
 
     /**
      *
      */
     public ColorsDispatcher() {
-        //TODO: implement smart algorythm instead of random
-        rnd = new Random();
+        reset();
+    }
+
+    public final void reset() {
+        assignedColors.clear();
+        increment = LEVEL_MAX;
+        bits = 1;
+        level = 0;
     }
 
     /**
@@ -46,24 +38,53 @@ public class ColorsDispatcher implements Serializable {
      * @return
      */
     public Color getNextColor() {
-        Color ret;
-        index++;
-        if (index < fixedColors.length) {
-            ret = fixedColors[index];
-        } else {
-            int rndIndex = index - fixedColors.length;
+        Color color = null;
 
-            if (randomColors.size() > rndIndex) {
-                ret = randomColors.get(rndIndex);
-            } else {
-                ret = new Color(rnd.nextInt(0xFFFFFF));
-                randomColors.add(ret);
-            }
+        doCycles();
+
+        int r = 0, g = 0, b = 0;
+        if ((bits & 1) == 1) {
+            r = level;
         }
-        return ret;
+        if ((bits & 2) == 2) {
+            g = level;
+        }
+        if ((bits & 4) == 4) {
+            b = level;
+        }
+        Color c = new Color(r, g, b);
+        if (assignedColors.contains(c)) {
+            System.out.println("Existing " + r + " " + g + " " + b);
+            color = getNextColor();
+        } else if ((r + g + b) / 3 < 32) {
+            log.debug("Too dark " + r + " " + g + " " + b);
+            color = getNextColor();
+        } else if ((r + g + b) / 3 > 256 - 64) {
+            log.debug("Too light " + r + " " + g + " " + b);
+            color = getNextColor();
+        } else {
+            log.debug("New " + r + " " + g + " " + b);
+            color = new Color(r, g, b);
+        }
+
+        assignedColors.add(color);
+        return color;
     }
 
-    public void reset() {
-        index = -1;
+    private void doCycles() {
+        bits++;
+        if (bits >= 8) {
+            level -= increment;
+            if (level < 0) {
+                increment /= 2;
+                if (increment <= 0) {
+                    log.warn("Colors exceeded. Rewind colors.");
+                    reset();
+                }
+                level = LEVEL_MAX-1;
+            }
+
+            bits = 1;
+        }
     }
 }

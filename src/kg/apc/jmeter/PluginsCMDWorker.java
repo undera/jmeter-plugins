@@ -2,7 +2,6 @@ package kg.apc.jmeter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 import kg.apc.jmeter.cmd.NewDriver;
 import kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizer;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -31,7 +30,7 @@ public class PluginsCMDWorker {
     private void prepareJMeterEnv() {
         String homeDir = NewDriver.getJMeterDir();
         JMeterUtils.setJMeterHome(homeDir);
-        JMeterUtils.setLocale(new Locale("ignoreResources"));
+        //JMeterUtils.setLocale(new Locale("ignoreResources"));
         File props = new File(homeDir + "/bin/jmeter.properties");
         if (!props.exists()) {
             try {
@@ -41,6 +40,7 @@ public class PluginsCMDWorker {
             }
         }
         JMeterUtils.loadJMeterProperties(props.getAbsolutePath());
+        JMeterUtils.initLocale();
     }
 
     public void addExportMode(int mode) {

@@ -73,8 +73,10 @@ public class ThreadsStateOverTimeGuiTest
    {
       System.out.println("add");
       SampleResult res = new SampleResult();
+      res.sampleStart();
       res.setAllThreads(1);
       res.setThreadName("test 1-2");
+      res.sampleEnd();
       instance.add(res);
       
       try
@@ -86,7 +88,7 @@ public class ThreadsStateOverTimeGuiTest
          Logger.getLogger(ThreadsStateOverTimeGuiTest.class.getName()).log(Level.SEVERE, null, ex);
       }
       
-      SampleResult res2 = new SampleResult();
+      SampleResult res2 = new SampleResult(res);
       res2.setAllThreads(1);
       res2.setThreadName("test 1-2");
       instance.add(res);
@@ -172,8 +174,6 @@ public class ThreadsStateOverTimeGuiTest
     @Test
     public void testGetWikiPage() {
         System.out.println("getWikiPage");
-        ThreadsStateOverTimeGui instance = new ThreadsStateOverTimeGui();
-        String expResult = "";
         String result = instance.getWikiPage();
         assertTrue(result.length()>0);
     }

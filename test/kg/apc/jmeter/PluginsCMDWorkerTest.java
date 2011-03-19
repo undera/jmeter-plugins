@@ -107,4 +107,36 @@ public class PluginsCMDWorkerTest {
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of setGraphWidth method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetGraphWidth() {
+        System.out.println("setGraphWidth");
+        int i = 0;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setGraphWidth(i);
+    }
+
+    /**
+     * Test of setGraphHeight method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetGraphHeight() {
+        System.out.println("setGraphHeight");
+        int i = 0;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setGraphHeight(i);
+    }
+
+    /**
+     * Test of setAggregate method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetAggregate() {
+        System.out.println("setAggregate");
+        boolean b = false;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setAggregate(b);
+    }
 }

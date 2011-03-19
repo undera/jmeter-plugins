@@ -10,7 +10,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import javax.net.SocketFactory;
 import kg.apc.jmeter.perfmon.agent.AgentCommandsInterface;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
@@ -28,7 +27,6 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
     private boolean testIsRunning = false;
     //for delta calculation
     private HashMap<String, Long> oldValues = new HashMap<String, Long>();
-    private SocketFactory socketFactory;
     private AbstractPerformanceMonitoringGui gui = null;
     private int monitorType = -1;
     private AgentConnector[] connectors = null;
@@ -37,14 +35,12 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
     private int connectTimeout=10000;
 
     public MetricsProvider(int monitorType, AbstractPerformanceMonitoringGui gui, AgentConnector[] connectors) {
-        socketFactory = new TCPSocketFactory();
         this.gui = gui;
         this.connectors = connectors;
         this.monitorType = monitorType;
     }
 
     public MetricsProvider(int monitorType, AgentConnector[] connectors) {
-        socketFactory = new TCPSocketFactory();
         this.connectors = connectors;
         this.monitorType = monitorType;
         MetricsProvider.openOutputFile();
@@ -293,7 +289,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
                 for (int i = 0; i < connectors.length; i++) {
                     try {
                         connector = connectors[i];
-                        Socket sock = socketFactory.createSocket(connector.getHost(), connector.getPort());
+                        Socket sock = createSocket(connector.getHost(), connector.getPort());
                         if (getConnectTimeout()>0) sock.setSoTimeout(getConnectTimeout());
                         connector.connect(sock);
                     } catch (UnknownHostException e) {
@@ -339,11 +335,6 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
         }
     }
 
-    void setSocketFactory(SocketFactory sf) {
-        socketFactory = sf;
-
-    }
-
     /**
      * @return the connectTimeout
      */
@@ -356,5 +347,9 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
      */
     public void setConnectTimeout(int connectTimeout) {
         this.connectTimeout = connectTimeout;
+    }
+
+    protected Socket createSocket(String host, int port) throws IOException {
+        return new Socket(host, port);
     }
 }

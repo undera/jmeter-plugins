@@ -40,6 +40,7 @@ public class FlexibleFileWriter
             + "threadName sampleLabel "
             + "startTimeMillis endTimeMillis "
             + "responseTimeMicros latencyMicros ";
+    //TODO: add samplerData, ResponseData, responseHeaders etc.
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String FILENAME = "filename";
     private static final String COLUMNS = "columns";
@@ -53,8 +54,6 @@ public class FlexibleFileWriter
     public FlexibleFileWriter() {
         super();
     }
-
-
 
     public void sampleStarted(SampleEvent e) {
     }
@@ -144,7 +143,9 @@ public class FlexibleFileWriter
 
     public void sampleOccurred(SampleEvent evt) {
         if (fileChannel == null || !fileChannel.isOpen()) {
-            if (log.isWarnEnabled()) log.warn("File writer is closed! Disable item or configure it properly");
+            if (log.isWarnEnabled()) {
+                log.warn("File writer is closed! Disable item or configure it properly");
+            }
             return;
         }
 

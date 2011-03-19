@@ -13,7 +13,7 @@ import org.apache.log.Logger;
 public class ColorsDispatcher implements Serializable {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private static ArrayList<Color> assignedColors = new ArrayList<Color>();
+    private ArrayList<Color> assignedColors = new ArrayList<Color>();
     private final static int LEVEL_MAX = 256;
     private int level;
     private int bits;

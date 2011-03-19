@@ -155,11 +155,11 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder("Test Plan Shutdown Criterias"));
+        setBorder(javax.swing.BorderFactory.createTitledBorder("Test Shutdown Criteria"));
         setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12));
-        jLabel1.setText("The test will be automatically stopped if any of these criteria is met:");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("The test will be automatically stopped if:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -171,21 +171,21 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         jLabelBulletRespTime.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/reporters/bulletGreen.png"))); // NOI18N
         jPanel1.add(jLabelBulletRespTime);
 
-        jLabel10.setText("Average Response Times are Greater than");
+        jLabel10.setText("average Response Time is greater than");
         jPanel1.add(jLabel10);
 
+        jTextFieldRespTime.setColumns(7);
         jTextFieldRespTime.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldRespTime.setMaximumSize(new java.awt.Dimension(100, 20));
-        jTextFieldRespTime.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel1.add(jTextFieldRespTime);
 
         jLabel2.setText("ms for");
         jPanel1.add(jLabel2);
 
+        jTextFieldRespTimeSec.setColumns(5);
         jTextFieldRespTimeSec.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldRespTimeSec.setInheritsPopupMenu(true);
         jTextFieldRespTimeSec.setMaximumSize(new java.awt.Dimension(100, 20));
-        jTextFieldRespTimeSec.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel1.add(jTextFieldRespTimeSec);
 
         jLabel3.setText("seconds");
@@ -200,20 +200,20 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         jLabelBulletLatency.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/reporters/bulletGreen.png"))); // NOI18N
         jPanel2.add(jLabelBulletLatency);
 
-        jLabel11.setText("Average Response Latencies are Greater than");
+        jLabel11.setText("average Latency is greater than");
         jPanel2.add(jLabel11);
 
+        jTextFieldRespLatency.setColumns(7);
         jTextFieldRespLatency.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldRespLatency.setMaximumSize(new java.awt.Dimension(100, 20));
-        jTextFieldRespLatency.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel2.add(jTextFieldRespLatency);
 
         jLabel4.setText("ms for");
         jPanel2.add(jLabel4);
 
+        jTextFieldRespLatencySec.setColumns(5);
         jTextFieldRespLatencySec.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldRespLatencySec.setMaximumSize(new java.awt.Dimension(100, 20));
-        jTextFieldRespLatencySec.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel2.add(jTextFieldRespLatencySec);
 
         jLabel5.setText("seconds");
@@ -228,20 +228,20 @@ public class JAutoStopPanel extends javax.swing.JPanel {
         jLabelBulletError.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/reporters/bulletGreen.png"))); // NOI18N
         jPanel4.add(jLabelBulletError);
 
-        jLabel12.setText("Error Rate is Greater than");
+        jLabel12.setText("Error Rate is greater than");
         jPanel4.add(jLabel12);
 
+        jTextFieldError.setColumns(5);
         jTextFieldError.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldError.setMaximumSize(new java.awt.Dimension(30, 20));
-        jTextFieldError.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel4.add(jTextFieldError);
 
         jLabel6.setText("% for");
         jPanel4.add(jLabel6);
 
+        jTextFieldErrorSec.setColumns(5);
         jTextFieldErrorSec.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextFieldErrorSec.setMaximumSize(new java.awt.Dimension(100, 20));
-        jTextFieldErrorSec.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel4.add(jTextFieldErrorSec);
 
         jLabel7.setText("seconds");

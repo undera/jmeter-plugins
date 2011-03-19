@@ -2,7 +2,8 @@
 <jmeterTestPlan version="1.2" properties="2.1">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
-      <stringProp name="TestPlan.comments">This Test Plan demonstrates how AutoStop used to terminate test when Response Time exceeds some value.</stringProp>
+      <stringProp name="TestPlan.comments">This Test Plan demonstrates how AutoStop used to terminate test 
+when Response Time exceeds some value.</stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
       <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
@@ -17,7 +18,10 @@
         <stringProp name="error_rate">0</stringProp>
         <stringProp name="error_rate_length">0</stringProp>
         <stringProp name="time_setting">response time</stringProp>
-        <stringProp name="TestPlan.comments">Thread Group set to work for 60 seconds, but we&apos;ll stop earlier, because response time will exceed 250 ms</stringProp>
+        <stringProp name="TestPlan.comments">Thread Group set to work for 60 seconds, but we&apos;ll stop earlier, 
+because response time will exceed 250 ms</stringProp>
+        <stringProp name="avg_response_latency"></stringProp>
+        <stringProp name="avg_response_latency_length"></stringProp>
       </kg.apc.jmeter.reporters.AutoStop>
       <hashTree/>
       <ResultCollector guiclass="kg.apc.jmeter.vizualizers.ResponseTimesOverTimeGui" testclass="ResultCollector" testname="jp@gc - Response Times Over Time" enabled="true">

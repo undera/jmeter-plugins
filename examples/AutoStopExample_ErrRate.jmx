@@ -12,13 +12,14 @@
     </TestPlan>
     <hashTree>
       <kg.apc.jmeter.reporters.AutoStop guiclass="kg.apc.jmeter.reporters.AutoStopGui" testclass="kg.apc.jmeter.reporters.AutoStop" testname="jp@gc - AutoStop Listener" enabled="true">
-        <stringProp name="avg_response_time">0</stringProp>
-        <stringProp name="avg_response_time_length">0</stringProp>
+        <stringProp name="avg_response_time"></stringProp>
+        <stringProp name="avg_response_time_length"></stringProp>
         <stringProp name="error_rate">45.9</stringProp>
         <stringProp name="error_rate_length">3</stringProp>
         <stringProp name="time_setting">response time</stringProp>
-        <stringProp name="TestPlan.comments">Thread Group set to work for 60 seconds, but we&apos;ll stop earlier, because error rate will exceed limit that was set below.</stringProp>
-        <stringProp name="avg_response_latency">${car}</stringProp>
+        <stringProp name="TestPlan.comments">Thread Group set to work for 60 seconds, but we&apos;ll stop earlier, 
+because error rate will exceed limit that was set below.</stringProp>
+        <stringProp name="avg_response_latency"></stringProp>
         <stringProp name="avg_response_latency_length"></stringProp>
       </kg.apc.jmeter.reporters.AutoStop>
       <hashTree/>
@@ -55,7 +56,8 @@
         <stringProp name="filename"></stringProp>
         <longProp name="interval_grouping">1000</longProp>
         <boolProp name="graph_aggregated">false</boolProp>
-        <stringProp name="TestPlan.comments">After 10 seconds of successful work we start simulating error responses. When error rate is 50% (equal to success rate), we stop test.</stringProp>
+        <stringProp name="TestPlan.comments">After 10 seconds of successful work we start simulating error responses. 
+When error rate is 50% (equal to success rate), we stop the test.</stringProp>
       </ResultCollector>
       <hashTree/>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="jp@gc - Ultimate Thread Group Success" enabled="true">

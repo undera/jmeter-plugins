@@ -155,7 +155,6 @@ public class HTTPRawSampler extends AbstractSampler {
             return savedSock;
         }
 
-        // FIXME: moving address outside started samplerresult could improve timings
         int port;
         try {
             port = Integer.parseInt(getPort());

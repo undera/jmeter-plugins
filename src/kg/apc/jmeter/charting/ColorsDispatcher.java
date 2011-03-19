@@ -47,10 +47,10 @@ public class ColorsDispatcher implements Serializable {
             r = level;
         }
         if ((bits & 2) == 2) {
-            g = level;
+            b = level;
         }
         if ((bits & 4) == 4) {
-            b = level;
+            g = level;
         }
         Color c = new Color(r, g, b);
         if (assignedColors.contains(c)) {

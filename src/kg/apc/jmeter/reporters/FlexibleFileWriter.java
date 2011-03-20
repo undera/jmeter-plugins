@@ -107,19 +107,24 @@ public class FlexibleFileWriter
      * in switch operators
      */
     private void compileColumns() {
-        //for (int k=0; k<availableFieldNames.size(); k++) log.debug(k+"-"+availableFieldNames.get(k));
         log.debug("Compiling columns string: " + getColumns());
-        // FIXME: no way to specify | as constant
         String[] chunks = JMeterPluginsUtils.replaceRNT(getColumns()).split("\\|");
+        log.debug("Chunks "+chunks.length);
         compiledFields = new int[chunks.length];
         compiledConsts = new ByteBuffer[chunks.length];
         for (int n = 0; n < chunks.length; n++) {
             int fieldID = availableFieldNames.indexOf(chunks[n]);
             if (fieldID >= 0) {
-                log.debug(chunks[n] + " field id: " + fieldID);
+                //log.debug(chunks[n] + " field id: " + fieldID);
                 compiledFields[n] = fieldID;
             } else {
                 log.debug(chunks[n] + " is const");
+                if (chunks[n].length()==0)
+                {
+                    //log.debug("Empty const, treated as |");
+                    chunks[n]="|";
+                }
+
                 compiledConsts[n] = ByteBuffer.wrap(chunks[n].getBytes());
             }
         }
@@ -144,7 +149,7 @@ public class FlexibleFileWriter
     public void sampleOccurred(SampleEvent evt) {
         if (fileChannel == null || !fileChannel.isOpen()) {
             if (log.isWarnEnabled()) {
-                log.warn("File writer is closed! Disable item or configure it properly");
+                log.warn("File writer is closed! Maybe test has already been stopped");
             }
             return;
         }
@@ -152,10 +157,10 @@ public class FlexibleFileWriter
         ByteBuffer buf = ByteBuffer.allocateDirect(1024 * 10);
         for (int n = 0; n < compiledConsts.length; n++) {
             if (compiledConsts[n] != null) {
-                //log.debug("Const " + compiledConsts[n]);
+                log.debug("Const " + JMeterPluginsUtils.byteBufferToString(compiledConsts[n]));
                 buf.put((ByteBuffer) compiledConsts[n].rewind());
             } else {
-                //log.debug("Field " + compiledFields[n]);
+                log.debug("Field " + compiledFields[n]);
                 appendSampleResultField(buf, evt.getResult(), compiledFields[n]);
             }
         }

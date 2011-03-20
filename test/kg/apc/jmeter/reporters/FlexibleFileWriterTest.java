@@ -59,10 +59,10 @@ public class FlexibleFileWriterTest {
         res.setResponseData("test".getBytes());
         SampleEvent e = new SampleEvent(res, "Test");
         FlexibleFileWriter instance = new FlexibleFileWriter();
-        instance.setColumns("isSuccsessful|\\t|latency|");
+        instance.setColumns("isSuccsessful|\\t||\\t|latency");
         instance.testStarted();
         for (int n = 0; n < 10; n++) {
-            String exp = "0\t"+n;
+            String exp = "0\t|\t"+n;
             System.out.println(exp);
             res.setLatency(n);
             res.setSampleLabel("n"+n);
@@ -78,7 +78,7 @@ public class FlexibleFileWriterTest {
      */
     @Test
     public void testSampleOccurred_phout() {
-        System.out.println("sampleOccurred");
+        System.out.println("sampleOccurred_phout");
 
         SampleResult res = new SampleResult();
         res.sampleStart();

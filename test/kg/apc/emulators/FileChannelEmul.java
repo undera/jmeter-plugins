@@ -7,6 +7,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -80,7 +81,7 @@ public class FileChannelEmul extends FileChannel {
             log.error("Null buffer!");
             return "";
         }
-        return src.toString();
+        return JMeterPluginsUtils.byteBufferToString(src);
     }
 
     @Override

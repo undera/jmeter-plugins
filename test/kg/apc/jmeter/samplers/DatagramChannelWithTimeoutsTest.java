@@ -76,6 +76,7 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testRead_ByteBuffer() throws Exception {
         System.out.println("read");
+        instance.socket().bind(new InetSocketAddress(53));
         ByteBuffer dst = ByteBuffer.allocateDirect(1024);
         int expResult = 0;
         int result = instance.read(dst);
@@ -91,7 +92,6 @@ public class DatagramChannelWithTimeoutsTest {
         ByteBuffer[] dsts = null;
         int offset = 0;
         int length = 0;
-        long expResult = 0L;
         try {
             long result = instance.read(dsts, offset, length);
             fail("exception expected");

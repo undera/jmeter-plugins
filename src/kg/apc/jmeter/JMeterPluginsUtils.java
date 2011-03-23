@@ -147,7 +147,7 @@ public abstract class JMeterPluginsUtils {
         link.setForeground(Color.blue);
         link.setFont(link.getFont().deriveFont(Font.PLAIN));
         link.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        link.addMouseListener(new URIOpener(WIKI_BASE + helpPage+"?utm_source=jmeter&utm_medium=helplink&utm_campaigh="+helpPage));
+        link.addMouseListener(new URIOpener(WIKI_BASE + helpPage+"?utm_source=jmeter&utm_medium=helplink&utm_campaign="+helpPage));
         Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.blue);
         link.setBorder(border);
 

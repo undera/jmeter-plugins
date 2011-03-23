@@ -1,6 +1,7 @@
 package kg.apc.jmeter.samplers;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -14,7 +15,7 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-public abstract class AbstractIPSampler extends AbstractSampler {
+public abstract class AbstractIPSampler extends AbstractSampler implements Serializable, Cloneable {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String HOSTNAME = "hostname";
@@ -57,6 +58,15 @@ public abstract class AbstractIPSampler extends AbstractSampler {
 
     public void setTimeout(String text) {
         setProperty(AbstractIPSampler.TIMEOUT, text);
+    }
+
+    protected int getPortAsInt() {
+        try {
+            return Integer.parseInt(getPort());
+        } catch (NumberFormatException ex) {
+            log.error("Wrong port: " + getTimeout(), ex);
+            return 0;
+        }
     }
 
     protected int getTimeoutAsInt() {

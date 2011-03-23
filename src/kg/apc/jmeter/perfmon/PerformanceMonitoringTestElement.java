@@ -3,6 +3,7 @@ package kg.apc.jmeter.perfmon;
 import java.io.Serializable;
 import java.util.ArrayList;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
+import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.testelement.AbstractTestElement;
@@ -16,7 +17,7 @@ import org.apache.jmeter.util.JMeterUtils;
  *
  * @author Stephane Hoblingre
  */
-public class PerformanceMonitoringTestElement extends AbstractTestElement implements Serializable, Clearable, TestListener
+public class PerformanceMonitoringTestElement extends AbstractTestElement implements Serializable, Clearable, TestListener, NoThreadClone
 {
 
     public static final String DATA_PROPERTY = "perfomdata";

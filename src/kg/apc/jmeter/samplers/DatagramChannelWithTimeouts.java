@@ -36,6 +36,7 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
     public int read(ByteBuffer dst) throws IOException {
         int bytesRead = 0;
         while (selector.select(readTimeout) > 0) {
+            if (log.isDebugEnabled()) log.debug("Loop "+bytesRead);
             selector.selectedKeys().remove(channelKey);
             int cnt = channel.read(dst);
             if (cnt < 1) {
@@ -52,7 +53,10 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
             }
         }
 
-        throw new SocketTimeoutException("Timeout exceeded while reading from socket");
+        if (bytesRead < 1) {
+            throw new SocketTimeoutException("Timeout exceeded while reading from socket");
+        }
+        return bytesRead;
     }
 
     public long read(ByteBuffer[] dsts, int offset, int length) throws IOException {

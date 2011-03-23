@@ -1,11 +1,11 @@
 package kg.apc.jmeter.samplers;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import kg.apc.emulators.DatagramChannelEmul;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -20,11 +20,17 @@ import static org.junit.Assert.*;
  */
 public class UDPSamplerTest {
 
+    private UDPSampler instance;
+
     private static class UDPSamplerEmul extends UDPSampler {
+
+        DatagramChannel c;
 
         @Override
         protected DatagramChannel getChannel() throws IOException {
-            return DatagramChannelEmul.open();
+            c = DatagramChannelEmul.open();
+            c.connect(new InetSocketAddress(53));
+            return c;
         }
     }
 
@@ -41,6 +47,9 @@ public class UDPSamplerTest {
 
     @Before
     public void setUp() {
+        instance = new UDPSamplerEmul();
+        instance.setPort("53");
+        instance.setEncoderClass(HexStringUDPDecoder.class.getCanonicalName());
     }
 
     @After
@@ -53,7 +62,7 @@ public class UDPSamplerTest {
     @Test
     public void testSample() {
         System.out.println("sample");
-        UDPSampler instance = new UDPSamplerEmul();
+        instance.threadStarted();
         SampleResult result = instance.sample(null);
         assertTrue(result.isSuccessful());
     }
@@ -64,7 +73,6 @@ public class UDPSamplerTest {
     @Test
     public void testGetHostName() {
         System.out.println("getHostName");
-        UDPSampler instance = new UDPSampler();
         String expResult = "";
         String result = instance.getHostName();
         assertEquals(expResult, result);
@@ -77,7 +85,6 @@ public class UDPSamplerTest {
     public void testSetHostName() {
         System.out.println("setHostName");
         String text = "";
-        UDPSampler instance = new UDPSampler();
         instance.setHostName(text);
     }
 
@@ -87,8 +94,7 @@ public class UDPSamplerTest {
     @Test
     public void testGetPort() {
         System.out.println("getPort");
-        UDPSampler instance = new UDPSampler();
-        String expResult = "";
+        String expResult = "53";
         String result = instance.getPort();
         assertEquals(expResult, result);
     }
@@ -99,7 +105,6 @@ public class UDPSamplerTest {
     @Test
     public void testGetTimeout() {
         System.out.println("getTimeout");
-        UDPSampler instance = new UDPSampler();
         String expResult = "";
         String result = instance.getTimeout();
         assertEquals(expResult, result);
@@ -111,7 +116,6 @@ public class UDPSamplerTest {
     @Test
     public void testIsWaitResponse() {
         System.out.println("isWaitResponse");
-        UDPSampler instance = new UDPSampler();
         boolean expResult = false;
         boolean result = instance.isWaitResponse();
         assertEquals(expResult, result);
@@ -123,10 +127,8 @@ public class UDPSamplerTest {
     @Test
     public void testGetEncoderClass() {
         System.out.println("getEncoderClass");
-        UDPSampler instance = new UDPSampler();
-        String expResult = "";
         String result = instance.getEncoderClass();
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 
     /**
@@ -135,7 +137,6 @@ public class UDPSamplerTest {
     @Test
     public void testGetRequestData() {
         System.out.println("getRequestData");
-        UDPSampler instance = new UDPSampler();
         String expResult = "";
         String result = instance.getRequestData();
         assertEquals(expResult, result);
@@ -148,7 +149,6 @@ public class UDPSamplerTest {
     public void testSetPort() {
         System.out.println("setPort");
         String text = "";
-        UDPSampler instance = new UDPSampler();
         instance.setPort(text);
     }
 
@@ -159,7 +159,6 @@ public class UDPSamplerTest {
     public void testSetWaitResponse() {
         System.out.println("setWaitResponse");
         boolean selected = false;
-        UDPSampler instance = new UDPSampler();
         instance.setWaitResponse(selected);
     }
 
@@ -170,7 +169,6 @@ public class UDPSamplerTest {
     public void testSetTimeout() {
         System.out.println("setTimeout");
         String text = "";
-        UDPSampler instance = new UDPSampler();
         instance.setTimeout(text);
     }
 
@@ -181,7 +179,6 @@ public class UDPSamplerTest {
     public void testSetRequestData() {
         System.out.println("setRequestData");
         String text = "";
-        UDPSampler instance = new UDPSampler();
         instance.setRequestData(text);
     }
 
@@ -192,67 +189,7 @@ public class UDPSamplerTest {
     public void testSetEncoderClass() {
         System.out.println("setEncoderClass");
         String text = "";
-        UDPSampler instance = new UDPSampler();
         instance.setEncoderClass(text);
-    }
-
-    /**
-     * Test of testStarted method, of class UDPSampler.
-     */
-    @Test
-    public void testTestStarted_0args() {
-        System.out.println("testStarted");
-        UDPSampler instance = new UDPSampler();
-        instance.setPort("53");
-        instance.testStarted();
-    }
-
-    /**
-     * Test of testStarted method, of class UDPSampler.
-     */
-    @Test
-    public void testTestStarted_String() {
-        System.out.println("testStarted");
-        String string = "";
-        UDPSampler instance = new UDPSampler();
-        instance.setPort("53");
-        instance.testStarted(string);
-    }
-
-    /**
-     * Test of testEnded method, of class UDPSampler.
-     */
-    @Test
-    public void testTestEnded_0args() {
-        System.out.println("testEnded");
-        UDPSampler instance = new UDPSampler();
-        instance.setPort("53");
-        instance.testStarted();
-        instance.testEnded();
-    }
-
-    /**
-     * Test of testEnded method, of class UDPSampler.
-     */
-    @Test
-    public void testTestEnded_String() {
-        System.out.println("testEnded");
-        String string = "";
-        UDPSampler instance = new UDPSampler();
-        instance.setPort("53");
-        instance.testStarted();
-        instance.testEnded(string);
-    }
-
-    /**
-     * Test of testIterationStart method, of class UDPSampler.
-     */
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoopIterationEvent lie = null;
-        UDPSampler instance = new UDPSampler();
-        instance.testIterationStart(lie);
     }
 
     /**
@@ -261,8 +198,6 @@ public class UDPSamplerTest {
     @Test
     public void testGetChannel() throws Exception {
         System.out.println("getChannel");
-        UDPSampler instance = new UDPSampler();
-        instance.setPort("53");
         DatagramChannel result = (DatagramChannel) instance.getChannel();
         assertNotNull(result);
     }
@@ -274,7 +209,6 @@ public class UDPSamplerTest {
     public void testEncode() {
         System.out.println("encode");
         String data = "test";
-        UDPSampler instance = new UDPSampler();
         ByteBuffer result = instance.encode(data);
         assertEquals(data, JMeterPluginsUtils.byteBufferToString(result));
     }
@@ -285,9 +219,23 @@ public class UDPSamplerTest {
     @Test
     public void testDecode() {
         System.out.println("decode");
-        ByteBuffer data = ByteBuffer.wrap("test".getBytes());
-        UDPSampler instance = new UDPSampler();
-        byte[] result = instance.decode(data);
-        assertEquals("test".getBytes(), result);
+        byte[] result = instance.decode("test".getBytes());
+        assertEquals(4, result.length);
+    }
+
+    @Test
+    public void testReal() {
+        System.out.println("real");
+        instance = new UDPSampler();
+        instance.setHostName("95.108.198.11");
+        instance.setPort("53");
+        instance.setRequestData("f11b0100000100000000000004636f646506676f6f676c6503636f6d00001c0001");
+        instance.setEncoderClass(HexStringUDPDecoder.class.getCanonicalName());
+        instance.threadStarted();
+        instance.setWaitResponse(true);
+        instance.setTimeout("500");
+        SampleResult res = instance.sample(null);
+        assertTrue(res.isSuccessful());
+        assertTrue(res.getResponseDataAsString().length()>0);
     }
 }

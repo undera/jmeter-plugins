@@ -1,15 +1,12 @@
 package kg.apc.jmeter.samplers;
 
-import java.beans.Encoder;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
-import java.util.logging.Level;
-import kg.apc.jmeter.JMeterPluginsUtils;
+import java.nio.channels.spi.AbstractSelectableChannel;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.apache.jmeter.samplers.AbstractSampler;
-import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestListener;
 import org.apache.jorphan.logging.LoggingManager;
@@ -19,37 +16,13 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-public class UDPSampler extends AbstractSampler implements TestListener, UDPTrafficEncoder {
+public class UDPSampler extends AbstractIPSampler implements TestListener, UDPTrafficEncoder {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    public static final String HOSTNAME = "hostname";
-    public static final String PORT = "port";
     public static final String ENCODECLASS = "encodeclass";
-    public static final String TIMEOUT = "timeout";
     public static final String WAITRESPONSE = "waitresponse";
-    public static final String DATA = "data";
-    private DatagramChannel channel;
+    private AbstractSelectableChannel channel;
     private UDPTrafficEncoder encoder;
-
-    public SampleResult sample(Entry entry) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public final String getHostName() {
-        return getPropertyAsString(HOSTNAME);
-    }
-
-    public void setHostName(String text) {
-        setProperty(HOSTNAME, text);
-    }
-
-    public String getPort() {
-        return getPropertyAsString(PORT);
-    }
-
-    public String getTimeout() {
-        return getPropertyAsString(TIMEOUT);
-    }
 
     public boolean isWaitResponse() {
         return getPropertyAsBoolean(WAITRESPONSE);
@@ -59,24 +32,8 @@ public class UDPSampler extends AbstractSampler implements TestListener, UDPTraf
         return getPropertyAsString(ENCODECLASS);
     }
 
-    public String getRequestData() {
-        return getPropertyAsString(DATA);
-    }
-
-    public void setPort(String text) {
-        setProperty(PORT, text);
-    }
-
     public void setWaitResponse(boolean selected) {
         setProperty(WAITRESPONSE, selected);
-    }
-
-    public void setTimeout(String text) {
-        setProperty(TIMEOUT, text);
-    }
-
-    public void setRequestData(String text) {
-        setProperty(DATA, text);
     }
 
     public void setEncoderClass(String text) {
@@ -97,7 +54,7 @@ public class UDPSampler extends AbstractSampler implements TestListener, UDPTraf
             }
             encoder = (UDPTrafficEncoder) e;
         } catch (ClassNotFoundException ex) {
-            log.error("Problem loading encoder " + getEncoderClass(), ex);
+            log.error("Problem loading encoder " + getEncoderClass() + ", raw data will be used", ex);
             encoder = this;
         }
     }
@@ -120,17 +77,17 @@ public class UDPSampler extends AbstractSampler implements TestListener, UDPTraf
     }
 
     public void testIterationStart(LoopIterationEvent lie) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    protected DatagramChannel getChannel() throws IOException {
+    protected AbstractSelectableChannel getChannel() throws IOException {
         DatagramChannel c;
         if (isWaitResponse()) {
             c = DatagramChannelWithTimeouts.open();
+            (( DatagramChannelWithTimeouts)c).setReadTimeout(getTimeoutAsInt());
         } else {
             c = DatagramChannel.open();
         }
-         int port = Integer.parseInt(getPort());
+        int port = Integer.parseInt(getPort());
         c.connect(new InetSocketAddress(getHostName(), port));
         return c;
     }
@@ -139,7 +96,46 @@ public class UDPSampler extends AbstractSampler implements TestListener, UDPTraf
         return ByteBuffer.wrap(data.getBytes());
     }
 
-    public String decode(ByteBuffer data) {
-        return JMeterPluginsUtils.byteBufferToString(data);
+    public byte[] decode(ByteBuffer buf) {
+        ByteBuffer str = buf.duplicate();
+        str.rewind();
+        byte[] dst = new byte[str.limit()];
+        str.get(dst);
+        return dst;
     }
+
+    @Override
+    protected byte[] processIO(SampleResult res) throws Exception {
+        ByteBuffer sendBuf = ByteBuffer.wrap(getRequestData().getBytes()); // cannot cache it because of variable processing
+        DatagramChannel sock = (DatagramChannel) getChannel();
+        sock.write(sendBuf);
+
+        if (!isWaitResponse())
+        {
+            res.latencyEnd();
+            res.sampleEnd();
+            return new byte[0];
+        }
+
+        ByteArrayOutputStream response = new ByteArrayOutputStream();
+        int cnt = 0;
+        recvBuf.clear();
+        boolean firstPack = true;
+        while ((cnt = sock.read(recvBuf)) != -1) {
+            if (firstPack) {
+                res.latencyEnd();
+                firstPack = false;
+            }
+            //log.debug("Read " + recvBuf.toString());
+            recvBuf.flip();
+            byte[] bytes = new byte[cnt];
+            recvBuf.get(bytes);
+            response.write(bytes);
+            recvBuf.clear();
+        }
+        res.sampleEnd();
+
+        return response.toByteArray();
+    }
+
 }

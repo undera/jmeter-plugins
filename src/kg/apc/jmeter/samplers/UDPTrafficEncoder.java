@@ -8,5 +8,5 @@ import java.nio.ByteBuffer;
  */
 public interface UDPTrafficEncoder {
     public abstract ByteBuffer encode(String data);
-    public abstract String decode(ByteBuffer data);
+    public abstract byte[] decode(ByteBuffer data);
 }

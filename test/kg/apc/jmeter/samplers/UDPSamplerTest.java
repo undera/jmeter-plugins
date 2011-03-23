@@ -1,9 +1,11 @@
 package kg.apc.jmeter.samplers;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import kg.apc.emulators.DatagramChannelEmul;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,6 +19,14 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class UDPSamplerTest {
+
+    private static class UDPSamplerEmul extends UDPSampler {
+
+        @Override
+        protected DatagramChannel getChannel() throws IOException {
+            return DatagramChannelEmul.open();
+        }
+    }
 
     public UDPSamplerTest() {
     }
@@ -43,11 +53,9 @@ public class UDPSamplerTest {
     @Test
     public void testSample() {
         System.out.println("sample");
-        Entry entry = null;
-        UDPSampler instance = new UDPSampler();
-        SampleResult expResult = null;
-        SampleResult result = instance.sample(entry);
-        assertEquals(expResult, result);
+        UDPSampler instance = new UDPSamplerEmul();
+        SampleResult result = instance.sample(null);
+        assertTrue(result.isSuccessful());
     }
 
     /**
@@ -219,6 +227,7 @@ public class UDPSamplerTest {
         System.out.println("testEnded");
         UDPSampler instance = new UDPSampler();
         instance.setPort("53");
+        instance.testStarted();
         instance.testEnded();
     }
 
@@ -230,6 +239,8 @@ public class UDPSamplerTest {
         System.out.println("testEnded");
         String string = "";
         UDPSampler instance = new UDPSampler();
+        instance.setPort("53");
+        instance.testStarted();
         instance.testEnded(string);
     }
 
@@ -251,9 +262,9 @@ public class UDPSamplerTest {
     public void testGetChannel() throws Exception {
         System.out.println("getChannel");
         UDPSampler instance = new UDPSampler();
-        DatagramChannel expResult = null;
-        DatagramChannel result = instance.getChannel();
-        assertEquals(expResult, result);
+        instance.setPort("53");
+        DatagramChannel result = (DatagramChannel) instance.getChannel();
+        assertNotNull(result);
     }
 
     /**
@@ -262,11 +273,10 @@ public class UDPSamplerTest {
     @Test
     public void testEncode() {
         System.out.println("encode");
-        String data = "";
+        String data = "test";
         UDPSampler instance = new UDPSampler();
-        ByteBuffer expResult = null;
         ByteBuffer result = instance.encode(data);
-        assertEquals(expResult, result);
+        assertEquals(data, JMeterPluginsUtils.byteBufferToString(result));
     }
 
     /**
@@ -275,11 +285,9 @@ public class UDPSamplerTest {
     @Test
     public void testDecode() {
         System.out.println("decode");
-        ByteBuffer data = null;
+        ByteBuffer data = ByteBuffer.wrap("test".getBytes());
         UDPSampler instance = new UDPSampler();
-        String expResult = "";
-        String result = instance.decode(data);
-        assertEquals(expResult, result);
+        byte[] result = instance.decode(data);
+        assertEquals("test".getBytes(), result);
     }
-
 }

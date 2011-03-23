@@ -55,7 +55,7 @@ public class HTTPRawSamplerGui
             port.setText(rawSampler.getPort());
             timeout.setText(rawSampler.getTimeout());
             keepAlive.setSelected(rawSampler.isUseKeepAlive());
-            requestData.setText(rawSampler.getRawRequest());
+            requestData.setText(rawSampler.getRequestData());
             parseResult.setSelected(rawSampler.isParseResult());
         }
     }
@@ -82,7 +82,7 @@ public class HTTPRawSamplerGui
             rawSampler.setPort(port.getText());
             rawSampler.setUseKeepAlive(keepAlive.isSelected());
             rawSampler.setTimeout(timeout.getText());
-            rawSampler.setRawRequest(transformCRLF(requestData.getText()));
+            rawSampler.setRequestData(transformCRLF(requestData.getText()));
             rawSampler.setParseResult(parseResult.isSelected());
         }
     }

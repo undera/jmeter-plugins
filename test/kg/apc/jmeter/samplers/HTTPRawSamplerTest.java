@@ -1,8 +1,8 @@
 package kg.apc.jmeter.samplers;
 
+import java.nio.channels.spi.AbstractSelectableChannel;
 import kg.apc.emulators.SocketChannelEmul;
 import java.io.IOException;
-import java.nio.channels.SocketChannel;
 import org.apache.jmeter.samplers.SampleResult;
 import java.net.MalformedURLException;
 import java.nio.ByteBuffer;
@@ -26,7 +26,7 @@ public class HTTPRawSamplerTest {
         SocketChannelEmul sockEmul = new SocketChannelEmul();
 
         @Override
-        protected SocketChannel getSocketChannelImpl() throws IOException {
+        protected AbstractSelectableChannel getChannel() throws IOException {
             return sockEmul;
         }
     }
@@ -62,7 +62,7 @@ public class HTTPRawSamplerTest {
         System.out.println("sample");
         String req="GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
         String resp="HTTP/1.1 200 OK\r\n\r\nTEST";
-        instance.setRawRequest(req);
+        instance.setRequestData(req);
         instance.setParseResult(true);
 
         instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
@@ -84,7 +84,7 @@ public class HTTPRawSamplerTest {
         System.out.println("sample");
         String req="TEST";
         String resp="TEST";
-        instance.setRawRequest(req);
+        instance.setRequestData(req);
         instance.setUseKeepAlive(true);
 
         instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
@@ -99,77 +99,6 @@ public class HTTPRawSamplerTest {
     }
 
     /**
-     * Test of getHostName method, of class HTTPRawSampler.
-     */
-    @Test
-    public void testGetHostName() {
-        System.out.println("getHostName");
-        String result = instance.getHostName();
-        assertTrue(result.length()>0);
-    }
-
-    /**
-     * Test of setHostName method, of class HTTPRawSampler.
-     */
-    @Test
-    public void testSetHostName() {
-        System.out.println("setHostName");
-        String text = "";
-        instance.setHostName(text);
-    }
-
-    /**
-     * Test of getPort method, of class HTTPRawSampler.
-     */
-    @Test
-    public void testGetPort() {
-        System.out.println("getPort");
-        String result = instance.getPort();
-        assertTrue(result.length()>0);
-    }
-
-    /**
-     * Test of setPort method, of class HTTPRawSampler.
-     */
-    @Test
-    public void testSetPort() {
-        System.out.println("setPort");
-        String value = "";
-        instance.setPort(value);
-    }
-
-    /**
-     * Test of getRawRequest method, of class HTTPRawSampler.
-     */
-    @Test
-    public void testGetRawRequest() {
-        System.out.println("getRawRequest");
-        String expResult = "";
-        String result = instance.getRawRequest();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setRawRequest method, of class HTTPRawSampler.
-     */
-    @Test
-    public void testSetRawRequest() {
-        System.out.println("setRawRequest");
-        String value = "";
-        instance.setRawRequest(value);
-    }
-
-    /**
-     * Test of getSocketChannel method, of class HTTPRawSampler.
-     */
-    @Test
-    public void testGetSocketChannelImpl() throws Exception {
-        System.out.println("getSocketChannel");
-        SocketChannel result = instance.getSocketChannelImpl();
-        assertTrue(result instanceof SocketChannelEmul);
-    }
-
-    /**
      * Test of setUseKeepAlive method, of class HTTPRawSampler.
      */
     @Test
@@ -177,27 +106,6 @@ public class HTTPRawSamplerTest {
         System.out.println("setUseKeepAlive");
         boolean selected = false;
         instance.setUseKeepAlive(selected);
-    }
-
-    /**
-     * Test of getTimeout method, of class HTTPRawSampler.
-     */
-    @Test
-    public void testGetTimeout() {
-        System.out.println("getTimeout");
-        String expResult = "0";
-        String result = instance.getTimeout();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setTimeout method, of class HTTPRawSampler.
-     */
-    @Test
-    public void testSetTimeout() {
-        System.out.println("setTimeout");
-        String value = "";
-        instance.setTimeout(value);
     }
 
     /**

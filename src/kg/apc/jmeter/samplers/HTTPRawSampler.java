@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.jmeter.samplers.AbstractSampler;
+import java.nio.channels.spi.AbstractSelectableChannel;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
@@ -16,75 +15,26 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-public class HTTPRawSampler extends AbstractSampler {
+public class HTTPRawSampler extends AbstractIPSampler {
 
-    public static final String CRLF = "\r\n";
-    public static final String EMPTY = "";
-    public static final String HOSTNAME = "hostname";
-    public static final String PORT = "port";
-    public static final String KEEPALIVE = "keepalive";
-    public static final String PARSE = "parse";
-    public static final String BODY = "body";
-    public static final String RC200 = "200";
-    public static final String RC500 = "500";
-    public static final String TIMEOUT = "timeout";
+    private static final String KEEPALIVE = "keepalive";
+    private static final String PARSE = "parse";
     private static final String RNpattern = "\\r\\n";
     private static final String SPACE = " ";
     // 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private ByteBuffer recvBuf = ByteBuffer.allocateDirect(1024 * 4); // TODO: make benchmarks to know how it impacts sampler performance
     private SocketChannel savedSock;
 
     public HTTPRawSampler() {
         super();
     }
 
-    public final String getHostName() {
-        return getPropertyAsString(HOSTNAME);
-    }
-
-    void setHostName(String text) {
-        setProperty(HOSTNAME, text);
-    }
-
-    public String getPort() {
-        return getPropertyAsString(PORT);
-    }
-
-    public void setPort(String value) {
-        setProperty(PORT, value);
-    }
-
-    public String getRawRequest() {
-        return getPropertyAsString(HTTPRawSampler.BODY);
-    }
-
-    public void setRawRequest(String value) {
-        setProperty(BODY, value);
-    }
-
-    public SampleResult sample(Entry e) {
-        SampleResult res = new SampleResult();
-        res.setSampleLabel(getName());
-        res.setSamplerData(getRawRequest());
-        res.sampleStart();
-        res.setDataType(SampleResult.TEXT);
-        res.setSuccessful(true);
-        res.setResponseCode(RC200);
-        try {
-            res.setResponseData(processIO(res));
-            if (isParseResult()) {
-                parseResponse(res);
-            }
-        } catch (Exception ex) {
-            log.error(getHostName(), ex);
-            res.sampleEnd();
-            res.setSuccessful(false);
-            res.setResponseCode(RC500);
-            res.setResponseMessage(ex.toString());
-            res.setResponseData((ex.toString() + CRLF + JMeterPluginsUtils.getStackTrace(ex)).getBytes());
+    @Override
+    public SampleResult sample(Entry entry) {
+        SampleResult res = super.sample(entry);
+        if (isParseResult()) {
+            parseResponse(res);
         }
-
         return res;
     }
 
@@ -118,12 +68,12 @@ public class HTTPRawSampler extends AbstractSampler {
         }
     }
 
-    private byte[] processIO(SampleResult res) throws Exception {
+    protected byte[] processIO(SampleResult res) throws Exception {
         //log.info("Begin IO");
         ByteArrayOutputStream response = new ByteArrayOutputStream();
         //log.info("send");
-        ByteBuffer sendBuf = ByteBuffer.wrap(getRawRequest().getBytes()); // cannot cache it because of variable processing
-        SocketChannel sock = getSocketChannel();
+        ByteBuffer sendBuf = ByteBuffer.wrap(getRequestData().getBytes()); // cannot cache it because of variable processing
+        SocketChannel sock = (SocketChannel) getSocketChannel();
         sock.write(sendBuf);
 
         int cnt = 0;
@@ -165,7 +115,7 @@ public class HTTPRawSampler extends AbstractSampler {
         InetSocketAddress address = new InetSocketAddress(getHostName(), port);
 
         //log.info("Open sock");
-        savedSock = getSocketChannelImpl();
+        savedSock = (SocketChannel) getChannel();
         savedSock.connect(address);
         return savedSock;
     }
@@ -178,15 +128,7 @@ public class HTTPRawSampler extends AbstractSampler {
         setProperty(KEEPALIVE, selected);
     }
 
-    public String getTimeout() {
-        return getPropertyAsString(TIMEOUT);
-    }
-
-    public void setTimeout(String value) {
-        setProperty(TIMEOUT, value);
-    }
-
-    protected SocketChannel getSocketChannelImpl() throws IOException {
+    protected AbstractSelectableChannel getChannel() throws IOException {
         int t = getTimeoutAsInt();
         if (t > 0) {
             SocketChannelWithTimeouts res = (SocketChannelWithTimeouts) SocketChannelWithTimeouts.open();
@@ -196,16 +138,6 @@ public class HTTPRawSampler extends AbstractSampler {
         } else {
             return SocketChannel.open();
         }
-    }
-
-    private int getTimeoutAsInt() {
-        int timeout = 0;
-        try {
-            timeout = Integer.parseInt(getTimeout());
-        } catch (NumberFormatException e) {
-            log.error("Wrong timeout: " + getTimeout(), e);
-        }
-        return timeout;
     }
 
     boolean isParseResult() {

@@ -14,11 +14,11 @@ public class HexStringUDPDecoder implements UDPTrafficEncoder {
         return ByteBuffer.wrap(BinaryTCPClientImpl.hexStringToByteArray(data));
     }
 
-    public String decode(ByteBuffer buf) {
+    public byte[] decode(ByteBuffer buf) {
         ByteBuffer str = buf.duplicate();
         str.rewind();
         byte[] dst = new byte[str.limit()];
         str.get(dst);
-        return JOrphanUtils.baToHexString(dst);
+        return JOrphanUtils.baToHexString(dst).getBytes();
     }
 }

@@ -3,7 +3,6 @@ package kg.apc.jmeter.samplers;
 import kg.apc.emulators.SelectionKeyEmul;
 import java.util.Set;
 import java.io.IOException;
-import java.nio.channels.ClosedChannelException;
 import kg.apc.emulators.SelectorEmul;
 import kg.apc.emulators.SocketChannelEmul;
 import java.net.Socket;
@@ -30,10 +29,6 @@ public class SocketChannelWithTimeoutsTest {
 
         protected SocketChannelWithTimeoutsEmul() throws IOException {
             super();
-        }
-
-        @Override
-        protected void createInnerObjects() throws IOException, ClosedChannelException {
             selector = new SelectorEmul();
             SocketChannelEmul ce = new SocketChannelEmul();
             ce.configureBlocking(false);
@@ -247,15 +242,5 @@ public class SocketChannelWithTimeoutsTest {
         int t = 0;
         SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         instance.setReadTimeout(t);
-    }
-
-    /**
-     * Test of createInnerObjects method, of class SocketChannelWithTimeouts.
-     */
-    @Test
-    public void testCreateInnerObjects() throws Exception {
-        System.out.println("createInnerObjects");
-        SocketChannelWithTimeouts instance = new SocketChannelWithTimeouts();
-        instance.createInnerObjects();
     }
 }

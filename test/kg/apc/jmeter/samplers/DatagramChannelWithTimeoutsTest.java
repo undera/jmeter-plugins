@@ -76,7 +76,7 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testRead_ByteBuffer() throws Exception {
         System.out.println("read");
-        ByteBuffer dst = null;
+        ByteBuffer dst = ByteBuffer.allocateDirect(1024);
         int expResult = 0;
         int result = instance.read(dst);
         assertEquals(expResult, result);
@@ -105,8 +105,8 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testWrite_ByteBuffer() throws Exception {
         System.out.println("write");
-        ByteBuffer src = null;
-        int expResult = 0;
+        ByteBuffer src = ByteBuffer.wrap("test".getBytes());
+        int expResult = 4;
         int result = instance.write(src);
         assertEquals(expResult, result);
     }

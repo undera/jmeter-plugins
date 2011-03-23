@@ -6,7 +6,6 @@ import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
-import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
@@ -32,7 +31,10 @@ public class SocketChannelWithTimeouts extends SocketChannel {
     protected SocketChannelWithTimeouts() throws IOException {
         super(null);
         log.debug("Creating socketChannel");
-        createInnerObjects();
+        selector = Selector.open();
+        socketChannel = SocketChannel.open();
+        socketChannel.configureBlocking(false);
+        channelKey = socketChannel.register(selector, SelectionKey.OP_CONNECT);
     }
 
     public static SocketChannel open() throws IOException {
@@ -65,20 +67,12 @@ public class SocketChannelWithTimeouts extends SocketChannel {
         throw new SocketTimeoutException("Failed to connect to " + remote.toString());
     }
 
-    protected void createInnerObjects() throws IOException, ClosedChannelException {
-        selector = Selector.open();
-        socketChannel = SocketChannel.open();
-        socketChannel.configureBlocking(false);
-        channelKey = socketChannel.register(selector, SelectionKey.OP_CONNECT);
-    }
-
     @Override
     public int read(ByteBuffer dst) throws IOException {
         int bytesRead = 0;
         while (selector.select(readTimeout) > 0) {
             selector.selectedKeys().remove(channelKey);
             int cnt = socketChannel.read(dst);
-            log.debug("Read " + cnt);
             if (cnt < 1) {
                 if (bytesRead < 1) {
                     bytesRead = -1;

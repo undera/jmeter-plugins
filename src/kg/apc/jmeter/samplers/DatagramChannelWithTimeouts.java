@@ -38,7 +38,6 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
         while (selector.select(readTimeout) > 0) {
             selector.selectedKeys().remove(channelKey);
             int cnt = channel.read(dst);
-            log.debug("Read " + cnt);
             if (cnt < 1) {
                 if (bytesRead < 1) {
                     bytesRead = -1;

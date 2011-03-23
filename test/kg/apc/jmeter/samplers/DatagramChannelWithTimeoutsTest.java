@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import kg.apc.emulators.DatagramChannelEmul;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -30,9 +32,9 @@ public class DatagramChannelWithTimeoutsTest {
         protected DatagramChannelWithTimeoutsEmul() throws IOException {
             super();
             selector = new SelectorEmul();
-            DatagramChannel ce = new DatagramChannelEmul();
+            DatagramChannelEmul ce = new DatagramChannelEmul();
             ce.configureBlocking(false);
-            //ce.setBytesToRead(ByteBuffer.wrap("test".getBytes()));
+            ce.setBytesToRead(ByteBuffer.wrap("test".getBytes()));
             channel = ce;
             channelKey = new SelectionKeyEmul();
         }
@@ -90,8 +92,11 @@ public class DatagramChannelWithTimeoutsTest {
         int offset = 0;
         int length = 0;
         long expResult = 0L;
-        long result = instance.read(dsts, offset, length);
-        assertEquals(expResult, result);
+        try {
+            long result = instance.read(dsts, offset, length);
+            fail("exception expected");
+        } catch (UnsupportedOperationException e) {
+        }
     }
 
     /**
@@ -116,8 +121,11 @@ public class DatagramChannelWithTimeoutsTest {
         int offset = 0;
         int length = 0;
         long expResult = 0L;
-        long result = instance.write(srcs, offset, length);
-        assertEquals(expResult, result);
+        try {
+            long result = instance.write(srcs, offset, length);
+            fail("exception expected");
+        } catch (UnsupportedOperationException e) {
+        }
     }
 
     /**
@@ -135,12 +143,12 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testImplConfigureBlocking() throws Exception {
         System.out.println("implConfigureBlocking");
-        try{
-        boolean block = false;
-        instance.implConfigureBlocking(block);
-        fail("Exception expected");
-        }catch(UnsupportedOperationException e)
-        {}
+        try {
+            boolean block = false;
+            instance.implConfigureBlocking(block);
+            fail("Exception expected");
+        } catch (UnsupportedOperationException e) {
+        }
     }
 
     /**
@@ -181,9 +189,8 @@ public class DatagramChannelWithTimeoutsTest {
     public void testConnect() throws Exception {
         System.out.println("connect");
         SocketAddress remote = new InetSocketAddress("localhost", 123);
-        DatagramChannel expResult = null;
         DatagramChannel result = instance.connect(remote);
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 
     /**
@@ -192,9 +199,8 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testDisconnect() throws Exception {
         System.out.println("disconnect");
-        DatagramChannel expResult = null;
         DatagramChannel result = instance.disconnect();
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 
     /**
@@ -205,8 +211,11 @@ public class DatagramChannelWithTimeoutsTest {
         System.out.println("receive");
         ByteBuffer dst = null;
         SocketAddress expResult = null;
-        SocketAddress result = instance.receive(dst);
-        assertEquals(expResult, result);
+        try {
+            SocketAddress result = instance.receive(dst);
+            fail("exception expected");
+        } catch (UnsupportedOperationException e) {
+        }
     }
 
     /**
@@ -215,25 +224,33 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testSend() throws Exception {
         System.out.println("send");
-        ByteBuffer src = null;
-        SocketAddress target = null;
-        int expResult = 0;
-        int result = instance.send(src, target);
-        assertEquals(expResult, result);
+        try {
+            instance.send(null, null);
+            fail("exception expected");
+        } catch (UnsupportedOperationException e) {
+        }
     }
 
-        @Test
+    @Test
     public void testSendRecv_real() throws Exception {
         System.out.println("send real");
         String req = "892f0100000100000000000007636f6d6d6f6e730977696b696d65646961036f72670000010001";
         ByteBuffer src = ByteBuffer.wrap(BinaryTCPClientImpl.hexStringToByteArray(req));
-        SocketAddress target = new InetSocketAddress("127.0.0.1", 53);
-        int expResult = req.length()/2;
-        DatagramChannel inst = DatagramChannelWithTimeouts.open();
+        SocketAddress target = new InetSocketAddress("204.74.112.1", 53);
+        int expResult = req.length() / 2;
+        DatagramChannelWithTimeouts inst = (DatagramChannelWithTimeouts) DatagramChannelWithTimeouts.open();
+        inst.setReadTimeout(500);
         inst.connect(target);
         int result = inst.write(src);
         assertEquals(expResult, result);
-        inst.read(src);
+        ByteBuffer dst = ByteBuffer.allocateDirect(1024);
+        inst.read(dst);
+        System.out.println(dst);
+        System.out.println(JMeterPluginsUtils.byteBufferToString(dst));
+        try{
+        inst.read(dst);
+        fail("Exception?");
+        } catch (SocketTimeoutException e)
+        {}
     }
-
 }

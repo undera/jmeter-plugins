@@ -33,7 +33,6 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
         return new DatagramChannelWithTimeouts();
     }
 
-    @Override
     public int read(ByteBuffer dst) throws IOException {
         int bytesRead = 0;
         while (selector.select(readTimeout) > 0) {
@@ -57,12 +56,10 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
         throw new SocketTimeoutException("Timeout exceeded while reading from socket");
     }
 
-    @Override
     public long read(ByteBuffer[] dsts, int offset, int length) throws IOException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
     public int write(ByteBuffer src) throws IOException {
         fastFirstPacketRead = false;
         int res = 0;
@@ -73,22 +70,18 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
         return res;
     }
 
-    @Override
     public long write(ByteBuffer[] srcs, int offset, int length) throws IOException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
     protected void implCloseSelectableChannel() throws IOException {
         channel.close();
     }
 
-    @Override
     protected void implConfigureBlocking(boolean block) throws IOException {
         throw new UnsupportedOperationException("This class is blocking implementation of SocketChannel");
     }
 
-    @Override
     public boolean isConnected() {
         return channel.isConnected();
     }
@@ -97,27 +90,22 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
         readTimeout = t;
     }
 
-    @Override
     public DatagramSocket socket() {
         return channel.socket();
     }
 
-    @Override
     public DatagramChannel disconnect() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return channel.disconnect();
     }
 
-    @Override
     public SocketAddress receive(ByteBuffer dst) throws IOException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
     public int send(ByteBuffer src, SocketAddress target) throws IOException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
     public DatagramChannel connect(SocketAddress remote) throws IOException {
         return channel.connect(remote);
     }

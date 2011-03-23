@@ -117,7 +117,7 @@ public class DatagramChannelEmul extends DatagramChannel {
 
     @Override
     public DatagramChannel disconnect() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this;
     }
 
     @Override

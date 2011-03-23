@@ -112,7 +112,7 @@ public class DatagramChannelEmul extends DatagramChannel {
 
     @Override
     public DatagramChannel connect(SocketAddress remote) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this;
     }
 
     @Override

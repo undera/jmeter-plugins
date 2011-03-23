@@ -3,7 +3,6 @@ package kg.apc.jmeter.samplers;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.SocketAddress;
-import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
@@ -16,7 +15,6 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
 
     protected DatagramChannel channel;
     protected Selector selector;
-    private long connectTimeout = 5000;
     private long readTimeout = 10000;
     protected SelectionKey channelKey;
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -28,7 +26,7 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
         selector = Selector.open();
         channel = DatagramChannel.open();
         channel.configureBlocking(false);
-        channelKey = channel.register(selector, SelectionKey.OP_CONNECT);
+        channelKey = channel.register(selector, SelectionKey.OP_READ);
     }
 
     public static DatagramChannel open() throws IOException {
@@ -95,10 +93,6 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
         return channel.isConnected();
     }
 
-    public void setConnectTimeout(int t) {
-        connectTimeout = t;
-    }
-
     public void setReadTimeout(int t) {
         readTimeout = t;
     }
@@ -106,30 +100,6 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
     @Override
     public DatagramSocket socket() {
         return channel.socket();
-    }
-
-    @Override
-    public DatagramChannel connect(SocketAddress remote) throws IOException {
-        long start = System.currentTimeMillis();
-        //log.debug("trying to connect");
-        channel.connect(remote);
-        while (selector.select(connectTimeout) > 0) {
-            selector.selectedKeys().remove(channelKey);
-            //log.debug("selected connect");
-            //log.debug("Spent " + (System.currentTimeMillis() - start));
-            if (!channelKey.isConnectable()) {
-                throw new IllegalStateException("Socket channel is in not connectable state");
-            }
-
-            channelKey = channel.register(selector, SelectionKey.OP_READ);
-            log.debug("Connected in " + (System.currentTimeMillis() - start));
-            if (!channel.isConnected()) {
-                throw new SocketException("SocketChannel not connected on some reason");
-            }
-            return this;
-        }
-        //log.debug("Spent " + (System.currentTimeMillis() - start));
-        throw new SocketTimeoutException("Failed to connect to " + remote.toString());
     }
 
     @Override
@@ -145,5 +115,10 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
     @Override
     public int send(ByteBuffer src, SocketAddress target) throws IOException {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public DatagramChannel connect(SocketAddress remote) throws IOException {
+        return channel.connect(remote);
     }
 }

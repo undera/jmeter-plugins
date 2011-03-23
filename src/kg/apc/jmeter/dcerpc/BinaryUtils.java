@@ -152,7 +152,7 @@ public class BinaryUtils
    {
       long reversed = Long.reverseBytes(Double.doubleToLongBits(val));
       String res = Long.toHexString(reversed);
-      res = new String("0000000000000000").substring(res.length()) + res;
+      res = "0000000000000000".substring(res.length()) + res;
       return res;
    }
 

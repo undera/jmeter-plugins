@@ -1,9 +1,11 @@
 package kg.apc.jmeter.samplers;
 
+import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import kg.apc.emulators.SelectionKeyEmul;
 import kg.apc.emulators.SelectorEmul;
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
@@ -62,9 +64,8 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testOpen() throws Exception {
         System.out.println("open");
-        DatagramChannel expResult = null;
         DatagramChannel result = DatagramChannelWithTimeoutsEmul.open();
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 
     /**
@@ -134,8 +135,12 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testImplConfigureBlocking() throws Exception {
         System.out.println("implConfigureBlocking");
+        try{
         boolean block = false;
         instance.implConfigureBlocking(block);
+        fail("Exception expected");
+        }catch(UnsupportedOperationException e)
+        {}
     }
 
     /**
@@ -144,19 +149,9 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testIsConnected() throws IOException {
         System.out.println("isConnected");
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.isConnected();
         assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setConnectTimeout method, of class DatagramChannelWithTimeouts.
-     */
-    @Test
-    public void testSetConnectTimeout() throws IOException {
-        System.out.println("setConnectTimeout");
-        int t = 0;
-        instance.setConnectTimeout(t);
     }
 
     /**
@@ -175,9 +170,8 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testSocket() {
         System.out.println("socket");
-        DatagramSocket expResult = null;
         DatagramSocket result = instance.socket();
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 
     /**
@@ -186,7 +180,7 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testConnect() throws Exception {
         System.out.println("connect");
-        SocketAddress remote = null;
+        SocketAddress remote = new InetSocketAddress("localhost", 123);
         DatagramChannel expResult = null;
         DatagramChannel result = instance.connect(remote);
         assertEquals(expResult, result);
@@ -227,4 +221,19 @@ public class DatagramChannelWithTimeoutsTest {
         int result = instance.send(src, target);
         assertEquals(expResult, result);
     }
+
+        @Test
+    public void testSendRecv_real() throws Exception {
+        System.out.println("send real");
+        String req = "892f0100000100000000000007636f6d6d6f6e730977696b696d65646961036f72670000010001";
+        ByteBuffer src = ByteBuffer.wrap(BinaryTCPClientImpl.hexStringToByteArray(req));
+        SocketAddress target = new InetSocketAddress("127.0.0.1", 53);
+        int expResult = req.length()/2;
+        DatagramChannel inst = DatagramChannelWithTimeouts.open();
+        inst.connect(target);
+        int result = inst.write(src);
+        assertEquals(expResult, result);
+        inst.read(src);
+    }
+
 }

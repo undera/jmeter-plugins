@@ -103,12 +103,12 @@ public class DCERPCMarshalling
          if (isNotVisibleChar(j))
          {
             addTextOrBinaryBuffer(result_buffer, text_buffer, binary_buffer, lengthThreshold);
-            result_buffer.append((j < 16 ? "0" : "") + Integer.toHexString(j));
+                result_buffer.append(j < 16 ? "0" : "").append(Integer.toHexString(j));
          }
          else
          {
             text_buffer.write(j);
-            binary_buffer.append((j < 16 ? "0" : "") + Integer.toHexString(j));
+                binary_buffer.append(j < 16 ? "0" : "").append(Integer.toHexString(j));
          }
       }
       addTextOrBinaryBuffer(result_buffer, text_buffer, binary_buffer, lengthThreshold);
@@ -119,7 +119,7 @@ public class DCERPCMarshalling
    {
       if (text_buffer.size() >= lengthThreshold)
       {
-         result_buffer.append('{' + text_buffer.toString() + '}');
+            result_buffer.append('{').append(text_buffer.toString()).append('}');
       }
       else
       {

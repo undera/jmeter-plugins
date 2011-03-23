@@ -125,7 +125,7 @@ public class DCERPCSamplerUtils
       {
          log.warn("Uneven hex, data will be trimmed to even: " + stubDataHex);
          stubDataHex = stubDataHex.substring(0, stubDataHex.length() - 1);
-         stubDataHex += JOrphanUtils.baToHexString(new String("!!!DATA WAS TRIMMED!!!").getBytes());
+         stubDataHex += JOrphanUtils.baToHexString("!!!DATA WAS TRIMMED!!!".getBytes());
       }
       return stubDataHex;
    }

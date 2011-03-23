@@ -3,25 +3,19 @@ package kg.apc.jmeter.samplers;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.SocketAddress;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
-import java.nio.channels.ClosedChannelException;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- * SocketChannel with timeouts.
- * This class performs blocking operations for connect and IO.
- * Make note that some of methods are not implemeted yet.
- * @author apc@apc.kg
- */
 public class DatagramChannelWithTimeouts extends DatagramChannel {
 
-    protected  DatagramChannel channel;
-    protected  Selector selector;
+    protected DatagramChannel channel;
+    protected Selector selector;
     private long connectTimeout = 5000;
     private long readTimeout = 10000;
     protected SelectionKey channelKey;
@@ -75,7 +69,7 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
         fastFirstPacketRead = false;
         int res = 0;
         int size = src.remaining();
-        while (res<size) {
+        while (res < size) {
             res += channel.write(src);
         }
         return res;
@@ -116,7 +110,26 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
 
     @Override
     public DatagramChannel connect(SocketAddress remote) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        long start = System.currentTimeMillis();
+        //log.debug("trying to connect");
+        channel.connect(remote);
+        while (selector.select(connectTimeout) > 0) {
+            selector.selectedKeys().remove(channelKey);
+            //log.debug("selected connect");
+            //log.debug("Spent " + (System.currentTimeMillis() - start));
+            if (!channelKey.isConnectable()) {
+                throw new IllegalStateException("Socket channel is in not connectable state");
+            }
+
+            channelKey = channel.register(selector, SelectionKey.OP_READ);
+            log.debug("Connected in " + (System.currentTimeMillis() - start));
+            if (!channel.isConnected()) {
+                throw new SocketException("SocketChannel not connected on some reason");
+            }
+            return this;
+        }
+        //log.debug("Spent " + (System.currentTimeMillis() - start));
+        throw new SocketTimeoutException("Failed to connect to " + remote.toString());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package kg.apc.jmeter.samplers;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import org.xbill.DNS.*;
 
@@ -24,4 +25,14 @@ public class DNSJavaDecoder extends HexStringUDPDecoder {
         return Record.newRecord(Name.fromConstantString(fields[0]), Type.value(fields[1]), DClass.value(fields[2]));
     }
 
+    @Override
+    public byte[] decode(byte[] buf) {
+        Message m;
+        try {
+            m = new Message(buf);
+        } catch (IOException ex) {
+            throw new RuntimeException("Cannot decode DNS message", ex);
+        }
+        return m.toString().getBytes();
+    }
 }

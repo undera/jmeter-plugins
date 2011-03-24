@@ -53,4 +53,19 @@ public class DNSJavaDecoderTest {
         System.out.println(res);
         assertEquals(exp.substring(4), res.substring(4));
     }
+
+    /**
+     * Test of decode method, of class DNSJavaDecoder.
+     */
+    @Test
+    public void testDecode() {
+        System.out.println("decode");
+        String resp="567f818000010007000000000667726f75707306676f6f676c6503636f6d0000010001c00c000500010000463a000b0667726f757073016cc013c02f000100010000011a00044a7d2765c02f000100010000011a00044a7d2771c02f000100010000011a00044a7d278ac02f000100010000011a00044a7d2766c02f000100010000011a00044a7d2764c02f000100010000011a00044a7d278b";
+        byte[] buf = BinaryTCPClientImpl.hexStringToByteArray(resp);
+        DNSJavaDecoder instance = new DNSJavaDecoder();
+        String expResult = "NOERROR";
+        String result = new String(instance.decode(buf));
+        System.out.println(result);
+        assertTrue(result.contains(expResult));
+    }
 }

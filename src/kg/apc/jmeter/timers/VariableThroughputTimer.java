@@ -32,6 +32,7 @@ public class VariableThroughputTimer
     public static final Class[] columnClasses = new Class[]{
         String.class, String.class, String.class
     };
+    // TODO: eliminate magic property
     public static final String DATA_PROPERTY = "load_profile";
     public static final int DURATION_FIELD_NO = 2;
     public static final int FROM_FIELD_NO = 0;

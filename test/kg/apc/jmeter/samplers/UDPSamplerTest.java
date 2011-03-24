@@ -241,4 +241,43 @@ public class UDPSamplerTest {
         assertTrue(res2.isSuccessful());
         assertTrue(res2.getResponseDataAsString().length()>0);
     }
+
+    /**
+     * Test of processIO method, of class UDPSampler.
+     */
+    @Test
+    public void testProcessIO() throws Exception {
+        System.out.println("processIO");
+        SampleResult res = null;
+        UDPSampler instance = new UDPSampler();
+        byte[] expResult = null;
+        byte[] result = instance.processIO(res);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of threadStarted method, of class UDPSampler.
+     */
+    @Test
+    public void testThreadStarted() {
+        System.out.println("threadStarted");
+        UDPSampler instance = new UDPSampler();
+        instance.threadStarted();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of threadFinished method, of class UDPSampler.
+     */
+    @Test
+    public void testThreadFinished() {
+        System.out.println("threadFinished");
+        UDPSampler instance = new UDPSampler();
+        instance.threadFinished();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

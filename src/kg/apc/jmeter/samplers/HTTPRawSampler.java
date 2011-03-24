@@ -96,7 +96,8 @@ public class HTTPRawSampler extends AbstractIPSampler {
         if (!isUseKeepAlive()) {
             sock.close();
         }
-        //log.info("End IO");
+
+        res.setBytes(response.size());
         return response.toByteArray();
     }
 

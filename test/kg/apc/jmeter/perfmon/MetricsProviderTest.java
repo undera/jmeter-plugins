@@ -231,4 +231,20 @@ public class MetricsProviderTest {
         MetricsProvider instance = new MetricsProvider(AbstractPerformanceMonitoringGui.PERFMON_CPU, connectors);
         instance.setConnectTimeout(connectTimeout);
     }
+
+    /**
+     * Test of createSocket method, of class MetricsProvider.
+     */
+    @Test
+    public void testCreateSocket() throws Exception {
+        System.out.println("createSocket");
+        String host = "";
+        int port = 0;
+        MetricsProvider instance = null;
+        Socket expResult = null;
+        Socket result = instance.createSocket(host, port);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

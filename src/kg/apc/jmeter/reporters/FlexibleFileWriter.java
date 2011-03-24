@@ -39,8 +39,8 @@ public class FlexibleFileWriter
             + "isFailed " // surrogates
             + "threadName sampleLabel "
             + "startTimeMillis endTimeMillis "
-            + "responseTimeMicros latencyMicros ";
-    //TODO: add samplerData, ResponseData, responseHeaders etc.
+            + "responseTimeMicros latencyMicros "
+            +"requestData responseData responseHeaders ";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String FILENAME = "filename";
     private static final String COLUMNS = "columns";
@@ -247,6 +247,18 @@ public class FlexibleFileWriter
 
             case 15:
                 buf.put(String.valueOf(result.getLatency() * 1000).getBytes());
+                break;
+
+            case 16:
+                buf.put(result.getSamplerData().getBytes());
+                break;
+
+            case 17:
+                buf.put(result.getResponseData());
+                break;
+
+            case 18:
+                buf.put(result.getRequestHeaders().getBytes());
                 break;
 
             default:

@@ -75,9 +75,6 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         int cnt = 0;
         recvBuf.clear();
         if ((cnt = channel.read(recvBuf)) != -1) {
-            if (log.isDebugEnabled()) {
-                log.debug("read " + cnt + " bytes");
-            }
             res.latencyEnd();
             //log.debug("Read " + recvBuf.toString());
             recvBuf.flip();
@@ -88,7 +85,7 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         }
         res.sampleEnd();
 
-        log.debug("Resp " + response.toString());
+        res.setBytes(response.size());
         return encoder.decode(response.toByteArray());
     }
 
@@ -98,17 +95,6 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         } catch (IOException ex) {
             log.error("Cannot open channel", ex);
         }
-
-        /*
-        if (isWaitResponse()) {
-        try {
-        ((DatagramChannel) channel).socket().bind(new InetSocketAddress(getHostName(), getPortAsInt()));
-        } catch (SocketException ex) {
-        log.error("Cannot bind socket", ex);
-        }
-        }
-         * 
-         */
 
         try {
             Class<?> c = Thread.currentThread().getContextClassLoader().loadClass(getEncoderClass());

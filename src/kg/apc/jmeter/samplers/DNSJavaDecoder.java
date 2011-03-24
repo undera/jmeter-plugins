@@ -8,7 +8,7 @@ import org.xbill.DNS.*;
  *
  * @author undera
  */
-public class DNSJavaDecoder extends HexStringUDPDecoder {
+public class DNSJavaDecoder implements UDPTrafficDecoder {
 
     @Override
     public ByteBuffer encode(String data) {

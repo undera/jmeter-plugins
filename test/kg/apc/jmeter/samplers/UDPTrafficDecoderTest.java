@@ -49,8 +49,6 @@ public class UDPTrafficDecoderTest {
         ByteBuffer expResult = null;
         ByteBuffer result = instance.encode(data);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -64,8 +62,6 @@ public class UDPTrafficDecoderTest {
         byte[] expResult = null;
         byte[] result = instance.decode(data);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     public class UDPTrafficDecoderImpl implements UDPTrafficDecoder {

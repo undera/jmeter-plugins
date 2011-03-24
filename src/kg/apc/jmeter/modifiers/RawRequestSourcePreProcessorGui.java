@@ -123,5 +123,6 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
         rewindOnEOF.setSelected(true);
         variableName.setText("rawData");
         fileName.setText("");
+        checkInfo.setText("");
     }
 }

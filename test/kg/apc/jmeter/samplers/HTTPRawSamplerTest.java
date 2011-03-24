@@ -146,13 +146,9 @@ public class HTTPRawSamplerTest {
     @Test
     public void testProcessIO() throws Exception {
         System.out.println("processIO");
-        SampleResult res = null;
-        HTTPRawSampler instance = new HTTPRawSampler();
-        byte[] expResult = null;
+        SampleResult res = new SampleResult();
         byte[] result = instance.processIO(res);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals("", new String(result));
     }
 
     /**
@@ -161,11 +157,7 @@ public class HTTPRawSamplerTest {
     @Test
     public void testGetChannel() throws Exception {
         System.out.println("getChannel");
-        HTTPRawSampler instance = new HTTPRawSampler();
-        AbstractSelectableChannel expResult = null;
         AbstractSelectableChannel result = instance.getChannel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 }

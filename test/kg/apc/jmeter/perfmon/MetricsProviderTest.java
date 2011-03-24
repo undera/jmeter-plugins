@@ -2,6 +2,7 @@ package kg.apc.jmeter.perfmon;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
 import kg.apc.emulators.SocketEmulator;
 import kg.apc.emulators.SocketEmulatorInputStream;
@@ -240,11 +241,11 @@ public class MetricsProviderTest {
         System.out.println("createSocket");
         String host = "";
         int port = 0;
-        MetricsProvider instance = null;
-        Socket expResult = null;
+        MetricsProvider instance = new MetricsProvider(AbstractPerformanceMonitoringGui.PERFMON_CPU, connectors);
+        try {
         Socket result = instance.createSocket(host, port);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        fail("must fail");
+        }catch(ConnectException ex)
+        {}
     }
 }

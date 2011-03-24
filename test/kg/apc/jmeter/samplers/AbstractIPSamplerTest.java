@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.samplers;
 
 import java.io.IOException;
@@ -51,8 +46,6 @@ public class AbstractIPSamplerTest {
         String expResult = "";
         String result = instance.getHostName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -65,8 +58,6 @@ public class AbstractIPSamplerTest {
         String expResult = "";
         String result = instance.getPort();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -79,8 +70,6 @@ public class AbstractIPSamplerTest {
         String expResult = "";
         String result = instance.getRequestData();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -93,8 +82,6 @@ public class AbstractIPSamplerTest {
         String expResult = "";
         String result = instance.getTimeout();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -106,8 +93,6 @@ public class AbstractIPSamplerTest {
         String text = "";
         AbstractIPSampler instance = new AbstractIPSamplerImpl();
         instance.setHostName(text);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -119,8 +104,6 @@ public class AbstractIPSamplerTest {
         String text = "";
         AbstractIPSampler instance = new AbstractIPSamplerImpl();
         instance.setPort(text);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -132,8 +115,6 @@ public class AbstractIPSamplerTest {
         String text = "";
         AbstractIPSampler instance = new AbstractIPSamplerImpl();
         instance.setRequestData(text);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -145,8 +126,6 @@ public class AbstractIPSamplerTest {
         String text = "";
         AbstractIPSampler instance = new AbstractIPSamplerImpl();
         instance.setTimeout(text);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -159,8 +138,6 @@ public class AbstractIPSamplerTest {
         int expResult = 0;
         int result = instance.getPortAsInt();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -173,8 +150,6 @@ public class AbstractIPSamplerTest {
         int expResult = 0;
         int result = instance.getTimeoutAsInt();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -185,11 +160,8 @@ public class AbstractIPSamplerTest {
         System.out.println("sample");
         Entry entry = null;
         AbstractIPSampler instance = new AbstractIPSamplerImpl();
-        SampleResult expResult = null;
         SampleResult result = instance.sample(entry);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -202,8 +174,6 @@ public class AbstractIPSamplerTest {
         AbstractSelectableChannel expResult = null;
         AbstractSelectableChannel result = instance.getChannel();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -217,8 +187,6 @@ public class AbstractIPSamplerTest {
         byte[] expResult = null;
         byte[] result = instance.processIO(res);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     public class AbstractIPSamplerImpl extends AbstractIPSampler {

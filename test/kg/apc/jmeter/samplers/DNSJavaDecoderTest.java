@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.xbill.DNS.Record;
 
 /**
  *
@@ -67,5 +68,17 @@ public class DNSJavaDecoderTest {
         String result = new String(instance.decode(buf));
         System.out.println(result);
         assertTrue(result.contains(expResult));
+    }
+
+    /**
+     * Test of getRecord method, of class DNSJavaDecoder.
+     */
+    @Test
+    public void testGetRecord() {
+        System.out.println("getRecord");
+        String recstr = ". A IN";
+        DNSJavaDecoder instance = new DNSJavaDecoder();
+        Record result = instance.getRecord(recstr);
+        assertTrue(result.toString().endsWith("A"));
     }
 }

@@ -24,6 +24,7 @@ import org.apache.log.Logger;
 public class RawRequestSourcePreProcessor
         extends AbstractTestElement
         implements PreProcessor, NoThreadClone {
+    public static final String regexp = "\\s";
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String VARIABLE_NAME = "variable_name";
@@ -47,7 +48,7 @@ public class RawRequestSourcePreProcessor
                 return;
             }
         }
-        String rawData = "";
+        String rawData;
 
         try {
             rawData = readNextChunk(getNextChunkSize());
@@ -122,7 +123,7 @@ public class RawRequestSourcePreProcessor
         byte[] bLine = new byte[count];
         metaBuf.get(bLine);
         String sLine = new String(bLine);
-        String[] ar = sLine.trim().split("\\s");
+        String[] ar = sLine.trim().split(regexp);
         //log.debug("Chunk size: "+ar[0]);
 
         int res = 0;

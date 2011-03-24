@@ -9,19 +9,21 @@ import org.xbill.DNS.*;
  * @author undera
  */
 public class DNSJavaDecoder implements UDPTrafficDecoder {
+    public static final String NL = "\n";
+    public static final String SPACE = " ";
 
     @Override
     public ByteBuffer encode(String data) {
         Message msg = new Message();
-        String recs[] = data.split("\n");
+        String recs[] = data.split(NL);
         for (int n = 0; n < recs.length; n++) {
             msg.addRecord(getRecord(recs[n]), Section.QUESTION);
         }
         return ByteBuffer.wrap(msg.toWire());
     }
 
-    private Record getRecord(String recstr) {
-        String[] fields = recstr.split(" ");
+    protected Record getRecord(String recstr) {
+        String[] fields = recstr.split(SPACE);
         return Record.newRecord(Name.fromConstantString(fields[0]), Type.value(fields[1]), DClass.value(fields[2]));
     }
 

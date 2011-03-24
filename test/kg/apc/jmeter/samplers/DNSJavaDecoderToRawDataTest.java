@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package kg.apc.jmeter.samplers;
 
 import java.nio.ByteBuffer;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,9 +17,9 @@ import static org.junit.Assert.*;
  *
  * @author undera
  */
-public class HexStringUDPDecoderTest {
+public class DNSJavaDecoderToRawDataTest {
 
-    public HexStringUDPDecoderTest() {
+    public DNSJavaDecoderToRawDataTest() {
     }
 
     @BeforeClass
@@ -39,26 +39,15 @@ public class HexStringUDPDecoderTest {
     }
 
     /**
-     * Test of encode method, of class HexStringUDPDecoder.
+     * Test of encode method, of class DNSJavaDecoderToRawData.
      */
     @Test
     public void testEncode() {
         System.out.println("encode");
-        String data = "74657374";
-        HexStringUDPDecoder instance = new HexStringUDPDecoder();
+        String data = ". A IN";
+        DNSJavaDecoderToRawData instance = new DNSJavaDecoderToRawData();
         ByteBuffer result = instance.encode(data);
-        assertEquals("test", JMeterPluginsUtils.byteBufferToString(result));
+        assertNotNull(result);
     }
 
-    /**
-     * Test of decode method, of class HexStringUDPDecoder.
-     */
-    @Test
-    public void testDecode() {
-        System.out.println("decode");
-        byte[] buf = "test".getBytes();
-        HexStringUDPDecoder instance = new HexStringUDPDecoder();
-        byte[] result = instance.decode(buf);
-        assertEquals("74657374", new String(result));
-    }
 }

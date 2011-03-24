@@ -2,6 +2,7 @@ package kg.apc.jmeter.samplers;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -89,7 +90,9 @@ public abstract class AbstractIPSampler extends AbstractSampler implements Seria
         try {
             res.setResponseData(processIO(res));
         } catch (Exception ex) {
-            log.error(getHostName(), ex);
+            if (!(ex instanceof SocketTimeoutException)) {
+                log.error(getHostName(), ex);
+            }
             res.sampleEnd();
             res.setSuccessful(false);
             res.setResponseCode(HTTPRawSampler.RC500);

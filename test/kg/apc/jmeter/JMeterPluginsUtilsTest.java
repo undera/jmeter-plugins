@@ -164,4 +164,15 @@ public class JMeterPluginsUtilsTest {
         assertEquals(60*60*4, JMeterPluginsUtils.getSecondsForShortString("4h"));
         assertEquals(104025, JMeterPluginsUtils.getSecondsForShortString("27h103m645s"));
     }
+
+    /**
+     * Test of byteBufferToByteArray method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testByteBufferToByteArray() {
+        System.out.println("byteBufferToByteArray");
+        ByteBuffer buf = ByteBuffer.wrap("test".getBytes());
+        byte[] result = JMeterPluginsUtils.byteBufferToByteArray(buf);
+        assertEquals(4, result.length);
+    }
 }

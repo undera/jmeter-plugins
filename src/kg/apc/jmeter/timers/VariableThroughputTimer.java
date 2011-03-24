@@ -76,7 +76,7 @@ public class VariableThroughputTimer
                 }
                 cntDelayed++;
                 try {
-                    log.debug("Waiting for " + delay);
+                    if (log.isDebugEnabled()) log.debug("Waiting for " + delay);
                     wait(delay);
                 } catch (InterruptedException ex) {
                     log.error("Waiting thread was interrupted", ex);
@@ -96,7 +96,7 @@ public class VariableThroughputTimer
             }
             time = secs;
             rps = getRPSForSecond((secs - startSec) / 1000);
-            log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent " + cntSent + " RPS: " + rps);
+            if (log.isDebugEnabled()) log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent " + cntSent + " RPS: " + rps);
             cntSent = 0;
             msecPerReq = 1000d / rps;
         }

@@ -96,13 +96,18 @@ public abstract class JMeterPluginsUtils {
     }
 
     public static String byteBufferToString(ByteBuffer buf) {
+        byte[] dst = byteBufferToByteArray(buf);
+        return new String(dst);
+    }
+
+    public static byte[] byteBufferToByteArray(ByteBuffer buf) {
         ByteBuffer str = buf.duplicate();
         //System.err.println(str);
         str.rewind();
         //System.err.println(str);
         byte[] dst = new byte[str.limit()];
         str.get(dst);
-        return new String(dst);
+        return dst;
     }
 
     public static String replaceRNT(String str) {

@@ -248,13 +248,11 @@ public class UDPSamplerTest {
     @Test
     public void testProcessIO() throws Exception {
         System.out.println("processIO");
-        SampleResult res = null;
-        UDPSampler instance = new UDPSampler();
-        byte[] expResult = null;
+        instance.threadStarted();
+        SampleResult res = new SampleResult();
+        instance.setRequestData("453555");
         byte[] result = instance.processIO(res);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals("", new String(result));
     }
 
     /**
@@ -263,10 +261,7 @@ public class UDPSamplerTest {
     @Test
     public void testThreadStarted() {
         System.out.println("threadStarted");
-        UDPSampler instance = new UDPSampler();
         instance.threadStarted();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -275,9 +270,6 @@ public class UDPSamplerTest {
     @Test
     public void testThreadFinished() {
         System.out.println("threadFinished");
-        UDPSampler instance = new UDPSampler();
         instance.threadFinished();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

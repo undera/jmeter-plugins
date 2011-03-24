@@ -2,6 +2,7 @@ package kg.apc.jmeter.samplers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
@@ -53,7 +54,11 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
     }
 
     public ByteBuffer encode(String data) {
-        return ByteBuffer.wrap(data.getBytes());
+        try {
+            return ByteBuffer.wrap(data.getBytes("Windows-1252"));
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public byte[] decode(byte[] buf) {
@@ -105,7 +110,8 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
             encoder = (UDPTrafficDecoder) o;
             log.debug("Using decoder: " + encoder);
         } catch (Exception ex) {
-            log.error("Problem loading encoder " + getEncoderClass() + ", raw data will be used", ex);
+            log.warn("Problem loading encoder " + getEncoderClass() + ", raw data will be used", ex);
+            encoder=this;
         }
     }
 

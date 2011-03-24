@@ -8,7 +8,7 @@ import org.apache.jorphan.util.JOrphanUtils;
  *
  * @author undera
  */
-public class HexStringUDPDecoder implements UDPTrafficEncoder {
+public class HexStringUDPDecoder implements UDPTrafficDecoder {
 
     public ByteBuffer encode(String data) {
         return ByteBuffer.wrap(BinaryTCPClientImpl.hexStringToByteArray(data));

@@ -30,7 +30,9 @@ public class DatagramChannelEmul extends DatagramChannel {
         }
     }
 
-
+    public static DatagramChannel open() throws IOException {
+        return new DatagramChannelEmul();
+    }
 
     @Override
     public DatagramSocket socket() {

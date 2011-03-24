@@ -1,7 +1,7 @@
 package kg.apc.jmeter.samplers;
 
+import java.nio.channels.SelectionKey;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
-import kg.apc.emulators.SelectionKeyEmul;
 import kg.apc.emulators.SelectorEmul;
 import java.io.IOException;
 import java.net.DatagramSocket;
@@ -32,11 +32,11 @@ public class DatagramChannelWithTimeoutsTest {
         protected DatagramChannelWithTimeoutsEmul() throws IOException {
             super();
             selector = new SelectorEmul();
-            DatagramChannelEmul ce = new DatagramChannelEmul();
+            DatagramChannelEmul ce = (DatagramChannelEmul) DatagramChannelEmul.open();
             ce.configureBlocking(false);
             ce.setBytesToRead(ByteBuffer.wrap("test".getBytes()));
             channel = ce;
-            channelKey = new SelectionKeyEmul();
+            channelKey = channel.register(selector, SelectionKey.OP_READ);
         }
     }
 
@@ -76,9 +76,9 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testRead_ByteBuffer() throws Exception {
         System.out.println("read");
-        instance.socket().bind(new InetSocketAddress(53));
+        instance.connect(new InetSocketAddress("204.74.112.1", 53));
         ByteBuffer dst = ByteBuffer.allocateDirect(1024);
-        int expResult = 0;
+        int expResult = 4;
         int result = instance.read(dst);
         assertEquals(expResult, result);
     }
@@ -134,7 +134,11 @@ public class DatagramChannelWithTimeoutsTest {
     @Test
     public void testImplCloseSelectableChannel() throws Exception {
         System.out.println("implCloseSelectableChannel");
+        try{
         instance.implCloseSelectableChannel();
+            fail("Exception expected");
+        } catch (UnsupportedOperationException e) {
+        }
     }
 
     /**

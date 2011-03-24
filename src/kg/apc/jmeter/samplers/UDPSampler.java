@@ -15,13 +15,13 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-public class UDPSampler extends AbstractIPSampler implements UDPTrafficEncoder, ThreadListener {
+public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, ThreadListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String ENCODECLASS = "encodeclass";
     public static final String WAITRESPONSE = "waitresponse";
     private DatagramChannel channel;
-    private UDPTrafficEncoder encoder;
+    private UDPTrafficDecoder encoder;
 
     public boolean isWaitResponse() {
         return getPropertyAsBoolean(WAITRESPONSE);
@@ -113,10 +113,10 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficEncoder, 
         try {
             Class<?> c = Thread.currentThread().getContextClassLoader().loadClass(getEncoderClass());
             Object o = c.newInstance();
-            if (!(o instanceof UDPTrafficEncoder)) {
-                throw new ClassNotFoundException("Class does not implement " + UDPTrafficEncoder.class.getCanonicalName());
+            if (!(o instanceof UDPTrafficDecoder)) {
+                throw new ClassNotFoundException("Class does not implement " + UDPTrafficDecoder.class.getCanonicalName());
             }
-            encoder = (UDPTrafficEncoder) o;
+            encoder = (UDPTrafficDecoder) o;
             log.debug("Using decoder: " + encoder);
         } catch (Exception ex) {
             log.error("Problem loading encoder " + getEncoderClass() + ", raw data will be used", ex);

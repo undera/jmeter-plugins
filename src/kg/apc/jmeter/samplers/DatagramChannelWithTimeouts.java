@@ -36,8 +36,13 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
     public int read(ByteBuffer dst) throws IOException {
         int bytesRead = 0;
         while (selector.select(readTimeout) > 0) {
-            if (log.isDebugEnabled()) log.debug("Loop "+bytesRead);
-            selector.selectedKeys().remove(channelKey);
+            if (log.isDebugEnabled()) {
+                log.debug("Loop " + bytesRead);
+            }
+            // damn NPE in unit tests...
+            if (selector.selectedKeys() != null) {
+                selector.selectedKeys().remove(channelKey);
+            }
             int cnt = channel.read(dst);
             if (cnt < 1) {
                 if (bytesRead < 1) {

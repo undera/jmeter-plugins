@@ -227,7 +227,7 @@ public class UDPSamplerTest {
     public void testReal() {
         System.out.println("real");
         instance = new UDPSampler();
-        instance.setHostName("95.108.198.11");
+        instance.setHostName("204.74.112.1");
         instance.setPort("53");
         instance.setRequestData("f11b0100000100000000000004636f646506676f6f676c6503636f6d00001c0001");
         instance.setEncoderClass(HexStringUDPDecoder.class.getCanonicalName());
@@ -237,5 +237,8 @@ public class UDPSamplerTest {
         SampleResult res = instance.sample(null);
         assertTrue(res.isSuccessful());
         assertTrue(res.getResponseDataAsString().length()>0);
+        SampleResult res2 = instance.sample(null);
+        assertTrue(res2.isSuccessful());
+        assertTrue(res2.getResponseDataAsString().length()>0);
     }
 }

@@ -47,6 +47,7 @@ public class VariableThroughputTimer
     private long startSec = 0;
     private CollectionProperty overrideProp;
     private int stopTries;
+    private long lastStopTry;
 
     public VariableThroughputTimer() {
         super();
@@ -76,7 +77,9 @@ public class VariableThroughputTimer
                 }
                 cntDelayed++;
                 try {
-                    if (log.isDebugEnabled()) log.debug("Waiting for " + delay);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Waiting for " + delay);
+                    }
                     wait(delay);
                 } catch (InterruptedException ex) {
                     log.error("Waiting thread was interrupted", ex);
@@ -96,7 +99,14 @@ public class VariableThroughputTimer
             }
             time = secs;
             rps = getRPSForSecond((secs - startSec) / 1000);
-            if (log.isDebugEnabled()) log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent " + cntSent + " RPS: " + rps);
+            if (log.isDebugEnabled()) {
+                log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent " + cntSent + " RPS: " + rps);
+            }
+
+            if (cntDelayed < 1) {
+                log.warn("No free threads left in worker pool, maybe you need more active threads");
+            }
+
             cntSent = 0;
             msecPerReq = 1000d / rps;
         }
@@ -228,6 +238,11 @@ public class VariableThroughputTimer
     }
 
     private void stopTest() {
+        if (lastStopTry == time) {
+            return;
+        }
+
+        lastStopTry = time;
         stopTries++;
         if (stopTries > 10) {
             log.info("Tries more than 10, stop it NOW!");

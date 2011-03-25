@@ -25,7 +25,7 @@ public class SocketEmulatorOutputStream
    public void write(int b)
         throws IOException
    {
-      buffer.append((b>10?"":"0")+Integer.toHexString(b));
+        buffer.append(b > 10 ? "" : "0").append(Integer.toHexString(b));
    }
 
    /**

@@ -214,4 +214,19 @@ public class RawRequestSourcePreProcessorTest {
         boolean result = instance.getRewindOnEOF();
         assertEquals(expResult, result);
     }
+
+
+    @Test
+    public void testProcess_bug1() {
+        System.out.println("bug with chunk sizes");
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.setFileName(basedir+ "/DNSJavaDecoderToRawData.out");
+        instance.setRewindOnEOF(false);
+        for (int n = 1; n < 1000; n++) {
+            instance.process();
+            String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
+            //System.out.println(n+" "+result);
+            assertTrue(result.length() > 0);
+        }
+    }
 }

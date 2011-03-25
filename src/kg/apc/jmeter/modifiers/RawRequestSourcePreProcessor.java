@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import kg.apc.jmeter.EndOfFileException;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.RuntimeEOFException;
 import org.apache.commons.io.IOExceptionWithCause;
 import org.apache.jmeter.engine.util.NoThreadClone;
@@ -64,7 +65,7 @@ public class RawRequestSourcePreProcessor
                 return;
             } else {
                 log.info("End of file reached: " + getFileName());
-                throw new RuntimeEOFException("End of file reached");
+                throw new RuntimeEOFException("End of file reached", ex);
             }
         } catch (IOException ex) {
             log.error("Error reading next chunk", ex);
@@ -94,15 +95,15 @@ public class RawRequestSourcePreProcessor
 
         buf.flip();
         buf.get(dst);
+        if (log.isDebugEnabled()) log.debug("Chunk : "+new String(dst));
+
         return new String(dst);
     }
 
     private int getNextChunkSize() throws IOException {
-        metaBuf.rewind();
-        int count = 0;
+        metaBuf.clear();
         while (true) {
             byte b = getOneByte();
-            count++;
             if (b == 10 || b == 13) {
                 // if we have \r\n then skip \n
                 byte b2 = getOneByte();
@@ -115,16 +116,18 @@ public class RawRequestSourcePreProcessor
                     break;
                 }
             } else {
+                //if (log.isDebugEnabled()) log.debug("Read byte: "+b);
                 metaBuf.put(b);
             }
         }
-        metaBuf.rewind();
+        //if (log.isDebugEnabled()) log.debug("Meta line: "+JMeterPluginsUtils.byteBufferToString(metaBuf));
 
-        byte[] bLine = new byte[count];
+        byte[] bLine = new byte[metaBuf.position()];
+        metaBuf.rewind();
         metaBuf.get(bLine);
-        String sLine = new String(bLine);
-        String[] ar = sLine.trim().split(regexp);
-        //log.debug("Chunk size: "+ar[0]);
+        String sLine = new String(bLine).trim();
+        String[] ar = sLine.split(regexp);
+        if (log.isDebugEnabled()) log.debug("Chunk size: "+ar[0]);
 
         int res = 0;
         try {

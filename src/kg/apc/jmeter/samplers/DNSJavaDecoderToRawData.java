@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import org.apache.jorphan.util.JOrphanUtils;
 import org.xbill.DNS.Message;
 import org.xbill.DNS.Section;
 
@@ -15,7 +17,7 @@ import org.xbill.DNS.Section;
 @Deprecated
 public class DNSJavaDecoderToRawData extends DNSJavaDecoder {
 
-    private FileOutputStream os = null;
+    protected OutputStream os = null;
 
     public DNSJavaDecoderToRawData() {
         try {
@@ -35,9 +37,9 @@ public class DNSJavaDecoderToRawData extends DNSJavaDecoder {
 
         try {
             final byte[] ba1 = msg.toWire();
-            os.write(Integer.toString(ba1.length).getBytes("cp866"));
+            os.write(Integer.toString(ba1.length*2).getBytes("cp866"));
             os.write('\n');
-            os.write(ba1);
+            os.write(JOrphanUtils.baToHexBytes(ba1));
             os.write('\n');
         } catch (IOException ex) {
             throw new RuntimeException(ex);

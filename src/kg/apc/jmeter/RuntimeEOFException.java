@@ -11,4 +11,8 @@ public class RuntimeEOFException extends RuntimeException
         super(string);
     }
 
+    public RuntimeEOFException(String string, Throwable ex) {
+        super(string, ex);
+    }
+
 }

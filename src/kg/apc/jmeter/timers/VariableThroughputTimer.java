@@ -64,7 +64,6 @@ public class VariableThroughputTimer
                 long secs = curTime - msecs;
                 checkNextSecond(secs);
                 if (rps < 0) {
-                    log.info("No further RPS schedule, asking threads to stop...");
                     stopTest();
                     notifyAll();
                 } else {
@@ -104,7 +103,7 @@ public class VariableThroughputTimer
             }
 
             if (cntDelayed < 1) {
-                log.warn("No free threads left in worker pool, maybe you need more active threads");
+                log.warn("No free threads left in worker pool, made  "+cntSent+'/'+rps+" RPS, maybe you need more active threads");
             }
 
             cntSent = 0;
@@ -241,7 +240,7 @@ public class VariableThroughputTimer
         if (lastStopTry == time) {
             return;
         }
-
+        log.info("No further RPS schedule, asking threads to stop...");
         lastStopTry = time;
         stopTries++;
         if (stopTries > 10) {

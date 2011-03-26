@@ -150,12 +150,12 @@ public class UDPSamplerGui extends AbstractSamplerGui {
     }
 
     private void initFields() {
-        hostName.setText("204.74.112.1");
-        port.setText("53");
+        hostName.setText("");
+        port.setText("");
         timeout.setText("1000");
         waitResponse.setSelected(true);
         messageEncodeClass.setText(HexStringUDPDecoder.class.getCanonicalName());
-        requestData.setText("633a010000010000000000000e6a6d657465722d706c7567696e730a676f6f676c65636f646503636f6d0000010001");
+        requestData.setText("");
     }
 
 }

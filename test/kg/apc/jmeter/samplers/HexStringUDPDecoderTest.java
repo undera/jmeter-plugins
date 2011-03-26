@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.samplers;
 
 import java.nio.ByteBuffer;
@@ -49,7 +45,6 @@ public class HexStringUDPDecoderTest {
         ByteBuffer result = instance.encode(data);
         assertEquals("test", JMeterPluginsUtils.byteBufferToString(result));
     }
-
     /**
      * Test of decode method, of class HexStringUDPDecoder.
      */

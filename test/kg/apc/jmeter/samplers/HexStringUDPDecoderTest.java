@@ -45,6 +45,7 @@ public class HexStringUDPDecoderTest {
         ByteBuffer result = instance.encode(data);
         assertEquals("test", JMeterPluginsUtils.byteBufferToString(result));
     }
+
     /**
      * Test of decode method, of class HexStringUDPDecoder.
      */

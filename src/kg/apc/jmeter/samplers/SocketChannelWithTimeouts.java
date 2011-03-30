@@ -16,6 +16,7 @@ import org.apache.log.Logger;
  * SocketChannel with timeouts.
  * This class performs blocking operations for connect and IO.
  * Make note that some of methods are not implemeted yet.
+ * Also selector usage kills scalability
  * @author apc@apc.kg
  */
 public class SocketChannelWithTimeouts extends SocketChannel {
@@ -114,6 +115,7 @@ public class SocketChannelWithTimeouts extends SocketChannel {
     @Override
     protected void implCloseSelectableChannel() throws IOException {
         socketChannel.close();
+        selector.close();
     }
 
     @Override

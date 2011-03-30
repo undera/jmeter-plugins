@@ -84,6 +84,7 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
 
     protected void implCloseSelectableChannel() throws IOException {
         channel.close();
+        selector.close();
     }
 
     protected void implConfigureBlocking(boolean block) throws IOException {

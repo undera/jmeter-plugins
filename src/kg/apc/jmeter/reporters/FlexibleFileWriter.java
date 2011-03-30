@@ -40,7 +40,7 @@ public class FlexibleFileWriter
             + "threadName sampleLabel "
             + "startTimeMillis endTimeMillis "
             + "responseTimeMicros latencyMicros "
-            +"requestData responseData responseHeaders ";
+            + "requestData responseData responseHeaders ";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String FILENAME = "filename";
     private static final String COLUMNS = "columns";
@@ -109,7 +109,7 @@ public class FlexibleFileWriter
     private void compileColumns() {
         log.debug("Compiling columns string: " + getColumns());
         String[] chunks = JMeterPluginsUtils.replaceRNT(getColumns()).split("\\|");
-        log.debug("Chunks "+chunks.length);
+        log.debug("Chunks " + chunks.length);
         compiledFields = new int[chunks.length];
         compiledConsts = new ByteBuffer[chunks.length];
         for (int n = 0; n < chunks.length; n++) {
@@ -119,10 +119,9 @@ public class FlexibleFileWriter
                 compiledFields[n] = fieldID;
             } else {
                 log.debug(chunks[n] + " is const");
-                if (chunks[n].length()==0)
-                {
+                if (chunks[n].length() == 0) {
                     //log.debug("Empty const, treated as |");
-                    chunks[n]="|";
+                    chunks[n] = "|";
                 }
 
                 compiledConsts[n] = ByteBuffer.wrap(chunks[n].getBytes());
@@ -168,7 +167,9 @@ public class FlexibleFileWriter
         buf.flip();
 
         try {
-            fileChannel.write(buf);
+            synchronized (fileChannel) {
+                fileChannel.write(buf);
+            }
         } catch (IOException ex) {
             log.error("Error writing record to file: ", ex);
         }

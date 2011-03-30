@@ -69,7 +69,6 @@ public class SelectorEmul extends AbstractSelector {
 
     @Override
     protected void implCloseSelector() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

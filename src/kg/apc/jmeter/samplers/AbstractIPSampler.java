@@ -84,7 +84,7 @@ public abstract class AbstractIPSampler extends AbstractSampler implements Seria
         res.setSampleLabel(getName());
         res.setSamplerData(getRequestData());
         res.sampleStart();
-        res.setDataType(SampleResult.BINARY);
+        res.setDataType(SampleResult.TEXT);
         res.setSuccessful(true);
         res.setResponseCode(HTTPRawSampler.RC200);
         try {

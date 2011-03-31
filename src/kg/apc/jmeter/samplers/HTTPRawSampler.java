@@ -22,7 +22,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
     private static final String RNpattern = "\\r\\n";
     private static final String SPACE = " ";
     // 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    protected static final Logger log = LoggingManager.getLoggerForClass();
     private SocketChannel savedSock;
 
     public HTTPRawSampler() {

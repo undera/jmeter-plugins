@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -18,13 +19,11 @@ public class SocketChannelEmul extends SocketChannel {
     private ByteBuffer writtenBytes;
     private ByteBuffer bytesToRead;
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private Socket socket=new SocketEmulator();
+    private Socket socket = new SocketEmulator();
 
     public SocketChannelEmul() {
         super(null);
     }
-
-
 
     @Override
     public Socket socket() {
@@ -43,7 +42,7 @@ public class SocketChannelEmul extends SocketChannel {
 
     @Override
     public boolean connect(SocketAddress remote) throws IOException {
-        log.debug("Emulating connect to "+remote.toString());
+        log.debug("Emulating connect to " + remote.toString());
         return true;
     }
 
@@ -58,7 +57,7 @@ public class SocketChannelEmul extends SocketChannel {
             log.debug("No more data to read");
             return -1;
         }
-        int cnt = dst.capacity()<bytesToRead.capacity()?dst.capacity():bytesToRead.capacity();
+        int cnt = dst.capacity() < bytesToRead.capacity() ? dst.capacity() : bytesToRead.capacity();
         ByteBuffer chunk = bytesToRead.duplicate();
         if (cnt < chunk.capacity()) {
             log.debug("Setting limit to " + cnt);
@@ -78,10 +77,20 @@ public class SocketChannelEmul extends SocketChannel {
 
     @Override
     public int write(ByteBuffer src) throws IOException {
-        log.debug("Emulating write: " + getString(src));
-        writtenBytes = src;
-        writtenBytesCount+=src.position();
-        return src.position();
+        // FIXME: this is wrong! We need to do actual buffer reading
+        log.debug("Emulating write: " + src.toString());
+        //log.debug("Emulating write verbose: " + getString(src));
+        writtenBytes = src.duplicate();
+        int written = 0;
+        while (src.hasRemaining()) {
+            src.get();
+            written++;
+        }
+
+        log.debug("Written "+written);
+        writtenBytesCount += written;
+
+        return written;
     }
 
     @Override
@@ -96,7 +105,7 @@ public class SocketChannelEmul extends SocketChannel {
 
     @Override
     protected void implConfigureBlocking(boolean block) throws IOException {
-        log.debug("Configure blocking: "+block);
+        log.debug("Configure blocking: " + block);
     }
 
     /**
@@ -119,7 +128,7 @@ public class SocketChannelEmul extends SocketChannel {
             log.error("Null buffer!");
             return "";
         }
-        return src.toString();
+        return JMeterPluginsUtils.byteBufferToString(src);
     }
 
     /**
@@ -127,7 +136,7 @@ public class SocketChannelEmul extends SocketChannel {
      */
     public int getWrittenBytesCount() {
         int res = writtenBytesCount;
-        writtenBytesCount=0;
+        writtenBytesCount = 0;
         return res;
     }
 }

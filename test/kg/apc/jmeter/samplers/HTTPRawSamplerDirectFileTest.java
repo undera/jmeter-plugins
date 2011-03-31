@@ -1,5 +1,6 @@
 package kg.apc.jmeter.samplers;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import kg.apc.emulators.SocketChannelEmul;
@@ -59,6 +60,37 @@ public class HTTPRawSamplerDirectFileTest {
         String file = this.getClass().getResource("testSendFile.raw").getPath();
         instance.setRequestData(file);
         instance.processIO(res);
-        assertEquals(149233, instance.sockEmul.getWrittenBytesCount());
+        assertEquals(new File(file).length(), instance.sockEmul.getWrittenBytesCount());
+    }
+
+
+    @Test
+    public void testProcessIO_real() throws Exception {
+        System.out.println("processIO_real_short");
+        String file = this.getClass().getResource("testSendFile_1.raw").getPath();
+        SampleResult res = new SampleResult();
+        res.sampleStart();
+        HTTPRawSamplerDirectFile instance = new HTTPRawSamplerDirectFile();
+        instance.setPort("80");
+        instance.setTimeout("15000");
+        instance.setHostName("files.namba.kz");
+        instance.setRequestData(file);
+        byte[] resp = instance.processIO(res);
+        assertTrue(resp.length>10);
+    }
+
+    @Test
+    public void testProcessIO_realbig() throws Exception {
+        System.out.println("processIO_real");
+        String file = this.getClass().getResource("testSendFile.raw").getPath();
+        SampleResult res = new SampleResult();
+        res.sampleStart();
+        HTTPRawSamplerDirectFile instance = new HTTPRawSamplerDirectFile();
+        instance.setPort("80");
+        instance.setTimeout("15000");
+        instance.setHostName("files.namba.kz");
+        instance.setRequestData(file);
+        byte[] resp = instance.processIO(res);
+        assertTrue(resp.length>10);
     }
 }

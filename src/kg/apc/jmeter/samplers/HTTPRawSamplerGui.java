@@ -13,6 +13,7 @@ import javax.swing.border.BevelBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -24,6 +25,8 @@ public class HTTPRawSamplerGui
         extends AbstractSamplerGui {
 
     public static final String WIKIPAGE = "RawRequest";
+    // TODO: magic properties are BAD!
+    public static final String IMPL_PROPERTY="directFileSender";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private JTextField hostName;
     private JTextField port;
@@ -61,7 +64,16 @@ public class HTTPRawSamplerGui
     }
 
     public TestElement createTestElement() {
-        HTTPRawSampler sampler = new HTTPRawSampler();
+        String loadProp = JMeterUtils.getProperty(IMPL_PROPERTY);
+        log.debug("Load prop: " + loadProp);
+        HTTPRawSampler sampler;
+        if (loadProp != null && loadProp.length() > 0) {
+            sampler = new HTTPRawSamplerDirectFile();
+        }
+        else
+        {
+            sampler = new HTTPRawSampler();
+        }
         modifyTestElement(sampler);
         sampler.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
         return sampler;

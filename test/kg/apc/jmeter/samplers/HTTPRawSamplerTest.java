@@ -147,6 +147,7 @@ public class HTTPRawSamplerTest {
     public void testProcessIO() throws Exception {
         System.out.println("processIO");
         SampleResult res = new SampleResult();
+        res.sampleStart();
         byte[] result = instance.processIO(res);
         assertEquals("", new String(result));
     }

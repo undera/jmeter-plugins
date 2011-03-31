@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import kg.apc.jmeter.EndOfFileException;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.RuntimeEOFException;
 import org.apache.commons.io.IOExceptionWithCause;
 import org.apache.jmeter.engine.util.NoThreadClone;

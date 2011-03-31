@@ -38,6 +38,30 @@ public class HTTPRawSampler extends AbstractIPSampler {
         return res;
     }
 
+    protected byte[] readResponse(SocketChannel sock, SampleResult res) throws IOException {
+        ByteArrayOutputStream response = new ByteArrayOutputStream();
+        int cnt = 0;
+        recvBuf.clear();
+        boolean firstPack = true;
+        while ((cnt = sock.read(recvBuf)) != -1) {
+            if (firstPack) {
+                res.latencyEnd();
+                firstPack = false;
+            }
+            recvBuf.flip();
+            byte[] bytes = new byte[cnt];
+            recvBuf.get(bytes);
+            response.write(bytes);
+            recvBuf.clear();
+        }
+        res.sampleEnd();
+        if (!isUseKeepAlive()) {
+            sock.close();
+        }
+        res.setBytes(response.size());
+        return response.toByteArray();
+    }
+
     private void parseResponse(SampleResult res) {
         String[] parsed = res.getResponseDataAsString().split(RNpattern);
 
@@ -70,38 +94,14 @@ public class HTTPRawSampler extends AbstractIPSampler {
 
     protected byte[] processIO(SampleResult res) throws Exception {
         //log.info("Begin IO");
-        ByteArrayOutputStream response = new ByteArrayOutputStream();
         //log.info("send");
         ByteBuffer sendBuf = ByteBuffer.wrap(getRequestData().getBytes()); // cannot cache it because of variable processing
         SocketChannel sock = (SocketChannel) getSocketChannel();
         sock.write(sendBuf);
-
-        int cnt = 0;
-        recvBuf.clear();
-        boolean firstPack = true;
-        while ((cnt = sock.read(recvBuf)) != -1) {
-            if (firstPack) {
-                res.latencyEnd();
-                firstPack = false;
-            }
-            //log.debug("Read " + recvBuf.toString());
-            recvBuf.flip();
-            byte[] bytes = new byte[cnt];
-            recvBuf.get(bytes);
-            response.write(bytes);
-            recvBuf.clear();
-        }
-        res.sampleEnd();
-
-        if (!isUseKeepAlive()) {
-            sock.close();
-        }
-
-        res.setBytes(response.size());
-        return response.toByteArray();
+        return readResponse(sock, res);
     }
 
-    private SocketChannel getSocketChannel() throws IOException {
+    protected SocketChannel getSocketChannel() throws IOException {
         if (isUseKeepAlive() && savedSock != null) {
             return savedSock;
         }

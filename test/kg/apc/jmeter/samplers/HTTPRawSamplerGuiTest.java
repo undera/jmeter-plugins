@@ -2,6 +2,7 @@ package kg.apc.jmeter.samplers;
 
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -43,7 +44,7 @@ public class HTTPRawSamplerGuiTest {
         System.out.println("getStaticLabel");
         HTTPRawSamplerGui instance = new HTTPRawSamplerGui();
         String result = instance.getStaticLabel();
-        assertTrue(result.length()>0);
+        assertTrue(result.length() > 0);
     }
 
     /**
@@ -66,6 +67,21 @@ public class HTTPRawSamplerGuiTest {
         HTTPRawSamplerGui instance = new HTTPRawSamplerGui();
         TestElement result = instance.createTestElement();
         assertTrue(result instanceof HTTPRawSampler);
+    }
+
+    /**
+     * Test of createTestElement method, of class HTTPRawSamplerGui.
+     */
+    @Test
+    public void testCreateTestElement_df() {
+        System.out.println("createTestElement");
+        HTTPRawSamplerGui instance = new HTTPRawSamplerGui();
+        JMeterUtils.setProperty(HTTPRawSamplerGui.IMPL_PROPERTY, "1");
+        TestElement result = instance.createTestElement();
+        JMeterUtils.setProperty(HTTPRawSamplerGui.IMPL_PROPERTY, "");
+        assertTrue(result instanceof HTTPRawSamplerDirectFile);
+        TestElement result2 = instance.createTestElement();
+        assertTrue(!(result2 instanceof HTTPRawSamplerDirectFile));
     }
 
     /**
@@ -98,6 +114,6 @@ public class HTTPRawSamplerGuiTest {
         System.out.println("getLabelResource");
         HTTPRawSamplerGui instance = new HTTPRawSamplerGui();
         String result = instance.getLabelResource();
-        assertTrue(result.length()>0);
+        assertTrue(result.length() > 0);
     }
 }

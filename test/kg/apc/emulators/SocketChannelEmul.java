@@ -14,6 +14,7 @@ import org.apache.log.Logger;
  */
 public class SocketChannelEmul extends SocketChannel {
 
+    private int writtenBytesCount;
     private ByteBuffer writtenBytes;
     private ByteBuffer bytesToRead;
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -79,7 +80,8 @@ public class SocketChannelEmul extends SocketChannel {
     public int write(ByteBuffer src) throws IOException {
         log.debug("Emulating write: " + getString(src));
         writtenBytes = src;
-        return src.capacity();
+        writtenBytesCount+=src.position();
+        return src.position();
     }
 
     @Override
@@ -103,6 +105,7 @@ public class SocketChannelEmul extends SocketChannel {
     public ByteBuffer getWrittenBytes() {
         ByteBuffer res = writtenBytes;
         writtenBytes = null;
+        getWrittenBytesCount();
         return res;
     }
 
@@ -117,5 +120,14 @@ public class SocketChannelEmul extends SocketChannel {
             return "";
         }
         return src.toString();
+    }
+
+    /**
+     * @return the writtenBytesCount
+     */
+    public int getWrittenBytesCount() {
+        int res = writtenBytesCount;
+        writtenBytesCount=0;
+        return res;
     }
 }

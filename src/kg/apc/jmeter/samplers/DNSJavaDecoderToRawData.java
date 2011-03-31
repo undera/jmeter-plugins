@@ -19,16 +19,16 @@ public class DNSJavaDecoderToRawData extends DNSJavaDecoder {
 
     protected OutputStream os = null;
 
-    public DNSJavaDecoderToRawData() {
-        try {
-            os = new FileOutputStream(new File("DNSJavaDecoderToRawData.out"));
-        } catch (FileNotFoundException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
     @Override
     public ByteBuffer encode(String data) {
+        if (os == null) {
+            try {
+                os = new FileOutputStream(new File("DNSJavaDecoderToRawData.out"));
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
         Message msg = new Message();
         String recs[] = data.split(NL);
         for (int n = 0; n < recs.length; n++) {
@@ -37,14 +37,14 @@ public class DNSJavaDecoderToRawData extends DNSJavaDecoder {
 
         try {
             final byte[] ba1 = msg.toWire();
-            os.write(Integer.toString(ba1.length*2).getBytes("cp866"));
+            os.write(Integer.toString(ba1.length * 2).getBytes("cp866"));
             os.write('\n');
             os.write(JOrphanUtils.baToHexBytes(ba1));
             os.write('\n');
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-        
+
         return ByteBuffer.wrap(msg.toWire());
     }
 }

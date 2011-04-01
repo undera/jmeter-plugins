@@ -11,6 +11,8 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+
+// FIXME: actually keep-alive does not work!
 /**
  *
  * @author undera
@@ -40,20 +42,27 @@ public class HTTPRawSampler extends AbstractIPSampler {
 
     protected byte[] readResponse(SocketChannel sock, SampleResult res) throws IOException {
         ByteArrayOutputStream response = new ByteArrayOutputStream();
-        int cnt = 0;
         recvBuf.clear();
         boolean firstPack = true;
-        while ((cnt = sock.read(recvBuf)) != -1) {
-            if (firstPack) {
-                res.latencyEnd();
-                firstPack = false;
+        int cnt = 0;
+
+        try {
+            while ((cnt = sock.read(recvBuf)) != -1) {
+                if (firstPack) {
+                    res.latencyEnd();
+                    firstPack = false;
+                }
+                recvBuf.flip();
+                byte[] bytes = new byte[cnt];
+                recvBuf.get(bytes);
+                response.write(bytes);
+                recvBuf.clear();
             }
-            recvBuf.flip();
-            byte[] bytes = new byte[cnt];
-            recvBuf.get(bytes);
-            response.write(bytes);
-            recvBuf.clear();
+        } catch (IOException ex) {
+            sock.close();
+            throw ex;
         }
+
         res.sampleEnd();
         if (!isUseKeepAlive()) {
             sock.close();

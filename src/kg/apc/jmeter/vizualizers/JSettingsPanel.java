@@ -706,7 +706,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         if ((evt.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK)
         {
-            JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaigh=" + parent.getWikiPage());
+            JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaign=" + parent.getWikiPage());
         }
     }//GEN-LAST:event_jLabel1MouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables

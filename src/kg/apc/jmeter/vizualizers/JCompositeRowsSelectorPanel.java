@@ -550,7 +550,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
     private void jLabelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelLogoMouseClicked
         if((evt.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK)
         {
-            JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaigh="+gui.getWikiPage());
+            JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaign="+gui.getWikiPage());
         }
     }//GEN-LAST:event_jLabelLogoMouseClicked
 

@@ -34,6 +34,7 @@ public class HTTPRawSamplerGui
     private JCheckBox keepAlive;
     private JCheckBox parseResult;
     private JTextArea requestData;
+    private JLabel dataLabel;
 
     /**
      *
@@ -60,6 +61,10 @@ public class HTTPRawSamplerGui
             keepAlive.setSelected(rawSampler.isUseKeepAlive());
             requestData.setText(rawSampler.getRequestData());
             parseResult.setSelected(rawSampler.isParseResult());
+            if (element instanceof HTTPRawSamplerDirectFile)
+            {
+                dataLabel.setText("Full path to file with raw request");
+            }
         }
     }
 
@@ -144,10 +149,10 @@ public class HTTPRawSamplerGui
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Timeout: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 3, timeout = new JTextField());
 
-        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Keep-alive connection: ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Keep connection open: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 4, keepAlive = new JCheckBox());
 
-        addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Request Data: ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 5, dataLabel=new JLabel("Request Data: ", JLabel.RIGHT));
 
         editConstraints.fill = GridBagConstraints.BOTH;
         addToPanel(mainPanel, editConstraints, 1, 5, requestData = new JTextArea());

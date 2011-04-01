@@ -77,7 +77,6 @@ public class SocketChannelEmul extends SocketChannel {
 
     @Override
     public int write(ByteBuffer src) throws IOException {
-        // FIXME: this is wrong! We need to do actual buffer reading
         log.debug("Emulating write: " + src.toString());
         //log.debug("Emulating write verbose: " + getString(src));
         writtenBytes = src.duplicate();
@@ -87,7 +86,6 @@ public class SocketChannelEmul extends SocketChannel {
             written++;
         }
 
-        log.debug("Written "+written);
         writtenBytesCount += written;
 
         return written;

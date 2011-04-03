@@ -1,12 +1,15 @@
 package kg.apc.jmeter.timers;
 
+// FIXME: two instances of GUI works bad - copy each other
 import java.util.Iterator;
 import java.util.List;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.StandardJMeterEngine;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.AbstractTestElement;
+import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
@@ -24,7 +27,7 @@ import org.apache.log.Logger;
  */
 public class VariableThroughputTimer
         extends AbstractTestElement
-        implements Timer, NoThreadClone {
+        implements Timer, NoThreadClone, TestListener {
 
     public static final String[] columnIdentifiers = new String[]{
         "Start RPS", "End RPS", "Duration, sec"
@@ -48,6 +51,7 @@ public class VariableThroughputTimer
     private CollectionProperty overrideProp;
     private int stopTries;
     private long lastStopTry;
+    private boolean stopping;
 
     public VariableThroughputTimer() {
         super();
@@ -63,12 +67,7 @@ public class VariableThroughputTimer
                 long msecs = curTime % 1000;
                 long secs = curTime - msecs;
                 checkNextSecond(secs);
-                if (rps < 0) {
-                    stopTest();
-                    notifyAll();
-                } else {
-                    delay = getDelay(msecs);
-                }
+                delay = getDelay(msecs);
 
                 if (delay < 1) {
                     notify();
@@ -76,9 +75,6 @@ public class VariableThroughputTimer
                 }
                 cntDelayed++;
                 try {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Waiting for " + delay);
-                    }
                     wait(delay);
                 } catch (InterruptedException ex) {
                     log.error("Waiting thread was interrupted", ex);
@@ -92,23 +88,36 @@ public class VariableThroughputTimer
 
     private synchronized void checkNextSecond(long secs) {
         // next second
-        if (time != secs) {
-            if (startSec == 0) {
-                startSec = secs;
-            }
-            time = secs;
-            rps = getRPSForSecond((secs - startSec) / 1000);
-            if (log.isDebugEnabled()) {
-                log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent " + cntSent + " RPS: " + rps);
-            }
-
-            if (cntDelayed < 1) {
-                log.warn("No free threads left in worker pool, made  "+cntSent+'/'+rps+" RPS, maybe you need more active threads");
-            }
-
-            cntSent = 0;
-            msecPerReq = 1000d / rps;
+        if (time == secs) {
+            return;
         }
+
+        if (startSec == 0) {
+            startSec = secs;
+        }
+        time = secs;
+
+        int nextRps = getRPSForSecond((secs - startSec) / 1000);
+        if (nextRps < 0) {
+            stopping=true;
+            rps = rps > 0 ? rps : 1;
+            stopTest();
+            notifyAll();
+        } else {
+            rps = nextRps;
+        }
+
+        if (log.isDebugEnabled()) {
+            log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent " + cntSent + " RPS: " + rps);
+        }
+
+        if (cntDelayed < 1) {
+            log.warn("No free threads left in worker pool, made  " + cntSent + '/' + rps + " samples");
+        }
+
+        cntSent = 0;
+        msecPerReq = 1000d / rps;
+
     }
 
     private int getDelay(long msecs) {
@@ -252,5 +261,24 @@ public class VariableThroughputTimer
         } else {
             JMeterContextService.getContext().getEngine().askThreadsToStop();
         }
+    }
+
+    public void testStarted() {
+        stopping=false;
+        stopTries=0;
+    }
+
+    public void testStarted(String string) {
+        testStarted();
+    }
+
+    public void testEnded() {
+    }
+
+    public void testEnded(String string) {
+        testEnded();
+    }
+
+    public void testIterationStart(LoopIterationEvent lie) {
     }
 }

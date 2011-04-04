@@ -14,7 +14,7 @@ public interface AgentCommandsInterface {
    public static final String NETWORK = "nio";
    public static final String SWAP = "swp";
 
-   //FIXME: APC: why don't use custom exceptions instead of error constants?
+   //APC: why don't use custom exceptions instead of error constants?
    public final static long SIGAR_ERROR = -1L;
    public final static long AGENT_ERROR = -2L;
    public final static long[] SIGAR_ERROR_ARRAY =

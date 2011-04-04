@@ -223,6 +223,7 @@ public class UDPSamplerTest {
         assertEquals(4, result.length);
     }
 
+    /*
     @Test
     public void testReal() {
         System.out.println("real");
@@ -241,6 +242,8 @@ public class UDPSamplerTest {
         assertTrue(res2.isSuccessful());
         assertTrue(res2.getResponseDataAsString().length()>0);
     }
+     * 
+     */
 
     /**
      * Test of processIO method, of class UDPSampler.

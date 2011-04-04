@@ -67,6 +67,14 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
 
     @Override
     protected byte[] processIO(SampleResult res) throws Exception {
+        if (channel == null || !channel.isOpen()) {
+            try {
+                channel = (DatagramChannel) getChannel();
+            } catch (IOException ex) {
+                log.error("Cannot open channel", ex);
+            }
+        }
+
         ByteBuffer sendBuf = encoder.encode(getRequestData());
         channel.write(sendBuf);
 
@@ -76,6 +84,18 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
             return new byte[0];
         }
 
+        try{
+            ByteArrayOutputStream response = readResponse(res);
+            return encoder.decode(response.toByteArray());
+        }
+        catch (IOException ex)
+        {
+            channel.close();
+            throw ex;
+        }
+    }
+
+    private ByteArrayOutputStream readResponse(SampleResult res) throws IOException {
         ByteArrayOutputStream response = new ByteArrayOutputStream();
         int cnt = 0;
         recvBuf.clear();
@@ -89,18 +109,11 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
             recvBuf.clear();
         }
         res.sampleEnd();
-
         res.setBytes(response.size());
-        return encoder.decode(response.toByteArray());
+        return response;
     }
 
     public void threadStarted() {
-        try {
-            channel = (DatagramChannel) getChannel();
-        } catch (IOException ex) {
-            log.error("Cannot open channel", ex);
-        }
-
         try {
             Class<?> c = Thread.currentThread().getContextClassLoader().loadClass(getEncoderClass());
             Object o = c.newInstance();
@@ -111,7 +124,7 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
             log.debug("Using decoder: " + encoder);
         } catch (Exception ex) {
             log.warn("Problem loading encoder " + getEncoderClass() + ", raw data will be used", ex);
-            encoder=this;
+            encoder = this;
         }
     }
 

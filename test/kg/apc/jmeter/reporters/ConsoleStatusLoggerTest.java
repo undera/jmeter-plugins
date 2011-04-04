@@ -42,7 +42,7 @@ public class ConsoleStatusLoggerTest {
      * Test of sampleOccurred method, of class ConsoleStatusLogger.
      */
     @Test
-    public void testSampleOccurred() {
+    public void testSampleOccurred() throws InterruptedException {
         System.out.println("sampleOccurred");
         SampleResult res = new SampleResult();
         res.setResponseCode("200");
@@ -51,6 +51,10 @@ public class ConsoleStatusLoggerTest {
         instance.testStarted();
         instance.sampleOccurred(se);
         instance.sampleOccurred(se);
+        Thread.sleep(1020);
+        instance.sampleOccurred(se);
+        instance.sampleOccurred(se);
+        Thread.sleep(1020);
         instance.sampleOccurred(se);
         instance.sampleOccurred(se);
     }

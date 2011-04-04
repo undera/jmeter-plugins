@@ -235,6 +235,7 @@ public class DatagramChannelWithTimeoutsTest {
         }
     }
 
+    /*
     @Test
     public void testSendRecv_real() throws Exception {
         System.out.println("send real");
@@ -257,4 +258,6 @@ public class DatagramChannelWithTimeoutsTest {
         } catch (SocketTimeoutException e)
         {}
     }
+     * 
+     */
 }

@@ -15,8 +15,8 @@ public class PluginsCMDWorker {
 
     private int graphWidth = 800;
     private int graphHeight = 600;
-    static final int EXPORT_PNG = 2 ^ 0;
-    static final int EXPORT_CSV = 2 ^ 1;
+    public static final int EXPORT_PNG = 1;
+    public static final int EXPORT_CSV = 2;
     private int exportMode = 0;
     private String inputFile;
     private String outputCSV;

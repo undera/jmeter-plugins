@@ -1,7 +1,9 @@
 package kg.apc.jmeter;
 
+import kg.apc.emulators.TestJMeterUtils;
 import java.io.File;
 import java.io.IOException;
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,8 +16,13 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class PluginsCMDWorkerTest {
+    private final String basedir;
 
     public PluginsCMDWorkerTest() {
+        String file = this.getClass().getResource("short.jtl").getPath();
+        basedir = file.substring(0, file.lastIndexOf("/"));
+        TestJMeterUtils.createJmeterEnv();
+        JMeterUtils.setProperty("saveservice_properties", basedir+"/saveservice.properties");
     }
 
     @BeforeClass
@@ -96,7 +103,7 @@ public class PluginsCMDWorkerTest {
     public void testDoJob() throws IOException {
         System.out.println("doJob");
         PluginsCMDWorker instance = new PluginsCMDWorker();
-        instance.setInputFile("/home/undera/short.jtl");
+        instance.setInputFile(basedir+"/short.jtl");
         instance.setOutputPNGFile(File.createTempFile("test", ".png").getAbsolutePath());
         instance.setOutputCSVFile(File.createTempFile("test", ".csv").getAbsolutePath());
         instance.setPluginType("ResponseTimesDistribution");

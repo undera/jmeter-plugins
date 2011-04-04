@@ -1,6 +1,5 @@
 package kg.apc.jmeter.timers;
 
-// FIXME: two instances of GUI works bad - copy each other
 import java.util.Iterator;
 import java.util.List;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -69,6 +68,12 @@ public class VariableThroughputTimer
                 checkNextSecond(secs);
                 delay = getDelay(msecs);
 
+                if (stopping)
+                {
+                    delay=10;
+                    notify();
+                }
+
                 if (delay < 1) {
                     notify();
                     break;
@@ -99,8 +104,8 @@ public class VariableThroughputTimer
 
         int nextRps = getRPSForSecond((secs - startSec) / 1000);
         if (nextRps < 0) {
-            stopping=true;
-            rps = rps > 0 ? rps : 1;
+            stopping = true;
+            rps = rps > 0 ? rps * (stopTries > 10 ? 2 : 1) : 1;
             stopTest();
             notifyAll();
         } else {
@@ -264,8 +269,8 @@ public class VariableThroughputTimer
     }
 
     public void testStarted() {
-        stopping=false;
-        stopTries=0;
+        stopping = false;
+        stopTries = 0;
     }
 
     public void testStarted(String string) {

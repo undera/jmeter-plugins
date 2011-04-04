@@ -1,5 +1,6 @@
 package kg.apc.jmeter.timers;
 
+// FIXME: two instances of GUI works bad - copy each other
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -252,5 +253,6 @@ public class VariableThroughputTimerGui
    {
       super.clearGui();
       tableModel.clearData();
+      tableModel.fireTableDataChanged();
    }
 }

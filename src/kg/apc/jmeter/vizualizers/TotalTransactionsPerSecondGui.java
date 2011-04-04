@@ -9,6 +9,7 @@ import org.apache.jmeter.testelement.TestElement;
  * Class for backward compatibility
  * @author Stephane Hoblingre
  */
+@Deprecated
 public class TotalTransactionsPerSecondGui extends TransactionsPerSecondGui {
 
     private Collection<String> emptyCollection = new ArrayList<String>();

@@ -198,7 +198,7 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
     }
 
     @Override
-    protected JSettingsPanel getSettingsPanel() {
+    protected JSettingsPanel createSettingsPanel() {
         return new JSettingsPanel(this, 0);
     }
 

@@ -1,5 +1,6 @@
 package kg.apc.jmeter.samplers;
 
+import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import kg.apc.emulators.SocketChannelEmul;
 import java.io.IOException;
@@ -160,5 +161,35 @@ public class HTTPRawSamplerTest {
         System.out.println("getChannel");
         AbstractSelectableChannel result = instance.getChannel();
         assertNotNull(result);
+    }
+
+    /**
+     * Test of readResponse method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testReadResponse() throws Exception {
+        System.out.println("readResponse");
+        SocketChannel sock = null;
+        SampleResult res = null;
+        HTTPRawSampler instance = new HTTPRawSampler();
+        byte[] expResult = null;
+        byte[] result = instance.readResponse(sock, res);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getSocketChannel method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testGetSocketChannel() throws Exception {
+        System.out.println("getSocketChannel");
+        HTTPRawSampler instance = new HTTPRawSampler();
+        SocketChannel expResult = null;
+        SocketChannel result = instance.getSocketChannel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

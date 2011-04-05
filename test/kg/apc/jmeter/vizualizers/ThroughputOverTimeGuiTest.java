@@ -117,7 +117,7 @@ public class ThroughputOverTimeGuiTest
    {
       System.out.println("getSettingsPanel");
       ThroughputOverTimeGui instance = new ThroughputOverTimeGui();
-      JSettingsPanel result = instance.getSettingsPanel();
+      JSettingsPanel result = instance.createSettingsPanel();
       assertNotNull(result);
    }
 
@@ -131,5 +131,19 @@ public class ThroughputOverTimeGuiTest
         String expResult = "";
         String result = instance.getWikiPage();
         assertTrue(result.length()>0);
+    }
+
+    /**
+     * Test of createSettingsPanel method, of class ThroughputOverTimeGui.
+     */
+    @Test
+    public void testCreateSettingsPanel() {
+        System.out.println("createSettingsPanel");
+        ThroughputOverTimeGui instance = new ThroughputOverTimeGui();
+        JSettingsPanel expResult = null;
+        JSettingsPanel result = instance.createSettingsPanel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

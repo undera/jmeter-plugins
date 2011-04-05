@@ -72,7 +72,7 @@ public class LatenciesOverTimeGui
    }
 
     @Override
-    protected JSettingsPanel getSettingsPanel()
+    protected JSettingsPanel createSettingsPanel()
     {
         return new JSettingsPanel(this,
                 JSettingsPanel.TIMELINE_OPTION |

@@ -94,7 +94,7 @@ public class BytesThroughputOverTimeGuiTest {
     {
         System.out.println("getSettingsPanel");
         BytesThroughputOverTimeGui instance = new BytesThroughputOverTimeGui();
-        JSettingsPanel result = instance.getSettingsPanel();
+        JSettingsPanel result = instance.createSettingsPanel();
         assertNotNull(result);
     }
 
@@ -107,6 +107,20 @@ public class BytesThroughputOverTimeGuiTest {
         BytesThroughputOverTimeGui instance = new BytesThroughputOverTimeGui();
         String result = instance.getWikiPage();
         assertTrue(result.length()>0);
+    }
+
+    /**
+     * Test of createSettingsPanel method, of class BytesThroughputOverTimeGui.
+     */
+    @Test
+    public void testCreateSettingsPanel() {
+        System.out.println("createSettingsPanel");
+        BytesThroughputOverTimeGui instance = new BytesThroughputOverTimeGui();
+        JSettingsPanel expResult = null;
+        JSettingsPanel result = instance.createSettingsPanel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

@@ -10,7 +10,7 @@ package kg.apc.jmeter;
 public class PluginsCMD {
 
     private static void showHelp() {
-        System.out.println("JMeter Plugins at Google Code Command-Line Tool "+JMeterPluginsUtils.PLUGINS_VERSION);
+        System.out.println("JMeter Plugins at Google Code Command-Line Tool " + JMeterPluginsUtils.PLUGINS_VERSION);
         System.out.println("Usage:\n JMeterPluginsCMD "
                 + "--help "
                 + "--generate-png <filename> "
@@ -20,10 +20,18 @@ public class PluginsCMD {
                 + "["
                 + "--width <graph width> "
                 + "--height <graph height> "
-                + "--aggregate-rows "
+                + "--granulation <ms>" 
+                + "--relative-times <yes/no>" // aggregate all rows into one ||
+                + "--aggregate-rows <yes/no>" // aggregate all rows into one ||
+                + "--paint-gradient <yes/no>" // paint gradient background ||
+                + "--paint-zeroing <yes/no>" // paint zeroing lines ||
+                + "--prevent-outliers <yes/no>" // prevent outliers on distribution graph ||
+                + "--limit-rows <num of points>" // limit number of points in row ||
+                + "--force-y <limit>" // force Y axis limit ||
+                + "--hide-low-counts <limit>" // hide points with sample count below limit ||
                 // TODO: add more options
                 + "]");
-        System.out.println("For help and support please visit "+JMeterPluginsUtils.WIKI_BASE+"JMeterPluginsCMD");
+        System.out.println("For help and support please visit " + JMeterPluginsUtils.WIKI_BASE + "JMeterPluginsCMD");
     }
 
     public int processParams(String[] args) {
@@ -82,7 +90,68 @@ public class PluginsCMD {
 
                 worker.setGraphHeight(Integer.parseInt(args[n]));
             } else if (args[n].equalsIgnoreCase("--aggregate-rows")) {
-                worker.setAggregate(true);
+                n++;
+                if (n >= args.length) {
+                    throw new IllegalArgumentException("Missing aggregate flag");
+                }
+
+                worker.setAggregate(getLogicValue(args[n]));
+            } else if (args[n].equalsIgnoreCase("--paint-zeroing")) {
+                n++;
+                if (n >= args.length) {
+                    throw new IllegalArgumentException("Missing zeroing flag");
+                }
+
+                worker.setZeroing(getLogicValue(args[n]));
+            } else if (args[n].equalsIgnoreCase("--relative-times")) {
+                n++;
+                if (n >= args.length) {
+                    throw new IllegalArgumentException("Missing rel time flag");
+                }
+
+                worker.setRelativeTimes(getLogicValue(args[n]));
+            } else if (args[n].equalsIgnoreCase("--paint-gradient")) {
+                n++;
+                if (n >= args.length) {
+                    throw new IllegalArgumentException("Missing gradient flag");
+                }
+
+                worker.setGradient(getLogicValue(args[n]));
+            } else if (args[n].equalsIgnoreCase("--prevent-outliers")) {
+                n++;
+                if (n >= args.length) {
+                    throw new IllegalArgumentException("Missing outliers flag");
+                }
+
+                worker.setPreventOutliers(getLogicValue(args[n]));
+            } else if (args[n].equalsIgnoreCase("--limit-rows")) {
+                n++;
+                if (n >= args.length) {
+                    throw new IllegalArgumentException("Missing limit rows specification");
+                }
+
+                worker.setRowsLimit(Integer.parseInt(args[n]));
+            } else if (args[n].equalsIgnoreCase("--force-y")) {
+                n++;
+                if (n >= args.length) {
+                    throw new IllegalArgumentException("Missing limit Y specification");
+                }
+
+                worker.setForceY(Integer.parseInt(args[n]));
+            } else if (args[n].equalsIgnoreCase("--hide-low-counts")) {
+                n++;
+                if (n >= args.length) {
+                    throw new IllegalArgumentException("Missing low counts specification");
+                }
+
+                worker.setHideLowCounts(Integer.parseInt(args[n]));
+            } else if (args[n].equalsIgnoreCase("--granulation")) {
+                n++;
+                if (n >= args.length) {
+                    throw new IllegalArgumentException("Missing granulation specification");
+                }
+
+                worker.setGranulation(Integer.parseInt(args[n]));
             } else {
                 System.out.println("Unrecognized option: " + args[n]);
                 showHelp();
@@ -94,11 +163,23 @@ public class PluginsCMD {
             return worker.doJob();
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
-            if (args.length<2)
-            {
+            if (args.length < 2) {
                 showHelp();
             }
             return 1;
         }
+    }
+
+    private int getLogicValue(String string) {
+        if (string.equalsIgnoreCase("on")) {
+            return 1;
+        }
+        if (string.equalsIgnoreCase("1")) {
+            return 1;
+        }
+        if (string.equalsIgnoreCase("yes")) {
+            return 1;
+        }
+        return 0;
     }
 }

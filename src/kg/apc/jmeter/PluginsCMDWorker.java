@@ -1,11 +1,18 @@
 package kg.apc.jmeter;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
+import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.cmd.NewDriver;
 import kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizer;
+import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.jorphan.util.JOrphanUtils;
+import org.apache.log.Logger;
 
 /**
  *
@@ -22,25 +29,86 @@ public class PluginsCMDWorker {
     private String outputCSV;
     private String outputPNG;
     private String pluginType;
-    private boolean isAggregate = false;
+    private static final Logger log = LoggingManager.getLoggerForClass();
+    private int aggregate = -1;
+    private int zeroing = -1;
+    private int preventOutliers = -1;
+    private int rowsLimit = -1;
+    private int forceY = -1;
+    private int lowCounts = -1;
+    private int granulation = -1;
+    private int relativeTimes = -1;
+    private int gradient = -1;
 
     public PluginsCMDWorker() {
+        prepareJMeterEnv();
     }
 
     private void prepareJMeterEnv() {
+        if (JMeterUtils.getJMeterHome() != null) {
+            log.warn("JMeter env exists. No one should see this normally.");
+            return;
+        }
+
+        log.debug("Creating jmeter env");
         String homeDir = NewDriver.getJMeterDir();
         JMeterUtils.setJMeterHome(homeDir);
-        //JMeterUtils.setLocale(new Locale("ignoreResources"));
-        File props = new File(homeDir + "/bin/jmeter.properties");
-        if (!props.exists()) {
+        initializeProperties();
+    }
+
+    /**
+     * Had to copy this method from JMeter class
+     * 'cause they provide no ways to re-use this code
+     * @see JMeter
+     */
+    private void initializeProperties() {
+        JMeterUtils.loadJMeterProperties(NewDriver.getJMeterDir() + File.separator
+                + "bin" + File.separator // $NON-NLS-1$
+                + "jmeter.properties");// $NON-NLS-1$
+
+        JMeterUtils.initLogging();
+        JMeterUtils.initLocale();
+
+        Properties jmeterProps = JMeterUtils.getJMeterProperties();
+
+        // Add local JMeter properties, if the file is found
+        String userProp = JMeterUtils.getPropDefault("user.properties", ""); //$NON-NLS-1$
+        if (userProp.length() > 0) { //$NON-NLS-1$
+            FileInputStream fis = null;
             try {
-                props = File.createTempFile("jmeterplugins", ".properties");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                File file = JMeterUtils.findFile(userProp);
+                if (file.canRead()) {
+                    log.info("Loading user properties from: " + file.getCanonicalPath());
+                    fis = new FileInputStream(file);
+                    Properties tmp = new Properties();
+                    tmp.load(fis);
+                    jmeterProps.putAll(tmp);
+                    LoggingManager.setLoggingLevels(tmp);//Do what would be done earlier
+                }
+            } catch (IOException e) {
+                log.warn("Error loading user property file: " + userProp, e);
+            } finally {
+                JOrphanUtils.closeQuietly(fis);
             }
         }
-        JMeterUtils.loadJMeterProperties(props.getAbsolutePath());
-        JMeterUtils.initLocale();
+
+        // Add local system properties, if the file is found
+        String sysProp = JMeterUtils.getPropDefault("system.properties", ""); //$NON-NLS-1$
+        if (sysProp.length() > 0) {
+            FileInputStream fis = null;
+            try {
+                File file = JMeterUtils.findFile(sysProp);
+                if (file.canRead()) {
+                    log.info("Loading system properties from: " + file.getCanonicalPath());
+                    fis = new FileInputStream(file);
+                    System.getProperties().load(fis);
+                }
+            } catch (IOException e) {
+                log.warn("Error loading system property file: " + sysProp, e);
+            } finally {
+                JOrphanUtils.closeQuietly(fis);
+            }
+        }
     }
 
     public void addExportMode(int mode) {
@@ -85,13 +153,7 @@ public class PluginsCMDWorker {
         graphHeight = i;
     }
 
-    public void setAggregate(boolean b) {
-        isAggregate = b;
-    }
-
     public int doJob() {
-        prepareJMeterEnv();
-
         checkParams();
 
         AbstractGraphPanelVisualizer gui = getGUIObject(pluginType);
@@ -148,6 +210,72 @@ public class PluginsCMDWorker {
     }
 
     private void setOptions(AbstractGraphPanelVisualizer gui) {
-        gui.switchModel(isAggregate);
+        JSettingsPanel settings = gui.getSettingsPanel();
+        GraphPanelChart graph = gui.getGraphPanelChart();
+
+        if (aggregate >= 0) {
+            settings.setAggregateMode(aggregate > 0);
+        }
+        if (granulation >= 0) {
+            settings.setGranulationValue(granulation);
+        }
+        if (relativeTimes >= 0) {
+            graph.setUseRelativeTime(relativeTimes > 0);
+        }
+
+        if (gradient >= 0) {
+            graph.setSettingsDrawGradient(gradient > 0);
+        }
+        if (zeroing >= 0) {
+            graph.setSettingsDrawFinalZeroingLines(zeroing > 0);
+        }
+        if (rowsLimit >= 0) {
+            graph.setMaxPoints(rowsLimit);
+        }
+        if (preventOutliers >= 0) {
+            graph.setPreventXAxisOverScaling(preventOutliers > 0);
+        }
+        if (lowCounts >= 0) {
+            graph.setSettingsHideNonRepValLimit(lowCounts);
+        }
+        if (forceY >= 0) {
+            graph.setForcedMaxY(forceY);
+        }
+    }
+
+    public void setAggregate(int logicValue) {
+        aggregate = logicValue;
+    }
+
+    public void setZeroing(int logicValue) {
+        zeroing = logicValue;
+    }
+
+    public void setPreventOutliers(int logicValue) {
+        preventOutliers = logicValue;
+    }
+
+    public void setRowsLimit(int parseInt) {
+        rowsLimit = parseInt;
+    }
+
+    public void setForceY(int parseInt) {
+        forceY = parseInt;
+    }
+
+    public void setHideLowCounts(int parseInt) {
+        lowCounts = parseInt;
+    }
+
+    public void setGranulation(int parseInt) {
+        granulation = parseInt;
+    }
+
+    public void setRelativeTimes(int logicValue) {
+        relativeTimes = logicValue;
+    }
+
+    public void setGradient(int logicValue) {
+        gradient = logicValue;
     }
 }

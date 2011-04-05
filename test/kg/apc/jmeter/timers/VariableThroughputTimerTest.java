@@ -1,5 +1,6 @@
 package kg.apc.jmeter.timers;
 
+import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import java.util.LinkedList;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -131,5 +132,68 @@ public class VariableThroughputTimerTest {
         int expResult = 0;
         int result = instance.getRPSForSecond(sec);
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of testStarted method, of class VariableThroughputTimer.
+     */
+    @Test
+    public void testTestStarted_0args() {
+        System.out.println("testStarted");
+        VariableThroughputTimer instance = new VariableThroughputTimer();
+        instance.testStarted();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of testStarted method, of class VariableThroughputTimer.
+     */
+    @Test
+    public void testTestStarted_String() {
+        System.out.println("testStarted");
+        String string = "";
+        VariableThroughputTimer instance = new VariableThroughputTimer();
+        instance.testStarted(string);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of testEnded method, of class VariableThroughputTimer.
+     */
+    @Test
+    public void testTestEnded_0args() {
+        System.out.println("testEnded");
+        VariableThroughputTimer instance = new VariableThroughputTimer();
+        instance.testEnded();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of testEnded method, of class VariableThroughputTimer.
+     */
+    @Test
+    public void testTestEnded_String() {
+        System.out.println("testEnded");
+        String string = "";
+        VariableThroughputTimer instance = new VariableThroughputTimer();
+        instance.testEnded(string);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of testIterationStart method, of class VariableThroughputTimer.
+     */
+    @Test
+    public void testTestIterationStart() {
+        System.out.println("testIterationStart");
+        LoopIterationEvent lie = null;
+        VariableThroughputTimer instance = new VariableThroughputTimer();
+        instance.testIterationStart(lie);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

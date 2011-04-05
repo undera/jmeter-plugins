@@ -1,3 +1,4 @@
+// TODO: cover all parameters
 package kg.apc.jmeter;
 
 import kg.apc.emulators.TestJMeterUtils;
@@ -21,8 +22,6 @@ public class PluginsCMDWorkerTest {
     public PluginsCMDWorkerTest() {
         String file = this.getClass().getResource("short.jtl").getPath();
         basedir = file.substring(0, file.lastIndexOf("/"));
-        TestJMeterUtils.createJmeterEnv();
-        JMeterUtils.setProperty("saveservice_properties", basedir+"/saveservice.properties");
     }
 
     @BeforeClass
@@ -103,11 +102,48 @@ public class PluginsCMDWorkerTest {
     public void testDoJob() throws IOException {
         System.out.println("doJob");
         PluginsCMDWorker instance = new PluginsCMDWorker();
+        JMeterUtils.setProperty("saveservice_properties", basedir+"/saveservice.properties");
         instance.setInputFile(basedir+"/short.jtl");
-        instance.setOutputPNGFile(File.createTempFile("test", ".png").getAbsolutePath());
-        instance.setOutputCSVFile(File.createTempFile("test", ".csv").getAbsolutePath());
+        File pngfile = File.createTempFile("test", ".png");
+        instance.setOutputPNGFile(pngfile.getAbsolutePath());
+        File csvfile = File.createTempFile("test", ".csv");
+        instance.setOutputCSVFile(csvfile.getAbsolutePath());
         instance.setPluginType("ResponseTimesDistribution");
         instance.addExportMode(PluginsCMDWorker.EXPORT_PNG);
+        instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);
+        int result = instance.doJob();
+        int expResult = 0;
+        assertEquals(expResult, result);
+        assertEquals(5024, pngfile.length());
+        assertEquals(21, csvfile.length());
+    }
+
+    /**
+     * Test of doJob method, of class CMDWorker.
+     */
+    @Test
+    public void testDoJob_png() throws IOException {
+        System.out.println("doJob");
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setInputFile(basedir+"/short.jtl");
+        instance.setOutputPNGFile(File.createTempFile("test", ".png").getAbsolutePath());
+        instance.setPluginType("ResponseTimesDistribution");
+        instance.addExportMode(PluginsCMDWorker.EXPORT_PNG);
+        int result = instance.doJob();
+        int expResult = 0;
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of doJob method, of class CMDWorker.
+     */
+    @Test
+    public void testDoJob_csv() throws IOException {
+        System.out.println("doJob");
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setInputFile(basedir+"/short.jtl");
+        instance.setOutputCSVFile(File.createTempFile("test", ".csv").getAbsolutePath());
+        instance.setPluginType("ResponseTimesDistribution");
         instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);
         int result = instance.doJob();
         int expResult = 0;
@@ -144,6 +180,94 @@ public class PluginsCMDWorkerTest {
         System.out.println("setAggregate");
         boolean b = false;
         PluginsCMDWorker instance = new PluginsCMDWorker();
-        instance.setAggregate(b);
+        instance.setAggregate(0);
+    }
+
+    /**
+     * Test of setZeroing method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetZeroing() {
+        System.out.println("setZeroing");
+        int logicValue = 0;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setZeroing(logicValue);
+    }
+
+    /**
+     * Test of setPreventOutliers method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetPreventOutliers() {
+        System.out.println("setPreventOutliers");
+        int logicValue = 0;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setPreventOutliers(logicValue);
+    }
+
+    /**
+     * Test of setRowsLimit method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetRowsLimit() {
+        System.out.println("setRowsLimit");
+        int parseInt = 0;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setRowsLimit(parseInt);
+    }
+
+    /**
+     * Test of setForceY method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetForceY() {
+        System.out.println("setForceY");
+        int parseInt = 0;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setForceY(parseInt);
+    }
+
+    /**
+     * Test of setHideLowCounts method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetHideLowCounts() {
+        System.out.println("setHideLowCounts");
+        int parseInt = 0;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setHideLowCounts(parseInt);
+    }
+
+    /**
+     * Test of setGranulation method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetGranulation() {
+        System.out.println("setGranulation");
+        int parseInt = 0;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setGranulation(parseInt);
+    }
+
+    /**
+     * Test of setRelativeTimes method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetRelativeTimes() {
+        System.out.println("setRelativeTimes");
+        int logicValue = 0;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setRelativeTimes(logicValue);
+    }
+
+    /**
+     * Test of setGradient method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetGradient() {
+        System.out.println("setGradient");
+        int logicValue = 0;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setGradient(logicValue);
     }
 }

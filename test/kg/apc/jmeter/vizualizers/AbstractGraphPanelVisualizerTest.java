@@ -143,7 +143,7 @@ public class AbstractGraphPanelVisualizerTest
       }
 
         @Override
-        protected JSettingsPanel getSettingsPanel()
+        protected JSettingsPanel createSettingsPanel()
         {
             return new JSettingsPanel(this, JSettingsPanel.GRADIENT_OPTION);
         }
@@ -220,7 +220,7 @@ public class AbstractGraphPanelVisualizerTest
    {
       System.out.println("getSettingsPanel");
       AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-      JSettingsPanel result = instance.getSettingsPanel();
+      JSettingsPanel result = instance.createSettingsPanel();
       assertNotNull(result);
    }
 
@@ -322,5 +322,19 @@ public class AbstractGraphPanelVisualizerTest
         boolean expResult = false;
         boolean result = instance.isFromTransactionControler(res);
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of createSettingsPanel method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testCreateSettingsPanel() {
+        System.out.println("createSettingsPanel");
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        JSettingsPanel expResult = null;
+        JSettingsPanel result = instance.createSettingsPanel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

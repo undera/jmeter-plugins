@@ -164,7 +164,7 @@ public class ThreadsStateOverTimeGuiTest
    public void testGetSettingsPanel()
    {
       System.out.println("getSettingsPanel");
-      JSettingsPanel result = instance.getSettingsPanel();
+      JSettingsPanel result = instance.createSettingsPanel();
       assertNotNull(result);
    }
 
@@ -176,5 +176,19 @@ public class ThreadsStateOverTimeGuiTest
         System.out.println("getWikiPage");
         String result = instance.getWikiPage();
         assertTrue(result.length()>0);
+    }
+
+    /**
+     * Test of createSettingsPanel method, of class ThreadsStateOverTimeGui.
+     */
+    @Test
+    public void testCreateSettingsPanel() {
+        System.out.println("createSettingsPanel");
+        ThreadsStateOverTimeGui instance = new ThreadsStateOverTimeGui();
+        JSettingsPanel expResult = null;
+        JSettingsPanel result = instance.createSettingsPanel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

@@ -126,7 +126,7 @@ public class ThreadsStateOverTimeGui
     }
 
     @Override
-    protected JSettingsPanel getSettingsPanel() {
+    protected JSettingsPanel createSettingsPanel() {
         return new JSettingsPanel(this,
                 JSettingsPanel.TIMELINE_OPTION
                 | JSettingsPanel.GRADIENT_OPTION

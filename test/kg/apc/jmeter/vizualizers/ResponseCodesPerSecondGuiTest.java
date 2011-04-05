@@ -99,7 +99,7 @@ public class ResponseCodesPerSecondGuiTest {
     {
         System.out.println("getSettingsPanel");
         ResponseCodesPerSecondGui instance = new ResponseCodesPerSecondGui();
-        JSettingsPanel result = instance.getSettingsPanel();
+        JSettingsPanel result = instance.createSettingsPanel();
         assertNotNull(result);
     }
 
@@ -123,6 +123,20 @@ public class ResponseCodesPerSecondGuiTest {
         String expResult = "";
         String result = instance.getWikiPage();
         assertTrue(result.length()>0);
+    }
+
+    /**
+     * Test of createSettingsPanel method, of class ResponseCodesPerSecondGui.
+     */
+    @Test
+    public void testCreateSettingsPanel() {
+        System.out.println("createSettingsPanel");
+        ResponseCodesPerSecondGui instance = new ResponseCodesPerSecondGui();
+        JSettingsPanel expResult = null;
+        JSettingsPanel result = instance.createSettingsPanel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

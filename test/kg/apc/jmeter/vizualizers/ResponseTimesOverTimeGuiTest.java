@@ -73,7 +73,7 @@ public class ResponseTimesOverTimeGuiTest
    {
       System.out.println("getSettingsPanel");
       ResponseTimesOverTimeGui instance = new ResponseTimesOverTimeGui();
-      JSettingsPanel result = instance.getSettingsPanel();
+      JSettingsPanel result = instance.createSettingsPanel();
       assertNotNull(result);
    }
 
@@ -87,5 +87,19 @@ public class ResponseTimesOverTimeGuiTest
         String expResult = "";
         String result = instance.getWikiPage();
         assertTrue(result.length()>0);
+    }
+
+    /**
+     * Test of createSettingsPanel method, of class ResponseTimesOverTimeGui.
+     */
+    @Test
+    public void testCreateSettingsPanel() {
+        System.out.println("createSettingsPanel");
+        ResponseTimesOverTimeGui instance = new ResponseTimesOverTimeGui();
+        JSettingsPanel expResult = null;
+        JSettingsPanel result = instance.createSettingsPanel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

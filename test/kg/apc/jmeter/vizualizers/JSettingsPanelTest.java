@@ -65,7 +65,7 @@ public class JSettingsPanelTest {
       }
 
         @Override
-        protected JSettingsPanel getSettingsPanel()
+        protected JSettingsPanel createSettingsPanel()
         {
             return new JSettingsPanel(this, JSettingsPanel.GRADIENT_OPTION);
         }

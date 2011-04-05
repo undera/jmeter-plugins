@@ -93,7 +93,7 @@ public class HitsPerSecondGuiTest {
     {
       System.out.println("getSettingsPanel");
       HitsPerSecondGui instance = new HitsPerSecondGui();
-      JSettingsPanel result = instance.getSettingsPanel();
+      JSettingsPanel result = instance.createSettingsPanel();
       assertNotNull(result);
     }
 
@@ -106,6 +106,20 @@ public class HitsPerSecondGuiTest {
         HitsPerSecondGui instance = new HitsPerSecondGui();
         String result = instance.getWikiPage();
         assertTrue(result.length()>0);
+    }
+
+    /**
+     * Test of createSettingsPanel method, of class HitsPerSecondGui.
+     */
+    @Test
+    public void testCreateSettingsPanel() {
+        System.out.println("createSettingsPanel");
+        HitsPerSecondGui instance = new HitsPerSecondGui();
+        JSettingsPanel expResult = null;
+        JSettingsPanel result = instance.createSettingsPanel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

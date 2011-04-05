@@ -82,7 +82,7 @@ public class AbstractVsThreadVisualizerTest {
     public class AbstractVsThreadVisualizerImpl extends AbstractVsThreadVisualizer
     {
         @Override
-        protected JSettingsPanel getSettingsPanel()
+        protected JSettingsPanel createSettingsPanel()
         {
             return new JSettingsPanel(this, JSettingsPanel.GRADIENT_OPTION);
         }

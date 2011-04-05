@@ -43,7 +43,7 @@ public class CompositeGraphGuiTest {
     public void testGetSettingsPanel() {
         System.out.println("getSettingsPanel");
         CompositeGraphGui instance = new CompositeGraphGui();
-        JSettingsPanel result = instance.getSettingsPanel();
+        JSettingsPanel result = instance.createSettingsPanel();
         assertNotNull(result);
     }
 
@@ -142,5 +142,19 @@ public class CompositeGraphGuiTest {
         System.out.println("clearData");
         CompositeGraphGui instance = new CompositeGraphGui();
         instance.clearData();
+    }
+
+    /**
+     * Test of createSettingsPanel method, of class CompositeGraphGui.
+     */
+    @Test
+    public void testCreateSettingsPanel() {
+        System.out.println("createSettingsPanel");
+        CompositeGraphGui instance = new CompositeGraphGui();
+        JSettingsPanel expResult = null;
+        JSettingsPanel result = instance.createSettingsPanel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

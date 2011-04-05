@@ -64,7 +64,7 @@ public abstract class AbstractGraphPanelVisualizer
     private static final long REPAINT_INTERVAL = 500;
     public static final String INTERVAL_PROPERTY = "interval_grouping";
     public static final String GRAPH_AGGREGATED = "graph_aggregated";
-    public JSettingsPanel settingsPanel = null;
+    private JSettingsPanel settingsPanel = null;
 
     /**
      *
@@ -79,7 +79,7 @@ public abstract class AbstractGraphPanelVisualizer
         initGui();
     }
 
-    protected abstract JSettingsPanel getSettingsPanel();
+    protected abstract JSettingsPanel createSettingsPanel();
 
     private void initGui() {
         setBorder(makeBorder());
@@ -96,8 +96,8 @@ public abstract class AbstractGraphPanelVisualizer
         graphPanel = new GraphPanel();
         graphPanel.getGraphObject().setRows(model);
         // should be placed after creating graph panel
-        settingsPanel = getSettingsPanel();
-        graphPanel.getSettingsTab().add(settingsPanel, BorderLayout.CENTER);
+        settingsPanel = createSettingsPanel();
+        graphPanel.getSettingsTab().add(getSettingsPanel(), BorderLayout.CENTER);
         //graphPanel.setSettingsTabPanel(settingsPanel);
         return graphPanel;
     }
@@ -154,7 +154,7 @@ public abstract class AbstractGraphPanelVisualizer
             throw new IllegalArgumentException("Interval cannot be less than 1");
         }
         interval = granulation;
-        settingsPanel.setGranulationValue(granulation);
+        getSettingsPanel().setGranulationValue(granulation);
         graphPanel.getGraphObject().setPrecisionLabel(granulation);
     }
 
@@ -213,7 +213,7 @@ public abstract class AbstractGraphPanelVisualizer
         }
 
         isAggregate = aggregate;
-        settingsPanel.setAggregateMode(aggregate);
+        getSettingsPanel().setAggregateMode(aggregate);
     }
 
     private void addRowToCompositeModels(String rowName, AbstractGraphRow row) {
@@ -304,4 +304,11 @@ public abstract class AbstractGraphPanelVisualizer
     }
 
     public abstract String getWikiPage();
+
+    /**
+     * @return the settingsPanel
+     */
+    public JSettingsPanel getSettingsPanel() {
+        return settingsPanel;
+    }
 }

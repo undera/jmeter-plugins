@@ -1,3 +1,5 @@
+// TODO: fight with lagging on start
+// TODO: create a thread which will wake up at least one sampler to provide rps
 package kg.apc.jmeter.timers;
 
 import java.util.Iterator;
@@ -68,9 +70,8 @@ public class VariableThroughputTimer
                 checkNextSecond(secs);
                 delay = getDelay(msecs);
 
-                if (stopping)
-                {
-                    delay=10;
+                if (stopping) {
+                    delay = delay > 0 ? 10 : 0;
                     notify();
                 }
 
@@ -250,7 +251,12 @@ public class VariableThroughputTimer
         }
     }
 
-    private void stopTest() {
+    // TODO: resolve shutdown problems. Patch JMeter if needed
+    protected void stopTest() {
+        if (stopTries > 30) {
+            throw new RuntimeException("More than 30 seconds - stoppin by exception");
+        }
+
         if (lastStopTry == time) {
             return;
         }

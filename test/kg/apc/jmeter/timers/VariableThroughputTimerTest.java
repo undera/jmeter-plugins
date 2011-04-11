@@ -21,6 +21,13 @@ import static org.junit.Assert.*;
  */
 public class VariableThroughputTimerTest {
 
+    private static class VariableThroughputTimerEmul extends VariableThroughputTimer {
+
+        @Override
+        protected void stopTest() {
+            throw new RuntimeException("Immediate stop");
+        }
+    }
     private PowerTableModel dataModel;
 
     public VariableThroughputTimerTest() {
@@ -68,7 +75,7 @@ public class VariableThroughputTimerTest {
     @Test
     public void testDelay_Prop() {
         System.out.println("delay from property");
-        String load="const(10,10s) line(10,100,1m) step(5,25,5,1h)";
+        String load = "const(10,10s) line(10,100,1m) step(5,25,5,1h)";
         JMeterUtils.setProperty(VariableThroughputTimer.DATA_PROPERTY, load);
         VariableThroughputTimer instance = new VariableThroughputTimer();
         JMeterUtils.setProperty(VariableThroughputTimer.DATA_PROPERTY, ""); // clear!
@@ -80,14 +87,20 @@ public class VariableThroughputTimerTest {
     @Test
     public void testDelay1000() throws InterruptedException {
         System.out.println("delay 1000");
-        VariableThroughputTimer instance = new VariableThroughputTimer();
+        VariableThroughputTimer instance = new VariableThroughputTimerEmul();
         CollectionProperty prop = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
         instance.setData(prop);
         //fail("temp");
         long start = System.currentTimeMillis();
+        long result = 0;
         while ((System.currentTimeMillis() - start) < 10 * 1000) // 10 seconds test
         {
-            long result = instance.delay();
+            try {
+                result = instance.delay();
+            } catch (RuntimeException ex) {
+                assertEquals("Immediate stop", ex.getMessage());
+            }
+
             if (result > 0) {
                 synchronized (this) {
                     wait(result / 1000);
@@ -142,8 +155,6 @@ public class VariableThroughputTimerTest {
         System.out.println("testStarted");
         VariableThroughputTimer instance = new VariableThroughputTimer();
         instance.testStarted();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -155,8 +166,6 @@ public class VariableThroughputTimerTest {
         String string = "";
         VariableThroughputTimer instance = new VariableThroughputTimer();
         instance.testStarted(string);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -167,8 +176,6 @@ public class VariableThroughputTimerTest {
         System.out.println("testEnded");
         VariableThroughputTimer instance = new VariableThroughputTimer();
         instance.testEnded();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -180,8 +187,6 @@ public class VariableThroughputTimerTest {
         String string = "";
         VariableThroughputTimer instance = new VariableThroughputTimer();
         instance.testEnded(string);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -193,7 +198,5 @@ public class VariableThroughputTimerTest {
         LoopIterationEvent lie = null;
         VariableThroughputTimer instance = new VariableThroughputTimer();
         instance.testIterationStart(lie);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

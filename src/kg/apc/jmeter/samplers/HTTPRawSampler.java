@@ -11,7 +11,6 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-
 // FIXME: actually keep-alive does not work!
 /**
  *
@@ -156,5 +155,17 @@ public class HTTPRawSampler extends AbstractIPSampler {
 
     void setParseResult(boolean selected) {
         setProperty(PARSE, selected);
+    }
+
+    public boolean interrupt() {
+        if (savedSock != null && savedSock.isOpen()) {
+            try {
+                savedSock.close();
+            } catch (IOException ex) {
+                log.warn("Exception while interrupting channel: ", ex);
+                return false;
+            }
+        }
+        return true;
     }
 }

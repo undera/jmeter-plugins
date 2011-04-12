@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DynamicClassLoaderTest.class, NewDriverTest.class})
+@Suite.SuiteClasses({NewDriverTest.class, DynamicClassLoaderTest.class})
 public class CmdSuite {
 
     @BeforeClass

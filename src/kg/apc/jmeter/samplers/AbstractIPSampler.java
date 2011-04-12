@@ -8,6 +8,7 @@ import java.nio.channels.spi.AbstractSelectableChannel;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
+import org.apache.jmeter.samplers.Interruptible;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -16,7 +17,9 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-public abstract class AbstractIPSampler extends AbstractSampler implements Serializable, Cloneable {
+public abstract class AbstractIPSampler
+        extends AbstractSampler
+        implements Serializable, Cloneable, Interruptible {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String HOSTNAME = "hostname";

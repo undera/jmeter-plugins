@@ -1,3 +1,4 @@
+// TODO: buffer file writes to bigger chunks?
 package kg.apc.jmeter.reporters;
 
 import java.io.FileNotFoundException;

@@ -254,7 +254,7 @@ public class VariableThroughputTimer
     // TODO: resolve shutdown problems. Patch JMeter if needed
     protected void stopTest() {
         if (stopTries > 30) {
-            throw new RuntimeException("More than 30 seconds - stoppin by exception");
+            throw new RuntimeException("More than 30 seconds - stopping by exception");
         }
 
         if (lastStopTry == time) {

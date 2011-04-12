@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ConsoleStatusLoggerTest.class, JAutoStopPanelTest.class, AutoStopTest.class, ConsoleStatusLoggerGuiTest.class, FlexibleFileWriterTest.class, AutoStopGuiTest.class, FlexibleFileWriterGuiTest.class})
+@Suite.SuiteClasses({FlexibleFileWriterTest.class, JAutoStopPanelTest.class, AutoStopGuiTest.class, AutoStopTest.class, ConsoleStatusLoggerGuiTest.class, FlexibleFileWriterGuiTest.class, ConsoleStatusLoggerTest.class})
 public class ReportersSuite {
 
     @BeforeClass

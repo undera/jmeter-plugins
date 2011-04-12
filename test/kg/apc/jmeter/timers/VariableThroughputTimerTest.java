@@ -199,4 +199,16 @@ public class VariableThroughputTimerTest {
         VariableThroughputTimer instance = new VariableThroughputTimer();
         instance.testIterationStart(lie);
     }
+
+    /**
+     * Test of stopTest method, of class VariableThroughputTimer.
+     */
+    @Test
+    public void testStopTest() {
+        System.out.println("stopTest");
+        VariableThroughputTimer instance = new VariableThroughputTimer();
+        instance.stopTest();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

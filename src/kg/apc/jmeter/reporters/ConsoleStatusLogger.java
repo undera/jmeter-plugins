@@ -1,3 +1,4 @@
+// TODO: work out clear distributed mode behavior
 package kg.apc.jmeter.reporters;
 
 import java.io.PrintStream;

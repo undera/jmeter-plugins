@@ -185,4 +185,18 @@ public class HTTPRawSamplerTest {
         SocketChannel result = instance.getSocketChannel();
         assertNotNull(result);
     }
+
+    /**
+     * Test of interrupt method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testInterrupt() {
+        System.out.println("interrupt");
+        HTTPRawSampler instance = new HTTPRawSampler();
+        boolean expResult = false;
+        boolean result = instance.interrupt();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

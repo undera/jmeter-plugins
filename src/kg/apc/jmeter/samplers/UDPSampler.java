@@ -84,12 +84,10 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
             return new byte[0];
         }
 
-        try{
+        try {
             ByteArrayOutputStream response = readResponse(res);
             return encoder.decode(response.toByteArray());
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             channel.close();
             throw ex;
         }
@@ -136,5 +134,17 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         } catch (IOException ex) {
             log.error("Cannot close channel", ex);
         }
+    }
+
+    public boolean interrupt() {
+        if (channel != null && channel.isOpen()) {
+            try {
+                channel.close();
+            } catch (IOException ex) {
+                log.warn("Exception while interrupting channel: ", ex);
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -105,10 +105,7 @@ public class LatenciesOverTimeGuiTest {
     public void testCreateSettingsPanel() {
         System.out.println("createSettingsPanel");
         LatenciesOverTimeGui instance = new LatenciesOverTimeGui();
-        JSettingsPanel expResult = null;
         JSettingsPanel result = instance.createSettingsPanel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 }

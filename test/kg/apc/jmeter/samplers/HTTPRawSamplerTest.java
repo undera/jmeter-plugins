@@ -169,11 +169,13 @@ public class HTTPRawSamplerTest {
     @Test
     public void testReadResponse() throws Exception {
         System.out.println("readResponse");
-        SocketChannel sock = null;
-        SampleResult res = null;
-        byte[] expResult = null;
+        SocketChannelEmul sock = new SocketChannelEmul();
+        sock.setBytesToRead(ByteBuffer.wrap("test".getBytes()));
+        SampleResult res = new SampleResult();
+        res.sampleStart();
+        byte[] expResult = "test".getBytes();
         byte[] result = instance.readResponse(sock, res);
-        assertEquals(expResult, result);
+        assertEquals(expResult.length, result.length);
     }
 
     /**
@@ -192,11 +194,8 @@ public class HTTPRawSamplerTest {
     @Test
     public void testInterrupt() {
         System.out.println("interrupt");
-        HTTPRawSampler instance = new HTTPRawSampler();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.interrupt();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

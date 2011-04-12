@@ -101,11 +101,8 @@ public class ResponseTimesDistributionGuiTest {
     public void testCreateSettingsPanel() {
         System.out.println("createSettingsPanel");
         ResponseTimesDistributionGui instance = new ResponseTimesDistributionGui();
-        JSettingsPanel expResult = null;
         JSettingsPanel result = instance.createSettingsPanel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
 }

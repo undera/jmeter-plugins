@@ -1,4 +1,3 @@
-// TODO process user.properties like Jmeter do
 package kg.apc.jmeter.cmd;
 
 // N.B. this must only use standard Java packages

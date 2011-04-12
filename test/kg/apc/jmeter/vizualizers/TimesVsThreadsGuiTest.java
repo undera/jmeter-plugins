@@ -1,9 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizerTest.AbstractGraphPanelVisualizerImpl;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jmeter.testelement.property.LongProperty;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
@@ -156,10 +154,7 @@ public class TimesVsThreadsGuiTest
     public void testCreateSettingsPanel() {
         System.out.println("createSettingsPanel");
         TimesVsThreadsGui instance = new TimesVsThreadsGui();
-        JSettingsPanel expResult = null;
         JSettingsPanel result = instance.createSettingsPanel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 }

@@ -4,8 +4,6 @@
  */
 package kg.apc.jmeter.vizualizers;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
@@ -140,10 +138,7 @@ public class ThroughputOverTimeGuiTest
     public void testCreateSettingsPanel() {
         System.out.println("createSettingsPanel");
         ThroughputOverTimeGui instance = new ThroughputOverTimeGui();
-        JSettingsPanel expResult = null;
         JSettingsPanel result = instance.createSettingsPanel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 }

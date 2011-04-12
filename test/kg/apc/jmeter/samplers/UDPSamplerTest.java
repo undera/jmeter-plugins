@@ -282,11 +282,8 @@ public class UDPSamplerTest {
     @Test
     public void testInterrupt() {
         System.out.println("interrupt");
-        UDPSampler instance = new UDPSampler();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.interrupt();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

@@ -198,6 +198,10 @@ public class AbstractIPSamplerTest {
         public byte[] processIO(SampleResult res) throws Exception {
             return null;
         }
+
+        public boolean interrupt() {
+            return true;
+        }
     }
 
 }

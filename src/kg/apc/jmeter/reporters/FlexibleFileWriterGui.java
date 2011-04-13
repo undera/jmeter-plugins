@@ -1,3 +1,4 @@
+// TODO: find better default format
 package kg.apc.jmeter.reporters;
 
 import java.awt.BorderLayout;

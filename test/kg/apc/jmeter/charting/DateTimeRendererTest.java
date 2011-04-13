@@ -81,6 +81,24 @@ public class DateTimeRendererTest
         assertEquals("03:16:40", text);
     }
 
+    @Test
+    public void testSetValue_double()
+    {
+        System.out.println("setValue");
+        DateTimeRenderer instance = new DateTimeRenderer(HHMMSS);
+
+        Calendar test = Calendar.getInstance();
+
+        test.set(Calendar.HOUR_OF_DAY, 0);
+        test.set(Calendar.MINUTE, 0);
+        test.set(Calendar.SECOND, 0);
+        test.set(Calendar.MILLISECOND, 0);
+
+        instance.setValue(test.getTimeInMillis()+0.5);
+
+        String text = instance.getText();
+        assertEquals("00:00:00", text);
+    }
     /**
      *
      */

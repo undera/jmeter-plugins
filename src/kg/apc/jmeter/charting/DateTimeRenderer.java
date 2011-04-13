@@ -4,19 +4,20 @@ import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 import org.apache.jorphan.gui.NumberRenderer;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  *
  * @author apc
  */
 public class DateTimeRenderer
-        extends NumberRenderer
-{
+        extends NumberRenderer {
 
     /**
      *
      */
-   // private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggingManager.getLoggerForClass();
     protected final SimpleDateFormat dateFormatter;
     private long relativeStartTime = 0;
     private static final String EMPTY = "";
@@ -25,8 +26,7 @@ public class DateTimeRenderer
     /**
      *
      */
-    public DateTimeRenderer()
-    {
+    public DateTimeRenderer() {
         super();
         dateFormatter = (SimpleDateFormat) SimpleDateFormat.getInstance();
         //log.info("Simple inst");
@@ -36,11 +36,10 @@ public class DateTimeRenderer
      *
      * @param format
      */
-    public DateTimeRenderer(String format)
-    {
+    public DateTimeRenderer(String format) {
         super();
         dateFormatter = new SimpleDateFormat(format);
-       // log.info("Format inst " + format);
+        // log.info("Format inst " + format);
     }
 
     /**
@@ -48,8 +47,7 @@ public class DateTimeRenderer
      * @param format - date/time format
      * @param aRelativeStartTime - test start time
      */
-    public DateTimeRenderer(String format, long aRelativeStartTime)
-    {
+    public DateTimeRenderer(String format, long aRelativeStartTime) {
         this(format);
         TimeZone utc = TimeZone.getTimeZone("UTC");
         dateFormatter.setTimeZone(utc);
@@ -58,20 +56,22 @@ public class DateTimeRenderer
     }
 
     @Override
-    public void setValue(Object value)
-    {
-        if (value == null)
+    public void setValue(Object value) {
+        if (value == null) {
             setText(EMPTY);
-        else
-            setLongValue((Long) value);
+        } else {
+            if (value instanceof Double) {
+                value=Math.round((Double) value);
+            }
+                setLongValue((Long) value);
+        }
     }
 
     /**
      * Sets value to render
      * @param value
      */
-    private void setLongValue(Long value)
-    {
+    private void setLongValue(Long value) {
         setText(dateFormatter.format(value - relativeStartTime));
     }
 }

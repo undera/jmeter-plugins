@@ -43,11 +43,11 @@ public class JAutoStopPanel extends javax.swing.JPanel {
     }
 
     public final void initFields() {
-        jTextFieldRespTime.setText("1000");
+        jTextFieldRespTime.setText("10000");
         jTextFieldRespTimeSec.setText("10");
         jTextFieldError.setText("50");
         jTextFieldErrorSec.setText("10");
-        jTextFieldRespLatency.setText("50");
+        jTextFieldRespLatency.setText("5000");
         jTextFieldRespLatencySec.setText("10");
     }
 

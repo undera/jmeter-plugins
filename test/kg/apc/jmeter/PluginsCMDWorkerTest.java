@@ -1,7 +1,6 @@
 // TODO: cover all parameters
 package kg.apc.jmeter;
 
-import kg.apc.emulators.TestJMeterUtils;
 import java.io.File;
 import java.io.IOException;
 import org.apache.jmeter.util.JMeterUtils;

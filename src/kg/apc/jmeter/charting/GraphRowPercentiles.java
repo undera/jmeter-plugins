@@ -3,145 +3,73 @@ package kg.apc.jmeter.charting;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  * The algorithm used for percentiles calculation is the one from
  * org.apache.commons.math.stat.descriptive.rank.Percentile
  * @author Stephane Hoblingre
  */
-public class GraphRowPercentiles extends AbstractGraphRow
-{
-    /*
-     * The calculated percentiles
-     */
+public class GraphRowPercentiles extends GraphRowSumValues {
+
+    private static final Logger log = LoggingManager.getLoggerForClass();
     private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> percentiles = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
+    private long totalCount = 0L;
 
-    /*
-     * The data received from JMeter samples
-     * Contains as key the response time, as value the occurence count
-     */
-    private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> values;
-    private long virtualSize = 0L;
-    private long minRespTime = Long.MAX_VALUE;
-    private long maxRespTime = 0L;
-
-    public GraphRowPercentiles()
-    {
+    public GraphRowPercentiles() {
         super();
-        values = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
         //create percentiles objects, and reuse them to avoid GC
-        for (long p = 0; p < 101; p++)
-        {
-            percentiles.put(p, new GraphPanelChartPercentileElement(100));
-        }
-    }
-
-    public void addResponseTime(long respTime)
-    {
-        if (values.containsKey(respTime))
-        {
-            GraphPanelChartPercentileElement el=(GraphPanelChartPercentileElement) values.get(respTime);
-            el.incValue();
-        } else
-        {
-            values.put(respTime, new GraphPanelChartPercentileElement(1));
-        }
-
-        if (minRespTime > respTime)
-        {
-            minRespTime = respTime;
-            super.add(0, minRespTime);
-        }
-        if (maxRespTime < respTime)
-        {
-            maxRespTime = respTime;
-            super.add(100, maxRespTime);
-        }
-
-        virtualSize++;
-    }
-
-    private void calculatePercentiles()
-    {
-        double count = virtualSize;
-
-        if (count == 0)
-        {
-            return;
-        }
-
-        if (count == 1)
-        {
-            for (long p = 0; p < 101; p++)
-            {
-                percentiles.get(p).add(minRespTime);
-            }
-        } else
-        {
-            Iterator<Entry<Long, AbstractGraphPanelChartElement>> iter = values.entrySet().iterator();
-            Entry<Long, AbstractGraphPanelChartElement> entry = iter.next();
-            long currentVirtualIndex = (long)entry.getValue().getValue();
-
-            for (long p = 1; p < 100; p++)
-            {
-                double pos = p * (count + 1) / 100;
-                double fpos = Math.floor(pos);
-                int intPos = (int) fpos;
-                double dif = pos - fpos;
-                if (pos < 1)
-                {
-                    percentiles.get(p).add(minRespTime);
-                } else
-                {
-                    long upper = -1;
-                    long lower = -1;
-
-                    while (upper == -1)
-                    {
-                        if (intPos - 1 <= currentVirtualIndex && lower == -1)
-                        {
-                            lower = entry.getKey();
-                        }
-                        if (intPos <= currentVirtualIndex)
-                        {
-                            upper = entry.getKey();
-                        }
-                        if (upper == -1)
-                        {
-                            entry = iter.next();
-                            currentVirtualIndex += entry.getValue().getValue();
-                        }
-                    }
-                   percentiles.get(p).add((double) lower + dif * (upper - lower));
-                }
-            }
-
-            percentiles.get(100L).add(maxRespTime);
-            percentiles.get(0L).add(minRespTime);
+        for (long p = 0; p <= 1000; p++) {
+            percentiles.put(p, new GraphPanelChartExactElement(p, 0));
         }
     }
 
     @Override
-    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
-    {
+    public void add(long xVal, double yVal) {
+        super.add(xVal, yVal);
+        totalCount++;
+    }
+
+    private void calculatePercentiles() {
+        long calculatedPerc = 0;
+        int rollingCount = 0;
+        Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = super.iterator();
+        Entry<Long, AbstractGraphPanelChartElement> el = null;
+        Iterator<Entry<Long, AbstractGraphPanelChartElement>> percIT = percentiles.entrySet().iterator();
+        while (percIT.hasNext()) {
+            Entry<Long, AbstractGraphPanelChartElement> percEl = percIT.next();
+            double percLevel = percEl.getKey() / 10D;
+            while (calculatedPerc < percLevel && it.hasNext()) {
+                el = it.next();
+                rollingCount += el.getValue().getValue();
+                calculatedPerc = 100 * rollingCount / totalCount;
+            }
+
+            if (el != null) {
+                log.debug(percLevel + " P: " + calculatedPerc + " T: " + el.getKey());
+                percEl.getValue().add(el.getKey());
+            }
+        }
+    }
+
+    @Override
+    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator() {
         calculatePercentiles();
         return percentiles.entrySet().iterator();
     }
 
     @Override
-    public int size()
-    {
-        if (values.isEmpty())
-        {
+    public int size() {
+        if (super.size() == 0) {
             return 0;
-        } else
-        {
-            return 101;
+        } else {
+            return percentiles.size();
         }
     }
+
     @Override
-    public AbstractGraphPanelChartElement getElement(long value)
-    {
+    public AbstractGraphPanelChartElement getElement(long value) {
         return percentiles.get(value);
     }
 }

@@ -18,13 +18,11 @@ public class GraphRowPercentilesTest {
     }
 
     @BeforeClass
-    public static void setUpClass() throws Exception
-    {
+    public static void setUpClass() throws Exception {
     }
 
     @AfterClass
-    public static void tearDownClass() throws Exception
-    {
+    public static void tearDownClass() throws Exception {
     }
 
     @Before
@@ -39,13 +37,12 @@ public class GraphRowPercentilesTest {
      * Test of addResponseTime method, of class GraphRowPercentiles.
      */
     @Test
-    public void testAddResponseTime()
-    {
+    public void testAddResponseTime() {
         System.out.println("addResponseTime");
         long respTime = 1234L;
         GraphRowPercentiles instance = new GraphRowPercentiles();
-        instance.addResponseTime(respTime);
-        int expResult = 101;
+        instance.add(respTime, 1);
+        int expResult = 1001;
         int result = instance.size();
         assertEquals(expResult, result);
     }
@@ -54,27 +51,33 @@ public class GraphRowPercentilesTest {
      * Test of iterator method, of class GraphRowPercentiles.
      */
     @Test
-    public void testIterator()
-    {
+    public void testIterator() {
         System.out.println("iterator");
         GraphRowPercentiles instance = new GraphRowPercentiles();
         Iterator result = instance.iterator();
         assertNotNull(result);
+        assertTrue(result.hasNext());
+        int cnt = 0;
+        while (result.hasNext())
+        {
+            assertNotNull(result.next());
+            cnt++;
+        }
+        assertEquals(1001, cnt);
     }
 
     /**
      * Test of size method, of class GraphRowPercentiles.
      */
     @Test
-    public void testSize()
-    {
+    public void testSize() {
         System.out.println("size");
         GraphRowPercentiles instance = new GraphRowPercentiles();
         int expResult = 0;
         int result = instance.size();
         assertEquals(expResult, result);
-        instance.addResponseTime(1234L);
-        expResult=101;
+        instance.add(1234L, 1);
+        expResult = 1001;
         result = instance.size();
         assertEquals(expResult, result);
     }
@@ -83,34 +86,22 @@ public class GraphRowPercentilesTest {
      * Test of getElement method, of class GraphRowPercentiles.
      */
     @Test
-    public void testGetElement()
-    {
-        /*
-        System.out.println("getElement");
-        long value = 0L;
-        GraphRowPercentiles instance = new GraphRowPercentiles();
-        AbstractGraphPanelChartElement expResult = null;
-        AbstractGraphPanelChartElement result = instance.getElement(value);
-        assertEquals(expResult, result);
-         */
-
+    public void testGetElement() {
         System.out.println("getElement");
 
-        long value = 50L;
+        long value = 500L;
         GraphRowPercentiles instance = new GraphRowPercentiles();
-        for(int i=0; i<100; i++)
-        {
-            instance.addResponseTime(20);
-            instance.addResponseTime(30);
-            instance.addResponseTime(40);
+        for (int i = 0; i < 1000; i++) {
+            instance.add(i, i);
         }
+
+        assertEquals(1001, instance.size());
 
         //force percentile calculation
         instance.iterator();
 
         AbstractGraphPanelChartElement result = instance.getElement(value);
- 
-        assertTrue(instance.getElement(value).getValue() == 30);
-    }
 
+        assertEquals(14, result.getValue(), 0.001);
+    }
 }

@@ -58,8 +58,9 @@ public class TransactionsPerSecondGui
         //fix to have trans/sec values in all cases
         if (getGranulation() > 0)
         {
-            row.add(time, count * 1000.0d / getGranulation());
-            rowAgg.add(time, count * 1000.0d / getGranulation());
+            double tps = count * 1000.0 / getGranulation();
+            row.add(time, tps);
+            rowAgg.add(time, tps);
             //always add 0 to agg failure row
             if(isSuccess)
             {

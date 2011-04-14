@@ -23,6 +23,7 @@ public class ResponseTimesPercentilesGui
         graphPanel.getGraphObject().setForcedMinX(0);
         graphPanel.getGraphObject().setxAxisLabel("Percentiles");
         graphPanel.getGraphObject().setyAxisLabel("Percentile value in ms");
+        graphPanel.getGraphObject().setxAxisLabelRenderer(new DividerRenderer(10));
     }
 
     @Override
@@ -47,15 +48,16 @@ public class ResponseTimesPercentilesGui
 
         if (row == null)
         {
-            row = (GraphRowPercentiles) getNewRow(model, AbstractGraphRow.ROW_PERCENTILES, label, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, false);
+            row = (GraphRowPercentiles) getNewRow(model, AbstractGraphRow.ROW_PERCENTILES, label, AbstractGraphRow.MARKER_SIZE_NONE, false, false, false, true, false);
         }
+        
         if (rowAgg == null)
         {
-            rowAgg = (GraphRowPercentiles) getNewRow(modelAggregate, AbstractGraphRow.ROW_PERCENTILES, aggregateLabel, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, Color.RED, false);
+            rowAgg = (GraphRowPercentiles) getNewRow(modelAggregate, AbstractGraphRow.ROW_PERCENTILES, aggregateLabel, AbstractGraphRow.MARKER_SIZE_NONE, false, false, false, true, Color.RED, false);
         }
 
-        row.addResponseTime(res.getTime());
-        rowAgg.addResponseTime(res.getTime());
+        row.add(res.getTime(), 1);
+        rowAgg.add(res.getTime(), 1);
         updateGui(null);
     }
 

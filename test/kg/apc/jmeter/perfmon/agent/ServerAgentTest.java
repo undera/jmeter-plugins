@@ -5,6 +5,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -85,5 +86,16 @@ public class ServerAgentTest {
       instance.startServiceAsThread();
       instance.stopService();
    }
+
+    /**
+     * Test of isAutoStop method, of class ServerAgent.
+     */
+    @Test
+    public void testIsAutoStop() {
+        System.out.println("isAutoStop");
+        boolean expResult = false;
+        boolean result = ServerAgent.isAutoStop();
+        assertEquals(expResult, result);
+    }
 
 }

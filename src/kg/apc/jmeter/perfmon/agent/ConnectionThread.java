@@ -27,6 +27,11 @@ public class ConnectionThread
    private int id;
 
    /**
+    * Count the number of active connections for auto stop feature
+    */
+   private static int nbOfCnx = 0;
+
+   /**
     * The constructor.
     * @param socket The socket used for communication with the AgentConnector
     */
@@ -42,6 +47,7 @@ public class ConnectionThread
     */
    public void run()
    {
+      nbOfCnx++;
       MetricsGetter data = MetricsGetter.getInstance();
       ServerAgent.logMessage("Client id=" + id + " connected!");
       try
@@ -73,6 +79,17 @@ public class ConnectionThread
       catch (IOException e)
       {
          ServerAgent.logMessage(e.getMessage());
+      }
+      finally
+      {
+          nbOfCnx--;
+      }
+
+      if(ServerAgent.isAutoStop() && nbOfCnx == 0)
+      {
+         ServerAgent.logMessage("No more connections, the Agent will stop now.");
+         //kill the process
+         System.exit(0);
       }
    }
 }

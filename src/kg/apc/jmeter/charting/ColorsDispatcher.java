@@ -29,8 +29,8 @@ public class ColorsDispatcher implements Serializable {
     public final void reset() {
         assignedColors.clear();
         increment = LEVEL_MAX;
-        bits = 1;
-        level = 0;
+        bits = 0;
+        level = LEVEL_MAX-1;
     }
 
     /**
@@ -54,16 +54,16 @@ public class ColorsDispatcher implements Serializable {
         }
         Color c = new Color(r, g, b);
         if (assignedColors.contains(c)) {
-            System.out.println("Existing " + r + " " + g + " " + b);
+            if(log.isDebugEnabled()) log.debug("Existing " + r + " " + g + " " + b);
             color = getNextColor();
         } else if ((r + g + b) / 3 < 32) {
-            log.debug("Too dark " + r + " " + g + " " + b);
+            if(log.isDebugEnabled()) log.debug("Too dark " + r + " " + g + " " + b);
             color = getNextColor();
         } else if ((r + g + b) / 3 > 256 - 64) {
-            log.debug("Too light " + r + " " + g + " " + b);
+            if(log.isDebugEnabled()) log.debug("Too light " + r + " " + g + " " + b);
             color = getNextColor();
         } else {
-            log.debug("New " + r + " " + g + " " + b);
+            if(log.isDebugEnabled()) log.debug("New " + r + " " + g + " " + b);
             color = new Color(r, g, b);
         }
 
@@ -84,7 +84,7 @@ public class ColorsDispatcher implements Serializable {
                 level = LEVEL_MAX-1;
             }
 
-            bits = 1;
+            bits = 0;
         }
     }
 }

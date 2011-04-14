@@ -993,10 +993,10 @@ public class GraphPanelChart
                 ((Graphics2D) g).setStroke(thickStroke);
             }
 
+            boolean valid = isChartPointValid(x, y);
+
             // draw lines
             if (row.isDrawLine()) {
-                boolean valid = isChartPointValid(x, y);
-
                 if (mustDrawFirstZeroingLine && valid) {
                     mustDrawFirstZeroingLine = false;
                     prevX = x;
@@ -1042,7 +1042,7 @@ public class GraphPanelChart
                 ((Graphics2D) g).setStroke(oldStroke);
             }
 
-            if (row.isDrawValueLabel()) {
+            if (row.isDrawValueLabel() && valid && y >= chartRect.y) {
                 g.setColor(Color.DARK_GRAY);
                 Font oldFont = g.getFont();
                 g.setFont(g.getFont().deriveFont(Font.BOLD));

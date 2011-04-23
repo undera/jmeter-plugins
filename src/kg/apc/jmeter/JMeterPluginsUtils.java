@@ -15,7 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -34,7 +34,7 @@ import org.apache.jmeter.util.JMeterUtils;
  */
 public abstract class JMeterPluginsUtils {
 
-    public static String PLUGINS_VERSION = "0.4.1 snapshot";
+    public static String PLUGINS_VERSION = "0.4.1 RC2";
     private static String PLUGINS_PREFIX = "jp@gc - ";
     private static boolean prefixPlugins = true;
     public static final String WIKI_BASE = "http://code.google.com/p/jmeter-plugins/wiki/";
@@ -62,37 +62,69 @@ public abstract class JMeterPluginsUtils {
         }
     }
 
-    /**
-     *
-     * @param model
-     * @return
-     */
-    public static CollectionProperty tableModelToCollectionProperty(PowerTableModel model, String propname) {
+    public static CollectionProperty tableModelRowsToCollectionProperty(PowerTableModel model, String propname) {
         CollectionProperty rows = new CollectionProperty(propname, new ArrayList<Object>());
-        for (int col = 0; col < model.getColumnCount(); col++) {
-            rows.addItem(model.getColumnData(model.getColumnName(col)));
+        for (int row = 0; row < model.getRowCount(); row++) {
+            List<Object> item = getArrayListForArray(model.getRowData(row));
+            rows.addItem(item);
         }
         return rows;
     }
 
-    /**
-     *
-     * @param model
-     * @return
-     */
-    public static CollectionProperty tableModelToCollectionPropertyEval(PowerTableModel model, String propname) {
+    public static CollectionProperty tableModelRowsToCollectionPropertyEval(PowerTableModel model, String propname) {
         CollectionProperty rows = new CollectionProperty(propname, new ArrayList<Object>());
-        for (int col = 0; col < model.getColumnCount(); col++) {
-            ArrayList<Object> tmp = new ArrayList<Object>();
-            Iterator iter = model.getColumnData(model.getColumnName(col)).iterator();
-            while (iter.hasNext()) {
-                String value = iter.next().toString();
-                tmp.add(new CompoundVariable(value).execute());
-            }
-
-            rows.addItem(tmp);
+        for (int row = 0; row < model.getRowCount(); row++) {
+            List<Object> item = getArrayListForArrayEval(model.getRowData(row));
+            rows.addItem(item);
         }
         return rows;
+    }
+
+    public static void collectionPropertyToTableModelRows(CollectionProperty prop, PowerTableModel model) {
+        model.clearData();
+        for (int rowN = 0; rowN < prop.size(); rowN++) {
+            ArrayList<String> rowObject = (ArrayList<String>) prop.get(rowN).getObjectValue();
+            model.addRow(rowObject.toArray());
+        }
+        model.fireTableDataChanged();
+    }
+
+    @Deprecated
+    public static CollectionProperty tableModelColsToCollectionProperty(PowerTableModel model, String propname) {
+        CollectionProperty rows = new CollectionProperty(propname, new ArrayList<Object>());
+        for (int colN = 0; colN < model.getColumnCount(); colN++) {
+            List<?> item = model.getColumnData(model.getColumnName(colN));
+            rows.addItem(item);
+        }
+        return rows;
+    }
+
+    @Deprecated
+    public static void collectionPropertyToTableModelCols(CollectionProperty prop, PowerTableModel model) {
+        model.clearData();
+        for (int colN = 0; colN < prop.size(); colN++) {
+            ArrayList<String> rowObject = (ArrayList<String>) prop.get(colN).getObjectValue();
+            model.setColumnData(colN, rowObject);
+        }
+        model.fireTableDataChanged();
+    }
+
+    private static List<Object> getArrayListForArray(Object[] rowData) {
+        ArrayList<Object> res = new ArrayList<Object>();
+        for (int n = 0; n < rowData.length; n++) // note that we must use ArrayList
+        {
+            res.add(rowData[n]);
+        }
+        return res;
+    }
+
+    private static List<Object> getArrayListForArrayEval(Object[] rowData) {
+        ArrayList<Object> res = new ArrayList<Object>();
+        for (int n = 0; n < rowData.length; n++) // note that we must use ArrayList
+        {
+            res.add(new CompoundVariable(rowData[n].toString()).execute());
+        }
+        return res;
     }
 
     public static String byteBufferToString(ByteBuffer buf) {
@@ -144,7 +176,7 @@ public abstract class JMeterPluginsUtils {
         if (!java.awt.Desktop.isDesktopSupported()) {
             return panel;
         }
-        
+
         JLabel icon = new JLabel();
         icon.setIcon(new javax.swing.ImageIcon(JMeterPluginsUtils.class.getResource("/kg/apc/jmeter/vizualizers/information.png")));
 
@@ -152,7 +184,7 @@ public abstract class JMeterPluginsUtils {
         link.setForeground(Color.blue);
         link.setFont(link.getFont().deriveFont(Font.PLAIN));
         link.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        link.addMouseListener(new URIOpener(WIKI_BASE + helpPage+"?utm_source=jmeter&utm_medium=helplink&utm_campaign="+helpPage));
+        link.addMouseListener(new URIOpener(WIKI_BASE + helpPage + "?utm_source=jmeter&utm_medium=helplink&utm_campaign=" + helpPage));
         Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.blue);
         link.setBorder(border);
 
@@ -185,7 +217,7 @@ public abstract class JMeterPluginsUtils {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 4);
         panelLink.add(version, gridBagConstraints);
-        
+
         if (innerPanel != null) {
             innerPanel.add(panelLink);
         } else {
@@ -197,13 +229,15 @@ public abstract class JMeterPluginsUtils {
     private static Container findComponentWithBorder(JComponent panel, Class<?> aClass) {
         for (int n = 0; n < panel.getComponentCount(); n++) {
             if (panel.getComponent(n) instanceof JComponent) {
-                JComponent comp=(JComponent) panel.getComponent(n);
-                if (comp.getBorder()!=null && aClass.isAssignableFrom(comp.getBorder().getClass()))
+                JComponent comp = (JComponent) panel.getComponent(n);
+                if (comp.getBorder() != null && aClass.isAssignableFrom(comp.getBorder().getClass())) {
                     return comp;
+                }
 
-                Container con=findComponentWithBorder(comp, aClass);
-                if (con!=null)
+                Container con = findComponentWithBorder(comp, aClass);
+                if (con != null) {
                     return con;
+                }
             }
         }
         return null;
@@ -220,49 +254,45 @@ public abstract class JMeterPluginsUtils {
     }
 
     public static int getSecondsForShortString(String string) {
-        int res=0;
-        string=string.trim();
+        int res = 0;
+        string = string.trim();
 
         String c;
-        String curNum="";
-        for (int n=0; n<string.length(); n++)
-        {
-            c=String.valueOf(string.charAt(n));
-            if (c.matches("\\d"))
-            {
-                curNum+=c;
-            }
-            else
-            {
+        String curNum = "";
+        for (int n = 0; n < string.length(); n++) {
+            c = String.valueOf(string.charAt(n));
+            if (c.matches("\\d")) {
+                curNum += c;
+            } else {
                 int mul;
-                switch(c.charAt(0))
-                {
+                switch (c.charAt(0)) {
                     case 's':
                     case 'S':
-                        mul=1;
+                        mul = 1;
                         break;
                     case 'm':
                     case 'M':
-                        mul=60;
+                        mul = 60;
                         break;
                     case 'h':
                     case 'H':
-                        mul=60*60;
+                        mul = 60 * 60;
                         break;
                     case 'd':
                     case 'D':
-                        mul=60*60*24;
+                        mul = 60 * 60 * 24;
                         break;
                     default:
-                        throw new NumberFormatException("Shorthand string does not allow using '"+c+"'");
+                        throw new NumberFormatException("Shorthand string does not allow using '" + c + "'");
                 }
-                res+=Integer.parseInt(curNum)*mul;
-                curNum="";
+                res += Integer.parseInt(curNum) * mul;
+                curNum = "";
             }
         }
 
-        if (!curNum.isEmpty())
-            res+=Integer.parseInt(curNum);
+        if (!curNum.isEmpty()) {
+            res += Integer.parseInt(curNum);
+        }
 
         return res;
     }
@@ -276,7 +306,9 @@ public abstract class JMeterPluginsUtils {
         }
 
         public void mouseClicked(MouseEvent e) {
-            if((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) openInBrowser(uri);
+            if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
+                openInBrowser(uri);
+            }
         }
 
         public void mousePressed(MouseEvent e) {

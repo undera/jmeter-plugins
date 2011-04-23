@@ -77,8 +77,19 @@ public class HTTPRawSampler extends AbstractIPSampler {
             int s = parsed[0].indexOf(SPACE);
             int e = parsed[0].indexOf(SPACE, s + 1);
             if (s < e) {
-                res.setResponseCode(parsed[0].substring(s, e).trim());
-                res.setResponseMessage(parsed[0].substring(e).trim());
+                String rc = parsed[0].substring(s, e).trim();
+                try {
+                    int rcInt = Integer.parseInt(rc);
+                    if (rcInt < 100 || rcInt > 599) {
+                        return;
+                    }
+                    res.setResponseCode(rc);
+                    res.setResponseMessage(parsed[0].substring(e).trim());
+                } catch (NumberFormatException ex) {
+                    return;
+                }
+            } else {
+                return;
             }
         }
 

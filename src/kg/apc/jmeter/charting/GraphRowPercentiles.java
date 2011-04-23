@@ -6,21 +6,17 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- * The algorithm used for percentiles calculation is the one from
- * org.apache.commons.math.stat.descriptive.rank.Percentile
- * @author Stephane Hoblingre
- */
 public class GraphRowPercentiles extends GraphRowSumValues {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> percentiles = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
     private long totalCount = 0L;
+    private static final int FRACTION = 10;
 
     public GraphRowPercentiles() {
         super();
         //create percentiles objects, and reuse them to avoid GC
-        for (long p = 0; p <= 1000; p++) {
+        for (long p = 1; p <= 100 * FRACTION; p++) {
             percentiles.put(p, new GraphPanelChartExactElement(p, 0));
         }
     }
@@ -31,25 +27,37 @@ public class GraphRowPercentiles extends GraphRowSumValues {
         totalCount++;
     }
 
+    @Override
+    public long getMinX() {
+        return 0;
+    }
+
+    @Override
+    public long getMaxX() {
+        return 100 * FRACTION;
+    }
+
     private void calculatePercentiles() {
-        long calculatedPerc = 0;
-        int rollingCount = 0;
-        Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = super.iterator();
+        double calculatedPerc = 0;
+        Iterator<Entry<Long, AbstractGraphPanelChartElement>> valIT = super.iterator();
         Entry<Long, AbstractGraphPanelChartElement> el = null;
         Iterator<Entry<Long, AbstractGraphPanelChartElement>> percIT = percentiles.entrySet().iterator();
+        Long timeLevel = 0L;
+
         while (percIT.hasNext()) {
             Entry<Long, AbstractGraphPanelChartElement> percEl = percIT.next();
-            double percLevel = percEl.getKey() / 10D;
-            while (calculatedPerc < percLevel && it.hasNext()) {
-                el = it.next();
-                rollingCount += el.getValue().getValue();
-                calculatedPerc = 100 * rollingCount / totalCount;
+            double percLevel = percEl.getKey() / (double) FRACTION;
+
+            while (calculatedPerc < percLevel && valIT.hasNext()) {
+                el = valIT.next();
+                calculatedPerc = 100 * el.getValue().getValue() / (double) totalCount;
             }
 
             if (el != null) {
-                log.debug(percLevel + " P: " + calculatedPerc + " T: " + el.getKey());
-                percEl.getValue().add(el.getKey());
+                timeLevel = el.getKey();
             }
+
+            percEl.getValue().add(timeLevel);
         }
     }
 
@@ -72,4 +80,5 @@ public class GraphRowPercentiles extends GraphRowSumValues {
     public AbstractGraphPanelChartElement getElement(long value) {
         return percentiles.get(value);
     }
+
 }

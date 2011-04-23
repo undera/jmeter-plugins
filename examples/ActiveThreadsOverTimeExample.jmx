@@ -103,24 +103,18 @@ without actual network activity. This helps debugging tests.</stringProp>
       </hashTree>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="jp@gc - Ultimate Thread Group" enabled="true">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="1898677726">
+          <collectionProp name="-292202350">
             <stringProp name="100">100</stringProp>
-            <stringProp name="48780">150</stringProp>
-          </collectionProp>
-          <collectionProp name="56766894">
             <stringProp name="0">0</stringProp>
-            <stringProp name="1598">20</stringProp>
-          </collectionProp>
-          <collectionProp name="58655011">
             <stringProp name="53">5</stringProp>
             <stringProp name="1598">20</stringProp>
+            <stringProp name="1635">36</stringProp>
           </collectionProp>
-          <collectionProp name="1735712709">
+          <collectionProp name="743775476">
+            <stringProp name="48780">150</stringProp>
+            <stringProp name="1598">20</stringProp>
             <stringProp name="1598">20</stringProp>
             <stringProp name="54">6</stringProp>
-          </collectionProp>
-          <collectionProp name="1736596117">
-            <stringProp name="1635">36</stringProp>
             <stringProp name="10">10</stringProp>
           </collectionProp>
         </collectionProp>

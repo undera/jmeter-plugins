@@ -62,19 +62,11 @@ When error rate is 50% (equal to success rate), we stop the test.</stringProp>
       <hashTree/>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="jp@gc - Ultimate Thread Group Success" enabled="true">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="86035">
+          <collectionProp name="417799235">
             <stringProp name="53">5</stringProp>
-          </collectionProp>
-          <collectionProp name="25128">
             <stringProp name="0">0</stringProp>
-          </collectionProp>
-          <collectionProp name="85068">
             <stringProp name="48">0</stringProp>
-          </collectionProp>
-          <collectionProp name="56050944">
             <stringProp name="1722">60</stringProp>
-          </collectionProp>
-          <collectionProp name="85068">
             <stringProp name="48">0</stringProp>
           </collectionProp>
         </collectionProp>
@@ -99,19 +91,11 @@ without actual network activity. This helps debugging tests.</stringProp>
       </hashTree>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="jp@gc - Ultimate Thread Group Failure" enabled="true">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="55984448">
+          <collectionProp name="1113600696">
             <stringProp name="1567">10</stringProp>
-          </collectionProp>
-          <collectionProp name="55984448">
             <stringProp name="1567">10</stringProp>
-          </collectionProp>
-          <collectionProp name="56015553">
             <stringProp name="1629">30</stringProp>
-          </collectionProp>
-          <collectionProp name="55987957">
             <stringProp name="1598">20</stringProp>
-          </collectionProp>
-          <collectionProp name="85068">
             <stringProp name="48">0</stringProp>
           </collectionProp>
         </collectionProp>

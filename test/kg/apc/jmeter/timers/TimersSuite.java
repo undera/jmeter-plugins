@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.timers.VariableThroughputTimerTest.class,kg.apc.jmeter.timers.VariableThroughputTimerGuiTest.class})
+@Suite.SuiteClasses({VariableThroughputTimerGuiTest.class, VariableThroughputTimerTest.class})
 public class TimersSuite {
 
     @BeforeClass

@@ -1,3 +1,4 @@
+// TODO: add other sampleResult fields
 package kg.apc.jmeter.samplers;
 
 import java.awt.BorderLayout;
@@ -130,6 +131,7 @@ public class DummySamplerGui
       addToPanel(mainPanel, editConstraints, 1, 3, responseTime = new JTextField());
       addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Response Data: ", JLabel.RIGHT));
 
+      // TODO: resolve scrolling issue here and in all other samplers
       editConstraints.fill = GridBagConstraints.BOTH;
       addToPanel(mainPanel, editConstraints, 1, 4, responseData = new JTextArea());
       responseData.setRows(10);

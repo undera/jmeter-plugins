@@ -930,7 +930,7 @@ public class GraphPanelChart
 
         Stroke oldStroke = null;
 
-        if (row.isDrawThickLines()) {
+        if (row.isDrawThickLines() || row.getMarkerSize() == AbstractGraphRow.MARKER_SIZE_NONE) {
             oldStroke = ((Graphics2D) g).getStroke();
         }
 
@@ -991,8 +991,7 @@ public class GraphPanelChart
 
             if (row.isDrawThickLines()) {
                 ((Graphics2D) g).setStroke(thickStroke);
-            }
-
+            } 
             boolean valid = isChartPointValid(x, y);
 
             // draw lines

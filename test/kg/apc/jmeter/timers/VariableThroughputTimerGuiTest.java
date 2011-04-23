@@ -1,10 +1,9 @@
 package kg.apc.jmeter.timers;
 
+import javax.swing.event.TableModelEvent;
 import org.apache.jmeter.gui.util.PowerTableModel;
-import java.util.List;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.TableModelEvent;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
@@ -20,6 +19,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class VariableThroughputTimerGuiTest {
+
     private PowerTableModel dataModel;
 
     public VariableThroughputTimerGuiTest() {
@@ -36,148 +36,154 @@ public class VariableThroughputTimerGuiTest {
 
     @Before
     public void setUp() {
-      dataModel = new PowerTableModel(VariableThroughputTimer.columnIdentifiers, VariableThroughputTimer.columnClasses);
-      dataModel.addRow(new Integer[]
-            {
-               1, 10, 3
-            });
-      dataModel.addRow(new Integer[]
-            {
-               15, 15, 3
-            });
-      dataModel.addRow(new Integer[]
-            {
-               15, 1, 3
-            });
+        dataModel = new PowerTableModel(VariableThroughputTimer.columnIdentifiers, VariableThroughputTimer.columnClasses);
+        dataModel.addRow(new Integer[]{
+                    1, 10, 3
+                });
+        dataModel.addRow(new Integer[]{
+                    15, 15, 3
+                });
+        dataModel.addRow(new Integer[]{
+                    15, 1, 3
+                });
+        dataModel.addRow(new Integer[]{
+                    1, 1, 1
+                });
     }
 
     @After
     public void tearDown() {
     }
 
-     /**
-    *
-    */
-   @Test
-   public void testInit()
-   {
-      System.out.println("init");
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      instance.init();
-   }
+    /**
+     *
+     */
+    @Test
+    public void testInit() {
+        System.out.println("init");
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        instance.init();
+    }
 
-   /**
-    *
-    */
-   @Test
-   public void testGetLabelResource()
-   {
-      System.out.println("getLabelResource");
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      String expResult = "VariableThroughputTimerGui";
-      String result = instance.getLabelResource();
-      assertEquals(expResult, result);
-   }
+    /**
+     *
+     */
+    @Test
+    public void testGetLabelResource() {
+        System.out.println("getLabelResource");
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        String expResult = "VariableThroughputTimerGui";
+        String result = instance.getLabelResource();
+        assertEquals(expResult, result);
+    }
 
-   /**
-    *
-    */
-   @Test
-   public void testGetStaticLabel()
-   {
-      System.out.println("getStaticLabel");
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      String result = instance.getStaticLabel();
-      assertTrue(result.length()>0);
-   }
+    /**
+     *
+     */
+    @Test
+    public void testGetStaticLabel() {
+        System.out.println("getStaticLabel");
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        String result = instance.getStaticLabel();
+        assertTrue(result.length() > 0);
+    }
 
-   /**
-    *
-    */
-   @Test
-   public void testCreateTestElement()
-   {
-      System.out.println("createTestElement");
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      TestElement result = instance.createTestElement();
-      assertTrue(result instanceof VariableThroughputTimer);
-   }
+    /**
+     *
+     */
+    @Test
+    public void testCreateTestElement() {
+        System.out.println("createTestElement");
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        TestElement result = instance.createTestElement();
+        assertTrue(result instanceof VariableThroughputTimer);
+    }
 
-   /**
-    *
-    */
-   @Test
-   public void testModifyTestElement()
-   {
-      System.out.println("modifyTestElement");
-      VariableThroughputTimer tg = new VariableThroughputTimer();
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      //instance.addRowButton.doClick();
-      instance.modifyTestElement(tg);
-      CollectionProperty data = (CollectionProperty) tg.getData();
-      assertEquals(instance.grid.getModel().getColumnCount(), data.size());
-      assertEquals(instance.grid.getModel().getRowCount(), ((List<?>) data.get(0).getObjectValue()).size());
-   }
+    /**
+     *
+     */
+    @Test
+    public void testModifyTestElement() {
+        System.out.println("modifyTestElement");
+        VariableThroughputTimer tg = new VariableThroughputTimer();
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        //instance.addRowButton.doClick();
+        instance.modifyTestElement(tg);
+        CollectionProperty data = (CollectionProperty) tg.getData();
+        assertEquals(instance.grid.getModel().getRowCount(), data.size());
+    }
 
-   /**
-    *
-    */
-   @Test
-   public void testConfigure()
-   {
-      System.out.println("configure");
-      VariableThroughputTimer tg = new VariableThroughputTimer();
-      CollectionProperty rows = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
-      tg.setData(rows);
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      //tg.setProperty(new ObjectProperty(AbstractThreadGroup.MAIN_CONTROLLER, tg));
-      instance.configure(tg);
-   }
+    /**
+     *
+     */
+    @Test
+    public void testConfigure() {
+        System.out.println("configure");
+        VariableThroughputTimer tg = new VariableThroughputTimer();
+        CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
+        System.err.println(rows);
+        tg.setData(rows);
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        //tg.setProperty(new ObjectProperty(AbstractThreadGroup.MAIN_CONTROLLER, tg));
+        instance.configure(tg);
+        assertEquals(4, instance.tableModel.getRowCount());
+        assertEquals(4, instance.grid.getRowCount());
+    }
 
-   /**
-    *
-    */
-   @Test
-   public void testClearGui()
-   {
-      System.out.println("clearGui");
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      instance.clearGui();
-   }
+    @Test
+    public void testConfigure_upgrade() {
+        System.out.println("configure upgrade");
+        VariableThroughputTimer tg = new VariableThroughputTimer();
+        CollectionProperty rows = JMeterPluginsUtils.tableModelColsToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
+        System.err.println(rows);
+        tg.setData(rows);
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        //tg.setProperty(new ObjectProperty(AbstractThreadGroup.MAIN_CONTROLLER, tg));
+        instance.configure(tg);
+        assertEquals(4, instance.tableModel.getRowCount());
+        assertEquals(4, instance.grid.getRowCount());
+    }
 
-   /**
-    *
-    */
-   @Test
-   public void testTableChanged()
-   {
-      System.out.println("tableChanged");
-      TableModelEvent e = null;
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      instance.tableChanged(e);
-   }
+    /**
+     *
+     */
+    @Test
+    public void testClearGui() {
+        System.out.println("clearGui");
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        instance.clearGui();
+    }
 
-   /**
-    *
-    */
-   @Test
-   public void testEditingStopped()
-   {
-      System.out.println("editingStopped");
-      ChangeEvent e = null;
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      instance.editingStopped(e);
-   }
+    /**
+     *
+     */
+    @Test
+    public void testEditingStopped() {
+        System.out.println("editingStopped");
+        ChangeEvent e = null;
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        instance.editingStopped(e);
+    }
 
-   /**
-    *
-    */
-   @Test
-   public void testEditingCanceled()
-   {
-      System.out.println("editingCanceled");
-      ChangeEvent e = null;
-      VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-      instance.editingCanceled(e);
-   }
+    /**
+     *
+     */
+    @Test
+    public void testEditingCanceled() {
+        System.out.println("editingCanceled");
+        ChangeEvent e = null;
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        instance.editingCanceled(e);
+    }
+
+    /**
+     * Test of tableChanged method, of class VariableThroughputTimerGui.
+     */
+    @Test
+    public void testTableChanged() {
+        System.out.println("tableChanged");
+        TableModelEvent e = null;
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        instance.tableChanged(e);
+    }
 }

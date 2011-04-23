@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java -jar $(dirname $0)/ServerAgent.jar $1
+java -jar $(dirname $0)/ServerAgent.jar $*

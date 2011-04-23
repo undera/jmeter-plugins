@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -30,7 +29,6 @@ import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
-import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
@@ -43,269 +41,237 @@ import org.apache.log.Logger;
  * @author apc
  */
 public class UltimateThreadGroupGui
-      extends AbstractThreadGroupGui
-      implements TableModelListener,
-                 CellEditorListener
-{
+        extends AbstractThreadGroupGui
+        implements TableModelListener,
+        CellEditorListener {
+
     public static final String WIKIPAGE = "UltimateThreadGroup";
-   private static final Logger log = LoggingManager.getLoggerForClass();
-   /**
-    *
-    */
-   protected ConcurrentHashMap<String, AbstractGraphRow> model;
-   private GraphPanelChart chart;
-   /**
-    *
-    */
-   public static final String[] columnIdentifiers = new String[]
-   {
-      "Start Threads Count", "Initial Delay, sec", "Startup Time, sec", "Hold Load For, sec", "Shutdown Time"
-   };
-   /**
-    *
-    */
-   public static final Class[] columnClasses = new Class[]
-   {
-      String.class, String.class, String.class, String.class, String.class
-   };
-   public static Integer[] defaultValues = new Integer[]
-   {
-      100, 0, 30, 60, 10
-   };
-   private LoopControlPanel loopPanel;
-   private PowerTableModel tableModel;
-   JTable grid;
+    private static final Logger log = LoggingManager.getLoggerForClass();
+    /**
+     *
+     */
+    protected ConcurrentHashMap<String, AbstractGraphRow> model;
+    private GraphPanelChart chart;
+    /**
+     *
+     */
+    public static final String[] columnIdentifiers = new String[]{
+        "Start Threads Count", "Initial Delay, sec", "Startup Time, sec", "Hold Load For, sec", "Shutdown Time"
+    };
+    /**
+     *
+     */
+    public static final Class[] columnClasses = new Class[]{
+        String.class, String.class, String.class, String.class, String.class
+    };
+    public static Integer[] defaultValues = new Integer[]{
+        100, 0, 30, 60, 10
+    };
+    private LoopControlPanel loopPanel;
+    protected PowerTableModel tableModel;
+    protected JTable grid;
 
-   /**
-    *
-    */
-   public UltimateThreadGroupGui()
-   {
-      super();
-      init();
-   }
+    /**
+     *
+     */
+    public UltimateThreadGroupGui() {
+        super();
+        init();
+    }
 
-   /**
-    *
-    */
-   protected final void init()
-   {
-      JMeterPluginsUtils.addHelpLinkToPanel(this, WIKIPAGE);
-      JPanel containerPanel = new VerticalPanel();
+    /**
+     *
+     */
+    protected final void init() {
+        JMeterPluginsUtils.addHelpLinkToPanel(this, WIKIPAGE);
+        JPanel containerPanel = new VerticalPanel();
 
-      containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
-      containerPanel.add(createChart(), BorderLayout.CENTER);
-      add(containerPanel, BorderLayout.CENTER);
+        containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
+        containerPanel.add(createChart(), BorderLayout.CENTER);
+        add(containerPanel, BorderLayout.CENTER);
 
-      // this magic LoopPanel provides functionality for thread loops
-      createControllerPanel();
-   }
+        // this magic LoopPanel provides functionality for thread loops
+        createControllerPanel();
+    }
 
-   private JPanel createParamsPanel()
-   {
-      JPanel panel = new JPanel(new BorderLayout(5, 5));
-      panel.setBorder(BorderFactory.createTitledBorder("Threads Schedule"));
-      panel.setPreferredSize(new Dimension(200, 200));
+    private JPanel createParamsPanel() {
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBorder(BorderFactory.createTitledBorder("Threads Schedule"));
+        panel.setPreferredSize(new Dimension(200, 200));
 
-      JScrollPane scroll = new JScrollPane(createGrid());
-      scroll.setPreferredSize(scroll.getMinimumSize());
-      panel.add(scroll, BorderLayout.CENTER);
-      panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
+        JScrollPane scroll = new JScrollPane(createGrid());
+        scroll.setPreferredSize(scroll.getMinimumSize());
+        panel.add(scroll, BorderLayout.CENTER);
+        panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
 
-      return panel;
-   }
+        return panel;
+    }
 
-   private JTable createGrid()
-   {
-      grid = new JTable();
-      grid.getDefaultEditor(String.class).addCellEditorListener(this);
-      createTableModel();
-      // grid.setRowSelectionAllowed(true);
-      // grid.setColumnSelectionAllowed(true);
-      grid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-      // grid.setCellSelectionEnabled(true);
-      //grid.setFillsViewportHeight(true);
-      grid.setMinimumSize(new Dimension(200, 100));
+    private JTable createGrid() {
+        grid = new JTable();
+        grid.getDefaultEditor(String.class).addCellEditorListener(this);
+        createTableModel();
+        grid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        grid.setMinimumSize(new Dimension(200, 100));
 
-      return grid;
-   }
+        return grid;
+    }
 
-   public String getLabelResource()
-   {
-      return this.getClass().getSimpleName();
-   }
+    public String getLabelResource() {
+        return this.getClass().getSimpleName();
+    }
 
-   @Override
-   public String getStaticLabel()
-   {
-      return JMeterPluginsUtils.prefixLabel("Ultimate Thread Group");
-   }
+    @Override
+    public String getStaticLabel() {
+        return JMeterPluginsUtils.prefixLabel("Ultimate Thread Group");
+    }
 
-   public TestElement createTestElement()
-   {
-      //log.info("Create test element");
-      UltimateThreadGroup tg = new UltimateThreadGroup();
-      modifyTestElement(tg);
-      tg.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
+    public TestElement createTestElement() {
+        //log.info("Create test element");
+        UltimateThreadGroup tg = new UltimateThreadGroup();
+        modifyTestElement(tg);
+        tg.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
 
-      return tg;
-   }
+        return tg;
+    }
 
-   public void modifyTestElement(TestElement tg)
-   {
-      //log.info("Modify test element");
-      if (grid.isEditing())
-      {
-         grid.getCellEditor().stopCellEditing();
-      }
+    public void modifyTestElement(TestElement tg) {
+        //log.info("Modify test element");
+        if (grid.isEditing()) {
+            grid.getCellEditor().stopCellEditing();
+        }
 
-      if (tg instanceof UltimateThreadGroup)
-      {
-         UltimateThreadGroup utg = (UltimateThreadGroup) tg;
-         UltimateThreadGroup utgForPreview = new UltimateThreadGroup();
-         CollectionProperty rows = JMeterPluginsUtils.tableModelToCollectionProperty(tableModel, UltimateThreadGroup.DATA_PROPERTY);
-         utg.setData(rows);
-         utgForPreview.setData(JMeterPluginsUtils.tableModelToCollectionPropertyEval(tableModel, UltimateThreadGroup.DATA_PROPERTY));
+        if (tg instanceof UltimateThreadGroup) {
+            UltimateThreadGroup utg = (UltimateThreadGroup) tg;
+            CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(tableModel, UltimateThreadGroup.DATA_PROPERTY);
+            utg.setData(rows);
+            utg.setSamplerController((LoopController) loopPanel.createTestElement());
+        }
+        super.configureTestElement(tg);
+    }
 
-         updateChart(utgForPreview);
-         utg.setSamplerController((LoopController) loopPanel.createTestElement());
-      }
-      super.configureTestElement(tg);
-   }
+    @Override
+    public void configure(TestElement tg) {
+        //log.info("Configure");
+        super.configure(tg);
+        UltimateThreadGroup utg = (UltimateThreadGroup) tg;
+        JMeterProperty threadValues = utg.getData();
+        if (!(threadValues instanceof NullProperty)) {
+            CollectionProperty columns = (CollectionProperty) threadValues;
 
-   @Override
-   public void configure(TestElement tg)
-   {
-      //log.info("Configure");
-      super.configure(tg);
-      UltimateThreadGroup utg = (UltimateThreadGroup) tg;
-      JMeterProperty threadValues = utg.getData();
-      if (!(threadValues instanceof NullProperty))
-      {
-         CollectionProperty columns = (CollectionProperty) threadValues;
-         //log.info("Received colimns collection with no columns " + columns.size());
-         PropertyIterator iter = columns.iterator();
-         int count = 0;
-         while (iter.hasNext())
-         {
-            List<?> list = (List<?>) iter.next().getObjectValue();
-            //log.info("Rows: " + list.size());
-            tableModel.setColumnData(count, list);
-            count++;
-         }
-         //log.info("Table rows after: " + tableModel.getRowCount());
-         //updateChart(utg); //Not needed
-      }
-      else
-      {
-         log.warn("Received null property instead of collection");
-      }
+            tableModel.removeTableModelListener(this);
+            try {
+                JMeterPluginsUtils.collectionPropertyToTableModelRows(columns, tableModel);
+            } catch (IllegalArgumentException ex) {
+                log.error("Error loading schedule, need to upgrade property", ex);
+                JMeterPluginsUtils.collectionPropertyToTableModelCols(columns, tableModel);
+            }
+            tableModel.addTableModelListener(this);
 
-      TestElement te = (TestElement) tg.getProperty(AbstractThreadGroup.MAIN_CONTROLLER).getObjectValue();
-      if (te != null)
-      {
-         loopPanel.configure(te);
-      }
-   }
+            UltimateThreadGroup utgForPreview = new UltimateThreadGroup();
+            utgForPreview.setData(JMeterPluginsUtils.tableModelRowsToCollectionPropertyEval(tableModel, UltimateThreadGroup.DATA_PROPERTY));
+            updateChart(utgForPreview);
+        } else {
+            log.warn("Received null property instead of collection");
+        }
 
-   private void updateChart(UltimateThreadGroup tg)
-   {
-      model.clear();
-      GraphRowSumValues row = new GraphRowSumValues();
-      row.setColor(Color.RED);
-      row.setDrawLine(true);
-      row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
-      row.setDrawThickLines(true);
+        TestElement te = (TestElement) tg.getProperty(AbstractThreadGroup.MAIN_CONTROLLER).getObjectValue();
+        if (te != null) {
+            loopPanel.configure(te);
+        }
+    }
 
-      final HashTree hashTree = new HashTree();
-      hashTree.add(new LoopController());
-      JMeterThread thread = new JMeterThread(hashTree, null, null);
+    private void updateChart(UltimateThreadGroup tg) {
+        tg.testStarted();
+        model.clear();
+        GraphRowSumValues row = new GraphRowSumValues();
+        row.setColor(Color.RED);
+        row.setDrawLine(true);
+        row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
+        row.setDrawThickLines(true);
 
-      long now = System.currentTimeMillis();
+        final HashTree hashTree = new HashTree();
+        hashTree.add(new LoopController());
+        JMeterThread thread = new JMeterThread(hashTree, null, null);
 
-      chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now-1)); //-1 because row.add(thread.getStartTime() - 1, 0)
-      chart.setForcedMinX(now);
+        long now = System.currentTimeMillis();
 
-      row.add(now, 0);
+        chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now - 1)); //-1 because row.add(thread.getStartTime() - 1, 0)
+        chart.setForcedMinX(now);
 
-      // users in
-      int numThreads = tg.getNumThreads();
-      for (int n = 0; n < numThreads; n++)
-      {
-         thread.setThreadNum(n);
-         tg.scheduleThread(thread);
-         row.add(thread.getStartTime() - 1, 0);
-         row.add(thread.getStartTime(), 1);
-      }
+        row.add(now, 0);
 
-      // users out
-      for (int n = 0; n < tg.getNumThreads(); n++)
-      {
-         thread.setThreadNum(n);
-         tg.scheduleThread(thread);
-         row.add(thread.getEndTime() - 1, 0);
-         row.add(thread.getEndTime(), -1);
-      }
+        // users in
+        int numThreads = tg.getNumThreads();
+        log.debug("Num Threads: " + numThreads);
+        for (int n = 0; n < numThreads; n++) {
+            thread.setThreadNum(n);
+            thread.setThreadName(Integer.toString(n));
+            tg.scheduleThread(thread);
+            row.add(thread.getStartTime() - 1, 0);
+            row.add(thread.getStartTime(), 1);
+        }
 
-      model.put("Expected parallel users count", row);
-      chart.repaint();
-   }
+        tg.testStarted();
+        // users out
+        for (int n = 0; n < tg.getNumThreads(); n++) {
+            thread.setThreadNum(n);
+            thread.setThreadName(Integer.toString(n));
+            tg.scheduleThread(thread);
+            row.add(thread.getEndTime() - 1, 0);
+            row.add(thread.getEndTime(), -1);
+        }
 
-   private JPanel createControllerPanel()
-   {
-      loopPanel = new LoopControlPanel(false);
-      LoopController looper = (LoopController) loopPanel.createTestElement();
-      looper.setLoops(-1);
-      looper.setContinueForever(true);
-      loopPanel.configure(looper);
-      return loopPanel;
-   }
+        model.put("Expected parallel users count", row);
+        chart.repaint();
+    }
 
-   private Component createChart()
-   {
-      chart = new GraphPanelChart(false);
-      model = new ConcurrentHashMap<String, AbstractGraphRow>();
-      chart.setRows(model);
-      chart.setDrawFinalZeroingLines(true);
-      chart.setxAxisLabel("Elapsed time");
-      chart.setyAxisLabel("Number of active threads");
-      return chart;
-   }
+    private JPanel createControllerPanel() {
+        loopPanel = new LoopControlPanel(false);
+        LoopController looper = (LoopController) loopPanel.createTestElement();
+        looper.setLoops(-1);
+        looper.setContinueForever(true);
+        loopPanel.configure(looper);
+        return loopPanel;
+    }
 
-   public void tableChanged(TableModelEvent e)
-   {
-      //log.info("Model changed");
-      updateChart();
-   }
+    private Component createChart() {
+        chart = new GraphPanelChart(false);
+        model = new ConcurrentHashMap<String, AbstractGraphRow>();
+        chart.setRows(model);
+        chart.setDrawFinalZeroingLines(true);
+        chart.setxAxisLabel("Elapsed time");
+        chart.setyAxisLabel("Number of active threads");
+        return chart;
+    }
 
-   private void createTableModel()
-   {
-      tableModel = new PowerTableModel(columnIdentifiers, columnClasses);
-      tableModel.addTableModelListener(this);
-      grid.setModel(tableModel);
-   }
+    public void tableChanged(TableModelEvent e) {
+        //log.info("Model changed");
+        updateChart();
+    }
 
-   public void editingStopped(ChangeEvent e)
-   {
-      //log.info("Editing stopped");
-      updateChart();
-   }
+    private void createTableModel() {
+        tableModel = new PowerTableModel(columnIdentifiers, columnClasses);
+        tableModel.addTableModelListener(this);
+        grid.setModel(tableModel);
+    }
 
-   public void editingCanceled(ChangeEvent e)
-   {
-      // no action needed
-   }
+    public void editingStopped(ChangeEvent e) {
+        //log.info("Editing stopped");
+        updateChart();
+    }
 
-   private void updateChart()
-   {
-      GuiPackage.getInstance().updateCurrentGui();
-   }
+    public void editingCanceled(ChangeEvent e) {
+        // no action needed
+    }
 
-     @Override
-   public void clearGui()
-   {
-      super.clearGui();
-      tableModel.clearData();
-   }
+    private void updateChart() {
+        GuiPackage.getInstance().updateCurrentGui();
+    }
 
-  }
+    @Override
+    public void clearGui() {
+        super.clearGui();
+        tableModel.clearData();
+    }
+}

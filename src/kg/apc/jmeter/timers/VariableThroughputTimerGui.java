@@ -1,11 +1,10 @@
 package kg.apc.jmeter.timers;
 
-// FIXME: two instances of GUI works bad - copy each other
+// TODO: make abstract classes for GUI or at least interfaces
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -30,7 +29,6 @@ import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
-import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.timers.gui.AbstractTimerGui;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -41,218 +39,188 @@ import org.apache.log.Logger;
  * @see UltimateThreadGroupGui
  */
 public class VariableThroughputTimerGui
-      extends AbstractTimerGui
-      implements TableModelListener,
-                 CellEditorListener
-{
+        extends AbstractTimerGui
+        implements TableModelListener,
+        CellEditorListener {
+
     public static final String WIKIPAGE = "ThroughputShapingTimer";
-   private static final Logger log = LoggingManager.getLoggerForClass();
-   /**
-    *
-    */
-   protected ConcurrentHashMap<String, AbstractGraphRow> model;
-   private GraphPanelChart chart;
-   /**
-    *
-    */
+    private static final Logger log = LoggingManager.getLoggerForClass();
+    /**
+     *
+     */
+    protected ConcurrentHashMap<String, AbstractGraphRow> model;
+    protected GraphPanelChart chart;
+    /**
+     *
+     */
     private static Integer[] defaultValues = new Integer[]{
         1, 1000, 60
     };
-   private PowerTableModel tableModel;
-   JTable grid;
+    protected PowerTableModel tableModel;
+    protected JTable grid;
 
-   /**
-    *
-    */
-   public VariableThroughputTimerGui()
-   {
-      super();
-      init();
-   }
+    /**
+     *
+     */
+    public VariableThroughputTimerGui() {
+        super();
+        init();
+    }
 
-   /**
-    *
-    */
-   protected final void init()
-   {
-       setBorder(makeBorder());
-       setLayout(new BorderLayout());
-        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(),WIKIPAGE), BorderLayout.NORTH);
+    /**
+     *
+     */
+    protected final void init() {
+        setBorder(makeBorder());
+        setLayout(new BorderLayout());
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
         JPanel containerPanel = new VerticalPanel();
 
-      containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
-      containerPanel.add(createChart(), BorderLayout.CENTER);
-      add(containerPanel, BorderLayout.CENTER);
-   }
+        containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
+        containerPanel.add(createChart(), BorderLayout.CENTER);
+        add(containerPanel, BorderLayout.CENTER);
+    }
 
-   private JPanel createParamsPanel()
-   {
-      JPanel panel = new JPanel(new BorderLayout(5, 5));
-      panel.setBorder(BorderFactory.createTitledBorder("Requests Per Second (RPS) Schedule"));
-      panel.setPreferredSize(new Dimension(200, 200));
+    private JPanel createParamsPanel() {
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBorder(BorderFactory.createTitledBorder("Requests Per Second (RPS) Schedule"));
+        panel.setPreferredSize(new Dimension(200, 200));
 
-      JScrollPane scroll = new JScrollPane(createGrid());
-      scroll.setPreferredSize(scroll.getMinimumSize());
-      panel.add(scroll, BorderLayout.CENTER);
-      panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
+        JScrollPane scroll = new JScrollPane(createGrid());
+        scroll.setPreferredSize(scroll.getMinimumSize());
+        panel.add(scroll, BorderLayout.CENTER);
+        panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
 
-      return panel;
-   }
+        return panel;
+    }
 
-   private JTable createGrid()
-   {
-      grid = new JTable();
-      grid.getDefaultEditor(String.class).addCellEditorListener(this);
-      createTableModel();
-      // grid.setRowSelectionAllowed(true);
-      // grid.setColumnSelectionAllowed(true);
-      grid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-      // grid.setCellSelectionEnabled(true);
-      //grid.setFillsViewportHeight(true);
-      grid.setMinimumSize(new Dimension(200, 100));
+    private JTable createGrid() {
+        grid = new JTable();
+        grid.getDefaultEditor(String.class).addCellEditorListener(this);
+        createTableModel();
+        grid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        grid.setMinimumSize(new Dimension(200, 100));
+        return grid;
+    }
 
-      return grid;
-   }
+    public String getLabelResource() {
+        return this.getClass().getSimpleName();
+    }
 
-   public String getLabelResource()
-   {
-      return this.getClass().getSimpleName();
-   }
+    @Override
+    public String getStaticLabel() {
+        return JMeterPluginsUtils.prefixLabel("Throughput Shaping Timer");
+    }
 
-   @Override
-   public String getStaticLabel()
-   {
-      return JMeterPluginsUtils.prefixLabel("Throughput Shaping Timer");
-   }
+    public TestElement createTestElement() {
+        //log.info("Create test element");
+        VariableThroughputTimer tg = new VariableThroughputTimer();
+        modifyTestElement(tg);
+        tg.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
+        return tg;
+    }
 
-   public TestElement createTestElement()
-   {
-      //log.info("Create test element");
-      VariableThroughputTimer tg = new VariableThroughputTimer();
-      modifyTestElement(tg);
-      tg.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
-      return tg;
-   }
+    public void modifyTestElement(TestElement tg) {
+        //log.info("Modify test element");
+        super.configureTestElement(tg);
 
-   public void modifyTestElement(TestElement tg)
-   {
-      //log.info("Modify test element");
-      if (grid.isEditing())
-      {
-         grid.getCellEditor().stopCellEditing();
-      }
+        if (grid.isEditing()) {
+            grid.getCellEditor().stopCellEditing();
+        }
 
-      if (tg instanceof VariableThroughputTimer)
-      {
-         VariableThroughputTimer utg = (VariableThroughputTimer) tg;
-         VariableThroughputTimer utgForPreview = new VariableThroughputTimer();
-         CollectionProperty rows = JMeterPluginsUtils.tableModelToCollectionProperty(tableModel, VariableThroughputTimer.DATA_PROPERTY);
-         utg.setData(rows);
-         utgForPreview.setData(JMeterPluginsUtils.tableModelToCollectionPropertyEval(tableModel, VariableThroughputTimer.DATA_PROPERTY));
+        if (tg instanceof VariableThroughputTimer) {
+            VariableThroughputTimer utg = (VariableThroughputTimer) tg;
+            CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(tableModel, VariableThroughputTimer.DATA_PROPERTY);
+            utg.setData(rows);
+        }
+    }
 
-         updateChart(utgForPreview);
-      }
-      
-      super.configureTestElement(tg);
-   }
+    @Override
+    public void configure(TestElement tg) {
+        //log.info("Configure");
+        super.configure(tg);
+        VariableThroughputTimer utg = (VariableThroughputTimer) tg;
+        JMeterProperty threadValues = utg.getData();
+        if (threadValues instanceof NullProperty) {
+            log.warn("Received null property instead of collection");
+            return;
+        }
 
-   @Override
-   public void configure(TestElement tg)
-   {
-      //log.info("Configure");
-      super.configure(tg);
-      VariableThroughputTimer utg = (VariableThroughputTimer) tg;
-      JMeterProperty threadValues = utg.getData();
-      if (!(threadValues instanceof NullProperty))
-      {
-         CollectionProperty columns = (CollectionProperty) threadValues;
-         PropertyIterator iter = columns.iterator();
-         int count = 0;
-         while (iter.hasNext())
-         {
-            List<?> list = (List<?>) iter.next().getObjectValue();
-            tableModel.setColumnData(count, list);
-            count++;
-         }
-      }
-      else
-      {
-         log.warn("Received null property instead of collection");
-      }
-   }
+        CollectionProperty columns = (CollectionProperty) threadValues;
 
-   private void updateChart(VariableThroughputTimer tg)
-   {
-      model.clear();
-      AbstractGraphRow row = new GraphRowExactValues();
-      row.setColor(Color.RED);
-      row.setDrawLine(true);
-      row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
-      row.setDrawThickLines(true);
+        tableModel.removeTableModelListener(this);
+        try {
+            JMeterPluginsUtils.collectionPropertyToTableModelRows(columns, tableModel);
+        } catch (IllegalArgumentException ex) {
+            log.error("Error loading data from property, will try to upgrade property", ex);
+            JMeterPluginsUtils.collectionPropertyToTableModelCols(columns, tableModel);
+        }
+        tableModel.addTableModelListener(this);
+        
+        VariableThroughputTimer utgForPreview = new VariableThroughputTimer();
+        utgForPreview.setData(JMeterPluginsUtils.tableModelRowsToCollectionPropertyEval(tableModel, VariableThroughputTimer.DATA_PROPERTY));
+        updateChart(utgForPreview);
+    }
 
-      long now = System.currentTimeMillis();
+    private void updateChart(VariableThroughputTimer tg) {
+        model.clear();
+        AbstractGraphRow row = new GraphRowExactValues();
+        row.setColor(Color.RED);
+        row.setDrawLine(true);
+        row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
+        row.setDrawThickLines(true);
 
-      chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now-1)); //-1 because row.add(thread.getStartTime() - 1, 0)
-      chart.setForcedMinX(now);
-      row.add(now, 0);
+        long now = System.currentTimeMillis();
 
-      int n=0; int rps=0;
-      while((rps=tg.getRPSForSecond(n))>=0)
-      {
-         row.add(now+n*1000, rps);
-         n++;
-      }
+        chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now - 1)); //-1 because row.add(thread.getStartTime() - 1, 0)
+        chart.setForcedMinX(now);
+        row.add(now, 0);
 
-      row.setColor(Color.blue);
-      model.put("Expected RPS", row);
-      chart.repaint();
-   }
+        int n = 0;
+        int rps = 0;
+        while ((rps = tg.getRPSForSecond(n)) >= 0) {
+            row.add(now + n * 1000, rps);
+            log.debug("Rps " + rps);
+            n++;
+        }
 
-   private Component createChart()
-   {
-      chart = new GraphPanelChart(false);
-      model = new ConcurrentHashMap<String, AbstractGraphRow>();
-      chart.setRows(model);
-      chart.setDrawFinalZeroingLines(true);
-      chart.setxAxisLabel("Elapsed Time");
-      chart.setyAxisLabel("Number of requests /sec");
-      return chart;
-   }
+        row.setColor(Color.blue);
+        model.put("Expected RPS", row);
+        chart.repaint();
+    }
 
-   public void tableChanged(TableModelEvent e)
-   {
-      //log.info("Model changed");
-      updateChart();
-   }
+    private Component createChart() {
+        chart = new GraphPanelChart(false);
+        model = new ConcurrentHashMap<String, AbstractGraphRow>();
+        chart.setRows(model);
+        chart.setDrawFinalZeroingLines(true);
+        chart.setxAxisLabel("Elapsed Time");
+        chart.setyAxisLabel("Number of requests /sec");
+        return chart;
+    }
 
-   private void createTableModel()
-   {
-      tableModel = new PowerTableModel(VariableThroughputTimer. columnIdentifiers, VariableThroughputTimer.columnClasses);
-      tableModel.addTableModelListener(this);
-      grid.setModel(tableModel);
-   }
+    private void createTableModel() {
+        tableModel = new PowerTableModel(VariableThroughputTimer.columnIdentifiers, VariableThroughputTimer.columnClasses);
+        tableModel.addTableModelListener(this);
+        grid.setModel(tableModel);
+    }
 
-   public void editingStopped(ChangeEvent e)
-   {
-      //log.info("Editing stopped");
-      updateChart();
-   }
+    public void editingStopped(ChangeEvent e) {
+        chart.repaint();
+    }
 
-   public void editingCanceled(ChangeEvent e)
-   {
-      // no action needed
-   }
+    public void editingCanceled(ChangeEvent e) {
+        chart.repaint();
+    }
 
-   private void updateChart()
-   {
-      GuiPackage.getInstance().updateCurrentGui();
-   }
+    @Override
+    public void clearGui() {
+        super.clearGui();
+        tableModel.clearData();
+        tableModel.fireTableDataChanged();
+    }
 
-   @Override
-   public void clearGui()
-   {
-      super.clearGui();
-      tableModel.clearData();
-      tableModel.fireTableDataChanged();
-   }
+    public void tableChanged(TableModelEvent e) {
+        GuiPackage.getInstance().updateCurrentGui();
+    }
 }

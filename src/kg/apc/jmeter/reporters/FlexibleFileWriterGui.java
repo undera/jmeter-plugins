@@ -1,4 +1,3 @@
-// TODO: find better default format
 package kg.apc.jmeter.reporters;
 
 import java.awt.BorderLayout;
@@ -65,10 +64,10 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
 
     private void initFields() {
         filename.setText("testResults.txt");
-        columns.setText("endTimeMillis|\\t\\t|"
-                + "responseTimeMicros|\\t|latencyMicros|\\t|"
+        columns.setText("endTimeMillis|\\t|"
+                + "responseTime|\\t|latency|\\t|"
                 + "sentBytes|\\t|receivedBytes|\\t|"
-                + "isFailed|\\t|responseCode|\\r\\n");
+                + "isSuccessful|\\t|responseCode|\\r\\n");
     }
 
     @Override

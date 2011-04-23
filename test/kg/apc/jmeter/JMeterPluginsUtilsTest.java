@@ -4,6 +4,7 @@ import javax.swing.BorderFactory;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import java.awt.Component;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.apache.jmeter.gui.util.PowerTableModel;
@@ -59,30 +60,7 @@ public class JMeterPluginsUtilsTest {
         System.out.println("getStackTrace");
         Exception ex = new Exception();
         String result = JMeterPluginsUtils.getStackTrace(ex);
-        assertTrue(result.length()>0);
-    }
-
-   /**
-    *
-    */
-   @Test
-   public void testTableModelToCollectionProperty()
-   {
-      System.out.println("tableModelToCollectionProperty");
-        PowerTableModel model = new PowerTableModel();
-      CollectionProperty prop = JMeterPluginsUtils.tableModelToCollectionProperty(model, "");
-      assertTrue(prop instanceof CollectionProperty);
-   }
-
-    /**
-     * Test of tableModelToCollectionPropertyEval method, of class UltimateThreadGroup.
-     */
-    @Test
-    public void testTableModelToCollectionPropertyEval() {
-        System.out.println("tableModelToCollectionPropertyEval");
-        PowerTableModel model = new PowerTableModel();
-        CollectionProperty result = JMeterPluginsUtils.tableModelToCollectionPropertyEval(model, "");
-        assertTrue(result instanceof CollectionProperty);
+        assertTrue(result.length() > 0);
     }
 
     /**
@@ -160,8 +138,8 @@ public class JMeterPluginsUtilsTest {
         System.out.println("getSecondsForShort");
         assertEquals(105, JMeterPluginsUtils.getSecondsForShortString("105"));
         assertEquals(105, JMeterPluginsUtils.getSecondsForShortString("105s"));
-        assertEquals(60*15, JMeterPluginsUtils.getSecondsForShortString("15m"));
-        assertEquals(60*60*4, JMeterPluginsUtils.getSecondsForShortString("4h"));
+        assertEquals(60 * 15, JMeterPluginsUtils.getSecondsForShortString("15m"));
+        assertEquals(60 * 60 * 4, JMeterPluginsUtils.getSecondsForShortString("4h"));
         assertEquals(104025, JMeterPluginsUtils.getSecondsForShortString("27h103m645s"));
     }
 
@@ -174,5 +152,82 @@ public class JMeterPluginsUtilsTest {
         ByteBuffer buf = ByteBuffer.wrap("test".getBytes());
         byte[] result = JMeterPluginsUtils.byteBufferToByteArray(buf);
         assertEquals(4, result.length);
+    }
+
+    private PowerTableModel getTestModel() {
+        String[] headers = {"col1", "col2"};
+        Class[] classes = {String.class, String.class};
+        PowerTableModel model = new PowerTableModel(headers, classes);
+        String[] row1 = {"1", "2"};
+        String[] row2 = {"3", "4"};
+        model.addRow(row1);
+        model.addRow(row2);
+        return model;
+    }
+
+    /**
+     * Test of tableModelRowsToCollectionProperty method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testTableModelRowsToCollectionProperty() {
+        System.out.println("tableModelRowsToCollectionProperty");
+        PowerTableModel model = getTestModel();
+        String propname = "prop";
+        CollectionProperty result = JMeterPluginsUtils.tableModelRowsToCollectionProperty(model, propname);
+        assertEquals(2, result.size());
+        assertEquals("[[1, 2], [3, 4]]", result.toString());
+    }
+
+    /**
+     * Test of collectionPropertyToTableModelRows method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testCollectionPropertyToTableModelRows() {
+        System.out.println("collectionPropertyToTableModelRows");
+        String propname = "prop";
+        PowerTableModel modelSrc = getTestModel();
+        CollectionProperty propExp = JMeterPluginsUtils.tableModelRowsToCollectionProperty(modelSrc, propname);
+        PowerTableModel modelDst = getTestModel();
+        modelDst.clearData();
+        JMeterPluginsUtils.collectionPropertyToTableModelRows(propExp, modelDst);
+        CollectionProperty propRes = JMeterPluginsUtils.tableModelRowsToCollectionProperty(modelDst, propname);
+        assertEquals(propExp.toString(), propRes.toString());
+    }
+
+    /**
+     * Test of tableModelRowsToCollectionPropertyEval method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testTableModelRowsToCollectionPropertyEval() {
+        System.out.println("tableModelRowsToCollectionPropertyEval");
+        PowerTableModel model = getTestModel();
+        String propname = "prop";
+        CollectionProperty result = JMeterPluginsUtils.tableModelRowsToCollectionPropertyEval(model, propname);
+        assertEquals(2, result.size());
+        assertEquals("[[1, 2], [3, 4]]", result.toString());
+    }
+
+    /**
+     * Test of tableModelColsToCollectionProperty method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testTableModelColsToCollectionProperty() {
+        System.out.println("tableModelColsToCollectionProperty");
+        PowerTableModel model = getTestModel();
+        String propname = "";
+        CollectionProperty result = JMeterPluginsUtils.tableModelColsToCollectionProperty(model, propname);
+        assertEquals("[[1, 3], [2, 4]]", result.toString());
+    }
+
+    /**
+     * Test of collectionPropertyToTableModelCols method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testCollectionPropertyToTableModelCols() {
+        System.out.println("collectionPropertyToTableModelCols");
+        CollectionProperty prop = JMeterPluginsUtils.tableModelColsToCollectionProperty(getTestModel(), "");
+        PowerTableModel model = getTestModel();
+        JMeterPluginsUtils.collectionPropertyToTableModelCols(prop, model);
+        assertEquals(prop.size(), model.getColumnCount());
     }
 }

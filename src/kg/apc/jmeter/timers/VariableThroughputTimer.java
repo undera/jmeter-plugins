@@ -2,8 +2,7 @@
 // TODO: create a thread which will wake up at least one sampler to provide rps
 package kg.apc.jmeter.timers;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.ArrayList;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
@@ -14,6 +13,7 @@ import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
+import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.timers.ConstantThroughputTimer;
 import org.apache.jmeter.timers.Timer;
@@ -148,45 +148,31 @@ public class VariableThroughputTimer
 
     public int getRPSForSecond(long sec) {
         JMeterProperty data = getData();
-        if (data instanceof NullProperty) {
-            log.error("Got NullProperty");
-            return 0;
-        }
+        if (data instanceof NullProperty) return -1;
+        CollectionProperty rows = (CollectionProperty) data;
+        PropertyIterator scheduleIT = rows.iterator();
 
-        int result = 0;
-        CollectionProperty columns = (CollectionProperty) data;
-        List<?> col = (List<?>) columns.get(DURATION_FIELD_NO).getObjectValue();
-        if (col.isEmpty()) {
-            return -1;
-        }
+        while (scheduleIT.hasNext()) {
+            ArrayList<Object> curProp = (ArrayList<Object>) scheduleIT.next().getObjectValue();
 
-        Iterator<?> iter = col.iterator();
-        int rowNo = 0;
-        while (true) {
-            JMeterProperty prop = (JMeterProperty) iter.next();
-            int duration = prop.getIntValue();
+            int duration = getIntValue(curProp, DURATION_FIELD_NO);
+            int from = getIntValue(curProp, FROM_FIELD_NO);
+            int to = getIntValue(curProp, TO_FIELD_NO);
+            //log.debug("sec "+sec+" Dur: "+duration+" from "+from+" to "+to);
             if (sec - duration <= 0) {
-                int from = getIntCell(columns, rowNo, FROM_FIELD_NO);
-                int to = getIntCell(columns, rowNo, TO_FIELD_NO);
-                result = from + (int) (sec * ((to - from) / (double) duration));
-                //log.info(sec+" "+from+" "+to+" "+result);
-                break;
+                int rpsCalculated = from + (int) (sec * ((to - from) / (double) duration));
+                //log.debug("RPS: "+rps);
+                return rpsCalculated;
             } else {
                 sec -= duration;
             }
-            rowNo++;
-            if (!iter.hasNext()) {
-                return -1;
-            }
         }
-
-        return result;
+        return -1;
     }
 
-    private int getIntCell(CollectionProperty columns, int rowNo, int col) {
-        List<?> list = (List<?>) columns.get(col).getObjectValue();
-        JMeterProperty prop = (JMeterProperty) list.get(rowNo);
-        return prop.getIntValue();
+    private int getIntValue(ArrayList<Object> prop, int colID) throws NumberFormatException {
+        JMeterProperty val = (JMeterProperty) prop.get(colID);
+        return val.getIntValue();
     }
 
     private void trySettingLoadFromProperty() {
@@ -207,7 +193,7 @@ public class VariableThroughputTimer
             }
 
             log.info("Setting load profile from property " + DATA_PROPERTY + ": " + loadProp);
-            overrideProp = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
+            overrideProp = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
         }
     }
 

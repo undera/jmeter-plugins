@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.threads;
 
 import org.junit.After;
@@ -17,7 +12,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SteppingThreadGroupGuiTest.class, ThreadScheduleParamsTest.class, UltimateThreadGroupGuiTest.class, UltimateThreadGroupTest.class, SteppingThreadGroupTest.class})
+@Suite.SuiteClasses({SteppingThreadGroupTest.class, UltimateThreadGroupTest.class, SteppingThreadGroupGuiTest.class, UltimateThreadGroupGuiTest.class})
 public class ThreadsSuite {
 
    @BeforeClass

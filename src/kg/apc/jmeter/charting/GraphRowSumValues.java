@@ -12,8 +12,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
  */
 public class GraphRowSumValues
         extends AbstractGraphRow
-        implements Iterator<Entry<Long, AbstractGraphPanelChartElement>>
-{
+        implements Iterator<Entry<Long, AbstractGraphPanelChartElement>> {
     //private static final Logger log = LoggingManager.getLoggerForClass();
 
     private ConcurrentSkipListMap<Long, GraphPanelChartSumElement> values;
@@ -25,22 +24,19 @@ public class GraphRowSumValues
     private int countX = 0;
 
     @Override
-    public void setExcludeOutOfRangeValues(boolean excludeOutOfRangeValues)
-    {
+    public void setExcludeOutOfRangeValues(boolean excludeOutOfRangeValues) {
         this.excludeOutOfRangeValues = excludeOutOfRangeValues;
     }
 
     /**
      *
      */
-    public GraphRowSumValues()
-    {
+    public GraphRowSumValues() {
         super();
         values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
     }
 
-    public GraphRowSumValues(boolean doRollingSum)
-    {
+    public GraphRowSumValues(boolean doRollingSum) {
         super();
         values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
         isRollingSum = doRollingSum;
@@ -52,94 +48,79 @@ public class GraphRowSumValues
      * @param yVal
      */
     @Override
-    public void add(long xVal, double yVal)
-    {
+    public void add(long xVal, double yVal) {
         GraphPanelChartSumElement el;
-        if (values.containsKey(xVal))
-        {
+        if (values.containsKey(xVal)) {
             el = values.get(xVal);
             el.add(yVal);
             yVal = el.getValue();
-        } else
-        {
+        } else {
             el = new GraphPanelChartSumElement(yVal);
             values.put(xVal, el);
             countX++;
         }
-       super.add(xVal, yVal);
+        super.add(xVal, yVal);
     }
 
     /**
      *
      * @return
      */
-    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
-    {
+    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator() {
         rollingSum = 0;
         iterator = values.entrySet().iterator();
         return this;
     }
 
-    public boolean hasNext()
-    {
+    public boolean hasNext() {
         return iterator.hasNext();
     }
 
-    public Entry<Long, AbstractGraphPanelChartElement> next()
-    {
+    public Entry<Long, AbstractGraphPanelChartElement> next() {
         Entry<Long, GraphPanelChartSumElement> entry = iterator.next();
         GraphPanelChartSumElement ret = entry.getValue();
 
         //log.info("Rolling: " + entry.getKey() + " " + rollingSum);
         ExactEntry retValue = null;
-        if (isRollingSum)
-        {
+        if (isRollingSum) {
             rollingSum += ret.getValue();
             retValue = new ExactEntry(entry.getKey(), new GraphPanelChartSumElement(rollingSum));
-        } else
-        {
+        } else {
             retValue = new ExactEntry(entry.getKey(), new GraphPanelChartSumElement(ret.getValue()));
         }
         return retValue;
     }
 
-    public void remove()
-    {
+    public void remove() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     private class ExactEntry
-            implements Entry<Long, AbstractGraphPanelChartElement>
-    {
+            implements Entry<Long, AbstractGraphPanelChartElement> {
 
         private long key;
         private final AbstractGraphPanelChartElement value;
 
-        public ExactEntry(long aKey, AbstractGraphPanelChartElement aValue)
-        {
+        public ExactEntry(long aKey, AbstractGraphPanelChartElement aValue) {
             key = aKey;
             value = aValue;
         }
 
-        public Long getKey()
-        {
+        public Long getKey() {
             return key;
         }
 
-        public AbstractGraphPanelChartElement getValue()
-        {
+        public AbstractGraphPanelChartElement getValue() {
             return value;
         }
 
-        public AbstractGraphPanelChartElement setValue(AbstractGraphPanelChartElement value)
-        {
+        public AbstractGraphPanelChartElement setValue(AbstractGraphPanelChartElement value) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 
     @Override
-    public int size()
-    {
+    public int size() {
         return countX;
     }
 
@@ -150,29 +131,22 @@ public class GraphRowSumValues
      * with the last point is > getGranulationValue() * excludeCount.
      * @return the evaluated MaxX
      */
-    public long getMaxX()
-    {
-        if (!excludeOutOfRangeValues)
-        {
+    public long getMaxX() {
+        if (!excludeOutOfRangeValues) {
             return super.getMaxX();
-        } else
-        {
+        } else {
             long retMax = 0;
             Iterator<Long> iter = values.keySet().iterator();
-            
-            if(iter.hasNext())
-            {
+
+            if (iter.hasNext()) {
                 retMax = iter.next();
             }
             long excludeValue = getGranulationValue() * excludeCount;
-            while (iter.hasNext())
-            {
+            while (iter.hasNext()) {
                 long value = iter.next();
-                
-                if (value > retMax)
-                {
-                    if ((value - retMax) < excludeValue)
-                    {
+
+                if (value > retMax) {
+                    if ((value - retMax) < excludeValue) {
                         retMax = value;
                     }
                 }
@@ -180,28 +154,22 @@ public class GraphRowSumValues
             return retMax;
         }
     }
+
     @Override
-    public AbstractGraphPanelChartElement getElement(long value)
-    {
-        if(!isRollingSum)
-        {
+    public AbstractGraphPanelChartElement getElement(long value) {
+        if (!isRollingSum) {
             return values.get(value);
-        } else
-        {
-            if(!values.containsKey(value))
-            {
+        } else {
+            if (!values.containsKey(value)) {
                 return null;
-            } else
-            {
+            } else {
                 long sum = 0;
                 Iterator<Entry<Long, GraphPanelChartSumElement>> it = values.entrySet().iterator();
                 boolean valueReached = false;
-                while(it.hasNext() && !valueReached)
-                {
+                while (it.hasNext() && !valueReached) {
                     Entry<Long, GraphPanelChartSumElement> entry = it.next();
                     sum += entry.getValue().getValue();
-                    if(entry.getKey() == value)
-                    {
+                    if (entry.getKey() == value) {
                         valueReached = true;
                     }
                 }

@@ -198,4 +198,31 @@ public class HTTPRawSamplerTest {
         boolean result = instance.interrupt();
         assertEquals(expResult, result);
     }
+
+    @Test
+    public void testSample_unparsable() throws MalformedURLException, IOException {
+        System.out.println("Sample_unparsable");
+        String req="GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
+        String resp="<html>\n"+
+                "<head><title>400 Bad Request</title></head>\n"
+                + "<body bgcolor=\"white\">\n"
+                +"<center><h1>400 Bad Request</h1></center>\n"
+                +"<hr><center>nginx</center>\n"
+                +"</body></html>";
+        instance.setRequestData(req);
+        instance.setParseResult(true);
+
+        instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
+
+        SampleResult result = instance.sample(null);
+        //System.err.println(result.getResponseDataAsString().length());
+        assertEquals(ByteBuffer.wrap(req.getBytes()), instance.sockEmul.getWrittenBytes());
+        assertTrue(result.isSuccessful());
+        assertEquals("200", result.getResponseCode());
+        assertEquals("", result.getResponseMessage());
+        assertEquals("", result.getResponseHeaders());
+        assertEquals(resp, result.getResponseDataAsString());
+        assertTrue(!instance.sockEmul.isOpen());
+    }
+
 }

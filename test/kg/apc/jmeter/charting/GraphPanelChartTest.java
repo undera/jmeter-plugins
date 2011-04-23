@@ -99,7 +99,7 @@ public class GraphPanelChartTest {
      */
     @Test
     public void testPaintComponent_empty() {
-        System.out.println("paintComponent");
+        System.out.println("paintComponent_empty");
         Graphics g = new TestGraphics();
         GraphPanelChart instance = new GraphPanelChart();
         instance.setSize(500, 500);

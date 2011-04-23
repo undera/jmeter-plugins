@@ -80,32 +80,26 @@ public class VariableThroughputTimerTest {
         VariableThroughputTimer instance = new VariableThroughputTimer();
         JMeterUtils.setProperty(VariableThroughputTimer.DATA_PROPERTY, ""); // clear!
         JMeterProperty result = instance.getData();
-        System.err.println(result);
-        assertEquals("[[10, 10, 5, 10, 15, 20, 25], [10, 100, 5, 10, 15, 20, 25], [10, 60, 3600, 3600, 3600, 3600, 3600]]", result.toString());
+        assertEquals("[[10, 10, 10], [10, 100, 60], [5, 5, 3600], [10, 10, 3600], [15, 15, 3600], [20, 20, 3600], [25, 25, 3600]]", result.toString());
     }
 
     @Test
     public void testDelay1000() throws InterruptedException {
         System.out.println("delay 1000");
         VariableThroughputTimer instance = new VariableThroughputTimerEmul();
-        CollectionProperty prop = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
+        CollectionProperty prop = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
         instance.setData(prop);
-        //fail("temp");
         long start = System.currentTimeMillis();
         long result = 0;
         while ((System.currentTimeMillis() - start) < 10 * 1000) // 10 seconds test
         {
             try {
                 result = instance.delay();
+                assertEquals(0, result);
             } catch (RuntimeException ex) {
-                assertEquals("Immediate stop", ex.getMessage());
-            }
-
-            if (result > 0) {
-                synchronized (this) {
-                    wait(result / 1000);
+                if (!ex.getMessage().equals("Immediate stop")) {
+                    throw ex;
                 }
-                //System.out.println(result);
             }
         }
     }
@@ -142,7 +136,7 @@ public class VariableThroughputTimerTest {
         System.out.println("getRPSForSecond");
         long sec = 0L;
         VariableThroughputTimer instance = new VariableThroughputTimer();
-        int expResult = 0;
+        int expResult = -1;
         int result = instance.getRPSForSecond(sec);
         assertEquals(expResult, result);
     }

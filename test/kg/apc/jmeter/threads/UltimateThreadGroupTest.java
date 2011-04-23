@@ -2,6 +2,7 @@ package kg.apc.jmeter.threads;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.control.LoopController;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
@@ -56,19 +57,7 @@ public class UltimateThreadGroupTest
    public void setUp()
    {
       instance = new UltimateThreadGroup();
-      dataModel = new PowerTableModel(UltimateThreadGroupGui.columnIdentifiers, UltimateThreadGroupGui.columnClasses);
-      dataModel.addRow(new Integer[]
-            {
-               1, 2, 3, 4, 44
-            });
-      dataModel.addRow(new Integer[]
-            {
-               5, 6, 7, 8, 88
-            });
-      dataModel.addRow(new Integer[]
-            {
-               9, 10, 11, 12, 122
-            });
+      dataModel = getTestModel();
    }
 
    /**
@@ -90,8 +79,9 @@ public class UltimateThreadGroupTest
       hashtree.add(new LoopController());
       JMeterThread thread = new JMeterThread(hashtree, null, null);
 
-      CollectionProperty prop = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
+      CollectionProperty prop = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
       instance.setData(prop);
+      instance.testStarted();
 
       instance.scheduleThread(thread);
 
@@ -109,8 +99,9 @@ public class UltimateThreadGroupTest
       HashTree hashtree = new HashTree();
       hashtree.add(new LoopController());
 
-      CollectionProperty prop = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
+      CollectionProperty prop = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
       instance.setData(prop);
+      instance.testStarted();
 
       for (int n = 0; n < instance.getNumThreads(); n++)
       {
@@ -127,7 +118,7 @@ public class UltimateThreadGroupTest
    public void testSetData()
    {
       System.out.println("setSchedule");
-      CollectionProperty prop = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
+      CollectionProperty prop = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
       instance.setData(prop);
    }
 
@@ -138,7 +129,7 @@ public class UltimateThreadGroupTest
    public void testGetData()
    {
       System.out.println("getSchedule");
-      CollectionProperty prop = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
+      CollectionProperty prop = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
       instance.setData(prop);
       JMeterProperty result = instance.getData();
       assertFalse(result instanceof NullProperty);
@@ -152,11 +143,78 @@ public class UltimateThreadGroupTest
    public void testGetNumThreads()
    {
       System.out.println("getNumThreads");
-      CollectionProperty prop = JMeterPluginsUtils.tableModelToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
+      CollectionProperty prop = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
       instance.setData(prop);
+      instance.testStarted();
 
       int expResult = 15;
       int result = instance.getNumThreads();
       assertEquals(expResult, result);
    }
+
+    /**
+     * Test of testStarted method, of class UltimateThreadGroup.
+     */
+    @Test
+    public void testTestStarted_0args() {
+        System.out.println("testStarted");
+        instance.testStarted();
+    }
+
+    /**
+     * Test of testStarted method, of class UltimateThreadGroup.
+     */
+    @Test
+    public void testTestStarted_String() {
+        System.out.println("testStarted");
+        String host = "";
+        instance.testStarted(host);
+    }
+
+    /**
+     * Test of testEnded method, of class UltimateThreadGroup.
+     */
+    @Test
+    public void testTestEnded_0args() {
+        System.out.println("testEnded");
+        instance.testEnded();
+    }
+
+    /**
+     * Test of testEnded method, of class UltimateThreadGroup.
+     */
+    @Test
+    public void testTestEnded_String() {
+        System.out.println("testEnded");
+        String host = "";
+        instance.testEnded(host);
+    }
+
+    /**
+     * Test of testIterationStart method, of class UltimateThreadGroup.
+     */
+    @Test
+    public void testTestIterationStart() {
+        System.out.println("testIterationStart");
+        LoopIterationEvent event = null;
+        instance.testIterationStart(event);
+    }
+
+    public static PowerTableModel getTestModel() {
+        PowerTableModel ret = new PowerTableModel(UltimateThreadGroupGui.columnIdentifiers, UltimateThreadGroupGui.columnClasses);
+      ret.addRow(new Integer[]
+            {
+               1, 2, 3, 4, 44
+            });
+      ret.addRow(new Integer[]
+            {
+               5, 6, 7, 8, 88
+            });
+      ret.addRow(new Integer[]
+            {
+               9, 10, 11, 12, 122
+            });
+
+      return ret;
+    }
 }

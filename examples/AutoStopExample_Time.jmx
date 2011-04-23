@@ -62,19 +62,11 @@ because response time will exceed 250 ms</stringProp>
       <hashTree/>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="jp@gc - Ultimate Thread Group" enabled="true">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="86035">
+          <collectionProp name="417799235">
             <stringProp name="53">5</stringProp>
-          </collectionProp>
-          <collectionProp name="25128">
             <stringProp name="0">0</stringProp>
-          </collectionProp>
-          <collectionProp name="85068">
             <stringProp name="48">0</stringProp>
-          </collectionProp>
-          <collectionProp name="56050944">
             <stringProp name="1722">60</stringProp>
-          </collectionProp>
-          <collectionProp name="85068">
             <stringProp name="48">0</stringProp>
           </collectionProp>
         </collectionProp>

@@ -48,19 +48,11 @@ if you have one.</stringProp>
       <hashTree/>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="jp@gc - Ultimate Thread Group" enabled="true">
         <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="55984448">
+          <collectionProp name="-1282668947">
             <stringProp name="1567">10</stringProp>
-          </collectionProp>
-          <collectionProp name="25128">
             <stringProp name="0">0</stringProp>
-          </collectionProp>
-          <collectionProp name="55987957">
             <stringProp name="1598">20</stringProp>
-          </collectionProp>
-          <collectionProp name="86035">
             <stringProp name="53">5</stringProp>
-          </collectionProp>
-          <collectionProp name="86035">
             <stringProp name="53">5</stringProp>
           </collectionProp>
         </collectionProp>

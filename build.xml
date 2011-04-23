@@ -166,6 +166,8 @@
          <zipfileset dir="${sigar.dir}/sigar-bin/lib" includes="*.*" excludes="log4j.jar, junit.jar, .sigar_shellrc" prefix="serverAgent"/>
          <zipfileset dir="${sigar.dir}" includes="COPYING EXCEPTIONS" prefix="serverAgent"/>
          <zipfileset dir="${sigar.dir}" includes="LICENSES README" prefix="serverAgent"/>
+         <!-- exaple test plans -->
+        <zipfileset dir="${svn.dir}/examples" includes="*Example*.jmx" prefix="examples"/>
       </zip>
 
       <!-- APC: fore easy debugging environment we copy files

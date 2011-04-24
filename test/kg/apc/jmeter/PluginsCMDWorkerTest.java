@@ -3,6 +3,7 @@ package kg.apc.jmeter;
 
 import java.io.File;
 import java.io.IOException;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,6 +17,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class PluginsCMDWorkerTest {
+    private PluginsCMDWorker instance;
     private final String basedir;
 
     public PluginsCMDWorkerTest() {
@@ -25,6 +27,7 @@ public class PluginsCMDWorkerTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
@@ -33,6 +36,10 @@ public class PluginsCMDWorkerTest {
 
     @Before
     public void setUp() {
+        //JMeterUtils.setJMeterHome(TestJMeterUtils.getTempDir());
+        JMeterUtils.setJMeterHome("");
+         instance = new PluginsCMDWorker();
+        //JMeterUtils.setProperty("saveservice_properties", "jmeter.properties");
     }
 
     @After
@@ -46,7 +53,7 @@ public class PluginsCMDWorkerTest {
     public void testAddExportMode() {
         System.out.println("addExportMode");
         int mode = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+//        PluginsCMDWorker instance = new PluginsCMDWorkerEmul();
         instance.addExportMode(mode);
     }
 
@@ -57,7 +64,7 @@ public class PluginsCMDWorkerTest {
     public void testSetInputFile() {
         System.out.println("setInputFile");
         String string = "";
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+  //      PluginsCMDWorker instance = new PluginsCMDWorkerEmul();
         instance.setInputFile(string);
     }
 
@@ -68,7 +75,7 @@ public class PluginsCMDWorkerTest {
     public void testSetOutputCSVFile() {
         System.out.println("setOutputCSVFile");
         String string = "";
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+    //    PluginsCMDWorker instance = new PluginsCMDWorkerEmul();
         instance.setOutputCSVFile(string);
     }
 
@@ -79,7 +86,6 @@ public class PluginsCMDWorkerTest {
     public void testSetOutputPNGFile() {
         System.out.println("setOutputPNGFile");
         String string = "";
-        PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setOutputPNGFile(string);
     }
 
@@ -90,7 +96,7 @@ public class PluginsCMDWorkerTest {
     public void testSetPluginType() {
         System.out.println("setPluginType");
         String string = "";
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+      //  PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setPluginType(string);
     }
 
@@ -100,7 +106,7 @@ public class PluginsCMDWorkerTest {
     @Test
     public void testDoJob() throws IOException {
         System.out.println("doJob");
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         JMeterUtils.setProperty("saveservice_properties", basedir+"/saveservice.properties");
         instance.setInputFile(basedir+"/short.jtl");
         File pngfile = File.createTempFile("test", ".png");
@@ -113,8 +119,8 @@ public class PluginsCMDWorkerTest {
         int result = instance.doJob();
         int expResult = 0;
         assertEquals(expResult, result);
-        assertEquals(5024, pngfile.length());
-        assertEquals(21, csvfile.length());
+        assertEquals(18161, pngfile.length());
+        assertEquals(73, csvfile.length());
     }
 
     /**
@@ -123,7 +129,7 @@ public class PluginsCMDWorkerTest {
     @Test
     public void testDoJob_png() throws IOException {
         System.out.println("doJob");
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir+"/short.jtl");
         instance.setOutputPNGFile(File.createTempFile("test", ".png").getAbsolutePath());
         instance.setPluginType("ResponseTimesDistribution");
@@ -139,7 +145,7 @@ public class PluginsCMDWorkerTest {
     @Test
     public void testDoJob_csv() throws IOException {
         System.out.println("doJob");
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir+"/short.jtl");
         instance.setOutputCSVFile(File.createTempFile("test", ".csv").getAbsolutePath());
         instance.setPluginType("ResponseTimesDistribution");
@@ -156,7 +162,7 @@ public class PluginsCMDWorkerTest {
     public void testSetGraphWidth() {
         System.out.println("setGraphWidth");
         int i = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setGraphWidth(i);
     }
 
@@ -167,7 +173,7 @@ public class PluginsCMDWorkerTest {
     public void testSetGraphHeight() {
         System.out.println("setGraphHeight");
         int i = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setGraphHeight(i);
     }
 
@@ -178,7 +184,7 @@ public class PluginsCMDWorkerTest {
     public void testSetAggregate() {
         System.out.println("setAggregate");
         boolean b = false;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setAggregate(0);
     }
 
@@ -189,7 +195,7 @@ public class PluginsCMDWorkerTest {
     public void testSetZeroing() {
         System.out.println("setZeroing");
         int logicValue = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setZeroing(logicValue);
     }
 
@@ -200,7 +206,7 @@ public class PluginsCMDWorkerTest {
     public void testSetPreventOutliers() {
         System.out.println("setPreventOutliers");
         int logicValue = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setPreventOutliers(logicValue);
     }
 
@@ -211,7 +217,7 @@ public class PluginsCMDWorkerTest {
     public void testSetRowsLimit() {
         System.out.println("setRowsLimit");
         int parseInt = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setRowsLimit(parseInt);
     }
 
@@ -222,7 +228,7 @@ public class PluginsCMDWorkerTest {
     public void testSetForceY() {
         System.out.println("setForceY");
         int parseInt = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setForceY(parseInt);
     }
 
@@ -233,7 +239,7 @@ public class PluginsCMDWorkerTest {
     public void testSetHideLowCounts() {
         System.out.println("setHideLowCounts");
         int parseInt = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setHideLowCounts(parseInt);
     }
 
@@ -244,7 +250,7 @@ public class PluginsCMDWorkerTest {
     public void testSetGranulation() {
         System.out.println("setGranulation");
         int parseInt = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setGranulation(parseInt);
     }
 
@@ -255,7 +261,7 @@ public class PluginsCMDWorkerTest {
     public void testSetRelativeTimes() {
         System.out.println("setRelativeTimes");
         int logicValue = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setRelativeTimes(logicValue);
     }
 
@@ -266,7 +272,7 @@ public class PluginsCMDWorkerTest {
     public void testSetGradient() {
         System.out.println("setGradient");
         int logicValue = 0;
-        PluginsCMDWorker instance = new PluginsCMDWorker();
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setGradient(logicValue);
     }
 }

@@ -1,6 +1,7 @@
 // TODO: cover all parameters
 package kg.apc.jmeter;
 
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -27,6 +28,7 @@ public class PluginsCMDTest {
 
     @Before
     public void setUp() {
+        JMeterUtils.setJMeterHome("");
     }
 
     @After

@@ -1,5 +1,6 @@
 package kg.apc.jmeter.cmd;
 
+import org.apache.jmeter.util.JMeterUtils;
 import java.net.URL;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -27,6 +28,7 @@ public class NewDriverTest {
 
     @Before
     public void setUp() {
+        JMeterUtils.setJMeterHome("");
     }
 
     @After

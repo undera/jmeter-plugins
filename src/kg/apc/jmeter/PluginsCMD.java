@@ -17,18 +17,18 @@ public class PluginsCMD {
                 + "--generate-csv <filename> "
                 + "--input-jtl <data file> "
                 + "--plugin-type <type> "
-                + "["
+                + "[ "
                 + "--width <graph width> "
                 + "--height <graph height> "
-                + "--granulation <ms>" 
-                + "--relative-times <yes/no>" // aggregate all rows into one ||
-                + "--aggregate-rows <yes/no>" // aggregate all rows into one ||
-                + "--paint-gradient <yes/no>" // paint gradient background ||
-                + "--paint-zeroing <yes/no>" // paint zeroing lines ||
-                + "--prevent-outliers <yes/no>" // prevent outliers on distribution graph ||
-                + "--limit-rows <num of points>" // limit number of points in row ||
-                + "--force-y <limit>" // force Y axis limit ||
-                + "--hide-low-counts <limit>" // hide points with sample count below limit ||
+                + "--granulation <ms> "
+                + "--relative-times <yes/no> " // aggregate all rows into one ||
+                + "--aggregate-rows <yes/no> " // aggregate all rows into one ||
+                + "--paint-gradient <yes/no> " // paint gradient background ||
+                + "--paint-zeroing <yes/no> " // paint zeroing lines ||
+                + "--prevent-outliers <yes/no> " // prevent outliers on distribution graph ||
+                + "--limit-rows <num of points> " // limit number of points in row ||
+                + "--force-y <limit> " // force Y axis limit ||
+                + "--hide-low-counts <limit> " // hide points with sample count below limit ||
                 // TODO: add more options
                 + "]");
         System.out.println("For help and support please visit " + JMeterPluginsUtils.WIKI_BASE + "JMeterPluginsCMD");

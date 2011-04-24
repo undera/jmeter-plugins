@@ -174,3 +174,4 @@
 <sample t="10000" lt="0" ts="1301920720957" s="false" lb="jp@gc - UDP Request" rc="500" rm="java.net.SocketTimeoutException: Timeout exceeded while reading from socket" tn="Thread Group 1-29" dt="text" by="580"/>
 <sample t="9998" lt="0" ts="1301920720959" s="false" lb="jp@gc - UDP Request" rc="500" rm="java.net.SocketTimeoutException: Timeout exceeded while reading from socket" tn="Thread Group 1-74" dt="text" by="580"/>
 <sample t="9999" lt="0" ts="1301920720959" s="false" lb="jp@gc - UDP Request" rc="500" rm="java.net.SocketTimeoutException: Timeout exceeded while reading from socket" tn="Thread Group 1-76" dt="text" by="580"/>
+</testResults>

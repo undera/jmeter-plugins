@@ -44,7 +44,7 @@ public class PluginsCMDWorker {
         prepareJMeterEnv();
     }
 
-    protected void prepareJMeterEnv() {
+    private void prepareJMeterEnv() {
         if (JMeterUtils.getJMeterHome() != null) {
             log.warn("JMeter env exists. No one should see this normally.");
             return;

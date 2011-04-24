@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class PluginsCMDWorkerTest {
+
     private PluginsCMDWorker instance;
     private final String basedir;
 
@@ -38,7 +39,7 @@ public class PluginsCMDWorkerTest {
     public void setUp() {
         //JMeterUtils.setJMeterHome(TestJMeterUtils.getTempDir());
         JMeterUtils.setJMeterHome("");
-         instance = new PluginsCMDWorker();
+        instance = new PluginsCMDWorker();
         //JMeterUtils.setProperty("saveservice_properties", "jmeter.properties");
     }
 
@@ -64,7 +65,7 @@ public class PluginsCMDWorkerTest {
     public void testSetInputFile() {
         System.out.println("setInputFile");
         String string = "";
-  //      PluginsCMDWorker instance = new PluginsCMDWorkerEmul();
+        //      PluginsCMDWorker instance = new PluginsCMDWorkerEmul();
         instance.setInputFile(string);
     }
 
@@ -75,7 +76,7 @@ public class PluginsCMDWorkerTest {
     public void testSetOutputCSVFile() {
         System.out.println("setOutputCSVFile");
         String string = "";
-    //    PluginsCMDWorker instance = new PluginsCMDWorkerEmul();
+        //    PluginsCMDWorker instance = new PluginsCMDWorkerEmul();
         instance.setOutputCSVFile(string);
     }
 
@@ -96,7 +97,7 @@ public class PluginsCMDWorkerTest {
     public void testSetPluginType() {
         System.out.println("setPluginType");
         String string = "";
-      //  PluginsCMDWorker instance = new PluginsCMDWorker();
+        //  PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setPluginType(string);
     }
 
@@ -107,8 +108,8 @@ public class PluginsCMDWorkerTest {
     public void testDoJob() throws IOException {
         System.out.println("doJob");
         //PluginsCMDWorker instance = new PluginsCMDWorker();
-        JMeterUtils.setProperty("saveservice_properties", basedir+"/saveservice.properties");
-        instance.setInputFile(basedir+"/short.jtl");
+        JMeterUtils.setProperty("saveservice_properties", basedir + "/saveservice.properties");
+        instance.setInputFile(basedir + "/short.jtl");
         File pngfile = File.createTempFile("test", ".png");
         instance.setOutputPNGFile(pngfile.getAbsolutePath());
         File csvfile = File.createTempFile("test", ".csv");
@@ -130,7 +131,7 @@ public class PluginsCMDWorkerTest {
     public void testDoJob_png() throws IOException {
         System.out.println("doJob");
         //PluginsCMDWorker instance = new PluginsCMDWorker();
-        instance.setInputFile(basedir+"/short.jtl");
+        instance.setInputFile(basedir + "/short.jtl");
         instance.setOutputPNGFile(File.createTempFile("test", ".png").getAbsolutePath());
         instance.setPluginType("ResponseTimesDistribution");
         instance.addExportMode(PluginsCMDWorker.EXPORT_PNG);
@@ -146,7 +147,7 @@ public class PluginsCMDWorkerTest {
     public void testDoJob_csv() throws IOException {
         System.out.println("doJob");
         //PluginsCMDWorker instance = new PluginsCMDWorker();
-        instance.setInputFile(basedir+"/short.jtl");
+        instance.setInputFile(basedir + "/short.jtl");
         instance.setOutputCSVFile(File.createTempFile("test", ".csv").getAbsolutePath());
         instance.setPluginType("ResponseTimesDistribution");
         instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);

@@ -23,9 +23,9 @@ public class GraphModelToCsvExporter
     private File destFile = null;
     private String csvSeparator;
     private char decimalSeparator;
-    private SimpleDateFormat dateFormatter;
+    private SimpleDateFormat dateFormatter = null;
     private String xAxisLabel;
-    private NumberRenderer xAxisRenderer;
+    private NumberRenderer xAxisRenderer = null;
 
     public GraphModelToCsvExporter(
             AbstractMap<String, AbstractGraphRow> rows,
@@ -38,12 +38,11 @@ public class GraphModelToCsvExporter
         this.model = rows;
         this.csvSeparator = csvSeparator;
         this.decimalSeparator = new DecimalFormatSymbols().getDecimalSeparator();
-        dateFormatter = new SimpleDateFormat("HH:mm:ss" + decimalSeparator + "S");
         this.xAxisLabel = xAxisLabel;
         if(xAxisRenderer != null && xAxisRenderer instanceof DividerRenderer) {
-            this.xAxisRenderer = new DividerRenderer(((DividerRenderer)xAxisRenderer).getFactor());
-        } else {
-            this.xAxisRenderer = null;
+           this.xAxisRenderer = new DividerRenderer(((DividerRenderer)xAxisRenderer).getFactor());
+        } else if(xAxisRenderer != null && xAxisRenderer instanceof DateTimeRenderer) {
+           dateFormatter = new SimpleDateFormat("HH:mm:ss" + decimalSeparator + "S");
         }
     }
 
@@ -65,7 +64,7 @@ public class GraphModelToCsvExporter
         if(xAxisRenderer != null) {
             xAxisRenderer.setValue(xValue);
             ret = xAxisRenderer.getText();
-        } else if (xValue > 1000000000000L) {
+        } else if (dateFormatter != null) {
             ret = dateFormatter.format(xValue);
         } else {
             ret = "" + xValue;

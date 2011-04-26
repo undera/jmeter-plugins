@@ -110,7 +110,7 @@ public class ThreadsStateOverTimeGui
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("ActiveThreadsOverTime");
+        return JMeterPluginsUtils.prefixLabel("Active Threads Over Time");
     }
 
     @Override
@@ -139,6 +139,6 @@ public class ThreadsStateOverTimeGui
 
     @Override
     public String getWikiPage() {
-        return "ThreadsStateOverTimeGui";
+        return "ActiveThreadsOverTime";
     }
 }

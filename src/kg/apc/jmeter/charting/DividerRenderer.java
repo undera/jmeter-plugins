@@ -1,4 +1,4 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.charting;
 
 import org.apache.jorphan.gui.NumberRenderer;
 
@@ -6,11 +6,15 @@ import org.apache.jorphan.gui.NumberRenderer;
  *
  * @author undera
  */
-class DividerRenderer extends NumberRenderer{
+public class DividerRenderer extends NumberRenderer{
     private final double factor;
 
     public DividerRenderer(double i) {
         factor=i;
+    }
+
+    public double getFactor() {
+        return factor;
     }
 
     @Override

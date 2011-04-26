@@ -4,6 +4,7 @@
  */
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.charting.DividerRendererTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListSet;
+import org.apache.jorphan.gui.NumberRenderer;
 
 /**
  *
@@ -24,12 +25,14 @@ public class GraphModelToCsvExporter
     private char decimalSeparator;
     private SimpleDateFormat dateFormatter;
     private String xAxisLabel;
+    private NumberRenderer xAxisRenderer;
 
     public GraphModelToCsvExporter(
             AbstractMap<String, AbstractGraphRow> rows,
             File destFile,
             String csvSeparator,
-            String xAxisLabel)
+            String xAxisLabel,
+            NumberRenderer xAxisRenderer)
     {
         this.destFile = destFile;
         this.model = rows;
@@ -37,6 +40,11 @@ public class GraphModelToCsvExporter
         this.decimalSeparator = new DecimalFormatSymbols().getDecimalSeparator();
         dateFormatter = new SimpleDateFormat("HH:mm:ss" + decimalSeparator + "S");
         this.xAxisLabel = xAxisLabel;
+        if(xAxisRenderer != null && xAxisRenderer instanceof DividerRenderer) {
+            this.xAxisRenderer = new DividerRenderer(((DividerRenderer)xAxisRenderer).getFactor());
+        } else {
+            this.xAxisRenderer = null;
+        }
     }
 
     //used for Unit Tests only as of now
@@ -46,20 +54,23 @@ public class GraphModelToCsvExporter
             String csvSeparator,
             char decimalSeparator)
     {
-        this(rows, destFile, csvSeparator, "Elapsed time");
+        this(rows, destFile, csvSeparator, "Elapsed time", null);
         this.decimalSeparator = decimalSeparator;
         dateFormatter = new SimpleDateFormat("HH:mm:ss" + decimalSeparator + "S");
     }
 
     private String xValueFormatter(long xValue)
     {
-        if (xValue > 1000000000000L)
-        {
-            return dateFormatter.format(xValue);
-        } else
-        {
-            return "" + xValue;
+        String ret;
+        if(xAxisRenderer != null) {
+            xAxisRenderer.setValue(xValue);
+            ret = xAxisRenderer.getText();
+        } else if (xValue > 1000000000000L) {
+            ret = dateFormatter.format(xValue);
+        } else {
+            ret = "" + xValue;
         }
+        return ret;
     }
 
     public void writeCsvFile() throws IOException

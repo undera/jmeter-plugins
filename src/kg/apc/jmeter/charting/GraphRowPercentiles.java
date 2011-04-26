@@ -16,7 +16,8 @@ public class GraphRowPercentiles extends GraphRowSumValues {
     public GraphRowPercentiles() {
         super();
         //create percentiles objects, and reuse them to avoid GC
-        for (long p = 1; p <= 100 * FRACTION; p++) {
+        //we remove p=100 as we now have 99.9 percentile which is enough, and by doing this loiterings will not break chart anymore
+        for (long p = 1; p <= 100 * FRACTION-1; p++) {
             percentiles.put(p, new GraphPanelChartExactElement(p, 0));
         }
     }

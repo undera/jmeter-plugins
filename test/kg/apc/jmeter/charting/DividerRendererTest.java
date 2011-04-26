@@ -1,4 +1,4 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.charting;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -37,11 +37,17 @@ public class DividerRendererTest {
      */
     @Test
     public void testSetValue() {
-        System.out.println("setValue");
-        Object value = new Long(54);
+        
+    }
+
+    /**
+     * Test of getFactor method, of class DividerRenderer.
+     */
+    @Test
+    public void testGetFactor() {
+        System.out.println("testGetFactor");
         DividerRenderer instance = new DividerRenderer(10);
-        instance.setValue(value);
-        assertEquals("5.4", instance.getText());
+        assertTrue(instance.getFactor() == 10);
     }
 
 }

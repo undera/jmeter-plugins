@@ -15,6 +15,8 @@ import static org.junit.Assert.*;
  */
 public class GraphRowPercentilesTest {
 
+    private int expectedCount = 999;
+
     public GraphRowPercentilesTest() {
     }
 
@@ -43,7 +45,7 @@ public class GraphRowPercentilesTest {
         long respTime = 1234L;
         GraphRowPercentiles instance = new GraphRowPercentiles();
         instance.add(respTime, 1);
-        int expResult = 1000;
+        int expResult = expectedCount;
         int result = instance.size();
         assertEquals(expResult, result);
     }
@@ -63,7 +65,7 @@ public class GraphRowPercentilesTest {
             assertNotNull(result.next());
             cnt++;
         }
-        assertEquals(1000, cnt);
+        assertEquals(expectedCount, cnt);
     }
 
     @Test
@@ -83,7 +85,7 @@ public class GraphRowPercentilesTest {
             assertEquals(10 , obj.getValue().getValue(), 0.01);
             cnt++;
         }
-        assertEquals(1000, cnt);
+        assertEquals(expectedCount, cnt);
     }
 
     @Test
@@ -103,7 +105,7 @@ public class GraphRowPercentilesTest {
             assertEquals(cnt < 500 ? 10 : 20, obj.getValue().getValue(), 0.01);
             cnt++;
         }
-        assertEquals(1000, cnt);
+        assertEquals(expectedCount, cnt);
     }
 
     @Test
@@ -111,7 +113,7 @@ public class GraphRowPercentilesTest {
         System.out.println("iterator 3req");
         GraphRowPercentiles instance = new GraphRowPercentiles();
 
-        for (int n = 0; n < 1000; n++) {
+        for (int n = 0; n < expectedCount; n++) {
             instance.add(n, 1);
         }
         
@@ -126,7 +128,7 @@ public class GraphRowPercentilesTest {
             assertEquals(cnt, obj.getValue().getValue(), 0.01);
             cnt++;
         }
-        assertEquals(1000, cnt);
+        assertEquals(expectedCount, cnt);
     }
 
     /**
@@ -140,7 +142,7 @@ public class GraphRowPercentilesTest {
         int result = instance.size();
         assertEquals(expResult, result);
         instance.add(1234L, 1);
-        expResult = 1000;
+        expResult = expectedCount;
         result = instance.size();
         assertEquals(expResult, result);
     }
@@ -154,11 +156,11 @@ public class GraphRowPercentilesTest {
 
         long value = 500L;
         GraphRowPercentiles instance = new GraphRowPercentiles();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < expectedCount; i++) {
             instance.add(i, i);
         }
 
-        assertEquals(1000, instance.size());
+        assertEquals(expectedCount, instance.size());
 
         //force percentile calculation
         instance.iterator();
@@ -199,7 +201,7 @@ public class GraphRowPercentilesTest {
     public void testGetMaxX() {
         System.out.println("getMaxX");
         GraphRowPercentiles instance = new GraphRowPercentiles();
-        long expResult = 1000L;
+        long expResult = 1000;
         long result = instance.getMaxX();
         assertEquals(expResult, result);
     }

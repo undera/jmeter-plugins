@@ -51,9 +51,10 @@ public class GraphModelToCsvExporter
             AbstractMap<String, AbstractGraphRow> rows,
             File destFile,
             String csvSeparator,
-            char decimalSeparator)
+            char decimalSeparator,
+            NumberRenderer renderer)
     {
-        this(rows, destFile, csvSeparator, "Elapsed time", null);
+        this(rows, destFile, csvSeparator, "Elapsed time", renderer);
         this.decimalSeparator = decimalSeparator;
         dateFormatter = new SimpleDateFormat("HH:mm:ss" + decimalSeparator + "S");
     }

@@ -152,6 +152,7 @@ public class PluginsCMD {
                 }
 
                 worker.setGranulation(Integer.parseInt(args[n]));
+            } else if (args[n].trim().length() == 0) {
             } else {
                 System.out.println("Unrecognized option: " + args[n]);
                 showHelp();

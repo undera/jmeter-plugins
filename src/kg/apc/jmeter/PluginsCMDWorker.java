@@ -143,6 +143,11 @@ public class PluginsCMDWorker {
         if (inputFile == null) {
             throw new IllegalArgumentException("Missing input JTL file specification");
         }
+
+        if (!(new File(inputFile).exists())) {
+            throw new IllegalArgumentException("Cannot find specified JTL file: " + inputFile);
+        }
+
     }
 
     public void setGraphWidth(int i) {
@@ -161,6 +166,7 @@ public class PluginsCMDWorker {
         setOptions(gui);
 
         ResultCollector rc = new ResultCollector();
+        log.debug("Using JTL file: " + inputFile);
         rc.setFilename(inputFile);
         rc.setListener(gui);
         rc.loadExistingFile();
@@ -210,14 +216,13 @@ public class PluginsCMDWorker {
     }
 
     private void setOptions(AbstractGraphPanelVisualizer gui) {
-        JSettingsPanel settings = gui.getSettingsPanel();
         GraphPanelChart graph = gui.getGraphPanelChart();
 
         if (aggregate >= 0) {
-            settings.setAggregateMode(aggregate > 0);
+            gui.switchModel(aggregate>0);
         }
         if (granulation >= 0) {
-            settings.setGranulationValue(granulation);
+            gui.setGranulation(granulation);
         }
         if (relativeTimes >= 0) {
             graph.setUseRelativeTime(relativeTimes > 0);

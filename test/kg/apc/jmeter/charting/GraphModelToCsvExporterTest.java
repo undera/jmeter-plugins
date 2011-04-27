@@ -57,18 +57,15 @@ public class GraphModelToCsvExporterTest {
 
         row1.add(now.getTimeInMillis(), 10);
         row2.add(now.getTimeInMillis(), 20);
-        row3.add(1, 50);
 
         now.set(Calendar.SECOND, 10);
 
         row1.add(now.getTimeInMillis(), 20);
         row2.add(now.getTimeInMillis(), 30);
-        row3.add(2, 100);
 
         now.set(Calendar.SECOND, 25);
 
-        row1.add(now.getTimeInMillis(), 50);
-        row3.add(10, 1000);
+        row3.add(now.getTimeInMillis(), 50);
 
         return testModel;
     }
@@ -86,7 +83,7 @@ public class GraphModelToCsvExporterTest {
         GraphModelToCsvExporter instance = new GraphModelToCsvExporter(createTestModel(), testFile, ";", '.', new DateTimeRenderer());
         instance.writeCsvFile();
         boolean success = FilesTestTools.compareFiles(testFile, referenceFile);
-        //testFile.delete();
+        testFile.delete();
         assertTrue(success);
     }
 

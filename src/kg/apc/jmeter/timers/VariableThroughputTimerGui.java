@@ -103,6 +103,7 @@ public class VariableThroughputTimerGui
         return grid;
     }
 
+    @Override
     public String getLabelResource() {
         return this.getClass().getSimpleName();
     }
@@ -112,6 +113,7 @@ public class VariableThroughputTimerGui
         return JMeterPluginsUtils.prefixLabel("Throughput Shaping Timer");
     }
 
+    @Override
     public TestElement createTestElement() {
         //log.info("Create test element");
         VariableThroughputTimer tg = new VariableThroughputTimer();
@@ -120,6 +122,7 @@ public class VariableThroughputTimerGui
         return tg;
     }
 
+    @Override
     public void modifyTestElement(TestElement tg) {
         //log.info("Modify test element");
         super.configureTestElement(tg);
@@ -205,12 +208,14 @@ public class VariableThroughputTimerGui
         grid.setModel(tableModel);
     }
 
+    @Override
     public void editingStopped(ChangeEvent e) {
-        chart.repaint();
+        GuiPackage.getInstance().updateCurrentGui();
     }
 
+    @Override
     public void editingCanceled(ChangeEvent e) {
-        chart.repaint();
+        // no action needed
     }
 
     @Override
@@ -220,6 +225,7 @@ public class VariableThroughputTimerGui
         tableModel.fireTableDataChanged();
     }
 
+    @Override
     public void tableChanged(TableModelEvent e) {
         GuiPackage.getInstance().updateCurrentGui();
     }

@@ -2,6 +2,7 @@
 package kg.apc.jmeter;
 
 import java.io.File;
+import java.io.IOException;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
@@ -56,9 +57,10 @@ public class PluginsCMDTest {
 
     @Test
     // issue 39
-    public void testProcessParams_aggreg() {
+    public void testProcessParams_aggreg() throws IOException {
         System.out.println("processParams aggregate");
-        String str=" --generate-csv "+TestJMeterUtils.getTempDir()+"/responsetimes.csv "
+        File f = File.createTempFile("test", ".csv");
+        String str=" --generate-csv "+f.getAbsolutePath()+" "
                 + "--input-jtl "+basedir+"/few.jtl "
                 + "--aggregate-rows yes --plugin-type ResponseTimesOverTime";
         String[] args = str.split(" +");
@@ -66,7 +68,6 @@ public class PluginsCMDTest {
         int expResult = 0;
         int result = instance.processParams(args);
         assertEquals(expResult, result);
-        File f = new File(TestJMeterUtils.getTempDir() + "/responsetimes.csv");
-        assertEquals(78, f.length());
+        assertTrue(78==f.length() || 81==f.length()); // 78 at linux, 81 at windows because or \r\n
     }
 }

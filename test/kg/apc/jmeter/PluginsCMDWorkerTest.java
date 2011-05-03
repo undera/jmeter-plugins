@@ -120,7 +120,8 @@ public class PluginsCMDWorkerTest {
         int result = instance.doJob();
         int expResult = 0;
         assertEquals(expResult, result);
-        assertTrue(18161==pngfile.length() || 16743==pngfile.length()); // win/linux different
+        System.out.println(pngfile.length());
+        assertTrue(18233==pngfile.length() || 16743==pngfile.length()); // win/linux different
         assertTrue(73==csvfile.length() || 77==csvfile.length()); // win/linux diff
     }
 

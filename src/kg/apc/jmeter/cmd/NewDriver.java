@@ -73,7 +73,7 @@ public final class NewDriver {
                 }
             });
             if (libJars == null) {
-                new Throwable("Could not access " + libDirs[a]).printStackTrace();
+                new Throwable("Could not access " + libDirs[a]).printStackTrace(System.err);
                 continue;
             }
             for (int i = 0; i < libJars.length; i++) {
@@ -93,7 +93,7 @@ public final class NewDriver {
                     classpath.append(CLASSPATH_SEPARATOR);
                     classpath.append(s);
                 } catch (MalformedURLException e) {
-                    e.printStackTrace();
+                    e.printStackTrace(System.err);
                 }
             }
         }
@@ -119,7 +119,7 @@ public final class NewDriver {
         try {
             loader.addURL(furl.toURI().toURL()); // See Java bug 4496398
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 

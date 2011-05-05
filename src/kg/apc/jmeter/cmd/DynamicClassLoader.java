@@ -47,21 +47,4 @@ public class DynamicClassLoader extends URLClassLoader {
             }
         }
     }
-
-    /*
-    @Override
-    protected Class<?> findClass(String name) throws ClassNotFoundException {
-    Class<?> res=super.findClass(name);
-    //new Throwable(name).printStackTrace();
-    System.out.println("Find "+name+" "+res.toString());
-    return res;
-    }
-
-    @Override
-    protected synchronized Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-    Class<?> res=super.loadClass(name, resolve);
-    System.out.println("Load "+name+" "+res.toString());
-    return res;
-    }
-     */
 }

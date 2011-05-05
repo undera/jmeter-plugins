@@ -37,6 +37,7 @@ public abstract class TestJMeterUtils {
         try {
             propsFile = File.createTempFile("jmeter-plugins", "testProps");
         } catch (IOException ex) {
+            ex.printStackTrace(System.err);
         }
 
         JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());

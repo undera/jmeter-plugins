@@ -77,7 +77,7 @@
 
    <target name="-post-compile">
       <macrodef name="javacAgent">
-         <attribute default="src/kg/apc/jmeter/perfmon/agent" name="srcdir"/>
+         <attribute default="agent/kg/apc/jmeter/perfmon/agent" name="srcdir"/>
          <attribute default="${build.dir}/agent/classes" name="destdir"/>
          <attribute default="${javac.classpath}" name="classpath"/>
          <attribute default="${javac.processorpath}" name="processorpath"/>
@@ -127,12 +127,13 @@
 
    <!-- APC: before making main jar we make agent's jar -->
    <target name="-pre-jar">
+      <property location="./" name="svn.dir"/>
       <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/ServerAgent.jar"
-      manifest="${src.dir}/kg/apc/jmeter/perfmon/agent/manifest.mf">
+      manifest="${svn.dir}/agent/kg/apc/jmeter/perfmon/agent/manifest.mf">
          <fileset dir="${build.dir}/agent/classes"/>
       </jar>
       <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/JMeterPluginsCMD.jar"
-      manifest="${src.dir}/kg/apc/jmeter/cmd/manifest.mf">
+      manifest="${svn.dir}/cmdtool/kg/apc/jmeter/cmd/manifest.mf">
          <fileset dir="${build.dir}/cmd/classes"/>
       </jar>
    </target>

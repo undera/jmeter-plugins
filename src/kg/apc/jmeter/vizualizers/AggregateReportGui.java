@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BoxLayout;
@@ -17,7 +19,6 @@ import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
-import kg.apc.jmeter.charting.GraphModelToCsvExporter;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import org.apache.jmeter.gui.util.HeaderAsPropertyRenderer;
 import org.apache.jmeter.samplers.SampleResult;
@@ -45,6 +46,7 @@ import org.apache.log.Logger;
  */
 public class AggregateReportGui extends AbstractGraphPanelVisualizer {
 
+    private Collection<String> emptyCollection = new ArrayList<String>();
     private static final long serialVersionUID = 240L;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String USE_GROUP_NAME = "useGroupName"; //$NON-NLS-1$
@@ -96,6 +98,13 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         clearData();
         init();
     }
+    
+    //do not insert this vizualiser in any JMeter menu
+    @Override
+    public Collection<String> getMenuCategories() {
+        return emptyCollection;
+    }
+    
     // Column renderers
     private static final TableCellRenderer[] RENDERERS =
             new TableCellRenderer[]{

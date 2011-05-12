@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.util.Collection;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -138,5 +139,16 @@ public class AggregateReportGuiTest {
         AggregateReportGui instance = new AggregateReportGui();
         JSettingsPanel result = instance.createSettingsPanel();
         assertNotNull(result);
+    }
+
+    /**
+     * Test of getMenuCategories method, of class AggregateReportGui.
+     */
+    @Test
+    public void testGetMenuCategories() {
+        System.out.println("getMenuCategories");
+        AggregateReportGui instance = new AggregateReportGui();
+        Collection result = instance.getMenuCategories();
+        assertTrue(result.isEmpty());
     }
 }

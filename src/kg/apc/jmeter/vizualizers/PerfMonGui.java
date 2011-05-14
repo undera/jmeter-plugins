@@ -40,13 +40,14 @@ public class PerfMonGui
    public static final Class[] columnClasses = new Class[]{
       String.class, String.class, String.class, String.class
    };
-   private static Object[] defaultValues = new Object[]{
+   private static String[] defaultValues = new String[]{
       "localhost", "4444", "CPU", ""
    };
 
    public PerfMonGui() {
       super();
       graphPanel.getGraphObject().setYAxisLabel("Performance Metrics");
+      graphPanel.getGraphObject().setExpendRows(true);
       initGui();
    }
 
@@ -157,7 +158,6 @@ public class PerfMonGui
                AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, true);
       }
 
-      log.info("Got value: "+value);
       row.add(time, value);
    }
 }

@@ -98,7 +98,7 @@ public class PerfMonCollectorTest {
    @Test
    public void testRun() throws InterruptedException {
       System.out.println("run");
-      PerfMonCollector instance = new PerfMonCollector();
+      PerfMonCollector instance = new PerfMonCollectorEmul();
       instance.setData(JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, PerfMonCollector.DATA_PROPERTY));
       instance.testStarted();
       Thread.sleep(1500);

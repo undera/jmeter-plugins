@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -24,6 +25,7 @@ public class PerfMonCollector
    public static final String DATA_PROPERTY = "metricConnections";
    private Thread workerThread;
    private AgentConnector[] connectors = null;
+   private HashMap<String, Long> oldValues = new HashMap<String, Long>();
 
    public void setData(CollectionProperty rows) {
       setProperty(rows);
@@ -70,6 +72,7 @@ public class PerfMonCollector
    }
 
    private void initiateConnectors() {
+      oldValues.clear();
       JMeterProperty prop = getData();
       connectors = new AgentConnector[0];
       if (!(prop instanceof CollectionProperty)) {
@@ -121,7 +124,7 @@ public class PerfMonCollector
       String label;
       for (int i = 0; i < connectors.length; i++) {
          if (connectors[i] != null) {
-            label=connectors[i].getHost() + " - " + AgentConnector.metrics.get(connectors[i].getMetricType());
+            label = connectors[i].getHost() + " - " + AgentConnector.metrics.get(connectors[i].getMetricType());
 
             switch (connectors[i].getMetricType()) {
                case AbstractPerformanceMonitoringGui.PERFMON_CPU:
@@ -131,34 +134,13 @@ public class PerfMonCollector
                   generateSample(connectors[i].getMem() / MEGABYTE, label);
                   break;
                case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
-                  // todo: make differential instead of cumulative
-                  long[] swapValues = connectors[i].getSwap();
-                  if (swapValues[0] == AgentConnector.AGENT_ERROR || swapValues[1] == AgentConnector.AGENT_ERROR) {
-                     continue;
-                  }
-
-                  generateSample(swapValues[0], label+" page in");
-                  generateSample(swapValues[1], label+" page out");
+                  generate2Samples(connectors[i].getSwap(), label + " page in", label + " page out");
                   break;
-                  
                case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
-                  long[] diskValues = connectors[i].getDisksIO();
-                  if (diskValues[0] == AgentConnector.AGENT_ERROR || diskValues[1] == AgentConnector.AGENT_ERROR) {
-                     continue;
-                  }
-
-                  generateSample(diskValues[0], label+" reads");
-                  generateSample(diskValues[1], label+" writes");
+                  generate2Samples(connectors[i].getDisksIO(), label + " reads", label + " writes");
                   break;
-
                case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
-                  long[] netValues = connectors[i].getDisksIO();
-                  if (netValues[0] == AgentConnector.AGENT_ERROR || netValues[1] == AgentConnector.AGENT_ERROR) {
-                     continue;
-                  }
-
-                  generateSample(netValues[0], label+" recv");
-                  generateSample(netValues[1], label+" send");
+                  generate2Samples(connectors[i].getDisksIO(), label + " recv", label + " send");
                   break;
                default:
                   log.error("Unknown metric index: " + connectors[i].getMetricType());
@@ -168,10 +150,24 @@ public class PerfMonCollector
    }
 
    private void generateSample(long value, String label) {
-            PerfMonSampleResult res = new PerfMonSampleResult();
-            res.setSampleLabel(label);
-            res.setValue(value);
-            SampleEvent e = new SampleEvent(res, PERFMON);
-            super.sampleOccurred(e);
+      PerfMonSampleResult res = new PerfMonSampleResult();
+      res.setSampleLabel(label);
+      res.setValue(value);
+      SampleEvent e = new SampleEvent(res, PERFMON);
+      super.sampleOccurred(e);
+   }
+
+   private void generate2Samples(long[] values, String label1, String label2) {
+      if (values[0] == AgentConnector.AGENT_ERROR || values[1] == AgentConnector.AGENT_ERROR) {
+         return;
+      }
+
+      if (oldValues.containsKey(label1) && oldValues.containsKey(label2)) {
+         generateSample(values[0] - oldValues.get(label1).longValue(), label1);
+         generateSample(values[1] - oldValues.get(label2).longValue(), label2);
+      }
+      oldValues.put(label1, new Long(values[0]));
+      oldValues.put(label2, new Long(values[1]));
+
    }
 }

@@ -1,6 +1,13 @@
 package kg.apc.jmeter.perfmon;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import kg.apc.emulators.SocketEmulator;
+import org.apache.jmeter.gui.util.PowerTableModel;
 import kg.apc.emulators.TestJMeterUtils;
+import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.vizualizers.PerfMonGui;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
@@ -16,9 +23,20 @@ import static org.junit.Assert.*;
  * @author APC
  */
 public class PerfMonCollectorTest {
+   private class PerfMonCollectorEmul extends PerfMonCollector {
+      SocketEmulator sock=new SocketEmulator();
 
-    public PerfMonCollectorTest() {
-    }
+      @Override
+      protected Socket createSocket(String host, int port) throws UnknownHostException, IOException {
+         return sock;
+      }
+
+   }
+
+   private PowerTableModel dataModel;
+
+   public PerfMonCollectorTest() {
+   }
 
    @BeforeClass
    public static void setUpClass() throws Exception {
@@ -29,13 +47,20 @@ public class PerfMonCollectorTest {
    public static void tearDownClass() throws Exception {
    }
 
-    @Before
-    public void setUp() {
-    }
+   @Before
+   public void setUp() {
+      dataModel = new PowerTableModel(PerfMonGui.columnIdentifiers, PerfMonGui.columnClasses);
+      dataModel.addRow(new String[]{
+               "localhost", "4444", "CPU", ""
+            });
+      dataModel.addRow(new String[]{
+               "localhost", "4444", "Memory", ""
+            });
+   }
 
-    @After
-    public void tearDown() {
-    }
+   @After
+   public void tearDown() {
+   }
 
    @Test
    public void testSetData() {
@@ -64,7 +89,8 @@ public class PerfMonCollectorTest {
    @Test
    public void testRun() throws InterruptedException {
       System.out.println("run");
-      PerfMonCollector instance = new PerfMonCollector();
+      PerfMonCollector instance = new PerfMonCollectorEmul();
+      instance.setData(JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, PerfMonCollector.DATA_PROPERTY));
       instance.testStarted();
       Thread.sleep(1500);
       instance.testEnded();

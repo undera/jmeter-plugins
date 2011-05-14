@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,9 +29,11 @@ import org.apache.log.Logger;
  */
 public class PerfMonGui
       extends AbstractOverTimeVisualizer {
+   public static final  String[] metrics={"CPU", "Memory", "Swap", "Disks I/O", "Network I/O"};
    private static final Logger log = LoggingManager.getLoggerForClass();
    private PowerTableModel tableModel;
    private JTable grid;
+   private JComboBox metricTypesBox;
    public static final String[] columnIdentifiers = new String[]{
       "Host / IP", "Port", "Metric to collect", "Metric parameter (see help)"
    };
@@ -66,7 +70,7 @@ public class PerfMonGui
 
    @Override
    public String getStaticLabel() {
-      return JMeterPluginsUtils.prefixLabel("New PerfMon");
+      return JMeterPluginsUtils.prefixLabel("PerfMon Metrics Collector");
    }
 
    private void initGui() {
@@ -75,13 +79,16 @@ public class PerfMonGui
 
    private Component createConnectionsPanel() {
       JPanel panel = new JPanel(new BorderLayout(5, 5));
-      panel.setBorder(BorderFactory.createTitledBorder("Servers to monitor (ServerAgent must be started!)"));
+      panel.setBorder(BorderFactory.createTitledBorder("Servers to Monitor (ServerAgent must be started, see help)"));
       panel.setPreferredSize(new Dimension(150, 150));
 
       JScrollPane scroll = new JScrollPane(createGrid());
       scroll.setPreferredSize(scroll.getMinimumSize());
       panel.add(scroll, BorderLayout.CENTER);
       panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
+
+      metricTypesBox=new JComboBox(metrics);
+      grid.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(metricTypesBox));
 
       return panel;
    }

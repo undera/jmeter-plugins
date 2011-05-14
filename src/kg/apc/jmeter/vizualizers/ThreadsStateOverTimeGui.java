@@ -26,7 +26,7 @@ public class ThreadsStateOverTimeGui
      */
     public ThreadsStateOverTimeGui() {
         super();
-        graphPanel.getGraphObject().setyAxisLabel("Number of active threads");
+        graphPanel.getGraphObject().setYAxisLabel("Number of active threads");
     }
 
     private double getAllThreadCount(long time) {
@@ -117,6 +117,7 @@ public class ThreadsStateOverTimeGui
     public void add(SampleResult res) {
         super.add(res);
         String threadName = res.getThreadName();
+        // SUBString to extract thread group name from thread name
         threadName = threadName.lastIndexOf(" ") >= 0 ? threadName.substring(0, threadName.lastIndexOf(" ")) : threadName;
 
         //fix response to fast can miss points

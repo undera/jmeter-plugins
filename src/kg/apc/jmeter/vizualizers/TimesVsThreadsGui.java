@@ -20,7 +20,7 @@ public class TimesVsThreadsGui
     public TimesVsThreadsGui()
     {
         super();
-        graphPanel.getGraphObject().setyAxisLabel("Response times in ms");
+        graphPanel.getGraphObject().setYAxisLabel("Response times in ms");
     }
 
     @Override

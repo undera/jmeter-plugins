@@ -9,9 +9,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
 import org.apache.jmeter.gui.util.PowerTableModel;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
@@ -29,17 +31,18 @@ public class PerfMonGui
    private PowerTableModel tableModel;
    private JTable grid;
    public static final String[] columnIdentifiers = new String[]{
-      "Host / IP", "Port"
+      "Host / IP", "Port", "Metric to collect", "Metric parameter (see help)"
    };
    public static final Class[] columnClasses = new Class[]{
-      String.class, String.class
+      String.class, String.class, String.class, String.class
    };
    private static Object[] defaultValues = new Object[]{
-      "localhost", "4444"
+      "localhost", "4444", "CPU", ""
    };
 
    public PerfMonGui() {
       super();
+      graphPanel.getGraphObject().setYAxisLabel("Performance Metrics");
       initGui();
    }
 
@@ -99,32 +102,55 @@ public class PerfMonGui
 
    @Override
    public TestElement createTestElement() {
-      return new PerfMonCollector();
+      TestElement te = new PerfMonCollector();
+      modifyTestElement(te);
+      te.setComment(JMeterPluginsUtils.getWikiLinkText(getWikiPage()));
+      return te;
    }
 
    @Override
    public void modifyTestElement(TestElement te) {
-        if (grid.isEditing()) {
-            grid.getCellEditor().stopCellEditing();
-        }
+      super.modifyTestElement(te);
+      if (grid.isEditing()) {
+         grid.getCellEditor().stopCellEditing();
+      }
 
-        if (te instanceof PerfMonCollector) {
-            PerfMonCollector pmte = (PerfMonCollector) te;
-            CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(tableModel, PerfMonCollector.DATA_PROPERTY);
-            pmte.setData(rows);
-        }
-        super.configureTestElement(te);
+      if (te instanceof PerfMonCollector) {
+         PerfMonCollector pmte = (PerfMonCollector) te;
+         CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(tableModel, PerfMonCollector.DATA_PROPERTY);
+         pmte.setData(rows);
+      }
+      super.configureTestElement(te);
    }
 
    @Override
    public void configure(TestElement te) {
-        super.configure(te);
-        PerfMonCollector pmte = (PerfMonCollector) te;
-        JMeterProperty perfmonValues = pmte.getData();
-        if (!(perfmonValues instanceof NullProperty)) {
-           JMeterPluginsUtils.collectionPropertyToTableModelRows((CollectionProperty) perfmonValues, tableModel);
-        } else {
-            log.warn("Received null property instead of collection");
-        }
+      super.configure(te);
+      PerfMonCollector pmte = (PerfMonCollector) te;
+      JMeterProperty perfmonValues = pmte.getData();
+      if (!(perfmonValues instanceof NullProperty)) {
+         JMeterPluginsUtils.collectionPropertyToTableModelRows((CollectionProperty) perfmonValues, tableModel);
+      }
+      else {
+         log.warn("Received null property instead of collection");
+      }
+   }
+
+   @Override
+   public void add(SampleResult res) {
+      super.add(res);
+      addThreadGroupRecord(res.getSampleLabel(), normalizeTime(res.getEndTime()), res.getLatency());
+      updateGui(null);
+   }
+
+   private void addThreadGroupRecord(String threadGroupName, long time, long value) {
+      AbstractGraphRow row = model.get(threadGroupName);
+      if (row == null) {
+         row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, threadGroupName,
+               AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, true);
+      }
+
+      log.info("Got value: "+value);
+      row.add(time, value);
    }
 }

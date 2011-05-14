@@ -20,7 +20,7 @@ public class ResponseTimesDistributionGui
       super();
       setGranulation(100);
       graphPanel.getGraphObject().setxAxisLabel("Response times in ms");
-      graphPanel.getGraphObject().setyAxisLabel("Number of responses");
+      graphPanel.getGraphObject().setYAxisLabel("Number of responses");
    }
 
    private void addThreadGroupRecord(String threadGroupName, long time, int granulation)

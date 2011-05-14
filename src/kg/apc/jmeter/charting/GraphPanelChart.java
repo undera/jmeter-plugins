@@ -130,7 +130,7 @@ public class GraphPanelChart
         this.xAxisLabel = xAxisLabel;
     }
 
-    public void setyAxisLabel(String yAxisLabel) {
+    public void setYAxisLabel(String yAxisLabel) {
         this.yAxisLabel = yAxisLabel;
     }
 

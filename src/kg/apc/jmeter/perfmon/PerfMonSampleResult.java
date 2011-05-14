@@ -11,6 +11,8 @@ public class PerfMonSampleResult
 
    public PerfMonSampleResult() {
       sampleStart();
+      setLatency(50);
+      setSampleLabel("Test");
       sampleEnd();
    }
 }

@@ -18,7 +18,7 @@ public class LatenciesOverTimeGui
    public LatenciesOverTimeGui()
    {
       super();
-      graphPanel.getGraphObject().setyAxisLabel("Response latencies in ms");
+      graphPanel.getGraphObject().setYAxisLabel("Response latencies in ms");
    }
 
    private void addThreadGroupRecord(String threadGroupName, long time,

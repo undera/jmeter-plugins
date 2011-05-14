@@ -241,7 +241,7 @@ public class UltimateThreadGroupGui
         chart.setRows(model);
         chart.setDrawFinalZeroingLines(true);
         chart.setxAxisLabel("Elapsed time");
-        chart.setyAxisLabel("Number of active threads");
+        chart.setYAxisLabel("Number of active threads");
         return chart;
     }
 

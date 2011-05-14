@@ -18,7 +18,7 @@ public class HitsPerSecondGui
     {
         super();
         setGranulation(1000);
-        graphPanel.getGraphObject().setyAxisLabel("Number of hits /sec");
+        graphPanel.getGraphObject().setYAxisLabel("Number of hits /sec");
     }
 
     private void addHit(String threadGroupName, long time, int count)

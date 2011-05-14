@@ -23,7 +23,7 @@ public class ThroughputVsThreadsGui
     {
         super();
         graphPanel.getGraphObject().setyAxisLabelRenderer(new CustomRateRenderer("#.0"));
-        graphPanel.getGraphObject().setyAxisLabel("Number of estimated transactions /sec");
+        graphPanel.getGraphObject().setYAxisLabel("Number of estimated transactions /sec");
     }
 
     @Override

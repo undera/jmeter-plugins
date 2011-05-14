@@ -2,6 +2,8 @@ package kg.apc.jmeter.vizualizers;
 
 import kg.apc.jmeter.perfmon.PerfMonCollector;
 import kg.apc.emulators.TestJMeterUtils;
+import kg.apc.jmeter.perfmon.PerfMonSampleResult;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,9 +17,8 @@ import static org.junit.Assert.*;
  * @author APC
  */
 public class PerfMonGuiTest {
-
-    public PerfMonGuiTest() {
-    }
+   public PerfMonGuiTest() {
+   }
 
    @BeforeClass
    public static void setUpClass() throws Exception {
@@ -28,13 +29,13 @@ public class PerfMonGuiTest {
    public static void tearDownClass() throws Exception {
    }
 
-    @Before
-    public void setUp() {
-    }
+   @Before
+   public void setUp() {
+   }
 
-    @After
-    public void tearDown() {
-    }
+   @After
+   public void tearDown() {
+   }
 
    @Test
    public void testCreateSettingsPanel() {
@@ -49,7 +50,7 @@ public class PerfMonGuiTest {
       System.out.println("getWikiPage");
       PerfMonGui instance = new PerfMonGui();
       String result = instance.getWikiPage();
-      assertTrue(result.length()>0);
+      assertTrue(result.length() > 0);
    }
 
    @Test
@@ -57,7 +58,7 @@ public class PerfMonGuiTest {
       System.out.println("getLabelResource");
       PerfMonGui instance = new PerfMonGui();
       String result = instance.getLabelResource();
-      assertTrue(result.length()>0);
+      assertTrue(result.length() > 0);
    }
 
    @Test
@@ -65,7 +66,7 @@ public class PerfMonGuiTest {
       System.out.println("getStaticLabel");
       PerfMonGui instance = new PerfMonGui();
       String result = instance.getStaticLabel();
-      assertTrue(result.length()>0);
+      assertTrue(result.length() > 0);
    }
 
    @Test
@@ -90,5 +91,29 @@ public class PerfMonGuiTest {
       TestElement el = new PerfMonCollector();
       PerfMonGui instance = new PerfMonGui();
       instance.configure(el);
+   }
+
+   @Test
+   public void testAdd() {
+      System.out.println("add");
+      SampleResult res = new PerfMonSampleResult();
+      PerfMonGui instance = new PerfMonGui();
+      instance.add(res);
+      assertEquals(1, instance.model.size());
+      assertEquals(1, instance.model.firstEntry().getValue().size());
+      assertEquals(0, instance.modelAggregate.size());
+   }
+
+   @Test
+   public void testWork() throws InterruptedException {
+      System.out.println("work");
+      PerfMonGui instance = new PerfMonGui();
+      PerfMonCollector collector = (PerfMonCollector) instance.createTestElement();
+      //collector.setListener(instance);
+      collector.testStarted();
+      collector.testIterationStart(null);
+      Thread.sleep(5000);
+      collector.testEnded();
+      assertEquals(5, instance.model.firstEntry().getValue().size());
    }
 }

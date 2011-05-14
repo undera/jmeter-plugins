@@ -35,7 +35,7 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer
         graphPanel.getGraphObject().setReSetColors(true);
 
         graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
-        graphPanel.getGraphObject().setyAxisLabel("Scaled values");
+        graphPanel.getGraphObject().setYAxisLabel("Scaled values");
 
         graphPanel.getGraphObject().setExpendRows(true);
         

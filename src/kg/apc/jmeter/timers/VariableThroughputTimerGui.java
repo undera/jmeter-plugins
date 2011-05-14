@@ -198,7 +198,7 @@ public class VariableThroughputTimerGui
         chart.setRows(model);
         chart.setDrawFinalZeroingLines(true);
         chart.setxAxisLabel("Elapsed Time");
-        chart.setyAxisLabel("Number of requests /sec");
+        chart.setYAxisLabel("Number of requests /sec");
         return chart;
     }
 

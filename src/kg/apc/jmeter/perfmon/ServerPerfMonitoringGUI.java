@@ -125,23 +125,23 @@ public class ServerPerfMonitoringGUI
 
       switch (monitorType) {
          case AbstractPerformanceMonitoringGui.PERFMON_CPU:
-            graphPanel.getGraphObject().setyAxisLabel("Combined CPU usage in %");
+            graphPanel.getGraphObject().setYAxisLabel("Combined CPU usage in %");
             chartType = GraphPanelChart.CHART_PERCENTAGE;
             break;
          case AbstractPerformanceMonitoringGui.PERFMON_MEM:
-            graphPanel.getGraphObject().setyAxisLabel("Memory used in MB");
+            graphPanel.getGraphObject().setYAxisLabel("Memory used in MB");
             break;
          case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
-            graphPanel.getGraphObject().setyAxisLabel("Number of disks access /sec");
+            graphPanel.getGraphObject().setYAxisLabel("Number of disks access /sec");
             break;
          case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
-            graphPanel.getGraphObject().setyAxisLabel("Number of KBytes /sec");
+            graphPanel.getGraphObject().setYAxisLabel("Number of KBytes /sec");
             break;
          case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
-            graphPanel.getGraphObject().setyAxisLabel("Number of pages /sec");
+            graphPanel.getGraphObject().setYAxisLabel("Number of pages /sec");
             break;
          default:
-            graphPanel.getGraphObject().setyAxisLabel("Unknown moitoring metric");
+            graphPanel.getGraphObject().setYAxisLabel("Unknown moitoring metric");
             break;
       }
       graphPanel.getGraphObject().setChartType(chartType);

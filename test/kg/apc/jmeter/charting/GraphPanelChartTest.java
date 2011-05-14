@@ -394,14 +394,14 @@ public class GraphPanelChartTest {
     }
 
     /**
-     * Test of setyAxisLabel method, of class GraphPanelChart.
+     * Test of setYAxisLabel method, of class GraphPanelChart.
      */
     @Test
     public void testSetyAxisLabel() {
         System.out.println("setyAxisLabel");
         String yAxisLabel = "";
         GraphPanelChart instance = new GraphPanelChart();
-        instance.setyAxisLabel(yAxisLabel);
+        instance.setYAxisLabel(yAxisLabel);
     }
 
     /**

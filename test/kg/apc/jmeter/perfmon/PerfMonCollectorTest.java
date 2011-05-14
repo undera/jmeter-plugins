@@ -56,6 +56,15 @@ public class PerfMonCollectorTest {
       dataModel.addRow(new String[]{
                "localhost", "4444", "Memory", ""
             });
+      dataModel.addRow(new String[]{
+               "localhost", "4444", "Swap", ""
+            });
+      dataModel.addRow(new String[]{
+               "localhost", "4444", "Disks I/O", ""
+            });
+      dataModel.addRow(new String[]{
+               "localhost", "4444", "Network I/O", ""
+            });
    }
 
    @After
@@ -89,7 +98,7 @@ public class PerfMonCollectorTest {
    @Test
    public void testRun() throws InterruptedException {
       System.out.println("run");
-      PerfMonCollector instance = new PerfMonCollectorEmul();
+      PerfMonCollector instance = new PerfMonCollector();
       instance.setData(JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, PerfMonCollector.DATA_PROPERTY));
       instance.testStarted();
       Thread.sleep(1500);

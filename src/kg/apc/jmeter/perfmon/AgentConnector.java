@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.List;
 import kg.apc.jmeter.perfmon.agent.AgentCommandsInterface;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -16,6 +18,8 @@ import org.apache.log.Logger;
  */
 public class AgentConnector implements AgentCommandsInterface
 {
+   public static final List<String> metrics=Arrays.asList(new String[]{"CPU", "Memory", "Swap", "Disks I/O", "Network I/O"});
+   
    private static final Logger log = LoggingManager.getLoggerForClass();
    private String host;
    private int port;
@@ -23,6 +27,7 @@ public class AgentConnector implements AgentCommandsInterface
    private PrintWriter out = null;
    private BufferedReader in = null;
    private String remoteServerName = null;
+   private int metricType;
 
    /**
     * The constructor.
@@ -207,5 +212,13 @@ public class AgentConnector implements AgentCommandsInterface
    public int getPort()
    {
       return port;
+   }
+
+   public void setMetricType(String metric) {
+     metricType=metrics.indexOf(metric);
+   }
+
+   public int getMetricType() {
+      return metricType;
    }
 }

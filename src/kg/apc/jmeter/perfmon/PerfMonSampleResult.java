@@ -11,8 +11,11 @@ public class PerfMonSampleResult
 
    public PerfMonSampleResult() {
       sampleStart();
-      setLatency(50);
-      setSampleLabel("Test");
       sampleEnd();
+   }
+
+   // storing as latency
+   public void setValue(long value) {
+      setLatency(value);
    }
 }

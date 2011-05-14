@@ -13,6 +13,7 @@ import javax.swing.ListSelectionModel;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.charting.AbstractGraphRow;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
+import kg.apc.jmeter.perfmon.AgentConnector;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.SampleResult;
@@ -29,7 +30,6 @@ import org.apache.log.Logger;
  */
 public class PerfMonGui
       extends AbstractOverTimeVisualizer {
-   public static final  String[] metrics={"CPU", "Memory", "Swap", "Disks I/O", "Network I/O"};
    private static final Logger log = LoggingManager.getLoggerForClass();
    private PowerTableModel tableModel;
    private JTable grid;
@@ -87,7 +87,7 @@ public class PerfMonGui
       panel.add(scroll, BorderLayout.CENTER);
       panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
 
-      metricTypesBox=new JComboBox(metrics);
+      metricTypesBox=new JComboBox(AgentConnector.metrics.toArray());
       grid.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(metricTypesBox));
 
       return panel;

@@ -151,4 +151,12 @@ public class AggregateReportGuiTest {
         Collection result = instance.getMenuCategories();
         assertTrue(result.isEmpty());
     }
+
+   @Test
+   public void testGetStaticLabel() {
+      System.out.println("getStaticLabel");
+      AggregateReportGui instance = new AggregateReportGui();
+      String result = instance.getStaticLabel();
+      assertNotNull(result);
+   }
 }

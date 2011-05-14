@@ -39,7 +39,7 @@ import org.apache.log.Logger;
 /**
  * OMG, I had to copy full contents of StatVisualizer
  * just to make its data visible to JMeterPluginsCMD
- * This class just invisible in menu;
+ * This class is just invisible in menu;
  *
  * @see StatVisualizer
  * @author undera
@@ -152,7 +152,7 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
      * Clears this visualizer and its model, and forces a repaint of the table.
      */
     @Override
-    public void clearData() {
+    public final void clearData() {
         synchronized (tableRows) {
             statModel.clearData();
             tableRows.clear();
@@ -220,6 +220,11 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
     public GraphPanelChart getGraphPanelChart() {
         return new FakeGraphPanelChart();
     }
+
+   @Override
+   public String getStaticLabel() {
+      return "Nobody never should not see this. No, no, no.";
+   }
 
     private class FakeGraphPanelChart extends GraphPanelChart {
 

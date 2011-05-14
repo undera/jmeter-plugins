@@ -179,5 +179,10 @@ public class GraphPanelTest
         public String getWikiPage() {
             return "";
         }
+
+      @Override
+      public String getStaticLabel() {
+         return "";
+      }
    }
 }

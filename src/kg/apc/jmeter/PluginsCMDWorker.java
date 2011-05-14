@@ -7,7 +7,6 @@ import java.util.Properties;
 import kg.apc.jmeter.charting.GraphPanelChart;
 import kg.apc.jmeter.cmd.NewDriver;
 import kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizer;
-import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;

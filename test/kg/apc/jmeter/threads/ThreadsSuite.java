@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({SteppingThreadGroupTest.class, UltimateThreadGroupTest.class, SteppingThreadGroupGuiTest.class, UltimateThreadGroupGuiTest.class})
+@Suite.SuiteClasses({UltimateThreadGroupTest.class, SteppingThreadGroupGuiTest.class, SteppingThreadGroupTest.class, UltimateThreadGroupGuiTest.class})
 public class ThreadsSuite {
 
    @BeforeClass

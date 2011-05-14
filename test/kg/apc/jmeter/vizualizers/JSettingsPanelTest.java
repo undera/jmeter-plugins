@@ -74,6 +74,11 @@ public class JSettingsPanelTest {
         public String getWikiPage() {
             return "";
         }
+
+      @Override
+      public String getStaticLabel() {
+         return "";
+      }
    }
 
     /**

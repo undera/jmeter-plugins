@@ -152,6 +152,11 @@ public class AbstractGraphPanelVisualizerTest
         public String getWikiPage() {
             return "";
         }
+
+      @Override
+      public String getStaticLabel() {
+         return "";
+      }
    }
 
    @Test
@@ -334,4 +339,13 @@ public class AbstractGraphPanelVisualizerTest
         JSettingsPanel result = instance.createSettingsPanel();
         assertNotNull(result);
     }
+
+   @Test
+   public void testGetStaticLabel() {
+      System.out.println("getStaticLabel");
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      String expResult = "";
+      String result = instance.getStaticLabel();
+      assertEquals(expResult, result);
+   }
 }

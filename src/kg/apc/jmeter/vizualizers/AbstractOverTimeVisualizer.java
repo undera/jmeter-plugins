@@ -8,44 +8,42 @@ import org.apache.jmeter.threads.JMeterContextService;
  *
  * @author apc
  */
-abstract class AbstractOverTimeVisualizer extends AbstractGraphPanelVisualizer {
-    
-    private long relativeStartTime=0;
+abstract class AbstractOverTimeVisualizer
+      extends AbstractGraphPanelVisualizer {
+   private long relativeStartTime = 0;
 
-    public AbstractOverTimeVisualizer()
-    {
+   public AbstractOverTimeVisualizer() {
       graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS));
       graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
       graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
       graphPanel.getGraphObject().setDisplayPrecision(true);
-    }
+   }
 
-    @Override
-    public void add(SampleResult sample)
-    {
-        if (relativeStartTime==0)
-        {
-            //relativeStartTime = JMeterUtils.getPropDefault("TESTSTART.MS", sample.getStartTime());
-            relativeStartTime = JMeterContextService.getTestStartTime();
-            if(relativeStartTime == 0) relativeStartTime = sample.getStartTime();
+   @Override
+   public void add(SampleResult sample) {
+      if (relativeStartTime == 0) {
+         //relativeStartTime = JMeterUtils.getPropDefault("TESTSTART.MS", sample.getStartTime());
+         relativeStartTime = JMeterContextService.getTestStartTime();
+         if (relativeStartTime == 0) {
+            relativeStartTime = sample.getStartTime();
+         }
 
-            if (graphPanel.getGraphObject().isUseRelativeTime())
-                graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, relativeStartTime));
-            graphPanel.getGraphObject().setTestStartTime(relativeStartTime);
-            graphPanel.getGraphObject().setForcedMinX(relativeStartTime);
-        }
-    }
+         if (graphPanel.getGraphObject().isUseRelativeTime()) {
+            graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, relativeStartTime));
+         }
+         graphPanel.getGraphObject().setTestStartTime(relativeStartTime);
+         graphPanel.getGraphObject().setForcedMinX(relativeStartTime);
+      }
+   }
 
-    @Override
-    public void clearData()
-    {
-        super.clearData();
-        relativeStartTime=0;
-        updateGui();
-    }
+   @Override
+   public void clearData() {
+      super.clearData();
+      relativeStartTime = 0;
+      updateGui();
+   }
 
-    protected long normalizeTime(long time)
-    {
-        return time - (time - relativeStartTime)%getGranulation();
-    }
+   protected long normalizeTime(long time) {
+      return time - (time - relativeStartTime) % getGranulation();
+   }
 }

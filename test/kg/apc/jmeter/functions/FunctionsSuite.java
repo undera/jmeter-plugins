@@ -3,9 +3,8 @@
  * and open the template in the editor.
  */
 
-package kg.apc.jmeter.perfmon;
+package kg.apc.jmeter.functions;
 
-import kg.apc.jmeter.perfmon.agent.AgentSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,27 +17,23 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({AgentSuite.class})
-public class PerfmonSuite {
+@Suite.SuiteClasses({kg.apc.jmeter.functions.DoubleSumTest.class,kg.apc.jmeter.functions.StrLenTest.class})
+public class FunctionsSuite {
 
    @BeforeClass
-   public static void setUpClass() throws Exception
-   {
+   public static void setUpClass() throws Exception {
    }
 
    @AfterClass
-   public static void tearDownClass() throws Exception
-   {
+   public static void tearDownClass() throws Exception {
    }
 
    @Before
-   public void setUp() throws Exception
-   {
+   public void setUp() throws Exception {
    }
 
    @After
-   public void tearDown() throws Exception
-   {
+   public void tearDown() throws Exception {
    }
 
 }

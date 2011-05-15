@@ -15,7 +15,7 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.charting.AbstractGraphRow;
+import kg.apc.charting.AbstractGraphRow;
 
 /**
  *

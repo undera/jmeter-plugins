@@ -3,7 +3,7 @@ package kg.apc.jmeter.perfmon;
 import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
-import kg.apc.jmeter.charting.GraphPanelChart;
+import kg.apc.charting.rows.GraphPanelChart;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.GraphPanel;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;

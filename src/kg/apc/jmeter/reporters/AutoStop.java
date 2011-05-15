@@ -1,7 +1,7 @@
 package kg.apc.jmeter.reporters;
 
 import java.io.Serializable;
-import kg.apc.jmeter.charting.GraphPanelChartAverageElement;
+import kg.apc.charting.elements.GraphPanelChartAverageElement;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.util.NoThreadClone;

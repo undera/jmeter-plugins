@@ -2,15 +2,15 @@
 // TODO: make a child of ResultCollector to eliminate save_threads_count problem
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.charting.ColorsDispatcher;
+import kg.apc.charting.ColorsDispatcher;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.GraphPanelChart;
+import kg.apc.charting.AbstractGraphRow;
+import kg.apc.charting.rows.GraphPanelChart;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
 import org.apache.jmeter.gui.tree.JMeterTreeNode;

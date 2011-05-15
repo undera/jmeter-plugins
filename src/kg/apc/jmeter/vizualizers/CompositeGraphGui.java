@@ -1,11 +1,11 @@
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.charting.DateTimeRenderer;
+import kg.apc.charting.DateTimeRenderer;
 import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.ImageIcon;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.charting.AbstractGraphRow;
+import kg.apc.charting.AbstractGraphRow;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;

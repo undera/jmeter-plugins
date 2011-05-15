@@ -2,7 +2,7 @@ package kg.apc.jmeter.vizualizers;
 
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
-import kg.apc.jmeter.charting.AbstractGraphRow;
+import kg.apc.charting.AbstractGraphRow;
 
 /**
  *

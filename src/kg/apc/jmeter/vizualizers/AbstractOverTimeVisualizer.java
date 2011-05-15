@@ -1,6 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.charting.DateTimeRenderer;
+import kg.apc.charting.DateTimeRenderer;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.threads.JMeterContextService;
 

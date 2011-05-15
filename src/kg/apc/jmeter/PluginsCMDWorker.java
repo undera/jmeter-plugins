@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-import kg.apc.jmeter.charting.GraphPanelChart;
+import kg.apc.charting.rows.GraphPanelChart;
 import kg.apc.jmeter.cmd.NewDriver;
 import kg.apc.jmeter.vizualizers.AbstractGraphPanelVisualizer;
 import org.apache.jmeter.reporters.ResultCollector;

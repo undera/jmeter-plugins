@@ -1,8 +1,8 @@
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.charting.GraphRowAverages;
-import kg.apc.jmeter.charting.GraphRowOverallAverages;
-import kg.apc.jmeter.charting.AbstractGraphRow;
+import kg.apc.charting.rows.GraphRowAverages;
+import kg.apc.charting.rows.GraphRowOverallAverages;
+import kg.apc.charting.AbstractGraphRow;
 import java.text.DecimalFormatSymbols;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.SampleResult;

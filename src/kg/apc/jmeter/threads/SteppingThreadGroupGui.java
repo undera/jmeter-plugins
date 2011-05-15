@@ -12,10 +12,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import kg.apc.jmeter.JMeterPluginsUtils;
 
-import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.GraphPanelChart;
-import kg.apc.jmeter.charting.GraphRowSumValues;
-import kg.apc.jmeter.charting.DateTimeRenderer;
+import kg.apc.charting.AbstractGraphRow;
+import kg.apc.charting.rows.GraphPanelChart;
+import kg.apc.charting.rows.GraphRowSumValues;
+import kg.apc.charting.DateTimeRenderer;
 
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;

@@ -3,8 +3,8 @@ package kg.apc.jmeter.vizualizers;
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
-import kg.apc.jmeter.charting.AbstractGraphPanelChartElement;
-import kg.apc.jmeter.charting.AbstractGraphRow;
+import kg.apc.charting.AbstractGraphPanelChartElement;
+import kg.apc.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**

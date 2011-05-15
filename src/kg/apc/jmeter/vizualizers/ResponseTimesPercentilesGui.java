@@ -1,10 +1,10 @@
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.charting.DividerRenderer;
+import kg.apc.charting.DividerRenderer;
 import java.awt.Color;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.GraphRowPercentiles;
+import kg.apc.charting.AbstractGraphRow;
+import kg.apc.charting.rows.GraphRowPercentiles;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**

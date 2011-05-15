@@ -4,7 +4,6 @@ import javax.swing.BorderFactory;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import java.awt.Component;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.apache.jmeter.gui.util.PowerTableModel;
@@ -107,8 +106,8 @@ public class JMeterPluginsUtilsTest {
     @Test
     public void testOpenInBrowser() {
         System.out.println("openInBrowser");
-        String string = "";
-        JMeterPluginsUtils.openInBrowser("");
+        // don't do this, because of odd window popups
+        // JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/");
     }
 
     /**

@@ -10,8 +10,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import kg.apc.jmeter.charting.AbstractGraphRow;
-import kg.apc.jmeter.charting.GraphPanelChart;
+import kg.apc.charting.AbstractGraphRow;
+import kg.apc.charting.rows.GraphPanelChart;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 

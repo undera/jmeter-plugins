@@ -2,7 +2,7 @@ package kg.apc.jmeter.vizualizers;
 
 import java.awt.Color;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.charting.AbstractGraphRow;
+import kg.apc.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**

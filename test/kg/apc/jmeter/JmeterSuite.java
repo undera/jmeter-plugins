@@ -1,6 +1,6 @@
 package kg.apc.jmeter;
 
-import kg.apc.jmeter.charting.ChartingSuite;
+import kg.apc.charting.ChartingSuite;
 import kg.apc.jmeter.cmd.CmdSuite;
 import kg.apc.jmeter.config.ConfigSuite;
 import kg.apc.jmeter.control.ControlSuite;

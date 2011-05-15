@@ -8,7 +8,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.charting.GraphPanelChart;
+import kg.apc.charting.rows.GraphPanelChart;
 
 /**
  *

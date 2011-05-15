@@ -1,4 +1,4 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
 import java.awt.Color;
 import java.util.Iterator;
@@ -11,7 +11,7 @@ import org.apache.jmeter.samplers.SampleResult;
  * Class used to handle thread counts in local and distributed tests
  * @author Stephane Hoblingre
  */
-abstract class AbstractVsThreadVisualizer extends AbstractGraphPanelVisualizer
+public abstract class AbstractVsThreadVisualizer extends AbstractGraphPanelVisualizer
 {
     private ConcurrentSkipListMap<String, AbstractGraphRow> state = new ConcurrentSkipListMap<String, AbstractGraphRow>();
     private final static int PRECISION_MS = 500;

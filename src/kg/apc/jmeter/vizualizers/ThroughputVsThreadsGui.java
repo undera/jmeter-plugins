@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.graphs.AbstractVsThreadVisualizer;
 import kg.apc.charting.rows.GraphRowAverages;
 import kg.apc.charting.rows.GraphRowOverallAverages;
 import kg.apc.charting.AbstractGraphRow;

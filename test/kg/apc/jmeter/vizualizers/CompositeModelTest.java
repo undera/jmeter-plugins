@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.graphs.CompositeNotifierInterface;
 import java.util.Iterator;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.rows.GraphRowAverages;

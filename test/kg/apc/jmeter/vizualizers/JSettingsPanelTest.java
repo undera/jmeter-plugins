@@ -1,7 +1,9 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.graphs.SettingsInterface;
+import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import javax.swing.JPanel;
-import kg.apc.charting.rows.GraphPanelChart;
+import kg.apc.charting.GraphPanelChart;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;

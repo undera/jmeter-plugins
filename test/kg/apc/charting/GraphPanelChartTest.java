@@ -2,7 +2,6 @@ package kg.apc.charting;
 
 import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.rows.GraphRowAverages;
-import kg.apc.charting.rows.GraphPanelChart;
 import java.awt.Graphics;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;

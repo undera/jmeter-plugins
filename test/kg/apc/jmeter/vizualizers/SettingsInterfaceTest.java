@@ -5,7 +5,8 @@
 
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.charting.rows.GraphPanelChart;
+import kg.apc.jmeter.graphs.SettingsInterface;
+import kg.apc.charting.GraphPanelChart;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

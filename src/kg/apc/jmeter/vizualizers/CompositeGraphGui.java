@@ -1,5 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.graphs.CompositeNotifierInterface;
+import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import kg.apc.charting.DateTimeRenderer;
 import java.util.HashSet;
 import java.util.Iterator;

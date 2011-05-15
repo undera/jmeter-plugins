@@ -17,7 +17,7 @@ import javax.swing.event.TableModelListener;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.DateTimeRenderer;
-import kg.apc.charting.rows.GraphPanelChart;
+import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowSumValues;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import org.apache.jmeter.control.LoopController;

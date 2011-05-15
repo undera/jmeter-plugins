@@ -1,7 +1,5 @@
-package kg.apc.charting.rows;
+package kg.apc.charting;
 
-import kg.apc.charting.AbstractGraphRow;
-import kg.apc.charting.AbstractGraphPanelChartElement;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -40,9 +38,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import kg.apc.charting.ColorsDispatcher;
-import kg.apc.charting.DateTimeRenderer;
-import kg.apc.charting.GraphModelToCsvExporter;
 import org.apache.jmeter.util.JMeterUtils;
 
 import org.apache.jorphan.gui.NumberRenderer;

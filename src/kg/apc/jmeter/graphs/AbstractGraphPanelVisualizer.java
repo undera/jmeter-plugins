@@ -1,7 +1,9 @@
 // fixme: perhaps we should replace model via setModel and use ONE model...
 // TODO: make a child of ResultCollector to eliminate save_threads_count problem
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
+import kg.apc.jmeter.vizualizers.CompositeResultCollector;
+import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import kg.apc.charting.ColorsDispatcher;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,7 +12,7 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
-import kg.apc.charting.rows.GraphPanelChart;
+import kg.apc.charting.GraphPanelChart;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
 import org.apache.jmeter.gui.tree.JMeterTreeNode;

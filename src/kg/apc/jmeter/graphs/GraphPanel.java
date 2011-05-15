@@ -1,4 +1,4 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -11,7 +11,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import kg.apc.charting.AbstractGraphRow;
-import kg.apc.charting.rows.GraphPanelChart;
+import kg.apc.charting.GraphPanelChart;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -90,7 +90,7 @@ public class GraphPanel
             return new ImageIcon(imgURL);
         else
         {
-            System.err.println("Couldn't find file: " + path);
+            log.error("Couldn't find file: " + path);
             return null;
         }
     }
@@ -105,7 +105,7 @@ public class GraphPanel
         selectedTab.repaint();
     }
 
-    Image getGraphImage()
+    public Image getGraphImage()
     {
         Image result = graphPanelObject.createImage(graphPanelObject.getWidth(), graphPanelObject.getHeight());
 

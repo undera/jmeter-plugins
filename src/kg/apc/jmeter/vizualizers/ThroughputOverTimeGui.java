@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import java.text.DecimalFormatSymbols;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;

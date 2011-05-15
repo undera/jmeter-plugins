@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package kg.apc.charting;
+package kg.apc.jmeter.graphs;
 
 /*
  * ColorRenderer.java (compiles with releases 1.2, 1.3, and 1.4) is used by
@@ -48,7 +48,7 @@ import java.awt.Component;
  *
  * @author apc
  */
-public class ColorRenderer extends JLabel
+class ColorRenderer extends JLabel
                            implements TableCellRenderer {
     Border unselectedBorder = null;
     Border selectedBorder = null;

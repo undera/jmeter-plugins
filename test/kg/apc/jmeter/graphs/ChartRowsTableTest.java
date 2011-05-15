@@ -1,8 +1,8 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
+import kg.apc.charting.rows.GraphRowOverallAverages;
 import javax.swing.table.TableCellRenderer;
 import kg.apc.charting.AbstractGraphRow;
-import kg.apc.charting.AbstractGraphRowTest.AbstractGraphRowImpl;
 import kg.apc.charting.rows.GraphRowAverages;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -74,5 +74,30 @@ public class ChartRowsTableTest {
         ChartRowsTable instance = new ChartRowsTable(new JRowsSelectorPanel());
         instance.clear();
     }
+
+   /**
+    * Test of addRow method, of class ChartRowsTable.
+    */
+   @Test
+   public void testAddRow2()
+   {
+      System.out.println("addRow");
+      AbstractGraphRow row = new GraphRowOverallAverages();
+      ChartRowsTable instance = new ChartRowsTable(null);
+      instance.addRow(row);
+   }
+
+   /**
+    * Test of getCellRenderer method, of class ChartRowsTable.
+    */
+   @Test
+   public void testGetCellRenderer2()
+   {
+      System.out.println("getCellRenderer");
+      ChartRowsTable instance = new ChartRowsTable(null);
+      assertTrue(instance.getCellRenderer(0, 1) instanceof ColorRenderer);
+      assertTrue(instance.getCellRenderer(1, 1) instanceof ColorRenderer);
+      assertFalse(instance.getCellRenderer(1, 0) instanceof ColorRenderer);
+   }
 
 }

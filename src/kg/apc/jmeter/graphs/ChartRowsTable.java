@@ -1,13 +1,12 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
-import kg.apc.charting.ColorRenderer;
 import javax.swing.event.TableModelEvent;
-import kg.apc.charting.AbstractGraphRow;
 import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellRenderer;
+import kg.apc.charting.AbstractGraphRow;
 import org.apache.jorphan.gui.ObjectTableModel;
 import org.apache.jorphan.reflect.Functor;
 
@@ -15,7 +14,7 @@ import org.apache.jorphan.reflect.Functor;
  *
  * @author apc
  */
-public class ChartRowsTable
+class ChartRowsTable
      extends JTable
 {
    TableCellRenderer colorRenderer = new ColorRenderer(false);

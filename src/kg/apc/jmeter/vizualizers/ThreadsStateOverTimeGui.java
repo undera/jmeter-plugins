@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import java.awt.Color;
 import java.util.Iterator;
 import kg.apc.jmeter.JMeterPluginsUtils;

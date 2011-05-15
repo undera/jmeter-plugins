@@ -1,5 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.graphs.CompositeNotifierInterface;
+import kg.apc.jmeter.graphs.GraphRendererInterface;
 import java.awt.event.InputEvent;
 import java.util.Enumeration;
 import java.util.Iterator;

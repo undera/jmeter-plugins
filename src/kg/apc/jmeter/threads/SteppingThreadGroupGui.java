@@ -13,7 +13,7 @@ import javax.swing.event.DocumentListener;
 import kg.apc.jmeter.JMeterPluginsUtils;
 
 import kg.apc.charting.AbstractGraphRow;
-import kg.apc.charting.rows.GraphPanelChart;
+import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowSumValues;
 import kg.apc.charting.DateTimeRenderer;
 

@@ -1,5 +1,6 @@
 package kg.apc.charting;
 
+import kg.apc.jmeter.graphs.ColorRendererTest;
 import kg.apc.charting.rows.GraphRowExactValuesTest;
 import kg.apc.charting.rows.GraphRowSumValuesTest;
 import kg.apc.charting.rows.GraphRowOverallAveragesTest;

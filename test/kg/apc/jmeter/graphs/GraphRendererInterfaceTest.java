@@ -3,8 +3,9 @@
  * and open the template in the editor.
  */
 
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
+import kg.apc.jmeter.graphs.GraphRendererInterface;
 import javax.swing.JPanel;
 import org.junit.After;
 import org.junit.AfterClass;

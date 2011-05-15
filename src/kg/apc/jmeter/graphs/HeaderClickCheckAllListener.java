@@ -1,4 +1,4 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;

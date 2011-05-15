@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import kg.apc.charting.DividerRenderer;
 import java.awt.Color;
 import kg.apc.jmeter.JMeterPluginsUtils;

@@ -1,6 +1,6 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
-import kg.apc.charting.rows.GraphPanelChart;
+import kg.apc.charting.GraphPanelChart;
 
 /**
  *

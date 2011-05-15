@@ -1,5 +1,6 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
+import kg.apc.jmeter.graphs.JRowsSelectorPanel;
 import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.JTable;

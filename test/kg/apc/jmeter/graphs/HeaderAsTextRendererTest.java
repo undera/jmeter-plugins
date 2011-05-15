@@ -1,5 +1,7 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
+import kg.apc.jmeter.graphs.HeaderAsTextRenderer;
+import kg.apc.jmeter.graphs.ChartRowsTable;
 import java.awt.Component;
 import javax.swing.JTable;
 import org.junit.After;

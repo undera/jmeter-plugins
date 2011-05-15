@@ -1,4 +1,4 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
 import java.awt.Component;
 import javax.swing.JLabel;
@@ -11,7 +11,7 @@ import org.apache.jmeter.gui.util.HeaderAsPropertyRenderer;
  *
  * @author apc
  */
-public class HeaderAsTextRenderer
+class HeaderAsTextRenderer
      extends HeaderAsPropertyRenderer
 {
    @Override

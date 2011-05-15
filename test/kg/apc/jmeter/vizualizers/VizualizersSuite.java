@@ -4,6 +4,14 @@
  */
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.jmeter.graphs.JRowsSelectorPanelTest;
+import kg.apc.jmeter.graphs.HeaderAsTextRendererTest;
+import kg.apc.jmeter.graphs.HeaderClickCheckAllListenerTest;
+import kg.apc.jmeter.graphs.GraphRendererInterfaceTest;
+import kg.apc.jmeter.graphs.ChartRowsTableTest;
+import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizerTest;
+import kg.apc.jmeter.graphs.AbstractVsThreadVisualizerTest;
+import kg.apc.jmeter.graphs.AbstractOverTimeVisualizerTest;
 import kg.apc.charting.DividerRendererTest;
 import org.junit.After;
 import org.junit.AfterClass;

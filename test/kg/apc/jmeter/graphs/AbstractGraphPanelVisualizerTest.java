@@ -1,11 +1,14 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
+import kg.apc.jmeter.graphs.GraphPanel;
+import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.charting.AbstractGraphRow;
-import kg.apc.charting.rows.GraphPanelChart;
+import kg.apc.charting.GraphPanelChart;
 import kg.apc.emulators.TestJMeterUtils;
+import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;

@@ -1,5 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.util.concurrent.ConcurrentSkipListMap;
+import kg.apc.charting.AbstractGraphRow;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.perfmon.PerfMonSampleResult;
@@ -17,6 +19,18 @@ import static org.junit.Assert.*;
  * @author APC
  */
 public class PerfMonGuiTest {
+   private static class PerfMonGuiEmul
+         extends PerfMonGui {
+
+      public ConcurrentSkipListMap<String, AbstractGraphRow> getModel_multi() {
+         return model;
+      }
+
+      public ConcurrentSkipListMap<String, AbstractGraphRow> getModel_aggr() {
+         return modelAggregate;
+      }
+   }
+
    public PerfMonGuiTest() {
    }
 
@@ -97,11 +111,11 @@ public class PerfMonGuiTest {
    public void testAdd() {
       System.out.println("add");
       SampleResult res = new PerfMonSampleResult();
-      PerfMonGui instance = new PerfMonGui();
+      PerfMonGuiEmul instance = new PerfMonGuiEmul();
       instance.add(res);
-      assertEquals(1, instance.model.size());
-      assertEquals(1, instance.model.firstEntry().getValue().size());
-      assertEquals(0, instance.modelAggregate.size());
+      assertEquals(1, instance.getModel_multi().size());
+      assertEquals(1, instance.getModel_multi().firstEntry().getValue().size());
+      assertEquals(0, instance.getModel_aggr().size());
    }
 
    @Test

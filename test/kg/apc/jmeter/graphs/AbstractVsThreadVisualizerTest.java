@@ -1,6 +1,8 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
+import kg.apc.jmeter.graphs.AbstractVsThreadVisualizer;
 import kg.apc.emulators.TestJMeterUtils;
+import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;

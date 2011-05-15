@@ -1,5 +1,6 @@
 package kg.apc.jmeter.cmd;
 
+import java.net.MalformedURLException;
 import org.apache.jmeter.util.JMeterUtils;
 import java.net.URL;
 import org.junit.After;
@@ -39,19 +40,9 @@ public class NewDriverTest {
      * Test of addURL method, of class NewDriver.
      */
     @Test
-    public void testAddURL_String() {
+    public void testAddURL_URL() throws MalformedURLException {
         System.out.println("addURL");
-        String path = "";
-        NewDriver.addURL(path);
-    }
-
-    /**
-     * Test of addURL method, of class NewDriver.
-     */
-    @Test
-    public void testAddURL_URL() {
-        System.out.println("addURL");
-        URL url = null;
+        URL url = new URL("http://localhost/");
         NewDriver.addURL(url);
     }
 
@@ -61,7 +52,7 @@ public class NewDriverTest {
     @Test
     public void testAddPath() throws Exception {
         System.out.println("addPath");
-        String path = "";
+        String path = "/";
         NewDriver.addPath(path);
     }
 

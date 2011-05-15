@@ -1,6 +1,5 @@
 package kg.apc.charting;
 
-import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.rows.GraphRowAverages;
 import java.awt.Graphics;
 import java.awt.datatransfer.Clipboard;
@@ -308,8 +307,8 @@ public class GraphPanelChartTest {
     @Test
     public void testIsGlobalDrawFinalZeroingLines() {
         System.out.println("isGlobalDrawFinalZeroingLines");
-        boolean expResult = true;
-        boolean result = GraphPanelChart.isGlobalDrawFinalZeroingLines();
+        boolean expResult = false;
+        boolean result = new GraphPanelChart().isSettingsDrawFinalZeroingLines();
         assertEquals(expResult, result);
     }
 
@@ -518,4 +517,37 @@ public class GraphPanelChartTest {
         instance.setRows(rows);
         instance.saveGraphToCSV(file);
     }
+
+   @Test
+   public void testSetYAxisLabel() {
+      System.out.println("setYAxisLabel");
+      String yAxisLabel = "";
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setYAxisLabel(yAxisLabel);
+   }
+
+   @Test
+   public void testSetCsvSeparator() {
+      System.out.println("setCsvSeparator");
+      String csvSeparator = "";
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setCsvSeparator(csvSeparator);
+   }
+
+   @Test
+   public void testSetOptimizeYAxis() {
+      System.out.println("setOptimizeYAxis");
+      boolean flag = false;
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.setOptimizeYAxis(flag);
+   }
+
+   @Test
+   public void testIsSettingsDrawFinalZeroingLines() {
+      System.out.println("isSettingsDrawFinalZeroingLines");
+      GraphPanelChart instance = new GraphPanelChart();
+      boolean expResult = false;
+      boolean result = instance.isSettingsDrawFinalZeroingLines();
+      assertEquals(expResult, result);
+   }
 }

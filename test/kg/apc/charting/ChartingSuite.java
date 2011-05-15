@@ -1,5 +1,7 @@
 package kg.apc.charting;
 
+import kg.apc.charting.elements.ElementsSuite;
+import kg.apc.charting.rows.RowsSuite;
 import kg.apc.jmeter.graphs.ColorRendererTest;
 import kg.apc.charting.rows.GraphRowExactValuesTest;
 import kg.apc.charting.rows.GraphRowSumValuesTest;
@@ -23,7 +25,7 @@ import org.junit.runners.Suite;
  * @author apc
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GraphModelToCsvExporterTest.class, ColorsDispatcherTest.class, GraphPanelChartTest.class, GraphPanelChartAverageElementTest.class, GraphRowPercentilesTest.class, AbstractGraphRowTest.class, DateTimeRendererTest.class, GraphPanelChartExactElementTest.class, AbstractGraphPanelChartElementTest.class, GraphRowSimpleTest.class, GraphPanelChartSumElementTest.class, GraphRowAveragesTest.class, GraphRowExactValuesTest.class, GraphRowOverallAveragesTest.class, GraphPanelChartSimpleElementTest.class, ColorRendererTest.class, DividerRendererTest.class, GraphRowSumValuesTest.class})
+@Suite.SuiteClasses({ColorsDispatcherTest.class, ElementsSuite.class, DividerRendererTest.class, GraphPanelChartTest.class, GraphModelToCsvExporterTest.class, AbstractGraphPanelChartElementTest.class, RowsSuite.class, AbstractGraphRowTest.class, DateTimeRendererTest.class})
 public class ChartingSuite {
 
     /**

@@ -8,7 +8,6 @@ import javax.swing.ToolTipManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.charting.GraphPanelChart;
 import kg.apc.jmeter.graphs.GraphRendererInterface;
 import kg.apc.jmeter.graphs.SettingsInterface;
 
@@ -114,7 +113,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jCheckBoxRelativeTime.setSelected(parent.getGraphPanelChart().isUseRelativeTime());
         if (showFinalZeroingLinesOption)
         {
-            jCheckBoxDrawFinalZeroingLines.setSelected(GraphPanelChart.isGlobalDrawFinalZeroingLines());
+            jCheckBoxDrawFinalZeroingLines.setSelected(parent.getGraphPanelChart().isSettingsDrawFinalZeroingLines());
         }
 
         jCheckBoxLimitMaxXValue.setVisible(showBarChartXAxisLimit);

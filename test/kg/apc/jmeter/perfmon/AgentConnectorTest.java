@@ -16,7 +16,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * APC: order of tests should never be important, it is mistake...
+ * FIXME:   APC: order of tests should never be important, it is mistake...
  * @author Stephane Hoblingre
  */
 public class AgentConnectorTest
@@ -212,5 +212,20 @@ public class AgentConnectorTest
          Logger.getLogger(AgentConnectorTest.class.getName()).log(Level.SEVERE, null, ex);
       }
       is.setBytesToRead(data.getBytes());
+   }
+
+   @Test
+   public void testSetMetricType() {
+      System.out.println("setMetricType");
+      String metric = "";
+      instance.setMetricType(metric);
+   }
+
+   @Test
+   public void testGetMetricType() {
+      System.out.println("getMetricType");
+      int expResult = 0;
+      int result = instance.getMetricType();
+      assertEquals(expResult, result);
    }
 }

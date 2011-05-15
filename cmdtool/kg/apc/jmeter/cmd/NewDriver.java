@@ -112,20 +112,6 @@ public final class NewDriver {
     /**
      * Add a URL to the loader classpath only; does not update the system classpath.
      *
-     * @param path to be added.
-     */
-    public static void addURL(String path) {
-        File furl = new File(path);
-        try {
-            loader.addURL(furl.toURI().toURL()); // See Java bug 4496398
-        } catch (MalformedURLException e) {
-            e.printStackTrace(System.err);
-        }
-    }
-
-    /**
-     * Add a URL to the loader classpath only; does not update the system classpath.
-     *
      * @param url
      */
     public static void addURL(URL url) {

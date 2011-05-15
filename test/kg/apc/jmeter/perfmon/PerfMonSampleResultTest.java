@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.perfmon;
 
 import org.junit.After;
@@ -40,6 +35,14 @@ public class PerfMonSampleResultTest {
    @Test
    public void testSomeMethod() {
      // fail("The test case is a prototype.");
+   }
+
+   @Test
+   public void testSetValue() {
+      System.out.println("setValue");
+      long value = 0L;
+      PerfMonSampleResult instance = new PerfMonSampleResult();
+      instance.setValue(value);
    }
 
 }

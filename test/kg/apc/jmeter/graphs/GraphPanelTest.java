@@ -1,4 +1,4 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
 import kg.apc.jmeter.graphs.GraphPanel;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
@@ -10,6 +10,7 @@ import javax.swing.event.ChangeEvent;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowOverallAverages;
+import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;

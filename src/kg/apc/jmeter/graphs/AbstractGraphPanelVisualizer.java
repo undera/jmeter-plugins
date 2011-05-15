@@ -23,6 +23,7 @@ import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.BooleanProperty;
 import org.apache.jmeter.testelement.property.LongProperty;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.GraphListener;
 import org.apache.jmeter.visualizers.ImageVisualizer;
 import org.apache.jmeter.visualizers.Sample;
@@ -115,6 +116,7 @@ public abstract class AbstractGraphPanelVisualizer
    public void updateGui(Sample sample) {
       long time = System.currentTimeMillis();
       if ((time - lastRepaint) >= REPAINT_INTERVAL) {
+         setOptionsFromProperties(graphPanel.getGraphObject());
          updateGui();
          repaint();
          lastRepaint = time;
@@ -317,5 +319,36 @@ public abstract class AbstractGraphPanelVisualizer
     */
    public JSettingsPanel getSettingsPanel() {
       return settingsPanel;
+   }
+
+   private void setOptionsFromProperties(GraphPanelChart graph) {
+        // moved this into jmeter part, because charting package knows nothing on JMEters
+        //properties from user.properties
+        String cfgDrawGradient = JMeterUtils.getProperty("jmeterPlugin.drawGradient");
+        if (cfgDrawGradient != null) {
+            graph.setSettingsDrawGradient("true".equalsIgnoreCase(cfgDrawGradient.trim()));
+        }
+        String cfgNeverDrawFinalZeroingLines = JMeterUtils.getProperty("jmeterPlugin.neverDrawFinalZeroingLines");
+        if (cfgNeverDrawFinalZeroingLines != null) {
+            graph.setDrawFinalZeroingLines(!("true".equalsIgnoreCase(cfgNeverDrawFinalZeroingLines.trim())));
+        }
+        
+        String cfgOptimizeYAxis = JMeterUtils.getProperty("jmeterPlugin.optimizeYAxis");
+        if (cfgOptimizeYAxis != null) {
+            graph.setOptimizeYAxis("true".equalsIgnoreCase(cfgOptimizeYAxis.trim()));
+        }
+
+        String cfgNeverDrawFinalCurrentX = JMeterUtils.getProperty("jmeterPlugin.neverDrawCurrentX");
+        if (cfgNeverDrawFinalCurrentX != null) {
+           graph.setDrawCurrentX(!("true".equalsIgnoreCase(cfgNeverDrawFinalCurrentX.trim())));
+        }
+        String cfgCsvSeparator = JMeterUtils.getProperty("jmeterPlugin.csvSeparator");
+        if (cfgCsvSeparator != null) {
+            graph.setCsvSeparator(cfgCsvSeparator);
+        }
+        String cfgUseRelativeTime = JMeterUtils.getProperty("jmeterPlugin.useRelativeTime");
+        if (cfgUseRelativeTime != null) {
+           graph.setUseRelativeTime("true".equalsIgnoreCase(cfgUseRelativeTime.trim()));
+        }
    }
 }

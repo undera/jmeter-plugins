@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
 import kg.apc.jmeter.graphs.SettingsInterface;
 import kg.apc.charting.GraphPanelChart;

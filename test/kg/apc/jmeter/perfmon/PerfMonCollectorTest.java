@@ -1,6 +1,7 @@
 package kg.apc.jmeter.perfmon;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import kg.apc.emulators.SocketEmulator;
@@ -23,16 +24,15 @@ import static org.junit.Assert.*;
  * @author APC
  */
 public class PerfMonCollectorTest {
-   private class PerfMonCollectorEmul extends PerfMonCollector {
-      SocketEmulator sock=new SocketEmulator();
+   private class PerfMonCollectorEmul
+         extends PerfMonCollector {
+      SocketEmulator sock = new SocketEmulator();
 
       @Override
       protected Socket createSocket(String host, int port) throws UnknownHostException, IOException {
          return sock;
       }
-
    }
-
    private PowerTableModel dataModel;
 
    public PerfMonCollectorTest() {
@@ -118,5 +118,19 @@ public class PerfMonCollectorTest {
       PerfMonCollector instance = new PerfMonCollector();
       instance.testStarted();
       instance.testEnded();
+   }
+
+   @Test
+   public void testCreateSocket() throws Exception {
+      System.out.println("createSocket");
+      String host = "";
+      int port = 0;
+      PerfMonCollector instance = new PerfMonCollector();
+      try {
+         instance.createSocket(host, port);
+         fail("Exception expected");
+      }
+      catch (ConnectException e) {
+      }
    }
 }

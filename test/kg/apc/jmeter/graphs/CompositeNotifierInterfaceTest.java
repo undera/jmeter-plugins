@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter.graphs;
 
 import kg.apc.jmeter.graphs.CompositeNotifierInterface;
 import org.junit.After;

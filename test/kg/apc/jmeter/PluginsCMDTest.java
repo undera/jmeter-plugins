@@ -70,4 +70,23 @@ public class PluginsCMDTest {
         assertEquals(expResult, result);
         assertTrue(78==f.length() || 81==f.length()); // 78 at linux, 81 at windows because or \r\n
     }
+
+    @Test
+    // issue 47
+    public void testProcessParams_outliers() throws IOException {
+        System.out.println("processParams outliers");
+        File f = File.createTempFile("test", ".png");
+        String str="--width 1000 --height 300 "
+                + "--prevent-outliers yes "
+                + "--plugin-type ResponseTimesDistribution"
+                + " --generate-png "+f.getAbsolutePath()+" "
+                + "--input-jtl "+basedir+"/results_issue_47.jtl";
+        String[] args = str.split(" +");
+        PluginsCMD instance = new PluginsCMD();
+        int expResult = 0;
+        int result = instance.processParams(args);
+        assertEquals(expResult, result);
+        System.out.println(f.length());
+        assertTrue(15707==f.length() || 15707==f.length()); // 78 at linux, 81 at windows
+    }
 }

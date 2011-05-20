@@ -365,6 +365,12 @@ public class GraphPanelChart
          row = it.next();
          rowValue = row.getValue();
 
+         rowValue.setExcludeOutOfRangeValues(preventXAxisOverScaling);
+
+         if (!rowValue.isDrawOnChart()) {
+            continue;
+         }
+
          if (rowValue.getMaxX() > maxXVal) {
             maxXVal = rowValue.getMaxX();
          }
@@ -373,11 +379,6 @@ public class GraphPanelChart
             minXVal = rowValue.getMinX();
          }
 
-         if (!rowValue.isDrawOnChart()) {
-            continue;
-         }
-
-         rowValue.setExcludeOutOfRangeValues(preventXAxisOverScaling);
          double[] rowMinMaxY = rowValue.getMinMaxY(maxPoints);
 
          //fix old implementation compatibility, to remove if we drop one

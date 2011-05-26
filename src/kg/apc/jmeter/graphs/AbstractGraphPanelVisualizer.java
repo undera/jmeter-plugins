@@ -1,5 +1,6 @@
 // fixme: perhaps we should replace model via setModel and use ONE model...
 // TODO: make a child of ResultCollector to eliminate save_threads_count problem
+// TODO: https://groups.google.com/forum/#!topic/jmeter-plugins/qflK3oCjv4c
 package kg.apc.jmeter.graphs;
 
 import kg.apc.jmeter.vizualizers.CompositeResultCollector;

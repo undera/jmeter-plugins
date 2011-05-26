@@ -44,7 +44,7 @@ public class GraphPanel
 
     private void addRowsTab()
     {
-        ImageIcon rowsIcon = createImageIcon("checks.png");
+        ImageIcon rowsIcon = createImageIcon("/kg/apc/jmeter/img/checks.png");
         rowsTab = new JRowsSelectorPanel();
         rowsTab.setTable(makeTable(rowsTab));
 
@@ -53,7 +53,7 @@ public class GraphPanel
 
     private void addOptionsTab()
     {
-        ImageIcon icon = createImageIcon("settings.png");
+        ImageIcon icon = createImageIcon("/kg/apc/jmeter/img/settings.png");
         settingsTab = new JPanel(new BorderLayout());
         addTab("Settings", icon, settingsTab, "Chart plot settings");
     }
@@ -74,7 +74,7 @@ public class GraphPanel
 
     private void addGraphTab()
     {
-        ImageIcon graphIcon = createImageIcon("graph.png");
+        ImageIcon graphIcon = createImageIcon("/kg/apc/jmeter/img/graph.png");
         graphPanelObject = new GraphPanelChart();
         graphPanelObject.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         graphTab = new JGraphPanel();
@@ -90,8 +90,9 @@ public class GraphPanel
             return new ImageIcon(imgURL);
         else
         {
-            log.error("Couldn't find file: " + path);
-            return null;
+            throw new RuntimeException("Couldn't find file: " + path);
+            //log.error("Couldn't find file: " + path);
+            //return null;
         }
     }
 

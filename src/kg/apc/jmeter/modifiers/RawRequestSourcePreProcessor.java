@@ -1,3 +1,4 @@
+// TODO: when no rewind - stop thread
 package kg.apc.jmeter.modifiers;
 
 import java.io.FileInputStream;

@@ -19,6 +19,14 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
         for (int n = 0; n < recs.length; n++) {
             msg.addRecord(getRecord(recs[n]), Section.QUESTION);
         }
+
+        /*
+        Header head=msg.getHeader();
+        head.setFlag(Flags.RD); // TODO: actually flags is important and need to be set from GUI
+        msg.setHeader(head);
+         * 
+         */
+
         return ByteBuffer.wrap(msg.toWire());
     }
 

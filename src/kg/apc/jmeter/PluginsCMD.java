@@ -1,4 +1,6 @@
 package kg.apc.jmeter;
+// TODO: add rows enabling/disabling function
+
 
 /**
  * This class used to handle all command-line stuff

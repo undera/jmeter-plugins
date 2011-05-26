@@ -1,3 +1,4 @@
+// TODO: implement uppercase, lowercase, substring functions
 package kg.apc.jmeter.functions;
 
 import java.util.Collection;

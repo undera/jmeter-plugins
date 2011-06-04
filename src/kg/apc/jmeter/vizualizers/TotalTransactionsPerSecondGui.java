@@ -12,13 +12,13 @@ import org.apache.jmeter.testelement.TestElement;
 @Deprecated
 public class TotalTransactionsPerSecondGui extends TransactionsPerSecondGui {
 
-    private Collection<String> emptyCollection = new ArrayList<String>();
 
     public TotalTransactionsPerSecondGui() {
         isAggregate = true;
     }
 
     //do not insert this vizualiser in any JMeter menu
+    private Collection<String> emptyCollection = new ArrayList<String>();
     @Override
     public Collection<String> getMenuCategories() {
         return emptyCollection;

@@ -23,6 +23,7 @@ import org.apache.log.Logger;
  *
  * @author Stephane Hoblingre
  */
+@Deprecated
 public class ServerPerfMonitoringGUI
       extends AbstractPerformanceMonitoringGui {
    private static final Logger log = LoggingManager.getLoggerForClass();
@@ -141,7 +142,7 @@ public class ServerPerfMonitoringGUI
             graphPanel.getGraphObject().setYAxisLabel("Number of pages /sec");
             break;
          default:
-            graphPanel.getGraphObject().setYAxisLabel("Unknown moitoring metric");
+            graphPanel.getGraphObject().setYAxisLabel("Unknown monitoring metric");
             break;
       }
       graphPanel.getGraphObject().setChartType(chartType);

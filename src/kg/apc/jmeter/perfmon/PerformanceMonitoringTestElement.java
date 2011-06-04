@@ -17,6 +17,7 @@ import org.apache.jmeter.util.JMeterUtils;
  *
  * @author Stephane Hoblingre
  */
+@Deprecated
 public class PerformanceMonitoringTestElement extends AbstractTestElement implements Serializable, Clearable, TestListener, NoThreadClone
 {
 

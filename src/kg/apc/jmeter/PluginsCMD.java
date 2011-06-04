@@ -1,6 +1,6 @@
 package kg.apc.jmeter;
 // TODO: add rows enabling/disabling function
-
+// TODO: add SummaryReport support
 
 /**
  * This class used to handle all command-line stuff

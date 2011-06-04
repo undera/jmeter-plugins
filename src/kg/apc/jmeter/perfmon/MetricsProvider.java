@@ -19,6 +19,7 @@ import org.apache.log.Logger;
  *
  * @author Stephane Hoblingre
  */
+@Deprecated
 public class MetricsProvider implements Runnable, AgentCommandsInterface {
 
     public static final String SEMICOLON = ";";

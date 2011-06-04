@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.concurrent.ConcurrentSkipListMap;
 import javax.swing.BorderFactory;
@@ -53,6 +55,7 @@ import org.apache.log.Logger;
  *
  * @author Stephane Hoblingre
  */
+@Deprecated
 public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerGui implements Clearable, TableModelListener, CellEditorListener, GraphListener, UnsharedComponent, SettingsInterface {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -97,6 +100,12 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
         model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         colors = new ColorsDispatcher();
         initGui();
+    }
+
+    private Collection<String> emptyCollection = new ArrayList<String>();
+    @Override
+    public Collection<String> getMenuCategories() {
+        return emptyCollection;
     }
 
     protected abstract JSettingsPanel getSettingsPanel();

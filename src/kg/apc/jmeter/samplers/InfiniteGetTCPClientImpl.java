@@ -16,10 +16,9 @@ import org.apache.log.Logger;
  * @author undera
  */
 public class InfiniteGetTCPClientImpl extends TCPClientImpl {
+
     private static final Logger log = LoggingManager.getLoggerForClass();
-
-    private final int infiniteTCPChunkSize = JMeterUtils.getPropDefault("tcp.infiniteTCPChunkSize", 5120); // $NON-NLS-1$
-
+    private final int chunkSize = JMeterUtils.getPropDefault("tcp.infiniteTCPChunkSize", 5120); // $NON-NLS-1$
     private boolean isRequestSent = false;
 
     @Override
@@ -40,21 +39,23 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
 
     @Override
     public String read(InputStream is) {
-        byte[] buffer = new byte[infiniteTCPChunkSize];
+        byte[] buffer = new byte[chunkSize];
         ByteArrayOutputStream w = new ByteArrayOutputStream();
         int x = 0;
         try {
             x = is.read(buffer);
+            if (x > 0) {
+                w.write(buffer, 0, x);
+            }
         } catch (SocketTimeoutException e) {
             // drop out to handle buffer
         } catch (InterruptedIOException e) {
             // drop out to handle buffer
         } catch (IOException e) {
-            log.warn("Read error:" + e);
-            return "";
+            log.warn("Read error", e);
+            throw new RuntimeException(e);
         }
 
-        w.write(buffer, 0, x);
         log.debug("Read: " + w.size() + "\n" + w.toString());
         return w.toString();
     }

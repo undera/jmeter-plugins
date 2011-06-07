@@ -1,3 +1,4 @@
+// TODO: add configurable interval to get metrics, default 1 sec
 package kg.apc.jmeter.perfmon.agent;
 
 import java.io.IOException;

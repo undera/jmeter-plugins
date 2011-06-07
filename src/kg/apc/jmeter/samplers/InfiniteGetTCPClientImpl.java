@@ -48,11 +48,10 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
                 w.write(buffer, 0, x);
             }
         } catch (SocketTimeoutException e) {
-            // drop out to handle buffer
+            throw new RuntimeException(e);
         } catch (InterruptedIOException e) {
-            // drop out to handle buffer
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            log.warn("Read error", e);
             throw new RuntimeException(e);
         }
 

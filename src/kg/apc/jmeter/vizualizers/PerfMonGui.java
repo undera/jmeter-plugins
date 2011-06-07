@@ -156,7 +156,7 @@ public class PerfMonGui
       AbstractGraphRow row = model.get(threadGroupName);
       if (row == null) {
          row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, threadGroupName,
-               AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, true);
+               AbstractGraphRow.MARKER_SIZE_NONE, false, false, false, true, true);
       }
 
       row.add(time, value);

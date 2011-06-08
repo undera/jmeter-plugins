@@ -30,7 +30,7 @@ public abstract class AbstractIPSampler
     public static final String EMPTY = "";
     public static final String RC200 = "200";
     public static final String RC500 = "500";
-    protected ByteBuffer recvBuf = ByteBuffer.allocateDirect(1024 * 4);
+    protected ByteBuffer recvBuf = ByteBuffer.allocateDirect(1024 * 4); // TODO: add property here
 
     public final String getHostName() {
         return getPropertyAsString(AbstractIPSampler.HOSTNAME);

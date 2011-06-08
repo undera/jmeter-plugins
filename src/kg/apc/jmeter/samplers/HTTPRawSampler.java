@@ -40,14 +40,14 @@ public class HTTPRawSampler extends AbstractIPSampler {
         return res;
     }
 
-    protected byte[] readResponse(SocketChannel sock, SampleResult res) throws IOException {
+    protected byte[] readResponse(SocketChannel channel, SampleResult res) throws IOException {
         ByteArrayOutputStream response = new ByteArrayOutputStream();
         recvBuf.clear();
         boolean firstPack = true;
         int cnt = 0;
 
         try {
-            while ((cnt = sock.read(recvBuf)) != -1) {
+            while ((cnt = channel.read(recvBuf)) != -1) {
                 if (firstPack) {
                     res.latencyEnd();
                     firstPack = false;
@@ -58,15 +58,21 @@ public class HTTPRawSampler extends AbstractIPSampler {
                 response.write(bytes);
                 recvBuf.clear();
             }
+
+            if (response.size() < 1) {
+                log.warn("Read no bytes from socket, seems it was closed. Let it be so.");
+                channel.close();
+            }
         } catch (IOException ex) {
-            sock.close();
+            channel.close();
             throw ex;
         }
 
         res.sampleEnd();
         if (!isUseKeepAlive()) {
-            sock.close();
+            channel.close();
         }
+
         res.setBytes(response.size());
         return response.toByteArray();
     }

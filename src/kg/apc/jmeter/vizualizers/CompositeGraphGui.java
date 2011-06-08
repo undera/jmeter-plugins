@@ -27,7 +27,7 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer
     {
         graphPanel.getGraphObject().setDisplayPrecision(false);
         compositeModel = new CompositeModel();
-        ImageIcon rowsIcon = new ImageIcon(CompositeGraphGui.class.getResource("checks.png"));
+        ImageIcon rowsIcon = new ImageIcon(CompositeGraphGui.class.getResource("/kg/apc/jmeter/img/checks.png"));
         graphPanel.remove(1);// FIXME: it is sooo bad way to make things...
         compositeRowsSelectorPanel = new JCompositeRowsSelectorPanel(compositeModel, this);
         compositeModel.setNotifier((CompositeNotifierInterface)compositeRowsSelectorPanel);

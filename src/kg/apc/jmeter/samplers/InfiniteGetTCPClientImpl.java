@@ -47,7 +47,8 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
             if (x > 0) {
                 w.write(buffer, 0, x);
             } else {
-                throw new RuntimeException("Read 0 bytes, seems we have the timeout");
+                log.warn("Read 0 bytes, seems the connection was closed. Closing stream");
+                is.close();
             }
         } catch (SocketTimeoutException e) {
             throw new RuntimeException(e);

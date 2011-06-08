@@ -1,6 +1,6 @@
 package kg.apc.io;
 
-import kg.apc.io.SocketChannelWithTimeouts;
+import org.apache.jmeter.samplers.SampleResult;
 import kg.apc.emulators.SelectionKeyEmul;
 import java.util.Set;
 import java.io.IOException;
@@ -132,6 +132,17 @@ public class SocketChannelWithTimeoutsTest {
         int expResult = 4;
         int result = instance.write(src);
         assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testWrite_Empty() throws Exception {
+        System.out.println("write");
+        SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
+        SocketChannelEmul sc = (SocketChannelEmul) instance.socketChannel;
+        assertEquals(4, instance.write(ByteBuffer.wrap("test".getBytes())));
+        assertEquals(4, sc.getWrittenBytesCount());
+        assertEquals(0, instance.write(ByteBuffer.wrap("".getBytes())));
+        assertEquals(0, sc.getWrittenBytesCount());
     }
 
     /**

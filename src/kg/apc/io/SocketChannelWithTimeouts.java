@@ -78,6 +78,7 @@ public class SocketChannelWithTimeouts extends SocketChannel {
                 if (bytesRead < 1) {
                     bytesRead = -1;
                 }
+                //log.info("Bytes read: "+bytesRead);
                 return bytesRead;
             } else {
                 bytesRead += cnt;

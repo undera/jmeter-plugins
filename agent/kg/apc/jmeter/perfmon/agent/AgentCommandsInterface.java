@@ -1,4 +1,5 @@
 // TODO: move it and its tests to separate project, don't forget to update build instruction
+// TODO: update building from source doc
 package kg.apc.jmeter.perfmon.agent;
 
 /**

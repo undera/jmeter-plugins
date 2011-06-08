@@ -1,5 +1,6 @@
-package kg.apc.jmeter.samplers;
+package kg.apc.io;
 
+import kg.apc.io.SocketChannelWithTimeouts;
 import kg.apc.emulators.SelectionKeyEmul;
 import java.util.Set;
 import java.io.IOException;

@@ -18,7 +18,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({MetricsProviderTest.class, PerfMonSampleResultTest.class, ServerPerfMonitoringGUITest.class, PerformanceMonitoringTestElementTest.class, AgentConnectorTest.class, PerfMonCollectorTest.class, AbstractPerformanceMonitoringGuiTest.class})
+@Suite.SuiteClasses({MetricsProviderTest.class, PerfMonSampleResultTest.class, AgentConnectorTest.class, PerfMonCollectorTest.class, ServerPerfMonitoringGUITest.class, AbstractPerformanceMonitoringGuiTest.class, PerformanceMonitoringTestElementTest.class})
 public class PerfmonSuite {
 
    @BeforeClass

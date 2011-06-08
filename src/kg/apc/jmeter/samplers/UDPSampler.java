@@ -1,5 +1,6 @@
 package kg.apc.jmeter.samplers;
 
+import kg.apc.io.DatagramChannelWithTimeouts;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

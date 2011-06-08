@@ -1,3 +1,4 @@
+// TODO: eliminate acid yellow color
 package kg.apc.charting;
 
 import java.awt.Color;

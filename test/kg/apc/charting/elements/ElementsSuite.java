@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.charting.elements.GraphPanelChartSumElementTest.class, kg.apc.charting.elements.GraphPanelChartSimpleElementTest.class, kg.apc.charting.elements.GraphPanelChartAverageElementTest.class, kg.apc.charting.elements.GraphPanelChartExactElementTest.class})
+@Suite.SuiteClasses({GraphPanelChartSumElementTest.class, GraphPanelChartExactElementTest.class, GraphPanelChartSimpleElementTest.class, GraphPanelChartAverageElementTest.class})
 public class ElementsSuite {
 
    @BeforeClass

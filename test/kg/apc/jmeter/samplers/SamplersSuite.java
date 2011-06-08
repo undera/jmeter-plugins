@@ -5,6 +5,8 @@
 
 package kg.apc.jmeter.samplers;
 
+import kg.apc.io.SocketChannelWithTimeoutsTest;
+import kg.apc.io.DatagramChannelWithTimeoutsTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,7 +19,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({HTTPRawSamplerDirectFileTest.class, HexStringUDPDecoderTest.class, DummySamplerGuiTest.class, HTTPRawSamplerGuiTest.class, UDPTrafficDecoderTest.class, SocketChannelWithTimeoutsTest.class, DNSJavaDecoderTest.class, UDPSamplerGuiTest.class, DummySamplerTest.class, DNSJavaDecoderToRawDataTest.class, HTTPRawSamplerTest.class, UDPSamplerTest.class, DatagramChannelWithTimeoutsTest.class, AbstractIPSamplerTest.class})
+@Suite.SuiteClasses({UDPSamplerGuiTest.class, DNSJavaDecoderTest.class, HexStringUDPDecoderTest.class, DummySamplerGuiTest.class, HTTPRawSamplerDirectFileTest.class, SocketChannelWithTimeoutsTest.class, HTTPRawSamplerTest.class, InfiniteGetTCPClientImplTest.class, DNSJavaDecoderToRawDataTest.class, DatagramChannelWithTimeoutsTest.class, DummySamplerTest.class, HTTPRawSamplerGuiTest.class, UDPTrafficDecoderTest.class, UDPSamplerTest.class, AbstractIPSamplerTest.class})
 public class SamplersSuite {
 
    @BeforeClass

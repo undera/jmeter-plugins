@@ -1,5 +1,6 @@
-package kg.apc.jmeter.samplers;
+package kg.apc.io;
 
+import kg.apc.io.DatagramChannelWithTimeouts;
 import java.nio.channels.SelectionKey;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import kg.apc.emulators.SelectorEmul;

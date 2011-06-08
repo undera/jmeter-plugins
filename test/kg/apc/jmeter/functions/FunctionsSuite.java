@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.functions.DoubleSumTest.class,kg.apc.jmeter.functions.StrLenTest.class})
+@Suite.SuiteClasses({StrLenTest.class, DoubleSumTest.class})
 public class FunctionsSuite {
 
    @BeforeClass

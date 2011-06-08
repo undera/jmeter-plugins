@@ -1,4 +1,4 @@
-package kg.apc.jmeter.samplers;
+package kg.apc.io;
 
 import java.io.IOException;
 import java.net.Socket;

@@ -1,5 +1,6 @@
 package kg.apc.jmeter.samplers;
 
+import kg.apc.io.SocketChannelWithTimeouts;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;

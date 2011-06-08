@@ -8,6 +8,7 @@ import kg.apc.jmeter.dcerpc.DcerpcSuite;
 import kg.apc.jmeter.functions.FunctionsSuite;
 import kg.apc.jmeter.graphs.GraphsSuite;
 import kg.apc.jmeter.gui.GuiSuite;
+import kg.apc.jmeter.img.ImgSuite;
 import kg.apc.jmeter.modifiers.ModifiersSuite;
 import kg.apc.jmeter.perfmon.PerfmonSuite;
 import kg.apc.jmeter.reporters.ReportersSuite;
@@ -28,7 +29,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
-    {FunctionsSuite.class, ModifiersSuite.class, EndOfFileExceptionTest.class, ThreadsSuite.class, GraphsSuite.class, TimersSuite.class, PluginsCMDTest.class, RuntimeEOFExceptionTest.class, GuiSuite.class, VizualizersSuite.class, JMeterPluginsUtilsTest.class, ReportersSuite.class, PerfmonSuite.class, ConfigSuite.class, DcerpcSuite.class, ControlSuite.class, SamplersSuite.class, PluginsCMDWorkerTest.class})
+    {TimersSuite.class, RuntimeEOFExceptionTest.class, VizualizersSuite.class, PluginsCMDTest.class, ImgSuite.class, ModifiersSuite.class, DcerpcSuite.class, ReportersSuite.class, GraphsSuite.class, ControlSuite.class, JMeterPluginsUtilsTest.class, PluginsCMDWorkerTest.class, PerfmonSuite.class, GuiSuite.class, ConfigSuite.class, SamplersSuite.class, EndOfFileExceptionTest.class, ThreadsSuite.class, FunctionsSuite.class})
 public class JmeterSuite
 {
 

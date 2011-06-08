@@ -46,6 +46,8 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
             x = is.read(buffer);
             if (x > 0) {
                 w.write(buffer, 0, x);
+            } else {
+                throw new RuntimeException("Read 0 bytes, seems we have the timeout");
             }
         } catch (SocketTimeoutException e) {
             throw new RuntimeException(e);
@@ -55,7 +57,9 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
             throw new RuntimeException(e);
         }
 
-        log.debug("Read: " + w.size() + "\n" + w.toString());
+        if (log.isDebugEnabled()) {
+            log.debug("Read: " + w.size() + "\n" + w.toString());
+        }
         return w.toString();
     }
 }

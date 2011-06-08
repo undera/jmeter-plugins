@@ -1,5 +1,6 @@
 package kg.apc.jmeter.perfmon;
 
+import java.util.Collection;
 import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
@@ -390,5 +391,16 @@ public class AbstractPerformanceMonitoringGuiTest
         String expResult = "";
         String result = instance.getWikiPage();
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getMenuCategories method, of class AbstractPerformanceMonitoringGui.
+     */
+    @Test
+    public void testGetMenuCategories() {
+        System.out.println("getMenuCategories");
+        AbstractPerformanceMonitoringGui instance = new AbstractPerformanceMonitoringGuiImpl();
+        Collection result = instance.getMenuCategories();
+        assertNotNull(result);
     }
 }

@@ -1,4 +1,4 @@
-// TODO: implement uppercase, lowercase, substring functions
+// TODO: implement uppercase, lowercase, substring, iif functions
 package kg.apc.jmeter.functions;
 
 import java.util.Collection;

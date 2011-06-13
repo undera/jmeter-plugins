@@ -1,6 +1,7 @@
 package kg.apc.jmeter;
 // TODO: add rows enabling/disabling function
 // TODO: add SummaryReport support
+// TODO: add --version support here, in JMeterPlugins.jar and in agent
 
 /**
  * This class used to handle all command-line stuff

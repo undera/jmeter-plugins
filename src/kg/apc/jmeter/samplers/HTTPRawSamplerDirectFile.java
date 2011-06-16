@@ -11,19 +11,39 @@ import org.apache.jmeter.samplers.SampleResult;
  *
  * @author undera
  */
+// TODO: fix the problem that we create this object with JMeter properties
+// TODO: document it, dude! No, don't document, just merge to HTTP Raw Sampler
 public class HTTPRawSamplerDirectFile extends HTTPRawSampler {
+
+    private static final String MARKER = "FileToInclude:";
 
     @Override
     protected byte[] processIO(SampleResult res) throws Exception {
-        FileInputStream is=new FileInputStream(new File(getRequestData()));
-        FileChannel source=is.getChannel();
+        String data = getRequestData();
+        int pos = data.lastIndexOf(MARKER);
+        if (pos < 0) {
+            throw new RuntimeException("Request data have no '" + MARKER + "' instruction");
+        }
+
+        SocketChannel sock = (SocketChannel) getSocketChannel();
+
+        if (pos>0)
+        {
+            String constant=data.substring(0, pos);
+            ByteBuffer constBuf=ByteBuffer.wrap(constant.getBytes());
+            sock.write(constBuf);
+        }
+
+        String filename = data.substring(pos+MARKER.length());
+        FileInputStream is = new FileInputStream(new File(filename));
+        FileChannel source = is.getChannel();
 
         ByteBuffer sendBuf = ByteBuffer.allocateDirect(1024);// is it efficient enough?
-        SocketChannel sock = (SocketChannel) getSocketChannel();
-        while(source.read(sendBuf)>0)
-        {
+        while (source.read(sendBuf) > 0) {
             sendBuf.flip();
-            if (log.isDebugEnabled()) log.debug("Sending "+sendBuf);
+            if (log.isDebugEnabled()) {
+                log.debug("Sending " + sendBuf);
+            }
             sock.write(sendBuf);
             sendBuf.rewind();
         }

@@ -11,6 +11,7 @@ import org.apache.jorphan.gui.RateRenderer;
  *
  * @author apc
  */
+// TODO: make it obsolete
 public class ThroughputOverTimeGui
         extends AbstractOverTimeVisualizer
 {

@@ -58,11 +58,24 @@ public class HTTPRawSamplerDirectFileTest {
         HTTPRawSamplerDirectFileEmul instance = new HTTPRawSamplerDirectFileEmul();
         instance.setPort("0");
         String file = this.getClass().getResource("testSendFile.raw").getPath();
-        instance.setRequestData(file);
+        instance.setRequestData("FileToInclude:"+file);
         instance.processIO(res);
         assertEquals(new File(file).length(), instance.sockEmul.getWrittenBytesCount());
     }
 
+    @Test
+    public void testProcessIO_with_headers() throws Exception {
+        System.out.println("processIO");
+        SampleResult res = new SampleResult();
+        res.sampleStart();
+        HTTPRawSamplerDirectFileEmul instance = new HTTPRawSamplerDirectFileEmul();
+        instance.setPort("0");
+        String file = this.getClass().getResource("testSendFile.raw").getPath();
+        String prefix="GET / HTTP/1.0\r\n";
+        instance.setRequestData(prefix+"FileToInclude:"+file);
+        instance.processIO(res);
+        assertEquals(new File(file).length()+prefix.length(), instance.sockEmul.getWrittenBytesCount());
+    }
 
     @Test
     public void testProcessIO_real() throws Exception {

@@ -106,7 +106,7 @@ public class FileChannelEmul extends FileChannel {
 
     @Override
     public void force(boolean metaData) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        log.debug("Force flush");
     }
 
     @Override
@@ -136,7 +136,7 @@ public class FileChannelEmul extends FileChannel {
 
     @Override
     public FileLock lock(long position, long size, boolean shared) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return new FileLockEmul();
     }
 
     @Override

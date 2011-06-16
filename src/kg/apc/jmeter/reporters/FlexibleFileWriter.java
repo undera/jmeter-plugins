@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.Arrays;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -45,7 +46,7 @@ public class FlexibleFileWriter
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String FILENAME = "filename";
     private static final String COLUMNS = "columns";
-    protected FileChannel fileChannel;
+    protected volatile FileChannel fileChannel;
     private int[] compiledFields;
     private ByteBuffer[] compiledConsts;
     private ArrayList<String> availableFieldNames = new ArrayList<String>(Arrays.asList(AVAILABLE_FIELDS.trim().split(" ")));
@@ -136,9 +137,10 @@ public class FlexibleFileWriter
         fileChannel = fos.getChannel();
     }
 
-    private void closeFile() {
+    private synchronized void closeFile() {
         if (fileChannel != null && fileChannel.isOpen()) {
             try {
+                fileChannel.force(false);
                 fileChannel.close();
             } catch (IOException ex) {
                 log.error("Failed to close file: " + getFilename(), ex);
@@ -157,23 +159,26 @@ public class FlexibleFileWriter
         ByteBuffer buf = ByteBuffer.allocateDirect(1024 * 10);
         for (int n = 0; n < compiledConsts.length; n++) {
             if (compiledConsts[n] != null) {
-                log.debug("Const " + JMeterPluginsUtils.byteBufferToString(compiledConsts[n]));
-                buf.put((ByteBuffer) compiledConsts[n].rewind());
+                buf.put(compiledConsts[n].duplicate()); 
             } else {
-                log.debug("Field " + compiledFields[n]);
                 appendSampleResultField(buf, evt.getResult(), compiledFields[n]);
             }
         }
 
         buf.flip();
 
+        // FIXME: some records are not written to file. Try using old file streams?
         try {
-            synchronized (fileChannel) {
-                fileChannel.write(buf);
-            }
+            syncWrite(buf);
         } catch (IOException ex) {
-            log.error("Error writing record to file: ", ex);
+            log.error("Problems writing to file", ex);
         }
+    }
+
+    private synchronized  void syncWrite(ByteBuffer buf) throws IOException {
+        FileLock lock = fileChannel.lock();
+        fileChannel.write(buf);
+        lock.release();
     }
 
     private void appendSampleResultField(ByteBuffer buf, SampleResult result, int fieldID) {

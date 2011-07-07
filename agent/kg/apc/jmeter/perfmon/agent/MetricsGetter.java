@@ -296,7 +296,8 @@ public class MetricsGetter implements AgentCommandsInterface
    public String getValues(String value)
    {
 
-      StringBuilder buff = new StringBuilder();
+       // NEVER CHANGE to Stgring BUILDER
+      StringBuffer buff = new StringBuffer();
 
       if (value.equals(CPU))
       {

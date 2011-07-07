@@ -1,5 +1,5 @@
 package kg.apc.jmeter.vizualizers;
-
+// TODO: rows in settings should have color markers for better experience
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import java.awt.BorderLayout;
 import java.awt.Component;

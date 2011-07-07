@@ -107,6 +107,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
         addToPanel(mainPanel, editConstraints, 1, 3, checkInfo = new JTextArea());
         checkButton.addActionListener(new CheckConsistencyAction(fileName, checkInfo));
         checkInfo.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        checkInfo.setEditable(false);
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

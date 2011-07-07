@@ -65,6 +65,7 @@ public class RawRequestSourcePreProcessor
                 return;
             } else {
                 log.info("End of file reached: " + getFileName());
+                JMeterContextService.getContext().getThread().stop();
                 throw new RuntimeEOFException("End of file reached", ex);
             }
         } catch (IOException ex) {

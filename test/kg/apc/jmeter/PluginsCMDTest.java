@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class PluginsCMDTest {
+
     private String basedir;
 
     public PluginsCMDTest() {
@@ -60,15 +61,15 @@ public class PluginsCMDTest {
     public void testProcessParams_aggreg() throws IOException {
         System.out.println("processParams aggregate");
         File f = File.createTempFile("test", ".csv");
-        String str=" --generate-csv "+f.getAbsolutePath()+" "
-                + "--input-jtl "+basedir+"/few.jtl "
+        String str = " --generate-csv " + f.getAbsolutePath() + " "
+                + "--input-jtl " + basedir + "/few.jtl "
                 + "--aggregate-rows yes --plugin-type ResponseTimesOverTime";
         String[] args = str.split(" +");
         PluginsCMD instance = new PluginsCMD();
         int expResult = 0;
         int result = instance.processParams(args);
         assertEquals(expResult, result);
-        assertTrue(78==f.length() || 81==f.length()); // 78 at linux, 81 at windows because or \r\n
+        assertTrue(78 == f.length() || 81 == f.length()); // 78 at linux, 81 at windows because or \r\n
     }
 
     @Test
@@ -76,17 +77,17 @@ public class PluginsCMDTest {
     public void testProcessParams_outliers() throws IOException {
         System.out.println("processParams outliers");
         File f = File.createTempFile("test", ".png");
-        String str="--width 1000 --height 300 "
+        String str = "--width 1000 --height 300 "
                 + "--prevent-outliers yes "
                 + "--plugin-type ResponseTimesDistribution"
-                + " --generate-png "+f.getAbsolutePath()+" "
-                + "--input-jtl "+basedir+"/results_issue_47.jtl";
+                + " --generate-png " + f.getAbsolutePath() + " "
+                + "--input-jtl " + basedir + "/results_issue_47.jtl";
         String[] args = str.split(" +");
         PluginsCMD instance = new PluginsCMD();
         int expResult = 0;
         int result = instance.processParams(args);
         assertEquals(expResult, result);
         System.out.println(f.length());
-        assertTrue(15707==f.length() || 15707==f.length()); // 78 at linux, 81 at windows
+        assertTrue(15707 == f.length() || 15707 == f.length());
     }
 }

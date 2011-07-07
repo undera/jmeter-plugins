@@ -44,6 +44,8 @@ public abstract class TestJMeterUtils {
          ex.printStackTrace(System.err);
       }
 
+      //propsFile=new File("/home/undera/NetBeansProjects/jmeter/trunk/bin/jmeter.properties");
+      
       JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
       JMeterUtils.setLocale(new Locale("ignoreResources"));
 

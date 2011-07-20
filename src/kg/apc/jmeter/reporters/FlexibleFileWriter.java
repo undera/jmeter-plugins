@@ -1,3 +1,4 @@
+// TODO: add startTimeSec - integer epoch seconds only
 // TODO: buffer file writes to bigger chunks?
 package kg.apc.jmeter.reporters;
 
@@ -233,11 +234,11 @@ public class FlexibleFileWriter
                 break;
 
             case 10:
-                buf.put(result.getSampleLabel().getBytes());
+                buf.put(result.getThreadName().getBytes());
                 break;
 
             case 11:
-                buf.put(result.getThreadName().getBytes());
+                buf.put(result.getSampleLabel().getBytes());
                 break;
 
             case 12:

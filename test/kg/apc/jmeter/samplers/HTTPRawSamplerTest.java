@@ -7,6 +7,8 @@ import java.io.IOException;
 import org.apache.jmeter.samplers.SampleResult;
 import java.net.MalformedURLException;
 import java.nio.ByteBuffer;
+import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,6 +39,7 @@ public class HTTPRawSamplerTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
@@ -49,7 +52,7 @@ public class HTTPRawSamplerTest {
         instance.setHostName("169.254.250.25");
         instance.setPort("80");
         instance.setTimeout("0");
-}
+    }
 
     @After
     public void tearDown() {
@@ -61,8 +64,8 @@ public class HTTPRawSamplerTest {
     @Test
     public void testSample() throws MalformedURLException, IOException {
         System.out.println("sample");
-        String req="GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
-        String resp="HTTP/1.1 200 OK\r\n\r\nTEST";
+        String req = "GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
+        String resp = "HTTP/1.1 200 OK\r\n\r\nTEST";
         instance.setRequestData(req);
         instance.setParseResult(true);
 
@@ -83,8 +86,8 @@ public class HTTPRawSamplerTest {
     @Test
     public void testSample_keepalive() throws MalformedURLException, IOException {
         System.out.println("sample");
-        String req="TEST";
-        String resp="TEST";
+        String req = "TEST";
+        String resp = "TEST";
         instance.setRequestData(req);
         instance.setUseKeepAlive(true);
 
@@ -202,13 +205,13 @@ public class HTTPRawSamplerTest {
     @Test
     public void testSample_unparsable() throws MalformedURLException, IOException {
         System.out.println("Sample_unparsable");
-        String req="GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
-        String resp="<html>\n"+
-                "<head><title>400 Bad Request</title></head>\n"
+        String req = "GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
+        String resp = "<html>\n"
+                + "<head><title>400 Bad Request</title></head>\n"
                 + "<body bgcolor=\"white\">\n"
-                +"<center><h1>400 Bad Request</h1></center>\n"
-                +"<hr><center>nginx</center>\n"
-                +"</body></html>";
+                + "<center><h1>400 Bad Request</h1></center>\n"
+                + "<hr><center>nginx</center>\n"
+                + "</body></html>";
         instance.setRequestData(req);
         instance.setParseResult(true);
 
@@ -225,4 +228,33 @@ public class HTTPRawSamplerTest {
         assertTrue(!instance.sockEmul.isOpen());
     }
 
+    @Test
+    public void testProcessIO_long_noLimit() throws Exception {
+        System.out.println("processIOnolim");
+        SampleResult res = new SampleResult();
+        res.sampleStart();
+        String resp=TestJMeterUtils.getTestData(2048);
+        instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
+        
+        byte[] result = instance.processIO(res);
+        assertTrue(result.length > 1024);
+    }
+
+    @Test
+    public void testProcessIO_long_Limited() throws Exception {
+        JMeterUtils.setProperty(AbstractIPSampler.RECV_BUFFER_LEN_PROPERTY, Integer.toString(1024));
+        JMeterUtils.setProperty(AbstractIPSampler.RESULT_DATA_LIMIT, Integer.toString(1024));
+        instance = new HTTPRawSamplerEmul();
+        instance.setHostName("169.254.250.25");
+        instance.setPort("80");
+        instance.setTimeout("0");
+        System.out.println("processIOlim");
+        SampleResult res = new SampleResult();
+        res.sampleStart();
+        String resp=TestJMeterUtils.getTestData(12048);
+        instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
+        byte[] result = instance.processIO(res);
+        System.out.println(result.length);
+        assertEquals(1024, result.length);
+    }
 }

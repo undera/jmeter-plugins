@@ -10,6 +10,7 @@ import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.Interruptible;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -22,6 +23,9 @@ public abstract class AbstractIPSampler
         implements Serializable, Cloneable, Interruptible {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
+    // TODO: document properties
+    public static final String RECV_BUFFER_LEN_PROPERTY = "kg.apc.jmeter.samplers.ReceiveBufferSize";
+    public static final String RESULT_DATA_LIMIT = "kg.apc.jmeter.samplers.ResultDataLimit";
     public static final String HOSTNAME = "hostname";
     public static final String PORT = "port";
     public static final String TIMEOUT = "timeout";
@@ -30,7 +34,13 @@ public abstract class AbstractIPSampler
     public static final String EMPTY = "";
     public static final String RC200 = "200";
     public static final String RC500 = "500";
-    protected ByteBuffer recvBuf = ByteBuffer.allocateDirect(1024 * 4); // TODO: add property here
+    protected final ByteBuffer recvBuf;
+    protected final int recvDataLimit;
+
+    public AbstractIPSampler() {
+        recvBuf = ByteBuffer.allocateDirect(JMeterUtils.getPropDefault(RECV_BUFFER_LEN_PROPERTY, 1024 * 4));
+        recvDataLimit = JMeterUtils.getPropDefault(RESULT_DATA_LIMIT, -1);
+    }
 
     public final String getHostName() {
         return getPropertyAsString(AbstractIPSampler.HOSTNAME);

@@ -1,3 +1,4 @@
+// TODO: add property to limit data stored in sampleresults
 package kg.apc.jmeter.samplers;
 
 import kg.apc.io.SocketChannelWithTimeouts;
@@ -53,9 +54,14 @@ public class HTTPRawSampler extends AbstractIPSampler {
                     firstPack = false;
                 }
                 recvBuf.flip();
-                byte[] bytes = new byte[cnt];
-                recvBuf.get(bytes);
-                response.write(bytes);
+                if (recvDataLimit < 0 || response.size() <= recvDataLimit) {
+                    byte[] bytes = new byte[cnt];
+                    recvBuf.get(bytes);
+                    response.write(bytes);
+                }
+                else {
+                    log.debug("Dropping data: "+response.size());
+                }
                 recvBuf.clear();
             }
 
@@ -119,8 +125,6 @@ public class HTTPRawSampler extends AbstractIPSampler {
     }
 
     protected byte[] processIO(SampleResult res) throws Exception {
-        //log.info("Begin IO");
-        //log.info("send");
         ByteBuffer sendBuf = ByteBuffer.wrap(getRequestData().getBytes()); // cannot cache it because of variable processing
         SocketChannel sock = (SocketChannel) getSocketChannel();
         sock.write(sendBuf);

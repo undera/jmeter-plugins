@@ -29,90 +29,95 @@ import org.junit.Test;
  * @author apc
  */
 public abstract class TestJMeterUtils {
-   private static JMeterTreeListener jMeterTreeListener;
-   private static JMeterTreeModel jMeterTreeModel;
 
-   /**
-    *
-    */
-   public static void createJmeterEnv() {
-      File propsFile = null;
-      try {
-         propsFile = File.createTempFile("jmeter-plugins", "testProps");
-      }
-      catch (IOException ex) {
-         ex.printStackTrace(System.err);
-      }
+    private static JMeterTreeListener jMeterTreeListener;
+    private static JMeterTreeModel jMeterTreeModel;
 
-      //propsFile=new File("/home/undera/NetBeansProjects/jmeter/trunk/bin/jmeter.properties");
-      
-      JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
-      JMeterUtils.setLocale(new Locale("ignoreResources"));
+    /**
+     *
+     */
+    public static void createJmeterEnv() {
+        File propsFile = null;
+        try {
+            propsFile = File.createTempFile("jmeter-plugins", "testProps");
+        } catch (IOException ex) {
+            ex.printStackTrace(System.err);
+        }
 
-      jMeterTreeModel = new JMeterTreeModel();
-      jMeterTreeListener = new JMeterTreeListener();
-      jMeterTreeListener.setModel(jMeterTreeModel);
-      GuiPackage.getInstance(jMeterTreeListener, jMeterTreeModel);
-      JMeterContextService.getContext().setVariables(new JMeterVariables());
-      StandardJMeterEngine engine = new EmulatorJmeterEngine();
-      JMeterContextService.getContext().setEngine(engine);
-      HashTree hashtree = new HashTree();
-      hashtree.add(new LoopController());
-      JMeterThread thread = new JMeterThread(hashtree, engine, null);
-      thread.setThreadName("test thread");
-      JMeterContextService.getContext().setThread(thread);
-      ThreadGroup threadGroup = new org.apache.jmeter.threads.ThreadGroup();
-      threadGroup.setName("test thread group");
-      JMeterContextService.getContext().setThreadGroup(threadGroup);
-   }
+        //propsFile=new File("/home/undera/NetBeansProjects/jmeter/trunk/bin/jmeter.properties");
 
-   public static String getTempDir() {
-      File f = null;
-      try {
-         f = File.createTempFile("jmeterplugins", ".tmp");
-      }
-      catch (IOException ex) {
-         Logger.getLogger(TestJMeterUtils.class.getName()).log(Level.SEVERE, null, ex);
-      }
-      return f.getParent();
-   }
+        JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
+        JMeterUtils.setLocale(new Locale("ignoreResources"));
 
-   /**
-    *
-    */
-   @Test
-   public void testEnv() {
-      TestJMeterUtils.createJmeterEnv();
-      GuiPackage.getInstance().updateCurrentNode();
-   }
+        jMeterTreeModel = new JMeterTreeModel();
+        jMeterTreeListener = new JMeterTreeListener();
+        jMeterTreeListener.setModel(jMeterTreeModel);
+        GuiPackage.getInstance(jMeterTreeListener, jMeterTreeModel);
+        JMeterContextService.getContext().setVariables(new JMeterVariables());
+        StandardJMeterEngine engine = new EmulatorJmeterEngine();
+        JMeterContextService.getContext().setEngine(engine);
+        HashTree hashtree = new HashTree();
+        hashtree.add(new LoopController());
+        JMeterThread thread = new JMeterThread(hashtree, engine, null);
+        thread.setThreadName("test thread");
+        JMeterContextService.getContext().setThread(thread);
+        ThreadGroup threadGroup = new org.apache.jmeter.threads.ThreadGroup();
+        threadGroup.setName("test thread group");
+        JMeterContextService.getContext().setThreadGroup(threadGroup);
+    }
 
-   public static String convertStreamToString(InputStream is)
-         throws IOException {
-      /*
-       * To convert the InputStream to String we use the
-       * Reader.read(char[] buffer) method. We iterate until the
-       * Reader return -1 which means there's no more data to
-       * read. We use the StringWriter class to produce the string.
-       */
-      if (is != null) {
-         Writer writer = new StringWriter();
+    public static String getTempDir() {
+        File f = null;
+        try {
+            f = File.createTempFile("jmeterplugins", ".tmp");
+        } catch (IOException ex) {
+            Logger.getLogger(TestJMeterUtils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return f.getParent();
+    }
 
-         char[] buffer = new char[1024];
-         try {
-            Reader reader = new BufferedReader(
-                  new InputStreamReader(is, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-               writer.write(buffer, 0, n);
+    public static String getTestData(int i) {
+        String res = "0";
+        while (res.length() < i) {
+            res += res;
+        }
+        return res.substring(0, i);
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testEnv() {
+        TestJMeterUtils.createJmeterEnv();
+        GuiPackage.getInstance().updateCurrentNode();
+    }
+
+    public static String convertStreamToString(InputStream is)
+            throws IOException {
+        /*
+         * To convert the InputStream to String we use the
+         * Reader.read(char[] buffer) method. We iterate until the
+         * Reader return -1 which means there's no more data to
+         * read. We use the StringWriter class to produce the string.
+         */
+        if (is != null) {
+            Writer writer = new StringWriter();
+
+            char[] buffer = new char[1024];
+            try {
+                Reader reader = new BufferedReader(
+                        new InputStreamReader(is, "UTF-8"));
+                int n;
+                while ((n = reader.read(buffer)) != -1) {
+                    writer.write(buffer, 0, n);
+                }
+            } finally {
+                is.close();
             }
-         }
-         finally {
-            is.close();
-         }
-         return writer.toString();
-      }
-      else {
-         return "";
-      }
-   }
+            return writer.toString();
+        } else {
+            return "";
+        }
+    }
 }

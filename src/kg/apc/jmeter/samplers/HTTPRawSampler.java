@@ -59,9 +59,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
                     recvBuf.get(bytes);
                     response.write(bytes);
                 }
-                else {
-                    log.debug("Dropping data: "+response.size());
-                }
+
                 recvBuf.clear();
             }
 

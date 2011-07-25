@@ -20,7 +20,7 @@ public class LoadosophiaUploaderTest {
     private final String basedir;
 
     public LoadosophiaUploaderTest() {
-        String file = this.getClass().getResource("saveservice.properties").getPath();
+        String file = this.getClass().getResource("anchor.txt").getPath();
         basedir = file.substring(0, file.lastIndexOf("/"));
     }
 

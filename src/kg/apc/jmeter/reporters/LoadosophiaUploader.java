@@ -98,6 +98,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         } catch (IOException ex) {
             log.error("Failed to upload results to loadosophia", ex);
         }
+        clearData();
     }
 
     private void sendJTLToLoadosophia(File targetFile) throws IOException {

@@ -119,4 +119,10 @@ public class LoadosophiaUploaderGui extends AbstractListenerGui {
         constraints.gridy = row;
         panel.add(component, constraints);
     }
+
+    @Override
+    public void clearGui() {
+        super.clearGui();
+        initFields();
+    }
 }

@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class LoadosophiaUploaderTest {
+
     private final String basedir;
 
     public LoadosophiaUploaderTest() {
@@ -126,5 +127,41 @@ public class LoadosophiaUploaderTest {
         String token = "";
         LoadosophiaUploader instance = new LoadosophiaUploader();
         instance.setUploadToken(token);
+    }
+
+    /**
+     * Test of getProject method, of class LoadosophiaUploader.
+     */
+    @Test
+    public void testGetProject() {
+        System.out.println("getProject");
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        String expResult = "";
+        String result = instance.getProject();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getUploadToken method, of class LoadosophiaUploader.
+     */
+    @Test
+    public void testGetUploadToken() {
+        System.out.println("getUploadToken");
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        String expResult = "";
+        String result = instance.getUploadToken();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getFilePrefix method, of class LoadosophiaUploader.
+     */
+    @Test
+    public void testGetFilePrefix() {
+        System.out.println("getFilePrefix");
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        String expResult = "";
+        String result = instance.getFilePrefix();
+        assertEquals(expResult, result);
     }
 }

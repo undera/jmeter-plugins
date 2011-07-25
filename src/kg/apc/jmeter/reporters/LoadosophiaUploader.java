@@ -126,7 +126,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         setProperty(PROJECT, proj);
     }
 
-    private String getProject() {
+    public String getProject() {
         return getPropertyAsString(PROJECT);
     }
 
@@ -134,7 +134,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         setProperty(UPLOAD_TOKEN, token);
     }
 
-    private String getUploadToken() {
+    public String getUploadToken() {
         return getPropertyAsString(UPLOAD_TOKEN);
     }
 

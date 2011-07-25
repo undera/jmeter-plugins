@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.reporters;
 
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,22 +14,23 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class LoadosophiaUploaderGuiTest {
-    
+
     public LoadosophiaUploaderGuiTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -44,11 +42,8 @@ public class LoadosophiaUploaderGuiTest {
     public void testGetStaticLabel() {
         System.out.println("getStaticLabel");
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
-        String expResult = "";
         String result = instance.getStaticLabel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result.length() > 0);
     }
 
     /**
@@ -58,11 +53,8 @@ public class LoadosophiaUploaderGuiTest {
     public void testGetLabelResource() {
         System.out.println("getLabelResource");
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
-        String expResult = "";
         String result = instance.getLabelResource();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result.length() > 0);
     }
 
     /**
@@ -72,11 +64,8 @@ public class LoadosophiaUploaderGuiTest {
     public void testCreateTestElement() {
         System.out.println("createTestElement");
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
-        TestElement expResult = null;
         TestElement result = instance.createTestElement();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result instanceof LoadosophiaUploader);
     }
 
     /**
@@ -85,11 +74,9 @@ public class LoadosophiaUploaderGuiTest {
     @Test
     public void testModifyTestElement() {
         System.out.println("modifyTestElement");
-        TestElement te = null;
+        TestElement te = new LoadosophiaUploader();
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
         instance.modifyTestElement(te);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -98,10 +85,8 @@ public class LoadosophiaUploaderGuiTest {
     @Test
     public void testConfigure() {
         System.out.println("configure");
-        TestElement element = null;
+        TestElement element = new LoadosophiaUploader();
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
         instance.configure(element);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

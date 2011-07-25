@@ -63,7 +63,7 @@ public class LoadosophiaUploaderTest {
         instance.setFilePrefix("UnitTest");
         instance.setUploaderURI("http://localhost/uploader/");
         instance.setProject("DEFAULT");
-        instance.setUploadToken(TestJMeterUtils.getTestData(64));
+        instance.setUploadToken("0000000000000000000000000000000000000000000000000000000000000000");
         instance.testStarted();
         SampleResult res = new SampleResult();
         res.sampleStart();

@@ -9,6 +9,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.jmeter.control.LoopController;
@@ -77,11 +78,10 @@ public abstract class TestJMeterUtils {
     }
 
     public static String getTestData(int i) {
-        String res = "0";
-        while (res.length() < i) {
-            res += res;
-        }
-        return res.substring(0, i);
+        byte[] bytes = new byte[i];
+        Random r = new Random();
+        r.nextBytes(bytes);
+        return new String(bytes);
     }
 
     /**

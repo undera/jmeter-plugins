@@ -2,12 +2,16 @@ package kg.apc.jmeter.reporters;
 
 // TODO: document it
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.zip.GZIPOutputStream;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.FilePart;
+import org.apache.commons.httpclient.methods.multipart.FilePartSource;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
@@ -109,7 +113,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             // TODO: gzip file optionally/mandatory
             new StringPart("projectKey", getProject()),
             new StringPart("uploadToken", getUploadToken()),
-            new FilePart("jtl_file", targetFile)
+            new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile)))
         };
         filePost.setRequestEntity(new MultipartRequestEntity(parts, filePost.getParams()));
 
@@ -121,6 +125,30 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
 
         log.info("Finished upload to Loadosophia.org");
 
+    }
+
+    private File gzipFile(File src) throws IOException {
+        // Create the GZIP output stream
+        String outFilename = src.getAbsolutePath() + ".gz";
+        log.info("Gzipping "+src.getAbsolutePath());
+        GZIPOutputStream out = new GZIPOutputStream(new FileOutputStream(outFilename));
+
+        // Open the input file
+        FileInputStream in = new FileInputStream(src);
+
+        // Transfer bytes from the input file to the GZIP output stream
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+
+        // Complete the GZIP file
+        out.finish();
+        out.close();
+
+        return new File(outFilename);
     }
 
     public void setProject(String proj) {

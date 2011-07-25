@@ -2,8 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package kg.apc.jmeter.reporters;
+package kg.apc.io;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,8 +16,8 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({AutoStopGuiTest.class, LoadosophiaUploaderTest.class, FlexibleFileWriterTest.class, JAutoStopPanelTest.class, LoadosophiaUploaderGuiTest.class, AutoStopTest.class, ConsoleStatusLoggerGuiTest.class, FlexibleFileWriterGuiTest.class, ConsoleStatusLoggerTest.class})
-public class ReportersSuite {
+@Suite.SuiteClasses({kg.apc.io.DatagramChannelWithTimeoutsTest.class, kg.apc.io.SocketChannelWithTimeoutsTest.class})
+public class IoSuite {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -35,5 +34,5 @@ public class ReportersSuite {
     @After
     public void tearDown() throws Exception {
     }
-
+    
 }

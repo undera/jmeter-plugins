@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({UDPSamplerGuiTest.class, DNSJavaDecoderTest.class, HexStringUDPDecoderTest.class, DummySamplerGuiTest.class, HTTPRawSamplerDirectFileTest.class, SocketChannelWithTimeoutsTest.class, HTTPRawSamplerTest.class, InfiniteGetTCPClientImplTest.class, DNSJavaDecoderToRawDataTest.class, DatagramChannelWithTimeoutsTest.class, DummySamplerTest.class, HTTPRawSamplerGuiTest.class, UDPTrafficDecoderTest.class, UDPSamplerTest.class, AbstractIPSamplerTest.class})
+@Suite.SuiteClasses({UDPSamplerGuiTest.class, DNSJavaDecoderTest.class, HexStringUDPDecoderTest.class, DummySamplerGuiTest.class, HTTPRawSamplerDirectFileTest.class, HTTPRawSamplerTest.class, InfiniteGetTCPClientImplTest.class, DNSJavaDecoderToRawDataTest.class, DummySamplerTest.class, HTTPRawSamplerGuiTest.class, UDPTrafficDecoderTest.class, UDPSamplerTest.class, AbstractIPSamplerTest.class})
 public class SamplersSuite {
 
    @BeforeClass

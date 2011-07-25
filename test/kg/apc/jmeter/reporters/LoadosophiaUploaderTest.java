@@ -1,5 +1,6 @@
 package kg.apc.jmeter.reporters;
 
+import org.apache.jmeter.util.JMeterUtils;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
@@ -15,8 +16,11 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class LoadosophiaUploaderTest {
+    private final String basedir;
 
     public LoadosophiaUploaderTest() {
+        String file = this.getClass().getResource("saveservice.properties").getPath();
+        basedir = file.substring(0, file.lastIndexOf("/"));
     }
 
     @BeforeClass
@@ -30,6 +34,7 @@ public class LoadosophiaUploaderTest {
 
     @Before
     public void setUp() {
+        JMeterUtils.setJMeterHome(basedir);
     }
 
     @After
@@ -55,10 +60,14 @@ public class LoadosophiaUploaderTest {
         System.out.println("testEnded");
         LoadosophiaUploader instance = new LoadosophiaUploader();
         instance.setFilePrefix("UnitTest");
-        instance.setUploaderURI("http://localhost/service/upload/");
+        instance.setUploaderURI("http://localhost/uploader/");
+        instance.setProject("DEFAULT");
+        instance.setUploadToken(TestJMeterUtils.getTestData(64));
         instance.testStarted();
-        SampleResult res=new SampleResult();
-        SampleEvent event=new SampleEvent(res, "test");
+        SampleResult res = new SampleResult();
+        res.sampleStart();
+        res.sampleEnd();
+        SampleEvent event = new SampleEvent(res, "test");
         instance.sampleOccurred(event);
         instance.testEnded();
     }
@@ -95,5 +104,27 @@ public class LoadosophiaUploaderTest {
         String prefix = "";
         LoadosophiaUploader instance = new LoadosophiaUploader();
         instance.setFilePrefix(prefix);
+    }
+
+    /**
+     * Test of setProject method, of class LoadosophiaUploader.
+     */
+    @Test
+    public void testSetProject() {
+        System.out.println("setProject");
+        String proj = "";
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        instance.setProject(proj);
+    }
+
+    /**
+     * Test of setUploadToken method, of class LoadosophiaUploader.
+     */
+    @Test
+    public void testSetUploadToken() {
+        System.out.println("setUploadToken");
+        String token = "";
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        instance.setUploadToken(token);
     }
 }

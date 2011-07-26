@@ -11,21 +11,27 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.gui.GuiPackage;
+import org.apache.jmeter.samplers.Clearable;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jmeter.visualizers.Visualizer;
 import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 
 /**
  *
  * @author undera
  */
-public class LoadosophiaUploaderGui extends AbstractListenerGui {
+public class LoadosophiaUploaderGui
+        extends AbstractListenerGui
+        implements Visualizer, Clearable {
 
     public static final String DEFAULT_UPLOADER_URI = "https://loadosophia.org/uploader/";
     public static final String WIKIPAGE = "LoadosophiaUploader";
     private JTextField filePrefix;
     private JTextArea uploadToken;
     private JTextField projectKey;
+    private JTextArea infoArea;
 
     public LoadosophiaUploaderGui() {
         super();
@@ -42,6 +48,7 @@ public class LoadosophiaUploaderGui extends AbstractListenerGui {
         return getClass().getCanonicalName();
     }
 
+    @Override
     public TestElement createTestElement() {
         TestElement te = new LoadosophiaUploader();
         modifyTestElement(te);
@@ -49,10 +56,12 @@ public class LoadosophiaUploaderGui extends AbstractListenerGui {
         return te;
     }
 
+    @Override
     public void modifyTestElement(TestElement te) {
         super.configureTestElement(te);
         if (te instanceof LoadosophiaUploader) {
             LoadosophiaUploader fw = (LoadosophiaUploader) te;
+            fw.setListener(this);
             fw.setFilePrefix(filePrefix.getText());
             fw.setProject(projectKey.getText());
             fw.setUploadToken(uploadToken.getText());
@@ -92,10 +101,16 @@ public class LoadosophiaUploaderGui extends AbstractListenerGui {
         addToPanel(mainPanel, editConstraints, 1, 1, projectKey = new JTextField());
 
         editConstraints.fill = GridBagConstraints.BOTH;
-        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Upload Token: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 4, uploadToken = new JTextArea());
-        uploadToken.setRows(10);
+        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Upload Token: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 2, uploadToken = new JTextArea());
+        uploadToken.setRows(5);
         uploadToken.setBorder(new BevelBorder(BevelBorder.LOWERED));
+
+        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Info Area: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 3, infoArea = new JTextArea());
+        infoArea.setRows(25);
+        infoArea.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        infoArea.setEditable(false);
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
@@ -124,5 +139,20 @@ public class LoadosophiaUploaderGui extends AbstractListenerGui {
     public void clearGui() {
         super.clearGui();
         initFields();
+    }
+
+    public void add(SampleResult sr) {
+    }
+
+    public void clearData() {
+        infoArea.setText("");
+    }
+
+    public void inform(String string) {
+        infoArea.append(string + "\n");
+    }
+
+    public boolean isStats() {
+        return false;
     }
 }

@@ -47,6 +47,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             java.util.logging.Logger.getLogger(LoadosophiaUploader.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         super.testStarted();
+
     }
 
     private void setupSaving() throws IOException {
@@ -54,7 +55,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         tmp.delete();
         tmp.deleteOnExit();
         fileName = tmp.getAbsolutePath();
-        log.info("Storing results for upload to Loadosophia.org: " + fileName);
+        informUser("Storing results for upload to Loadosophia.org: " + fileName);
         setFilename(fileName);
 
         SampleSaveConfiguration conf = new SampleSaveConfiguration();
@@ -100,13 +101,14 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
 
             sendJTLToLoadosophia(new File(fileName));
         } catch (IOException ex) {
+            informUser("Failed to upload results to Loadosophia.org, see log for detais");
             log.error("Failed to upload results to loadosophia", ex);
         }
         clearData();
     }
 
     private void sendJTLToLoadosophia(File targetFile) throws IOException {
-        log.info("Starting upload to Loadosophia.org");
+        informUser("Starting upload to Loadosophia.org");
         HttpClient uploader = new HttpClient();
         PostMethod filePost = new PostMethod(getUploaderURI());
         Part[] parts = {
@@ -123,14 +125,15 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             throw $e;
         }
 
-        log.info("Finished upload to Loadosophia.org");
+        informUser("Finished upload to Loadosophia.org\nGo to https://loadosophia.org/service/upload/ to see processing status.\n");
 
     }
 
     private File gzipFile(File src) throws IOException {
+        // TODO: still want to make it stream-like on the fly
         // Create the GZIP output stream
         String outFilename = src.getAbsolutePath() + ".gz";
-        log.info("Gzipping "+src.getAbsolutePath());
+        informUser("Gzipping " + src.getAbsolutePath());
         GZIPOutputStream out = new GZIPOutputStream(new FileOutputStream(outFilename));
 
         // Open the input file
@@ -181,5 +184,13 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
 
     public String getFilePrefix() {
         return getPropertyAsString(FILE_PREFIX);
+    }
+
+    private void informUser(String string) {
+        log.info(string);
+        // TODO: test in non-gui mode!
+        if (getVisualizer() != null && getVisualizer() instanceof LoadosophiaUploaderGui) {
+            ((LoadosophiaUploaderGui) getVisualizer()).inform(string);
+        }
     }
 }

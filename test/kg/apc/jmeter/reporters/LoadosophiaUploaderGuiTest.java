@@ -1,6 +1,7 @@
 package kg.apc.jmeter.reporters;
 
 import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -88,5 +89,59 @@ public class LoadosophiaUploaderGuiTest {
         TestElement element = new LoadosophiaUploader();
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
         instance.configure(element);
+    }
+
+    /**
+     * Test of clearGui method, of class LoadosophiaUploaderGui.
+     */
+    @Test
+    public void testClearGui() {
+        System.out.println("clearGui");
+        LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
+        instance.clearGui();
+    }
+
+    /**
+     * Test of add method, of class LoadosophiaUploaderGui.
+     */
+    @Test
+    public void testAdd() {
+        System.out.println("add");
+        SampleResult sr = null;
+        LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
+        instance.add(sr);
+    }
+
+    /**
+     * Test of clearData method, of class LoadosophiaUploaderGui.
+     */
+    @Test
+    public void testClearData() {
+        System.out.println("clearData");
+        LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
+        instance.clearData();
+    }
+
+    /**
+     * Test of inform method, of class LoadosophiaUploaderGui.
+     */
+    @Test
+    public void testInform() {
+        System.out.println("inform");
+        String string = "";
+        LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
+        instance.inform(string);
+    }
+
+    /**
+     * Test of isStats method, of class LoadosophiaUploaderGui.
+     */
+    @Test
+    public void testIsStats() {
+        System.out.println("isStats");
+        LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
+        boolean expResult = false;
+        boolean result = instance.isStats();
+        assertEquals(expResult, result);
     }
 }

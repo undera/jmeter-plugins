@@ -1,6 +1,5 @@
 package kg.apc.jmeter.reporters;
 
-// TODO: document it
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -105,6 +104,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             log.error("Failed to upload results to loadosophia", ex);
         }
         clearData();
+        informUser("");
     }
 
     private void sendJTLToLoadosophia(File targetFile) throws IOException {
@@ -125,12 +125,12 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             throw $e;
         }
 
-        informUser("Finished upload to Loadosophia.org\nGo to https://loadosophia.org/service/upload/ to see processing status.\n");
-
+        informUser("Finished upload to Loadosophia.org");
+        informUser("Go to https://loadosophia.org/service/upload/ to see processing status.");
     }
 
     private File gzipFile(File src) throws IOException {
-        // TODO: still want to make it stream-like on the fly
+        // Never try to make it stream-like on the fly, because content-length still required
         // Create the GZIP output stream
         String outFilename = src.getAbsolutePath() + ".gz";
         informUser("Gzipping " + src.getAbsolutePath());

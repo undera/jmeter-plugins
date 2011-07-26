@@ -108,7 +108,7 @@ public class LoadosophiaUploaderGui
 
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Info Area: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 3, infoArea = new JTextArea());
-        infoArea.setRows(25);
+        infoArea.setRows(5);
         infoArea.setBorder(new BevelBorder(BevelBorder.LOWERED));
         infoArea.setEditable(false);
 

@@ -1,9 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.emulators.TestJMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,22 +14,23 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class CorrectedResultCollectorTest {
-    
+
     public CorrectedResultCollectorTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -44,7 +43,5 @@ public class CorrectedResultCollectorTest {
         System.out.println("testStarted");
         CorrectedResultCollector instance = new CorrectedResultCollector();
         instance.testStarted();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

@@ -1,7 +1,5 @@
 package kg.apc.jmeter.graphs;
 
-import kg.apc.jmeter.graphs.GraphPanel;
-import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.concurrent.ConcurrentSkipListMap;

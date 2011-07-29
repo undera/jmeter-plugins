@@ -19,14 +19,12 @@ public class HitsPerSecondGuiTest {
     }
 
     @BeforeClass
-    public static void setUpClass() throws Exception
-    {
+    public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
-    public static void tearDownClass() throws Exception
-    {
+    public static void tearDownClass() throws Exception {
     }
 
     @Before
@@ -41,8 +39,7 @@ public class HitsPerSecondGuiTest {
      * Test of getLabelResource method, of class HitsPerSecondGui.
      */
     @Test
-    public void testGetLabelResource()
-    {
+    public void testGetLabelResource() {
         System.out.println("getLabelResource");
         HitsPerSecondGui instance = new HitsPerSecondGui();
         String expResult = "HitsPerSecondGui";
@@ -54,20 +51,18 @@ public class HitsPerSecondGuiTest {
      * Test of getStaticLabel method, of class HitsPerSecondGui.
      */
     @Test
-    public void testGetStaticLabel()
-    {
+    public void testGetStaticLabel() {
         System.out.println("getStaticLabel");
         HitsPerSecondGui instance = new HitsPerSecondGui();
         String result = instance.getStaticLabel();
-        assertTrue(result.length()>0);
+        assertTrue(result.length() > 0);
     }
 
     /**
      * Test of add method, of class HitsPerSecondGui.
      */
     @Test
-    public void testAdd()
-    {
+    public void testAdd() {
         System.out.println("add");
         SampleResult res = new SampleResult();
         res.setAllThreads(1);
@@ -75,13 +70,33 @@ public class HitsPerSecondGuiTest {
         HitsPerSecondGui instance = new HitsPerSecondGui();
         instance.add(res);
         res.sampleStart();
-        try
-        {
+        try {
             Thread.sleep(10);
-        } catch (InterruptedException ex)
-        {
+        } catch (InterruptedException ex) {
         }
         res.sampleEnd();
+        instance.add(res);
+    }
+
+    @Test
+    public void testAdd_issue48() {
+        System.out.println("add48");
+        SampleResult res = new SampleResult();
+        res.setAllThreads(0);
+        res.setThreadName("test 1-2");
+        res.setResponseMessage(null);
+
+        SampleResult subres = new SampleResult();
+        subres.sampleStart();
+        subres.sampleEnd();
+        res.sampleStart();
+        res.addSubResult(subres);
+
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException ex) {
+        }
+        HitsPerSecondGui instance = new HitsPerSecondGui();
         instance.add(res);
     }
 
@@ -89,12 +104,11 @@ public class HitsPerSecondGuiTest {
      * Test of getSettingsPanel method, of class HitsPerSecondGui.
      */
     @Test
-    public void testGetSettingsPanel()
-    {
-      System.out.println("getSettingsPanel");
-      HitsPerSecondGui instance = new HitsPerSecondGui();
-      JSettingsPanel result = instance.createSettingsPanel();
-      assertNotNull(result);
+    public void testGetSettingsPanel() {
+        System.out.println("getSettingsPanel");
+        HitsPerSecondGui instance = new HitsPerSecondGui();
+        JSettingsPanel result = instance.createSettingsPanel();
+        assertNotNull(result);
     }
 
     /**
@@ -105,7 +119,7 @@ public class HitsPerSecondGuiTest {
         System.out.println("getWikiPage");
         HitsPerSecondGui instance = new HitsPerSecondGui();
         String result = instance.getWikiPage();
-        assertTrue(result.length()>0);
+        assertTrue(result.length() > 0);
     }
 
     /**
@@ -118,5 +132,4 @@ public class HitsPerSecondGuiTest {
         JSettingsPanel result = instance.createSettingsPanel();
         assertNotNull(result);
     }
-
 }

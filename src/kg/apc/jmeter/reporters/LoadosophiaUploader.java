@@ -108,15 +108,15 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
     }
 
     private void sendJTLToLoadosophia(File targetFile) throws IOException {
-        informUser("Starting upload to Loadosophia.org");
         HttpClient uploader = new HttpClient();
         PostMethod filePost = new PostMethod(getUploaderURI());
         Part[] parts = {
-            // TODO: gzip file optionally/mandatory
             new StringPart("projectKey", getProject()),
             new StringPart("uploadToken", getUploadToken()),
             new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile)))
         };
+
+        informUser("Starting upload to Loadosophia.org");
         filePost.setRequestEntity(new MultipartRequestEntity(parts, filePost.getParams()));
 
         int result = uploader.executeMethod(filePost);
@@ -188,7 +188,6 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
 
     private void informUser(String string) {
         log.info(string);
-        // TODO: test in non-gui mode!
         if (getVisualizer() != null && getVisualizer() instanceof LoadosophiaUploaderGui) {
             ((LoadosophiaUploaderGui) getVisualizer()).inform(string);
         }

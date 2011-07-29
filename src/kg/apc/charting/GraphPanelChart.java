@@ -1142,7 +1142,6 @@ public class GraphPanelChart
 
    public void setUseRelativeTime(boolean selected) {
       settingsUseRelativeTime = selected;
-      // TODO: we can't notify listener from here about relative time setting, this method should be placed somewhere else
       if (selected) {
          setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, testStartTime));
       }

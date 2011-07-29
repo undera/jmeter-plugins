@@ -11,7 +11,7 @@ import org.apache.jmeter.threads.JMeterContextService;
 public abstract class AbstractOverTimeVisualizer
         extends AbstractGraphPanelVisualizer {
 
-    private long relativeStartTime = 0;
+    protected long relativeStartTime = 0;
 
     public AbstractOverTimeVisualizer() {
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS));
@@ -23,18 +23,20 @@ public abstract class AbstractOverTimeVisualizer
     @Override
     public void add(SampleResult sample) {
         if (relativeStartTime == 0) {
-            //relativeStartTime = JMeterUtils.getPropDefault("TESTSTART.MS", sample.getStartTime());
             relativeStartTime = JMeterContextService.getTestStartTime();
             if (relativeStartTime == 0) {
                 relativeStartTime = sample.getStartTime();
             }
-
-            if (graphPanel.getGraphObject().isUseRelativeTime()) {
-                graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, relativeStartTime));
-            }
-            graphPanel.getGraphObject().setTestStartTime(relativeStartTime);
-            graphPanel.getGraphObject().setForcedMinX(relativeStartTime);
+            handleRelativeStartTime();
         }
+    }
+
+    protected void handleRelativeStartTime() {
+        if (graphPanel.getGraphObject().isUseRelativeTime()) {
+            graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, relativeStartTime));
+        }
+        graphPanel.getGraphObject().setTestStartTime(relativeStartTime);
+        graphPanel.getGraphObject().setForcedMinX(relativeStartTime);
     }
 
     @Override

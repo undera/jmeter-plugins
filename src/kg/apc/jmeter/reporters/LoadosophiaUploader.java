@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.zip.GZIPOutputStream;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -32,6 +34,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
     public static final String FILE_PREFIX = "filePrefix";
     public static final String UPLOAD_TOKEN = "uploadToken";
     public static final String PROJECT = "project";
+    public static final String STORE_DIR = "storeDir";
     private String fileName;
 
     public LoadosophiaUploader() {
@@ -50,10 +53,12 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
     }
 
     private void setupSaving() throws IOException {
-        File tmp = File.createTempFile(getFilePrefix() + "_", ".jtl");
-        tmp.delete();
-        tmp.deleteOnExit();
-        fileName = tmp.getAbsolutePath();
+        String dir = getStoreDir();
+        if (!dir.endsWith(File.separator)) {
+            dir += File.separator;
+        }
+
+        fileName = dir + getFilePrefix() + System.currentTimeMillis() + ".jtl";
         informUser("Storing results for upload to Loadosophia.org: " + fileName);
         setFilename(fileName);
 
@@ -116,11 +121,19 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile)))
         };
 
+        targetFile.delete();
+
         informUser("Starting upload to Loadosophia.org");
         filePost.setRequestEntity(new MultipartRequestEntity(parts, filePost.getParams()));
 
         int result = uploader.executeMethod(filePost);
         if (result != HttpStatus.SC_ACCEPTED) {
+            String fname = targetFile.getAbsolutePath() + ".html";
+            informUser("Saving server error response to: " + fname);
+            FileOutputStream fos = new FileOutputStream(fname);
+            FileChannel resultFile = fos.getChannel();
+            resultFile.write(ByteBuffer.wrap(filePost.getResponseBody()));
+            resultFile.close();
             HttpException $e = new HttpException("Upload returned not 202 ACCEPTED status: " + result);
             throw $e;
         }
@@ -191,5 +204,13 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         if (getVisualizer() != null && getVisualizer() instanceof LoadosophiaUploaderGui) {
             ((LoadosophiaUploaderGui) getVisualizer()).inform(string);
         }
+    }
+
+    public String getStoreDir() {
+        return getPropertyAsString(STORE_DIR);
+    }
+
+    public void setStoreDir(String prefix) {
+        setProperty(STORE_DIR, prefix);
     }
 }

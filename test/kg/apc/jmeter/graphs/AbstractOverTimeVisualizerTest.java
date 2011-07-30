@@ -21,14 +21,12 @@ public class AbstractOverTimeVisualizerTest {
     }
 
     @BeforeClass
-    public static void setUpClass() throws Exception
-    {
+    public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
-    public static void tearDownClass() throws Exception
-    {
+    public static void tearDownClass() throws Exception {
     }
 
     @Before
@@ -43,47 +41,41 @@ public class AbstractOverTimeVisualizerTest {
      * Test of add method, of class AbstractOverTimeVisualizer.
      */
     @Test
-    public void testAdd()
-    {
+    public void testAdd() {
         System.out.println("add");
         SampleResult sample = new SampleResult();
         AbstractOverTimeVisualizer instance = new AbstractOverTimeVisualizerImpl();
         instance.add(sample);
     }
 
-    public class AbstractOverTimeVisualizerImpl extends AbstractOverTimeVisualizer
-    {
+    public class AbstractOverTimeVisualizerImpl extends AbstractOverTimeVisualizer {
 
         @Override
-        protected JSettingsPanel createSettingsPanel()
-        {
+        protected JSettingsPanel createSettingsPanel() {
             return new JSettingsPanel(this, JSettingsPanel.GRADIENT_OPTION);
         }
 
-        public String getLabelResource()
-        {
+        public String getLabelResource() {
             return "";
         }
 
         @Override
-        public String getStaticLabel()
-        {
+        public String getStaticLabel() {
             return "TEST";
         }
 
         @Override
         public String getWikiPage() {
-           return "";
+            return "";
         }
-   }
+    }
 
-   @Test
-   public void testClearData()
-   {
-      System.out.println("clearData");
-      AbstractOverTimeVisualizer instance = new AbstractOverTimeVisualizerImpl();
-      instance.clearData();
-   }
+    @Test
+    public void testClearData() {
+        System.out.println("clearData");
+        AbstractOverTimeVisualizer instance = new AbstractOverTimeVisualizerImpl();
+        instance.clearData();
+    }
 
     /**
      * Test of normalizeTime method, of class AbstractOverTimeVisualizer.
@@ -98,4 +90,13 @@ public class AbstractOverTimeVisualizerTest {
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of handleRelativeStartTime method, of class AbstractOverTimeVisualizer.
+     */
+    @Test
+    public void testHandleRelativeStartTime() {
+        System.out.println("handleRelativeStartTime");
+        AbstractOverTimeVisualizer instance = new AbstractOverTimeVisualizerImpl();
+        instance.handleRelativeStartTime();
+    }
 }

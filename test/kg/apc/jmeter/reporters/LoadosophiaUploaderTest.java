@@ -50,6 +50,7 @@ public class LoadosophiaUploaderTest {
         System.out.println("testStarted");
         LoadosophiaUploader instance = new LoadosophiaUploader();
         instance.setFilePrefix("UnitTest");
+        instance.setStoreDir(TestJMeterUtils.getTempDir());
         instance.testStarted();
     }
 
@@ -60,6 +61,7 @@ public class LoadosophiaUploaderTest {
     public void testTestEnded() {
         System.out.println("testEnded");
         LoadosophiaUploader instance = new LoadosophiaUploader();
+        instance.setStoreDir(TestJMeterUtils.getTempDir());
         instance.setFilePrefix("UnitTest");
         instance.setUploaderURI("http://localhost/uploader/");
         instance.setProject("DEFAULT");
@@ -163,5 +165,28 @@ public class LoadosophiaUploaderTest {
         String expResult = "";
         String result = instance.getFilePrefix();
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getStoreDir method, of class LoadosophiaUploader.
+     */
+    @Test
+    public void testGetStoreDir() {
+        System.out.println("getStoreDir");
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        String expResult = "";
+        String result = instance.getStoreDir();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setStoreDir method, of class LoadosophiaUploader.
+     */
+    @Test
+    public void testSetStoreDir() {
+        System.out.println("setStoreDir");
+        String prefix = "";
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        instance.setStoreDir(prefix);
     }
 }

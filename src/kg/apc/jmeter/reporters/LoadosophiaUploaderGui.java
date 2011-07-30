@@ -3,6 +3,8 @@ package kg.apc.jmeter.reporters;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,6 +34,7 @@ public class LoadosophiaUploaderGui
     private JTextArea uploadToken;
     private JTextField projectKey;
     private JTextArea infoArea;
+    private JTextField storeDir;
 
     public LoadosophiaUploaderGui() {
         super();
@@ -66,6 +69,7 @@ public class LoadosophiaUploaderGui
             fw.setProject(projectKey.getText());
             fw.setUploadToken(uploadToken.getText());
             fw.setUploaderURI(JMeterUtils.getPropDefault("loadosophia.uploaderURI", DEFAULT_UPLOADER_URI));
+            fw.setStoreDir(storeDir.getText());
         }
     }
 
@@ -76,6 +80,7 @@ public class LoadosophiaUploaderGui
         filePrefix.setText(fw.getFilePrefix());
         projectKey.setText(fw.getProject());
         uploadToken.setText(fw.getUploadToken());
+        storeDir.setText(fw.getStoreDir());
     }
 
     private void init() {
@@ -94,20 +99,23 @@ public class LoadosophiaUploaderGui
         editConstraints.weightx = 1.0;
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-        addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Filename Prefix: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 0, filePrefix = new JTextField());
+        addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Upload to Project: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 0, projectKey = new JTextField());
 
-        addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Upload to Project: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 1, projectKey = new JTextField());
+        addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Directory to store data for upload: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 1, storeDir = new JTextField());
+
+        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Filename Prefix: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 2, filePrefix = new JTextField());
 
         editConstraints.fill = GridBagConstraints.BOTH;
-        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Upload Token: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, uploadToken = new JTextArea());
+        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Upload Token: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 3, uploadToken = new JTextArea());
         uploadToken.setRows(5);
         uploadToken.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
-        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Info Area: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 3, infoArea = new JTextArea());
+        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Info Area: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 4, infoArea = new JTextArea());
         infoArea.setRows(5);
         infoArea.setBorder(new BevelBorder(BevelBorder.LOWERED));
         infoArea.setEditable(false);
@@ -126,7 +134,8 @@ public class LoadosophiaUploaderGui
         }
 
         projectKey.setText("DEFAULT");
-        uploadToken.setText("Replace this text with upload token received at Loadosophia.org\nRemember that anyone who has this token can upload files to your account. Please, treat your token as confidential data.\nSee plugin help for details.");
+        uploadToken.setText("Replace this text with upload token received at Loadosophia.org\nRemember that anyone who has this token can upload files to your account.\nPlease, treat your token as confidential data.\nSee plugin help for details.");
+        storeDir.setText(getTempDir());
     }
 
     private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {
@@ -154,5 +163,15 @@ public class LoadosophiaUploaderGui
 
     public boolean isStats() {
         return false;
+    }
+
+    private String getTempDir() {
+        File f = null;
+        try {
+            f = File.createTempFile("jmeterplugins", ".tmp");
+        } catch (IOException ex) {
+            return "";
+        }
+        return f.getParent();
     }
 }

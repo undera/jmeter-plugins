@@ -226,7 +226,7 @@ public class SteppingThreadGroupGui
    {
       log.debug("Updating chart...");
       TestElement tg = createTestElement();
-      //updateChart((SteppingThreadGroup) tg); //done in modifyte already
+      //updateChart((SteppingThreadGroup) tg); //done in modify te already
    }
 
    private void updateChart(SteppingThreadGroup tg)

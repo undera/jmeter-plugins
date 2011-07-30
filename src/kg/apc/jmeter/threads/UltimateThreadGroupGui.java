@@ -64,7 +64,7 @@ public class UltimateThreadGroupGui
     public static final Class[] columnClasses = new Class[]{
         String.class, String.class, String.class, String.class, String.class
     };
-    public static Integer[] defaultValues = new Integer[]{
+    public static final Integer[] defaultValues = new Integer[]{
         100, 0, 30, 60, 10
     };
     private LoopControlPanel loopPanel;
@@ -155,6 +155,7 @@ public class UltimateThreadGroupGui
         //log.info("Configure");
         super.configure(tg);
         UltimateThreadGroup utg = (UltimateThreadGroup) tg;
+        //log.info("Configure "+utg.getName());
         JMeterProperty threadValues = utg.getData();
         if (!(threadValues instanceof NullProperty)) {
             CollectionProperty columns = (CollectionProperty) threadValues;
@@ -167,10 +168,7 @@ public class UltimateThreadGroupGui
                 JMeterPluginsUtils.collectionPropertyToTableModelCols(columns, tableModel);
             }
             tableModel.addTableModelListener(this);
-
-            UltimateThreadGroup utgForPreview = new UltimateThreadGroup();
-            utgForPreview.setData(JMeterPluginsUtils.tableModelRowsToCollectionPropertyEval(tableModel, UltimateThreadGroup.DATA_PROPERTY));
-            updateChart(utgForPreview);
+            updateUI();
         } else {
             log.warn("Received null property instead of collection");
         }
@@ -178,6 +176,17 @@ public class UltimateThreadGroupGui
         TestElement te = (TestElement) tg.getProperty(AbstractThreadGroup.MAIN_CONTROLLER).getObjectValue();
         if (te != null) {
             loopPanel.configure(te);
+        }
+    }
+
+    @Override
+    public void updateUI() {
+        super.updateUI();
+
+        if (tableModel != null) {
+            UltimateThreadGroup utgForPreview = new UltimateThreadGroup();
+            utgForPreview.setData(JMeterPluginsUtils.tableModelRowsToCollectionPropertyEval(tableModel, UltimateThreadGroup.DATA_PROPERTY));
+            updateChart(utgForPreview);
         }
     }
 
@@ -247,7 +256,7 @@ public class UltimateThreadGroupGui
 
     public void tableChanged(TableModelEvent e) {
         //log.info("Model changed");
-        updateChart();
+        updateUI();
     }
 
     private void createTableModel() {
@@ -258,15 +267,11 @@ public class UltimateThreadGroupGui
 
     public void editingStopped(ChangeEvent e) {
         //log.info("Editing stopped");
-        updateChart();
+        updateUI();
     }
 
     public void editingCanceled(ChangeEvent e) {
         // no action needed
-    }
-
-    private void updateChart() {
-        GuiPackage.getInstance().updateCurrentGui();
     }
 
     @Override

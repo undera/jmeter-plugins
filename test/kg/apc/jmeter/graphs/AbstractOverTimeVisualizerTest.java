@@ -1,6 +1,5 @@
 package kg.apc.jmeter.graphs;
 
-import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.samplers.SampleResult;

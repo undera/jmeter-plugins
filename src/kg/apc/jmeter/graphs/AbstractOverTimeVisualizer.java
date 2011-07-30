@@ -16,7 +16,7 @@ public abstract class AbstractOverTimeVisualizer
     public AbstractOverTimeVisualizer() {
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS));
         graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
-        graphPanel.getGraphObject().setDrawFinalZeroingLines(true);
+        graphPanel.getGraphObject().setDrawFinalZeroingLines(false);
         graphPanel.getGraphObject().setDisplayPrecision(true);
     }
 

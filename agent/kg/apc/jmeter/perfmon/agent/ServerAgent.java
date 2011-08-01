@@ -1,3 +1,4 @@
+// TODO: add configurable interval to get metrics, default 1 sec
 package kg.apc.jmeter.perfmon.agent;
 
 import java.io.IOException;
@@ -130,7 +131,7 @@ public class ServerAgent implements Runnable {
                     try {
                         isPortSpecified = true;
                         port = Integer.valueOf(args[i]).intValue();
-                        ServerAgent.logMessage("The Agent will use port: " + port);
+                        ServerAgent.logMessage("The agent will use port: " + port);
                     } catch (Exception e) {
                         ServerAgent.logMessage("No valid port specified (" + args[i] + "), the default value is used: " + port);
                     }

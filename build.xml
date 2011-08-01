@@ -184,7 +184,7 @@
            to jmeter/lib/ext, defined by property jmeter.lib.ext
            in project.properties files -->
       <copy todir="${jmeter.lib.ext}">
-         <fileset dir="${dist.dir}" includes="**/*.jar" />
+         <fileset dir="${dist.dir}" includes="*.jar" />
          <fileset dir="${svn.dir}/agent" includes="*.*" />
       </copy>
    </target>

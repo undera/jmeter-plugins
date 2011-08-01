@@ -45,7 +45,7 @@ public class PerfMonGui
    private JTable grid;
    private JComboBox metricTypesBox;
    public static final String[] columnIdentifiers = new String[]{
-      "Host / IP", "Port", "Metric to collect", "Metric parameter (see help)"
+      "Host / IP", "Port", "Metric to collect", "(reserved field)"// "Metric parameter (see help)"
    };
    public static final Class[] columnClasses = new Class[]{
       String.class, String.class, String.class, String.class
@@ -75,6 +75,7 @@ public class PerfMonGui
       return "PerfMon";
    }
 
+    @Override
    public String getLabelResource() {
       return getClass().getSimpleName();
    }

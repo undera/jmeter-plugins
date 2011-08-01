@@ -116,6 +116,7 @@ public abstract class AbstractGraphPanelVisualizer
     public void updateGui(Sample sample) {
         long time = System.currentTimeMillis();
         if ((time - lastRepaint) >= REPAINT_INTERVAL) {
+            changeAxisLabels();
             setOptionsFromProperties(graphPanel.getGraphObject());
             updateGui();
             repaint();
@@ -123,11 +124,16 @@ public abstract class AbstractGraphPanelVisualizer
         }
     }
 
+    protected void changeAxisLabels() {
+        //to override if desired...
+    }
+
     /**
      *
      */
     @Override
     public void updateGui() {
+        changeAxisLabels();
         graphPanel.updateGui();
     }
 
@@ -138,6 +144,7 @@ public abstract class AbstractGraphPanelVisualizer
         modelAggregate.clear();
         colors.reset();
         graphPanel.clearRowsTab();
+        changeAxisLabels();
         updateGui();
         repaint();
     }

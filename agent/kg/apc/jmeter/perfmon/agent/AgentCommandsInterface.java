@@ -15,6 +15,7 @@ public interface AgentCommandsInterface {
    public static final String NAME = "name";
    public static final String NETWORK = "nio";
    public static final String SWAP = "swp";
+   public static final String PID = "pid";
 
    //APC: why don't use custom exceptions instead of error constants?
    public final static long SIGAR_ERROR = -1L;

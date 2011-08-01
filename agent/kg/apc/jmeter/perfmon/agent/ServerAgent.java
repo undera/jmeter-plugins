@@ -1,4 +1,3 @@
-// TODO: add configurable interval to get metrics, default 1 sec
 package kg.apc.jmeter.perfmon.agent;
 
 import java.io.IOException;
@@ -15,7 +14,7 @@ public class ServerAgent implements Runnable {
     /**
      * The version of the Agent
      */
-    private static String version = "1.3.2";
+    private static String version = "1.4";
     /**
      * The default port
      */
@@ -62,10 +61,18 @@ public class ServerAgent implements Runnable {
         t.start();
     }
 
-    public void startServie() {
+    public void startServie(long pid) {
         listening = true;
         ServerSocket serverSocket = null;
-        MetricsGetter.getInstance().getValues(MetricsGetter.CPU);
+        MetricsGetter.getInstance().getValues(MetricsGetter.MEMORY);
+        if(pid!=-1) {
+            if(MetricsGetter.getInstance().isPidFound(pid)) {
+                MetricsGetter.getInstance().setPidToMonitor(pid);
+            } else {
+                logMessage("The agent will monitor the server cpu and memory.");
+            }
+        }
+        
 
         try {
             serverSocket = new ServerSocket(port);
@@ -98,6 +105,7 @@ public class ServerAgent implements Runnable {
      * @param args [optional] the port on which the agent will start. 4444 is used if nothing is specified.
      */
     public static void main(String[] args) {
+        long pid = -1;
         ServerAgent.logMessage("JMeterPlugins Agent version " + version);
 
         int port = ServerAgent.DEFAULT_PORT;
@@ -108,6 +116,15 @@ public class ServerAgent implements Runnable {
                 if (args[i].equals("--autostop")) {
                     logMessage("The agent will automatically stop at end of the test.");
                     autoStop = true;
+                }
+                if (args[i].startsWith("--pid=")) {
+                    String sPid = args[i].substring(6);
+                    try {
+                        pid = Long.valueOf(sPid).longValue();
+                        logMessage("The agent will only monitor cpu and memory for the process with id=" + pid + ".");
+                    } catch (NumberFormatException ex) {
+                        logMessage("Incorrect pid specified: " + sPid + ". The agent will monitor the server cpu and memory.");
+                    }
                 }
                 if (!args[i].startsWith("--")) {
                     try {
@@ -123,13 +140,13 @@ public class ServerAgent implements Runnable {
         if(!isPortSpecified) logMessage("No port specified, the default value is used: " + port);
 
         ServerAgent agent = new ServerAgent(port);
-        agent.startServie();
+        agent.startServie(pid);
 
     }
     //Need to remove annotation for Java 1.4 compilation
     //@Override
 
     public void run() {
-        startServie();
+        startServie(-1);
     }
 }

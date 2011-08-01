@@ -8,6 +8,8 @@ import org.hyperic.sigar.FileSystem;
 import org.hyperic.sigar.FileSystemUsage;
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.NetInterfaceStat;
+import org.hyperic.sigar.ProcCpu;
+import org.hyperic.sigar.ProcMem;
 
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
@@ -42,6 +44,8 @@ public class MetricsGetter implements AgentCommandsInterface
    private FileSystem[] fileSystems = null;
    private String[] networkInterfaces = null;
 
+   private long pid = -1;
+
    /**
     * The constructor which instanciates the Sigar service
     */
@@ -58,6 +62,10 @@ public class MetricsGetter implements AgentCommandsInterface
       {
          ServerAgent.logMessage(e.getMessage());
       }
+   }
+
+   public void setPidToMonitor(long pid) {
+       this.pid = pid;
    }
 
    /**
@@ -137,8 +145,13 @@ public class MetricsGetter implements AgentCommandsInterface
    {
       try
       {
+         if(pid == -1) {
          CpuPerc cpuPerc = sigarProxy.getCpuPerc();
          return cpuPerc != null ? cpuPerc.getCombined() : 0;
+         } else {
+            ProcCpu procCpu = sigarProxy.getProcCpu(pid);
+            return procCpu != null ? procCpu.getPercent() : 0; 
+         }
       }
       catch (SigarException e)
       {
@@ -155,8 +168,13 @@ public class MetricsGetter implements AgentCommandsInterface
    {
       try
       {
+         if(pid == -1) {
          Mem mem = sigarProxy.getMem();
          return mem != null ? mem.getUsed() : 0;
+         } else {
+            ProcMem procMem = sigarProxy.getProcMem(pid);
+            return procMem != null ? procMem.getSize() : 0; 
+         }
       }
       catch (SigarException e)
       {
@@ -279,6 +297,18 @@ public class MetricsGetter implements AgentCommandsInterface
       return ret;
    }
 
+   public boolean isPidFound(long pid) {
+        try {
+            return (sigarProxy.getProcCpu(pid) != null);
+        } catch (SigarException ex) {
+            String friendlyMsg = ex.getMessage();
+            if(friendlyMsg.indexOf("Access is denied.")!= -1) friendlyMsg = "Access is denied.";
+            else if(friendlyMsg.indexOf("The parameter is incorrect.")!= -1) friendlyMsg = "PID not found.";
+            
+            ServerAgent.logMessage("Cannot access pid " + pid + ": " + friendlyMsg);
+            return false;
+        }
+   }
    /**
     * Get the server name
     * @return the server name retrieved by Sigar
@@ -296,7 +326,7 @@ public class MetricsGetter implements AgentCommandsInterface
    public String getValues(String value)
    {
 
-       // NEVER CHANGE to Stgring BUILDER
+      // NEVER CHANGE to String BUILDER for old jdk compatibility
       StringBuffer buff = new StringBuffer();
 
       if (value.equals(CPU))
@@ -334,6 +364,10 @@ public class MetricsGetter implements AgentCommandsInterface
       else if (value.equals(NAME))
       {
          buff.append(getServerName());
+      }
+      else if (value.equals(PID))
+      {
+         buff.append(pid);
       }
       else
       {

@@ -76,4 +76,27 @@ public class MetricsGetterTest {
       
    }
 
+    /**
+     * Test of setPidToMonitor method, of class MetricsGetter.
+     */
+    @Test
+    public void testSetPidToMonitor() {
+        System.out.println("setPidToMonitor");
+        long pid = 1234L;
+        MetricsGetter instance = MetricsGetter.getInstance();
+        instance.setPidToMonitor(pid);
+    }
+
+    /**
+     * Test of isPidFound method, of class MetricsGetter.
+     */
+    @Test
+    public void testIsPidFound() {
+        System.out.println("isPidFound");
+        long pid = 0L;
+        MetricsGetter instance = MetricsGetter.getInstance();
+        boolean expResult = false;
+        boolean result = instance.isPidFound(pid);
+        assertEquals(expResult, result);
+    }
 }

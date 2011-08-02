@@ -155,55 +155,6 @@ public class PerfMonGui
       }
    }
 
-   //FIXME: remove hardcoded string
-   @Override
-   protected void changeAxisLabels() {
-       Iterator<String> iter = model.keySet().iterator();
-       int displayedRows = 0;
-       while(iter.hasNext()) {
-           String rowName = iter.next();
-           if(model.get(rowName).isDrawOnChart()) {
-               if(rowName.indexOf(" - C") != -1) displayedRows = displayedRows | SHOW_CPU;
-               else if(rowName.indexOf(" - M") != -1) displayedRows = displayedRows | SHOW_MEM;
-               else if(rowName.indexOf(" - D") != -1) displayedRows = displayedRows | SHOW_DIO;
-               else if(rowName.indexOf(" - N") != -1) displayedRows = displayedRows | SHOW_NIO;
-               else if(rowName.indexOf(" - S") != -1) displayedRows = displayedRows | SHOW_SWP;
-           }
-       }
-
-       if(displayedRows == SHOW_CPU) {
-           graphPanel.getGraphObject().setChartType(GraphPanelChart.CHART_PERCENTAGE);
-           graphPanel.getGraphObject().setExpendRows(false);
-       } else {
-           graphPanel.getGraphObject().setChartType(GraphPanelChart.CHART_DEFAULT);
-           graphPanel.getGraphObject().setExpendRows(true);
-       }
-
-       if(displayedRows == SHOW_CPU) {
-            graphPanel.getGraphObject().setYAxisLabel("Combined CPU usage in %");
-       } else if(displayedRows == SHOW_MEM) {
-            graphPanel.getGraphObject().setYAxisLabel("Memory used in MB");
-       } else if(displayedRows == SHOW_DIO) {
-            graphPanel.getGraphObject().setYAxisLabel("Number of disks access /sec");
-       } else if(displayedRows == SHOW_NIO) {
-            graphPanel.getGraphObject().setYAxisLabel("Number of KBytes /sec");
-       } else if(displayedRows == SHOW_SWP) {
-            graphPanel.getGraphObject().setYAxisLabel("Number of pages /sec");
-       } else {
-            //default
-            String label = "Performance Metrics";
-            if(displayedRows != 0) {
-                label = "";
-                if((displayedRows & SHOW_CPU) != 0) label += "CPU in %, ";
-                if((displayedRows & SHOW_MEM) != 0) label += "MEM in MB, ";
-                if((displayedRows & SHOW_DIO) != 0) label += "DIO in Access /sec, ";
-                if((displayedRows & SHOW_NIO) != 0) label += "NIO in Kb /sec, ";
-                if((displayedRows & SHOW_SWP) != 0) label += "SWP in pages /sec, ";
-            }
-            graphPanel.getGraphObject().setYAxisLabel(label);
-       }
-   }
-
    @Override
    public void add(SampleResult res) {
       super.add(res);

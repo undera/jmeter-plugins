@@ -101,6 +101,7 @@ public abstract class AbstractGraphPanelVisualizer
     protected GraphPanel createGraphPanel() {
         graphPanel = new GraphPanel();
         graphPanel.getGraphObject().setRows(model);
+        setOptionsFromProperties(graphPanel.getGraphObject());
         // should be placed after creating graph panel
         settingsPanel = createSettingsPanel();
         graphPanel.getSettingsTab().add(getSettingsPanel(), BorderLayout.CENTER);
@@ -116,7 +117,6 @@ public abstract class AbstractGraphPanelVisualizer
     public void updateGui(Sample sample) {
         long time = System.currentTimeMillis();
         if ((time - lastRepaint) >= REPAINT_INTERVAL) {
-            setOptionsFromProperties(graphPanel.getGraphObject());
             updateGui();
             repaint();
             lastRepaint = time;
@@ -344,7 +344,7 @@ public abstract class AbstractGraphPanelVisualizer
         }
         String cfgUseRelativeTime = JMeterUtils.getProperty("jmeterPlugin.useRelativeTime");
         if (cfgUseRelativeTime != null) {
-            graph.setUseRelativeTime("true".equalsIgnoreCase(cfgUseRelativeTime.trim()));
+            graph.setRelativeTimeInitValue("true".equalsIgnoreCase(cfgUseRelativeTime.trim()));
         }
     }
 }

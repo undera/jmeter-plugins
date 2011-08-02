@@ -230,7 +230,6 @@ public class GraphPanelChart
    private boolean neverDrawFinalZeroingLines = false;
    private boolean optimizeYAxis = true;
    private boolean neverDrawCurrentX = false;
-   private boolean useRelativeTime = true;
    private String csvSeparator = null;
    //some of these preference can be overidden by the preference tab:
    private boolean settingsDrawGradient;
@@ -273,7 +272,6 @@ public class GraphPanelChart
       settingsDrawGradient = drawGradient;
       //default to false, will be initialized in each vizualiser
       settingsDrawFinalZeroingLines = false;
-      settingsUseRelativeTime = useRelativeTime;
 
       if (new DecimalFormatSymbols().getDecimalSeparator() == '.') {
          csvSeparator = ",";
@@ -1138,6 +1136,10 @@ public class GraphPanelChart
          popup.addSeparator();
          popup.add(itemExport);
       }
+   }
+
+   public void setRelativeTimeInitValue(boolean isUseRelTime) {
+       settingsUseRelativeTime = isUseRelTime;
    }
 
    public void setUseRelativeTime(boolean selected) {

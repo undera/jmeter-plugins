@@ -550,4 +550,15 @@ public class GraphPanelChartTest {
       boolean result = instance.isSettingsDrawFinalZeroingLines();
       assertEquals(expResult, result);
    }
+
+    /**
+     * Test of setRelativeTimeInitValue method, of class GraphPanelChart.
+     */
+    @Test
+    public void testSetRelativeTimeInitValue() {
+        System.out.println("setRelativeTimeInitValue");
+        boolean isUseRelTime = true;
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setRelativeTimeInitValue(isUseRelTime);
+    }
 }

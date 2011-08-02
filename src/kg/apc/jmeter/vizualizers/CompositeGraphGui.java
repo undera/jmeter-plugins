@@ -150,11 +150,12 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer {
                 if (!model.containsKey(rowName)) {
                     model.put(rowName, row);
 
+                    //SH: buggy code maybe because of issue 67 ?
                     // handle relative start times
-                    if (relativeStartTime == 0 || relativeStartTime > row.getFirstTime()) {
+                    /*if (relativeStartTime == 0 || relativeStartTime > row.getFirstTime()) {
                         relativeStartTime = row.getFirstTime();
                         handleRelativeStartTime();
-                    }
+                    }*/
                 }
             }
         }

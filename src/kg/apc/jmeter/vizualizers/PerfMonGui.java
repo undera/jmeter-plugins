@@ -2,15 +2,23 @@ package kg.apc.jmeter.vizualizers;
 // TODO: rows in settings should have color markers for better experience
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
@@ -44,6 +52,8 @@ public class PerfMonGui
    private PowerTableModel tableModel;
    private JTable grid;
    private JComboBox metricTypesBox;
+   private JTextArea errorTextArea;
+   private JScrollPane errorPane;
    public static final String[] columnIdentifiers = new String[]{
       "Host / IP", "Port", "Metric to collect", "(reserved field)"// "Metric parameter (see help)"
    };
@@ -86,8 +96,59 @@ public class PerfMonGui
    }
 
    private void initGui() {
-      add(createConnectionsPanel(), BorderLayout.SOUTH);
+      add(createSouthPanel(), BorderLayout.SOUTH);
    }
+
+   private Component createSouthPanel() {
+       JPanel southPanel = new JPanel(new BorderLayout());
+
+       errorPane = new JScrollPane();
+       errorPane.setMinimumSize(new Dimension(100, 50));
+       errorPane.setPreferredSize(new Dimension(100, 50));
+
+       errorTextArea = new JTextArea();
+       errorTextArea.setForeground(Color.red);
+       errorTextArea.setBackground(new Color(255, 255, 153));
+       errorTextArea.setEditable(false);
+       //errorTextArea.setText("Error!!!\nError!!!\nError!!!\nError!!!\nError!!!\n");
+       errorPane.setViewportView(errorTextArea);
+
+       registerPopup();
+
+       southPanel.add(createConnectionsPanel(), BorderLayout.CENTER);
+       southPanel.add(errorPane, BorderLayout.NORTH);
+
+       errorPane.setVisible(false);
+
+       return southPanel;
+   }
+
+   private void addErrorMessage(String msg) {
+        errorPane.setVisible(true);
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        errorTextArea.setText(errorTextArea.getText() + formatter.format(new Date()) + " - ERROR: " + msg + "\n");
+
+        updateGui();
+    }
+
+    public void clearErrorMessage() {
+        errorTextArea.setText("");
+        errorPane.setVisible(false);
+    }
+
+    private void registerPopup() {
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem hideMessagesMenu = new JMenuItem("Hide Error Panel");
+        hideMessagesMenu.addActionListener(new HideAction());
+        popup.add(hideMessagesMenu);
+        errorTextArea.setComponentPopupMenu(popup);
+    }
+
+    @Override
+    public void clearData() {
+        clearErrorMessage();
+        super.clearData();
+    }
 
    private Component createConnectionsPanel() {
       JPanel panel = new JPanel(new BorderLayout(5, 5));
@@ -157,9 +218,13 @@ public class PerfMonGui
 
    @Override
    public void add(SampleResult res) {
-      super.add(res);
-      addThreadGroupRecord(res.getSampleLabel(), normalizeTime(res.getEndTime()), res.getLatency());
-      updateGui(null);
+      if(res.isSuccessful()) {
+          super.add(res);
+          addThreadGroupRecord(res.getSampleLabel(), normalizeTime(res.getEndTime()), res.getLatency());
+          updateGui(null);
+       } else {
+          addErrorMessage(res.getSampleLabel());
+       }
    }
 
    private void addThreadGroupRecord(String threadGroupName, long time, long value) {
@@ -171,4 +236,14 @@ public class PerfMonGui
 
       row.add(time, value);
    }
+
+   private class HideAction
+            implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            errorPane.setVisible(false);
+            updateGui();
+        }
+    }
 }

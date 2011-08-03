@@ -17,157 +17,200 @@ import org.apache.log.Logger;
  * @author APC
  */
 public class PerfMonCollector
-      extends ResultCollector
-      implements Runnable {
-   private static final long MEGABYTE = 1024L * 1024L;
-   private static final String PERFMON = "PerfMon";
-   private static final Logger log = LoggingManager.getLoggerForClass();
-   public static final String DATA_PROPERTY = "metricConnections";
-   private Thread workerThread;
-   private AgentConnector[] connectors = null;
-   private HashMap<String, Long> oldValues = new HashMap<String, Long>();
+        extends ResultCollector
+        implements Runnable {
 
-   public void setData(CollectionProperty rows) {
-      setProperty(rows);
-   }
+    private static final long MEGABYTE = 1024L * 1024L;
+    private static final String PERFMON = "PerfMon";
+    private static final Logger log = LoggingManager.getLoggerForClass();
+    public static final String DATA_PROPERTY = "metricConnections";
+    private Thread workerThread;
+    private AgentConnector[] connectors = null;
+    private HashMap<String, Long> oldValues = new HashMap<String, Long>();
 
-   public JMeterProperty getData() {
-      return getProperty(DATA_PROPERTY);
-   }
+    public void setData(CollectionProperty rows) {
+        setProperty(rows);
+    }
 
-   @Override
-   public void sampleOccurred(SampleEvent event) {
-      // just dropping regular test samples
-   }
+    public JMeterProperty getData() {
+        return getProperty(DATA_PROPERTY);
+    }
 
-   public synchronized void run() {
-      while (true) {
-         processConnectors();
-         try {
-            this.wait(1000);
-         }
-         catch (InterruptedException ex) {
-            log.debug("Monitoring thread was interrupted", ex);
-            break;
-         }
-      }
-   }
+    @Override
+    public void sampleOccurred(SampleEvent event) {
+        // just dropping regular test samples
+    }
 
-   @Override
-   public void testStarted(String host) {
-      initiateConnectors();
-
-      workerThread = new Thread(this);
-      workerThread.start();
-
-      super.testStarted(host);
-   }
-
-   @Override
-   public void testEnded(String host) {
-      workerThread.interrupt();
-      shutdownConnectors();
-
-      super.testEnded(host);
-   }
-
-   private void initiateConnectors() {
-      oldValues.clear();
-      JMeterProperty prop = getData();
-      connectors = new AgentConnector[0];
-      if (!(prop instanceof CollectionProperty)) {
-         log.warn("Got unexpected property: " + prop);
-         return;
-      }
-      CollectionProperty rows = (CollectionProperty) prop;
-
-      connectors = new AgentConnector[rows.size()];
-
-      for (int i = 0; i < connectors.length; i++) {
-         ArrayList<Object> row = (ArrayList<Object>) rows.get(i).getObjectValue();
-         String host = ((JMeterProperty) row.get(0)).getStringValue();
-         int port = ((JMeterProperty) row.get(1)).getIntValue();
-         String metric = ((JMeterProperty) row.get(2)).getStringValue();
-
-         AgentConnector connector = new AgentConnector(host, port);
-         connector.setMetricType(metric);
-
-         try {
-            Socket sock = createSocket(connector.getHost(), connector.getPort());
-            connector.connect(sock);
-            connectors[i] = connector;
-         }
-         catch (UnknownHostException e) {
-            log.error("Unknown host exception occured. Please verify access to the server '" + connector.getHost() + "'.", e);
-            connectors[i] = null;
-         }
-         catch (IOException e) {
-            log.error("Unable to connect to server '" + connector.getHost() + "'. Please verify the agent is running on port " + connector.getPort() + ".", e);
-            connectors[i] = null;
-         }
-      }
-   }
-
-   private void shutdownConnectors() {
-      for (int i = 0; i < connectors.length; i++) {
-         if (connectors[i] != null) {
-            connectors[i].disconnect();
-         }
-      }
-   }
-
-   protected Socket createSocket(String host, int port) throws UnknownHostException, IOException {
-      return new Socket(host, port);
-   }
-
-   private void processConnectors() {
-      String label;
-      for (int i = 0; i < connectors.length; i++) {
-         if (connectors[i] != null) {
-            label = connectors[i].getHost() + " - " + AgentConnector.metrics.get(connectors[i].getMetricType());
-
-            switch (connectors[i].getMetricType()) {
-               case AbstractPerformanceMonitoringGui.PERFMON_CPU:
-                  generateSample((long) (100 * connectors[i].getCpu()), label);
-                  break;
-               case AbstractPerformanceMonitoringGui.PERFMON_MEM:
-                  generateSample(connectors[i].getMem() / MEGABYTE, label);
-                  break;
-               case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
-                  generate2Samples(connectors[i].getSwap(), label + " page in", label + " page out");
-                  break;
-               case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
-                  generate2Samples(connectors[i].getDisksIO(), label + " reads", label + " writes");
-                  break;
-               case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
-                  generate2Samples(connectors[i].getDisksIO(), label + " recv", label + " send");
-                  break;
-               default:
-                  log.error("Unknown metric index: " + connectors[i].getMetricType());
+    public synchronized void run() {
+        while (true) {
+            processConnectors();
+            try {
+                this.wait(1000);
+            } catch (InterruptedException ex) {
+                log.debug("Monitoring thread was interrupted", ex);
+                break;
             }
-         }
-      }
-   }
+        }
+    }
 
-   private void generateSample(long value, String label) {
-      PerfMonSampleResult res = new PerfMonSampleResult();
-      res.setSampleLabel(label);
-      res.setValue(value);
-      SampleEvent e = new SampleEvent(res, PERFMON);
-      super.sampleOccurred(e);
-   }
+    @Override
+    public void testStarted(String host) {
+        initiateConnectors();
 
-   private void generate2Samples(long[] values, String label1, String label2) {
-      if (values[0] == AgentConnector.AGENT_ERROR || values[1] == AgentConnector.AGENT_ERROR) {
-         return;
-      }
+        workerThread = new Thread(this);
+        workerThread.start();
 
-      if (oldValues.containsKey(label1) && oldValues.containsKey(label2)) {
-         generateSample(values[0] - oldValues.get(label1).longValue(), label1);
-         generateSample(values[1] - oldValues.get(label2).longValue(), label2);
-      }
-      oldValues.put(label1, new Long(values[0]));
-      oldValues.put(label2, new Long(values[1]));
+        super.testStarted(host);
+    }
 
-   }
+    @Override
+    public void testEnded(String host) {
+        workerThread.interrupt();
+        shutdownConnectors();
+
+        super.testEnded(host);
+    }
+
+    private void initiateConnectors() {
+        oldValues.clear();
+        JMeterProperty prop = getData();
+        connectors = new AgentConnector[0];
+        if (!(prop instanceof CollectionProperty)) {
+            log.warn("Got unexpected property: " + prop);
+            return;
+        }
+        CollectionProperty rows = (CollectionProperty) prop;
+
+        connectors = new AgentConnector[rows.size()];
+
+        for (int i = 0; i < connectors.length; i++) {
+            ArrayList<Object> row = (ArrayList<Object>) rows.get(i).getObjectValue();
+            String host = ((JMeterProperty) row.get(0)).getStringValue();
+            int port = ((JMeterProperty) row.get(1)).getIntValue();
+            String metric = ((JMeterProperty) row.get(2)).getStringValue();
+
+            AgentConnector connector = new AgentConnector(host, port);
+            connector.setMetricType(metric);
+
+            try {
+                Socket sock = createSocket(connector.getHost(), connector.getPort());
+                connector.connect(sock);
+                connectors[i] = connector;
+            } catch (UnknownHostException e) {
+                String msg = "Unknown host exception occured. Please verify access to the server '" + connector.getHost() + "'. (required for " + AgentConnector.metrics.get(connector.getMetricType()) + ")";
+                log.error(msg, e);
+                generateErrorSample(msg);
+                connectors[i] = null;
+            } catch (IOException e) {
+                String msg = "Unable to connect to server '" + connector.getHost() + "'. Please verify the agent is running on port " + connector.getPort() + ". (required for " + AgentConnector.metrics.get(connector.getMetricType()) + ")";
+                log.error(msg, e);
+                generateErrorSample(msg);
+                connectors[i] = null;
+            }
+        }
+    }
+
+    private void shutdownConnectors() {
+        for (int i = 0; i < connectors.length; i++) {
+            if (connectors[i] != null) {
+                connectors[i].disconnect();
+            }
+        }
+    }
+
+    protected Socket createSocket(String host, int port) throws UnknownHostException, IOException {
+        return new Socket(host, port);
+    }
+
+    private void processConnectors() {
+        String label;
+        boolean cnxLost;
+        for (int i = 0; i < connectors.length; i++) {
+            cnxLost = false;
+            if (connectors[i] != null) {
+                label = connectors[i].getHost() + " - " + AgentConnector.metrics.get(connectors[i].getMetricType());
+
+                switch (connectors[i].getMetricType()) {
+                    case AbstractPerformanceMonitoringGui.PERFMON_CPU:
+                        double cpuMetric = connectors[i].getCpu();
+                        if (cpuMetric != AgentConnector.AGENT_ERROR) {
+                            generateSample((long) (100 * cpuMetric), label);
+                        } else {
+                            cnxLost = true;
+                        }
+                        break;
+                    case AbstractPerformanceMonitoringGui.PERFMON_MEM:
+                        long memMetric = connectors[i].getMem();
+                        if (memMetric != AgentConnector.AGENT_ERROR) {
+                            generateSample(memMetric / MEGABYTE, label);
+                        } else {
+                            cnxLost = true;
+                        }
+                        break;
+                    case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
+                        long[] swapMetrics = connectors[i].getSwap();
+                        if (swapMetrics[0] != AgentConnector.AGENT_ERROR && swapMetrics[1] != AgentConnector.AGENT_ERROR) {
+                            generate2Samples(swapMetrics, label + " page in", label + " page out");
+                        } else {
+                            cnxLost = true;
+                        }
+                        break;
+                    case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
+                        long[] dioMetrics = connectors[i].getDisksIO();
+                        if (dioMetrics[0] != AgentConnector.AGENT_ERROR && dioMetrics[1] != AgentConnector.AGENT_ERROR) {
+                            generate2Samples(dioMetrics, label + " reads", label + " writes");
+                        } else {
+                            cnxLost = true;
+                        }
+                        break;
+                    case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
+                        long[] nioMetrics = connectors[i].getNetIO();
+                        if (nioMetrics[0] != AgentConnector.AGENT_ERROR && nioMetrics[1] != AgentConnector.AGENT_ERROR) {
+                            generate2Samples(nioMetrics, label + " recv", label + " send");
+                        } else {
+                            cnxLost = true;
+                        }
+                        
+                        break;
+                    default:
+                        log.error("Unknown metric index: " + connectors[i].getMetricType());
+                }
+                //if cnx lost, notify
+                if(cnxLost) {
+                    String msg = "Connection lost with '" + connectors[i].getHost() + "'! (required for " + label + ")";
+                    generateErrorSample(msg);
+                    log.error(msg);
+                    connectors[i] = null;
+                }
+            }
+        }
+    }
+
+    private void generateSample(long value, String label) {
+        if (value != AgentConnector.AGENT_ERROR) {
+            PerfMonSampleResult res = new PerfMonSampleResult();
+            res.setSampleLabel(label);
+            res.setValue(value);
+            res.setSuccessful(true);
+            SampleEvent e = new SampleEvent(res, PERFMON);
+            super.sampleOccurred(e);
+        }
+    }
+
+    private void generateErrorSample(String errorMsg) {
+        PerfMonSampleResult res = new PerfMonSampleResult();
+        res.setSampleLabel(errorMsg);
+        res.setSuccessful(false);
+        SampleEvent e = new SampleEvent(res, PERFMON);
+        super.sampleOccurred(e);
+    }
+
+    private void generate2Samples(long[] values, String label1, String label2) {
+        if (oldValues.containsKey(label1) && oldValues.containsKey(label2)) {
+            generateSample(values[0] - oldValues.get(label1).longValue(), label1);
+            generateSample(values[1] - oldValues.get(label2).longValue(), label2);
+        }
+        oldValues.put(label1, new Long(values[0]));
+        oldValues.put(label2, new Long(values[1]));
+    }
 }

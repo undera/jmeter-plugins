@@ -223,7 +223,7 @@ public class PerfMonGui
           addThreadGroupRecord(res.getSampleLabel(), normalizeTime(res.getEndTime()), res.getLatency());
           updateGui(null);
        } else {
-          addErrorMessage(res.getSampleLabel());
+          addErrorMessage(res.getResponseMessage());
        }
    }
 

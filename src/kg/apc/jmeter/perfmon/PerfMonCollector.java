@@ -99,12 +99,12 @@ public class PerfMonCollector
             } catch (UnknownHostException e) {
                 String msg = "Unknown host exception occured. Please verify access to the server '" + connector.getHost() + "'. (required for " + AgentConnector.metrics.get(connector.getMetricType()) + ")";
                 log.error(msg, e);
-                generateErrorSample(msg);
+                generateErrorSample("Agent Connnection", msg);
                 connectors[i] = null;
             } catch (IOException e) {
                 String msg = "Unable to connect to server '" + connector.getHost() + "'. Please verify the agent is running on port " + connector.getPort() + ". (required for " + AgentConnector.metrics.get(connector.getMetricType()) + ")";
                 log.error(msg, e);
-                generateErrorSample(msg);
+                generateErrorSample("Agent Connnection", msg);
                 connectors[i] = null;
             }
         }
@@ -178,7 +178,7 @@ public class PerfMonCollector
                 //if cnx lost, notify
                 if(cnxLost) {
                     String msg = "Connection lost with '" + connectors[i].getHost() + "'! (required for " + label + ")";
-                    generateErrorSample(msg);
+                    generateErrorSample(label, msg);
                     log.error(msg);
                     connectors[i] = null;
                 }
@@ -197,9 +197,11 @@ public class PerfMonCollector
         }
     }
 
-    private void generateErrorSample(String errorMsg) {
+    private void generateErrorSample(String label, String errorMsg) {
         PerfMonSampleResult res = new PerfMonSampleResult();
-        res.setSampleLabel(errorMsg);
+        res.setSampleLabel(label);
+        res.setValue(-1L);
+        res.setResponseMessage(errorMsg);
         res.setSuccessful(false);
         SampleEvent e = new SampleEvent(res, PERFMON);
         super.sampleOccurred(e);

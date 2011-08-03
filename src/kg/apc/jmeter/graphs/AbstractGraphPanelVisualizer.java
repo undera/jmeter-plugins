@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Image;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
+import javax.swing.JPanel;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.GraphPanelChart;
@@ -91,7 +92,18 @@ public abstract class AbstractGraphPanelVisualizer
         setBorder(makeBorder());
         setLayout(new BorderLayout());
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), getWikiPage()), BorderLayout.NORTH);
-        add(createGraphPanel(), BorderLayout.CENTER);
+        JPanel container = getGraphPanelContainer();
+        if(container == null) {
+            add(createGraphPanel(), BorderLayout.CENTER);
+        } else {
+            container.add(createGraphPanel(), BorderLayout.CENTER);
+            add(container, BorderLayout.CENTER);
+        }
+    }
+
+    //to override if custom layout desired
+    protected JPanel getGraphPanelContainer() {
+        return null;
     }
 
     /**

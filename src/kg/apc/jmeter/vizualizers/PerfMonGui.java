@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -22,7 +21,6 @@ import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
-import kg.apc.charting.GraphPanelChart;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.perfmon.AgentConnector;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
@@ -41,12 +39,6 @@ import org.apache.log.Logger;
  */
 public class PerfMonGui
       extends AbstractOverTimeVisualizer {
-
-   private final static int SHOW_CPU = 1;
-   private final static int SHOW_MEM = 1 << 1;
-   private final static int SHOW_NIO = 1 << 2;
-   private final static int SHOW_DIO = 1 << 3;
-   private final static int SHOW_SWP = 1 << 4;
 
    private static final Logger log = LoggingManager.getLoggerForClass();
    private PowerTableModel tableModel;
@@ -68,7 +60,6 @@ public class PerfMonGui
       super();
       graphPanel.getGraphObject().setYAxisLabel("Performance Metrics");
       graphPanel.getGraphObject().setExpendRows(true);
-      initGui();
    }
 
    @Override
@@ -95,12 +86,10 @@ public class PerfMonGui
       return JMeterPluginsUtils.prefixLabel("PerfMon Metrics Collector");
    }
 
-   private void initGui() {
-      add(createSouthPanel(), BorderLayout.SOUTH);
-   }
-
-   private Component createSouthPanel() {
-       JPanel southPanel = new JPanel(new BorderLayout());
+    @Override
+    protected JPanel getGraphPanelContainer() {
+       JPanel panel = new JPanel(new BorderLayout());
+       JPanel innerTopPanel = new JPanel(new BorderLayout());
 
        errorPane = new JScrollPane();
        errorPane.setMinimumSize(new Dimension(100, 50));
@@ -115,12 +104,14 @@ public class PerfMonGui
 
        registerPopup();
 
-       southPanel.add(createConnectionsPanel(), BorderLayout.CENTER);
-       southPanel.add(errorPane, BorderLayout.NORTH);
+       innerTopPanel.add(createConnectionsPanel(), BorderLayout.CENTER);
+       innerTopPanel.add(errorPane, BorderLayout.SOUTH);
+
+       panel.add(innerTopPanel, BorderLayout.NORTH);
 
        errorPane.setVisible(false);
 
-       return southPanel;
+       return panel;
    }
 
    private void addErrorMessage(String msg) {

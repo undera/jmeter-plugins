@@ -215,17 +215,17 @@ public class PerfMonGui
    public void add(SampleResult res) {
       if(res.isSuccessful()) {
           super.add(res);
-          addThreadGroupRecord(res.getSampleLabel(), normalizeTime(res.getEndTime()), ((PerfMonSampleResult)res).getValue());
+          addPerfMonRecord(res.getSampleLabel(), normalizeTime(res.getEndTime()), ((PerfMonSampleResult)res).getValue());
           updateGui(null);
        } else {
           addErrorMessage(res.getResponseMessage());
        }
    }
 
-   private void addThreadGroupRecord(String threadGroupName, long time, double value) {
-      AbstractGraphRow row = model.get(threadGroupName);
+   private void addPerfMonRecord(String rowName, long time, double value) {
+      AbstractGraphRow row = model.get(rowName);
       if (row == null) {
-         row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, threadGroupName,
+         row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, rowName,
                AbstractGraphRow.MARKER_SIZE_NONE, false, false, false, true, true);
       }
       row.add(time, value);

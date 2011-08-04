@@ -111,6 +111,7 @@ public class PerfMonGuiTest {
    public void testAdd() {
       System.out.println("add");
       SampleResult res = new PerfMonSampleResult();
+      res.setSuccessful(true);
       PerfMonGuiEmul instance = new PerfMonGuiEmul();
       instance.add(res);
       assertEquals(1, instance.getModel_multi().size());

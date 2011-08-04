@@ -118,8 +118,10 @@ public class PerfMonGui
    private void addErrorMessage(String msg) {
         errorPane.setVisible(true);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        errorTextArea.setText(errorTextArea.getText() + formatter.format(new Date()) + " - ERROR: " + msg + "\n");
-        errorPane.getVerticalScrollBar().setValue(errorPane.getVerticalScrollBar().getMaximum());
+        String newLine = "";
+        if(errorTextArea.getText().length() != 0) newLine = "\n";
+        errorTextArea.setText(errorTextArea.getText() + newLine + formatter.format(new Date()) + " - ERROR: " + msg);
+        errorTextArea.setCaretPosition(errorTextArea.getDocument().getLength());
         updateGui();
     }
 

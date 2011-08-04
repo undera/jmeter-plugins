@@ -93,17 +93,19 @@ public abstract class AbstractGraphPanelVisualizer
         setLayout(new BorderLayout());
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), getWikiPage()), BorderLayout.NORTH);
         JPanel container = getGraphPanelContainer();
-        if(container == null) {
-            add(createGraphPanel(), BorderLayout.CENTER);
-        } else {
-            container.add(createGraphPanel(), BorderLayout.CENTER);
-            add(container, BorderLayout.CENTER);
-        }
+        container.add(createGraphPanel(), BorderLayout.CENTER);
+        add(container, BorderLayout.CENTER);
     }
 
-    //to override if custom layout desired
+    /**
+     * Provide a JPanel with BorderLayout, holder of the GraphPanelChart,
+     * which will be placed in the BorderLayout.CENTER. It can be overridden
+     * to create custom Visualizer layout. Note the JMeter file panel can be
+     * retrieved with getFilePanel() and moved in.
+     * @return a JPanel with a BorderLayout
+     */
     protected JPanel getGraphPanelContainer() {
-        return null;
+        return new JPanel(new BorderLayout());
     }
 
     /**

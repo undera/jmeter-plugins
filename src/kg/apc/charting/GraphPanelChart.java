@@ -156,6 +156,7 @@ public class GraphPanelChart
          double[] minMax = row.getValue().getMinMaxY(maxPoints);
          if (minMax[1] > 0) {
             double zoomFactor = 1;
+            rowsZoomFactor.put(row.getKey(), zoomFactor);
             while (minMax[1] * zoomFactor <= maxYVal) {
                rowsZoomFactor.put(row.getKey(), zoomFactor);
                zoomFactor = zoomFactor * 10;

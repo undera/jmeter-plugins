@@ -105,8 +105,9 @@ public class PerfMonGui
 
        registerPopup();
 
-       innerTopPanel.add(createConnectionsPanel(), BorderLayout.CENTER);
+       innerTopPanel.add(createConnectionsPanel(), BorderLayout.NORTH);
        innerTopPanel.add(errorPane, BorderLayout.SOUTH);
+       innerTopPanel.add(getFilePanel(), BorderLayout.CENTER);
 
        panel.add(innerTopPanel, BorderLayout.NORTH);
 

@@ -59,6 +59,7 @@ public class PerfMonGui
 
    public PerfMonGui() {
       super();
+      setGranulation(1000);
       graphPanel.getGraphObject().setYAxisLabel("Performance Metrics");
       graphPanel.getGraphObject().setExpendRows(true);
    }
@@ -100,7 +101,6 @@ public class PerfMonGui
        errorTextArea.setForeground(Color.red);
        errorTextArea.setBackground(new Color(255, 255, 153));
        errorTextArea.setEditable(false);
-       //errorTextArea.setText("Error!!!\nError!!!\nError!!!\nError!!!\nError!!!\n");
        errorPane.setViewportView(errorTextArea);
 
        registerPopup();
@@ -119,7 +119,7 @@ public class PerfMonGui
         errorPane.setVisible(true);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         errorTextArea.setText(errorTextArea.getText() + formatter.format(new Date()) + " - ERROR: " + msg + "\n");
-
+        errorPane.getVerticalScrollBar().setValue(errorPane.getVerticalScrollBar().getMaximum());
         updateGui();
     }
 

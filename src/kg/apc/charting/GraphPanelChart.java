@@ -380,18 +380,8 @@ public class GraphPanelChart
 
          double[] rowMinMaxY = rowValue.getMinMaxY(maxPoints);
 
-         //fix old implementation compatibility, to remove if we drop one
-         double zoomFactor;
-         Double rowZoomFactor = rowsZoomFactor.get(row.getKey());
-         if (rowZoomFactor != null) {
-            zoomFactor = rowZoomFactor;
-         }
-         else {
-            zoomFactor = 1;
-         }
-
-         if (rowMinMaxY[1] * zoomFactor > maxYVal) {
-            maxYVal = rowMinMaxY[1] * zoomFactor;
+         if (rowMinMaxY[1] > maxYVal) {
+            maxYVal = rowMinMaxY[1];
          }
          if (rowMinMaxY[0] < minYVal) {
             //we draw only positives values
@@ -578,10 +568,10 @@ public class GraphPanelChart
       }
 
       setDefaultDimensions(g);
-      autoZoom_orig();
 
       getMinMaxDataValues();
-
+      autoZoom_orig();
+      
       paintLegend(g);
       calculateYAxisDimensions(g);
       calculateXAxisDimensions(g);

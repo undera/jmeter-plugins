@@ -45,4 +45,16 @@ public class PerfMonSampleResultTest {
       instance.setValue(value);
    }
 
+    /**
+     * Test of getValue method, of class PerfMonSampleResult.
+     */
+    @Test
+    public void testGetValue() {
+        System.out.println("getValue");
+        PerfMonSampleResult instance = new PerfMonSampleResult();
+        instance.setValue(123.0);
+        double expResult = 123.0;
+        double result = instance.getValue();
+        assertEquals(expResult, result, 0.0);
+    }
 }

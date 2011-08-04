@@ -14,8 +14,12 @@ public class PerfMonSampleResult
       sampleEnd();
    }
 
-   // storing as latency
-   public void setValue(long value) {
-      setLatency(value);
+   // storing as latency, multiply by 1000 to keep floating precision
+   public void setValue(double value) {
+      setLatency((long)(value*1000));
+   }
+
+   public double getValue() {
+       return ((double)getLatency())/1000d;
    }
 }

@@ -134,7 +134,7 @@ public class PerfMonCollector
                     case AbstractPerformanceMonitoringGui.PERFMON_CPU:
                         double cpuMetric = connectors[i].getCpu();
                         if (cpuMetric != AgentConnector.AGENT_ERROR) {
-                            generateSample((long) (100 * cpuMetric), label);
+                            generateSample(100 * cpuMetric, label);
                         } else {
                             cnxLost = true;
                         }
@@ -142,7 +142,7 @@ public class PerfMonCollector
                     case AbstractPerformanceMonitoringGui.PERFMON_MEM:
                         long memMetric = connectors[i].getMem();
                         if (memMetric != AgentConnector.AGENT_ERROR) {
-                            generateSample(memMetric / MEGABYTE, label);
+                            generateSample((double)memMetric / MEGABYTE, label);
                         } else {
                             cnxLost = true;
                         }
@@ -186,7 +186,8 @@ public class PerfMonCollector
         }
     }
 
-    private void generateSample(long value, String label) {
+    //need floating point precision for memory and cpu
+    private void generateSample(double value, String label) {
         if (value != AgentConnector.AGENT_ERROR) {
             PerfMonSampleResult res = new PerfMonSampleResult();
             res.setSampleLabel(label);
@@ -207,6 +208,7 @@ public class PerfMonCollector
         super.sampleOccurred(e);
     }
 
+    //here long precision is enough as monitored values are counts
     private void generate2Samples(long[] values, String label1, String label2) {
         if (oldValues.containsKey(label1) && oldValues.containsKey(label2)) {
             generateSample(values[0] - oldValues.get(label1).longValue(), label1);

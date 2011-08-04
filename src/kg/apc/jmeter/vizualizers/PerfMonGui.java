@@ -24,6 +24,7 @@ import kg.apc.charting.AbstractGraphRow;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.perfmon.AgentConnector;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
+import kg.apc.jmeter.perfmon.PerfMonSampleResult;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
@@ -211,20 +212,19 @@ public class PerfMonGui
    public void add(SampleResult res) {
       if(res.isSuccessful()) {
           super.add(res);
-          addThreadGroupRecord(res.getSampleLabel(), normalizeTime(res.getEndTime()), res.getLatency());
+          addThreadGroupRecord(res.getSampleLabel(), normalizeTime(res.getEndTime()), ((PerfMonSampleResult)res).getValue());
           updateGui(null);
        } else {
           addErrorMessage(res.getResponseMessage());
        }
    }
 
-   private void addThreadGroupRecord(String threadGroupName, long time, long value) {
+   private void addThreadGroupRecord(String threadGroupName, long time, double value) {
       AbstractGraphRow row = model.get(threadGroupName);
       if (row == null) {
          row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, threadGroupName,
                AbstractGraphRow.MARKER_SIZE_NONE, false, false, false, true, true);
       }
-
       row.add(time, value);
    }
 

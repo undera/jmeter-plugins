@@ -1,5 +1,4 @@
 package kg.apc.jmeter;
-// TODO: add rows enabling/disabling function
 // TODO: add SummaryReport support
 // TODO: add --version support here, in JMeterPlugins.jar and in agent
 
@@ -32,7 +31,7 @@ public class PluginsCMD {
                 + "--limit-rows <num of points> " // limit number of points in row ||
                 + "--force-y <limit> " // force Y axis limit ||
                 + "--hide-low-counts <limit> " // hide points with sample count below limit ||
-                // TODO: add more options
+                // TODO: add rows enabling/disabling function
                 + "]");
         System.out.println("For help and support please visit " + JMeterPluginsUtils.WIKI_BASE + "JMeterPluginsCMD");
     }

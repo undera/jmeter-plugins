@@ -1,4 +1,3 @@
-// TODO: eliminate acid yellow, blue etc colors
 package kg.apc.charting;
 
 import java.awt.Color;
@@ -31,7 +30,10 @@ public class ColorsDispatcher implements Serializable {
         assignedColors.clear();
         increment = LEVEL_MAX;
         bits = 0;
-        level = LEVEL_MAX-1;
+        level = LEVEL_MAX - 1;
+
+        assignedColors.add(new Color(255, 255, 0));
+        assignedColors.add(new Color(127, 127, 0));
     }
 
     /**
@@ -55,16 +57,24 @@ public class ColorsDispatcher implements Serializable {
         }
         Color c = new Color(r, g, b);
         if (assignedColors.contains(c)) {
-            if(log.isDebugEnabled()) log.debug("Existing " + r + " " + g + " " + b);
+            if (log.isDebugEnabled()) {
+                log.debug("Existing " + r + " " + g + " " + b);
+            }
             color = getNextColor();
         } else if ((r + g + b) / 3 < 32) {
-            if(log.isDebugEnabled()) log.debug("Too dark " + r + " " + g + " " + b);
+            if (log.isDebugEnabled()) {
+                log.debug("Too dark " + r + " " + g + " " + b);
+            }
             color = getNextColor();
         } else if ((r + g + b) / 3 > 256 - 64) {
-            if(log.isDebugEnabled()) log.debug("Too light " + r + " " + g + " " + b);
+            if (log.isDebugEnabled()) {
+                log.debug("Too light " + r + " " + g + " " + b);
+            }
             color = getNextColor();
         } else {
-            if(log.isDebugEnabled()) log.debug("New " + r + " " + g + " " + b);
+            if (log.isDebugEnabled()) {
+                log.debug("New " + r + " " + g + " " + b);
+            }
             color = new Color(r, g, b);
         }
 
@@ -82,7 +92,7 @@ public class ColorsDispatcher implements Serializable {
                     log.warn("Colors exceeded. Rewind colors.");
                     reset();
                 }
-                level = LEVEL_MAX-1;
+                level = LEVEL_MAX - 1;
             }
 
             bits = 0;

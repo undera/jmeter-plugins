@@ -33,7 +33,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
     private AgentConnector[] connectors = null;
     private static BufferedWriter outWriter = null;
     private final static String FILE_HEADER = "PerfMon";
-    private int connectTimeout=10000;
+    private int connectTimeout = 10000;
 
     public MetricsProvider(int monitorType, AbstractPerformanceMonitoringGui gui, AgentConnector[] connectors) {
         this.gui = gui;
@@ -51,7 +51,6 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
         if (outWriter == null) {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
 
-            // TODO: eliminate magic property, use TestElement property set via GUI
             String fileName = JMeterUtils.getPropDefault("jppmfile", "perfmon_" + formatter.format(System.currentTimeMillis()) + ".jppm");
             File f = new File(fileName);
 
@@ -291,7 +290,9 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
                     try {
                         connector = connectors[i];
                         Socket sock = createSocket(connector.getHost(), connector.getPort());
-                        if (getConnectTimeout()>0) sock.setSoTimeout(getConnectTimeout());
+                        if (getConnectTimeout() > 0) {
+                            sock.setSoTimeout(getConnectTimeout());
+                        }
                         connector.connect(sock);
                     } catch (UnknownHostException e) {
                         reportError("Unknown host exception occured. Please verify access to the server '" + connector.getHost() + "'.", e);

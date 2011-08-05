@@ -195,7 +195,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
         setProperty(FILE_NAME, text);
     }
 
-    // TODO: make something with test stopping in JMeter
+    // TODO: make something with test stopping in JMeter. Write custom plugin that tries to kill all threads? Guillotine Stopper! 
     @Override
     public boolean interrupt() {
         if (savedSock != null && savedSock.isOpen()) {

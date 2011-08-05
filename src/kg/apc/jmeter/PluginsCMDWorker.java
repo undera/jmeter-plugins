@@ -169,6 +169,9 @@ public class PluginsCMDWorker {
         rc.setFilename(inputFile);
         rc.setListener(gui);
         rc.loadExistingFile();
+        
+        // to handle issue 64 and since it must be cheap - set options again
+        setOptions(gui);
 
         if ((exportMode & EXPORT_PNG) == EXPORT_PNG) {
             try {

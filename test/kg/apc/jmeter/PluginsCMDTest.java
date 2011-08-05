@@ -88,6 +88,25 @@ public class PluginsCMDTest {
         int result = instance.processParams(args);
         assertEquals(expResult, result);
         System.out.println(f.length());
-        assertTrue(14000 <=f.length());
+        assertTrue(14000 <= f.length());
+    }
+
+    @Test
+    // issue 64
+    public void testProcessParams_issue64() throws IOException {
+        System.out.println("processParams outliers");
+        File f = File.createTempFile("test", ".png");
+        String str = "--width 800 --height 600 "
+                + "--plugin-type HitsPerSecond  "
+                + "--aggregate-rows yes "
+                + "--generate-png " + f.getAbsolutePath() + " "
+                + "--input-jtl " + basedir + "/results_issue_47.jtl";
+        String[] args = str.split(" +");
+        PluginsCMD instance = new PluginsCMD();
+        try {
+            instance.processParams(args);
+            fail("HitsPerSec don't handle aggregates");
+        } catch (UnsupportedOperationException e) {
+        }
     }
 }

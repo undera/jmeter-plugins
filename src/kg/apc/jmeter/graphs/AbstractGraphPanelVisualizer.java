@@ -212,9 +212,14 @@ public abstract class AbstractGraphPanelVisualizer
 
     @Override
     public void switchModel(boolean aggregate) {
-
         ConcurrentSkipListMap<String, AbstractGraphRow> selectedModel;
         if (aggregate) {
+            // issue 64: we must fail requests for aggregate in unsupported cases
+            if (modelAggregate.isEmpty() && !model.isEmpty()) {
+                throw new UnsupportedOperationException("Seems you've requested "
+                        + "aggregate mode for graph that don't support it. We apologize...");
+            }
+
             selectedModel = modelAggregate;
         } else {
             selectedModel = model;
@@ -321,8 +326,6 @@ public abstract class AbstractGraphPanelVisualizer
         }
         return false;
     }
-
-    public abstract String getWikiPage();
 
     /**
      * @return the settingsPanel

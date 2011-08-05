@@ -37,7 +37,7 @@ public class HitsPerSecondGui
             row.add(time, count * 1000.0d / getGranulation());
         }
     }
-
+    
     @Override
     public String getLabelResource()
     {

@@ -42,6 +42,7 @@ public class LatenciesOverTimeGui
       rowAgg.add(time, numThreads);
    }
 
+    @Override
    public String getLabelResource()
    {
       return this.getClass().getSimpleName();

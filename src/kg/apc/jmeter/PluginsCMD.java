@@ -6,9 +6,9 @@ package kg.apc.jmeter;
 /**
  * This class used to handle all command-line stuff
  * like parameter processing etc. All real work
- * made by CMDWorker
+ * made by PluginsCMDWorker
  * @author undera
- * @see CMDWorker
+ * @see PluginsCMDWorker
  */
 public class PluginsCMD {
 

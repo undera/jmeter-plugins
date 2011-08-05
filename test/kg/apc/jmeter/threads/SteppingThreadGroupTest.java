@@ -83,7 +83,7 @@ public class SteppingThreadGroupTest {
         thread.setThreadNum(6);
         instance.scheduleThread(thread);
         s2 = thread.getStartTime();
-        assertEquals(32000, s2 - s1);
+        assertEquals(34000, s2 - s1);
         s1 = s2;
 
         for (int n = 7; n < 9; n++) {

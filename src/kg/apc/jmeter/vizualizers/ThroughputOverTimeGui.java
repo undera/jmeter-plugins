@@ -2,6 +2,8 @@ package kg.apc.jmeter.vizualizers;
 
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.Collection;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
 import org.apache.jmeter.samplers.SampleResult;
@@ -11,11 +13,17 @@ import org.apache.jorphan.gui.RateRenderer;
  *
  * @author apc
  */
-// TODO: make it obsolete
+@Deprecated
 public class ThroughputOverTimeGui
         extends AbstractOverTimeVisualizer
 {
     //private static final Logger log = LoggingManager.getLoggerForClass();
+   //do not insert this vizualiser in any JMeter menu
+    private Collection<String> emptyCollection = new ArrayList<String>();
+    @Override
+    public Collection<String> getMenuCategories() {
+        return emptyCollection;
+    }
 
     /**
      *

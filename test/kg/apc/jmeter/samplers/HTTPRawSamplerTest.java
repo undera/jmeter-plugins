@@ -1,5 +1,6 @@
 package kg.apc.jmeter.samplers;
 
+import java.io.File;
 import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import kg.apc.emulators.SocketChannelEmul;
@@ -233,9 +234,9 @@ public class HTTPRawSamplerTest {
         System.out.println("processIOnolim");
         SampleResult res = new SampleResult();
         res.sampleStart();
-        String resp=TestJMeterUtils.getTestData(2048);
+        String resp = TestJMeterUtils.getTestData(2048);
         instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
-        
+
         byte[] result = instance.processIO(res);
         assertTrue(result.length > 1024);
     }
@@ -251,10 +252,39 @@ public class HTTPRawSamplerTest {
         System.out.println("processIOlim");
         SampleResult res = new SampleResult();
         res.sampleStart();
-        String resp=TestJMeterUtils.getTestData(12048);
+        String resp = TestJMeterUtils.getTestData(12048);
         instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
         byte[] result = instance.processIO(res);
         System.out.println(result.length);
         assertEquals(1024, result.length);
+    }
+
+    /**
+     * Test of processIO method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testProcessIO_fileOnly() throws Exception {
+        System.out.println("processIO");
+        SampleResult res = new SampleResult();
+        res.sampleStart();
+        instance.setPort("0");
+        String file = this.getClass().getResource("testSendFile.raw").getPath();
+        instance.setFileToSend(file);
+        instance.processIO(res);
+        assertEquals(new File(file).length(), instance.sockEmul.getWrittenBytesCount());
+    }
+
+    @Test
+    public void testProcessIO_field_andFile() throws Exception {
+        System.out.println("processIO");
+        SampleResult res = new SampleResult();
+        res.sampleStart();
+        instance.setPort("0");
+        String file = this.getClass().getResource("testSendFile.raw").getPath();
+        String prefix = "GET / HTTP/1.0\r\n";
+        instance.setRequestData(prefix);
+        instance.setFileToSend(file);
+        instance.processIO(res);
+        assertEquals(new File(file).length() + prefix.length(), instance.sockEmul.getWrittenBytesCount());
     }
 }

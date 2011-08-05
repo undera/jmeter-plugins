@@ -3,6 +3,7 @@ package kg.apc.jmeter.samplers;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -11,9 +12,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.gui.BrowseAction;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -25,8 +26,6 @@ public class HTTPRawSamplerGui
         extends AbstractSamplerGui {
 
     public static final String WIKIPAGE = "RawRequest";
-    // TODO: magic properties are BAD!
-    public static final String IMPL_PROPERTY="directFileSender";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private JTextField hostName;
     private JTextField port;
@@ -34,7 +33,8 @@ public class HTTPRawSamplerGui
     private JCheckBox keepAlive;
     private JCheckBox parseResult;
     private JTextArea requestData;
-    private JLabel dataLabel;
+    private JTextField fileName;
+    private JButton browseButton;
 
     /**
      *
@@ -61,24 +61,13 @@ public class HTTPRawSamplerGui
             keepAlive.setSelected(rawSampler.isUseKeepAlive());
             requestData.setText(rawSampler.getRequestData());
             parseResult.setSelected(rawSampler.isParseResult());
-            if (element instanceof HTTPRawSamplerDirectFile)
-            {
-                dataLabel.setText("Full path to file with raw request");
-            }
+            fileName.setText(rawSampler.getFileToSend());
         }
     }
 
+    @Override
     public TestElement createTestElement() {
-        String loadProp = JMeterUtils.getProperty(IMPL_PROPERTY);
-        log.debug("Load prop: " + loadProp);
-        HTTPRawSampler sampler;
-        if (loadProp != null && loadProp.length() > 0) {
-            sampler = new HTTPRawSamplerDirectFile();
-        }
-        else
-        {
-            sampler = new HTTPRawSampler();
-        }
+        HTTPRawSampler sampler = new HTTPRawSampler();
         modifyTestElement(sampler);
         sampler.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
         return sampler;
@@ -90,6 +79,7 @@ public class HTTPRawSamplerGui
      * @param sampler
      * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
      */
+    @Override
     public void modifyTestElement(TestElement sampler) {
         super.configureTestElement(sampler);
 
@@ -100,6 +90,7 @@ public class HTTPRawSamplerGui
             rawSampler.setUseKeepAlive(keepAlive.isSelected());
             rawSampler.setTimeout(timeout.getText());
             rawSampler.setRequestData(transformCRLF(requestData.getText()));
+            rawSampler.setFileToSend(fileName.getText());
             rawSampler.setParseResult(parseResult.isSelected());
         }
     }
@@ -116,10 +107,10 @@ public class HTTPRawSamplerGui
     @Override
     public void clearGui() {
         super.clearGui();
-
         initFields();
     }
 
+    @Override
     public String getLabelResource() {
         return this.getClass().getSimpleName();
     }
@@ -152,15 +143,21 @@ public class HTTPRawSamplerGui
         addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Keep connection open: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 4, keepAlive = new JCheckBox());
 
-        addToPanel(mainPanel, labelConstraints, 0, 5, dataLabel=new JLabel("Request Data: ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Request Data: ", JLabel.RIGHT));
 
         editConstraints.fill = GridBagConstraints.BOTH;
         addToPanel(mainPanel, editConstraints, 1, 5, requestData = new JTextArea());
         requestData.setRows(10);
         requestData.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
-        addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Parse result as HTTP: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 6, parseResult = new JCheckBox());
+        addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Data file path: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 6, fileName = new JTextField());
+        addToPanel(mainPanel, labelConstraints, 2, 6, browseButton = new JButton("Browse..."));
+        browseButton.addActionListener(new BrowseAction(fileName));
+
+
+        addToPanel(mainPanel, labelConstraints, 0, 7, new JLabel("Parse result as HTTP: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 7, parseResult = new JCheckBox());
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
@@ -183,5 +180,6 @@ public class HTTPRawSamplerGui
                 + "Connection: close\r\n"
                 + "\r\n");
         parseResult.setSelected(true);
+        fileName.setText("");
     }
 }

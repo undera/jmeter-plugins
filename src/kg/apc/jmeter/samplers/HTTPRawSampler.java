@@ -3,9 +3,12 @@ package kg.apc.jmeter.samplers;
 
 import kg.apc.io.SocketChannelWithTimeouts;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import org.apache.jmeter.samplers.Entry;
@@ -20,6 +23,7 @@ import org.apache.log.Logger;
  */
 public class HTTPRawSampler extends AbstractIPSampler {
 
+    private static final String FILE_NAME = "fileName";
     private static final String KEEPALIVE = "keepalive";
     private static final String PARSE = "parse";
     private static final String RNpattern = "\\r\\n";
@@ -122,10 +126,15 @@ public class HTTPRawSampler extends AbstractIPSampler {
         }
     }
 
+    @Override
     protected byte[] processIO(SampleResult res) throws Exception {
-        ByteBuffer sendBuf = ByteBuffer.wrap(getRequestData().getBytes()); // cannot cache it because of variable processing
         SocketChannel sock = (SocketChannel) getSocketChannel();
-        sock.write(sendBuf);
+
+        if (!getRequestData().isEmpty()) {
+            ByteBuffer sendBuf = ByteBuffer.wrap(getRequestData().getBytes()); // cannot cache it because of variable processing
+            sock.write(sendBuf);
+        }
+        sendFile(getFileToSend(), sock);
         return readResponse(sock, res);
     }
 
@@ -157,6 +166,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
         setProperty(KEEPALIVE, selected);
     }
 
+    @Override
     protected AbstractSelectableChannel getChannel() throws IOException {
         int t = getTimeoutAsInt();
         if (t > 0) {
@@ -169,14 +179,24 @@ public class HTTPRawSampler extends AbstractIPSampler {
         }
     }
 
-    boolean isParseResult() {
+    public boolean isParseResult() {
         return getPropertyAsBoolean(PARSE);
     }
 
-    void setParseResult(boolean selected) {
+    public void setParseResult(boolean selected) {
         setProperty(PARSE, selected);
     }
 
+    public String getFileToSend() {
+        return getPropertyAsString(FILE_NAME);
+    }
+
+    public void setFileToSend(String text) {
+        setProperty(FILE_NAME, text);
+    }
+
+    // TODO: make something with test stopping in JMeter
+    @Override
     public boolean interrupt() {
         if (savedSock != null && savedSock.isOpen()) {
             try {
@@ -187,5 +207,24 @@ public class HTTPRawSampler extends AbstractIPSampler {
             }
         }
         return true;
+    }
+
+    private void sendFile(String filename, SocketChannel sock) throws IOException {
+        if (filename.isEmpty()) {
+            return;
+        }
+
+        FileInputStream is = new FileInputStream(new File(filename));
+        FileChannel source = is.getChannel();
+
+        ByteBuffer sendBuf = ByteBuffer.allocateDirect(1024);// is it efficient enough?
+        while (source.read(sendBuf) > 0) {
+            sendBuf.flip();
+            if (log.isDebugEnabled()) {
+                log.debug("Sending " + sendBuf);
+            }
+            sock.write(sendBuf);
+            sendBuf.rewind();
+        }
     }
 }

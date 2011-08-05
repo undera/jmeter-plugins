@@ -76,34 +76,4 @@ public class HTTPRawSamplerDirectFileTest {
         instance.processIO(res);
         assertEquals(new File(file).length()+prefix.length(), instance.sockEmul.getWrittenBytesCount());
     }
-
-    @Test
-    public void testProcessIO_real() throws Exception {
-        System.out.println("processIO_real_short");
-        String file = this.getClass().getResource("testSendFile_1.raw").getPath();
-        SampleResult res = new SampleResult();
-        res.sampleStart();
-        HTTPRawSamplerDirectFile instance = new HTTPRawSamplerDirectFile();
-        instance.setPort("80");
-        instance.setTimeout("15000");
-        instance.setHostName("files.namba.kz");
-        instance.setRequestData(file);
-        //byte[] resp = instance.processIO(res);
-        //assertTrue(resp.length>10);
-    }
-
-    @Test
-    public void testProcessIO_realbig() throws Exception {
-        System.out.println("processIO_real");
-        String file = this.getClass().getResource("testSendFile.raw").getPath();
-        SampleResult res = new SampleResult();
-        res.sampleStart();
-        HTTPRawSamplerDirectFile instance = new HTTPRawSamplerDirectFile();
-        instance.setPort("80");
-        instance.setTimeout("15000");
-        instance.setHostName("files.namba.kz");
-        instance.setRequestData(file);
-        //byte[] resp = instance.processIO(res);
-        //assertTrue(resp.length>10);
-    }
 }

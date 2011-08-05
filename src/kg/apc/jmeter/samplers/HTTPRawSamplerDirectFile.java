@@ -11,8 +11,7 @@ import org.apache.jmeter.samplers.SampleResult;
  *
  * @author undera
  */
-// TODO: fix the problem that we create this object with JMeter properties
-// TODO: document it, dude! No, don't document, just merge to HTTP Raw Sampler
+@Deprecated
 public class HTTPRawSamplerDirectFile extends HTTPRawSampler {
 
     private static final String MARKER = "FileToInclude:";

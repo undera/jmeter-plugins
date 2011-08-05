@@ -23,7 +23,6 @@ import org.apache.jmeter.testelement.TestElement;
 public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
 
     public static final String WIKIPAGE = "RawDataSource";
-
     private JCheckBox rewindOnEOF;
     private JTextField variableName;
     private JTextField fileName;
@@ -42,6 +41,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
         return JMeterPluginsUtils.prefixLabel("Raw Data Source PreProcessor");
     }
 
+    @Override
     public String getLabelResource() {
         return getClass().getCanonicalName();
     }
@@ -54,6 +54,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
         fileName.setText(element.getPropertyAsString(RawRequestSourcePreProcessor.FILENAME));
     }
 
+    @Override
     public TestElement createTestElement() {
         RawRequestSourcePreProcessor preproc = new RawRequestSourcePreProcessor();
         modifyTestElement(preproc);
@@ -61,6 +62,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
         return preproc;
     }
 
+    @Override
     public void modifyTestElement(TestElement te) {
         configureTestElement(te);
         if (te instanceof RawRequestSourcePreProcessor) {

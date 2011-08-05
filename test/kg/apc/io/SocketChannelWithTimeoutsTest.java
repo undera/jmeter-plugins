@@ -1,6 +1,5 @@
 package kg.apc.io;
 
-import org.apache.jmeter.samplers.SampleResult;
 import kg.apc.emulators.SelectionKeyEmul;
 import java.util.Set;
 import java.io.IOException;

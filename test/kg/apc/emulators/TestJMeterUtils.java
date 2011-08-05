@@ -41,6 +41,7 @@ public abstract class TestJMeterUtils {
         File propsFile = null;
         try {
             propsFile = File.createTempFile("jmeter-plugins", "testProps");
+            propsFile.deleteOnExit();
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
         }

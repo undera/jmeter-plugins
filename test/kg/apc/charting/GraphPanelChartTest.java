@@ -451,7 +451,7 @@ public class GraphPanelChartTest {
         System.out.println("isUseRelativeTime");
         GraphPanelChart instance = new GraphPanelChart();
         //default value is true
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.isUseRelativeTime();
         assertEquals(expResult, result);
     }

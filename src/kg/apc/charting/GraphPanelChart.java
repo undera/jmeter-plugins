@@ -237,7 +237,7 @@ public class GraphPanelChart
    private boolean settingsDrawFinalZeroingLines;
    private boolean settingsDrawCurrentX;
    private int settingsHideNonRepValLimit = -1;
-   private boolean settingsUseRelativeTime = false;
+   private boolean settingsUseRelativeTime = true;
 
    //relative time
    private long testStartTime = 0;

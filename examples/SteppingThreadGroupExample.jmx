@@ -61,6 +61,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
+        <stringProp name="rampUp">2</stringProp>
       </kg.apc.jmeter.threads.SteppingThreadGroup>
       <hashTree>
         <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler" enabled="true">
@@ -89,6 +90,7 @@ then stop threads with 10x5 steps</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
+        <stringProp name="rampUp">1</stringProp>
       </kg.apc.jmeter.threads.SteppingThreadGroup>
       <hashTree>
         <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler" enabled="true">

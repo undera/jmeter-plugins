@@ -13,123 +13,112 @@ import static org.junit.Assert.*;
  *
  * @author apc
  */
-public class SteppingThreadGroupGuiTest
-{
-   /**
-    *
-    */
-   public SteppingThreadGroupGuiTest()
-   {
-   }
+public class SteppingThreadGroupGuiTest {
 
-   /**
-    *
-    * @throws Exception
-    */
-   @BeforeClass
-   public static void setUpClass() throws Exception
-   {
-      TestJMeterUtils.createJmeterEnv();
-   }
+    /**
+     *
+     */
+    public SteppingThreadGroupGuiTest() {
+    }
 
-   /**
-    *
-    * @throws Exception
-    */
-   @AfterClass
-   public static void tearDownClass() throws Exception
-   {
-   }
+    /**
+     *
+     * @throws Exception
+     */
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
+    }
 
-   /**
-    *
-    */
-   @Before
-   public void setUp()
-   {
-   }
+    /**
+     *
+     * @throws Exception
+     */
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
 
-   /**
-    *
-    */
-   @After
-   public void tearDown()
-   {
-   }
+    /**
+     *
+     */
+    @Before
+    public void setUp() {
+    }
 
-   /**
-    * Test of init method, of class SteppingThreadGroupGui.
-    */
-   @Test
-   public void testInit()
-   {
-      System.out.println("init");
-      SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
-      instance.init();
-   }
+    /**
+     *
+     */
+    @After
+    public void tearDown() {
+    }
 
-   /**
-    * Test of getLabelResource method, of class SteppingThreadGroupGui.
-    */
-   @Test
-   public void testGetLabelResource()
-   {
-      System.out.println("getLabelResource");
-      SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
-      String result = instance.getLabelResource();
-      assertNotNull(result);
-   }
+    /**
+     * Test of init method, of class SteppingThreadGroupGui.
+     */
+    @Test
+    public void testInit() {
+        System.out.println("init");
+        SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
+        instance.init();
+    }
 
-   /**
-    * Test of getStaticLabel method, of class SteppingThreadGroupGui.
-    */
-   @Test
-   public void testGetStaticLabel()
-   {
-      System.out.println("getStaticLabel");
-      SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
-      String result = instance.getStaticLabel();
-      assertNotNull(result);
-   }
+    /**
+     * Test of getLabelResource method, of class SteppingThreadGroupGui.
+     */
+    @Test
+    public void testGetLabelResource() {
+        System.out.println("getLabelResource");
+        SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
+        String result = instance.getLabelResource();
+        assertNotNull(result);
+    }
 
-   /**
-    * Test of createTestElement method, of class SteppingThreadGroupGui.
-    */
-   @Test
-   public void testCreateTestElement()
-   {
-      System.out.println("createTestElement");
-      SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
-      TestElement expResult = new SteppingThreadGroup();
-      TestElement result = instance.createTestElement();
-      assertEquals(expResult.getClass().getName(), result.getClass().getName());
-   }
+    /**
+     * Test of getStaticLabel method, of class SteppingThreadGroupGui.
+     */
+    @Test
+    public void testGetStaticLabel() {
+        System.out.println("getStaticLabel");
+        SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
+        String result = instance.getStaticLabel();
+        assertNotNull(result);
+    }
 
-   /**
-    * Test of modifyTestElement method, of class SteppingThreadGroupGui.
-    */
-   @Test
-   public void testModifyTestElement()
-   {
-      System.out.println("modifyTestElement");
-      SteppingThreadGroup tg = new SteppingThreadGroup();
-      tg.setNumThreads(100);
-      SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
-      instance.modifyTestElement(tg);
-   }
+    /**
+     * Test of createTestElement method, of class SteppingThreadGroupGui.
+     */
+    @Test
+    public void testCreateTestElement() {
+        System.out.println("createTestElement");
+        SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
+        TestElement expResult = new SteppingThreadGroup();
+        TestElement result = instance.createTestElement();
+        assertEquals(expResult.getClass().getName(), result.getClass().getName());
+    }
 
-   /**
-    * Test of configure method, of class SteppingThreadGroupGui.
-    */
-   @Test
-   public void testConfigure()
-   {
-      System.out.println("configure");
-      TestElement tg = new SteppingThreadGroup();
-      SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
-      instance.createTestElement();
-      instance.configure(tg);
-   }
+    /**
+     * Test of modifyTestElement method, of class SteppingThreadGroupGui.
+     */
+    @Test
+    public void testModifyTestElement() {
+        System.out.println("modifyTestElement");
+        SteppingThreadGroup tg = new SteppingThreadGroup();
+        tg.setNumThreads(100);
+        SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
+        instance.modifyTestElement(tg);
+    }
+
+    /**
+     * Test of configure method, of class SteppingThreadGroupGui.
+     */
+    @Test
+    public void testConfigure() {
+        System.out.println("configure");
+        TestElement tg = new SteppingThreadGroup();
+        SteppingThreadGroupGui instance = new SteppingThreadGroupGui();
+        instance.createTestElement();
+        instance.configure(tg);
+    }
 
     /**
      * Test of clearGui method, of class SteppingThreadGroupGui.

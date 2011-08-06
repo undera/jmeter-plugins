@@ -69,7 +69,7 @@ public class ParameterizedControllerGui
 
    private JPanel createVariablePanel()
    {
-      argsPanel = new ArgumentsPanel(JMeterUtils.getResString("user_defined_variables")); // $NON-NLS-1$
+      argsPanel = new ArgumentsPanel(JMeterUtils.getResString("user_defined_variables")); 
       return argsPanel;
    }
 

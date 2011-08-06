@@ -18,8 +18,17 @@ import org.apache.log.Logger;
 public class InfiniteGetTCPClientImpl extends TCPClientImpl {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private final int chunkSize = JMeterUtils.getPropDefault("tcp.infiniteTCPChunkSize", 5120); // $NON-NLS-1$
+    private final int chunkSize = JMeterUtils.getPropDefault("tcp.infiniteTCPChunkSize", 5120);
     private boolean isRequestSent = false;
+    private int recvDataLimit;
+
+    public InfiniteGetTCPClientImpl() {
+        super();
+        recvDataLimit = JMeterUtils.getPropDefault(AbstractIPSampler.RESULT_DATA_LIMIT, Integer.MAX_VALUE);
+        if (recvDataLimit < Integer.MAX_VALUE) {
+            log.info("Limiting result data to " + recvDataLimit);
+        }
+    }
 
     @Override
     public void write(OutputStream os, InputStream is) {
@@ -45,7 +54,9 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
         try {
             x = is.read(buffer);
             if (x > 0) {
-                w.write(buffer, 0, x);
+                if (w.size() < recvDataLimit) {
+                    w.write(buffer, 0, x);
+                }
             } else {
                 log.warn("Read 0 bytes, seems the connection was closed. Closing stream");
                 is.close();

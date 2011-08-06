@@ -39,8 +39,8 @@ public abstract class AbstractIPSampler
 
     public AbstractIPSampler() {
         recvBuf = ByteBuffer.allocateDirect(JMeterUtils.getPropDefault(RECV_BUFFER_LEN_PROPERTY, 1024 * 4));
-        recvDataLimit = JMeterUtils.getPropDefault(RESULT_DATA_LIMIT, -1);
-        if (recvDataLimit >= 0) {
+        recvDataLimit = JMeterUtils.getPropDefault(RESULT_DATA_LIMIT, Integer.MAX_VALUE);
+        if (recvDataLimit < Integer.MAX_VALUE) {
             log.info("Limiting result data to " + recvDataLimit);
         }
     }

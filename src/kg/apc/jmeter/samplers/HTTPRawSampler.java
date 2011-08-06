@@ -50,15 +50,17 @@ public class HTTPRawSampler extends AbstractIPSampler {
         recvBuf.clear();
         boolean firstPack = true;
         int cnt = 0;
+        int responseSize = 0;
 
         try {
             while ((cnt = channel.read(recvBuf)) != -1) {
+                responseSize += cnt;
                 if (firstPack) {
                     res.latencyEnd();
                     firstPack = false;
                 }
                 recvBuf.flip();
-                if (recvDataLimit < 0 || response.size() <= recvDataLimit) {
+                if (response.size() <= recvDataLimit) {
                     byte[] bytes = new byte[cnt];
                     recvBuf.get(bytes);
                     response.write(bytes);
@@ -81,7 +83,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
             channel.close();
         }
 
-        res.setBytes(response.size());
+        res.setBytes(responseSize);
         return response.toByteArray();
     }
 

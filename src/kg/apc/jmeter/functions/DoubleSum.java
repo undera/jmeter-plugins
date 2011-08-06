@@ -1,4 +1,3 @@
-// TODO: implement functions iif, base64, 
 package kg.apc.jmeter.functions;
 
 import java.util.Collection;

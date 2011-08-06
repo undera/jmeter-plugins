@@ -62,8 +62,8 @@ public class PluginsCMDWorker {
      */
     private void initializeProperties() {
         JMeterUtils.loadJMeterProperties(NewDriver.getJMeterDir() + File.separator
-                + "bin" + File.separator // $NON-NLS-1$
-                + "jmeter.properties");// $NON-NLS-1$
+                + "bin" + File.separator 
+                + "jmeter.properties");
 
         JMeterUtils.initLogging();
         JMeterUtils.initLocale();

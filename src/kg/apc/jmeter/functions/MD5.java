@@ -44,7 +44,7 @@ public class MD5 extends AbstractFunction {
             return "Error creating digest: " + ex;
         }
 
-        String res = JOrphanUtils.baToHexString(str.getBytes());
+        String res = JOrphanUtils.baToHexString(digest.digest(str.getBytes()));
 
         if (vars != null && values.length > 1) {
             String varName = ((CompoundVariable) values[1]).execute().trim();

@@ -36,5 +36,6 @@ public class DummySampleResultTest {
     public void testSomeMethod() {
         DummySampleResult res=new DummySampleResult(10);
         assertEquals(10, res.getEndTime()-res.getStartTime());
+        assertEquals(10, res.getTime());
     }
 }

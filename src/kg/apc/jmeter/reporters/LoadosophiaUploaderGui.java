@@ -47,6 +47,7 @@ public class LoadosophiaUploaderGui
         return JMeterPluginsUtils.prefixLabel("Loadosophia.org Uploader");
     }
 
+    @Override
     public String getLabelResource() {
         return getClass().getCanonicalName();
     }
@@ -150,9 +151,11 @@ public class LoadosophiaUploaderGui
         initFields();
     }
 
+    @Override
     public void add(SampleResult sr) {
     }
 
+    @Override
     public void clearData() {
         infoArea.setText("");
     }
@@ -161,6 +164,7 @@ public class LoadosophiaUploaderGui
         infoArea.append(string + "\n");
     }
 
+    @Override
     public boolean isStats() {
         return false;
     }

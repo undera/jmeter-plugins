@@ -1,4 +1,3 @@
-// TODO: move all images to IMG folder
 package kg.apc.jmeter.vizualizers;
 
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;

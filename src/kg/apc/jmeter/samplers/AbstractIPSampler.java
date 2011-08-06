@@ -23,7 +23,6 @@ public abstract class AbstractIPSampler
         implements Serializable, Cloneable, Interruptible {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    // TODO: document properties
     public static final String RECV_BUFFER_LEN_PROPERTY = "kg.apc.jmeter.samplers.ReceiveBufferSize";
     public static final String RESULT_DATA_LIMIT = "kg.apc.jmeter.samplers.ResultDataLimit";
     public static final String HOSTNAME = "hostname";

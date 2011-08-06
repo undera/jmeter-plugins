@@ -1,4 +1,3 @@
-// TODO: add property to limit data stored in sampleresults
 package kg.apc.jmeter.samplers;
 
 import kg.apc.io.SocketChannelWithTimeouts;

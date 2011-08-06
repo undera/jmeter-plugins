@@ -17,6 +17,7 @@ import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.jmeter.reporters.ResultCollector;
+import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.TestListener;
 import org.apache.jorphan.logging.LoggingManager;
@@ -36,6 +37,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
     public static final String PROJECT = "project";
     public static final String STORE_DIR = "storeDir";
     private String fileName;
+    private long count; // TODO: remove me
 
     public LoadosophiaUploader() {
         super();
@@ -45,8 +47,9 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
     public void testStarted() {
         try {
             setupSaving();
+            count = 0;
         } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(LoadosophiaUploader.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            log.error("Error setting up saving", ex);
         }
         super.testStarted();
 
@@ -58,11 +61,13 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             dir += File.separator;
         }
 
-        fileName = dir + getFilePrefix() + System.currentTimeMillis() + ".jtl";
+        File tmpFile = File.createTempFile(getFilePrefix() + "_", ".jtl", new File(dir));
+        //tmpFile.deleteOnExit(); TODO: restore it
+        fileName = tmpFile.getAbsolutePath();
         informUser("Storing results for upload to Loadosophia.org: " + fileName);
         setFilename(fileName);
 
-        SampleSaveConfiguration conf = new SampleSaveConfiguration();
+        SampleSaveConfiguration conf = getSaveConfig();
         conf.setFormatter(null);
         conf.setSamplerData(false);
         conf.setRequestHeaders(false);
@@ -92,7 +97,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
 
         conf.setAsXml(false);
         conf.setFieldNames(true);
-        setSaveConfig(conf);
+        //setSaveConfig(conf);
     }
 
     @Override
@@ -108,11 +113,22 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             informUser("Failed to upload results to Loadosophia.org, see log for detais");
             log.error("Failed to upload results to loadosophia", ex);
         }
+
         clearData();
-        informUser("");
+        informUser(getName() + " Count: " + count);
+    }
+
+    @Override
+    public void sampleOccurred(SampleEvent event) {
+        super.sampleOccurred(event);
+        count++;
     }
 
     private void sendJTLToLoadosophia(File targetFile) throws IOException {
+        if (targetFile.length() == 0) {
+            throw new IOException("Cannot send empty file to Loadosophia.org");
+        }
+
         HttpClient uploader = new HttpClient();
         PostMethod filePost = new PostMethod(getUploaderURI());
         Part[] parts = {
@@ -121,7 +137,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile)))
         };
 
-        targetFile.delete();
+        // targetFile.delete(); todo: restore it
 
         informUser("Starting upload to Loadosophia.org");
         filePost.setRequestEntity(new MultipartRequestEntity(parts, filePost.getParams()));

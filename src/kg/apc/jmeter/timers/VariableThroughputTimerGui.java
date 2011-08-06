@@ -1,6 +1,5 @@
 package kg.apc.jmeter.timers;
 
-// TODO: make abstract classes for GUI or at least interfaces
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;

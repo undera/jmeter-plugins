@@ -41,6 +41,7 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         setProperty(ENCODECLASS, text);
     }
 
+    @Override
     protected AbstractSelectableChannel getChannel() throws IOException {
         DatagramChannel c;
         if (isWaitResponse()) {
@@ -54,6 +55,7 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         return c;
     }
 
+    @Override
     public ByteBuffer encode(String data) {
         try {
             return ByteBuffer.wrap(data.getBytes("Windows-1252"));
@@ -62,6 +64,7 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         }
     }
 
+    @Override
     public byte[] decode(byte[] buf) {
         return buf;
     }
@@ -112,6 +115,7 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         return response;
     }
 
+    @Override
     public void threadStarted() {
         try {
             Class<?> c = Thread.currentThread().getContextClassLoader().loadClass(getEncoderClass());
@@ -127,6 +131,7 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         }
     }
 
+    @Override
     public void threadFinished() {
         try {
             if (channel != null) {
@@ -137,6 +142,7 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         }
     }
 
+    @Override
     public boolean interrupt() {
         if (channel != null && channel.isOpen()) {
             try {

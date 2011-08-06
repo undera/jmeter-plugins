@@ -41,6 +41,7 @@ public class PerfMonCollector
         // just dropping regular test samples
     }
 
+    @Override
     public synchronized void run() {
         while (true) {
             processConnectors();
@@ -134,7 +135,7 @@ public class PerfMonCollector
                     case AbstractPerformanceMonitoringGui.PERFMON_CPU:
                         double cpuMetric = connectors[i].getCpu();
                         if (cpuMetric != AgentConnector.AGENT_ERROR) {
-                            generateSample(100 * cpuMetric, label);
+                            generateSample(100 * cpuMetric, label+", %");
                         } else {
                             cnxLost = true;
                         }
@@ -142,7 +143,7 @@ public class PerfMonCollector
                     case AbstractPerformanceMonitoringGui.PERFMON_MEM:
                         long memMetric = connectors[i].getMem();
                         if (memMetric != AgentConnector.AGENT_ERROR) {
-                            generateSample((double)memMetric / MEGABYTE, label);
+                            generateSample((double) memMetric / MEGABYTE, label+ ", MB");
                         } else {
                             cnxLost = true;
                         }
@@ -166,17 +167,17 @@ public class PerfMonCollector
                     case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
                         long[] nioMetrics = connectors[i].getNetIO();
                         if (nioMetrics[0] != AgentConnector.AGENT_ERROR && nioMetrics[1] != AgentConnector.AGENT_ERROR) {
-                            generate2Samples(nioMetrics, label + " recv", label + " send");
+                            generate2Samples(nioMetrics, label + " recv, KB", label + " send, KB");
                         } else {
                             cnxLost = true;
                         }
-                        
+
                         break;
                     default:
                         log.error("Unknown metric index: " + connectors[i].getMetricType());
                 }
                 //if cnx lost, notify
-                if(cnxLost) {
+                if (cnxLost) {
                     String msg = "Connection lost with '" + connectors[i].getHost() + "'! (required for " + label + ")";
                     generateErrorSample(label, msg);
                     log.error(msg);

@@ -1,4 +1,4 @@
-// TODO: implement uppercase, lowercase, substring, iif, md5, base64, isDefined functions
+// TODO: implement substring, iif, base64, isDefined functions
 package kg.apc.jmeter.functions;
 
 import java.util.Collection;
@@ -21,12 +21,12 @@ import org.apache.jmeter.threads.JMeterVariables;
 public class DoubleSum extends AbstractFunction {
 
     private static final List<String> desc = new LinkedList<String>();
-    private static final String KEY = "__doubleSum"; //$NON-NLS-1$
+    private static final String KEY = "__doubleSum"; 
 
     static {
-        desc.add("First double to add"); //$NON-NLS-1$
-        desc.add("Second long to add - further doubles can be summed by adding further arguments"); //$NON-NLS-1$
-        desc.add("Name of variable in which to store the result (optional)"); //$NON-NLS-1$
+        desc.add("First double to add"); 
+        desc.add("Second long to add - further doubles can be summed by adding further arguments"); 
+        desc.add("Name of variable in which to store the result (optional)"); 
     }
     private Object[] values;
 

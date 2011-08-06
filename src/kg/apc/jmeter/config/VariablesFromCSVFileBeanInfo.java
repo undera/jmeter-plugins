@@ -12,9 +12,9 @@ public class VariablesFromCSVFileBeanInfo
      extends BeanInfoSupport
 {
    // These names must agree case-wise with the variable and property names
-   private static final String FILENAME = "filename";               //$NON-NLS-1$
-   private static final String VARIABLES_PREFIX = "variablesPrefix";    //$NON-NLS-1$
-   private static final String DELIMITER = "delimiter";             //$NON-NLS-1$
+   private static final String FILENAME = "filename";               
+   private static final String VARIABLES_PREFIX = "variablesPrefix";    
+   private static final String DELIMITER = "delimiter";             
 
    /**
     * 
@@ -23,7 +23,7 @@ public class VariablesFromCSVFileBeanInfo
    {
       super(VariablesFromCSVFile.class);
 
-      createPropertyGroup("csv_data", //$NON-NLS-1$
+      createPropertyGroup("csv_data", 
            new String[]
            {
               FILENAME,
@@ -33,17 +33,17 @@ public class VariablesFromCSVFileBeanInfo
 
       PropertyDescriptor p = property(FILENAME);
       p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-      p.setValue(DEFAULT, "");        //$NON-NLS-1$
+      p.setValue(DEFAULT, "");        
       p.setValue(NOT_EXPRESSION, Boolean.TRUE);
 
       p = property(VARIABLES_PREFIX);
       p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-      p.setValue(DEFAULT, "");        //$NON-NLS-1$
+      p.setValue(DEFAULT, "");        
       p.setValue(NOT_EXPRESSION, Boolean.TRUE);
 
       p = property(DELIMITER);
       p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-      p.setValue(DEFAULT, ",");        //$NON-NLS-1$
+      p.setValue(DEFAULT, ",");        
       p.setValue(NOT_EXPRESSION, Boolean.TRUE);
 
       getBeanDescriptor().setDisplayName(JMeterPluginsUtils.prefixLabel(getBeanDescriptor().getDisplayName()));

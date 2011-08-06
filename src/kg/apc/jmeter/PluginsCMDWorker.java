@@ -71,8 +71,8 @@ public class PluginsCMDWorker {
         Properties jmeterProps = JMeterUtils.getJMeterProperties();
 
         // Add local JMeter properties, if the file is found
-        String userProp = JMeterUtils.getPropDefault("user.properties", ""); //$NON-NLS-1$
-        if (userProp.length() > 0) { //$NON-NLS-1$
+        String userProp = JMeterUtils.getPropDefault("user.properties", ""); 
+        if (userProp.length() > 0) { 
             FileInputStream fis = null;
             try {
                 File file = JMeterUtils.findFile(userProp);
@@ -92,7 +92,7 @@ public class PluginsCMDWorker {
         }
 
         // Add local system properties, if the file is found
-        String sysProp = JMeterUtils.getPropDefault("system.properties", ""); //$NON-NLS-1$
+        String sysProp = JMeterUtils.getPropDefault("system.properties", ""); 
         if (sysProp.length() > 0) {
             FileInputStream fis = null;
             try {

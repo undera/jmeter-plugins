@@ -50,28 +50,28 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
     private Collection<String> emptyCollection = new ArrayList<String>();
     private static final long serialVersionUID = 240L;
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private static final String USE_GROUP_NAME = "useGroupName"; //$NON-NLS-1$
-    private static final String SAVE_HEADERS = "saveHeaders"; //$NON-NLS-1$
+    private static final String USE_GROUP_NAME = "useGroupName"; 
+    private static final String SAVE_HEADERS = "saveHeaders"; 
     private static final String[] COLUMNS = {
-        "sampler_label", //$NON-NLS-1$
-        "aggregate_report_count", //$NON-NLS-1$
-        "average", //$NON-NLS-1$
-        "aggregate_report_median", //$NON-NLS-1$
-        "aggregate_report_90%_line", //$NON-NLS-1$
-        "aggregate_report_min", //$NON-NLS-1$
-        "aggregate_report_max", //$NON-NLS-1$
-        "aggregate_report_error%", //$NON-NLS-1$
-        "aggregate_report_rate", //$NON-NLS-1$
-        "aggregate_report_bandwidth"};  //$NON-NLS-1$
-    private final String TOTAL_ROW_LABEL = JMeterUtils.getResString("aggregate_report_total_label");  //$NON-NLS-1$
+        "sampler_label", 
+        "aggregate_report_count", 
+        "average", 
+        "aggregate_report_median", 
+        "aggregate_report_90%_line", 
+        "aggregate_report_min", 
+        "aggregate_report_max", 
+        "aggregate_report_error%", 
+        "aggregate_report_rate", 
+        "aggregate_report_bandwidth"};  
+    private final String TOTAL_ROW_LABEL = JMeterUtils.getResString("aggregate_report_total_label");  
     private JTable myJTable;
     private JScrollPane myScrollPane;
     private final JButton saveTable =
-            new JButton(JMeterUtils.getResString("aggregate_graph_save_table"));            //$NON-NLS-1$
+            new JButton(JMeterUtils.getResString("aggregate_graph_save_table"));            
     private final JCheckBox saveHeaders = // should header be saved with the data?
-            new JCheckBox(JMeterUtils.getResString("aggregate_graph_save_table_header"), true);    //$NON-NLS-1$
+            new JCheckBox(JMeterUtils.getResString("aggregate_graph_save_table_header"), true);    
     private final JCheckBox useGroupName =
-            new JCheckBox(JMeterUtils.getResString("aggregate_graph_use_group_name"));            //$NON-NLS-1$
+            new JCheckBox(JMeterUtils.getResString("aggregate_graph_use_group_name"));            
     private transient ObjectTableModel statModel;
     private final Map<String, SamplingStatCalculator> tableRows =
             new ConcurrentHashMap<String, SamplingStatCalculator>();
@@ -81,17 +81,17 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         statModel = new ObjectTableModel(COLUMNS,
                 SamplingStatCalculator.class,
                 new Functor[]{
-                    new Functor("getLabel"), //$NON-NLS-1$
-                    new Functor("getCount"), //$NON-NLS-1$
-                    new Functor("getMeanAsNumber"), //$NON-NLS-1$
-                    new Functor("getMedian"), //$NON-NLS-1$
-                    new Functor("getPercentPoint", //$NON-NLS-1$
+                    new Functor("getLabel"), 
+                    new Functor("getCount"), 
+                    new Functor("getMeanAsNumber"), 
+                    new Functor("getMedian"), 
+                    new Functor("getPercentPoint", 
                     new Object[]{new Float(.900)}),
-                    new Functor("getMin"), //$NON-NLS-1$
-                    new Functor("getMax"), //$NON-NLS-1$
-                    new Functor("getErrorPercentage"), //$NON-NLS-1$
-                    new Functor("getRate"), //$NON-NLS-1$
-                    new Functor("getKBPerSecond") //$NON-NLS-1$
+                    new Functor("getMin"), 
+                    new Functor("getMax"), 
+                    new Functor("getErrorPercentage"), 
+                    new Functor("getRate"), 
+                    new Functor("getKBPerSecond") 
                 },
                 new Functor[]{null, null, null, null, null, null, null, null, null, null},
                 new Class[]{String.class, Long.class, Long.class, Long.class, Long.class,
@@ -116,13 +116,13 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         null, // 90%
         null, // Min
         null, // Max
-        new NumberRenderer("#0.00%"), // Error %age //$NON-NLS-1$
-        new RateRenderer("#.0"), // Throughput //$NON-NLS-1$
-        new NumberRenderer("#.0"), // pageSize   //$NON-NLS-1$
+        new NumberRenderer("#0.00%"), // Error %age 
+        new RateRenderer("#.0"), // Throughput 
+        new NumberRenderer("#.0"), // pageSize   
     };
 
     public String getLabelResource() {
-        return "aggregate_report";  //$NON-NLS-1$
+        return "aggregate_report";  
     }
 
     public void add(SampleResult res) {

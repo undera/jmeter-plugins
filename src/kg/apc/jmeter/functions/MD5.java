@@ -1,5 +1,7 @@
 package kg.apc.jmeter.functions;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,31 +9,26 @@ import java.util.List;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.functions.AbstractFunction;
 import org.apache.jmeter.functions.InvalidVariableException;
-import org.apache.jmeter.functions.LongSum;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jorphan.util.JOrphanUtils;
 
-/**
- * Provides a DoubleSum function that adds two or more Double values.
- * Mostly copied from LongSum
- * @see LongSum
- */
-public class StrLen extends AbstractFunction {
+public class MD5 extends AbstractFunction {
 
     private static final List<String> desc = new LinkedList<String>();
-    private static final String KEY = "__strLen"; 
+    private static final String KEY = "__MD5";
 
     static {
-        desc.add("String to measure length"); 
-        desc.add("Name of variable in which to store the result (optional)"); 
+        desc.add("String to calculate MD5 hash");
+        desc.add("Name of variable in which to store the result (optional)");
     }
     private Object[] values;
 
     /**
      * No-arg constructor.
      */
-    public StrLen() {
+    public MD5() {
     }
 
     /** {@inheritDoc} */
@@ -39,15 +36,22 @@ public class StrLen extends AbstractFunction {
     public synchronized String execute(SampleResult previousResult, Sampler currentSampler)
             throws InvalidVariableException {
         JMeterVariables vars = getVariables();
-        Integer len=((CompoundVariable) values[0]).execute().length();
-
-        if (vars != null && values.length>1) {
-            String varName = ((CompoundVariable) values[1]).execute().trim();
-            vars.put(varName, len.toString());
+        String str = ((CompoundVariable) values[0]).execute();
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("md5");
+        } catch (NoSuchAlgorithmException ex) {
+            return "Error creating digest: " + ex;
         }
 
-        return len.toString();
+        String res = JOrphanUtils.baToHexString(str.getBytes());
 
+        if (vars != null && values.length > 1) {
+            String varName = ((CompoundVariable) values[1]).execute().trim();
+            vars.put(varName, res);
+        }
+
+        return res;
     }
 
     /** {@inheritDoc} */
@@ -64,6 +68,7 @@ public class StrLen extends AbstractFunction {
     }
 
     /** {@inheritDoc} */
+    @Override
     public List<String> getArgumentDesc() {
         return desc;
     }

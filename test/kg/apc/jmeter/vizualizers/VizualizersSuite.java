@@ -25,7 +25,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({TimesVsThreadsGuiTest.class, ThreadsStateOverTimeGuiTest.class, TransactionsPerSecondGuiTest.class, ResponseTimesPercentilesGuiTest.class, CorrectedResultCollectorTest.class, ThroughputVsThreadsGuiTest.class, ResponseTimesDistributionGuiTest.class, ResponseTimesOverTimeGuiTest.class, JSettingsPanelTest.class, ThroughputOverTimeGuiTest.class, TotalTransactionsPerSecondGuiTest.class, LatenciesOverTimeGuiTest.class, HitsPerSecondGuiTest.class, JCompositeRowsSelectorPanelTest.class, CompositeResultCollectorTest.class, PerfMonGuiTest.class, CompositeModelTest.class, CompositeGraphGuiTest.class, ResponseCodesPerSecondGuiTest.class, AggregateReportGuiTest.class, BytesThroughputOverTimeGuiTest.class})
+@Suite.SuiteClasses({PerfMonGuiTest.class, ResponseTimesPercentilesGuiTest.class, JSettingsPanelTest.class, CompositeResultCollectorTest.class, AggregateReportGuiTest.class, ThreadsStateOverTimeGuiTest.class, ThroughputOverTimeGuiTest.class, TransactionsPerSecondGuiTest.class, ResponseTimesOverTimeGuiTest.class, TimesVsThreadsGuiTest.class, ResponseTimesDistributionGuiTest.class, BytesThroughputOverTimeGuiTest.class, CompositeModelTest.class, CorrectedResultCollectorTest.class, TotalTransactionsPerSecondGuiTest.class, ThroughputVsThreadsGuiTest.class, LatenciesOverTimeGuiTest.class, JCompositeRowsSelectorPanelTest.class, CompositeGraphGuiTest.class, ResponseCodesPerSecondGuiTest.class, HitsPerSecondGuiTest.class})
 public class VizualizersSuite {
 
     @BeforeClass

@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({StrLenTest.class, DoubleSumTest.class})
+@Suite.SuiteClasses({UpperCaseTest.class, StrLenTest.class, MD5Test.class, DoubleSumTest.class, IsDefinedTest.class, SubstringTest.class, LowerCaseTest.class})
 public class FunctionsSuite {
 
    @BeforeClass

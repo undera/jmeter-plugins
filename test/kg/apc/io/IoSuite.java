@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.io.DatagramChannelWithTimeoutsTest.class, kg.apc.io.SocketChannelWithTimeoutsTest.class})
+@Suite.SuiteClasses({SocketChannelWithTimeoutsTest.class, DatagramChannelWithTimeoutsTest.class})
 public class IoSuite {
 
     @BeforeClass

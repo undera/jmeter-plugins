@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({RawRequestSourcePreProcessorTest.class, RawRequestSourcePreProcessorGuiTest.class, CheckConsistencyActionTest.class})
+@Suite.SuiteClasses({RawRequestSourcePreProcessorTest.class, CheckConsistencyActionTest.class, RawRequestSourcePreProcessorGuiTest.class})
 public class ModifiersSuite {
 
     @BeforeClass

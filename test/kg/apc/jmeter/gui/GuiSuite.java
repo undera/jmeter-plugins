@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DeleteRowActionTest.class, ButtonPanelAddCopyRemoveTest.class, AddRowActionTest.class, CopyRowActionTest.class, BrowseActionTest.class})
+@Suite.SuiteClasses({BrowseActionTest.class, ButtonPanelAddCopyRemoveTest.class, AddRowActionTest.class, CopyRowActionTest.class, DeleteRowActionTest.class})
 public class GuiSuite {
 
     @BeforeClass

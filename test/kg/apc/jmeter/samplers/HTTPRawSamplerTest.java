@@ -287,4 +287,25 @@ public class HTTPRawSamplerTest {
         instance.processIO(res);
         assertEquals(new File(file).length() + prefix.length(), instance.sockEmul.getWrittenBytesCount());
     }
+
+    /**
+     * Test of getFileToSend method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testGetFileToSend() {
+        System.out.println("getFileToSend");
+        String expResult = "";
+        String result = instance.getFileToSend();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setFileToSend method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testSetFileToSend() {
+        System.out.println("setFileToSend");
+        String text = "";
+        instance.setFileToSend(text);
+    }
 }

@@ -3,6 +3,7 @@ package kg.apc.jmeter.graphs;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.concurrent.ConcurrentSkipListMap;
+import javax.swing.JPanel;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.emulators.TestJMeterUtils;
@@ -349,4 +350,15 @@ public class AbstractGraphPanelVisualizerTest
       String result = instance.getStaticLabel();
       assertEquals(expResult, result);
    }
+
+    /**
+     * Test of getGraphPanelContainer method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testGetGraphPanelContainer() {
+        System.out.println("getGraphPanelContainer");
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        JPanel result = instance.getGraphPanelContainer();
+        assertNotNull(result);
+    }
 }

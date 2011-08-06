@@ -4,6 +4,7 @@
  */
 package kg.apc.jmeter.vizualizers;
 
+import java.util.Collection;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
@@ -140,5 +141,16 @@ public class ThroughputOverTimeGuiTest
         ThroughputOverTimeGui instance = new ThroughputOverTimeGui();
         JSettingsPanel result = instance.createSettingsPanel();
         assertNotNull(result);
+    }
+
+    /**
+     * Test of getMenuCategories method, of class ThroughputOverTimeGui.
+     */
+    @Test
+    public void testGetMenuCategories() {
+        System.out.println("getMenuCategories");
+        ThroughputOverTimeGui instance = new ThroughputOverTimeGui();
+        Collection result = instance.getMenuCategories();
+        assertEquals(0, result.size());
     }
 }

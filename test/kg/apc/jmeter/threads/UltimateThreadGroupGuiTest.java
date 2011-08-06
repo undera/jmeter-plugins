@@ -191,4 +191,14 @@ public class UltimateThreadGroupGuiTest {
         CollectionProperty data = JMeterPluginsUtils.tableModelRowsToCollectionProperty(model, UltimateThreadGroup.DATA_PROPERTY);
         return data;
     }
+
+    /**
+     * Test of updateUI method, of class UltimateThreadGroupGui.
+     */
+    @Test
+    public void testUpdateUI() {
+        System.out.println("updateUI");
+        UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
+        instance.updateUI();
+    }
 }

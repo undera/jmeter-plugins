@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({BinaryUtilsTest.class, DCERPCMarshallingTest.class, RPCPacketTest.class, RPCCallExceptionTest.class, RPCCallRequestTest.class, DCERPCSamplerTest.class, RPCBindRequestTest.class, DCERPCSamplerUtilsTest.class, RPCMarshallingExceptionTest.class})
+@Suite.SuiteClasses({DCERPCSamplerTest.class, RPCCallRequestTest.class, DCERPCSamplerUtilsTest.class, DCERPCMarshallingTest.class, RPCBindRequestTest.class, RPCCallExceptionTest.class, RPCMarshallingExceptionTest.class, BinaryUtilsTest.class, RPCPacketTest.class})
 public class DcerpcSuite {
 
    @BeforeClass

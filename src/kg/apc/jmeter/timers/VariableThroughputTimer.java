@@ -238,6 +238,7 @@ public class VariableThroughputTimer
     }
 
     // TODO: resolve shutdown problems. Patch JMeter if needed
+    // TODO: make something with test stopping in JMeter. Write custom plugin that tries to kill all threads? Guillotine Stopper! 
     protected void stopTest() {
         if (stopTries > 30) {
             throw new RuntimeException("More than 30 seconds - stopping by exception");
@@ -260,22 +261,27 @@ public class VariableThroughputTimer
         }
     }
 
+    @Override
     public void testStarted() {
         stopping = false;
         stopTries = 0;
     }
 
+    @Override
     public void testStarted(String string) {
         testStarted();
     }
 
+    @Override
     public void testEnded() {
     }
 
+    @Override
     public void testEnded(String string) {
         testEnded();
     }
 
+    @Override
     public void testIterationStart(LoopIterationEvent lie) {
     }
 }

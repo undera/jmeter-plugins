@@ -9,151 +9,149 @@ import org.apache.jmeter.samplers.SampleResult;
  * @author apc
  */
 public class DummySampler
-      extends AbstractSampler
-{
-   /**
-    *
-    */
-   public static final String IS_SUCCESSFUL = "SUCCESFULL";
-   /**
-    *
-    */
-   public static final String RESPONSE_CODE = "RESPONSE_CODE";
-   /**
-    *
-    */
-   public static final String RESPONSE_MESSAGE = "RESPONSE_MESSAGE";
-   /**
-    *
-    */
-   public static final String RESPONSE_DATA = "RESPONSE_DATA";
-   /**
-    *
-    */
-   public static final String RESPONSE_TIME = "RESPONSE_TIME";
+        extends AbstractSampler {
 
-   public SampleResult sample(Entry e)
-   {
-      SampleResult res = new SampleResult();
-      res.setSampleLabel(getName());
+    public static final String IS_SUCCESSFUL = "SUCCESFULL";
+    public static final String RESPONSE_CODE = "RESPONSE_CODE";
+    public static final String RESPONSE_MESSAGE = "RESPONSE_MESSAGE";
+    public static final String RESPONSE_DATA = "RESPONSE_DATA";
+    public static final String REQUEST_DATA = "REQUEST_DATA";
+    public static final String RESPONSE_TIME = "RESPONSE_TIME";
+    public static final String LATENCY = "LATENCY";
+    public static final String IS_WAITING = "WAITING";
 
-      // source data
-      res.setSamplerData(getResponseData());
+    @Override
+    public SampleResult sample(Entry e) {
+        SampleResult res = new DummySampleResult(getResponseTime());
+        res.setSampleLabel(getName());
 
-      // response code
-      res.setResponseCode(getResponseCode());
-      res.setResponseMessage(getResponseMessage());
-      res.setSuccessful(isSuccessfull());
+        // source data
+        res.setSamplerData(getRequestData());
 
-      // responde data
-      res.setDataType(SampleResult.TEXT);
-      res.setResponseData(getResponseData().getBytes());
+        // response code
+        res.setResponseCode(getResponseCode());
+        res.setResponseMessage(getResponseMessage());
+        res.setSuccessful(isSuccessfull());
 
-      // response time
-      res.sampleStart();
-      try
-      {
-         Thread.sleep(getResponseTime());
-      }
-      catch (InterruptedException ex)
-      {
-      }
-      res.sampleEnd();
+        // responde data
+        res.setDataType(SampleResult.TEXT);
+        res.setResponseData(getResponseData().getBytes());
 
-      return res;
-   }
+        res.setLatency(getLatency());
 
-   /**
-    *
-    * @param selected
-    */
-   public void setSuccessful(boolean selected)
-   {
-      setProperty(IS_SUCCESSFUL, selected);
-   }
+        if (isSimulateWaiting()) {
+            try {
+                Thread.sleep(getResponseTime());
+            } catch (InterruptedException ex) {
+            }
+        }
 
-   /**
-    *
-    * @param text
-    */
-   public void setResponseCode(String text)
-   {
-      setProperty(RESPONSE_CODE, text);
-   }
+        return res;
+    }
 
-   /**
-    *
-    * @param text
-    */
-   public void setResponseMessage(String text)
-   {
-      setProperty(RESPONSE_MESSAGE, text);
-   }
+    /**
+     *
+     * @param selected
+     */
+    public void setSuccessful(boolean selected) {
+        setProperty(IS_SUCCESSFUL, selected);
+    }
 
-   /**
-    *
-    * @param text
-    */
-   public void setResponseData(String text)
-   {
-      setProperty(RESPONSE_DATA, text);
-   }
+    public void setSimulateWaiting(boolean selected) {
+        setProperty(IS_WAITING, selected);
+    }
 
-   /**
-    * @return the successfull
-    */
-   public boolean isSuccessfull()
-   {
-      return getPropertyAsBoolean(IS_SUCCESSFUL);
-   }
+    /**
+     *
+     * @param text
+     */
+    public void setResponseCode(String text) {
+        setProperty(RESPONSE_CODE, text);
+    }
 
-   /**
-    * @return the responseCode
-    */
-   public String getResponseCode()
-   {
-      return getPropertyAsString(RESPONSE_CODE);
-   }
+    /**
+     *
+     * @param text
+     */
+    public void setResponseMessage(String text) {
+        setProperty(RESPONSE_MESSAGE, text);
+    }
 
-   /**
-    * @return the responseMessage
-    */
-   public String getResponseMessage()
-   {
-      return getPropertyAsString(RESPONSE_MESSAGE);
-   }
+    /**
+     *
+     * @param text
+     */
+    public void setResponseData(String text) {
+        setProperty(RESPONSE_DATA, text);
+    }
 
-   /**
-    * @return the responseData
-    */
-   public String getResponseData()
-   {
-      return getPropertyAsString(RESPONSE_DATA);
-   }
+    public void setRequestData(String text) {
+        setProperty(REQUEST_DATA, text);
+    }
 
-   /**
-    *
-    * @return
-    */
-   public int getResponseTime()
-   {
-      int time = 0;
-      try
-      {
-         time = Integer.valueOf(getPropertyAsString(RESPONSE_TIME));
-      }
-      catch (NumberFormatException e)
-      {
-      }
-      return time;
-   }
+    /**
+     * @return the successfull
+     */
+    public boolean isSuccessfull() {
+        return getPropertyAsBoolean(IS_SUCCESSFUL);
+    }
 
-   /**
-    *
-    * @param time
-    */
-   public void setResponseTime(String time)
-   {
-      setProperty(RESPONSE_TIME, time);
-   }
+    public boolean isSimulateWaiting() {
+        return getPropertyAsBoolean(IS_WAITING);
+    }
+
+    /**
+     * @return the responseCode
+     */
+    public String getResponseCode() {
+        return getPropertyAsString(RESPONSE_CODE);
+    }
+
+    /**
+     * @return the responseMessage
+     */
+    public String getResponseMessage() {
+        return getPropertyAsString(RESPONSE_MESSAGE);
+    }
+
+    /**
+     * @return the responseData
+     */
+    public String getResponseData() {
+        return getPropertyAsString(RESPONSE_DATA);
+    }
+
+    public String getRequestData() {
+        return getPropertyAsString(REQUEST_DATA);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getResponseTime() {
+        int time = 0;
+        try {
+            time = Integer.valueOf(getPropertyAsString(RESPONSE_TIME));
+        } catch (NumberFormatException e) {
+        }
+        return time;
+    }
+
+    public int getLatency() {
+        int time = 0;
+        try {
+            time = Integer.valueOf(getPropertyAsString(LATENCY));
+        } catch (NumberFormatException e) {
+        }
+        return time;
+    }
+
+    public void setResponseTime(String time) {
+        setProperty(RESPONSE_TIME, time);
+    }
+
+    public void setLatency(String time) {
+        setProperty(LATENCY, time);
+    }
 }

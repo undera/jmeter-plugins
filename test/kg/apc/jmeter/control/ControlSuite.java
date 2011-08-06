@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ParameterizedControllerGuiTest.class, ParameterizedControllerTest.class})
+@Suite.SuiteClasses({ParameterizedControllerTest.class, ParameterizedControllerGuiTest.class})
 public class ControlSuite {
 
    @BeforeClass

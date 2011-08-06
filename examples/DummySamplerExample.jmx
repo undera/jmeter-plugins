@@ -71,7 +71,11 @@ For now, Response data used as sent and received data</stringProp>
 without actual network activity. This helps debugging tests.
 
 Random number:${__Random(1,1000)}</stringProp>
-          <stringProp name="RESPONSE_TIME">${__Random(1,1000)}</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(10,1000)}</stringProp>
+          <boolProp name="WAITING">true</boolProp>
+          <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="LATENCY">${__Random(1,100)}</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">

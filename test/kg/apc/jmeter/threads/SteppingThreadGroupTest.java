@@ -1,6 +1,7 @@
 package kg.apc.jmeter.threads;
 
 import org.apache.jmeter.control.LoopController;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jorphan.collections.HashTree;
 import org.junit.After;
@@ -256,5 +257,165 @@ public class SteppingThreadGroupTest {
         String delay = "";
         SteppingThreadGroup instance = new SteppingThreadGroup();
         instance.setRampUp(delay);
+    }
+
+    /**
+     * Test of getThreadGroupDelayAsInt method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testGetThreadGroupDelayAsInt() {
+        System.out.println("getThreadGroupDelayAsInt");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        int expResult = 0;
+        int result = instance.getThreadGroupDelayAsInt();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getInUserPeriodAsInt method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testGetInUserPeriodAsInt() {
+        System.out.println("getInUserPeriodAsInt");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        int expResult = 0;
+        int result = instance.getInUserPeriodAsInt();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getInUserCountAsInt method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testGetInUserCountAsInt() {
+        System.out.println("getInUserCountAsInt");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        int expResult = 0;
+        int result = instance.getInUserCountAsInt();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getRampUpAsInt method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testGetRampUpAsInt() {
+        System.out.println("getRampUpAsInt");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        int expResult = 0;
+        int result = instance.getRampUpAsInt();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getFlightTimeAsInt method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testGetFlightTimeAsInt() {
+        System.out.println("getFlightTimeAsInt");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        int expResult = 0;
+        int result = instance.getFlightTimeAsInt();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getOutUserPeriodAsInt method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testGetOutUserPeriodAsInt() {
+        System.out.println("getOutUserPeriodAsInt");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        int expResult = 0;
+        int result = instance.getOutUserPeriodAsInt();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getOutUserCountAsInt method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testGetOutUserCountAsInt() {
+        System.out.println("getOutUserCountAsInt");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        int expResult = 0;
+        int result = instance.getOutUserCountAsInt();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setNumThreads method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testSetNumThreads() {
+        System.out.println("setNumThreads");
+        String execute = "";
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        instance.setNumThreads(execute);
+    }
+
+    /**
+     * Test of getNumThreadsAsString method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testGetNumThreadsAsString() {
+        System.out.println("getNumThreadsAsString");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        String expResult = "";
+        String result = instance.getNumThreadsAsString();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of testStarted method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testTestStarted_0args() {
+        System.out.println("testStarted");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        instance.testStarted();
+    }
+
+    /**
+     * Test of testStarted method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testTestStarted_String() {
+        System.out.println("testStarted");
+        String string = "";
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        instance.testStarted(string);
+    }
+
+    /**
+     * Test of testEnded method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testTestEnded_0args() {
+        System.out.println("testEnded");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        instance.testEnded();
+    }
+
+    /**
+     * Test of testEnded method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testTestEnded_String() {
+        System.out.println("testEnded");
+        String string = "";
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        instance.testEnded(string);
+    }
+
+    /**
+     * Test of testIterationStart method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testTestIterationStart() {
+        System.out.println("testIterationStart");
+        LoopIterationEvent lie = null;
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        instance.testIterationStart(lie);
     }
 }

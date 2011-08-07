@@ -1,6 +1,7 @@
 package kg.apc.jmeter.reporters;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.io.File;
@@ -37,6 +38,11 @@ public class LoadosophiaUploaderGui
         super();
         init();
         initFields();
+    }
+
+    @Override
+    protected Component getFilePanel() {
+        return new JPanel();
     }
 
     @Override

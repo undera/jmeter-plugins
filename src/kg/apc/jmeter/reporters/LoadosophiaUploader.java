@@ -84,6 +84,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
 
         File tmpFile = File.createTempFile(getFilePrefix() + "_", ".jtl", new File(dir));
         fileName = tmpFile.getAbsolutePath();
+        tmpFile.delete(); // IMPORTANT! this is required to have CSV headers
         informUser("Storing results for upload to Loadosophia.org: " + fileName);
         setFilename(fileName);
         // OMG, I spent a 2 days finding that setting properties in testStarted
@@ -91,8 +92,9 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         // So we do dirty(?) hack here...
         clearTemporary(getProperty(FILENAME));
 
-        SampleSaveConfiguration conf = (SampleSaveConfiguration) getSaveConfig().clone();
+        SampleSaveConfiguration conf = (SampleSaveConfiguration) getSaveConfig();
         conf.setAsXml(false);
+        conf.setFieldNames(true);
 
         conf.setFormatter(null);
         conf.setSamplerData(false);
@@ -121,8 +123,6 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         conf.setCode(true);
         conf.setDataType(false);
         conf.setSampleCount(false);
-
-        conf.setFieldNames(true);
 
         setSaveConfig(conf);
     }

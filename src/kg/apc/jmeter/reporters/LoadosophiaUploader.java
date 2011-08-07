@@ -52,7 +52,6 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             log.error("Error setting up saving", ex);
         }
         super.testStarted();
-
     }
 
     private void setupSaving() throws IOException {
@@ -62,12 +61,17 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         }
 
         File tmpFile = File.createTempFile(getFilePrefix() + "_", ".jtl", new File(dir));
-        //tmpFile.deleteOnExit(); TODO: restore it
         fileName = tmpFile.getAbsolutePath();
         informUser("Storing results for upload to Loadosophia.org: " + fileName);
         setFilename(fileName);
+        // OMG, I spent a 2 days finding that setting properties in testStarted
+        // marks them temporary, though they cleared in some places.
+        // So we do dirty(?) hack here...
+        clearTemporary(getProperty(FILENAME)); 
 
-        SampleSaveConfiguration conf = getSaveConfig();
+        SampleSaveConfiguration conf = (SampleSaveConfiguration) getSaveConfig().clone();
+        conf.setAsXml(false);
+        
         conf.setFormatter(null);
         conf.setSamplerData(false);
         conf.setRequestHeaders(false);
@@ -83,6 +87,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         conf.setSubresults(false);
         conf.setLatency(true);
         conf.setLabel(true);
+        
         conf.setThreadName(false);
         conf.setBytes(true);
         conf.setHostname(false);
@@ -94,10 +99,10 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         conf.setCode(true);
         conf.setDataType(false);
         conf.setSampleCount(false);
-
-        conf.setAsXml(false);
+        
         conf.setFieldNames(true);
-        //setSaveConfig(conf);
+        
+        setSaveConfig(conf);
     }
 
     @Override
@@ -137,7 +142,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile)))
         };
 
-        // targetFile.delete(); todo: restore it
+        targetFile.delete();
 
         informUser("Starting upload to Loadosophia.org");
         filePost.setRequestEntity(new MultipartRequestEntity(parts, filePost.getParams()));

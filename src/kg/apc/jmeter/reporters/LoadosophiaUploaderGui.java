@@ -65,7 +65,7 @@ public class LoadosophiaUploaderGui
         super.configureTestElement(te);
         if (te instanceof LoadosophiaUploader) {
             LoadosophiaUploader fw = (LoadosophiaUploader) te;
-            fw.setListener(this);
+            fw.setListener(this); // FIXME: all GUI share the same info area
             fw.setFilePrefix(filePrefix.getText());
             fw.setProject(projectKey.getText());
             fw.setUploadToken(uploadToken.getText());

@@ -13,20 +13,17 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.gui.GuiPackage;
-import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jmeter.visualizers.Visualizer;
-import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
+import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 
 /**
  *
  * @author undera
  */
 public class LoadosophiaUploaderGui
-        extends AbstractListenerGui
-        implements Visualizer, Clearable {
+        extends AbstractVisualizer {
 
     public static final String DEFAULT_UPLOADER_URI = "https://loadosophia.org/uploader/";
     public static final String WIKIPAGE = "LoadosophiaUploader";
@@ -62,10 +59,9 @@ public class LoadosophiaUploaderGui
 
     @Override
     public void modifyTestElement(TestElement te) {
-        super.configureTestElement(te);
+        super.modifyTestElement(te);
         if (te instanceof LoadosophiaUploader) {
             LoadosophiaUploader fw = (LoadosophiaUploader) te;
-            fw.setListener(this); // FIXME: all GUI share the same info area
             fw.setFilePrefix(filePrefix.getText());
             fw.setProject(projectKey.getText());
             fw.setUploadToken(uploadToken.getText());

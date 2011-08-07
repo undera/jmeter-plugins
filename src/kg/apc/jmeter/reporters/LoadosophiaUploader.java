@@ -17,7 +17,6 @@ import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.jmeter.reporters.ResultCollector;
-import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.TestListener;
 import org.apache.jorphan.logging.LoggingManager;
@@ -27,7 +26,6 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-// TODO: how will it go in distributed test?
 public class LoadosophiaUploader extends ResultCollector implements TestListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -37,21 +35,45 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
     public static final String PROJECT = "project";
     public static final String STORE_DIR = "storeDir";
     private String fileName;
-    private long count; // TODO: remove me
+    private static final Object LOCK = new Object();
+    private boolean isSaving;
 
     public LoadosophiaUploader() {
         super();
     }
 
     @Override
-    public void testStarted() {
-        try {
-            setupSaving();
-            count = 0;
-        } catch (IOException ex) {
-            log.error("Error setting up saving", ex);
+    public void testStarted(String host) {
+        synchronized (LOCK) {
+            try {
+                if (!isSaving) {
+                    isSaving = true;
+                    setupSaving();
+                }
+            } catch (IOException ex) {
+                log.error("Error setting up saving", ex);
+            }
         }
-        super.testStarted();
+        super.testStarted(host);
+    }
+
+    @Override
+    public void testEnded(String host) {
+        super.testEnded(host);
+        synchronized (LOCK) {
+            try {
+                if (fileName == null) {
+                    throw new IOException("File for upload was not set, search for errors above in log");
+                }
+
+                isSaving = false;
+                sendJTLToLoadosophia(new File(fileName));
+            } catch (IOException ex) {
+                informUser("Failed to upload results to Loadosophia.org, see log for detais");
+                log.error("Failed to upload results to loadosophia", ex);
+            }
+        }
+        clearData();
     }
 
     private void setupSaving() throws IOException {
@@ -67,11 +89,11 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         // OMG, I spent a 2 days finding that setting properties in testStarted
         // marks them temporary, though they cleared in some places.
         // So we do dirty(?) hack here...
-        clearTemporary(getProperty(FILENAME)); 
+        clearTemporary(getProperty(FILENAME));
 
         SampleSaveConfiguration conf = (SampleSaveConfiguration) getSaveConfig().clone();
         conf.setAsXml(false);
-        
+
         conf.setFormatter(null);
         conf.setSamplerData(false);
         conf.setRequestHeaders(false);
@@ -87,7 +109,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         conf.setSubresults(false);
         conf.setLatency(true);
         conf.setLabel(true);
-        
+
         conf.setThreadName(false);
         conf.setBytes(true);
         conf.setHostname(false);
@@ -99,34 +121,10 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         conf.setCode(true);
         conf.setDataType(false);
         conf.setSampleCount(false);
-        
+
         conf.setFieldNames(true);
-        
+
         setSaveConfig(conf);
-    }
-
-    @Override
-    public void testEnded() {
-        super.testEnded();
-        try {
-            if (fileName == null) {
-                throw new IOException("File for upload was not set, search for errors above in log");
-            }
-
-            sendJTLToLoadosophia(new File(fileName));
-        } catch (IOException ex) {
-            informUser("Failed to upload results to Loadosophia.org, see log for detais");
-            log.error("Failed to upload results to loadosophia", ex);
-        }
-
-        clearData();
-        informUser(getName() + " Count: " + count);
-    }
-
-    @Override
-    public void sampleOccurred(SampleEvent event) {
-        super.sampleOccurred(event);
-        count++;
     }
 
     private void sendJTLToLoadosophia(File targetFile) throws IOException {
@@ -159,7 +157,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             throw $e;
         }
 
-        informUser("Finished upload to Loadosophia.org");
+        informUser("Finished upload to Loadosophia.org successfully");
         informUser("Go to https://loadosophia.org/service/upload/ to see processing status.");
     }
 
@@ -224,6 +222,8 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         log.info(string);
         if (getVisualizer() != null && getVisualizer() instanceof LoadosophiaUploaderGui) {
             ((LoadosophiaUploaderGui) getVisualizer()).inform(string);
+        } else {
+            log.info("No Visualizer");
         }
     }
 

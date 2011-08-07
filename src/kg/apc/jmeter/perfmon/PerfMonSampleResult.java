@@ -13,12 +13,14 @@ public class PerfMonSampleResult
 
     public PerfMonSampleResult() {
         ts = System.currentTimeMillis();
-        setStartTime(ts);
+        //setTimeStamp(ts);
+        //setStartTime(ts);
     }
 
     // storing as latency, multiply by 1000 to keep floating precision
     public void setValue(double value) {
-        setEndTime(ts + (int) (value * 1000));
+        setStampAndTime(ts, (int) (value * 1000));
+        //setEndTime(ts + (int) (value * 1000));
     }
 
     public double getValue() {

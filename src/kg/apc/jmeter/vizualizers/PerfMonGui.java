@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -116,14 +115,14 @@ public class PerfMonGui
         return panel;
     }
 
-    private void addErrorMessage(String msg) {
+    private void addErrorMessage(String msg, long time) {
         errorPane.setVisible(true);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         String newLine = "";
         if (errorTextArea.getText().length() != 0) {
             newLine = "\n";
         }
-        errorTextArea.setText(errorTextArea.getText() + newLine + formatter.format(new Date()) + " - ERROR: " + msg);
+        errorTextArea.setText(errorTextArea.getText() + newLine + formatter.format(time) + " - ERROR: " + msg);
         errorTextArea.setCaretPosition(errorTextArea.getDocument().getLength());
         updateGui();
     }
@@ -219,7 +218,7 @@ public class PerfMonGui
             addPerfMonRecord(res.getSampleLabel(), normalizeTime(res.getStartTime()), ((PerfMonSampleResult) res).getValue());
             updateGui(null);
         } else {
-            addErrorMessage(res.getResponseMessage());
+            addErrorMessage(res.getResponseMessage(), res.getStartTime());
         }
     }
 

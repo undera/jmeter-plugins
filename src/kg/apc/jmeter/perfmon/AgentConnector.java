@@ -18,7 +18,14 @@ import org.apache.log.Logger;
  */
 public class AgentConnector implements AgentCommandsInterface
 {
-   public static final List<String> metrics=Arrays.asList(new String[]{"CPU", "Memory", "Swap", "Disks I/O", "Network I/O"});
+   public static final List<String> metrics = Arrays.asList(new String[]{"CPU", "Memory", "Swap", "Disks I/O", "Network I/O"});
+
+   //must be sync with the metrics array indexes
+   public final static int PERFMON_CPU = 0;
+   public final static int PERFMON_MEM = 1;
+   public final static int PERFMON_SWAP = 2;
+   public final static int PERFMON_DISKS_IO = 3;
+   public final static int PERFMON_NETWORKS_IO = 4;
    
    private static final Logger log = LoggingManager.getLoggerForClass();
    private String host;

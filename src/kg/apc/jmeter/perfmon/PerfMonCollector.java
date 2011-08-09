@@ -137,19 +137,19 @@ public class PerfMonCollector
 
                 try {
                    switch (connectors[i].getMetricType()) {
-                       case AbstractPerformanceMonitoringGui.PERFMON_CPU:
+                       case AgentConnector.PERFMON_CPU:
                            generateSample(100 * connectors[i].getCpu(), label+", %");
                            break;
-                       case AbstractPerformanceMonitoringGui.PERFMON_MEM:
+                       case AgentConnector.PERFMON_MEM:
                            generateSample((double) connectors[i].getMem() / MEGABYTE, label+ ", MB");
                            break;
-                       case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
+                       case AgentConnector.PERFMON_SWAP:
                            generate2Samples(connectors[i].getSwap(), label + " page in", label + " page out");
                            break;
-                       case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
+                       case AgentConnector.PERFMON_DISKS_IO:
                            generate2Samples(connectors[i].getDisksIO(), label + " reads", label + " writes");
                            break;
-                       case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
+                       case AgentConnector.PERFMON_NETWORKS_IO:
                            generate2Samples(connectors[i].getNetIO(), label + " recv, KB", label + " sent, KB");
                            break;
                        default:
@@ -184,6 +184,8 @@ public class PerfMonCollector
         res.setSuccessful(false);
         SampleEvent e = new SampleEvent(res, PERFMON);
         super.sampleOccurred(e);
+        //add a console message for imediate user notice
+        System.out.println("Perfmon plugin error: " + errorMsg);
     }
 
     //here long precision is enough as monitored values are counts

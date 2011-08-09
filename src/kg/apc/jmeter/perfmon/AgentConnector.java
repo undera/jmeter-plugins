@@ -174,7 +174,7 @@ public class AgentConnector implements AgentCommandsInterface
          ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
          ret[1] = Long.parseLong(value.substring(value.indexOf(':') + 1));
       }
-      if(ret[0] < 0 || ret[1] < 0) throwNotSupportedMetricException("disks I/O");
+      if(ret[0] < 0 || ret[1] < 0) throwNotSupportedMetricException("network I/O");
 
       return ret;
    }

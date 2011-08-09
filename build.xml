@@ -152,6 +152,14 @@
       <!-- APC: copying just in case -->
         <copy todir="${dist.dir}" file="${dist.jar}" />
 
+        <fail message="File not found: ${dist.dir}/JMeterPlugins.jar">
+            <condition>
+                <not>
+                    <available file="${dist.dir}/JMeterPlugins.jar" />
+                </not>
+            </condition>
+        </fail>
+
       <!-- APC: we should provide one package, that includes all of the stuff
            to use most of our project -->
         <zip destfile="${dist.dir}/JMeterPlugins.zip">

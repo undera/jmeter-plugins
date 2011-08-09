@@ -10,7 +10,6 @@ class DummySampleResult extends SampleResult {
 
     public DummySampleResult(int time) {
         long t = System.currentTimeMillis();
-        setStartTime(t);
-        setEndTime(t + time);
+        setStampAndTime(t, time);
     }
 }

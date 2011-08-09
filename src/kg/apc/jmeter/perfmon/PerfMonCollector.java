@@ -150,7 +150,7 @@ public class PerfMonCollector
                            generate2Samples(connectors[i].getDisksIO(), label + " reads", label + " writes");
                            break;
                        case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
-                           generate2Samples(connectors[i].getNetIO(), label + " recv, KB", label + " send, KB");
+                           generate2Samples(connectors[i].getNetIO(), label + " recv, KB", label + " sent, KB");
                            break;
                        default:
                            log.error("Unknown metric index: " + connectors[i].getMetricType());

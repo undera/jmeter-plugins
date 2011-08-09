@@ -1,6 +1,7 @@
 package kg.apc.jmeter.reporters;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
@@ -97,8 +98,13 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Filename: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 1, filename = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
+        int bWidth = (int)browseButton.getPreferredSize().getWidth();
+        int bHeight = (int)filename.getPreferredSize().getHeight();
+        browseButton.setPreferredSize(new Dimension(bWidth, bHeight));
         browseButton.addActionListener(new BrowseAction(filename));
 
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
 
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Record each sample as: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 2, columns = new JTextField(20));

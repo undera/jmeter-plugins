@@ -9,9 +9,9 @@ import java.io.IOException;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.samplers.SampleResult;
@@ -103,25 +103,38 @@ public class LoadosophiaUploaderGui
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Upload to Project: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 0, projectKey = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 0, projectKey = new JTextField(20));
+
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
 
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Directory to store data for upload: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 1, storeDir = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 1, storeDir = new JTextField(20));
 
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Filename Prefix: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, filePrefix = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 2, filePrefix = new JTextField(20));
 
         editConstraints.fill = GridBagConstraints.BOTH;
+
+        editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Upload Token: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 3, uploadToken = new JTextArea());
+        uploadToken = new JTextArea();
+        JScrollPane spUploadToken = new JScrollPane();
         uploadToken.setRows(5);
-        uploadToken.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        uploadToken.setColumns(20);
+        spUploadToken.setViewportView(uploadToken);
+        addToPanel(mainPanel, editConstraints, 1, 3, spUploadToken);
 
         addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Info Area: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 4, infoArea = new JTextArea());
+        infoArea = new JTextArea();
+        JScrollPane spInfoArea = new JScrollPane();
         infoArea.setRows(5);
-        infoArea.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        infoArea.setColumns(20);
         infoArea.setEditable(false);
+        spInfoArea.setViewportView(infoArea);
+        addToPanel(mainPanel, editConstraints, 1, 4, spInfoArea);
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

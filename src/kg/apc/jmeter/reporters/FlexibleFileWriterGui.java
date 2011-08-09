@@ -95,7 +95,7 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Filename: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 1, filename = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 1, filename = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
         browseButton.addActionListener(new BrowseAction(filename));
 

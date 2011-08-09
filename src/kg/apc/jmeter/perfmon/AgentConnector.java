@@ -46,7 +46,7 @@ public class AgentConnector implements AgentCommandsInterface
     * @throws UnknownHostException id the server cannot be located.
     * @throws IOException if the communication channel cannot be created.
     */
-   public void connect(Socket aSocket) throws UnknownHostException, IOException
+   public void connect(Socket aSocket) throws UnknownHostException, IOException, PerfMonException
    {
       socket = aSocket;
       out = new PrintWriter(socket.getOutputStream(), true);
@@ -87,7 +87,7 @@ public class AgentConnector implements AgentCommandsInterface
     * @return a String containing the numbered value
     * @throws IOException if a communication problem occurred
     */
-   private String getData(String data)
+   private String getData(String data) throws PerfMonException
    {
       out.println(data);
       String ret = null;
@@ -98,28 +98,27 @@ public class AgentConnector implements AgentCommandsInterface
       catch (IOException ex)
       {
          log.error("Error receiving data", ex);
+         throw new PerfMonException("Connection lost with '" + host +"'!", ex);
       }
       log.debug("Read " + data + "=" + ret);
       return ret;
+   }
+
+   private void throwNotSupportedMetricException(String metric) throws PerfMonException {
+      throw new PerfMonException("Getting " + metric + " metrics is not supported by Sigar API on this operating system...");
    }
 
    /**
     * Get the current total memory used on the server
     * @return the total memory in bytes or -2 if any error occurred
     */
-   public long getMem()
+   public long getMem() throws PerfMonException
    {
-      long ret;
+      long ret = -1;
 
       String value = getData(MEMORY);
-      if (value != null)
-      {
-         ret = Long.parseLong(value);
-      }
-      else
-      {
-         ret = AGENT_ERROR;
-      }
+      if (value != null) ret = Long.parseLong(value);
+      if(ret <= 0) throwNotSupportedMetricException("memory");
 
       return ret;
    }
@@ -128,69 +127,54 @@ public class AgentConnector implements AgentCommandsInterface
     * Get the current cpu load on the server
     * @return the current cpu load % on the server or -1 if a problem occurred.
     */
-   public double getCpu()
+   public double getCpu() throws PerfMonException
    {
-      double ret;
+      double ret = -1;
 
       String value = getData(CPU);
-      if (value != null)
-      {
-         ret = Double.parseDouble(value);
-      }
-      else
-      {
-         ret = AGENT_ERROR;
-      }
+      if (value != null) ret = Double.parseDouble(value);
+      if(ret < 0) throwNotSupportedMetricException("cpu");
 
       return ret;
    }
 
-   public long[] getSwap()
+   public long[] getSwap() throws PerfMonException
    {
-      long[] ret = new long[2];
+      long[] ret = {-1L, -1L};
       String value = getData(SWAP);
       if (value != null)
       {
          ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
          ret[1] = Long.parseLong(value.substring(value.indexOf(':') + 1));
       }
-      else
-      {
-         ret = AGENT_ERROR_ARRAY;
-      }
-
+      if(ret[0] < 0 || ret[1] < 0) throwNotSupportedMetricException("swap");
+      
       return ret;
    }
 
-   public long[] getDisksIO()
+   public long[] getDisksIO() throws PerfMonException
    {
-      long[] ret = new long[2];
+      long[] ret = {-1L, -1L};
       String value = getData(DISKIO);
       if (value != null)
       {
          ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
          ret[1] = Long.parseLong(value.substring(value.indexOf(':') + 1));
       }
-      else
-      {
-         ret = AGENT_ERROR_ARRAY;
-      }
+      if(ret[0] < 0 || ret[1] < 0) throwNotSupportedMetricException("disks I/O");
       return ret;
    }
 
-   public long[] getNetIO()
+   public long[] getNetIO() throws PerfMonException
    {
-      long[] ret = new long[2];
+      long[] ret = {-1L, -1L};
       String value = getData(NETWORK);
       if (value != null)
       {
          ret[0] = Long.parseLong(value.substring(0, value.indexOf(':')));
          ret[1] = Long.parseLong(value.substring(value.indexOf(':') + 1));
       }
-      else
-      {
-         ret = AGENT_ERROR_ARRAY;
-      }
+      if(ret[0] < 0 || ret[1] < 0) throwNotSupportedMetricException("disks I/O");
 
       return ret;
    }

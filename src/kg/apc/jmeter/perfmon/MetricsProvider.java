@@ -176,38 +176,43 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
     private void processConnectors() throws IllegalArgumentException {
         for (int i = 0; i < connectors.length; i++) {
             if (connectors[i] != null) {
-                boolean success = true;
-                switch (monitorType) {
-                    case AbstractPerformanceMonitoringGui.PERFMON_CPU:
-                        success = addCPURecord(connectors[i]);
-                        break;
-                    case AbstractPerformanceMonitoringGui.PERFMON_MEM:
-                        success = addMemRecord(connectors[i]);
-                        break;
-                    case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
-                        success = addSwapRecord(connectors[i]);
-                        break;
-                    case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
-                        success = addDisksIORecord(connectors[i]);
-                        break;
-                    case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
-                        success = addNetworkRecord(connectors[i]);
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Unhandled perfmon type:" + monitorType);
-                }
-                if (!success) {
-                    //don't display error message if test is stopping
-                    if (testIsRunning) {
-                        reportError("Connection lost with '" + connectors[i].getHost() + "'!");
-                        connectors[i] = null;
-                    }
-                }
+                try {
+                   boolean success = true;
+                   switch (monitorType) {
+                       case AbstractPerformanceMonitoringGui.PERFMON_CPU:
+                           success = addCPURecord(connectors[i]);
+                           break;
+                       case AbstractPerformanceMonitoringGui.PERFMON_MEM:
+                           success = addMemRecord(connectors[i]);
+                           break;
+                       case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
+                           success = addSwapRecord(connectors[i]);
+                           break;
+                       case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
+                           success = addDisksIORecord(connectors[i]);
+                           break;
+                       case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
+                           success = addNetworkRecord(connectors[i]);
+                           break;
+                       default:
+                           throw new IllegalArgumentException("Unhandled perfmon type:" + monitorType);
+                   }
+                   if (!success) {
+                       //don't display error message if test is stopping
+                       if (testIsRunning) {
+                           reportError("Connection lost with '" + connectors[i].getHost() + "'!");
+                           connectors[i] = null;
+                       }
+                   }
+               } catch (PerfMonException e) {
+                  reportError(e.getMessage());
+                  connectors[i] = null;
+               }
             }
         }
     }
 
-    private boolean addCPURecord(AgentConnector connector) {
+    private boolean addCPURecord(AgentConnector connector) throws PerfMonException {
         long value = (long) (100 * connector.getCpu());
         if (value >= 0) {
             addPerfRecord(connector.getRemoteServerName(), value);
@@ -217,7 +222,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
         }
     }
 
-    private boolean addMemRecord(AgentConnector agentConnector) {
+    private boolean addMemRecord(AgentConnector agentConnector) throws PerfMonException {
         //change to double precision
         double value = (double) agentConnector.getMem() / (1024L * 1024L);
         if (value >= 0) {
@@ -228,7 +233,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
         }
     }
 
-    private boolean addSwapRecord(AgentConnector agentConnector) {
+    private boolean addSwapRecord(AgentConnector agentConnector) throws PerfMonException {
         long[] values = agentConnector.getSwap();
         if (values[0] == AGENT_ERROR || values[1] == AGENT_ERROR) {
             return false;
@@ -245,7 +250,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
         return true;
     }
 
-    private boolean addDisksIORecord(AgentConnector agentConnector) {
+    private boolean addDisksIORecord(AgentConnector agentConnector) throws PerfMonException {
         long[] values = agentConnector.getDisksIO();
         if (values[0] == AGENT_ERROR || values[1] == AGENT_ERROR) {
             return false;
@@ -262,7 +267,7 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
         return true;
     }
 
-    private boolean addNetworkRecord(AgentConnector agentConnector) {
+    private boolean addNetworkRecord(AgentConnector agentConnector) throws PerfMonException {
         long[] values = agentConnector.getNetIO();
         if (values[0] == AGENT_ERROR || values[1] == AGENT_ERROR) {
             return false;
@@ -300,6 +305,9 @@ public class MetricsProvider implements Runnable, AgentCommandsInterface {
                     } catch (IOException e) {
                         reportError("Unable to connect to server '" + connector.getHost() + "'. Please verify the agent is running on port " + connector.getPort() + ".", e);
                         connectors[i] = null;
+                    } catch (PerfMonException e) {
+                       reportError(e.getMessage());
+                       connectors[i] = null;
                     }
                 }
                 Thread t = new Thread(this);

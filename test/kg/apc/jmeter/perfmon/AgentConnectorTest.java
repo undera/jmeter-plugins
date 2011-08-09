@@ -75,6 +75,11 @@ public class AgentConnectorTest
       {
          Logger.getLogger(AgentConnectorTest.class.getName()).log(Level.SEVERE, null, ex);
       }
+      catch (PerfMonException ex)
+      {
+         Logger.getLogger(AgentConnectorTest.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
    }
 
    @After
@@ -95,7 +100,7 @@ public class AgentConnectorTest
     * Test of getMem method, of class AgentConnector.
     */
    @Test
-   public void testGetMem()
+   public void testGetMem() throws PerfMonException
    {
       System.out.println("getMem");
       prepareTestData(123);
@@ -108,7 +113,7 @@ public class AgentConnectorTest
     * Test of getCpu method, of class AgentConnector.
     */
    @Test
-   public void testGetCpu()
+   public void testGetCpu() throws PerfMonException
    {
       System.out.println("getCpu");
       prepareTestData(123);
@@ -121,7 +126,7 @@ public class AgentConnectorTest
     * Test of getRemoteServerName method, of class AgentConnector.
     */
    @Test
-   public void testGetRemoteServerName()
+   public void testGetRemoteServerName() throws PerfMonException
    {
       System.out.println("getRemoteServerName");
       String result = instance.getRemoteServerName();
@@ -142,7 +147,7 @@ public class AgentConnectorTest
    }
 
    @Test
-   public void testGetSwap()
+   public void testGetSwap() throws PerfMonException
    {
       System.out.println("getSwap");
       prepareTestData("123:456");
@@ -152,7 +157,7 @@ public class AgentConnectorTest
    }
 
    @Test
-   public void testGetDisksIO()
+   public void testGetDisksIO() throws PerfMonException
    {
       System.out.println("getDisksIO");
       prepareTestData("123:456");
@@ -162,7 +167,7 @@ public class AgentConnectorTest
    }
 
    @Test
-   public void testGetNetIO()
+   public void testGetNetIO() throws PerfMonException
    {
       System.out.println("getNetIO");
       prepareTestData("123:456");

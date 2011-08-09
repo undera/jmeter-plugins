@@ -103,10 +103,12 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
     }
 
     private Collection<String> emptyCollection = new ArrayList<String>();
+
+    /*
     @Override
     public Collection<String> getMenuCategories() {
         return emptyCollection;
-    }
+    }*/
 
     protected abstract JSettingsPanel getSettingsPanel();
 

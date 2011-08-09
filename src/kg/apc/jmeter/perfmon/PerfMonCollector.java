@@ -107,6 +107,10 @@ public class PerfMonCollector
                 log.error(msg, e);
                 generateErrorSample("Agent Connnection", msg);
                 connectors[i] = null;
+            } catch (PerfMonException e) {
+                log.error("Agent Connnection", e);
+                generateErrorSample("Agent Connnection", e.getMessage());
+                connectors[i] = null;
             }
         }
     }
@@ -131,58 +135,31 @@ public class PerfMonCollector
             if (connectors[i] != null) {
                 label = connectors[i].getHost() + " - " + AgentConnector.metrics.get(connectors[i].getMetricType());
 
-                switch (connectors[i].getMetricType()) {
-                    case AbstractPerformanceMonitoringGui.PERFMON_CPU:
-                        double cpuMetric = connectors[i].getCpu();
-                        if (cpuMetric != AgentConnector.AGENT_ERROR) {
-                            generateSample(100 * cpuMetric, label+", %");
-                        } else {
-                            cnxLost = true;
-                        }
-                        break;
-                    case AbstractPerformanceMonitoringGui.PERFMON_MEM:
-                        long memMetric = connectors[i].getMem();
-                        if (memMetric != AgentConnector.AGENT_ERROR) {
-                            generateSample((double) memMetric / MEGABYTE, label+ ", MB");
-                        } else {
-                            cnxLost = true;
-                        }
-                        break;
-                    case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
-                        long[] swapMetrics = connectors[i].getSwap();
-                        if (swapMetrics[0] != AgentConnector.AGENT_ERROR && swapMetrics[1] != AgentConnector.AGENT_ERROR) {
-                            generate2Samples(swapMetrics, label + " page in", label + " page out");
-                        } else {
-                            cnxLost = true;
-                        }
-                        break;
-                    case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
-                        long[] dioMetrics = connectors[i].getDisksIO();
-                        if (dioMetrics[0] != AgentConnector.AGENT_ERROR && dioMetrics[1] != AgentConnector.AGENT_ERROR) {
-                            generate2Samples(dioMetrics, label + " reads", label + " writes");
-                        } else {
-                            cnxLost = true;
-                        }
-                        break;
-                    case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
-                        long[] nioMetrics = connectors[i].getNetIO();
-                        if (nioMetrics[0] != AgentConnector.AGENT_ERROR && nioMetrics[1] != AgentConnector.AGENT_ERROR) {
-                            generate2Samples(nioMetrics, label + " recv, KB", label + " send, KB");
-                        } else {
-                            cnxLost = true;
-                        }
-
-                        break;
-                    default:
-                        log.error("Unknown metric index: " + connectors[i].getMetricType());
-                }
-                //if cnx lost, notify
-                if (cnxLost) {
-                    String msg = "Connection lost with '" + connectors[i].getHost() + "'! (required for " + label + ")";
-                    generateErrorSample(label, msg);
-                    log.error(msg);
+                try {
+                   switch (connectors[i].getMetricType()) {
+                       case AbstractPerformanceMonitoringGui.PERFMON_CPU:
+                           generateSample(100 * connectors[i].getCpu(), label+", %");
+                           break;
+                       case AbstractPerformanceMonitoringGui.PERFMON_MEM:
+                           generateSample((double) connectors[i].getMem() / MEGABYTE, label+ ", MB");
+                           break;
+                       case AbstractPerformanceMonitoringGui.PERFMON_SWAP:
+                           generate2Samples(connectors[i].getSwap(), label + " page in", label + " page out");
+                           break;
+                       case AbstractPerformanceMonitoringGui.PERFMON_DISKS_IO:
+                           generate2Samples(connectors[i].getDisksIO(), label + " reads", label + " writes");
+                           break;
+                       case AbstractPerformanceMonitoringGui.PERFMON_NETWORKS_IO:
+                           generate2Samples(connectors[i].getNetIO(), label + " recv, KB", label + " send, KB");
+                           break;
+                       default:
+                           log.error("Unknown metric index: " + connectors[i].getMetricType());
+                   }
+               } catch (PerfMonException e) {
+                    generateErrorSample(label, e.getMessage() + " (while getting " + label + ")");
+                    log.error(e.getMessage());
                     connectors[i] = null;
-                }
+               }
             }
         }
     }

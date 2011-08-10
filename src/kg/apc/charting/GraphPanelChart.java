@@ -20,6 +20,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -119,6 +120,9 @@ public class GraphPanelChart
    private int precisionLabel = -1;
    private int factorInUse = 1;
    private boolean displayPrecision = false;
+
+   private int xHoverInfo = -1;
+   private int yHoverInfo = -1;
 
    public void setDisplayPrecision(boolean displayPrecision) {
       this.displayPrecision = displayPrecision;
@@ -280,6 +284,8 @@ public class GraphPanelChart
       else {
          csvSeparator = ";";
       }
+
+      registerHoverInfo();
    }
 
    public GraphPanelChart() {
@@ -578,6 +584,7 @@ public class GraphPanelChart
       paintYAxis(g);
       paintXAxis(g);
       paintChart(g);
+      paintHoverInfo(g, false);
    }
 
    private void paintLegend(Graphics g) {
@@ -1128,6 +1135,60 @@ public class GraphPanelChart
          popup.add(itemExport);
       }
    }
+
+   private void registerHoverInfo() {
+      addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+         @Override
+         public void mouseMoved(java.awt.event.MouseEvent evt) {
+            formMouseMoved(evt);
+         }
+      });
+   }
+
+   private void paintHoverInfo(Graphics2D g, boolean forceErase) {
+
+      if(isPreview) return;
+
+      Font oldFont = g.getFont();
+      Color oldColor = g.getColor();
+
+      g.setFont(g.getFont().deriveFont(10F));
+
+      int height = g.getFontMetrics().getHeight();
+      int x = 10;
+      int y = xAxisRect.y + xAxisRect.height - 5;
+
+      if(xHoverInfo != -1 || forceErase) {
+         g.setColor(gradientColor);
+         g.fill(new Rectangle2D.Double(x, y-height, 200, height+2));
+      }
+
+      if(xHoverInfo != -1) {
+          g.setColor(Color.GRAY);
+          g.drawString("x=" + xHoverInfo + " ; y=" + yHoverInfo, x, y);
+      }
+
+      g.setColor(oldColor);
+      g.setFont(oldFont);
+   }
+
+   private void formMouseMoved(java.awt.event.MouseEvent evt) {
+      int x = evt.getX();
+      int y = evt.getY();
+      
+      if( x>chartRect.x
+              && x<(chartRect.x+chartRect.width)
+              && y>chartRect.y
+              && y<(chartRect.y+chartRect.height)) {
+         xHoverInfo = x;
+         yHoverInfo = y;
+         paintHoverInfo((Graphics2D) this.getGraphics(), false);
+      } else {
+         xHoverInfo = -1;
+         yHoverInfo = -1;
+         paintHoverInfo((Graphics2D) this.getGraphics(), true);
+      }
+    }
 
    public void setRelativeTimeInitValue(boolean isUseRelTime) {
        settingsUseRelativeTime = isUseRelTime;

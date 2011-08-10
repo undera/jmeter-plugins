@@ -10,9 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
+import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.logging.LoggingManager;
@@ -132,13 +132,16 @@ public class HTTPRawSamplerGui
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Hostname: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 1, hostName = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 1, hostName = new JTextField(20));
+
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
 
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("TCP Port: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, port = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 2, port = new JTextField(20));
 
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Timeout: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 3, timeout = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 3, timeout = new JTextField(20));
 
         addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Keep connection open: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 4, keepAlive = new JCheckBox());
@@ -146,15 +149,23 @@ public class HTTPRawSamplerGui
         addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Request Data: ", JLabel.RIGHT));
 
         editConstraints.fill = GridBagConstraints.BOTH;
-        addToPanel(mainPanel, editConstraints, 1, 5, requestData = new JTextArea());
-        requestData.setRows(10);
-        requestData.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        requestData = new JTextArea();
+        addToPanel(mainPanel, editConstraints, 1, 5, GuiBuilderHelper.getTextAreaScrollPaneContainer(requestData, 20));
+
+
+        editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
         addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Data file path: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 6, fileName = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 6, fileName = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 2, 6, browseButton = new JButton("Browse..."));
+
+        GuiBuilderHelper.strechButtonToComponent(fileName, browseButton);
+
         browseButton.addActionListener(new BrowseAction(fileName));
 
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
 
         addToPanel(mainPanel, labelConstraints, 0, 7, new JLabel("Parse result as HTTP: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 7, parseResult = new JCheckBox());

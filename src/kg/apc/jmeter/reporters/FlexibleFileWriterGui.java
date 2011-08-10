@@ -1,7 +1,6 @@
 package kg.apc.jmeter.reporters;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
@@ -38,10 +37,12 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
         return JMeterPluginsUtils.prefixLabel("Flexible File Writer");
     }
 
+   @Override
     public String getLabelResource() {
         return getClass().getCanonicalName();
     }
 
+   @Override
     public TestElement createTestElement() {
         TestElement te = new FlexibleFileWriter();
         modifyTestElement(te);
@@ -49,6 +50,7 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
         return te;
     }
 
+   @Override
     public void modifyTestElement(TestElement te) {
         super.configureTestElement(te);
         if (te instanceof FlexibleFileWriter) {

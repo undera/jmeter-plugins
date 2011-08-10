@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.jmeter.gui;
 
 import javax.swing.JButton;
@@ -49,7 +44,7 @@ public class GuiBuilderHelperTest {
    public void testGetTextAreaScrollPaneContainer() {
       System.out.println("getTextAreaScrollPaneContainer");
       JTextArea textArea = new JTextArea();
-      JScrollPane result = GuiBuilderHelper.getTextAreaScrollPaneContainer(textArea);
+      JScrollPane result = GuiBuilderHelper.getTextAreaScrollPaneContainer(textArea, 5);
       assertTrue(textArea.getParent().equals(result.getViewport()));
    }
 

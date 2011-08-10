@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
+import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.processor.gui.AbstractPreProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
@@ -98,17 +99,28 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
         addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Rewind on end of file: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 0, rewindOnEOF = new JCheckBox());
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Data file path: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 1, fileName = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 1, fileName = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
+
+        GuiBuilderHelper.strechButtonToComponent(fileName, browseButton);
+
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+
         browseButton.addActionListener(new BrowseAction(fileName));
 
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Variable name: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, variableName = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 2, variableName = new JTextField(20));
+
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 2);
 
         addToPanel(mainPanel, labelConstraints, 0, 3, checkButton = new JButton("Check File Consistency"));
-        addToPanel(mainPanel, editConstraints, 1, 3, checkInfo = new JTextArea());
+
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+
+        checkInfo = new JTextArea();
+        addToPanel(mainPanel, editConstraints, 1, 3, GuiBuilderHelper.getTextAreaScrollPaneContainer(checkInfo, 3));
         checkButton.addActionListener(new CheckConsistencyAction(fileName, checkInfo));
-        checkInfo.setBorder(new BevelBorder(BevelBorder.LOWERED));
         checkInfo.setEditable(false);
 
         JPanel container = new JPanel(new BorderLayout());

@@ -10,10 +10,12 @@ import javax.swing.JTextArea;
  * Simple class to help building GUI
  * @author Stephane Hoblingre
  */
+
 public class GuiBuilderHelper {
-   public static JScrollPane getTextAreaScrollPaneContainer(JTextArea textArea) {
+   
+   public static JScrollPane getTextAreaScrollPaneContainer(JTextArea textArea, int nbLines) {
       JScrollPane ret = new JScrollPane();
-      textArea.setRows(5);
+      textArea.setRows(nbLines);
       textArea.setColumns(20);
       ret.setViewportView(textArea);
       return ret;

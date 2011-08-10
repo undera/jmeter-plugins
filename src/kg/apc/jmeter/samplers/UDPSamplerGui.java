@@ -9,8 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 
@@ -38,6 +38,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         return JMeterPluginsUtils.prefixLabel("UDP Request");
     }
 
+   @Override
     public String getLabelResource() {
         return getClass().getCanonicalName();
     }
@@ -57,6 +58,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         }
     }
 
+   @Override
     public TestElement createTestElement() {
         UDPSampler sampler = new UDPSampler();
         modifyTestElement(sampler);
@@ -70,6 +72,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
      * @param sampler
      * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
      */
+   @Override
     public void modifyTestElement(TestElement el) {
         super.configureTestElement(el);
 
@@ -117,26 +120,31 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Hostname/IP: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 1, hostName = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 1, hostName = new JTextField(20));
+
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
 
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("UDP Port: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, port = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 2, port = new JTextField(20));
 
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Wait for Response: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 3, waitResponse = new JCheckBox());
 
         addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Response Timeout: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 4, timeout = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 4, timeout = new JTextField(20));
 
         addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Data Encode/Decode class: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 5, messageEncodeClass = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 5, messageEncodeClass = new JTextField(20));
+
+        editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
         addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Request Data: ", JLabel.RIGHT));
 
         editConstraints.fill = GridBagConstraints.BOTH;
-        addToPanel(mainPanel, editConstraints, 1, 6, requestData = new JTextArea());
-        requestData.setRows(10);
-        requestData.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        requestData = new JTextArea();
+        addToPanel(mainPanel, editConstraints, 1, 6, GuiBuilderHelper.getTextAreaScrollPaneContainer(requestData, 10));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

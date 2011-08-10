@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 
@@ -130,27 +131,33 @@ public class DummySamplerGui
         addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Successfull sample: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 0, isSuccessful = new JCheckBox());
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Response Code (eg 200): ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 1, responseCode = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 1, responseCode = new JTextField(20));
+
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Response Message (eg OK): ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, responseMessage = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 2, responseMessage = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Latency (milliseconds): ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 3, latency = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 3, latency = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Response Time (milliseconds): ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 4, responseTime = new JTextField());
+        addToPanel(mainPanel, editConstraints, 1, 4, responseTime = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Simulate Response Time (sleep): ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 5, isWaiting = new JCheckBox());
 
+        editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+
         addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Request Data: ", JLabel.RIGHT));
         editConstraints.fill = GridBagConstraints.BOTH;
-        addToPanel(mainPanel, editConstraints, 1, 6, requestData = new JTextArea());
-        requestData.setRows(10);
-        requestData.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        requestData = new JTextArea();
+        addToPanel(mainPanel, editConstraints, 1, 6, GuiBuilderHelper.getTextAreaScrollPaneContainer(requestData, 10));
 
         addToPanel(mainPanel, labelConstraints, 0, 7, new JLabel("Response Data: ", JLabel.RIGHT));
         editConstraints.fill = GridBagConstraints.BOTH;
-        addToPanel(mainPanel, editConstraints, 1, 7, responseData = new JTextArea());
-        responseData.setRows(10);
-        responseData.setBorder(new BevelBorder(BevelBorder.LOWERED));
+
+        responseData = new JTextArea();
+        addToPanel(mainPanel, editConstraints, 1, 7, GuiBuilderHelper.getTextAreaScrollPaneContainer(responseData, 10));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

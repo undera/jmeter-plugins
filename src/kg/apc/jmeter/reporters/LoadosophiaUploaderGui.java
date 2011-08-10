@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
@@ -121,20 +122,13 @@ public class LoadosophiaUploaderGui
 
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Upload Token: ", JLabel.RIGHT));
         uploadToken = new JTextArea();
-        JScrollPane spUploadToken = new JScrollPane();
-        uploadToken.setRows(5);
-        uploadToken.setColumns(20);
-        spUploadToken.setViewportView(uploadToken);
-        addToPanel(mainPanel, editConstraints, 1, 3, spUploadToken);
+
+        addToPanel(mainPanel, editConstraints, 1, 3, GuiBuilderHelper.getTextAreaScrollPaneContainer(uploadToken));
 
         addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Info Area: ", JLabel.RIGHT));
         infoArea = new JTextArea();
-        JScrollPane spInfoArea = new JScrollPane();
-        infoArea.setRows(5);
-        infoArea.setColumns(20);
         infoArea.setEditable(false);
-        spInfoArea.setViewportView(infoArea);
-        addToPanel(mainPanel, editConstraints, 1, 4, spInfoArea);
+        addToPanel(mainPanel, editConstraints, 1, 4, GuiBuilderHelper.getTextAreaScrollPaneContainer(infoArea));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

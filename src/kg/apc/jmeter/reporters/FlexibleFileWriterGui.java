@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
+import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 
@@ -98,9 +99,9 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Filename: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 1, filename = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
-        int bWidth = (int)browseButton.getPreferredSize().getWidth();
-        int bHeight = (int)filename.getPreferredSize().getHeight();
-        browseButton.setPreferredSize(new Dimension(bWidth, bHeight));
+
+        GuiBuilderHelper.strechButtonToComponent(filename, browseButton);
+
         browseButton.addActionListener(new BrowseAction(filename));
 
         editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);

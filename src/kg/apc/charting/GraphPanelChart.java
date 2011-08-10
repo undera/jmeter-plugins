@@ -559,6 +559,10 @@ public class GraphPanelChart
    }
 
    private void drawPanel(Graphics2D g) {
+      drawPanel(g, true);
+   }
+
+   private void drawPanel(Graphics2D g, boolean drawHoverInfo) {
       g.setColor(Color.white);
 
       if (settingsDrawGradient) {
@@ -584,7 +588,7 @@ public class GraphPanelChart
       paintYAxis(g);
       paintXAxis(g);
       paintChart(g);
-      paintHoverInfo(g, false);
+      if(drawHoverInfo) paintHoverInfo(g, false);
    }
 
    private void paintLegend(Graphics g) {
@@ -1112,7 +1116,7 @@ public class GraphPanelChart
       Graphics2D g2 = image.createGraphics();
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       g2.setClip(0, 0, w, h);
-      drawPanel(g2);
+      drawPanel(g2, false);
 
       return image;
    }
@@ -1153,6 +1157,10 @@ public class GraphPanelChart
       Color oldColor = g.getColor();
 
       g.setFont(g.getFont().deriveFont(10F));
+      g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+      long realX = minXVal + (maxXVal - minXVal) * (xHoverInfo - chartRect.x)/chartRect.width;
+      double realY = minYVal + (maxYVal - minYVal) * (yHoverInfo - chartRect.y)/chartRect.height;
 
       int height = g.getFontMetrics().getHeight();
       int x = 10;
@@ -1164,8 +1172,10 @@ public class GraphPanelChart
       }
 
       if(xHoverInfo != -1) {
-          g.setColor(Color.GRAY);
-          g.drawString("x=" + xHoverInfo + " ; y=" + yHoverInfo, x, y);
+          g.setColor(Color.DARK_GRAY);
+          xAxisLabelRenderer.setValue(realX);
+          yAxisLabelRenderer.setValue(realY);
+          g.drawString("(" + xAxisLabelRenderer.getText() + " ; " + yAxisLabelRenderer.getText() + ")", x, y);
       }
 
       g.setColor(oldColor);

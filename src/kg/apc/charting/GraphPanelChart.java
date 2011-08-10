@@ -123,6 +123,7 @@ public class GraphPanelChart
 
    private int xHoverInfo = -1;
    private int yHoverInfo = -1;
+   private int lastHoverInfoWitdh = 0;
 
    public void setDisplayPrecision(boolean displayPrecision) {
       this.displayPrecision = displayPrecision;
@@ -1160,7 +1161,7 @@ public class GraphPanelChart
       g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
       long realX = minXVal + (maxXVal - minXVal) * (xHoverInfo - chartRect.x)/chartRect.width;
-      double realY = minYVal + (maxYVal - minYVal) * (yHoverInfo - chartRect.y)/chartRect.height;
+      double realY = minYVal + (maxYVal - minYVal) * (chartRect.height - yHoverInfo + chartRect.y)/chartRect.height;
 
       int height = g.getFontMetrics().getHeight();
       int x = 10;
@@ -1168,14 +1169,16 @@ public class GraphPanelChart
 
       if(xHoverInfo != -1 || forceErase) {
          g.setColor(gradientColor);
-         g.fill(new Rectangle2D.Double(x, y-height, 200, height+2));
+         g.fill(new Rectangle2D.Double(x, y-height, lastHoverInfoWitdh, height+2));
       }
 
       if(xHoverInfo != -1) {
           g.setColor(Color.DARK_GRAY);
           xAxisLabelRenderer.setValue(realX);
           yAxisLabelRenderer.setValue(realY);
-          g.drawString("(" + xAxisLabelRenderer.getText() + " ; " + yAxisLabelRenderer.getText() + ")", x, y);
+          String hoverInfo = "(" + xAxisLabelRenderer.getText() + " ; " + yAxisLabelRenderer.getText() + ")";
+          g.drawString(hoverInfo, x, y);
+          lastHoverInfoWitdh = g.getFontMetrics().stringWidth(hoverInfo);
       }
 
       g.setColor(oldColor);

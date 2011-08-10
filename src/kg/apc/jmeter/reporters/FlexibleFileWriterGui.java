@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
@@ -25,6 +27,26 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
     private JTextField filename;
     private JTextField columns;
     private JButton browseButton;
+
+    private static String help = "|startTime|\t\tEpoch time when the request was started\n"
+           + "|endTime|\t\tEpoch time when the request was ended\n"
+           + "|responseTime|\t\tResponse time, time to full response loaded\n"
+           + "|latency|\t\tLatency, time to first response byte received (if available)\n"
+           + "|responseCode|\tResponse code (200, 404, etc.)\n"
+           + "|responseMessage|\tResponse message (OK, Not Found, etc.)\n"
+           + "|responseHeaders|\tResponse headers (if present in sample)\n"
+           + "|responseData|\t\tResponse data\n"
+           + "|requestData|\t\tRequest data from sample\n"
+           + "|sentBytes|\t\tNumber of request bytes sent (if available)\n"
+           + "|receivedBytes|\t\tNumber of request bytes received (if available)\n"
+           + "|threadName|\t\tName of thread in Thread Group that processed the request\n"
+           + "|sampleLabel|\t\tName of the sampler that made the request\n"
+           + "|isSuccsessful|\t\tIf response was marked as successful\n"
+           + "|isFailed|\t\tIf response was marked as failed (surrogate field)\n"
+           + "|startTimeMillis|\t\tSame as startTime, but divided by 1000 (surrogate field, example: 1311121131.362)\n"
+           + "|endTimeMillis|\t\tSame as endTime, but divided by 1000 (surrogate field)\n"
+           + "|responseTimeMicros|\tSame as responseTime, but multiplied by 1000 (surrogate field)\n"
+           + "|latencyMicros|\t\tSame as latency, but multiplied by 1000 (surrogate field)";
 
     public FlexibleFileWriterGui() {
         super();
@@ -115,6 +137,21 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
         add(container, BorderLayout.CENTER);
+
+        JTextArea info = new JTextArea();
+        info.setEditable(false);
+        info.setWrapStyleWord(true);
+        info.setOpaque(false);
+        info.setLineWrap(true);
+        info.setColumns(20);
+
+        JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane1.setViewportView(info);
+        jScrollPane1.setBorder(null);
+
+        info.setText("Available fields:\n\n" + help + "\n");
+
+        add(info, BorderLayout.SOUTH);
     }
 
     private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {

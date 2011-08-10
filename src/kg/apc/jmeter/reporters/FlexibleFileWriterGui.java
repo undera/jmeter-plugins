@@ -140,10 +140,7 @@ public class FlexibleFileWriterGui extends AbstractListenerGui {
 
         JTextArea info = new JTextArea();
         info.setEditable(false);
-        info.setWrapStyleWord(true);
         info.setOpaque(false);
-        info.setLineWrap(true);
-        info.setColumns(20);
 
         JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane1.setViewportView(info);

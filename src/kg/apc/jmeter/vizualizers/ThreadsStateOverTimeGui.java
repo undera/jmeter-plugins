@@ -30,6 +30,11 @@ public class ThreadsStateOverTimeGui
         graphPanel.getGraphObject().setYAxisLabel("Number of active threads");
     }
 
+   @Override
+    protected void setExtraChartSettings() {
+       graphPanel.getGraphObject().getChartSettings().initDrawFinalZeroingLines(true);
+   }
+
     private double getAllThreadCount(long time) {
         double ret = 0;
         Iterator<AbstractGraphRow> rowsIter = model.values().iterator();

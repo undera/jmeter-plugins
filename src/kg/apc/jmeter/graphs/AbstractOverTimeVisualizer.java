@@ -16,7 +16,6 @@ public abstract class AbstractOverTimeVisualizer
     public AbstractOverTimeVisualizer() {
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS));
         graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
-        graphPanel.getGraphObject().setDrawFinalZeroingLines(false);
         graphPanel.getGraphObject().setDisplayPrecision(true);
     }
 
@@ -32,7 +31,7 @@ public abstract class AbstractOverTimeVisualizer
     }
 
     protected void handleRelativeStartTime() {
-        if (graphPanel.getGraphObject().isUseRelativeTime()) {
+        if (graphPanel.getGraphObject().getChartSettings().isUseRelativeTime()) {
             graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, relativeStartTime));
         }
         graphPanel.getGraphObject().setTestStartTime(relativeStartTime);

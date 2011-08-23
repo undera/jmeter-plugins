@@ -1,6 +1,5 @@
 package kg.apc.charting;
 
-import kg.apc.charting.AbstractGraphPanelChartElement;
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -15,335 +14,301 @@ import kg.apc.charting.rows.GraphRowSumValues;
  *
  * @author apc
  */
-public abstract class AbstractGraphRow
-{
-   /**
-    *
-    */
-   public static final int MARKER_SIZE_NONE = 0;
-   /**
-    *
-    */
-   public static final int MARKER_SIZE_SMALL = 2;
-   /**
-    *
-    */
-   public static final int MARKER_SIZE_BIG = 4;
-   /**
-    *
-    */
-   public static final float LINE_THICKNESS_BIG = 3.0f;
-   /**
-    *
-    */
+public abstract class AbstractGraphRow {
 
+    /**
+     *
+     */
+    public static final int MARKER_SIZE_NONE = 0;
+    /**
+     *
+     */
+    public static final int MARKER_SIZE_SMALL = 2;
+    /**
+     *
+     */
+    public static final int MARKER_SIZE_BIG = 4;
+    /**
+     *
+     */
+    public static final float LINE_THICKNESS_BIG = 3.0f;
+    /**
+     *
+     */
+    /*
+     * rows types
+     */
+    public static final int ROW_AVERAGES = 0;
+    public static final int ROW_EXACT_VALUES = 1;
+    public static final int ROW_OVERALL_AVERAGES = 2;
+    public static final int ROW_PERCENTILES = 3;
+    public static final int ROW_SUM_VALUES = 4;
+    public static final int ROW_ROLLING_SUM_VALUES = 5;
+    public static final int ROW_SIMPLE = 6;
+    protected boolean drawLine = false;
+    private boolean drawValueLabel = false;
+    private boolean showInLegend = true;
+    private boolean drawThickLines = false;
+    /**
+     *
+     */
+    protected int markerSize = MARKER_SIZE_NONE;
+    /**
+     *
+     */
+    protected Color color = Color.BLACK;
+    /**
+     *
+     */
+    protected String label = "";
+    /**
+     *
+     */
+    protected long maxX = Long.MIN_VALUE;
+    /**
+     *
+     */
+    protected long minX = Long.MAX_VALUE;
+    /**
+     *
+     */
+    private boolean drawOnChart = true;
+    private boolean drawBar = false;
+    private int granulation = 0;
+    private long firstTime = Long.MIN_VALUE;
 
-   /*
-    * rows types
-    */
-   public static final int ROW_AVERAGES = 0;
-   public static final int ROW_EXACT_VALUES = 1;
-   public static final int ROW_OVERALL_AVERAGES = 2;
-   public static final int ROW_PERCENTILES = 3;
-   public static final int ROW_SUM_VALUES = 4;
-   public static final int ROW_ROLLING_SUM_VALUES = 5;
-   public static final int ROW_SIMPLE = 6;
+    public void setDrawThickLines(boolean isThickLine) {
+        drawThickLines = isThickLine;
+    }
 
-   protected boolean drawLine = false;
-   private boolean drawValueLabel = false;
-   private boolean showInLegend = true;
-   private boolean drawThickLines = false;
-   /**
-    *
-    */
-   protected int markerSize = MARKER_SIZE_NONE;
-   /**
-    *
-    */
-   protected Color color = Color.BLACK;
-   /**
-    *
-    */
-   protected String label = "";
-   /**
-    *
-    */
-   protected long maxX = Long.MIN_VALUE;
-   /**
-    *
-    */
-   protected long minX = Long.MAX_VALUE;
-   /**
-    *
-    */
-   private boolean drawOnChart = true;
-   private boolean drawBar = false;
-   private int granulation = 0;
-   private long firstTime=Long.MIN_VALUE;
+    public boolean isDrawThickLines() {
+        return drawThickLines;
+    }
 
-   public void setDrawThickLines(boolean isThickLine)
-   {
-      drawThickLines = isThickLine;
-   }
+    /**
+     *
+     * @param b
+     */
+    public void setDrawLine(boolean b) {
+        drawLine = b;
+    }
 
-   public boolean isDrawThickLines()
-   {
-      return drawThickLines;
-   }
+    /**
+     *
+     * @param aMarkerSize
+     */
+    public void setMarkerSize(int aMarkerSize) {
+        markerSize = aMarkerSize;
+    }
 
-   /**
-    *
-    * @param b
-    */
-   public void setDrawLine(boolean b)
-   {
-      drawLine = b;
-   }
+    /**
+     * @return the drawLine
+     */
+    public boolean isDrawLine() {
+        return drawLine;
+    }
 
-   /**
-    *
-    * @param aMarkerSize
-    */
-   public void setMarkerSize(int aMarkerSize)
-   {
-      markerSize = aMarkerSize;
-   }
+    /**
+     * @return the markerSize
+     */
+    public int getMarkerSize() {
+        return markerSize;
+    }
 
-   /**
-    * @return the drawLine
-    */
-   public boolean isDrawLine()
-   {
-      return drawLine;
-   }
+    /**
+     *
+     * @return
+     */
+    public Color getColor() {
+        return color;
+    }
 
-   /**
-    * @return the markerSize
-    */
-   public int getMarkerSize()
-   {
-      return markerSize;
-   }
+    /**
+     *
+     * @param nextColor
+     */
+    public void setColor(Color nextColor) {
+        color = nextColor;
+    }
 
-   /**
-    *
-    * @return
-    */
-   public Color getColor()
-   {
-      return color;
-   }
+    /**
+     * @return the label
+     */
+    public String getLabel() {
+        return label;
+    }
 
-   /**
-    *
-    * @param nextColor
-    */
-   public void setColor(Color nextColor)
-   {
-      color = nextColor;
-   }
+    /**
+     * @param label the label to set
+     */
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-   /**
-    * @return the label
-    */
-   public String getLabel()
-   {
-      return label;
-   }
+    /**
+     * @return the maxX
+     */
+    public long getMaxX() {
+        return maxX;
+    }
 
-   /**
-    * @param label the label to set
-    */
-   public void setLabel(String label)
-   {
-      this.label = label;
-   }
+    /**
+     * @return the exact maxY, taking in account maxPoint limit
+     */
+    public double[] getMinMaxY(int maxPoints) {
+        int factor;
+        double[] minMax = new double[2];
+        minMax[0] = Double.MAX_VALUE;
+        minMax[1] = 0;
+        Entry<Long, AbstractGraphPanelChartElement> element;
 
-   /**
-    * @return the maxX
-    */
-   public long getMaxX()
-   {
-      return maxX;
-   }
+        if (maxPoints > 0) {
+            factor = (int) Math.floor(this.size() / maxPoints) + 1;
+        } else {
+            factor = 1;
+        }
 
-   /**
-    * @return the exact maxY, taking in account maxPoint limit
-    */
-   public double[] getMinMaxY(int maxPoints)
-   {
-      int factor;
-      double[] minMax = new double[2];
-      minMax[0] = Double.MAX_VALUE;
-      minMax[1] = 0;
-      Entry<Long, AbstractGraphPanelChartElement> element;
+        Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = this.iterator();
 
-      if (maxPoints > 0)
-      {
-          factor = (int)Math.floor(this.size() / maxPoints) + 1;
-      } else
-      {
-          factor = 1;
-      }
+        double calcY;
 
-      Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = this.iterator();
+        while (it.hasNext()) {
+            calcY = 0;
 
-      double calcY;
+            if (factor == 1) {
+                element = it.next();
+                AbstractGraphPanelChartElement elt = (AbstractGraphPanelChartElement) element.getValue();
+                calcY = elt.getValue();
+            } else {
+                double nbPointProcessed = 0;
+                for (int i = 0; i < factor; i++) {
+                    if (it.hasNext()) {
+                        element = it.next();
+                        calcY = calcY + ((AbstractGraphPanelChartElement) element.getValue()).getValue();
+                        nbPointProcessed++;
+                    }
+                }
+                calcY = calcY / nbPointProcessed;
+            }
 
-      while (it.hasNext())
-      {
-          calcY = 0;
+            if (minMax[0] > calcY) {
+                minMax[0] = calcY;
+            }
+            if (minMax[1] < calcY) {
+                minMax[1] = calcY;
+            }
+        }
 
-          if (factor == 1)
-          {
-              element = it.next();
-              AbstractGraphPanelChartElement elt = (AbstractGraphPanelChartElement) element.getValue();
-              calcY = elt.getValue();
-          } else {
-              double nbPointProcessed = 0;
-              for (int i = 0; i < factor; i++)
-              {
-                  if (it.hasNext())
-                  {
-                      element = it.next();
-                      calcY = calcY + ((AbstractGraphPanelChartElement) element.getValue()).getValue();
-                      nbPointProcessed++;
-                  } 
-              }
-              calcY = calcY / nbPointProcessed;
-          }
+        //if bars min always 0
+        if (isDrawBar()) {
+            minMax[0] = 0;
+        }
+        return minMax;
+    }
 
-          if(minMax[0] > calcY) minMax[0] = calcY;
-          if(minMax[1] < calcY) minMax[1] = calcY;
-       }
+    /**
+     * @return the minX
+     */
+    public long getMinX() {
+        return minX;
+    }
 
-      //if bars min always 0
-      if(isDrawBar())
-      {
-          minMax[0] = 0;
-      }
-      return minMax;
-   }
+    /**
+     *
+     * @param xVal
+     * @param yVal
+     */
+    public void add(long xVal, double yVal) {
+        if (getFirstTime() == Long.MIN_VALUE) {
+            firstTime = xVal;
+        }
 
-   /**
-    * @return the minX
-    */
-   public long getMinX()
-   {
-      return minX;
-   }
+        if (xVal > maxX) {
+            maxX = xVal;
+        }
+        if (xVal < minX) {
+            minX = xVal;
+        }
+    }
 
-   /**
-    *
-    * @param xVal
-    * @param yVal
-    */
-   public void add(long xVal, double yVal)
-   {
-      if (getFirstTime()==Long.MIN_VALUE)
-      {
-          firstTime=xVal;
-      }
+    /**
+     *
+     * @return
+     */
+    public abstract Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator();
 
-      if (xVal > maxX)
-      {
-         maxX = xVal;
-      }
-      if (xVal < minX)
-      {
-         minX = xVal;
-      }
-   }
+    /**
+     * @return the drawValueLabel
+     */
+    public boolean isDrawValueLabel() {
+        return drawValueLabel;
+    }
 
-   /**
-    *
-    * @return
-    */
-   public abstract Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator();
+    /**
+     * @param drawValueLabel the drawValueLabel to set
+     */
+    public void setDrawValueLabel(boolean drawValueLabel) {
+        this.drawValueLabel = drawValueLabel;
+    }
 
-   /**
-    * @return the drawValueLabel
-    */
-   public boolean isDrawValueLabel()
-   {
-      return drawValueLabel;
-   }
+    /**
+     * @return the showInLegend
+     */
+    public boolean isShowInLegend() {
+        return showInLegend;
+    }
 
-   /**
-    * @param drawValueLabel the drawValueLabel to set
-    */
-   public void setDrawValueLabel(boolean drawValueLabel)
-   {
-      this.drawValueLabel = drawValueLabel;
-   }
+    /**
+     * @param showInLegend the showInLegend to set
+     */
+    public void setShowInLegend(boolean showInLegend) {
+        this.showInLegend = showInLegend;
+    }
 
-   /**
-    * @return the showInLegend
-    */
-   public boolean isShowInLegend()
-   {
-      return showInLegend;
-   }
+    /**
+     * @return the drawOnChart
+     */
+    public boolean isDrawOnChart() {
+        return drawOnChart;
+    }
 
-   /**
-    * @param showInLegend the showInLegend to set
-    */
-   public void setShowInLegend(boolean showInLegend)
-   {
-      this.showInLegend = showInLegend;
-   }
+    /**
+     * @param drawOnChart the drawOnChart to set
+     */
+    public void setDrawOnChart(boolean drawOnChart) {
+        this.drawOnChart = drawOnChart;
+    }
 
-   /**
-    * @return the drawOnChart
-    */
-   public boolean isDrawOnChart()
-   {
-      return drawOnChart;
-   }
+    public void setDrawBar(boolean b) {
+        this.drawBar = b;
+    }
 
-   /**
-    * @param drawOnChart the drawOnChart to set
-    */
-   public void setDrawOnChart(boolean drawOnChart)
-   {
-      this.drawOnChart = drawOnChart;
-   }
+    /**
+     * @return the drawBar
+     */
+    public boolean isDrawBar() {
+        return drawBar;
+    }
 
-   public void setDrawBar(boolean b)
-   {
-      this.drawBar = b;
-   }
+    /**
+     * @return the granulation value for drawbar width
+     */
+    public int getGranulationValue() {
+        return granulation;
+    }
 
-   /**
-    * @return the drawBar
-    */
-   public boolean isDrawBar()
-   {
-      return drawBar;
-   }
+    /**
+     * set the granulation value for drawbar width
+     */
+    public void setGranulationValue(int value) {
+        this.granulation = value;
+    }
 
-   /**
-    * @return the granulation value for drawbar width
-    */
-   public int getGranulationValue()
-   {
-      return granulation;
-   }
-
-   /**
-    * set the granulation value for drawbar width
-    */
-   public void setGranulationValue(int value)
-   {
-      this.granulation = value;
-   }
-
-   /**
+    /**
      * For bar chart x axis too big prevention. Must be overridden if necessary.
      * @param excludeOutOfRangeValues
      */
-    public void setExcludeOutOfRangeValues(boolean excludeOutOfRangeValues)
-    {
+    public void setExcludeOutOfRangeValues(boolean excludeOutOfRangeValues) {
     }
 
     /**
@@ -359,22 +324,18 @@ public abstract class AbstractGraphRow
      * @param value the upper key to get the floor element
      * @return the floor element, null if not exist
      */
-    public AbstractGraphPanelChartElement getLowerElement(long value)
-    {
+    public AbstractGraphPanelChartElement getLowerElement(long value) {
         throw new UnsupportedOperationException();
     }
-    
-    public Long getHigherKey(long value)
-    {
+
+    public Long getHigherKey(long value) {
         throw new UnsupportedOperationException();
     }
 
     public abstract int size();
 
-    public static AbstractGraphRow instantiateNewRow(int rowType)
-    {
-        switch (rowType)
-        {
+    public static AbstractGraphRow instantiateNewRow(int rowType) {
+        switch (rowType) {
             case AbstractGraphRow.ROW_AVERAGES:
                 return new GraphRowAverages();
             case AbstractGraphRow.ROW_EXACT_VALUES:
@@ -397,9 +358,7 @@ public abstract class AbstractGraphRow
     /**
      * @return the firstTime
      */
-    public long getFirstTime()
-    {
+    public long getFirstTime() {
         return firstTime;
     }
-
 }

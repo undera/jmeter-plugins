@@ -45,6 +45,7 @@ public class ResponseTimesDistributionGui
       rowAgg.setGranulationValue(granulation);
    }
 
+    @Override
    public String getLabelResource()
    {
       return this.getClass().getSimpleName();
@@ -56,6 +57,7 @@ public class ResponseTimesDistributionGui
       return JMeterPluginsUtils.prefixLabel("Response Times Distribution");
    }
 
+    @Override
    public void add(SampleResult res)
    {
       int granulation = getGranulation();

@@ -20,8 +20,8 @@ import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowExactValues;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
+import kg.apc.jmeter.gui.GuiBuilderHelper;
 import kg.apc.jmeter.threads.UltimateThreadGroupGui;
-import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
@@ -76,7 +76,7 @@ public class VariableThroughputTimerGui
         JPanel containerPanel = new VerticalPanel();
 
         containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
-        containerPanel.add(createChart(), BorderLayout.CENTER);
+        containerPanel.add(GuiBuilderHelper.getComponentWithMargin(createChart(), 2, 2, 0, 2), BorderLayout.CENTER);
         add(containerPanel, BorderLayout.CENTER);
     }
 
@@ -158,10 +158,19 @@ public class VariableThroughputTimerGui
             JMeterPluginsUtils.collectionPropertyToTableModelCols(columns, tableModel);
         }
         tableModel.addTableModelListener(this);
-        
-        VariableThroughputTimer utgForPreview = new VariableThroughputTimer();
-        utgForPreview.setData(JMeterPluginsUtils.tableModelRowsToCollectionPropertyEval(tableModel, VariableThroughputTimer.DATA_PROPERTY));
-        updateChart(utgForPreview);
+
+        updateUI();
+    }
+
+    @Override
+    public void updateUI() {
+        super.updateUI();
+
+        if (tableModel != null) {
+            VariableThroughputTimer utgForPreview = new VariableThroughputTimer();
+            utgForPreview.setData(JMeterPluginsUtils.tableModelRowsToCollectionPropertyEval(tableModel, VariableThroughputTimer.DATA_PROPERTY));
+            updateChart(utgForPreview);
+        }
     }
 
     private void updateChart(VariableThroughputTimer tg) {
@@ -180,9 +189,13 @@ public class VariableThroughputTimerGui
 
         int n = 0;
         int rps = 0;
+        int prevRPS = 0;
         while ((rps = tg.getRPSForSecond(n)) >= 0) {
-            row.add(now + n * 1000, rps);
-            log.debug("Rps " + rps);
+            if (rps != prevRPS) {
+                row.add(now + n * 1000, rps);
+                log.debug("Rps " + rps);
+                prevRPS = rps;
+            }
             n++;
         }
 
@@ -195,9 +208,10 @@ public class VariableThroughputTimerGui
         chart = new GraphPanelChart(false);
         model = new ConcurrentHashMap<String, AbstractGraphRow>();
         chart.setRows(model);
-        chart.setDrawFinalZeroingLines(true);
+        chart.getChartSettings().setDrawFinalZeroingLines(true);
         chart.setxAxisLabel("Elapsed Time");
         chart.setYAxisLabel("Number of requests /sec");
+        chart.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         return chart;
     }
 
@@ -209,7 +223,7 @@ public class VariableThroughputTimerGui
 
     @Override
     public void editingStopped(ChangeEvent e) {
-        GuiPackage.getInstance().updateCurrentGui();
+        updateUI();
     }
 
     @Override
@@ -226,6 +240,6 @@ public class VariableThroughputTimerGui
 
     @Override
     public void tableChanged(TableModelEvent e) {
-        GuiPackage.getInstance().updateCurrentGui();
+        updateUI();
     }
 }

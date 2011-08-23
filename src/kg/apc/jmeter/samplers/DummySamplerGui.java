@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;

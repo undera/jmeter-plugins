@@ -20,9 +20,9 @@ import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowSumValues;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
+import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
-import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
@@ -87,7 +87,7 @@ public class UltimateThreadGroupGui
         JPanel containerPanel = new VerticalPanel();
 
         containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
-        containerPanel.add(createChart(), BorderLayout.CENTER);
+        containerPanel.add(GuiBuilderHelper.getComponentWithMargin(createChart(), 2, 2, 0, 2), BorderLayout.CENTER);
         add(containerPanel, BorderLayout.CENTER);
 
         // this magic LoopPanel provides functionality for thread loops
@@ -117,6 +117,7 @@ public class UltimateThreadGroupGui
         return grid;
     }
 
+    @Override
     public String getLabelResource() {
         return this.getClass().getSimpleName();
     }
@@ -126,6 +127,7 @@ public class UltimateThreadGroupGui
         return JMeterPluginsUtils.prefixLabel("Ultimate Thread Group");
     }
 
+    @Override
     public TestElement createTestElement() {
         //log.info("Create test element");
         UltimateThreadGroup tg = new UltimateThreadGroup();
@@ -135,6 +137,7 @@ public class UltimateThreadGroupGui
         return tg;
     }
 
+    @Override
     public void modifyTestElement(TestElement tg) {
         //log.info("Modify test element");
         if (grid.isEditing()) {
@@ -248,9 +251,10 @@ public class UltimateThreadGroupGui
         chart = new GraphPanelChart(false);
         model = new ConcurrentHashMap<String, AbstractGraphRow>();
         chart.setRows(model);
-        chart.setDrawFinalZeroingLines(true);
+        chart.getChartSettings().setDrawFinalZeroingLines(true);
         chart.setxAxisLabel("Elapsed time");
         chart.setYAxisLabel("Number of active threads");
+        chart.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         return chart;
     }
 

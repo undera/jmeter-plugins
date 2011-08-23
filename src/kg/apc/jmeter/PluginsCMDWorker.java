@@ -231,22 +231,22 @@ public class PluginsCMDWorker {
         }
 
         if (gradient >= 0) {
-            graph.setSettingsDrawGradient(gradient > 0);
+            graph.getChartSettings().setDrawGradient(gradient > 0);
         }
         if (zeroing >= 0) {
-            graph.setSettingsDrawFinalZeroingLines(zeroing > 0);
+            graph.getChartSettings().setDrawFinalZeroingLines(zeroing > 0);
         }
         if (rowsLimit >= 0) {
-            graph.setMaxPoints(rowsLimit);
+            graph.getChartSettings().setMaxPointPerRow(rowsLimit);
         }
         if (preventOutliers >= 0) {
-            graph.setPreventXAxisOverScaling(preventOutliers > 0);
+            graph.getChartSettings().setPreventXAxisOverScaling(preventOutliers > 0);
         }
         if (lowCounts >= 0) {
-            graph.setSettingsHideNonRepValLimit(lowCounts);
+            graph.getChartSettings().setHideNonRepValLimit(lowCounts);
         }
         if (forceY >= 0) {
-            graph.setForcedMaxY(forceY);
+            graph.getChartSettings().setForcedMaxY(forceY);
         }
     }
 

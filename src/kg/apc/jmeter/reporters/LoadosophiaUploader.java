@@ -82,7 +82,15 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             dir += File.separator;
         }
 
-        File tmpFile = File.createTempFile(getFilePrefix() + "_", ".jtl", new File(dir));
+        File tmpFile;
+        try {
+            tmpFile = File.createTempFile(getFilePrefix() + "_", ".jtl", new File(dir));
+        } catch (IOException ex) {
+            informUser("Unable to create temp file: " + ex.getMessage());
+            informUser("Try to set another directory in the above field.");
+            throw ex;
+        }
+
         fileName = tmpFile.getAbsolutePath();
         tmpFile.delete(); // IMPORTANT! this is required to have CSV headers
         informUser("Storing results for upload to Loadosophia.org: " + fileName);

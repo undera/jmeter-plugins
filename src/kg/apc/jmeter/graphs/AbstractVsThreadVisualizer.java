@@ -18,11 +18,15 @@ public abstract class AbstractVsThreadVisualizer extends AbstractGraphPanelVisua
 
     public AbstractVsThreadVisualizer()
     {
-        graphPanel.getGraphObject().setDrawCurrentX(true);
         graphPanel.getGraphObject().setForcedMinX(0);
         graphPanel.getGraphObject().setxAxisLabel("Number of active threads");
     }
 
+   @Override
+    protected void setExtraChartSettings() {
+       graphPanel.getGraphObject().getChartSettings().initDrawCurrentX(true);
+    }
+   
     private void addCount(String tgName, int nbThread, long time)
     {
         AbstractGraphRow row = state.get(tgName);

@@ -22,7 +22,19 @@ public class DummySampler
 
     @Override
     public SampleResult sample(Entry e) {
-        SampleResult res = new DummySampleResult(getResponseTime());
+        SampleResult res;
+        if (isSimulateWaiting()) {
+            res = new SampleResult();
+            res.sampleStart();
+            try {
+                Thread.sleep(getResponseTime());
+            } catch (InterruptedException ex) {
+            }
+            res.sampleEnd();
+        } else {
+            res = new SampleResult(System.currentTimeMillis(), getResponseTime());
+        }
+
         res.setSampleLabel(getName());
 
         // source data
@@ -38,13 +50,6 @@ public class DummySampler
         res.setResponseData(getResponseData().getBytes());
 
         res.setLatency(getLatency());
-
-        if (isSimulateWaiting()) {
-            try {
-                Thread.sleep(getResponseTime());
-            } catch (InterruptedException ex) {
-            }
-        }
 
         return res;
     }

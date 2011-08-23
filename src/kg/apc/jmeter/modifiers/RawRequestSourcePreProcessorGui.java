@@ -111,16 +111,18 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Variable name: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 2, variableName = new JTextField(20));
 
-        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 2);
+        editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 2);
 
         addToPanel(mainPanel, labelConstraints, 0, 3, checkButton = new JButton("Check File Consistency"));
 
-        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
         checkInfo = new JTextArea();
-        addToPanel(mainPanel, editConstraints, 1, 3, GuiBuilderHelper.getTextAreaScrollPaneContainer(checkInfo, 3));
+        addToPanel(mainPanel, editConstraints, 1, 3, GuiBuilderHelper.getTextAreaScrollPaneContainer(checkInfo, 10));
         checkButton.addActionListener(new CheckConsistencyAction(fileName, checkInfo));
         checkInfo.setEditable(false);
+        checkInfo.setOpaque(false);
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

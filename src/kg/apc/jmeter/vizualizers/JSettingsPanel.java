@@ -108,12 +108,12 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         originalTooltipDisplayTime = ToolTipManager.sharedInstance().getDismissDelay();
 
         //init default values from global config
-        jCheckBoxPaintGradient.setSelected(parent.getGraphPanelChart().isSettingsDrawGradient());
-        jCheckBoxDrawCurrentX.setSelected(parent.getGraphPanelChart().isSettingsDrawCurrentX());
-        jCheckBoxRelativeTime.setSelected(parent.getGraphPanelChart().isUseRelativeTime());
+        jCheckBoxPaintGradient.setSelected(parent.getGraphPanelChart().getChartSettings().isDrawGradient());
+        jCheckBoxDrawCurrentX.setSelected(parent.getGraphPanelChart().getChartSettings().isDrawCurrentX());
+        jCheckBoxRelativeTime.setSelected(parent.getGraphPanelChart().getChartSettings().isUseRelativeTime());
         if (showFinalZeroingLinesOption)
         {
-            jCheckBoxDrawFinalZeroingLines.setSelected(parent.getGraphPanelChart().isSettingsDrawFinalZeroingLines());
+            jCheckBoxDrawFinalZeroingLines.setSelected(parent.getGraphPanelChart().getChartSettings().isDrawFinalZeroingLines());
         }
 
         jCheckBoxLimitMaxXValue.setVisible(showBarChartXAxisLimit);
@@ -570,19 +570,19 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
     private void jCheckBoxPaintGradientActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxPaintGradientActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxPaintGradientActionPerformed
-        parent.getGraphPanelChart().setSettingsDrawGradient(jCheckBoxPaintGradient.isSelected());
+        parent.getGraphPanelChart().getChartSettings().setDrawGradient(jCheckBoxPaintGradient.isSelected());
         refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxPaintGradientActionPerformed
 
     private void jCheckBoxDrawFinalZeroingLinesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxDrawFinalZeroingLinesActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxDrawFinalZeroingLinesActionPerformed
-        parent.getGraphPanelChart().setSettingsDrawFinalZeroingLines(jCheckBoxDrawFinalZeroingLines.isSelected());
+        parent.getGraphPanelChart().getChartSettings().setDrawFinalZeroingLines(jCheckBoxDrawFinalZeroingLines.isSelected());
         refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxDrawFinalZeroingLinesActionPerformed
 
     private void jCheckBoxDrawCurrentXActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxDrawCurrentXActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxDrawCurrentXActionPerformed
-        parent.getGraphPanelChart().setSettingsDrawCurrentX(jCheckBoxDrawCurrentX.isSelected());
+        parent.getGraphPanelChart().getChartSettings().setDrawCurrentX(jCheckBoxDrawCurrentX.isSelected());
         refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxDrawCurrentXActionPerformed
 
@@ -590,10 +590,10 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     {//GEN-HEADEREND:event_jCheckBoxMaxPointsActionPerformed
         if (jCheckBoxMaxPoints.isSelected())
         {
-            parent.getGraphPanelChart().setMaxPoints(getValueFromString((String) jComboBoxMaxPoints.getSelectedItem()));
+            parent.getGraphPanelChart().getChartSettings().setMaxPointPerRow(getValueFromString((String) jComboBoxMaxPoints.getSelectedItem()));
         } else
         {
-            parent.getGraphPanelChart().setMaxPoints(-1);
+            parent.getGraphPanelChart().getChartSettings().setMaxPointPerRow(-1);
         }
         refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxMaxPointsActionPerformed
@@ -602,7 +602,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     {//GEN-HEADEREND:event_jComboBoxMaxPointsActionPerformed
         if (jCheckBoxMaxPoints.isSelected())
         {
-            parent.getGraphPanelChart().setMaxPoints(getValueFromString((String) jComboBoxMaxPoints.getSelectedItem()));
+            parent.getGraphPanelChart().getChartSettings().setMaxPointPerRow(getValueFromString((String) jComboBoxMaxPoints.getSelectedItem()));
         }
         refreshGraphPreview();
     }//GEN-LAST:event_jComboBoxMaxPointsActionPerformed
@@ -620,7 +620,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
     private void jCheckBoxLimitMaxXValueActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxLimitMaxXValueActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxLimitMaxXValueActionPerformed
-        parent.getGraphPanelChart().setPreventXAxisOverScaling(jCheckBoxLimitMaxXValue.isSelected());
+        parent.getGraphPanelChart().getChartSettings().setPreventXAxisOverScaling(jCheckBoxLimitMaxXValue.isSelected());
         refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxLimitMaxXValueActionPerformed
 
@@ -628,10 +628,10 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     {//GEN-HEADEREND:event_jCheckBoxHideNonRepValuesActionPerformed
         if (jCheckBoxHideNonRepValues.isSelected())
         {
-            parent.getGraphPanelChart().setSettingsHideNonRepValLimit(getValueFromString((String) jComboBoxHideNonRepValLimit.getSelectedItem()));
+            parent.getGraphPanelChart().getChartSettings().setHideNonRepValLimit(getValueFromString((String) jComboBoxHideNonRepValLimit.getSelectedItem()));
         } else
         {
-            parent.getGraphPanelChart().setSettingsHideNonRepValLimit(-1);
+            parent.getGraphPanelChart().getChartSettings().setHideNonRepValLimit(-1);
         }
         refreshGraphPreview();
     }//GEN-LAST:event_jCheckBoxHideNonRepValuesActionPerformed
@@ -640,7 +640,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     {//GEN-HEADEREND:event_jComboBoxHideNonRepValLimitActionPerformed
         if (jCheckBoxHideNonRepValues.isSelected())
         {
-            parent.getGraphPanelChart().setSettingsHideNonRepValLimit(getValueFromString((String) jComboBoxHideNonRepValLimit.getSelectedItem()));
+            parent.getGraphPanelChart().getChartSettings().setHideNonRepValLimit(getValueFromString((String) jComboBoxHideNonRepValLimit.getSelectedItem()));
         }
         refreshGraphPreview();
     }//GEN-LAST:event_jComboBoxHideNonRepValLimitActionPerformed
@@ -678,7 +678,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     private void jCheckBoxMaxYActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jCheckBoxMaxYActionPerformed
     {//GEN-HEADEREND:event_jCheckBoxMaxYActionPerformed
         long value = getLongValue(jTextFieldMaxY.getText());
-        long oldValue = parent.getGraphPanelChart().getForcedMaxY();
+        long oldValue = parent.getGraphPanelChart().getChartSettings().getForcedMaxY();
         if (value == -1)
         {
             jTextFieldMaxY.setForeground(Color.red);
@@ -689,14 +689,14 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
         if (jCheckBoxMaxY.isSelected())
         {
-            parent.getGraphPanelChart().setForcedMaxY(value);
+            parent.getGraphPanelChart().getChartSettings().setForcedMaxY(value);
             if (oldValue != value)
             {
                 refreshGraphPreview();
             }
         } else
         {
-            parent.getGraphPanelChart().setForcedMaxY(-1);
+            parent.getGraphPanelChart().getChartSettings().setForcedMaxY(-1);
             if (oldValue != -1)
             {
                 refreshGraphPreview();

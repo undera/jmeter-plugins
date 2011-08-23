@@ -1,4 +1,4 @@
-// TODO: add startTimeSec - integer epoch seconds only
+// TODO: add startTimeSec - integer epoch seconds only - why startTime does not apply?
 // TODO: buffer file writes to bigger chunks?
 package kg.apc.jmeter.reporters;
 

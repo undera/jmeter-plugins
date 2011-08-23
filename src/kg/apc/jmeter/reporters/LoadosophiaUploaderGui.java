@@ -122,11 +122,13 @@ public class LoadosophiaUploaderGui
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Upload Token: ", JLabel.RIGHT));
 
         uploadToken = new JTextArea();
+        uploadToken.setLineWrap(true);
         addToPanel(mainPanel, editConstraints, 1, 3, GuiBuilderHelper.getTextAreaScrollPaneContainer(uploadToken, 6));
 
         addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Info Area: ", JLabel.RIGHT));
         infoArea = new JTextArea();
         infoArea.setEditable(false);
+        infoArea.setOpaque(false);
         
         addToPanel(mainPanel, editConstraints, 1, 4, GuiBuilderHelper.getTextAreaScrollPaneContainer(infoArea, 6));
 

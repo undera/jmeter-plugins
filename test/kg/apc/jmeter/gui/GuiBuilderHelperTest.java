@@ -1,7 +1,9 @@
 package kg.apc.jmeter.gui;
 
+import java.awt.Component;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -58,6 +60,21 @@ public class GuiBuilderHelperTest {
       JButton button = new JButton();
       GuiBuilderHelper.strechButtonToComponent(component, button);
       assertTrue(component.getHeight() == button.getHeight());
+   }
+
+   /**
+    * Test of getComponentWithMargin method, of class GuiBuilderHelper.
+    */
+   @Test
+   public void testGetComponentWithMargin() {
+      System.out.println("getComponentWithMargin");
+      Component component = new JTextField("test");
+      int top = 1;
+      int left = 2;
+      int bottom = 3;
+      int right = 4;
+      JPanel result = GuiBuilderHelper.getComponentWithMargin(component, top, left, bottom, right);
+      assertTrue(component.getParent().equals(result));
    }
 
 }

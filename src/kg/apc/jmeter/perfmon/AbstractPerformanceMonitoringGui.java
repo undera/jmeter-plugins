@@ -352,7 +352,7 @@ public abstract class AbstractPerformanceMonitoringGui extends AbstractListenerG
                 relativeStartTime = time;
             }
 
-            if (graphPanel.getGraphObject().isUseRelativeTime()) {
+            if (graphPanel.getGraphObject().getChartSettings().isUseRelativeTime()) {
                 graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, relativeStartTime));
             }
             graphPanel.getGraphObject().setTestStartTime(relativeStartTime);

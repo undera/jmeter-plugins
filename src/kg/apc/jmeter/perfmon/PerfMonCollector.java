@@ -9,6 +9,7 @@ import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -20,6 +21,7 @@ public class PerfMonCollector
         extends ResultCollector
         implements Runnable {
 
+    private static boolean translateHostName = false;
     private static final long MEGABYTE = 1024L * 1024L;
     private static final String PERFMON = "PerfMon";
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -27,6 +29,13 @@ public class PerfMonCollector
     private Thread workerThread;
     private AgentConnector[] connectors = null;
     private HashMap<String, Long> oldValues = new HashMap<String, Long>();
+
+    static {
+       String cfgTranslateHostName = JMeterUtils.getProperty("jmeterPlugin.perfmon.translateHostName");
+        if (cfgTranslateHostName != null) {
+            translateHostName = "true".equalsIgnoreCase(cfgTranslateHostName.trim());
+        }
+    }
 
     public void setData(CollectionProperty rows) {
         setProperty(rows);
@@ -129,11 +138,15 @@ public class PerfMonCollector
 
     private void processConnectors() {
         String label;
-        boolean cnxLost;
         for (int i = 0; i < connectors.length; i++) {
-            cnxLost = false;
             if (connectors[i] != null) {
-                label = connectors[i].getHost() + " - " + AgentConnector.metrics.get(connectors[i].getMetricType());
+                String hostName;
+                if(PerfMonCollector.translateHostName) {
+                   hostName = connectors[i].getRemoteServerName();
+                } else {
+                   hostName = connectors[i].getHost();
+                }
+                label = hostName + " - " + AgentConnector.metrics.get(connectors[i].getMetricType());
 
                 try {
                    switch (connectors[i].getMetricType()) {
@@ -150,7 +163,7 @@ public class PerfMonCollector
                            generate2Samples(connectors[i].getDisksIO(), label + " reads", label + " writes");
                            break;
                        case AgentConnector.PERFMON_NETWORKS_IO:
-                           generate2Samples(connectors[i].getNetIO(), label + " recv, KB", label + " sent, KB");
+                           generate2Samples(connectors[i].getNetIO(), label + " recv, KB", label + " sent, KB", 1024d);
                            break;
                        default:
                            log.error("Unknown metric index: " + connectors[i].getMetricType());
@@ -188,11 +201,15 @@ public class PerfMonCollector
         System.out.println("Perfmon plugin error: " + errorMsg);
     }
 
-    //here long precision is enough as monitored values are counts
     private void generate2Samples(long[] values, String label1, String label2) {
+        generate2Samples(values, label1, label2, 1d);
+    }
+
+    //float precision required for net io
+    private void generate2Samples(long[] values, String label1, String label2, double dividingFactor) {
         if (oldValues.containsKey(label1) && oldValues.containsKey(label2)) {
-            generateSample(values[0] - oldValues.get(label1).longValue(), label1);
-            generateSample(values[1] - oldValues.get(label2).longValue(), label2);
+            generateSample(((double)(values[0] - oldValues.get(label1).longValue()))/dividingFactor, label1);
+            generateSample(((double)(values[1] - oldValues.get(label2).longValue()))/dividingFactor, label2);
         }
         oldValues.put(label1, new Long(values[0]));
         oldValues.put(label2, new Long(values[1]));

@@ -3,24 +3,24 @@ package kg.apc.jmeter.threads;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import kg.apc.jmeter.JMeterPluginsUtils;
 
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowSumValues;
 import kg.apc.charting.DateTimeRenderer;
+import kg.apc.jmeter.gui.GuiBuilderHelper;
 
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.engine.util.CompoundVariable;
-import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
@@ -36,7 +36,7 @@ import org.apache.log.Logger;
 public class SteppingThreadGroupGui
         extends AbstractThreadGroupGui {
 
-    private class FieldChangesListener implements KeyListener {
+    private class FieldChangesListener implements DocumentListener {
 
         private final JTextField tf;
 
@@ -45,22 +45,25 @@ public class SteppingThreadGroupGui
         }
 
         private void update() {
-            GuiPackage.getInstance().updateCurrentGui();
+            refreshPreview();
         }
 
         @Override
-        public void keyTyped(KeyEvent ke) {
+        public void insertUpdate(DocumentEvent e) {
+           if(tf.hasFocus()) update();
+        }
+        
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+           if(tf.hasFocus()) update();
         }
 
         @Override
-        public void keyPressed(KeyEvent ke) {
-        }
-
-        @Override
-        public void keyReleased(KeyEvent ke) {
-            update();
+        public void changedUpdate(DocumentEvent e) {
+           if(tf.hasFocus()) update();
         }
     }
+
     public static final String WIKIPAGE = "SteppingThreadGroup";
     /**
      *
@@ -96,12 +99,14 @@ public class SteppingThreadGroupGui
         chart = new GraphPanelChart(false);
         model = new ConcurrentHashMap<String, AbstractGraphRow>();
         chart.setRows(model);
-        chart.setDrawFinalZeroingLines(true);
+        chart.getChartSettings().setDrawFinalZeroingLines(true);
 
         chart.setxAxisLabel("Elapsed time");
         chart.setYAxisLabel("Number of active threads");
 
-        containerPanel.add(chart, BorderLayout.CENTER);
+        chart.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        containerPanel.add(GuiBuilderHelper.getComponentWithMargin(chart, 2, 2, 0, 2), BorderLayout.CENTER);
 
         add(containerPanel, BorderLayout.CENTER);
 
@@ -205,10 +210,7 @@ public class SteppingThreadGroupGui
         return tg;
     }
 
-    @Override
-    public void modifyTestElement(TestElement te) {
-        super.configureTestElement(te);
-
+    private void refreshPreview() {
         SteppingThreadGroup tgForPreview = new SteppingThreadGroup();
         tgForPreview.setNumThreads(new CompoundVariable(totalThreads.getText()).execute());
         tgForPreview.setThreadGroupDelay(new CompoundVariable(initialDelay.getText()).execute());
@@ -218,6 +220,13 @@ public class SteppingThreadGroupGui
         tgForPreview.setOutUserPeriod(new CompoundVariable(decUserPeriod.getText()).execute());
         tgForPreview.setFlightTime(new CompoundVariable(flightTime.getText()).execute());
         tgForPreview.setRampUp(new CompoundVariable(rampUp.getText()).execute());
+
+        updateChart(tgForPreview);
+    }
+
+    @Override
+    public void modifyTestElement(TestElement te) {
+        super.configureTestElement(te);
 
         if (te instanceof SteppingThreadGroup) {
             SteppingThreadGroup tg = (SteppingThreadGroup) te;
@@ -229,8 +238,9 @@ public class SteppingThreadGroupGui
             tg.setOutUserPeriod(decUserPeriod.getText());
             tg.setFlightTime(flightTime.getText());
             tg.setRampUp(rampUp.getText());
-            updateChart(tgForPreview);
             ((AbstractThreadGroup) tg).setSamplerController((LoopController) loopPanel.createTestElement());
+
+            refreshPreview();
         }
     }
 
@@ -307,6 +317,6 @@ public class SteppingThreadGroupGui
 
     private void registerJTextfieldForGraphRefresh(final JTextField tf) {
         tf.addActionListener(loopPanel);
-        tf.addKeyListener(new FieldChangesListener(tf));
+        tf.getDocument().addDocumentListener(new FieldChangesListener(tf));
     }
 }

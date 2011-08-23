@@ -69,9 +69,8 @@ public class GraphPanelChartTest {
         Graphics g = new TestGraphics();
         GraphPanelChart instance = new GraphPanelChart();
         instance.setSize(500, 500);
-        instance.setDrawFinalZeroingLines(true);
-        instance.setDrawCurrentX(true);
-        instance.setDrawCurrentX(true);
+        instance.getChartSettings().setDrawFinalZeroingLines(true);
+        instance.getChartSettings().setDrawCurrentX(true);
         instance.setExpendRows(true);
 
         final ConcurrentSkipListMap<String, AbstractGraphRow> rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
@@ -104,7 +103,7 @@ public class GraphPanelChartTest {
         Graphics g = new TestGraphics();
         GraphPanelChart instance = new GraphPanelChart();
         instance.setSize(500, 500);
-        instance.setDrawFinalZeroingLines(false);
+        instance.getChartSettings().setDrawFinalZeroingLines(false);
 
         final ConcurrentSkipListMap<String, AbstractGraphRow> rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         instance.setRows(rows);
@@ -142,28 +141,6 @@ public class GraphPanelChartTest {
         NumberRenderer xAxisLabelRenderer = null;
         GraphPanelChart instance = new GraphPanelChart();
         instance.setxAxisLabelRenderer(xAxisLabelRenderer);
-    }
-
-    /**
-     * Test of setDrawFinalZeroingLines method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetDrawFinalZeroingLines() {
-        System.out.println("setDrawFinalZeroingLines");
-        boolean drawFinalZeroingLines = false;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setDrawFinalZeroingLines(drawFinalZeroingLines);
-    }
-
-    /**
-     * Test of setDrawCurrentX method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetDrawCurrentX() {
-        System.out.println("setDrawCurrentX");
-        boolean drawCurrentX = false;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setDrawCurrentX(drawCurrentX);
     }
 
     /**
@@ -234,104 +211,6 @@ public class GraphPanelChartTest {
         int type = GraphPanelChart.CHART_PERCENTAGE;
         GraphPanelChart instance = new GraphPanelChart();
         instance.setChartType(type);
-    }
-
-    @Test
-    public void testSetMaxPoints() {
-        System.out.println("setMaxPoints");
-        int maxPoints = 0;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setMaxPoints(maxPoints);
-    }
-
-    /**
-     * Test of setSettingsDrawCurrentX method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetSettingsDrawCurrentX() {
-        System.out.println("setSettingsDrawCurrentX");
-        boolean settingsDrawCurrentX = false;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setSettingsDrawCurrentX(settingsDrawCurrentX);
-    }
-
-    /**
-     * Test of setSettingsDrawnalZeroingLines method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetSettingsDrawFinalZeroingLines() {
-        System.out.println("setSettingsDrawFinalZeroingLines");
-        boolean settingsDrawFinalZeroingLines = false;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setSettingsDrawFinalZeroingLines(settingsDrawFinalZeroingLines);
-    }
-
-    /**
-     * Test of setSettingsDrawGradient method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetSettingsDrawGradient() {
-        System.out.println("setSettingsDrawGradient");
-        boolean settingsDrawGradient = false;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setSettingsDrawGradient(settingsDrawGradient);
-    }
-
-    /**
-     * Test of isSettingsDrawCurrentX method, of class GraphPanelChart.
-     */
-    @Test
-    public void testIsSettingsDrawCurrentX() {
-        System.out.println("isSettingsDrawCurrentX");
-        GraphPanelChart instance = new GraphPanelChart();
-        boolean expResult = true;
-        boolean result = instance.isSettingsDrawCurrentX();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of isSettingsDrawGradient method, of class GraphPanelChart.
-     */
-    @Test
-    public void testIsSettingsDrawGradient() {
-        System.out.println("isSettingsDrawGradient");
-        GraphPanelChart instance = new GraphPanelChart();
-        boolean expResult = true;
-        boolean result = instance.isSettingsDrawGradient();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of isGlobalDrawFinalZeroingLines method, of class GraphPanelChart.
-     */
-    @Test
-    public void testIsGlobalDrawFinalZeroingLines() {
-        System.out.println("isGlobalDrawFinalZeroingLines");
-        boolean expResult = false;
-        boolean result = new GraphPanelChart().isSettingsDrawFinalZeroingLines();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setSettingsHideNonRepValLimit method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetSettingsHideNonRepValLimit() {
-        System.out.println("setSettingsHideNonRepValLimit");
-        int limit = 5;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setSettingsHideNonRepValLimit(limit);
-    }
-
-    /**
-     * Test of setPreventXAxisOverScaling method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetPreventXAxisOverScaling() {
-        System.out.println("setPreventXAxisOverScaling");
-        boolean preventXAxisOverScaling = true;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setPreventXAxisOverScaling(preventXAxisOverScaling);
     }
 
     /**
@@ -446,16 +325,6 @@ public class GraphPanelChartTest {
         instance.setUseRelativeTime(selected);
     }
 
-    @Test
-    public void testIsUseRelativeTime() {
-        System.out.println("isUseRelativeTime");
-        GraphPanelChart instance = new GraphPanelChart();
-        //default value is true
-        boolean expResult = true;
-        boolean result = instance.isUseRelativeTime();
-        assertEquals(expResult, result);
-    }
-
     /**
      * Test of setTestStartTime method, of class GraphPanelChart.
      */
@@ -465,29 +334,6 @@ public class GraphPanelChartTest {
         long time = System.currentTimeMillis();
         GraphPanelChart instance = new GraphPanelChart();
         instance.setTestStartTime(time);
-    }
-
-    /**
-     * Test of setForcedMaxY method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetForcedMaxY() {
-        System.out.println("setForcedMaxY");
-        long forcedMaxY = 0L;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setForcedMaxY(forcedMaxY);
-    }
-
-    /**
-     * Test of getForcedMaxY method, of class GraphPanelChart.
-     */
-    @Test
-    public void testGetForcedMaxY() {
-        System.out.println("getForcedMaxY");
-        GraphPanelChart instance = new GraphPanelChart();
-        long expResult = -1L;
-        long result = instance.getForcedMaxY();
-        assertEquals(expResult, result);
     }
 
     /**
@@ -525,40 +371,4 @@ public class GraphPanelChartTest {
       GraphPanelChart instance = new GraphPanelChart();
       instance.setYAxisLabel(yAxisLabel);
    }
-
-   @Test
-   public void testSetCsvSeparator() {
-      System.out.println("setCsvSeparator");
-      String csvSeparator = "";
-      GraphPanelChart instance = new GraphPanelChart();
-      instance.setCsvSeparator(csvSeparator);
-   }
-
-   @Test
-   public void testSetOptimizeYAxis() {
-      System.out.println("setOptimizeYAxis");
-      boolean flag = false;
-      GraphPanelChart instance = new GraphPanelChart();
-      instance.setOptimizeYAxis(flag);
-   }
-
-   @Test
-   public void testIsSettingsDrawFinalZeroingLines() {
-      System.out.println("isSettingsDrawFinalZeroingLines");
-      GraphPanelChart instance = new GraphPanelChart();
-      boolean expResult = false;
-      boolean result = instance.isSettingsDrawFinalZeroingLines();
-      assertEquals(expResult, result);
-   }
-
-    /**
-     * Test of setRelativeTimeInitValue method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetRelativeTimeInitValue() {
-        System.out.println("setRelativeTimeInitValue");
-        boolean isUseRelTime = true;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setRelativeTimeInitValue(isUseRelTime);
-    }
 }

@@ -6,12 +6,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.samplers.SampleResult;
@@ -33,6 +35,7 @@ public class LoadosophiaUploaderGui
     private JTextField projectKey;
     private JTextArea infoArea;
     private JTextField storeDir;
+    private JButton browseButton;
 
     public LoadosophiaUploaderGui() {
         super();
@@ -110,6 +113,10 @@ public class LoadosophiaUploaderGui
 
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Directory to store data for upload: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 1, storeDir = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
+
+        GuiBuilderHelper.strechButtonToComponent(storeDir, browseButton);
+        browseButton.addActionListener(new BrowseAction(storeDir, true));
 
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Filename Prefix: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 2, filePrefix = new JTextField(20));

@@ -2,34 +2,41 @@ package kg.apc.jmeter.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
-import org.apache.jmeter.gui.util.FileDialoger;
+import org.apache.jmeter.gui.GuiPackage;
 
 public class BrowseAction implements ActionListener {
 
     private final JTextField control;
+    private boolean isDirectoryBrowse = false;
+    private String lastPath = ".";
 
     public BrowseAction(JTextField filename) {
         control = filename;
     }
 
+    public BrowseAction(JTextField filename, boolean isDirectoryBrowse) {
+        control = filename;
+        this.isDirectoryBrowse = isDirectoryBrowse;
+    }
+
+   @Override
     public void actionPerformed(ActionEvent e) {
-        String path = "";
         JFileChooser chooser = getFileChooser();
         if (chooser != null) {
-            //File f=new File(control.getText());
-            //chooser.setSelectedFile(f);
-            File file = chooser.getSelectedFile();
-            if (file != null) {
-                path = file.getPath();
-                control.setText(path);
+            int returnVal = chooser.showOpenDialog(GuiPackage.getInstance().getMainFrame());
+            if(returnVal == JFileChooser.APPROVE_OPTION) {
+               control.setText(chooser.getSelectedFile().getPath());
             }
+            lastPath = chooser.getCurrentDirectory().getPath();
         }
     }
 
     protected JFileChooser getFileChooser() {
-        return FileDialoger.promptToOpenFile();
+        JFileChooser ret = new JFileChooser(lastPath);
+        if(isDirectoryBrowse) ret.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        return ret;
     }
 }

@@ -264,30 +264,28 @@ public class ChartSettingsTest {
    @Test
    public void testSetForcedMaxY() {
       System.out.println("setForcedMaxY");
-      long forcedMaxY = 0L;
+      long forcedMaxY = 100L;
       ChartSettings instance = new ChartSettings();
       instance.setForcedMaxY(forcedMaxY);
    }
 
    /**
-    * Test of initDrawFinalZeroingLines method, of class ChartSettings.
+    * Test of enableDrawFinalZeroingLines method, of class ChartSettings.
     */
    @Test
-   public void testInitDrawFinalZeroingLines() {
-      System.out.println("initDrawFinalZeroingLines");
-      boolean draw = false;
+   public void testEnableDrawFinalZeroingLines() {
+      System.out.println("enableDrawFinalZeroingLines");
       ChartSettings instance = new ChartSettings();
-      instance.initDrawFinalZeroingLines(draw);
+      instance.enableDrawFinalZeroingLines();
    }
 
    /**
-    * Test of initDrawCurrentX method, of class ChartSettings.
+    * Test of enableDrawCurrentX method, of class ChartSettings.
     */
    @Test
-   public void testInitDrawCurrentX() {
-      System.out.println("initDrawCurrentX");
-      boolean draw = false;
+   public void testEnableDrawCurrentX() {
+      System.out.println("enableDrawCurrentX");
       ChartSettings instance = new ChartSettings();
-      instance.initDrawCurrentX(draw);
+      instance.enableDrawCurrentX();
    }
 }

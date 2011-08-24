@@ -32,7 +32,7 @@ public class ThreadsStateOverTimeGui
 
    @Override
     protected void setExtraChartSettings() {
-       graphPanel.getGraphObject().getChartSettings().initDrawFinalZeroingLines(true);
+       graphPanel.getGraphObject().getChartSettings().enableDrawFinalZeroingLines();
    }
 
     private double getAllThreadCount(long time) {

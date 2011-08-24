@@ -132,11 +132,11 @@ public class ChartSettings {
    }
    
    // initialisation
-   public void initDrawFinalZeroingLines(boolean draw) {
-      drawFinalZeroingLines = draw && !configNeverDrawFinalZeroingLines;
+   public void enableDrawFinalZeroingLines() {
+      drawFinalZeroingLines = !configNeverDrawFinalZeroingLines;
    }
 
-   public void initDrawCurrentX(boolean draw) {
-      drawCurrentX = draw && !configNeverDrawCurrentX;
+   public void enableDrawCurrentX() {
+      drawCurrentX = !configNeverDrawCurrentX;
    }
 }

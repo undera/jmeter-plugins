@@ -24,7 +24,7 @@ public abstract class AbstractVsThreadVisualizer extends AbstractGraphPanelVisua
 
    @Override
     protected void setExtraChartSettings() {
-       graphPanel.getGraphObject().getChartSettings().initDrawCurrentX(true);
+       graphPanel.getGraphObject().getChartSettings().enableDrawCurrentX();
     }
    
     private void addCount(String tgName, int nbThread, long time)

@@ -19,7 +19,7 @@ public class PerfMonSampleResult
 
     // storing as latency, multiply by 1000 to keep floating precision
     public void setValue(double value) {
-        setStampAndTime(ts, (int) (value * 1000));
+        setStampAndTime(ts, (long) (value * 1000));
         //setEndTime(ts + (int) (value * 1000));
     }
 

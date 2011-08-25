@@ -314,7 +314,7 @@ public class GraphPanelChart
 
         Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
         Entry<String, AbstractGraphRow> row = null;
-        AbstractGraphRow rowValue;
+        AbstractGraphRow rowValue = null;
         int barValue = 0;
         while (it.hasNext()) {
             row = it.next();
@@ -363,10 +363,19 @@ public class GraphPanelChart
             minXVal = forcedMinX;
         }
 
-        //prevent Y axis not initialized in case of no row displayed
-        if (minYVal == Double.MAX_VALUE || maxYVal == 0L) {
+        //prevent X and Y axis not initialized in case of no row displayed
+        if (maxXVal == 0L ||
+            maxYVal == 0L ||
+            minXVal == Long.MAX_VALUE ||
+            minYVal == Double.MAX_VALUE) {
+
             minYVal = 0;
             maxYVal = 10;
+            //we take last known row to get x range
+            if(rowValue != null) {
+               maxXVal = rowValue.getMaxX();
+               minXVal = rowValue.getMinX();
+            }
         } else if (chartSettings.isConfigOptimizeYAxis()) {
             computeChartSteps();
         } else {

@@ -75,7 +75,8 @@ public class HitsPerSecondGui
                 JSettingsPanel.GRADIENT_OPTION |
                 JSettingsPanel.FINAL_ZEROING_OPTION |
                 JSettingsPanel.LIMIT_POINT_OPTION |
-                JSettingsPanel.RELATIVE_TIME_OPTION);
+                JSettingsPanel.RELATIVE_TIME_OPTION |
+                JSettingsPanel.MAXY_OPTION);
     }
 
     @Override

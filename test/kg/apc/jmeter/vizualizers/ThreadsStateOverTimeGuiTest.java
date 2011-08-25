@@ -196,7 +196,6 @@ public class ThreadsStateOverTimeGuiTest
         System.out.println("setExtraChartSettings");
         ThreadsStateOverTimeGui instance = new ThreadsStateOverTimeGui();
         instance.setExtraChartSettings();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.getGraphPanelChart().getChartSettings().isDrawFinalZeroingLines());
     }
 }

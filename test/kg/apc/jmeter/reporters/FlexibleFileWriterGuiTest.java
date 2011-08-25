@@ -112,8 +112,6 @@ public class FlexibleFileWriterGuiTest {
         Transferable contents = null;
         FlexibleFileWriterGui instance = new FlexibleFileWriterGui();
         instance.lostOwnership(clipboard, contents);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

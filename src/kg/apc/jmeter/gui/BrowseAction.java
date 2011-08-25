@@ -25,11 +25,13 @@ public class BrowseAction implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JFileChooser chooser = getFileChooser();
         if (chooser != null) {
-            int returnVal = chooser.showOpenDialog(GuiPackage.getInstance().getMainFrame());
-            if(returnVal == JFileChooser.APPROVE_OPTION) {
-               control.setText(chooser.getSelectedFile().getPath());
+            if(GuiPackage.getInstance() != null) {
+                int returnVal = chooser.showOpenDialog(GuiPackage.getInstance().getMainFrame());
+                if(returnVal == JFileChooser.APPROVE_OPTION) {
+                   control.setText(chooser.getSelectedFile().getPath());
+                }
+                lastPath = chooser.getCurrentDirectory().getPath();
             }
-            lastPath = chooser.getCurrentDirectory().getPath();
         }
     }
 

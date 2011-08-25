@@ -115,8 +115,7 @@ public class AbstractVsThreadVisualizerTest {
         System.out.println("setExtraChartSettings");
         AbstractVsThreadVisualizer instance = new AbstractVsThreadVisualizerImpl();
         instance.setExtraChartSettings();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(instance.getGraphPanelChart().getChartSettings().isDrawCurrentX());
     }
 
 }

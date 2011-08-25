@@ -361,4 +361,16 @@ public class AbstractGraphPanelVisualizerTest
         JPanel result = instance.getGraphPanelContainer();
         assertNotNull(result);
     }
+
+    /**
+     * Test of setExtraChartSettings method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testSetExtraChartSettings() {
+        System.out.println("setExtraChartSettings");
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        instance.setExtraChartSettings();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

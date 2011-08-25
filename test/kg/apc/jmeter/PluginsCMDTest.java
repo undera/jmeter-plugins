@@ -3,6 +3,8 @@ package kg.apc.jmeter;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ListIterator;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
@@ -108,5 +110,48 @@ public class PluginsCMDTest {
             fail("HitsPerSec don't handle aggregates");
         } catch (UnsupportedOperationException e) {
         }
+    }
+
+    /**
+     * Test of processParams method, of class PluginsCMD.
+     */
+    @Test
+    public void testProcessParams_StringArr() {
+        System.out.println("processParams");
+        String[] args = null;
+        PluginsCMD instance = new PluginsCMD();
+        int expResult = 0;
+        int result = instance.processParams(args);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of processParams method, of class PluginsCMD.
+     */
+    @Test
+    public void testProcessParams_ListIterator() {
+        System.out.println("processParams");
+        ListIterator<String> args = null;
+        PluginsCMD instance = new PluginsCMD();
+        int expResult = 0;
+        int result = instance.processParams(args);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of showHelp method, of class PluginsCMD.
+     */
+    @Test
+    public void testShowHelp() {
+        System.out.println("showHelp");
+        PrintStream os = null;
+        PluginsCMD instance = new PluginsCMD();
+        instance.showHelp(os);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

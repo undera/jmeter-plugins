@@ -186,4 +186,16 @@ public class VariableThroughputTimerGuiTest {
         VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
         instance.tableChanged(e);
     }
+
+    /**
+     * Test of updateUI method, of class VariableThroughputTimerGui.
+     */
+    @Test
+    public void testUpdateUI() {
+        System.out.println("updateUI");
+        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
+        instance.updateUI();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

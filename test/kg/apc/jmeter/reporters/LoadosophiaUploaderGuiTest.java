@@ -1,5 +1,6 @@
 package kg.apc.jmeter.reporters;
 
+import java.awt.Component;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
@@ -143,5 +144,19 @@ public class LoadosophiaUploaderGuiTest {
         boolean expResult = false;
         boolean result = instance.isStats();
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getFilePanel method, of class LoadosophiaUploaderGui.
+     */
+    @Test
+    public void testGetFilePanel() {
+        System.out.println("getFilePanel");
+        LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
+        Component expResult = null;
+        Component result = instance.getFilePanel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

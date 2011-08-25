@@ -371,4 +371,15 @@ public class GraphPanelChartTest {
       GraphPanelChart instance = new GraphPanelChart();
       instance.setYAxisLabel(yAxisLabel);
    }
+
+    /**
+     * Test of getChartSettings method, of class GraphPanelChart.
+     */
+    @Test
+    public void testGetChartSettings() {
+        System.out.println("getChartSettings");
+        GraphPanelChart instance = new GraphPanelChart();
+        ChartSettings result = instance.getChartSettings();
+        assertNotNull(result);
+    }
 }

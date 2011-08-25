@@ -187,4 +187,16 @@ public class ThreadsStateOverTimeGuiTest
         JSettingsPanel result = instance.createSettingsPanel();
         assertNotNull(result);
     }
+
+    /**
+     * Test of setExtraChartSettings method, of class ThreadsStateOverTimeGui.
+     */
+    @Test
+    public void testSetExtraChartSettings() {
+        System.out.println("setExtraChartSettings");
+        ThreadsStateOverTimeGui instance = new ThreadsStateOverTimeGui();
+        instance.setExtraChartSettings();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

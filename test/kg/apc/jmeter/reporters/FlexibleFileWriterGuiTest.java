@@ -1,5 +1,7 @@
 package kg.apc.jmeter.reporters;
 
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.Transferable;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
@@ -98,6 +100,20 @@ public class FlexibleFileWriterGuiTest {
         TestElement element = new FlexibleFileWriter();
         FlexibleFileWriterGui instance = new FlexibleFileWriterGui();
         instance.configure(element);
+    }
+
+    /**
+     * Test of lostOwnership method, of class FlexibleFileWriterGui.
+     */
+    @Test
+    public void testLostOwnership() {
+        System.out.println("lostOwnership");
+        Clipboard clipboard = null;
+        Transferable contents = null;
+        FlexibleFileWriterGui instance = new FlexibleFileWriterGui();
+        instance.lostOwnership(clipboard, contents);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

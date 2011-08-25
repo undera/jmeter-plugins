@@ -16,5 +16,8 @@ public class PerfMonAgentTool extends AbstractCMDTool {
 
     @Override
     protected void showHelp(PrintStream os) {
+        // interval <sec>
+        // tcp-port
+        // udp-port
     }
 }

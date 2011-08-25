@@ -61,7 +61,7 @@ public class PluginsCMDTest {
     public void testProcessParams_aggreg() throws IOException {
         System.out.println("processParams aggregate");
         File f = File.createTempFile("test", ".csv");
-        String str = " --generate-csv " + f.getAbsolutePath() + " "
+        String str = " --tool Reporter --generate-csv " + f.getAbsolutePath() + " "
                 + "--input-jtl " + basedir + "/few.jtl "
                 + "--aggregate-rows yes --plugin-type ResponseTimesOverTime";
         String[] args = str.split(" +");
@@ -77,7 +77,7 @@ public class PluginsCMDTest {
     public void testProcessParams_outliers() throws IOException {
         System.out.println("processParams outliers");
         File f = File.createTempFile("test", ".png");
-        String str = "--width 1000 --height 300 "
+        String str = " --tool Reporter --width 1000 --height 300 "
                 + "--prevent-outliers yes "
                 + "--plugin-type ResponseTimesDistribution"
                 + " --generate-png " + f.getAbsolutePath() + " "
@@ -96,7 +96,7 @@ public class PluginsCMDTest {
     public void testProcessParams_issue64() throws IOException {
         System.out.println("processParams outliers");
         File f = File.createTempFile("test", ".png");
-        String str = "--width 800 --height 600 "
+        String str = "--tool Reporter --width 800 --height 600 "
                 + "--plugin-type HitsPerSecond  "
                 + "--aggregate-rows yes "
                 + "--generate-png " + f.getAbsolutePath() + " "

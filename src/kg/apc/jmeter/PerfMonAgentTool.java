@@ -1,7 +1,7 @@
 package kg.apc.jmeter;
 
 import java.io.PrintStream;
-import java.util.Iterator;
+import java.util.ListIterator;
 
 /**
  *
@@ -10,7 +10,7 @@ import java.util.Iterator;
 public class PerfMonAgentTool extends AbstractCMDTool {
 
     @Override
-    protected int processParams(Iterator<String> args) throws UnsupportedOperationException, IllegalArgumentException {
+    protected int processParams(ListIterator<String> args) throws UnsupportedOperationException, IllegalArgumentException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

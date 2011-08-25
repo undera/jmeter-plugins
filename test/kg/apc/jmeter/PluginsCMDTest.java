@@ -61,7 +61,7 @@ public class PluginsCMDTest {
     public void testProcessParams_aggreg() throws IOException {
         System.out.println("processParams aggregate");
         File f = File.createTempFile("test", ".csv");
-        String str = " --tool Reporter --generate-csv " + f.getAbsolutePath() + " "
+        String str = "--tool Reporter --generate-csv " + f.getAbsolutePath() + " "
                 + "--input-jtl " + basedir + "/few.jtl "
                 + "--aggregate-rows yes --plugin-type ResponseTimesOverTime";
         String[] args = str.split(" +");

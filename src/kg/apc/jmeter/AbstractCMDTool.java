@@ -1,7 +1,7 @@
 package kg.apc.jmeter;
 
 import java.io.PrintStream;
-import java.util.Iterator;
+import java.util.ListIterator;
 
 /**
  *
@@ -25,7 +25,7 @@ public abstract class AbstractCMDTool {
         return 0;
     }
 
-    protected abstract int processParams(Iterator<String> args) throws UnsupportedOperationException, IllegalArgumentException;
+    protected abstract int processParams(ListIterator<String> args) throws UnsupportedOperationException, IllegalArgumentException;
 
     protected abstract void showHelp(PrintStream os);
 }

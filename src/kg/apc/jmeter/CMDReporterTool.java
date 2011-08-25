@@ -2,7 +2,7 @@
 package kg.apc.jmeter;
 
 import java.io.PrintStream;
-import java.util.Iterator;
+import java.util.ListIterator;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -37,7 +37,7 @@ public class CMDReporterTool extends AbstractCMDTool {
     }
 
     @Override
-    protected int processParams(Iterator<String> args) throws UnsupportedOperationException, IllegalArgumentException {
+    protected int processParams(ListIterator<String> args) throws UnsupportedOperationException, IllegalArgumentException {
 
         PluginsCMDWorker worker = new PluginsCMDWorker();
 

@@ -3,9 +3,9 @@ package kg.apc.jmeter;
 
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * This class used to handle all command-line stuff
@@ -21,29 +21,31 @@ public class PluginsCMD extends AbstractCMDTool {
             args = new String[]{"--help"};
         }
 
-        List<String> arrayArgs=Arrays.asList(args);
-        Iterator<String> argsIt = new LinkedList<String>(arrayArgs).iterator();
+        List<String> arrayArgs = Arrays.asList(args);
+        ListIterator<String> argsIt = new LinkedList<String>(arrayArgs).listIterator();
         return processParams(argsIt);
     }
 
     @Override
-    protected int processParams(Iterator<String> args) throws UnsupportedOperationException, IllegalArgumentException {
+    protected int processParams(ListIterator<String> args) throws UnsupportedOperationException, IllegalArgumentException {
         AbstractCMDTool tool = null;
 
         while (args.hasNext()) {
-            String arg = args.next();
+            String arg = (String) args.next();
             if (arg.equals("-?") || arg.equals("--help")) {
                 showHelp(System.out);
                 return 0;
             } else if (arg.equals("--version")) {
                 showVersion(System.out);
                 return 0;
+            } else if (arg.equals("")) {
+                args.remove();
             } else if (arg.equals("--tool")) {
                 args.remove();
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("No tool name passed");
                 }
-                arg = args.next();
+                arg = (String) args.next();
                 if (arg.equals("Reporter")) {
                     tool = new CMDReporterTool();
                 } else if (arg.equals("PerfMonAgent")) {
@@ -57,6 +59,9 @@ public class PluginsCMD extends AbstractCMDTool {
             throw new IllegalArgumentException("No suitable tool mode provided in params");
         }
 
+        while (args.hasPrevious()) {
+            args.previous();
+        }
         return tool.processParams(args);
     }
 

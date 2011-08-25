@@ -8,8 +8,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.InputEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -115,6 +115,7 @@ public abstract class JMeterPluginsUtils {
         {
             res.add(rowData[n]);
         }
+        
         return res;
     }
 
@@ -297,7 +298,7 @@ public abstract class JMeterPluginsUtils {
         return res;
     }
 
-    private static class URIOpener implements MouseListener {
+    private static class URIOpener extends MouseAdapter {
 
         private final String uri;
 
@@ -305,22 +306,11 @@ public abstract class JMeterPluginsUtils {
             uri = aURI;
         }
 
+        @Override
         public void mouseClicked(MouseEvent e) {
             if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
                 openInBrowser(uri);
             }
-        }
-
-        public void mousePressed(MouseEvent e) {
-        }
-
-        public void mouseReleased(MouseEvent e) {
-        }
-
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        public void mouseExited(MouseEvent e) {
         }
     }
 }

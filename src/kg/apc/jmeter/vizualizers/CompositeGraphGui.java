@@ -5,7 +5,6 @@ import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import kg.apc.charting.DateTimeRenderer;
 import java.util.HashSet;
 import java.util.Iterator;
-import javax.swing.ImageIcon;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -26,11 +25,10 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer {
     public CompositeGraphGui() {
         graphPanel.getGraphObject().setDisplayPrecision(false);
         compositeModel = new CompositeModel();
-        ImageIcon rowsIcon = new ImageIcon(CompositeGraphGui.class.getResource("/kg/apc/jmeter/img/checks.png"));
-        graphPanel.remove(1);// FIXME: it is sooo bad way to make things...
         compositeRowsSelectorPanel = new JCompositeRowsSelectorPanel(compositeModel, this);
         compositeModel.setNotifier((CompositeNotifierInterface) compositeRowsSelectorPanel);
-        graphPanel.insertTab("Graphs", rowsIcon, compositeRowsSelectorPanel, "Select graphs/rows to display", 1);
+
+        graphPanel.replaceRowTab("Graphs", compositeRowsSelectorPanel, "Select graphs/rows to display");
 
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer("HH:mm:ss"));
         graphPanel.getGraphObject().setReSetColors(true);

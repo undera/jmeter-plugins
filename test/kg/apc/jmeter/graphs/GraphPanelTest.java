@@ -1,11 +1,11 @@
 package kg.apc.jmeter.graphs;
 
-import kg.apc.jmeter.graphs.GraphPanel;
-import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
+import java.awt.Component;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.emulators.TestJMeterUtils;
 import javax.swing.JComponent;
 import java.awt.Image;
+import javax.swing.JLabel;
 import javax.swing.event.ChangeEvent;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.GraphPanelChart;
@@ -187,5 +187,17 @@ public class GraphPanelTest
       public String getStaticLabel() {
          return "";
       }
+   }
+
+   /**
+    * Test of replaceRowTab method, of class GraphPanel.
+    */
+   @Test
+   public void testReplaceRowTab() {
+      System.out.println("replaceRowTab");
+      String tabLabel = "Test";
+      Component object = new JLabel("TestLabel");
+      String toolTipText = "Tooltip test";
+      instance.replaceRowTab(tabLabel, object, toolTipText);
    }
 }

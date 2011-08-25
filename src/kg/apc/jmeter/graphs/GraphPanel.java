@@ -51,6 +51,19 @@ public class GraphPanel
         addTab("Rows", rowsIcon, rowsTab, "Select rows to display");
     }
 
+    /**
+     * Method used only for change row selector tab in Composite Chart
+     * @param tabLabelnew the new tab label
+     * @param object the new Panel to add in the tab
+     * @param toolTipText the new tooltip text
+     */
+    public void replaceRowTab(String tabLabel, Component object, String toolTipText) {
+       int index = indexOfComponent(rowsTab);
+       remove(index);
+       ImageIcon rowsIcon = createImageIcon("/kg/apc/jmeter/img/checks.png");
+       insertTab(tabLabel, rowsIcon, object, toolTipText, index);
+    }
+
     private void addOptionsTab()
     {
         ImageIcon icon = createImageIcon("/kg/apc/jmeter/img/settings.png");

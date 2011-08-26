@@ -221,8 +221,8 @@ public class SteppingThreadGroupGui
         tgForPreview.setFlightTime(new CompoundVariable(flightTime.getText()).execute());
         tgForPreview.setRampUp(new CompoundVariable(rampUp.getText()).execute());
 
-        //disable refresh attempts if data is not valid
-        if(tgForPreview.getInUserCountAsInt() == 0 || tgForPreview.getOutUserCountAsInt() == 0) tgForPreview.setNumThreads(0) ;
+        if(tgForPreview.getInUserCountAsInt() == 0) tgForPreview.setInUserCount(new CompoundVariable(totalThreads.getText()).execute());
+        if(tgForPreview.getOutUserCountAsInt() == 0) tgForPreview.setOutUserCount(new CompoundVariable(totalThreads.getText()).execute());
 
         updateChart(tgForPreview);
     }

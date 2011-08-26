@@ -59,8 +59,8 @@ public class SteppingThreadGroup
         int inUserCount = getInUserCountAsInt();
         int outUserCount = getOutUserCountAsInt();
 
-        //if user in or out count is 0, not valid...
-        if(inUserCount == 0 || outUserCount == 0) return;
+        if(inUserCount == 0) inUserCount = getNumThreads();
+        if(outUserCount == 0) outUserCount = getNumThreads();
 
         int threadGroupDelay = 1000 * getThreadGroupDelayAsInt();
         long ascentPoint = testStartTime + threadGroupDelay;

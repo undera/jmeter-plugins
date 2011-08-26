@@ -102,7 +102,7 @@ public class VariablesFromCSVFile
       log.debug("Started loading variables from CSV for thread " + Integer.toString(threanNo));
 
       JMeterVariables variables = JMeterContextService.getContext().getVariables();
-      String alias = this.getClass().getName() + Integer.toString(threanNo);
+      String alias = this.getClass().getName() + getFilename() + Integer.toString(threanNo);
       FileServer server = FileServer.getFileServer();
       server.reserveFile(getFilename(), "UTF-8", alias);
 

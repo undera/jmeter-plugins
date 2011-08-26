@@ -56,17 +56,18 @@ public class SteppingThreadGroup
      */
     @Override
     public void scheduleThread(JMeterThread thread) {
+        int inUserCount = getInUserCountAsInt();
+        int outUserCount = getOutUserCountAsInt();
+
+        //if user in or out count is 0, not valid...
+        if(inUserCount == 0 || outUserCount == 0) return;
+
         int threadGroupDelay = 1000 * getThreadGroupDelayAsInt();
         long ascentPoint = testStartTime + threadGroupDelay;
-
         int inUserPeriod = 1000 * getInUserPeriodAsInt();
-        int inUserCount = getInUserCountAsInt();
         int additionalRampUp = 1000 * getRampUpAsInt() / inUserCount;
-
         int flightTime = 1000 * getFlightTimeAsInt();
-
         int outUserPeriod = 1000 * getOutUserPeriodAsInt();
-        int outUserCount = getOutUserCountAsInt();
 
         long rampUpDuration = 1000 * getRampUpAsInt();
         long iterationDuration = inUserPeriod + rampUpDuration;

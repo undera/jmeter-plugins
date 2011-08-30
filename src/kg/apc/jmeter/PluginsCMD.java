@@ -21,9 +21,12 @@ public class PluginsCMD extends AbstractCMDTool {
             args = new String[]{"--help"};
         }
 
+        return processParams(argsArrayToListIterator(args));
+    }
+
+    public static ListIterator<String> argsArrayToListIterator(String[] args) {
         List<String> arrayArgs = Arrays.asList(args);
-        ListIterator<String> argsIt = new LinkedList<String>(arrayArgs).listIterator();
-        return processParams(argsIt);
+        return new LinkedList<String>(arrayArgs).listIterator();
     }
 
     @Override

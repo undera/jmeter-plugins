@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class AbstractCMDToolTest {
-    
+
     public AbstractCMDToolTest() {
     }
 
@@ -29,11 +29,11 @@ public class AbstractCMDToolTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -49,8 +49,6 @@ public class AbstractCMDToolTest {
         int expResult = 0;
         int result = instance.getLogicValue(string);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -64,8 +62,6 @@ public class AbstractCMDToolTest {
         int expResult = 0;
         int result = instance.processParams(args);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -77,16 +73,16 @@ public class AbstractCMDToolTest {
         PrintStream os = null;
         AbstractCMDTool instance = new AbstractCMDToolImpl();
         instance.showHelp(os);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     public class AbstractCMDToolImpl extends AbstractCMDTool {
 
+        @Override
         public int processParams(ListIterator<String> args) throws UnsupportedOperationException, IllegalArgumentException {
             return 0;
         }
 
+        @Override
         public void showHelp(PrintStream os) {
         }
     }

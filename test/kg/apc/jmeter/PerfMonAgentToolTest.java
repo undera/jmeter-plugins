@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ListIterator;
 import org.junit.After;
@@ -18,7 +15,41 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class PerfMonAgentToolTest {
-    
+
+    private static class PerfMonAgentToolEmul extends PerfMonAgentTool {
+
+        @Override
+        protected PerfMonWorker getWorker() throws IOException {
+            return new PerfMonWorkerEmul();
+        }
+    }
+
+    private static class PerfMonWorkerEmul extends PerfMonWorker {
+
+        private boolean finished = false;
+        private int rc = -1;
+
+        public PerfMonWorkerEmul() throws IOException {
+            super();
+        }
+
+        @Override
+        public void processCommands() throws IOException {
+            finished = true;
+            rc = 0;
+        }
+
+        @Override
+        public boolean isFinished() {
+            return finished;
+        }
+
+        @Override
+        public int getExitCode() {
+            return rc;
+        }
+    }
+
     public PerfMonAgentToolTest() {
     }
 
@@ -29,11 +60,11 @@ public class PerfMonAgentToolTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -44,13 +75,12 @@ public class PerfMonAgentToolTest {
     @Test
     public void testProcessParams() {
         System.out.println("processParams");
-        ListIterator<String> args = null;
-        PerfMonAgentTool instance = new PerfMonAgentTool();
+        ListIterator<String> args = PluginsCMD.argsArrayToListIterator("--tcp-port 4444 --udp-port 4444".split(" "));
+        PerfMonAgentTool instance = new PerfMonAgentToolEmul();
+
         int expResult = 0;
         int result = instance.processParams(args);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -59,10 +89,8 @@ public class PerfMonAgentToolTest {
     @Test
     public void testShowHelp() {
         System.out.println("showHelp");
-        PrintStream os = null;
+        PrintStream os = System.out;
         PerfMonAgentTool instance = new PerfMonAgentTool();
         instance.showHelp(os);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

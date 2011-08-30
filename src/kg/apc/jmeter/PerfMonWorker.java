@@ -22,9 +22,7 @@ public class PerfMonWorker {
     private int tcpPort = 4444;
     private int udpPort = 4444;
     private int exitCode = -1;
-    private boolean isFinished = false;
-    private ServerSocketChannel tcpChannel;
-    private DatagramChannel udpChannel;
+    private boolean isFinished = true;
     private final Selector selector;
     private Map<SelectableChannel, Object> connections;
 
@@ -45,8 +43,15 @@ public class PerfMonWorker {
     }
 
     public void processCommands() throws IOException {
+        if (isFinished)
+            throw new IOException("Worker finished");
+        
+        if (!selector.isOpen())
+            throw new IOException("Selector is closed");
+            
         log.debug("Selecting");
         this.selector.select();
+        log.debug("Selected");
 
         // wakeup to work on selected keys
         Iterator keys = this.selector.selectedKeys().iterator();
@@ -76,7 +81,9 @@ public class PerfMonWorker {
     }
 
     public void startAcceptingCommands() throws IOException {
+        isFinished=false;
         if (tcpPort > 0) {
+            log.debug("Binding TCP to "+tcpPort);
             ServerSocketChannel serverChannel = ServerSocketChannel.open();
             serverChannel.configureBlocking(false);
 
@@ -85,6 +92,11 @@ public class PerfMonWorker {
         }
 
         if (udpPort > 0) {
+            log.debug("Binding UDP to "+udpPort);
+            DatagramChannel udp = DatagramChannel.open();
+            udp.configureBlocking(false);
+            udp.register(selector, SelectionKey.OP_READ);
+            udp.connect(new InetSocketAddress(udpPort));
         }
     }
 

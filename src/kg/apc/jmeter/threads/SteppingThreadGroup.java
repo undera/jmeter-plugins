@@ -68,7 +68,7 @@ public class SteppingThreadGroup
         int additionalRampUp = 1000 * getRampUpAsInt() / inUserCount;
         int flightTime = 1000 * getFlightTimeAsInt();
         int outUserPeriod = 1000 * getOutUserPeriodAsInt();
-
+        
         long rampUpDuration = 1000 * getRampUpAsInt();
         long iterationDuration = inUserPeriod + rampUpDuration;
         int iterationCountTotal = (int) Math.ceil((double) getNumThreads() / inUserCount) - 1;

@@ -362,13 +362,13 @@ public class AbstractGraphPanelVisualizerTest
         assertNotNull(result);
     }
 
-    /**
-     * Test of setExtraChartSettings method, of class AbstractGraphPanelVisualizer.
-     */
-    @Test
-    public void testSetExtraChartSettings() {
-        System.out.println("setExtraChartSettings");
-        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-        instance.setExtraChartSettings();
-    }
+   /**
+    * Test of setExtraChartSettings method, of class AbstractGraphPanelVisualizer.
+    */
+   @Test
+   public void testSetExtraChartSettings() {
+      System.out.println("setExtraChartSettings");
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      instance.setExtraChartSettings();
+   }
 }

@@ -188,14 +188,14 @@ public class ThreadsStateOverTimeGuiTest
         assertNotNull(result);
     }
 
-    /**
-     * Test of setExtraChartSettings method, of class ThreadsStateOverTimeGui.
-     */
-    @Test
-    public void testSetExtraChartSettings() {
-        System.out.println("setExtraChartSettings");
-        ThreadsStateOverTimeGui instance = new ThreadsStateOverTimeGui();
-        instance.setExtraChartSettings();
-        assertTrue(instance.getGraphPanelChart().getChartSettings().isDrawFinalZeroingLines());
-    }
+   /**
+    * Test of setExtraChartSettings method, of class ThreadsStateOverTimeGui.
+    */
+   @Test
+   public void testSetExtraChartSettings() {
+      System.out.println("setExtraChartSettings");
+      ThreadsStateOverTimeGui instance = new ThreadsStateOverTimeGui();
+      instance.setExtraChartSettings();
+      assertTrue(instance.getGraphPanelChart().getChartSettings().isDrawFinalZeroingLines());
+   }
 }

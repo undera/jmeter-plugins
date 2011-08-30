@@ -107,15 +107,15 @@ public class AbstractVsThreadVisualizerTest {
         }
     }
 
-    /**
-     * Test of setExtraChartSettings method, of class AbstractVsThreadVisualizer.
-     */
-    @Test
-    public void testSetExtraChartSettings() {
-        System.out.println("setExtraChartSettings");
-        AbstractVsThreadVisualizer instance = new AbstractVsThreadVisualizerImpl();
-        instance.setExtraChartSettings();
-        assertTrue(instance.getGraphPanelChart().getChartSettings().isDrawCurrentX());
-    }
+   /**
+    * Test of setExtraChartSettings method, of class AbstractVsThreadVisualizer.
+    */
+   @Test
+   public void testSetExtraChartSettings() {
+      System.out.println("setExtraChartSettings");
+      AbstractVsThreadVisualizer instance = new AbstractVsThreadVisualizerImpl();
+      instance.setExtraChartSettings();
+      assertTrue(instance.getGraphPanelChart().getChartSettings().isDrawCurrentX());
+   }
 
 }

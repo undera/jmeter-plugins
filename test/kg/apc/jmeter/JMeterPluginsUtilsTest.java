@@ -74,6 +74,17 @@ public class JMeterPluginsUtilsTest {
         assertEquals(expResult, result);
     }
 
+    @Test
+    public void testByteBufferToString2() {
+        System.out.println("byteBufferToString2");
+        
+        ByteBuffer buf = ByteBuffer.allocateDirect(2014);
+        buf.put("My Test".getBytes());
+        buf.flip();
+        String expResult = "My Test";
+        String result = JMeterPluginsUtils.byteBufferToString(buf);
+        assertEquals(expResult, result);
+    }
     /**
      * Test of replaceRNT method, of class JMeterPluginsUtils.
      */

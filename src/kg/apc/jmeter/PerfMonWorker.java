@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
-import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -92,7 +92,7 @@ public class PerfMonWorker {
         if (udpPort > 0) {
             log.debug("Binding UDP to " + udpPort);
             DatagramChannel udp = DatagramChannel.open();
-            udp.connect(new InetSocketAddress(udpPort));
+            udp.socket().bind(new InetSocketAddress(udpPort));
             udp.configureBlocking(false);
             SelectionKey key = udp.register(selector, SelectionKey.OP_READ);
             accept(key);
@@ -119,25 +119,41 @@ public class PerfMonWorker {
             k = c.register(this.selector, SelectionKey.OP_READ);
         } else {
             c = channel;
-            k=key;
+            k = key;
         }
 
-        PerfMonMetricGetter getter=new PerfMonMetricGetter();
+        PerfMonMetricGetter getter = new PerfMonMetricGetter();
         k.attach(getter);
         connections.put(c, getter);
     }
 
     private void read(SelectionKey key) throws IOException {
         log.debug("Reading from " + key);
-        if (key.channel() instanceof ReadableByteChannel) {
-            ReadableByteChannel channel = (ReadableByteChannel) key.channel();
-            ByteBuffer buf = ByteBuffer.allocateDirect(1024);
+        ByteBuffer buf = ByteBuffer.allocateDirect(1024);
+        if (key.channel() instanceof SocketChannel) {
+            SocketChannel channel = (SocketChannel) key.channel();
             channel.read(buf);
-            
-            // READ to \n!
-            log.debug("Read: " + buf.toString());
-            PerfMonMetricGetter getter=(PerfMonMetricGetter) key.attachment();
-            getter.processCommand(buf.toString());
+        }
+
+        if (key.channel() instanceof DatagramChannel) {
+            DatagramChannel channel = (DatagramChannel) key.channel();
+            channel.receive(buf);
+        }
+
+        buf.flip();
+        log.debug("Read: " + buf.toString());
+        if (buf.limit() == 0) {
+            log.debug("No data read");
+            key.channel().close(); // TODO: this is odd way to detect closed connections...
+            return;
+        }
+
+        PerfMonMetricGetter getter = (PerfMonMetricGetter) key.attachment();
+
+        try {
+            getter.processCommand(JMeterPluginsUtils.byteBufferToString(buf));
+        } catch (Exception e) {
+            log.error("Error executing command", e);
         }
     }
 

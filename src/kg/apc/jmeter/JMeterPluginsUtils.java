@@ -23,7 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import org.apache.jmeter.engine.util.CompoundVariable;
-import org.apache.jmeter.gui.AbstractJMeterGuiComponent;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.util.JMeterUtils;
@@ -135,9 +134,10 @@ public abstract class JMeterPluginsUtils {
 
     public static byte[] byteBufferToByteArray(ByteBuffer buf) {
         ByteBuffer str = buf.duplicate();
-        //System.err.println(str);
+        //System.err.println("Before "+str);
         str.rewind();
-        //System.err.println(str);
+        //str.flip();
+        //System.err.println("After "+str);
         byte[] dst = new byte[str.limit()];
         str.get(dst);
         return dst;

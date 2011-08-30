@@ -7,8 +7,10 @@ import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -17,6 +19,7 @@ import org.apache.log.Logger;
  * @author undera
  */
 public class PerfMonWorker {
+    public static final int SELECT_INTERVAL = 1000;
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int tcpPort = 4444;
@@ -24,7 +27,8 @@ public class PerfMonWorker {
     private int exitCode = -1;
     private boolean isFinished = true;
     private final Selector selector;
-    private Map<SelectableChannel, Object> connections;
+    private Map<SelectableChannel, Object> connections = new HashMap<SelectableChannel, Object>();
+    private ServerSocketChannel serverChannel;
 
     public PerfMonWorker() throws IOException {
         this.selector = Selector.open();
@@ -43,14 +47,16 @@ public class PerfMonWorker {
     }
 
     public void processCommands() throws IOException {
-        if (isFinished)
+        if (isFinished) {
             throw new IOException("Worker finished");
-        
-        if (!selector.isOpen())
+        }
+
+        if (!selector.isOpen()) {
             throw new IOException("Selector is closed");
-            
+        }
+
         log.debug("Selecting");
-        this.selector.select();
+        this.selector.select(SELECT_INTERVAL);
         log.debug("Selected");
 
         // wakeup to work on selected keys
@@ -58,8 +64,6 @@ public class PerfMonWorker {
         while (keys.hasNext()) {
             SelectionKey key = (SelectionKey) keys.next();
 
-            // this is necessary to prevent the same key from coming up 
-            // again the next time around.
             keys.remove();
 
             if (!key.isValid()) {
@@ -81,35 +85,52 @@ public class PerfMonWorker {
     }
 
     public void startAcceptingCommands() throws IOException {
-        isFinished=false;
+        isFinished = false;
+        if (udpPort > 0) {
+            log.debug("Binding UDP to " + udpPort);
+            DatagramChannel udp = DatagramChannel.open();
+            udp.socket().bind(new InetSocketAddress(udpPort));
+            udp.configureBlocking(false);
+            SelectionKey key = udp.register(selector, SelectionKey.OP_READ);
+            accept(key);
+        }
+
         if (tcpPort > 0) {
-            log.debug("Binding TCP to "+tcpPort);
-            ServerSocketChannel serverChannel = ServerSocketChannel.open();
+            log.debug("Binding TCP to " + tcpPort);
+            serverChannel = ServerSocketChannel.open();
             serverChannel.configureBlocking(false);
 
             serverChannel.socket().bind(new InetSocketAddress(tcpPort));
             serverChannel.register(this.selector, SelectionKey.OP_ACCEPT);
         }
-
-        if (udpPort > 0) {
-            log.debug("Binding UDP to "+udpPort);
-            DatagramChannel udp = DatagramChannel.open();
-            udp.configureBlocking(false);
-            udp.register(selector, SelectionKey.OP_READ);
-            udp.connect(new InetSocketAddress(udpPort));
-        }
     }
 
     private void accept(SelectionKey key) {
+        log.debug("Accepting connection " + key);
         SelectableChannel channel = key.channel();
         connections.put(channel, null);
     }
 
     private void read(SelectionKey key) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        log.debug("Reading from " + key);
     }
 
     private void write(SelectionKey key) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        log.debug("Writing to " + key);
+    }
+
+    public void shutdownConnections() throws IOException {
+        Iterator<Entry<SelectableChannel, Object>> it = connections.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<SelectableChannel, Object> entry = it.next();
+            log.debug("Closing " + entry.getKey());
+            entry.getKey().close();
+            it.remove();
+        }
+
+        if (serverChannel != null) {
+            serverChannel.close();
+        }
+        selector.close();
     }
 }

@@ -78,7 +78,9 @@ public class PerfMonWorkerTest {
     public void testProcessCommands() throws Exception {
         System.out.println("processCommands");
         PerfMonWorker instance = new PerfMonWorker();
+        instance.startAcceptingCommands();
         instance.processCommands();
+        instance.shutdownConnections();
     }
 
     /**
@@ -88,7 +90,7 @@ public class PerfMonWorkerTest {
     public void testGetExitCode() throws IOException {
         System.out.println("getExitCode");
         PerfMonWorker instance = new PerfMonWorker();
-        int expResult = 0;
+        int expResult = -1;
         int result = instance.getExitCode();
         assertEquals(expResult, result);
     }
@@ -100,6 +102,17 @@ public class PerfMonWorkerTest {
     public void testStartAcceptingCommands() throws Exception {
         System.out.println("startAcceptingCommands");
         PerfMonWorker instance = new PerfMonWorker();
+        //Thread.sleep(5000);
         instance.startAcceptingCommands();
+    }
+
+    /**
+     * Test of shutdownConnections method, of class PerfMonWorker.
+     */
+    @Test
+    public void testShutdownConnections() throws Exception {
+        System.out.println("shutdownConnections");
+        PerfMonWorker instance = new PerfMonWorker();
+        instance.shutdownConnections();
     }
 }

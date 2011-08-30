@@ -153,10 +153,7 @@ public class LoadosophiaUploaderGuiTest {
     public void testGetFilePanel() {
         System.out.println("getFilePanel");
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
-        Component expResult = null;
         Component result = instance.getFilePanel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 }

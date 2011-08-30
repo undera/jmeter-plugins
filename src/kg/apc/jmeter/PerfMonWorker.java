@@ -68,7 +68,7 @@ public class PerfMonWorker {
 
             keys.remove();
 
-            if (!key.isValid()) {
+            if (!key.isValid() || !key.channel().isOpen()) {
                 continue;
             }
 
@@ -132,7 +132,11 @@ public class PerfMonWorker {
         ByteBuffer buf = ByteBuffer.allocateDirect(1024);
         if (key.channel() instanceof SocketChannel) {
             SocketChannel channel = (SocketChannel) key.channel();
-            channel.read(buf);
+            if (channel.read(buf) < 0) {
+                log.debug("Closing connection");
+                channel.close();
+                return;
+            }
         }
 
         if (key.channel() instanceof DatagramChannel) {
@@ -142,16 +146,12 @@ public class PerfMonWorker {
 
         buf.flip();
         log.debug("Read: " + buf.toString());
-        if (buf.limit() == 0) {
-            log.debug("No data read");
-            key.channel().close(); // TODO: this is odd way to detect closed connections...
-            return;
-        }
 
         PerfMonMetricGetter getter = (PerfMonMetricGetter) key.attachment();
 
+        getter.addCommandString(JMeterPluginsUtils.byteBufferToString(buf));
         try {
-            getter.processCommand(JMeterPluginsUtils.byteBufferToString(buf));
+            getter.processNextCommand();
         } catch (Exception e) {
             log.error("Error executing command", e);
         }

@@ -10,8 +10,9 @@ import org.apache.log.Logger;
 class PerfMonMetricGetter {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
+    private String commandString = "";
 
-    public void processCommand(String toString) {
+    private void processCommand(String toString) {
         log.debug("Got command line: " + toString);
 
         String cmd = toString.substring(toString.indexOf(":") >= 0 ? toString.indexOf(":") : 0);
@@ -20,5 +21,14 @@ class PerfMonMetricGetter {
         } else {
             throw new UnsupportedOperationException("Unknown command: " + cmd);
         }
+    }
+
+    public void addCommandString(String byteBufferToString) {
+        commandString += byteBufferToString;
+    }
+
+    public void processNextCommand() {
+        if (commandString.indexOf("\n")>=0)
+          processCommand(commandString.substring(commandString.indexOf("\n")));
     }
 }

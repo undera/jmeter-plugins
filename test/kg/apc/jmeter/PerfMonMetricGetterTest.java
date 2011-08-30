@@ -40,6 +40,7 @@ public class PerfMonMetricGetterTest {
         System.out.println("processCommand");
         String toString = "test";
         PerfMonMetricGetter instance = new PerfMonMetricGetter();
-        instance.processCommand(toString);
+        instance.addCommandString(toString);
+        instance.processNextCommand();
     }
 }

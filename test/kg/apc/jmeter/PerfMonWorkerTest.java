@@ -78,9 +78,15 @@ public class PerfMonWorkerTest {
     public void testProcessCommands() throws Exception {
         System.out.println("processCommands");
         PerfMonWorker instance = new PerfMonWorker();
+        instance.setUDPPort(-1);
+        instance.setTCPPort(-1);
         instance.startAcceptingCommands();
-        instance.processCommands();
-        instance.shutdownConnections();
+        try {
+            instance.processCommands();
+            fail();
+        } catch (IOException e) {
+            instance.shutdownConnections();
+        }
     }
 
     /**
@@ -104,6 +110,7 @@ public class PerfMonWorkerTest {
         PerfMonWorker instance = new PerfMonWorker();
         //Thread.sleep(5000);
         instance.startAcceptingCommands();
+        instance.shutdownConnections();
     }
 
     /**
@@ -113,6 +120,18 @@ public class PerfMonWorkerTest {
     public void testShutdownConnections() throws Exception {
         System.out.println("shutdownConnections");
         PerfMonWorker instance = new PerfMonWorker();
+        instance.shutdownConnections();
+    }
+
+    @Test
+    public void testProcessCommands_real() throws Exception {
+        System.out.println("processCommands real");
+        PerfMonWorker instance = new PerfMonWorker();
+        instance.setUDPPort(-1);
+        instance.startAcceptingCommands();
+        while (!instance.isFinished()) {
+            instance.processCommands();
+        }
         instance.shutdownConnections();
     }
 }

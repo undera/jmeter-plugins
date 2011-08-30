@@ -2,7 +2,9 @@ package kg.apc.jmeter;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -19,8 +21,8 @@ import org.apache.log.Logger;
  * @author undera
  */
 public class PerfMonWorker {
-    public static final int SELECT_INTERVAL = 1000;
 
+    public static final int SELECT_INTERVAL = 60000;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int tcpPort = 4444;
     private int udpPort = 4444;
@@ -51,12 +53,12 @@ public class PerfMonWorker {
             throw new IOException("Worker finished");
         }
 
-        if (!selector.isOpen()) {
-            throw new IOException("Selector is closed");
+        if (!selector.isOpen() || (connections.isEmpty() && serverChannel == null)) {
+            throw new IOException("Nothing to do with this settings");
         }
 
         log.debug("Selecting");
-        this.selector.select(SELECT_INTERVAL);
+        this.selector.select();
         log.debug("Selected");
 
         // wakeup to work on selected keys
@@ -85,11 +87,12 @@ public class PerfMonWorker {
     }
 
     public void startAcceptingCommands() throws IOException {
+        log.debug("Start accepting connections");
         isFinished = false;
         if (udpPort > 0) {
             log.debug("Binding UDP to " + udpPort);
             DatagramChannel udp = DatagramChannel.open();
-            udp.socket().bind(new InetSocketAddress(udpPort));
+            udp.connect(new InetSocketAddress(udpPort));
             udp.configureBlocking(false);
             SelectionKey key = udp.register(selector, SelectionKey.OP_READ);
             accept(key);
@@ -105,14 +108,37 @@ public class PerfMonWorker {
         }
     }
 
-    private void accept(SelectionKey key) {
+    private void accept(SelectionKey key) throws IOException {
         log.debug("Accepting connection " + key);
         SelectableChannel channel = key.channel();
-        connections.put(channel, null);
+        SelectableChannel c;
+        SelectionKey k;
+        if (channel instanceof ServerSocketChannel) {
+            c = ((ServerSocketChannel) channel).accept();
+            c.configureBlocking(false);
+            k = c.register(this.selector, SelectionKey.OP_READ);
+        } else {
+            c = channel;
+            k=key;
+        }
+
+        PerfMonMetricGetter getter=new PerfMonMetricGetter();
+        k.attach(getter);
+        connections.put(c, getter);
     }
 
-    private void read(SelectionKey key) {
+    private void read(SelectionKey key) throws IOException {
         log.debug("Reading from " + key);
+        if (key.channel() instanceof ReadableByteChannel) {
+            ReadableByteChannel channel = (ReadableByteChannel) key.channel();
+            ByteBuffer buf = ByteBuffer.allocateDirect(1024);
+            channel.read(buf);
+            
+            // READ to \n!
+            log.debug("Read: " + buf.toString());
+            PerfMonMetricGetter getter=(PerfMonMetricGetter) key.attachment();
+            getter.processCommand(buf.toString());
+        }
     }
 
     private void write(SelectionKey key) {
@@ -120,6 +146,7 @@ public class PerfMonWorker {
     }
 
     public void shutdownConnections() throws IOException {
+        log.debug("Shutdown connections");
         Iterator<Entry<SelectableChannel, Object>> it = connections.entrySet().iterator();
         while (it.hasNext()) {
             Entry<SelectableChannel, Object> entry = it.next();

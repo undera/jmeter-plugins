@@ -122,7 +122,7 @@ public class PerfMonWorker {
             k = key;
         }
 
-        PerfMonMetricGetter getter = new PerfMonMetricGetter();
+        PerfMonMetricGetter getter = new PerfMonMetricGetter(this);
         k.attach(getter);
         connections.put(c, getter);
     }
@@ -163,6 +163,7 @@ public class PerfMonWorker {
 
     public void shutdownConnections() throws IOException {
         log.debug("Shutdown connections");
+        isFinished=true;
         Iterator<Entry<SelectableChannel, Object>> it = connections.entrySet().iterator();
         while (it.hasNext()) {
             Entry<SelectableChannel, Object> entry = it.next();

@@ -1,5 +1,6 @@
 package kg.apc.jmeter;
 
+import java.io.IOException;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -9,17 +10,28 @@ import org.apache.log.Logger;
  */
 class PerfMonMetricGetter {
 
+    private final PerfMonWorker controller;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private String commandString = "";
 
-    private void processCommand(String toString) {
+    public PerfMonMetricGetter(PerfMonWorker aController) {
+        controller = aController;
+    }
+
+    private void processCommand(String toString) throws IOException {
         log.debug("Got command line: " + toString);
 
-        String cmd = toString.substring(toString.indexOf(":") >= 0 ? toString.indexOf(":") : 0);
-        if (cmd.equals("test")) {
+        String cmd = toString.trim();
+        if (toString.indexOf(":") >= 0) {
+            cmd = toString.substring(0, toString.indexOf(":")).trim();
+        }
+
+        if (cmd.equals("exit")) {
+            controller.shutdownConnections();
+        } else if (cmd.equals("test")) {
             log.debug("Yep, we received the 'test'");
         } else {
-            throw new UnsupportedOperationException("Unknown command: " + cmd);
+            throw new UnsupportedOperationException("Unknown command [" + cmd.length() + "]: '" + cmd + "'");
         }
     }
 
@@ -27,8 +39,13 @@ class PerfMonMetricGetter {
         commandString += byteBufferToString;
     }
 
-    public void processNextCommand() {
-        if (commandString.indexOf("\n")>=0)
-          processCommand(commandString.substring(commandString.indexOf("\n")));
+    public void processNextCommand() throws IOException {
+        log.debug("Command line is: " + commandString);
+        if (commandString.indexOf("\n") >= 0) {
+            int pos = commandString.indexOf("\n");
+            String cmd = commandString.substring(0, pos);
+            commandString = commandString.substring(pos + 1);
+            processCommand(cmd);
+        }
     }
 }

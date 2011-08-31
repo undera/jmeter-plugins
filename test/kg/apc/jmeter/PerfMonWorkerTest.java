@@ -1,10 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter;
 
 import java.io.IOException;
+import java.nio.channels.SelectableChannel;
+import kg.apc.emulators.SocketChannelEmul;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -129,9 +127,32 @@ public class PerfMonWorkerTest {
         PerfMonWorker instance = new PerfMonWorker();
         //instance.setTCPPort(-1);
         instance.startAcceptingCommands();
-        while (!instance.isFinished()) {
-            instance.processCommands();
+        int cnt=0;
+        while (!instance.isFinished() && cnt++<5) {
+            //instance.processCommands();
         }
         instance.shutdownConnections();
+    }
+
+    /**
+     * Test of run method, of class PerfMonWorker.
+     */
+    @Test
+    public void testRun() throws IOException {
+        System.out.println("run");
+        PerfMonWorker instance = new PerfMonWorker();
+        instance.run();
+    }
+
+    /**
+     * Test of registerWritingChannel method, of class PerfMonWorker.
+     */
+    @Test
+    public void testRegisterWritingChannel() throws Exception {
+        System.out.println("registerWritingChannel");
+        SelectableChannel channel = new SocketChannelEmul();
+        PerfMonWorker instance = new PerfMonWorker();
+        PerfMonMetricGetter worker = new PerfMonMetricGetter(instance, channel);
+        instance.registerWritingChannel(channel, worker);
     }
 }

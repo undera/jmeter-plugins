@@ -3,6 +3,7 @@
     <description>Contains specific for JMeterPlugins build steps, all other steps are managed by NetBeans.</description>
 
    <!-- We rely on NetBeans build instructions file -->
+   <!-- For build instructions please visit http://code.google.com/p/jmeter-plugins/wiki/BuildingFromSource -->
     <import file="nbproject/build-impl.xml"/>
    
     <!--

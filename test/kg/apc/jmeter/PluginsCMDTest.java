@@ -92,4 +92,18 @@ public class PluginsCMDTest {
         PluginsCMD instance = new PluginsCMD();
         instance.showHelp(os);
     }
+
+    /**
+     * Test of argsArrayToListIterator method, of class PluginsCMD.
+     */
+    @Test
+    public void testArgsArrayToListIterator() {
+        System.out.println("argsArrayToListIterator");
+        String[] args = null;
+        ListIterator expResult = null;
+        ListIterator result = PluginsCMD.argsArrayToListIterator(args);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

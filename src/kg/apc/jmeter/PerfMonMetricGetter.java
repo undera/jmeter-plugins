@@ -6,6 +6,10 @@ import java.nio.channels.SelectableChannel;
 import java.nio.channels.WritableByteChannel;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
+import org.hyperic.sigar.SigarProxy;
+import org.hyperic.sigar.SigarProxyCache;
 
 /**
  *
@@ -13,14 +17,20 @@ import org.apache.log.Logger;
  */
 public class PerfMonMetricGetter {
 
+    public static final String TAB = "\t";
+    private static final String DVOETOCHIE = ":";
+    private static final String NEWLINE = "\n";
     private final PerfMonWorker controller;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private String commandString = "";
     private final SelectableChannel channel;
+    private AbstractPerfMonMetric[] metrics = new AbstractPerfMonMetric[0];
+    private final SigarProxy sigarProxy;// TODO: move up to share between all getters
 
     public PerfMonMetricGetter(PerfMonWorker aController, SelectableChannel aChannel) {
         controller = aController;
         channel = aChannel;
+        sigarProxy = SigarProxyCache.newInstance(new Sigar(), 500);
     }
 
     private void processCommand(String command) throws IOException {
@@ -28,15 +38,15 @@ public class PerfMonMetricGetter {
 
         String cmdType = command.trim();
         String params = "";
-        if (command.indexOf(":") >= 0) {
-            cmdType = command.substring(0, command.indexOf(":")).trim();
-            params = command.substring(command.indexOf(":") + 1).trim();
+        if (command.indexOf(DVOETOCHIE) >= 0) {
+            cmdType = command.substring(0, command.indexOf(DVOETOCHIE)).trim();
+            params = command.substring(command.indexOf(DVOETOCHIE) + 1).trim();
         }
 
         if (cmdType.equals("shutdown")) {
             controller.shutdownConnections();
         } else if (cmdType.equals("metrics")) {
-            setUpMetrics(params);
+            setUpMetrics(params.split(TAB));
         } else if (cmdType.equals("exit")) {
             channel.close();
         } else if (cmdType.equals("go")) {
@@ -55,8 +65,8 @@ public class PerfMonMetricGetter {
 
     public boolean processNextCommand() throws IOException {
         log.debug("Command line is: " + commandString);
-        if (commandString.indexOf("\n") >= 0) {
-            int pos = commandString.indexOf("\n");
+        if (commandString.indexOf(NEWLINE) >= 0) {
+            int pos = commandString.indexOf(NEWLINE);
             String cmd = commandString.substring(0, pos);
             commandString = commandString.substring(pos + 1);
             processCommand(cmd);
@@ -68,11 +78,38 @@ public class PerfMonMetricGetter {
 
     public void sendMetrics() throws IOException {
         log.debug("Building metrics");
-        String res = "some\tmetrics\n";
-        ((WritableByteChannel) channel).write(ByteBuffer.wrap(res.getBytes()));
+        StringBuilder res = new StringBuilder();
+        for (int n = 0; n < metrics.length; n++) {
+            try {
+                metrics[n].getValue(res);
+            } catch (SigarException ex) {
+                log.error("Error getting metric", ex);
+            }
+            res.append(TAB);
+        }
+        res.append(NEWLINE);
+        ((WritableByteChannel) channel).write(ByteBuffer.wrap(res.toString().getBytes()));
     }
 
-    private void setUpMetrics(String params) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    private void setUpMetrics(String[] params) {
+        metrics = new AbstractPerfMonMetric[params.length];
+        String metricParams = "";
+        for (int n = 0; n < params.length; n++) {
+            String metricType = params[n];
+            if (metricType.indexOf(DVOETOCHIE) >= 0) {
+                metricParams = metricType.substring(metricType.indexOf(DVOETOCHIE) + 1).trim();
+                metricType = metricType.substring(0, metricType.indexOf(DVOETOCHIE)).trim();
+            }
+
+            AbstractPerfMonMetric metric;
+            if (metricType.equals("cpu")) {
+                metric = new CPUPerfMetric(sigarProxy);
+            } else {
+                log.error("Invalid metric specified: " + params[n]);
+                metric = new InvalidPerfMonMetric();
+            }
+
+            metrics[n] = metric;
+        }
     }
 }

@@ -93,4 +93,15 @@ public class PerfMonAgentToolTest {
         PerfMonAgentTool instance = new PerfMonAgentTool();
         instance.showHelp(os);
     }
+
+    /**
+     * Test of getWorker method, of class PerfMonAgentTool.
+     */
+    @Test
+    public void testGetWorker() throws Exception {
+        System.out.println("getWorker");
+        PerfMonAgentTool instance = new PerfMonAgentTool();
+        PerfMonWorker result = instance.getWorker();
+        assertNotNull(result);
+    }
 }

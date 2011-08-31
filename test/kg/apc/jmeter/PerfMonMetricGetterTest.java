@@ -51,4 +51,37 @@ public class PerfMonMetricGetterTest {
         } catch (UnsupportedOperationException e) {
         }
     }
+
+    /**
+     * Test of addCommandString method, of class PerfMonMetricGetter.
+     */
+    @Test
+    public void testAddCommandString() throws IOException {
+        System.out.println("addCommandString");
+        String byteBufferToString = "";
+        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), new SocketChannelEmul());
+        instance.addCommandString(byteBufferToString);
+    }
+
+    /**
+     * Test of processNextCommand method, of class PerfMonMetricGetter.
+     */
+    @Test
+    public void testProcessNextCommand() throws Exception {
+        System.out.println("processNextCommand");
+        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), new SocketChannelEmul());
+        boolean expResult = false;
+        boolean result = instance.processNextCommand();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of sendMetrics method, of class PerfMonMetricGetter.
+     */
+    @Test
+    public void testSendMetrics() throws IOException {
+        System.out.println("sendMetrics");
+        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), new SocketChannelEmul());
+        instance.sendMetrics();
+    }
 }

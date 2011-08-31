@@ -1,7 +1,9 @@
 package kg.apc.jmeter;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.channels.SelectableChannel;
+import java.nio.channels.WritableByteChannel;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -21,25 +23,29 @@ public class PerfMonMetricGetter {
         channel = aChannel;
     }
 
-    private void processCommand(String toString) throws IOException {
-        log.debug("Got command line: " + toString);
+    private void processCommand(String command) throws IOException {
+        log.debug("Got command line: " + command);
 
-        String cmd = toString.trim();
-        if (toString.indexOf(":") >= 0) {
-            cmd = toString.substring(0, toString.indexOf(":")).trim();
+        String cmdType = command.trim();
+        String params = "";
+        if (command.indexOf(":") >= 0) {
+            cmdType = command.substring(0, command.indexOf(":")).trim();
+            params = command.substring(command.indexOf(":") + 1).trim();
         }
 
-        if (cmd.equals("exit")) {
+        if (cmdType.equals("shutdown")) {
             controller.shutdownConnections();
-        } else if (cmd.equals("stop")) {
+        } else if (cmdType.equals("metrics")) {
+            setUpMetrics(params);
+        } else if (cmdType.equals("exit")) {
             channel.close();
-        } else if (cmd.equals("start")) {
+        } else if (cmdType.equals("go")) {
             controller.registerWritingChannel(channel, this);
-        } else if (cmd.equals("test")) {
+        } else if (cmdType.equals("test")) {
             log.debug("Yep, we received the 'test'");
-        } else if (cmd.equals("")) {
+        } else if (cmdType.equals("")) {
         } else {
-            throw new UnsupportedOperationException("Unknown command [" + cmd.length() + "]: '" + cmd + "'");
+            throw new UnsupportedOperationException("Unknown command [" + cmdType.length() + "]: '" + cmdType + "'");
         }
     }
 
@@ -60,7 +66,13 @@ public class PerfMonMetricGetter {
         }
     }
 
-    public void sendMetrics() {
-        log.debug("Sending metrics!");
+    public void sendMetrics() throws IOException {
+        log.debug("Building metrics");
+        String res = "some\tmetrics\n";
+        ((WritableByteChannel) channel).write(ByteBuffer.wrap(res.getBytes()));
+    }
+
+    private void setUpMetrics(String params) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

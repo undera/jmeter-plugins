@@ -127,7 +127,7 @@ public class PerfMonWorkerTest {
     public void testProcessCommands_real() throws Exception {
         System.out.println("processCommands real");
         PerfMonWorker instance = new PerfMonWorker();
-        instance.setTCPPort(-1);
+        //instance.setTCPPort(-1);
         instance.startAcceptingCommands();
         while (!instance.isFinished()) {
             instance.processCommands();

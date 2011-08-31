@@ -1,6 +1,7 @@
 package kg.apc.jmeter;
 
 import java.io.IOException;
+import kg.apc.emulators.SocketChannelEmul;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,7 +41,7 @@ public class PerfMonMetricGetterTest {
     public void testProcessCommand() throws IOException {
         System.out.println("processCommand");
         String toString = "test\ntest\nerr\n";
-        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker());
+        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), new SocketChannelEmul());
         instance.addCommandString(toString);
         instance.processNextCommand();
         instance.processNextCommand();

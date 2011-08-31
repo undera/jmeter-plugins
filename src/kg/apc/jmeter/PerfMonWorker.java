@@ -4,16 +4,17 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -21,19 +22,23 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-public class PerfMonWorker {
+public class PerfMonWorker implements Runnable {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int tcpPort = 4444;
     private int udpPort = 4444;
     private int exitCode = -1;
     private boolean isFinished = true;
-    private final Selector selector;
-    private Map<SelectableChannel, Object> connections = new HashMap<SelectableChannel, Object>();
+    private final Selector acceptSelector;
+    private List<SelectableChannel> connections = new LinkedList<SelectableChannel>();
     private ServerSocketChannel serverChannel;
+    private final Thread writerThread;
+    private final Selector sendSelector;
 
     public PerfMonWorker() throws IOException {
-        this.selector = Selector.open();
+        acceptSelector = Selector.open();
+        sendSelector = Selector.open();
+        writerThread = new Thread(this);
     }
 
     public void setTCPPort(int parseInt) {
@@ -53,16 +58,16 @@ public class PerfMonWorker {
             throw new IOException("Worker finished");
         }
 
-        if (!selector.isOpen() || (connections.isEmpty() && serverChannel == null)) {
+        if (!acceptSelector.isOpen() || (connections.isEmpty() && serverChannel == null)) {
             throw new IOException("Nothing to do with this settings");
         }
 
         log.debug("Selecting");
-        this.selector.select();
+        this.acceptSelector.select();
         log.debug("Selected");
 
         // wakeup to work on selected keys
-        Iterator keys = this.selector.selectedKeys().iterator();
+        Iterator keys = this.acceptSelector.selectedKeys().iterator();
         while (keys.hasNext()) {
             SelectionKey key = (SelectionKey) keys.next();
 
@@ -86,25 +91,42 @@ public class PerfMonWorker {
         return exitCode;
     }
 
-    public void startAcceptingCommands() throws IOException {
+    public void startAcceptingCommands() {
         log.debug("Start accepting connections");
         isFinished = false;
-        if (udpPort > 0) {
-            log.debug("Binding UDP to " + udpPort);
-            DatagramChannel udp = DatagramChannel.open();
-            udp.socket().bind(new InetSocketAddress(udpPort));
-            udp.configureBlocking(false);
-            SelectionKey key = udp.register(selector, SelectionKey.OP_READ);
-            accept(key);
+        writerThread.start();
+        try {
+            listenUDP();
+        } catch (IOException ex) {
+            log.error("Can't accept UDP connections", ex);
         }
 
+        try {
+            listenTCP();
+        } catch (IOException ex) {
+            log.error("Can't accept TCP connections", ex);
+        }
+    }
+
+    private void listenTCP() throws IOException {
         if (tcpPort > 0) {
             log.debug("Binding TCP to " + tcpPort);
             serverChannel = ServerSocketChannel.open();
             serverChannel.configureBlocking(false);
 
             serverChannel.socket().bind(new InetSocketAddress(tcpPort));
-            serverChannel.register(this.selector, SelectionKey.OP_ACCEPT);
+            serverChannel.register(this.acceptSelector, SelectionKey.OP_ACCEPT);
+        }
+    }
+
+    private void listenUDP() throws IOException {
+        if (udpPort > 0) {
+            log.debug("Binding UDP to " + udpPort);
+            DatagramChannel udp = DatagramChannel.open();
+            udp.socket().bind(new InetSocketAddress(udpPort));
+            udp.configureBlocking(false);
+            SelectionKey key = udp.register(acceptSelector, SelectionKey.OP_READ);
+            accept(key);
         }
     }
 
@@ -116,15 +138,15 @@ public class PerfMonWorker {
         if (channel instanceof ServerSocketChannel) {
             c = ((ServerSocketChannel) channel).accept();
             c.configureBlocking(false);
-            k = c.register(this.selector, SelectionKey.OP_READ);
+            k = c.register(this.acceptSelector, SelectionKey.OP_READ);
         } else {
             c = channel;
             k = key;
         }
 
-        PerfMonMetricGetter getter = new PerfMonMetricGetter(this);
+        PerfMonMetricGetter getter = new PerfMonMetricGetter(this, c);
         k.attach(getter);
-        connections.put(c, getter);
+        connections.add(c);
     }
 
     private void read(SelectionKey key) throws IOException {
@@ -143,7 +165,7 @@ public class PerfMonWorker {
             DatagramChannel channel = (DatagramChannel) key.channel();
             channel.receive(buf);
             //channel.
-            
+
             DatagramSocket sock = channel.socket();
             log.debug(sock.toString());
         }
@@ -170,17 +192,62 @@ public class PerfMonWorker {
     public void shutdownConnections() throws IOException {
         log.debug("Shutdown connections");
         isFinished = true;
-        Iterator<Entry<SelectableChannel, Object>> it = connections.entrySet().iterator();
+        Iterator<SelectableChannel> it = connections.iterator();
         while (it.hasNext()) {
-            Entry<SelectableChannel, Object> entry = it.next();
-            log.debug("Closing " + entry.getKey());
-            entry.getKey().close();
+            SelectableChannel entry = it.next();
+            log.debug("Closing " + entry);
+            entry.close();
             it.remove();
         }
 
         if (serverChannel != null) {
             serverChannel.close();
         }
-        selector.close();
+        acceptSelector.close();
+    }
+
+    @Override
+    public void run() {
+        while (!isFinished) {
+            try {
+                processSenders();
+            } catch (IOException ex) {
+                log.error("Error processing senders", ex);
+                break;
+            }
+        }
+    }
+
+    public void registerWritingChannel(SelectableChannel channel, PerfMonMetricGetter worker) throws ClosedChannelException {
+        channel.register(sendSelector, SelectionKey.OP_WRITE, worker);
+    }
+
+    private void processSenders() throws IOException {
+        log.debug("Selecting senders");
+        sendSelector.selectNow();
+        log.debug("Selected senders");
+
+        // wakeup to work on selected keys
+        Iterator keys = this.sendSelector.selectedKeys().iterator();
+        while (keys.hasNext()) {
+            SelectionKey key = (SelectionKey) keys.next();
+
+            keys.remove();
+
+            if (!key.isValid() || !key.channel().isOpen()) {
+                continue;
+            }
+
+            if (key.isWritable()) {
+                PerfMonMetricGetter getter = (PerfMonMetricGetter) key.attachment();
+                getter.sendMetrics();
+            }
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            log.debug("Thread interrupted", ex);
+        }
     }
 }

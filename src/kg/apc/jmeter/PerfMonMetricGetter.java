@@ -39,13 +39,14 @@ class PerfMonMetricGetter {
         commandString += byteBufferToString;
     }
 
-    public void processNextCommand() throws IOException {
+    public boolean  processNextCommand() throws IOException {
         log.debug("Command line is: " + commandString);
         if (commandString.indexOf("\n") >= 0) {
             int pos = commandString.indexOf("\n");
             String cmd = commandString.substring(0, pos);
             commandString = commandString.substring(pos + 1);
             processCommand(cmd);
-        }
+            return true;
+        } else return false;
     }
 }

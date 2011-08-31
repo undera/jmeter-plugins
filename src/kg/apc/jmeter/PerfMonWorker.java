@@ -1,6 +1,7 @@
 package kg.apc.jmeter;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
@@ -22,7 +23,6 @@ import org.apache.log.Logger;
  */
 public class PerfMonWorker {
 
-    public static final int SELECT_INTERVAL = 60000;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int tcpPort = 4444;
     private int udpPort = 4444;
@@ -142,6 +142,10 @@ public class PerfMonWorker {
         if (key.channel() instanceof DatagramChannel) {
             DatagramChannel channel = (DatagramChannel) key.channel();
             channel.receive(buf);
+            //channel.
+            
+            DatagramSocket sock = channel.socket();
+            log.debug(sock.toString());
         }
 
         buf.flip();
@@ -151,7 +155,9 @@ public class PerfMonWorker {
 
         getter.addCommandString(JMeterPluginsUtils.byteBufferToString(buf));
         try {
-            getter.processNextCommand();
+            while (getter.processNextCommand()) {
+                log.debug("Done executing command");
+            }
         } catch (Exception e) {
             log.error("Error executing command", e);
         }
@@ -163,7 +169,7 @@ public class PerfMonWorker {
 
     public void shutdownConnections() throws IOException {
         log.debug("Shutdown connections");
-        isFinished=true;
+        isFinished = true;
         Iterator<Entry<SelectableChannel, Object>> it = connections.entrySet().iterator();
         while (it.hasNext()) {
             Entry<SelectableChannel, Object> entry = it.next();

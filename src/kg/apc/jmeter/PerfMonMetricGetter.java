@@ -3,7 +3,7 @@ package kg.apc.jmeter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectableChannel;
-import java.nio.channels.WritableByteChannel;
+import java.nio.channels.SocketChannel;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.hyperic.sigar.Sigar;
@@ -26,6 +26,7 @@ public class PerfMonMetricGetter {
     private final SelectableChannel channel;
     private AbstractPerfMonMetric[] metrics = new AbstractPerfMonMetric[0];
     private final SigarProxy sigarProxy;// TODO: move up to share between all getters
+    private boolean started = false;
 
     public PerfMonMetricGetter(PerfMonWorker aController, SelectableChannel aChannel) {
         controller = aController;
@@ -47,10 +48,12 @@ public class PerfMonMetricGetter {
             controller.shutdownConnections();
         } else if (cmdType.equals("metrics")) {
             setUpMetrics(params.split(TAB));
-        } else if (cmdType.equals("exit")) {
-            channel.close();
-        } else if (cmdType.equals("go")) {
             controller.registerWritingChannel(channel, this);
+        } else if (cmdType.equals("exit")) {
+            metrics = new AbstractPerfMonMetric[0];
+            if (channel instanceof SocketChannel) {
+                channel.close();
+            }
         } else if (cmdType.equals("test")) {
             log.debug("Yep, we received the 'test'");
         } else if (cmdType.equals("")) {
@@ -76,7 +79,7 @@ public class PerfMonMetricGetter {
         }
     }
 
-    public void sendMetrics() throws IOException {
+    public ByteBuffer getMetricsLine() throws IOException {
         log.debug("Building metrics");
         StringBuilder res = new StringBuilder();
         for (int n = 0; n < metrics.length; n++) {
@@ -88,7 +91,8 @@ public class PerfMonMetricGetter {
             res.append(TAB);
         }
         res.append(NEWLINE);
-        ((WritableByteChannel) channel).write(ByteBuffer.wrap(res.toString().getBytes()));
+
+        return (ByteBuffer.wrap(res.toString().getBytes()));
     }
 
     private void setUpMetrics(String[] params) {
@@ -111,5 +115,9 @@ public class PerfMonMetricGetter {
 
             metrics[n] = metric;
         }
+    }
+
+    public boolean isStarted() {
+        return metrics.length > 0;
     }
 }

@@ -82,6 +82,6 @@ public class PerfMonMetricGetterTest {
     public void testSendMetrics() throws IOException {
         System.out.println("sendMetrics");
         PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), new SocketChannelEmul());
-        instance.sendMetrics();
+        instance.getMetricsLine();
     }
 }

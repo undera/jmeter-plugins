@@ -11,6 +11,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.channels.WritableByteChannel;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -131,6 +132,7 @@ public class PerfMonWorker implements Runnable {
             udp.socket().bind(new InetSocketAddress(udpPort));
             udp.configureBlocking(false);
             udp.register(acceptSelector, SelectionKey.OP_READ);
+            udp.register(sendSelector, SelectionKey.OP_WRITE);
         }
     }
 
@@ -223,7 +225,7 @@ public class PerfMonWorker implements Runnable {
 
     private void processSenders() throws IOException {
         log.debug("Selecting senders");
-        sendSelector.select();
+        sendSelector.select(getInterval());
         log.debug("Selected senders");
 
         long begin = System.currentTimeMillis();
@@ -240,8 +242,13 @@ public class PerfMonWorker implements Runnable {
             }
 
             if (key.isWritable()) {
-                PerfMonMetricGetter getter = (PerfMonMetricGetter) key.attachment();
-                getter.sendMetrics();
+                if (key.channel() instanceof DatagramChannel) {
+                    sendToUDP(key);
+                } else {
+                    PerfMonMetricGetter getter = (PerfMonMetricGetter) key.attachment();
+                    ByteBuffer metrics = getter.getMetricsLine();
+                    ((WritableByteChannel) key.channel()).write(metrics);
+                }
             }
         }
 
@@ -251,6 +258,18 @@ public class PerfMonWorker implements Runnable {
                 Thread.sleep(getInterval() - spent);
             } catch (InterruptedException ex) {
                 log.debug("Thread interrupted", ex);
+            }
+        }
+    }
+
+    private void sendToUDP(SelectionKey key) throws IOException {
+        Iterator<SocketAddress> it = udpConnections.keySet().iterator();
+        while (it.hasNext()) {
+            SocketAddress addr = it.next();
+            PerfMonMetricGetter getter = udpConnections.get(addr);
+            if (getter.isStarted()) {
+                ByteBuffer metrics = getter.getMetricsLine();
+                ((DatagramChannel) key.channel()).send(metrics, addr);
             }
         }
     }

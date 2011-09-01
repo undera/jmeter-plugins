@@ -13,6 +13,8 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -29,7 +31,8 @@ public class PerfMonWorker implements Runnable {
     private int exitCode = -1;
     private boolean isFinished = true;
     private final Selector acceptSelector;
-    private Map<SelectableChannel, SocketAddress> connections = new HashMap<SelectableChannel, SocketAddress>();
+    private List<SelectableChannel> tcpConnections = new LinkedList<SelectableChannel>();
+    private Map<SocketAddress, PerfMonMetricGetter> udpConnections = new HashMap<SocketAddress, PerfMonMetricGetter>();
     private ServerSocketChannel tcpServer;
     private final Thread writerThread;
     private final Selector sendSelector;
@@ -58,13 +61,13 @@ public class PerfMonWorker implements Runnable {
             throw new IOException("Worker finished");
         }
 
-        if (!acceptSelector.isOpen() || (connections.isEmpty() && tcpServer == null)) {
+        if (!acceptSelector.isOpen() || (tcpServer == null && udpServer == null)) {
             throw new IOException("Nothing to do with this settings");
         }
 
-        log.debug("Selecting");
+        log.debug("Selecting incoming");
         this.acceptSelector.select();
-        log.debug("Selected");
+        log.debug("Selected incoming");
 
         // wakeup to work on selected keys
         Iterator keys = this.acceptSelector.selectedKeys().iterator();
@@ -73,16 +76,14 @@ public class PerfMonWorker implements Runnable {
 
             keys.remove();
 
-            if (!key.isValid() || !key.channel().isOpen()) {
+            if (!key.isValid()) {
                 continue;
             }
 
             if (key.isAcceptable()) {
-                this.accept(key, null);
+                this.accept(key);
             } else if (key.isReadable()) {
                 this.read(key);
-            } else if (key.isWritable()) {
-                this.write(key);
             }
         }
     }
@@ -133,28 +134,22 @@ public class PerfMonWorker implements Runnable {
         }
     }
 
-    private void accept(SelectionKey key, SocketAddress remoteAddr) throws IOException {
-        log.debug("Accepting connection " + key);
+    private void accept(SelectionKey key) throws IOException {
+        log.debug("Accepting TCP connection " + key);
         SelectableChannel channel = key.channel();
-        SelectableChannel c;
-        SelectionKey k;
-        if (channel instanceof ServerSocketChannel) {
-            c = ((ServerSocketChannel) channel).accept();
-            c.configureBlocking(false);
-            k = c.register(this.acceptSelector, SelectionKey.OP_READ);
-        } else {
-            c = channel;
-            k = key;
-        }
+        SelectableChannel tcpConn = ((ServerSocketChannel) channel).accept();
+        tcpConn.configureBlocking(false);
+        SelectionKey k = tcpConn.register(this.acceptSelector, SelectionKey.OP_READ);
 
         log.debug("Creating new metric getter");
-        PerfMonMetricGetter getter = new PerfMonMetricGetter(this, c);
+        PerfMonMetricGetter getter = new PerfMonMetricGetter(this, tcpConn);
         k.attach(getter);
-        connections.put(c, remoteAddr);
+        tcpConnections.add(tcpConn);
     }
 
+    // TODO: refactor this code
     private void read(SelectionKey key) throws IOException {
-        log.debug("Reading from " + key);
+        PerfMonMetricGetter getter = null;
         ByteBuffer buf = ByteBuffer.allocateDirect(1024);
         if (key.channel() instanceof SocketChannel) {
             SocketChannel channel = (SocketChannel) key.channel();
@@ -163,28 +158,19 @@ public class PerfMonWorker implements Runnable {
                 channel.close();
                 return;
             }
-        }
-
-        if (key.channel() instanceof DatagramChannel) {
+            getter = (PerfMonMetricGetter) key.attachment();
+        } else if (key.channel() instanceof DatagramChannel) {
             DatagramChannel channel = (DatagramChannel) key.channel();
             SocketAddress remoteAddr = channel.receive(buf);
-            if (!connections.containsValue(remoteAddr)) {
-                log.debug("Connecting new UDP channel");
-                DatagramChannelFake dc = DatagramChannelFake.open();
-                dc.connect(remoteAddr);
-                dc.setCommChannel(channel);
-                SelectionKey key2 = dc.register(acceptSelector, SelectionKey.OP_READ);
-                accept(key2, remoteAddr);
-                key = key2;
-            } else {
-                return;
+            if (!udpConnections.containsKey(remoteAddr)) {
+                log.debug("Connecting new UDP client");
+                udpConnections.put(remoteAddr, new PerfMonMetricGetter(this, channel));
             }
+            getter = udpConnections.get(remoteAddr);
         }
 
         buf.flip();
         log.debug("Read: " + buf.toString());
-
-        PerfMonMetricGetter getter = (PerfMonMetricGetter) key.attachment();
 
         getter.addCommandString(JMeterPluginsUtils.byteBufferToString(buf));
         try {
@@ -196,14 +182,10 @@ public class PerfMonWorker implements Runnable {
         }
     }
 
-    private void write(SelectionKey key) {
-        log.debug("Writing to " + key);
-    }
-
     public void shutdownConnections() throws IOException {
         log.debug("Shutdown connections");
         isFinished = true;
-        Iterator<SelectableChannel> it = connections.keySet().iterator();
+        Iterator<SelectableChannel> it = tcpConnections.iterator();
         while (it.hasNext()) {
             SelectableChannel entry = it.next();
             log.debug("Closing " + entry);

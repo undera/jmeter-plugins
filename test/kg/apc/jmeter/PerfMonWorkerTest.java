@@ -1,8 +1,9 @@
 package kg.apc.jmeter;
 
+import java.nio.channels.SocketChannel;
 import java.io.IOException;
 import java.nio.channels.SelectableChannel;
-import kg.apc.emulators.SocketChannelEmul;
+import kg.apc.io.DatagramChannelWithTimeouts;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -150,7 +151,7 @@ public class PerfMonWorkerTest {
     @Test
     public void testRegisterWritingChannel() throws Exception {
         System.out.println("registerWritingChannel");
-        SelectableChannel channel = new SocketChannelEmul();
+        SelectableChannel channel = DatagramChannelWithTimeouts.open();
         PerfMonWorker instance = new PerfMonWorker();
         PerfMonMetricGetter worker = new PerfMonMetricGetter(instance, channel);
         instance.registerWritingChannel(channel, worker);

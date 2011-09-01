@@ -107,6 +107,10 @@ public class PerfMonWorker implements Runnable {
         }
     }
 
+    private int getInterval() {
+        return 1000;
+    }
+
     private void listenTCP() throws IOException {
         if (tcpPort > 0) {
             log.debug("Binding TCP to " + tcpPort);
@@ -218,13 +222,16 @@ public class PerfMonWorker implements Runnable {
     }
 
     public void registerWritingChannel(SelectableChannel channel, PerfMonMetricGetter worker) throws ClosedChannelException {
+        sendSelector.wakeup();
         channel.register(sendSelector, SelectionKey.OP_WRITE, worker);
     }
 
     private void processSenders() throws IOException {
         log.debug("Selecting senders");
-        sendSelector.selectNow();
+        sendSelector.select();
         log.debug("Selected senders");
+
+        long begin = System.currentTimeMillis();
 
         // wakeup to work on selected keys
         Iterator keys = this.sendSelector.selectedKeys().iterator();
@@ -233,7 +240,7 @@ public class PerfMonWorker implements Runnable {
 
             keys.remove();
 
-            if (!key.isValid() || !key.channel().isOpen()) {
+            if (!key.isValid()) {
                 continue;
             }
 
@@ -243,10 +250,13 @@ public class PerfMonWorker implements Runnable {
             }
         }
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            log.debug("Thread interrupted", ex);
+        long spent = System.currentTimeMillis() - begin;
+        if (spent < getInterval()) {
+            try {
+                Thread.sleep(getInterval() - spent);
+            } catch (InterruptedException ex) {
+                log.debug("Thread interrupted", ex);
+            }
         }
     }
 }

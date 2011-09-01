@@ -75,7 +75,7 @@ public class PluginsCMDTest {
     @Test
     public void testProcessParams_ListIterator() {
         System.out.println("processParams");
-        ListIterator<String> args = null;
+        ListIterator<String> args = PluginsCMD.argsArrayToListIterator("-?".split(" "));
         PluginsCMD instance = new PluginsCMD();
         int expResult = 0;
         int result = instance.processParams(args);
@@ -88,7 +88,7 @@ public class PluginsCMDTest {
     @Test
     public void testShowHelp() {
         System.out.println("showHelp");
-        PrintStream os = null;
+        PrintStream os = System.out;
         PluginsCMD instance = new PluginsCMD();
         instance.showHelp(os);
     }
@@ -99,11 +99,8 @@ public class PluginsCMDTest {
     @Test
     public void testArgsArrayToListIterator() {
         System.out.println("argsArrayToListIterator");
-        String[] args = null;
-        ListIterator expResult = null;
+        String[] args = "".split(" ");
         ListIterator result = PluginsCMD.argsArrayToListIterator(args);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 }

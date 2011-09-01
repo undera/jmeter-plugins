@@ -68,6 +68,7 @@ public final class NewDriver {
         for (int a = 0; a < libDirs.length; a++) {
             File[] libJars = libDirs[a].listFiles(new FilenameFilter() {
 
+                @Override
                 public boolean accept(File dir, String name) {// only accept jar files
                     return name.endsWith(".jar");// $NON-NLS-1$
                 }

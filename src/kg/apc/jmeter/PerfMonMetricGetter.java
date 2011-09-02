@@ -55,7 +55,7 @@ public class PerfMonMetricGetter {
                 channel.close();
             }
         } else if (cmdType.equals("test")) {
-            log.debug("Yep, we received the 'test'");
+            log.info("Yep, we received the 'test'");
         } else if (cmdType.equals("")) {
         } else {
             throw new UnsupportedOperationException("Unknown command [" + cmdType.length() + "]: '" + cmdType + "'");
@@ -106,10 +106,14 @@ public class PerfMonMetricGetter {
             }
 
             AbstractPerfMonMetric metric;
-            if (metricType.equals("cpu")) {
-                metric = new CPUPerfMetric(sigarProxy);
-            } else {
-                log.error("Invalid metric specified: " + params[n]);
+            try {
+                if (metricType.equals("cpu")) {
+                    metric = AbstractCPUMetric.getMetric(sigarProxy, metricParams);
+                } else {
+                    throw new SigarException("No SIGAR object for metric type " + metricType);
+                }
+            } catch (SigarException ex) {
+                log.error("Invalid metric specified: " + params[n], ex);
                 metric = new InvalidPerfMonMetric();
             }
 

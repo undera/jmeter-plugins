@@ -33,6 +33,12 @@ public class PerfMonAgentTool extends AbstractCMDTool {
                 }
 
                 worker.setTCPPort(Integer.parseInt(args.next()));
+            } else if (nextArg.equalsIgnoreCase("--metrics")) {
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing metrics specification");
+                }
+
+                worker.setMetrics(args.next());
             } else if (nextArg.equalsIgnoreCase("--udp-port")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing UDP Port no");

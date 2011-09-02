@@ -273,4 +273,9 @@ public class PerfMonWorker implements Runnable {
             }
         }
     }
+
+    public void setMetrics(String next) {
+        // TODO: implement command-line printing mode for SSH transport
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

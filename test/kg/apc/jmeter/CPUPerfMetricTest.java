@@ -41,7 +41,7 @@ public class CPUPerfMetricTest {
     public void testGetValue() throws Exception {
         System.out.println("getValue");
         StringBuilder res = new StringBuilder();
-        CPUPerfMetric instance = new CPUPerfMetric(SigarProxyCache.newInstance(new Sigar(), 500));
+        CPUTotalMetric instance = new CPUTotalMetric(SigarProxyCache.newInstance(new Sigar(), 500));
         instance.getValue(res);
         assertTrue(Double.parseDouble(res.toString()) > 0);
     }

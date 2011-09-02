@@ -15,5 +15,9 @@ public abstract class AbstractPerfMonMetric {
         sigarProxy = aSigar;
     }
 
+    protected long getPIDByProcName(String name, int index) {
+        return 0;
+    }
+
     abstract public void getValue(StringBuilder res) throws SigarException;
 }

@@ -1,5 +1,10 @@
 package kg.apc.jmeter;
 
+import kg.apc.jmeter.perfmon.AbstractPerfMonMetricTest;
+import kg.apc.jmeter.perfmon.CPUPerfMetricTest;
+import kg.apc.jmeter.perfmon.PerfMonMetricGetterTest;
+import kg.apc.jmeter.perfmon.InvalidPerfMonMetricTest;
+import kg.apc.jmeter.perfmon.PerfMonWorkerTest;
 import kg.apc.charting.ChartingSuite;
 import kg.apc.jmeter.cmd.CmdSuite;
 import kg.apc.jmeter.config.ConfigSuite;

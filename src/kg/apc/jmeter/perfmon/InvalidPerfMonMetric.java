@@ -1,4 +1,6 @@
-package kg.apc.jmeter;
+package kg.apc.jmeter.perfmon;
+
+import kg.apc.jmeter.perfmon.AbstractPerfMonMetric;
 
 /**
  *

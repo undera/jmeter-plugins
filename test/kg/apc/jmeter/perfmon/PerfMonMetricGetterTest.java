@@ -1,5 +1,7 @@
-package kg.apc.jmeter;
+package kg.apc.jmeter.perfmon;
 
+import kg.apc.jmeter.perfmon.PerfMonWorker;
+import kg.apc.jmeter.perfmon.PerfMonMetricGetter;
 import java.io.IOException;
 import kg.apc.emulators.SocketChannelEmul;
 import org.junit.After;

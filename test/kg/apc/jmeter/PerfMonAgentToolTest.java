@@ -1,5 +1,6 @@
 package kg.apc.jmeter;
 
+import kg.apc.jmeter.perfmon.PerfMonWorker;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ListIterator;

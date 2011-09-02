@@ -1,4 +1,4 @@
-package kg.apc.jmeter;
+package kg.apc.jmeter.perfmon;
 
 import org.hyperic.sigar.SigarProxy;
 

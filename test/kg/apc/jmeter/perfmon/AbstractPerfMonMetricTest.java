@@ -1,5 +1,6 @@
-package kg.apc.jmeter;
+package kg.apc.jmeter.perfmon;
 
+import kg.apc.jmeter.perfmon.AbstractPerfMonMetric;
 import org.hyperic.sigar.SigarException;
 import org.junit.After;
 import org.junit.AfterClass;

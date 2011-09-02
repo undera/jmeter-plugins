@@ -1,5 +1,7 @@
-package kg.apc.jmeter;
+package kg.apc.jmeter.perfmon;
 
+import kg.apc.jmeter.perfmon.PerfMonWorker;
+import kg.apc.jmeter.perfmon.PerfMonMetricGetter;
 import java.nio.channels.SocketChannel;
 import java.io.IOException;
 import java.nio.channels.SelectableChannel;

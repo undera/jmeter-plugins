@@ -1,5 +1,6 @@
-package kg.apc.jmeter;
+package kg.apc.jmeter.perfmon;
 
+import kg.apc.jmeter.perfmon.CPUTotalMetric;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarProxyCache;
 import org.junit.After;

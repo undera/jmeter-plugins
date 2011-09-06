@@ -1,5 +1,4 @@
 package kg.apc.jmeter;
-// TODO: add --version support here, in JMeterPlugins.jar and in agent
 
 import java.io.PrintStream;
 import java.util.Arrays;

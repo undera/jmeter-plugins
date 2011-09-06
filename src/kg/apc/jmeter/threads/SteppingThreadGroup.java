@@ -74,7 +74,7 @@ public class SteppingThreadGroup
         int iterationCountTotal = (int) Math.ceil((double) getNumThreads() / inUserCount) - 1;
         int iterationCountBeforeMe = (int) Math.floor((double) thread.getThreadNum() / inUserCount);
 
-        long descentPoint = ascentPoint + iterationCountTotal * (iterationDuration+additionalRampUp) + additionalRampUp + flightTime;
+        long descentPoint = ascentPoint + iterationCountTotal * (iterationDuration+additionalRampUp) + rampUpDuration + flightTime;
 
         long startTime = ascentPoint + iterationCountBeforeMe * iterationDuration + (thread.getThreadNum() % inUserCount) * additionalRampUp;
         long endTime = descentPoint + outUserPeriod * (int) Math.floor((double) thread.getThreadNum() / outUserCount);

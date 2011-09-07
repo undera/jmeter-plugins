@@ -1,6 +1,5 @@
 package kg.apc.perfmon;
 
-import kg.apc.jmeter.perfmon.PerfMonMetricGetter;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -16,10 +15,6 @@ import java.nio.channels.WritableByteChannel;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.perfmon.PerfMonMetricGetter;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -35,12 +30,12 @@ public class PerfMonWorker implements Runnable {
     private int exitCode = -1;
     private boolean isFinished = true;
     private final Selector acceptSelector;
-    private List<SelectableChannel> tcpConnections = new LinkedList<SelectableChannel>();
-    private Map<SocketAddress, PerfMonMetricGetter> udpConnections = new HashMap<SocketAddress, PerfMonMetricGetter>();
     private ServerSocketChannel tcpServer;
     private final Thread writerThread;
     private final Selector sendSelector;
     private DatagramChannel udpServer;
+    private final LinkedList<SelectableChannel> tcpConnections = new LinkedList<SelectableChannel>();
+    private final HashMap<SocketAddress, PerfMonMetricGetter> udpConnections = new HashMap<SocketAddress, PerfMonMetricGetter>();
 
     public PerfMonWorker() throws IOException {
         acceptSelector = Selector.open();

@@ -97,6 +97,8 @@
       <!-- APC: copying just in case -->
         <copy todir="${dist.dir}" file="${dist.jar}" />
 
+        <!-- If you failed here, consider setting in project.properties
+            dist.jar=${dist.dir}/JMeterPlugins.jar -->
         <fail message="File not found: ${dist.dir}/JMeterPlugins.jar">
             <condition>
                 <not>
@@ -113,15 +115,22 @@
             <zipfileset dir="${dist.dir}" includes="JMeterPlugins.jar"/>
          <!-- CMD files -->
             <zipfileset dir="${dist.dir}" includes="JMeterPluginsCMD.jar" prefix="cmd"/>
-            <zipfileset dir="${svn.dir}/agent" includes="JMeterPluginsCMD.*" prefix="cmd"/>
-            <zipfileset dir="${svn.dir}/agent" includes="startAgent.*" prefix="serverAgent"/>
+            <zipfileset dir="${svn.dir}/src/kg/apc/cmd" includes="JMeterPluginsCMD.*" prefix="cmd"/>
          <!-- example test plans -->
-            <zipfileset dir="${svn.dir}/examples" includes="*Example*.jmx" prefix="examples"/>
+            <zipfileset dir="${svn.dir}/../examples" includes="*Example*.jmx" prefix="examples"/>
         </zip>
 
       <!-- APC: fore easy debugging environment we copy JmeterPlugins.jar
            to jmeter/lib/ext, defined by property jmeter.lib.ext
            in project.properties files -->
+        <fail message="jmeter.lib.ext not available">
+            <condition>
+                <not>
+                    <available file="${jmeter.lib.ext}" />
+                </not>
+            </condition>
+        </fail>
+           
         <copy todir="${jmeter.lib.ext}">
             <fileset dir="${dist.dir}" includes="*.jar" />
         </copy>

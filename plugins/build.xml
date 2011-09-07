@@ -83,7 +83,7 @@
     <target name="-pre-jar">
         <property location="./" name="svn.dir"/>
         <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/JMeterPluginsCMD.jar"
-      manifest="${svn.dir}/cmdtool/kg/apc/jmeter/cmd/manifest.mf">
+      manifest="${svn.dir}/src/kg/apc/cmd/manifest.mf">
             <fileset dir="${build.dir}/cmd/classes"/>
         </jar>
     </target>

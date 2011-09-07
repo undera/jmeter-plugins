@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: kg.apc.jmeter.cmd.NewDriver
+Main-Class: kg.apc.cmd.NewDriver

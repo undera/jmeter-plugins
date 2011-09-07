@@ -1,9 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.cmd;
 
+import kg.apc.cmd.NewDriver;
+import java.net.MalformedURLException;
+import org.apache.jmeter.util.JMeterUtils;
 import java.net.URL;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,7 +16,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class NewDriverTest {
-    
+
     public NewDriverTest() {
     }
 
@@ -28,11 +27,12 @@ public class NewDriverTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
+        JMeterUtils.setJMeterHome("");
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -41,12 +41,10 @@ public class NewDriverTest {
      * Test of addURL method, of class NewDriver.
      */
     @Test
-    public void testAddURL() {
+    public void testAddURL_URL() throws MalformedURLException {
         System.out.println("addURL");
-        URL url = null;
+        URL url = new URL("http://localhost/");
         NewDriver.addURL(url);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -55,10 +53,8 @@ public class NewDriverTest {
     @Test
     public void testAddPath() throws Exception {
         System.out.println("addPath");
-        String path = "";
+        String path = "/";
         NewDriver.addPath(path);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -67,11 +63,8 @@ public class NewDriverTest {
     @Test
     public void testGetJMeterDir() {
         System.out.println("getJMeterDir");
-        String expResult = "";
         String result = NewDriver.getJMeterDir();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result.length()>0);
     }
 
     /**
@@ -80,9 +73,7 @@ public class NewDriverTest {
     @Test
     public void testMain() {
         System.out.println("main");
-        String[] args = null;
+        String[] args = "--help".split(" ");
         NewDriver.main(args);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

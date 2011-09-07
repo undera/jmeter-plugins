@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.cmd;
 
+import kg.apc.cmd.DynamicClassLoader;
 import java.net.URL;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,7 +14,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class DynamicClassLoaderTest {
-    
+
     public DynamicClassLoaderTest() {
     }
 
@@ -28,11 +25,11 @@ public class DynamicClassLoaderTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -43,11 +40,9 @@ public class DynamicClassLoaderTest {
     @Test
     public void testAddURL() {
         System.out.println("addURL");
-        URL url = null;
-        DynamicClassLoader instance = null;
+        URL url = getClass().getResource(".");
+        DynamicClassLoader instance = new DynamicClassLoader(new URL[0]);
         instance.addURL(url);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -56,9 +51,7 @@ public class DynamicClassLoaderTest {
     @Test
     public void testUpdateLoader() {
         System.out.println("updateLoader");
-        URL[] urls = null;
+        URL[] urls = new URL[0];
         DynamicClassLoader.updateLoader(urls);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

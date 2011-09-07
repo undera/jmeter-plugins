@@ -1,4 +1,4 @@
-package kg.apc.perfmon;
+package kg.apc.jmeter.perfmon.agent;
 
 import java.io.BufferedReader;
 import java.io.IOException;

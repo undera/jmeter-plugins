@@ -26,15 +26,21 @@ public class PerfMonCollector
     private static final String PERFMON = "PerfMon";
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String DATA_PROPERTY = "metricConnections";
+    private int interval;
     private Thread workerThread;
     private AgentConnector[] connectors = null;
     private HashMap<String, Long> oldValues = new HashMap<String, Long>();
 
     static {
-       String cfgTranslateHostName = JMeterUtils.getProperty("jmeterPlugin.perfmon.translateHostName");
+        String cfgTranslateHostName = JMeterUtils.getProperty("jmeterPlugin.perfmon.translateHostName");
         if (cfgTranslateHostName != null) {
             translateHostName = "true".equalsIgnoreCase(cfgTranslateHostName.trim());
         }
+    }
+
+    public PerfMonCollector() {
+        // TODO: document it
+        interval = JMeterUtils.getPropDefault("jmeterPlugin.perfmon.interval", 1000);
     }
 
     public void setData(CollectionProperty rows) {
@@ -55,7 +61,7 @@ public class PerfMonCollector
         while (true) {
             processConnectors();
             try {
-                this.wait(1000);
+                this.wait(interval);
             } catch (InterruptedException ex) {
                 log.debug("Monitoring thread was interrupted", ex);
                 break;
@@ -141,38 +147,38 @@ public class PerfMonCollector
         for (int i = 0; i < connectors.length; i++) {
             if (connectors[i] != null) {
                 String hostName;
-                if(PerfMonCollector.translateHostName) {
-                   hostName = connectors[i].getRemoteServerName();
+                if (PerfMonCollector.translateHostName) {
+                    hostName = connectors[i].getRemoteServerName();
                 } else {
-                   hostName = connectors[i].getHost();
+                    hostName = connectors[i].getHost();
                 }
                 label = hostName + " - " + AgentConnector.metrics.get(connectors[i].getMetricType());
 
                 try {
-                   switch (connectors[i].getMetricType()) {
-                       case AgentConnector.PERFMON_CPU:
-                           generateSample(100 * connectors[i].getCpu(), label+", %");
-                           break;
-                       case AgentConnector.PERFMON_MEM:
-                           generateSample((double) connectors[i].getMem() / MEGABYTE, label+ ", MB");
-                           break;
-                       case AgentConnector.PERFMON_SWAP:
-                           generate2Samples(connectors[i].getSwap(), label + " page in", label + " page out");
-                           break;
-                       case AgentConnector.PERFMON_DISKS_IO:
-                           generate2Samples(connectors[i].getDisksIO(), label + " reads", label + " writes");
-                           break;
-                       case AgentConnector.PERFMON_NETWORKS_IO:
-                           generate2Samples(connectors[i].getNetIO(), label + " recv, KB", label + " sent, KB", 1024d);
-                           break;
-                       default:
-                           log.error("Unknown metric index: " + connectors[i].getMetricType());
-                   }
-               } catch (PerfMonException e) {
+                    switch (connectors[i].getMetricType()) {
+                        case AgentConnector.PERFMON_CPU:
+                            generateSample(100 * connectors[i].getCpu(), label + ", %");
+                            break;
+                        case AgentConnector.PERFMON_MEM:
+                            generateSample((double) connectors[i].getMem() / MEGABYTE, label + ", MB");
+                            break;
+                        case AgentConnector.PERFMON_SWAP:
+                            generate2Samples(connectors[i].getSwap(), label + " page in", label + " page out");
+                            break;
+                        case AgentConnector.PERFMON_DISKS_IO:
+                            generate2Samples(connectors[i].getDisksIO(), label + " reads", label + " writes");
+                            break;
+                        case AgentConnector.PERFMON_NETWORKS_IO:
+                            generate2Samples(connectors[i].getNetIO(), label + " recv, KB", label + " sent, KB", 1024d);
+                            break;
+                        default:
+                            log.error("Unknown metric index: " + connectors[i].getMetricType());
+                    }
+                } catch (PerfMonException e) {
                     generateErrorSample(label, e.getMessage() + " (while getting " + label + ")");
                     log.error(e.getMessage());
                     connectors[i] = null;
-               }
+                }
             }
         }
     }
@@ -208,8 +214,8 @@ public class PerfMonCollector
     //float precision required for net io
     private void generate2Samples(long[] values, String label1, String label2, double dividingFactor) {
         if (oldValues.containsKey(label1) && oldValues.containsKey(label2)) {
-            generateSample(((double)(values[0] - oldValues.get(label1).longValue()))/dividingFactor, label1);
-            generateSample(((double)(values[1] - oldValues.get(label2).longValue()))/dividingFactor, label2);
+            generateSample(((double) (values[0] - oldValues.get(label1).longValue())) / dividingFactor, label1);
+            generateSample(((double) (values[1] - oldValues.get(label2).longValue())) / dividingFactor, label2);
         }
         oldValues.put(label1, new Long(values[0]));
         oldValues.put(label2, new Long(values[1]));

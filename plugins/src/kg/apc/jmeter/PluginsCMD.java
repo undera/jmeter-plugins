@@ -51,7 +51,7 @@ public class PluginsCMD extends AbstractCMDTool {
                 if (arg.equals("Reporter")) {
                     tool = new CMDReporterTool();
                 } else if (arg.equals("PerfMonAgent")) {
-                    tool = new PerfMonAgentTool();
+                    //tool = new PerfMonAgentTool();
                 }
                 args.remove();
             }
@@ -80,7 +80,7 @@ public class PluginsCMD extends AbstractCMDTool {
         CMDReporterTool tool = new CMDReporterTool();
         tool.showHelp(os);
 
-        PerfMonAgentTool agent = new PerfMonAgentTool();
-        agent.showHelp(os);
+        //PerfMonAgentTool agent = new PerfMonAgentTool();
+        //agent.showHelp(os);
     }
 }

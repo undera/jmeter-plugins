@@ -172,7 +172,7 @@ public class PerfMonWorker implements Runnable {
         buf.flip();
         log.debug("Read: " + buf.toString());
 
-        getter.addCommandString(JMeterPluginsUtils.byteBufferToString(buf));
+        getter.addCommandString(byteBufferToString(buf));
         try {
             while (getter.processNextCommand()) {
                 log.debug("Done executing command");
@@ -274,5 +274,11 @@ public class PerfMonWorker implements Runnable {
     public void setMetrics(String next) {
         // TODO: implement command-line printing mode for SSH transport
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    private static String byteBufferToString(ByteBuffer bytebuff) {
+        byte[] bytearr = new byte[bytebuff.remaining()];
+        bytebuff.get(bytearr);
+        return new String(bytearr);
     }
 }

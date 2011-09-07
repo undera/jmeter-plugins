@@ -69,58 +69,11 @@
     -->
 
     <target name="-pre-compile">
-        <mkdir dir="${build.dir}/agent"/>
-        <mkdir dir="${build.dir}/agent/classes"/>
-        <mkdir dir="${build.dir}/agent/generated-sources/ap-source-output"/>
         <mkdir dir="${build.dir}/cmd"/>
         <mkdir dir="${build.dir}/cmd/classes"/>
     </target>
 
     <target name="-post-compile">
-        <macrodef name="javacAgent">
-            <attribute default="agent/kg/apc/jmeter/perfmon/agent" name="srcdir"/>
-            <attribute default="${build.dir}/agent/classes" name="destdir"/>
-            <attribute default="${javac.classpath}" name="classpath"/>
-            <attribute default="${javac.processorpath}" name="processorpath"/>
-            <attribute default="${build.dir}/agent/generated-sources/ap-source-output" name="apgeneratedsrcdir"/>
-            <attribute default="${includes}" name="includes"/>
-            <attribute default="${excludes}" name="excludes"/>
-            <attribute default="${javac.debug}" name="debug"/>
-            <attribute default="${empty.dir}" name="sourcepath"/>
-            <attribute default="${empty.dir}" name="gensrcdir"/>
-            <element name="customize" optional="true"/>
-            <sequential>
-                <property location="${build.dir}/agent/empty" name="empty.dir"/>
-                <mkdir dir="${empty.dir}"/>
-                <mkdir dir="${java.io.tmpdir}"/>
-                <javac debug="@{debug}" deprecation="${javac.deprecation}"
-                        destdir="@{destdir}" encoding="${source.encoding}"
-                        excludes="@{excludes}" fork="${javac.fork}"
-                        includeantruntime="false" includes="@{includes}"
-                        source="1.4" sourcepath="@{sourcepath}"
-                        srcdir="@{srcdir}" target="1.4"
-                        tempdir="${java.io.tmpdir}">
-                    <src>
-                        <dirset dir="@{gensrcdir}" erroronmissingdir="false">
-                            <include name="*"/>
-                        </dirset>
-                    </src>
-                    <classpath>
-                        <path path="@{classpath}"/>
-                    </classpath>
-                    <compilerarg line="${endorsed.classpath.cmd.line.arg}"/>
-                    <compilerarg line="${javac.compilerargs}"/>
-                    <customize/>
-                </javac>
-            </sequential>
-        </macrodef>
-
-        <javacAgent/>
-
-        <copy todir="${build.dir}/agent/classes">
-            <fileset dir="${build.dir}/classes" excludes="${build.classes.excludes},${excludes}" includes="**/kg/apc/jmeter/perfmon/agent/*.class"/>
-        </copy>
-
         <copy todir="${build.dir}/cmd/classes">
             <fileset dir="${build.dir}/classes" includes="**/kg/apc/jmeter/cmd/*.class"/>
         </copy>
@@ -129,10 +82,6 @@
    <!-- APC: before making main jar we make agent's jar -->
     <target name="-pre-jar">
         <property location="./" name="svn.dir"/>
-        <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/ServerAgent.jar"
-      manifest="${svn.dir}/agent/kg/apc/jmeter/perfmon/agent/manifest.mf">
-            <fileset dir="${build.dir}/agent/classes"/>
-        </jar>
         <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/JMeterPluginsCMD.jar"
       manifest="${svn.dir}/cmdtool/kg/apc/jmeter/cmd/manifest.mf">
             <fileset dir="${build.dir}/cmd/classes"/>
@@ -141,11 +90,6 @@
 
    <!-- APC: I see no problems in making package always. It is quick enough now. -->
     <target name="-post-jar">
-      <!-- APC: I believe that it is much simplier to require Sigar
-           to be placed in sigar subdirectory, not requiring editing of build.xml
-           by each contributor... -->
-        <property location="sigar" name="sigar.dir"/>
-
       <!-- APC: what is svn.dir for us? it is just current dir!
            and again build.xml should be rarely modified file... -->
         <property location="./" name="svn.dir"/>
@@ -167,34 +111,19 @@
          <!-- JmeterPlugins files -->
             <zipfileset dir="${svn.dir}" includes="LICENSE README"/>
             <zipfileset dir="${dist.dir}" includes="JMeterPlugins.jar"/>
-         <!-- agent & CMD files -->
-            <zipfileset dir="${dist.dir}" includes="ServerAgent.jar" prefix="serverAgent"/>
+         <!-- CMD files -->
             <zipfileset dir="${dist.dir}" includes="JMeterPluginsCMD.jar" prefix="cmd"/>
             <zipfileset dir="${svn.dir}/agent" includes="JMeterPluginsCMD.*" prefix="cmd"/>
             <zipfileset dir="${svn.dir}/agent" includes="startAgent.*" prefix="serverAgent"/>
-         <!-- sigar files -->
-            <zipfileset dir="${sigar.dir}/sigar-bin/lib" includes="*.*" excludes="log4j.jar, junit.jar, .sigar_shellrc" prefix="serverAgent"/>
-            <zipfileset dir="${sigar.dir}" includes="COPYING EXCEPTIONS" prefix="serverAgent"/>
-            <zipfileset dir="${sigar.dir}" includes="LICENSES README" prefix="serverAgent"/>
-         <!-- exaple test plans -->
+         <!-- example test plans -->
             <zipfileset dir="${svn.dir}/examples" includes="*Example*.jmx" prefix="examples"/>
         </zip>
-
-      <!-- APC: fore easy debugging environment we copy files
-           for agent start to dist dir -->
-        <copy todir="${dist.dir}">
-            <fileset dir="${svn.dir}/agent" includes="*.sh" />
-            <fileset dir="${svn.dir}/agent" includes="*.bat" />
-            <fileset dir="${svn.dir}/agent" includes="*.cmd" />
-            <fileset dir="${sigar.dir}/sigar-bin/lib" includes="*.*" excludes="log4j.jar, junit.jar, .sigar_shellrc"/>
-        </copy>
 
       <!-- APC: fore easy debugging environment we copy JmeterPlugins.jar
            to jmeter/lib/ext, defined by property jmeter.lib.ext
            in project.properties files -->
         <copy todir="${jmeter.lib.ext}">
             <fileset dir="${dist.dir}" includes="*.jar" />
-            <fileset dir="${svn.dir}/agent" includes="*.*" />
         </copy>
     </target>
 

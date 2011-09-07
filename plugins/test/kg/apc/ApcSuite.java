@@ -1,6 +1,7 @@
 package kg.apc;
 
 import kg.apc.charting.ChartingSuite;
+import kg.apc.cmd.CmdSuite;
 import kg.apc.io.IoSuite;
 import kg.apc.jmeter.JmeterSuite;
 import org.junit.After;
@@ -15,7 +16,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({JmeterSuite.class, IoSuite.class, ChartingSuite.class})
+@Suite.SuiteClasses({IoSuite.class, ChartingSuite.class, CmdSuite.class, JmeterSuite.class})
 public class ApcSuite {
 
    @BeforeClass

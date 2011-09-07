@@ -2,17 +2,15 @@ package kg.apc.jmeter.perfmon.agent;
 
 import java.io.PrintWriter;
 import java.net.Socket;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *
  * @author APC
  */
-public class ConnectionThreadTest
+public class ConnectionThreadTest extends TestCase
 {
 
     private static ServerAgent agent;
@@ -22,7 +20,11 @@ public class ConnectionThreadTest
     {
     }
 
-    @BeforeClass
+    public static Test suite() {
+        TestSuite suite = new TestSuite(ConnectionThreadTest.class);
+        return suite;
+    }
+
     public static void setUpClass() throws Exception
     {
         agent = new ServerAgent(testPort);
@@ -31,23 +33,11 @@ public class ConnectionThreadTest
         Thread.sleep(2000);
     }
 
-    @AfterClass
     public static void tearDownClass() throws Exception
     {
         agent.stopService();
     }
 
-    @Before
-    public void setUp()
-    {
-    }
-
-    @After
-    public void tearDown()
-    {
-    }
-
-    @Test
     public void testRun() throws Exception
     {
         System.out.println("run");

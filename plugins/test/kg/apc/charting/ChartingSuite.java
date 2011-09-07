@@ -25,7 +25,7 @@ import org.junit.runners.Suite;
  * @author apc
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DividerRendererTest.class, GraphModelToCsvExporterTest.class, ElementsSuite.class, DateTimeRendererTest.class, ColorsDispatcherTest.class, AbstractGraphPanelChartElementTest.class, RowsSuite.class, AbstractGraphRowTest.class, GraphPanelChartTest.class, ChartSettingsTest.class})
+@Suite.SuiteClasses({ChartSettingsTest.class, ElementsSuite.class, DividerRendererTest.class, GraphModelToCsvExporterTest.class, RowsSuite.class, AbstractGraphRowTest.class, AbstractGraphPanelChartElementTest.class, ColorsDispatcherTest.class, DateTimeRendererTest.class, GraphPanelChartTest.class})
 public class ChartingSuite {
 
     /**

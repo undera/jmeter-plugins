@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GraphPanelTest.class, ChartRowsTableTest.class, HeaderClickCheckAllListenerTest.class, SettingsInterfaceTest.class, ColorRendererTest.class, HeaderAsTextRendererTest.class, CompositeNotifierInterfaceTest.class, AbstractOverTimeVisualizerTest.class, AbstractVsThreadVisualizerTest.class, AbstractGraphPanelVisualizerTest.class, JRowsSelectorPanelTest.class, GraphRendererInterfaceTest.class})
+@Suite.SuiteClasses({JRowsSelectorPanelTest.class, GraphPanelTest.class, CompositeNotifierInterfaceTest.class, AbstractVsThreadVisualizerTest.class, ColorRendererTest.class, HeaderClickCheckAllListenerTest.class, ChartRowsTableTest.class, GraphRendererInterfaceTest.class, HeaderAsTextRendererTest.class, AbstractGraphPanelVisualizerTest.class, SettingsInterfaceTest.class, AbstractOverTimeVisualizerTest.class})
 public class GraphsSuite {
 
    @BeforeClass

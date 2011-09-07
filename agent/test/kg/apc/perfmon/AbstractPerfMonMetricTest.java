@@ -1,43 +1,19 @@
 package kg.apc.perfmon;
 
-import kg.apc.perfmon.AbstractPerfMonMetric;
+import junit.framework.TestCase;
 import org.hyperic.sigar.SigarException;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author undera
  */
-public class AbstractPerfMonMetricTest {
+public class AbstractPerfMonMetricTest extends TestCase{
     
     public AbstractPerfMonMetricTest() {
     }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test of getValue method, of class AbstractPerfMonMetric.
      */
-    @Test
     public void testGetValue() throws Exception {
         System.out.println("getValue");
         StringBuilder res = null;
@@ -51,7 +27,6 @@ public class AbstractPerfMonMetricTest {
             super(null);
         }
 
-        @Override
         public void getValue(StringBuilder res) throws SigarException {
         }
     }

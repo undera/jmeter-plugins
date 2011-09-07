@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package kg.apc.io;
+package kg.apc.cmd;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,8 +16,8 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DatagramChannelWithTimeoutsTest.class, SocketChannelWithTimeoutsTest.class})
-public class IoSuite {
+@Suite.SuiteClasses({kg.apc.cmd.DynamicClassLoaderTest.class, kg.apc.cmd.NewDriverTest.class})
+public class CmdSuite {
 
     @BeforeClass
     public static void setUpClass() throws Exception {

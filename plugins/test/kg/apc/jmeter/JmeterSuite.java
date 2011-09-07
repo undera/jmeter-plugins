@@ -1,19 +1,9 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package kg.apc.jmeter;
 
-import kg.apc.jmeter.config.ConfigSuite;
-import kg.apc.jmeter.control.ControlSuite;
-import kg.apc.jmeter.dcerpc.DcerpcSuite;
-import kg.apc.jmeter.functions.FunctionsSuite;
-import kg.apc.jmeter.graphs.GraphsSuite;
-import kg.apc.jmeter.gui.GuiSuite;
-import kg.apc.jmeter.img.ImgSuite;
-import kg.apc.jmeter.modifiers.ModifiersSuite;
-import kg.apc.jmeter.perfmon.PerfmonSuite;
-import kg.apc.jmeter.reporters.ReportersSuite;
-import kg.apc.jmeter.samplers.SamplersSuite;
-import kg.apc.jmeter.threads.ThreadsSuite;
-import kg.apc.jmeter.timers.TimersSuite;
-import kg.apc.jmeter.vizualizers.VizualizersSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,17 +13,10 @@ import org.junit.runners.Suite;
 
 /**
  *
- * @author APC
+ * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({PerfmonSuite.class, GuiSuite.class, PluginsCMDTest.class, 
-    FunctionsSuite.class, JMeterPluginsUtilsTest.class, PluginsCMDWorkerTest.class, 
-    PerfMonAgentToolTest.class, VizualizersSuite.class, SamplersSuite.class, 
-    ImgSuite.class, CMDReporterToolTest.class, TimersSuite.class, 
-    RuntimeEOFExceptionTest.class, ConfigSuite.class, ThreadsSuite.class, 
-    ControlSuite.class, GraphsSuite.class, 
-    ReportersSuite.class, AbstractCMDToolTest.class,
-    DcerpcSuite.class, EndOfFileExceptionTest.class, ModifiersSuite.class})
+@Suite.SuiteClasses({kg.apc.jmeter.PluginsCMDWorkerTest.class, kg.apc.jmeter.samplers.SamplersSuite.class, kg.apc.jmeter.RuntimeEOFExceptionTest.class, kg.apc.jmeter.CMDReporterToolTest.class, kg.apc.jmeter.AbstractCMDToolTest.class, kg.apc.jmeter.threads.ThreadsSuite.class, kg.apc.jmeter.JMeterPluginsUtilsTest.class, kg.apc.jmeter.EndOfFileExceptionTest.class, kg.apc.jmeter.timers.TimersSuite.class, kg.apc.jmeter.gui.GuiSuite.class, kg.apc.jmeter.control.ControlSuite.class, kg.apc.jmeter.config.ConfigSuite.class, kg.apc.jmeter.vizualizers.VizualizersSuite.class, kg.apc.jmeter.functions.FunctionsSuite.class, kg.apc.jmeter.graphs.GraphsSuite.class, kg.apc.jmeter.modifiers.ModifiersSuite.class, kg.apc.jmeter.PluginsCMDTest.class, kg.apc.jmeter.reporters.ReportersSuite.class, kg.apc.jmeter.dcerpc.DcerpcSuite.class, kg.apc.jmeter.img.ImgSuite.class})
 public class JmeterSuite {
 
     @BeforeClass
@@ -51,4 +34,5 @@ public class JmeterSuite {
     @After
     public void tearDown() throws Exception {
     }
+    
 }

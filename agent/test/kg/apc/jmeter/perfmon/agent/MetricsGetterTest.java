@@ -1,40 +1,23 @@
 package kg.apc.jmeter.perfmon.agent;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *
  * @author APC
  */
-public class MetricsGetterTest {
+public class MetricsGetterTest extends TestCase{
 
     public MetricsGetterTest() {
     }
 
-   @BeforeClass
-   public static void setUpClass() throws Exception
-   {
-   }
-
-   @AfterClass
-   public static void tearDownClass() throws Exception
-   {
-   }
-
-    @Before
-    public void setUp() {
+    public static Test suite() {
+        TestSuite suite = new TestSuite(MetricsGetterTest.class);
+        return suite;
     }
 
-    @After
-    public void tearDown() {
-    }
-
-   @Test
    public void testGetInstance()
    {
       System.out.println("getInstance");
@@ -42,7 +25,6 @@ public class MetricsGetterTest {
       assertNotNull(result);
    }
 
-   @Test
    public void testInitNetworkInterfaces()
    {
       System.out.println("initNetworkInterfaces");
@@ -50,7 +32,6 @@ public class MetricsGetterTest {
       instance.initNetworkInterfaces();
    }
 
-   @Test
    public void testInitFileSystems()
    {
       System.out.println("initFileSystems");
@@ -58,7 +39,6 @@ public class MetricsGetterTest {
       instance.initFileSystems();
    }
 
-   @Test
    public void testGetValues()
    {
       System.out.println("getValues");
@@ -79,7 +59,6 @@ public class MetricsGetterTest {
     /**
      * Test of setPidToMonitor method, of class MetricsGetter.
      */
-    @Test
     public void testSetPidToMonitor() {
         System.out.println("setPidToMonitor");
         long pid = 1234L;
@@ -90,7 +69,6 @@ public class MetricsGetterTest {
     /**
      * Test of isPidFound method, of class MetricsGetter.
      */
-    @Test
     public void testIsPidFound() {
         System.out.println("isPidFound");
         long pid = 0L;

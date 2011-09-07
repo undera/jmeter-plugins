@@ -25,7 +25,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({PerfMonGuiTest.class, ResponseTimesPercentilesGuiTest.class, JSettingsPanelTest.class, CompositeResultCollectorTest.class, AggregateReportGuiTest.class, ThreadsStateOverTimeGuiTest.class, ThroughputOverTimeGuiTest.class, TransactionsPerSecondGuiTest.class, ResponseTimesOverTimeGuiTest.class, TimesVsThreadsGuiTest.class, ResponseTimesDistributionGuiTest.class, BytesThroughputOverTimeGuiTest.class, CompositeModelTest.class, CorrectedResultCollectorTest.class, ThroughputVsThreadsGuiTest.class, TotalTransactionsPerSecondGuiTest.class, LatenciesOverTimeGuiTest.class, JCompositeRowsSelectorPanelTest.class, ResponseCodesPerSecondGuiTest.class, CompositeGraphGuiTest.class, HitsPerSecondGuiTest.class})
+@Suite.SuiteClasses({ThreadsStateOverTimeGuiTest.class, JSettingsPanelTest.class, CorrectedResultCollectorTest.class, HitsPerSecondGuiTest.class, AggregateReportGuiTest.class, CompositeResultCollectorTest.class, ThroughputVsThreadsGuiTest.class, ThroughputOverTimeGuiTest.class, TransactionsPerSecondGuiTest.class, TimesVsThreadsGuiTest.class, ResponseTimesPercentilesGuiTest.class, PerfMonGuiTest.class, JCompositeRowsSelectorPanelTest.class, BytesThroughputOverTimeGuiTest.class, ResponseTimesDistributionGuiTest.class, ResponseTimesOverTimeGuiTest.class, ResponseCodesPerSecondGuiTest.class, TotalTransactionsPerSecondGuiTest.class, CompositeGraphGuiTest.class, LatenciesOverTimeGuiTest.class, CompositeModelTest.class})
 public class VizualizersSuite {
 
     @BeforeClass

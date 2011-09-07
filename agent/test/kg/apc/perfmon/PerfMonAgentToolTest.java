@@ -1,25 +1,18 @@
-package kg.apc.jmeter;
+package kg.apc.perfmon;
 
-import kg.apc.perfmon.PerfMonWorker;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ListIterator;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
 /**
  *
  * @author undera
  */
-public class PerfMonAgentToolTest {
+public class PerfMonAgentToolTest extends TestCase{
 
     private static class PerfMonAgentToolEmul extends PerfMonAgentTool {
 
-        @Override
         protected PerfMonWorker getWorker() throws IOException {
             return new PerfMonWorkerEmul();
         }
@@ -34,18 +27,15 @@ public class PerfMonAgentToolTest {
             super();
         }
 
-        @Override
         public void processCommands() throws IOException {
             finished = true;
             rc = 0;
         }
 
-        @Override
         public boolean isFinished() {
             return finished;
         }
 
-        @Override
         public int getExitCode() {
             return rc;
         }
@@ -54,29 +44,13 @@ public class PerfMonAgentToolTest {
     public PerfMonAgentToolTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Test of processParams method, of class PerfMonAgentTool.
      */
-    @Test
     public void testProcessParams() {
         System.out.println("processParams");
-        ListIterator<String> args = PluginsCMD.argsArrayToListIterator("--tcp-port 4444 --udp-port 4444".split(" "));
+        ListIterator args = null;//PluginsCMD.argsArrayToListIterator("--tcp-port 4444 --udp-port 4444".split(" "));
         PerfMonAgentTool instance = new PerfMonAgentToolEmul();
 
         int expResult = 0;
@@ -87,7 +61,6 @@ public class PerfMonAgentToolTest {
     /**
      * Test of showHelp method, of class PerfMonAgentTool.
      */
-    @Test
     public void testShowHelp() {
         System.out.println("showHelp");
         PrintStream os = System.out;
@@ -98,7 +71,6 @@ public class PerfMonAgentToolTest {
     /**
      * Test of getWorker method, of class PerfMonAgentTool.
      */
-    @Test
     public void testGetWorker() throws Exception {
         System.out.println("getWorker");
         PerfMonAgentTool instance = new PerfMonAgentTool();

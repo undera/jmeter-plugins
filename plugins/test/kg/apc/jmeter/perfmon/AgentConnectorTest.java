@@ -5,7 +5,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import kg.apc.jmeter.perfmon.agent.ServerAgent;
 import kg.apc.emulators.SocketEmulator;
 import kg.apc.emulators.SocketEmulatorInputStream;
 import org.junit.After;
@@ -24,6 +23,24 @@ public class AgentConnectorTest
    private static AgentConnector instance;
    private static ServerAgent agent;
    private static int testPort = 4567;
+
+    private static class ServerAgent {
+
+        public ServerAgent() {
+        }
+
+        private ServerAgent(int testPort) {
+            throw new UnsupportedOperationException("Not yet implemented");
+        }
+
+        private void startServiceAsThread() {
+            throw new UnsupportedOperationException("Not yet implemented");
+        }
+
+        private void stopService() {
+            throw new UnsupportedOperationException("Not yet implemented");
+        }
+    }
    private SocketEmulator socketEmulator;
 
    public AgentConnectorTest()

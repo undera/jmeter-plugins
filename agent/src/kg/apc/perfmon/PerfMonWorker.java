@@ -34,8 +34,8 @@ public class PerfMonWorker implements Runnable {
     private final Thread writerThread;
     private final Selector sendSelector;
     private DatagramChannel udpServer;
-    private final LinkedList<SelectableChannel> tcpConnections = new LinkedList<SelectableChannel>();
-    private final HashMap<SocketAddress, PerfMonMetricGetter> udpConnections = new HashMap<SocketAddress, PerfMonMetricGetter>();
+    private final LinkedList tcpConnections = new LinkedList();
+    private final HashMap udpConnections = new HashMap();
 
     public PerfMonWorker() throws IOException {
         acceptSelector = Selector.open();
@@ -166,7 +166,7 @@ public class PerfMonWorker implements Runnable {
                 log.debug("Connecting new UDP client");
                 udpConnections.put(remoteAddr, new PerfMonMetricGetter(this, channel));
             }
-            getter = udpConnections.get(remoteAddr);
+            getter = (PerfMonMetricGetter) udpConnections.get(remoteAddr);
         }
 
         buf.flip();
@@ -185,9 +185,9 @@ public class PerfMonWorker implements Runnable {
     public void shutdownConnections() throws IOException {
         log.debug("Shutdown connections");
         isFinished = true;
-        Iterator<SelectableChannel> it = tcpConnections.iterator();
+        Iterator it = tcpConnections.iterator();
         while (it.hasNext()) {
-            SelectableChannel entry = it.next();
+            SelectableChannel entry = (SelectableChannel) it.next();
             log.debug("Closing " + entry);
             entry.close();
             it.remove();
@@ -204,7 +204,6 @@ public class PerfMonWorker implements Runnable {
         sendSelector.close();
     }
 
-    @Override
     public void run() {
         while (!isFinished) {
             try {
@@ -261,10 +260,10 @@ public class PerfMonWorker implements Runnable {
     }
 
     private void sendToUDP(SelectionKey key) throws IOException {
-        Iterator<SocketAddress> it = udpConnections.keySet().iterator();
+        Iterator it = udpConnections.keySet().iterator();
         while (it.hasNext()) {
-            SocketAddress addr = it.next();
-            PerfMonMetricGetter getter = udpConnections.get(addr);
+            SocketAddress addr = (SocketAddress) it.next();
+            PerfMonMetricGetter getter = (PerfMonMetricGetter) udpConnections.get(addr);
             if (getter.isStarted()) {
                 ByteBuffer metrics = getter.getMetricsLine();
                 ((DatagramChannel) key.channel()).send(metrics, addr);

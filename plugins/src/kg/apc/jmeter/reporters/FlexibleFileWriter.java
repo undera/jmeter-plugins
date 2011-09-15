@@ -182,6 +182,20 @@ public class FlexibleFileWriter
         lock.release();
     }
 
+    /*
+     * we work with timestamps, so we assume number > 1000 to avoid tests
+     * to be faster
+     */
+    private String getShiftDecimal(long number, int shift) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(number);
+
+        int index = builder.length() - shift;
+        builder.insert(index, ".");
+
+        return builder.toString();
+    }
+
     private void appendSampleResultField(ByteBuffer buf, SampleResult result, int fieldID) {
         // IMPORTANT: keep this as fast as possible
         switch (fieldID) {
@@ -242,11 +256,11 @@ public class FlexibleFileWriter
                 break;
 
             case 12:
-                buf.put((String.valueOf(result.getStartTime() / 1000) + '.' + String.valueOf(result.getStartTime() % 1000)).getBytes());
+                buf.put(getShiftDecimal(result.getStartTime(), 3).getBytes());
                 break;
 
             case 13:
-                buf.put((String.valueOf(result.getEndTime() / 1000) + '.' + String.valueOf(result.getEndTime() % 1000)).getBytes());
+                buf.put(getShiftDecimal(result.getEndTime(), 3).getBytes());
                 break;
 
             case 14:

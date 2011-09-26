@@ -25,8 +25,8 @@ import org.apache.log.Logger;
 public class RawRequestSourcePreProcessor
         extends AbstractTestElement
         implements PreProcessor, NoThreadClone {
-    public static final String regexp = "\\s";
 
+    public static final String regexp = "\\s";
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String VARIABLE_NAME = "variable_name";
     public static final String FILENAME = "filename";
@@ -39,6 +39,7 @@ public class RawRequestSourcePreProcessor
         super();
     }
 
+    @Override
     public synchronized void process() {
         if (file == null) {
             log.info("Creating file object: " + getFileName());
@@ -55,7 +56,9 @@ public class RawRequestSourcePreProcessor
             rawData = readNextChunk(getNextChunkSize());
         } catch (EndOfFileException ex) {
             if (getRewindOnEOF()) {
-                if (log.isDebugEnabled()) log.debug("Rewind file");
+                if (log.isDebugEnabled()) {
+                    log.debug("Rewind file");
+                }
                 try {
                     file.position(0);
                 } catch (IOException ex1) {
@@ -65,7 +68,9 @@ public class RawRequestSourcePreProcessor
                 return;
             } else {
                 log.info("End of file reached: " + getFileName());
-                JMeterContextService.getContext().getThread().stop();
+                if (JMeterContextService.getContext().getThread() != null) {
+                    JMeterContextService.getContext().getThread().stop();
+                }
                 throw new RuntimeEOFException("End of file reached", ex);
             }
         } catch (IOException ex) {
@@ -96,7 +101,9 @@ public class RawRequestSourcePreProcessor
 
         buf.flip();
         buf.get(dst);
-        if (log.isDebugEnabled()) log.debug("Chunk : "+new String(dst));
+        if (log.isDebugEnabled()) {
+            log.debug("Chunk : " + new String(dst));
+        }
 
         return new String(dst);
     }
@@ -128,7 +135,9 @@ public class RawRequestSourcePreProcessor
         metaBuf.get(bLine);
         String sLine = new String(bLine).trim();
         String[] ar = sLine.split(regexp);
-        if (log.isDebugEnabled()) log.debug("Chunk size: "+ar[0]);
+        if (log.isDebugEnabled()) {
+            log.debug("Chunk size: " + ar[0]);
+        }
 
         int res = 0;
         try {

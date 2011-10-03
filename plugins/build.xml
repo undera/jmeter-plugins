@@ -77,6 +77,10 @@
         <copy todir="${build.dir}/cmd/classes">
             <fileset dir="${build.dir}/classes" includes="**/kg/apc/jmeter/cmd/*.class"/>
         </copy>
+         <!-- SH: Copy Agent shared interface dependency, to have standalone plugins jar -->
+        <copy todir="${build.dir}/classes/kg/apc/jmeter/perfmon" >
+            <fileset dir="${svn.dir}/../../agent/build/classes/kg/apc/jmeter/perfmon" includes="agent/AgentCommandsInterface.class"/>
+        </copy>
     </target>
 
    <!-- APC: before making main jar we make agent's jar -->

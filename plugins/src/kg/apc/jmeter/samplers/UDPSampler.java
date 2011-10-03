@@ -10,6 +10,7 @@ import java.nio.channels.DatagramChannel;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.ThreadListener;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -100,7 +101,8 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
     private ByteArrayOutputStream readResponse(SampleResult res) throws IOException {
         ByteArrayOutputStream response = new ByteArrayOutputStream();
         int cnt = 0;
-        recvBuf.clear();
+        ByteBuffer recvBuf = ByteBuffer.allocateDirect(recvBufSize);
+        //recvBuf.clear();
         if ((cnt = channel.read(recvBuf)) != -1) {
             res.latencyEnd();
             //log.debug("Read " + recvBuf.toString());

@@ -46,7 +46,10 @@ public class HTTPRawSampler extends AbstractIPSampler {
 
     protected byte[] readResponse(SocketChannel channel, SampleResult res) throws IOException {
         ByteArrayOutputStream response = new ByteArrayOutputStream();
-        recvBuf.clear();
+
+        ByteBuffer recvBuf = ByteBuffer.allocateDirect(recvBufSize);
+
+        //recvBuf.clear();
         boolean firstPack = true;
         int cnt = 0;
         int responseSize = 0;

@@ -122,6 +122,11 @@
             <zipfileset dir="${svn.dir}/src/kg/apc/cmd" includes="JMeterPluginsCMD.*" prefix="cmd"/>
          <!-- example test plans -->
             <zipfileset dir="${svn.dir}/../examples" includes="*Example*.jmx" prefix="examples"/>
+         <!-- agent -->
+            <zipfileset dir="${svn.dir}/../agent/dist" includes="ServerAgent.jar" prefix="serverAgent"/>
+            <zipfileset dir="${svn.dir}/../agent/sigar/sigar-bin/lib" includes="*.*" excludes="junit.jar,log4j.jar,.sigar_shellrc" prefix="serverAgent"/>
+            <zipfileset dir="${svn.dir}/../agent" includes="startAgent.*" prefix="serverAgent"/>
+            <zipfileset dir="${svn.dir}/../agent/sigar" includes="COPYING,EXCEPTIONS,LICENSES,README" prefix="serverAgent"/>
         </zip>
 
       <!-- APC: fore easy debugging environment we copy JmeterPlugins.jar

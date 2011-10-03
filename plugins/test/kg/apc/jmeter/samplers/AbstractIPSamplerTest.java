@@ -1,6 +1,7 @@
 package kg.apc.jmeter.samplers;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
@@ -203,5 +204,16 @@ public class AbstractIPSamplerTest {
             return true;
         }
     }
+
+   /**
+    * Test of getRecvBuf method, of class AbstractIPSampler.
+    */
+   @Test
+   public void testGetRecvBuf() {
+      System.out.println("getRecvBuf");
+      AbstractIPSampler instance = new AbstractIPSamplerImpl();
+      ByteBuffer result = instance.getRecvBuf();
+      assertNotNull(result);
+   }
 
 }

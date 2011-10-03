@@ -3,6 +3,7 @@ package kg.apc.jmeter.samplers;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.SocketTimeoutException;
+import java.nio.ByteBuffer;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.AbstractSampler;
@@ -33,7 +34,7 @@ public abstract class AbstractIPSampler
     public static final String RC200 = "200";
     public static final String RC500 = "500";
     protected final static int recvBufSize = JMeterUtils.getPropDefault(RECV_BUFFER_LEN_PROPERTY, 1024 * 4);
-    //protected final ByteBuffer recvBuf;
+    private transient ByteBuffer recvBuf;
     protected final int recvDataLimit;
 
     public AbstractIPSampler() {
@@ -42,6 +43,13 @@ public abstract class AbstractIPSampler
         if (recvDataLimit < Integer.MAX_VALUE) {
             log.info("Limiting result data to " + recvDataLimit);
         }
+    }
+
+    public ByteBuffer getRecvBuf() {
+       if(recvBuf == null) {
+          recvBuf = ByteBuffer.allocateDirect(recvBufSize);
+       }
+       return recvBuf;
     }
 
     public final String getHostName() {

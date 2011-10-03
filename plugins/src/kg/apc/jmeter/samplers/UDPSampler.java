@@ -101,8 +101,8 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
     private ByteArrayOutputStream readResponse(SampleResult res) throws IOException {
         ByteArrayOutputStream response = new ByteArrayOutputStream();
         int cnt = 0;
-        ByteBuffer recvBuf = ByteBuffer.allocateDirect(recvBufSize);
-        //recvBuf.clear();
+        ByteBuffer recvBuf = getRecvBuf();
+        recvBuf.clear();
         if ((cnt = channel.read(recvBuf)) != -1) {
             res.latencyEnd();
             //log.debug("Read " + recvBuf.toString());

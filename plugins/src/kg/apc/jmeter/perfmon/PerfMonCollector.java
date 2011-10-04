@@ -85,7 +85,7 @@ public class PerfMonCollector
            if(getProperty(FILENAME) == null || getProperty(FILENAME).getStringValue().trim().length() == 0) {
               setupSaving();
            } else {
-              informUser("perfMon metrics will be stored in: " + getProperty(FILENAME));
+              informUser("INFO: PerfMon metrics will be stored in: " + getProperty(FILENAME));
            }
         }
 
@@ -102,7 +102,7 @@ public class PerfMonCollector
        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
        String fileName = "perfMon_" + formatter.format(now.getTime()) + ".csv";
        setFilename(fileName);
-       informUser("perfMon metrics will be stored in: " + fileName);
+       informUser("INFO: PerfMon metrics will be stored in: " + fileName);
     }
 
     @Override

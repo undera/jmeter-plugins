@@ -1,5 +1,6 @@
 package kg.apc.jmeter.perfmon;
 
+import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,17 +45,28 @@ public class PerfMonSampleResultTest {
       PerfMonSampleResult instance = new PerfMonSampleResult();
       instance.setValue(value);
    }
+   /**
+    * Test of getValue method, of class PerfMonSampleResult.
+    */
+   @Test
+   public void testGetValue_0args() {
+      System.out.println("getValue");
+      PerfMonSampleResult instance = new PerfMonSampleResult();
+      instance.setValue(123.0);
+      double expResult = 123.0;
+      double result = instance.getValue();
+      assertEquals(expResult, result, 0.0);
+   }
 
-    /**
-     * Test of getValue method, of class PerfMonSampleResult.
-     */
-    @Test
-    public void testGetValue() {
-        System.out.println("getValue");
-        PerfMonSampleResult instance = new PerfMonSampleResult();
-        instance.setValue(123.0);
-        double expResult = 123.0;
-        double result = instance.getValue();
-        assertEquals(expResult, result, 0.0);
-    }
+   /**
+    * Test of getValue method, of class PerfMonSampleResult.
+    */
+   @Test
+   public void testGetValue_SampleResult() {
+      System.out.println("getValue");
+      SampleResult res = new SampleResult(1000000, 123 * 1000);
+      double expResult = 123;
+      double result = PerfMonSampleResult.getValue(res);
+      assertEquals(expResult, result, 0.0);
+   }
 }

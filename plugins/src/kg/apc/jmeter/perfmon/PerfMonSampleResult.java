@@ -23,7 +23,13 @@ public class PerfMonSampleResult
         //setEndTime(ts + (int) (value * 1000));
     }
 
+    @Deprecated
     public double getValue() {
         return ((double) getTime()) / 1000d;
+    }
+
+    //needed for CSV reload as object created by JMeter is not PerfMonSampleResult but SampleResult
+    public static double getValue(SampleResult res) {
+       return ((double) res.getTime()) / 1000d;
     }
 }

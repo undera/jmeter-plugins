@@ -215,7 +215,8 @@ public class PerfMonGui
     public void add(SampleResult res) {
         if (res.isSuccessful()) {
             super.add(res);
-            addPerfMonRecord(res.getSampleLabel(), normalizeTime(res.getStartTime()), ((PerfMonSampleResult) res).getValue());
+            //FIX csv reload problem
+            addPerfMonRecord(res.getSampleLabel(), normalizeTime(res.getStartTime()), PerfMonSampleResult.getValue(res));
             updateGui(null);
         } else {
             addErrorMessage(res.getResponseMessage(), res.getStartTime());

@@ -3,8 +3,12 @@ package kg.apc.jmeter.perfmon;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
+import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -69,14 +73,36 @@ public class PerfMonCollector
         }
     }
 
+    private void informUser(String msg) {
+       log.info(msg);
+       System.out.println(msg);
+    }
+
     @Override
     public void testStarted(String host) {
+        //if we run in non gui mode, ensure the data will be saved
+        if(GuiPackage.getInstance() == null) {
+           if(getProperty(FILENAME) == null || getProperty(FILENAME).getStringValue().trim().length() == 0) {
+              setupSaving();
+           } else {
+              informUser("perfMon metrics will be stored in: " + getProperty(FILENAME));
+           }
+        }
+
         initiateConnectors();
 
         workerThread = new Thread(this);
         workerThread.start();
 
         super.testStarted(host);
+    }
+
+    private void setupSaving() {
+       Calendar now = Calendar.getInstance();
+       SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
+       String fileName = "perfMon_" + formatter.format(now.getTime()) + ".csv";
+       setFilename(fileName);
+       informUser("perfMon metrics will be stored in: " + fileName);
     }
 
     @Override

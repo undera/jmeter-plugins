@@ -75,7 +75,7 @@
 
     <target name="-post-compile">
         <copy todir="${build.dir}/cmd/classes">
-            <fileset dir="${build.dir}/classes" includes="**/kg/apc/jmeter/cmd/*.class"/>
+            <fileset dir="${build.dir}/classes" includes="**/kg/apc/cmd/*.class"/>
         </copy>
          <!-- SH: Copy Agent shared interface dependency, to have standalone plugins jar -->
         <copy todir="${build.dir}/classes/kg/apc/jmeter/perfmon" >

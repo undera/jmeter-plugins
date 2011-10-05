@@ -1,5 +1,6 @@
 package kg.apc.jmeter.perfmon;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -7,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
@@ -26,6 +26,8 @@ public class PerfMonCollector
         implements Runnable {
 
     private static boolean translateHostName = false;
+    private static boolean autoGenerateFiles = false;
+
     private static final long MEGABYTE = 1024L * 1024L;
     private static final String PERFMON = "PerfMon";
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -35,11 +37,32 @@ public class PerfMonCollector
     private AgentConnector[] connectors = null;
     private HashMap<String, Long> oldValues = new HashMap<String, Long>();
 
+    private static String autoFileBaseName = null;
+    private static int counter = 0;
+
     static {
         String cfgTranslateHostName = JMeterUtils.getProperty("jmeterPlugin.perfmon.translateHostName");
         if (cfgTranslateHostName != null) {
             translateHostName = "true".equalsIgnoreCase(cfgTranslateHostName.trim());
+            autoGenerateFiles = (JMeterUtils.getPropDefault("forcePerfmonFile", "false")).trim().equalsIgnoreCase("true");
         }
+    }
+
+    private static synchronized String getAutoFileName() {
+       String ret = "";
+       counter++;
+       if(autoFileBaseName == null) {
+          Calendar now = Calendar.getInstance();
+          SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
+          autoFileBaseName = "perfMon_" + formatter.format(now.getTime());
+       }
+       ret = ret + autoFileBaseName;
+       if(counter > 1) {
+          ret = ret + "_" + counter;
+       }
+       ret = ret + ".csv";
+
+       return ret;
     }
 
     public PerfMonCollector() {
@@ -83,9 +106,13 @@ public class PerfMonCollector
         //if we run in non gui mode, ensure the data will be saved
         if(GuiPackage.getInstance() == null) {
            if(getProperty(FILENAME) == null || getProperty(FILENAME).getStringValue().trim().length() == 0) {
-              setupSaving();
+              if(autoGenerateFiles) {
+                 setupSaving();
+              } else {
+                 informUser("[WARN] PerfMon metrics will not be recorded! Please run the test with -JforcePerfmonFile=true");
+              }
            } else {
-              informUser("INFO: PerfMon metrics will be stored in: " + getProperty(FILENAME));
+              informUser("[INFO] PerfMon metrics will be stored in " + getProperty(FILENAME));
            }
         }
 
@@ -98,17 +125,19 @@ public class PerfMonCollector
     }
 
     private void setupSaving() {
-       Calendar now = Calendar.getInstance();
-       SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
-       String fileName = "perfMon_" + formatter.format(now.getTime()) + ".csv";
+       String fileName = getAutoFileName();
        setFilename(fileName);
-       informUser("INFO: PerfMon metrics will be stored in: " + fileName);
+       informUser("[INFO] PerfMon metrics will be stored in " + new File(fileName).getAbsolutePath());
     }
 
     @Override
     public void testEnded(String host) {
         workerThread.interrupt();
         shutdownConnectors();
+
+        //reset autoFileName for next test run
+        autoFileBaseName = null;
+        counter = 0;
 
         super.testEnded(host);
     }

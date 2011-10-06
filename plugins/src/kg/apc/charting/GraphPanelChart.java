@@ -252,18 +252,22 @@ public class GraphPanelChart
         xAxisRect = new Rectangle();
         chartRect = new Rectangle();
 
-        registerPopup(allowCsvExport);
-
-        hoverLabel = new JTextField();
-        hoverLabel.setEditable(false);
-        hoverLabel.setOpaque(false);
-        hoverLabel.setBorder(null);
-        hoverLabel.setFont(new java.awt.Font("Tahoma", 0, 11));
-
-        hoverWindow = new Window(SwingUtilities.windowForComponent(this));
-        hoverWindow.setBackground(gradientColor);
-        hoverWindow.add(hoverLabel, BorderLayout.CENTER);
-        registerHoverInfo();
+        //attempt to fix CMD in unix without X11
+        //no need to register anything in non GUI mode
+        if(GuiPackage.getInstance() != null) {
+          registerPopup(allowCsvExport);
+  
+          hoverLabel = new JTextField();
+          hoverLabel.setEditable(false);
+          hoverLabel.setOpaque(false);
+          hoverLabel.setBorder(null);
+          hoverLabel.setFont(new java.awt.Font("Tahoma", 0, 11));
+  
+          hoverWindow = new Window(SwingUtilities.windowForComponent(this));
+          hoverWindow.setBackground(gradientColor);
+          hoverWindow.add(hoverLabel, BorderLayout.CENTER);
+          registerHoverInfo();
+        }
     }
 
     public GraphPanelChart() {

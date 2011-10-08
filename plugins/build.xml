@@ -146,20 +146,6 @@
             <fileset dir="${svn.dir}/src/kg/apc/cmd" includes="JMeterPluginsCMD.*" />
         </copy>
 
-        <!-- SH: same for perfmon agent,  defined by property perfmon.agent.dir
-           in project.properties files -->
-        <fail message="perfmon.agent.dir not available">
-            <condition>
-                <not>
-                    <available file="${perfmon.agent.dir}" />
-                </not>
-            </condition>
-        </fail>
-
-        <copy todir="${perfmon.agent.dir}">
-            <fileset dir="${svn.dir}/../agent/dist" includes="ServerAgent.jar" />
-            <fileset dir="${svn.dir}/../agent" includes="startAgent.*" />
-        </copy>
     </target>
 
 </project>

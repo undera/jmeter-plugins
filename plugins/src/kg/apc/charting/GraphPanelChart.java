@@ -10,6 +10,7 @@ import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
@@ -256,7 +257,7 @@ public class GraphPanelChart
         //attempt to fix CMD in unix without X11
         //no need to register anything in non GUI mode
         //second test required for unit test mode
-        if(GuiPackage.getInstance() != null && GuiPackage.getInstance().getMainFrame() != null) {
+        if(GuiPackage.getInstance() != null && !GraphicsEnvironment.isHeadless()) {
           registerPopup(allowCsvExport);
           hoverLabel = new JTextField();
           hoverLabel.setEditable(false);

@@ -256,9 +256,8 @@ public class GraphPanelChart
         //attempt to fix CMD in unix without X11
         //no need to register anything in non GUI mode
         //second test required for unit test mode
-        if(GuiPackage.getInstance() != null || GuiPackage.getInstance().getMainFrame() == null) {
+        if(GuiPackage.getInstance() != null && GuiPackage.getInstance().getMainFrame() != null) {
           registerPopup(allowCsvExport);
-  
           hoverLabel = new JTextField();
           hoverLabel.setEditable(false);
           hoverLabel.setOpaque(false);

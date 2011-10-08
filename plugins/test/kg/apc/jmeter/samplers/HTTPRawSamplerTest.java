@@ -256,7 +256,7 @@ public class HTTPRawSamplerTest {
         instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
         byte[] result = instance.processIO(res);
         System.out.println(result.length);
-        assertEquals(1024, result.length);
+        assertEquals(4096, result.length);
     }
 
     /**

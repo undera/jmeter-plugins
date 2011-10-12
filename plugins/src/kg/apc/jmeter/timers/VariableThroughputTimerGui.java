@@ -192,14 +192,14 @@ public class VariableThroughputTimerGui
         int prevRPS = 0;
         while ((rps = tg.getRPSForSecond(n)) >= 0) {
             if (rps != prevRPS) {
-                row.add(now + (n-1) * 1000, prevRPS);
+                if(n > 0) row.add(now + (n-1) * 1000, prevRPS);
                 row.add(now + n * 1000, rps);
                 log.debug("Rps " + rps);
                 prevRPS = rps;
             }
             n++;
         }
-        row.add(now + (n-1) * 1000, prevRPS);
+        if(n > 0) row.add(now + (n-1) * 1000, prevRPS);
 
         row.setColor(Color.blue);
         model.put("Expected RPS", row);

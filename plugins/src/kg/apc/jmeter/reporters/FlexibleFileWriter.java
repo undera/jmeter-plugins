@@ -48,7 +48,9 @@ public class FlexibleFileWriter
     private static final String OVERWRITE = "overwrite";
     private static final String FILENAME = "filename";
     private static final String COLUMNS = "columns";
+    private static final String VAR_PREFIX = "variable#";
     protected volatile FileChannel fileChannel;
+    private int[] compiledVars;
     private int[] compiledFields;
     private ByteBuffer[] compiledConsts;
     private ArrayList<String> availableFieldNames = new ArrayList<String>(Arrays.asList(AVAILABLE_FIELDS.trim().split(" ")));
@@ -130,6 +132,7 @@ public class FlexibleFileWriter
         String[] chunks = JMeterPluginsUtils.replaceRNT(getColumns()).split("\\|");
         log.debug("Chunks " + chunks.length);
         compiledFields = new int[chunks.length];
+        compiledVars = new int[chunks.length];
         compiledConsts = new ByteBuffer[chunks.length];
         for (int n = 0; n < chunks.length; n++) {
             int fieldID = availableFieldNames.indexOf(chunks[n]);
@@ -137,13 +140,26 @@ public class FlexibleFileWriter
                 //log.debug(chunks[n] + " field id: " + fieldID);
                 compiledFields[n] = fieldID;
             } else {
-                log.debug(chunks[n] + " is const");
-                if (chunks[n].length() == 0) {
-                    //log.debug("Empty const, treated as |");
-                    chunks[n] = "|";
-                }
+                compiledFields[n] = -1;
+                compiledVars[n] = -1;
+                if (chunks[n].indexOf(VAR_PREFIX) >= 0) {
+                    log.debug(chunks[n] + " is sample variable");
+                    String varN = chunks[n].substring(VAR_PREFIX.length());
+                    try {
+                        compiledVars[n] = Integer.parseInt(varN);
+                    } catch (NumberFormatException e) {
+                        log.error("Seems it is not variable spec: " + chunks[n]);
+                        compiledConsts[n] = ByteBuffer.wrap(chunks[n].getBytes());
+                    }
+                } else {
+                    log.debug(chunks[n] + " is const");
+                    if (chunks[n].length() == 0) {
+                        //log.debug("Empty const, treated as |");
+                        chunks[n] = "|";
+                    }
 
-                compiledConsts[n] = ByteBuffer.wrap(chunks[n].getBytes());
+                    compiledConsts[n] = ByteBuffer.wrap(chunks[n].getBytes());
+                }
             }
         }
     }
@@ -181,7 +197,9 @@ public class FlexibleFileWriter
                     buf.put(compiledConsts[n].duplicate());
                 }
             } else {
-                appendSampleResultField(buf, evt.getResult(), compiledFields[n]);
+                if (!appendSampleResultField(buf, evt.getResult(), compiledFields[n])) {
+                    appendSampleVariable(buf, evt, compiledVars[n]);
+                }
             }
         }
 
@@ -214,7 +232,22 @@ public class FlexibleFileWriter
         return builder.toString();
     }
 
-    private void appendSampleResultField(ByteBuffer buf, SampleResult result, int fieldID) {
+    private void appendSampleVariable(ByteBuffer buf, SampleEvent evt, int varID) {
+        log.info("Len:" + SampleEvent.getVarCount());
+        log.info("0:" + evt.getVarValue(0));
+        if (evt.getVarValue(varID) != null) {
+            buf.put(evt.getVarValue(varID).getBytes());
+        }
+    }
+
+    /**
+     * 
+     * @param buf
+     * @param result
+     * @param fieldID
+     * @return boolean true if existing field found, false instead
+     */
+    private boolean appendSampleResultField(ByteBuffer buf, SampleResult result, int fieldID) {
         // IMPORTANT: keep this as fast as possible
         switch (fieldID) {
             case 0:
@@ -302,7 +335,8 @@ public class FlexibleFileWriter
                 break;
 
             default:
-                throw new IllegalArgumentException("Unknown field ID: " + fieldID);
+                return false;
         }
+        return true;
     }
 }

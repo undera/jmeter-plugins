@@ -3,10 +3,13 @@ package kg.apc.jmeter.reporters;
 import kg.apc.emulators.FileChannelEmul;
 import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
+import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -35,6 +38,8 @@ public class FlexibleFileWriterTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
+        JMeterUtils.setProperty("sample_variables", "TEST1,TEST2,TEST3");
     }
 
     @AfterClass
@@ -62,10 +67,31 @@ public class FlexibleFileWriterTest {
         instance.setColumns("isSuccsessful|\\t||\\t|latency");
         instance.testStarted();
         for (int n = 0; n < 10; n++) {
-            String exp = "0\t|\t"+n;
+            String exp = "0\t|\t" + n;
             System.out.println(exp);
             res.setLatency(n);
-            res.setSampleLabel("n"+n);
+            res.setSampleLabel("n" + n);
+            instance.sampleOccurred(e);
+            ByteBuffer written = instance.fileEmul.getWrittenBytes();
+            assertEquals(exp, JMeterPluginsUtils.byteBufferToString(written));
+        }
+        instance.testEnded();
+    }
+
+    @Test
+    public void testSampleOccurred_var() {
+        System.out.println("sampleOccurred");
+        SampleResult res = new SampleResult();
+        res.setResponseData("test".getBytes());
+        JMeterVariables vars = new JMeterVariables();
+        vars.put("TEST1", "TEST");
+        SampleEvent e = new SampleEvent(res, "Test", vars);
+        FlexibleFileWriter instance = new FlexibleFileWriter();
+        instance.setColumns("variable#0| |variable#| |variable#4t");
+        instance.testStarted();
+        for (int n = 0; n < 10; n++) {
+            String exp = "TEST variable# variable#4t";
+            System.out.println(exp);
             instance.sampleOccurred(e);
             ByteBuffer written = instance.fileEmul.getWrittenBytes();
             assertEquals(exp, JMeterPluginsUtils.byteBufferToString(written));
@@ -98,7 +124,6 @@ public class FlexibleFileWriterTest {
         assertEquals(8, written.split("\t").length);
         instance.testEnded();
     }
-
 
     /**
      * Test of sampleStarted method, of class FlexibleCSVWriter.

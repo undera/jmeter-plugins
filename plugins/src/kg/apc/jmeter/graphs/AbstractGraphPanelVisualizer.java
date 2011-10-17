@@ -327,10 +327,11 @@ public abstract class AbstractGraphPanelVisualizer
             boolean canCompose) {
         return getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, null, canCompose);
     }
-
+    
     protected boolean isFromTransactionControler(SampleResult res) {
         if (res.getResponseMessage() != null) {
-            // FIXME: isn't the odd way?
+            // FIXME: isn't the odd way? there is isTransactionSampleEvent in SampleEvent
+            // accessible via SampleListener interface...
             return res.getResponseMessage().startsWith("Number of samples in transaction");
         }
         return false;

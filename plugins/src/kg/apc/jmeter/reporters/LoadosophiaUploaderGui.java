@@ -191,6 +191,7 @@ public class LoadosophiaUploaderGui
         File f = null;
         try {
             f = File.createTempFile("jmeterplugins", ".tmp");
+            f.deleteOnExit();
         } catch (IOException ex) {
             return "";
         }

@@ -1,4 +1,5 @@
 // TODO: work out clear distributed mode behavior
+// TODO: limit precision for error rate
 package kg.apc.jmeter.reporters;
 
 import java.io.PrintStream;
@@ -45,7 +46,9 @@ public class ConsoleStatusLogger extends AbstractListenerElement
         }
     }
 
+    @Override
     public synchronized void sampleOccurred(SampleEvent se) {
+        // TODO: make the interval configurable
         long sec = System.currentTimeMillis() / 1000;
         if (sec != cur && count > 0) {
             if (cur == 0) {
@@ -80,12 +83,15 @@ public class ConsoleStatusLogger extends AbstractListenerElement
         errors = 0;
     }
 
+    @Override
     public void sampleStarted(SampleEvent se) {
     }
 
+    @Override
     public void sampleStopped(SampleEvent se) {
     }
 
+    @Override
     public void testStarted() {
         if (JMeter.isNonGUI()) {
             out = System.out;
@@ -95,16 +101,20 @@ public class ConsoleStatusLogger extends AbstractListenerElement
         cur = 0;
     }
 
+    @Override
     public void testStarted(String string) {
         testStarted();
     }
 
+    @Override
     public void testEnded() {
     }
 
+    @Override
     public void testEnded(String string) {
     }
 
+    @Override
     public void testIterationStart(LoopIterationEvent lie) {
     }
 }

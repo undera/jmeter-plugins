@@ -45,6 +45,7 @@ public class FlexibleFileWriter
             + "responseTimeMicros latencyMicros "
             + "requestData responseData responseHeaders ";
     private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final String OVERWRITE = "overwrite";
     private static final String FILENAME = "filename";
     private static final String COLUMNS = "columns";
     protected volatile FileChannel fileChannel;
@@ -58,12 +59,15 @@ public class FlexibleFileWriter
         super();
     }
 
+    @Override
     public void sampleStarted(SampleEvent e) {
     }
 
+    @Override
     public void sampleStopped(SampleEvent e) {
     }
 
+    @Override
     public void testStarted() {
         compileColumns();
         try {
@@ -73,18 +77,22 @@ public class FlexibleFileWriter
         }
     }
 
+    @Override
     public void testStarted(String host) {
         testStarted();
     }
 
+    @Override
     public void testEnded() {
         closeFile();
     }
 
+    @Override
     public void testEnded(String host) {
         testEnded();
     }
 
+    @Override
     public void testIterationStart(LoopIterationEvent event) {
     }
 
@@ -102,6 +110,14 @@ public class FlexibleFileWriter
 
     public String getColumns() {
         return getPropertyAsString(COLUMNS);
+    }
+
+    public boolean isOverwrite() {
+        return getPropertyAsBoolean(OVERWRITE, false);
+    }
+
+    public void setOverwrite(boolean ov) {
+        setProperty(OVERWRITE, ov);
     }
 
     /**
@@ -134,7 +150,7 @@ public class FlexibleFileWriter
 
     protected void openFile() throws FileNotFoundException {
         String filename = getFilename();
-        FileOutputStream fos = new FileOutputStream(filename, true);
+        FileOutputStream fos = new FileOutputStream(filename, !isOverwrite());
         fileChannel = fos.getChannel();
     }
 
@@ -149,6 +165,7 @@ public class FlexibleFileWriter
         }
     }
 
+    @Override
     public void sampleOccurred(SampleEvent evt) {
         if (fileChannel == null || !fileChannel.isOpen()) {
             if (log.isWarnEnabled()) {
@@ -160,7 +177,9 @@ public class FlexibleFileWriter
         ByteBuffer buf = ByteBuffer.allocateDirect(1024 * 10);
         for (int n = 0; n < compiledConsts.length; n++) {
             if (compiledConsts[n] != null) {
-                buf.put(compiledConsts[n].duplicate()); 
+                synchronized (compiledConsts) {
+                    buf.put(compiledConsts[n].duplicate());
+                }
             } else {
                 appendSampleResultField(buf, evt.getResult(), compiledFields[n]);
             }
@@ -168,7 +187,6 @@ public class FlexibleFileWriter
 
         buf.flip();
 
-        // FIXME: some records are not written to file. Try using old file streams?
         try {
             syncWrite(buf);
         } catch (IOException ex) {
@@ -176,7 +194,7 @@ public class FlexibleFileWriter
         }
     }
 
-    private synchronized  void syncWrite(ByteBuffer buf) throws IOException {
+    private synchronized void syncWrite(ByteBuffer buf) throws IOException {
         FileLock lock = fileChannel.lock();
         fileChannel.write(buf);
         lock.release();

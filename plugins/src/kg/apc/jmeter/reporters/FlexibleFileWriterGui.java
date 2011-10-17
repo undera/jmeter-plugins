@@ -11,6 +11,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,214 +28,221 @@ import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
  */
 public class FlexibleFileWriterGui extends AbstractListenerGui implements ClipboardOwner {
 
-   public static final String WIKIPAGE = "FlexibleFileWriter";
-   private JTextField filename;
-   private JTextField columns;
-   private JButton browseButton;
-   private String[] fields = {
-      "startTime", "Epoch time when the request was started",
-      "endTime", "Epoch time when the request was ended",
-      "responseTime", "Response time, time to full response loaded",
-      "latency", "Latency, time to first response byte received (if available)",
-      "responseCode", "Response code (200, 404, etc.)",
-      "responseMessage", "Response message (OK, Not Found, etc.)",
-      "responseHeaders", "Response headers (if present in sample)",
-      "responseData", "Response data",
-      "requestData", "Request data from sample",
-      "sentBytes", "Number of request bytes sent (if available)",
-      "receivedBytes", "Number of request bytes received (if available)",
-      "threadName", "Name of thread in Thread Group that processed the request",
-      "sampleLabel", "Name of the sampler that made the request",
-      "isSuccsessful", "If response was marked as successful",
-      "isFailed", "If response was marked as failed (surrogate field)",
-      "startTimeMillis", "Same as startTime, but divided by 1000 (surrogate field, example: 1311121131.362)",
-      "endTimeMillis", "Same as endTime, but divided by 1000 (surrogate field)",
-      "responseTimeMicros", "Same as responseTime, but multiplied by 1000 (surrogate field)",
-      "latencyMicros", "Same as latency, but multiplied by 1000 (surrogate field)"
-   };
+    public static final String WIKIPAGE = "FlexibleFileWriter";
+    private JTextField filename;
+    private JTextField columns;
+    private JCheckBox overwrite;
+    private JButton browseButton;
+    private String[] fields = {
+        "startTime", "Epoch time when the request was started",
+        "endTime", "Epoch time when the request was ended",
+        "responseTime", "Response time, time to full response loaded",
+        "latency", "Latency, time to first response byte received (if available)",
+        "responseCode", "Response code (200, 404, etc.)",
+        "responseMessage", "Response message (OK, Not Found, etc.)",
+        "responseHeaders", "Response headers (if present in sample)",
+        "responseData", "Response data",
+        "requestData", "Request data from sample",
+        "sentBytes", "Number of request bytes sent (if available)",
+        "receivedBytes", "Number of request bytes received (if available)",
+        "threadName", "Name of thread in Thread Group that processed the request",
+        "sampleLabel", "Name of the sampler that made the request",
+        "isSuccsessful", "If response was marked as successful",
+        "isFailed", "If response was marked as failed (surrogate field)",
+        "startTimeMillis", "Same as startTime, but divided by 1000 (surrogate field, example: 1311121131.362)",
+        "endTimeMillis", "Same as endTime, but divided by 1000 (surrogate field)",
+        "responseTimeMicros", "Same as responseTime, but multiplied by 1000 (surrogate field)",
+        "latencyMicros", "Same as latency, but multiplied by 1000 (surrogate field)"
+    };
 
-   public FlexibleFileWriterGui() {
-      super();
-      init();
-      initFields();
-   }
+    public FlexibleFileWriterGui() {
+        super();
+        init();
+        initFields();
+    }
 
-   @Override
-   public String getStaticLabel() {
-      return JMeterPluginsUtils.prefixLabel("Flexible File Writer");
-   }
+    @Override
+    public String getStaticLabel() {
+        return JMeterPluginsUtils.prefixLabel("Flexible File Writer");
+    }
 
-   @Override
-   public String getLabelResource() {
-      return getClass().getCanonicalName();
-   }
+    @Override
+    public String getLabelResource() {
+        return getClass().getCanonicalName();
+    }
 
-   @Override
-   public TestElement createTestElement() {
-      TestElement te = new FlexibleFileWriter();
-      modifyTestElement(te);
-      te.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
-      return te;
-   }
+    @Override
+    public TestElement createTestElement() {
+        TestElement te = new FlexibleFileWriter();
+        modifyTestElement(te);
+        te.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
+        return te;
+    }
 
-   @Override
-   public void modifyTestElement(TestElement te) {
-      super.configureTestElement(te);
-      if (te instanceof FlexibleFileWriter) {
-         FlexibleFileWriter fw = (FlexibleFileWriter) te;
-         fw.setFilename(filename.getText());
-         fw.setColumns(columns.getText());
-      }
-   }
+    @Override
+    public void modifyTestElement(TestElement te) {
+        super.configureTestElement(te);
+        if (te instanceof FlexibleFileWriter) {
+            FlexibleFileWriter fw = (FlexibleFileWriter) te;
+            fw.setFilename(filename.getText());
+            fw.setColumns(columns.getText());
+            fw.setOverwrite(overwrite.isSelected());
+        }
+    }
 
-   @Override
-   public void clearGui() {
-      super.clearGui();
-      initFields();
-   }
+    @Override
+    public void clearGui() {
+        super.clearGui();
+        initFields();
+    }
 
-   private void initFields() {
-      filename.setText("testResults.txt");
-      columns.setText("endTimeMillis|\\t|"
-              + "responseTime|\\t|latency|\\t|"
-              + "sentBytes|\\t|receivedBytes|\\t|"
-              + "isSuccessful|\\t|responseCode|\\r\\n");
-   }
+    private void initFields() {
+        filename.setText("testResults.txt");
+        columns.setText("endTimeMillis|\\t|"
+                + "responseTime|\\t|latency|\\t|"
+                + "sentBytes|\\t|receivedBytes|\\t|"
+                + "isSuccessful|\\t|responseCode|\\r\\n");
+        overwrite.setSelected(false);
+    }
 
-   @Override
-   public void configure(TestElement element) {
-      super.configure(element);
-      FlexibleFileWriter fw = (FlexibleFileWriter) element;
-      filename.setText(fw.getFilename());
-      columns.setText(fw.getColumns());
-   }
+    @Override
+    public void configure(TestElement element) {
+        super.configure(element);
+        FlexibleFileWriter fw = (FlexibleFileWriter) element;
+        filename.setText(fw.getFilename());
+        columns.setText(fw.getColumns());
+        overwrite.setSelected(fw.isOverwrite());
+    }
 
-   private void init() {
-      setLayout(new BorderLayout(0, 5));
-      setBorder(makeBorder());
+    private void init() {
+        setLayout(new BorderLayout(0, 5));
+        setBorder(makeBorder());
 
-      add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
 
-      JPanel mainPanel = new JPanel(new GridBagLayout());
+        JPanel mainPanel = new JPanel(new GridBagLayout());
 
-      GridBagConstraints labelConstraints = new GridBagConstraints();
-      labelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
+        GridBagConstraints labelConstraints = new GridBagConstraints();
+        labelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
 
-      GridBagConstraints editConstraints = new GridBagConstraints();
-      editConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
-      editConstraints.weightx = 1.0;
-      editConstraints.fill = GridBagConstraints.HORIZONTAL;
+        GridBagConstraints editConstraints = new GridBagConstraints();
+        editConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
+        editConstraints.weightx = 1.0;
+        editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-      addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Filename: ", JLabel.RIGHT));
-      addToPanel(mainPanel, editConstraints, 1, 1, filename = new JTextField(20));
-      addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
+        addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Filename: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 1, filename = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
 
-      GuiBuilderHelper.strechButtonToComponent(filename, browseButton);
+        GuiBuilderHelper.strechButtonToComponent(filename, browseButton);
 
-      browseButton.addActionListener(new BrowseAction(filename));
+        browseButton.addActionListener(new BrowseAction(filename));
 
-      editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-      labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
 
-      addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Record each sample as: ", JLabel.RIGHT));
-      addToPanel(mainPanel, editConstraints, 1, 2, columns = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Record each sample as: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 2, columns = new JTextField(20));
 
-      JPanel container = new JPanel(new BorderLayout());
-      container.add(mainPanel, BorderLayout.NORTH);
-      add(container, BorderLayout.CENTER);
+        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Overwrite existing file: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 3, overwrite=new JCheckBox());
 
-      add(createHelperPanel(), BorderLayout.SOUTH);
-   }
+        JPanel container = new JPanel(new BorderLayout());
+        container.add(mainPanel, BorderLayout.NORTH);
+        add(container, BorderLayout.CENTER);
 
-   private JPanel createHelperPanel() {
-      JPanel ret = new JPanel(new GridBagLayout());
+        add(createHelperPanel(), BorderLayout.SOUTH);
+    }
 
-      GridBagConstraints labelConstraints = new GridBagConstraints();
-      labelConstraints.insets = new Insets(0, 0, 10, 0);
-      labelConstraints.gridx = 0;
-      labelConstraints.fill = GridBagConstraints.HORIZONTAL;
-      labelConstraints.gridwidth = 2;
+    private JPanel createHelperPanel() {
+        JPanel ret = new JPanel(new GridBagLayout());
 
-      ret.add(new JLabel("Available fields (click any button to copy the field to clipboard):"), labelConstraints);
+        GridBagConstraints labelConstraints = new GridBagConstraints();
+        labelConstraints.insets = new Insets(0, 0, 10, 0);
+        labelConstraints.gridx = 0;
+        labelConstraints.fill = GridBagConstraints.HORIZONTAL;
+        labelConstraints.gridwidth = 2;
 
-      GridBagConstraints buttonConstraints = new GridBagConstraints();
-      buttonConstraints.insets = new Insets(4, 0, 0, 0);
-      buttonConstraints.gridx = 0;
-      buttonConstraints.fill = GridBagConstraints.HORIZONTAL;
+        ret.add(new JLabel("Available fields (click any button to copy the field to clipboard):"), labelConstraints);
 
-      GridBagConstraints detailConstraints = new GridBagConstraints();
-      detailConstraints.insets = new Insets(4, 10, 0, 0);
-      detailConstraints.weightx = 1.0;
-      detailConstraints.fill = GridBagConstraints.HORIZONTAL;
-      detailConstraints.gridx = 1;
-      detailConstraints.anchor = GridBagConstraints.WEST;
+        GridBagConstraints buttonConstraints = new GridBagConstraints();
+        buttonConstraints.insets = new Insets(4, 0, 0, 0);
+        buttonConstraints.gridx = 0;
+        buttonConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-      int line = 1;
+        GridBagConstraints detailConstraints = new GridBagConstraints();
+        detailConstraints.insets = new Insets(4, 10, 0, 0);
+        detailConstraints.weightx = 1.0;
+        detailConstraints.fill = GridBagConstraints.HORIZONTAL;
+        detailConstraints.gridx = 1;
+        detailConstraints.anchor = GridBagConstraints.WEST;
 
-      CopyAction copyAction = new CopyAction();
+        int line = 1;
 
-      for (int i = 0; i < fields.length / 2; i++) {
-         JButton fieldButton = new JButton(fields[2 * i]);
-         fieldButton.addActionListener(copyAction);
+        CopyAction copyAction = new CopyAction();
 
-         JTextField fieldDescription = new JTextField(fields[2 * i + 1]);
-         fieldDescription.setEditable(false);
-         fieldDescription.setBorder(null);
-         fieldDescription.setOpaque(false);
+        for (int i = 0; i < fields.length / 2; i++) {
+            JButton fieldButton = new JButton(fields[2 * i]);
+            fieldButton.addActionListener(copyAction);
 
-         GuiBuilderHelper.strechButtonToComponent(fieldDescription, fieldButton);
+            JTextField fieldDescription = new JTextField(fields[2 * i + 1]);
+            fieldDescription.setEditable(false);
+            fieldDescription.setBorder(null);
+            fieldDescription.setOpaque(false);
 
-         buttonConstraints.gridy = line;
-         detailConstraints.gridy = line;
+            GuiBuilderHelper.strechButtonToComponent(fieldDescription, fieldButton);
 
-         ret.add(fieldButton, buttonConstraints);
-         ret.add(fieldDescription, detailConstraints);
+            buttonConstraints.gridy = line;
+            detailConstraints.gridy = line;
 
-         line++;
-      }
-      return ret;
-   }
+            ret.add(fieldButton, buttonConstraints);
+            ret.add(fieldDescription, detailConstraints);
 
-   private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {
-      constraints.gridx = col;
-      constraints.gridy = row;
-      panel.add(component, constraints);
-   }
+            line++;
+        }
+        return ret;
+    }
 
-   @Override
-   public void lostOwnership(Clipboard clipboard, Transferable contents) {
-      // do nothing
-   }
+    private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {
+        constraints.gridx = col;
+        constraints.gridy = row;
+        panel.add(component, constraints);
+    }
 
-   private class CopyAction
-           implements ActionListener {
+    @Override
+    public void lostOwnership(Clipboard clipboard, Transferable contents) {
+        // do nothing
+    }
 
-      @Override
-      public void actionPerformed(final ActionEvent e) {
-         Clipboard clipboard = getToolkit().getSystemClipboard();
-         Transferable transferable = new Transferable() {
+    private class CopyAction
+            implements ActionListener {
 
-            @Override
-            public Object getTransferData(DataFlavor flavor) {
-               if (isDataFlavorSupported(flavor)) {
-                  return "|" + ((JButton)e.getSource()).getText() + "|";
-               }
-               return null;
-            }
+        @Override
+        public void actionPerformed(final ActionEvent e) {
+            Clipboard clipboard = getToolkit().getSystemClipboard();
+            Transferable transferable = new Transferable() {
 
-            @Override
-            public DataFlavor[] getTransferDataFlavors() {
-               return new DataFlavor[]{
-                          DataFlavor.stringFlavor
-                       };
-            }
+                @Override
+                public Object getTransferData(DataFlavor flavor) {
+                    if (isDataFlavorSupported(flavor)) {
+                        return "|" + ((JButton) e.getSource()).getText() + "|";
+                    }
+                    return null;
+                }
 
-            @Override
-            public boolean isDataFlavorSupported(DataFlavor flavor) {
-               return DataFlavor.stringFlavor.equals(flavor);
-            }
-         };
-         clipboard.setContents(transferable, FlexibleFileWriterGui.this);
-      }
-   }
+                @Override
+                public DataFlavor[] getTransferDataFlavors() {
+                    return new DataFlavor[]{
+                                DataFlavor.stringFlavor
+                            };
+                }
+
+                @Override
+                public boolean isDataFlavorSupported(DataFlavor flavor) {
+                    return DataFlavor.stringFlavor.equals(flavor);
+                }
+            };
+            clipboard.setContents(transferable, FlexibleFileWriterGui.this);
+        }
+    }
 }

@@ -230,4 +230,27 @@ public class FlexibleFileWriterTest {
         FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.openFile();
     }
+
+    /**
+     * Test of isOverwrite method, of class FlexibleFileWriter.
+     */
+    @Test
+    public void testIsOverwrite() {
+        System.out.println("isOverwrite");
+        FlexibleFileWriter instance = new FlexibleFileWriter();
+        boolean expResult = false;
+        boolean result = instance.isOverwrite();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setOverwrite method, of class FlexibleFileWriter.
+     */
+    @Test
+    public void testSetOverwrite() {
+        System.out.println("setOverwrite");
+        boolean ov = false;
+        FlexibleFileWriter instance = new FlexibleFileWriter();
+        instance.setOverwrite(ov);
+    }
 }

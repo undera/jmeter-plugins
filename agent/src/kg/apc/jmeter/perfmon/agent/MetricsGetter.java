@@ -54,14 +54,15 @@ public class MetricsGetter implements AgentCommandsInterface
       try
       {
          hostName = InetAddress.getLocalHost().getHostName();
-         sigarProxy = SigarProxyCache.newInstance(new Sigar(), 500);
-         initFileSystems();
-         initNetworkInterfaces();
       }
       catch (UnknownHostException e)
       {
          ServerAgent.logMessage(e.getMessage());
+         hostName = "unknownHost";
       }
+      sigarProxy = SigarProxyCache.newInstance(new Sigar(), 500);
+      initFileSystems();
+      initNetworkInterfaces();
    }
 
    public void setPidToMonitor(long pid) {

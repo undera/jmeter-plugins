@@ -1,7 +1,5 @@
 package kg.apc.jmeter.perfmon.agent;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.FileSystem;
@@ -51,16 +49,13 @@ public class MetricsGetter implements AgentCommandsInterface
     */
    private MetricsGetter()
    {
-      try
-      {
-         hostName = InetAddress.getLocalHost().getHostName();
-      }
-      catch (UnknownHostException e)
-      {
-         ServerAgent.logMessage(e.getMessage());
+      sigarProxy = SigarProxyCache.newInstance(new Sigar(), 500);
+      try {
+         hostName = sigarProxy.getNetInfo().getHostName();
+      } catch (SigarException ex) {
+         ServerAgent.logMessage(ex.getMessage());
          hostName = "unknownHost";
       }
-      sigarProxy = SigarProxyCache.newInstance(new Sigar(), 500);
       initFileSystems();
       initNetworkInterfaces();
    }

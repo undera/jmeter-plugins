@@ -56,7 +56,7 @@ public class MetricsGetter implements AgentCommandsInterface
          ServerAgent.logMessage(ex.getMessage());
          hostName = "unknownHost";
       }
-      ServerAgent.logMessage("Monitored server: " + hostName);
+      ServerAgent.logMessage("Server monitored: " + hostName);
       initFileSystems();
       initNetworkInterfaces();
    }

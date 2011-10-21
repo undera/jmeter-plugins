@@ -83,13 +83,15 @@
         </copy>
     </target>
 
-   <!-- APC: before making main jar we make agent's jar -->
+   <!-- APC: before making main jar we make cmd's jar -->
     <target name="-pre-jar">
         <property location="./" name="svn.dir"/>
         <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/JMeterPluginsCMD.jar"
       manifest="${svn.dir}/src/kg/apc/cmd/manifest.mf">
             <fileset dir="${build.dir}/cmd/classes"/>
         </jar>
+        <!-- SH: we clean cmd files so they are not put in main jar -->
+        <delete dir="${build.dir}/classes/kg/apc/cmd"/>
     </target>
 
    <!-- APC: I see no problems in making package always. It is quick enough now. -->

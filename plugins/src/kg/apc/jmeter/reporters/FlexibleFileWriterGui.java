@@ -53,7 +53,7 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
         "endTimeMillis", "Same as endTime, but divided by 1000 (surrogate field)",
         "responseTimeMicros", "Same as responseTime, but multiplied by 1000 (surrogate field)",
         "latencyMicros", "Same as latency, but multiplied by 1000 (surrogate field)",
-        "variable#<N>", "Sample variable with index N, see help for details"
+        "variable#<N>", "Sample variable with index N (eg. variable#2), see help for details"
     };
 
     public FlexibleFileWriterGui() {

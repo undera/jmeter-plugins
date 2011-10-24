@@ -1173,10 +1173,10 @@ public class GraphPanelChart
                 && x <= (chartRect.x + chartRect.width)
                 && y >= chartRect.y
                 && y <= (chartRect.y + chartRect.height)) {
-               hoverWindow.setVisible(true);
                xHoverInfo = x;
                yHoverInfo = y;
                showHoverInfo();
+               hoverWindow.setVisible(true);
         } else {
             hoverWindow.setVisible(false);
             xHoverInfo = -1;

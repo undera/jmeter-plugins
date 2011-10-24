@@ -12,9 +12,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
@@ -122,6 +125,10 @@ public class GraphPanelChart
 
     //hover info
     private Window hoverWindow;
+    //gap in pixels relative to mouse pointer position
+    private final static int hoverGap = 20;
+    //force positionning between 2 clicks
+    private boolean forceHoverPosition = true;
     private JTextField hoverLabel;
     private int xHoverInfo = -1;
     private int yHoverInfo = -1;
@@ -262,7 +269,7 @@ public class GraphPanelChart
           hoverLabel = new JTextField();
           hoverLabel.setEditable(false);
           hoverLabel.setOpaque(false);
-          hoverLabel.setBorder(null);
+          hoverLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
           hoverLabel.setFont(new java.awt.Font("Tahoma", 0, 11));
   
           hoverWindow = new Window(SwingUtilities.windowForComponent(this));
@@ -1085,6 +1092,7 @@ public class GraphPanelChart
          @Override
          public void mousePressed(java.awt.event.MouseEvent evt) {
             if(!isPreview && evt.getButton() == MouseEvent.BUTTON1) {
+               forceHoverPosition = true;
                addMouseMotionListener(motionListener);
                chartMouseMoved(evt);
             }
@@ -1139,11 +1147,20 @@ public class GraphPanelChart
 
         if(hoverWindow.getWidth() < labelWidth || hoverWindow.getHeight() < labelHeight) hoverWindow.setSize(labelWidth, labelHeight);
 
-        int hoverWindowX = this.getLocationOnScreen().x + 5;
-        int hoverWindowY = this.getLocationOnScreen().y + this.getBounds().height - labelHeight -5;
+        Point mousePos = MouseInfo.getPointerInfo().getLocation();
 
-        if(hoverWindow.getLocation().getX() != hoverWindowX || hoverWindow.getLocation().getY() != hoverWindowY) {
-           hoverWindow.setLocation(hoverWindowX, hoverWindowY);
+        int hoverWindowX = mousePos.x + hoverGap;
+        int hoverWindowY = mousePos.y + hoverGap;
+
+        //we move window only if far from pointer to limit cpu
+        double deltaX = Math.abs(hoverWindow.getLocation().getX() - hoverWindowX);
+        double deltaY = Math.abs(hoverWindow.getLocation().getY() - hoverWindowY);
+
+        if(forceHoverPosition || deltaX >= hoverGap || deltaY >= hoverGap) {
+           //prevent out of screen
+           int correctedX = Math.min(hoverWindowX, Toolkit.getDefaultToolkit().getScreenSize().width - hoverWindow.getSize().width);
+           hoverWindow.setLocation(correctedX, hoverWindowY);
+           forceHoverPosition = false;
         }
     }
 

@@ -1121,7 +1121,7 @@ public class GraphPanelChart
        yHoverInfo = -1;
     }
 
-    private void showHoverInfo() {
+    private synchronized void showHoverInfo() {
        
         if (isPreview
                 || chartRect.width == 0 || chartRect.height == 0

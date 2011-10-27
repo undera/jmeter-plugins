@@ -2,6 +2,9 @@ package kg.apc.perfmon;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
 import junit.framework.TestCase;
 
@@ -9,7 +12,7 @@ import junit.framework.TestCase;
  *
  * @author undera
  */
-public class PerfMonAgentToolTest extends TestCase{
+public class PerfMonAgentToolTest extends TestCase {
 
     private static class PerfMonAgentToolEmul extends PerfMonAgentTool {
 
@@ -44,13 +47,17 @@ public class PerfMonAgentToolTest extends TestCase{
     public PerfMonAgentToolTest() {
     }
 
+    private ListIterator argsArrayToListIterator(String[] args) {
+        List arrayArgs = Arrays.asList(args);
+        return new LinkedList(arrayArgs).listIterator();
+    }
 
     /**
      * Test of processParams method, of class PerfMonAgentTool.
      */
     public void testProcessParams() {
         System.out.println("processParams");
-        ListIterator args = null;//PluginsCMD.argsArrayToListIterator("--tcp-port 4444 --udp-port 4444".split(" "));
+        ListIterator args = argsArrayToListIterator("--tcp-port 4444 --udp-port 4444".split(" "));
         PerfMonAgentTool instance = new PerfMonAgentToolEmul();
 
         int expResult = 0;

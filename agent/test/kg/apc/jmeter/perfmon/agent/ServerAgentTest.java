@@ -1,5 +1,8 @@
 package kg.apc.jmeter.perfmon.agent;
 
+import kg.apc.emulators.ServerSocketEmulator;
+import java.io.IOException;
+import java.net.ServerSocket;
 import junit.framework.TestCase;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -10,6 +13,16 @@ import junit.framework.TestSuite;
  */
 public class ServerAgentTest extends TestCase {
 
+    private class ServerAgentEmul extends ServerAgent {
+
+        public ServerAgentEmul() {
+            super(0);
+        }
+
+        protected ServerSocket getServerSocket(int port) throws IOException {
+            return new ServerSocketEmulator();
+        }
+    }
     private static int testPort = 4567;
 
     public ServerAgentTest() {

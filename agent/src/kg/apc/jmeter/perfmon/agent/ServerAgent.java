@@ -66,17 +66,17 @@ public class ServerAgent implements Runnable {
         listening = true;
         ServerSocket serverSocket = null;
         MetricsGetter.getInstance().getValues(MetricsGetter.MEMORY);
-        if(pid!=-1) {
-            if(MetricsGetter.getInstance().isPidFound(pid)) {
+        if (pid != -1) {
+            if (MetricsGetter.getInstance().isPidFound(pid)) {
                 MetricsGetter.getInstance().setPidToMonitor(pid);
             } else {
                 logMessage("The agent will monitor the server cpu and memory.");
             }
         }
-        
+
 
         try {
-            serverSocket = new ServerSocket(port);
+            serverSocket = getServerSocket(port);
         } catch (IOException e) {
             logMessage("Could not listen on port: " + port + ". Please specify another port...");
             System.exit(-1);
@@ -138,7 +138,9 @@ public class ServerAgent implements Runnable {
                 }
             }
         }
-        if(!isPortSpecified) logMessage("No port specified, the default value is used: " + port);
+        if (!isPortSpecified) {
+            logMessage("No port specified, the default value is used: " + port);
+        }
 
         ServerAgent agent = new ServerAgent(port);
         agent.startServie(pid);
@@ -149,5 +151,9 @@ public class ServerAgent implements Runnable {
 
     public void run() {
         startServie(-1);
+    }
+
+    protected ServerSocket getServerSocket(int port) throws IOException {
+        return new ServerSocket(port);
     }
 }

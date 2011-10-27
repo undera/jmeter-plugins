@@ -5,6 +5,7 @@ import java.net.Socket;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import kg.apc.emulators.SocketEmulator;
 
 /**
  *
@@ -27,8 +28,8 @@ public class ConnectionThreadTest extends TestCase
 
     public static void setUpClass() throws Exception
     {
-        agent = new ServerAgent(testPort);
-        agent.startServiceAsThread();
+        //agent = new ServerAgent(testPort);
+        //agent.startServiceAsThread();
         //wait the Server Agent starts
         Thread.sleep(2000);
     }
@@ -42,7 +43,7 @@ public class ConnectionThreadTest extends TestCase
     {
         System.out.println("run");
 
-        Socket socket = new Socket("localhost", testPort);
+        Socket socket = new SocketEmulator();
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         //close the automaticly created ConnectionThread
         out.println("bye");

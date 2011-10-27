@@ -1,9 +1,5 @@
 package kg.apc.perfmon;
 
-import kg.apc.perfmon.PerfMonWorker;
-import kg.apc.perfmon.InvalidPerfMonMetric;
-import kg.apc.perfmon.AbstractCPUMetric;
-import kg.apc.perfmon.AbstractPerfMonMetric;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectableChannel;

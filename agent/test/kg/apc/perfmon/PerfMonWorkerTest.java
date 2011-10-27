@@ -120,6 +120,7 @@ public class PerfMonWorkerTest extends TestCase {
     public void testRegisterWritingChannel() throws Exception {
         System.out.println("registerWritingChannel");
         SelectableChannel channel = DatagramChannel.open();
+        channel.configureBlocking(false);
         PerfMonWorker instance = new PerfMonWorker();
         PerfMonMetricGetter worker = new PerfMonMetricGetter(instance, channel);
         instance.registerWritingChannel(channel, worker);

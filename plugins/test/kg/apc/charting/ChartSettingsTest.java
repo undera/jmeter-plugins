@@ -308,7 +308,7 @@ public class ChartSettingsTest {
    @Test
    public void testSetChartType() {
       System.out.println("setChartType");
-      int chartType = ChartSettings.CHART_TYPE_BSPLINE;
+      int chartType = ChartSettings.CHART_TYPE_CSPLINE;
       ChartSettings instance = new ChartSettings();
       instance.setChartType(chartType);
    }

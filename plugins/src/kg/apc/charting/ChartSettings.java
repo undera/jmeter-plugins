@@ -19,7 +19,7 @@ public class ChartSettings {
     public final static int CHART_TYPE_DEFAULT = 0;
     public final static int CHART_TYPE_LINE = 1;
     public final static int CHART_TYPE_BAR = 2;
-    public final static int CHART_TYPE_BSPLINE = 3;
+    public final static int CHART_TYPE_CSPLINE = 3;
 
     public final static int CHART_MARKERS_DEFAULT = 0;
     public final static int CHART_MARKERS_YES = 1;

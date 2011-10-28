@@ -507,12 +507,11 @@
                   <StringArray count="3">
                     <StringItem index="0" value="Line"/>
                     <StringItem index="1" value="Bar"/>
-                    <StringItem index="2" value="B-Spline"/>
+                    <StringItem index="2" value="Cubic Spline"/>
                   </StringArray>
                 </Property>
-                <Property name="selectedIndex" type="int" value="1"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[80, 20]"/>
+                  <Dimension value="[110, 20]"/>
                 </Property>
               </Properties>
               <Events>

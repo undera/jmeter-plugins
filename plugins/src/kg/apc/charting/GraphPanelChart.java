@@ -978,7 +978,7 @@ public class GraphPanelChart
       prevX = -1;
       prevY = chartRect.y + chartRect.height;
 
-      if (row.isDrawSpline() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT || chartSettings.getChartType() == ChartSettings.CHART_TYPE_BSPLINE) {
+      if (row.isDrawSpline() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT || chartSettings.getChartType() == ChartSettings.CHART_TYPE_CSPLINE) {
          if(row.size() >=3) {
             CubicSpline cs = new CubicSpline(row);
             long minX = row.getMinX();

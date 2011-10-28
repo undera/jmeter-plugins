@@ -503,4 +503,27 @@ public class AbstractGraphRowTest
         catch(UnsupportedOperationException e)
         {}
     }
+
+   /**
+    * Test of isDrawSpline method, of class AbstractGraphRow.
+    */
+   @Test
+   public void testIsDrawSpline() {
+      System.out.println("isDrawSpline");
+      AbstractGraphRow instance = new AbstractGraphRowImpl();
+      boolean expResult = false;
+      boolean result = instance.isDrawSpline();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of setDrawSpline method, of class AbstractGraphRow.
+    */
+   @Test
+   public void testSetDrawSpline() {
+      System.out.println("setDrawSpline");
+      boolean drawSpline = true;
+      AbstractGraphRow instance = new AbstractGraphRowImpl();
+      instance.setDrawSpline(drawSpline);
+   }
 }

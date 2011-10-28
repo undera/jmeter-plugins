@@ -74,6 +74,8 @@ public abstract class AbstractGraphRow {
      */
     private boolean drawOnChart = true;
     private boolean drawBar = false;
+    private boolean drawSpline = false;
+
     private int granulation = 0;
     private long firstTime = Long.MIN_VALUE;
 
@@ -288,6 +290,14 @@ public abstract class AbstractGraphRow {
      */
     public boolean isDrawBar() {
         return drawBar;
+    }
+
+    public boolean isDrawSpline() {
+       return drawSpline;
+    }
+
+    public void setDrawSpline(boolean drawSpline) {
+      this.drawSpline = drawSpline;
     }
 
     /**

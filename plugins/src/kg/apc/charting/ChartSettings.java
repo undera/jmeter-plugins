@@ -15,6 +15,15 @@ public class ChartSettings {
     // jmeterPlugin.neverDrawCurrentX=(true/false)
     // jmeterPlugin.useRelativeTime=(true/false)
     // jmeterPlugin.csvSeparator=(.?)
+
+    public final static int CHART_TYPE_DEFAULT = 0;
+    public final static int CHART_TYPE_LINE = 1;
+    public final static int CHART_TYPE_BAR = 2;
+    public final static int CHART_TYPE_BSPLINE = 3;
+
+    public final static int CHART_MARKERS_DEFAULT = 0;
+    public final static int CHART_MARKERS_YES = 1;
+    public final static int CHART_MARKERS_NO = 2;
    
     //Global config
     private boolean configNeverDrawFinalZeroingLines = false;
@@ -31,6 +40,10 @@ public class ChartSettings {
     private int hideNonRepValLimit = -1;
     private int maxPointPerRow = -1;
     private long forcedMaxY = -1;
+
+    //Chart type
+    private int chartType = CHART_TYPE_DEFAULT;
+    private int chartMarkers = CHART_MARKERS_DEFAULT;
 
     public ChartSettings() {
        if (new DecimalFormatSymbols().getDecimalSeparator() == '.') {
@@ -138,5 +151,21 @@ public class ChartSettings {
 
    public void enableDrawCurrentX() {
       drawCurrentX = !configNeverDrawCurrentX;
+   }
+
+   public int getChartType() {
+      return chartType;
+   }
+
+   public void setChartType(int chartType) {
+      this.chartType = chartType;
+   }
+
+   public int getChartMarkers() {
+      return chartMarkers;
+   }
+
+   public void setChartMarkers(int chartMarkers) {
+      this.chartMarkers = chartMarkers;
    }
 }

@@ -10,6 +10,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -287,5 +288,51 @@ public class ChartSettingsTest {
       System.out.println("enableDrawCurrentX");
       ChartSettings instance = new ChartSettings();
       instance.enableDrawCurrentX();
+   }
+
+   /**
+    * Test of getChartType method, of class ChartSettings.
+    */
+   @Test
+   public void testGetChartType() {
+      System.out.println("getChartType");
+      ChartSettings instance = new ChartSettings();
+      int expResult = ChartSettings.CHART_TYPE_DEFAULT;
+      int result = instance.getChartType();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of setChartType method, of class ChartSettings.
+    */
+   @Test
+   public void testSetChartType() {
+      System.out.println("setChartType");
+      int chartType = ChartSettings.CHART_TYPE_BSPLINE;
+      ChartSettings instance = new ChartSettings();
+      instance.setChartType(chartType);
+   }
+
+   /**
+    * Test of getChartMarkers method, of class ChartSettings.
+    */
+   @Test
+   public void testGetChartMarkers() {
+      System.out.println("getChartMarkers");
+      ChartSettings instance = new ChartSettings();
+      int expResult = ChartSettings.CHART_MARKERS_DEFAULT;
+      int result = instance.getChartMarkers();
+      assertEquals(expResult, result);
+   }
+
+   /**
+    * Test of setChartMarkers method, of class ChartSettings.
+    */
+   @Test
+   public void testSetChartMarkers() {
+      System.out.println("setChartMarkers");
+      int chartMarkers = ChartSettings.CHART_MARKERS_YES;
+      ChartSettings instance = new ChartSettings();
+      instance.setChartMarkers(chartMarkers);
    }
 }

@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 import javax.swing.ToolTipManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import kg.apc.charting.ChartSettings;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.GraphRendererInterface;
 import kg.apc.jmeter.graphs.SettingsInterface;
@@ -27,6 +28,8 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     public final static int AGGREGATE_OPTION = 1 << 7;
     public final static int RELATIVE_TIME_OPTION = 1 << 8;
     public final static int MAXY_OPTION = 1 << 9;
+    public final static int CHART_TYPE_OPTION = 1 << 10;
+    public final static int MARKERS_OPTION = 1 << 11;
 
     private SettingsInterface parent = null;
     private int originalTooltipDisplayTime = 0;
@@ -44,6 +47,8 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         boolean showAggregateOption = (options & AGGREGATE_OPTION) != 0;
         boolean showRelativeTimeOption = (options & RELATIVE_TIME_OPTION) != 0;
         boolean showMaxYOption = (options & MAXY_OPTION) != 0;
+        boolean showGraphTypeOption = (options & CHART_TYPE_OPTION) != 0;
+        boolean showMarkersOption = (options & MARKERS_OPTION) != 0;
 
         initComponents();
         this.parent = parent;
@@ -57,7 +62,9 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
                 showHideNonRepValues,
                 showAggregateOption,
                 showRelativeTimeOption,
-                showMaxYOption);
+                showMaxYOption,
+                showGraphTypeOption,
+                showMarkersOption);
         registerJTextfieldForRefresh(jTextFieldMaxY);
     }
 
@@ -71,7 +78,9 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showHideNonRepValues,
             boolean showAggregateOption,
             boolean showRelativeTimeOption,
-            boolean showMaxYOption)
+            boolean showMaxYOption,
+            boolean showGraphTypeOption,
+            boolean showMarkersOption)
     {
         jPanelTimeLineContainer.setVisible(
                 showTimelineOption ||
@@ -85,6 +94,9 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
                 showBarChartXAxisLimit ||
                 showHideNonRepValues ||
                 showMaxYOption);
+        jPanelGraphStyle.setVisible(
+                showGraphTypeOption ||
+                showMarkersOption);
 
         jLabelTimeline1.setVisible(showTimelineOption);
         jLabelTimeline2.setVisible(showTimelineOption);
@@ -124,6 +136,12 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
         jCheckBoxMaxY.setVisible(showMaxYOption);
         jTextFieldMaxY.setVisible(showMaxYOption);
+
+        jComboBoxChartType.setVisible(showGraphTypeOption);
+        jLabelGraphType.setVisible(showGraphTypeOption);
+        jCheckBoxDrawMarkers.setVisible(showMarkersOption);
+
+        if(showGraphTypeOption) jCheckBoxDrawMarkers.setEnabled(false);
     }
 
     private void refreshGraphPreview()
@@ -215,6 +233,10 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
       jPanelGraphPreviewContainer = new javax.swing.JPanel();
       jPanelGraphPreview = new javax.swing.JPanel();
       jLabel2 = new javax.swing.JLabel();
+      jPanelGraphStyle = new javax.swing.JPanel();
+      jLabelChartType = new javax.swing.JLabel();
+      jComboBoxChartType = new javax.swing.JComboBox();
+      jCheckBoxDrawMarkers = new javax.swing.JCheckBox();
 
       setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
       setLayout(new java.awt.BorderLayout());
@@ -353,6 +375,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
       gridBagConstraints.gridx = 0;
       gridBagConstraints.gridy = 0;
       gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+      gridBagConstraints.weightx = 1.0;
       jPanelAllSettingsContainer.add(jPanelTimeLineContainer, gridBagConstraints);
 
       jPanelRenderingOptionsContainer.setBorder(javax.swing.BorderFactory.createTitledBorder("Rendering Options"));
@@ -525,8 +548,8 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
       gridBagConstraints = new java.awt.GridBagConstraints();
       gridBagConstraints.gridx = 0;
       gridBagConstraints.gridy = 1;
+      gridBagConstraints.gridwidth = 2;
       gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-      gridBagConstraints.weightx = 1.0;
       jPanelAllSettingsContainer.add(jPanelRenderingOptionsContainer, gridBagConstraints);
 
       jPanelGraphPreviewContainer.setLayout(new java.awt.GridBagLayout());
@@ -550,10 +573,60 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
       gridBagConstraints = new java.awt.GridBagConstraints();
       gridBagConstraints.gridx = 0;
       gridBagConstraints.gridy = 3;
+      gridBagConstraints.gridwidth = 2;
       gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
       gridBagConstraints.weightx = 1.0;
       gridBagConstraints.weighty = 1.0;
       jPanelAllSettingsContainer.add(jPanelGraphPreviewContainer, gridBagConstraints);
+
+      jPanelGraphStyle.setBorder(javax.swing.BorderFactory.createTitledBorder("Graph Type"));
+      jPanelGraphStyle.setLayout(new java.awt.GridBagLayout());
+
+      jLabelChartType.setText("Chart type:");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 0;
+      gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+      jPanelGraphStyle.add(jLabelChartType, gridBagConstraints);
+
+      jComboBoxChartType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Line", "Bar", "B-Spline" }));
+      jComboBoxChartType.setSelectedIndex(1);
+      jComboBoxChartType.setPreferredSize(new java.awt.Dimension(80, 20));
+      jComboBoxChartType.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jComboBoxChartTypeActionPerformed(evt);
+         }
+      });
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 1;
+      gridBagConstraints.gridy = 0;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+      jPanelGraphStyle.add(jComboBoxChartType, gridBagConstraints);
+
+      jCheckBoxDrawMarkers.setText("Draw markers");
+      jCheckBoxDrawMarkers.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jCheckBoxDrawMarkersActionPerformed(evt);
+         }
+      });
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.gridwidth = 3;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+      gridBagConstraints.weightx = 1.0;
+      gridBagConstraints.weighty = 1.0;
+      gridBagConstraints.insets = new java.awt.Insets(10, 2, 0, 2);
+      jPanelGraphStyle.add(jCheckBoxDrawMarkers, gridBagConstraints);
+
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 1;
+      gridBagConstraints.gridy = 0;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+      gridBagConstraints.weightx = 1.0;
+      jPanelAllSettingsContainer.add(jPanelGraphStyle, gridBagConstraints);
 
       add(jPanelAllSettingsContainer, java.awt.BorderLayout.CENTER);
    }// </editor-fold>//GEN-END:initComponents
@@ -710,21 +783,55 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaign=" + parent.getWikiPage());
         }
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jComboBoxChartTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxChartTypeActionPerformed
+       int selectedType = jComboBoxChartType.getSelectedIndex();
+       switch(selectedType) {
+          case 0:
+             parent.getGraphPanelChart().getChartSettings().setChartType(ChartSettings.CHART_TYPE_LINE);
+             jCheckBoxDrawMarkers.setEnabled(true);
+             break;
+          case 1:
+             parent.getGraphPanelChart().getChartSettings().setChartType(ChartSettings.CHART_TYPE_BAR);
+             parent.getGraphPanelChart().getChartSettings().setChartMarkers(ChartSettings.CHART_MARKERS_NO);
+             jCheckBoxDrawMarkers.setSelected(false);
+             jCheckBoxDrawMarkers.setEnabled(false);
+             break;
+          case 2:
+             parent.getGraphPanelChart().getChartSettings().setChartType(ChartSettings.CHART_TYPE_BSPLINE);
+             jCheckBoxDrawMarkers.setEnabled(true);
+             break;
+          default:
+             parent.getGraphPanelChart().getChartSettings().setChartType(ChartSettings.CHART_TYPE_DEFAULT);
+             break;
+       }
+       refreshGraphPreview();
+    }//GEN-LAST:event_jComboBoxChartTypeActionPerformed
+
+    private void jCheckBoxDrawMarkersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDrawMarkersActionPerformed
+       if(jCheckBoxDrawMarkers.isSelected()) parent.getGraphPanelChart().getChartSettings().setChartMarkers(ChartSettings.CHART_MARKERS_YES);
+       else parent.getGraphPanelChart().getChartSettings().setChartMarkers(ChartSettings.CHART_MARKERS_NO);
+       refreshGraphPreview();
+    }//GEN-LAST:event_jCheckBoxDrawMarkersActionPerformed
+
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.ButtonGroup buttonGroupGraphType;
    private javax.swing.JCheckBox jCheckBoxDrawCurrentX;
    private javax.swing.JCheckBox jCheckBoxDrawFinalZeroingLines;
+   private javax.swing.JCheckBox jCheckBoxDrawMarkers;
    private javax.swing.JCheckBox jCheckBoxHideNonRepValues;
    private javax.swing.JCheckBox jCheckBoxLimitMaxXValue;
    private javax.swing.JCheckBox jCheckBoxMaxPoints;
    private javax.swing.JCheckBox jCheckBoxMaxY;
    private javax.swing.JCheckBox jCheckBoxPaintGradient;
    private javax.swing.JCheckBox jCheckBoxRelativeTime;
+   private javax.swing.JComboBox jComboBoxChartType;
    private javax.swing.JComboBox jComboBoxGranulation;
    private javax.swing.JComboBox jComboBoxHideNonRepValLimit;
    private javax.swing.JComboBox jComboBoxMaxPoints;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
+   private javax.swing.JLabel jLabelChartType;
    private javax.swing.JLabel jLabelGraphType;
    private javax.swing.JLabel jLabelHideNonRepPoints;
    private javax.swing.JLabel jLabelInfoGrpValues;
@@ -738,6 +845,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
    private javax.swing.JPanel jPanelAllSettingsContainer;
    private javax.swing.JPanel jPanelGraphPreview;
    private javax.swing.JPanel jPanelGraphPreviewContainer;
+   private javax.swing.JPanel jPanelGraphStyle;
    private javax.swing.JPanel jPanelLogo;
    private javax.swing.JPanel jPanelRenderingOptionsContainer;
    private javax.swing.JPanel jPanelTimeLineContainer;

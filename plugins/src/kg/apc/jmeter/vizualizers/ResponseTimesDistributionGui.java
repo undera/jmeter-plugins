@@ -72,7 +72,9 @@ public class ResponseTimesDistributionGui
                 JSettingsPanel.TIMELINE_OPTION |
                 JSettingsPanel.GRADIENT_OPTION |
                 JSettingsPanel.BAR_CHART_X_LIMIT_OPTION |
-                JSettingsPanel.AGGREGATE_OPTION);
+                JSettingsPanel.AGGREGATE_OPTION |
+                JSettingsPanel.MARKERS_OPTION |
+                JSettingsPanel.CHART_TYPE_OPTION);
     }
 
     @Override

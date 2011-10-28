@@ -590,6 +590,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
       jPanelGraphStyle.add(jLabelChartType, gridBagConstraints);
 
       jComboBoxChartType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Line", "Bar", "Cubic Spline" }));
+      jComboBoxChartType.setSelectedIndex(1);
       jComboBoxChartType.setPreferredSize(new java.awt.Dimension(110, 20));
       jComboBoxChartType.addActionListener(new java.awt.event.ActionListener() {
          public void actionPerformed(java.awt.event.ActionEvent evt) {

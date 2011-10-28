@@ -510,6 +510,7 @@
                     <StringItem index="2" value="Cubic Spline"/>
                   </StringArray>
                 </Property>
+                <Property name="selectedIndex" type="int" value="1"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[110, 20]"/>
                 </Property>

@@ -57,6 +57,13 @@ public abstract class AbstractRowPlotter {
       dyForDVal = (maxYVal <= minYVal) ? 0 : (double) chartRect.height / (maxYVal - minYVal);
    }
 
+   /*
+    * Check if the point (x,y) is contained in the chart area
+    * We check only minX, maxX, and maxY to avoid flickering.
+    * We take max(chartRect.y, y) as redering value
+    * This is done to prevent line out of range if new point is added
+    * during chart paint.
+    */
    protected boolean isChartPointValid(int xx, int yy) {
       boolean ret = true;
 

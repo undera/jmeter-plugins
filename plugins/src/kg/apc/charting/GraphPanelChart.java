@@ -1,7 +1,6 @@
 package kg.apc.charting;
 
 import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Composite;
@@ -46,6 +45,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import kg.apc.charting.plotters.AbstractRowPlotter;
+import kg.apc.charting.plotters.BarRowPlotter;
+import kg.apc.charting.plotters.CSplineRowPlotter;
+import kg.apc.charting.plotters.LineRowPlotter;
 import org.apache.jmeter.gui.GuiPackage;
 
 import org.apache.jorphan.gui.NumberRenderer;
@@ -59,6 +62,11 @@ import org.apache.log.Logger;
 public class GraphPanelChart
         extends JComponent
         implements ClipboardOwner {
+
+   //plotters
+   BarRowPlotter barRowPlotter = null;
+   LineRowPlotter lineRowPlotter = null;
+   CSplineRowPlotter cSplineRowPlotter = null;
 
    JPopupMenu popup = new JPopupMenu();
    private static final String AD_TEXT = "http://apc.kg/plugins";
@@ -95,8 +103,7 @@ public class GraphPanelChart
    private final static Color gradientColor = new Color(229, 236, 246);
    // Chart's Axis Color. For good results, use gradient color - (30, 30, 30)
    private final static Color axisColor = new Color(199, 206, 216);
-   //the composite used to draw bars
-   private final static AlphaComposite barComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+   
    //save file path. We remember last folder used.
    private static String savePath = null;
    private ChartSettings chartSettings = new ChartSettings();
@@ -258,6 +265,9 @@ public class GraphPanelChart
          hoverWindow.add(hoverLabel, BorderLayout.CENTER);
          registerHoverInfo();
       }
+      barRowPlotter = new BarRowPlotter(chartSettings, yAxisLabelRenderer);
+      lineRowPlotter = new LineRowPlotter(chartSettings, yAxisLabelRenderer);
+      cSplineRowPlotter = new CSplineRowPlotter(chartSettings, yAxisLabelRenderer);
    }
 
    public GraphPanelChart() {
@@ -270,20 +280,6 @@ public class GraphPanelChart
 
    public void setChartType(int type) {
       chartType = type;
-   }
-
-   private void drawFinalLines(AbstractGraphRow row, Graphics g, int prevX, int prevY, final double dxForDVal, Stroke oldStroke, Color color) {
-      // draw final lines
-      if (row.isDrawLine() && chartSettings.isDrawFinalZeroingLines()) {
-         if (row.isDrawThickLines()) {
-            ((Graphics2D) g).setStroke(chartSettings.getThickStroke());
-         }
-         g.setColor(color);
-         g.drawLine(prevX, Math.max(prevY, chartRect.y), (int) (prevX + dxForDVal), chartRect.y + chartRect.height);
-         if (row.isDrawThickLines()) {
-            ((Graphics2D) g).setStroke(oldStroke);
-         }
-      }
    }
 
    private boolean drawMessages(Graphics2D g) {
@@ -592,7 +588,7 @@ public class GraphPanelChart
          boolean isBarChart = row.getValue().isDrawBar() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT || chartSettings.getChartType() == ChartSettings.CHART_TYPE_BAR;
          if (isBarChart) {
             oldComposite = ((Graphics2D) g).getComposite();
-            ((Graphics2D) g).setComposite(barComposite);
+            ((Graphics2D) g).setComposite(chartSettings.getBarComposite());
          }
          g.fillRect(currentX, currentY, rectW, rectH);
          if (isBarChart) {
@@ -777,225 +773,29 @@ public class GraphPanelChart
       }
    }
 
-   /*
-    * Check if the point (x,y) is contained in the chart area
-    * We check only minX, maxX, and maxY to avoid flickering.
-    * We take max(chartRect.y, y) as redering value
-    * This is done to prevent line out of range if new point is added
-    * during chart paint.
-    */
-   private boolean isChartPointValid(int x, int y) {
-      boolean ret = true;
-
-      //check x
-      if (x < chartRect.x || x > chartRect.x + chartRect.width) {
-         ret = false;
-      } else //check y bellow x axis
-      if (y > chartRect.y + chartRect.height) {
-         ret = false;
-      }
-
-      return ret;
-   }
-
    private void paintRow(Graphics g, AbstractGraphRow row, String rowLabel, Color color) {
-      FontMetrics fm = g.getFontMetrics(g.getFont());
-      Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = row.iterator();
-      Entry<Long, AbstractGraphPanelChartElement> element;
-      int radius = row.getMarkerSize();
-      int x, y;
-      int prevX = -1;
-      int prevY = chartRect.y + chartRect.height;
-      final double dxForDVal = (maxXVal <= minXVal) ? 0 : (double) chartRect.width / (maxXVal - minXVal);
-      final double dyForDVal = (maxYVal <= minYVal) ? 0 : (double) chartRect.height / (maxYVal - minYVal);
-
-      boolean mustDrawFirstZeroingLine = chartSettings.isDrawFinalZeroingLines();
-
-      Stroke oldStroke = null;
-
-      if (row.isDrawThickLines() || row.getMarkerSize() == AbstractGraphRow.MARKER_SIZE_NONE) {
-         oldStroke = ((Graphics2D) g).getStroke();
+      AbstractRowPlotter plotter = null;
+      if (row.isDrawLine() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT ||
+              chartSettings.getChartType() == ChartSettings.CHART_TYPE_LINE) {
+         plotter = lineRowPlotter;
+      }
+      if (row.isDrawBar() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT ||
+              chartSettings.getChartType() == ChartSettings.CHART_TYPE_BAR) {
+         plotter = barRowPlotter;
+      }
+      if (row.isDrawSpline() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT ||
+              chartSettings.getChartType() == ChartSettings.CHART_TYPE_CSPLINE) {
+         plotter = cSplineRowPlotter;
       }
 
-      boolean isPointBellowForcedMaxY = true;
-
-      while (it.hasNext()) {
-         if (!row.isDrawOnChart()) {
-            continue;
-         }
-         double calcPointX = 0;
-         double calcPointY = 0;
-
-         if (factorInUse == 1) {
-
-            element = it.next();
-            AbstractGraphPanelChartElement elt = (AbstractGraphPanelChartElement) element.getValue();
-
-            //not compatible with factor != 1, ie cannot be used if limit nb of point is selected.
-            if (chartSettings.getHideNonRepValLimit() > 0) {
-               while (!elt.isPointRepresentative(chartSettings.getHideNonRepValLimit()) && it.hasNext()) {
-                  element = it.next();
-                  elt = (AbstractGraphPanelChartElement) element.getValue();
-               }
-
-               if (!elt.isPointRepresentative(chartSettings.getHideNonRepValLimit())) {
-                  break;
-               }
-            }
-
-            calcPointX = element.getKey().doubleValue();
-            calcPointY = elt.getValue();
-         } else {
-            int nbPointProcessed = 0;
-            for (int i = 0; i < factorInUse; i++) {
-               if (it.hasNext()) {
-                  element = it.next();
-                  calcPointX = calcPointX + element.getKey().doubleValue();
-                  calcPointY = calcPointY + ((AbstractGraphPanelChartElement) element.getValue()).getValue();
-                  nbPointProcessed++;
-               }
-            }
-            calcPointX = calcPointX / (double) nbPointProcessed;
-            calcPointY = calcPointY / (double) nbPointProcessed;
-         }
-
+      if(plotter != null) {
+         double zoomFactor = 1;
          if (expendRows && rowsZoomFactor.get(rowLabel) != null) {
-            calcPointY = calcPointY * rowsZoomFactor.get(rowLabel);
+               zoomFactor = rowsZoomFactor.get(rowLabel);
          }
-
-         x = chartRect.x + (int) ((calcPointX - minXVal) * dxForDVal);
-         int yHeight = (int) ((calcPointY - minYVal) * dyForDVal);
-         y = chartRect.y + chartRect.height - yHeight;
-         //fix bar flickering
-
-         if (y < chartRect.y && row.isDrawBar()) {
-            y = chartRect.y;
-         }
-
-         if (row.isDrawThickLines()) {
-            ((Graphics2D) g).setStroke(chartSettings.getThickStroke());
-         }
-         boolean valid = isChartPointValid(x, y);
-
-         // draw lines
-         if (row.isDrawLine() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT || chartSettings.getChartType() == ChartSettings.CHART_TYPE_LINE) {
-            if (mustDrawFirstZeroingLine && valid) {
-               mustDrawFirstZeroingLine = false;
-               prevX = x;
-            }
-
-            isPointBellowForcedMaxY = y >= chartRect.y;
-
-            if (prevX >= 0) {
-               g.setColor(color);
-               if (valid) {
-                  if (prevY >= chartRect.y && y >= chartRect.y) {
-                     g.drawLine(prevX, prevY, x, y);
-                  } else if (prevY >= chartRect.y && y < chartRect.y) {
-                     int x1 = (x - prevX) * (chartRect.y - prevY) / (y - prevY) + prevX;
-                     g.drawLine(prevX, prevY, x1, chartRect.y);
-                  } else if (prevY < chartRect.y && y >= chartRect.y) {
-                     int x1 = (x - prevX) * (chartRect.y - prevY) / (y - prevY) + prevX;
-                     g.drawLine(x1, chartRect.y, x, y);
-                  }
-               }
-            }
-            if (valid) {
-               prevX = x;
-               prevY = y;
-            }
-         }
-
-         // draw bars
-         if (row.isDrawBar() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT || chartSettings.getChartType() == ChartSettings.CHART_TYPE_BAR) {
-            g.setColor(color);
-            if (isChartPointValid(x + 1, y)) //as we draw bars, xMax values must be rejected
-            {
-               int x2 = chartRect.x + (int) ((calcPointX + row.getGranulationValue() - minXVal) * dxForDVal) - x - 1;
-               Composite oldComposite = ((Graphics2D) g).getComposite();
-               ((Graphics2D) g).setComposite(barComposite);
-
-               g.fillRect(x, y - 1, x2, yHeight + 1);
-               ((Graphics2D) g).setComposite(oldComposite);
-            }
-         }
-
-         if (row.isDrawThickLines()) {
-            ((Graphics2D) g).setStroke(oldStroke);
-         }
-
-         if (row.isDrawValueLabel() && valid && y >= chartRect.y) {
-            g.setColor(Color.DARK_GRAY);
-            Font oldFont = g.getFont();
-            g.setFont(g.getFont().deriveFont(Font.BOLD));
-
-            yAxisLabelRenderer.setValue(calcPointY);
-            int labelSize = g.getFontMetrics(g.getFont()).stringWidth(yAxisLabelRenderer.getText());
-            //if close to end
-            if (x + row.getMarkerSize() + spacing + labelSize > chartRect.x + chartRect.width) {
-               g.drawString(yAxisLabelRenderer.getText(),
-                       x - row.getMarkerSize() - spacing - labelSize,
-                       y + fm.getAscent() / 2);
-            } else {
-               g.drawString(yAxisLabelRenderer.getText(),
-                       x + row.getMarkerSize() + spacing,
-                       y + fm.getAscent() / 2);
-            }
-            g.setFont(oldFont);
-         }
-
-         if(chartSettings.getChartMarkers() == ChartSettings.CHART_MARKERS_YES) radius = AbstractGraphRow.MARKER_SIZE_SMALL;
-         if(chartSettings.getChartMarkers() == ChartSettings.CHART_MARKERS_NO) radius = AbstractGraphRow.MARKER_SIZE_NONE;
-
-         // draw markers
-         if (radius != AbstractGraphRow.MARKER_SIZE_NONE && isPointBellowForcedMaxY) {
-            g.setColor(color);
-            if (isChartPointValid(x, y)) {
-               g.fillOval(x - radius, y - radius, (radius) * 2, (radius) * 2);
-               //g.setColor(Color.black);
-               //g.drawOval(x - radius, y - radius, radius * 2, radius * 2);
-            }
-         }
+         plotter.setBoundsValues(chartRect, minXVal, maxXVal, minYVal, maxYVal);
+         plotter.paintRow((Graphics2D)g, row, rowLabel, color, zoomFactor);
       }
-
-      //draw spline
-      x=0;
-      y=0;
-      prevX = -1;
-      prevY = chartRect.y + chartRect.height;
-
-      if (row.isDrawSpline() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT || chartSettings.getChartType() == ChartSettings.CHART_TYPE_CSPLINE) {
-         if(row.size() >=3) {
-            CubicSpline cs = new CubicSpline(row);
-            long minX = row.getMinX();
-            long maxX = row.getMaxX();
-
-            long step = (maxX - minX) / 200L;
-
-            long currentX = minX;
-            g.setColor(color);
-            while (currentX <= maxX) {
-               x = chartRect.x + (int) ((currentX - minXVal) * dxForDVal);
-               int yHeight = (int) ((cs.interpolate(currentX) - minYVal) * dyForDVal);
-               y = chartRect.y + chartRect.height - yHeight;
-
-               //prevent out of range
-               if(y < chartRect.y) y = chartRect.y;
-               if(y > chartRect.y + chartRect.height) y = chartRect.y + chartRect.height;
-
-               currentX += step;
-
-               if (prevX >= 0) {
-                  g.drawLine(prevX, prevY, x, y);
-               }
-
-               prevX = x;
-               prevY = y;
-            }
-         }
-      }
-
-      drawFinalLines(row, g, prevX, prevY, dxForDVal, oldStroke, color);
    }
 
    /**

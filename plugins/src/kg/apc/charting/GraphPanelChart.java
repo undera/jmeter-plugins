@@ -68,6 +68,8 @@ public class GraphPanelChart
    LineRowPlotter lineRowPlotter = null;
    CSplineRowPlotter cSplineRowPlotter = null;
 
+   AbstractRowPlotter currentPlotter = null;
+
    JPopupMenu popup = new JPopupMenu();
    private static final String AD_TEXT = "http://apc.kg/plugins";
    private static final String NO_SAMPLES = "Waiting for samples...";
@@ -774,27 +776,29 @@ public class GraphPanelChart
    }
 
    private void paintRow(Graphics g, AbstractGraphRow row, String rowLabel, Color color) {
-      AbstractRowPlotter plotter = null;
+
       if (row.isDrawLine() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT ||
               chartSettings.getChartType() == ChartSettings.CHART_TYPE_LINE) {
-         plotter = lineRowPlotter;
+         currentPlotter = lineRowPlotter;
       }
-      if (row.isDrawBar() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT ||
+      else if(row.isDrawBar() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT
+              ||
               chartSettings.getChartType() == ChartSettings.CHART_TYPE_BAR) {
-         plotter = barRowPlotter;
+         currentPlotter = barRowPlotter;
       }
-      if (row.isDrawSpline() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT ||
+      else if(row.isDrawSpline() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT
+              ||
               chartSettings.getChartType() == ChartSettings.CHART_TYPE_CSPLINE) {
-         plotter = cSplineRowPlotter;
+         currentPlotter = cSplineRowPlotter;
       }
 
-      if(plotter != null) {
+      if(currentPlotter != null) {
          double zoomFactor = 1;
          if (expendRows && rowsZoomFactor.get(rowLabel) != null) {
                zoomFactor = rowsZoomFactor.get(rowLabel);
          }
-         plotter.setBoundsValues(chartRect, minXVal, maxXVal, minYVal, maxYVal);
-         plotter.paintRow((Graphics2D)g, row, rowLabel, color, zoomFactor);
+         currentPlotter.setBoundsValues(chartRect, minXVal, maxXVal, minYVal, maxYVal);
+         currentPlotter.paintRow((Graphics2D)g, row, color, zoomFactor);
       }
    }
 

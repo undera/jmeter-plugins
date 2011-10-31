@@ -21,7 +21,7 @@ public class CSplineRowPlotter extends AbstractRowPlotter {
    }
 
    @Override
-   protected void processPoint(Graphics2D g2d, String rowLabel, Color color, int granulation) {
+   protected void processPoint(Graphics2D g2d, Color color, int granulation) {
       //do nothing
    }
 

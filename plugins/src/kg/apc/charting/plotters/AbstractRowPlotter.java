@@ -79,7 +79,7 @@ public abstract class AbstractRowPlotter {
    }
 
    //this method is responsible to maintain x, y, prevX, prevY
-   public void paintRow(Graphics2D g2d, AbstractGraphRow row, String rowLabel, Color color, double zoomFactor) {
+   public void paintRow(Graphics2D g2d, AbstractGraphRow row, Color color, double zoomFactor) {
       
       Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = row.iterator();
       Entry<Long, AbstractGraphPanelChartElement> element;
@@ -140,7 +140,7 @@ public abstract class AbstractRowPlotter {
          y = chartRect.y + chartRect.height - yHeight;
 
          //now x and y are set, we can call plotter
-         processPoint(g2d, rowLabel, color, row.getGranulationValue());
+         processPoint(g2d, color, row.getGranulationValue());
          
          //set prevX, prevY
          if (isChartPointValid(x, y)) {
@@ -170,7 +170,7 @@ public abstract class AbstractRowPlotter {
       }
    }
 
-   protected abstract void processPoint(Graphics2D g2d, String rowLabel, Color color, int granulation);
+   protected abstract void processPoint(Graphics2D g2d, Color color, int granulation);
 
    protected void postPaintRow(AbstractGraphRow row, Graphics2D g2d, Color color) {
    }

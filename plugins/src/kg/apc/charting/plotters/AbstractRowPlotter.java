@@ -31,6 +31,8 @@ public abstract class AbstractRowPlotter {
    //live values to paint rows
    protected double dxForDVal;
    protected double dyForDVal;
+   protected double calcPointX = 0;
+   protected double calcPointY = 0;
    protected int x, y;
    protected int prevX;
    protected int prevY;
@@ -79,8 +81,6 @@ public abstract class AbstractRowPlotter {
 
       prevX = -1;
       prevY = chartRect.y + chartRect.height;
-      double calcPointX = 0;
-      double calcPointY = 0;
 
       mustDrawFirstZeroingLine = chartSettings.isDrawFinalZeroingLines();
 
@@ -133,7 +133,7 @@ public abstract class AbstractRowPlotter {
          y = chartRect.y + chartRect.height - yHeight;
 
          //now x and y are set, we can call plotter
-         processPoint(g2d, rowLabel, color);
+         processPoint(g2d, rowLabel, color, row.getGranulationValue());
          
          //set prevX, prevY
          if (isChartPointValid(x, y)) {
@@ -144,68 +144,18 @@ public abstract class AbstractRowPlotter {
             prevY = y;
          }
 
-/*
-
-         //fix bar flickering
-
-         if (y < chartRect.y && row.isDrawBar()) {
-            y = chartRect.y;
-         }
-
-         
-         boolean valid = isChartPointValid(x, y);
-
-         // draw lines
-         if (row.isDrawLine() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT || chartSettings.getChartType() == ChartSettings.CHART_TYPE_LINE) {
-            if (mustDrawFirstZeroingLine && valid) {
-               mustDrawFirstZeroingLine = false;
-               prevX = x;
-            }
-
-            isPointBellowForcedMaxY = y >= chartRect.y;
-
-            if (prevX >= 0) {
-               g.setColor(color);
-               if (valid) {
-                  if (prevY >= chartRect.y && y >= chartRect.y) {
-                     g.drawLine(prevX, prevY, x, y);
-                  } else if (prevY >= chartRect.y && y < chartRect.y) {
-                     int x1 = (x - prevX) * (chartRect.y - prevY) / (y - prevY) + prevX;
-                     g.drawLine(prevX, prevY, x1, chartRect.y);
-                  } else if (prevY < chartRect.y && y >= chartRect.y) {
-                     int x1 = (x - prevX) * (chartRect.y - prevY) / (y - prevY) + prevX;
-                     g.drawLine(x1, chartRect.y, x, y);
-                  }
-               }
-            }
-            if (valid) {
-               prevX = x;
-               prevY = y;
-            }
-         }
-
-         // draw bars
-         if (row.isDrawBar() && chartSettings.getChartType() == ChartSettings.CHART_TYPE_DEFAULT || chartSettings.getChartType() == ChartSettings.CHART_TYPE_BAR) {
-            g.setColor(color);
-            if (isChartPointValid(x + 1, y)) //as we draw bars, xMax values must be rejected
-            {
-               int x2 = chartRect.x + (int) ((calcPointX + row.getGranulationValue() - minXVal) * dxForDVal) - x - 1;
-               Composite oldComposite = ((Graphics2D) g).getComposite();
-               ((Graphics2D) g).setComposite(barComposite);
-
-               g.fillRect(x, y - 1, x2, yHeight + 1);
-               ((Graphics2D) g).setComposite(oldComposite);
-            }
-         }
-
-*/
-
-      if (row.isDrawValueLabel() && isChartPointValid(x, y) && y >= chartRect.y) {
+         if (row.isDrawValueLabel() && isChartPointValid(x, y) && y >= chartRect.y) {
             drawLabels(g2d, row, calcPointY);
          }
       }
 
       processFinalLines(row, g2d, color);
+
+      x=0;
+      y=0;
+      prevX = -1;
+      prevY = chartRect.y + chartRect.height;
+
       postPaintRow(row, g2d, color);
 
       if(olStroke != null) {
@@ -213,7 +163,7 @@ public abstract class AbstractRowPlotter {
       }
    }
 
-   protected abstract void processPoint(Graphics2D g2d, String rowLabel, Color color);
+   protected abstract void processPoint(Graphics2D g2d, String rowLabel, Color color, int granulation);
 
    protected void postPaintRow(AbstractGraphRow row, Graphics2D g2d, Color color) {
    }

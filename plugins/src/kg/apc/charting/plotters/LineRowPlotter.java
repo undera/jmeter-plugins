@@ -17,7 +17,7 @@ public class LineRowPlotter extends AbstractRowPlotter {
    }
 
    @Override
-   protected void processPoint(Graphics2D g2d, String rowLabel, Color color) {
+   protected void processPoint(Graphics2D g2d, String rowLabel, Color color, int granulation) {
       boolean valid = isChartPointValid(x, y);
       if (mustDrawFirstZeroingLine && valid) {
          mustDrawFirstZeroingLine = false;

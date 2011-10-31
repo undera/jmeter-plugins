@@ -11,11 +11,11 @@ import org.apache.jorphan.gui.NumberRenderer;
  *
  * @author Stephane Hoblingre
  */
-public class CSplinePlotter extends AbstractRowPlotter {
+public class CSplineRowPlotter extends AbstractRowPlotter {
 
    private long splineLinesCount = 200L;
 
-   public CSplinePlotter(ChartSettings chartSettings, NumberRenderer labelRenderer) {
+   public CSplineRowPlotter(ChartSettings chartSettings, NumberRenderer labelRenderer) {
       super(chartSettings, labelRenderer);
       allowMarkers = true;
    }

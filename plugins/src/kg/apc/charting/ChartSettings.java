@@ -1,5 +1,7 @@
 package kg.apc.charting;
 
+import java.awt.BasicStroke;
+import java.awt.Stroke;
 import java.text.DecimalFormatSymbols;
 
 /**
@@ -44,6 +46,23 @@ public class ChartSettings {
     //Chart type
     private int chartType = CHART_TYPE_DEFAULT;
     private int chartMarkers = CHART_MARKERS_DEFAULT;
+
+    //Strokes
+    // The stroke used to paint Graph's dashed lines
+   private final static Stroke dashStroke = new BasicStroke(
+           1.0f, // Width
+           BasicStroke.CAP_SQUARE, // End cap
+           BasicStroke.JOIN_MITER, // Join style
+           10.0f, // Miter limit
+           new float[]{
+              1.0f, 4.0f
+           }, // Dash pattern
+           0.0f); // Dash phase
+   // The stroke to paint thick Graph rows
+   private final static Stroke thickStroke = new BasicStroke(
+           AbstractGraphRow.LINE_THICKNESS_BIG,
+           BasicStroke.CAP_BUTT,
+           BasicStroke.JOIN_BEVEL);
 
     public ChartSettings() {
        if (new DecimalFormatSymbols().getDecimalSeparator() == '.') {
@@ -167,5 +186,13 @@ public class ChartSettings {
 
    public void setChartMarkers(int chartMarkers) {
       this.chartMarkers = chartMarkers;
+   }
+
+   public Stroke getDashStroke() {
+      return dashStroke;
+   }
+
+   public Stroke getThickStroke() {
+      return thickStroke;
    }
 }

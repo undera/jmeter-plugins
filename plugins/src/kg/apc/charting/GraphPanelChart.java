@@ -88,21 +88,7 @@ public class GraphPanelChart
    private NumberRenderer xAxisLabelRenderer;
    private long forcedMinX = -1;
    private int chartType = CHART_DEFAULT;
-   // The stroke used to paint Graph's dashed lines
-   private final static Stroke dashStroke = new BasicStroke(
-           1.0f, // Width
-           BasicStroke.CAP_SQUARE, // End cap
-           BasicStroke.JOIN_MITER, // Join style
-           10.0f, // Miter limit
-           new float[]{
-              1.0f, 4.0f
-           }, // Dash pattern
-           0.0f); // Dash phase
-   // The stroke to paint thick Graph rows
-   private final static Stroke thickStroke = new BasicStroke(
-           AbstractGraphRow.LINE_THICKNESS_BIG,
-           BasicStroke.CAP_BUTT,
-           BasicStroke.JOIN_BEVEL);
+   
    // Message display in graphs. Used for perfmon error messages
    private String errorMessage = null;
    // Chart's gradient background end color
@@ -290,7 +276,7 @@ public class GraphPanelChart
       // draw final lines
       if (row.isDrawLine() && chartSettings.isDrawFinalZeroingLines()) {
          if (row.isDrawThickLines()) {
-            ((Graphics2D) g).setStroke(thickStroke);
+            ((Graphics2D) g).setStroke(chartSettings.getThickStroke());
          }
          g.setColor(color);
          g.drawLine(prevX, Math.max(prevY, chartRect.y), (int) (prevX + dxForDVal), chartRect.y + chartRect.height);
@@ -647,7 +633,7 @@ public class GraphPanelChart
       for (int n = 0; n <= gridLinesCount; n++) {
          //draw 2nd and more axis dashed and shifted
          if (n != 0) {
-            ((Graphics2D) g).setStroke(dashStroke);
+            ((Graphics2D) g).setStroke(chartSettings.getDashStroke());
             shift = 7;
          }
 
@@ -708,7 +694,7 @@ public class GraphPanelChart
       for (int n = 0; n <= gridLinesCount; n++) {
          //draw 2nd and more axis dashed and shifted
          if (n != 0) {
-            ((Graphics2D) g).setStroke(dashStroke);
+            ((Graphics2D) g).setStroke(chartSettings.getDashStroke());
             shift = 7;
          }
 
@@ -887,7 +873,7 @@ public class GraphPanelChart
          }
 
          if (row.isDrawThickLines()) {
-            ((Graphics2D) g).setStroke(thickStroke);
+            ((Graphics2D) g).setStroke(chartSettings.getThickStroke());
          }
          boolean valid = isChartPointValid(x, y);
 

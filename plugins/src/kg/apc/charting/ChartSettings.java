@@ -1,5 +1,6 @@
 package kg.apc.charting;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Stroke;
 import java.text.DecimalFormatSymbols;
@@ -64,7 +65,10 @@ public class ChartSettings {
            BasicStroke.CAP_BUTT,
            BasicStroke.JOIN_BEVEL);
 
-    public ChartSettings() {
+   //the composite used to draw bars
+   private final static AlphaComposite barComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+
+   public ChartSettings() {
        if (new DecimalFormatSymbols().getDecimalSeparator() == '.') {
             configCsvSeparator = ",";
         } else {
@@ -194,5 +198,9 @@ public class ChartSettings {
 
    public Stroke getThickStroke() {
       return thickStroke;
+   }
+
+   public AlphaComposite getBarComposite() {
+      return barComposite;
    }
 }

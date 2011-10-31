@@ -141,7 +141,8 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jLabelGraphType.setVisible(showGraphTypeOption);
         jCheckBoxDrawMarkers.setVisible(showMarkersOption);
 
-        if(showGraphTypeOption) jCheckBoxDrawMarkers.setEnabled(false);
+        //bar is default for now, logic needs to be updated in the future
+        if(showGraphTypeOption) jCheckBoxDrawMarkers.setVisible(false);
     }
 
     private void refreshGraphPreview()
@@ -237,6 +238,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
       jLabelChartType = new javax.swing.JLabel();
       jComboBoxChartType = new javax.swing.JComboBox();
       jCheckBoxDrawMarkers = new javax.swing.JCheckBox();
+      jPanel2 = new javax.swing.JPanel();
 
       setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
       setLayout(new java.awt.BorderLayout());
@@ -600,7 +602,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
       gridBagConstraints = new java.awt.GridBagConstraints();
       gridBagConstraints.gridx = 1;
       gridBagConstraints.gridy = 0;
-      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
       gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
       jPanelGraphStyle.add(jComboBoxChartType, gridBagConstraints);
 
@@ -616,10 +618,16 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
       gridBagConstraints.gridwidth = 3;
       gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
       gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-      gridBagConstraints.weightx = 1.0;
-      gridBagConstraints.weighty = 1.0;
       gridBagConstraints.insets = new java.awt.Insets(10, 2, 0, 2);
       jPanelGraphStyle.add(jCheckBoxDrawMarkers, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 2;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+      gridBagConstraints.weightx = 1.0;
+      gridBagConstraints.weighty = 1.0;
+      jPanelGraphStyle.add(jPanel2, gridBagConstraints);
 
       gridBagConstraints = new java.awt.GridBagConstraints();
       gridBagConstraints.gridx = 1;
@@ -789,17 +797,15 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
        switch(selectedType) {
           case 0:
              parent.getGraphPanelChart().getChartSettings().setChartType(ChartSettings.CHART_TYPE_LINE);
-             jCheckBoxDrawMarkers.setEnabled(true);
+             jCheckBoxDrawMarkers.setVisible(true);
              break;
           case 1:
              parent.getGraphPanelChart().getChartSettings().setChartType(ChartSettings.CHART_TYPE_BAR);
-             parent.getGraphPanelChart().getChartSettings().setChartMarkers(ChartSettings.CHART_MARKERS_NO);
-             jCheckBoxDrawMarkers.setSelected(false);
-             jCheckBoxDrawMarkers.setEnabled(false);
+             jCheckBoxDrawMarkers.setVisible(false);
              break;
           case 2:
              parent.getGraphPanelChart().getChartSettings().setChartType(ChartSettings.CHART_TYPE_CSPLINE);
-             jCheckBoxDrawMarkers.setEnabled(true);
+             jCheckBoxDrawMarkers.setVisible(true);
              break;
           default:
              parent.getGraphPanelChart().getChartSettings().setChartType(ChartSettings.CHART_TYPE_DEFAULT);
@@ -840,6 +846,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
    private javax.swing.JLabel jLabelTimeline1;
    private javax.swing.JLabel jLabelTimeline2;
    private javax.swing.JPanel jPanel1;
+   private javax.swing.JPanel jPanel2;
    private javax.swing.JPanel jPanel4;
    private javax.swing.JPanel jPanel6;
    private javax.swing.JPanel jPanelAllSettingsContainer;

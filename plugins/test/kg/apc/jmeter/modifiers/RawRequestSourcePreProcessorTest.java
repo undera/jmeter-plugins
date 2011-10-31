@@ -215,12 +215,11 @@ public class RawRequestSourcePreProcessorTest {
         assertEquals(expResult, result);
     }
 
-
     @Test
     public void testProcess_bug1() {
         System.out.println("bug with chunk sizes");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
-        instance.setFileName(basedir+ "/DNSJavaDecoderToRawData.out");
+        instance.setFileName(basedir + "/DNSJavaDecoderToRawData.out");
         instance.setRewindOnEOF(false);
         for (int n = 1; n < 1000; n++) {
             instance.process();

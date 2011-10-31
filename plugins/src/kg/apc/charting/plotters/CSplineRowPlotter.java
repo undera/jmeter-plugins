@@ -32,9 +32,9 @@ public class CSplineRowPlotter extends AbstractRowPlotter {
          long minX = row.getMinX();
          long maxX = row.getMaxX();
 
-         long step = (maxX - minX) / splineLinesCount;
-
-         long currentX = minX;
+         double step = (double)(maxX - minX) / splineLinesCount;
+         
+         double currentX = minX;
          g2d.setColor(color);
          while (currentX <= maxX) {
             x = chartRect.x + (int) ((currentX - minXVal) * dxForDVal);

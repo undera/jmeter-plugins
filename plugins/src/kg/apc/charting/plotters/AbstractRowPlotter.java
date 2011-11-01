@@ -36,7 +36,6 @@ public abstract class AbstractRowPlotter {
    protected int x, y;
    protected int prevX;
    protected int prevY;
-   protected int factorInUse = 1;
    protected boolean allowMarkers = false;
 
    protected boolean mustDrawFirstZeroingLine;
@@ -79,7 +78,7 @@ public abstract class AbstractRowPlotter {
    }
 
    //this method is responsible to maintain x, y, prevX, prevY
-   public void paintRow(Graphics2D g2d, AbstractGraphRow row, Color color, double zoomFactor) {
+   public synchronized void paintRow(Graphics2D g2d, AbstractGraphRow row, Color color, double zoomFactor, int limitPointFactor) {
       
       Iterator<Entry<Long, AbstractGraphPanelChartElement>> it = row.iterator();
       Entry<Long, AbstractGraphPanelChartElement> element;
@@ -100,7 +99,7 @@ public abstract class AbstractRowPlotter {
          if (!row.isDrawOnChart()) {
             continue;
          }
-         if (factorInUse == 1) {
+         if (limitPointFactor == 1) {
 
             element = it.next();
             AbstractGraphPanelChartElement elt = (AbstractGraphPanelChartElement) element.getValue();
@@ -120,8 +119,10 @@ public abstract class AbstractRowPlotter {
             calcPointX = element.getKey().doubleValue();
             calcPointY = elt.getValue();
          } else {
+            calcPointX = 0;
+            calcPointY = 0;
             int nbPointProcessed = 0;
-            for (int i = 0; i < factorInUse; i++) {
+            for (int i = 0; i < limitPointFactor; i++) {
                if (it.hasNext()) {
                   element = it.next();
                   calcPointX = calcPointX + element.getKey().doubleValue();

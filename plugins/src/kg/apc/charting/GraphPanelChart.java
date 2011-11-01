@@ -131,7 +131,7 @@ public class GraphPanelChart
    private String xAxisLabel = "X axis label";
    private String yAxisLabel = "Y axis label";
    private int precisionLabel = -1;
-   private int factorInUse = 1;
+   private int limitPointFactor = 1;
    private boolean displayPrecision = false;
 
    public void setDisplayPrecision(boolean displayPrecision) {
@@ -183,7 +183,7 @@ public class GraphPanelChart
             granularity = precisionLabel;
 
          } else {
-            granularity = precisionLabel * factorInUse;
+            granularity = precisionLabel * limitPointFactor;
          }
 
          long min = granularity / 60000;
@@ -746,14 +746,14 @@ public class GraphPanelChart
       }
 
       //first we get the aggregate point factor if maxpoint is > 0;
-      factorInUse = 1;
+      limitPointFactor = 1;
       if (chartSettings.getMaxPointPerRow() > 0) {
          it = rows.entrySet().iterator();
          while (it.hasNext()) {
             Entry<String, AbstractGraphRow> row = it.next();
             int rowFactor = (int) Math.floor(row.getValue().size() / chartSettings.getMaxPointPerRow()) + 1;
-            if (rowFactor > factorInUse) {
-               factorInUse = rowFactor;
+            if (rowFactor > limitPointFactor) {
+               limitPointFactor = rowFactor;
             }
          }
       }
@@ -798,7 +798,7 @@ public class GraphPanelChart
                zoomFactor = rowsZoomFactor.get(rowLabel);
          }
          currentPlotter.setBoundsValues(chartRect, minXVal, maxXVal, minYVal, maxYVal);
-         currentPlotter.paintRow((Graphics2D)g, row, color, zoomFactor);
+         currentPlotter.paintRow((Graphics2D)g, row, color, zoomFactor, limitPointFactor);
       }
    }
 

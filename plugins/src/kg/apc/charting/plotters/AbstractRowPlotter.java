@@ -95,6 +95,8 @@ public abstract class AbstractRowPlotter {
          g2d.setStroke(chartSettings.getThickStroke());
       }
 
+      g2d.setColor(color);
+
       while (it.hasNext()) {
          if (!row.isDrawOnChart()) {
             continue;
@@ -141,12 +143,12 @@ public abstract class AbstractRowPlotter {
          y = chartRect.y + chartRect.height - yHeight;
 
          //now x and y are set, we can call plotter
-         processPoint(g2d, color, row.getGranulationValue());
+         processPoint(g2d, row.getGranulationValue());
          
          //set prevX, prevY
          if (isChartPointValid(x, y)) {
             if(allowMarkers) {
-               processMarker(g2d, row, color);
+               processMarker(g2d, row);
             }
             prevX = x;
             prevY = y;
@@ -157,26 +159,26 @@ public abstract class AbstractRowPlotter {
          }
       }
 
-      processFinalLines(row, g2d, color);
+      processFinalLines(row, g2d);
 
       x=0;
       y=0;
       prevX = -1;
       prevY = chartRect.y + chartRect.height;
 
-      postPaintRow(row, g2d, color);
+      postPaintRow(row, g2d);
 
       if(olStroke != null) {
          g2d.setStroke(olStroke);
       }
    }
 
-   protected abstract void processPoint(Graphics2D g2d, Color color, int granulation);
+   protected abstract void processPoint(Graphics2D g2d, int granulation);
 
-   protected void postPaintRow(AbstractGraphRow row, Graphics2D g2d, Color color) {
+   protected void postPaintRow(AbstractGraphRow row, Graphics2D g2d) {
    }
 
-   private void processMarker(Graphics2D g2d, AbstractGraphRow row, Color color) {
+   private void processMarker(Graphics2D g2d, AbstractGraphRow row) {
       int radius = row.getMarkerSize();
 
       //check if forced via settings
@@ -189,7 +191,6 @@ public abstract class AbstractRowPlotter {
 
       // draw markers
       if (radius != AbstractGraphRow.MARKER_SIZE_NONE && (y >= chartRect.y)) {
-         g2d.setColor(color);
          if (isChartPointValid(x, y)) {
             g2d.fillOval(x - radius, y - radius, (radius) * 2, (radius) * 2);
          }
@@ -197,6 +198,7 @@ public abstract class AbstractRowPlotter {
    }
 
    private void drawLabels(Graphics2D g2d, AbstractGraphRow row, double yValue) {
+      Color oldColor = g2d.getColor();
       g2d.setColor(Color.DARK_GRAY);
       Font oldFont = g2d.getFont();
       g2d.setFont(g2d.getFont().deriveFont(Font.BOLD));
@@ -216,9 +218,10 @@ public abstract class AbstractRowPlotter {
                  y + fm.getAscent() / 2);
       }
       g2d.setFont(oldFont);
+      g2d.setColor(oldColor);
    }
 
-   private void processFinalLines(AbstractGraphRow row, Graphics2D g2d, Color color) {
+   private void processFinalLines(AbstractGraphRow row, Graphics2D g2d) {
       Stroke oldStroke = null;
 
       if (row.isDrawLine() && chartSettings.isDrawFinalZeroingLines()) {
@@ -226,7 +229,6 @@ public abstract class AbstractRowPlotter {
             oldStroke = g2d.getStroke();
             g2d.setStroke(chartSettings.getThickStroke());
          }
-         g2d.setColor(color);
          g2d.drawLine(prevX, Math.max(prevY, chartRect.y), (int) (prevX + dxForDVal), chartRect.y + chartRect.height);
          if (row.isDrawThickLines()) {
             g2d.setStroke(oldStroke);

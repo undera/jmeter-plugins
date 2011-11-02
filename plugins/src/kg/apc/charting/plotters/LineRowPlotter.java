@@ -17,14 +17,13 @@ public class LineRowPlotter extends AbstractRowPlotter {
    }
 
    @Override
-   protected void processPoint(Graphics2D g2d, Color color, int granulation) {
+   protected void processPoint(Graphics2D g2d, int granulation) {
       boolean valid = isChartPointValid(x, y);
       if (mustDrawFirstZeroingLine && valid) {
          mustDrawFirstZeroingLine = false;
          prevX = x;
       }
       if (prevX >= 0) {
-         g2d.setColor(color);
          if (valid) {
             if (prevY >= chartRect.y && y >= chartRect.y) {
                g2d.drawLine(prevX, prevY, x, y);

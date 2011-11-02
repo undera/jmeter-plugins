@@ -21,12 +21,12 @@ public class CSplineRowPlotter extends AbstractRowPlotter {
    }
 
    @Override
-   protected void processPoint(Graphics2D g2d, Color color, int granulation) {
+   protected void processPoint(Graphics2D g2d, int granulation) {
       //do nothing
    }
 
    @Override
-   protected void postPaintRow(AbstractGraphRow row, Graphics2D g2d, Color color) {
+   protected void postPaintRow(AbstractGraphRow row, Graphics2D g2d) {
       if (row.size() >= 3) {
          CubicSpline cs = new CubicSpline(row);
          long minX = row.getMinX();
@@ -35,7 +35,7 @@ public class CSplineRowPlotter extends AbstractRowPlotter {
          double step = (double)(maxX - minX) / splineLinesCount;
          
          double currentX = minX;
-         g2d.setColor(color);
+         
          while (currentX <= maxX) {
             x = chartRect.x + (int) ((currentX - minXVal) * dxForDVal);
             int yHeight = (int) ((cs.interpolate(currentX) - minYVal) * dyForDVal);

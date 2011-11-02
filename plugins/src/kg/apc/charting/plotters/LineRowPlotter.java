@@ -1,6 +1,5 @@
 package kg.apc.charting.plotters;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import kg.apc.charting.ChartSettings;
 import org.apache.jorphan.gui.NumberRenderer;

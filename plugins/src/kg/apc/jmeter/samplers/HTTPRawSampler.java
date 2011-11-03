@@ -49,10 +49,14 @@ public class HTTPRawSampler extends AbstractIPSampler {
 
         ByteBuffer recvBuf = getRecvBuf();
         recvBuf.clear();
-        
+
         boolean firstPack = true;
         int cnt = 0;
         int responseSize = 0;
+
+        if (log.isDebugEnabled()) {
+            log.debug("Start reading response");
+        }
 
         try {
             while ((cnt = channel.read(recvBuf)) != -1) {
@@ -78,6 +82,10 @@ public class HTTPRawSampler extends AbstractIPSampler {
         } catch (IOException ex) {
             channel.close();
             throw ex;
+        }
+
+        if (log.isDebugEnabled()) {
+            log.debug("Done reading response");
         }
 
         res.sampleEnd();
@@ -139,6 +147,9 @@ public class HTTPRawSampler extends AbstractIPSampler {
             sock.write(sendBuf);
         }
         sendFile(getFileToSend(), sock);
+        if (log.isDebugEnabled()) {
+            log.debug("Sent request");
+        }
         return readResponse(sock, res);
     }
 

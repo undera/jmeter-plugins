@@ -125,6 +125,26 @@ public class FlexibleFileWriterTest {
         instance.testEnded();
     }
 
+    @Test
+    public void testSampleOccurred_labels() {
+        System.out.println("sampleOccurred_labels");
+        SampleResult res = new SampleResult();
+        res.setResponseData("test".getBytes());
+        FlexibleFileWriter instance = new FlexibleFileWriter();
+        instance.setColumns("threadName|\\t|sampleLabel");
+        instance.testStarted();
+
+        res.setSampleLabel("SAMPLELBL");
+        res.setThreadName("THRDNAME");
+        String exp = "THRDNAME\tSAMPLELBL";
+        SampleEvent e = new SampleEvent(res, "Test");
+        instance.sampleOccurred(e);
+        ByteBuffer written = instance.fileEmul.getWrittenBytes();
+        assertEquals(exp, JMeterPluginsUtils.byteBufferToString(written));
+
+        instance.testEnded();
+    }
+
     /**
      * Test of sampleStarted method, of class FlexibleCSVWriter.
      */

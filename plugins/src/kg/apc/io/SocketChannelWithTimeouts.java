@@ -21,8 +21,8 @@ import org.apache.log.Logger;
  */
 public class SocketChannelWithTimeouts extends SocketChannel {
 
-    protected  SocketChannel socketChannel;
-    protected  Selector selector;
+    protected SocketChannel socketChannel;
+    protected Selector selector;
     private long connectTimeout = 5000;
     private long readTimeout = 10000;
     protected SelectionKey channelKey;
@@ -58,7 +58,9 @@ public class SocketChannelWithTimeouts extends SocketChannel {
 
             socketChannel.finishConnect();
             channelKey = socketChannel.register(selector, SelectionKey.OP_READ);
-            log.debug("Connected in " + (System.currentTimeMillis() - start));
+            if (log.isDebugEnabled()) {
+                log.debug("Connected socket in " + (System.currentTimeMillis() - start));
+            }
             if (!socketChannel.isConnected()) {
                 throw new SocketException("SocketChannel not connected on some reason");
             }
@@ -102,7 +104,7 @@ public class SocketChannelWithTimeouts extends SocketChannel {
         fastFirstPacketRead = false;
         int res = 0;
         int size = src.remaining();
-        while (res<size) {
+        while (res < size) {
             res += socketChannel.write(src);
         }
         return res;

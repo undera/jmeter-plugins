@@ -1,5 +1,6 @@
 package kg.apc.jmeter.samplers;
 
+import java.io.IOException;
 import kg.apc.emulators.SocketEmulatorInputStream;
 import kg.apc.emulators.SocketEmulatorOutputStream;
 import org.junit.After;
@@ -38,7 +39,7 @@ public class InfiniteGetTCPClientImplTest {
      * Test of write method, of class InfiniteGetTCPClientImpl.
      */
     @Test
-    public void testWrite_OutputStream_InputStream() {
+    public void testWrite_OutputStream_InputStream() throws IOException {
         System.out.println("write");
         SocketEmulatorOutputStream os = new SocketEmulatorOutputStream();
         SocketEmulatorInputStream is = new SocketEmulatorInputStream();
@@ -50,7 +51,7 @@ public class InfiniteGetTCPClientImplTest {
      * Test of write method, of class InfiniteGetTCPClientImpl.
      */
     @Test
-    public void testWrite_OutputStream_String() {
+    public void testWrite_OutputStream_String() throws IOException {
         System.out.println("write");
         SocketEmulatorOutputStream out = new SocketEmulatorOutputStream();
         String string = "";

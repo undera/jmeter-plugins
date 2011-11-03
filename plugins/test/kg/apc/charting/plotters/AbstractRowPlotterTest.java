@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package kg.apc.charting.plotters;
 
 import java.awt.Color;
@@ -21,7 +16,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author z000205
+ * @author Stephane Hoblingre
  */
 public class AbstractRowPlotterTest {
 

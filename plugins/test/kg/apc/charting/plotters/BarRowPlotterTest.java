@@ -1,13 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.charting.plotters;
 
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.rows.GraphRowAverages;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import kg.apc.charting.ChartSettings;
 import kg.apc.emulators.Graphics2DEmul;
 import org.apache.jorphan.gui.NumberRenderer;
@@ -20,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author z000205
+ * @author Stephane Hoblingre
  */
 public class BarRowPlotterTest {
 
@@ -42,7 +37,6 @@ public class BarRowPlotterTest {
    @Before
    public void setUp() {
       testRow = new GraphRowAverages();
-      long now = System.currentTimeMillis();
       testRow.add(1000, 100);
       testRow.add(1300, 70);
       testRow.add(1500, 90);

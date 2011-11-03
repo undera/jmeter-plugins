@@ -74,7 +74,7 @@ public class ConsoleStatusLogger extends AbstractListenerElement
         msg += "Samples: " + count + '\t';
         msg += "Latency: " + sumLatency / (count > 0 ? count : 1) + '\t';
         msg += "Resp.Time: " + sumRTime / (count > 0 ? count : 1) + '\t';
-        msg += "Errors: " + (10000 * errors / (1.0 * (count > 0 ? count : 1))) / 100 + '%';
+        msg += "Errors: " + errors;
         out.println(msg);
 
         count = 0;

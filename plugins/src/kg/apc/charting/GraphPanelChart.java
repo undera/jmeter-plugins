@@ -63,6 +63,9 @@ public class GraphPanelChart
         extends JComponent
         implements ClipboardOwner {
 
+   BufferedImage cache = null;
+   int cacheWitdh, cacheHeight;
+   boolean cacheValid = false;
    //plotters
    BarRowPlotter barRowPlotter = null;
    LineRowPlotter lineRowPlotter = null;
@@ -492,16 +495,32 @@ public class GraphPanelChart
       yAxisRect.setBounds(yAxisRect.x, yAxisRect.y, yAxisRect.width, chartRect.height);
    }
 
+   public void invalidateCache() {
+      cacheValid = false;
+   }
+
    @Override
    public void paintComponent(Graphics g) {
       super.paintComponent(g);
 
-      BufferedImage image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
-      Graphics2D g2d = image.createGraphics();
-      g2d.setClip(0, 0, getWidth(), getHeight());
-      g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-      drawPanel(g2d);
-      g.drawImage(image, 0, 0, this);
+      int witdh = this.getWidth();
+      int height = this.getHeight();
+
+      if(cacheHeight != height || cacheWitdh != witdh) {
+         cacheValid = false;
+      }
+
+      if(!cacheValid) {
+         cache = new BufferedImage(witdh, height, BufferedImage.TYPE_INT_ARGB);
+         Graphics2D g2d = cache.createGraphics();
+         g2d.setClip(0, 0, getWidth(), getHeight());
+         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+         drawPanel(g2d);
+         cacheValid = true;
+         cacheHeight = height;
+         cacheWitdh = witdh;
+      }
+      g.drawImage(cache, 0, 0, this);
    }
 
    private void drawPanel(Graphics2D g) {
@@ -734,7 +753,7 @@ public class GraphPanelChart
          g.setColor(Color.black);
       }
    }
-
+   
    private void paintChart(Graphics g) {
       g.setColor(Color.yellow);
       Iterator<Entry<String, AbstractGraphRow>> it;

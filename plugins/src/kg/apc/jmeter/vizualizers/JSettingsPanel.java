@@ -147,6 +147,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
     private void refreshGraphPreview()
     {
+        parent.getGraphPanelChart().invalidateCache();
         jPanelGraphPreview.invalidate();
         jPanelGraphPreview.repaint();
     }

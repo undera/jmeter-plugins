@@ -114,6 +114,7 @@ public class GraphPanel
      */
     public void updateGui()
     {
+        graphPanelObject.invalidateCache();
         JComponent selectedTab = (JComponent) getSelectedComponent();
         selectedTab.updateUI();
         selectedTab.repaint();

@@ -235,6 +235,7 @@ public class UltimateThreadGroupGui
         }
 
         model.put("Expected parallel users count", row);
+        chart.invalidateCache();
         chart.repaint();
     }
 

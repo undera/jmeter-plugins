@@ -306,6 +306,7 @@ public class SteppingThreadGroupGui
         }
 
         model.put("Expected Active Users Count", row);
+        chart.invalidateCache();
         chart.repaint();
     }
 

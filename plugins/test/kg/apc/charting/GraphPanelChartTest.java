@@ -382,4 +382,14 @@ public class GraphPanelChartTest {
         ChartSettings result = instance.getChartSettings();
         assertNotNull(result);
     }
+
+   /**
+    * Test of invalidateCache method, of class GraphPanelChart.
+    */
+   @Test
+   public void testInvalidateCache() {
+      System.out.println("invalidateCache");
+      GraphPanelChart instance = new GraphPanelChart();
+      instance.invalidateCache();
+   }
 }

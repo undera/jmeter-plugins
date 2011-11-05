@@ -203,6 +203,7 @@ public class VariableThroughputTimerGui
 
         row.setColor(Color.blue);
         model.put("Expected RPS", row);
+        chart.invalidateCache();
         chart.repaint();
     }
 

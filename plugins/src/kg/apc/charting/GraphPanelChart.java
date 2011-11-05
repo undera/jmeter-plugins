@@ -511,9 +511,11 @@ public class GraphPanelChart
       }
 
       if(!cacheValid) {
-         cache = new BufferedImage(witdh, height, BufferedImage.TYPE_INT_ARGB);
+         if(cache == null || cacheHeight != height || cacheWitdh != witdh) {
+            cache = new BufferedImage(witdh, height, BufferedImage.TYPE_INT_ARGB);
+         }
          Graphics2D g2d = cache.createGraphics();
-         g2d.setClip(0, 0, getWidth(), getHeight());
+         g2d.setClip(0, 0, witdh, height);
          g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
          drawPanel(g2d);
          cacheValid = true;

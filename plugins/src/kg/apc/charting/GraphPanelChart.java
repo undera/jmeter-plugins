@@ -63,9 +63,13 @@ public class GraphPanelChart
         extends JComponent
         implements ClipboardOwner {
 
-   BufferedImage cache = null;
-   int cacheWitdh, cacheHeight;
-   boolean cacheValid = false;
+   //cache management
+   private static BufferedImage cache = null;
+   private static int cacheWitdh, cacheHeight;
+   private static boolean cacheValid = false;
+   private static int cacheOwner = -1;
+   private int gpcId;
+   private static int uidGenerator = 0;
    //plotters
    BarRowPlotter barRowPlotter = null;
    LineRowPlotter lineRowPlotter = null;
@@ -240,10 +244,16 @@ public class GraphPanelChart
       this.expendRows = expendRows;
    }
 
+   private static synchronized int getNextId() {
+      uidGenerator++;
+      return uidGenerator;
+   }
+
    /**
     * Creates new chart object with default parameters
     */
    public GraphPanelChart(boolean allowCsvExport) {
+      gpcId = getNextId();
       setBackground(Color.white);
       setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.lightGray, Color.darkGray));
 
@@ -506,7 +516,7 @@ public class GraphPanelChart
       int witdh = this.getWidth();
       int height = this.getHeight();
 
-      if(cacheHeight != height || cacheWitdh != witdh) {
+      if(cacheHeight != height || cacheWitdh != witdh || gpcId != cacheOwner) {
          cacheValid = false;
       }
 
@@ -521,6 +531,7 @@ public class GraphPanelChart
          cacheValid = true;
          cacheHeight = height;
          cacheWitdh = witdh;
+         cacheOwner = gpcId;
       }
       g.drawImage(cache, 0, 0, this);
    }

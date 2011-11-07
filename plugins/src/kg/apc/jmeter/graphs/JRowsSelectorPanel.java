@@ -18,9 +18,12 @@ import kg.apc.jmeter.JMeterPluginsUtils;
  */
 class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInterface {
 
+    GraphPanel parent = null;
+
     /** Creates new form JRowsSelectorPanel */
-    public JRowsSelectorPanel() {
-        initComponents();
+    public JRowsSelectorPanel(GraphPanel parent) {
+       this.parent = parent;
+       initComponents();
     }
 
     public void setTable(Component table)
@@ -30,6 +33,7 @@ class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInte
 
     public void refreshPreview()
     {
+        parent.getGraphObject().invalidateCache();
         jPanelGraphPreview.invalidate();
         jPanelGraphPreview.repaint();
     }

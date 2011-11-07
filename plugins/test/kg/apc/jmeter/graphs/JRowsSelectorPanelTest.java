@@ -46,7 +46,7 @@ public class JRowsSelectorPanelTest {
     {
         System.out.println("setTable");
         Component table = new JTable();
-        JRowsSelectorPanel instance = new JRowsSelectorPanel();
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
         instance.setTable(table);
     }
 
@@ -57,7 +57,7 @@ public class JRowsSelectorPanelTest {
     public void testRefreshPreview()
     {
         System.out.println("refreshPreview");
-        JRowsSelectorPanel instance = new JRowsSelectorPanel();
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
         instance.refreshPreview();
     }
 
@@ -68,7 +68,7 @@ public class JRowsSelectorPanelTest {
     public void testGetGraphDisplayPanel()
     {
         System.out.println("getGraphDisplayPanel");
-        JRowsSelectorPanel instance = new JRowsSelectorPanel();
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
         JPanel result = instance.getGraphDisplayPanel();
         assertNotNull(result);
     }
@@ -80,7 +80,7 @@ public class JRowsSelectorPanelTest {
     public void testIsPreview()
     {
         System.out.println("isPreview");
-        JRowsSelectorPanel instance = new JRowsSelectorPanel();
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
         boolean expResult = true;
         boolean result = instance.isPreview();
         assertEquals(expResult, result);

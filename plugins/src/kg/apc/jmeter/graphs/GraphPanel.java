@@ -45,7 +45,7 @@ public class GraphPanel
     private void addRowsTab()
     {
         ImageIcon rowsIcon = createImageIcon("/kg/apc/jmeter/img/checks.png");
-        rowsTab = new JRowsSelectorPanel();
+        rowsTab = new JRowsSelectorPanel(this);
         rowsTab.setTable(makeTable(rowsTab));
 
         addTab("Rows", rowsIcon, rowsTab, "Select rows to display");

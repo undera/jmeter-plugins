@@ -1,9 +1,11 @@
 package kg.apc.jmeter.config;
 
+import java.awt.event.ActionEvent;
 import kg.apc.jmeter.modifiers.*;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -22,8 +24,8 @@ import org.apache.jmeter.testelement.TestElement;
  */
 public class VariablesFromCSVGui extends AbstractConfigGui {
 
-    public static final String WIKIPAGE = "RawDataSource";
-    //private JTextField rewindOnEOF;
+    public static final String WIKIPAGE = "VariablesFromCSV";
+
     private JTextField fileName;
     private JTextField variablePrefix;
     private JTextField separator;
@@ -40,7 +42,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Variables From CSV File (new)");
+        return JMeterPluginsUtils.prefixLabel("Variables From CSV File");
     }
 
     @Override
@@ -97,7 +99,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         editConstraints.weightx = 1.0;
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-        addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel(" CSV File: ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("CSV File: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 0, fileName = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 2, 0, browseButton = new JButton("Browse..."));
 
@@ -111,19 +113,19 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel(" Variable prefix: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 1, variablePrefix = new JTextField(20));
 
-        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel(" Separator (use \\t for tab): ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Separator (use \\t for tab): ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 2, separator = new JTextField(20));
 
         editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 2);
 
-        addToPanel(mainPanel, labelConstraints, 0, 3, checkButton = new JButton("Check CSV File"));
+        addToPanel(mainPanel, labelConstraints, 0, 3, checkButton = new JButton("Test CSV File"));
 
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
         checkInfo = new JTextArea();
         addToPanel(mainPanel, editConstraints, 1, 3, GuiBuilderHelper.getTextAreaScrollPaneContainer(checkInfo, 10));
-        checkButton.addActionListener(new CheckConsistencyAction(fileName, checkInfo));
+        checkButton.addActionListener(new TestCsvFileAction(fileName, variablePrefix, separator, checkInfo));
         checkInfo.setEditable(false);
         checkInfo.setOpaque(false);
 

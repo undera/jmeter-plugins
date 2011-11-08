@@ -70,6 +70,7 @@ public class UltimateThreadGroupGui
     private LoopControlPanel loopPanel;
     protected PowerTableModel tableModel;
     protected JTable grid;
+    protected ButtonPanelAddCopyRemove buttons;
 
     /**
      *
@@ -102,7 +103,8 @@ public class UltimateThreadGroupGui
         JScrollPane scroll = new JScrollPane(createGrid());
         scroll.setPreferredSize(scroll.getMinimumSize());
         panel.add(scroll, BorderLayout.CENTER);
-        panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
+        buttons = new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues);
+        panel.add(buttons, BorderLayout.SOUTH);
 
         return panel;
     }
@@ -180,6 +182,7 @@ public class UltimateThreadGroupGui
         if (te != null) {
             loopPanel.configure(te);
         }
+        buttons.checkDeleteButtonStatus();
     }
 
     @Override

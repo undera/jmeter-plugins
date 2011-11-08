@@ -15,6 +15,8 @@ public class ButtonPanelAddCopyRemove extends JPanel{
     private final JButton copyRowButton;
     private final JButton deleteRowButton;
 
+    private final PowerTableModel tableModel;
+
     public ButtonPanelAddCopyRemove(JTable grid, PowerTableModel tableModel, Object[] defaultValues) {
       setLayout(new GridLayout(1, 2));
 
@@ -29,5 +31,10 @@ public class ButtonPanelAddCopyRemove extends JPanel{
       add(addRowButton);
       add(copyRowButton);
       add(deleteRowButton);
+      this.tableModel = tableModel;
+    }
+
+    public void checkDeleteButtonStatus() {
+       deleteRowButton.setEnabled(tableModel != null && tableModel.getRowCount() > 0);
     }
 }

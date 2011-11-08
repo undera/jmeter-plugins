@@ -43,4 +43,15 @@ public class ButtonPanelAddCopyRemoveTest {
         ButtonPanelAddCopyRemove instance = new ButtonPanelAddCopyRemove(null, null, defaultValues);
     }
 
+   /**
+    * Test of checkDeleteButtonStatus method, of class ButtonPanelAddCopyRemove.
+    */
+   @Test
+   public void testCheckDeleteButtonStatus() {
+      System.out.println("checkDeleteButtonStatus");
+      Object[] defaultValues=new String[]{"", "", ""};
+      ButtonPanelAddCopyRemove instance = new ButtonPanelAddCopyRemove(null, null, defaultValues);;
+      instance.checkDeleteButtonStatus();
+   }
+
 }

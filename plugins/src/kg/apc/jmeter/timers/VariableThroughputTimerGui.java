@@ -57,6 +57,7 @@ public class VariableThroughputTimerGui
     };
     protected PowerTableModel tableModel;
     protected JTable grid;
+    protected ButtonPanelAddCopyRemove buttons;
 
     /**
      *
@@ -88,7 +89,8 @@ public class VariableThroughputTimerGui
         JScrollPane scroll = new JScrollPane(createGrid());
         scroll.setPreferredSize(scroll.getMinimumSize());
         panel.add(scroll, BorderLayout.CENTER);
-        panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
+        buttons = new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues);
+        panel.add(buttons, BorderLayout.SOUTH);
 
         return panel;
     }
@@ -158,7 +160,7 @@ public class VariableThroughputTimerGui
             JMeterPluginsUtils.collectionPropertyToTableModelCols(columns, tableModel);
         }
         tableModel.addTableModelListener(this);
-
+        buttons.checkDeleteButtonStatus();
         updateUI();
     }
 

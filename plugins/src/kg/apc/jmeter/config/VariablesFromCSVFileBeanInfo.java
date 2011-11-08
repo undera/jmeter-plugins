@@ -46,7 +46,6 @@ public class VariablesFromCSVFileBeanInfo
       p.setValue(DEFAULT, ",");        
       p.setValue(NOT_EXPRESSION, Boolean.TRUE);
 
-      getBeanDescriptor().setDisplayName(JMeterPluginsUtils.prefixLabel(getBeanDescriptor().getDisplayName()));
-      getBeanDescriptor().setHidden(true);
+      getBeanDescriptor().setDisplayName(null);
    }
 }

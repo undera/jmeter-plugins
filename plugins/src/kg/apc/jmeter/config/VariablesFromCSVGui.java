@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +27,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
     private JTextField fileName;
     private JTextField variablePrefix;
     private JTextField separator;
+    private JCheckBox storeSysProp;
     
     private JButton browseButton;
     private JButton checkButton;
@@ -53,6 +55,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         fileName.setText(element.getPropertyAsString(VariablesFromCSV.FILENAME));
         variablePrefix.setText(element.getPropertyAsString(VariablesFromCSV.VARIABLE_PREFIX));
         separator.setText(element.getPropertyAsString(VariablesFromCSV.SEPARATOR));
+        storeSysProp.setSelected(element.getPropertyAsBoolean(VariablesFromCSV.STORE_SYS_PROP));
     }
 
     @Override
@@ -71,6 +74,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
             varsCsv.setFileName(fileName.getText());
             varsCsv.setVariablePrefix(variablePrefix.getText());
             varsCsv.setSeparator(separator.getText());
+            varsCsv.setStoreAsSystemProperty(storeSysProp.isSelected());
         }
     }
 
@@ -110,18 +114,21 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel(" Variable prefix: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 1, variablePrefix = new JTextField(20));
 
-        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Separator (use \\t for tab): ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Separator (use '\\t' for tab): ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 2, separator = new JTextField(20));
+
+        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Store also variables in System Properties: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 3, storeSysProp = new JCheckBox());
 
         editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 2);
 
-        addToPanel(mainPanel, labelConstraints, 0, 3, checkButton = new JButton("Test CSV File"));
+        addToPanel(mainPanel, labelConstraints, 0, 4, checkButton = new JButton("Test CSV File"));
 
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
         checkInfo = new JTextArea();
-        addToPanel(mainPanel, editConstraints, 1, 3, GuiBuilderHelper.getTextAreaScrollPaneContainer(checkInfo, 10));
+        addToPanel(mainPanel, editConstraints, 1, 4, GuiBuilderHelper.getTextAreaScrollPaneContainer(checkInfo, 10));
         checkButton.addActionListener(new TestCsvFileAction(fileName, variablePrefix, separator, checkInfo));
         checkInfo.setEditable(false);
         checkInfo.setOpaque(false);
@@ -141,5 +148,6 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         variablePrefix.setText("");
         fileName.setText("");
         checkInfo.setText("");
+        storeSysProp.setSelected(false);
     }
 }

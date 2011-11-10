@@ -117,7 +117,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Separator (use '\\t' for tab): ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 2, separator = new JTextField(20));
 
-        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Store also variables in System Properties: ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Store variables also in System Properties: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 3, storeSysProp = new JCheckBox());
 
         editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);

@@ -1,7 +1,6 @@
 package kg.apc.jmeter.config;
 
 import java.beans.PropertyDescriptor;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.testbeans.BeanInfoSupport;
 
 /**
@@ -46,6 +45,9 @@ public class VariablesFromCSVFileBeanInfo
       p.setValue(DEFAULT, ",");        
       p.setValue(NOT_EXPRESSION, Boolean.TRUE);
 
+      //getBeanDescriptor().setDisplayName(JMeterPluginsUtils.prefixLabel(getBeanDescriptor().getDisplayName()));
+      //FIXME: tempory hack until JMeter handles hidden property
+      //will be replaced by: getBeanDescriptor().setHidden(true);
       getBeanDescriptor().setDisplayName(null);
    }
 }

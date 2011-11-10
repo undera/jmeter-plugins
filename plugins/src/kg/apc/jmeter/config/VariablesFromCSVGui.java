@@ -18,7 +18,7 @@ import org.apache.jmeter.testelement.TestElement;
 
 /**
  *
- * @author undera
+ * @author Stephane Hoblingre
  */
 public class VariablesFromCSVGui extends AbstractConfigGui {
 

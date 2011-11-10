@@ -27,6 +27,10 @@ public class TestCsvFileAction implements ActionListener {
         infoArea.setText("");
         infoArea.setForeground(Color.black);
 
+        boolean noValues = true;
+        String msgVars = "";
+        int count = 0;
+
         File f = new File(filename.getText());
         if (!f.exists()) {
             reportError("File '" + filename.getText() + "' was not found...");
@@ -34,12 +38,25 @@ public class TestCsvFileAction implements ActionListener {
         } else {
             VariableFromCsvFileReader reader = new VariableFromCsvFileReader(filename.getText());
             Map<String,String> vars = reader.getDataAsMap(prefix.getText(), separator.getText());
-            reportOk("File successfuly parsed, " + vars.size() + " variable(s) found:");
             Iterator<String> iter = vars.keySet().iterator();
             while(iter.hasNext()) {
                String var = iter.next();
-               reportOk("${" + var + "} = " + vars.get(var));
+               String value = vars.get(var);
+               if(!"".equals(value)) {
+                  noValues = false;
+               }
+               msgVars = msgVars + "${" + var + "} = " + vars.get(var) + "\n";
+               count++;
             }
+        }
+        if(count == 0) {
+           reportError("File parsed, but no variable found.");
+        } else if(noValues) {
+           reportOk("WARNING: File parsed, " + count + " variable" + (count>1?"s":"") + " found, but no variable have value!");
+           reportOk(msgVars);
+        } else {
+           reportOk("File successfuly parsed, " + count + " variable" + (count>1?"s":"") + " found:");
+           reportOk(msgVars);
         }
     }
 

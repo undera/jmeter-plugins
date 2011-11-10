@@ -17,7 +17,6 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
@@ -42,7 +41,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.JWindow;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import kg.apc.charting.plotters.AbstractRowPlotter;
@@ -122,7 +121,7 @@ public class GraphPanelChart
    }
    private boolean reSetColors = false;
    //hover info
-   private Window hoverWindow;
+   private JWindow hoverWindow;
    //gap in pixels relative to mouse pointer position
    private final static int hoverGap = 20;
    //force positionning between 2 clicks
@@ -264,7 +263,6 @@ public class GraphPanelChart
       xAxisRect = new Rectangle();
       chartRect = new Rectangle();
 
-      //attempt to fix CMD in unix without X11
       //no need to register anything in non GUI mode
       //second test required for unit test mode
       if (GuiPackage.getInstance() != null && !GraphicsEnvironment.isHeadless()) {
@@ -275,7 +273,7 @@ public class GraphPanelChart
          hoverLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
          hoverLabel.setFont(new java.awt.Font("Tahoma", 0, 11));
 
-         hoverWindow = new Window(SwingUtilities.windowForComponent(this));
+         hoverWindow = new JWindow();
          hoverWindow.setBackground(gradientColor);
          hoverWindow.add(hoverLabel, BorderLayout.CENTER);
          registerHoverInfo();

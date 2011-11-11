@@ -2,6 +2,7 @@ package kg.apc.jmeter.config;
 
 import java.beans.PropertyDescriptor;
 import org.apache.jmeter.testbeans.BeanInfoSupport;
+import org.apache.jmeter.util.JMeterUtils;
 
 /**
  *
@@ -13,7 +14,8 @@ public class VariablesFromCSVFileBeanInfo
    // These names must agree case-wise with the variable and property names
    private static final String FILENAME = "filename";               
    private static final String VARIABLES_PREFIX = "variablesPrefix";    
-   private static final String DELIMITER = "delimiter";             
+   private static final String DELIMITER = "delimiter";
+   private static final String MIN_JMETER_VERSION = "2.5.2";
 
    /**
     * 
@@ -45,9 +47,12 @@ public class VariablesFromCSVFileBeanInfo
       p.setValue(DEFAULT, ",");        
       p.setValue(NOT_EXPRESSION, Boolean.TRUE);
 
-      //getBeanDescriptor().setDisplayName(JMeterPluginsUtils.prefixLabel(getBeanDescriptor().getDisplayName()));
-      //FIXME: tempory hack until JMeter handles hidden property
-      //will be replaced by: getBeanDescriptor().setHidden(true);
-      getBeanDescriptor().setDisplayName(null);
+      //hide bean from menu, but hidden flag is taken in account in JMeter >2.5.1 only
+      getBeanDescriptor().setHidden(true);
+
+      //if JMeter <= 2.5.1, use null name hack
+      if(MIN_JMETER_VERSION.compareTo(JMeterUtils.getJMeterVersion()) < 0) {
+         getBeanDescriptor().setDisplayName(null);
+      }    
    }
 }

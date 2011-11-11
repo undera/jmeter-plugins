@@ -52,7 +52,7 @@ public class DNSJavaDecoderTest {
         String res = JOrphanUtils.baToHexString(JMeterPluginsUtils.byteBufferToString(result).getBytes("cp866"));
         System.out.println(exp);
         System.out.println(res);
-        assertEquals(exp.substring(4), res.substring(4));
+        assertEquals(exp.substring(8), res.substring(res.length()-exp.length()+8));
     }
 
     /**

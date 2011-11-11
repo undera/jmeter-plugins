@@ -119,4 +119,93 @@ public class PerfMonCollectorTest {
         instance.testEnded();
     }
 
+    /**
+     * Test of getMetricSettings method, of class PerfMonCollector.
+     */
+    @Test
+    public void testGetMetricSettings() {
+        System.out.println("getMetricSettings");
+        PerfMonCollector instance = new PerfMonCollector();
+        JMeterProperty expResult = null;
+        JMeterProperty result = instance.getMetricSettings();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of generateSample method, of class PerfMonCollector.
+     */
+    @Test
+    public void testGenerateSample() {
+        System.out.println("generateSample");
+        double value = 0.0;
+        String label = "";
+        PerfMonCollector instance = new PerfMonCollector();
+        instance.generateSample(value, label);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of generateErrorSample method, of class PerfMonCollector.
+     */
+    @Test
+    public void testGenerateErrorSample() {
+        System.out.println("generateErrorSample");
+        String label = "";
+        String errorMsg = "";
+        PerfMonCollector instance = new PerfMonCollector();
+        instance.generateErrorSample(label, errorMsg);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of generate2Samples method, of class PerfMonCollector.
+     */
+    @Test
+    public void testGenerate2Samples_3args() {
+        System.out.println("generate2Samples");
+        long[] values = null;
+        String label1 = "";
+        String label2 = "";
+        PerfMonCollector instance = new PerfMonCollector();
+        instance.generate2Samples(values, label1, label2);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of generate2Samples method, of class PerfMonCollector.
+     */
+    @Test
+    public void testGenerate2Samples_4args() {
+        System.out.println("generate2Samples");
+        long[] values = null;
+        String label1 = "";
+        String label2 = "";
+        double dividingFactor = 0.0;
+        PerfMonCollector instance = new PerfMonCollector();
+        instance.generate2Samples(values, label1, label2, dividingFactor);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getConnector method, of class PerfMonCollector.
+     */
+    @Test
+    public void testGetConnector() throws Exception {
+        System.out.println("getConnector");
+        String host = "";
+        int port = 0;
+        PerfMonCollector instance = new PerfMonCollector();
+        PerfMonAgentConnector expResult = null;
+        PerfMonAgentConnector result = instance.getConnector(host, port);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

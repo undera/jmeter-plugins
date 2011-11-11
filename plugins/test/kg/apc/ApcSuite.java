@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({IoSuite.class, ChartingSuite.class, CmdSuite.class, JmeterSuite.class})
+@Suite.SuiteClasses({IoSuite.class, CmdSuite.class, ChartingSuite.class, JmeterSuite.class})
 public class ApcSuite {
 
    @BeforeClass

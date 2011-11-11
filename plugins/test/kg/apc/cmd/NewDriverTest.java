@@ -1,6 +1,5 @@
 package kg.apc.cmd;
 
-import kg.apc.cmd.NewDriver;
 import java.net.MalformedURLException;
 import org.apache.jmeter.util.JMeterUtils;
 import java.net.URL;
@@ -75,5 +74,15 @@ public class NewDriverTest {
         System.out.println("main");
         String[] args = "--help".split(" ");
         NewDriver.main(args);
+    }
+
+    /**
+     * Test of addURL method, of class NewDriver.
+     */
+    @Test
+    public void testAddURL() {
+        System.out.println("addURL");
+        URL url = null;
+        NewDriver.addURL(url);
     }
 }

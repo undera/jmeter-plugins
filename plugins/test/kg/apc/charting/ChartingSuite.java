@@ -1,6 +1,7 @@
 package kg.apc.charting;
 
 import kg.apc.charting.elements.ElementsSuite;
+import kg.apc.charting.plotters.PlottersSuite;
 import kg.apc.charting.rows.RowsSuite;
 import kg.apc.jmeter.graphs.ColorRendererTest;
 import kg.apc.charting.rows.GraphRowExactValuesTest;
@@ -25,7 +26,7 @@ import org.junit.runners.Suite;
  * @author apc
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ElementsSuite.class, AbstractGraphRowTest.class, RowsSuite.class, DividerRendererTest.class, ChartSettingsTest.class, CubicSplineTest.class, DateTimeRendererTest.class, AbstractGraphPanelChartElementTest.class, ColorsDispatcherTest.class, GraphModelToCsvExporterTest.class, GraphPanelChartTest.class})
+@Suite.SuiteClasses({CubicSplineTest.class, PlottersSuite.class, DividerRendererTest.class, RowsSuite.class, AbstractGraphPanelChartElementTest.class, ColorsDispatcherTest.class, GraphPanelChartTest.class, ChartSettingsTest.class, ElementsSuite.class, GraphModelToCsvExporterTest.class, AbstractGraphRowTest.class, DateTimeRendererTest.class})
 public class ChartingSuite {
 
     /**

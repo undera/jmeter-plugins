@@ -5,6 +5,8 @@
 
 package kg.apc.charting;
 
+import java.awt.AlphaComposite;
+import java.awt.Stroke;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -335,4 +337,46 @@ public class ChartSettingsTest {
       ChartSettings instance = new ChartSettings();
       instance.setChartMarkers(chartMarkers);
    }
+
+    /**
+     * Test of getDashStroke method, of class ChartSettings.
+     */
+    @Test
+    public void testGetDashStroke() {
+        System.out.println("getDashStroke");
+        ChartSettings instance = new ChartSettings();
+        Stroke expResult = null;
+        Stroke result = instance.getDashStroke();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getThickStroke method, of class ChartSettings.
+     */
+    @Test
+    public void testGetThickStroke() {
+        System.out.println("getThickStroke");
+        ChartSettings instance = new ChartSettings();
+        Stroke expResult = null;
+        Stroke result = instance.getThickStroke();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getBarComposite method, of class ChartSettings.
+     */
+    @Test
+    public void testGetBarComposite() {
+        System.out.println("getBarComposite");
+        ChartSettings instance = new ChartSettings();
+        AlphaComposite expResult = null;
+        AlphaComposite result = instance.getBarComposite();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

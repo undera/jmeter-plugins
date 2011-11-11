@@ -1,6 +1,5 @@
 package kg.apc.perfmon.metrics;
 
-import kg.apc.perfmon.metrics.CPUTotalMetric;
 import junit.framework.TestCase;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarProxyCache;

@@ -45,7 +45,9 @@ public class PerfMonMetricGetter {
             params = command.substring(command.indexOf(DVOETOCHIE) + 1).trim();
         }
 
-        if (cmdType.equals("shutdown")) {
+        if (cmdType.equals("interval")) {
+            controller.setInterval(Integer.parseInt(params));
+        } else if (cmdType.equals("shutdown")) {
             controller.shutdownConnections();
         } else if (cmdType.equals("metrics")) {
             setUpMetrics(params.split(TAB));
@@ -56,7 +58,7 @@ public class PerfMonMetricGetter {
                 channel.close();
             }
         } else if (cmdType.equals("test")) {
-            log.info("Yep, we received the 'test'");
+            log.info("Yep, we received the 'test' command");
         } else if (cmdType.equals("")) {
         } else {
             throw new UnsupportedOperationException("Unknown command [" + cmdType.length() + "]: '" + cmdType + "'");
@@ -113,5 +115,4 @@ public class PerfMonMetricGetter {
     public boolean isStarted() {
         return metrics.length > 0;
     }
-
 }

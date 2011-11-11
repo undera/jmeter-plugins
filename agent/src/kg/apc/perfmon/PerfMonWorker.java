@@ -36,6 +36,7 @@ public class PerfMonWorker implements Runnable {
     private DatagramChannel udpServer;
     private final LinkedList tcpConnections = new LinkedList();
     private final HashMap udpConnections = new HashMap();
+    private int interval=1000;
 
     public PerfMonWorker() throws IOException {
         acceptSelector = Selector.open();
@@ -109,7 +110,7 @@ public class PerfMonWorker implements Runnable {
     }
 
     private int getInterval() {
-        return 1000;
+        return interval;
     }
 
     private void listenTCP() throws IOException {
@@ -280,5 +281,10 @@ public class PerfMonWorker implements Runnable {
         byte[] bytearr = new byte[bytebuff.remaining()];
         bytebuff.get(bytearr);
         return new String(bytearr);
+    }
+
+    public void setInterval(int parseInt) {
+        log.debug("Setting interval to: " + parseInt);
+        interval = parseInt;
     }
 }

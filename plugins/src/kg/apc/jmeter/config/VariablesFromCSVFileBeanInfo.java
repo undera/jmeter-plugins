@@ -54,7 +54,7 @@ public class VariablesFromCSVFileBeanInfo
       getBeanDescriptor().setHidden(true);
 
       //if JMeter <= 2.5.1, use null name hack
-      if(MIN_JMETER_VERSION.compareTo(JMeterUtils.getJMeterVersion()) < 0) {
+      if(MIN_JMETER_VERSION.compareTo(JMeterUtils.getJMeterVersion()) > 0) {
          getBeanDescriptor().setDisplayName(null);
       }    
    }

@@ -1,9 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.perfmon;
 
+import kg.apc.jmeter.perfmon.client.AbstractTransport;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,7 +13,51 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class NewAgentConnectorTest {
-    
+
+    private static class Gen implements PerfMonSampleGenerator {
+
+        public Gen() {
+        }
+
+        public void generate2Samples(long[] netIO, String string, String string0, double d) {
+        }
+
+        public void generate2Samples(long[] disksIO, String string, String string0) {
+        }
+
+        public void generateSample(double d, String string) {
+        }
+
+        public void generateErrorSample(String label, String errorMsg) {
+        }
+    }
+
+    private NewAgentConnector instance;
+
+    private static class EmulatorTransport implements AbstractTransport {
+
+        public EmulatorTransport() {
+        }
+
+        public void disconnect() {
+        }
+
+        public void writeln(String string) {
+        }
+
+        public String readln() {
+            return "";
+        }
+    }
+
+    private class NewConnEmul extends NewAgentConnector {
+
+        public NewConnEmul(int protocol, String host, int port) {
+            super(protocol, host, port);
+            transport = new EmulatorTransport();
+        }
+    }
+
     public NewAgentConnectorTest() {
     }
 
@@ -27,11 +68,12 @@ public class NewAgentConnectorTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
+        instance = new NewConnEmul(0, null, 0);
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -43,10 +85,7 @@ public class NewAgentConnectorTest {
     public void testSetMetricType() {
         System.out.println("setMetricType");
         String metric = "";
-        NewAgentConnector instance = null;
         instance.setMetricType(metric);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -55,12 +94,9 @@ public class NewAgentConnectorTest {
     @Test
     public void testTest() {
         System.out.println("test");
-        NewAgentConnector instance = null;
         boolean expResult = false;
         boolean result = instance.test();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -70,10 +106,7 @@ public class NewAgentConnectorTest {
     public void testSetParams() {
         System.out.println("setParams");
         String params = "";
-        NewAgentConnector instance = null;
         instance.setParams(params);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -82,10 +115,7 @@ public class NewAgentConnectorTest {
     @Test
     public void testConnect() throws Exception {
         System.out.println("connect");
-        NewAgentConnector instance = null;
         instance.connect();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -94,25 +124,7 @@ public class NewAgentConnectorTest {
     @Test
     public void testDisconnect() {
         System.out.println("disconnect");
-        NewAgentConnector instance = null;
         instance.disconnect();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getLabel method, of class NewAgentConnector.
-     */
-    @Test
-    public void testGetLabel() {
-        System.out.println("getLabel");
-        boolean translateHost = false;
-        NewAgentConnector instance = null;
-        String expResult = "";
-        String result = instance.getLabel(translateHost);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -121,10 +133,7 @@ public class NewAgentConnectorTest {
     @Test
     public void testGenerateSamples() throws Exception {
         System.out.println("generateSamples");
-        PerfMonSampleGenerator collector = null;
-        NewAgentConnector instance = null;
+        PerfMonSampleGenerator collector = new Gen();
         instance.generateSamples(collector);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

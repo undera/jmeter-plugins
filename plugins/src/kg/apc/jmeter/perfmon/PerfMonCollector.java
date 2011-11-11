@@ -23,7 +23,6 @@ public class PerfMonCollector
         extends ResultCollector
         implements Runnable, PerfMonSampleGenerator {
 
-    private static boolean translateHostName = false;
     private static boolean autoGenerateFiles = false;
     public static final long MEGABYTE = 1024L * 1024L;
     private static final String PERFMON = "PerfMon";
@@ -220,7 +219,7 @@ public class PerfMonCollector
     }
 
     protected PerfMonAgentConnector getConnector(String host, int port) throws IOException {
-        NewAgentConnector connector = new NewAgentConnector(host, port);
+        NewAgentConnector connector = new NewAgentConnector(NewAgentConnector.PROTO_TCP, host, port);
         if (connector.test()) {
             return connector;
         }

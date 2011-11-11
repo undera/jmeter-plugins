@@ -4,7 +4,10 @@
  */
 package kg.apc.jmeter.perfmon;
 
+import kg.apc.emulators.SocketEmulator;
+import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,7 +20,39 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class OldAgentConnectorTest {
-    
+
+    private static class Gen implements PerfMonSampleGenerator {
+
+        public Gen() {
+        }
+
+        public void generate2Samples(long[] netIO, String string, String string0, double d) {
+        }
+
+        public void generate2Samples(long[] disksIO, String string, String string0) {
+        }
+
+        public void generateSample(double d, String string) {
+        }
+
+        public void generateErrorSample(String label, String errorMsg) {
+        }
+    }
+
+    private class OldConnEmul extends OldAgentConnector {
+
+        public OldConnEmul(String host, int port) {
+            super(host, port);
+        }
+        SocketEmulator sock = new SocketEmulator();
+
+        @Override
+        protected Socket createSocket(String host, int port) throws UnknownHostException, IOException {
+            return sock;
+        }
+    }
+    private OldAgentConnector instance;
+
     public OldAgentConnectorTest() {
     }
 
@@ -28,11 +63,12 @@ public class OldAgentConnectorTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
+        instance = new OldConnEmul("localhost", 4444);
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -44,10 +80,7 @@ public class OldAgentConnectorTest {
     public void testSetMetricType() {
         System.out.println("setMetricType");
         String metric = "";
-        OldAgentConnector instance = null;
         instance.setMetricType(metric);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -57,10 +90,7 @@ public class OldAgentConnectorTest {
     public void testSetParams() {
         System.out.println("setParams");
         String params = "";
-        OldAgentConnector instance = null;
         instance.setParams(params);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -69,10 +99,7 @@ public class OldAgentConnectorTest {
     @Test
     public void testConnect() throws Exception {
         System.out.println("connect");
-        OldAgentConnector instance = null;
         instance.connect();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -81,10 +108,7 @@ public class OldAgentConnectorTest {
     @Test
     public void testDisconnect() {
         System.out.println("disconnect");
-        OldAgentConnector instance = null;
         instance.disconnect();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -95,27 +119,8 @@ public class OldAgentConnectorTest {
         System.out.println("createSocket");
         String host = "";
         int port = 0;
-        OldAgentConnector instance = null;
-        Socket expResult = null;
         Socket result = instance.createSocket(host, port);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getLabel method, of class OldAgentConnector.
-     */
-    @Test
-    public void testGetLabel() {
-        System.out.println("getLabel");
-        boolean translate = false;
-        OldAgentConnector instance = null;
-        String expResult = "";
-        String result = instance.getLabel(translate);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -124,10 +129,8 @@ public class OldAgentConnectorTest {
     @Test
     public void testGenerateSamples() throws Exception {
         System.out.println("generateSamples");
-        PerfMonSampleGenerator collector = null;
-        OldAgentConnector instance = null;
+        PerfMonSampleGenerator collector = new Gen();
+        instance.connect();
         instance.generateSamples(collector);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

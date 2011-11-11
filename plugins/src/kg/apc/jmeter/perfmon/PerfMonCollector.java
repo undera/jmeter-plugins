@@ -37,11 +37,6 @@ public class PerfMonCollector
     private static int counter = 0;
 
     static {
-        String cfgTranslateHostName = JMeterUtils.getProperty("jmeterPlugin.perfmon.translateHostName");
-        if (cfgTranslateHostName != null) {
-            translateHostName = "true".equalsIgnoreCase(cfgTranslateHostName.trim());
-        }
-
         autoGenerateFiles = (JMeterUtils.getPropDefault("forcePerfmonFile", "false")).trim().equalsIgnoreCase("true");
     }
 
@@ -176,13 +171,10 @@ public class PerfMonCollector
     }
 
     private void processConnectors() {
-        String label;
         for (int i = 0; i < connectors.length; i++) {
-            label = connectors[i].getLabel(PerfMonCollector.translateHostName);
             try {
                 connectors[i].generateSamples(this);
             } catch (IOException e) {
-                generateErrorSample(label, e.getMessage() + " (while getting " + label + ")");
                 log.error(e.getMessage());
                 connectors[i] = new UnavailableAgentConnector(e);
             }

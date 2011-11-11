@@ -3,6 +3,7 @@ package kg.apc.jmeter.perfmon;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -13,7 +14,15 @@ import org.apache.log.Logger;
 public class OldAgentConnector implements PerfMonAgentConnector {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
+    private static boolean isTranslate = false;
     AgentConnector connector;
+
+    static {
+        String cfgTranslateHostName = JMeterUtils.getProperty("jmeterPlugin.perfmon.translateHostName");
+        if (cfgTranslateHostName != null) {
+            isTranslate = "true".equalsIgnoreCase(cfgTranslateHostName.trim());
+        }
+    }
 
     public OldAgentConnector(String host, int port) {
         connector = new AgentConnector(host, port);
@@ -41,7 +50,7 @@ public class OldAgentConnector implements PerfMonAgentConnector {
     }
 
     // TODO: cache it to be efficient
-    public String getLabel(boolean translate) {
+    private String getLabel(boolean translate) {
         String hostName;
         if (translate) {
             hostName = connector.getRemoteServerName();
@@ -52,7 +61,7 @@ public class OldAgentConnector implements PerfMonAgentConnector {
     }
 
     public void generateSamples(PerfMonSampleGenerator collector) throws IOException {
-        String label = null;
+        String label = getLabel(isTranslate);
         switch (connector.getMetricType()) {
             case AgentConnector.PERFMON_CPU:
                 collector.generateSample(100 * connector.getCpu(), label + ", %");

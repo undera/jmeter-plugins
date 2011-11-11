@@ -6,7 +6,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -73,19 +72,6 @@ public class PerfMonAgentConnectorTest {
         System.out.println("disconnect");
         PerfMonAgentConnector instance = new PerfMonAgentConnectorImpl();
         instance.disconnect();
-    }
-
-    /**
-     * Test of getLabel method, of class PerfMonAgentConnector.
-     */
-    @Test
-    public void testGetLabel() {
-        System.out.println("getLabel");
-        boolean translateHost = false;
-        PerfMonAgentConnector instance = new PerfMonAgentConnectorImpl();
-        String expResult = "";
-        String result = instance.getLabel(translateHost);
-        assertEquals(expResult, result);
     }
 
     /**

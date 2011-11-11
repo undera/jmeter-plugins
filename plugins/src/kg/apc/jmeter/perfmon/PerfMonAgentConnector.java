@@ -16,7 +16,5 @@ public interface PerfMonAgentConnector {
 
     public void disconnect();
 
-    public String getLabel(boolean translateHost);
-
     public void generateSamples(PerfMonSampleGenerator collector) throws IOException;
 }

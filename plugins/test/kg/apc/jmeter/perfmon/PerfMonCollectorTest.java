@@ -9,6 +9,7 @@ import kg.apc.jmeter.vizualizers.PerfMonGui;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.testelement.property.NullProperty;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -126,9 +127,9 @@ public class PerfMonCollectorTest {
     public void testGetMetricSettings() {
         System.out.println("getMetricSettings");
         PerfMonCollector instance = new PerfMonCollector();
-        JMeterProperty expResult = null;
+        JMeterProperty expResult = new NullProperty();
         JMeterProperty result = instance.getMetricSettings();
-        assertEquals(expResult, result);
+        assertEquals(expResult.toString(), result.toString());
     }
 
     /**
@@ -161,7 +162,7 @@ public class PerfMonCollectorTest {
     @Test
     public void testGenerate2Samples_3args() {
         System.out.println("generate2Samples");
-        long[] values = null;
+        long[] values = {0, 0};
         String label1 = "";
         String label2 = "";
         PerfMonCollector instance = new PerfMonCollector();
@@ -174,7 +175,7 @@ public class PerfMonCollectorTest {
     @Test
     public void testGenerate2Samples_4args() {
         System.out.println("generate2Samples");
-        long[] values = null;
+        long[] values = {0,0};
         String label1 = "";
         String label2 = "";
         double dividingFactor = 0.0;
@@ -191,9 +192,7 @@ public class PerfMonCollectorTest {
         String host = "";
         int port = 0;
         PerfMonCollector instance = new PerfMonCollector();
-        PerfMonAgentConnector expResult = null;
         PerfMonAgentConnector result = instance.getConnector(host, port);
-        assertEquals(expResult, result);
+        assertTrue(result instanceof OldAgentConnector);
     }
-
 }

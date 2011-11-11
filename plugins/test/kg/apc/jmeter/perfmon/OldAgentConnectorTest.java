@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import kg.apc.emulators.SocketEmulatorInputStream;
-import org.apache.jorphan.util.JOrphanUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -97,6 +96,7 @@ public class OldAgentConnectorTest {
     @Test
     public void testConnect() throws Exception {
         System.out.println("connect");
+        instance = new OldConnEmul("", 0);
         instance.connect();
     }
 

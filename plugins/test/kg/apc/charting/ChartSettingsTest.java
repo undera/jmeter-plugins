@@ -345,11 +345,8 @@ public class ChartSettingsTest {
     public void testGetDashStroke() {
         System.out.println("getDashStroke");
         ChartSettings instance = new ChartSettings();
-        Stroke expResult = null;
         Stroke result = instance.getDashStroke();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -359,11 +356,8 @@ public class ChartSettingsTest {
     public void testGetThickStroke() {
         System.out.println("getThickStroke");
         ChartSettings instance = new ChartSettings();
-        Stroke expResult = null;
         Stroke result = instance.getThickStroke();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -373,10 +367,7 @@ public class ChartSettingsTest {
     public void testGetBarComposite() {
         System.out.println("getBarComposite");
         ChartSettings instance = new ChartSettings();
-        AlphaComposite expResult = null;
         AlphaComposite result = instance.getBarComposite();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 }

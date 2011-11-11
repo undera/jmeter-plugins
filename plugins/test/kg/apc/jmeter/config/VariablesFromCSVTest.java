@@ -128,8 +128,6 @@ public class VariablesFromCSVTest {
         boolean expResult = false;
         boolean result = instance.isStoreAsSystemProperty();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -141,7 +139,5 @@ public class VariablesFromCSVTest {
         boolean storeAsSysProp = false;
         VariablesFromCSV instance = new VariablesFromCSV();
         instance.setStoreAsSystemProperty(storeAsSysProp);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

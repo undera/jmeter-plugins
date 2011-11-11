@@ -79,7 +79,7 @@ public class ServerAgent implements Runnable {
             serverSocket = getServerSocket(port);
         } catch (IOException e) {
             logMessage("Could not listen on port: " + port + ". Please specify another port...");
-            System.exit(-1);
+            exit(-1);
         }
 
         logMessage("Waiting for incoming connections...");
@@ -155,5 +155,9 @@ public class ServerAgent implements Runnable {
 
     protected ServerSocket getServerSocket(int port) throws IOException {
         return new ServerSocket(port);
+    }
+
+    protected void exit(int rc) {
+        System.exit(rc);
     }
 }

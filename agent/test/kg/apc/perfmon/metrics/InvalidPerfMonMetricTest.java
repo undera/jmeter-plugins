@@ -1,5 +1,6 @@
-package kg.apc.perfmon;
+package kg.apc.perfmon.metrics;
 
+import kg.apc.perfmon.metrics.InvalidPerfMonMetric;
 import junit.framework.TestCase;
 
 /**

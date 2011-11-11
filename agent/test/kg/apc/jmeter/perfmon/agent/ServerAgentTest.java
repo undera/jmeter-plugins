@@ -19,6 +19,10 @@ public class ServerAgentTest extends TestCase {
             super(0);
         }
 
+        protected void exit(int rc) {
+            System.err.println("Simulated exit with " + rc);
+        }
+
         protected ServerSocket getServerSocket(int port) throws IOException {
             return new ServerSocketEmulator();
         }

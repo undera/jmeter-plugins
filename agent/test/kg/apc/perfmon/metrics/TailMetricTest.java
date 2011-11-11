@@ -1,5 +1,6 @@
-package kg.apc.perfmon;
+package kg.apc.perfmon.metrics;
 
+import kg.apc.perfmon.metrics.TailMetric;
 import java.io.File;
 import java.io.PrintWriter;
 import junit.framework.TestCase;
@@ -29,7 +30,7 @@ public class TailMetricTest extends TestCase {
      */
     public void testGetValue() throws Exception {
         System.out.println("getValue");
-        TailMetric instance = new TailMetric(SigarProxyCache.newInstance(new Sigar(), 500));
+        TailMetric instance = new TailMetric();
 
         StringBuilder res = new StringBuilder();
         instance.setParams("/notexists");

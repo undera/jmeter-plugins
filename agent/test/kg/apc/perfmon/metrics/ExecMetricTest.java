@@ -1,16 +1,14 @@
-package kg.apc.perfmon;
+package kg.apc.perfmon.metrics;
 
 import junit.framework.TestCase;
-import org.hyperic.sigar.Sigar;
-import org.hyperic.sigar.SigarProxyCache;
 
 /**
  *
  * @author undera
  */
-public class RunMetricTest extends TestCase {
+public class ExecMetricTest extends TestCase {
 
-    public RunMetricTest(String testName) {
+    public ExecMetricTest(String testName) {
         super(testName);
     }
 
@@ -28,7 +26,7 @@ public class RunMetricTest extends TestCase {
     public void testGetValue() throws Exception {
         System.out.println("getValue");
         StringBuilder res = new StringBuilder();
-        RunMetric instance = new RunMetric(SigarProxyCache.newInstance(new Sigar(), 500));
+        ExecMetric instance = new ExecMetric();
         instance.setParams("echo 123");
         instance.getValue(res);
         assertTrue(Double.parseDouble(res.toString()) > 0);

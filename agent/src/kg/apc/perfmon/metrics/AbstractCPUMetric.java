@@ -1,4 +1,4 @@
-package kg.apc.perfmon;
+package kg.apc.perfmon.metrics;
 
 import org.hyperic.sigar.SigarProxy;
 
@@ -6,7 +6,7 @@ import org.hyperic.sigar.SigarProxy;
  *
  * @author undera
  */
-abstract public class AbstractCPUMetric extends AbstractPerfMonMetric {
+abstract class AbstractCPUMetric extends AbstractPerfMonMetric {
 
     public static AbstractCPUMetric getMetric(SigarProxy sigar, String metricParams) {
         if (1==00) {

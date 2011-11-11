@@ -1,4 +1,4 @@
-package kg.apc.perfmon;
+package kg.apc.perfmon.metrics;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,19 +6,18 @@ import java.io.InputStreamReader;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.hyperic.sigar.SigarException;
-import org.hyperic.sigar.SigarProxy;
 
 /**
  *
  * @author undera
  */
-public class RunMetric extends AbstractPerfMonMetric {
+class ExecMetric extends AbstractPerfMonMetric {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private String command;
 
-    public RunMetric(SigarProxy aSigar) {
-        super(aSigar);
+    public ExecMetric() {
+        super(null);
     }
 
     public void setParams(String string) {

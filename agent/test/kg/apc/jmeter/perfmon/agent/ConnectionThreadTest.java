@@ -11,14 +11,22 @@ import kg.apc.emulators.SocketEmulator;
  *
  * @author APC
  */
-public class ConnectionThreadTest extends TestCase
-{
+public class ConnectionThreadTest extends TestCase {
 
+    private class ConnectionThreadEmul extends ConnectionThread {
+
+        public ConnectionThreadEmul(Socket socket) {
+            super(socket);
+        }
+
+        protected void exit(int rc) {
+            System.err.println("Simulated exit with " + rc);
+        }
+    }
     private static ServerAgent agent;
     private static int testPort = 4567;
 
-    public ConnectionThreadTest()
-    {
+    public ConnectionThreadTest() {
     }
 
     public static Test suite() {
@@ -26,21 +34,18 @@ public class ConnectionThreadTest extends TestCase
         return suite;
     }
 
-    public static void setUpClass() throws Exception
-    {
+    public static void setUpClass() throws Exception {
         //agent = new ServerAgent(testPort);
         //agent.startServiceAsThread();
         //wait the Server Agent starts
         Thread.sleep(2000);
     }
 
-    public static void tearDownClass() throws Exception
-    {
-        agent.stopService();
+    public static void tearDownClass() throws Exception {
+        //agent.stopService();
     }
 
-    public void testRun() throws Exception
-    {
+    public void testRun() throws Exception {
         System.out.println("run");
 
         Socket socket = new SocketEmulator();

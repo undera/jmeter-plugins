@@ -6,7 +6,7 @@
  * 
  * 
  */
-package kg.apc.perfmon;
+package kg.apc.perfmon.metrics;
 
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.SigarException;

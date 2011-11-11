@@ -1,5 +1,6 @@
-package kg.apc.perfmon;
+package kg.apc.perfmon.metrics;
 
+import kg.apc.perfmon.metrics.AbstractPerfMonMetric;
 import junit.framework.TestCase;
 import org.hyperic.sigar.SigarException;
 

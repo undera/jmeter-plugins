@@ -1,4 +1,4 @@
-package kg.apc.perfmon;
+package kg.apc.perfmon.metrics;
 
 /**
  *

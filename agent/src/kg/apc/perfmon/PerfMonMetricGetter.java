@@ -1,5 +1,6 @@
 package kg.apc.perfmon;
 
+import kg.apc.perfmon.metrics.AbstractPerfMonMetric;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectableChannel;
@@ -105,23 +106,12 @@ public class PerfMonMetricGetter {
                 metricType = metricType.substring(0, metricType.indexOf(DVOETOCHIE)).trim();
             }
 
-            AbstractPerfMonMetric metric;
-            try {
-                if (metricType.equals("cpu")) {
-                    metric = AbstractCPUMetric.getMetric(sigarProxy, metricParams);
-                } else {
-                    throw new SigarException("No SIGAR object for metric type " + metricType);
-                }
-            } catch (SigarException ex) {
-                log.error("Invalid metric specified: " + params[n], ex);
-                metric = new InvalidPerfMonMetric();
-            }
-
-            metrics[n] = metric;
+            metrics[n] = AbstractPerfMonMetric.createMetric(metricType, metricParams, sigarProxy);
         }
     }
 
     public boolean isStarted() {
         return metrics.length > 0;
     }
+
 }

@@ -19,6 +19,10 @@ public class ServerAgentTest extends TestCase {
             super(0);
         }
 
+        private ServerAgentEmul(int testPort) {
+            super(testPort);
+        }
+
         protected void exit(int rc) {
             System.err.println("Simulated exit with " + rc);
         }
@@ -45,21 +49,21 @@ public class ServerAgentTest extends TestCase {
 
     public void testStopService() {
         System.out.println("stopService");
-        ServerAgent instance = new ServerAgent(testPort);
+        ServerAgent instance = new ServerAgentEmul(testPort);
         instance.startServiceAsThread();
         instance.stopService();
     }
 
     public void testStartServiceAsThread() {
         System.out.println("startServiceAsThread");
-        ServerAgent instance = new ServerAgent(testPort);
+        ServerAgent instance = new ServerAgentEmul(testPort);
         instance.startServiceAsThread();
         instance.stopService();
     }
 
     public void testStartServie() {
         System.out.println("startServie");
-        ServerAgent instance = new ServerAgent(testPort);
+        ServerAgent instance = new ServerAgentEmul(testPort);
         instance.startServiceAsThread();
         instance.stopService();
     }
@@ -71,7 +75,7 @@ public class ServerAgentTest extends TestCase {
 
     public void testRun() {
         System.out.println("startServie");
-        ServerAgent instance = new ServerAgent(testPort);
+        ServerAgent instance = new ServerAgentEmul(testPort);
         instance.startServiceAsThread();
         instance.stopService();
     }

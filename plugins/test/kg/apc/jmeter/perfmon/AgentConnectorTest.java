@@ -68,14 +68,9 @@ public class AgentConnectorTest {
         instance = new AgentConnector("localhost", testPort);
         try {
             instance.connect(socketEmulator);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(AgentConnectorTest.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(AgentConnectorTest.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (PerfMonException ex) {
-            Logger.getLogger(AgentConnectorTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @After

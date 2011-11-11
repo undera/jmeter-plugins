@@ -203,7 +203,7 @@ public class PerfMonGui
     public void configure(TestElement te) {
         super.configure(te);
         PerfMonCollector pmte = (PerfMonCollector) te;
-        JMeterProperty perfmonValues = pmte.getData();
+        JMeterProperty perfmonValues = pmte.getMetricSettings();
         if (!(perfmonValues instanceof NullProperty)) {
             JMeterPluginsUtils.collectionPropertyToTableModelRows((CollectionProperty) perfmonValues, tableModel);
         } else {

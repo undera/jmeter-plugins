@@ -2,8 +2,6 @@ package kg.apc.jmeter.perfmon;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,20 +21,18 @@ import org.apache.log.Logger;
  */
 public class PerfMonCollector
         extends ResultCollector
-        implements Runnable {
+        implements Runnable, PerfMonSampleGenerator {
 
     private static boolean translateHostName = false;
     private static boolean autoGenerateFiles = false;
-
-    private static final long MEGABYTE = 1024L * 1024L;
+    public static final long MEGABYTE = 1024L * 1024L;
     private static final String PERFMON = "PerfMon";
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String DATA_PROPERTY = "metricConnections";
     private int interval;
     private Thread workerThread;
-    private AgentConnector[] connectors = null;
+    private PerfMonAgentConnector[] connectors = null;
     private HashMap<String, Long> oldValues = new HashMap<String, Long>();
-
     private static String autoFileBaseName = null;
     private static int counter = 0;
 
@@ -44,25 +40,26 @@ public class PerfMonCollector
         String cfgTranslateHostName = JMeterUtils.getProperty("jmeterPlugin.perfmon.translateHostName");
         if (cfgTranslateHostName != null) {
             translateHostName = "true".equalsIgnoreCase(cfgTranslateHostName.trim());
-            autoGenerateFiles = (JMeterUtils.getPropDefault("forcePerfmonFile", "false")).trim().equalsIgnoreCase("true");
         }
+
+        autoGenerateFiles = (JMeterUtils.getPropDefault("forcePerfmonFile", "false")).trim().equalsIgnoreCase("true");
     }
 
     private static synchronized String getAutoFileName() {
-       String ret = "";
-       counter++;
-       if(autoFileBaseName == null) {
-          Calendar now = Calendar.getInstance();
-          SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
-          autoFileBaseName = "perfMon_" + formatter.format(now.getTime());
-       }
-       ret = ret + autoFileBaseName;
-       if(counter > 1) {
-          ret = ret + "_" + counter;
-       }
-       ret = ret + ".csv";
+        String ret = "";
+        counter++;
+        if (autoFileBaseName == null) {
+            Calendar now = Calendar.getInstance();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd-HHmmss");
+            autoFileBaseName = "perfMon_" + formatter.format(now.getTime());
+        }
+        ret = ret + autoFileBaseName;
+        if (counter > 1) {
+            ret = ret + "_" + counter;
+        }
+        ret = ret + ".csv";
 
-       return ret;
+        return ret;
     }
 
     public PerfMonCollector() {
@@ -74,7 +71,7 @@ public class PerfMonCollector
         setProperty(rows);
     }
 
-    public JMeterProperty getData() {
+    public JMeterProperty getMetricSettings() {
         return getProperty(DATA_PROPERTY);
     }
 
@@ -96,24 +93,19 @@ public class PerfMonCollector
         }
     }
 
-    private void informUser(String msg) {
-       log.info(msg);
-       System.out.println(msg);
-    }
-
     @Override
     public void testStarted(String host) {
         //if we run in non gui mode, ensure the data will be saved
-        if(GuiPackage.getInstance() == null) {
-           if(getProperty(FILENAME) == null || getProperty(FILENAME).getStringValue().trim().length() == 0) {
-              if(autoGenerateFiles) {
-                 setupSaving();
-              } else {
-                 informUser("[WARN] PerfMon metrics will not be recorded! Please run the test with -JforcePerfmonFile=true");
-              }
-           } else {
-              informUser("[INFO] PerfMon metrics will be stored in " + getProperty(FILENAME));
-           }
+        if (GuiPackage.getInstance() == null) {
+            if (getProperty(FILENAME) == null || getProperty(FILENAME).getStringValue().trim().length() == 0) {
+                if (autoGenerateFiles) {
+                    setupSaving();
+                } else {
+                    log.warn("PerfMon metrics will not be recorded! Please run the test with -JforcePerfmonFile=true");
+                }
+            } else {
+                log.info("PerfMon metrics will be stored in " + getProperty(FILENAME));
+            }
         }
 
         initiateConnectors();
@@ -125,9 +117,9 @@ public class PerfMonCollector
     }
 
     private void setupSaving() {
-       String fileName = getAutoFileName();
-       setFilename(fileName);
-       informUser("[INFO] PerfMon metrics will be stored in " + new File(fileName).getAbsolutePath());
+        String fileName = getAutoFileName();
+        setFilename(fileName);
+        log.info("PerfMon metrics will be stored in " + new File(fileName).getAbsolutePath());
     }
 
     @Override
@@ -144,43 +136,33 @@ public class PerfMonCollector
 
     private void initiateConnectors() {
         oldValues.clear();
-        JMeterProperty prop = getData();
-        connectors = new AgentConnector[0];
+        JMeterProperty prop = getMetricSettings();
+        connectors = new PerfMonAgentConnector[0];
         if (!(prop instanceof CollectionProperty)) {
             log.warn("Got unexpected property: " + prop);
             return;
         }
         CollectionProperty rows = (CollectionProperty) prop;
 
-        connectors = new AgentConnector[rows.size()];
+        connectors = new PerfMonAgentConnector[rows.size()];
 
         for (int i = 0; i < connectors.length; i++) {
             ArrayList<Object> row = (ArrayList<Object>) rows.get(i).getObjectValue();
             String host = ((JMeterProperty) row.get(0)).getStringValue();
             int port = ((JMeterProperty) row.get(1)).getIntValue();
             String metric = ((JMeterProperty) row.get(2)).getStringValue();
-
-            AgentConnector connector = new AgentConnector(host, port);
-            connector.setMetricType(metric);
+            String params = ((JMeterProperty) row.get(3)).getStringValue();
 
             try {
-                Socket sock = createSocket(connector.getHost(), connector.getPort());
-                connector.connect(sock);
+                PerfMonAgentConnector connector = getConnector(host, port);
+                connector.setMetricType(metric);
+                connector.setParams(params);
+
+                connector.connect();
                 connectors[i] = connector;
-            } catch (UnknownHostException e) {
-                String msg = "Unknown host exception occured. Please verify access to the server '" + connector.getHost() + "'. (required for " + AgentConnector.metrics.get(connector.getMetricType()) + ")";
-                log.error(msg, e);
-                generateErrorSample("Agent Connnection", msg);
-                connectors[i] = null;
             } catch (IOException e) {
-                String msg = "Unable to connect to server '" + connector.getHost() + "'. Please verify the agent is running on port " + connector.getPort() + ". (required for " + AgentConnector.metrics.get(connector.getMetricType()) + ")";
-                log.error(msg, e);
-                generateErrorSample("Agent Connnection", msg);
-                connectors[i] = null;
-            } catch (PerfMonException e) {
-                log.error("Agent Connnection", e);
-                generateErrorSample("Agent Connnection", e.getMessage());
-                connectors[i] = null;
+                log.error("Problems creating connector", e);
+                connectors[i] = new UnavailableAgentConnector(e);
             }
         }
     }
@@ -193,53 +175,22 @@ public class PerfMonCollector
         }
     }
 
-    protected Socket createSocket(String host, int port) throws UnknownHostException, IOException {
-        return new Socket(host, port);
-    }
-
     private void processConnectors() {
         String label;
         for (int i = 0; i < connectors.length; i++) {
-            if (connectors[i] != null) {
-                String hostName;
-                if (PerfMonCollector.translateHostName) {
-                    hostName = connectors[i].getRemoteServerName();
-                } else {
-                    hostName = connectors[i].getHost();
-                }
-                label = hostName + " - " + AgentConnector.metrics.get(connectors[i].getMetricType());
-
-                try {
-                    switch (connectors[i].getMetricType()) {
-                        case AgentConnector.PERFMON_CPU:
-                            generateSample(100 * connectors[i].getCpu(), label + ", %");
-                            break;
-                        case AgentConnector.PERFMON_MEM:
-                            generateSample((double) connectors[i].getMem() / MEGABYTE, label + ", MB");
-                            break;
-                        case AgentConnector.PERFMON_SWAP:
-                            generate2Samples(connectors[i].getSwap(), label + " page in", label + " page out");
-                            break;
-                        case AgentConnector.PERFMON_DISKS_IO:
-                            generate2Samples(connectors[i].getDisksIO(), label + " reads", label + " writes");
-                            break;
-                        case AgentConnector.PERFMON_NETWORKS_IO:
-                            generate2Samples(connectors[i].getNetIO(), label + " recv, KB", label + " sent, KB", 1024d);
-                            break;
-                        default:
-                            log.error("Unknown metric index: " + connectors[i].getMetricType());
-                    }
-                } catch (PerfMonException e) {
-                    generateErrorSample(label, e.getMessage() + " (while getting " + label + ")");
-                    log.error(e.getMessage());
-                    connectors[i] = null;
-                }
+            label = connectors[i].getLabel(PerfMonCollector.translateHostName);
+            try {
+                connectors[i].generateSamples(this);
+            } catch (IOException e) {
+                generateErrorSample(label, e.getMessage() + " (while getting " + label + ")");
+                log.error(e.getMessage());
+                connectors[i] = new UnavailableAgentConnector(e);
             }
         }
     }
 
     //need floating point precision for memory and cpu
-    private void generateSample(double value, String label) {
+    public void generateSample(double value, String label) {
         if (value != AgentConnector.AGENT_ERROR) {
             PerfMonSampleResult res = new PerfMonSampleResult();
             res.setSampleLabel(label);
@@ -250,7 +201,7 @@ public class PerfMonCollector
         }
     }
 
-    private void generateErrorSample(String label, String errorMsg) {
+    public void generateErrorSample(String label, String errorMsg) {
         PerfMonSampleResult res = new PerfMonSampleResult();
         res.setSampleLabel(label);
         res.setValue(-1L);
@@ -262,17 +213,26 @@ public class PerfMonCollector
         System.out.println("Perfmon plugin error: " + errorMsg);
     }
 
-    private void generate2Samples(long[] values, String label1, String label2) {
+    public void generate2Samples(long[] values, String label1, String label2) {
         generate2Samples(values, label1, label2, 1d);
     }
 
     //float precision required for net io
-    private void generate2Samples(long[] values, String label1, String label2, double dividingFactor) {
+    public void generate2Samples(long[] values, String label1, String label2, double dividingFactor) {
         if (oldValues.containsKey(label1) && oldValues.containsKey(label2)) {
             generateSample(((double) (values[0] - oldValues.get(label1).longValue())) / dividingFactor, label1);
             generateSample(((double) (values[1] - oldValues.get(label2).longValue())) / dividingFactor, label2);
         }
         oldValues.put(label1, new Long(values[0]));
         oldValues.put(label2, new Long(values[1]));
+    }
+
+    protected PerfMonAgentConnector getConnector(String host, int port) throws IOException {
+        NewAgentConnector connector = new NewAgentConnector(host, port);
+        if (connector.test()) {
+            return connector;
+        }
+
+        return new OldAgentConnector(host, port);
     }
 }

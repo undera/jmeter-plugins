@@ -32,7 +32,7 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
     }
 
     @Override
-    public void write(OutputStream os, InputStream is) {
+    public void write(OutputStream os, InputStream is) throws IOException {
         if (!isRequestSent) {
             isRequestSent = true;
             super.write(os, is);
@@ -40,7 +40,7 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
     }
 
     @Override
-    public void write(OutputStream out, String string) {
+    public void write(OutputStream out, String string) throws IOException {
         if (!isRequestSent) {
             isRequestSent = true;
             super.write(out, string);

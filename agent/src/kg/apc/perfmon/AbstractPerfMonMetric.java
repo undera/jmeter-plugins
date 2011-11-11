@@ -19,5 +19,8 @@ public abstract class AbstractPerfMonMetric {
         return 0;
     }
 
+    public void setParams(String params) {
+    }
+
     abstract public void getValue(StringBuilder res) throws SigarException;
 }

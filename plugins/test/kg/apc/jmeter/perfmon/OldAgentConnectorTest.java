@@ -1,13 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.perfmon;
 
 import kg.apc.emulators.SocketEmulator;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import kg.apc.emulators.SocketEmulatorInputStream;
+import org.apache.jorphan.util.JOrphanUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -66,7 +64,7 @@ public class OldAgentConnectorTest {
 
     @Before
     public void setUp() {
-        instance = new OldConnEmul("localhost", 4444);
+        instance = new OldAgentConnector("localhost", 4444);
     }
 
     @After
@@ -119,6 +117,7 @@ public class OldAgentConnectorTest {
         System.out.println("createSocket");
         String host = "";
         int port = 0;
+        instance = new OldConnEmul("", 0);
         Socket result = instance.createSocket(host, port);
         assertNotNull(result);
     }
@@ -129,7 +128,11 @@ public class OldAgentConnectorTest {
     @Test
     public void testGenerateSamples() throws Exception {
         System.out.println("generateSamples");
+        instance = new OldConnEmul("", 0);
         PerfMonSampleGenerator collector = new Gen();
+        SocketEmulator s = ((OldConnEmul) instance).sock;
+        SocketEmulatorInputStream is = (SocketEmulatorInputStream) s.getInputStream();
+        is.setBytesToRead("test\n1\n");
         instance.connect();
         instance.generateSamples(collector);
     }

@@ -9,7 +9,7 @@ import java.io.IOException;
 public class NewAgentConnector implements PerfMonAgentConnector {
 
     public NewAgentConnector(String host, int port) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        
     }
 
     public void setMetricType(String metric) {

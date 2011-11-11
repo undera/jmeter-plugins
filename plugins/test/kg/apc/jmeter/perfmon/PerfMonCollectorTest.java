@@ -129,8 +129,6 @@ public class PerfMonCollectorTest {
         JMeterProperty expResult = null;
         JMeterProperty result = instance.getMetricSettings();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -143,8 +141,6 @@ public class PerfMonCollectorTest {
         String label = "";
         PerfMonCollector instance = new PerfMonCollector();
         instance.generateSample(value, label);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -157,8 +153,6 @@ public class PerfMonCollectorTest {
         String errorMsg = "";
         PerfMonCollector instance = new PerfMonCollector();
         instance.generateErrorSample(label, errorMsg);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -172,8 +166,6 @@ public class PerfMonCollectorTest {
         String label2 = "";
         PerfMonCollector instance = new PerfMonCollector();
         instance.generate2Samples(values, label1, label2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -188,8 +180,6 @@ public class PerfMonCollectorTest {
         double dividingFactor = 0.0;
         PerfMonCollector instance = new PerfMonCollector();
         instance.generate2Samples(values, label1, label2, dividingFactor);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

@@ -117,4 +117,31 @@ public class VariablesFromCSVTest {
       VariablesFromCSV instance = new VariablesFromCSV();
       instance.setSeparator(separator);
    }
+
+    /**
+     * Test of isStoreAsSystemProperty method, of class VariablesFromCSV.
+     */
+    @Test
+    public void testIsStoreAsSystemProperty() {
+        System.out.println("isStoreAsSystemProperty");
+        VariablesFromCSV instance = new VariablesFromCSV();
+        boolean expResult = false;
+        boolean result = instance.isStoreAsSystemProperty();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setStoreAsSystemProperty method, of class VariablesFromCSV.
+     */
+    @Test
+    public void testSetStoreAsSystemProperty() {
+        System.out.println("setStoreAsSystemProperty");
+        boolean storeAsSysProp = false;
+        VariablesFromCSV instance = new VariablesFromCSV();
+        instance.setStoreAsSystemProperty(storeAsSysProp);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

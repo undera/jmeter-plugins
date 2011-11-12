@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 import kg.apc.charting.GraphPanelChart;
-import kg.apc.cmd.NewDriver;
+import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.util.JMeterUtils;
@@ -50,7 +50,7 @@ public class PluginsCMDWorker {
         }
 
         log.debug("Creating jmeter env");
-        String homeDir = NewDriver.getJMeterDir();
+        String homeDir = UniversalRunner.getJMeterDir();
         JMeterUtils.setJMeterHome(homeDir);
         initializeProperties();
     }
@@ -61,7 +61,7 @@ public class PluginsCMDWorker {
      * @see JMeter
      */
     private void initializeProperties() {
-        JMeterUtils.loadJMeterProperties(NewDriver.getJMeterDir() + File.separator
+        JMeterUtils.loadJMeterProperties(UniversalRunner.getJMeterDir() + File.separator
                 + "bin" + File.separator 
                 + "jmeter.properties");
 

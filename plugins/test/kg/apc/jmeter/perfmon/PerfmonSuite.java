@@ -4,6 +4,7 @@
  */
 package kg.apc.jmeter.perfmon;
 
+import kg.apc.jmeter.perfmon.client.ClientSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,7 +17,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.perfmon.OldAgentConnectorTest.class, kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest.class, kg.apc.jmeter.perfmon.AgentConnectorTest.class, kg.apc.jmeter.perfmon.NewAgentConnectorTest.class, kg.apc.jmeter.perfmon.PerfMonExceptionTest.class, kg.apc.jmeter.perfmon.PerfMonSampleGeneratorTest.class, kg.apc.jmeter.perfmon.PerfMonAgentConnectorTest.class, kg.apc.jmeter.perfmon.PerfMonCollectorTest.class, kg.apc.jmeter.perfmon.PerfMonSampleResultTest.class})
+@Suite.SuiteClasses({OldAgentConnectorTest.class, UnavailableAgentConnectorTest.class, AgentConnectorTest.class, NewAgentConnectorTest.class, ClientSuite.class, PerfMonExceptionTest.class, PerfMonAgentConnectorTest.class, PerfMonSampleGeneratorTest.class, PerfMonSampleResultTest.class, PerfMonCollectorTest.class})
 public class PerfmonSuite {
 
     @BeforeClass

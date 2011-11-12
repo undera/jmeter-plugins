@@ -3,6 +3,8 @@ package kg.apc.jmeter;
 
 import java.io.PrintStream;
 import java.util.ListIterator;
+import kg.apc.jmeter.AbstractCMDTool;
+import kg.apc.jmeter.PluginsCMDWorker;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -10,7 +12,7 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-public class CMDReporterTool extends AbstractCMDTool {
+public class ReporterTool extends AbstractCMDTool {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 

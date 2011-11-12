@@ -17,11 +17,11 @@ import static org.junit.Assert.*;
  *
  * @author undera
  */
-public class CMDReporterToolTest {
+public class ReporterToolTest {
 
     private final String basedir;
 
-    public CMDReporterToolTest() {
+    public ReporterToolTest() {
         String file = this.getClass().getResource("short.jtl").getPath();
         basedir = file.substring(0, file.lastIndexOf("/"));
     }
@@ -51,7 +51,7 @@ public class CMDReporterToolTest {
     public void testShowHelp() {
         System.out.println("showHelp");
         PrintStream os = System.out;
-        CMDReporterTool instance = new CMDReporterTool();
+        ReporterTool instance = new ReporterTool();
         instance.showHelp(os);
     }
 
@@ -62,7 +62,7 @@ public class CMDReporterToolTest {
     public void testProcessParams() {
         System.out.println("processParams");
         ListIterator<String> args = PluginsCMD.argsArrayToListIterator("--help".split(" "));
-        CMDReporterTool instance = new CMDReporterTool();
+        ReporterTool instance = new ReporterTool();
         try {
             instance.processParams(args);
             fail();
@@ -79,7 +79,7 @@ public class CMDReporterToolTest {
                 + "--input-jtl " + basedir + "/few.jtl "
                 + "--aggregate-rows yes --plugin-type ResponseTimesOverTime";
         String[] args = str.split(" +");
-        CMDReporterTool instance = new CMDReporterTool();
+        ReporterTool instance = new ReporterTool();
         int expResult = 0;
         int result = instance.processParams(PluginsCMD.argsArrayToListIterator(args));
         assertEquals(expResult, result);
@@ -97,7 +97,7 @@ public class CMDReporterToolTest {
                 + " --generate-png " + f.getAbsolutePath() + " "
                 + "--input-jtl " + basedir + "/results_issue_47.jtl";
         String[] args = str.split(" +");
-        CMDReporterTool instance = new CMDReporterTool();
+        ReporterTool instance = new ReporterTool();
         int expResult = 0;
         int result = instance.processParams(PluginsCMD.argsArrayToListIterator(args));
         assertEquals(expResult, result);
@@ -116,7 +116,7 @@ public class CMDReporterToolTest {
                 + "--generate-png " + f.getAbsolutePath() + " "
                 + "--input-jtl " + basedir + "/results_issue_47.jtl";
         String[] args = str.split(" +");
-        CMDReporterTool instance = new CMDReporterTool();
+        ReporterTool instance = new ReporterTool();
         try {
             int result = instance.processParams(PluginsCMD.argsArrayToListIterator(args));
             fail("HitsPerSec don't handle aggregates");

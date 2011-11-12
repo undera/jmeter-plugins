@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package kg.apc;
+package kg.apc.jmeter.perfmon.client;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,8 +16,8 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.io.IoSuite.class, kg.apc.charting.ChartingSuite.class, kg.apc.jmeter.JmeterSuite.class})
-public class ApcSuite {
+@Suite.SuiteClasses({kg.apc.jmeter.perfmon.client.TCPTransportTest.class, kg.apc.jmeter.perfmon.client.UDPTransportTest.class, kg.apc.jmeter.perfmon.client.AbstractTransportTest.class})
+public class ClientSuite {
 
     @BeforeClass
     public static void setUpClass() throws Exception {

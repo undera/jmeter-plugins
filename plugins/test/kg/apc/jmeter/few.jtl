@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testResults version="1.2">
-<sample t="10027" lt="0" ts="1301920709163" s="false" lb="jp@gc - UDP Request1" rc="500" rm="java.net.SocketTimeoutException: Timeout exceeded while reading from socket" tn="Thread Group 1-12" dt="text" by="580"/>
-<sample t="10160" lt="0" ts="1301920709030" s="false" lb="jp@gc - UDP Request2" rc="500" rm="java.net.SocketTimeoutException: Timeout exceeded while reading from socket" tn="Thread Group 1-1" dt="text" by="580"/>
-<sample t="10095" lt="0" ts="1301920709098" s="false" lb="jp@gc - UDP Request3" rc="500" rm="java.net.SocketTimeoutException: Timeout exceeded while reading from socket" tn="Thread Group 1-5" dt="text" by="580"/>
-<sample t="10121" lt="0" ts="1301920709072" s="false" lb="jp@gc - UDP Request1" rc="500" rm="java.net.SocketTimeoutException: Timeout exceeded while reading from socket" tn="Thread Group 1-3" dt="text" by="580"/>
-<sample t="10149" lt="0" ts="1301920709044" s="false" lb="jp@gc - UDP Request2" rc="500" rm="java.net.SocketTimeoutException: Timeout exceeded while reading from socket" tn="Thread Group 1-2" dt="text" by="580"/>
-<sample t="10068" lt="0" ts="1301920709125" s="false" lb="jp@gc - UDP Request3" rc="500" rm="java.net.SocketTimeoutException: Timeout exceeded while reading from socket" tn="Thread Group 1-7" dt="text" by="580"/>
-</testResults>

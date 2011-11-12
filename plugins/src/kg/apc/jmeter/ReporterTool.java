@@ -3,8 +3,6 @@ package kg.apc.jmeter;
 
 import java.io.PrintStream;
 import java.util.ListIterator;
-import kg.apc.jmeter.AbstractCMDTool;
-import kg.apc.jmeter.PluginsCMDWorker;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 

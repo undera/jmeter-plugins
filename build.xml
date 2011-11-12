@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JMeterPluginsAll" default="default" basedir=".">
+    <description>Subprojects wrapper</description>
+    <target name="default">
+        <ant dir="cmd"/>    
+        <ant dir="agent"/>    
+        <ant dir="plugins"/>    
+    </target>
+</project>

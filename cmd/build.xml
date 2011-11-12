@@ -72,33 +72,9 @@
 
     -->
 
-    <target name="-pre-compile">
-        <mkdir dir="${build.dir}/cmd"/>
-        <mkdir dir="${build.dir}/cmd/classes"/>
-    </target>
-
-    <target name="-post-compile">
-        <copy todir="${build.dir}/cmd/classes">
-            <fileset dir="${build.dir}/classes" includes="**/kg/apc/cmd/*.class"/>
-        </copy>
-    </target>
-
    <!-- APC: before making main jar we make cmd's jar -->
-    <target name="-pre-jar">
-        <property location="./" name="svn.dir"/>
-        <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/JMeterPluginsCMD.jar"
-      manifest="${svn.dir}/src/kg/apc/cmd/manifest.mf">
-            <fileset dir="${build.dir}/cmd/classes"/>
-        </jar>
-        <!-- SH: we clean cmd files so they are not put in main jar -->
-        <delete dir="${build.dir}/classes/kg/apc/cmd"/>
-    </target>
-
+   
     <target name="-post-jar">
-         <!-- CMD files -->
-        <zipfileset dir="${dist.dir}" includes="JMeterPluginsCMD.jar" prefix="cmd"/>
-        <zipfileset dir="${svn.dir}/src/kg/apc/cmd" includes="JMeterPluginsCMD.*" prefix="cmd"/>
-
           <!-- APC: fore easy debugging environment we copy JmeterPlugins.jar,
            JmeterPluginsCMD.jar and cmd scripts
            to jmeter/lib/ext, defined by property jmeter.lib.ext
@@ -113,7 +89,7 @@
            
         <copy todir="${jmeter.lib.ext}">
             <fileset dir="${dist.dir}" includes="*.jar" />
-            <fileset dir="${svn.dir}/src/kg/apc/cmd" includes="JMeterPluginsCMD.*" />
+            <fileset dir="src/kg/apc/cmd" includes="JMeterPluginsCMD.*" />
         </copy>
     </target>
 

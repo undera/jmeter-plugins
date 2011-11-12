@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.perfmon.client;
 
 import org.junit.After;
@@ -16,7 +12,9 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class TCPTransportTest {
-    
+
+    private TCPTransport instance;
+
     public TCPTransportTest() {
     }
 
@@ -27,11 +25,12 @@ public class TCPTransportTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
+        instance = new TCPTransport("", 0);
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -42,10 +41,7 @@ public class TCPTransportTest {
     @Test
     public void testDisconnect() {
         System.out.println("disconnect");
-        TCPTransport instance = null;
         instance.disconnect();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -55,10 +51,7 @@ public class TCPTransportTest {
     public void testWriteln() {
         System.out.println("writeln");
         String string = "";
-        TCPTransport instance = null;
         instance.writeln(string);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -67,11 +60,8 @@ public class TCPTransportTest {
     @Test
     public void testReadln() {
         System.out.println("readln");
-        TCPTransport instance = null;
         String expResult = "";
         String result = instance.readln();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

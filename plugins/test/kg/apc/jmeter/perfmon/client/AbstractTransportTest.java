@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.perfmon.client;
 
 import org.junit.After;
@@ -16,7 +12,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class AbstractTransportTest {
-    
+
     public AbstractTransportTest() {
     }
 
@@ -27,11 +23,11 @@ public class AbstractTransportTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -44,8 +40,6 @@ public class AbstractTransportTest {
         System.out.println("disconnect");
         AbstractTransport instance = new AbstractTransportImpl();
         instance.disconnect();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -57,8 +51,6 @@ public class AbstractTransportTest {
         String string = "";
         AbstractTransport instance = new AbstractTransportImpl();
         instance.writeln(string);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -71,8 +63,6 @@ public class AbstractTransportTest {
         String expResult = "";
         String result = instance.readln();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     public class AbstractTransportImpl implements AbstractTransport {

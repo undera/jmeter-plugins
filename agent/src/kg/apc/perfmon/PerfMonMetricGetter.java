@@ -60,7 +60,7 @@ public class PerfMonMetricGetter {
             }
         } else if (cmdType.equals("test")) {
             log.info("Yep, we received the 'test' command");
-            ((WritableByteChannel) channel).write(ByteBuffer.wrap("Yep".getBytes()));
+            ((WritableByteChannel) channel).write(ByteBuffer.wrap("Yep\n".getBytes()));
         } else if (cmdType.equals("")) {
         } else {
             throw new UnsupportedOperationException("Unknown command [" + cmdType.length() + "]: '" + cmdType + "'");

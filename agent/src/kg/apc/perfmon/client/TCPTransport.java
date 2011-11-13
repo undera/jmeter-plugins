@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import kg.apc.perfmon.PerfMonMetricGetter;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -24,36 +23,13 @@ class TCPTransport extends AbstractTransport {
     }
 
     public void disconnect() {
+        super.disconnect();
+
         try {
-            writeln("exit");
             channel.close();
         } catch (IOException ex) {
-            log.error("Problems closing connection", ex);
+            log.error("Problems closing TCP connection", ex);
         }
-    }
-
-    public boolean test() {
-        try {
-            writeln("test");
-        } catch (IOException ex) {
-            log.error("Failed to send command", ex);
-            return false;
-        }
-        return readln().startsWith("Yep");
-    }
-
-    public void startWithMetrics(String[] metricsArray) throws IOException {
-        String cmd = "metrics:";
-        for (int n = 0; n < metricsArray.length; n++) {
-            cmd += metricsArray[n] + PerfMonMetricGetter.TAB;
-        }
-
-        writeln(cmd);
-    }
-
-    public String[] readMetrics() {
-        String str = readln();
-        return str.split(PerfMonMetricGetter.TAB);
     }
 
     protected void writeln(String line) throws IOException {
@@ -66,11 +42,10 @@ class TCPTransport extends AbstractTransport {
 
         try {
             channel.read(buf);
+            buf.flip();
+            return readln(buf);
         } catch (IOException e) {
             return null;
         }
-
-        buf.flip();
-        return byteBufferToString(buf);
     }
 }

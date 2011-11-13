@@ -1,6 +1,7 @@
 package kg.apc.perfmon;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.nio.channels.DatagramChannel;
 import junit.framework.TestCase;
 
@@ -19,7 +20,9 @@ public class PerfMonMetricGetterTest extends TestCase {
     public void testProcessCommand() throws IOException {
         System.out.println("processCommand");
         String toString = "test\ntest\nerr\n";
-        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), DatagramChannel.open());
+        final DatagramChannel channel = DatagramChannel.open();
+        channel.connect(new InetSocketAddress(4444));
+        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), channel);
         instance.addCommandString(toString);
         instance.processNextCommand();
         instance.processNextCommand();

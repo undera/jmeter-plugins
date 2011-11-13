@@ -70,7 +70,7 @@ public class UniversalRunnerTest {
      * Test of main method, of class NewDriver.
      */
     @Test
-    public void testMain() {
+    public void testMain() throws Throwable {
         System.out.println("main");
         String[] args = "--help".split(" ");
         UniversalRunner.main(args);

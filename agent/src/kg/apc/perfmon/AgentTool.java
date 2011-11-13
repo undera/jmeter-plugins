@@ -11,7 +11,7 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-public class PerfMonAgentTool extends AbstractCMDTool {
+public class AgentTool extends AbstractCMDTool {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 

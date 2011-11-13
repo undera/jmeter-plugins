@@ -12,9 +12,9 @@ import junit.framework.TestCase;
  *
  * @author undera
  */
-public class PerfMonAgentToolTest extends TestCase {
+public class AgentToolTest extends TestCase {
 
-    private static class PerfMonAgentToolEmul extends PerfMonAgentTool {
+    private static class PerfMonAgentToolEmul extends AgentTool {
 
         protected PerfMonWorker getWorker() throws IOException {
             return new PerfMonWorkerEmul();
@@ -44,7 +44,7 @@ public class PerfMonAgentToolTest extends TestCase {
         }
     }
 
-    public PerfMonAgentToolTest() {
+    public AgentToolTest() {
     }
 
     private ListIterator argsArrayToListIterator(String[] args) {
@@ -58,7 +58,7 @@ public class PerfMonAgentToolTest extends TestCase {
     public void testProcessParams() {
         System.out.println("processParams");
         ListIterator args = argsArrayToListIterator("--tcp-port 4444 --udp-port 4444".split(" "));
-        PerfMonAgentTool instance = new PerfMonAgentToolEmul();
+        AgentTool instance = new PerfMonAgentToolEmul();
 
         int expResult = 0;
         int result = instance.processParams(args);
@@ -71,7 +71,7 @@ public class PerfMonAgentToolTest extends TestCase {
     public void testShowHelp() {
         System.out.println("showHelp");
         PrintStream os = System.out;
-        PerfMonAgentTool instance = new PerfMonAgentTool();
+        AgentTool instance = new AgentTool();
         instance.showHelp(os);
     }
 
@@ -80,7 +80,7 @@ public class PerfMonAgentToolTest extends TestCase {
      */
     public void testGetWorker() throws Exception {
         System.out.println("getWorker");
-        PerfMonAgentTool instance = new PerfMonAgentTool();
+        AgentTool instance = new AgentTool();
         PerfMonWorker result = instance.getWorker();
         assertNotNull(result);
     }

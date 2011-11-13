@@ -84,7 +84,7 @@
         </fail>
 
         <copy todir="${perfmon.agent.dir}">
-            <fileset dir="${dist.dir}" includes="ServerAgent.jar" />
+            <fileset dir="${dist.dir}" includes="*.jar" />
             <fileset dir="${src.dir}/.." includes="startAgent.*" />
         </copy>
     </target>

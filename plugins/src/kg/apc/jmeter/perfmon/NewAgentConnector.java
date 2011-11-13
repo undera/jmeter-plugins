@@ -1,8 +1,8 @@
 package kg.apc.jmeter.perfmon;
 
-import kg.apc.jmeter.perfmon.client.UDPTransport;
-import kg.apc.jmeter.perfmon.client.TCPTransport;
-import kg.apc.jmeter.perfmon.client.AbstractTransport;
+import kg.apc.perfmon.client.UDPTransport;
+import kg.apc.perfmon.client.TCPTransport;
+import kg.apc.perfmon.client.AbstractTransport;
 import java.io.IOException;
 
 /**

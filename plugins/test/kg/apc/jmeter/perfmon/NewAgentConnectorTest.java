@@ -1,6 +1,6 @@
 package kg.apc.jmeter.perfmon;
 
-import kg.apc.jmeter.perfmon.client.AbstractTransport;
+import kg.apc.perfmon.client.AbstractTransport;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

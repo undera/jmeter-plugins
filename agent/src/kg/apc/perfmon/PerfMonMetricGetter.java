@@ -19,7 +19,7 @@ import org.hyperic.sigar.SigarProxyCache;
 public class PerfMonMetricGetter {
 
     public static final String TAB = "\t";
-    private static final String DVOETOCHIE = ":";
+    public static final String DVOETOCHIE = ":";
     private static final String NEWLINE = "\n";
     private final PerfMonWorker controller;
     private static final Logger log = LoggingManager.getLoggerForClass();

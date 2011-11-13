@@ -1,12 +1,16 @@
 package kg.apc.perfmon.client;
 
+import java.io.IOException;
+import java.net.SocketAddress;
+
 /**
  *
  * @author undera
  */
-public class UDPTransport implements AbstractTransport {
+class UDPTransport extends AbstractTransport {
 
-    public UDPTransport(String host, int port) {
+    public UDPTransport(SocketAddress addr) throws IOException {
+        super(addr);
     }
 
     public void disconnect() {
@@ -17,5 +21,17 @@ public class UDPTransport implements AbstractTransport {
 
     public String readln() {
         return "";
+    }
+
+    public boolean test() {
+        return false;
+    }
+
+    public void startWithMetrics(String[] metricsArray) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public String[] readMetrics() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

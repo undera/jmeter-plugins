@@ -36,7 +36,7 @@ public class PerfMonWorker implements Runnable {
     private DatagramChannel udpServer;
     private final LinkedList tcpConnections = new LinkedList();
     private final HashMap udpConnections = new HashMap();
-    private int interval=1000;
+    private int interval = 1000;
 
     public PerfMonWorker() throws IOException {
         acceptSelector = Selector.open();
@@ -83,7 +83,12 @@ public class PerfMonWorker implements Runnable {
             if (key.isAcceptable()) {
                 this.accept(key);
             } else if (key.isReadable()) {
-                this.read(key);
+                try {
+                    this.read(key);
+                } catch (IOException e) {
+                    log.error("Error reading from the network layer", e);
+                    key.cancel();
+                }
             }
         }
     }
@@ -240,12 +245,18 @@ public class PerfMonWorker implements Runnable {
             }
 
             if (key.isWritable()) {
-                if (key.channel() instanceof DatagramChannel) {
-                    sendToUDP(key);
-                } else {
-                    PerfMonMetricGetter getter = (PerfMonMetricGetter) key.attachment();
-                    ByteBuffer metrics = getter.getMetricsLine();
-                    ((WritableByteChannel) key.channel()).write(metrics);
+                try {
+                    if (key.channel() instanceof DatagramChannel) {
+                        sendToUDP(key);
+                    } else {
+                        PerfMonMetricGetter getter = (PerfMonMetricGetter) key.attachment();
+                        ByteBuffer metrics = getter.getMetricsLine();
+                        ((WritableByteChannel) key.channel()).write(metrics);
+
+                    }
+                } catch (IOException e) {
+                    log.error("Cannot send data to TCP network connection", e);
+                    key.cancel();
                 }
             }
         }

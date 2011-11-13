@@ -20,6 +20,7 @@ class TCPTransport extends AbstractTransport {
     public TCPTransport(SocketAddress addr) throws IOException {
         super(addr);
         channel = SocketChannel.open(addr);
+        channel.configureBlocking(true);
     }
 
     public void disconnect() {
@@ -51,11 +52,11 @@ class TCPTransport extends AbstractTransport {
     }
 
     public String[] readMetrics() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String str = readln();
+        return str.split(PerfMonMetricGetter.TAB);
     }
 
     protected void writeln(String line) throws IOException {
-        channel.configureBlocking(true);
         channel.write(ByteBuffer.wrap(line.concat("\n").getBytes()));
     }
 
@@ -64,7 +65,6 @@ class TCPTransport extends AbstractTransport {
         ByteBuffer buf = ByteBuffer.allocateDirect(4096); // FIXME: magic constants are bad
 
         try {
-            channel.configureBlocking(false);
             channel.read(buf);
         } catch (IOException e) {
             return null;

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.channels.WritableByteChannel;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.hyperic.sigar.Sigar;
@@ -59,6 +60,7 @@ public class PerfMonMetricGetter {
             }
         } else if (cmdType.equals("test")) {
             log.info("Yep, we received the 'test' command");
+            ((WritableByteChannel) channel).write(ByteBuffer.wrap("Yep".getBytes()));
         } else if (cmdType.equals("")) {
         } else {
             throw new UnsupportedOperationException("Unknown command [" + cmdType.length() + "]: '" + cmdType + "'");

@@ -1,11 +1,10 @@
 package kg.apc.perfmon.metrics;
 
-import kg.apc.perfmon.metrics.TailMetric;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 import java.io.File;
 import java.io.PrintWriter;
 import junit.framework.TestCase;
-import org.hyperic.sigar.Sigar;
-import org.hyperic.sigar.SigarProxyCache;
 
 /**
  *
@@ -15,6 +14,11 @@ public class TailMetricTest extends TestCase {
 
     public TailMetricTest(String testName) {
         super(testName);
+    }
+
+    public static Test suite() {
+        TestSuite suite = new TestSuite(TailMetricTest.class);
+        return suite;
     }
 
     protected void setUp() throws Exception {
@@ -51,5 +55,15 @@ public class TailMetricTest extends TestCase {
         res = new StringBuilder();
         instance.getValue(res);
         assertEquals("15", res.toString());
+    }
+
+    /**
+     * Test of setParams method, of class TailMetric.
+     */
+    public void testSetParams() {
+        System.out.println("setParams");
+        String string = "";
+        TailMetric instance = new TailMetric();
+        instance.setParams(string);
     }
 }

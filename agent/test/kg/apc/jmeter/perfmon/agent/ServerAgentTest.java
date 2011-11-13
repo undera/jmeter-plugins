@@ -89,4 +89,25 @@ public class ServerAgentTest extends TestCase {
         boolean result = ServerAgent.isAutoStop();
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of getServerSocket method, of class ServerAgent.
+     */
+    public void testGetServerSocket() throws Exception {
+        System.out.println("getServerSocket");
+        int port = 0;
+        ServerAgent instance = new ServerAgentEmul();
+        ServerSocket result = instance.getServerSocket(port);
+        assertNotNull(result);
+    }
+
+    /**
+     * Test of exit method, of class ServerAgent.
+     */
+    public void testExit() {
+        System.out.println("exit");
+        int rc = 0;
+        ServerAgent instance = new ServerAgentEmul();
+        instance.exit(rc);
+    }
 }

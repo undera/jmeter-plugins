@@ -1,5 +1,7 @@
 package kg.apc.perfmon.metrics;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
 import kg.apc.perfmon.metrics.InvalidPerfMonMetric;
 import junit.framework.TestCase;
 
@@ -10,6 +12,11 @@ import junit.framework.TestCase;
 public class InvalidPerfMonMetricTest extends TestCase {
 
     public InvalidPerfMonMetricTest() {
+    }
+
+    public static Test suite() {
+        TestSuite suite = new TestSuite(InvalidPerfMonMetricTest.class);
+        return suite;
     }
 
     /**

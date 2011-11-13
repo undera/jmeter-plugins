@@ -58,4 +58,14 @@ public class ConnectionThreadTest extends TestCase {
         instance.start();
         out.println("bye");
     }
+
+    /**
+     * Test of exit method, of class ConnectionThread.
+     */
+    public void testExit() {
+        System.out.println("exit");
+        int i = 0;
+        ConnectionThread instance = new ConnectionThreadEmul(null);
+        instance.exit(i);
+    }
 }

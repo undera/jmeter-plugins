@@ -102,11 +102,11 @@ public class PluginsCMD extends AbstractCMDTool {
             try {
                 toolClass = loader.loadClass(arg);
             } catch (ClassNotFoundException ex) {
-                throw new IllegalArgumentException("Tool class " + arg + " not extends AbstractCMDTool");
+                throw new IllegalArgumentException("Tool class " + arg + " not found");
             }
         }
 
-        if (!toolClass.isAssignableFrom(AbstractCMDTool.class)) {
+        if (!AbstractCMDTool.class.isAssignableFrom(toolClass)) {
             throw new IllegalArgumentException("Tool class " + arg + " not extends AbstractCMDTool");
         }
 

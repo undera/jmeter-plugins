@@ -155,7 +155,7 @@ public final class UniversalRunner {
      * @param args
      *            the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Throwable {
         Thread.currentThread().setContextClassLoader(loader);
         try {
             Class<?> initialClass;
@@ -169,8 +169,15 @@ public final class UniversalRunner {
                 System.exit(rc);
             }
         } catch (Throwable e) {
-            System.err.println("JMeter home directory was detected as: " + jmDir);
-            throw new RuntimeException(e);
+            if (e.getCause() != null) {
+                System.err.println("ERROR: " + e.getCause().getMessage());
+                System.err.println("Technical details:");
+                System.err.println("JMeter home directory was detected as: " + jmDir);
+                throw e.getCause();
+            } else {
+                System.err.println("JMeter home directory was detected as: " + jmDir);
+                throw e;
+            }
         }
     }
 }

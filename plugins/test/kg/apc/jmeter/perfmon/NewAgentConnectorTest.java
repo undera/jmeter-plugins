@@ -1,12 +1,13 @@
 package kg.apc.jmeter.perfmon;
 
+import java.io.IOException;
+import java.net.InetSocketAddress;
 import kg.apc.perfmon.client.AbstractTransport;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -31,29 +32,49 @@ public class NewAgentConnectorTest {
         public void generateErrorSample(String label, String errorMsg) {
         }
     }
-
     private NewAgentConnector instance;
 
-    private static class EmulatorTransport implements AbstractTransport {
+    private static class EmulatorTransport extends AbstractTransport {
 
-        public EmulatorTransport() {
+        public EmulatorTransport() throws IOException {
+            super(new InetSocketAddress("localhost", 4444));
         }
 
+        @Override
         public void disconnect() {
+            throw new UnsupportedOperationException("Not supported yet.");
         }
 
-        public void writeln(String string) {
+        @Override
+        public boolean test() {
+            throw new UnsupportedOperationException("Not supported yet.");
         }
 
-        public String readln() {
-            return "";
+        @Override
+        public void startWithMetrics(String[] metricsArray) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public String[] readMetrics() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        protected void writeln(String line) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        protected String readln() {
+            throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 
     private class NewConnEmul extends NewAgentConnector {
 
-        public NewConnEmul(int protocol, String host, int port) {
-            super(protocol, host, port);
+        public NewConnEmul(int protocol, String host, int port) throws IOException {
+            super(host, port);
             transport = new EmulatorTransport();
         }
     }
@@ -70,8 +91,8 @@ public class NewAgentConnectorTest {
     }
 
     @Before
-    public void setUp() {
-        instance = new NewConnEmul(0, null, 0);
+    public void setUp() throws IOException {
+        instance = new NewConnEmul(0, "localhost", 0);
     }
 
     @After
@@ -86,17 +107,6 @@ public class NewAgentConnectorTest {
         System.out.println("setMetricType");
         String metric = "";
         instance.setMetricType(metric);
-    }
-
-    /**
-     * Test of test method, of class NewAgentConnector.
-     */
-    @Test
-    public void testTest() {
-        System.out.println("test");
-        boolean expResult = false;
-        boolean result = instance.test();
-        assertEquals(expResult, result);
     }
 
     /**

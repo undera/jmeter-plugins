@@ -1,9 +1,11 @@
 package kg.apc.jmeter.perfmon;
 
-import kg.apc.perfmon.client.UDPTransport;
-import kg.apc.perfmon.client.TCPTransport;
 import kg.apc.perfmon.client.AbstractTransport;
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import kg.apc.perfmon.PerfMonMetricGetter;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  *
@@ -11,35 +13,26 @@ import java.io.IOException;
  */
 public class NewAgentConnector implements PerfMonAgentConnector {
 
-    public static final int PROTO_TCP = 0;
-    public static final int PROTO_UDP = 1;
+    private static final Logger log = LoggingManager.getLoggerForClass();
     protected AbstractTransport transport;
     private String metricsStr;
+    private String[] metricLabels;
 
-    public NewAgentConnector(int protocol, String host, int port) {
-        if (protocol == PROTO_UDP) {
-            transport = new UDPTransport(host, port);
-        } else {
-            transport = new TCPTransport(host, port);
-        }
+    public NewAgentConnector(String host, int port) throws IOException {
+        transport = AbstractTransport.getTransport(new InetSocketAddress(host, port));
     }
 
     public void setMetricType(String metric) {
         metricsStr = metric;
     }
 
-    public boolean test() {
-        transport.writeln("test");
-        String testResult = transport.readln();
-        return testResult.startsWith("Yep");
-    }
-
     public void setParams(String params) {
-        metricsStr += ":" + params;
+        metricsStr += PerfMonMetricGetter.DVOETOCHIE + params;
     }
 
     public void connect() throws IOException {
-        transport.writeln(metricsStr);
+        String[] m = {metricsStr};
+        transport.startWithMetrics(m);
     }
 
     public void disconnect() {
@@ -47,7 +40,11 @@ public class NewAgentConnector implements PerfMonAgentConnector {
     }
 
     public void generateSamples(PerfMonSampleGenerator collector) throws IOException {
-        String data = transport.readln();
-        collector.generateSample(PROTO_TCP, metricsStr);
+        String[] data = transport.readMetrics();
+        try {
+            collector.generateSample(Double.parseDouble(data[0]), metricLabels[0]);
+        } catch (NumberFormatException e) {
+            collector.generateErrorSample(metricLabels[0], e.getMessage());
+        }
     }
 }

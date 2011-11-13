@@ -219,11 +219,10 @@ public class PerfMonCollector
     }
 
     protected PerfMonAgentConnector getConnector(String host, int port) throws IOException {
-        NewAgentConnector connector = new NewAgentConnector(NewAgentConnector.PROTO_TCP, host, port);
-        if (connector.test()) {
-            return connector;
+        try {
+            return new NewAgentConnector(host, port);
+        } catch (IOException e) {
+            return new OldAgentConnector(host, port);
         }
-
-        return new OldAgentConnector(host, port);
     }
 }

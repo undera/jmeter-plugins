@@ -120,7 +120,7 @@ public class PerfMonWorker implements Runnable {
 
     private void listenTCP() throws IOException {
         if (tcpPort > 0) {
-            log.debug("Binding TCP to " + tcpPort);
+            log.info("Binding TCP to " + tcpPort);
             tcpServer = ServerSocketChannel.open();
             tcpServer.configureBlocking(false);
 
@@ -131,7 +131,7 @@ public class PerfMonWorker implements Runnable {
 
     private void listenUDP() throws IOException {
         if (udpPort > 0) {
-            log.debug("Binding UDP to " + udpPort);
+            log.info("Binding UDP to " + udpPort);
             DatagramChannel udp = DatagramChannel.open();
             udp.socket().bind(new InetSocketAddress(udpPort));
             udp.configureBlocking(false);
@@ -141,7 +141,7 @@ public class PerfMonWorker implements Runnable {
     }
 
     private void accept(SelectionKey key) throws IOException {
-        log.debug("Accepting TCP connection " + key);
+        log.info("Accepting new TCP connection");
         SelectableChannel channel = key.channel();
         SelectableChannel tcpConn = ((ServerSocketChannel) channel).accept();
         tcpConn.configureBlocking(false);
@@ -160,7 +160,7 @@ public class PerfMonWorker implements Runnable {
         if (key.channel() instanceof SocketChannel) {
             SocketChannel channel = (SocketChannel) key.channel();
             if (channel.read(buf) < 0) {
-                log.debug("Closing connection");
+                log.info("Closing TCP connection");
                 channel.close();
                 return;
             }
@@ -169,7 +169,7 @@ public class PerfMonWorker implements Runnable {
             DatagramChannel channel = (DatagramChannel) key.channel();
             SocketAddress remoteAddr = channel.receive(buf);
             if (!udpConnections.containsKey(remoteAddr)) {
-                log.debug("Connecting new UDP client");
+                log.info("Connecting new UDP client");
                 udpConnections.put(remoteAddr, new PerfMonMetricGetter(this, channel));
             }
             getter = (PerfMonMetricGetter) udpConnections.get(remoteAddr);
@@ -189,7 +189,7 @@ public class PerfMonWorker implements Runnable {
     }
 
     public void shutdownConnections() throws IOException {
-        log.debug("Shutdown connections");
+        log.info("Shutdown connections");
         isFinished = true;
         Iterator it = tcpConnections.iterator();
         while (it.hasNext()) {

@@ -26,12 +26,4 @@ class UDPTransport extends AbstractTransport {
     public boolean test() {
         return false;
     }
-
-    public void startWithMetrics(String[] metricsArray) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public String[] readMetrics() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }

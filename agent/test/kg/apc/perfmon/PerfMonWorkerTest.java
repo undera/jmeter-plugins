@@ -113,16 +113,4 @@ public class PerfMonWorkerTest extends TestCase {
         PerfMonWorker instance = new PerfMonWorker();
         instance.run();
     }
-
-    /**
-     * Test of registerWritingChannel method, of class PerfMonWorker.
-     */
-    public void testRegisterWritingChannel() throws Exception {
-        System.out.println("registerWritingChannel");
-        SelectableChannel channel = DatagramChannel.open();
-        channel.configureBlocking(false);
-        PerfMonWorker instance = new PerfMonWorker();
-        PerfMonMetricGetter worker = new PerfMonMetricGetter(instance, channel);
-        instance.registerWritingChannel(channel, worker);
-    }
 }

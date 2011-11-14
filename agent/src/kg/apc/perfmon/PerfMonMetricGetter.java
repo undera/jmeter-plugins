@@ -28,9 +28,8 @@ public class PerfMonMetricGetter {
     private final SelectableChannel channel;
     private AbstractPerfMonMetric[] metrics = new AbstractPerfMonMetric[0];
     private final SigarProxy sigarProxy;// TODO: move up to share between all getters
-    private boolean started = false;
 
-    public PerfMonMetricGetter(PerfMonWorker aController, SelectableChannel aChannel) {
+    public PerfMonMetricGetter(PerfMonWorker aController, SelectableChannel aChannel) throws IOException {
         controller = aController;
         channel = aChannel;
         sigarProxy = SigarProxyCache.newInstance(new Sigar(), 500);
@@ -52,7 +51,6 @@ public class PerfMonMetricGetter {
             controller.shutdownConnections();
         } else if (cmdType.equals("metrics")) {
             setUpMetrics(params.split(TAB));
-            controller.registerWritingChannel(channel, this);
         } else if (cmdType.equals("exit")) {
             metrics = new AbstractPerfMonMetric[0];
             if (channel instanceof SocketChannel) {
@@ -100,7 +98,7 @@ public class PerfMonMetricGetter {
         return (ByteBuffer.wrap(res.toString().getBytes()));
     }
 
-    private void setUpMetrics(String[] params) {
+    private void setUpMetrics(String[] params) throws IOException {
         metrics = new AbstractPerfMonMetric[params.length];
         String metricParams = "";
         for (int n = 0; n < params.length; n++) {
@@ -112,6 +110,9 @@ public class PerfMonMetricGetter {
 
             metrics[n] = AbstractPerfMonMetric.createMetric(metricType, metricParams, sigarProxy);
         }
+
+        // this will make it sending channel
+        controller.registerWritingChannel(channel, this);
     }
 
     public boolean isStarted() {

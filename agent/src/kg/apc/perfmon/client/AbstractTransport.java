@@ -125,4 +125,20 @@ public abstract class AbstractTransport {
             }
         }
     }
+    
+    public void setInterval(long interval) {
+        try {
+            writeln("interval:"+interval);
+        } catch (IOException ex) {
+            log.error("Error setting interval", ex);
+        }
+    }
+
+    public void shutdownAgent() {
+        try {
+            writeln("shutdown");
+        } catch (IOException ex) {
+            log.error("Error setting interval", ex);
+        }
+    }
 }

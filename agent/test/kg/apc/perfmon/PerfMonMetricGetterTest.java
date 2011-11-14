@@ -21,6 +21,7 @@ public class PerfMonMetricGetterTest extends TestCase {
         System.out.println("processCommand");
         String toString = "test\ntest\nerr\n";
         final DatagramChannel channel = DatagramChannel.open();
+        channel.configureBlocking(false);
         channel.connect(new InetSocketAddress(4444));
         PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), channel);
         instance.addCommandString(toString);

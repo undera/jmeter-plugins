@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import org.apache.jorphan.logging.LoggingManager;
 
 /**
  * This class used to handle all command-line stuff
@@ -30,13 +31,20 @@ public class PluginsCMD extends AbstractCMDTool {
 
     @Override
     protected int processParams(ListIterator<String> args) throws UnsupportedOperationException, IllegalArgumentException {
+        LoggingManager.setPriority("INFO");
         AbstractCMDTool tool = null;
 
         while (args.hasNext()) {
             String arg = (String) args.next();
             if (arg.equals("-?") || arg.equals("--help")) {
                 showHelp(System.out);
+                // fixme: how to show help for the tool?
                 return 0;
+            } else if (arg.equals("--loglevel")) {
+                args.remove();
+                String loglevelStr = (String) args.next();
+                args.remove();
+                LoggingManager.setPriority(loglevelStr);
             } else if (arg.equals("--version")) {
                 showVersion(System.out);
                 return 0;

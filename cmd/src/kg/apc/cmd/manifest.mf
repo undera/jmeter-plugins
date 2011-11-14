@@ -1,2 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: kg.apc.cmd.NewDriver
+Main-Class: kg.apc.cmd.UniversalRunner

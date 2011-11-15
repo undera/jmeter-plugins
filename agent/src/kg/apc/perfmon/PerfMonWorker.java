@@ -1,3 +1,4 @@
+// FIXME: both this class and getter is shit because of poor TCP/udp abstraction. Refactor it!
 package kg.apc.perfmon;
 
 import java.io.IOException;
@@ -157,7 +158,6 @@ public class PerfMonWorker implements Runnable {
     private void read(SelectionKey key) throws IOException {
         PerfMonMetricGetter getter = null;
         ByteBuffer buf = ByteBuffer.allocateDirect(1024);
-        DatagramChannel udpChannel;
         if (key.channel() instanceof SocketChannel) {
             SocketChannel channel = (SocketChannel) key.channel();
             if (channel.read(buf) < 0) {
@@ -171,10 +171,7 @@ public class PerfMonWorker implements Runnable {
             SocketAddress remoteAddr = channel.receive(buf);
             if (!udpConnections.containsKey(remoteAddr)) {
                 log.info("Connecting new UDP client");
-                udpChannel = DatagramChannel.open();
-                udpChannel.configureBlocking(false);
-                udpChannel.connect(remoteAddr);
-                udpConnections.put(remoteAddr, new PerfMonMetricGetter(this, udpChannel));
+                udpConnections.put(remoteAddr, new PerfMonMetricGetter(this, channel, remoteAddr));
             }
             getter = (PerfMonMetricGetter) udpConnections.get(remoteAddr);
         }

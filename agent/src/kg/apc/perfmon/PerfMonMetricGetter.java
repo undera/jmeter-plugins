@@ -1,8 +1,10 @@
 package kg.apc.perfmon;
 
+import java.net.SocketAddress;
 import kg.apc.perfmon.metrics.AbstractPerfMonMetric;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.channels.WritableByteChannel;
@@ -21,18 +23,24 @@ public class PerfMonMetricGetter {
 
     public static final String TAB = "\t";
     public static final String DVOETOCHIE = ":";
-    private static final String NEWLINE = "\n";
+    public static final String NEWLINE = "\n";
     private final PerfMonWorker controller;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private String commandString = "";
     private final SelectableChannel channel;
     private AbstractPerfMonMetric[] metrics = new AbstractPerfMonMetric[0];
     private final SigarProxy sigarProxy;// TODO: move up to share between all getters
+    private SocketAddress udpPeer;
 
     public PerfMonMetricGetter(PerfMonWorker aController, SelectableChannel aChannel) throws IOException {
         controller = aController;
         channel = aChannel;
         sigarProxy = SigarProxyCache.newInstance(new Sigar(), 500);
+    }
+
+    PerfMonMetricGetter(PerfMonWorker aThis, DatagramChannel udpServer, SocketAddress remoteAddr) throws IOException {
+        this(aThis, udpServer);
+        udpPeer = remoteAddr;
     }
 
     private void processCommand(String command) throws IOException {
@@ -58,7 +66,12 @@ public class PerfMonMetricGetter {
             }
         } else if (cmdType.equals("test")) {
             log.info("Yep, we received the 'test' command");
-            ((WritableByteChannel) channel).write(ByteBuffer.wrap("Yep\n".getBytes()));
+            if (channel instanceof DatagramChannel) {
+                DatagramChannel udpChannel = ((DatagramChannel) channel);
+                udpChannel.send(ByteBuffer.wrap("Yep\n".getBytes()), udpPeer);
+            } else {
+                ((WritableByteChannel) channel).write(ByteBuffer.wrap("Yep\n".getBytes()));
+            }
         } else if (cmdType.equals("")) {
         } else {
             throw new UnsupportedOperationException("Unknown command [" + cmdType.length() + "]: '" + cmdType + "'");

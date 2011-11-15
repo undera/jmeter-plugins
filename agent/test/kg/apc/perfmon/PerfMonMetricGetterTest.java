@@ -23,7 +23,7 @@ public class PerfMonMetricGetterTest extends TestCase {
         final DatagramChannel channel = DatagramChannel.open();
         channel.configureBlocking(false);
         channel.connect(new InetSocketAddress(4444));
-        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), channel);
+        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), channel, new InetSocketAddress("localhost", 4444));
         instance.addCommandString(toString);
         instance.processNextCommand();
         instance.processNextCommand();

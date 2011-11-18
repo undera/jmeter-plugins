@@ -4,6 +4,7 @@ import kg.apc.perfmon.client.AbstractTransport;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import kg.apc.perfmon.PerfMonMetricGetter;
+import kg.apc.perfmon.client.TransportFactory;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -18,12 +19,13 @@ public class NewAgentConnector implements PerfMonAgentConnector {
     private String metricsStr;
     private String[] metricLabels;
 
-    public NewAgentConnector(String host, int port) throws IOException {
-        transport = AbstractTransport.getTransport(new InetSocketAddress(host, port));
+    public NewAgentConnector(String host, int port, TransportFactory factory) throws IOException {
+        transport = factory.getTransport(new InetSocketAddress(host, port));
     }
 
     public void setMetricType(String metric) {
-        metricsStr = metric;
+        metricsStr = metric.toLowerCase();
+        metricLabels=metric.split("\t");
     }
 
     public void setParams(String params) {

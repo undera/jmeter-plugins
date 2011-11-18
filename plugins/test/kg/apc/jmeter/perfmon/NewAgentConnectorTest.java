@@ -2,7 +2,9 @@ package kg.apc.jmeter.perfmon;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import kg.apc.perfmon.client.AbstractTransport;
+import kg.apc.perfmon.client.TransportFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,6 +16,17 @@ import org.junit.Test;
  * @author undera
  */
 public class NewAgentConnectorTest {
+
+    private static class EmulFactory extends TransportFactory {
+
+        public EmulFactory() {
+        }
+
+        @Override
+        public AbstractTransport getTransport(SocketAddress addr) throws IOException {
+            return new EmulatorTransport();
+        }
+    }
 
     private static class Gen implements PerfMonSampleGenerator {
 
@@ -32,9 +45,11 @@ public class NewAgentConnectorTest {
         public void generateErrorSample(String label, String errorMsg) {
         }
     }
-    private NewAgentConnector instance;
+    private NewConnEmul instance;
 
     private static class EmulatorTransport extends AbstractTransport {
+
+        private String[] metricsToReturn;
 
         public EmulatorTransport() throws IOException {
             super(new InetSocketAddress("localhost", 4444));
@@ -42,7 +57,6 @@ public class NewAgentConnectorTest {
 
         @Override
         public void disconnect() {
-            throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
@@ -52,12 +66,11 @@ public class NewAgentConnectorTest {
 
         @Override
         public void startWithMetrics(String[] metricsArray) {
-            throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
         public String[] readMetrics() {
-            throw new UnsupportedOperationException("Not supported yet.");
+            return metricsToReturn;
         }
 
         @Override
@@ -69,13 +82,20 @@ public class NewAgentConnectorTest {
         protected String readln() {
             throw new UnsupportedOperationException("Not supported yet.");
         }
+
+        private void esetMetricsToReturn(String[] split) {
+            metricsToReturn = split;
+        }
     }
 
     private class NewConnEmul extends NewAgentConnector {
 
-        public NewConnEmul(int protocol, String host, int port) throws IOException {
-            super(host, port);
-            transport = new EmulatorTransport();
+        final EmulatorTransport etrans;
+
+        public NewConnEmul() throws IOException {
+            super("", 0, new EmulFactory());
+            etrans = new EmulatorTransport();
+            transport = etrans;
         }
     }
 
@@ -92,7 +112,7 @@ public class NewAgentConnectorTest {
 
     @Before
     public void setUp() throws IOException {
-        instance = new NewConnEmul(0, "localhost", 0);
+        instance = new NewConnEmul();
     }
 
     @After
@@ -144,6 +164,24 @@ public class NewAgentConnectorTest {
     public void testGenerateSamples() throws Exception {
         System.out.println("generateSamples");
         PerfMonSampleGenerator collector = new Gen();
+        instance.etrans.esetMetricsToReturn("0.123".split("\t"));
+        instance.setMetricType("test");
+        instance.generateSamples(collector);
+    }
+
+    @Test
+    public void testGenerateSamples_none() throws Exception {
+        System.out.println("generateSamples");
+        PerfMonSampleGenerator collector = new Gen();
+        instance.etrans.esetMetricsToReturn("".split("\t"));
+        instance.setMetricType("test");
+        instance.generateSamples(collector);
+    }
+
+    public void testGenerateSamples_many() throws Exception {
+        System.out.println("generateSamples");
+        PerfMonSampleGenerator collector = new Gen();
+        instance.etrans.esetMetricsToReturn("0.123  3424".split("\t"));
         instance.generateSamples(collector);
     }
 }

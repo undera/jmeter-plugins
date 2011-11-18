@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import kg.apc.perfmon.client.TransportFactory;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
@@ -220,7 +221,7 @@ public class PerfMonCollector
 
     protected PerfMonAgentConnector getConnector(String host, int port) throws IOException {
         try {
-            return new NewAgentConnector(host, port);
+            return new NewAgentConnector(host, port, new TransportFactory());
         } catch (IOException e) {
             return new OldAgentConnector(host, port);
         }

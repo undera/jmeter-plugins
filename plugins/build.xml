@@ -94,6 +94,11 @@
             </condition>
         </fail>
 
+        <!--  SH: handle plugin nameupdater.properties -->
+        <zip destfile="${dist.jar}" update="yes">
+            <zipfileset dir="${svn.dir}" includes="org.apache.jmeter.nameupdater.properties" prefix="META-INF/resources"/>
+        </zip>
+
       <!-- APC: we should provide one package, that includes all of the stuff
            to use most of our project -->
         <zip destfile="${dist.dir}/JMeterPlugins.zip">

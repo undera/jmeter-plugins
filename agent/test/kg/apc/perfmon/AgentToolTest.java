@@ -6,7 +6,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *
@@ -45,6 +47,11 @@ public class AgentToolTest extends TestCase {
     }
 
     public AgentToolTest() {
+    }
+
+    public static Test suite() {
+        TestSuite suite = new TestSuite(AgentToolTest.class);
+        return suite;
     }
 
     private ListIterator argsArrayToListIterator(String[] args) {

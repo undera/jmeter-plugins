@@ -15,7 +15,7 @@ public class TransportFactory {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
-    public NIOTransport getTransport(SocketAddress addr) throws IOException {
+    public static NIOTransport getTransport(SocketAddress addr) throws IOException {
         NIOTransport trans;
         try {
             log.debug("Connecting UDP");
@@ -50,7 +50,7 @@ public class TransportFactory {
         return ret;
     }
 
-    private NIOTransport TCPInstance(SocketAddress addr) throws IOException {
+    public static NIOTransport TCPInstance(SocketAddress addr) throws IOException {
         SocketChannel channel = SocketChannel.open(addr);
         NIOTransport ret = new NIOTransport();
         ret.setChannels(channel, channel);

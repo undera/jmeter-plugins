@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import kg.apc.perfmon.PerfMonMetricGetter;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -33,7 +34,7 @@ class TCPTransport extends AbstractTransport {
     }
 
     protected void writeln(String line) throws IOException {
-        channel.write(ByteBuffer.wrap(line.concat("\n").getBytes()));
+        channel.write(ByteBuffer.wrap(line.concat(PerfMonMetricGetter.NEWLINE).getBytes()));
     }
 
     protected String readln() {

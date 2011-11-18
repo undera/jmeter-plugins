@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.DatagramChannel;
 import junit.framework.TestCase;
+import kg.apc.emulators.DatagramChannelEmul;
+import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarProxyCache;
 
 /**
  *
@@ -20,10 +23,11 @@ public class PerfMonMetricGetterTest extends TestCase {
     public void testProcessCommand() throws IOException {
         System.out.println("processCommand");
         String toString = "test\ntest\nerr\n";
-        final DatagramChannel channel = DatagramChannel.open();
+        final DatagramChannel channel = DatagramChannelEmul.open();
         channel.configureBlocking(false);
-        channel.connect(new InetSocketAddress(4444));
-        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), channel, new InetSocketAddress("localhost", 4444));
+        final InetSocketAddress inetSocketAddress = new InetSocketAddress("localhost", 4444);
+        channel.connect(inetSocketAddress);
+        PerfMonMetricGetter instance = new PerfMonMetricGetter(SigarProxyCache.newInstance(new Sigar(), 500), new PerfMonWorker(), channel, inetSocketAddress);
         instance.addCommandString(toString);
         instance.processNextCommand();
         instance.processNextCommand();
@@ -40,7 +44,7 @@ public class PerfMonMetricGetterTest extends TestCase {
     public void testAddCommandString() throws IOException {
         System.out.println("addCommandString");
         String byteBufferToString = "";
-        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), DatagramChannel.open());
+        PerfMonMetricGetter instance = new PerfMonMetricGetter(SigarProxyCache.newInstance(new Sigar(), 500), new PerfMonWorker(), DatagramChannel.open());
         instance.addCommandString(byteBufferToString);
     }
 
@@ -49,7 +53,7 @@ public class PerfMonMetricGetterTest extends TestCase {
      */
     public void testProcessNextCommand() throws Exception {
         System.out.println("processNextCommand");
-        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), DatagramChannel.open());
+        PerfMonMetricGetter instance = new PerfMonMetricGetter(SigarProxyCache.newInstance(new Sigar(), 500), new PerfMonWorker(), DatagramChannel.open());
         boolean expResult = false;
         boolean result = instance.processNextCommand();
         assertEquals(expResult, result);
@@ -60,7 +64,7 @@ public class PerfMonMetricGetterTest extends TestCase {
      */
     public void testSendMetrics() throws IOException {
         System.out.println("sendMetrics");
-        PerfMonMetricGetter instance = new PerfMonMetricGetter(new PerfMonWorker(), DatagramChannel.open());
+        PerfMonMetricGetter instance = new PerfMonMetricGetter(SigarProxyCache.newInstance(new Sigar(), 500), new PerfMonWorker(), DatagramChannel.open());
         instance.getMetricsLine();
     }
 }

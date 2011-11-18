@@ -18,6 +18,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarProxy;
+import org.hyperic.sigar.SigarProxyCache;
 
 /**
  *
@@ -38,11 +41,13 @@ public class PerfMonWorker implements Runnable {
     private final LinkedList tcpConnections = new LinkedList();
     private final HashMap udpConnections = new HashMap();
     private int interval = 1000;
+    private final SigarProxy sigar;
 
     public PerfMonWorker() throws IOException {
         acceptSelector = Selector.open();
         sendSelector = Selector.open();
         writerThread = new Thread(this);
+        sigar=SigarProxyCache.newInstance(new Sigar(), 500);
     }
 
     public void setTCPPort(int parseInt) {
@@ -149,7 +154,7 @@ public class PerfMonWorker implements Runnable {
         SelectionKey k = tcpConn.register(this.acceptSelector, SelectionKey.OP_READ);
 
         log.debug("Creating new metric getter");
-        PerfMonMetricGetter getter = new PerfMonMetricGetter(this, tcpConn);
+        PerfMonMetricGetter getter = new PerfMonMetricGetter(sigar, this, tcpConn);
         k.attach(getter);
         tcpConnections.add(tcpConn);
     }
@@ -171,7 +176,7 @@ public class PerfMonWorker implements Runnable {
             SocketAddress remoteAddr = channel.receive(buf);
             if (!udpConnections.containsKey(remoteAddr)) {
                 log.info("Connecting new UDP client");
-                udpConnections.put(remoteAddr, new PerfMonMetricGetter(this, channel, remoteAddr));
+                udpConnections.put(remoteAddr, new PerfMonMetricGetter(sigar, this, channel, remoteAddr));
             }
             getter = (PerfMonMetricGetter) udpConnections.get(remoteAddr);
         }

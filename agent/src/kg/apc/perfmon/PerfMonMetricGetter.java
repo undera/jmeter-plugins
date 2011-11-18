@@ -10,10 +10,8 @@ import java.nio.channels.SocketChannel;
 import java.nio.channels.WritableByteChannel;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarProxy;
-import org.hyperic.sigar.SigarProxyCache;
 
 /**
  *
@@ -32,14 +30,14 @@ public class PerfMonMetricGetter {
     private final SigarProxy sigarProxy;// TODO: move up to share between all getters
     private SocketAddress udpPeer;
 
-    public PerfMonMetricGetter(PerfMonWorker aController, SelectableChannel aChannel) throws IOException {
+    public PerfMonMetricGetter(SigarProxy aproxy, PerfMonWorker aController, SelectableChannel aChannel) throws IOException {
         controller = aController;
         channel = aChannel;
-        sigarProxy = SigarProxyCache.newInstance(new Sigar(), 500);
+        sigarProxy = aproxy;
     }
 
-    PerfMonMetricGetter(PerfMonWorker aThis, DatagramChannel udpServer, SocketAddress remoteAddr) throws IOException {
-        this(aThis, udpServer);
+    PerfMonMetricGetter(SigarProxy aproxy, PerfMonWorker aThis, DatagramChannel udpServer, SocketAddress remoteAddr) throws IOException {
+        this(aproxy, aThis, udpServer);
         udpPeer = remoteAddr;
     }
 

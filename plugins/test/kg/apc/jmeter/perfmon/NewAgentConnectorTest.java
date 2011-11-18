@@ -1,10 +1,9 @@
 package kg.apc.jmeter.perfmon;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import kg.apc.perfmon.client.AbstractTransport;
-import kg.apc.perfmon.client.TransportFactory;
+import java.nio.ByteBuffer;
+import kg.apc.emulators.DatagramChannelEmul;
+import kg.apc.perfmon.client.NIOTransport;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,17 +15,8 @@ import org.junit.Test;
  * @author undera
  */
 public class NewAgentConnectorTest {
-
-    private static class EmulFactory extends TransportFactory {
-
-        public EmulFactory() {
-        }
-
-        @Override
-        public AbstractTransport getTransport(SocketAddress addr) throws IOException {
-            return new EmulatorTransport();
-        }
-    }
+    private DatagramChannelEmul channel;
+    private NIOTransport transport;
 
     private static class Gen implements PerfMonSampleGenerator {
 
@@ -45,59 +35,7 @@ public class NewAgentConnectorTest {
         public void generateErrorSample(String label, String errorMsg) {
         }
     }
-    private NewConnEmul instance;
-
-    private static class EmulatorTransport extends AbstractTransport {
-
-        private String[] metricsToReturn;
-
-        public EmulatorTransport() throws IOException {
-            super(new InetSocketAddress("localhost", 4444));
-        }
-
-        @Override
-        public void disconnect() {
-        }
-
-        @Override
-        public boolean test() {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public void startWithMetrics(String[] metricsArray) {
-        }
-
-        @Override
-        public String[] readMetrics() {
-            return metricsToReturn;
-        }
-
-        @Override
-        protected void writeln(String line) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        protected String readln() {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        private void esetMetricsToReturn(String[] split) {
-            metricsToReturn = split;
-        }
-    }
-
-    private class NewConnEmul extends NewAgentConnector {
-
-        final EmulatorTransport etrans;
-
-        public NewConnEmul() throws IOException {
-            super("", 0, new EmulFactory());
-            etrans = new EmulatorTransport();
-            transport = etrans;
-        }
-    }
+    private NewAgentConnector instance;
 
     public NewAgentConnectorTest() {
     }
@@ -112,7 +50,11 @@ public class NewAgentConnectorTest {
 
     @Before
     public void setUp() throws IOException {
-        instance = new NewConnEmul();
+        instance = new NewAgentConnector();
+        channel=(DatagramChannelEmul) DatagramChannelEmul.open();
+        transport=new NIOTransport();
+        transport.setChannels(channel, channel);
+        instance.setTransport(transport);
     }
 
     @After
@@ -164,7 +106,7 @@ public class NewAgentConnectorTest {
     public void testGenerateSamples() throws Exception {
         System.out.println("generateSamples");
         PerfMonSampleGenerator collector = new Gen();
-        instance.etrans.esetMetricsToReturn("0.123".split("\t"));
+        channel.setBytesToRead(ByteBuffer.wrap("0.123\n".getBytes()));
         instance.setMetricType("test");
         instance.generateSamples(collector);
     }
@@ -173,7 +115,7 @@ public class NewAgentConnectorTest {
     public void testGenerateSamples_none() throws Exception {
         System.out.println("generateSamples");
         PerfMonSampleGenerator collector = new Gen();
-        instance.etrans.esetMetricsToReturn("".split("\t"));
+        channel.setBytesToRead(ByteBuffer.wrap("".getBytes()));
         instance.setMetricType("test");
         instance.generateSamples(collector);
     }
@@ -181,7 +123,7 @@ public class NewAgentConnectorTest {
     public void testGenerateSamples_many() throws Exception {
         System.out.println("generateSamples");
         PerfMonSampleGenerator collector = new Gen();
-        instance.etrans.esetMetricsToReturn("0.123  3424".split("\t"));
+        channel.setBytesToRead(ByteBuffer.wrap("0.123  3424\n".getBytes()));
         instance.generateSamples(collector);
     }
 }

@@ -1,10 +1,8 @@
 package kg.apc.jmeter.perfmon;
 
-import kg.apc.perfmon.client.AbstractTransport;
+import kg.apc.perfmon.client.NIOTransport;
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import kg.apc.perfmon.PerfMonMetricGetter;
-import kg.apc.perfmon.client.TransportFactory;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -15,17 +13,17 @@ import org.apache.log.Logger;
 public class NewAgentConnector implements PerfMonAgentConnector {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    protected AbstractTransport transport;
+    protected NIOTransport transport;
     private String metricsStr;
     private String[] metricLabels;
 
-    public NewAgentConnector(String host, int port, TransportFactory factory) throws IOException {
-        transport = factory.getTransport(new InetSocketAddress(host, port));
+    public void setTransport(NIOTransport atransport) {
+        transport = atransport;
     }
 
     public void setMetricType(String metric) {
         metricsStr = metric.toLowerCase();
-        metricLabels=metric.split("\t");
+        metricLabels = metric.split(PerfMonMetricGetter.TAB);
     }
 
     public void setParams(String params) {

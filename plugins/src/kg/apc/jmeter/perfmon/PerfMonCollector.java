@@ -2,10 +2,12 @@ package kg.apc.jmeter.perfmon;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import kg.apc.perfmon.client.NIOTransport;
 import kg.apc.perfmon.client.TransportFactory;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -201,8 +203,7 @@ public class PerfMonCollector
         res.setSuccessful(false);
         SampleEvent e = new SampleEvent(res, PERFMON);
         super.sampleOccurred(e);
-        //add a console message for imediate user notice
-        System.out.println("Perfmon plugin error: " + errorMsg);
+        log.error("Perfmon plugin error: " + errorMsg);
     }
 
     public void generate2Samples(long[] values, String label1, String label2) {
@@ -221,7 +222,10 @@ public class PerfMonCollector
 
     protected PerfMonAgentConnector getConnector(String host, int port) throws IOException {
         try {
-            return new NewAgentConnector(host, port, new TransportFactory());
+            NIOTransport transport = TransportFactory.getTransport(new InetSocketAddress(host, port));
+            NewAgentConnector conn = new NewAgentConnector();
+            conn.setTransport(transport);
+            return conn;
         } catch (IOException e) {
             return new OldAgentConnector(host, port);
         }

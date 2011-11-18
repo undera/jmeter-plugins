@@ -19,6 +19,7 @@ class UDPTransport extends AbstractTransport {
     public UDPTransport(SocketAddress addr) throws IOException {
         super(addr);
         channel = DatagramChannel.open();
+        channel.socket().setSoTimeout(1000);
         channel.connect(addr);
     }
 
@@ -44,7 +45,7 @@ class UDPTransport extends AbstractTransport {
             buf.flip();
             return readln(buf);
         } catch (IOException e) {
-            return null;
+            return "";
         }
     }
 }

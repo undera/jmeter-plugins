@@ -45,7 +45,7 @@ class TCPTransport extends AbstractTransport {
             buf.flip();
             return readln(buf);
         } catch (IOException e) {
-            return null;
+            return "";
         }
     }
 }

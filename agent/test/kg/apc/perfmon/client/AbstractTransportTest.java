@@ -1,8 +1,6 @@
 package kg.apc.perfmon.client;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import junit.framework.TestCase;
 
@@ -104,19 +102,6 @@ public class AbstractTransportTest extends TestCase {
         ByteBuffer buf2 = ByteBuffer.wrap("\n".getBytes());
         String result2 = instance.readln(buf2);
         assertEquals("", result2);
-    }
-
-    /**
-     * Test of getTransport method, of class AbstractTransport.
-     */
-    public void testGetTransport() throws Exception {
-        System.out.println("getTransport");
-        SocketAddress addr = new InetSocketAddress("localhost", 0);
-        try {
-            AbstractTransport result = AbstractTransport.getTransport(addr);
-            fail();
-        } catch (IOException e) {
-        }
     }
 
     public class AbstractTransportImpl extends AbstractTransport {

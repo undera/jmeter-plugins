@@ -1,24 +1,26 @@
 package kg.apc.perfmon.client;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import junit.framework.TestCase;
+import kg.apc.emulators.DatagramChannelEmul;
 
 /**
  *
  * @author undera
  */
-public class AbstractTransportTest extends TestCase {
+public class NIOTransportTest extends TestCase {
 
-    private AbstractTransportImpl instance;
+    private NIOTransport instance;
+    private DatagramChannelEmul channel;
 
-    public AbstractTransportTest(String testName) {
+    public NIOTransportTest(String testName) {
         super(testName);
     }
 
     protected void setUp() throws Exception {
         super.setUp();
-        instance = new AbstractTransportImpl();
+        instance = new NIOTransport();
+        channel = (DatagramChannelEmul) DatagramChannelEmul.open();
+        instance.setChannels(channel, channel);
     }
 
     protected void tearDown() throws Exception {
@@ -78,43 +80,5 @@ public class AbstractTransportTest extends TestCase {
         String expResult = "";
         String result = instance.readln();
         assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of readln method, of class AbstractTransport.
-     */
-    public void testReadln_ByteBuffer() throws Exception {
-        System.out.println("readln");
-        ByteBuffer buf1 = ByteBuffer.wrap("123".getBytes());
-        instance.readln(buf1);
-        ByteBuffer buf2 = ByteBuffer.wrap("456\n789\n".getBytes());
-        String expResult = "789";
-        String result = instance.readln(buf2);
-        assertEquals(expResult, result);
-    }
-
-    public void testReadln_ByteBuffer_empty() throws Exception {
-        System.out.println("readln");
-        ByteBuffer buf1 = ByteBuffer.wrap("".getBytes());
-        String result = instance.readln(buf1);
-        assertEquals(null, result);
-
-        ByteBuffer buf2 = ByteBuffer.wrap("\n".getBytes());
-        String result2 = instance.readln(buf2);
-        assertEquals("", result2);
-    }
-
-    public class AbstractTransportImpl extends AbstractTransport {
-
-        public AbstractTransportImpl() throws Exception {
-            super(null);
-        }
-
-        public void writeln(String line) throws IOException {
-        }
-
-        public String readln() {
-            return "";
-        }
     }
 }

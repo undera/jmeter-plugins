@@ -3,8 +3,9 @@ package kg.apc.perfmon.client;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
 import kg.apc.perfmon.PerfMonMetricGetter;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -13,20 +14,33 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-public abstract class AbstractTransport {
+public class NIOTransport {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private final PipedOutputStream pos;
     private final PipedInputStream pis;
+    private ReadableByteChannel readChannel;
+    private WritableByteChannel writeChannel;
 
-    public AbstractTransport(SocketAddress addr) throws IOException {
+    public NIOTransport() throws IOException {
         pos = new PipedOutputStream();
         pis = new PipedInputStream(pos, 256 * 1024);
+    }
+
+    public void setChannels(ReadableByteChannel reader, WritableByteChannel writer) {
+        readChannel = reader;
+        writeChannel = writer;
     }
 
     public void disconnect() {
         try {
             writeln("exit");
+            if (readChannel.isOpen()) {
+                readChannel.close();
+            }
+            if (writeChannel.isOpen()) {
+                writeChannel.close();
+            }
         } catch (IOException ex) {
             log.error("Error closing transport", ex);
         }
@@ -56,11 +70,23 @@ public abstract class AbstractTransport {
         return str.split(PerfMonMetricGetter.TAB);
     }
 
-    protected abstract void writeln(String line) throws IOException;
+    public void writeln(String line) throws IOException {
+        writeChannel.write(ByteBuffer.wrap(line.concat(PerfMonMetricGetter.NEWLINE).getBytes()));
+    }
 
-    protected abstract String readln();
+    public String readln() {
+        ByteBuffer buf = ByteBuffer.allocateDirect(4096); // FIXME: magic constants are bad
 
-    protected String readln(ByteBuffer buf) throws IOException {
+        try {
+            readChannel.read(buf);
+            buf.flip();
+            return readlnFromByteBuffer(buf);
+        } catch (IOException e) {
+            return "";
+        }
+    }
+
+    private String readlnFromByteBuffer(ByteBuffer buf) throws IOException {
         int nlCount = 0;
         while (buf.position() < buf.limit()) {
             try {
@@ -75,7 +101,7 @@ public abstract class AbstractTransport {
         }
 
         if (nlCount == 0) {
-            return null;
+            return "";
         }
 
         StringBuilder str = new StringBuilder();
@@ -83,7 +109,7 @@ public abstract class AbstractTransport {
         while (pis.available() > 0) {
             b = pis.read();
             if (b == -1) {
-                return null;
+                return "";
             }
 
             if (b == '\n') {
@@ -98,7 +124,7 @@ public abstract class AbstractTransport {
             str.append((char) b);
         }
 
-        return null;
+        return "";
     }
 
     public void setInterval(long interval) {

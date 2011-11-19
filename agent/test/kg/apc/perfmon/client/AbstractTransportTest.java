@@ -10,8 +10,9 @@ import junit.framework.TestSuite;
  * @author undera
  */
 public class AbstractTransportTest extends TestCase {
+
     private AbstractTransportImpl instance;
-    
+
     public AbstractTransportTest(String testName) {
         super(testName);
     }
@@ -20,12 +21,12 @@ public class AbstractTransportTest extends TestCase {
         TestSuite suite = new TestSuite(AbstractTransportTest.class);
         return suite;
     }
-    
+
     protected void setUp() throws Exception {
         super.setUp();
-         instance = new AbstractTransportImpl();
+        instance = new AbstractTransportImpl();
     }
-    
+
     protected void tearDown() throws Exception {
         super.tearDown();
     }
@@ -89,5 +90,22 @@ public class AbstractTransportTest extends TestCase {
 
         public void writeln(String line) throws IOException {
         }
+    }
+
+    /**
+     * Test of setInterval method, of class AbstractTransport.
+     */
+    public void testSetInterval() throws Exception {
+        System.out.println("setInterval");
+        long interval = 0L;
+        instance.setInterval(interval);
+    }
+
+    /**
+     * Test of shutdownAgent method, of class AbstractTransport.
+     */
+    public void testShutdownAgent() {
+        System.out.println("shutdownAgent");
+        instance.shutdownAgent();
     }
 }

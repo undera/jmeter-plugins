@@ -37,7 +37,6 @@ public class NIOTransportTest extends TestCase {
         super.tearDown();
     }
 
-
     /**
      * Test of writeln method, of class AbstractTransport.
      */
@@ -75,5 +74,13 @@ public class NIOTransportTest extends TestCase {
         String expResult = "";
         String result = instance.readln();
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of disconnect method, of class NIOTransport.
+     */
+    public void testDisconnect() {
+        System.out.println("disconnect");
+        instance.disconnect();
     }
 }

@@ -13,8 +13,8 @@ import org.apache.log.Logger;
 class StreamTransport extends AbstractTransport {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    InputStream is;
-    OutputStream os;
+    private InputStream is;
+    private OutputStream os;
 
     public StreamTransport() throws IOException {
         super();

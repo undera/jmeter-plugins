@@ -1,7 +1,10 @@
 package kg.apc.perfmon.client;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.Socket;
 import java.net.SocketAddress;
+import java.net.SocketException;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SocketChannel;
 import org.apache.jorphan.logging.LoggingManager;
@@ -15,8 +18,8 @@ public class TransportFactory {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
-    public static NIOTransport getTransport(SocketAddress addr) throws IOException {
-        NIOTransport trans;
+    public static Transport getTransport(SocketAddress addr) throws IOException {
+        Transport trans;
         try {
             log.debug("Connecting UDP");
             trans = UDPInstance(addr);
@@ -40,7 +43,7 @@ public class TransportFactory {
         }
     }
 
-    public static NIOTransport UDPInstance(SocketAddress addr) throws IOException {
+    public static Transport NIOUDPInstance(SocketAddress addr) throws IOException {
         DatagramChannel channel = DatagramChannel.open();
         channel.socket().setSoTimeout(1000);
         channel.connect(addr);
@@ -50,12 +53,36 @@ public class TransportFactory {
         return ret;
     }
 
-    public static NIOTransport TCPInstance(SocketAddress addr) throws IOException {
+    public static Transport NIOTCPInstance(SocketAddress addr) throws IOException {
         SocketChannel channel = SocketChannel.open();
         channel.socket().setSoTimeout(1000);
         channel.connect(addr);
         NIOTransport ret = new NIOTransport();
         ret.setChannels(channel, channel);
         return ret;
+    }
+
+    public static Transport TCPInstance(SocketAddress addr) throws IOException {
+        Socket sock = new Socket();
+        sock.setSoTimeout(getTimeout());
+        sock.connect(addr);
+
+        StreamTransport trans = new StreamTransport();
+        trans.setStreams(sock.getInputStream(), sock.getOutputStream());
+        return trans;
+    }
+
+    private static int getTimeout() {
+        return 1000;
+    }
+
+    public static Transport UDPInstance(SocketAddress addr) throws IOException {
+        DatagramSocket sock = new DatagramSocket();
+        sock.setSoTimeout(getTimeout());
+        sock.connect(addr);
+
+        StreamTransport trans = new StreamTransport();
+        trans.setStreams(new UDPInputStream(sock), new UDPOutputStream(sock));
+        return trans;
     }
 }

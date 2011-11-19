@@ -1,6 +1,11 @@
 package kg.apc.perfmon.client;
 
+import java.io.IOException;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
+import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import kg.apc.emulators.DatagramChannelEmul;
 
 /**
@@ -16,6 +21,11 @@ public class NIOTransportTest extends TestCase {
         super(testName);
     }
 
+    public static Test suite() {
+        TestSuite suite = new TestSuite(NIOTransportTest.class);
+        return suite;
+    }
+
     protected void setUp() throws Exception {
         super.setUp();
         instance = new NIOTransport();
@@ -27,41 +37,6 @@ public class NIOTransportTest extends TestCase {
         super.tearDown();
     }
 
-    /**
-     * Test of disconnect method, of class AbstractTransport.
-     */
-    public void testDisconnect() {
-        System.out.println("disconnect");
-        instance.disconnect();
-    }
-
-    /**
-     * Test of test method, of class AbstractTransport.
-     */
-    public void testTest() {
-        System.out.println("test");
-        boolean expResult = false;
-        boolean result = instance.test();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of startWithMetrics method, of class AbstractTransport.
-     */
-    public void testStartWithMetrics() throws Exception {
-        System.out.println("startWithMetrics");
-        String[] metricsArray = {"cpu"};
-        instance.startWithMetrics(metricsArray);
-    }
-
-    /**
-     * Test of readMetrics method, of class AbstractTransport.
-     */
-    public void testReadMetrics() {
-        System.out.println("readMetrics");
-        String[] result = instance.readMetrics();
-        assertEquals("", result[0]);
-    }
 
     /**
      * Test of writeln method, of class AbstractTransport.
@@ -76,6 +51,26 @@ public class NIOTransportTest extends TestCase {
      * Test of readln method, of class AbstractTransport.
      */
     public void testReadln_0args() {
+        System.out.println("readln");
+        String expResult = "";
+        String result = instance.readln();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setChannels method, of class NIOTransport.
+     */
+    public void testSetChannels() throws IOException {
+        System.out.println("setChannels");
+        ReadableByteChannel reader = null;
+        WritableByteChannel writer = null;
+        instance.setChannels(reader, writer);
+    }
+
+    /**
+     * Test of readln method, of class NIOTransport.
+     */
+    public void testReadln() {
         System.out.println("readln");
         String expResult = "";
         String result = instance.readln();

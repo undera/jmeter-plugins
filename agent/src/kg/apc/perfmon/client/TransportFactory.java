@@ -51,7 +51,9 @@ public class TransportFactory {
     }
 
     public static NIOTransport TCPInstance(SocketAddress addr) throws IOException {
-        SocketChannel channel = SocketChannel.open(addr);
+        SocketChannel channel = SocketChannel.open();
+        channel.socket().setSoTimeout(1000);
+        channel.connect(addr);
         NIOTransport ret = new NIOTransport();
         ret.setChannels(channel, channel);
         return ret;

@@ -3,7 +3,9 @@ package kg.apc.perfmon.client;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *
@@ -13,6 +15,11 @@ public class TransportFactoryTest extends TestCase {
 
     public TransportFactoryTest(String testName) {
         super(testName);
+    }
+
+    public static Test suite() {
+        TestSuite suite = new TestSuite(TransportFactoryTest.class);
+        return suite;
     }
 
     protected void setUp() throws Exception {

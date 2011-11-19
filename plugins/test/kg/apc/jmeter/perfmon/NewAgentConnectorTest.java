@@ -3,7 +3,7 @@ package kg.apc.jmeter.perfmon;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import kg.apc.emulators.DatagramChannelEmul;
-import kg.apc.perfmon.client.NIOTransport;
+import kg.apc.perfmon.client.Transport;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,8 +15,44 @@ import org.junit.Test;
  * @author undera
  */
 public class NewAgentConnectorTest {
+
+    private static class TransportEmul implements Transport {
+
+        public TransportEmul() {
+        }
+
+        public void disconnect() {
+        }
+
+        public String[] readMetrics() {
+            return new String[0];
+        }
+
+        public String readln() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public void setInterval(long interval) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public void shutdownAgent() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public void startWithMetrics(String[] metricsArray) throws IOException {
+        }
+
+        public boolean test() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        public void writeln(String line) throws IOException {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }
     private DatagramChannelEmul channel;
-    private NIOTransport transport;
+    private Transport transport;
 
     private static class Gen implements PerfMonSampleGenerator {
 
@@ -51,9 +87,8 @@ public class NewAgentConnectorTest {
     @Before
     public void setUp() throws IOException {
         instance = new NewAgentConnector();
-        channel=(DatagramChannelEmul) DatagramChannelEmul.open();
-        transport=new NIOTransport();
-        transport.setChannels(channel, channel);
+        channel = (DatagramChannelEmul) DatagramChannelEmul.open();
+        transport = new TransportEmul();
         instance.setTransport(transport);
     }
 

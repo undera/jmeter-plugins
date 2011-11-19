@@ -1,8 +1,8 @@
 package kg.apc.jmeter.perfmon;
 
-import kg.apc.perfmon.client.NIOTransport;
 import java.io.IOException;
 import kg.apc.perfmon.PerfMonMetricGetter;
+import kg.apc.perfmon.client.Transport;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -13,11 +13,11 @@ import org.apache.log.Logger;
 public class NewAgentConnector implements PerfMonAgentConnector {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    protected NIOTransport transport;
+    protected Transport transport;
     private String metricsStr;
     private String[] metricLabels;
 
-    public void setTransport(NIOTransport atransport) {
+    public void setTransport(Transport atransport) {
         transport = atransport;
     }
 
@@ -44,6 +44,8 @@ public class NewAgentConnector implements PerfMonAgentConnector {
         try {
             collector.generateSample(Double.parseDouble(data[0]), metricLabels[0]);
         } catch (NumberFormatException e) {
+            collector.generateErrorSample(metricLabels[0], e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
             collector.generateErrorSample(metricLabels[0], e.getMessage());
         }
     }

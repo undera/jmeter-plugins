@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import kg.apc.perfmon.client.NIOTransport;
+import kg.apc.perfmon.client.Transport;
 import kg.apc.perfmon.client.TransportFactory;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -222,11 +222,13 @@ public class PerfMonCollector
 
     protected PerfMonAgentConnector getConnector(String host, int port) throws IOException {
         try {
-            NIOTransport transport = TransportFactory.getTransport(new InetSocketAddress(host, port));
+            log.debug("Trying new connector");
+            Transport transport = TransportFactory.getTransport(new InetSocketAddress(host, port));
             NewAgentConnector conn = new NewAgentConnector();
             conn.setTransport(transport);
             return conn;
         } catch (IOException e) {
+            log.debug("Using old connector");
             return new OldAgentConnector(host, port);
         }
     }

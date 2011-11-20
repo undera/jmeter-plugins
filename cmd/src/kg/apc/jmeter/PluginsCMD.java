@@ -62,7 +62,7 @@ public class PluginsCMD extends AbstractCMDTool {
         }
 
         if (tool == null) {
-            throw new IllegalArgumentException("No suitable tool mode provided in params");
+            throw new IllegalArgumentException("No suitable tool class provided in params");
         }
 
         while (args.hasPrevious()) {

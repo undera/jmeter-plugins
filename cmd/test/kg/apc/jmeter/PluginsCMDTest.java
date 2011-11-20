@@ -3,8 +3,6 @@ package kg.apc.jmeter;
 
 import java.io.PrintStream;
 import java.util.ListIterator;
-import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -27,7 +25,7 @@ public class PluginsCMDTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        TestJMeterUtils.createJmeterEnv();
+       // TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
@@ -36,7 +34,7 @@ public class PluginsCMDTest {
 
     @Before
     public void setUp() {
-        JMeterUtils.setJMeterHome(basedir);
+        //JMeterUtils.setJMeterHome(basedir);
     }
 
     @After

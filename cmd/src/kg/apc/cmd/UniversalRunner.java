@@ -24,47 +24,67 @@ public final class UniversalRunner {
     /** The class loader to use for loading JMeter classes. */
     private static final DynamicClassLoader loader;
     /** The directory JMeter is installed in. */
-    private static final String jmDir;
+    private static final String jarDirectory;
 
     static {
         //System.setProperty("user.dir", new File(System.getProperty("user.dir")).getParent());
         List<URL> jars = new LinkedList<URL>();
         final String initial_classpath = System.getProperty(JAVA_CLASS_PATH);
+        jarDirectory = getJarDirectory(initial_classpath);
 
+        // Add standard jar locations to initial classpath
+        StringBuilder classpath = buildUpdatedClassPath(jars);
+        System.err.println(classpath.toString());
+
+        // ClassFinder needs the classpath
+        System.setProperty(JAVA_CLASS_PATH, initial_classpath + classpath.toString() + ":");
+        loader = new DynamicClassLoader(jars.toArray(new URL[0]));
+    }
+
+    protected static String getJarDirectory(final String initial_classpath) {
         // Find JMeter home dir from the initial classpath
         String tmpDir = null;
         StringTokenizer tok = new StringTokenizer(initial_classpath, File.pathSeparator);
+        //System.err.println("CP: "+initial_classpath);
         if (tok.countTokens() == 1
                 || (tok.countTokens() == 2 // Java on Mac OS can add a second entry to the initial classpath
                 && OS_NAME_LC.startsWith("mac os x")// $NON-NLS-1$
                 )) {
             File jar = new File(tok.nextToken());
             try {
-                tmpDir = jar.getCanonicalFile().getParentFile().getParent();
+                tmpDir = jar.getCanonicalFile().getParent();
+                //System.err.println("Can: "+tmpDir);
             } catch (IOException e) {
             }
         } else {// e.g. started from IDE with full classpath
             tmpDir = System.getProperty("jmeter.home", "");// Allow override $NON-NLS-1$ $NON-NLS-2$
             if (tmpDir.length() == 0) {
                 File userDir = new File(System.getProperty("user.dir"));// $NON-NLS-1$
-                tmpDir = userDir.getAbsoluteFile().getParent();
+                tmpDir = userDir.getAbsolutePath();
+                //System.err.println("User: "+tmpDir);
             }
         }
-        //jmDir=tmpDir;
+        return tmpDir;
+    }
 
-        jmDir = new File(tmpDir).getParent();
-
+    protected static StringBuilder buildUpdatedClassPath(List<URL> jars) {
+        StringBuilder classpath = new StringBuilder();
         /*
          * Does the system support UNC paths? If so, may need to fix them up
          * later
          */
         boolean usesUNC = OS_NAME_LC.startsWith("windows");// $NON-NLS-1$
 
-        // Add standard jar locations to initial classpath
-        StringBuilder classpath = new StringBuilder();
-        File[] libDirs = new File[]{new File(jmDir + File.separator + "lib"),// $NON-NLS-1$ $NON-NLS-2$
-            new File(jmDir + File.separator + "lib" + File.separator + "ext"),// $NON-NLS-1$ $NON-NLS-2$
-            new File(jmDir + File.separator + "lib" + File.separator + "junit")};// $NON-NLS-1$ $NON-NLS-2$
+
+        int count = jarDirectory.split(File.separator).length;
+        File[] libDirs = new File[count];
+        File f = new File(jarDirectory);
+        for (int n = 0; n < count; n++) {
+            libDirs[n] = f.getAbsoluteFile();
+            f = f.getParentFile();
+            //System.err.println(libDirs[n]);
+        }
+
         for (int a = 0; a < libDirs.length; a++) {
             File[] libJars = libDirs[a].listFiles(new FilenameFilter() {
 
@@ -93,15 +113,13 @@ public final class UniversalRunner {
                     jars.add(new File(s).toURI().toURL());// See Java bug 4496398
                     classpath.append(CLASSPATH_SEPARATOR);
                     classpath.append(s);
+                    System.err.println(s);
                 } catch (MalformedURLException e) {
                     e.printStackTrace(System.err);
                 }
             }
         }
-
-        // ClassFinder needs the classpath
-        System.setProperty(JAVA_CLASS_PATH, initial_classpath + classpath.toString());
-        loader = new DynamicClassLoader(jars.toArray(new URL[0]));
+        return classpath;
     }
 
     /**
@@ -140,13 +158,13 @@ public final class UniversalRunner {
     }
 
     /**
-     * Get the directory where JMeter is installed. This is the absolute path
+     * Get the directory where CMD jar is placed. This is the absolute path
      * name.
      *
      * @return the directory where JMeter is installed.
      */
     public static String getJMeterDir() {
-        return jmDir;
+        return jarDirectory;
     }
 
     /**
@@ -170,12 +188,12 @@ public final class UniversalRunner {
             }
         } catch (Throwable e) {
             if (e.getCause() != null) {
-                System.err.println("ERROR: " + e.getCause().getMessage());
+                System.err.println("ERROR: " + e.getCause().toString());
                 System.err.println("Technical details:");
-                System.err.println("JMeter home directory was detected as: " + jmDir);
+                System.err.println("Home directory was detected as: " + jarDirectory);
                 throw e.getCause();
             } else {
-                System.err.println("JMeter home directory was detected as: " + jmDir);
+                System.err.println("Home directory was detected as: " + jarDirectory);
                 throw e;
             }
         }

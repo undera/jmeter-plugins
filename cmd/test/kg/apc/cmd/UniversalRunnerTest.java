@@ -1,8 +1,8 @@
 package kg.apc.cmd;
 
 import java.net.MalformedURLException;
-import org.apache.jmeter.util.JMeterUtils;
 import java.net.URL;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -29,7 +29,7 @@ public class UniversalRunnerTest {
 
     @Before
     public void setUp() {
-        JMeterUtils.setJMeterHome("");
+       // JMeterUtils.setJMeterHome("");
     }
 
     @After
@@ -84,5 +84,33 @@ public class UniversalRunnerTest {
         System.out.println("addURL");
         URL url = null;
         UniversalRunner.addURL(url);
+    }
+
+    /**
+     * Test of getJarDirectory method, of class UniversalRunner.
+     */
+    @Test
+    public void testGetJarDirectory() {
+        System.out.println("getJarDirectory");
+        String initial_classpath = "";
+        String expResult = "";
+        String result = UniversalRunner.getJarDirectory(initial_classpath);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of buildUpdatedClassPath method, of class UniversalRunner.
+     */
+    @Test
+    public void testBuildUpdatedClassPath() {
+        System.out.println("buildUpdatedClassPath");
+        List<URL> jars = null;
+        StringBuilder expResult = null;
+        StringBuilder result = UniversalRunner.buildUpdatedClassPath(jars);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

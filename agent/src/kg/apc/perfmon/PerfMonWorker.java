@@ -1,4 +1,4 @@
-// FIXME: both this class and getter is shit because of poor TCP/udp abstraction. Refactor it!
+// FIXME: both this class and getter is ugly because of poor TCP/udp abstraction. Refactor it!
 package kg.apc.perfmon;
 
 import java.io.IOException;
@@ -71,9 +71,9 @@ public class PerfMonWorker implements Runnable {
             throw new IOException("Nothing to do with this settings");
         }
 
-        log.debug("Selecting incoming");
+        //log.debug("Selecting incoming");
         this.acceptSelector.select();
-        log.debug("Selected incoming");
+        //log.debug("Selected incoming");
 
         // wakeup to work on selected keys
         Iterator keys = this.acceptSelector.selectedKeys().iterator();
@@ -233,9 +233,9 @@ public class PerfMonWorker implements Runnable {
     }
 
     private void processSenders() throws IOException {
-        log.debug("Selecting senders");
+        //log.debug("Selecting senders");
         sendSelector.select(getInterval());
-        log.debug("Selected senders");
+        //log.debug("Selected senders");
 
         long begin = System.currentTimeMillis();
 

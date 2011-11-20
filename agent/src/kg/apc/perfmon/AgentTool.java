@@ -6,6 +6,7 @@ import java.util.ListIterator;
 import kg.apc.jmeter.AbstractCMDTool;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.apache.log.Priority;
 
 /**
  *
@@ -16,6 +17,7 @@ public class AgentTool extends AbstractCMDTool {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     protected int processParams(ListIterator args) throws UnsupportedOperationException, IllegalArgumentException {
+        LoggingManager.setPriority(Priority.INFO);
         PerfMonWorker worker;
         try {
             worker = getWorker();

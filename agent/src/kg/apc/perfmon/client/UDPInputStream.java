@@ -14,7 +14,7 @@ class UDPInputStream extends InputStream {
 
     private final DatagramSocket socket;
     private final DatagramPacket packet;
-    private ByteBuffer data=ByteBuffer.allocateDirect(0);
+    private ByteBuffer data;
 
     public UDPInputStream(DatagramSocket sock) {
         socket = sock;
@@ -24,12 +24,14 @@ class UDPInputStream extends InputStream {
     }
 
     public int read() throws IOException {
-        if (!data.hasRemaining()) {
+        if (data == null) {
             socket.receive(packet);
-            data = ByteBuffer.wrap(packet.getData());
+            byte[] packetData = packet.getData();
+            data = ByteBuffer.wrap(packetData, packet.getOffset(), packet.getLength());
         }
 
-        if (!data.hasRemaining()) {
+        if (data.position() >= data.limit()) {
+            data = null;
             return -1;
         } else {
             return data.get();

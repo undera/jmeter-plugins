@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.net.SocketException;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SocketChannel;
 import org.apache.jorphan.logging.LoggingManager;
@@ -24,7 +23,7 @@ public class TransportFactory {
             log.debug("Connecting UDP");
             trans = UDPInstance(addr);
             if (!trans.test()) {
-                throw new IOException();
+                throw new IOException("Agent is unreachable via UDP");
             }
             return trans;
         } catch (IOException e) {
@@ -33,7 +32,7 @@ public class TransportFactory {
                 log.debug("Connecting TCP");
                 trans = TCPInstance(addr);
                 if (!trans.test()) {
-                    throw new IOException();
+                    throw new IOException("Agent is unreachable via TCP");
                 }
                 return trans;
             } catch (IOException ex) {

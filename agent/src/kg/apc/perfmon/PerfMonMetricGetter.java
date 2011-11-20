@@ -106,6 +106,7 @@ public class PerfMonMetricGetter {
         }
         res.append(NEWLINE);
 
+        log.debug("Metrics line: "+res.toString());
         return (ByteBuffer.wrap(res.toString().getBytes()));
     }
 

@@ -36,7 +36,7 @@ public class TransportFactoryTest extends TestCase {
      */
     public void testGetTransport() throws Exception {
         System.out.println("getTransport");
-        SocketAddress addr = new InetSocketAddress("localhost", 4444);
+        SocketAddress addr = new InetSocketAddress("localhost", 4445);
         try {
             Transport result = TransportFactory.getTransport(addr);
             fail();
@@ -49,7 +49,7 @@ public class TransportFactoryTest extends TestCase {
      */
     public void testUDPInstance() throws Exception {
         System.out.println("UDPInstance");
-        SocketAddress addr = new InetSocketAddress("localhost", 4444);
+        SocketAddress addr = new InetSocketAddress("localhost", 4445);
         Transport result = TransportFactory.UDPInstance(addr);
         assertEquals(false, result.test());
     }
@@ -59,7 +59,7 @@ public class TransportFactoryTest extends TestCase {
      */
     public void testTCPInstance() throws Exception {
         System.out.println("TCPInstance");
-        SocketAddress addr = new InetSocketAddress("localhost", 4444);
+        SocketAddress addr = new InetSocketAddress("localhost", 4445);
         try {
             Transport result = TransportFactory.TCPInstance(addr);
             fail();
@@ -72,7 +72,7 @@ public class TransportFactoryTest extends TestCase {
      */
     public void testNIOUDPInstance() throws Exception {
         System.out.println("NIOUDPInstance");
-        SocketAddress addr = new InetSocketAddress("localhost", 4444);
+        SocketAddress addr = new InetSocketAddress("localhost", 4445);
         Transport result = TransportFactory.NIOUDPInstance(addr);
         assertNotNull(result);
     }
@@ -82,11 +82,21 @@ public class TransportFactoryTest extends TestCase {
      */
     public void testNIOTCPInstance() throws Exception {
         System.out.println("NIOTCPInstance");
-        SocketAddress addr = new InetSocketAddress("localhost", 4444);
+        SocketAddress addr = new InetSocketAddress("localhost", 4445);
         try {
             Transport result = TransportFactory.NIOTCPInstance(addr);
             fail();
         } catch (ConnectException e) {
         }
+    }
+
+    public void testAll() throws Exception {
+        Transport trans = TransportFactory.getTransport(new InetSocketAddress("localhost", 4444));
+        assertTrue(trans.test());
+        trans.writeln("metrics: cpu\n");
+        String res=trans.readln();
+        assertNotNull(res);
+        assertTrue(Double.parseDouble(res)>0);
+        trans.disconnect();
     }
 }

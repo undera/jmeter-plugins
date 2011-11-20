@@ -3,6 +3,7 @@ package kg.apc.perfmon.client;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import kg.apc.perfmon.PerfMonMetricGetter;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -29,8 +30,9 @@ class StreamTransport extends AbstractTransport {
         int nlCount = 0;
         int b;
         try {
-            while ((b = is.read()) > 0) {
+            while ((b = is.read()) >= 0) {
                 pos.write(b);
+                if (b=='\n') nlCount++;
             }
             return getNextLine(nlCount);
         } catch (IOException ex) {
@@ -40,6 +42,6 @@ class StreamTransport extends AbstractTransport {
     }
 
     public void writeln(String line) throws IOException {
-        os.write(line.getBytes());
+        os.write(line.concat(PerfMonMetricGetter.NEWLINE).getBytes());
     }
 }

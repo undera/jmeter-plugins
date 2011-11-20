@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import kg.apc.perfmon.client.Transport;
 import kg.apc.perfmon.client.TransportFactory;
 import org.apache.jmeter.gui.GuiPackage;
@@ -33,7 +35,7 @@ public class PerfMonCollector
     public static final String DATA_PROPERTY = "metricConnections";
     private int interval;
     private Thread workerThread;
-    private PerfMonAgentConnector[] connectors = null;
+    private Map<Object, PerfMonAgentConnector> connectors = new HashMap<Object, PerfMonAgentConnector>();
     private HashMap<String, Long> oldValues = new HashMap<String, Long>();
     private static String autoFileBaseName = null;
     private static int counter = 0;
@@ -134,51 +136,77 @@ public class PerfMonCollector
     private void initiateConnectors() {
         oldValues.clear();
         JMeterProperty prop = getMetricSettings();
-        connectors = new PerfMonAgentConnector[0];
+        connectors.clear();
         if (!(prop instanceof CollectionProperty)) {
             log.warn("Got unexpected property: " + prop);
             return;
         }
         CollectionProperty rows = (CollectionProperty) prop;
 
-        connectors = new PerfMonAgentConnector[rows.size()];
-
-        for (int i = 0; i < connectors.length; i++) {
+        for (int i = 0; i < rows.size(); i++) {
             ArrayList<Object> row = (ArrayList<Object>) rows.get(i).getObjectValue();
             String host = ((JMeterProperty) row.get(0)).getStringValue();
             int port = ((JMeterProperty) row.get(1)).getIntValue();
             String metric = ((JMeterProperty) row.get(2)).getStringValue();
             String params = ((JMeterProperty) row.get(3)).getStringValue();
+            initiateConnector(host, port, i, metric, params);
+        }
+    }
 
-            try {
+    private void initiateConnector(String host, int port, int index, String metric, String params) {
+        InetSocketAddress addr = new InetSocketAddress(host, port);
+        String stringKey = addr.toString() + "#" + index;
+        String label = host + ":" + port + " " + metric + " " + params;
+        try {
+            if (connectors.containsKey(addr)) {
+                connectors.get(addr).addMetric(metric, params, label);
+            } else {
                 PerfMonAgentConnector connector = getConnector(host, port);
-                connector.setMetricType(metric);
-                connector.setParams(params);
-
+                connector.addMetric(metric, params, label);
                 connector.connect();
-                connectors[i] = connector;
-            } catch (IOException e) {
-                log.error("Problems creating connector", e);
-                connectors[i] = new UnavailableAgentConnector(e);
+
+                if (connector instanceof OldAgentConnector) {
+                    connectors.put(stringKey, connector);
+                } else {
+                    connectors.put(addr, connector);
+                }
             }
+        } catch (IOException e) {
+            log.error("Problems creating connector", e);
+            connectors.put(stringKey, new UnavailableAgentConnector(e));
+        }
+    }
+
+    protected PerfMonAgentConnector getConnector(String host, int port) throws IOException {
+        try {
+            log.debug("Trying new connector");
+            Transport transport = TransportFactory.getTransport(new InetSocketAddress(host, port));
+            NewAgentConnector conn = new NewAgentConnector();
+            conn.setTransport(transport);
+            return conn;
+        } catch (IOException e) {
+            log.debug("Using old connector");
+            return new OldAgentConnector(host, port);
         }
     }
 
     private void shutdownConnectors() {
-        for (int i = 0; i < connectors.length; i++) {
-            if (connectors[i] != null) {
-                connectors[i].disconnect();
-            }
+        Iterator<PerfMonAgentConnector> it = connectors.values().iterator();
+        while (it.hasNext()) {
+            it.next().disconnect();
         }
     }
 
     private void processConnectors() {
-        for (int i = 0; i < connectors.length; i++) {
+        Iterator<Object> it = connectors.keySet().iterator();
+        while (it.hasNext()) {
+            Object key = it.next();
+            PerfMonAgentConnector connector = connectors.get(key);
             try {
-                connectors[i].generateSamples(this);
+                connector.generateSamples(this);
             } catch (IOException e) {
                 log.error(e.getMessage());
-                connectors[i] = new UnavailableAgentConnector(e);
+                connectors.put(key, new UnavailableAgentConnector(e));
             }
         }
     }
@@ -218,18 +246,5 @@ public class PerfMonCollector
         }
         oldValues.put(label1, new Long(values[0]));
         oldValues.put(label2, new Long(values[1]));
-    }
-
-    protected PerfMonAgentConnector getConnector(String host, int port) throws IOException {
-        try {
-            log.debug("Trying new connector");
-            Transport transport = TransportFactory.getTransport(new InetSocketAddress(host, port));
-            NewAgentConnector conn = new NewAgentConnector();
-            conn.setTransport(transport);
-            return conn;
-        } catch (IOException e) {
-            log.debug("Using old connector");
-            return new OldAgentConnector(host, port);
-        }
     }
 }

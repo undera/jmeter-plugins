@@ -8,13 +8,11 @@ import java.io.IOException;
  */
 public interface PerfMonAgentConnector {
 
-    public void setMetricType(String metric);
-
-    public void setParams(String params);
-
     public void connect() throws IOException;
 
     public void disconnect();
 
     public void generateSamples(PerfMonSampleGenerator collector) throws IOException;
+
+    public void addMetric(String metric, String params, String label);
 }

@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author undera
  */
 public class PerfMonAgentConnectorTest {
-    
+
     public PerfMonAgentConnectorTest() {
     }
 
@@ -23,35 +23,13 @@ public class PerfMonAgentConnectorTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
-    }
-
-    /**
-     * Test of setMetricType method, of class PerfMonAgentConnector.
-     */
-    @Test
-    public void testSetMetricType() {
-        System.out.println("setMetricType");
-        String metric = "";
-        PerfMonAgentConnector instance = new PerfMonAgentConnectorImpl();
-        instance.setMetricType(metric);
-    }
-
-    /**
-     * Test of setParams method, of class PerfMonAgentConnector.
-     */
-    @Test
-    public void testSetParams() {
-        System.out.println("setParams");
-        String params = "";
-        PerfMonAgentConnector instance = new PerfMonAgentConnectorImpl();
-        instance.setParams(params);
     }
 
     /**
@@ -105,5 +83,20 @@ public class PerfMonAgentConnectorTest {
 
         public void generateSamples(PerfMonSampleGenerator collector) throws IOException {
         }
+
+        public void addMetric(String metric, String params, java.lang.String label) {
+        }
+    }
+
+    /**
+     * Test of addMetric method, of class PerfMonAgentConnector.
+     */
+    @Test
+    public void testAddMetric() {
+        System.out.println("addMetric");
+        String metric = "";
+        String params = "";
+        PerfMonAgentConnector instance = new PerfMonAgentConnectorImpl();
+        instance.addMetric(metric, params, null);
     }
 }

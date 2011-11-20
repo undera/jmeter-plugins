@@ -71,26 +71,6 @@ public class OldAgentConnectorTest {
     }
 
     /**
-     * Test of setMetricType method, of class OldAgentConnector.
-     */
-    @Test
-    public void testSetMetricType() {
-        System.out.println("setMetricType");
-        String metric = "";
-        instance.setMetricType(metric);
-    }
-
-    /**
-     * Test of setParams method, of class OldAgentConnector.
-     */
-    @Test
-    public void testSetParams() {
-        System.out.println("setParams");
-        String params = "";
-        instance.setParams(params);
-    }
-
-    /**
      * Test of connect method, of class OldAgentConnector.
      */
     @Test
@@ -135,5 +115,16 @@ public class OldAgentConnectorTest {
         is.setBytesToRead("test\n1\n");
         instance.connect();
         instance.generateSamples(collector);
+    }
+
+    /**
+     * Test of addMetric method, of class OldAgentConnector.
+     */
+    @Test
+    public void testAddMetric() {
+        System.out.println("addMetric");
+        String metric = "";
+        String params = "";
+        instance.addMetric(metric, params, null);
     }
 }

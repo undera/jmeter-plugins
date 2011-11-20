@@ -16,6 +16,7 @@ public class OldAgentConnector implements PerfMonAgentConnector {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static boolean isTranslate = false;
     AgentConnector connector;
+    private boolean metricWasSet = false;
 
     static {
         String cfgTranslateHostName = JMeterUtils.getProperty("jmeterPlugin.perfmon.translateHostName");
@@ -26,14 +27,6 @@ public class OldAgentConnector implements PerfMonAgentConnector {
 
     public OldAgentConnector(String host, int port) {
         connector = new AgentConnector(host, port);
-    }
-
-    public void setMetricType(String metric) {
-        connector.setMetricType(metric);
-    }
-
-    public void setParams(String params) {
-        log.debug("Old agent don't support params: " + params);
     }
 
     public void connect() throws IOException {
@@ -81,5 +74,14 @@ public class OldAgentConnector implements PerfMonAgentConnector {
             default:
                 throw new IOException("Unknown metric index: " + connector.getMetricType());
         }
+    }
+
+    // TODO: label currently ignored - maybe use it instead of calculated?
+    public void addMetric(String metric, String params, String label) {
+        if (metricWasSet) {
+            throw new RuntimeException("Old connector don't support multiple metrics");
+        }
+        metricWasSet = true;
+        connector.setMetricType(metric);
     }
 }

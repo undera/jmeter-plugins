@@ -40,4 +40,8 @@ class UnavailableAgentConnector implements PerfMonAgentConnector {
     public void generateSamples(PerfMonSampleGenerator collector) throws IOException {
         collector.generateErrorSample(getLabel(false), cause.toString());
     }
+
+    public void addMetric(String metric, String params, String label) {
+        log.debug("Dropped addMetric call");
+    }
 }

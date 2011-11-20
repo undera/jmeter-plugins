@@ -50,6 +50,13 @@ public class NewAgentConnectorTest {
         public void writeln(String line) throws IOException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
+
+        public String getAddressLabel() {
+            return "label";
+        }
+
+        public void setAddressLabel(String label) {
+        }
     }
     private DatagramChannelEmul channel;
     private Transport transport;
@@ -97,26 +104,6 @@ public class NewAgentConnectorTest {
     }
 
     /**
-     * Test of setMetricType method, of class NewAgentConnector.
-     */
-    @Test
-    public void testSetMetricType() {
-        System.out.println("setMetricType");
-        String metric = "";
-        instance.setMetricType(metric);
-    }
-
-    /**
-     * Test of setParams method, of class NewAgentConnector.
-     */
-    @Test
-    public void testSetParams() {
-        System.out.println("setParams");
-        String params = "";
-        instance.setParams(params);
-    }
-
-    /**
      * Test of connect method, of class NewAgentConnector.
      */
     @Test
@@ -142,7 +129,6 @@ public class NewAgentConnectorTest {
         System.out.println("generateSamples");
         PerfMonSampleGenerator collector = new Gen();
         channel.setBytesToRead(ByteBuffer.wrap("0.123\n".getBytes()));
-        instance.setMetricType("test");
         instance.generateSamples(collector);
     }
 
@@ -151,7 +137,6 @@ public class NewAgentConnectorTest {
         System.out.println("generateSamples");
         PerfMonSampleGenerator collector = new Gen();
         channel.setBytesToRead(ByteBuffer.wrap("".getBytes()));
-        instance.setMetricType("test");
         instance.generateSamples(collector);
     }
 
@@ -160,5 +145,26 @@ public class NewAgentConnectorTest {
         PerfMonSampleGenerator collector = new Gen();
         channel.setBytesToRead(ByteBuffer.wrap("0.123  3424\n".getBytes()));
         instance.generateSamples(collector);
+    }
+
+    /**
+     * Test of setTransport method, of class NewAgentConnector.
+     */
+    @Test
+    public void testSetTransport() {
+        System.out.println("setTransport");
+        Transport atransport = null;
+        instance.setTransport(atransport);
+    }
+
+    /**
+     * Test of addMetric method, of class NewAgentConnector.
+     */
+    @Test
+    public void testAddMetric() {
+        System.out.println("addMetric");
+        String metric = "";
+        String params = "";
+        instance.addMetric(metric, params, null);
     }
 }

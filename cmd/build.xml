@@ -87,9 +87,13 @@
             </condition>
         </fail>
            
+        <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/JMeterPluginsCMD.jar"		
+	      manifest="src/kg/apc/cmd/manifest.mf">
+            <fileset dir="${build.dir}/classes"/>		
+        </jar>
+        
         <copy todir="${jmeter.lib.ext}">
-            <fileset dir="${dist.dir}" includes="*.jar" />
-            <fileset dir="src/kg/apc/cmd" includes="JMeterPluginsCMD.*" />
+            <fileset dir="${dist.dir}" includes="JMeterPluginsCMD.jar" />
         </copy>
     </target>
 

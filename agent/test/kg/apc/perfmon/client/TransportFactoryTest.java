@@ -92,13 +92,13 @@ public class TransportFactoryTest extends TestCase {
 
     /*
     public void testAll() throws Exception {
-        Transport trans = TransportFactory.getTransport(new InetSocketAddress("localhost", 4444));
-        assertTrue(trans.test());
-        trans.writeln("metrics: cpu\n");
-        String res=trans.readln();
-        assertNotNull(res);
-        assertTrue(Double.parseDouble(res)>0);
-        trans.disconnect();
+    Transport trans = TransportFactory.getTransport(new InetSocketAddress("localhost", 4444));
+    assertTrue(trans.test());
+    trans.writeln("metrics: cpu\n");
+    String res=trans.readln();
+    assertNotNull(res);
+    assertTrue(Double.parseDouble(res)>0);
+    trans.disconnect();
     }
      * 
      */

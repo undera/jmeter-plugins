@@ -38,7 +38,7 @@ public class ExecMetricTest extends TestCase {
         instance.getValue(res);
         assertTrue(Double.parseDouble(res.toString()) > 0);
     }
-
+/*
     public void testGetValue2() throws Exception {
         System.out.println("getValue");
         StringBuilder res = new StringBuilder();
@@ -47,7 +47,7 @@ public class ExecMetricTest extends TestCase {
         instance.getValue(res);
         assertTrue(Double.parseDouble(res.toString()) > 0);
     }
-
+*/
     /**
      * Test of setParams method, of class ExecMetric.
      */

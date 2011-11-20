@@ -2,6 +2,7 @@ package kg.apc.cmd;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -29,7 +30,7 @@ public class UniversalRunnerTest {
 
     @Before
     public void setUp() {
-       // JMeterUtils.setJMeterHome("");
+        // JMeterUtils.setJMeterHome("");
     }
 
     @After
@@ -63,7 +64,7 @@ public class UniversalRunnerTest {
     public void testGetJMeterDir() {
         System.out.println("getJMeterDir");
         String result = UniversalRunner.getJMeterDir();
-        assertTrue(result.length()>0);
+        assertTrue(result.length() > 0);
     }
 
     /**
@@ -93,11 +94,8 @@ public class UniversalRunnerTest {
     public void testGetJarDirectory() {
         System.out.println("getJarDirectory");
         String initial_classpath = "";
-        String expResult = "";
         String result = UniversalRunner.getJarDirectory(initial_classpath);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -106,11 +104,8 @@ public class UniversalRunnerTest {
     @Test
     public void testBuildUpdatedClassPath() {
         System.out.println("buildUpdatedClassPath");
-        List<URL> jars = null;
-        StringBuilder expResult = null;
+        List<URL> jars = new ArrayList<URL>();
         StringBuilder result = UniversalRunner.buildUpdatedClassPath(jars);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result.toString());
     }
 }

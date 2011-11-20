@@ -2,6 +2,7 @@ package kg.apc.jmeter.samplers;
 
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
+import org.apache.jmeter.samplers.Interruptible;
 import org.apache.jmeter.samplers.SampleResult;
 
 /**
@@ -9,7 +10,7 @@ import org.apache.jmeter.samplers.SampleResult;
  * @author apc
  */
 public class DummySampler
-        extends AbstractSampler {
+        extends AbstractSampler implements Interruptible {
 
     public static final String IS_SUCCESSFUL = "SUCCESFULL";
     public static final String RESPONSE_CODE = "RESPONSE_CODE";
@@ -158,5 +159,10 @@ public class DummySampler
 
     public void setLatency(String time) {
         setProperty(LATENCY, time);
+    }
+
+    public boolean interrupt() {
+        Thread.currentThread().interrupt();
+        return true;
     }
 }

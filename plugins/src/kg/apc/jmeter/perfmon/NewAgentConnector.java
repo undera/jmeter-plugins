@@ -42,12 +42,14 @@ public class NewAgentConnector implements PerfMonAgentConnector {
     public void generateSamples(PerfMonSampleGenerator collector) throws IOException {
         String[] data = transport.readMetrics();
         for (int n = 0; n < data.length; n++) {
-            try {
-                collector.generateSample(Double.parseDouble(data[n]), metricLabels[n]);
-            } catch (NumberFormatException e) {
-                collector.generateErrorSample(metricLabels[n], e.toString());
-            } catch (ArrayIndexOutOfBoundsException e) {
-                collector.generateErrorSample(metricLabels[n], e.toString());
+            if (!data[n].isEmpty()) {
+                try {
+                    collector.generateSample(Double.parseDouble(data[n]), metricLabels[n]);
+                } catch (NumberFormatException e) {
+                    collector.generateErrorSample(metricLabels[n], e.toString());
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    collector.generateErrorSample(metricLabels[n], e.toString());
+                }
             }
         }
     }

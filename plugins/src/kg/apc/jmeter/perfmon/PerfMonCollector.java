@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
 import kg.apc.perfmon.client.Transport;
 import kg.apc.perfmon.client.TransportFactory;
 import org.apache.jmeter.gui.GuiPackage;
@@ -151,19 +152,29 @@ public class PerfMonCollector
             String params = ((JMeterProperty) row.get(3)).getStringValue();
             initiateConnector(host, port, i, metric, params);
         }
+
+        Iterator<Object> it = connectors.keySet().iterator();
+        while (it.hasNext()) {
+            Object key = it.next();
+            try {
+                connectors.get(key).connect();
+            } catch (IOException ex) {
+                log.error("Error connecting to agent", ex);
+                connectors.put(key, new UnavailableAgentConnector(ex));
+            }
+        }
     }
 
     private void initiateConnector(String host, int port, int index, String metric, String params) {
         InetSocketAddress addr = new InetSocketAddress(host, port);
         String stringKey = addr.toString() + "#" + index;
-        String label = host + ":" + port + " " + metric + " " + params;
+        String label = host + " " + metric + " " + params;
         try {
             if (connectors.containsKey(addr)) {
                 connectors.get(addr).addMetric(metric, params, label);
             } else {
                 PerfMonAgentConnector connector = getConnector(host, port);
                 connector.addMetric(metric, params, label);
-                connector.connect();
 
                 if (connector instanceof OldAgentConnector) {
                     connectors.put(stringKey, connector);

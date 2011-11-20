@@ -16,6 +16,7 @@ public abstract class AbstractTransport implements Transport {
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected final PipedOutputStream pos;
     protected final PipedInputStream pis;
+    private String label;
 
     public AbstractTransport() throws IOException {
         pos = new PipedOutputStream();
@@ -50,7 +51,7 @@ public abstract class AbstractTransport implements Transport {
         for (int n = 0; n < metricsArray.length; n++) {
             cmd += metricsArray[n] + PerfMonMetricGetter.TAB;
         }
-        log.info("Starting with metrics: " + cmd);
+        log.debug("Starting with metrics: " + cmd);
         writeln(cmd);
     }
 
@@ -94,5 +95,16 @@ public abstract class AbstractTransport implements Transport {
             str.append((char) b);
         }
         return "";
+    }
+
+    public String getAddressLabel() {
+        return label;
+    }
+
+    /**
+     * @param label the label to set
+     */
+    public void setAddressLabel(String label) {
+        this.label = label;
     }
 }

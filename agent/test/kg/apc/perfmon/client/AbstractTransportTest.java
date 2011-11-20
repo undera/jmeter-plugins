@@ -108,4 +108,23 @@ public class AbstractTransportTest extends TestCase {
         System.out.println("shutdownAgent");
         instance.shutdownAgent();
     }
+
+    /**
+     * Test of getAddressLabel method, of class AbstractTransport.
+     */
+    public void testGetAddressLabel() {
+        System.out.println("getAddressLabel");
+        String expResult = null;
+        String result = instance.getAddressLabel();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setAddressLabel method, of class AbstractTransport.
+     */
+    public void testSetAddressLabel() {
+        System.out.println("setAddressLabel");
+        String label = "";
+        instance.setAddressLabel(label);
+    }
 }

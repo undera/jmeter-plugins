@@ -1,4 +1,3 @@
-
 package kg.apc.perfmon.client;
 
 import java.io.IOException;
@@ -24,5 +23,11 @@ public interface Transport {
     boolean test();
 
     void writeln(String line) throws IOException;
-    
+
+    String getAddressLabel();
+
+    /**
+     * @param label the label to set
+     */
+    void setAddressLabel(String label);
 }

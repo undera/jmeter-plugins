@@ -141,5 +141,33 @@ public class TransportTest extends TestCase {
 
         public void writeln(String line) throws IOException {
         }
+
+        public String getAddressLabel() {
+            return "";
+        }
+
+        public void setAddressLabel(String label) {
+        }
+    }
+
+    /**
+     * Test of getAddressLabel method, of class Transport.
+     */
+    public void testGetAddressLabel() {
+        System.out.println("getAddressLabel");
+        Transport instance = new TransportImpl();
+        String expResult = "";
+        String result = instance.getAddressLabel();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setAddressLabel method, of class Transport.
+     */
+    public void testSetAddressLabel() {
+        System.out.println("setAddressLabel");
+        String label = "";
+        Transport instance = new TransportImpl();
+        instance.setAddressLabel(label);
     }
 }

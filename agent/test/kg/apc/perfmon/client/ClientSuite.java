@@ -22,8 +22,8 @@ public class ClientSuite extends TestCase {
         TestSuite suite = new TestSuite("ClientSuite");
         suite.addTest(NIOTransportTest.suite());
         suite.addTest(UDPInputStreamTest.suite());
-        suite.addTest(StreamTransportTest.suite());
         suite.addTest(UDPOutputStreamTest.suite());
+        suite.addTest(StreamTransportTest.suite());
         suite.addTest(TransportFactoryTest.suite());
         suite.addTest(TransportTest.suite());
         suite.addTest(AbstractTransportTest.suite());

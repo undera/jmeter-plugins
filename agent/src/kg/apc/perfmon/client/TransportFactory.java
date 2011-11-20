@@ -66,6 +66,7 @@ public class TransportFactory {
 
         StreamTransport trans = new StreamTransport();
         trans.setStreams(sock.getInputStream(), sock.getOutputStream());
+        trans.setAddressLabel(addr.toString());
         return trans;
     }
 
@@ -80,6 +81,7 @@ public class TransportFactory {
 
         StreamTransport trans = new StreamTransport();
         trans.setStreams(new UDPInputStream(sock), new UDPOutputStream(sock));
+        trans.setAddressLabel(addr.toString());
         return trans;
     }
 }

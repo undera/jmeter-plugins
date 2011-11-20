@@ -36,7 +36,7 @@ public class PluginsCMD extends AbstractCMDTool {
             String arg = (String) args.next();
             if (arg.equals("-?") || arg.equals("--help")) {
                 showHelp(System.out);
-                // fixme: how to show help for the tool?
+                // FIXME: how to show help for the tool?
                 return 0;
             } else if (arg.equals("--version")) {
                 showVersion(System.out);
@@ -73,7 +73,7 @@ public class PluginsCMD extends AbstractCMDTool {
         os.println("JMeter Plugins at Google Code Command-Line Tools");
         os.println("For help and support please visit http://code.google.com/p/jmeter-plugins/wiki/JMeterPluginsCMD");
         os.println("Usage:\n JMeterPluginsCMD "
-                + "--tool < Reporter | PerfMonAgent > [--help --version]");
+                + "--tool < Reporter | PerfMonAgent > [--help]");
 
         AbstractCMDTool tool;
         try {

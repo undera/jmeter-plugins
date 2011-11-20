@@ -1,4 +1,3 @@
-// TODO: cover all parameters
 package kg.apc.jmeter;
 
 import java.io.PrintStream;
@@ -16,11 +15,7 @@ import static org.junit.Assert.*;
  */
 public class PluginsCMDTest {
 
-    private String basedir;
-
     public PluginsCMDTest() {
-        String file = this.getClass().getResource("short.jtl").getPath();
-        basedir = file.substring(0, file.lastIndexOf("/"));
     }
 
     @BeforeClass

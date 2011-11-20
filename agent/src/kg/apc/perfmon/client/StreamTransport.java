@@ -32,11 +32,16 @@ class StreamTransport extends AbstractTransport {
         try {
             while ((b = is.read()) >= 0) {
                 pos.write(b);
-                if (b=='\n') nlCount++;
+                if (b == '\n') {
+                    nlCount++;
+                    return getNextLine(nlCount);
+                }
             }
-            return getNextLine(nlCount);
+            return "";
         } catch (IOException ex) {
-            log.error("Error reading next line", ex);
+            if (nlCount > 0) {
+                log.error("Error reading next line", ex);
+            }
             return "";
         }
     }

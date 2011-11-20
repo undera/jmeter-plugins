@@ -90,6 +90,7 @@ public class TransportFactoryTest extends TestCase {
         }
     }
 
+    /*
     public void testAll() throws Exception {
         Transport trans = TransportFactory.getTransport(new InetSocketAddress("localhost", 4444));
         assertTrue(trans.test());
@@ -99,4 +100,6 @@ public class TransportFactoryTest extends TestCase {
         assertTrue(Double.parseDouble(res)>0);
         trans.disconnect();
     }
+     * 
+     */
 }

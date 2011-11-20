@@ -34,7 +34,16 @@ public class ExecMetricTest extends TestCase {
         System.out.println("getValue");
         StringBuilder res = new StringBuilder();
         ExecMetric instance = new ExecMetric();
-        instance.setParams("echo 123");
+        instance.setParams("echo:123");
+        instance.getValue(res);
+        assertTrue(Double.parseDouble(res.toString()) > 0);
+    }
+
+    public void testGetValue2() throws Exception {
+        System.out.println("getValue");
+        StringBuilder res = new StringBuilder();
+        ExecMetric instance = new ExecMetric();
+        instance.setParams("/bin/sh:-c:uptime | cut -d ' ' -f 12 | cut -d ',' -f 1");
         instance.getValue(res);
         assertTrue(Double.parseDouble(res.toString()) > 0);
     }

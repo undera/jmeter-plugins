@@ -3,6 +3,7 @@ package kg.apc.perfmon.metrics;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.hyperic.sigar.SigarException;
@@ -14,23 +15,32 @@ import org.hyperic.sigar.SigarException;
 class ExecMetric extends AbstractPerfMonMetric {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private String command;
+    private String[] command;
 
     public ExecMetric() {
         super(null);
     }
 
     public void setParams(String string) {
-        command = string;
+        log.debug("Got command line: " + string);
+        command = string.split(":");
         super.setParams(string);
     }
 
     public void getValue(StringBuilder res) throws SigarException {
+
         try {
-            log.debug("Executing command: "+command);
-            Process p = Runtime.getRuntime().exec(command);
+            ProcessBuilder pb = new ProcessBuilder(Arrays.asList(command));
+
+            Process p = pb.start();
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            BufferedReader stdErr = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            String e;
+            while ((e = stdErr.readLine()) != null) {
+                log.error("Error: " + e);
+            }
 
             // read the output from the command
             String s, lastStr = "";

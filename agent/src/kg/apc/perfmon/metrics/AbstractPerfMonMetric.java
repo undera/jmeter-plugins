@@ -47,6 +47,7 @@ public abstract class AbstractPerfMonMetric {
         }
 
         metric.setParams(metricParams);
+        log.debug("Have metric object: "+metric.toString());
         return metric;
     }
 }

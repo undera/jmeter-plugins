@@ -29,6 +29,7 @@ public abstract class AbstractPerfMonMetric {
     abstract public void getValue(StringBuilder res) throws SigarException;
 
     public static AbstractPerfMonMetric createMetric(String metricType, String metricParams, SigarProxy sigarProxy) {
+        log.debug("Creating metric: " + metricType + " with params: " + metricParams);
         AbstractPerfMonMetric metric;
         try {
             if (metricType.equals("exec")) {

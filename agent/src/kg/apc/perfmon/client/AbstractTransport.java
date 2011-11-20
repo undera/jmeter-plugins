@@ -28,6 +28,7 @@ public abstract class AbstractTransport implements Transport {
     }
 
     public void setInterval(long interval) {
+        log.debug("Setting interval to " + interval);
         try {
             writeln("interval:" + interval);
         } catch (IOException ex) {
@@ -36,6 +37,7 @@ public abstract class AbstractTransport implements Transport {
     }
 
     public void shutdownAgent() {
+        log.info("Shutting down the agent");
         try {
             writeln("shutdown");
         } catch (IOException ex) {
@@ -48,6 +50,7 @@ public abstract class AbstractTransport implements Transport {
         for (int n = 0; n < metricsArray.length; n++) {
             cmd += metricsArray[n] + PerfMonMetricGetter.TAB;
         }
+        log.info("Starting with metrics: " + cmd);
         writeln(cmd);
     }
 

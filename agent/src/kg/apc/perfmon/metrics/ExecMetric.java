@@ -27,6 +27,7 @@ class ExecMetric extends AbstractPerfMonMetric {
 
     public void getValue(StringBuilder res) throws SigarException {
         try {
+            log.debug("Executing command: "+command);
             Process p = Runtime.getRuntime().exec(command);
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));

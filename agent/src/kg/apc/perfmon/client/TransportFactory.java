@@ -44,7 +44,6 @@ public class TransportFactory {
 
     public static Transport NIOUDPInstance(SocketAddress addr) throws IOException {
         DatagramChannel channel = DatagramChannel.open();
-        channel.socket().setSoTimeout(1000);
         channel.connect(addr);
 
         NIOTransport ret = new NIOTransport();
@@ -54,7 +53,6 @@ public class TransportFactory {
 
     public static Transport NIOTCPInstance(SocketAddress addr) throws IOException {
         SocketChannel channel = SocketChannel.open();
-        channel.socket().setSoTimeout(1000);
         channel.connect(addr);
         NIOTransport ret = new NIOTransport();
         ret.setChannels(channel, channel);
@@ -72,7 +70,7 @@ public class TransportFactory {
     }
 
     private static int getTimeout() {
-        return 1000;
+        return 2000;
     }
 
     public static Transport UDPInstance(SocketAddress addr) throws IOException {

@@ -32,7 +32,7 @@ class UDPInputStream extends InputStream {
 
         if (data.position() >= data.limit()) {
             data = null;
-            return -1;
+            return read();
         } else {
             return data.get();
         }

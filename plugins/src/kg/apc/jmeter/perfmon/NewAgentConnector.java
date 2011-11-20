@@ -31,6 +31,7 @@ public class NewAgentConnector implements PerfMonAgentConnector {
     }
 
     public void connect() throws IOException {
+        log.info(metricsStr);
         String[] m = {metricsStr};
         transport.startWithMetrics(m);
     }

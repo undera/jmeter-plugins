@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 // TODO: rows in settings should have color markers for better experience
+import java.util.List;
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -47,7 +49,7 @@ public class PerfMonGui
     private JTextArea errorTextArea;
     private JScrollPane errorPane;
     public static final String[] columnIdentifiers = new String[]{
-        "Host / IP", "Port", "Metric to collect", "(reserved field)"// "Metric parameter (see help)"
+        "Host / IP", "Port", "Metric to collect", "Metric parameter (see help)"
     };
     public static final Class[] columnClasses = new Class[]{
         String.class, String.class, String.class, String.class
@@ -156,7 +158,11 @@ public class PerfMonGui
         panel.add(scroll, BorderLayout.CENTER);
         panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
 
-        metricTypesBox = new JComboBox(AgentConnector.metrics.toArray());
+        List<String> items = new LinkedList<String>(AgentConnector.metrics);
+        // add metrics from new agent
+        items.add("EXEC");
+        items.add("TAIL");
+        metricTypesBox = new JComboBox(items.toArray());
         grid.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(metricTypesBox));
 
         return panel;

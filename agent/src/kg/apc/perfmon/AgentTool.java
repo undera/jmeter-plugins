@@ -33,6 +33,10 @@ public class AgentTool extends AbstractCMDTool {
                 }
 
                 worker.setTCPPort(Integer.parseInt((String) args.next()));
+            } else if (nextArg.equals("--loglevel")) {
+                args.remove();
+                String loglevelStr = (String) args.next();
+                LoggingManager.setPriority(loglevelStr);
             } else if (nextArg.equalsIgnoreCase("--metrics")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing metrics specification");

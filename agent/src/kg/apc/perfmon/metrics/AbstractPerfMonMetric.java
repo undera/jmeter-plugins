@@ -1,7 +1,9 @@
 package kg.apc.perfmon.metrics;
 
+import java.io.File;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.hyperic.sigar.ProcExe;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarProxy;
 
@@ -19,7 +21,34 @@ public abstract class AbstractPerfMonMetric {
     }
 
     protected long getPIDByProcName(String name, int index) {
-        return 0;
+        int procIndex = 0;
+        long[] list;
+        ProcExe proc;
+        try {
+            list = sigarProxy.getProcList();
+        } catch (SigarException ex) {
+            log.error("Failed to get process list", ex);
+            return -1;
+        }
+
+        for (int n = 0; n < list.length; n++) {
+            try {
+                proc = sigarProxy.getProcExe(list[n]);
+            } catch (SigarException e) {
+                log.debug("Can't get process exe for pid " + list[n], e);
+                continue;
+            }
+
+            // case insensitive match
+            String pname = proc.getName().toLowerCase();
+            if (pname.endsWith(File.separator + name.toLowerCase())) {
+                if (procIndex == index) {
+                    return list[n];
+                }
+                procIndex++;
+            }
+        }
+        return -1;
     }
 
     public void setParams(String params) {
@@ -47,7 +76,7 @@ public abstract class AbstractPerfMonMetric {
         }
 
         metric.setParams(metricParams);
-        log.debug("Have metric object: "+metric.toString());
+        log.debug("Have metric object: " + metric.toString());
         return metric;
     }
 }

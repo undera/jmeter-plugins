@@ -282,6 +282,10 @@ public class GraphPanelChart
         this(true, haveGUI);
     }
 
+    public GraphPanelChart() {
+        this(false);
+    }
+
     public boolean isModelContainsRow(AbstractGraphRow row) {
         return rows.containsKey(row.getLabel());
     }

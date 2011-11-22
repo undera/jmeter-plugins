@@ -12,6 +12,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.GraphPanelChart;
+import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -88,7 +89,7 @@ public class GraphPanel
     private void addGraphTab()
     {
         ImageIcon graphIcon = createImageIcon("/kg/apc/jmeter/img/graph.png");
-        graphPanelObject = new GraphPanelChart();
+        graphPanelObject = new GraphPanelChart(GuiPackage.getInstance() != null);
         graphPanelObject.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         graphTab = new JGraphPanel();
         graphTab.add(graphPanelObject, BorderLayout.CENTER);

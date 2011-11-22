@@ -37,13 +37,12 @@ public class ReporterTool extends AbstractCMDTool {
     }
 
     @Override
-    protected int processParams(ListIterator<String> args) throws UnsupportedOperationException, IllegalArgumentException {
+    protected int processParams(ListIterator args) throws UnsupportedOperationException, IllegalArgumentException {
 
         PluginsCMDWorker worker = new PluginsCMDWorker();
 
-
         while (args.hasNext()) {
-            String nextArg = args.next();
+            String nextArg = (String) args.next();
             log.debug("Arg: " + nextArg);
             if (nextArg.equalsIgnoreCase("--generate-png")) {
                 if (!args.hasNext()) {
@@ -51,104 +50,104 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 worker.addExportMode(PluginsCMDWorker.EXPORT_PNG);
-                worker.setOutputPNGFile(args.next());
+                worker.setOutputPNGFile((String) args.next());
             } else if (nextArg.equalsIgnoreCase("--generate-csv")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing CSV file name");
                 }
 
                 worker.addExportMode(PluginsCMDWorker.EXPORT_CSV);
-                worker.setOutputCSVFile(args.next());
+                worker.setOutputCSVFile((String) args.next());
             } else if (nextArg.equalsIgnoreCase("--input-jtl")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing input JTL file name");
                 }
 
-                worker.setInputFile(args.next());
+                worker.setInputFile((String) args.next());
             } else if (nextArg.equalsIgnoreCase("--plugin-type")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing plugin type");
                 }
 
-                worker.setPluginType(args.next());
+                worker.setPluginType((String) args.next());
             } else if (nextArg.equalsIgnoreCase("--width")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing width specification");
                 }
 
-                worker.setGraphWidth(Integer.parseInt(args.next()));
+                worker.setGraphWidth(Integer.parseInt((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--height")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing height specification");
                 }
 
-                worker.setGraphHeight(Integer.parseInt(args.next()));
+                worker.setGraphHeight(Integer.parseInt((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--aggregate-rows")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing aggregate flag");
                 }
 
-                worker.setAggregate(getLogicValue(args.next()));
+                worker.setAggregate(getLogicValue((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--paint-zeroing")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing zeroing flag");
                 }
 
-                worker.setZeroing(getLogicValue(args.next()));
+                worker.setZeroing(getLogicValue((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--relative-times")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing rel time flag");
                 }
 
-                worker.setRelativeTimes(getLogicValue(args.next()));
+                worker.setRelativeTimes(getLogicValue((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--paint-gradient")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing gradient flag");
                 }
 
-                worker.setGradient(getLogicValue(args.next()));
+                worker.setGradient(getLogicValue((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--prevent-outliers")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing outliers flag");
                 }
 
-                worker.setPreventOutliers(getLogicValue(args.next()));
+                worker.setPreventOutliers(getLogicValue((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--limit-rows")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing limit rows specification");
                 }
 
-                worker.setRowsLimit(Integer.parseInt(args.next()));
+                worker.setRowsLimit(Integer.parseInt((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--force-y")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing limit Y specification");
                 }
 
-                worker.setForceY(Integer.parseInt(args.next()));
+                worker.setForceY(Integer.parseInt((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--hide-low-counts")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing low counts specification");
                 }
 
-                worker.setHideLowCounts(Integer.parseInt(args.next()));
+                worker.setHideLowCounts(Integer.parseInt((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--granulation")) {
 
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing granulation specification");
                 }
 
-                worker.setGranulation(Integer.parseInt(args.next()));
+                worker.setGranulation(Integer.parseInt((String) args.next()));
             } else {
                 throw new UnsupportedOperationException("Unrecognized option: " + nextArg);
             }

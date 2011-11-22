@@ -50,28 +50,28 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
     private Collection<String> emptyCollection = new ArrayList<String>();
     private static final long serialVersionUID = 240L;
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private static final String USE_GROUP_NAME = "useGroupName"; 
-    private static final String SAVE_HEADERS = "saveHeaders"; 
+    private static final String USE_GROUP_NAME = "useGroupName";
+    private static final String SAVE_HEADERS = "saveHeaders";
     private static final String[] COLUMNS = {
-        "sampler_label", 
-        "aggregate_report_count", 
-        "average", 
-        "aggregate_report_median", 
-        "aggregate_report_90%_line", 
-        "aggregate_report_min", 
-        "aggregate_report_max", 
-        "aggregate_report_error%", 
-        "aggregate_report_rate", 
-        "aggregate_report_bandwidth"};  
-    private final String TOTAL_ROW_LABEL = JMeterUtils.getResString("aggregate_report_total_label");  
+        "sampler_label",
+        "aggregate_report_count",
+        "average",
+        "aggregate_report_median",
+        "aggregate_report_90%_line",
+        "aggregate_report_min",
+        "aggregate_report_max",
+        "aggregate_report_error%",
+        "aggregate_report_rate",
+        "aggregate_report_bandwidth"};
+    private final String TOTAL_ROW_LABEL = JMeterUtils.getResString("aggregate_report_total_label");
     private JTable myJTable;
     private JScrollPane myScrollPane;
     private final JButton saveTable =
-            new JButton(JMeterUtils.getResString("aggregate_graph_save_table"));            
+            new JButton(JMeterUtils.getResString("aggregate_graph_save_table"));
     private final JCheckBox saveHeaders = // should header be saved with the data?
-            new JCheckBox(JMeterUtils.getResString("aggregate_graph_save_table_header"), true);    
+            new JCheckBox(JMeterUtils.getResString("aggregate_graph_save_table_header"), true);
     private final JCheckBox useGroupName =
-            new JCheckBox(JMeterUtils.getResString("aggregate_graph_use_group_name"));            
+            new JCheckBox(JMeterUtils.getResString("aggregate_graph_use_group_name"));
     private transient ObjectTableModel statModel;
     private final Map<String, SamplingStatCalculator> tableRows =
             new ConcurrentHashMap<String, SamplingStatCalculator>();
@@ -81,17 +81,17 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         statModel = new ObjectTableModel(COLUMNS,
                 SamplingStatCalculator.class,
                 new Functor[]{
-                    new Functor("getLabel"), 
-                    new Functor("getCount"), 
-                    new Functor("getMeanAsNumber"), 
-                    new Functor("getMedian"), 
-                    new Functor("getPercentPoint", 
+                    new Functor("getLabel"),
+                    new Functor("getCount"),
+                    new Functor("getMeanAsNumber"),
+                    new Functor("getMedian"),
+                    new Functor("getPercentPoint",
                     new Object[]{new Float(.900)}),
-                    new Functor("getMin"), 
-                    new Functor("getMax"), 
-                    new Functor("getErrorPercentage"), 
-                    new Functor("getRate"), 
-                    new Functor("getKBPerSecond") 
+                    new Functor("getMin"),
+                    new Functor("getMax"),
+                    new Functor("getErrorPercentage"),
+                    new Functor("getRate"),
+                    new Functor("getKBPerSecond")
                 },
                 new Functor[]{null, null, null, null, null, null, null, null, null, null},
                 new Class[]{String.class, Long.class, Long.class, Long.class, Long.class,
@@ -99,13 +99,12 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         clearData();
         init();
     }
-    
+
     //do not insert this vizualiser in any JMeter menu
     @Override
     public Collection<String> getMenuCategories() {
         return emptyCollection;
     }
-    
     // Column renderers
     private static final TableCellRenderer[] RENDERERS =
             new TableCellRenderer[]{
@@ -121,10 +120,12 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         new NumberRenderer("#.0"), // pageSize   
     };
 
+    @Override
     public String getLabelResource() {
-        return "aggregate_report";  
+        return "aggregate_report";
     }
 
+    @Override
     public void add(SampleResult res) {
         SamplingStatCalculator row = null;
         final String sampleLabel = res.getSampleLabel(useGroupName.isSelected());
@@ -222,12 +223,16 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         return new FakeGraphPanelChart();
     }
 
-   @Override
-   public String getStaticLabel() {
-      return "Nobody never should not see this. No, no, no.";
-   }
+    @Override
+    public String getStaticLabel() {
+        return "Nobody never should not see this. No, no, no.";
+    }
 
     private class FakeGraphPanelChart extends GraphPanelChart {
+
+        public FakeGraphPanelChart() {
+            super(false);
+        }
 
         @Override
         public void saveGraphToCSV(File file) throws IOException {

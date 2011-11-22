@@ -14,42 +14,8 @@
     <taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
     
     <target name="test-with-coverage" 
-    depends="init,compile,compile-test,cobertura-instrument,test-for-coverage,cobertura-report"/>
+    depends="init,compile,compile-test,cobertura-instrument,-do-test-run,cobertura-report"/>
 
-    <target name="test-for-coverage">
-        <junit fork="yes" dir="${basedir}" failureProperty="test.failed" >
-	<!--
-		Specify the name of the coverage data file to use.
-		The value specified below is the default.
-	-->
-            <sysproperty key="net.sourceforge.cobertura.datafile"
-		file="build/coverage/cobertura.ser" />
-
-	<!--
-		Note the classpath order: instrumented classes are before the
-		original (uninstrumented) classes.  This is important.
-	-->
-            <classpath location="${instrumented.dir}" />
-            <classpath location="build/test/classes" />
-            <classpath path="/usr/share/java/junit.jar" />
-
-	<!--
-		The instrumented classes reference classes used by the
-		Cobertura runtime, so Cobertura and its dependencies
-		must be on your classpath.
-	-->
-            <classpath refid="cobertura.classpath" />
-
-            <formatter type="xml" />
-            <!-- <test name="${testcase}" todir="build" if="testcase" /> -->
-            <batchtest todir="build" unless="testcase">
-                <fileset dir="test">
-                    <include name="**/*Test.java" />
-                </fileset>
-            </batchtest>
-        </junit>    
-    </target>
-    
     <target name="cobertura-instrument" >
         <delete file="build/coverage/cobertura.ser" />
         <cobertura-instrument datafile="build/coverage/cobertura.ser">

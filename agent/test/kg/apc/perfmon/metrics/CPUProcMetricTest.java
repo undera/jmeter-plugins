@@ -24,6 +24,6 @@ public class CPUProcMetricTest extends TestCase {
         MetricParams params = MetricParams.createFromString("pid="+sigar.getPid(), sigar);
         CPUProcMetric instance = new CPUProcMetric(sigar, params);
         instance.getValue(res);
-        assertTrue(Double.parseDouble(res.toString()) > 0);
+        assertTrue(Double.parseDouble(res.toString()) >= 0);
     }
 }

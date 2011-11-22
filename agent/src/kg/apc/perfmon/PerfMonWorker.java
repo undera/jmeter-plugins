@@ -13,9 +13,9 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.channels.WritableByteChannel;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentHashMap;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.hyperic.sigar.Sigar;
@@ -39,7 +39,7 @@ public class PerfMonWorker implements Runnable {
     private final Selector sendSelector;
     private DatagramChannel udpServer;
     private final LinkedList tcpConnections = new LinkedList();
-    private final HashMap udpConnections = new HashMap();
+    private final ConcurrentHashMap udpConnections = new ConcurrentHashMap();
     private int interval = 1000;
     private final SigarProxy sigar;
 

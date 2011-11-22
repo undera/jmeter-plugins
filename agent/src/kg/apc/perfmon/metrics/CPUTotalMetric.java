@@ -42,7 +42,6 @@ class CPUTotalMetric extends AbstractCPUMetric {
 
     public void getValue(StringBuilder res) throws SigarException {
         CpuPerc cpu = sigarProxy.getCpuPerc();
-        sigarProxy.getCpuPercList();
         double val;
         switch (type) {
 
@@ -74,8 +73,8 @@ class CPUTotalMetric extends AbstractCPUMetric {
                 val = cpu.getWait();
                 break;
             default:
-                throw new SigarException("Unknown proc cpu type " + type);
+                throw new SigarException("Unknown proc total type " + type);
         }
-        res.append(Double.toString(100*val));
+        res.append(Double.toString(100 * val));
     }
 }

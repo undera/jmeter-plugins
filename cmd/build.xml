@@ -74,11 +74,15 @@
 
    <!-- APC: before making main jar we make cmd's jar -->
    
-    <target name="-post-jar">
-          <!-- APC: fore easy debugging environment we copy JmeterPlugins.jar,
-           JmeterPluginsCMD.jar and cmd scripts
+    <target name="-post-jar">           
+        <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/CMDRunner.jar"		
+	      manifest="src/kg/apc/cmd/manifest.mf">
+            <fileset dir="${build.dir}/classes"/>		
+        </jar>
+        
+          <!-- APC: for easy debugging environment we copy JAR
            to jmeter/lib/ext, defined by property jmeter.lib.ext
-           in project.properties files -->
+           in private.properties file -->
         <fail message="jmeter.lib.ext not available">
             <condition>
                 <not>
@@ -86,14 +90,17 @@
                 </not>
             </condition>
         </fail>
-           
-        <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/JMeterPluginsCMD.jar"		
-	      manifest="src/kg/apc/cmd/manifest.mf">
-            <fileset dir="${build.dir}/classes"/>		
-        </jar>
         
-        <copy todir="${jmeter.lib.ext}">
-            <fileset dir="${dist.dir}" includes="JMeterPluginsCMD.jar" />
+        <fail message="CMDRunner.jar not found">
+            <condition>
+                <not>
+                    <available file="${dist.dir}/CMDRunner.jar" />
+                </not>
+            </condition>
+        </fail>
+
+        <copy todir="${jmeter.lib.ext}" verbose="true" failonerror="true">
+            <fileset dir="${dist.dir}" includes="CMDRunner.jar" />
         </copy>
     </target>
 

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.cmd;
 
 import org.junit.After;
@@ -16,7 +12,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.cmd.DynamicClassLoaderTest.class, kg.apc.cmd.UniversalRunnerTest.class})
+@Suite.SuiteClasses({kg.apc.cmd.UniversalRunnerTest.class})
 public class CmdSuite {
 
     @BeforeClass
@@ -34,5 +30,4 @@ public class CmdSuite {
     @After
     public void tearDown() throws Exception {
     }
-    
 }

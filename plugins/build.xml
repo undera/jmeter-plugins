@@ -70,9 +70,14 @@
 
     <target name="-post-compile">
          <!-- SH: Copy Agent shared interface dependency, to have standalone plugins jar -->
+         <!-- APC: I removed id, because agent and plugins became pretty separate
+            projects and we'll need agent's jar with new agent. And cmd jar too.
+         -->
+         <!--
         <copy todir="${build.dir}/classes/kg/apc/jmeter/perfmon" >
             <fileset dir="${svn.dir}/../../agent/build/classes/kg/apc/jmeter/perfmon" includes="agent/AgentCommandsInterface.class"/>
         </copy>
+        -->
     </target>
 
    <!-- APC: I see no problems in making package always. It is quick enough now. -->

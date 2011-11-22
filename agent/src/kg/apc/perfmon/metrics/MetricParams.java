@@ -32,6 +32,8 @@ class MetricParams {
                 PID = getPIDByName(token, sigar);
             } else if (token.startsWith("pid=")) {
                 PID = getPIDByPID(token);
+            } else if (token.startsWith("ptql=")) {
+                PID = getPIDByPTQL(token, sigar);
             } else {
                 type = token;
             }
@@ -44,11 +46,12 @@ class MetricParams {
     }
 
     private static long getPIDByName(String token, SigarProxy sigar) {
-        long PID = 0;
+        long PID = -1;
         String name = token.substring(token.indexOf("=") + 1);
-        String[] parts = name.split("=");
+        String[] parts = name.split("#");
         try {
-            PID = getPIDByProcName(sigar, parts[0], Long.parseLong(parts[1]));
+            long index = parts.length > 1 ? Long.parseLong(parts[1]) : 0;
+            PID = getPIDByProcName(sigar, parts[0], index);
         } catch (ArrayIndexOutOfBoundsException e) {
             log.warn("Error processing token: " + token, e);
             PID = -1;
@@ -75,7 +78,17 @@ class MetricParams {
         return PID;
     }
 
-    public static long getPIDByProcName(SigarProxy sigar, String name, long index) {
+    private static long getPIDByPTQL(String token, SigarProxy sigar) {
+        String query = token.substring(token.indexOf("=") + 1);
+        try {
+            return sigar.getProcState(query).getPpid();
+        } catch (SigarException ex) {
+            log.warn("Error querying PTQL: " + query, ex);
+            return -1;
+        }
+    }
+
+    private static long getPIDByProcName(SigarProxy sigar, String name, long index) {
         int procIndex = 0;
         long[] list;
         ProcExe proc;

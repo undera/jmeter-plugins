@@ -41,6 +41,8 @@ public abstract class AbstractPerfMonMetric {
                 metric = AbstractCPUMetric.getMetric(sigarProxy, metricParams);
             } else if (metricType.equalsIgnoreCase("memory")) {
                 metric = AbstractMemMetric.getMetric(sigarProxy, metricParams);
+            } else if (metricType.equalsIgnoreCase("swap")) {
+                metric = new SwapTotalMetric(sigarProxy, metricParams);
             } else {
                 throw new SigarException("No SIGAR object for metric type " + metricType);
             }

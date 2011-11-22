@@ -15,7 +15,6 @@ abstract class AbstractMemMetric extends AbstractPerfMonMetric {
 
     public static AbstractMemMetric getMetric(SigarProxy sigar, String metricParams) {
         MetricParams params = MetricParams.createFromString(metricParams, sigar);
-
         if (params.PID >= 0) {
             return new MemProcMetric(sigar, params);
         } else {

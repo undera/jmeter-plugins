@@ -41,7 +41,6 @@ class MemTotalMetric extends AbstractMemMetric {
 
     public void getValue(StringBuilder res) throws SigarException {
         Mem mem = sigarProxy.getMem();
-        sigarProxy.getCpuPercList();
         double val;
         switch (type) {
 

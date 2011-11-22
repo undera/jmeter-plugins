@@ -2,44 +2,41 @@ package kg.apc.jmeter;
 
 import java.io.PrintStream;
 import java.util.ListIterator;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *
  * @author undera
  */
-public class PluginsCMDTest {
+public class PluginsCMDTest extends TestCase {
 
     public PluginsCMDTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-       // TestJMeterUtils.createJmeterEnv();
+    public static Test suite() {
+        TestSuite suite = new TestSuite(PluginsCMDTest.class);
+        return suite;
     }
 
-    @AfterClass
+    public static void setUpClass() throws Exception {
+        // TestJMeterUtils.createJmeterEnv();
+    }
+
     public static void tearDownClass() throws Exception {
     }
 
-    @Before
     public void setUp() {
         //JMeterUtils.setJMeterHome(basedir);
     }
 
-    @After
     public void tearDown() {
     }
 
     /**
      * Test of processParams method, of class PluginsCMD.
      */
-    @Test
     public void testProcessParams() {
         System.out.println("processParams");
         String[] args = null;
@@ -52,7 +49,6 @@ public class PluginsCMDTest {
     /**
      * Test of processParams method, of class PluginsCMD.
      */
-    @Test
     public void testProcessParams_StringArr() {
         System.out.println("processParams");
         String[] args = null;
@@ -65,10 +61,9 @@ public class PluginsCMDTest {
     /**
      * Test of processParams method, of class PluginsCMD.
      */
-    @Test
     public void testProcessParams_ListIterator() {
         System.out.println("processParams");
-        ListIterator<String> args = PluginsCMD.argsArrayToListIterator("-?".split(" "));
+        ListIterator args = PluginsCMD.argsArrayToListIterator("-?".split(" "));
         PluginsCMD instance = new PluginsCMD();
         int expResult = 0;
         int result = instance.processParams(args);
@@ -78,7 +73,6 @@ public class PluginsCMDTest {
     /**
      * Test of showHelp method, of class PluginsCMD.
      */
-    @Test
     public void testShowHelp() {
         System.out.println("showHelp");
         PrintStream os = System.out;
@@ -89,7 +83,6 @@ public class PluginsCMDTest {
     /**
      * Test of argsArrayToListIterator method, of class PluginsCMD.
      */
-    @Test
     public void testArgsArrayToListIterator() {
         System.out.println("argsArrayToListIterator");
         String[] args = "".split(" ");

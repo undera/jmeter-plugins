@@ -104,4 +104,6 @@
         </copy>
     </target>
 
+    <import file="coverage.xml"/>
+        
 </project>

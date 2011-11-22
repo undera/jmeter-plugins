@@ -1,42 +1,39 @@
 package kg.apc.cmd;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *
  * @author undera
  */
-public class UniversalRunnerTest {
+public class UniversalRunnerTest extends TestCase {
 
     public UniversalRunnerTest() {
     }
 
-    @BeforeClass
+    public static Test suite() {
+        TestSuite suite = new TestSuite(UniversalRunnerTest.class);
+        return suite;
+    }
+
     public static void setUpClass() throws Exception {
     }
 
-    @AfterClass
     public static void tearDownClass() throws Exception {
     }
 
-    @Before
     public void setUp() {
         // JMeterUtils.setJMeterHome("");
     }
 
-    @After
     public void tearDown() {
     }
 
     /**
      * Test of getJMeterDir method, of class NewDriver.
      */
-    @Test
     public void testGetJMeterDir() {
         System.out.println("getJMeterDir");
         String result = UniversalRunner.getJMeterDir();
@@ -46,7 +43,6 @@ public class UniversalRunnerTest {
     /**
      * Test of main method, of class NewDriver.
      */
-    @Test
     public void testMain() throws Throwable {
         System.out.println("main");
         String[] args = "--help".split(" ");

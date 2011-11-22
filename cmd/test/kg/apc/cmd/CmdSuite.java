@@ -1,33 +1,34 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package kg.apc.cmd;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *
  * @author undera
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.cmd.UniversalRunnerTest.class})
-public class CmdSuite {
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
+public class CmdSuite extends TestCase {
+    
+    public CmdSuite(String testName) {
+        super(testName);
     }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
+    
+    public static Test suite() {
+        TestSuite suite = new TestSuite("CmdSuite");
+        suite.addTest(UniversalRunnerTest.suite());
+        return suite;
     }
-
-    @Before
-    public void setUp() throws Exception {
+    
+    protected void setUp() throws Exception {
+        super.setUp();
     }
-
-    @After
-    public void tearDown() throws Exception {
+    
+    protected void tearDown() throws Exception {
+        super.tearDown();
     }
 }

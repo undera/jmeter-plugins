@@ -2,45 +2,42 @@ package kg.apc.jmeter;
 
 import java.io.PrintStream;
 import java.util.ListIterator;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *
  * @author undera
  */
-public class HelloWorldToolTest {
+public class HelloWorldToolTest extends TestCase {
 
     public HelloWorldToolTest() {
     }
 
-    @BeforeClass
+    public static Test suite() {
+        TestSuite suite = new TestSuite(HelloWorldToolTest.class);
+        return suite;
+    }
+
     public static void setUpClass() throws Exception {
     }
 
-    @AfterClass
     public static void tearDownClass() throws Exception {
     }
 
-    @Before
     public void setUp() {
     }
 
-    @After
     public void tearDown() {
     }
 
     /**
      * Test of processParams method, of class HelloWorldTool.
      */
-    @Test
     public void testProcessParams() {
         System.out.println("processParams");
-        ListIterator<String> args = null;
+        ListIterator args = null;
         HelloWorldTool instance = new HelloWorldTool();
         int expResult = 0;
         int result = instance.processParams(args);
@@ -50,7 +47,6 @@ public class HelloWorldToolTest {
     /**
      * Test of showHelp method, of class HelloWorldTool.
      */
-    @Test
     public void testShowHelp() {
         System.out.println("showHelp");
         PrintStream os = new PrintStream(System.out);

@@ -9,13 +9,11 @@ import java.util.ListIterator;
  */
 public class HelloWorldTool extends AbstractCMDTool {
 
-    @Override
-    protected int processParams(ListIterator<String> args) throws UnsupportedOperationException, IllegalArgumentException {
+    protected int processParams(ListIterator args) throws UnsupportedOperationException, IllegalArgumentException {
         System.out.println("Hello, World!");
         return 0;
     }
 
-    @Override
     protected void showHelp(PrintStream os) {
         os.println("This tool just prints 'Hello, World!'");
     }

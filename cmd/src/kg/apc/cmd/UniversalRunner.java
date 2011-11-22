@@ -27,7 +27,7 @@ public final class UniversalRunner {
 
     static {
         //System.setProperty("user.dir", new File(System.getProperty("user.dir")).getParent());
-        List<URL> jars = new LinkedList<URL>();
+        List jars = new LinkedList();
         final String initial_classpath = System.getProperty(JAVA_CLASS_PATH);
         jarDirectory = getJarDirectory(initial_classpath);
 
@@ -37,7 +37,8 @@ public final class UniversalRunner {
         // ClassFinder needs the classpath
         System.setProperty(JAVA_CLASS_PATH, initial_classpath + classpath.toString() + ":");
 
-        URLClassLoader loader = new URLClassLoader(jars.toArray(new URL[0]));
+        URL[] urls = (URL[]) jars.toArray(new URL[0]);
+        URLClassLoader loader = new URLClassLoader(urls);
         Thread.currentThread().setContextClassLoader(loader);
     }
 
@@ -63,7 +64,7 @@ public final class UniversalRunner {
         return tmpDir;
     }
 
-    private static StringBuilder buildUpdatedClassPath(List<URL> jars) {
+    private static StringBuilder buildUpdatedClassPath(List jars) {
         StringBuilder classpath = new StringBuilder();
         /*
          * Does the system support UNC paths? If so, may need to fix them up
@@ -83,7 +84,6 @@ public final class UniversalRunner {
         for (int a = 0; a < libDirs.length; a++) {
             File[] libJars = libDirs[a].listFiles(new FilenameFilter() {
 
-                @Override
                 public boolean accept(File dir, String name) {// only accept jar files
                     return name.endsWith(".jar");// $NON-NLS-1$
                 }
@@ -141,13 +141,13 @@ public final class UniversalRunner {
      */
     public static void main(String[] args) throws Throwable {
         try {
-            Class<?> initialClass;
+            Class initialClass;
             // make it independent - get class name & method from props/manifest
             initialClass = Thread.currentThread().getContextClassLoader().loadClass("kg.apc.jmeter.PluginsCMD");// $NON-NLS-1$
             Object instance = initialClass.newInstance();
             Method startup = initialClass.getMethod("processParams", new Class[]{(new String[0]).getClass()});// $NON-NLS-1$
             Object res = startup.invoke(instance, new Object[]{args});
-            int rc = (Integer) res;
+            int rc = ((Integer) res).intValue();
             if (rc != 0) {
                 System.exit(rc);
             }

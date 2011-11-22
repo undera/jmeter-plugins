@@ -4,35 +4,32 @@
  */
 package kg;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import kg.apc.ApcSuite;
 
 /**
  *
  * @author undera
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.ApcSuite.class})
-public class KgSuite {
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
+public class KgSuite extends TestCase {
+    
+    public KgSuite(String testName) {
+        super(testName);
     }
     
+    public static Test suite() {
+        TestSuite suite = new TestSuite("KgSuite");
+        suite.addTest(ApcSuite.suite());
+        return suite;
+    }
+    
+    protected void setUp() throws Exception {
+        super.setUp();
+    }
+    
+    protected void tearDown() throws Exception {
+        super.tearDown();
+    }
 }

@@ -25,7 +25,7 @@ public abstract class AbstractCMDTool {
         return 0;
     }
 
-    protected abstract int processParams(ListIterator<String> args) throws UnsupportedOperationException, IllegalArgumentException;
+    protected abstract int processParams(ListIterator args) throws UnsupportedOperationException, IllegalArgumentException;
 
     protected abstract void showHelp(PrintStream os);
 }

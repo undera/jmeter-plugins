@@ -4,35 +4,34 @@
  */
 package kg.apc;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import kg.apc.cmd.CmdSuite;
+import kg.apc.jmeter.JmeterSuite;
 
 /**
  *
  * @author undera
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.cmd.CmdSuite.class, kg.apc.jmeter.JmeterSuite.class})
-public class ApcSuite {
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
+public class ApcSuite extends TestCase {
+    
+    public ApcSuite(String testName) {
+        super(testName);
     }
     
+    public static Test suite() {
+        TestSuite suite = new TestSuite("ApcSuite");
+        suite.addTest(CmdSuite.suite());
+        suite.addTest(JmeterSuite.suite());
+        return suite;
+    }
+    
+    protected void setUp() throws Exception {
+        super.setUp();
+    }
+    
+    protected void tearDown() throws Exception {
+        super.tearDown();
+    }
 }

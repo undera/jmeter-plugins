@@ -23,13 +23,12 @@ public class PluginsCMD extends AbstractCMDTool {
         return processParams(argsArrayToListIterator(args));
     }
 
-    public static ListIterator<String> argsArrayToListIterator(String[] args) {
-        List<String> arrayArgs = Arrays.asList(args);
-        return new LinkedList<String>(arrayArgs).listIterator();
+    public static ListIterator argsArrayToListIterator(String[] args) {
+        List arrayArgs = Arrays.asList(args);
+        return new LinkedList(arrayArgs).listIterator();
     }
 
-    @Override
-    protected int processParams(ListIterator<String> args) throws UnsupportedOperationException, IllegalArgumentException {
+    protected int processParams(ListIterator args) throws UnsupportedOperationException, IllegalArgumentException {
         AbstractCMDTool tool = null;
 
         while (args.hasNext()) {
@@ -68,7 +67,6 @@ public class PluginsCMD extends AbstractCMDTool {
         os.println("JP@GC Tools v. 0.4.3");
     }
 
-    @Override
     protected void showHelp(PrintStream os) {
         os.println("JMeter Plugins at Google Code Command-Line Tools");
         os.println("For help and support please visit http://code.google.com/p/jmeter-plugins/wiki/JMeterPluginsCMD");

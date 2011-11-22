@@ -24,7 +24,6 @@ class ExecMetric extends AbstractPerfMonMetric {
     public void setParams(String string) {
         log.debug("Got command line: " + string);
         command = string.split(":");
-        super.setParams(string);
     }
 
     public void getValue(StringBuilder res) throws SigarException {

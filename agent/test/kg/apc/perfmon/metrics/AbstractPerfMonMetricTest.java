@@ -24,14 +24,6 @@ public class AbstractPerfMonMetricTest extends TestCase {
         instance.getValue(res);
     }
 
-    public void testGetPID() throws Exception {
-        System.out.println("getValue");
-        AbstractPerfMonMetric instance = new AbstractPerfMonMetricImpl();
-        long resLinux = instance.getPIDByProcName("java", 0);
-        long resWindows = instance.getPIDByProcName("java.exe", 0);
-        assertTrue(resLinux > 0 || resWindows > 0);
-    }
-
     public class AbstractPerfMonMetricImpl extends AbstractPerfMonMetric {
 
         public AbstractPerfMonMetricImpl() {
@@ -40,10 +32,6 @@ public class AbstractPerfMonMetricTest extends TestCase {
         }
 
         public void getValue(StringBuilder res) throws SigarException {
-        }
-
-        public long getPIDByProcName(String name, int index) {
-            return super.getPIDByProcName(name, index);
         }
     }
 }

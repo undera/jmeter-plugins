@@ -1,13 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.perfmon.metrics;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarProxy;
 import org.hyperic.sigar.SigarProxyCache;
 
 /**
@@ -15,7 +12,7 @@ import org.hyperic.sigar.SigarProxyCache;
  * @author undera
  */
 public class CPUTotalMetricTest extends TestCase {
-    
+
     public CPUTotalMetricTest(String testName) {
         super(testName);
     }
@@ -24,11 +21,11 @@ public class CPUTotalMetricTest extends TestCase {
         TestSuite suite = new TestSuite(CPUTotalMetricTest.class);
         return suite;
     }
-    
+
     protected void setUp() throws Exception {
         super.setUp();
     }
-    
+
     protected void tearDown() throws Exception {
         super.tearDown();
     }
@@ -39,7 +36,9 @@ public class CPUTotalMetricTest extends TestCase {
     public void testGetValue() throws Exception {
         System.out.println("getValue");
         StringBuilder res = new StringBuilder();
-        CPUTotalMetric instance = new CPUTotalMetric(SigarProxyCache.newInstance(new Sigar(), 500));
+        SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
+        MetricParams params=MetricParams.createFromString("idle", "system", sigar);
+        CPUTotalMetric instance = new CPUTotalMetric(sigar, params);
         instance.getValue(res);
     }
 }

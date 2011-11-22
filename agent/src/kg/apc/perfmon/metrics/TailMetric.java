@@ -25,7 +25,6 @@ class TailMetric extends AbstractPerfMonMetric {
     public void setParams(String string) {
         log.debug("Tailing file: " + string);
         filename = string;
-        super.setParams(string);
     }
 
     public void getValue(StringBuilder res) throws SigarException {

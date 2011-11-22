@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.perfmon.metrics;
 
 import junit.framework.Test;
@@ -14,7 +10,7 @@ import org.hyperic.sigar.SigarProxy;
  * @author undera
  */
 public class AbstractCPUMetricTest extends TestCase {
-    
+
     public AbstractCPUMetricTest(String testName) {
         super(testName);
     }
@@ -23,11 +19,11 @@ public class AbstractCPUMetricTest extends TestCase {
         TestSuite suite = new TestSuite(AbstractCPUMetricTest.class);
         return suite;
     }
-    
+
     protected void setUp() throws Exception {
         super.setUp();
     }
-    
+
     protected void tearDown() throws Exception {
         super.tearDown();
     }

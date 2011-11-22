@@ -2,15 +2,16 @@ package kg.apc.perfmon.metrics;
 
 import junit.framework.TestCase;
 import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarProxy;
 import org.hyperic.sigar.SigarProxyCache;
 
 /**
  *
  * @author undera
  */
-public class CPUPerfMetricTest extends TestCase {
+public class CPUProcMetricTest extends TestCase {
 
-    public CPUPerfMetricTest() {
+    public CPUProcMetricTest() {
     }
 
     /**
@@ -19,7 +20,9 @@ public class CPUPerfMetricTest extends TestCase {
     public void testGetValue() throws Exception {
         System.out.println("getValue");
         StringBuilder res = new StringBuilder();
-        CPUTotalMetric instance = new CPUTotalMetric(SigarProxyCache.newInstance(new Sigar(), 500));
+        final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
+        MetricParams params = MetricParams.createFromString("pid="+sigar.getPid(), "total", sigar);
+        CPUProcMetric instance = new CPUProcMetric(sigar, params);
         instance.getValue(res);
         assertTrue(Double.parseDouble(res.toString()) > 0);
     }

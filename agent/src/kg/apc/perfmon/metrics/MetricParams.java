@@ -21,11 +21,11 @@ class MetricParams {
     private MetricParams() {
     }
 
-    public static MetricParams createFromString(String metricParams, String defaultType, SigarProxy sigar) {
+    public static MetricParams createFromString(String metricParams, SigarProxy sigar) {
         StringTokenizer st = new StringTokenizer(metricParams);
 
         long PID = -1;
-        String type = defaultType;
+        String type = "";
         while (st.hasMoreTokens()) {
             String token = st.nextToken(":");
             if (token.startsWith("name=")) {
@@ -41,7 +41,7 @@ class MetricParams {
 
         MetricParams inst = new MetricParams();
         inst.PID = PID;
-        inst.type = type;
+        inst.type = type.toLowerCase();
         return inst;
     }
 

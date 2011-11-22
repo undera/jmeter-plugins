@@ -37,8 +37,9 @@ public class CPUTotalMetricTest extends TestCase {
         System.out.println("getValue");
         StringBuilder res = new StringBuilder();
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams params=MetricParams.createFromString("idle", "system", sigar);
+        MetricParams params=MetricParams.createFromString("idle", sigar);
         CPUTotalMetric instance = new CPUTotalMetric(sigar, params);
         instance.getValue(res);
+        assertTrue(!res.toString().isEmpty());
     }
 }

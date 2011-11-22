@@ -27,7 +27,7 @@ public class PerfMonMetricGetter {
     private String commandString = "";
     private final SelectableChannel channel;
     private AbstractPerfMonMetric[] metrics = new AbstractPerfMonMetric[0];
-    private final SigarProxy sigarProxy;// TODO: move up to share between all getters
+    private final SigarProxy sigarProxy;
     private SocketAddress udpPeer;
 
     public PerfMonMetricGetter(SigarProxy aproxy, PerfMonWorker aController, SelectableChannel aChannel) throws IOException {
@@ -59,9 +59,11 @@ public class PerfMonMetricGetter {
             setUpMetrics(params.split(TAB));
         } else if (cmdType.equals("exit")) {
             log.info("Client disconnected");
-            metrics = new AbstractPerfMonMetric[0];
-            if (channel instanceof SocketChannel) {
-                channel.close();
+            synchronized (channel) {
+                metrics = new AbstractPerfMonMetric[0];
+                if (channel instanceof SocketChannel) {
+                    channel.close();
+                }
             }
         } else if (cmdType.equals("test")) {
             log.info("Yep, we received the 'test' command");
@@ -97,13 +99,15 @@ public class PerfMonMetricGetter {
     public ByteBuffer getMetricsLine() throws IOException {
         log.debug("Building metrics");
         StringBuilder res = new StringBuilder();
-        for (int n = 0; n < metrics.length; n++) {
-            try {
-                metrics[n].getValue(res);
-            } catch (SigarException ex) {
-                log.error("Error getting metric", ex);
+        synchronized (channel) {
+            for (int n = 0; n < metrics.length; n++) {
+                try {
+                    metrics[n].getValue(res);
+                } catch (SigarException ex) {
+                    log.error("Error getting metric", ex);
+                }
+                res.append(TAB);
             }
-            res.append(TAB);
         }
         res.append(NEWLINE);
 
@@ -112,18 +116,19 @@ public class PerfMonMetricGetter {
     }
 
     private void setUpMetrics(String[] params) throws IOException {
-        metrics = new AbstractPerfMonMetric[params.length];
-        String metricParams = "";
-        for (int n = 0; n < params.length; n++) {
-            String metricType = params[n];
-            if (metricType.indexOf(DVOETOCHIE) >= 0) {
-                metricParams = metricType.substring(metricType.indexOf(DVOETOCHIE) + 1).trim();
-                metricType = metricType.substring(0, metricType.indexOf(DVOETOCHIE)).trim();
+        synchronized (channel) {
+            metrics = new AbstractPerfMonMetric[params.length];
+            String metricParams = "";
+            for (int n = 0; n < params.length; n++) {
+                String metricType = params[n];
+                if (metricType.indexOf(DVOETOCHIE) >= 0) {
+                    metricParams = metricType.substring(metricType.indexOf(DVOETOCHIE) + 1).trim();
+                    metricType = metricType.substring(0, metricType.indexOf(DVOETOCHIE)).trim();
+                }
+
+                metrics[n] = AbstractPerfMonMetric.createMetric(metricType, metricParams, sigarProxy);
             }
-
-            metrics[n] = AbstractPerfMonMetric.createMetric(metricType, metricParams, sigarProxy);
         }
-
         // this will make it sending channel
         controller.registerWritingChannel(channel, this);
     }

@@ -31,7 +31,7 @@ public class MetricParamsTest extends TestCase {
         String metricParams = "ptql=Exe.Name.ct=java,Args.*.ct=junit";
         String defaultType = "";
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams result = MetricParams.createFromString(metricParams, defaultType, sigar);
+        MetricParams result = MetricParams.createFromString(metricParams, sigar);
         assertTrue(result.PID > 0);
     }
     
@@ -39,8 +39,8 @@ public class MetricParamsTest extends TestCase {
         System.out.println("createFromString");
         String defaultType = "";
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams resultLinux = MetricParams.createFromString("name=java#1", defaultType, sigar);
-        MetricParams resultWin = MetricParams.createFromString("name=java.exe#1", defaultType, sigar);
+        MetricParams resultLinux = MetricParams.createFromString("name=java#1", sigar);
+        MetricParams resultWin = MetricParams.createFromString("name=java.exe#1", sigar);
         assertTrue(resultLinux.PID > 0 || resultWin.PID > 0);
     }
     
@@ -49,7 +49,7 @@ public class MetricParamsTest extends TestCase {
         String defaultType = "";
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         String metricParams = "pid=" + sigar.getPid();
-        MetricParams result = MetricParams.createFromString(metricParams, defaultType, sigar);
+        MetricParams result = MetricParams.createFromString(metricParams, sigar);
         assertTrue(result.PID > 0);
     }
 }

@@ -81,8 +81,18 @@
            and again build.xml should be rarely modified file... -->
         <property location="./" name="svn.dir"/>
       
-      <!-- APC: copying just in case -->
-        <copy todir="${dist.dir}" file="${dist.jar}" />
+         <!-- APC: for easy debugging environment we copy JAR
+           to jmeter/lib/ext, defined by property jmeter.lib.ext
+           in private.properties file -->
+        <fail message="jmeter.lib.ext not available">
+            <condition>
+                <not>
+                    <available file="${jmeter.lib.ext}" />
+                </not>
+            </condition>
+        </fail>
+        
+        <copy todir="${jmeter.lib.ext}" file="${dist.jar}" />
 
         <!-- If you failed here, consider setting in project.properties
             dist.jar=${dist.dir}/JMeterPlugins.jar -->

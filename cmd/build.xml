@@ -74,7 +74,7 @@
 
    <!-- APC: before making main jar we make cmd's jar -->
    
-    <target name="-post-jar">           
+    <target name="-post-jar">      
         <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/CMDRunner.jar"		
 	      manifest="src/kg/apc/cmd/manifest.mf">
             <fileset dir="${build.dir}/classes"/>		

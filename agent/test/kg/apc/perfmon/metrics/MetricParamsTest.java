@@ -39,8 +39,8 @@ public class MetricParamsTest extends TestCase {
         System.out.println("createFromString");
         String defaultType = "";
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams resultLinux = MetricParams.createFromString("name=java", defaultType, sigar);
-        MetricParams resultWin = MetricParams.createFromString("name=java.exe", defaultType, sigar);
+        MetricParams resultLinux = MetricParams.createFromString("name=java#1", defaultType, sigar);
+        MetricParams resultWin = MetricParams.createFromString("name=java.exe#1", defaultType, sigar);
         assertTrue(resultLinux.PID > 0 || resultWin.PID > 0);
     }
     

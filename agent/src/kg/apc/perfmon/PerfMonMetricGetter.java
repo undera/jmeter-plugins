@@ -58,6 +58,7 @@ public class PerfMonMetricGetter {
         } else if (cmdType.equals("metrics")) {
             setUpMetrics(params.split(TAB));
         } else if (cmdType.equals("exit")) {
+            log.info("Client disconnected");
             metrics = new AbstractPerfMonMetric[0];
             if (channel instanceof SocketChannel) {
                 channel.close();

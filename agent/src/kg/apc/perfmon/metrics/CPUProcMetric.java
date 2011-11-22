@@ -17,6 +17,7 @@ class CPUProcMetric extends AbstractCPUMetric {
     public static final byte USER = 3;
     public static final String[] types = {"percent", "total", "system", "user"};
     private int type = -1;
+    private double prev = -1;
 
     public CPUProcMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar, params);
@@ -26,22 +27,29 @@ class CPUProcMetric extends AbstractCPUMetric {
     public void getValue(StringBuilder res) throws SigarException {
         ProcCpu cpu = sigarProxy.getProcCpu(params.PID);
         double val;
+        long cur;
 
         switch (type) {
             case PERCENT:
                 val = cpu.getPercent();
                 break;
             case TOTAL:
-                val = cpu.getTotal();
+                cur = cpu.getTotal();
+                val = prev > 0 ? cur - prev : 0;
+                prev = cur;
                 break;
             case SYSTEM:
-                val = cpu.getSys();
+                cur = cpu.getSys();
+                val = prev > 0 ? cur - prev : 0;
+                prev = cur;
                 break;
             case USER:
-                val = cpu.getUser();
+                cur = cpu.getUser();
+                val = prev > 0 ? cur - prev : 0;
+                prev = cur;
                 break;
             default:
-                throw new SigarException("Unknown proc cpu type");
+                throw new SigarException("Unknown proc cpu type " + type);
         }
 
         res.append(Double.toString(val));

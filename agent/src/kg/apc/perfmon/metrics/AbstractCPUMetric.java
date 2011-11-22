@@ -1,6 +1,5 @@
 package kg.apc.perfmon.metrics;
 
-import java.util.Arrays;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.hyperic.sigar.SigarProxy;

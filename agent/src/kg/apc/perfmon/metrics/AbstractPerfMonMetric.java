@@ -33,11 +33,11 @@ public abstract class AbstractPerfMonMetric {
         log.debug("Creating metric: " + metricType + " with params: " + metricParams);
         AbstractPerfMonMetric metric;
         try {
-            if (metricType.equals("exec")) {
+            if (metricType.equalsIgnoreCase("exec")) {
                 metric = new ExecMetric();
-            } else if (metricType.equals("tail")) {
+            } else if (metricType.equalsIgnoreCase("tail")) {
                 metric = new TailMetric();
-            } else if (metricType.equals("cpu")) {
+            } else if (metricType.equalsIgnoreCase("cpu")) {
                 metric = AbstractCPUMetric.getMetric(sigarProxy, metricParams);
             } else {
                 throw new SigarException("No SIGAR object for metric type " + metricType);

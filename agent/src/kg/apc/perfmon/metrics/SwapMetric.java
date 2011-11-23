@@ -1,11 +1,3 @@
-/**
- * 
- * core ID
- * process id
- * image name
- * 
- * 
- */
 package kg.apc.perfmon.metrics;
 
 import java.util.Arrays;
@@ -29,10 +21,14 @@ class SwapMetric extends AbstractPerfMonMetric {
 
     public SwapMetric(SigarProxy aSigar, String metricParams) {
         super(aSigar);
-                MetricParams params = MetricParams.createFromString(metricParams, sigarProxy);
-        type = Arrays.asList(types).indexOf(params.type);
-        if (type < 0) {
+        MetricParams params = MetricParams.createFromString(metricParams, sigarProxy);
+        if (params.type.isEmpty()) {
             type = USED;
+        } else {
+            type = Arrays.asList(types).indexOf(params.type);
+            if (type < 0) {
+                throw new IllegalArgumentException("Unknown swap type: " + metricParams);
+            }
         }
     }
 

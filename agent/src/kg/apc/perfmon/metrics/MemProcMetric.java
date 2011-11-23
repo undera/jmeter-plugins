@@ -24,9 +24,13 @@ class MemProcMetric extends AbstractMemMetric {
 
     public MemProcMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar, params);
-        type = Arrays.asList(types).indexOf(params.type);
-        if (type < 0) {
+        if (params.type.isEmpty()) {
             type = RESIDENT;
+        } else {
+            type = Arrays.asList(types).indexOf(params.type);
+            if (type < 0) {
+                throw new IllegalArgumentException("Invalid proc mem type: " + params.type);
+            }
         }
     }
 

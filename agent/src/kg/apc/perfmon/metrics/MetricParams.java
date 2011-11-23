@@ -16,10 +16,6 @@ import org.hyperic.sigar.SigarProxy;
 class MetricParams {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-
-    private static String getIfaceByName(String token) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
     long PID = -1;
     String type = null;
     String fs = null;

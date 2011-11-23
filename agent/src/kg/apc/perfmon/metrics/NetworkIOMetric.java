@@ -41,9 +41,13 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
     public NetworkIOMetric(SigarProxy aSigar, String metricParams) {
         super(aSigar);
         MetricParams params = MetricParams.createFromString(metricParams, sigarProxy);
-        type = Arrays.asList(types).indexOf(params.type);
-        if (type < 0) {
+        if (params.type.isEmpty()) {
             type = RX_BYTES;
+        } else {
+            type = Arrays.asList(types).indexOf(params.type);
+            if (type < 0) {
+                throw new IllegalArgumentException("Unknown net io type: " + params.type);
+            }
         }
         log.debug("Net metric type: " + type);
 
@@ -125,7 +129,7 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
                 case SPEED:
                     val = usage.getSpeed();
                     break;
-                                    case TX_PACKETS:
+                case TX_PACKETS:
                     val += usage.getTxPackets();
                     break;
                 default:

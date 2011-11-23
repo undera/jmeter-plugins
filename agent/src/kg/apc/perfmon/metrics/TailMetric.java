@@ -20,6 +20,10 @@ class TailMetric extends AbstractPerfMonMetric {
 
     public TailMetric(String params) {
         super(null);
+        if (params.isEmpty()) {
+            throw new IllegalArgumentException("Cannot tail unspecified file");
+        }
+
         setParams(params);
     }
 

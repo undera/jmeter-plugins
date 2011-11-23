@@ -19,6 +19,10 @@ class ExecMetric extends AbstractPerfMonMetric {
 
     public ExecMetric(String params) {
         super(null);
+        if (params.isEmpty()) {
+            throw new IllegalArgumentException("Params cannot be null");
+        }
+
         setParams(params);
     }
 

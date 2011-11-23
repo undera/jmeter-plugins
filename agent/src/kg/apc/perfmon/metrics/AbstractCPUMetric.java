@@ -27,8 +27,4 @@ abstract class AbstractCPUMetric extends AbstractPerfMonMetric {
         super(aSigar);
         this.params = params;
     }
-
-    public void setParams(String params) {
-        // just drop it
-    }
 }

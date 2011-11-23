@@ -21,9 +21,13 @@ class CPUProcMetric extends AbstractCPUMetric {
 
     public CPUProcMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar, params);
-        type = Arrays.asList(types).indexOf(params.type);
-        if (type < 0) {
+        if (params.type.isEmpty()) {
             type = PERCENT;
+        } else {
+            type = Arrays.asList(types).indexOf(params.type);
+            if (type < 0) {
+                throw new IllegalArgumentException("Invalid process cpu type: " + params.type);
+            }
         }
     }
 

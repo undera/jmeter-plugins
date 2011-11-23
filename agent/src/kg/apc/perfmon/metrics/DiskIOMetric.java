@@ -49,9 +49,14 @@ class DiskIOMetric extends AbstractPerfMonMetric {
     public DiskIOMetric(SigarProxy aSigar, String metricParams) {
         super(aSigar);
         MetricParams params = MetricParams.createFromString(metricParams, sigarProxy);
-        type = Arrays.asList(types).indexOf(params.type);
-        if (type < 0) {
+
+        if (params.type.isEmpty()) {
             type = USE_PERCENT;
+        } else {
+            type = Arrays.asList(types).indexOf(params.type);
+            if (type < 0) {
+                throw new IllegalArgumentException("Invalid disk io type: " + params.type);
+            }
         }
         log.debug("Disk metric type: " + type);
 
@@ -89,7 +94,7 @@ class DiskIOMetric extends AbstractPerfMonMetric {
             while (it.hasNext()) {
                 Object key = it.next();
                 FileSystem fs = (FileSystem) map.get(key);
-                log.info("Filesystem: fs="+fs.toString()+" type=" + fs.getSysTypeName());
+                log.info("Filesystem: fs=" + fs.toString() + " type=" + fs.getSysTypeName());
             }
         } catch (SigarException e) {
             log.warn("Can't get filesystems map", e);

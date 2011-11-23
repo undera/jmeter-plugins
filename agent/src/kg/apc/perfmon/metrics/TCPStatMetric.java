@@ -33,9 +33,13 @@ class TCPStatMetric extends AbstractPerfMonMetric {
     public TCPStatMetric(SigarProxy aSigar, String metricParams) {
         super(aSigar);
         MetricParams params = MetricParams.createFromString(metricParams, sigarProxy);
-        type = Arrays.asList(types).indexOf(params.type);
-        if (type < 0) {
+        if (params.type.isEmpty()) {
             type = ESTAB;
+        } else {
+            type = Arrays.asList(types).indexOf(params.type);
+            if (type < 0) {
+                throw new IllegalArgumentException("Unknown TCP type: " + metricParams);
+            }
         }
     }
 

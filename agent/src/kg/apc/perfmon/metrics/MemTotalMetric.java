@@ -1,11 +1,3 @@
-/**
- * 
- * core ID
- * process id
- * image name
- * 
- * 
- */
 package kg.apc.perfmon.metrics;
 
 import java.util.Arrays;
@@ -18,7 +10,7 @@ import org.hyperic.sigar.SigarProxy;
  * @author undera
  */
 class MemTotalMetric extends AbstractMemMetric {
-
+    
     public static final byte ACTUAL_FREE = 0;
     public static final byte ACTUAL_USED = 1;
     public static final byte FREE = 2;
@@ -30,20 +22,24 @@ class MemTotalMetric extends AbstractMemMetric {
     public static final String[] types = {"actualfree", "actualused", "free", "freeperc",
         "ram", "total", "used", "usedperc"};
     private int type = -1;
-
+    
     public MemTotalMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar, params);
-        type = Arrays.asList(types).indexOf(params.type);
-        if (type < 0) {
+        if (params.type.isEmpty()) {
             type = USED_PERCENT;
+        } else {
+            type = Arrays.asList(types).indexOf(params.type);
+            if (type < 0) {
+                throw new IllegalArgumentException("Invalid total mem type: " + params.type);
+            }
         }
     }
-
+    
     public void getValue(StringBuilder res) throws SigarException {
         Mem mem = sigarProxy.getMem();
         double val;
         switch (type) {
-
+            
             case ACTUAL_FREE:
                 val = mem.getActualFree();
                 break;

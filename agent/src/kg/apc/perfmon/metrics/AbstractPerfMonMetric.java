@@ -53,6 +53,10 @@ public abstract class AbstractPerfMonMetric {
         } catch (SigarException ex) {
             log.error("Invalid metric specified: " + metricType, ex);
             metric = new InvalidPerfMonMetric();
+        } catch (IllegalArgumentException ex) {
+            log.error(ex.toString());
+            log.error("Invalid parameters specified for metric " + metricType + ": " + metricParams);
+            metric = new InvalidPerfMonMetric();
         }
 
         log.debug("Have metric object: " + metric.toString());

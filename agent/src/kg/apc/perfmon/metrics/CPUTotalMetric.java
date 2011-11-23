@@ -14,24 +14,29 @@ import org.hyperic.sigar.SigarProxy;
 class CPUTotalMetric extends AbstractCPUMetric {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    public static final byte combined = 0;
-    public static final byte idle = 1;
-    public static final byte irq = 2;
-    public static final byte nice = 3;
-    public static final byte softirq = 4;
-    public static final byte stolen = 5;
-    public static final byte system = 6;
-    public static final byte user = 7;
-    public static final byte iowait = 8;
+    public static final byte COMBINED = 0;
+    public static final byte IDLE = 1;
+    public static final byte IRQ = 2;
+    public static final byte NICE = 3;
+    public static final byte SOFTIRQ = 4;
+    public static final byte STOLEN = 5;
+    public static final byte SYSTEM = 6;
+    public static final byte USER = 7;
+    public static final byte IOWAIT = 8;
     public static final String[] types = {"combined", "idle", "irq", "nice", "softirq",
         "stolen", "system", "user", "iowait"};
     private int type = -1;
 
     public CPUTotalMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar, params);
-        type = Arrays.asList(types).indexOf(params.type);
-        if (type < 0) {
-            type = combined;
+
+        if (params.type.isEmpty()) {
+            type = COMBINED;
+        } else {
+            type = Arrays.asList(types).indexOf(params.type);
+            if (type < 0) {
+                throw new IllegalArgumentException("Invalid total cpu type: " + params.type);
+            }
         }
     }
 
@@ -40,31 +45,31 @@ class CPUTotalMetric extends AbstractCPUMetric {
         double val;
         switch (type) {
 
-            case combined:
+            case COMBINED:
                 val = cpu.getCombined();
                 break;
-            case idle:
+            case IDLE:
                 val = cpu.getIdle();
                 break;
-            case irq:
+            case IRQ:
                 val = cpu.getIrq();
                 break;
-            case nice:
+            case NICE:
                 val = cpu.getNice();
                 break;
-            case softirq:
+            case SOFTIRQ:
                 val = cpu.getSoftIrq();
                 break;
-            case stolen:
+            case STOLEN:
                 val = cpu.getStolen();
                 break;
-            case system:
+            case SYSTEM:
                 val = cpu.getSys();
                 break;
-            case user:
+            case USER:
                 val = cpu.getUser();
                 break;
-            case iowait:
+            case IOWAIT:
                 val = cpu.getWait();
                 break;
             default:

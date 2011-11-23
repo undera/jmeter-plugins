@@ -89,7 +89,7 @@ class DiskIOMetric extends AbstractPerfMonMetric {
             while (it.hasNext()) {
                 Object key = it.next();
                 FileSystem fs = (FileSystem) map.get(key);
-                log.info("Filesystem type=" + fs.getSysTypeName() + ": " + fs.toString());
+                log.info("Filesystem fs="+fs.toString()+" type=" + fs.getSysTypeName());
             }
         } catch (SigarException e) {
             log.warn("Can't get filesystems map", e);

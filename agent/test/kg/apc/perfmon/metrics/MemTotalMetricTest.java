@@ -33,4 +33,16 @@ public class MemTotalMetricTest extends TestCase {
         MemTotalMetric instance = new MemTotalMetric(sigar, MetricParams.createFromString("", sigar));
         instance.getValue(res);
     }
+
+    public void testGetValue_all() throws Exception {
+        System.out.println("getValue");
+        SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
+        for (int n = 0; n < MemTotalMetric.types.length; n++) {
+            MetricParams params = MetricParams.createFromString(MemTotalMetric.types[n], sigar);
+            MemTotalMetric instance = new MemTotalMetric(sigar, params);
+            StringBuilder res = new StringBuilder();
+            instance.getValue(res);
+            System.out.println(MemTotalMetric.types[n] + "=" + res.toString());
+        }
+    }
 }

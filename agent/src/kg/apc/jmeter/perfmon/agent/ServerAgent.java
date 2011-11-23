@@ -8,6 +8,7 @@ import java.net.ServerSocket;
  * incoming connections. It is a console application, so we will use
  * System.out to print messages.
  * @author Stephane Hoblingre
+ * @deprecated in favor of new agent
  */
 public class ServerAgent implements Runnable {
 

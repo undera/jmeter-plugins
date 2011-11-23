@@ -20,6 +20,7 @@ import org.hyperic.sigar.Swap;
  * with all ConnectionThreads.
  * This class is based on Sigar API: http://www.hyperic.com/products/sigar
  * @author Stephane Hoblingre
+ * @deprecated in favor of new agent
  */
 public class MetricsGetter implements AgentCommandsInterface
 {

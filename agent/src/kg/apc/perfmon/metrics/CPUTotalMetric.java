@@ -1,14 +1,8 @@
-/**
- * type - user, system, io, idle
- * core ID
- * process id
- * image name
- * 
- * 
- */
 package kg.apc.perfmon.metrics;
 
 import java.util.Arrays;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarProxy;
@@ -19,6 +13,7 @@ import org.hyperic.sigar.SigarProxy;
  */
 class CPUTotalMetric extends AbstractCPUMetric {
 
+    private static final Logger log = LoggingManager.getLoggerForClass();
     public static final byte combined = 0;
     public static final byte idle = 1;
     public static final byte irq = 2;
@@ -75,6 +70,11 @@ class CPUTotalMetric extends AbstractCPUMetric {
             default:
                 throw new SigarException("Unknown proc total type " + type);
         }
-        res.append(Double.toString(100 * val));
+
+        if (!Double.isNaN(val)) {
+            res.append(Double.toString(100 * val));
+        } else {
+            log.warn("Failed to get total cpu metric: " + types[type]);
+        }
     }
 }

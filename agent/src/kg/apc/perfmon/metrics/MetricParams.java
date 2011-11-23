@@ -16,9 +16,14 @@ import org.hyperic.sigar.SigarProxy;
 class MetricParams {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
+
+    private static String getIfaceByName(String token) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
     long PID = -1;
     String type = null;
     String fs = null;
+    String iface = null;
 
     private MetricParams() {
     }
@@ -29,14 +34,17 @@ class MetricParams {
         long PID = -1;
         String type = "";
         String FS = "";
+        String ifc = "";
         while (st.hasMoreTokens()) {
             String token = st.nextToken(":");
             if (token.startsWith("name=")) {
                 PID = getPIDByName(token, sigar);
             } else if (token.startsWith("pid=")) {
                 PID = getPIDByPID(token);
+            } else if (token.startsWith("iface=")) {
+                ifc = getParam(token);
             } else if (token.startsWith("fs=")) {
-                FS = getFSByName(token);
+                FS = getParam(token);
             } else if (token.startsWith("ptql=")) {
                 PID = getPIDByPTQL(token, sigar);
             } else {
@@ -48,6 +56,7 @@ class MetricParams {
         inst.PID = PID;
         inst.type = type.toLowerCase();
         inst.fs = FS;
+        inst.iface = ifc;
         return inst;
     }
 
@@ -69,7 +78,7 @@ class MetricParams {
         return PID;
     }
 
-    private static String getFSByName(String token) {
+    private static String getParam(String token) {
         return token.substring(token.indexOf("=") + 1);
     }
 

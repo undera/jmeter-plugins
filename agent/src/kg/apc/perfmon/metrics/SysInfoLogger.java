@@ -14,7 +14,8 @@ public class SysInfoLogger {
 
     public static void doIt(SigarProxy sigar) {
         MetricParams.logAvailableProcesses(sigar);
-        DiskIOMetric.logAllAvailableFilesystems(sigar);
+        DiskIOMetric.logAvailableFilesystems(sigar);
+        NetworkIOMetric.logAvailableInterfaces(sigar);
         log.info("*** Done logging sysinfo ***");
     }
 }

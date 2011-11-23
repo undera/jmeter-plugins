@@ -35,11 +35,23 @@ public class CPUTotalMetricTest extends TestCase {
      */
     public void testGetValue() throws Exception {
         System.out.println("getValue");
-        StringBuilder res = new StringBuilder();
+        StringBuilder res = new StringBuilder("");
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams params=MetricParams.createFromString("idle", sigar);
+        MetricParams params = MetricParams.createFromString("idle", sigar);
         CPUTotalMetric instance = new CPUTotalMetric(sigar, params);
         instance.getValue(res);
-        assertTrue(!res.toString().isEmpty());
+    }
+
+    public void testGetValue_all() throws Exception {
+        System.out.println("getValue");
+        SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
+        for (int n = 0; n < CPUTotalMetric.types.length; n++) {
+            MetricParams params = MetricParams.createFromString("pid=" + sigar.getPid() + ":" + CPUTotalMetric.types[n], sigar);
+            CPUTotalMetric instance = new CPUTotalMetric(sigar, params);
+            StringBuilder res = new StringBuilder("");
+            instance.getValue(res);
+            assertTrue(!res.toString().equals("NaN"));
+            System.out.println(CPUTotalMetric.types[n] + "=" + res.toString());
+        }
     }
 }

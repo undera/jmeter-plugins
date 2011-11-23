@@ -43,6 +43,10 @@ public abstract class AbstractPerfMonMetric {
                 metric = new SwapMetric(sigarProxy, metricParams);
             } else if (metricType.equalsIgnoreCase("disks")) {
                 metric = new DiskIOMetric(sigarProxy, metricParams);
+            } else if (metricType.equalsIgnoreCase("network")) {
+                metric = new NetworkIOMetric(sigarProxy, metricParams);
+            } else if (metricType.equalsIgnoreCase("tcp")) {
+                metric = new TCPStatMetric(sigarProxy, metricParams);
             } else {
                 throw new SigarException("No SIGAR object for metric type " + metricType);
             }

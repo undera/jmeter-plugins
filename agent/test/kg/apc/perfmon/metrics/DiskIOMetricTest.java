@@ -60,7 +60,7 @@ public class DiskIOMetricTest extends TestCase {
         instance.getValue(res);
         assertTrue(!res.toString().isEmpty());
         System.out.println(res.toString());
-        res=new StringBuilder();
+        res = new StringBuilder();
 
         instance.getValue(res);
         assertTrue(!res.toString().isEmpty());
@@ -68,11 +68,26 @@ public class DiskIOMetricTest extends TestCase {
     }
 
     /**
-     * Test of logAllAvailableFilesystems method, of class DiskIOMetric.
+     * Test of logAvailableFilesystems method, of class DiskIOMetric.
      */
-    public void testLogAllAvailableFilesystems() {
-        System.out.println("logAllAvailableFilesystems");
+    public void testLogAvailableFilesystems() {
+        System.out.println("logAvailableFilesystems");
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        DiskIOMetric.logAllAvailableFilesystems(sigar);
+        DiskIOMetric.logAvailableFilesystems(sigar);
+    }
+
+    public void testGetValue_all() throws Exception {
+        System.out.println("getValue");
+        SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
+        for (int n = 0; n < DiskIOMetric.types.length; n++) {
+            DiskIOMetric instance = new DiskIOMetric(sigar, DiskIOMetric.types[n]);
+            StringBuilder res = new StringBuilder();
+            instance.getValue(res);
+            System.out.println(DiskIOMetric.types[n] + "=" + res.toString());
+            Thread.sleep(100);
+            res = new StringBuilder();
+            instance.getValue(res);
+            System.out.println(DiskIOMetric.types[n] + "=" + res.toString());
+        }
     }
 }

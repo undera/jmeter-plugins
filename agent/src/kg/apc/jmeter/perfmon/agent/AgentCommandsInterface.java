@@ -4,6 +4,7 @@ package kg.apc.jmeter.perfmon.agent;
 /**
  *
  * @author Stephane Hoblingre
+ * @deprecated in favor of new agent
  */
 public interface AgentCommandsInterface {
 

@@ -9,6 +9,7 @@ import java.net.Socket;
 /**
  * This class will handle one connection with the remote JMeter plugin AgentConnector
  * @author Stephane Hoblingre
+ * @deprecated in favor of new agent
  */
 public class ConnectionThread
         extends Thread {

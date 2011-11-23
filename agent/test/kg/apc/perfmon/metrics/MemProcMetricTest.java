@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.perfmon.metrics;
 
 import junit.framework.Test;
@@ -41,7 +37,19 @@ public class MemProcMetricTest extends TestCase {
         System.out.println("getValue");
         StringBuilder res = new StringBuilder();
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MemProcMetric instance = new MemProcMetric(sigar, MetricParams.createFromString("pid="+sigar.getPid(), sigar));
+        MemProcMetric instance = new MemProcMetric(sigar, MetricParams.createFromString("pid=" + sigar.getPid(), sigar));
         instance.getValue(res);
+    }
+
+    public void testGetValue_all() throws Exception {
+        System.out.println("getValue");
+        SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
+        for (int n = 0; n < MemProcMetric.types.length; n++) {
+            MetricParams params = MetricParams.createFromString("pid=" + sigar.getPid() + ":" + MemProcMetric.types[n], sigar);
+            MemProcMetric instance = new MemProcMetric(sigar, params);
+            StringBuilder res = new StringBuilder();
+            instance.getValue(res);
+            System.out.println(MemProcMetric.types[n] + "=" + res.toString());
+        }
     }
 }

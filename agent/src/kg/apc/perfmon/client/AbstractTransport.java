@@ -1,3 +1,4 @@
+
 package kg.apc.perfmon.client;
 
 import java.io.IOException;
@@ -97,6 +98,7 @@ public abstract class AbstractTransport implements Transport {
                 if (newlineCount == 0) {
                     log.debug("Read lines: " + str.toString());
                     String[] lines = str.toString().split("\n");
+                    // FIXME: this leads to queuing lines so we will have time lag!
                     return lines[lines.length - 1];
                 }
             }

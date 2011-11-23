@@ -42,7 +42,22 @@ public class DiskIOMetricTest extends TestCase {
         DiskIOMetric instance = new DiskIOMetric(sigar, "fs=/");
         instance.getValue(res);
         assertTrue(!res.toString().isEmpty());
-        System.err.append(res.toString());
+        System.err.println(res.toString());
+    }
+
+    public void testGetValue_reads() throws Exception {
+        System.out.println("getValue_r");
+        StringBuilder res = new StringBuilder();
+        SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
+        DiskIOMetric instance = new DiskIOMetric(sigar, "reads");
+        instance.getValue(res);
+        assertTrue(!res.toString().isEmpty());
+        System.out.println(res.toString());
+        res=new StringBuilder();
+
+        instance.getValue(res);
+        assertTrue(!res.toString().isEmpty());
+        System.out.println(res.toString());
     }
 
     /**

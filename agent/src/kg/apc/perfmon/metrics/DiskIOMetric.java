@@ -44,6 +44,7 @@ class DiskIOMetric extends AbstractPerfMonMetric {
         "total", "useperc", "used"};
     private int type = -1;
     private final String[] filesystems;
+    private double prev = -1;
 
     public DiskIOMetric(SigarProxy aSigar, String metricParams) {
         super(aSigar);
@@ -99,57 +100,50 @@ class DiskIOMetric extends AbstractPerfMonMetric {
         double val = 0;
         long used = 0;
         long total = 0;
-        long cur, prev = 0;
+        double cur;
         for (int n = 0; n < filesystems.length; n++) {
             FileSystemUsage usage = sigarProxy.getFileSystemUsage(filesystems[n]);
             switch (type) {
                 case AVAILABLE:
-                    val = usage.getAvail();
+                    val += usage.getAvail();
                     break;
                 case DISK_QUEUE:
-                    val = usage.getDiskQueue();
+                    val += usage.getDiskQueue();
                     break;
                 case READ_BYTES:
-                    cur = usage.getDiskReadBytes();
-                    val = prev > 0 ? cur - prev : 0;
-                    prev = cur;
+                    val += usage.getDiskReadBytes();
                     break;
                 case READS:
-                    cur = usage.getDiskReads();
-                    val = prev > 0 ? cur - prev : 0;
-                    prev = cur;
+                    val += usage.getDiskReads();
                     break;
                 case SERVICE_TIME:
-                    val = usage.getDiskServiceTime();
+                    val += usage.getDiskServiceTime();
                     break;
                 case WRITE_BYTES:
-                    cur = usage.getDiskWriteBytes();
-                    val = prev > 0 ? cur - prev : 0;
-                    prev = cur;
+                    val += usage.getDiskWriteBytes();
                     break;
                 case WRITES:
-                    cur = usage.getDiskWrites();
-                    val = prev > 0 ? cur - prev : 0;
-                    prev = cur;
+                    val += usage.getDiskWrites();
                     break;
                 case FILES:
-                    val = usage.getFiles();
+                    val += usage.getFiles();
                     break;
                 case FREE:
-                    val = usage.getFree();
+                    val += usage.getFree();
                     break;
                 case FREE_FILES:
-                    val = usage.getFreeFiles();
+                    val += usage.getFreeFiles();
                     break;
                 case TOTAL:
-                    val = usage.getTotal();
+                    val += usage.getTotal();
                     break;
                 case USE_PERCENT:
+                    // special case for multiple percentages
                     if (filesystems.length > 1) {
                         used += usage.getUsed();
                         total += usage.getTotal();
                     } else {
-                        val = 100 * usage.getUsePercent();
+                        val += 100 * usage.getUsePercent();
                     }
                     break;
                 case USED:
@@ -160,9 +154,38 @@ class DiskIOMetric extends AbstractPerfMonMetric {
             }
         }
 
-        if (type == USE_PERCENT && filesystems.length > 1) {
-            val = 100 * (double) used / total;
+        // some post-processing
+        switch (type) {
+            case READ_BYTES:
+                cur = val;
+                val = prev > 0 ? cur - prev : 0;
+                prev = cur;
+                break;
+            case READS:
+                cur = val;
+                val = prev > 0 ? cur - prev : 0;
+                prev = cur;
+                break;
+            case SERVICE_TIME:
+                cur = val;
+                break;
+            case WRITE_BYTES:
+                cur = val;
+                val = prev > 0 ? cur - prev : 0;
+                prev = cur;
+                break;
+            case WRITES:
+                cur = val;
+                val = prev > 0 ? cur - prev : 0;
+                prev = cur;
+                break;
+            case USE_PERCENT:
+                if (filesystems.length > 1) {
+                    val = 100 * (double) used / total;
+                }
+                break;
         }
+
         res.append(Double.toString(val));
     }
 }

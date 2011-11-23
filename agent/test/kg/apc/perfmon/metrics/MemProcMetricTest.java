@@ -41,7 +41,7 @@ public class MemProcMetricTest extends TestCase {
         System.out.println("getValue");
         StringBuilder res = new StringBuilder();
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MemProcMetric instance = new MemProcMetric(sigar, MetricParams.createFromString("", sigar));
+        MemProcMetric instance = new MemProcMetric(sigar, MetricParams.createFromString("pid="+sigar.getPid(), sigar));
         instance.getValue(res);
     }
 }

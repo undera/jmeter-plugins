@@ -160,6 +160,7 @@ public class PerfMonGui
 
         List<String> items = new LinkedList<String>(AgentConnector.metrics);
         // add metrics from new agent
+        items.add("TCP");
         items.add("EXEC");
         items.add("TAIL");
         metricTypesBox = new JComboBox(items.toArray());

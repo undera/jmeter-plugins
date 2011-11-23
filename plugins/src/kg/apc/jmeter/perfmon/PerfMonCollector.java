@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.logging.Level;
 import kg.apc.perfmon.client.Transport;
 import kg.apc.perfmon.client.TransportFactory;
 import org.apache.jmeter.gui.GuiPackage;

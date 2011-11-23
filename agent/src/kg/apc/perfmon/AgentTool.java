@@ -51,6 +51,9 @@ public class AgentTool extends AbstractCMDTool {
                 }
 
                 worker.setUDPPort(Integer.parseInt((String) args.next()));
+            } else if (nextArg.equals("--sysinfo")) {
+                args.remove();
+                worker.logSysInfo();
             } else {
                 throw new UnsupportedOperationException("Unrecognized option: " + nextArg);
             }
@@ -73,7 +76,7 @@ public class AgentTool extends AbstractCMDTool {
     protected void showHelp(PrintStream os) {
         os.println("Options for tool 'PerfMon': "
                 + "[ --tcp-port <port no> "
-                + "--udp-port <port no> ]");
+                + "--udp-port <port no> --sysinfo]");
     }
 
     protected PerfMonWorker getWorker() throws IOException {

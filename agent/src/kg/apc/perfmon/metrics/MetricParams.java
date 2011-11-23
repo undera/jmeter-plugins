@@ -17,6 +17,7 @@ class MetricParams {
     private static final Logger log = LoggingManager.getLoggerForClass();
     long PID = -1;
     String type = null;
+    String fs = null;
 
     private MetricParams() {
     }
@@ -26,12 +27,15 @@ class MetricParams {
 
         long PID = -1;
         String type = "";
+        String FS = "";
         while (st.hasMoreTokens()) {
             String token = st.nextToken(":");
             if (token.startsWith("name=")) {
                 PID = getPIDByName(token, sigar);
             } else if (token.startsWith("pid=")) {
                 PID = getPIDByPID(token);
+            } else if (token.startsWith("fs=")) {
+                FS = getFSByName(token);
             } else if (token.startsWith("ptql=")) {
                 PID = getPIDByPTQL(token, sigar);
             } else {
@@ -42,6 +46,7 @@ class MetricParams {
         MetricParams inst = new MetricParams();
         inst.PID = PID;
         inst.type = type.toLowerCase();
+        inst.fs = FS;
         return inst;
     }
 
@@ -61,6 +66,10 @@ class MetricParams {
         }
 
         return PID;
+    }
+
+    private static String getFSByName(String token) {
+        return token.substring(token.indexOf("=") + 1);
     }
 
     private static long getPIDByPID(String token) {

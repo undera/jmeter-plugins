@@ -8,8 +8,10 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 /**
- *
+ * Class that solved most of communication tasks for Transport interface 
+ * and only readln() and writeln() methods left to be implemented
  * @author undera
+ * @see Transport
  */
 public abstract class AbstractTransport implements Transport {
 
@@ -73,6 +75,12 @@ public abstract class AbstractTransport implements Transport {
         return readln().startsWith("Yep");
     }
 
+    /**
+     * Method retrieves next line from received bytes sequence
+     * @param newlineCount
+     * @return
+     * @throws IOException 
+     */
     protected String getNextLine(int newlineCount) throws IOException {
         if (newlineCount == 0) {
             return "";

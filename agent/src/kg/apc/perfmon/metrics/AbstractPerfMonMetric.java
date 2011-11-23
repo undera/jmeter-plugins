@@ -20,29 +20,29 @@ public abstract class AbstractPerfMonMetric {
         sigarProxy = aSigar;
     }
 
-    public void setParams(String params) {
-        if (!params.isEmpty()) {
-            log.warn("Nothing to do with params: " + params);
-        }
-    }
-
     // FIXME: do we need SigarException here?
     abstract public void getValue(StringBuilder res) throws SigarException;
 
     public static AbstractPerfMonMetric createMetric(String metricType, String metricParams, SigarProxy sigarProxy) {
         log.debug("Creating metric: " + metricType + " with params: " + metricParams);
         AbstractPerfMonMetric metric;
+        if (metricType.indexOf(' ') > 0) {
+            metricType = metricType.substring(0, metricType.indexOf(' '));
+        }
+
         try {
             if (metricType.equalsIgnoreCase("exec")) {
-                metric = new ExecMetric();
+                metric = new ExecMetric(metricParams);
             } else if (metricType.equalsIgnoreCase("tail")) {
-                metric = new TailMetric();
+                metric = new TailMetric(metricParams);
             } else if (metricType.equalsIgnoreCase("cpu")) {
                 metric = AbstractCPUMetric.getMetric(sigarProxy, metricParams);
             } else if (metricType.equalsIgnoreCase("memory")) {
                 metric = AbstractMemMetric.getMetric(sigarProxy, metricParams);
             } else if (metricType.equalsIgnoreCase("swap")) {
-                metric = new SwapTotalMetric(sigarProxy, metricParams);
+                metric = new SwapMetric(sigarProxy, metricParams);
+            } else if (metricType.equalsIgnoreCase("disks")) {
+                metric = new DiskIOMetric(sigarProxy, metricParams);
             } else {
                 throw new SigarException("No SIGAR object for metric type " + metricType);
             }
@@ -51,7 +51,6 @@ public abstract class AbstractPerfMonMetric {
             metric = new InvalidPerfMonMetric();
         }
 
-        metric.setParams(metricParams);
         log.debug("Have metric object: " + metric.toString());
         return metric;
     }

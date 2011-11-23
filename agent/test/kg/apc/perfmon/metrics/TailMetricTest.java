@@ -34,15 +34,15 @@ public class TailMetricTest extends TestCase {
      */
     public void testGetValue() throws Exception {
         System.out.println("getValue");
-        TailMetric instance = new TailMetric();
+        TailMetric instance;
 
         StringBuilder res = new StringBuilder();
-        instance.setParams("/notexists");
+        instance = new TailMetric("/notexists");
         instance.getValue(res);
 
         File f = File.createTempFile("plugins-tail-", ".log");
         PrintWriter w = new PrintWriter(f);
-        instance.setParams(f.getAbsolutePath());
+        instance = new TailMetric(f.getAbsolutePath());
 
         w.write("1");
         w.flush();
@@ -55,15 +55,5 @@ public class TailMetricTest extends TestCase {
         res = new StringBuilder();
         instance.getValue(res);
         assertEquals("15", res.toString());
-    }
-
-    /**
-     * Test of setParams method, of class TailMetric.
-     */
-    public void testSetParams() {
-        System.out.println("setParams");
-        String string = "";
-        TailMetric instance = new TailMetric();
-        instance.setParams(string);
     }
 }

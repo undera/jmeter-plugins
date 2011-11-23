@@ -10,13 +10,21 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 /**
- *
+ * Factory used to obtain instances of PerfMon Agent Connections (Transports)
  * @author undera
+ * @see Transport
  */
 public class TransportFactory {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
+    /**
+     * Primary transport getting method. Tries to connect and test UDP Transport.
+     * If UDP failed, tries TCP transport. If it fails, too, throws IOException
+     * @param addr
+     * @return Transport instance
+     * @throws IOException 
+     */
     public static Transport getTransport(SocketAddress addr) throws IOException {
         Transport trans;
         try {
@@ -42,6 +50,12 @@ public class TransportFactory {
         }
     }
 
+    /**
+     * @deprecated because of instability
+     * @param addr 
+     * @return
+     * @throws IOException 
+     */
     public static Transport NIOUDPInstance(SocketAddress addr) throws IOException {
         DatagramChannel channel = DatagramChannel.open();
         channel.connect(addr);
@@ -51,6 +65,12 @@ public class TransportFactory {
         return ret;
     }
 
+    /**
+     * @deprecated because of instability
+     * @param addr
+     * @return
+     * @throws IOException 
+     */
     public static Transport NIOTCPInstance(SocketAddress addr) throws IOException {
         SocketChannel channel = SocketChannel.open();
         channel.connect(addr);
@@ -59,6 +79,12 @@ public class TransportFactory {
         return ret;
     }
 
+    /**
+     * Returns TCP transport instance, connected to specified address
+     * @param addr
+     * @return Transport instance
+     * @throws IOException 
+     */
     public static Transport TCPInstance(SocketAddress addr) throws IOException {
         Socket sock = new Socket();
         sock.setSoTimeout(getTimeout());
@@ -74,6 +100,13 @@ public class TransportFactory {
         return 2000;
     }
 
+    /**
+     * Returns new UDP Transport instance
+     * connected to specified socket address
+     * @param addr
+     * @return connected Transport
+     * @throws IOException 
+     */
     public static Transport UDPInstance(SocketAddress addr) throws IOException {
         DatagramSocket sock = new DatagramSocket();
         sock.setSoTimeout(getTimeout());

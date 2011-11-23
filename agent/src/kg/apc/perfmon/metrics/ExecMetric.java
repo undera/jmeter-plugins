@@ -17,11 +17,12 @@ class ExecMetric extends AbstractPerfMonMetric {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private String[] command;
 
-    public ExecMetric() {
+    public ExecMetric(String params) {
         super(null);
+        setParams(params);
     }
 
-    public void setParams(String string) {
+    private void setParams(String string) {
         log.debug("Got command line: " + string);
         command = string.split(":");
     }

@@ -18,11 +18,12 @@ class TailMetric extends AbstractPerfMonMetric {
     private String filename;
     private BufferedReader reader;
 
-    public TailMetric() {
+    public TailMetric(String params) {
         super(null);
+        setParams(params);
     }
 
-    public void setParams(String string) {
+    private void setParams(String string) {
         log.debug("Tailing file: " + string);
         filename = string;
     }

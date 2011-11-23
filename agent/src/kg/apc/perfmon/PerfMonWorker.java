@@ -16,6 +16,7 @@ import java.nio.channels.WritableByteChannel;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;
+import kg.apc.perfmon.metrics.SysInfoLogger;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.hyperic.sigar.Sigar;
@@ -47,7 +48,7 @@ public class PerfMonWorker implements Runnable {
         acceptSelector = Selector.open();
         sendSelector = Selector.open();
         writerThread = new Thread(this);
-        sigar=SigarProxyCache.newInstance(new Sigar(), 500);
+        sigar = SigarProxyCache.newInstance(new Sigar(), 500);
     }
 
     public void setTCPPort(int parseInt) {
@@ -303,5 +304,9 @@ public class PerfMonWorker implements Runnable {
     public void setInterval(int parseInt) {
         log.debug("Setting interval to: " + parseInt);
         interval = parseInt;
+    }
+
+    public void logSysInfo() {
+        SysInfoLogger.doIt(sigar);
     }
 }

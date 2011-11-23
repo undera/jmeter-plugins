@@ -30,9 +30,10 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
     public static final byte TX_OVERRUNS = 11;
     public static final byte USED = 12;
     public static final byte SPEED = 13;
+    public static final byte TX_PACKETS = 14;
     public static final String[] types = {"bytesrecv", "rxdrops", "rxerr",
         "rxframe", "rxoverruns", "rx", "bytessent", "txcarrier", "txcollisions", "txdrops",
-        "txerr", "txoverruns", "used", "speed"};
+        "txerr", "txoverruns", "used", "speed", "tx"};
     private int type = -1;
     private final String[] interfaces;
     private double prev = -1;
@@ -123,6 +124,9 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
                     break;
                 case SPEED:
                     val = usage.getSpeed();
+                    break;
+                                    case TX_PACKETS:
+                    val += usage.getTxPackets();
                     break;
                 default:
                     throw new SigarException("Unknown net io type " + type);

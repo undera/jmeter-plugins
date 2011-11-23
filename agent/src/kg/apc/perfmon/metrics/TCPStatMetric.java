@@ -25,7 +25,9 @@ class TCPStatMetric extends AbstractPerfMonMetric {
     public static final byte OUTBOUND_TOTAL = 11;
     public static final byte SYN_RECV = 12;
     public static final byte TIME_WAIT = 13;
-    public static final String[] types = {"pagein", "pageout", "free", "total", "used"};
+    public static final String[] types = {"bound", "close", "close_wait",
+        "closing", "estab", "fin_wait1", "fin_wait2", "idle",
+        "inbound", "last_ack", "listen", "outbound", "syn_recv", "time_wait"};
     private int type = -1;
 
     public TCPStatMetric(SigarProxy aSigar, String metricParams) {

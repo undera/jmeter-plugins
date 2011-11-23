@@ -10,6 +10,7 @@ import org.apache.log.Logger;
 /**
  *
  * @author undera
+ * @deprecated in favor of new agent
  */
 public class OldAgentConnector implements PerfMonAgentConnector {
 

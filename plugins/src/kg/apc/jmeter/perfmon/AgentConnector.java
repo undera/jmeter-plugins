@@ -15,6 +15,7 @@ import org.apache.log.Logger;
 /**
  * This class is used to connect to the remote server Agent and get the metrics
  * @author Stephane Hoblingre
+ * @deprecated in favor of new agent
  */
 public class AgentConnector implements AgentCommandsInterface {
 

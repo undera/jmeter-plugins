@@ -39,12 +39,12 @@ public class AgentTool extends AbstractCMDTool {
                 args.remove();
                 String loglevelStr = (String) args.next();
                 LoggingManager.setPriority(loglevelStr);
-            } else if (nextArg.equalsIgnoreCase("--metrics")) {
+            } else if (nextArg.equalsIgnoreCase("--interval")) {
                 if (!args.hasNext()) {
-                    throw new IllegalArgumentException("Missing metrics specification");
+                    throw new IllegalArgumentException("Missing interval specification");
                 }
 
-                worker.setMetrics((String) args.next());
+                worker.setInterval(Long.parseLong((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--udp-port")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing UDP Port no");
@@ -78,8 +78,9 @@ public class AgentTool extends AbstractCMDTool {
 
     protected void showHelp(PrintStream os) {
         os.println("Options for tool 'PerfMon': "
-                + "[ --tcp-port <port no> "
-                + "--udp-port <port no> --sysinfo --auto-shutdown]");
+                + "[ --tcp-port <port no> --udp-port <port no> "
+                + "--interval <seconds> "
+                + "--sysinfo --auto-shutdown]");
     }
 
     protected PerfMonWorker getWorker() throws IOException {

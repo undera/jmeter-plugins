@@ -41,7 +41,7 @@ public class PerfMonWorker implements Runnable {
     private DatagramChannel udpServer;
     private final LinkedList tcpConnections = new LinkedList();
     private final ConcurrentHashMap udpConnections = new ConcurrentHashMap();
-    private int interval = 1000;
+    private long interval = 1000;
     private final SigarProxy sigar;
     private long numConnections = 0;
     private boolean autoShutdown = false;
@@ -124,7 +124,7 @@ public class PerfMonWorker implements Runnable {
         }
     }
 
-    private int getInterval() {
+    private long getInterval() {
         return interval;
     }
 
@@ -297,20 +297,15 @@ public class PerfMonWorker implements Runnable {
         }
     }
 
-    public void setMetrics(String next) {
-        // TODO: implement command-line printing mode for SSH transport
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
     private static String byteBufferToString(ByteBuffer bytebuff) {
         byte[] bytearr = new byte[bytebuff.remaining()];
         bytebuff.get(bytearr);
         return new String(bytearr);
     }
 
-    public void setInterval(int parseInt) {
-        log.debug("Setting interval to: " + parseInt);
-        interval = parseInt;
+    public void setInterval(long parseInt) {
+        log.debug("Setting interval to: " + parseInt + " seconds");
+        interval = parseInt * 1000;
     }
 
     public void logSysInfo() {

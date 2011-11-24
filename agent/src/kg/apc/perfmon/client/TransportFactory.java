@@ -97,7 +97,7 @@ public class TransportFactory {
     }
 
     private static int getTimeout() {
-        return 2000;
+        return 500;
     }
 
     /**

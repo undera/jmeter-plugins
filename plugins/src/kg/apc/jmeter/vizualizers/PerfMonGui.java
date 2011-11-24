@@ -223,10 +223,10 @@ public class PerfMonGui
         if (res.isSuccessful()) {
             super.add(res);
             //FIX csv reload problem
-            addPerfMonRecord(res.getSampleLabel(), normalizeTime(res.getStartTime()), PerfMonSampleResult.getValue(res));
+            addPerfMonRecord(res.getSampleLabel(), normalizeTime(res.getEndTime()), PerfMonSampleResult.getValue(res));
             updateGui(null);
         } else {
-            addErrorMessage(res.getResponseMessage(), res.getStartTime());
+            addErrorMessage(res.getResponseMessage(), res.getEndTime());
         }
     }
 

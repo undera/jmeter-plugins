@@ -50,7 +50,7 @@
             <zipfileset dir="agent/dist" includes="ServerAgent.jar" prefix="serverAgent"/>
             <zipfileset dir="agent/sigar/sigar-bin/lib" includes="*.*" excludes="junit.jar,log4j.jar,.sigar_shellrc" prefix="serverAgent"/>
             <zipfileset dir="agent" includes="startAgent.*" prefix="serverAgent"/>
-            <zipfileset dir="agent/sigar" includes="COPYING,EXCEPTIONS,LICENSES,README" prefix="serverAgent"/>
+            <zipfileset dir="agent/sigar" includes="AUTHORS,NOTICE,LICENSE,README" prefix="serverAgent"/>
             <zipfileset dir="${jmeter.dir}/lib" includes="jorphan.jar" prefix="serverAgent"/>
             <zipfileset dir="${jmeter.dir}/lib" includes="avalon-framework-*.jar" prefix="serverAgent"/>
             <zipfileset dir="${jmeter.dir}/lib" includes="logkit-*.jar" prefix="serverAgent"/>

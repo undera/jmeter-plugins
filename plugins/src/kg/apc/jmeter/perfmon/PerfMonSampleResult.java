@@ -17,7 +17,8 @@ public class PerfMonSampleResult
 
     // store as responseTime, multiply by 1000 to keep floating precision
     public void setValue(double value) {
-        setStampAndTime(ts, (long) (value * 1000));
+        setStartTime(ts);
+        setEndTime(ts + (long) (value * 1000));
     }
 
     @Deprecated
@@ -27,6 +28,6 @@ public class PerfMonSampleResult
 
     //needed for CSV reload as object created by JMeter is not PerfMonSampleResult but SampleResult
     public static double getValue(SampleResult res) {
-       return ((double) res.getTime()) / 1000d;
+        return ((double) res.getTime()) / 1000d;
     }
 }

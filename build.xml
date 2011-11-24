@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+ <!-- For build instructions please visit http://code.google.com/p/jmeter-plugins/wiki/BuildingFromSource -->
 <project name="JMeterPluginsAll" default="dist" basedir=".">
     <description>Subprojects wrapper</description>
     <target name="dist" depends="clean">
@@ -33,18 +34,29 @@
         </fail>    
     </target>
     
+        <!-- APC: we should provide one package, that includes all of the stuff
+           to use most of our project -->
     <target name="package" depends="check">
         <delete file="JMeterPlugins-snapshot.zip" />
         <property location="../JMeter/trunk" name="jmeter.dir"/>
-        <!-- APC: we should provide one package, that includes all of the stuff
-           to use most of our project -->
+        <!-- Stef was right and we'll pack agent client into jar -->
+        <jar file="plugins/dist/JMeterPlugins.jar" update="yes" 
+            basedir="agent/build/classes" includes="kg/apc/perfmon/client*">
+        </jar>
+        <jar file="plugins/dist/JMeterPlugins.jar" update="yes" 
+            basedir="agent/build/classes" includes="kg/apc/jmeter/perfmon/agent*">
+        </jar>
+        <jar file="plugins/dist/JMeterPlugins.jar" update="yes" 
+            basedir="agent/build/classes" includes="kg/apc/jmeter/perfmon/agent/*">
+        </jar>
+           
         <zip destfile="JMeterPlugins-snapshot.zip" whenempty="fail">
          <!-- JmeterPlugins files -->
             <zipfileset dir="." includes="LICENSE README"/>
             <zipfileset dir="plugins/dist" includes="JMeterPlugins.jar"/>
             <zipfileset dir="cmd/dist" includes="CMDRunner.jar"/>
             <zipfileset dir="plugins" includes="JMeterPluginsCMD.*"/>
-            <zipfileset dir="agent/dist" includes="ServerAgent.jar"/>
+            
          <!-- agent -->
             <zipfileset dir="cmd/dist" includes="CMDRunner.jar" prefix="serverAgent"/>
             <zipfileset dir="agent/dist" includes="ServerAgent.jar" prefix="serverAgent"/>

@@ -119,6 +119,9 @@ and produce their last samples all together without limitations.</stringProp>
 without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESPONSE_TIME">${__Random(1,10)}</stringProp>
           <stringProp name="TestPlan.comments">Pretty fast response time gives us huge possible RPS rate</stringProp>
+          <boolProp name="WAITING">false</boolProp>
+          <stringProp name="REQUEST_DATA"></stringProp>
+          <stringProp name="LATENCY"></stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree/>
       </hashTree>

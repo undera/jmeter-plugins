@@ -82,10 +82,6 @@
 
    <!-- APC: I see no problems in making package always. It is quick enough now. -->
     <target name="-post-jar">
-      <!-- APC: what is svn.dir for us? it is just current dir!
-           and again build.xml should be rarely modified file... -->
-        <property location="./" name="svn.dir"/>
-      
          <!-- APC: for easy debugging environment we copy JAR
            to jmeter/lib/ext, defined by property jmeter.lib.ext
            in private.properties file -->
@@ -111,7 +107,7 @@
 
         <!--  SH: handle plugin nameupdater.properties -->
         <zip destfile="${dist.jar}" update="yes">
-            <zipfileset dir="${svn.dir}" includes="org.apache.jmeter.nameupdater.properties" prefix="META-INF/resources"/>
+            <zipfileset dir="." includes="org.apache.jmeter.nameupdater.properties" prefix="META-INF/resources"/>
         </zip>
     </target>
 

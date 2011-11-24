@@ -81,11 +81,15 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
 
     public void getValue(StringBuilder res) throws SigarException {
         double val = 0;
-        long used = 0;
-        long total = 0;
         double cur;
         for (int n = 0; n < interfaces.length; n++) {
-            NetInterfaceStat usage = sigarProxy.getNetInterfaceStat(interfaces[n]);
+            NetInterfaceStat usage;
+            try {
+                usage = sigarProxy.getNetInterfaceStat(interfaces[n]);
+            } catch (SigarException e) {
+                log.error("Failed to get interface stat: " + interfaces[n], e);
+                continue;
+            }
             switch (type) {
                 case RX_BYTES:
                     val += usage.getRxBytes();
@@ -136,7 +140,6 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
                     throw new SigarException("Unknown net io type " + type);
             }
         }
-
 
         // some post-processing
         switch (type) {

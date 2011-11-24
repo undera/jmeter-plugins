@@ -43,6 +43,8 @@ public class PerfMonWorker implements Runnable {
     private final ConcurrentHashMap udpConnections = new ConcurrentHashMap();
     private int interval = 1000;
     private final SigarProxy sigar;
+    private long numConnections = 0;
+    private boolean autoShutdown = false;
 
     public PerfMonWorker() throws IOException {
         acceptSelector = Selector.open();
@@ -94,6 +96,7 @@ public class PerfMonWorker implements Runnable {
                     this.read(key);
                 } catch (IOException e) {
                     log.error("Error reading from the network layer", e);
+                    notifyDisonnected();
                     key.cancel();
                 }
             }
@@ -149,6 +152,7 @@ public class PerfMonWorker implements Runnable {
 
     private void accept(SelectionKey key) throws IOException {
         log.info("Accepting new TCP connection");
+        numConnections++;
         SelectableChannel channel = key.channel();
         SelectableChannel tcpConn = ((ServerSocketChannel) channel).accept();
         tcpConn.configureBlocking(false);
@@ -169,6 +173,7 @@ public class PerfMonWorker implements Runnable {
             if (channel.read(buf) < 0) {
                 log.info("Closing TCP connection");
                 channel.close();
+                notifyDisonnected();
                 return;
             }
             getter = (PerfMonMetricGetter) key.attachment();
@@ -177,6 +182,7 @@ public class PerfMonWorker implements Runnable {
             SocketAddress remoteAddr = channel.receive(buf);
             if (!udpConnections.containsKey(remoteAddr)) {
                 log.info("Connecting new UDP client");
+                numConnections++;
                 udpConnections.put(remoteAddr, new PerfMonMetricGetter(sigar, this, channel, remoteAddr));
             }
             getter = (PerfMonMetricGetter) udpConnections.get(remoteAddr);
@@ -263,6 +269,7 @@ public class PerfMonWorker implements Runnable {
                     }
                 } catch (IOException e) {
                     log.error("Cannot send data to TCP network connection", e);
+                    notifyDisonnected();
                     key.cancel();
                 }
             }
@@ -308,5 +315,22 @@ public class PerfMonWorker implements Runnable {
 
     public void logSysInfo() {
         SysInfoLogger.doIt(sigar);
+    }
+
+    public void setAutoShutdown() {
+        log.debug("Agent will shutdown when clientds disconnected");
+        autoShutdown = true;
+    }
+
+    public void notifyDisonnected() throws IOException {
+        numConnections--;
+        if (autoShutdown) {
+            log.debug("Num connections: " + numConnections);
+        }
+
+        if (numConnections == 0 && autoShutdown) {
+            log.info("Auto-shutdown triggered");
+            shutdownConnections();
+        }
     }
 }

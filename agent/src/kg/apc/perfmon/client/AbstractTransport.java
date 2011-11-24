@@ -1,4 +1,3 @@
-
 package kg.apc.perfmon.client;
 
 import java.io.IOException;
@@ -59,6 +58,7 @@ public abstract class AbstractTransport implements Transport {
     }
 
     public void disconnect() {
+        log.debug("Disconnecting from " + label);
         try {
             writeln("exit");
         } catch (IOException ex) {

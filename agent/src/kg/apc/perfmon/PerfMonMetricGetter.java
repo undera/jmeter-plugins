@@ -63,8 +63,11 @@ public class PerfMonMetricGetter {
                 metrics = new AbstractPerfMonMetric[0];
                 if (channel instanceof SocketChannel) {
                     channel.close();
+                } else {
+                    log.debug("UDP channel left open to receive data");
                 }
             }
+            controller.notifyDisonnected();
         } else if (cmdType.equals("test")) {
             log.info("Yep, we received the 'test' command");
             if (channel instanceof DatagramChannel) {

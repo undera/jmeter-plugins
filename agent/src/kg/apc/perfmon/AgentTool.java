@@ -51,6 +51,9 @@ public class AgentTool extends AbstractCMDTool {
                 }
 
                 worker.setUDPPort(Integer.parseInt((String) args.next()));
+            } else if (nextArg.equals("--auto-shutdown")) {
+                args.remove();
+                worker.setAutoShutdown();
             } else if (nextArg.equals("--sysinfo")) {
                 args.remove();
                 worker.logSysInfo();
@@ -76,7 +79,7 @@ public class AgentTool extends AbstractCMDTool {
     protected void showHelp(PrintStream os) {
         os.println("Options for tool 'PerfMon': "
                 + "[ --tcp-port <port no> "
-                + "--udp-port <port no> --sysinfo]");
+                + "--udp-port <port no> --sysinfo --auto-shutdown]");
     }
 
     protected PerfMonWorker getWorker() throws IOException {

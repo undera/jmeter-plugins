@@ -1,3 +1,3 @@
 #!/bin/sh
 
-java -jar $(dirname $0)/ServerAgent.jar $*
+java -jar $(dirname $0)/CMDRunner.jar --tool PerfMonAgent $*

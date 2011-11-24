@@ -9,8 +9,33 @@
         <antcall target="package" />
     </target>
     
-    <target name="package" >
+    <target name="check">
+        <fail message="JMeterPlugins.jar missing">
+            <condition>
+                <not>
+                    <available file="plugins/dist/JMeterPlugins.jar" />
+                </not>
+            </condition>  
+        </fail> 
+        <fail message="CMDRunner.jar missing">    
+            <condition>
+                <not>
+                    <available file="cmd/dist/CMDRunner.jar" />
+                </not>
+            </condition>   
+        </fail> 
+        <fail message="ServerAgent.jar missing">    
+            <condition>
+                <not>
+                    <available file="agent/dist/ServerAgent.jar" />
+                </not>
+            </condition>            
+        </fail>    
+    </target>
+    
+    <target name="package" depends="check">
         <delete file="JMeterPlugins-snapshot.zip" />
+        <property location="../JMeter/trunk" name="jmeter.dir"/>
         <!-- APC: we should provide one package, that includes all of the stuff
            to use most of our project -->
         <zip destfile="JMeterPlugins-snapshot.zip" whenempty="fail">
@@ -19,12 +44,16 @@
             <zipfileset dir="plugins/dist" includes="JMeterPlugins.jar"/>
             <zipfileset dir="cmd/dist" includes="CMDRunner.jar"/>
             <zipfileset dir="plugins" includes="JMeterPluginsCMD.*"/>
+            <zipfileset dir="agent/dist" includes="ServerAgent.jar"/>
          <!-- agent -->
             <zipfileset dir="cmd/dist" includes="CMDRunner.jar" prefix="serverAgent"/>
             <zipfileset dir="agent/dist" includes="ServerAgent.jar" prefix="serverAgent"/>
             <zipfileset dir="agent/sigar/sigar-bin/lib" includes="*.*" excludes="junit.jar,log4j.jar,.sigar_shellrc" prefix="serverAgent"/>
             <zipfileset dir="agent" includes="startAgent.*" prefix="serverAgent"/>
             <zipfileset dir="agent/sigar" includes="COPYING,EXCEPTIONS,LICENSES,README" prefix="serverAgent"/>
+            <zipfileset dir="${jmeter.dir}/lib" includes="jorphan.jar" prefix="serverAgent"/>
+            <zipfileset dir="${jmeter.dir}/lib" includes="avalon-framework-*.jar" prefix="serverAgent"/>
+            <zipfileset dir="${jmeter.dir}/lib" includes="logkit-*.jar" prefix="serverAgent"/>
 
              <!-- example test plans -->
             <zipfileset dir="examples" includes="*Example*.jmx" prefix="examples"/>

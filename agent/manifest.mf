@@ -1,3 +1,2 @@
 Manifest-Version: 1.0
-Main-Class: kg.apc.jmeter.perfmon.agent.ServerAgent
-Class-Path: sigar.jar
+Main-Class: kg.apc.cmd.UniversalRunner

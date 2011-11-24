@@ -201,9 +201,14 @@ public class PerfMonCollector
     }
 
     private void shutdownConnectors() {
-        Iterator<PerfMonAgentConnector> it = connectors.values().iterator();
+        log.debug("Shutting down connectors");
+        Iterator<Object> it = connectors.keySet().iterator();
         while (it.hasNext()) {
-            it.next().disconnect();
+            Object key = it.next();
+            final PerfMonAgentConnector conn = connectors.get(key);
+            log.debug("Shutting down " + conn.toString());
+            connectors.remove(key);
+            conn.disconnect();
         }
     }
 
@@ -222,6 +227,7 @@ public class PerfMonCollector
     }
 
     //need floating point precision for memory and cpu
+    @Override
     public void generateSample(double value, String label) {
         if (value != AgentConnector.AGENT_ERROR) {
             PerfMonSampleResult res = new PerfMonSampleResult();
@@ -233,6 +239,7 @@ public class PerfMonCollector
         }
     }
 
+    @Override
     public void generateErrorSample(String label, String errorMsg) {
         PerfMonSampleResult res = new PerfMonSampleResult();
         res.setSampleLabel(label);
@@ -244,11 +251,13 @@ public class PerfMonCollector
         log.error("Perfmon plugin error: " + errorMsg);
     }
 
+    @Override
     public void generate2Samples(long[] values, String label1, String label2) {
         generate2Samples(values, label1, label2, 1d);
     }
 
     //float precision required for net io
+    @Override
     public void generate2Samples(long[] values, String label1, String label2, double dividingFactor) {
         if (oldValues.containsKey(label1) && oldValues.containsKey(label2)) {
             generateSample(((double) (values[0] - oldValues.get(label1).longValue())) / dividingFactor, label1);

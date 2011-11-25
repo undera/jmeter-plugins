@@ -51,7 +51,7 @@ public abstract class AbstractTransport implements Transport {
     public void startWithMetrics(String[] metricsArray) throws IOException {
         String cmd = "metrics:";
         for (int n = 0; n < metricsArray.length; n++) {
-            cmd += metricsArray[n] + PerfMonMetricGetter.TAB;
+            cmd += metricsArray[n].replace('\t', ' ') + PerfMonMetricGetter.TAB;
         }
         log.debug("Starting with metrics: " + cmd);
         writeln(cmd);

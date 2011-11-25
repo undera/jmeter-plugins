@@ -313,7 +313,7 @@ public class PerfMonWorker implements Runnable {
     }
 
     public void setAutoShutdown() {
-        log.debug("Agent will shutdown when clientds disconnected");
+        log.info("Agent will shutdown when all clients disconnected");
         autoShutdown = true;
     }
 

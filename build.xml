@@ -39,16 +39,6 @@
     <target name="package" depends="check">
         <delete file="JMeterPlugins-snapshot.zip" />
         <property location="../JMeter/trunk" name="jmeter.dir"/>
-        <!-- Stef was right and we'll pack agent client into jar -->
-        <jar file="plugins/dist/JMeterPlugins.jar" update="yes" 
-            basedir="agent/build/classes" includes="kg/apc/perfmon/client*">
-        </jar>
-        <jar file="plugins/dist/JMeterPlugins.jar" update="yes" 
-            basedir="agent/build/classes" includes="kg/apc/jmeter/perfmon/agent*">
-        </jar>
-        <jar file="plugins/dist/JMeterPlugins.jar" update="yes" 
-            basedir="agent/build/classes" includes="kg/apc/jmeter/perfmon/agent/*">
-        </jar>
            
         <zip destfile="JMeterPlugins-snapshot.zip" whenempty="fail">
          <!-- JmeterPlugins files -->

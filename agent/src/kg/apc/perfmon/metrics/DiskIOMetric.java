@@ -42,7 +42,7 @@ class DiskIOMetric extends AbstractPerfMonMetric {
         super(aSigar);
 
         if (params.type.isEmpty()) {
-            type = USE_PERCENT;
+            type = DISK_QUEUE;
         } else {
             type = Arrays.asList(types).indexOf(params.type);
             if (type < 0) {

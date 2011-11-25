@@ -79,7 +79,7 @@ public class AgentTool extends AbstractCMDTool {
     protected void showHelp(PrintStream os) {
         os.println("Options for tool 'PerfMon': "
                 + "[ --tcp-port <port no> --udp-port <port no> "
-                + "--interval <seconds> "
+                + "--interval <seconds> --loglevel <debug|info|warn|error>"
                 + "--sysinfo --auto-shutdown]");
     }
 

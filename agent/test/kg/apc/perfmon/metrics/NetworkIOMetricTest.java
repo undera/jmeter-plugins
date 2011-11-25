@@ -39,7 +39,7 @@ public class NetworkIOMetricTest extends TestCase {
         System.out.println("getValue");
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         for (int n = 0; n < NetworkIOMetric.types.length; n++) {
-            NetworkIOMetric instance = new NetworkIOMetric(sigar, NetworkIOMetric.types[n]);
+            NetworkIOMetric instance = new NetworkIOMetric(sigar, MetricParams.createFromString(NetworkIOMetric.types[n]));
             StringBuilder res = new StringBuilder();
             instance.getValue(res);
             System.out.println(NetworkIOMetric.types[n] + "=" + res.toString());

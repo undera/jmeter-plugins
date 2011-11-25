@@ -2,7 +2,10 @@ package kg.apc.perfmon.metrics;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.StringTokenizer;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.hyperic.sigar.ProcExe;
@@ -20,19 +23,41 @@ class MetricParams {
     String type = null;
     String fs = null;
     String iface = null;
+    String[] params = new String[0];
 
     private MetricParams() {
     }
 
+    static MetricParams createFromString(String string) {
+        return createFromString(string, null);
+    }
+
+    // TODO: pretty ugly, refactor it
     public static MetricParams createFromString(String metricParams, SigarProxy sigar) {
-        StringTokenizer st = new StringTokenizer(metricParams);
+        Scanner st = new Scanner(metricParams);
+        st.useDelimiter(AbstractPerfMonMetric.PARAMS_DELIMITER);
 
         long PID = -1;
         String type = "";
         String FS = "";
         String ifc = "";
-        while (st.hasMoreTokens()) {
-            String token = st.nextToken(":");
+        List params = new LinkedList();
+        while (true) {
+            String token;
+            try {
+                token = st.next();
+
+                String buff = token;
+                while (token.endsWith("\\")) {
+                    buff = token.substring(0, token.length() - 1) + AbstractPerfMonMetric.PARAMS_DELIMITER;
+                    token = st.next();
+                    buff += token;
+                }
+                token = buff;
+            } catch (NoSuchElementException e) {
+                break;
+            }
+
             if (token.startsWith("name=")) {
                 PID = getPIDByName(token, sigar);
             } else if (token.startsWith("pid=")) {
@@ -44,6 +69,7 @@ class MetricParams {
             } else if (token.startsWith("ptql=")) {
                 PID = getPIDByPTQL(token, sigar);
             } else {
+                params.add(token);
                 type = token;
             }
         }
@@ -53,6 +79,7 @@ class MetricParams {
         inst.type = type.toLowerCase();
         inst.fs = FS;
         inst.iface = ifc;
+        inst.params = (String[]) params.toArray(new String[0]);
         return inst;
     }
 
@@ -179,8 +206,12 @@ class MetricParams {
         }
     }
 
-    private static String join(final StringBuilder buff, final Object array[],
+    public static String join(StringBuilder buff, final Object array[],
             final String delim) {
+        if (buff == null) {
+            buff = new StringBuilder();
+        }
+
         boolean haveDelim = (delim != null);
 
         for (int i = 0; i < array.length; i++) {

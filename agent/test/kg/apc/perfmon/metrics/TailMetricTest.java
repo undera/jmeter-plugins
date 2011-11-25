@@ -37,12 +37,12 @@ public class TailMetricTest extends TestCase {
         TailMetric instance;
 
         StringBuilder res = new StringBuilder();
-        instance = new TailMetric("/notexists");
+        instance = new TailMetric(MetricParams.createFromString("/notexists"));
         instance.getValue(res);
 
         File f = File.createTempFile("plugins-tail-", ".log");
         PrintWriter w = new PrintWriter(f);
-        instance = new TailMetric(f.getAbsolutePath());
+        instance = new TailMetric(MetricParams.createFromString(f.getAbsolutePath()));
 
         w.write("1");
         w.flush();

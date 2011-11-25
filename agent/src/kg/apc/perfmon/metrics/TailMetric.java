@@ -18,16 +18,13 @@ class TailMetric extends AbstractPerfMonMetric {
     private String filename;
     private BufferedReader reader;
 
-    public TailMetric(String params) {
+    public TailMetric(MetricParams params) {
         super(null);
-        if (params.isEmpty()) {
+        if (params.params.length == 0) {
             throw new IllegalArgumentException("Cannot tail unspecified file");
         }
 
-        setParams(params);
-    }
-
-    private void setParams(String string) {
+        String string = MetricParams.join(null, params.params, PARAMS_DELIMITER);
         log.debug("Tailing file: " + string);
         filename = string;
     }

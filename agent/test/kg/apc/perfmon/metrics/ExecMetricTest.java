@@ -33,7 +33,7 @@ public class ExecMetricTest extends TestCase {
     public void testGetValue() throws Exception {
         System.out.println("getValue");
         StringBuilder res = new StringBuilder();
-        ExecMetric instance = new ExecMetric("echo:123");
+        ExecMetric instance = new ExecMetric(MetricParams.createFromString("echo:123"));
         instance.getValue(res);
         assertTrue(Double.parseDouble(res.toString()) > 0);
     }

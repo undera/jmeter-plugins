@@ -13,9 +13,7 @@ abstract class AbstractCPUMetric extends AbstractPerfMonMetric {
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected final MetricParams params;
 
-    public static AbstractCPUMetric getMetric(SigarProxy sigar, String metricParams) {
-        MetricParams params = MetricParams.createFromString(metricParams, sigar);
-
+    public static AbstractCPUMetric getMetric(SigarProxy sigar, MetricParams params) {
         if (params.PID >= 0) {
             return new CPUProcMetric(sigar, params);
         } else {

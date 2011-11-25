@@ -23,12 +23,14 @@ public abstract class AbstractPerfMonMetric {
     // FIXME: do we need SigarException here?
     abstract public void getValue(StringBuilder res) throws SigarException;
 
-    public static AbstractPerfMonMetric createMetric(String metricType, String metricParams, SigarProxy sigarProxy) {
-        log.debug("Creating metric: " + metricType + " with params: " + metricParams);
+    public static AbstractPerfMonMetric createMetric(String metricType, String metricParamsStr, SigarProxy sigarProxy) {
+        log.debug("Creating metric: " + metricType + " with params: " + metricParamsStr);
         AbstractPerfMonMetric metric;
         if (metricType.indexOf(' ') > 0) {
             metricType = metricType.substring(0, metricType.indexOf(' '));
         }
+
+        MetricParams metricParams = MetricParams.createFromString(metricParamsStr, sigarProxy);
 
         try {
             if (metricType.equalsIgnoreCase("exec")) {

@@ -1,11 +1,3 @@
-/**
- * 
- * core ID
- * process id
- * image name
- * 
- * 
- */
 package kg.apc.perfmon.metrics;
 
 import java.util.Arrays;
@@ -46,9 +38,8 @@ class DiskIOMetric extends AbstractPerfMonMetric {
     private final String[] filesystems;
     private double prev = -1;
 
-    public DiskIOMetric(SigarProxy aSigar, String metricParams) {
+    public DiskIOMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar);
-        MetricParams params = MetricParams.createFromString(metricParams, sigarProxy);
 
         if (params.type.isEmpty()) {
             type = USE_PERCENT;

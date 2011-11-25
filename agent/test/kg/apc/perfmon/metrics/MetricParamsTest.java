@@ -37,11 +37,19 @@ public class MetricParamsTest extends TestCase {
 
     public void testCreateFromString_name() {
         System.out.println("createFromString");
-        String defaultType = "";
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         MetricParams resultLinux = MetricParams.createFromString("name=java#1", sigar);
         MetricParams resultWin = MetricParams.createFromString("name=java.exe#1", sigar);
         assertTrue(resultLinux.PID > 0 || resultWin.PID > 0);
+    }
+
+    public void testCreateFromString_escaping() {
+        System.out.println("createFromString");
+        final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
+        MetricParams result = MetricParams.createFromString("exec:testcolon\\:attr:next", sigar);
+        assertEquals("exec", result.params[0]);
+        assertEquals("testcolon:attr", result.params[1]);
+        assertEquals("next", result.params[2]);
     }
 
     public void testCreateFromString() {

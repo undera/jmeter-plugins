@@ -13,8 +13,7 @@ abstract class AbstractMemMetric extends AbstractPerfMonMetric {
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected final MetricParams params;
 
-    public static AbstractMemMetric getMetric(SigarProxy sigar, String metricParams) {
-        MetricParams params = MetricParams.createFromString(metricParams, sigar);
+    public static AbstractMemMetric getMetric(SigarProxy sigar, MetricParams params) {
         if (params.PID >= 0) {
             return new MemProcMetric(sigar, params);
         } else {

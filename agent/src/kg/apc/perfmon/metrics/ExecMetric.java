@@ -17,18 +17,13 @@ class ExecMetric extends AbstractPerfMonMetric {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private String[] command;
 
-    public ExecMetric(String params) {
+    public ExecMetric(MetricParams params) {
         super(null);
-        if (params.isEmpty()) {
+        if (params.params.length == 0) {
             throw new IllegalArgumentException("Params cannot be null");
         }
 
-        setParams(params);
-    }
-
-    private void setParams(String string) {
-        log.debug("Got command line: " + string);
-        command = string.split(":");
+        command = params.params;
     }
 
     public void getValue(StringBuilder res) throws SigarException {
@@ -54,7 +49,7 @@ class ExecMetric extends AbstractPerfMonMetric {
             }
             res.append(lastStr);
         } catch (IOException e) {
-            log.error("Problems executing: " + command, e);
+            log.error("Problems executing: " + command[0], e);
         }
     }
 }

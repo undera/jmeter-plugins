@@ -38,9 +38,9 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
     private final String[] interfaces;
     private double prev = -1;
 
-    public NetworkIOMetric(SigarProxy aSigar, String metricParams) {
+    public NetworkIOMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar);
-        MetricParams params = MetricParams.createFromString(metricParams, sigarProxy);
+        
         if (params.type.isEmpty()) {
             type = RX_BYTES;
         } else {

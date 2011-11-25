@@ -30,15 +30,15 @@ class TCPStatMetric extends AbstractPerfMonMetric {
         "inbound", "last_ack", "listen", "outbound", "syn_recv", "time_wait"};
     private int type = -1;
 
-    public TCPStatMetric(SigarProxy aSigar, String metricParams) {
+    public TCPStatMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar);
-        MetricParams params = MetricParams.createFromString(metricParams, sigarProxy);
+
         if (params.type.isEmpty()) {
             type = ESTAB;
         } else {
             type = Arrays.asList(types).indexOf(params.type);
             if (type < 0) {
-                throw new IllegalArgumentException("Unknown TCP type: " + metricParams);
+                throw new IllegalArgumentException("Unknown TCP type: " + params.type);
             }
         }
     }

@@ -19,15 +19,14 @@ class SwapMetric extends AbstractPerfMonMetric {
     public static final String[] types = {"pagein", "pageout", "free", "total", "used"};
     private int type = -1;
 
-    public SwapMetric(SigarProxy aSigar, String metricParams) {
+    public SwapMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar);
-        MetricParams params = MetricParams.createFromString(metricParams, sigarProxy);
         if (params.type.isEmpty()) {
             type = USED;
         } else {
             type = Arrays.asList(types).indexOf(params.type);
             if (type < 0) {
-                throw new IllegalArgumentException("Unknown swap type: " + metricParams);
+                throw new IllegalArgumentException("Unknown swap type: " + params.type);
             }
         }
     }

@@ -80,11 +80,9 @@
         -->
     </target>
 
-   <!-- APC: I see no problems in making package always. It is quick enough now. -->
-    <target name="-post-jar">
-         <!-- Stef was right and we'll pack agent client into jar -->
+    <target name="update-jar" if="${agent.built}">
         <jar file="${dist.jar}" update="yes" 
-            basedir="../agent/build/classes" includes="kg/apc/perfmon/client*">
+            basedir="../agent/build/classes" includes="kg/apc/perfmon/client*">  
         </jar>
         <jar file="${dist.jar}" update="yes" 
             basedir="../agent/build/classes" includes="kg/apc/jmeter/perfmon/agent*">
@@ -93,6 +91,17 @@
             basedir="../agent/build/classes" includes="kg/apc/jmeter/perfmon/agent/*">
         </jar>
         
+    </target>
+
+   <!-- APC: I see no problems in making package always. It is quick enough now. -->
+    <target name="-post-jar">
+             <!-- Stef was right and we'll pack agent client into jar -->
+        <condition property="agent.built">
+            <available file="../agent/build/classes" />
+        </condition>
+        <antcall target="update-jar">
+            <param name="agent.built" value="${agent.built}" />    
+        </antcall>
          <!-- APC: for easy debugging environment we copy JAR
            to jmeter/lib/ext, defined by property jmeter.lib.ext
            in private.properties file -->

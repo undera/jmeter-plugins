@@ -37,12 +37,12 @@ public class ExecMetricTest extends TestCase {
         instance.getValue(res);
         assertTrue(Double.parseDouble(res.toString()) > 0);
     }
+
     /*
     public void testGetValue2() throws Exception {
     System.out.println("getValue");
     StringBuilder res = new StringBuilder();
-    ExecMetric instance = new ExecMetric();
-    instance.setParams("/bin/sh:-c:uptime | cut -d ' ' -f 12 | cut -d ',' -f 1");
+    ExecMetric instance = new ExecMetric(MetricParams.createFromString("/usr/bin/perl:-e:\"print 100*rand(1);\""));
     instance.getValue(res);
     assertTrue(Double.parseDouble(res.toString()) > 0);
     }

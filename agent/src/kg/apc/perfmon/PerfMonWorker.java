@@ -180,6 +180,10 @@ public class PerfMonWorker implements Runnable {
         } else if (key.channel() instanceof DatagramChannel) {
             DatagramChannel channel = (DatagramChannel) key.channel();
             SocketAddress remoteAddr = channel.receive(buf);
+            if (remoteAddr == null) {
+                throw new IOException("Received null datagram");
+            }
+
             if (!udpConnections.containsKey(remoteAddr)) {
                 log.info("Connecting new UDP client");
                 numConnections++;

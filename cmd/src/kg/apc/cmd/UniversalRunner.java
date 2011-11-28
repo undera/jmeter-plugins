@@ -72,7 +72,13 @@ public final class UniversalRunner {
          */
         boolean usesUNC = OS_NAME_LC.startsWith("windows");// $NON-NLS-1$
 
-        int count = jarDirectory.split(File.separator).length;
+        String pattern = File.separator;
+        if("\\".equals(pattern)) {
+           pattern = "\\\\";
+        }
+
+        int count = jarDirectory.split(pattern).length;
+        
         File[] libDirs = new File[count];
         File f = new File(jarDirectory);
         for (int n = 0; n < count; n++) {

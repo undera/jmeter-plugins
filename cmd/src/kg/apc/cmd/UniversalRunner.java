@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -72,30 +73,25 @@ public final class UniversalRunner {
          */
         boolean usesUNC = OS_NAME_LC.startsWith("windows");// $NON-NLS-1$
 
-        String pattern = File.separator;
-        if("\\".equals(pattern)) {
-           pattern = "\\\\";
-        }
-
-        int count = jarDirectory.split(pattern).length;
-        
-        File[] libDirs = new File[count];
+        List libDirs = new LinkedList();
         File f = new File(jarDirectory);
-        for (int n = 0; n < count; n++) {
-            libDirs[n] = f.getAbsoluteFile();
+        while (f != null) {
+            libDirs.add(f.getAbsoluteFile());
             f = f.getParentFile();
-            //System.err.println(libDirs[n]);
         }
 
-        for (int a = 0; a < libDirs.length; a++) {
-            File[] libJars = libDirs[a].listFiles(new FilenameFilter() {
+        Iterator it = libDirs.iterator();
+
+        while (it.hasNext()) {
+            File libDir = (File) it.next();
+            File[] libJars = libDir.listFiles(new FilenameFilter() {
 
                 public boolean accept(File dir, String name) {// only accept jar files
                     return name.endsWith(".jar");// $NON-NLS-1$
                 }
             });
             if (libJars == null) {
-                new Throwable("Could not access " + libDirs[a]).printStackTrace(System.err);
+                new Throwable("Could not access " + libDir).printStackTrace(System.err);
                 continue;
             }
             for (int i = 0; i < libJars.length; i++) {

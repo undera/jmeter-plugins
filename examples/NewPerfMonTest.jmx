@@ -9,7 +9,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="host" elementType="Argument">
             <stringProp name="Argument.name">host</stringProp>
-            <stringProp name="Argument.value">192.168.0.1</stringProp>
+            <stringProp name="Argument.value">localhost</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -218,6 +218,12 @@
             <stringProp name="2142353">EXEC</stringProp>
             <stringProp name="-128701370">/bin/sh:-c:free | grep Mem | awk &apos;{print $7}&apos;</stringProp>
           </collectionProp>
+          <collectionProp name="-1215858206">
+            <stringProp name="1211246942">${host}</stringProp>
+            <stringProp name="1600768">4444</stringProp>
+            <stringProp name="2142353">EXEC</stringProp>
+            <stringProp name="-1758602915">/usr/bin/perl:-e:&quot;print 100*rand(1);&quot;</stringProp>
+          </collectionProp>
         </collectionProp>
       </kg.apc.jmeter.perfmon.PerfMonCollector>
       <hashTree/>
@@ -412,31 +418,31 @@
         <longProp name="interval_grouping">1000</longProp>
         <boolProp name="graph_aggregated">false</boolProp>
         <collectionProp name="metricConnections">
-          <collectionProp name="1666122338">
+          <collectionProp name="1474860229">
             <stringProp name="1211246942">${host}</stringProp>
             <stringProp name="1600768">4444</stringProp>
             <stringProp name="2590131">Swap</stringProp>
             <stringProp name="-995751948">pagein</stringProp>
           </collectionProp>
-          <collectionProp name="338681640">
+          <collectionProp name="147419531">
             <stringProp name="1211246942">${host}</stringProp>
             <stringProp reference="../../collectionProp/stringProp[2]"/>
             <stringProp reference="../../collectionProp/stringProp[3]"/>
             <stringProp name="-803533217">pageout</stringProp>
           </collectionProp>
-          <collectionProp name="-973633108">
+          <collectionProp name="-1164895217">
             <stringProp name="1211246942">${host}</stringProp>
             <stringProp reference="../../collectionProp/stringProp[2]"/>
             <stringProp name="2590131">Swap</stringProp>
             <stringProp name="3151468">free</stringProp>
           </collectionProp>
-          <collectionProp name="-1913650052">
+          <collectionProp name="-2104912161">
             <stringProp name="1211246942">${host}</stringProp>
             <stringProp reference="../../collectionProp/stringProp[2]"/>
             <stringProp name="2590131">Swap</stringProp>
             <stringProp name="110549828">total</stringProp>
           </collectionProp>
-          <collectionProp name="-885606845">
+          <collectionProp name="-1076868954">
             <stringProp name="1211246942">${host}</stringProp>
             <stringProp reference="../../collectionProp/stringProp[2]"/>
             <stringProp name="2590131">Swap</stringProp>
@@ -746,7 +752,7 @@
             <stringProp name="82881">TCP</stringProp>
             <stringProp name="94756344">close</stringProp>
           </collectionProp>
-          <collectionProp name="-1304432632">
+          <collectionProp name="-1495694741">
             <stringProp name="1211246942">${host}</stringProp>
             <stringProp name="1600768">4444</stringProp>
             <stringProp name="82881">TCP</stringProp>
@@ -853,7 +859,7 @@ without actual network activity. This helps debugging tests.</stringProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.domain">${host}</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>

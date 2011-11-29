@@ -21,7 +21,7 @@ abstract class AbstractCPUMetric extends AbstractPerfMonMetric {
         }
     }
 
-    public AbstractCPUMetric(SigarProxy aSigar, MetricParams params) {
+    protected AbstractCPUMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar);
         this.params = params;
     }

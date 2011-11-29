@@ -19,7 +19,7 @@ class CPUProcMetric extends AbstractCPUMetric {
     private int type = -1;
     private double prev = -1;
 
-    public CPUProcMetric(SigarProxy aSigar, MetricParams params) {
+    protected CPUProcMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar, params);
         if (params.type.isEmpty()) {
             type = PERCENT;

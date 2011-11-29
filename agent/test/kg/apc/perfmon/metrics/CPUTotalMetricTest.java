@@ -42,6 +42,15 @@ public class CPUTotalMetricTest extends TestCase {
         instance.getValue(res);
     }
 
+    public void testGetValue_core() throws Exception {
+        System.out.println("getValue");
+        StringBuilder res = new StringBuilder("");
+        SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
+        MetricParams params = MetricParams.createFromString("core=0:idle", sigar);
+        CPUTotalMetric instance = new CPUTotalMetric(sigar, params);
+        instance.getValue(res);
+    }
+
     public void testGetValue_all() throws Exception {
         System.out.println("getValue");
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);

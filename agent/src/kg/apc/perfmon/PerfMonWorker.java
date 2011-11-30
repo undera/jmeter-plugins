@@ -332,4 +332,19 @@ public class PerfMonWorker implements Runnable {
             shutdownConnections();
         }
     }
+
+    public void sendToClient(SelectableChannel channel, ByteBuffer buf) throws IOException {
+        if (channel instanceof DatagramChannel) {
+            DatagramChannel udpChannel = (DatagramChannel) channel;
+            Iterator it = udpConnections.keySet().iterator();
+            while (it.hasNext()) {
+                SocketAddress addr = (SocketAddress) it.next();
+                if (udpConnections.get(addr) == udpChannel) {
+                    udpChannel.send(buf, addr);
+                }
+            }
+        } else {
+            ((SocketChannel) channel).write(buf);
+        }
+    }
 }

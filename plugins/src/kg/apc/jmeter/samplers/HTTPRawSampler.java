@@ -10,6 +10,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.AbstractSelectableChannel;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
@@ -29,6 +31,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
     private static final String SPACE = " ";
     // 
     protected static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Pattern anyContent = Pattern.compile(".+", Pattern.DOTALL);
     private SocketChannel savedSock;
 
     public HTTPRawSampler() {
@@ -98,44 +101,48 @@ public class HTTPRawSampler extends AbstractIPSampler {
     }
 
     private void parseResponse(SampleResult res) {
-        String[] parsed = res.getResponseDataAsString().split(RNpattern);
+        Scanner scanner = new Scanner(res.getResponseDataAsString());
+        scanner.useDelimiter(RNpattern);
 
-        if (parsed.length > 0) {
-            int s = parsed[0].indexOf(SPACE);
-            int e = parsed[0].indexOf(SPACE, s + 1);
-            if (s < e) {
-                String rc = parsed[0].substring(s, e).trim();
-                try {
-                    int rcInt = Integer.parseInt(rc);
-                    if (rcInt < 100 || rcInt > 599) {
-                        return;
-                    }
-                    res.setResponseCode(rc);
-                    res.setResponseMessage(parsed[0].substring(e).trim());
-                } catch (NumberFormatException ex) {
+        if (!scanner.hasNextLine()) {
+            return;
+        }
+
+        String httpStatus = scanner.nextLine();
+
+        int s = httpStatus.indexOf(SPACE);
+        int e = httpStatus.indexOf(SPACE, s + 1);
+        if (s < e) {
+            String rc = httpStatus.substring(s, e).trim();
+            try {
+                int rcInt = Integer.parseInt(rc);
+                if (rcInt < 100 || rcInt > 599) {
                     return;
                 }
-            } else {
+                res.setResponseCode(rc);
+                res.setResponseMessage(httpStatus.substring(e).trim());
+            } catch (NumberFormatException ex) {
                 return;
             }
+        } else {
+            return;
         }
 
-        if (parsed.length > 1) {
-            int n = 1;
-            String headers = EMPTY;
-            while (n < parsed.length && parsed[n].length() > 0) {
-                headers += parsed[n] + CRLF;
-                n++;
-            }
-            res.setResponseHeaders(headers);
-            String body = EMPTY;
-            n++;
-            while (n < parsed.length) {
-                body += parsed[n] + (n + 1 < parsed.length ? CRLF : EMPTY);
-                n++;
-            }
-            res.setResponseData(body.getBytes());
+        if (!scanner.hasNextLine()) {
+            return;
         }
+
+        int n = 1;
+        String headers = EMPTY;
+        String line;
+        while (scanner.hasNextLine() && !(line = scanner.nextLine()).isEmpty()) {
+            headers += line + CRLF;
+            n++;
+        }
+        res.setResponseHeaders(headers);
+
+        res.setResponseData(scanner.next(anyContent).getBytes());
+
     }
 
     @Override

@@ -81,6 +81,25 @@ public class HTTPRawSamplerTest {
         assertTrue(!instance.sockEmul.isOpen());
     }
 
+    @Test
+    public void testSample_hugeparse() throws MalformedURLException, IOException {
+        System.out.println("sample");
+        String req = "GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
+        String resp = "HTTP/1.1 200 OK\r\nConnection: close\r\n\r\n" + TestJMeterUtils.getTestData(10000000);
+        instance.setRequestData(req);
+        instance.setParseResult(true);
+
+        instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
+
+        SampleResult result = instance.sample(null);
+        //System.err.println(result.getResponseDataAsString().length());
+        assertEquals(ByteBuffer.wrap(req.getBytes()), instance.sockEmul.getWrittenBytes());
+        assertTrue(result.isSuccessful());
+        assertEquals("200", result.getResponseCode());
+        assertEquals(10000000, result.getResponseDataAsString().length());
+        assertTrue(!instance.sockEmul.isOpen());
+    }
+
     /**
      * Test of sample method, of class HTTPRawSampler.
      */

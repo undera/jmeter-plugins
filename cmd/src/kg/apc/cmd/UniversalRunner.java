@@ -156,7 +156,7 @@ public final class UniversalRunner {
         } catch (Throwable e) {
             if (e.getCause() != null) {
                 System.err.println("ERROR: " + e.getCause().toString());
-                System.err.println("Problem's technical details go below:");
+                System.err.println("*** Problem's technical details go below ***");
                 System.err.println("Home directory was detected as: " + jarDirectory);
                 throw e.getCause();
             } else {

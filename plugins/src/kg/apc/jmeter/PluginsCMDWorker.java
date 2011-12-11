@@ -49,7 +49,7 @@ public class PluginsCMDWorker {
             return;
         }
 
-        String homeDir = UniversalRunner.getJMeterDir();
+        String homeDir = UniversalRunner.getJARLocation();
 
         File dir = new File(homeDir);
         while (dir != null && dir.exists()

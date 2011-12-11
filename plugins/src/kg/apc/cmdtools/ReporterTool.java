@@ -1,9 +1,9 @@
 // TODO: add SummaryReport support
-package kg.apc.jmeter;
+package kg.apc.cmdtools;
 
-import kg.apc.cmdtools.AbstractCMDTool;
 import java.io.PrintStream;
 import java.util.ListIterator;
+import kg.apc.jmeter.PluginsCMDWorker;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 

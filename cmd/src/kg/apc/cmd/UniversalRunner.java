@@ -145,7 +145,7 @@ public final class UniversalRunner {
         try {
             Class initialClass;
             // make it independent - get class name & method from props/manifest
-            initialClass = Thread.currentThread().getContextClassLoader().loadClass("kg.apc.jmeter.PluginsCMD");// $NON-NLS-1$
+            initialClass = Thread.currentThread().getContextClassLoader().loadClass("kg.apc.cmdtools.PluginsCMD");// $NON-NLS-1$
             Object instance = initialClass.newInstance();
             Method startup = initialClass.getMethod("processParams", new Class[]{(new String[0]).getClass()});// $NON-NLS-1$
             Object res = startup.invoke(instance, new Object[]{args});

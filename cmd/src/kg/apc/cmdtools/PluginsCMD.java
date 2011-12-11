@@ -96,7 +96,7 @@ public class PluginsCMD extends AbstractCMDTool {
         Class toolClass;
 
         try {
-            toolClass = loader.loadClass("kg.apc.jmeter." + arg + "Tool");
+            toolClass = loader.loadClass("kg.apc.cmdtools." + arg + "Tool");
         } catch (ClassNotFoundException e) {
             try {
                 toolClass = loader.loadClass(arg);

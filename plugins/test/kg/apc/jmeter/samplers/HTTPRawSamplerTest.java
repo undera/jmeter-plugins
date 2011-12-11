@@ -66,7 +66,7 @@ public class HTTPRawSamplerTest {
     public void testSample() throws MalformedURLException, IOException {
         System.out.println("sample");
         String req = "GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
-        String resp = "HTTP/1.1 200 OK\r\n\r\nTEST";
+        String resp = "HTTP/1.1 200 OK\r\nConnection: close\r\n\r\nTEST";
         instance.setRequestData(req);
         instance.setParseResult(true);
 
@@ -78,6 +78,25 @@ public class HTTPRawSamplerTest {
         assertTrue(result.isSuccessful());
         assertEquals("200", result.getResponseCode());
         assertEquals("TEST", result.getResponseDataAsString());
+        assertTrue(!instance.sockEmul.isOpen());
+    }
+
+    @Test
+    public void testSample_hugeparse() throws MalformedURLException, IOException {
+        System.out.println("sample");
+        String req = "GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
+        String resp = "HTTP/1.1 200 OK\r\nConnection: close\r\n\r\n" + TestJMeterUtils.getTestData(10000000);
+        instance.setRequestData(req);
+        instance.setParseResult(true);
+
+        instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
+
+        SampleResult result = instance.sample(null);
+        //System.err.println(result.getResponseDataAsString().length());
+        assertEquals(ByteBuffer.wrap(req.getBytes()), instance.sockEmul.getWrittenBytes());
+        assertTrue(result.isSuccessful());
+        assertEquals("200", result.getResponseCode());
+        assertTrue( result.getResponseDataAsString().length()>6000);
         assertTrue(!instance.sockEmul.isOpen());
     }
 

@@ -1,8 +1,9 @@
 // TODO: add SummaryReport support
-package kg.apc.jmeter;
+package kg.apc.cmdtools;
 
 import java.io.PrintStream;
 import java.util.ListIterator;
+import kg.apc.jmeter.PluginsCMDWorker;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -38,6 +39,21 @@ public class ReporterTool extends AbstractCMDTool {
 
     @Override
     protected int processParams(ListIterator args) throws UnsupportedOperationException, IllegalArgumentException {
+        // first process params without worker created
+        while (args.hasNext()) {
+            String nextArg = (String) args.next();
+            if (nextArg.equals("--loglevel")) {
+                args.remove();
+                String loglevelStr = (String) args.next();
+                args.remove();
+                LoggingManager.setPriority(loglevelStr);
+            }
+        }
+
+        // rewind it
+        while (args.hasPrevious()) {
+            args.previous();
+        }
 
         PluginsCMDWorker worker = new PluginsCMDWorker();
 

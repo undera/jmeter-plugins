@@ -1,5 +1,6 @@
-package kg.apc.jmeter;
+package kg.apc.cmdtools;
 
+import kg.apc.cmdtools.PluginsCMD;
 import java.io.PrintStream;
 import java.util.ListIterator;
 import junit.framework.Test;

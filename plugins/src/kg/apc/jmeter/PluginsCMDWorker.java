@@ -49,8 +49,22 @@ public class PluginsCMDWorker {
             return;
         }
 
-        log.debug("Creating jmeter env");
-        String homeDir = UniversalRunner.getJMeterDir();
+        String homeDir = UniversalRunner.getJARLocation();
+
+        File dir = new File(homeDir);
+        while (dir != null && dir.exists()
+                && dir.getName().equals("ext")
+                && dir.getParentFile().getName().equals("lib")) {
+            dir = dir.getParentFile();
+        }
+
+        if (dir == null || !dir.exists()) {
+            throw new IllegalArgumentException("CMDRunner.jar must be placed in <jmeter>/lib/ext directory");
+        }
+        
+        homeDir=dir.getParent();
+
+        log.debug("Creating jmeter env using JMeter home: " + homeDir);
         JMeterUtils.setJMeterHome(homeDir);
         initializeProperties();
     }
@@ -61,8 +75,8 @@ public class PluginsCMDWorker {
      * @see JMeter
      */
     private void initializeProperties() {
-        JMeterUtils.loadJMeterProperties(UniversalRunner.getJMeterDir() + File.separator
-                + "bin" + File.separator 
+        JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterHome() + File.separator
+                + "bin" + File.separator
                 + "jmeter.properties");
 
         JMeterUtils.initLogging();
@@ -71,8 +85,8 @@ public class PluginsCMDWorker {
         Properties jmeterProps = JMeterUtils.getJMeterProperties();
 
         // Add local JMeter properties, if the file is found
-        String userProp = JMeterUtils.getPropDefault("user.properties", ""); 
-        if (userProp.length() > 0) { 
+        String userProp = JMeterUtils.getPropDefault("user.properties", "");
+        if (userProp.length() > 0) {
             FileInputStream fis = null;
             try {
                 File file = JMeterUtils.findFile(userProp);
@@ -92,7 +106,7 @@ public class PluginsCMDWorker {
         }
 
         // Add local system properties, if the file is found
-        String sysProp = JMeterUtils.getPropDefault("system.properties", ""); 
+        String sysProp = JMeterUtils.getPropDefault("system.properties", "");
         if (sysProp.length() > 0) {
             FileInputStream fis = null;
             try {
@@ -169,7 +183,7 @@ public class PluginsCMDWorker {
         rc.setFilename(inputFile);
         rc.setListener(gui);
         rc.loadExistingFile();
-        
+
         // to handle issue 64 and since it must be cheap - set options again
         setOptions(gui);
 
@@ -221,7 +235,7 @@ public class PluginsCMDWorker {
         GraphPanelChart graph = gui.getGraphPanelChart();
 
         if (aggregate >= 0) {
-            gui.switchModel(aggregate>0);
+            gui.switchModel(aggregate > 0);
         }
         if (granulation >= 0) {
             gui.setGranulation(granulation);

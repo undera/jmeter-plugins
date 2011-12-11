@@ -1,4 +1,4 @@
-package kg.apc.jmeter;
+package kg.apc.cmdtools;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.util.JMeterUtils;
 import java.io.PrintStream;
 import java.util.ListIterator;
+import kg.apc.emulators.FilesTestTools;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -122,5 +123,22 @@ public class ReporterToolTest {
             fail("HitsPerSec don't handle aggregates");
         } catch (UnsupportedOperationException e) {
         }
+    }
+
+    @Test
+    // issue 96
+    public void testProcessParams_issue96() throws IOException {
+        System.out.println("processParams outliers");
+        File f = File.createTempFile("test", ".csv");
+        String str =
+                "--plugin-type TimesVsThreads  "
+                + "--hide-low-counts 5 "
+                + "--generate-csv " + f.getAbsolutePath() + " "
+                + "--input-jtl " + basedir + "/issue96.jtl";
+        String[] args = str.split(" +");
+        ReporterTool instance = new ReporterTool();
+        int result = instance.processParams(PluginsCMD.argsArrayToListIterator(args));
+        
+        FilesTestTools.compareFiles(f, new File(basedir+"/issue96.txt"));
     }
 }

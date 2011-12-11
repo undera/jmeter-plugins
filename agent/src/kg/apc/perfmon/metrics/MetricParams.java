@@ -20,10 +20,11 @@ class MetricParams {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     long PID = -1;
-    String type = null;
-    String fs = null;
-    String iface = null;
+    String type = "";
+    String fs = "";
+    String iface = "";
     String[] params = new String[0];
+    int coreID = -1;
 
     private MetricParams() {
     }
@@ -34,13 +35,10 @@ class MetricParams {
 
     // TODO: pretty ugly, refactor it
     public static MetricParams createFromString(String metricParams, SigarProxy sigar) {
+        MetricParams inst = new MetricParams();
         Scanner st = new Scanner(metricParams);
         st.useDelimiter(AbstractPerfMonMetric.PARAMS_DELIMITER);
 
-        long PID = -1;
-        String type = "";
-        String FS = "";
-        String ifc = "";
         List params = new LinkedList();
         while (true) {
             String token;
@@ -59,26 +57,23 @@ class MetricParams {
             }
 
             if (token.startsWith("name=")) {
-                PID = getPIDByName(token, sigar);
+                inst.PID = getPIDByName(token, sigar);
             } else if (token.startsWith("pid=")) {
-                PID = getPIDByPID(token);
+                inst.PID = getPIDByPID(token);
             } else if (token.startsWith("iface=")) {
-                ifc = getParam(token);
+                inst.iface = getParam(token);
             } else if (token.startsWith("fs=")) {
-                FS = getParam(token);
+                inst.fs = getParam(token);
             } else if (token.startsWith("ptql=")) {
-                PID = getPIDByPTQL(token, sigar);
+                inst.PID = getPIDByPTQL(token, sigar);
+            } else if (token.startsWith("core=")) {
+                inst.coreID = Integer.parseInt(getParam(token));
             } else {
                 params.add(token);
-                type = token;
+                inst.type = token;
             }
         }
 
-        MetricParams inst = new MetricParams();
-        inst.PID = PID;
-        inst.type = type.toLowerCase();
-        inst.fs = FS;
-        inst.iface = ifc;
         inst.params = (String[]) params.toArray(new String[0]);
         return inst;
     }

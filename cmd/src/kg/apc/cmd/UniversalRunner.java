@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -18,11 +19,10 @@ import java.util.StringTokenizer;
  */
 public final class UniversalRunner {
 
-    private static final String CLASSPATH_SEPARATOR = System.getProperty("path.separator");// $NON-NLS-1$
-    private static final String OS_NAME = System.getProperty("os.name");// $NON-NLS-1$
+    private static final String CLASSPATH_SEPARATOR = System.getProperty("path.separator");
+    private static final String OS_NAME = System.getProperty("os.name");
     private static final String OS_NAME_LC = OS_NAME.toLowerCase(java.util.Locale.ENGLISH);
-    private static final String JAVA_CLASS_PATH = "java.class.path";// $NON-NLS-1$
-    /** The directory JMeter is installed in. */
+    private static final String JAVA_CLASS_PATH = "java.class.path";
     private static final String jarDirectory;
 
     static {
@@ -49,8 +49,7 @@ public final class UniversalRunner {
         //System.err.println("CP: "+initial_classpath);
         if (tok.countTokens() == 1
                 || (tok.countTokens() == 2 // Java on Mac OS can add a second entry to the initial classpath
-                && OS_NAME_LC.startsWith("mac os x")// $NON-NLS-1$
-                )) {
+                && OS_NAME_LC.startsWith("mac os x"))) {
             File jar = new File(tok.nextToken());
             try {
                 tmpDir = jar.getCanonicalFile().getParent();
@@ -58,7 +57,7 @@ public final class UniversalRunner {
             } catch (IOException e) {
             }
         } else {// e.g. started from IDE with full classpath
-            File userDir = new File(System.getProperty("user.dir"));// $NON-NLS-1$
+            File userDir = new File(System.getProperty("user.dir"));
             tmpDir = userDir.getAbsolutePath();
         }
         return tmpDir;
@@ -70,31 +69,27 @@ public final class UniversalRunner {
          * Does the system support UNC paths? If so, may need to fix them up
          * later
          */
-        boolean usesUNC = OS_NAME_LC.startsWith("windows");// $NON-NLS-1$
+        boolean usesUNC = OS_NAME_LC.startsWith("windows");
 
-        String pattern = File.separator;
-        if("\\".equals(pattern)) {
-           pattern = "\\\\";
-        }
-
-        int count = jarDirectory.split(pattern).length;
-        File[] libDirs = new File[count];
+        List libDirs = new LinkedList();
         File f = new File(jarDirectory);
-        for (int n = 0; n < count; n++) {
-            libDirs[n] = f.getAbsoluteFile();
+        while (f != null) {
+            libDirs.add(f.getAbsoluteFile());
             f = f.getParentFile();
-            //System.err.println(libDirs[n]);
         }
 
-        for (int a = 0; a < libDirs.length; a++) {
-            File[] libJars = libDirs[a].listFiles(new FilenameFilter() {
+        Iterator it = libDirs.iterator();
+
+        while (it.hasNext()) {
+            File libDir = (File) it.next();
+            File[] libJars = libDir.listFiles(new FilenameFilter() {
 
                 public boolean accept(File dir, String name) {// only accept jar files
-                    return name.endsWith(".jar");// $NON-NLS-1$
+                    return name.endsWith(".jar");
                 }
             });
             if (libJars == null) {
-                new Throwable("Could not access " + libDirs[a]).printStackTrace(System.err);
+                new Throwable("Could not access " + libDir).printStackTrace(System.err);
                 continue;
             }
             for (int i = 0; i < libJars.length; i++) {
@@ -134,7 +129,7 @@ public final class UniversalRunner {
      *
      * @return the directory where JMeter is installed.
      */
-    public static String getJMeterDir() {
+    public static String getJARLocation() {
         return jarDirectory;
     }
 
@@ -148,9 +143,9 @@ public final class UniversalRunner {
         try {
             Class initialClass;
             // make it independent - get class name & method from props/manifest
-            initialClass = Thread.currentThread().getContextClassLoader().loadClass("kg.apc.jmeter.PluginsCMD");// $NON-NLS-1$
+            initialClass = Thread.currentThread().getContextClassLoader().loadClass("kg.apc.cmdtools.PluginsCMD");
             Object instance = initialClass.newInstance();
-            Method startup = initialClass.getMethod("processParams", new Class[]{(new String[0]).getClass()});// $NON-NLS-1$
+            Method startup = initialClass.getMethod("processParams", new Class[]{(new String[0]).getClass()});
             Object res = startup.invoke(instance, new Object[]{args});
             int rc = ((Integer) res).intValue();
             if (rc != 0) {
@@ -159,7 +154,7 @@ public final class UniversalRunner {
         } catch (Throwable e) {
             if (e.getCause() != null) {
                 System.err.println("ERROR: " + e.getCause().toString());
-                System.err.println("Problem's technical details go below:");
+                System.err.println("*** Problem's technical details go below ***");
                 System.err.println("Home directory was detected as: " + jarDirectory);
                 throw e.getCause();
             } else {

@@ -1,4 +1,4 @@
-package kg.apc.jmeter;
+package kg.apc.cmdtools;
 
 import java.io.PrintStream;
 import java.util.Arrays;
@@ -96,7 +96,7 @@ public class PluginsCMD extends AbstractCMDTool {
         Class toolClass;
 
         try {
-            toolClass = loader.loadClass("kg.apc.jmeter." + arg + "Tool");
+            toolClass = loader.loadClass("kg.apc.cmdtools." + arg + "Tool");
         } catch (ClassNotFoundException e) {
             try {
                 toolClass = loader.loadClass(arg);

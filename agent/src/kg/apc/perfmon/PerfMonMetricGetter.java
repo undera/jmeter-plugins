@@ -55,8 +55,14 @@ public class PerfMonMetricGetter {
             controller.setInterval(Integer.parseInt(params));
         } else if (cmdType.equals("shutdown")) {
             controller.shutdownConnections();
+        } else if (cmdType.equals("metrics-single")) {
+            setUpMetrics(params.split(TAB));
+            ByteBuffer buf = getMetricsLine();
+            controller.sendToClient(channel, buf);
         } else if (cmdType.equals("metrics")) {
             setUpMetrics(params.split(TAB));
+            // this will make it sending channel
+            controller.registerWritingChannel(channel, this);
         } else if (cmdType.equals("exit")) {
             log.info("Client disconnected");
             synchronized (channel) {
@@ -132,8 +138,6 @@ public class PerfMonMetricGetter {
                 metrics[n] = AbstractPerfMonMetric.createMetric(metricType, metricParams, sigarProxy);
             }
         }
-        // this will make it sending channel
-        controller.registerWritingChannel(channel, this);
     }
 
     public boolean isStarted() {

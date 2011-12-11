@@ -1,4 +1,4 @@
-package kg.apc.jmeter;
+package kg.apc.cmdtools;
 
 import kg.apc.perfmon.AgentTool;
 

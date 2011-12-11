@@ -3,7 +3,7 @@ package kg.apc.perfmon;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ListIterator;
-import kg.apc.jmeter.AbstractCMDTool;
+import kg.apc.cmdtools.AbstractCMDTool;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.apache.log.Priority;

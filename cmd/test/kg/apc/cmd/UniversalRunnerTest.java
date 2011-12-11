@@ -36,7 +36,7 @@ public class UniversalRunnerTest extends TestCase {
      */
     public void testGetJMeterDir() {
         System.out.println("getJMeterDir");
-        String result = UniversalRunner.getJMeterDir();
+        String result = UniversalRunner.getJARLocation();
         assertTrue(result.length() > 0);
     }
 

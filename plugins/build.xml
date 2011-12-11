@@ -85,6 +85,9 @@
             basedir="../agent/build/classes" includes="kg/apc/perfmon/client*">  
         </jar>
         <jar file="${dist.jar}" update="yes" 
+            basedir="../agent/build/classes" includes="kg/apc/perfmon/client/*">  
+        </jar>
+        <jar file="${dist.jar}" update="yes" 
             basedir="../agent/build/classes" includes="kg/apc/jmeter/perfmon/agent*">
         </jar>
         <jar file="${dist.jar}" update="yes" 
@@ -113,7 +116,7 @@
             </condition>
         </fail>
         
-        <copy todir="${jmeter.lib.ext}" file="${dist.jar}" />
+        <copy todir="${jmeter.lib.ext}" file="${dist.jar}" verbose="true" />
 
         <!-- If you failed here, consider setting in project.properties
             dist.jar=${dist.dir}/JMeterPlugins.jar -->

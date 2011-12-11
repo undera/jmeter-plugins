@@ -52,6 +52,13 @@ public class MetricParamsTest extends TestCase {
         assertEquals("next", result.params[2]);
     }
 
+    public void testCreateFromString_multicore() {
+        System.out.println("createFromString");
+        final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
+        MetricParams result = MetricParams.createFromString("core=1", sigar);
+        assertEquals(1, result.coreID);
+    }
+
     public void testCreateFromString() {
         System.out.println("createFromString");
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);

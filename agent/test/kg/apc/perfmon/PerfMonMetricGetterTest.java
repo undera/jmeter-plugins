@@ -67,4 +67,16 @@ public class PerfMonMetricGetterTest extends TestCase {
         PerfMonMetricGetter instance = new PerfMonMetricGetter(SigarProxyCache.newInstance(new Sigar(), 500), new PerfMonWorker(), DatagramChannel.open());
         instance.getMetricsLine();
     }
+
+    public void testProcessCommand_single_metrics() throws IOException {
+        System.out.println("processCommand");
+        String toString = "metrics-single:cpu\tmemory\ttcp\n";
+        final DatagramChannel channel = DatagramChannelEmul.open();
+        channel.configureBlocking(false);
+        final InetSocketAddress inetSocketAddress = new InetSocketAddress("localhost", 4444);
+        channel.connect(inetSocketAddress);
+        PerfMonMetricGetter instance = new PerfMonMetricGetter(SigarProxyCache.newInstance(new Sigar(), 500), new PerfMonWorker(), channel, inetSocketAddress);
+        instance.addCommandString(toString);
+        instance.processNextCommand();
+    }
 }

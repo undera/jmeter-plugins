@@ -8,7 +8,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import kg.apc.cmd.CmdSuite;
-import kg.apc.jmeter.JmeterSuite;
+import kg.apc.cmdtools.JmeterSuite;
 
 /**
  *

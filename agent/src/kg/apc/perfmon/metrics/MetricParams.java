@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.hyperic.sigar.ProcExe;
@@ -45,13 +46,16 @@ class MetricParams {
             try {
                 token = st.next();
 
-                String buff = token;
-                while (token.endsWith("\\")) {
-                    buff = token.substring(0, token.length() - 1) + AbstractPerfMonMetric.PARAMS_DELIMITER;
-                    token = st.next();
-                    buff += token;
-                }
-                token = buff;
+	            String buff = "";
+	            String tmp = token;
+	            
+	            while (token.endsWith("\\")) {
+	            	tmp = token.substring(0, token.length() - 1) + AbstractPerfMonMetric.PARAMS_DELIMITER;
+	                token = st.next();
+	                buff += tmp;
+	            }
+
+	            token = buff + token;
             } catch (NoSuchElementException e) {
                 break;
             }

@@ -52,6 +52,16 @@ public class MetricParamsTest extends TestCase {
         assertEquals("next", result.params[2]);
     }
 
+    public void testCreateFromString_escaping_issue101() {
+        System.out.println("createFromString");
+        final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
+        MetricParams result = MetricParams.createFromString("exec:/bin/sh:-c:wget http\\://localhost\\:8000", sigar);
+        assertEquals("exec", result.params[0]);
+        assertEquals("/bin/sh", result.params[1]);
+        assertEquals("-c", result.params[2]);
+        assertEquals("wget http://localhost:8000", result.params[3]);
+    }
+
     public void testCreateFromString_multicore() {
         System.out.println("createFromString");
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);

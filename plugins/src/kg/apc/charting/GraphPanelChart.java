@@ -64,7 +64,7 @@ public class GraphPanelChart
     //cache management
     private static BufferedImage cache = null;
     private static int cacheWitdh, cacheHeight;
-    private static boolean cacheValid = false;
+    private boolean cacheValid = false;
     private static int cacheOwner = -1;
     private int gpcId;
     private static int uidGenerator = 0;

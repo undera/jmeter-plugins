@@ -252,7 +252,7 @@ public class UltimateThreadGroupGui
     }
 
     private Component createChart() {
-        chart = new GraphPanelChart(false);
+        chart = new GraphPanelChart(false, true);
         model = new ConcurrentHashMap<String, AbstractGraphRow>();
         chart.setRows(model);
         chart.getChartSettings().setDrawFinalZeroingLines(true);

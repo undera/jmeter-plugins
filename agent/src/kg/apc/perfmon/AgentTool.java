@@ -57,7 +57,7 @@ public class AgentTool extends AbstractCMDTool {
             } else if (nextArg.equals("--sysinfo")) {
                 args.remove();
                 worker.logSysInfo();
-            } if (nextArg.equals("--agent-version")) {
+            } else if (nextArg.equals("--agent-version")) {
                 args.remove();
                 worker.logVersion();
             } else {

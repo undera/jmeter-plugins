@@ -26,19 +26,22 @@ public class GraphModelToCsvExporter
     private SimpleDateFormat dateFormatter = null;
     private String xAxisLabel;
     private NumberRenderer xAxisRenderer = null;
+    private int hideNonRepValLimit = -1;
 
     public GraphModelToCsvExporter(
             AbstractMap<String, AbstractGraphRow> rows,
             File destFile,
             String csvSeparator,
             String xAxisLabel,
-            NumberRenderer xAxisRenderer)
+            NumberRenderer xAxisRenderer,
+            int hideNonRepValLimit)
     {
         this.destFile = destFile;
         this.model = rows;
         this.csvSeparator = csvSeparator;
         this.decimalSeparator = new DecimalFormatSymbols().getDecimalSeparator();
         this.xAxisLabel = xAxisLabel;
+        this.hideNonRepValLimit = hideNonRepValLimit;
         if(xAxisRenderer != null && xAxisRenderer instanceof DividerRenderer) {
            this.xAxisRenderer = new DividerRenderer(((DividerRenderer)xAxisRenderer).getFactor());
         } else if(xAxisRenderer != null && xAxisRenderer instanceof DateTimeRenderer) {
@@ -52,9 +55,10 @@ public class GraphModelToCsvExporter
             File destFile,
             String csvSeparator,
             char decimalSeparator,
-            NumberRenderer renderer)
+            NumberRenderer renderer,
+            int hideNonRepValLimit)
     {
-        this(rows, destFile, csvSeparator, "Elapsed time", renderer);
+        this(rows, destFile, csvSeparator, "Elapsed time", renderer, hideNonRepValLimit);
         this.decimalSeparator = decimalSeparator;
         dateFormatter = new SimpleDateFormat("HH:mm:ss" + decimalSeparator + "S");
     }
@@ -87,9 +91,11 @@ public class GraphModelToCsvExporter
             while (itRow.hasNext())
             {
                 Entry<Long, AbstractGraphPanelChartElement> element = itRow.next();
-                xValues.add(element.getKey());
+                    if(element.getValue().isPointRepresentative(hideNonRepValLimit)) {
+                        xValues.add(element.getKey());
+                    }
+                }
             }
-        }
 
         //write file...
         //1st line

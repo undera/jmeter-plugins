@@ -1086,7 +1086,7 @@ public class GraphPanelChart
 
     public void saveGraphToCSV(File file) throws IOException {
         log.info("Saving CSV to " + file.getAbsolutePath());
-        GraphModelToCsvExporter exporter = new GraphModelToCsvExporter(rows, file, chartSettings.getConfigCsvSeparator(), xAxisLabel, xAxisLabelRenderer);
+        GraphModelToCsvExporter exporter = new GraphModelToCsvExporter(rows, file, chartSettings.getConfigCsvSeparator(), xAxisLabel, xAxisLabelRenderer, chartSettings.getHideNonRepValLimit());
         exporter.writeCsvFile();
     }
 

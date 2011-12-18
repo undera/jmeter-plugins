@@ -83,7 +83,7 @@ public class GraphModelToCsvExporterTest {
         File testFile = new File(referenceFile.getParent() + "/testExport.csv");
 
         System.out.println("writeCsvFile: " + testFile.getAbsolutePath());
-        GraphModelToCsvExporter instance = new GraphModelToCsvExporter(createTestModel(), testFile, ";", '.', new DateTimeRenderer());
+        GraphModelToCsvExporter instance = new GraphModelToCsvExporter(createTestModel(), testFile, ";", '.', new DateTimeRenderer(), -1);
         instance.writeCsvFile();
         boolean success = FilesTestTools.compareFiles(testFile, referenceFile);
         testFile.delete();

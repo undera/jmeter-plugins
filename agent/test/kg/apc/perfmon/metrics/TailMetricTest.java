@@ -36,7 +36,7 @@ public class TailMetricTest extends TestCase {
         System.out.println("getValue");
         TailMetric instance;
 
-        StringBuilder res = new StringBuilder();
+        StringBuffer res = new StringBuffer();
         instance = new TailMetric(MetricParams.createFromString("/notexists"));
         instance.getValue(res);
 
@@ -46,13 +46,13 @@ public class TailMetricTest extends TestCase {
 
         w.write("1");
         w.flush();
-        res = new StringBuilder();
+        res = new StringBuffer();
         instance.getValue(res);
         assertEquals("1", res.toString());
 
         w.write("15");
         w.flush();
-        res = new StringBuilder();
+        res = new StringBuffer();
         instance.getValue(res);
         assertEquals("15", res.toString());
     }

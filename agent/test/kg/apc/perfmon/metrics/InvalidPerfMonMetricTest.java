@@ -24,7 +24,7 @@ public class InvalidPerfMonMetricTest extends TestCase {
      */
     public void testGetValue() {
         System.out.println("getValue");
-        StringBuilder res = new StringBuilder();
+        StringBuffer res = new StringBuffer();
         InvalidPerfMonMetric instance = new InvalidPerfMonMetric();
         instance.getValue(res);
     }

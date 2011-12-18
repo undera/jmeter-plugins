@@ -21,7 +21,7 @@ public abstract class AbstractPerfMonMetric {
     }
 
     // FIXME: do we need SigarException here?
-    abstract public void getValue(StringBuilder res) throws SigarException;
+    abstract public void getValue(StringBuffer res) throws SigarException;
 
     public static AbstractPerfMonMetric createMetric(String metricType, String metricParamsStr, SigarProxy sigarProxy) {
         log.debug("Creating metric: " + metricType + " with params: " + metricParamsStr);

@@ -21,7 +21,7 @@ class CPUProcMetric extends AbstractCPUMetric {
 
     protected CPUProcMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar, params);
-        if (params.type.isEmpty()) {
+        if (params.type.length() == 0) {
             type = PERCENT;
         } else {
             type = Arrays.asList(types).indexOf(params.type);
@@ -31,7 +31,7 @@ class CPUProcMetric extends AbstractCPUMetric {
         }
     }
 
-    public void getValue(StringBuilder res) throws SigarException {
+    public void getValue(StringBuffer res) throws SigarException {
         ProcCpu cpu = sigarProxy.getProcCpu(params.PID);
         double val;
         long cur;

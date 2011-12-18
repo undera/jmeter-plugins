@@ -15,7 +15,7 @@ class InvalidPerfMonMetric extends AbstractPerfMonMetric {
         super(null);
     }
 
-    public void getValue(StringBuilder res) {
+    public void getValue(StringBuffer res) {
         log.debug("Invalid metric stub hit");
         res.append("");
     }

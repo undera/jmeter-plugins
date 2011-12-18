@@ -32,7 +32,7 @@ public class ExecMetricTest extends TestCase {
      */
     public void testGetValue() throws Exception {
         System.out.println("getValue");
-        StringBuilder res = new StringBuilder();
+        StringBuffer res = new StringBuffer();
         ExecMetric instance = new ExecMetric(MetricParams.createFromString("echo:123"));
         instance.getValue(res);
         assertTrue(Double.parseDouble(res.toString()) > 0);
@@ -41,7 +41,7 @@ public class ExecMetricTest extends TestCase {
     /*
     public void testGetValue2() throws Exception {
     System.out.println("getValue");
-    StringBuilder res = new StringBuilder();
+    StringBuffer res = new StringBuffer();
     ExecMetric instance = new ExecMetric(MetricParams.createFromString("/usr/bin/perl:-e:\"print 100*rand(1);\""));
     instance.getValue(res);
     assertTrue(Double.parseDouble(res.toString()) > 0);

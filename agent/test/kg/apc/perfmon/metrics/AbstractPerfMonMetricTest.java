@@ -20,7 +20,7 @@ public class AbstractPerfMonMetricTest extends TestCase {
      */
     public void testGetValue() throws Exception {
         System.out.println("getValue");
-        StringBuilder res = null;
+        StringBuffer res = null;
         AbstractPerfMonMetric instance = new AbstractPerfMonMetricImpl();
         instance.getValue(res);
     }
@@ -32,7 +32,7 @@ public class AbstractPerfMonMetricTest extends TestCase {
 
         }
 
-        public void getValue(StringBuilder res) throws SigarException {
+        public void getValue(StringBuffer res) throws SigarException {
         }
     }
 

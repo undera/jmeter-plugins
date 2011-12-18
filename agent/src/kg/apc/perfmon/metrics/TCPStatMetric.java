@@ -33,7 +33,7 @@ class TCPStatMetric extends AbstractPerfMonMetric {
     public TCPStatMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar);
 
-        if (params.type.isEmpty()) {
+        if (params.type.length() == 0) {
             type = ESTAB;
         } else {
             type = Arrays.asList(types).indexOf(params.type);
@@ -43,7 +43,7 @@ class TCPStatMetric extends AbstractPerfMonMetric {
         }
     }
 
-    public void getValue(StringBuilder res) throws SigarException {
+    public void getValue(StringBuffer res) throws SigarException {
         NetStat stat = sigarProxy.getNetStat();
         double val;
         switch (type) {

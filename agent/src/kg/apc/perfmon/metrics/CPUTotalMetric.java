@@ -31,7 +31,7 @@ class CPUTotalMetric extends AbstractCPUMetric {
     protected CPUTotalMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar, params);
 
-        if (params.type.isEmpty()) {
+        if (params.type.length() == 0) {
             type = COMBINED;
         } else {
             type = Arrays.asList(types).indexOf(params.type);
@@ -45,7 +45,7 @@ class CPUTotalMetric extends AbstractCPUMetric {
             try {
                 avail = aSigar.getCpuList().length;
             } catch (SigarException ex) {
-                throw new IllegalArgumentException("Cannot get CPU count at this system", ex);
+                throw new IllegalArgumentException("Cannot get CPU count at this system: " + ex.getMessage());
             }
             if (params.coreID >= avail) {
                 throw new IllegalArgumentException("Invalid core ID on this system: " + params.type);
@@ -54,7 +54,7 @@ class CPUTotalMetric extends AbstractCPUMetric {
         }
     }
 
-    public void getValue(StringBuilder res) throws SigarException {
+    public void getValue(StringBuffer res) throws SigarException {
         CpuPerc cpu;
         if (coreID < 0) {
             cpu = sigarProxy.getCpuPerc();

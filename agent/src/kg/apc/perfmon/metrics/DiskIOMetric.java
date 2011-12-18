@@ -41,7 +41,7 @@ class DiskIOMetric extends AbstractPerfMonMetric {
     public DiskIOMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar);
 
-        if (params.type.isEmpty()) {
+        if (params.type.length() == 0) {
             type = DISK_QUEUE;
         } else {
             type = Arrays.asList(types).indexOf(params.type);
@@ -52,7 +52,7 @@ class DiskIOMetric extends AbstractPerfMonMetric {
         log.debug("Disk metric type: " + type);
 
         LinkedList list = new LinkedList();
-        if (!params.fs.isEmpty()) {
+        if (params.fs.length() != 0) {
             list.add(params.fs);
         } else {
             getAllDiskFilesystems(aSigar, list);
@@ -92,7 +92,7 @@ class DiskIOMetric extends AbstractPerfMonMetric {
         }
     }
 
-    public void getValue(StringBuilder res) throws SigarException {
+    public void getValue(StringBuffer res) throws SigarException {
         double val = 0;
         long used = 0;
         long total = 0;

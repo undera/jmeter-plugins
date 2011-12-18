@@ -22,7 +22,7 @@ public abstract class AbstractTransport implements Transport {
 
     public AbstractTransport() throws IOException {
         pos = new PipedOutputStream();
-        pis = new PipedInputStream(pos, 256 * 1024); // FIXME: eliminate magic constrant
+        pis = new PipedInputStream(pos); //jdk 1.4 compatibility , 256 * 1024); // FIXME: eliminate magic constrant
     }
 
     public String[] readMetrics() {
@@ -86,7 +86,7 @@ public abstract class AbstractTransport implements Transport {
         if (newlineCount == 0) {
             return "";
         }
-        StringBuilder str = new StringBuilder();
+        StringBuffer str = new StringBuffer();
         int b;
         while (pis.available() > 0) {
             b = pis.read();

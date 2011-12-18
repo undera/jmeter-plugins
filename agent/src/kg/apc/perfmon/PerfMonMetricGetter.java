@@ -107,7 +107,7 @@ public class PerfMonMetricGetter {
 
     public ByteBuffer getMetricsLine() throws IOException {
         log.debug("Building metrics");
-        StringBuilder res = new StringBuilder();
+        StringBuffer res = new StringBuffer();
         synchronized (channel) {
             for (int n = 0; n < metrics.length; n++) {
                 try {

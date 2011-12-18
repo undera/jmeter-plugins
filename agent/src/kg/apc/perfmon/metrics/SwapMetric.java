@@ -21,7 +21,7 @@ class SwapMetric extends AbstractPerfMonMetric {
 
     public SwapMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar);
-        if (params.type.isEmpty()) {
+        if (params.type.length() == 0) {
             type = USED;
         } else {
             type = Arrays.asList(types).indexOf(params.type);
@@ -31,7 +31,7 @@ class SwapMetric extends AbstractPerfMonMetric {
         }
     }
 
-    public void getValue(StringBuilder res) throws SigarException {
+    public void getValue(StringBuffer res) throws SigarException {
         Swap mem = sigarProxy.getSwap();
         double val;
         switch (type) {

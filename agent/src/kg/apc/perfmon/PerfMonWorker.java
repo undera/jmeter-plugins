@@ -13,9 +13,9 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.channels.WritableByteChannel;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.concurrent.ConcurrentHashMap;
 import kg.apc.perfmon.metrics.SysInfoLogger;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -29,6 +29,7 @@ import org.hyperic.sigar.SigarProxyCache;
  */
 public class PerfMonWorker implements Runnable {
 
+    private static String version = "2.0.0";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int tcpPort = 4444;
     private int udpPort = 4444;
@@ -40,7 +41,7 @@ public class PerfMonWorker implements Runnable {
     private final Selector sendSelector;
     private DatagramChannel udpServer;
     private final LinkedList tcpConnections = new LinkedList();
-    private final ConcurrentHashMap udpConnections = new ConcurrentHashMap();
+    private final Hashtable udpConnections = new Hashtable();
     private long interval = 1000;
     private final SigarProxy sigar;
     private long numConnections = 0;
@@ -310,6 +311,10 @@ public class PerfMonWorker implements Runnable {
     public void setInterval(long parseInt) {
         log.debug("Setting interval to: " + parseInt + " seconds");
         interval = parseInt * 1000;
+    }
+
+    public void logVersion() {
+        log.info("JMeter Plugins Agent v" + version);
     }
 
     public void logSysInfo() {

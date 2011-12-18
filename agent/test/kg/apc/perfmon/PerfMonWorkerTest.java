@@ -113,4 +113,13 @@ public class PerfMonWorkerTest extends TestCase {
         PerfMonWorker instance = new PerfMonWorker();
         instance.run();
     }
+
+    /**
+     * Test of run method, of class PerfMonWorker.
+     */
+    public void testLogVersion() throws IOException {
+        System.out.println("logVersion");
+        PerfMonWorker instance = new PerfMonWorker();
+        instance.logVersion();
+    }
 }

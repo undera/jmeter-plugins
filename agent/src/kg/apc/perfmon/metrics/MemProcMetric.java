@@ -24,7 +24,7 @@ class MemProcMetric extends AbstractMemMetric {
 
     public MemProcMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar, params);
-        if (params.type.isEmpty()) {
+        if (params.type.length() == 0) {
             type = RESIDENT;
         } else {
             type = Arrays.asList(types).indexOf(params.type);
@@ -34,7 +34,7 @@ class MemProcMetric extends AbstractMemMetric {
         }
     }
 
-    public void getValue(StringBuilder res) throws SigarException {
+    public void getValue(StringBuffer res) throws SigarException {
         ProcMem mem = sigarProxy.getProcMem(params.PID);
         double val;
         long cur;

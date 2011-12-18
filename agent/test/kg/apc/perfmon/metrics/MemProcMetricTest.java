@@ -35,7 +35,7 @@ public class MemProcMetricTest extends TestCase {
      */
     public void testGetValue() throws Exception {
         System.out.println("getValue");
-        StringBuilder res = new StringBuilder();
+        StringBuffer res = new StringBuffer();
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         MemProcMetric instance = new MemProcMetric(sigar, MetricParams.createFromString("pid=" + sigar.getPid(), sigar));
         instance.getValue(res);
@@ -47,7 +47,7 @@ public class MemProcMetricTest extends TestCase {
         for (int n = 0; n < MemProcMetric.types.length; n++) {
             MetricParams params = MetricParams.createFromString("pid=" + sigar.getPid() + ":" + MemProcMetric.types[n], sigar);
             MemProcMetric instance = new MemProcMetric(sigar, params);
-            StringBuilder res = new StringBuilder();
+            StringBuffer res = new StringBuffer();
             instance.getValue(res);
             System.out.println(MemProcMetric.types[n] + "=" + res.toString());
         }

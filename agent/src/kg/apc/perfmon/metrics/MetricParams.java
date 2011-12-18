@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -37,21 +37,20 @@ class MetricParams {
     // TODO: pretty ugly, refactor it
     public static MetricParams createFromString(String metricParams, SigarProxy sigar) {
         MetricParams inst = new MetricParams();
-        Scanner st = new Scanner(metricParams);
-        st.useDelimiter(AbstractPerfMonMetric.PARAMS_DELIMITER);
+        StringTokenizer tokens = new StringTokenizer(metricParams, AbstractPerfMonMetric.PARAMS_DELIMITER);
 
         List params = new LinkedList();
         while (true) {
             String token;
             try {
-                token = st.next();
+                token = tokens.nextToken();
 
 	            String buff = "";
 	            String tmp = token;
 	            
 	            while (token.endsWith("\\")) {
 	            	tmp = token.substring(0, token.length() - 1) + AbstractPerfMonMetric.PARAMS_DELIMITER;
-	                token = st.next();
+	                token = tokens.nextToken();
 	                buff += tmp;
 	            }
 
@@ -180,7 +179,7 @@ class MetricParams {
                 continue;
             }
 
-            StringBuilder str = new StringBuilder("Process: ");
+            StringBuffer str = new StringBuffer("Process: ");
             str.append("pid=").append(list[n]).append(' ');
             String pname = proc.getName().substring(proc.getName().lastIndexOf(File.separator) + 1).toLowerCase();
             str.append("name=").append(pname);
@@ -205,10 +204,10 @@ class MetricParams {
         }
     }
 
-    public static String join(StringBuilder buff, final Object array[],
+    public static String join(StringBuffer buff, final Object array[],
             final String delim) {
         if (buff == null) {
-            buff = new StringBuilder();
+            buff = new StringBuffer();
         }
 
         boolean haveDelim = (delim != null);

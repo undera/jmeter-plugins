@@ -38,7 +38,7 @@ public class TCPStatMetricTest extends TestCase {
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         for (int n = 0; n < TCPStatMetric.types.length; n++) {
             TCPStatMetric instance = new TCPStatMetric(sigar, MetricParams.createFromString(TCPStatMetric.types[n]));
-            StringBuilder res = new StringBuilder();
+            StringBuffer res = new StringBuffer();
             instance.getValue(res);
             System.out.println(TCPStatMetric.types[n] + '=' + res.toString());
         }

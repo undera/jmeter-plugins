@@ -19,7 +19,7 @@ public class CPUProcMetricTest extends TestCase {
      */
     public void testGetValue() throws Exception {
         System.out.println("getValue");
-        StringBuilder res = new StringBuilder();
+        StringBuffer res = new StringBuffer();
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         MetricParams params = MetricParams.createFromString("pid=" + sigar.getPid(), sigar);
         CPUProcMetric instance = new CPUProcMetric(sigar, params);
@@ -33,11 +33,11 @@ public class CPUProcMetricTest extends TestCase {
         for (int n = 0; n < CPUProcMetric.types.length; n++) {
             MetricParams params = MetricParams.createFromString("pid=" + sigar.getPid() + ":" + CPUProcMetric.types[n], sigar);
             CPUProcMetric instance = new CPUProcMetric(sigar, params);
-            StringBuilder res = new StringBuilder();
+            StringBuffer res = new StringBuffer();
             instance.getValue(res);
             System.out.println(CPUProcMetric.types[n] + "=" + res.toString());
             Thread.sleep(100);
-            res = new StringBuilder();
+            res = new StringBuffer();
             instance.getValue(res);
             System.out.println(CPUProcMetric.types[n] + "=" + res.toString());
         }

@@ -41,7 +41,7 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
     public NetworkIOMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar);
         
-        if (params.type.isEmpty()) {
+        if (params.type.length() == 0) {
             type = RX_BYTES;
         } else {
             type = Arrays.asList(types).indexOf(params.type);
@@ -52,7 +52,7 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
         log.debug("Net metric type: " + type);
 
         LinkedList list = new LinkedList();
-        if (!params.iface.isEmpty()) {
+        if (params.iface.length() != 0) {
             list.add(params.iface);
         } else {
             try {
@@ -79,7 +79,7 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
         }
     }
 
-    public void getValue(StringBuilder res) throws SigarException {
+    public void getValue(StringBuffer res) throws SigarException {
         double val = 0;
         double cur;
         for (int n = 0; n < interfaces.length; n++) {

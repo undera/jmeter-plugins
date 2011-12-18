@@ -35,7 +35,7 @@ public class DiskIOMetricTest extends TestCase {
      */
     public void testGetValue() throws Exception {
         System.out.println("getValue");
-        StringBuilder res = new StringBuilder();
+        StringBuffer res = new StringBuffer();
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         MetricParams metricParams = MetricParams.createFromString("used", sigar);
 
@@ -46,26 +46,26 @@ public class DiskIOMetricTest extends TestCase {
 
     public void testGetValue_concrete() throws Exception {
         System.out.println("getValue_c");
-        StringBuilder res = new StringBuilder();
+        StringBuffer res = new StringBuffer();
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         DiskIOMetric instance = new DiskIOMetric(sigar, MetricParams.createFromString("fs=/", sigar));
         instance.getValue(res);
-        assertTrue(!res.toString().isEmpty());
+        assertTrue(res.toString().length() != 0);
         System.err.println(res.toString());
     }
 
     public void testGetValue_reads() throws Exception {
         System.out.println("getValue_r");
-        StringBuilder res = new StringBuilder();
+        StringBuffer res = new StringBuffer();
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         DiskIOMetric instance = new DiskIOMetric(sigar, MetricParams.createFromString("reads", sigar));
         instance.getValue(res);
-        assertTrue(!res.toString().isEmpty());
+        assertTrue(res.toString().length() != 0);
         System.out.println(res.toString());
-        res = new StringBuilder();
+        res = new StringBuffer();
 
         instance.getValue(res);
-        assertTrue(!res.toString().isEmpty());
+        assertTrue(res.toString().length() != 0);
         System.out.println(res.toString());
     }
 
@@ -83,11 +83,11 @@ public class DiskIOMetricTest extends TestCase {
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         for (int n = 0; n < DiskIOMetric.types.length; n++) {
             DiskIOMetric instance = new DiskIOMetric(sigar, MetricParams.createFromString(DiskIOMetric.types[n], sigar));
-            StringBuilder res = new StringBuilder();
+            StringBuffer res = new StringBuffer();
             instance.getValue(res);
             System.out.println(DiskIOMetric.types[n] + "=" + res.toString());
             Thread.sleep(100);
-            res = new StringBuilder();
+            res = new StringBuffer();
             instance.getValue(res);
             System.out.println(DiskIOMetric.types[n] + "=" + res.toString());
         }

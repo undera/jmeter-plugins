@@ -29,7 +29,7 @@ class TailMetric extends AbstractPerfMonMetric {
         filename = string;
     }
 
-    public void getValue(StringBuilder res) throws SigarException {
+    public void getValue(StringBuffer res) throws SigarException {
         String line, lastLine = "";
         try {
             while ((line = getReader().readLine()) != null) {

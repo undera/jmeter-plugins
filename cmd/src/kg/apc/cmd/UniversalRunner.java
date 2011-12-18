@@ -32,7 +32,7 @@ public final class UniversalRunner {
         jarDirectory = getJarDirectory(initial_classpath);
 
         // Add standard jar locations to initial classpath
-        StringBuilder classpath = buildUpdatedClassPath(jars);
+        StringBuffer classpath = buildUpdatedClassPath(jars);
 
         // ClassFinder needs the classpath
         System.setProperty(JAVA_CLASS_PATH, initial_classpath + classpath.toString() + ":");
@@ -63,8 +63,8 @@ public final class UniversalRunner {
         return tmpDir;
     }
 
-    private static StringBuilder buildUpdatedClassPath(List jars) {
-        StringBuilder classpath = new StringBuilder();
+    private static StringBuffer buildUpdatedClassPath(List jars) {
+        StringBuffer classpath = new StringBuffer();
         /*
          * Does the system support UNC paths? If so, may need to fix them up
          * later

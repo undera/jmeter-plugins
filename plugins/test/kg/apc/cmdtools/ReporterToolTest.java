@@ -1,5 +1,6 @@
 package kg.apc.cmdtools;
 
+import java.text.DecimalFormatSymbols;
 import java.io.File;
 import java.io.IOException;
 import kg.apc.emulators.TestJMeterUtils;
@@ -138,7 +139,11 @@ public class ReporterToolTest {
         String[] args = str.split(" +");
         ReporterTool instance = new ReporterTool();
         int result = instance.processParams(PluginsCMD.argsArrayToListIterator(args));
-        
-        FilesTestTools.compareFiles(f, new File(basedir+"/issue96.txt"));
+
+        if (new DecimalFormatSymbols().getDecimalSeparator() == '.') {
+            FilesTestTools.compareFiles(f, new File(basedir + "/issue96.comma.txt"));
+        } else {
+            FilesTestTools.compareFiles(f, new File(basedir + "/issue96.semicolon.txt"));
+        }
     }
 }

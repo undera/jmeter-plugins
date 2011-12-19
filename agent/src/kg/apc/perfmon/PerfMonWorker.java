@@ -185,12 +185,14 @@ public class PerfMonWorker implements Runnable {
                 throw new IOException("Received null datagram");
             }
 
-            if (!udpConnections.containsKey(remoteAddr)) {
-                log.info("Connecting new UDP client");
-                numConnections++;
-                udpConnections.put(remoteAddr, new PerfMonMetricGetter(sigar, this, channel, remoteAddr));
+            synchronized (udpConnections) {
+                if (!udpConnections.containsKey(remoteAddr)) {
+                    log.info("Connecting new UDP client");
+                    numConnections++;
+                    udpConnections.put(remoteAddr, new PerfMonMetricGetter(sigar, this, channel, remoteAddr));
+                }
+                getter = (PerfMonMetricGetter) udpConnections.get(remoteAddr);
             }
-            getter = (PerfMonMetricGetter) udpConnections.get(remoteAddr);
         }
 
         buf.flip();
@@ -291,13 +293,15 @@ public class PerfMonWorker implements Runnable {
     }
 
     private void sendToUDP(SelectionKey key) throws IOException {
-        Iterator it = udpConnections.keySet().iterator();
-        while (it.hasNext()) {
-            SocketAddress addr = (SocketAddress) it.next();
-            PerfMonMetricGetter getter = (PerfMonMetricGetter) udpConnections.get(addr);
-            if (getter.isStarted()) {
-                ByteBuffer metrics = getter.getMetricsLine();
-                ((DatagramChannel) key.channel()).send(metrics, addr);
+        synchronized (udpConnections) {
+            Iterator it = udpConnections.keySet().iterator();
+            while (it.hasNext()) {
+                SocketAddress addr = (SocketAddress) it.next();
+                PerfMonMetricGetter getter = (PerfMonMetricGetter) udpConnections.get(addr);
+                if (getter.isStarted()) {
+                    ByteBuffer metrics = getter.getMetricsLine();
+                    ((DatagramChannel) key.channel()).send(metrics, addr);
+                }
             }
         }
     }
@@ -340,12 +344,14 @@ public class PerfMonWorker implements Runnable {
 
     public void sendToClient(SelectableChannel channel, ByteBuffer buf) throws IOException {
         if (channel instanceof DatagramChannel) {
-            DatagramChannel udpChannel = (DatagramChannel) channel;
-            Iterator it = udpConnections.keySet().iterator();
-            while (it.hasNext()) {
-                SocketAddress addr = (SocketAddress) it.next();
-                if (udpConnections.get(addr) == udpChannel) {
-                    udpChannel.send(buf, addr);
+            synchronized (udpConnections) {
+                DatagramChannel udpChannel = (DatagramChannel) channel;
+                Iterator it = udpConnections.keySet().iterator();
+                while (it.hasNext()) {
+                    SocketAddress addr = (SocketAddress) it.next();
+                    if (udpConnections.get(addr) == udpChannel) {
+                        udpChannel.send(buf, addr);
+                    }
                 }
             }
         } else {

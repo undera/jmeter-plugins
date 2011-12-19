@@ -140,13 +140,10 @@ public class ReporterToolTest {
         ReporterTool instance = new ReporterTool();
         int result = instance.processParams(PluginsCMD.argsArrayToListIterator(args));
 
-            FilesTestTools.compareFiles(f, new File(basedir + "/issue96.semicolon.txt"));
-            /*
         if (new DecimalFormatSymbols().getDecimalSeparator() == '.') {
-        } else {
             FilesTestTools.compareFiles(f, new File(basedir + "/issue96.comma.txt"));
+        } else {
+            FilesTestTools.compareFiles(new File(basedir + "/issue96.semicolon.txt"), f);
         }
-             * 
-             */
     }
 }

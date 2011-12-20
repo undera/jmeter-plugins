@@ -139,7 +139,8 @@ public class ReporterToolTest {
         String[] args = str.split(" +");
         ReporterTool instance = new ReporterTool();
         int result = instance.processParams(PluginsCMD.argsArrayToListIterator(args));
-
+        assertEquals(0, result);
+        
         if (new DecimalFormatSymbols().getDecimalSeparator() == '.') {
             FilesTestTools.compareFiles(f, new File(basedir + "/issue96.comma.txt"));
         } else {

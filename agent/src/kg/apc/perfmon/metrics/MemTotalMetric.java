@@ -50,7 +50,7 @@ class MemTotalMetric extends AbstractMemMetric {
                 val = mem.getFree();
                 break;
             case FREE_PERCENT:
-                val = 100 * mem.getFreePercent();
+                val = mem.getFreePercent();
                 break;
             case RAM:
                 val = mem.getRam();
@@ -62,7 +62,7 @@ class MemTotalMetric extends AbstractMemMetric {
                 val = mem.getUsed();
                 break;
             case USED_PERCENT:
-                val = 100 * mem.getUsedPercent();
+                val = mem.getUsedPercent();
                 break;
             default:
                 throw new SigarException("Unknown total mem type " + type);

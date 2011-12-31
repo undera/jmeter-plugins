@@ -6,12 +6,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -19,13 +22,17 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
+import kg.apc.jmeter.gui.ComponentBorder;
+import kg.apc.jmeter.gui.GuiBuilderHelper;
 import kg.apc.jmeter.perfmon.AgentConnector;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
 import kg.apc.jmeter.perfmon.PerfMonSampleResult;
+import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
@@ -166,6 +173,29 @@ public class PerfMonGui
         metricTypesBox = new JComboBox(items.toArray());
         grid.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(metricTypesBox));
 
+        final JTextField wizEditor = new JTextField();
+        wizEditor.setBorder(null);
+        JButton wiz = new JButton("...");
+        wiz.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Frame parent = GuiPackage.getInstance().getMainFrame();
+                //JPerfmonParamsDialog dlg = new JPerfmonParamsDialog(parent, "Edit row " + grid.getSelectedRow() + " [" + grid.getValueAt(grid.getSelectedRow(), 2) + "]", true, grid);
+                JPerfmonParamsDialog dlg = new JPerfmonParamsDialog(parent, grid.getValueAt(grid.getSelectedRow(),2).toString(), true, wizEditor);
+                dlg.setLocation(parent.getLocation().x + (parent.getSize().width - dlg.getSize().width) / 2,
+                        parent.getLocation().y + (parent.getSize().height - dlg.getSize().height) / 2);
+
+                dlg.setVisible(true);
+            }
+        });
+        wiz.setMargin(new Insets(0, 6, 5, 6));
+        GuiBuilderHelper.strechButtonToComponent(wizEditor, wiz);
+        ComponentBorder bd = new ComponentBorder(wiz);
+
+        bd.install(wizEditor);
+
+        grid.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(wizEditor));
+
         return panel;
     }
 
@@ -174,6 +204,11 @@ public class PerfMonGui
         createTableModel();
         grid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         grid.setMinimumSize(new Dimension(200, 100));
+
+        grid.getColumnModel().getColumn(0).setPreferredWidth(170);
+        grid.getColumnModel().getColumn(1).setPreferredWidth(80);
+        grid.getColumnModel().getColumn(2).setPreferredWidth(120);
+        grid.getColumnModel().getColumn(3).setPreferredWidth(500);
 
         return grid;
     }
@@ -222,7 +257,6 @@ public class PerfMonGui
     public void add(SampleResult res) {
         if (res.isSuccessful()) {
             super.add(res);
-            //FIX csv reload problem
             addPerfMonRecord(res.getSampleLabel(), normalizeTime(res.getStartTime()), PerfMonSampleResult.getValue(res));
             updateGui(null);
         } else {

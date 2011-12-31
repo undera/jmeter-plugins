@@ -33,9 +33,14 @@ public class ExecMetricTest extends TestCase {
     public void testGetValue() throws Exception {
         System.out.println("getValue");
         StringBuffer res = new StringBuffer();
-        ExecMetric instance = new ExecMetric(MetricParams.createFromString("echo:123"));
+        //default is linux os
+        String cmd = "echo:123";
+        if(System.getProperty("os.name").toLowerCase().indexOf("windows") != -1) {
+            cmd = "cmd:/C:echo:123";
+        }
+        ExecMetric instance = new ExecMetric(MetricParams.createFromString(cmd));
         instance.getValue(res);
-        assertTrue(Double.parseDouble(res.toString()) > 0);
+        assertTrue(Double.parseDouble(res.toString()) == 123);
     }
 
     /*

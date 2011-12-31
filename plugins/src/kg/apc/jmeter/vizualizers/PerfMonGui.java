@@ -195,6 +195,7 @@ public class PerfMonGui
         bd.install(wizEditor);
 
         grid.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(wizEditor));
+        grid.getTableHeader().setReorderingAllowed(false);
 
         return panel;
     }

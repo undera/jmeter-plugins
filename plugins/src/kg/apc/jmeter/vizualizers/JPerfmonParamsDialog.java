@@ -612,6 +612,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         getContentPane().add(jPanelCpuCore, gridBagConstraints);
 
         jPanelScope.setBorder(javax.swing.BorderFactory.createTitledBorder("Scope"));
+        jPanelScope.setLayout(new java.awt.GridLayout(0, 1));
 
         buttonGroupScope.add(jRadioScopeAll);
         jRadioScopeAll.setSelected(true);

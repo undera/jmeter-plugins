@@ -11,6 +11,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -31,35 +32,115 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     private final static int OPTION_NET_INTERFACE_SCOPE = 1 << 5;
     private final static int OPTION_EXEC = 1 << 6;
     private final static int OPTION_TAIL = 1 << 7;
-
     private JTextField parent = null;
     private String type = null;
-
     private final static int minWidth = 400;
     private final static String defaultMarker = " (default)";
-
-    private HashMap<String,Integer> rules = new HashMap<String, Integer>();
-    
+    private HashMap<String, Integer> rules = new HashMap<String, Integer>();
+    //CPU metrics
     private static String[] cpuMetricsPrimary = {
-       "combined" + defaultMarker, "Get the combined CPU usage, in percent (%)",
-       "idle", "Get the idle CPU usage, in percent (%)",
-       "system", "Get the system CPU usage, in percent (%)",
-       "user", "Get the user CPU usage, in percent (%)",
-       "iowait", "Get the iowait CPU usage, in percent (%)"
+        "combined" + defaultMarker, "Get the combined CPU usage, in percent (%)",
+        "idle", "Get the idle CPU usage, in percent (%)",
+        "system", "Get the system CPU usage, in percent (%)",
+        "user", "Get the user CPU usage, in percent (%)",
+        "iowait", "Get the iowait CPU usage, in percent (%)"
     };
-
     private static String[] cpuProcessMetricsPrimary = {
-       "percent" + defaultMarker, "Get the process combined CPU usage, in percent (%)",
-       "total", "Get the process total CPU usage, in percent (%)",
-       "system", "Get the system CPU usage, in percent (%)",
-       "user", "Get the user CPU usage, in percent (%)"
+        "percent" + defaultMarker, "Get the process combined CPU usage, in percent (%)",
+        "total", "Get the process total CPU usage, in percent (%)",
+        "system", "Get the system CPU usage, in percent (%)",
+        "user", "Get the user CPU usage, in percent (%)"
     };
-
     private static String[] cpuMetricsAdditional = {
-       "irq", "Get the irq CPU usage, in percent (%)",
-       "nice", "Get the nice CPU usage, in percent (%)",
-       "softirq", "Get the softirq CPU usage, in percent (%)",
-       "stolen", "Get the stolen CPU usage, in percent (%)",
+        "irq", "Get the irq CPU usage, in percent (%)",
+        "nice", "Get the nice CPU usage, in percent (%)",
+        "softirq", "Get the softirq CPU usage, in percent (%)",
+        "stolen", "Get the stolen CPU usage, in percent (%)",};
+    //Memory Metrics
+    private static String[] memMetricsPrimary = {
+        "usedperc" + defaultMarker, "Relative memory usage, in percent (%)",
+        "freeperc", "Relative free memory, in percent (%)",
+        "used", "Memory used, in bytes",
+        "free", "Free memory, in bytes",};
+    private static String[] memMetricsAdditional = {
+        "actualused", "Actual memory usage, in percent (%)",
+        "actualfree", "Actual free memory, in percent (%)",
+        "ram", "Server physical memory, in bytes",
+        "total", "Total memory, in bytes",};
+    private static String[] memProcessMetricsPrimary = {
+        "resident" + defaultMarker, "Process resident memory usage, in bytes",
+        "virtual", "Process virtual memory usage, in bytes",
+        "shared", "Process shared memory usage, in bytes"
+    };
+    private static String[] memProcessMetricsAdditional = {
+        "pagefaults", "Process page faults count",
+        "majorfaults", "Process major faults count",
+        "minorfaults", "Process minor faults count"
+    };
+    //Disk I/O
+    private static String[] diskIOMetricsPrimary = {
+        "queue" + defaultMarker, "Description to update",
+        "reads", "Number of read access",
+        "writes", "Number of write access",
+        "readbytes", "Number of bytes read",
+        "writebytes", "Number of bytes written"
+    };
+    private static String[] diskIOMetricsAdditional = {
+        "available", "Description to update",
+        "service", "Description to update",
+        "files", "Description to update",
+        "free", "Description to update",
+        "freefiles", "Description to update",
+        "total", "Description to update",
+        "useperc", "Description to update",
+        "used", "Description to update"
+    };
+    //Network I/O
+    private static String[] netIOMetricsPrimary = {
+        "bytesrecv" + defaultMarker, "Number of bytes received",
+        "bytessent", "Number of bytes sent",
+        "rx", "Description to update",
+        "tx", "Description to update"
+    };
+    private static String[] netIOMetricsAdditional = {
+        "used", "Description to update",
+        "speed", "Description to update",
+        "rxdrops", "Description to update",
+        "rxerr", "Description to update",
+        "rxframe", "Description to update",
+        "rxoverruns", "Description to update",
+        "txcarrier", "Description to update",
+        "txcollisions", "Description to update",
+        "txdrops", "Description to update",
+        "txerr", "Description to update",
+        "txoverruns", "Description to update"
+    };
+    //TCP
+    private static String[] tcpMetricsPrimary = {
+        "estab" + defaultMarker, "Number of established connections",
+        "time_wait", "Description to update",
+        "close_wait", "Description to update"
+    };
+    private static String[] tcpMetricsAdditional = {
+        "bound", "Description to update",
+        "close", "Description to update",
+        "closing", "Description to update",
+        "fin_wait1", "Description to update",
+        "fin_wait2", "Description to update",
+        "idle", "Description to update",
+        "inbound", "Description to update",
+        "last_ack", "Description to update",
+        "listen", "Description to update",
+        "outbound", "Description to update",
+        "syn_recv", "Description to update"
+    };
+    //SWAP
+    private static String[] swapMetricsPrimary = {
+        "used" + defaultMarker, "Description to update",
+        "pagein", "Number of page in",
+        "pageout", "Number of page out",
+        "free", "Description to update",
+        "total", "Description to update"
     };
 
     /** Creates new form JPerfmonParamsDialog */
@@ -73,7 +154,9 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         initMetrics(type);
         this.pack();
         //avoid small dialogs
-        if(this.getWidth() < minWidth) this.setSize(minWidth, this.getHeight());
+        if (this.getWidth() < minWidth) {
+            this.setSize(minWidth, this.getHeight());
+        }
         showProcessScopePanels();
         makePtqlLink();
     }
@@ -83,12 +166,13 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         jLabelPtqlHelp.setFont(jLabelPtqlHelp.getFont().deriveFont(Font.PLAIN));
         jLabelPtqlHelp.setCursor(new Cursor(Cursor.HAND_CURSOR));
         jLabelPtqlHelp.addMouseListener(new MouseAdapter() {
+
             @Override
             public void mouseClicked(MouseEvent e) {
-            if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
-                JMeterPluginsUtils.openInBrowser("http://support.hyperic.com/display/SIGAR/PTQL");
+                if ((e.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK) {
+                    JMeterPluginsUtils.openInBrowser("http://support.hyperic.com/display/SIGAR/PTQL");
+                }
             }
-        }
         });
         Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.blue);
         jLabelPtqlHelp.setBorder(border);
@@ -106,34 +190,57 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     }
 
     private void fillMetrics(String[] metrics, JPanel panel) {
-        for(int i=0; i<metrics.length/2; i++) {
-            JRadioButton radio = new JRadioButton(metrics[2*i]);
-            String action = metrics[2*i];
-            if(action.endsWith(defaultMarker)) {
-                action = action.substring(0, action.length() - defaultMarker.length());
+        if (metrics != null) {
+            for (int i = 0; i < metrics.length / 2; i++) {
+                JRadioButton radio = new JRadioButton(metrics[2 * i]);
+                String action = metrics[2 * i];
+                if (action.endsWith(defaultMarker)) {
+                    action = action.substring(0, action.length() - defaultMarker.length());
+                }
+                radio.setActionCommand(action);
+                radio.setToolTipText(metrics[2 * i + 1]);
+                buttonGroupMetrics.add(radio);
+                panel.add(radio);
             }
-            radio.setActionCommand(action);
-            radio.setToolTipText(metrics[2*i+1]);
-            buttonGroupMetrics.add(radio);
-            panel.add(radio);
+        } else {
+            panel.add(new JLabel(" None..."));
         }
     }
 
     private void initMetrics(String metricType) {
         //init params
-        String[] primaryMetrics = cpuMetricsPrimary;
-        String[] additionalMetrics = cpuMetricsAdditional;
+        String[] primaryMetrics = null;
+        String[] additionalMetrics = null;
+        if (type.equals("CPU")) {
+            primaryMetrics = cpuMetricsPrimary;
+            additionalMetrics = cpuMetricsAdditional;
+        } else if (type.equals("Memory")) {
+            primaryMetrics = memMetricsPrimary;
+            additionalMetrics = memMetricsAdditional;
+        } else if (type.equals("Disks I/O")) {
+            primaryMetrics = diskIOMetricsPrimary;
+            additionalMetrics = diskIOMetricsAdditional;
+        } else if (type.equals("Network I/O")) {
+            primaryMetrics = netIOMetricsPrimary;
+            additionalMetrics = netIOMetricsAdditional;
+        } else if (type.equals("TCP")) {
+            primaryMetrics = tcpMetricsPrimary;
+            additionalMetrics = tcpMetricsAdditional;
+        } else if (type.equals("Swap")) {
+            primaryMetrics = swapMetricsPrimary;
+            additionalMetrics = null;
+        }
 
         //show/hide relevent panels
-        if(rules.containsKey(metricType)) {
+        if (rules.containsKey(metricType)) {
             jPanelScope.setVisible((rules.get(metricType) & OPTION_PROCESS_SCOPE) != 0);
             jPanelPID.setVisible((rules.get(metricType) & OPTION_PROCESS_SCOPE) != 0);
-            if((rules.get(metricType) & OPTION_PRIMARY_METRIC) != 0) {
+            if ((rules.get(metricType) & OPTION_PRIMARY_METRIC) != 0) {
                 fillMetrics(primaryMetrics, jPanelPrimaryMetrics);
             } else {
                 jPanelPrimaryMetrics.setVisible(false);
             }
-            if((rules.get(metricType) & OPTION_ADDITIONAL_METRIC) != 0) {
+            if ((rules.get(metricType) & OPTION_ADDITIONAL_METRIC) != 0) {
                 fillMetrics(additionalMetrics, jPanelAdditionaMetrics);
             } else {
                 jPanelAdditionaMetrics.setVisible(false);
@@ -146,12 +253,90 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         }
     }
 
-    private String getParamsString() {
+    private int getIntValue(String str, int defaultValue) {
+        int ret;
+        try {
+            ret = Integer.valueOf(str);
+        } catch (NumberFormatException ex) {
+            ret = defaultValue;
+        }
+
+        return ret;
+    }
+
+    private String getProcessScopeString() {
         String ret = "";
-        if(buttonGroupMetrics.getSelection() != null) {
-            ret = buttonGroupMetrics.getSelection().getActionCommand();
+        if (jRadioScopePerProcess.isSelected()) {
+            if (buttonGroupPID.getSelection() != null) {
+                String tmp = buttonGroupPID.getSelection().getActionCommand();
+                if ("pid".equals(tmp)) {
+                    ret += "pid=" + getIntValue(jTextFieldPID.getText(), 0);
+                } else if ("name".equals(tmp)) {
+                    String name = jTextFieldPorcessName.getText();
+                    if (name.length() == 0) {
+                        name = "unknown";
+                    }
+                    ret += "name=" + name + "#" + jTextFieldOccurence.getText();
+                } else if ("ptql".equals(tmp)) {
+                    String query = jTextFieldPtql.getText();
+                    if (query.length() == 0) {
+                        query = "query";
+                    }
+                    ret += "ptql=" + query;
+                }
+            } else {
+                ret += "pid=0";
+            }
         }
         return ret;
+    }
+
+    private void addStringItem(StringBuilder buf, String item) {
+        if(item != null && item.length()>0) {
+            if(buf.length() > 0) buf.append(":");
+            buf.append(item);
+        }
+    }
+
+    private String getParamsString() {
+        StringBuilder ret = new StringBuilder("");
+        String tmp = null;
+
+        //special preprocessing
+        if (type.equals("CPU")) {
+            if (buttonGroupCpuCores.getSelection() != null) {
+                tmp = buttonGroupCpuCores.getSelection().getActionCommand();
+                if ("index".equals(tmp)) {
+                    addStringItem(ret, "core=" + getIntValue(jTextFieldCoreIndex.getText(), 0));
+                }
+            }
+             addStringItem(ret, getProcessScopeString());
+        } else if (type.equals("Memory")) {
+            addStringItem(ret, getProcessScopeString());
+        } else if (type.equals("Disks I/O")) {
+            tmp = jTextFieldFileSystem.getText();
+            if(tmp.trim().length() > 0) {
+                addStringItem(ret, "fs=" + tmp.trim());
+            }
+        } else if (type.equals("Network I/O")) {
+            tmp = jTextFieldNetInterface.getText();
+            if(tmp.trim().length() > 0) {
+                addStringItem(ret, "iface=" + tmp.trim());
+            }
+        } else if (type.equals("TCP")) {
+        } else if (type.equals("Swap")) {
+        } else if (type.equals("EXEC")) {
+            addStringItem(ret, jTextFieldExec.getText());
+        } else if (type.equals("TAIL")) {
+            addStringItem(ret, jTextFieldTail.getText());
+        }
+
+        //add the metric
+        if (buttonGroupMetrics.getSelection() != null) {
+            addStringItem(ret, buttonGroupMetrics.getSelection().getActionCommand());
+        }
+
+        return ret.toString();
     }
 
     /** This method is called from within the constructor to
@@ -175,8 +360,8 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         jTextFieldPorcessName = new javax.swing.JTextField();
         jLabelOccurence = new javax.swing.JLabel();
         jTextFieldOccurence = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jTextField1 = new javax.swing.JTextField();
+        jRadioPtql = new javax.swing.JRadioButton();
+        jTextFieldPtql = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabelPtqlHelp = new javax.swing.JLabel();
         jPanelButtons = new javax.swing.JPanel();
@@ -193,7 +378,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         jPanelCpuCore = new javax.swing.JPanel();
         jRadioCpuAllCores = new javax.swing.JRadioButton();
         jRadioCustomCpuCore = new javax.swing.JRadioButton();
-        jTextFieldProcessOccurence = new javax.swing.JTextField();
+        jTextFieldCoreIndex = new javax.swing.JTextField();
         jPanelScope = new javax.swing.JPanel();
         jRadioScopeAll = new javax.swing.JRadioButton();
         jRadioScopePerProcess = new javax.swing.JRadioButton();
@@ -216,13 +401,15 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
 
         buttonGroupPID.add(jRadioPID);
         jRadioPID.setText("Process ID");
+        jRadioPID.setActionCommand("pid");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanelPID.add(jRadioPID, gridBagConstraints);
 
-        jTextFieldPID.setText("jTextField1");
+        jTextFieldPID.setMinimumSize(new java.awt.Dimension(60, 20));
+        jTextFieldPID.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -230,13 +417,15 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
 
         buttonGroupPID.add(jRadioProcessName);
         jRadioProcessName.setText("Process Name");
+        jRadioProcessName.setActionCommand("name");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         jPanelPID.add(jRadioProcessName, gridBagConstraints);
 
-        jTextFieldPorcessName.setText("jTextField1");
+        jTextFieldPorcessName.setMinimumSize(new java.awt.Dimension(60, 20));
+        jTextFieldPorcessName.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -248,7 +437,8 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 2;
         jPanelPID.add(jLabelOccurence, gridBagConstraints);
 
-        jTextFieldOccurence.setText("jTextField1");
+        jTextFieldOccurence.setMinimumSize(new java.awt.Dimension(60, 20));
+        jTextFieldOccurence.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
@@ -256,21 +446,20 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.weightx = 1.0;
         jPanelPID.add(jTextFieldOccurence, gridBagConstraints);
 
-        buttonGroupPID.add(jRadioButton1);
-        jRadioButton1.setText("PTQL Query");
+        buttonGroupPID.add(jRadioPtql);
+        jRadioPtql.setText("PTQL Query");
+        jRadioPtql.setActionCommand("ptql");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanelPID.add(jRadioButton1, gridBagConstraints);
-
-        jTextField1.setText("jTextField1");
+        jPanelPID.add(jRadioPtql, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanelPID.add(jTextField1, gridBagConstraints);
+        jPanelPID.add(jTextFieldPtql, gridBagConstraints);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -337,14 +526,12 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         jPanelCustomCommand.setBorder(javax.swing.BorderFactory.createTitledBorder("Custom Exec Command"));
         jPanelCustomCommand.setLayout(new java.awt.GridBagLayout());
 
-        jLabelExec.setText("Enter your custom command here as in a prompt:");
+        jLabelExec.setText("Enter the custom command here:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanelCustomCommand.add(jLabelExec, gridBagConstraints);
-
-        jTextFieldExec.setText("jTextField1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -390,6 +577,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
 
         buttonGroupCpuCores.add(jRadioCpuAllCores);
         jRadioCpuAllCores.setText("All Cores (default)");
+        jRadioCpuAllCores.setActionCommand("all");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -400,19 +588,21 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
 
         buttonGroupCpuCores.add(jRadioCustomCpuCore);
         jRadioCustomCpuCore.setText("Custom CPU Index (0 based)");
+        jRadioCustomCpuCore.setActionCommand("index");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanelCpuCore.add(jRadioCustomCpuCore, gridBagConstraints);
 
-        jTextFieldProcessOccurence.setText("jTextField2");
+        jTextFieldCoreIndex.setMinimumSize(new java.awt.Dimension(60, 20));
+        jTextFieldCoreIndex.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
-        jPanelCpuCore.add(jTextFieldProcessOccurence, gridBagConstraints);
+        jPanelCpuCore.add(jTextFieldCoreIndex, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -465,8 +655,6 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanelTailCommand.add(jLabelTail, gridBagConstraints);
-
-        jTextFieldTail.setText("jTextField1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -492,8 +680,6 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanelFileSystem.add(jLabelFileSystem, gridBagConstraints);
-
-        jTextFieldFileSystem.setText("jTextField1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -519,8 +705,6 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         jPanelNetInterface.add(jLabelNetInterface, gridBagConstraints);
-
-        jTextFieldNetInterface.setText("jTextField1");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -550,20 +734,36 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonApplyActionPerformed
 
     private void showProcessScopePanels() {
-        jPanelPID.setVisible(jRadioScopePerProcess.isSelected());
-        if(type.equals("CPU")) {
+        if (rules.containsKey(type) && (rules.get(type) & OPTION_PROCESS_SCOPE) != 0) {
+            jPanelPID.setVisible(jRadioScopePerProcess.isSelected());
             jPanelPrimaryMetrics.removeAll();
             jPanelAdditionaMetrics.removeAll();
             Enumeration<AbstractButton> enu = buttonGroupMetrics.getElements();
-            while(enu.hasMoreElements()) {
+            while (enu.hasMoreElements()) {
                 buttonGroupMetrics.remove(enu.nextElement());
             }
-            if(jRadioScopePerProcess.isSelected()) {
-                fillMetrics(cpuProcessMetricsPrimary, jPanelPrimaryMetrics);
+            String[] primaryMetrics = null;
+            String[] additionalMetrics = null;
+
+            if (jRadioScopePerProcess.isSelected()) {
+                if (type.equals("CPU")) {
+                    primaryMetrics = cpuProcessMetricsPrimary;
+                } else if (type.equals("Memory")) {
+                    primaryMetrics = memProcessMetricsPrimary;
+                    additionalMetrics = memProcessMetricsAdditional;
+                }
             } else {
-                fillMetrics(cpuMetricsPrimary, jPanelPrimaryMetrics);
-                fillMetrics(cpuMetricsAdditional, jPanelAdditionaMetrics);
+                if (type.equals("CPU")) {
+                    primaryMetrics = cpuMetricsPrimary;
+                    additionalMetrics = cpuMetricsAdditional;
+                } else if (type.equals("Memory")) {
+                    primaryMetrics = memMetricsPrimary;
+                    additionalMetrics = memMetricsAdditional;
+                }
             }
+
+            fillMetrics(primaryMetrics, jPanelPrimaryMetrics);
+            fillMetrics(additionalMetrics, jPanelAdditionaMetrics);
         }
     }
 
@@ -574,9 +774,6 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     private void jRadioScopePerProcessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioScopePerProcessActionPerformed
         showProcessScopePanels();
     }//GEN-LAST:event_jRadioScopePerProcessActionPerformed
-
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupCpuCores;
     private javax.swing.ButtonGroup buttonGroupMetrics;
@@ -603,24 +800,23 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelScope;
     private javax.swing.JPanel jPanelStretch;
     private javax.swing.JPanel jPanelTailCommand;
-    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioCpuAllCores;
     private javax.swing.JRadioButton jRadioCustomCpuCore;
     private javax.swing.JRadioButton jRadioPID;
     private javax.swing.JRadioButton jRadioProcessName;
+    private javax.swing.JRadioButton jRadioPtql;
     private javax.swing.JRadioButton jRadioScopeAll;
     private javax.swing.JRadioButton jRadioScopePerProcess;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaExecHelp;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldCoreIndex;
     private javax.swing.JTextField jTextFieldExec;
     private javax.swing.JTextField jTextFieldFileSystem;
     private javax.swing.JTextField jTextFieldNetInterface;
     private javax.swing.JTextField jTextFieldOccurence;
     private javax.swing.JTextField jTextFieldPID;
     private javax.swing.JTextField jTextFieldPorcessName;
-    private javax.swing.JTextField jTextFieldProcessOccurence;
+    private javax.swing.JTextField jTextFieldPtql;
     private javax.swing.JTextField jTextFieldTail;
     // End of variables declaration//GEN-END:variables
-
 }

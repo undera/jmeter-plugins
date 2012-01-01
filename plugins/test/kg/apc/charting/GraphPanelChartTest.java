@@ -71,7 +71,7 @@ public class GraphPanelChartTest {
         instance.setSize(500, 500);
         instance.getChartSettings().setDrawFinalZeroingLines(true);
         instance.getChartSettings().setDrawCurrentX(true);
-        instance.setExpendRows(true);
+        instance.getChartSettings().setExpendRows(true);
 
         final ConcurrentSkipListMap<String, AbstractGraphRow> rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         instance.setRows(rows);
@@ -304,17 +304,6 @@ public class GraphPanelChartTest {
         boolean isPreview = false;
         GraphPanelChart instance = new GraphPanelChart();
         instance.setIsPreview(isPreview);
-    }
-
-    /**
-     * Test of setExpendRows method, of class GraphPanelChart.
-     */
-    @Test
-    public void testSetExpendRows() {
-        System.out.println("setExpendRows");
-        boolean expendRows = false;
-        GraphPanelChart instance = new GraphPanelChart();
-        instance.setExpendRows(expendRows);
     }
 
     @Test

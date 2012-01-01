@@ -36,7 +36,7 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer {
         graphPanel.getGraphObject().setxAxisLabel("Elapsed time");
         graphPanel.getGraphObject().setYAxisLabel("Scaled values");
 
-        graphPanel.getGraphObject().setExpendRows(true);
+        graphPanel.getGraphObject().getChartSettings().setExpendRows(true);
 
         CompositeResultCollector compositeResultCollector = new CompositeResultCollector();
         compositeResultCollector.setCompositeModel(compositeModel);
@@ -52,7 +52,8 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer {
                 | JSettingsPanel.FINAL_ZEROING_OPTION
                 | JSettingsPanel.LIMIT_POINT_OPTION
                 | JSettingsPanel.MAXY_OPTION
-                | JSettingsPanel.RELATIVE_TIME_OPTION);
+                | JSettingsPanel.RELATIVE_TIME_OPTION
+                | JSettingsPanel.AUTO_EXPAND_OPTION);
     }
 
     @Override

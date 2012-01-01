@@ -69,7 +69,7 @@ public class PerfMonGui
         super();
         setGranulation(1000);
         graphPanel.getGraphObject().setYAxisLabel("Performance Metrics");
-        graphPanel.getGraphObject().setExpendRows(true);
+        graphPanel.getGraphObject().getChartSettings().setExpendRows(true);
     }
 
     @Override
@@ -78,7 +78,8 @@ public class PerfMonGui
                 JSettingsPanel.GRADIENT_OPTION
                 | JSettingsPanel.LIMIT_POINT_OPTION
                 | JSettingsPanel.MAXY_OPTION
-                | JSettingsPanel.RELATIVE_TIME_OPTION);
+                | JSettingsPanel.RELATIVE_TIME_OPTION
+                | JSettingsPanel.AUTO_EXPAND_OPTION);
     }
 
     @Override

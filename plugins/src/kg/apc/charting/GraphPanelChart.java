@@ -153,7 +153,7 @@ public class GraphPanelChart
 
     private void autoZoom_orig() {
         //row zooming
-        if (!expendRows) {
+        if (!chartSettings.isExpendRows()) {
             return;
         }
 
@@ -232,12 +232,7 @@ public class GraphPanelChart
     }
     //row zooming
     private HashMap<String, Double> rowsZoomFactor = new HashMap<String, Double>();
-    private boolean expendRows = false;
-
-    public void setExpendRows(boolean expendRows) {
-        this.expendRows = expendRows;
-    }
-
+    
     private static synchronized int getNextId() {
         uidGenerator++;
         return uidGenerator;
@@ -594,7 +589,7 @@ public class GraphPanelChart
             }
 
             String rowLabel = row.getKey();
-            if (expendRows && rowsZoomFactor.get(row.getKey()) != null) {
+            if (chartSettings.isExpendRows() && rowsZoomFactor.get(row.getKey()) != null) {
                 double zoomFactor = rowsZoomFactor.get(row.getKey());
                 if (zoomFactor != 1) {
                     if (zoomFactor > 1) {
@@ -819,7 +814,7 @@ public class GraphPanelChart
 
         if (currentPlotter != null) {
             double zoomFactor = 1;
-            if (expendRows && rowsZoomFactor.get(rowLabel) != null) {
+            if (chartSettings.isExpendRows() && rowsZoomFactor.get(rowLabel) != null) {
                 zoomFactor = rowsZoomFactor.get(rowLabel);
             }
             currentPlotter.setBoundsValues(chartRect, minXVal, maxXVal, minYVal, maxYVal);

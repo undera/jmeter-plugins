@@ -43,6 +43,7 @@ public class ChartSettings {
     private int hideNonRepValLimit = -1;
     private int maxPointPerRow = -1;
     private long forcedMaxY = -1;
+    private boolean expendRows = false;
 
     //Chart type
     private int chartType = CHART_TYPE_DEFAULT;
@@ -202,5 +203,13 @@ public class ChartSettings {
 
    public AlphaComposite getBarComposite() {
       return barComposite;
+   }
+
+   public boolean isExpendRows() {
+      return expendRows;
+   }
+
+   public void setExpendRows(boolean expendRows) {
+      this.expendRows = expendRows;
    }
 }

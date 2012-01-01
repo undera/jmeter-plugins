@@ -370,4 +370,27 @@ public class ChartSettingsTest {
         AlphaComposite result = instance.getBarComposite();
         assertNotNull(result);
     }
+
+    /**
+     * Test of isExpendRows method, of class ChartSettings.
+     */
+    @Test
+    public void testIsExpendRows() {
+        System.out.println("isExpendRows");
+        ChartSettings instance = new ChartSettings();
+        boolean expResult = false;
+        boolean result = instance.isExpendRows();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setExpendRows method, of class ChartSettings.
+     */
+    @Test
+    public void testSetExpendRows() {
+        System.out.println("setExpendRows");
+        boolean expendRows = true;
+        ChartSettings instance = new ChartSettings();
+        instance.setExpendRows(expendRows);
+    }
 }

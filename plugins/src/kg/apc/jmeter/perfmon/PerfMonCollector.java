@@ -207,7 +207,9 @@ public class PerfMonCollector
             Object key = it.next();
             final PerfMonAgentConnector conn = connectors.get(key);
             log.debug("Shutting down " + conn.toString());
-            connectors.remove(key);
+            //Fix ConcurrentModificationException if more than one host
+            //connectors.remove(key);
+            it.remove();
             conn.disconnect();
         }
     }

@@ -35,7 +35,18 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     private JTextField parent = null;
     private String type = null;
     private final static int minWidth = 400;
+
     private final static String defaultMarker = " (default)";
+    private final static String separator = ":";
+    private final static String METRIC_CPU = "CPU";
+    private final static String METRIC_MEM = "Memory";
+    private final static String METRIC_SWAP = "Swap";
+    private final static String METRIC_DISKIO = "Disks I/O";
+    private final static String METRIC_NETIO = "Network I/O";
+    private final static String METRIC_TCP = "TCP";
+    private final static String METRIC_EXEC = "EXEC";
+    private final static String METRIC_TAIL = "TAIL";
+
     private HashMap<String, Integer> rules = new HashMap<String, Integer>();
     //CPU metrics
     private static String[] cpuMetricsPrimary = {
@@ -164,9 +175,9 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
 
     private void initFields() {
         String existing = parent.getText();
-        String[] elements = existing.split(":");
+        String[] elements = existing.split(separator);
         //check process scope
-        if("CPU".equals(type) || "Memory".equals(type)) {
+        if(METRIC_CPU.equals(type) || METRIC_MEM.equals(type)) {
             if(existing.indexOf("pid=") != -1
                     || existing.indexOf("name=") != -1
                     || existing.indexOf("ptql=") != -1) {
@@ -194,7 +205,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
             }
         }
         //check cpu core
-        if("CPU".equals(type)) {
+        if(METRIC_CPU.equals(type)) {
             int i=0;
             while(i<elements.length) {
                 if(elements[i].startsWith("core=")) {
@@ -212,7 +223,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         }
 
         //check filesystem filter
-        if("Disks I/O".equals(type)) {
+        if(METRIC_DISKIO.equals(type)) {
             int i=0;
             while(i<elements.length) {
                 if(elements[i].startsWith("fs=")) {
@@ -224,7 +235,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         }
 
         //check network interface filter
-        if("Network I/O".equals(type)) {
+        if(METRIC_NETIO.equals(type)) {
             int i=0;
             while(i<elements.length) {
                 if(elements[i].startsWith("iface=")) {
@@ -236,9 +247,9 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         }
 
         //set metric selected, exec or tail command
-        if("EXEC".equals(type)) {
+        if(METRIC_EXEC.equals(type)) {
             jTextFieldExec.setText(existing);
-        } else if("TAIL".equals(type)) {
+        } else if(METRIC_TAIL.equals(type)) {
             jTextFieldTail.setText(existing);
         } else {
             for(int i=0; i<elements.length; i++) {
@@ -276,14 +287,14 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     }
 
     private void initRules() {
-        rules.put("CPU", OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_PROCESS_SCOPE | OPTION_CPU_CORE_SCOPE);
-        rules.put("Memory", OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_PROCESS_SCOPE);
-        rules.put("Swap", OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC);
-        rules.put("Disks I/O", OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_FILESYSTEM_SCOPE);
-        rules.put("Network I/O", OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_NET_INTERFACE_SCOPE);
-        rules.put("TCP", OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC);
-        rules.put("EXEC", OPTION_EXEC);
-        rules.put("TAIL", OPTION_TAIL);
+        rules.put(METRIC_CPU, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_PROCESS_SCOPE | OPTION_CPU_CORE_SCOPE);
+        rules.put(METRIC_MEM, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_PROCESS_SCOPE);
+        rules.put(METRIC_SWAP, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC);
+        rules.put(METRIC_DISKIO, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_FILESYSTEM_SCOPE);
+        rules.put(METRIC_NETIO, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_NET_INTERFACE_SCOPE);
+        rules.put(METRIC_TCP, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC);
+        rules.put(METRIC_EXEC, OPTION_EXEC);
+        rules.put(METRIC_TAIL, OPTION_TAIL);
     }
 
     private void fillMetrics(String[] metrics, JPanel panel) {
@@ -308,22 +319,22 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         //init params
         String[] primaryMetrics = null;
         String[] additionalMetrics = null;
-        if (type.equals("CPU")) {
+        if (type.equals(METRIC_CPU)) {
             primaryMetrics = cpuMetricsPrimary;
             additionalMetrics = cpuMetricsAdditional;
-        } else if (type.equals("Memory")) {
+        } else if (type.equals(METRIC_MEM)) {
             primaryMetrics = memMetricsPrimary;
             additionalMetrics = memMetricsAdditional;
-        } else if (type.equals("Disks I/O")) {
+        } else if (type.equals(METRIC_DISKIO)) {
             primaryMetrics = diskIOMetricsPrimary;
             additionalMetrics = diskIOMetricsAdditional;
-        } else if (type.equals("Network I/O")) {
+        } else if (type.equals(METRIC_NETIO)) {
             primaryMetrics = netIOMetricsPrimary;
             additionalMetrics = netIOMetricsAdditional;
-        } else if (type.equals("TCP")) {
+        } else if (type.equals(METRIC_TCP)) {
             primaryMetrics = tcpMetricsPrimary;
             additionalMetrics = tcpMetricsAdditional;
-        } else if (type.equals("Swap")) {
+        } else if (type.equals(METRIC_SWAP)) {
             primaryMetrics = swapMetricsPrimary;
             additionalMetrics = null;
         }
@@ -390,7 +401,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
 
     private void addStringItem(StringBuilder buf, String item) {
         if(item != null && item.length()>0) {
-            if(buf.length() > 0) buf.append(":");
+            if(buf.length() > 0) buf.append(separator);
             buf.append(item);
         }
     }
@@ -400,7 +411,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         String tmp = null;
 
         //special preprocessing
-        if (type.equals("CPU")) {
+        if (type.equals(METRIC_CPU)) {
             if (buttonGroupCpuCores.getSelection() != null) {
                 tmp = buttonGroupCpuCores.getSelection().getActionCommand();
                 if ("index".equals(tmp)) {
@@ -408,23 +419,23 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
                 }
             }
              addStringItem(ret, getProcessScopeString());
-        } else if (type.equals("Memory")) {
+        } else if (type.equals(METRIC_MEM)) {
             addStringItem(ret, getProcessScopeString());
-        } else if (type.equals("Disks I/O")) {
+        } else if (type.equals(METRIC_DISKIO)) {
             tmp = jTextFieldFileSystem.getText();
             if(tmp.trim().length() > 0) {
                 addStringItem(ret, "fs=" + tmp.trim());
             }
-        } else if (type.equals("Network I/O")) {
+        } else if (type.equals(METRIC_NETIO)) {
             tmp = jTextFieldNetInterface.getText();
             if(tmp.trim().length() > 0) {
                 addStringItem(ret, "iface=" + tmp.trim());
             }
-        } else if (type.equals("TCP")) {
-        } else if (type.equals("Swap")) {
-        } else if (type.equals("EXEC")) {
+        } else if (type.equals(METRIC_TCP)) {
+        } else if (type.equals(METRIC_SWAP)) {
+        } else if (type.equals(METRIC_EXEC)) {
             addStringItem(ret, jTextFieldExec.getText());
-        } else if (type.equals("TAIL")) {
+        } else if (type.equals(METRIC_TAIL)) {
             addStringItem(ret, jTextFieldTail.getText());
         }
 
@@ -844,17 +855,17 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
             String[] additionalMetrics = null;
 
             if (jRadioScopePerProcess.isSelected()) {
-                if (type.equals("CPU")) {
+                if (type.equals(METRIC_CPU)) {
                     primaryMetrics = cpuProcessMetricsPrimary;
-                } else if (type.equals("Memory")) {
+                } else if (type.equals(METRIC_MEM)) {
                     primaryMetrics = memProcessMetricsPrimary;
                     additionalMetrics = memProcessMetricsAdditional;
                 }
             } else {
-                if (type.equals("CPU")) {
+                if (type.equals(METRIC_CPU)) {
                     primaryMetrics = cpuMetricsPrimary;
                     additionalMetrics = cpuMetricsAdditional;
-                } else if (type.equals("Memory")) {
+                } else if (type.equals(METRIC_MEM)) {
                     primaryMetrics = memMetricsPrimary;
                     additionalMetrics = memMetricsAdditional;
                 }

@@ -241,13 +241,9 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         } else if("TAIL".equals(type)) {
             jTextFieldTail.setText(existing);
         } else {
-            int index = existing.lastIndexOf(":");
-            if(index == -1) {
-                index = 0;
-            } else {
-                index++;
+            for(int i=0; i<elements.length; i++) {
+                initMetricRadios(elements[i]);
             }
-            initMetricRadios(existing.substring(index));
         }
 
     }

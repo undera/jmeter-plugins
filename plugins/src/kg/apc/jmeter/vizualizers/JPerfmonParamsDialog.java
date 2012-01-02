@@ -159,6 +159,107 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         }
         showProcessScopePanels();
         makePtqlLink();
+        initFields();
+    }
+
+    private void initFields() {
+        String existing = parent.getText();
+        String[] elements = existing.split(":");
+        //check process scope
+        if("CPU".equals(type) || "Memory".equals(type)) {
+            if(existing.indexOf("pid=") != -1
+                    || existing.indexOf("name=") != -1
+                    || existing.indexOf("ptql=") != -1) {
+                jRadioScopePerProcess.setSelected(true);
+                showProcessScopePanels();
+            }
+            int i=0;
+            while(i<elements.length) {
+                if(elements[i].startsWith("pid=")) {
+                    jRadioPID.setSelected(true);
+                    jTextFieldPID.setText(elements[i].substring(4));
+                    break;
+                } else if(elements[i].startsWith("name=")) {
+                    String[] tmp = elements[i].split("#");
+                    jRadioProcessName.setSelected(true);
+                    jTextFieldPorcessName.setText(tmp[0].substring(5));
+                    if(tmp.length == 2) jTextFieldOccurence.setText(tmp[1]);
+                    break;
+                } else if(elements[i].startsWith("ptql=")) {
+                    jRadioPtql.setSelected(true);
+                    jTextFieldPtql.setText(elements[i].substring(5));
+                    break;
+                }
+                i++;
+            }
+        }
+        //check cpu core
+        if("CPU".equals(type)) {
+            int i=0;
+            while(i<elements.length) {
+                if(elements[i].startsWith("core=")) {
+                    jRadioCustomCpuCore.setSelected(true);
+                    String[] tmp = elements[i].split("=");
+                    if(tmp.length > 1) {
+                        jTextFieldCoreIndex.setText(tmp[1]);
+                    } else {
+                        jTextFieldCoreIndex.setText("0");
+                    }
+                    break;
+                }
+                i++;
+            }
+        }
+
+        //check filesystem filter
+        if("Disks I/O".equals(type)) {
+            int i=0;
+            while(i<elements.length) {
+                if(elements[i].startsWith("fs=")) {
+                    jTextFieldFileSystem.setText(elements[i].substring(3));
+                    break;
+                }
+                i++;
+            }
+        }
+
+        //check network interface filter
+        if("Network I/O".equals(type)) {
+            int i=0;
+            while(i<elements.length) {
+                if(elements[i].startsWith("iface=")) {
+                    jTextFieldNetInterface.setText(elements[i].substring(6));
+                    break;
+                }
+                i++;
+            }
+        }
+
+        //set metric selected, exec or tail command
+        if("EXEC".equals(type)) {
+            jTextFieldExec.setText(existing);
+        } else if("TAIL".equals(type)) {
+            jTextFieldTail.setText(existing);
+        } else {
+            int index = existing.lastIndexOf(":");
+            if(index == -1) {
+                index = 0;
+            } else {
+                index++;
+            }
+            initMetricRadios(existing.substring(index));
+        }
+
+    }
+
+    private void initMetricRadios(String metricName) {
+        Enumeration<AbstractButton> enu = buttonGroupMetrics.getElements();
+        while(enu.hasMoreElements()) {
+            JRadioButton radio = (JRadioButton)enu.nextElement();
+            if(metricName.equals(radio.getActionCommand())) {
+                radio.setSelected(true);
+            }
+        }
     }
 
     private void makePtqlLink() {
@@ -276,7 +377,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
                     if (name.length() == 0) {
                         name = "unknown";
                     }
-                    ret += "name=" + name + "#" + jTextFieldOccurence.getText();
+                    ret += "name=" + name + "#" + getIntValue(jTextFieldOccurence.getText(), 1);
                 } else if ("ptql".equals(tmp)) {
                     String query = jTextFieldPtql.getText();
                     if (query.length() == 0) {

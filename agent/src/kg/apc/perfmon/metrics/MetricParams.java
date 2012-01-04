@@ -1,12 +1,7 @@
 package kg.apc.perfmon.metrics;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
-
+import java.util.*;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.hyperic.sigar.ProcExe;
@@ -15,15 +10,17 @@ import org.hyperic.sigar.SigarProxy;
 
 /**
  * Class to parse metric params like process name, PID, metric type
+ *
  * @author undera
  */
-class MetricParams {
+public class MetricParams {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     long PID = -1;
     String type = "";
     String fs = "";
     String iface = "";
+    String label = "";
     String[] params = new String[0];
     int coreID = -1;
 
@@ -45,16 +42,16 @@ class MetricParams {
             try {
                 token = tokens.nextToken();
 
-	            String buff = "";
-	            String tmp = token;
-	            
-	            while (token.endsWith("\\")) {
-	            	tmp = token.substring(0, token.length() - 1) + AbstractPerfMonMetric.PARAMS_DELIMITER;
-	                token = tokens.nextToken();
-	                buff += tmp;
-	            }
+                String buff = "";
+                String tmp;
 
-	            token = buff + token;
+                while (token.endsWith("\\")) {
+                    tmp = token.substring(0, token.length() - 1) + AbstractPerfMonMetric.PARAMS_DELIMITER;
+                    token = tokens.nextToken();
+                    buff += tmp;
+                }
+
+                token = buff + token;
             } catch (NoSuchElementException e) {
                 break;
             }
@@ -65,6 +62,8 @@ class MetricParams {
                 inst.PID = getPIDByPID(token);
             } else if (token.startsWith("iface=")) {
                 inst.iface = getParam(token);
+            } else if (token.startsWith("label=")) {
+                inst.label = getParam(token);
             } else if (token.startsWith("fs=")) {
                 inst.fs = getParam(token);
             } else if (token.startsWith("ptql=")) {
@@ -82,7 +81,7 @@ class MetricParams {
     }
 
     private static long getPIDByName(String token, SigarProxy sigar) {
-        long PID = -1;
+        long PID;
         String name = token.substring(token.indexOf("=") + 1);
         String[] parts = name.split("#");
         try {
@@ -104,7 +103,7 @@ class MetricParams {
     }
 
     private static long getPIDByPID(String token) {
-        long PID = -1;
+        long PID;
         try {
             String PIDStr = token.substring(token.indexOf("=") + 1);
             PID = Long.parseLong(PIDStr);
@@ -222,5 +221,9 @@ class MetricParams {
         }
 
         return buff.toString();
+    }
+
+    public String getLabel() {
+        return label;
     }
 }

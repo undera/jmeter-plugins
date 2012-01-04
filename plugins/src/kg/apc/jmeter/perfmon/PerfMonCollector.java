@@ -166,7 +166,7 @@ public class PerfMonCollector
         String stringKey = addr.toString() + "#" + index;
 
         // handle label parameter
-        MetricParams paramsParsed = MetricParams.createFromString(params, null);
+        MetricParams paramsParsed = MetricParams.createFromString(params);
         String label;
         if (paramsParsed.getLabel().isEmpty()) {
             label = host + " " + metric + " " + params;

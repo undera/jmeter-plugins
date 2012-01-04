@@ -1,11 +1,7 @@
 // TODO: document it!
 package kg.apc.jmeter.samplers;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InterruptedIOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.SocketTimeoutException;
 import org.apache.jmeter.protocol.tcp.sampler.TCPClientImpl;
 import org.apache.jmeter.util.JMeterUtils;
@@ -51,7 +47,7 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
     public String read(InputStream is) {
         byte[] buffer = new byte[chunkSize];
         ByteArrayOutputStream w = new ByteArrayOutputStream();
-        int x = 0;
+        int x;
         try {
             x = is.read(buffer);
             if (x > 0) {

@@ -4,13 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import kg.apc.perfmon.client.Transport;
 import kg.apc.perfmon.client.TransportFactory;
+import kg.apc.perfmon.metrics.MetricParams;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
@@ -167,7 +164,20 @@ public class PerfMonCollector
     private void initiateConnector(String host, int port, int index, String metric, String params) {
         InetSocketAddress addr = new InetSocketAddress(host, port);
         String stringKey = addr.toString() + "#" + index;
-        String label = host + " " + metric + " " + params;
+
+        // handle label parameter
+        MetricParams paramsParsed = MetricParams.createFromString(params, null);
+        String label;
+        if (paramsParsed.getLabel().isEmpty()) {
+            label = host + " " + metric + " " + params;
+        } else {
+            label = host + " " + metric + " " + paramsParsed.getLabel();
+            // TODO: God, I need to test this case properly or find better way to do this
+            params = params.replaceAll(":label=" + paramsParsed.getLabel() + ":", "");
+            params = params.replaceAll("label=" + paramsParsed.getLabel() + ":", "");
+            params = params.replaceAll(":label=" + paramsParsed.getLabel(), "");
+        }
+
         try {
             if (connectors.containsKey(addr)) {
                 connectors.get(addr).addMetric(metric, params, label);

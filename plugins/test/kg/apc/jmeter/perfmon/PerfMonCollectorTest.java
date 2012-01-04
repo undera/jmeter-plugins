@@ -2,20 +2,16 @@ package kg.apc.jmeter.perfmon;
 
 import java.io.IOException;
 import kg.apc.emulators.SocketEmulator;
-import org.apache.jmeter.gui.util.PowerTableModel;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.vizualizers.PerfMonGui;
+import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.*;
 
 /**
  *
@@ -51,7 +47,7 @@ public class PerfMonCollectorTest {
     public void setUp() {
         dataModel = new PowerTableModel(PerfMonGui.columnIdentifiers, PerfMonGui.columnClasses);
         dataModel.addRow(new String[]{
-                    "localhost", "4444", "CPU", ""
+                    "localhost", "4444", "CPU", "label=testLabel"
                 });
         dataModel.addRow(new String[]{
                     "localhost", "4444", "Memory", ""
@@ -64,6 +60,9 @@ public class PerfMonCollectorTest {
                 });
         dataModel.addRow(new String[]{
                     "localhost", "4444", "Network I/O", ""
+                });
+        dataModel.addRow(new String[]{
+                    "localhost", "4444", "EXEC", "label=test:echo 123"
                 });
     }
 
@@ -175,7 +174,7 @@ public class PerfMonCollectorTest {
     @Test
     public void testGenerate2Samples_4args() {
         System.out.println("generate2Samples");
-        long[] values = {0,0};
+        long[] values = {0, 0};
         String label1 = "";
         String label2 = "";
         double dividingFactor = 0.0;

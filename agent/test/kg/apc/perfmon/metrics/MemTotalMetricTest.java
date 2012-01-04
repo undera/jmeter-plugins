@@ -30,7 +30,7 @@ public class MemTotalMetricTest extends TestCase {
         System.out.println("getValue");
         StringBuffer res = new StringBuffer();
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MemTotalMetric instance = new MemTotalMetric(sigar, MetricParams.createFromString("", sigar));
+        MemTotalMetric instance = new MemTotalMetric(sigar, MetricParamsSigar.createFromString("", sigar));
         instance.getValue(res);
     }
 
@@ -38,7 +38,7 @@ public class MemTotalMetricTest extends TestCase {
         System.out.println("getValue");
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         for (int n = 0; n < MemTotalMetric.types.length; n++) {
-            MetricParams params = MetricParams.createFromString(MemTotalMetric.types[n], sigar);
+            MetricParamsSigar params = MetricParamsSigar.createFromString(MemTotalMetric.types[n], sigar);
             MemTotalMetric instance = new MemTotalMetric(sigar, params);
             StringBuffer res = new StringBuffer();
             instance.getValue(res);

@@ -34,7 +34,7 @@ public class AbstractCPUMetricTest extends TestCase {
     public void testGetMetric() {
         System.out.println("getMetric");
         SigarProxy sigar = null;
-        MetricParams metricParams = MetricParams.createFromString("", sigar);
+        MetricParamsSigar metricParams = MetricParamsSigar.createFromString("", sigar);
         AbstractCPUMetric result = AbstractCPUMetric.getMetric(sigar, metricParams);
         assertNotNull(result);
     }

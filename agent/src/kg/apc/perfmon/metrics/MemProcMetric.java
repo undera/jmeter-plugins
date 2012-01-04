@@ -22,7 +22,7 @@ class MemProcMetric extends AbstractMemMetric {
     private int type = -1;
     private double prev = -1;
 
-    public MemProcMetric(SigarProxy aSigar, MetricParams params) {
+    public MemProcMetric(SigarProxy aSigar, MetricParamsSigar params) {
         super(aSigar, params);
         if (params.type.length() == 0) {
             type = RESIDENT;
@@ -45,7 +45,6 @@ class MemProcMetric extends AbstractMemMetric {
                 break;
             case SHARED:
                 cur = mem.getShare();
-                val = prev > 0 ? cur - prev : 0;
                 prev = cur;
                 val = cur;
                 break;
@@ -53,23 +52,19 @@ class MemProcMetric extends AbstractMemMetric {
                 cur = mem.getPageFaults();
                 val = prev > 0 ? cur - prev : 0;
                 prev = cur;
-                //val = cur;
                 break;
             case MAJOR_FAULTS:
                 cur = mem.getMajorFaults();
                 val = prev > 0 ? cur - prev : 0;
                 prev = cur;
-                //val = cur;
                 break;
             case MINOR_FAULTS:
                 cur = mem.getMinorFaults();
                 val = prev > 0 ? cur - prev : 0;
                 prev = cur;
-                //val = cur;
                 break;
             case RESIDENT:
                 cur = mem.getResident();
-                val = prev > 0 ? cur - prev : 0;
                 prev = cur;
                 val = cur;
                 break;

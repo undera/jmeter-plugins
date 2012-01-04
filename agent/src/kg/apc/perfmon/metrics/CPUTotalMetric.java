@@ -28,7 +28,7 @@ class CPUTotalMetric extends AbstractCPUMetric {
     private int type = -1;
     private int coreID = -1;
 
-    protected CPUTotalMetric(SigarProxy aSigar, MetricParams params) {
+    protected CPUTotalMetric(SigarProxy aSigar, MetricParamsSigar params) {
         super(aSigar, params);
 
         if (params.type.length() == 0) {

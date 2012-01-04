@@ -19,7 +19,7 @@ class SwapMetric extends AbstractPerfMonMetric {
     public static final String[] types = {"pagein", "pageout", "free", "total", "used"};
     private int type = -1;
 
-    public SwapMetric(SigarProxy aSigar, MetricParams params) {
+    public SwapMetric(SigarProxy aSigar, MetricParamsSigar params) {
         super(aSigar);
         if (params.type.length() == 0) {
             type = USED;

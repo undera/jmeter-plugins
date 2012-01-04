@@ -23,7 +23,7 @@ class MemTotalMetric extends AbstractMemMetric {
         "ram", "total", "used", "usedperc"};
     private int type = -1;
     
-    public MemTotalMetric(SigarProxy aSigar, MetricParams params) {
+    public MemTotalMetric(SigarProxy aSigar, MetricParamsSigar params) {
         super(aSigar, params);
         if (params.type.length() == 0) {
             type = USED_PERCENT;

@@ -11,9 +11,9 @@ import org.hyperic.sigar.SigarProxy;
 abstract class AbstractMemMetric extends AbstractPerfMonMetric {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    protected final MetricParams params;
+    protected final MetricParamsSigar params;
 
-    public static AbstractMemMetric getMetric(SigarProxy sigar, MetricParams params) {
+    public static AbstractMemMetric getMetric(SigarProxy sigar, MetricParamsSigar params) {
         if (params.PID >= 0) {
             return new MemProcMetric(sigar, params);
         } else {
@@ -21,7 +21,7 @@ abstract class AbstractMemMetric extends AbstractPerfMonMetric {
         }
     }
 
-    public AbstractMemMetric(SigarProxy aSigar, MetricParams params) {
+    public AbstractMemMetric(SigarProxy aSigar, MetricParamsSigar params) {
         super(aSigar);
         this.params = params;
     }

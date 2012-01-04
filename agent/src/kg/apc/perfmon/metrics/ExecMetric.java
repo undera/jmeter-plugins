@@ -26,7 +26,7 @@ class ExecMetric extends AbstractPerfMonMetric {
     }
 
     public void getValue(StringBuffer res) throws SigarException {
-        log.debug("Executing custom script: " + MetricParams.join(null, command, " "));
+        log.debug("Executing custom script: " + MetricParamsSigar.join(null, command, " "));
 
         try {
             Process p = Runtime.getRuntime().exec(command);

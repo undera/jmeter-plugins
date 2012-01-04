@@ -24,7 +24,7 @@ class TailMetric extends AbstractPerfMonMetric {
             throw new IllegalArgumentException("Cannot tail unspecified file");
         }
 
-        String string = MetricParams.join(null, params.params, PARAMS_DELIMITER);
+        String string = MetricParamsSigar.join(null, params.params, PARAMS_DELIMITER);
         log.debug("Tailing file: " + string);
         filename = string;
     }

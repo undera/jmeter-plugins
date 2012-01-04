@@ -37,7 +37,7 @@ public class CPUTotalMetricTest extends TestCase {
         System.out.println("getValue");
         StringBuffer res = new StringBuffer("");
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams params = MetricParams.createFromString("idle", sigar);
+        MetricParamsSigar params = MetricParamsSigar.createFromString("idle", sigar);
         CPUTotalMetric instance = new CPUTotalMetric(sigar, params);
         instance.getValue(res);
     }
@@ -46,7 +46,7 @@ public class CPUTotalMetricTest extends TestCase {
         System.out.println("getValue");
         StringBuffer res = new StringBuffer("");
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams params = MetricParams.createFromString("core=0:idle", sigar);
+        MetricParamsSigar params = MetricParamsSigar.createFromString("core=0:idle", sigar);
         CPUTotalMetric instance = new CPUTotalMetric(sigar, params);
         instance.getValue(res);
     }
@@ -55,7 +55,7 @@ public class CPUTotalMetricTest extends TestCase {
         System.out.println("getValue");
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         for (int n = 0; n < CPUTotalMetric.types.length; n++) {
-            MetricParams params = MetricParams.createFromString("pid=" + sigar.getPid() + ":" + CPUTotalMetric.types[n], sigar);
+            MetricParamsSigar params = MetricParamsSigar.createFromString("pid=" + sigar.getPid() + ":" + CPUTotalMetric.types[n], sigar);
             CPUTotalMetric instance = new CPUTotalMetric(sigar, params);
             StringBuffer res = new StringBuffer("");
             instance.getValue(res);

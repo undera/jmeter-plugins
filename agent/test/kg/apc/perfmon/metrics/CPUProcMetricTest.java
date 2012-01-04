@@ -21,7 +21,7 @@ public class CPUProcMetricTest extends TestCase {
         System.out.println("getValue");
         StringBuffer res = new StringBuffer();
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams params = MetricParams.createFromString("pid=" + sigar.getPid(), sigar);
+        MetricParamsSigar params = MetricParamsSigar.createFromString("pid=" + sigar.getPid(), sigar);
         CPUProcMetric instance = new CPUProcMetric(sigar, params);
         instance.getValue(res);
         assertTrue(Double.parseDouble(res.toString()) >= 0);
@@ -31,7 +31,7 @@ public class CPUProcMetricTest extends TestCase {
         System.out.println("getValue");
         SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         for (int n = 0; n < CPUProcMetric.types.length; n++) {
-            MetricParams params = MetricParams.createFromString("pid=" + sigar.getPid() + ":" + CPUProcMetric.types[n], sigar);
+            MetricParamsSigar params = MetricParamsSigar.createFromString("pid=" + sigar.getPid() + ":" + CPUProcMetric.types[n], sigar);
             CPUProcMetric instance = new CPUProcMetric(sigar, params);
             StringBuffer res = new StringBuffer();
             instance.getValue(res);

@@ -31,22 +31,22 @@ public class MetricParamsTest extends TestCase {
         String metricParams = "ptql=Exe.Name.ct=java,Args.*.ct=junit";
         String defaultType = "";
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams result = MetricParams.createFromString(metricParams, sigar);
+        MetricParamsSigar result = MetricParamsSigar.createFromString(metricParams, sigar);
         assertTrue(result.PID > 0);
     }
 
     public void testCreateFromString_name() {
         System.out.println("createFromString");
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams resultLinux = MetricParams.createFromString("name=java#1", sigar);
-        MetricParams resultWin = MetricParams.createFromString("name=java.exe#1", sigar);
+        MetricParamsSigar resultLinux = MetricParamsSigar.createFromString("name=java#1", sigar);
+        MetricParamsSigar resultWin = MetricParamsSigar.createFromString("name=java.exe#1", sigar);
         assertTrue(resultLinux.PID > 0 || resultWin.PID > 0);
     }
 
     public void testCreateFromString_escaping() {
         System.out.println("createFromString");
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams result = MetricParams.createFromString("exec:testcolon\\:attr:next", sigar);
+        MetricParamsSigar result = MetricParamsSigar.createFromString("exec:testcolon\\:attr:next", sigar);
         assertEquals("exec", result.params[0]);
         assertEquals("testcolon:attr", result.params[1]);
         assertEquals("next", result.params[2]);
@@ -55,7 +55,7 @@ public class MetricParamsTest extends TestCase {
     public void testCreateFromString_escaping_issue101() {
         System.out.println("createFromString");
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams result = MetricParams.createFromString("exec:/bin/sh:-c:wget http\\://localhost\\:8000", sigar);
+        MetricParamsSigar result = MetricParamsSigar.createFromString("exec:/bin/sh:-c:wget http\\://localhost\\:8000", sigar);
         assertEquals("exec", result.params[0]);
         assertEquals("/bin/sh", result.params[1]);
         assertEquals("-c", result.params[2]);
@@ -65,7 +65,7 @@ public class MetricParamsTest extends TestCase {
     public void testCreateFromString_multicore() {
         System.out.println("createFromString");
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams result = MetricParams.createFromString("core=1", sigar);
+        MetricParamsSigar result = MetricParamsSigar.createFromString("core=1", sigar);
         assertEquals(1, result.coreID);
     }
 
@@ -73,7 +73,7 @@ public class MetricParamsTest extends TestCase {
         System.out.println("createFromString");
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
         String metricParams = "pid=" + sigar.getPid();
-        MetricParams result = MetricParams.createFromString(metricParams, sigar);
+        MetricParamsSigar result = MetricParamsSigar.createFromString(metricParams, sigar);
         assertTrue(result.PID > 0);
     }
 
@@ -83,6 +83,6 @@ public class MetricParamsTest extends TestCase {
     public void testLogAvailableProcesses() {
         System.out.println("logAvailableProcesses");
         final SigarProxy sigar = SigarProxyCache.newInstance(new Sigar(), 500);
-        MetricParams.logAvailableProcesses(sigar);
+        MetricParamsSigar.logAvailableProcesses(sigar);
     }
 }

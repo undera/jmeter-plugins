@@ -38,7 +38,7 @@ class DiskIOMetric extends AbstractPerfMonMetric {
     private final String[] filesystems;
     private double prev = -1;
 
-    public DiskIOMetric(SigarProxy aSigar, MetricParams params) {
+    public DiskIOMetric(SigarProxy aSigar, MetricParamsSigar params) {
         super(aSigar);
 
         if (params.type.length() == 0) {

@@ -13,7 +13,7 @@ public class SysInfoLogger {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     public static void doIt(SigarProxy sigar) {
-        MetricParams.logAvailableProcesses(sigar);
+        MetricParamsSigar.logAvailableProcesses(sigar);
         DiskIOMetric.logAvailableFilesystems(sigar);
         NetworkIOMetric.logAvailableInterfaces(sigar);
         log.info("*** Done logging sysinfo ***");

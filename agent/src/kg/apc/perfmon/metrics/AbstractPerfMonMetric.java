@@ -30,7 +30,7 @@ public abstract class AbstractPerfMonMetric {
             metricType = metricType.substring(0, metricType.indexOf(' '));
         }
 
-        MetricParams metricParams = MetricParams.createFromString(metricParamsStr, sigarProxy);
+        MetricParamsSigar metricParams = MetricParamsSigar.createFromString(metricParamsStr, sigarProxy);
 
         try {
             if (metricType.equalsIgnoreCase("exec")) {

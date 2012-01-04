@@ -11,9 +11,9 @@ import org.hyperic.sigar.SigarProxy;
 abstract class AbstractCPUMetric extends AbstractPerfMonMetric {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    protected final MetricParams params;
+    protected final MetricParamsSigar params;
 
-    public static AbstractCPUMetric getMetric(SigarProxy sigar, MetricParams params) {
+    public static AbstractCPUMetric getMetric(SigarProxy sigar, MetricParamsSigar params) {
         if (params.PID >= 0) {
             return new CPUProcMetric(sigar, params);
         } else {
@@ -21,7 +21,7 @@ abstract class AbstractCPUMetric extends AbstractPerfMonMetric {
         }
     }
 
-    protected AbstractCPUMetric(SigarProxy aSigar, MetricParams params) {
+    protected AbstractCPUMetric(SigarProxy aSigar, MetricParamsSigar params) {
         super(aSigar);
         this.params = params;
     }

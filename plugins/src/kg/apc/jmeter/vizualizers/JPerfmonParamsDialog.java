@@ -2,6 +2,7 @@ package kg.apc.jmeter.vizualizers;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.InputEvent;
@@ -156,26 +157,33 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
 
     /** Creates new form JPerfmonParamsDialog */
     public JPerfmonParamsDialog(Frame owner, String type, boolean modal, JTextField parentField) {
-        super(owner, "Perfmon helper", modal);
+        super(owner, "Perfmon [" + type + "] parameters helper", modal);
         this.parent = parentField;
         this.type = type;
         initRules();
-        this.setTitle("Perfmon [" + type + "] parameters helper");
         initComponents();
         initMetrics(type);
-        this.pack();
-        //avoid small dialogs
-        if (this.getWidth() < minWidth) {
-            this.setSize(minWidth, this.getHeight());
-        }
         showProcessScopePanels();
         makePtqlLink();
         initFields();
+        repack();
+    }
+
+    private void repack() {
+        Dimension newSize = getPreferredSize();
+        if(newSize.width < minWidth) {
+            newSize.width = minWidth;
+        }
+        setSize(newSize);
+        validate();
     }
 
     private void initFields() {
         String existing = parent.getText();
-        String[] elements = existing.split(separator);
+
+        //for split, avoid ':' preceeded with '\', ie do not process "\:"
+        String[] elements = existing.split("(?<!\\\\)" + separator);
+
         //check process scope
         if(METRIC_CPU.equals(type) || METRIC_MEM.equals(type)) {
             if(existing.indexOf("pid=") != -1
@@ -257,6 +265,15 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
             }
         }
 
+        //set label
+        int i=0;
+        while(i<elements.length) {
+            if(elements[i].startsWith("label=")) {
+                jTextFieldMetricLabel.setText(elements[i].substring(6));
+                break;
+            }
+            i++;
+        }
     }
 
     private void initMetricRadios(String metricName) {
@@ -421,11 +438,6 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
              addStringItem(ret, getProcessScopeString());
         } else if (type.equals(METRIC_MEM)) {
             addStringItem(ret, getProcessScopeString());
-        } else if (type.equals(METRIC_DISKIO)) {
-            tmp = jTextFieldFileSystem.getText();
-            if(tmp.trim().length() > 0) {
-                addStringItem(ret, "fs=" + tmp.trim());
-            }
         } else if (type.equals(METRIC_NETIO)) {
             tmp = jTextFieldNetInterface.getText();
             if(tmp.trim().length() > 0) {
@@ -439,9 +451,25 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
             addStringItem(ret, jTextFieldTail.getText());
         }
 
+        //add the metric label
+        tmp = jTextFieldMetricLabel.getText();
+        if(tmp.trim().length() > 0) {
+            addStringItem(ret, "label=" + tmp.trim());
+        }
+
         //add the metric
         if (buttonGroupMetrics.getSelection() != null) {
             addStringItem(ret, buttonGroupMetrics.getSelection().getActionCommand());
+        }
+
+        //add filesystem at the end to avoid issue with win filesystem ending with \ which
+        //would produce "\:" otherwise
+
+        if (type.equals(METRIC_DISKIO)) {
+            tmp = jTextFieldFileSystem.getText();
+            if(tmp.trim().length() > 0) {
+                addStringItem(ret, "fs=" + tmp.trim());
+            }
         }
 
         return ret.toString();
@@ -500,6 +528,9 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         jPanelNetInterface = new javax.swing.JPanel();
         jLabelNetInterface = new javax.swing.JLabel();
         jTextFieldNetInterface = new javax.swing.JTextField();
+        jPanelMetricLabel = new javax.swing.JPanel();
+        jLabelMetricLabel = new javax.swing.JLabel();
+        jTextFieldMetricLabel = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -607,7 +638,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
@@ -749,7 +780,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         getContentPane().add(jPanelScope, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 1.0;
@@ -758,7 +789,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         jPanelTailCommand.setBorder(javax.swing.BorderFactory.createTitledBorder("Custom Tail Command"));
         jPanelTailCommand.setLayout(new java.awt.GridBagLayout());
 
-        jLabelTail.setText("Enter the path of the file to tail:");
+        jLabelTail.setText("Path of the file to tail:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -783,7 +814,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         jPanelFileSystem.setBorder(javax.swing.BorderFactory.createTitledBorder("Filesystem Filter"));
         jPanelFileSystem.setLayout(new java.awt.GridBagLayout());
 
-        jLabelFileSystem.setText("Enter the filesystem to monitor (if empty: all), eg /home:");
+        jLabelFileSystem.setText("Filesystem to monitor (if empty: all), eg \"C\\:\\\" or \"/home\":");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -808,7 +839,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         jPanelNetInterface.setBorder(javax.swing.BorderFactory.createTitledBorder("Network Interface Filter"));
         jPanelNetInterface.setLayout(new java.awt.GridBagLayout());
 
-        jLabelNetInterface.setText("Enter the network interface to monitor (if empty: all), eg eth0:");
+        jLabelNetInterface.setText("Network interface to monitor (if empty: all), eg \"eth0\":");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -829,6 +860,30 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         getContentPane().add(jPanelNetInterface, gridBagConstraints);
+
+        jPanelMetricLabel.setBorder(javax.swing.BorderFactory.createTitledBorder("Metric Label"));
+        jPanelMetricLabel.setLayout(new java.awt.GridBagLayout());
+
+        jLabelMetricLabel.setText("Chart label name (if empty, will be Host+Metric+Params):");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanelMetricLabel.add(jLabelMetricLabel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        jPanelMetricLabel.add(jTextFieldMetricLabel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        getContentPane().add(jPanelMetricLabel, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -874,6 +929,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
             fillMetrics(primaryMetrics, jPanelPrimaryMetrics);
             fillMetrics(additionalMetrics, jPanelAdditionaMetrics);
         }
+        repack();
     }
 
     private void jRadioScopeAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioScopeAllActionPerformed
@@ -894,6 +950,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelExec;
     private javax.swing.JLabel jLabelFileSystem;
+    private javax.swing.JLabel jLabelMetricLabel;
     private javax.swing.JLabel jLabelNetInterface;
     private javax.swing.JLabel jLabelOccurence;
     private javax.swing.JLabel jLabelPtqlHelp;
@@ -903,6 +960,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelCpuCore;
     private javax.swing.JPanel jPanelCustomCommand;
     private javax.swing.JPanel jPanelFileSystem;
+    private javax.swing.JPanel jPanelMetricLabel;
     private javax.swing.JPanel jPanelNetInterface;
     private javax.swing.JPanel jPanelPID;
     private javax.swing.JPanel jPanelPrimaryMetrics;
@@ -921,6 +979,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldCoreIndex;
     private javax.swing.JTextField jTextFieldExec;
     private javax.swing.JTextField jTextFieldFileSystem;
+    private javax.swing.JTextField jTextFieldMetricLabel;
     private javax.swing.JTextField jTextFieldNetInterface;
     private javax.swing.JTextField jTextFieldOccurence;
     private javax.swing.JTextField jTextFieldPID;

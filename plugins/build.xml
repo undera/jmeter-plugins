@@ -88,6 +88,12 @@
             basedir="../agent/build/classes" includes="kg/apc/perfmon/client/*">  
         </jar>
         <jar file="${dist.jar}" update="yes" 
+            basedir="../agent/build/classes" includes="kg/apc/perfmon/metrics*">  
+        </jar>
+        <jar file="${dist.jar}" update="yes" 
+            basedir="../agent/build/classes" includes="kg/apc/perfmon/metrics/*">  
+        </jar>
+        <jar file="${dist.jar}" update="yes" 
             basedir="../agent/build/classes" includes="kg/apc/jmeter/perfmon/agent*">
         </jar>
         <jar file="${dist.jar}" update="yes" 

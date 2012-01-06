@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -28,6 +30,7 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.gui.ComponentBorder;
+import kg.apc.jmeter.gui.DialogFactory;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import kg.apc.jmeter.perfmon.AgentConnector;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
@@ -177,18 +180,23 @@ public class PerfMonGui
         final JTextField wizEditor = new JTextField();
         wizEditor.setBorder(null);
         JButton wiz = new JButton("...");
-        wiz.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Frame parent = GuiPackage.getInstance().getMainFrame();
-                //JPerfmonParamsDialog dlg = new JPerfmonParamsDialog(parent, "Edit row " + grid.getSelectedRow() + " [" + grid.getValueAt(grid.getSelectedRow(), 2) + "]", true, grid);
-                JPerfmonParamsDialog dlg = new JPerfmonParamsDialog(parent, grid.getValueAt(grid.getSelectedRow(),2).toString(), true, wizEditor);
-                dlg.setLocation(parent.getLocation().x + (parent.getSize().width - dlg.getSize().width) / 2,
-                        parent.getLocation().y + (parent.getSize().height - dlg.getSize().height) / 2);
+        if(!GraphicsEnvironment.isHeadless()) {
+            wiz.addActionListener(new java.awt.event.ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    Frame parent = GuiPackage.getInstance().getMainFrame();
+                    String type = grid.getValueAt(grid.getSelectedRow(),2).toString();
 
-                dlg.setVisible(true);
-            }
-        });
+                    JPerfmonParamsPanel dlgContent = new JPerfmonParamsPanel(type, wizEditor);
+                    dlgContent.setMinWidth(400);
+                    JDialog dlg = DialogFactory.getJDialogInstance(parent, "Perfmon [" + type + "] parameters helper", true, dlgContent);
+
+                    DialogFactory.centerDialog(parent, dlg);
+
+                    dlg.setVisible(true);
+                }
+            });
+        }
         wiz.setMargin(new Insets(0, 6, 5, 6));
         GuiBuilderHelper.strechButtonToComponent(wizEditor, wiz);
         ComponentBorder bd = new ComponentBorder(wiz);

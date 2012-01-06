@@ -2,9 +2,7 @@ package kg.apc.jmeter.vizualizers;
 
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,12 +16,13 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.gui.JAbsrtactDialogPanel;
 
 /**
  *
  * @author Stephane Hoblingre
  */
-public class JPerfmonParamsDialog extends javax.swing.JDialog {
+public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
 
     private final static int OPTION_PRIMARY_METRIC = 1;
     private final static int OPTION_ADDITIONAL_METRIC = 1 << 1;
@@ -35,7 +34,6 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     private final static int OPTION_TAIL = 1 << 7;
     private JTextField parent = null;
     private String type = null;
-    private final static int minWidth = 400;
 
     private final static String defaultMarker = " (default)";
     private final static String separator = ":";
@@ -156,8 +154,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
     };
 
     /** Creates new form JPerfmonParamsDialog */
-    public JPerfmonParamsDialog(Frame owner, String type, boolean modal, JTextField parentField) {
-        super(owner, "Perfmon [" + type + "] parameters helper", modal);
+    public JPerfmonParamsPanel(String type, JTextField parentField) {
         this.parent = parentField;
         this.type = type;
         initRules();
@@ -166,16 +163,6 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         showProcessScopePanels();
         makePtqlLink();
         initFields();
-        repack();
-    }
-
-    private void repack() {
-        Dimension newSize = getPreferredSize();
-        if(newSize.width < minWidth) {
-            newSize.width = minWidth;
-        }
-        setSize(newSize);
-        validate();
     }
 
     private void initFields() {
@@ -257,6 +244,8 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         //set metric selected, exec or tail command
         if(METRIC_EXEC.equals(type)) {
             jTextFieldExec.setText(existing);
+            //hide stretch panel as stretch is done with text area
+            jPanelStretch.setVisible(false);
         } else if(METRIC_TAIL.equals(type)) {
             jTextFieldTail.setText(existing);
         } else {
@@ -518,7 +507,6 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         jPanelScope = new javax.swing.JPanel();
         jRadioScopeAll = new javax.swing.JRadioButton();
         jRadioScopePerProcess = new javax.swing.JRadioButton();
-        jPanelStretch = new javax.swing.JPanel();
         jPanelTailCommand = new javax.swing.JPanel();
         jLabelTail = new javax.swing.JLabel();
         jTextFieldTail = new javax.swing.JTextField();
@@ -531,9 +519,9 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         jPanelMetricLabel = new javax.swing.JPanel();
         jLabelMetricLabel = new javax.swing.JLabel();
         jTextFieldMetricLabel = new javax.swing.JTextField();
+        jPanelStretch = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        setLayout(new java.awt.GridBagLayout());
 
         jPanelPID.setBorder(javax.swing.BorderFactory.createTitledBorder("Process Identification"));
         jPanelPID.setLayout(new java.awt.GridBagLayout());
@@ -618,7 +606,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        getContentPane().add(jPanelPID, gridBagConstraints);
+        add(jPanelPID, gridBagConstraints);
 
         jButtonApply.setText("Apply");
         jButtonApply.addActionListener(new java.awt.event.ActionListener() {
@@ -641,8 +629,8 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 11;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
-        getContentPane().add(jPanelButtons, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
+        add(jPanelButtons, gridBagConstraints);
 
         jPanelPrimaryMetrics.setBorder(javax.swing.BorderFactory.createTitledBorder("Primary Metrics"));
         jPanelPrimaryMetrics.setLayout(new java.awt.GridLayout(0, 1));
@@ -651,7 +639,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        getContentPane().add(jPanelPrimaryMetrics, gridBagConstraints);
+        add(jPanelPrimaryMetrics, gridBagConstraints);
 
         jPanelAdditionaMetrics.setBorder(javax.swing.BorderFactory.createTitledBorder("Additional Metrics"));
         jPanelAdditionaMetrics.setLayout(new java.awt.GridLayout(0, 2));
@@ -660,12 +648,12 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        getContentPane().add(jPanelAdditionaMetrics, gridBagConstraints);
+        add(jPanelAdditionaMetrics, gridBagConstraints);
 
         jPanelCustomCommand.setBorder(javax.swing.BorderFactory.createTitledBorder("Custom Exec Command"));
         jPanelCustomCommand.setLayout(new java.awt.GridBagLayout());
 
-        jLabelExec.setText("Enter the custom command here:");
+        jLabelExec.setText("Command to run:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -701,15 +689,17 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weighty = 1.0;
         jPanelCustomCommand.add(jScrollPane1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
-        getContentPane().add(jPanelCustomCommand, gridBagConstraints);
+        gridBagConstraints.weighty = 1.0;
+        add(jPanelCustomCommand, gridBagConstraints);
 
         jPanelCpuCore.setBorder(javax.swing.BorderFactory.createTitledBorder("CPU Cores"));
         jPanelCpuCore.setLayout(new java.awt.GridBagLayout());
@@ -748,7 +738,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        getContentPane().add(jPanelCpuCore, gridBagConstraints);
+        add(jPanelCpuCore, gridBagConstraints);
 
         jPanelScope.setBorder(javax.swing.BorderFactory.createTitledBorder("Scope"));
         jPanelScope.setLayout(new java.awt.GridLayout(0, 1));
@@ -777,14 +767,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        getContentPane().add(jPanelScope, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weighty = 1.0;
-        getContentPane().add(jPanelStretch, gridBagConstraints);
+        add(jPanelScope, gridBagConstraints);
 
         jPanelTailCommand.setBorder(javax.swing.BorderFactory.createTitledBorder("Custom Tail Command"));
         jPanelTailCommand.setLayout(new java.awt.GridBagLayout());
@@ -809,7 +792,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        getContentPane().add(jPanelTailCommand, gridBagConstraints);
+        add(jPanelTailCommand, gridBagConstraints);
 
         jPanelFileSystem.setBorder(javax.swing.BorderFactory.createTitledBorder("Filesystem Filter"));
         jPanelFileSystem.setLayout(new java.awt.GridBagLayout());
@@ -834,7 +817,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        getContentPane().add(jPanelFileSystem, gridBagConstraints);
+        add(jPanelFileSystem, gridBagConstraints);
 
         jPanelNetInterface.setBorder(javax.swing.BorderFactory.createTitledBorder("Network Interface Filter"));
         jPanelNetInterface.setLayout(new java.awt.GridBagLayout());
@@ -859,7 +842,7 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        getContentPane().add(jPanelNetInterface, gridBagConstraints);
+        add(jPanelNetInterface, gridBagConstraints);
 
         jPanelMetricLabel.setBorder(javax.swing.BorderFactory.createTitledBorder("Metric Label"));
         jPanelMetricLabel.setLayout(new java.awt.GridBagLayout());
@@ -883,18 +866,26 @@ public class JPerfmonParamsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        getContentPane().add(jPanelMetricLabel, gridBagConstraints);
+        add(jPanelMetricLabel, gridBagConstraints);
 
-        pack();
+        jPanelStretch.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanelStretch.setPreferredSize(new java.awt.Dimension(0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weighty = 1.0;
+        add(jPanelStretch, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
-        dispose();
+        getAssociatedDialog().dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
     private void jButtonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyActionPerformed
         parent.setText(getParamsString());
-        dispose();
+        getAssociatedDialog().dispose();
     }//GEN-LAST:event_jButtonApplyActionPerformed
 
     private void showProcessScopePanels() {

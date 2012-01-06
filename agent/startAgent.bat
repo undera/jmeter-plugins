@@ -1,2 +1,2 @@
 @echo off
-java -jar $0\..\CMDRunner.jar --tool PerfMonAgent %*
+java -jar %0\..\CMDRunner.jar --tool PerfMonAgent %*

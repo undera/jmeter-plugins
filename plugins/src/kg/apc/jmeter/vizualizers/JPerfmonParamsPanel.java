@@ -409,15 +409,15 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
             if (buttonGroupPID.getSelection() != null) {
                 String tmp = buttonGroupPID.getSelection().getActionCommand();
                 if ("pid".equals(tmp)) {
-                    ret += "pid=" + getIntValue(jTextFieldPID.getText(), 0);
+                    ret += "pid=" + getIntValue(jTextFieldPID.getText().trim(), 0);
                 } else if ("name".equals(tmp)) {
-                    String name = jTextFieldPorcessName.getText();
+                    String name = jTextFieldPorcessName.getText().trim();
                     if (name.length() == 0) {
                         name = "unknown";
                     }
-                    ret += "name=" + name + "#" + getIntValue(jTextFieldOccurence.getText(), 1);
+                    ret += "name=" + name + "#" + getIntValue(jTextFieldOccurence.getText().trim(), 1);
                 } else if ("ptql".equals(tmp)) {
-                    String query = jTextFieldPtql.getText();
+                    String query = jTextFieldPtql.getText().trim();
                     if (query.length() == 0) {
                         query = "query";
                     }
@@ -446,7 +446,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
             if (buttonGroupCpuCores.getSelection() != null) {
                 tmp = buttonGroupCpuCores.getSelection().getActionCommand();
                 if ("index".equals(tmp)) {
-                    addStringItem(ret, "core=" + getIntValue(jTextFieldCoreIndex.getText(), 0));
+                    addStringItem(ret, "core=" + getIntValue(jTextFieldCoreIndex.getText().trim(), 0));
                 }
             }
              addStringItem(ret, getProcessScopeString());
@@ -468,9 +468,9 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         }
 
         if (type.equals(METRIC_EXEC)) {
-            addStringItem(ret, jTextFieldExec.getText());
+            addStringItem(ret, jTextFieldExec.getText().trim());
         } else if (type.equals(METRIC_TAIL)) {
-            addStringItem(ret, jTextFieldTail.getText());
+            addStringItem(ret, jTextFieldTail.getText().trim());
         }
 
         //add the metric

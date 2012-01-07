@@ -165,6 +165,24 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         initFields();
     }
 
+    //extract exec or tail command (handle label)
+    private String extractExecTailCmd(String params) {
+        String ret;
+        int index = params.indexOf("label=");
+        if(index != -1) {
+            int endIndex = params.indexOf(":", index);
+            if(endIndex == -1) {
+                ret = params.substring(0, index-1);
+            } else {
+                ret = params.substring(endIndex+1);
+            }
+        } else {
+            ret = params;
+        }
+
+        return ret;
+    }
+
     private void initFields() {
         String existing = parent.getText();
 
@@ -243,11 +261,12 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
 
         //set metric selected, exec or tail command
         if(METRIC_EXEC.equals(type)) {
-            jTextFieldExec.setText(existing);
+            jTextFieldExec.setText(extractExecTailCmd(existing));
+
             //hide stretch panel as stretch is done with text area
             jPanelStretch.setVisible(false);
         } else if(METRIC_TAIL.equals(type)) {
-            jTextFieldTail.setText(existing);
+            jTextFieldTail.setText(extractExecTailCmd(existing));
         } else {
             for(int i=0; i<elements.length; i++) {
                 initMetricRadios(elements[i]);
@@ -434,16 +453,18 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
             }
         } else if (type.equals(METRIC_TCP)) {
         } else if (type.equals(METRIC_SWAP)) {
-        } else if (type.equals(METRIC_EXEC)) {
-            addStringItem(ret, jTextFieldExec.getText());
-        } else if (type.equals(METRIC_TAIL)) {
-            addStringItem(ret, jTextFieldTail.getText());
         }
 
         //add the metric label
         tmp = jTextFieldMetricLabel.getText();
         if(tmp.trim().length() > 0) {
             addStringItem(ret, "label=" + tmp.trim());
+        }
+
+        if (type.equals(METRIC_EXEC)) {
+            addStringItem(ret, jTextFieldExec.getText());
+        } else if (type.equals(METRIC_TAIL)) {
+            addStringItem(ret, jTextFieldTail.getText());
         }
 
         //add the metric

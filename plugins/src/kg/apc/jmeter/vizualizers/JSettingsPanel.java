@@ -209,7 +209,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
         buttonGroupGraphType = new javax.swing.ButtonGroup();
         jPanelLogo = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelLogo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanelAllSettingsContainer = new javax.swing.JPanel();
         jPanelTimeLineContainer = new javax.swing.JPanel();
@@ -252,18 +252,18 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
         jPanelLogo.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabelLogo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
+        jLabelLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelLogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                jLabelLogoMouseClicked(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        jPanelLogo.add(jLabel1, gridBagConstraints);
+        jPanelLogo.add(jLabelLogo, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -805,12 +805,12 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         }
     }//GEN-LAST:event_jCheckBoxMaxYActionPerformed
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    private void jLabelLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelLogoMouseClicked
         if ((evt.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK)
         {
             JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/?utm_source=jmeter&utm_medium=logolink&utm_campaign=" + parent.getWikiPage());
         }
-    }//GEN-LAST:event_jLabel1MouseClicked
+    }//GEN-LAST:event_jLabelLogoMouseClicked
 
     private void jComboBoxChartTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxChartTypeActionPerformed
        int selectedType = jComboBoxChartType.getSelectedIndex();
@@ -861,13 +861,13 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     private javax.swing.JComboBox jComboBoxGranulation;
     private javax.swing.JComboBox jComboBoxHideNonRepValLimit;
     private javax.swing.JComboBox jComboBoxMaxPoints;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelChartType;
     private javax.swing.JLabel jLabelGraphType;
     private javax.swing.JLabel jLabelHideNonRepPoints;
     private javax.swing.JLabel jLabelInfoGrpValues;
     private javax.swing.JLabel jLabelInfoMaxPoint;
+    private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelMaxPoints;
     private javax.swing.JLabel jLabelTimeline1;
     private javax.swing.JLabel jLabelTimeline2;

@@ -46,7 +46,7 @@ public class DialogFactoryTest {
         String title = "test";
         boolean modal = false;
         JAbsrtactDialogPanel content = new JAbsrtactDialogPanelImpl();
-        JDialog result = DialogFactory.getJDialogInstance(owner, title, modal, content);
+        JDialog result = DialogFactory.getJDialogInstance(owner, title, modal, content, "/kg/apc/jmeter/vizualizers/wand.png");
         assertEquals(result == null, GraphicsEnvironment.isHeadless());
     }
 

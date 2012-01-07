@@ -168,13 +168,19 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
     //extract exec or tail command (handle label)
     private String extractExecTailCmd(String params) {
         String ret;
-        int index = params.indexOf("label=");
-        if(index != -1) {
-            int endIndex = params.indexOf(":", index);
-            if(endIndex == -1) {
-                ret = params.substring(0, index-1);
+        String[] tmp = params.split("(?<!\\\\)" + separator);
+        String labelString = null;
+        for(int i=0; i<tmp.length; i++) {
+            if(tmp[i].startsWith("label=")) {
+                labelString = tmp[i];
+            }
+        }
+
+        if(labelString != null) {
+            if(params.startsWith(labelString)) {
+                ret = params.substring(labelString.length() + separator.length());
             } else {
-                ret = params.substring(endIndex+1);
+                ret = params.substring(0, params.indexOf(labelString) - separator.length());
             }
         } else {
             ret = params;

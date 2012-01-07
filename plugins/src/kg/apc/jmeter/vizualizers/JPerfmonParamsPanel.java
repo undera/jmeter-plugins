@@ -608,6 +608,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(jPanelPID, gridBagConstraints);
 
+        jButtonApply.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/tick.png"))); // NOI18N
         jButtonApply.setText("Apply");
         jButtonApply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -616,6 +617,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         });
         jPanelButtons.add(jButtonApply);
 
+        jButtonCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/cross.png"))); // NOI18N
         jButtonCancel.setText("Cancel");
         jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

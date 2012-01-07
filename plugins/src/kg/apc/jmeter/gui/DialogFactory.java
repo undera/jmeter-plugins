@@ -3,7 +3,6 @@ package kg.apc.jmeter.gui;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
-import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 
@@ -13,7 +12,7 @@ import javax.swing.JDialog;
  */
 public class DialogFactory {
 
-    public static JDialog getJDialogInstance(Frame owner, String title, boolean modal, JAbsrtactDialogPanel content, String imageIcon) {
+    public static JDialog getJDialogInstance(Frame owner, String title, boolean modal, JAbsrtactDialogPanel content, String imagePath) {
         if(!GraphicsEnvironment.isHeadless()) {
             JDialog ret = new JDialog(owner, title, modal);
             ret.add(content);
@@ -24,9 +23,11 @@ public class DialogFactory {
             }
             ret.setSize(size);
             ret.validate();
-            if(imageIcon != null) {
-                Image icon = new ImageIcon(ret.getClass().getResource(imageIcon)).getImage();
-                ret.setIconImage(icon);
+            if(imagePath != null) {
+                ImageIcon imageIcon = new ImageIcon(DialogFactory.class.getResource(imagePath));
+                if(imageIcon != null) {
+                    ret.setIconImage(imageIcon.getImage());
+                }
             }
             return ret;
         } else {

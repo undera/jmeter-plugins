@@ -77,24 +77,23 @@ public class ResponseCodesPerSecondGui
         }
         return ret + res.getResponseCode();
     }
+    
+    private void addCodes(SampleResult res) {
+        SampleResult[] subResults = res.getSubResults();
+        if(!isFromTransactionControler(res)) {
+            addResponse(getRespCodeLabel(res), normalizeTime(res.getEndTime()));
+        }
+        
+        for(int i=0; i<subResults.length; i++) {
+            addCodes(subResults[i]);
+        }
+    }
 
     @Override
     public void add(SampleResult res)
     {
         super.add(res);
-        SampleResult[] subResults = res.getSubResults();
-        if(subResults.length > 0)
-        {
-            for(int i=0; i<subResults.length; i++)
-            {
-                addResponse(getRespCodeLabel(subResults[i]), normalizeTime(subResults[i].getEndTime()));
-            }
-
-            if(!isFromTransactionControler(res)) addResponse(getRespCodeLabel(res), normalizeTime(res.getEndTime()));
-        } else
-        {
-            addResponse(getRespCodeLabel(res), normalizeTime(res.getEndTime()));
-        }
+        addCodes(res);
         updateGui(null);
     }
 

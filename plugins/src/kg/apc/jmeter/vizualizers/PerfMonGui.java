@@ -189,7 +189,7 @@ public class PerfMonGui
 
                     JPerfmonParamsPanel dlgContent = new JPerfmonParamsPanel(type, wizEditor);
                     dlgContent.setMinWidth(400);
-                    JDialog dlg = DialogFactory.getJDialogInstance(parent, "Perfmon [" + type + "] parameters helper",
+                    JDialog dlg = DialogFactory.getJDialogInstance(parent, "PerfMon [" + type + "] Parameters Helper",
                             true, dlgContent, "/kg/apc/jmeter/vizualizers/wand.png");
 
                     DialogFactory.centerDialog(parent, dlg);

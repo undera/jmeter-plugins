@@ -50,20 +50,26 @@ public class HitsPerSecondGui
         return JMeterPluginsUtils.prefixLabel("Hits per Second");
     }
 
+    private int getHitCount(SampleResult res) {
+        SampleResult[] subResults = res.getSubResults();
+        int count;
+        if(isFromTransactionControler(res)) {
+            count = 0;
+        } else {
+            count = 1;
+        }
+        for(int i=0; i<subResults.length; i++) {
+            count = count + getHitCount(subResults[i]);
+        }
+        return count;
+    }
+    
     @Override
     public void add(SampleResult res)
     {
         super.add(res);
 
-        int count = res.getSubResults().length;
-        if(count == 0)
-        {
-            count++;
-        } else if(!isFromTransactionControler(res))
-        {
-            count++;
-        }
-        addHit("Server Hits per Second", normalizeTime(res.getStartTime()), count);
+        addHit("Server Hits per Second", normalizeTime(res.getStartTime()), getHitCount(res));
         updateGui(null);
     }
 

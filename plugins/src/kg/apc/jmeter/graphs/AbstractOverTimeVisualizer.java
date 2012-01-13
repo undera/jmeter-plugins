@@ -12,6 +12,7 @@ public abstract class AbstractOverTimeVisualizer
         extends AbstractGraphPanelVisualizer {
 
     protected long relativeStartTime = 0;
+    private boolean isJtlLoad = false;
 
     public AbstractOverTimeVisualizer() {
         graphPanel.getGraphObject().setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS));
@@ -23,10 +24,19 @@ public abstract class AbstractOverTimeVisualizer
     public void add(SampleResult sample) {
         if (relativeStartTime == 0) {
             relativeStartTime = JMeterContextService.getTestStartTime();
+            isJtlLoad = false;
             if (relativeStartTime == 0) {
                 relativeStartTime = sample.getStartTime();
+                isJtlLoad = true;
             }
+            relativeStartTime = relativeStartTime - relativeStartTime%getGranulation();
             handleRelativeStartTime();
+        }
+        if(isJtlLoad) {
+            if(relativeStartTime > sample.getStartTime()) {
+                relativeStartTime = sample.getStartTime() - sample.getStartTime()%getGranulation();
+                handleRelativeStartTime();
+            }
         }
     }
 
@@ -42,10 +52,11 @@ public abstract class AbstractOverTimeVisualizer
     public void clearData() {
         super.clearData();
         relativeStartTime = 0;
+        isJtlLoad = false;
         updateGui();
     }
 
     protected long normalizeTime(long time) {
-        return time - (time - relativeStartTime) % getGranulation();
+        return time - time%getGranulation();
     }
 }

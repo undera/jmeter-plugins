@@ -37,6 +37,9 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
 
     protected Record getRecord(String recstr) {
         String[] fields = recstr.split(SPACE);
+        if (fields.length != 3) {
+            throw new IllegalArgumentException("Wrong DNS query string: " + recstr);
+        }
         return Record.newRecord(Name.fromConstantString(fields[0]), Type.value(fields[1]), DClass.value(fields[2]));
     }
 

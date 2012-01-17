@@ -68,6 +68,20 @@ public class DNSJavaDecoderTest {
         System.out.println(res);
         assertEquals(exp.substring(8), res.substring(res.length()-exp.length()+8));
     }
+    
+    @Test
+    public void testEncode_withFlagsMac() throws UnsupportedEncodingException {
+        System.out.println("encode f");
+        // stackowerflow.com
+        String data = "stackowerflow.com. A IN\n\r7\n\r-7";
+        DNSJavaDecoder instance = new DNSJavaDecoder();
+        ByteBuffer result = instance.encode(data);
+        String exp = "3f3c000000010000000000000d737461636b6f776572666c6f7703636f6d0000010001";
+        String res = JOrphanUtils.baToHexString(JMeterPluginsUtils.byteBufferToString(result).getBytes("cp866"));
+        System.out.println(exp);
+        System.out.println(res);
+        assertEquals(exp.substring(8), res.substring(res.length()-exp.length()+8));
+    }
 
     /**
      * Test of decode method, of class DNSJavaDecoder.

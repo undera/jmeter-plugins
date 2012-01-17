@@ -5,12 +5,9 @@ import java.nio.ByteBuffer;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import org.apache.jorphan.util.JOrphanUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import org.junit.*;
 import org.xbill.DNS.Record;
 
 /**
@@ -46,6 +43,23 @@ public class DNSJavaDecoderTest {
         System.out.println("encode");
         // stackowerflow.com
         String data = "stackowerflow.com. A IN ";
+        DNSJavaDecoder instance = new DNSJavaDecoder();
+        ByteBuffer result = instance.encode(data);
+        String exp = "3f3c000000010000000000000d737461636b6f776572666c6f7703636f6d0000010001";
+        String res = JOrphanUtils.baToHexString(JMeterPluginsUtils.byteBufferToString(result).getBytes("cp866"));
+        System.out.println(exp);
+        System.out.println(res);
+        assertEquals(exp.substring(8), res.substring(res.length()-exp.length()+8));
+    }
+
+    /**
+     * Test of encode method, of class DNSJavaDecoder.
+     */
+    @Test
+    public void testEncode_withFlags() throws UnsupportedEncodingException {
+        System.out.println("encode f");
+        // stackowerflow.com
+        String data = "stackowerflow.com. A IN\r\n7\r\n-7";
         DNSJavaDecoder instance = new DNSJavaDecoder();
         ByteBuffer result = instance.encode(data);
         String exp = "3f3c000000010000000000000d737461636b6f776572666c6f7703636f6d0000010001";

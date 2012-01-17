@@ -9,6 +9,7 @@ import org.xbill.DNS.*;
  * @author undera
  */
 public class DNSJavaDecoder implements UDPTrafficDecoder {
+
     public static final String NL = "\n";
     public static final String SPACE = " ";
 
@@ -17,15 +18,19 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
         Message msg = new Message();
         String recs[] = data.split(NL);
         for (int n = 0; n < recs.length; n++) {
-            msg.addRecord(getRecord(recs[n]), Section.QUESTION);
+            if (recs[n].length() <= 3) {
+                Header head = msg.getHeader();
+                int val = Integer.parseInt(recs[n].trim());
+                if (val < 0) {
+                    head.unsetFlag(-val);
+                } else {
+                    head.setFlag(val);
+                }
+                msg.setHeader(head);
+            } else {
+                msg.addRecord(getRecord(recs[n].trim()), Section.QUESTION);
+            }
         }
-
-        /*
-        Header head=msg.getHeader();
-        head.setFlag(Flags.RD); // TODO: actually flags is important and need to be set from GUI
-        msg.setHeader(head);
-         * 
-         */
 
         return ByteBuffer.wrap(msg.toWire());
     }

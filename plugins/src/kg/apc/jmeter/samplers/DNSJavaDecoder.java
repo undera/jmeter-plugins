@@ -15,6 +15,10 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
 
     @Override
     public ByteBuffer encode(String data) {
+        return ByteBuffer.wrap(getMessageBytes(data));
+    }
+    
+    protected byte[] getMessageBytes(String data) {
         Message msg = new Message();
         String recs[] = data.split(NL);
         for (int n = 0; n < recs.length; n++) {
@@ -31,8 +35,7 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
                 msg.addRecord(getRecord(recs[n].trim()), Section.QUESTION);
             }
         }
-
-        return ByteBuffer.wrap(msg.toWire());
+        return msg.toWire();
     }
 
     protected Record getRecord(String recstr) {

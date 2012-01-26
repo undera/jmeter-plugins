@@ -9,39 +9,44 @@ import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
  * @author apc
  */
 public class SocketEmulatorOutputStream
-     extends OutputStream
-{
-   private StringBuffer buffer;
+        extends OutputStream {
 
-   /**
-    *
-    */
-   public SocketEmulatorOutputStream()
-   {
-      buffer=new StringBuffer();
-   }
+    private StringBuilder buffer;
 
-   @Override
-   public void write(int b)
-        throws IOException
-   {
-        buffer.append(b > 10 ? "" : "0").append(Integer.toHexString(b));
-   }
+    /**
+     *
+     */
+    public SocketEmulatorOutputStream() {
+        buffer = new StringBuilder();
+    }
 
-   /**
-    * 
-    * @return
-    */
-   public String getWrittenBytesAsHexString()
-   {
-      final String toString = buffer.toString();
-      buffer.setLength(0);
-      return toString;
-   }
+    @Override
+    public void write(int b)
+            throws IOException {
+        appendByte(b);
+    }
 
-   public String getWrittenBytesAsString()
-   {
+    private void appendByte(int b1) {
+        String hex = Integer.toHexString(0xFF & b1);
+        if (hex.length() == 1) {
+            // could use a for loop, but we're only dealing with a single byte
+            buffer.append('0');
+        }
+        buffer.append(hex);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getWrittenBytesAsHexString() {
+        final String toString = buffer.toString();
+        buffer.setLength(0);
+        return toString;
+    }
+
+    public String getWrittenBytesAsString() {
         byte[] res = BinaryTCPClientImpl.hexStringToByteArray(getWrittenBytesAsHexString());
-      return res.toString();
-   }
+        return res.toString();
+    }
 }

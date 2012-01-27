@@ -1,6 +1,9 @@
 package kg.apc.jmeter.samplers;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import kg.apc.jmeter.dcerpc.BinaryUtils;
 import org.apache.jmeter.protocol.tcp.sampler.TCPClient;
 import org.apache.jorphan.logging.LoggingManager;
@@ -26,16 +29,16 @@ public class DNSJavaTCPClientImpl extends DNSJavaDecoder implements TCPClient {
     }
 
     public void write(OutputStream out, String string) {
-        try {
-            byte[] msg = getMessageBytes(string);
+        byte[] msg = getMessageBytes(string);
 
+        try {
             bos.write(getLengthPrefix(msg.length));
             bos.write(msg);
             out.write(bos.toByteArray());
-            bos.reset();
         } catch (IOException ex) {
             log.error("Failed to send DNS request: " + string, ex);
         }
+        bos.reset();
     }
 
     protected byte[] getLengthPrefix(int length) {

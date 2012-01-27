@@ -5,7 +5,8 @@ import java.io.OutputStream;
 import kg.apc.emulators.SocketEmulatorInputStream;
 import kg.apc.emulators.SocketEmulatorOutputStream;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import org.junit.*;
 
 /**
@@ -114,7 +115,7 @@ public class DNSJavaTCPClientImplTest {
         DNSJavaTCPClientImpl instance = new DNSJavaTCPClientImpl();
         String expResult = "NOERROR";
         try {
-            String result = instance.read(in);
+            instance.read(in);
             fail();
         } catch (RuntimeException e) {
         }

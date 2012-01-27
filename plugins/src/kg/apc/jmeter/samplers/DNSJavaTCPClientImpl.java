@@ -1,8 +1,6 @@
 package kg.apc.jmeter.samplers;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import kg.apc.jmeter.dcerpc.BinaryUtils;
 import org.apache.jmeter.protocol.tcp.sampler.TCPClient;
 import org.apache.jorphan.logging.LoggingManager;
@@ -14,6 +12,7 @@ import org.apache.jorphan.logging.LoggingManager;
 // todo: document it!
 public class DNSJavaTCPClientImpl extends DNSJavaDecoder implements TCPClient {
 
+    private ByteArrayOutputStream bos = new ByteArrayOutputStream();
     private static final org.apache.log.Logger log = LoggingManager.getLoggerForClass();
 
     public void setupTest() {
@@ -29,8 +28,11 @@ public class DNSJavaTCPClientImpl extends DNSJavaDecoder implements TCPClient {
     public void write(OutputStream out, String string) {
         try {
             byte[] msg = getMessageBytes(string);
-            out.write(getLengthPrefix(msg.length));
-            out.write(msg);
+
+            bos.write(getLengthPrefix(msg.length));
+            bos.write(msg);
+            out.write(bos.toByteArray());
+            bos.reset();
         } catch (IOException ex) {
             log.error("Failed to send DNS request: " + string, ex);
         }
@@ -50,7 +52,7 @@ public class DNSJavaTCPClientImpl extends DNSJavaDecoder implements TCPClient {
         byte[] buf = new byte[0];
         try {
             in.read(header);
-            short len = BinaryUtils.twoBytesToShortVal(header[1], header[0]);
+            int len = (int) BinaryUtils.twoBytesToLongVal(header[1], header[0]);
             buf = new byte[len];
             in.read(buf);
         } catch (IOException ex) {

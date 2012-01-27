@@ -117,6 +117,20 @@ public class BinaryUtils
 
    /**
     *
+    * @param byte1
+    * @param byte2
+    * @return
+    */
+   public static long twoBytesToLongVal(byte byte1, byte byte2)
+   {
+      long short1 = (long) (byte1 & 0xFF); // God knows, how long I searched for this...
+      long short2 = (long) (byte2 & 0xFF);
+
+      return (long) ((short2 << 8) | short1);
+   }
+   
+   /**
+    *
     * @param i
     * @return
     */

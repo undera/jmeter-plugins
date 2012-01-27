@@ -95,14 +95,43 @@ public class DNSJavaTCPClientImplTest {
     @Test
     public void testRead() {
         System.out.println("read");
-        String resp="00386a1c81800001000200000000036e6e6d0272750000010001c00c000100010000137f0004596fbd94c00c000100010000137f0004596fbd95";
+        String resp = "00386a1c81800001000200000000036e6e6d0272750000010001c00c000100010000137f0004596fbd94c00c000100010000137f0004596fbd95";
         byte[] buf = BinaryTCPClientImpl.hexStringToByteArray(resp);
-        SocketEmulatorInputStream in = new  SocketEmulatorInputStream(buf);
+        SocketEmulatorInputStream in = new SocketEmulatorInputStream(buf);
         DNSJavaTCPClientImpl instance = new DNSJavaTCPClientImpl();
         String expResult = "NOERROR";
         String result = instance.read(in);
         System.out.println(result);
         assertTrue(result.contains(expResult));
+    }
+
+    @Test
+    public void testRead_broken_response() {
+        System.out.println("read 2");
+        String resp = "a74c85000001000200000000036e6e6d0272750000010001c00c00010001000054600004596fbd95c00c";
+        byte[] buf = BinaryTCPClientImpl.hexStringToByteArray(resp);
+        SocketEmulatorInputStream in = new SocketEmulatorInputStream(buf);
+        DNSJavaTCPClientImpl instance = new DNSJavaTCPClientImpl();
+        String expResult = "NOERROR";
+        try {
+            String result = instance.read(in);
+            fail();
+        } catch (RuntimeException e) {
+        }
+    }
+
+    @Test
+    public void testRead_3() {
+        /*
+         * System.out.println("read 3"); String resp =
+         * "81800001000200000000036e6e6d0272750000010001c00c00010001000027540004596fbd95c00c00010001000027540004596fbd94";
+         * byte[] buf = BinaryTCPClientImpl.hexStringToByteArray(resp);
+         * SocketEmulatorInputStream in = new SocketEmulatorInputStream(buf);
+         * DNSJavaTCPClientImpl instance = new DNSJavaTCPClientImpl(); String
+         * expResult = "NOERROR"; String result = instance.read(in);
+         * System.out.println(result); assertTrue(result.contains(expResult));
+         *
+         */
     }
 
     /**

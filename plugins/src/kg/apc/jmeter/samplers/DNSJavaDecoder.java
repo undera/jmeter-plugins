@@ -2,6 +2,7 @@ package kg.apc.jmeter.samplers;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import org.apache.jorphan.util.JOrphanUtils;
 import org.xbill.DNS.*;
 
 /**
@@ -52,7 +53,7 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
         try {
             m = new Message(buf);
         } catch (IOException ex) {
-            throw new RuntimeException("Cannot decode DNS message", ex);
+            throw new RuntimeException("Cannot decode DNS message: "+JOrphanUtils.baToHexString(buf), ex);
         }
         return m.toString().getBytes();
     }

@@ -98,6 +98,20 @@ public class DNSJavaDecoderTest {
         assertTrue(result.contains(expResult));
     }
 
+    @Test
+    public void testDecode_tcp() {
+        System.out.println("decode");
+        // 0038 byte prefix must not be passed to parser
+        String resp="bcd581800001000200000000036e6e6d0272750000010001c00c00010001000027540004596fbd95c00c00010001000027540004596fbd94";
+        byte[] buf = BinaryTCPClientImpl.hexStringToByteArray(resp);
+        DNSJavaDecoder instance = new DNSJavaDecoder();
+        String expResult = "NOERROR";
+        String result = new String(instance.decode(buf));
+        System.out.println(result);
+        assertTrue(result.contains(expResult));
+    }
+    
+    
     /**
      * Test of getRecord method, of class DNSJavaDecoder.
      */

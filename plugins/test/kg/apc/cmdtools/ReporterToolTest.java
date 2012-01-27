@@ -1,19 +1,15 @@
 package kg.apc.cmdtools;
 
-import java.text.DecimalFormatSymbols;
 import java.io.File;
 import java.io.IOException;
-import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.util.JMeterUtils;
 import java.io.PrintStream;
+import java.text.DecimalFormatSymbols;
 import java.util.ListIterator;
 import kg.apc.emulators.FilesTestTools;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.util.JMeterUtils;
 import static org.junit.Assert.*;
+import org.junit.*;
 
 /**
  *
@@ -24,8 +20,8 @@ public class ReporterToolTest {
     private final String basedir;
 
     public ReporterToolTest() {
-        String file = this.getClass().getResource("short.jtl").getPath();
-        basedir = file.substring(0, file.lastIndexOf("/"));
+        File file = new File(this.getClass().getResource("short.jtl").getFile());
+        basedir = file.getParentFile().getAbsolutePath();
     }
 
     @BeforeClass

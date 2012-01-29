@@ -21,7 +21,7 @@ public class ReporterToolTest {
 
     public ReporterToolTest() {
         File file = new File(this.getClass().getResource("short.jtl").getFile());
-        basedir = file.getParentFile().getAbsolutePath();
+        basedir = TestJMeterUtils.fixWinPath(file.getParentFile().getAbsolutePath());
     }
 
     @BeforeClass

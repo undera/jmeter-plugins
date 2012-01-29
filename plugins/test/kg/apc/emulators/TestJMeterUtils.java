@@ -94,6 +94,21 @@ public abstract class TestJMeterUtils {
         GuiPackage.getInstance().updateCurrentNode();
     }
 
+    public static String fixWinPath(String path) {
+        String ret = path;
+        //test if win os
+        boolean isWinOs = System.getProperty("os.name").toLowerCase().indexOf("win") >= 0;
+
+        //fix only files in "document and settings", for computer with no admin / C: drive access...
+        if(isWinOs) {
+            ret = ret.replace("Documents%20and%20Settings", "DOCUME~1");
+            ret = ret.replace("Local%20Settings", "LOCALS~1");
+            ret = ret.replace("Application%20Data", "APPLIC~1");
+        }
+
+        return ret;
+    }
+
     public static String convertStreamToString(InputStream is)
             throws IOException {
         /*

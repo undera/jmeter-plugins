@@ -3,6 +3,7 @@ package kg.apc.jmeter.samplers;
 
 import java.io.*;
 import java.net.SocketTimeoutException;
+import java.util.logging.Level;
 import org.apache.jmeter.protocol.tcp.sampler.TCPClientImpl;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
@@ -31,7 +32,11 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
     public void write(OutputStream os, InputStream is) {
         if (!isRequestSent) {
             isRequestSent = true;
-            super.write(os, is);
+            try {
+                super.write(os, is);
+            } catch (IOException ex) {
+                log.error("Can't send: ", ex);
+            }
         }
     }
 
@@ -39,7 +44,11 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
     public void write(OutputStream out, String string) {
         if (!isRequestSent) {
             isRequestSent = true;
-            super.write(out, string);
+            try {
+                super.write(out, string);
+            } catch (IOException ex) {
+                log.error("Can't send: ", ex);
+            }
         }
     }
 

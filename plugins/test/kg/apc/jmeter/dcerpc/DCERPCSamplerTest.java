@@ -112,12 +112,9 @@ public class DCERPCSamplerTest
            + ABSTRACT_SYNTAX;
 
       instance.write(os, str);
-      String expBytes = "0500b031000000048000000010000000ffffffd0160fffff" +
-           "fd0160000000001000000000001002a0ffffff860ffffffd70ffffff8060610" +
-           "ffffff96450ffffffaa0ffffffa917430ffffffe40ffffffc27638010000000" +
-           "45d0ffffff880ffffff8a0ffffffeb1c0ffffffc9110ffffff9f0ffffffe8080" +
-           "02b10486002000000";
+      String expBytes = "05000b03100000004800000001000000d016d0160000000001000000000001002a86d78060619645aaa91743e4c2763801000000045d888aeb1cc9119fe808002b10486002000000";
       String gotBytes = os.getWrittenBytesAsHexString();
+      System.out.println(gotBytes);
       assertEquals(expBytes, gotBytes);
    }
 
@@ -138,7 +135,7 @@ public class DCERPCSamplerTest
 
       instance.write(os, str);
       String gotBytes = os.getWrittenBytesAsHexString();
-      assertEquals(90110, gotBytes.length());
+      assertEquals(20096, gotBytes.length());
    }
 
    /**

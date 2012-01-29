@@ -1,10 +1,6 @@
 package kg.apc.jmeter.dcerpc;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InterruptedIOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.SocketTimeoutException;
 import org.apache.jmeter.protocol.tcp.sampler.AbstractTCPClient;
 import org.apache.jorphan.logging.LoggingManager;

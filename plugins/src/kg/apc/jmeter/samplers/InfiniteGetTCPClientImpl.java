@@ -34,7 +34,7 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
             isRequestSent = true;
             try {
                 super.write(os, is);
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 log.error("Can't send: ", ex);
             }
         }
@@ -46,7 +46,7 @@ public class InfiniteGetTCPClientImpl extends TCPClientImpl {
             isRequestSent = true;
             try {
                 super.write(out, string);
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 log.error("Can't send: ", ex);
             }
         }

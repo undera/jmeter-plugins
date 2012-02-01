@@ -3,8 +3,6 @@ package kg.apc.jmeter.modifiers;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.*;
-import org.apache.commons.collections.BidiMap;
-import org.apache.commons.collections.bidimap.DualHashBidiMap;
 import org.apache.jmeter.config.Argument;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.processor.PreProcessor;
@@ -16,6 +14,7 @@ import org.apache.jmeter.protocol.http.util.HTTPConstants;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.testelement.AbstractTestElement;
+import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jorphan.logging.LoggingManager;
@@ -32,8 +31,9 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
     private static final Random rand = new Random();
     private final static Boolean visited = true;
     private final static Boolean notvisited = false;
-    BidiMap marks = new DualHashBidiMap();
+    List<String> marks = new LinkedList<String>();
     private HashMap<String, HTTPSamplerBase> URLs = new HashMap<String, HTTPSamplerBase>();
+    private String baseDomain;
 
     public AnchorModifier() {
     }
@@ -61,18 +61,22 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
         if (index == -1) {
             index = 0;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Check for matches against: " + sampler.toString());
-        }
+        /*
+         * if (log.isDebugEnabled()) { log.debug("Check for matches against: " +
+         * sampler.toString()); }
+         *
+         */
         html = (Document) HtmlParsingUtils.getDOM(responseText.substring(index));
         addAnchorUrls(html, result, sampler);
         addFormUrls(html, result, sampler);
         addFramesetUrls(html, result, sampler);
         if (hasNotVisited()) {
             HTTPSamplerBase url = getNextLink();
-            if (log.isDebugEnabled()) {
-                log.debug("Selected: " + url.toString());
-            }
+            /*
+             * if (log.isDebugEnabled()) { log.debug("Selected: " +
+             * url.toString()); }
+             *
+             */
             sampler.setDomain(url.getDomain());
             sampler.setPath(url.getPath());
             if (url.getMethod().equals(HTTPConstants.POST)) {
@@ -87,14 +91,17 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
             }
             sampler.setProtocol(url.getProtocol());
         } else {
-            log.debug("No matches found");
+            log.info("No further matches found, stopping test");
+            context.getEngine().askThreadsToStop();
         }
     }
 
     private void modifyArgument(Argument arg, Arguments args) {
-        if (log.isDebugEnabled()) {
-            log.debug("Modifying argument: " + arg);
-        }
+        /*
+         * if (log.isDebugEnabled()) { log.debug("Modifying argument: " + arg);
+         * }
+         *
+         */
         List<Argument> possibleReplacements = new ArrayList<Argument>();
         PropertyIterator iter = args.iterator();
         Argument replacementArg;
@@ -113,9 +120,11 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
             replacementArg = possibleReplacements.get(rand.nextInt(possibleReplacements.size()));
             arg.setName(replacementArg.getName());
             arg.setValue(replacementArg.getValue());
-            if (log.isDebugEnabled()) {
-                log.debug("Just set argument to values: " + arg.getName() + " = " + arg.getValue());
-            }
+            /*
+             * if (log.isDebugEnabled()) { log.debug("Just set argument to
+             * values: " + arg.getName() + " = " + arg.getValue()); }
+             *
+             */
             args.removeArgument(replacementArg);
         }
     }
@@ -130,11 +139,13 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
         for (Iterator<HTTPSamplerBase> it = urls.iterator(); it.hasNext();) {
             HTTPSamplerBase newUrl = it.next();
             newUrl.setMethod(HTTPConstants.POST);
-            if (log.isDebugEnabled()) {
-                log.debug("Potential Form match: " + newUrl.toString());
-            }
+            /*
+             * if (log.isDebugEnabled()) { log.debug("Potential Form match: " +
+             * newUrl.toString()); }
+             *
+             */
             if (HtmlParsingUtils.isAnchorMatched(newUrl, config)) {
-                log.debug("Matched!");
+                //log.debug("Matched!");
                 addURL(newUrl);
             }
         }
@@ -161,12 +172,15 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
             try {
                 HTTPSamplerBase newUrl = HtmlParsingUtils.createUrlFromAnchor(hrefStr, ConversionUtils.makeRelativeURL(result.getURL(), base));
                 newUrl.setMethod(HTTPConstants.GET);
+
                 if (log.isDebugEnabled()) {
-                    log.debug("Potential <a href> match: " + newUrl);
+                    //log.debug("Potential <a href>match: " + newUrl);
                 }
-                if (HtmlParsingUtils.isAnchorMatched(newUrl, config)) {
-                    log.debug("Matched!");
+                if (true || HtmlParsingUtils.isAnchorMatched(newUrl, config)) {
+                    //log.debug("Matched!");
                     addURL(newUrl);
+                } else {
+                    //log.debug("Not matched: " + newUrl);
                 }
             } catch (MalformedURLException e) {
                 log.warn("Bad URL " + e);
@@ -194,11 +208,13 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
                 HTTPSamplerBase newUrl = HtmlParsingUtils.createUrlFromAnchor(
                         hrefStr, ConversionUtils.makeRelativeURL(result.getURL(), base));
                 newUrl.setMethod(HTTPConstants.GET);
-                if (log.isDebugEnabled()) {
-                    log.debug("Potential <frame src> match: " + newUrl);
-                }
+                /*
+                 * if (log.isDebugEnabled()) { log.debug("Potential <frame src>
+                 * match: " + newUrl); }
+                 *
+                 */
                 if (HtmlParsingUtils.isAnchorMatched(newUrl, config)) {
-                    log.debug("Matched!");
+                    //log.debug("Matched!");
                     addURL(newUrl);
                 }
             } catch (MalformedURLException e) {
@@ -208,35 +224,54 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
     }
 
     private boolean hasNotVisited() {
-        Object key = marks.getKey(notvisited);
-        return key != null;
+        return !marks.isEmpty();
     }
 
     private HTTPSamplerBase getNextLink() {
-        String key = (String) marks.getKey(notvisited);
-            if (log.isDebugEnabled()) {
-                log.debug("Not visited key: " + key);
-            }
-        marks.put(key, visited);
+        String key = marks.get(marks.size() - 1);
+        if (log.isDebugEnabled()) {
+            log.debug("Not visited key: " + key);
+        }
+        marks.remove(key);
         return URLs.get(key);
     }
 
     private void addURL(HTTPSamplerBase newUrl) {
+        if (baseDomain == null) {
+            baseDomain = newUrl.getDomain();
+            if (log.isDebugEnabled()) {
+                log.debug("Base domain: " + baseDomain);
+            }
+        }
+
+        if (!newUrl.getDomain().equals(baseDomain)) {
+            if (log.isDebugEnabled()) {
+                //log.debug("Skip external: " + newUrl.toString());
+            }
+            return;
+        }
+
         String key = getKeyForURL(newUrl);
         if (!URLs.containsKey(key)) {
             URLs.put(key, newUrl);
-            marks.put(key, notvisited);
+            marks.add(key);
             if (log.isDebugEnabled()) {
                 log.debug("Put: " + newUrl.toString());
             }
         } else {
             if (log.isDebugEnabled()) {
-                log.debug("Skip existing: " + newUrl.toString());
+               // log.debug("Skip existing: " + newUrl.toString());
             }
         }
     }
 
     private String getKeyForURL(HTTPSamplerBase newUrl) {
-        return newUrl.toString();
+        PropertyIterator it = newUrl.propertyIterator();
+        String ret = "";
+        while (it.hasNext()) {
+            JMeterProperty p = it.next();
+            ret += p.getName() + "=" + p.getStringValue() + "\t";
+        }
+        return ret;
     }
 }

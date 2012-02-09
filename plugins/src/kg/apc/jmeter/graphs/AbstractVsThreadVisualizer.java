@@ -53,7 +53,7 @@ public abstract class AbstractVsThreadVisualizer extends AbstractGraphPanelVisua
         }
         else
         {
-            ret = res.getAllThreads();
+            ret = res.getGroupThreads();
         }
         return ret;
     }
@@ -64,8 +64,8 @@ public abstract class AbstractVsThreadVisualizer extends AbstractGraphPanelVisua
     {
         String threadName = res.getThreadName();
         threadName = threadName.lastIndexOf(" ") >= 0 ? threadName.substring(0, threadName.lastIndexOf(" ")) : threadName;
-
-        addCount(threadName, res.getAllThreads(), res.getStartTime());
+       // System.out.println(threadName);
+        addCount(threadName, res.getGroupThreads(), res.getStartTime());
     }
 
     @Override

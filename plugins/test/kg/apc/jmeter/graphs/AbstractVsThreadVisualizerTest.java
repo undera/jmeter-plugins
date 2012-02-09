@@ -48,7 +48,7 @@ public class AbstractVsThreadVisualizerTest {
         System.out.println("getCurrentThreadCount");
         long now = System.currentTimeMillis();
         SampleResult sample = new SampleResult();
-        sample.setAllThreads(3);
+        sample.setGroupThreads(3);
         sample.setThreadName("test_tg");
         sample.setStampAndTime(now, 300);
         AbstractVsThreadVisualizer instance = new AbstractVsThreadVisualizerImpl();

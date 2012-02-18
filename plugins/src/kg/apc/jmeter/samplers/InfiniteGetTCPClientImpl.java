@@ -1,9 +1,8 @@
-// TODO: document it!
+// todo: document it in wiki
 package kg.apc.jmeter.samplers;
 
 import java.io.*;
 import java.net.SocketTimeoutException;
-import java.util.logging.Level;
 import org.apache.jmeter.protocol.tcp.sampler.TCPClientImpl;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;

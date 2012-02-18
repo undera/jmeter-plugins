@@ -1,9 +1,11 @@
+// todo: document it in wiki
 package kg.apc.jmeter.samplers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import kg.apc.jmeter.dcerpc.BinaryUtils;
 import org.apache.jmeter.protocol.tcp.sampler.TCPClient;
 import org.apache.jorphan.logging.LoggingManager;
@@ -12,7 +14,6 @@ import org.apache.jorphan.logging.LoggingManager;
  *
  * @author undera
  */
-// todo: document it!
 public class DNSJavaTCPClientImpl extends DNSJavaDecoder implements TCPClient {
 
     private ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -69,5 +70,9 @@ public class DNSJavaTCPClientImpl extends DNSJavaDecoder implements TCPClient {
     }
 
     public void setEolByte(int i) {
+    }
+
+    public String getCharset() {
+        return Charset.defaultCharset().name();
     }
 }

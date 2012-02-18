@@ -8,6 +8,7 @@ import org.apache.log.Logger;
 import org.hyperic.sigar.ProcExe;
 import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarProxy;
+import org.hyperic.sigar.ptql.ProcessFinder;
 
 /**
  * Class to parse metric params like process name, PID, metric type
@@ -60,7 +61,7 @@ class MetricParamsSigar extends MetricParams {
     private long getPIDByPTQL(String token) {
         String query = token.substring(token.indexOf("=") + 1);
         try {
-            return sigar.getProcState(query).getPpid();
+            return new ProcessFinder(sigar).findSingleProcess(query);
         } catch (SigarException ex) {
             log.warn("Error querying PTQL: " + query, ex);
             return -1;

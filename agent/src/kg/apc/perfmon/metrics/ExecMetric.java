@@ -46,6 +46,10 @@ class ExecMetric extends AbstractPerfMonMetric {
                 lastStr = s;
             }
             res.append(lastStr);
+            
+            stdErr.close();
+            stdInput.close();
+            p.destroy();
         } catch (IOException e) {
             log.error("Problems executing: " + command[0], e);
         }

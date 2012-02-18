@@ -5,20 +5,16 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowExactValues;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import kg.apc.jmeter.threads.UltimateThreadGroupGui;
@@ -190,18 +186,22 @@ public class VariableThroughputTimerGui
         row.add(now, 0);
 
         int n = 0;
-        int rps = 0;
-        int prevRPS = 0;
+        double rps;
+        double prevRPS = 0;
         while ((rps = tg.getRPSForSecond(n)) >= 0) {
             if (rps != prevRPS) {
-                if(n > 0 && row.getElement(now + (n-1) * 1000) == null) row.add(now + (n-1) * 1000, prevRPS);
+                if (n > 0 && row.getElement(now + (n - 1) * 1000) == null) {
+                    row.add(now + (n - 1) * 1000, prevRPS);
+                }
                 row.add(now + n * 1000, rps);
                 log.debug("Rps " + rps);
                 prevRPS = rps;
             }
             n++;
         }
-        if(n > 0 && row.getElement(now + (n-1) * 1000) == null) row.add(now + (n-1) * 1000, prevRPS);
+        if (n > 0 && row.getElement(now + (n - 1) * 1000) == null) {
+            row.add(now + (n - 1) * 1000, prevRPS);
+        }
 
         row.setColor(Color.blue);
         model.put("Expected RPS", row);

@@ -44,14 +44,14 @@ public class VariableThroughputTimer
     private static final Logger log = LoggingManager.getLoggerForClass();
     /* put this in fields because we don't want create variables in tight loops */
     private long cntDelayed;
-    private long time = 0;
+    private double time = 0;
     private double msecPerReq;
     private long cntSent;
-    private int rps;
-    private long startSec = 0;
+    private double rps;
+    private double startSec = 0;
     private CollectionProperty overrideProp;
     private int stopTries;
-    private long lastStopTry;
+    private double lastStopTry;
     private boolean stopping;
 
     public VariableThroughputTimer() {
@@ -63,7 +63,7 @@ public class VariableThroughputTimer
         synchronized (this) {
 
             while (true) {
-                int delay = 0;
+                int delay;
                 long curTime = System.currentTimeMillis();
                 long msecs = curTime % 1000;
                 long secs = curTime - msecs;
@@ -92,7 +92,7 @@ public class VariableThroughputTimer
         return 0;
     }
 
-    private synchronized void checkNextSecond(long secs) {
+    private synchronized void checkNextSecond(double secs) {
         // next second
         if (time == secs) {
             return;
@@ -103,7 +103,7 @@ public class VariableThroughputTimer
         }
         time = secs;
 
-        int nextRps = getRPSForSecond((secs - startSec) / 1000);
+        double nextRps = getRPSForSecond((secs - startSec) / 1000);
         if (nextRps < 0) {
             stopping = true;
             rps = rps > 0 ? rps * (stopTries > 10 ? 2 : 1) : 1;
@@ -146,7 +146,7 @@ public class VariableThroughputTimer
         return getProperty(DATA_PROPERTY);
     }
 
-    public int getRPSForSecond(long sec) {
+    public double getRPSForSecond(double sec) {
         JMeterProperty data = getData();
         if (data instanceof NullProperty) return -1;
         CollectionProperty rows = (CollectionProperty) data;
@@ -156,11 +156,11 @@ public class VariableThroughputTimer
             ArrayList<Object> curProp = (ArrayList<Object>) scheduleIT.next().getObjectValue();
 
             int duration = getIntValue(curProp, DURATION_FIELD_NO);
-            int from = getIntValue(curProp, FROM_FIELD_NO);
-            int to = getIntValue(curProp, TO_FIELD_NO);
+            double from = getDoubleValue(curProp, FROM_FIELD_NO);
+            double to = getDoubleValue(curProp, TO_FIELD_NO);
             //log.debug("sec "+sec+" Dur: "+duration+" from "+from+" to "+to);
             if (sec - duration <= 0) {
-                int rpsCalculated = from + (int) (sec * ((to - from) / (double) duration));
+            	double rpsCalculated = from + (int) (sec * ((to - from) / (double) duration));
                 //log.debug("RPS: "+rps);
                 return rpsCalculated;
             } else {
@@ -170,6 +170,11 @@ public class VariableThroughputTimer
         return -1;
     }
 
+    private double getDoubleValue(ArrayList<Object> prop, int colID) throws NumberFormatException {
+        JMeterProperty val = (JMeterProperty) prop.get(colID);
+        return val.getDoubleValue();
+    }
+    
     private int getIntValue(ArrayList<Object> prop, int colID) throws NumberFormatException {
         JMeterProperty val = (JMeterProperty) prop.get(colID);
         return val.getIntValue();

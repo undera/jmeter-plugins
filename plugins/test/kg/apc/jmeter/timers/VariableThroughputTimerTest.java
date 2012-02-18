@@ -137,8 +137,8 @@ public class VariableThroughputTimerTest {
         long sec = 0L;
         VariableThroughputTimer instance = new VariableThroughputTimer();
         int expResult = -1;
-        int result = instance.getRPSForSecond(sec);
-        assertEquals(expResult, result);
+        double result = instance.getRPSForSecond(sec);
+        assertEquals(expResult, result, 0.01);
     }
 
     /**

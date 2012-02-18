@@ -7,6 +7,7 @@ import java.util.Properties;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
+import org.apache.jmeter.JMeter;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
@@ -61,8 +62,8 @@ public class PluginsCMDWorker {
         if (dir == null || !dir.exists()) {
             throw new IllegalArgumentException("CMDRunner.jar must be placed in <jmeter>/lib/ext directory");
         }
-        
-        homeDir=dir.getParent();
+
+        homeDir = dir.getParent();
 
         log.debug("Creating jmeter env using JMeter home: " + homeDir);
         JMeterUtils.setJMeterHome(homeDir);
@@ -70,8 +71,9 @@ public class PluginsCMDWorker {
     }
 
     /**
-     * Had to copy this method from JMeter class
-     * 'cause they provide no ways to re-use this code
+     * Had to copy this method from JMeter class 'cause they provide no ways to
+     * re-use this code
+     *
      * @see JMeter
      */
     private void initializeProperties() {
@@ -101,7 +103,11 @@ public class PluginsCMDWorker {
             } catch (IOException e) {
                 log.warn("Error loading user property file: " + userProp, e);
             } finally {
-                JOrphanUtils.closeQuietly(fis);
+                try {
+                    fis.close();
+                } catch (IOException ex) {
+                    log.warn("There was problem closing file stream", ex);
+                }
             }
         }
 

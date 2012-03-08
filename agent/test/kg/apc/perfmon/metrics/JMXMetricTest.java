@@ -29,5 +29,7 @@ public class JMXMetricTest extends TestCase {
         MetricParams params= MetricParams.createFromString("url=127.0.0.1\\:4711");
         JMXMetric instance = new JMXMetric(params);
         instance.getValue(res);
+        System.gc();
+        instance.getValue(res);
     }
 }

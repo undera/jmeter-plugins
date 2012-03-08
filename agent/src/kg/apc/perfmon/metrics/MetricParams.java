@@ -57,13 +57,13 @@ public class MetricParams {
         if (token.startsWith("pid=")) {
             this.PID = getPIDByPID(token);
         } else if (token.startsWith("iface=")) {
-            this.iface = getParam(token);
+            this.iface = getParamValue(token);
         } else if (token.startsWith("label=")) {
-            this.label = getParam(token);
+            this.label = getParamValue(token);
         } else if (token.startsWith("fs=")) {
-            this.fs = getParam(token);
+            this.fs = getParamValue(token);
         } else if (token.startsWith("core=")) {
-            this.coreID = Integer.parseInt(getParam(token));
+            this.coreID = Integer.parseInt(getParamValue(token));
         } else {
             params.add(token);
             this.type = token;
@@ -99,7 +99,7 @@ public class MetricParams {
         return label;
     }
 
-    protected static String getParam(String token) {
+    protected static String getParamValue(String token) {
         return token.substring(token.indexOf("=") + 1);
     }
 

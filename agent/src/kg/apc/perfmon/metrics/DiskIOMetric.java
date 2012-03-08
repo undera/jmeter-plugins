@@ -5,11 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.hyperic.sigar.FileSystem;
-import org.hyperic.sigar.FileSystemMap;
-import org.hyperic.sigar.FileSystemUsage;
-import org.hyperic.sigar.SigarException;
-import org.hyperic.sigar.SigarProxy;
+import org.hyperic.sigar.*;
 
 /**
  *

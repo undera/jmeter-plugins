@@ -1,16 +1,15 @@
 package kg.apc.perfmon;
 
-import java.net.SocketAddress;
-import kg.apc.perfmon.metrics.AbstractPerfMonMetric;
 import java.io.IOException;
+import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.channels.WritableByteChannel;
+import kg.apc.perfmon.metrics.AbstractPerfMonMetric;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.hyperic.sigar.SigarException;
 import org.hyperic.sigar.SigarProxy;
 
 /**
@@ -112,7 +111,7 @@ public class PerfMonMetricGetter {
             for (int n = 0; n < metrics.length; n++) {
                 try {
                     metrics[n].getValue(res);
-                } catch (SigarException ex) {
+                } catch (Exception ex) {
                     log.error("Error getting metric", ex);
                 }
                 res.append(TAB);

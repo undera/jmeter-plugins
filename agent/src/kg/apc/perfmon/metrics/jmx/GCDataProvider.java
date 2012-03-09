@@ -23,6 +23,6 @@ class GCDataProvider extends AbstractJMXDataProvider {
     }
 
     protected long getValueFromBean(Object bean) {
-        return ((GarbageCollectorMXBean) bean).getCollectionCount();
+        return ((GarbageCollectorMXBean) bean).getCollectionTime();
     }
 }

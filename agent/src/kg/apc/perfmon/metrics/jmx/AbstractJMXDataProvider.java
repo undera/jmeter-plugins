@@ -16,8 +16,6 @@ import kg.apc.perfmon.metrics.MetricParams;
  */
 abstract public class AbstractJMXDataProvider {
 
-    public static final int TYPE_GC = 0;
-    public static final int TYPE_CLASSES = 1;
     protected final Set beans;
 
     public AbstractJMXDataProvider(MBeanServerConnection mBeanServerConn) throws Exception {
@@ -32,6 +30,12 @@ abstract public class AbstractJMXDataProvider {
                     return new GCDataProvider(mBeanServerConn);
                 } else if (sType.startsWith("class-")) {
                     return new ClassesDataProvider(mBeanServerConn);
+                } else if (sType.startsWith("compile-")) {
+                    return new CompilerDataProvider(mBeanServerConn);
+                } else if (sType.startsWith("memorypool-")) {
+                    return new MemoryPoolDataProvider(mBeanServerConn);
+                } else if (sType.startsWith("memory-")) {
+                    return new MemoryDataProvider(mBeanServerConn);
                 }
             }
         }

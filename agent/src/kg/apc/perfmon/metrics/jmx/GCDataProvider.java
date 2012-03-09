@@ -10,10 +10,9 @@ import javax.management.MBeanServerConnection;
  */
 class GCDataProvider extends AbstractJMXDataProvider {
 
-    public GCDataProvider(MBeanServerConnection mBeanServerConn) throws Exception {
-        super(mBeanServerConn);
+    public GCDataProvider(MBeanServerConnection mBeanServerConn, boolean diff) throws Exception {
+        super(mBeanServerConn, diff);
     }
-
 
     protected String getMXBeanType() {
         return ManagementFactory.GARBAGE_COLLECTOR_MXBEAN_DOMAIN_TYPE;

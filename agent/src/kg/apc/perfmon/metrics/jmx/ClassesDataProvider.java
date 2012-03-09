@@ -10,8 +10,8 @@ import javax.management.MBeanServerConnection;
  */
 class ClassesDataProvider extends AbstractJMXDataProvider {
 
-    public ClassesDataProvider(MBeanServerConnection mBeanServerConn) throws Exception {
-        super(mBeanServerConn);
+    public ClassesDataProvider(MBeanServerConnection mBeanServerConn, boolean diff) throws Exception {
+        super(mBeanServerConn, diff);
     }
 
     protected String getMXBeanType() {

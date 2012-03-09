@@ -10,8 +10,8 @@ import javax.management.MBeanServerConnection;
  */
 class CompilerDataProvider extends AbstractJMXDataProvider {
 
-    public CompilerDataProvider(MBeanServerConnection mBeanServerConn) throws Exception {
-        super(mBeanServerConn);
+    public CompilerDataProvider(MBeanServerConnection mBeanServerConn, boolean diff) throws Exception {
+        super(mBeanServerConn, diff);
     }
 
     protected String getMXBeanType() {
@@ -25,5 +25,4 @@ class CompilerDataProvider extends AbstractJMXDataProvider {
     protected long getValueFromBean(Object bean) {
         return ((CompilationMXBean) bean).getTotalCompilationTime();
     }
-    
 }

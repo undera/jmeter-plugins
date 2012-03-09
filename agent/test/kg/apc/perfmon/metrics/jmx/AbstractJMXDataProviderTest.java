@@ -91,7 +91,7 @@ public class AbstractJMXDataProviderTest extends TestCase {
     public class AbstractJMXDataProviderImpl extends AbstractJMXDataProvider {
 
         public AbstractJMXDataProviderImpl() throws Exception {
-            super(new EmulatorMBeanServerConnection());
+            super(new EmulatorMBeanServerConnection(), false);
         }
 
         public String getMXBeanType() {

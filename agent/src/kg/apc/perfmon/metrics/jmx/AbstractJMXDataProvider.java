@@ -17,8 +17,11 @@ import kg.apc.perfmon.metrics.MetricParams;
 abstract public class AbstractJMXDataProvider {
 
     protected final Set beans;
+    private final boolean isDiff;
+    private long prevValue = 0;
 
-    public AbstractJMXDataProvider(MBeanServerConnection mBeanServerConn) throws Exception {
+    public AbstractJMXDataProvider(MBeanServerConnection mBeanServerConn, boolean diff) throws Exception {
+        isDiff = diff;
         beans = getMXBeans(mBeanServerConn);
     }
 
@@ -27,15 +30,15 @@ abstract public class AbstractJMXDataProvider {
             if (params[i].startsWith("type=")) {
                 String sType = MetricParams.getParamValue(params[i]);
                 if (sType.startsWith("gc-")) {
-                    return new GCDataProvider(mBeanServerConn);
+                    return new GCDataProvider(mBeanServerConn, true);
                 } else if (sType.startsWith("class-")) {
-                    return new ClassesDataProvider(mBeanServerConn);
+                    return new ClassesDataProvider(mBeanServerConn, true);
                 } else if (sType.startsWith("compile-")) {
-                    return new CompilerDataProvider(mBeanServerConn);
+                    return new CompilerDataProvider(mBeanServerConn, true);
                 } else if (sType.startsWith("memorypool-")) {
-                    return new MemoryPoolDataProvider(mBeanServerConn);
+                    return new MemoryPoolDataProvider(mBeanServerConn, false);
                 } else if (sType.startsWith("memory-")) {
-                    return new MemoryDataProvider(mBeanServerConn);
+                    return new MemoryDataProvider(mBeanServerConn, false);
                 }
             }
         }
@@ -67,6 +70,18 @@ abstract public class AbstractJMXDataProvider {
         while (it.hasNext()) {
             value += getValueFromBean(it.next());
         }
+
+        if (isDiff) {
+            if (prevValue == 0) {
+                prevValue = value;
+                value = 0;
+            } else {
+                long oldVal = value;
+                value -= prevValue;
+                prevValue = oldVal;
+            }
+        }
+
         res.append(Long.toString(value));
     }
 }

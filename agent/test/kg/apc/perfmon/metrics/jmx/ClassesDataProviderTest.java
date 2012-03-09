@@ -33,7 +33,7 @@ public class ClassesDataProviderTest extends TestCase {
      */
     public void testGetMXBeanType() throws Exception {
         System.out.println("getMXBeanType");
-        ClassesDataProvider instance = new ClassesDataProvider(new EmulatorMBeanServerConnection());
+        ClassesDataProvider instance = new ClassesDataProvider(new EmulatorMBeanServerConnection(), false);
         String result = instance.getMXBeanType();
         assertNotNull(result);
     }
@@ -43,7 +43,7 @@ public class ClassesDataProviderTest extends TestCase {
      */
     public void testGetMXBeanClass() throws Exception {
         System.out.println("getMXBeanClass");
-        ClassesDataProvider instance = new ClassesDataProvider(new EmulatorMBeanServerConnection());
+        ClassesDataProvider instance = new ClassesDataProvider(new EmulatorMBeanServerConnection(), false);
         Class expResult = ClassLoadingMXBean.class;
         Class result = instance.getMXBeanClass();
         assertEquals(expResult, result);
@@ -55,7 +55,7 @@ public class ClassesDataProviderTest extends TestCase {
     public void testGetValueFromBean() throws Exception {
         System.out.println("getValueFromBean");
         Object bean = new ClassLoadingMXBeanImpl();
-        ClassesDataProvider instance = new ClassesDataProvider(new EmulatorMBeanServerConnection());
+        ClassesDataProvider instance = new ClassesDataProvider(new EmulatorMBeanServerConnection(), false);
         long result = instance.getValueFromBean(bean);
         assertTrue(result > 0);
     }

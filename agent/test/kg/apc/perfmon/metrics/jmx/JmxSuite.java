@@ -20,7 +20,12 @@ public class JmxSuite extends TestCase {
     
     public static Test suite() {
         TestSuite suite = new TestSuite("JmxSuite");
+        suite.addTest(ClassesDataProviderTest.suite());
         suite.addTest(AbstractJMXDataProviderTest.suite());
+        suite.addTest(MemoryDataProviderTest.suite());
+        suite.addTest(CompilerDataProviderTest.suite());
+        suite.addTest(JMXConnectorHelperTest.suite());
+        suite.addTest(MemoryPoolDataProviderTest.suite());
         suite.addTest(GCDataProviderTest.suite());
         return suite;
     }

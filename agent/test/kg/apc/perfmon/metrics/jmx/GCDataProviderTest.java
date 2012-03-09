@@ -33,7 +33,7 @@ public class GCDataProviderTest extends TestCase {
      */
     public void testGetMXBeanType() throws Exception {
         System.out.println("getMXBeanType");
-        GCDataProvider instance = new GCDataProvider(new EmulatorMBeanServerConnection());
+        GCDataProvider instance = new GCDataProvider(new EmulatorMBeanServerConnection(), false);
         String result = instance.getMXBeanType();
         assertNotNull(result);
     }
@@ -43,7 +43,7 @@ public class GCDataProviderTest extends TestCase {
      */
     public void testGetMXBeanClass() throws Exception {
         System.out.println("getMXBeanClass");
-        GCDataProvider instance = new GCDataProvider(new EmulatorMBeanServerConnection());
+        GCDataProvider instance = new GCDataProvider(new EmulatorMBeanServerConnection(), false);
         Class expResult = GarbageCollectorMXBean.class;
         Class result = instance.getMXBeanClass();
         assertEquals(expResult, result);
@@ -55,7 +55,7 @@ public class GCDataProviderTest extends TestCase {
     public void testGetValueFromBean() throws Exception {
         System.out.println("getValueFromBean");
         Object bean = new GarbageCollectorMXBeanImpl();
-        GCDataProvider instance = new GCDataProvider(new EmulatorMBeanServerConnection());
+        GCDataProvider instance = new GCDataProvider(new EmulatorMBeanServerConnection(), false);
         long result = instance.getValueFromBean(bean);
         assertTrue(result>0);
     }

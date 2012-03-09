@@ -10,8 +10,8 @@ import javax.management.MBeanServerConnection;
  */
 class MemoryPoolDataProvider extends AbstractJMXDataProvider {
 
-    public MemoryPoolDataProvider(MBeanServerConnection mBeanServerConn) throws Exception {
-        super(mBeanServerConn);
+    public MemoryPoolDataProvider(MBeanServerConnection mBeanServerConn, boolean diff) throws Exception {
+        super(mBeanServerConn, diff);
     }
 
     protected String getMXBeanType() {

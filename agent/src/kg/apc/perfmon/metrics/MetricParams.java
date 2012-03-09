@@ -99,7 +99,7 @@ public class MetricParams {
         return label;
     }
 
-    protected static String getParamValue(String token) {
+    public static String getParamValue(String token) {
         return token.substring(token.indexOf("=") + 1);
     }
 

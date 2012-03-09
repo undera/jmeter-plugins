@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.hyperic.sigar.SigarException;
 
 /**
  *
@@ -25,8 +24,8 @@ class ExecMetric extends AbstractPerfMonMetric {
         command = params.params;
     }
 
-    public void getValue(StringBuffer res) throws SigarException {
-        log.debug("Executing custom script: " + MetricParamsSigar.join(null, command, " "));
+    public void getValue(StringBuffer res) throws Exception {
+        log.debug("Executing custom script: " + MetricParams.join(null, command, " "));
 
         try {
             Process p = Runtime.getRuntime().exec(command);

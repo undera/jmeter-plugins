@@ -1,6 +1,7 @@
 package kg.apc.perfmon.metrics;
 
 import kg.apc.perfmon.PerfMonMetricGetter;
+import kg.apc.perfmon.metrics.jmx.JMXConnectorHelper;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.hyperic.sigar.SigarProxy;
@@ -48,7 +49,7 @@ public abstract class AbstractPerfMonMetric {
             } else if (metricType.equalsIgnoreCase("tcp")) {
                 metric = new TCPStatMetric(sigarProxy, metricParams);
             } else if (metricType.equalsIgnoreCase("jmx")) {
-                metric = new JMXMetric(metricParams);
+                metric = new JMXMetric(metricParams, new JMXConnectorHelper());
             } else {
                 throw new RuntimeException("No collector object for metric type " + metricType);
             }

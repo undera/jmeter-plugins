@@ -10,8 +10,13 @@ import javax.management.MBeanServerConnection;
  */
 class MemoryDataProvider extends AbstractJMXDataProvider {
 
-    public MemoryDataProvider(MBeanServerConnection mBeanServerConn, boolean diff) throws Exception {
+    public static final int TYPE_USED = 0;
+    public static final int TYPE_COMMITTED = 1;
+    private int type = TYPE_USED;
+
+    public MemoryDataProvider(MBeanServerConnection mBeanServerConn, boolean diff, int aType) throws Exception {
         super(mBeanServerConn, diff);
+        type = aType;
     }
 
     protected String getMXBeanType() {
@@ -23,6 +28,10 @@ class MemoryDataProvider extends AbstractJMXDataProvider {
     }
 
     protected long getValueFromBean(Object bean) {
-        return ((MemoryMXBean) bean).getHeapMemoryUsage().getUsed();
+        if (type == TYPE_COMMITTED) {
+            return ((MemoryMXBean) bean).getHeapMemoryUsage().getCommitted();
+        } else {
+            return ((MemoryMXBean) bean).getHeapMemoryUsage().getUsed();
+        }
     }
 }

@@ -36,7 +36,7 @@ public class MemoryPoolDataProviderTest extends TestCase {
      */
     public void testGetMXBeanType() throws Exception {
         System.out.println("getMXBeanType");
-        MemoryPoolDataProvider instance = new MemoryPoolDataProvider(new EmulatorMBeanServerConnection(), false);
+        MemoryPoolDataProvider instance = new MemoryPoolDataProvider(new EmulatorMBeanServerConnection(), false, MemoryPoolDataProvider.TYPE_COMMITTED);
         String expResult = ManagementFactory.MEMORY_POOL_MXBEAN_DOMAIN_TYPE;
         String result = instance.getMXBeanType();
         assertEquals(expResult, result);
@@ -47,7 +47,7 @@ public class MemoryPoolDataProviderTest extends TestCase {
      */
     public void testGetMXBeanClass() throws Exception {
         System.out.println("getMXBeanClass");
-        MemoryPoolDataProvider instance = new MemoryPoolDataProvider(new EmulatorMBeanServerConnection(), false);
+        MemoryPoolDataProvider instance = new MemoryPoolDataProvider(new EmulatorMBeanServerConnection(), false, MemoryPoolDataProvider.TYPE_COMMITTED);
         Class expResult = MemoryPoolMXBean.class;
         Class result = instance.getMXBeanClass();
         assertEquals(expResult, result);
@@ -59,8 +59,8 @@ public class MemoryPoolDataProviderTest extends TestCase {
     public void testGetValueFromBean() throws Exception {
         System.out.println("getValueFromBean");
         Object bean = new MemoryPoolMXBeanImpl();
-        MemoryPoolDataProvider instance = new MemoryPoolDataProvider(new EmulatorMBeanServerConnection(), false);
-        long expResult = 2L;
+        MemoryPoolDataProvider instance = new MemoryPoolDataProvider(new EmulatorMBeanServerConnection(), false, MemoryPoolDataProvider.TYPE_COMMITTED);
+        long expResult = 3L;
         long result = instance.getValueFromBean(bean);
         assertEquals(expResult, result);
     }

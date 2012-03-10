@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
-import kg.apc.perfmon.metrics.MetricParams;
 
 /**
  *
@@ -33,9 +32,17 @@ abstract public class AbstractJMXDataProvider {
         } else if (type.startsWith("compile-")) {
             return new CompilerDataProvider(mBeanServerConn, true);
         } else if (type.startsWith("memorypool-")) {
-            return new MemoryPoolDataProvider(mBeanServerConn, false);
+            if (type.endsWith("-committed")) {
+                return new MemoryPoolDataProvider(mBeanServerConn, false, MemoryPoolDataProvider.TYPE_COMMITTED);
+            } else {
+                return new MemoryPoolDataProvider(mBeanServerConn, false, MemoryPoolDataProvider.TYPE_USED);
+            }
         } else if (type.startsWith("memory-")) {
-            return new MemoryDataProvider(mBeanServerConn, false);
+            if (type.endsWith("-committed")) {
+                return new MemoryDataProvider(mBeanServerConn, false, MemoryDataProvider.TYPE_COMMITTED);
+            } else {
+                return new MemoryDataProvider(mBeanServerConn, false, MemoryDataProvider.TYPE_USED);
+            }
         }
         throw new IllegalArgumentException("Can't define JMX type");
     }

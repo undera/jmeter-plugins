@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.perfmon.metrics.jmx;
 
 import java.lang.management.GarbageCollectorMXBean;
@@ -40,7 +36,7 @@ public class AbstractJMXDataProviderTest extends TestCase {
     public void testGetProvider() throws Exception {
         System.out.println("getProvider");
         MBeanServerConnection mBeanServerConn = new EmulatorMBeanServerConnection();
-        String params = "type=gc-count";
+        String params = "gc-time";
         Class expResult = GCDataProvider.class;
         AbstractJMXDataProvider result = AbstractJMXDataProvider.getProvider(mBeanServerConn, params);
         assertEquals(expResult, result.getClass());

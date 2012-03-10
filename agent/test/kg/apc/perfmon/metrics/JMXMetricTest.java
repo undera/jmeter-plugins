@@ -29,7 +29,7 @@ public class JMXMetricTest extends TestCase {
     public void testGetValue() throws Exception {
         System.out.println("getValue");
         StringBuffer res = new StringBuffer();
-        MetricParams params = MetricParams.createFromString("url=127.0.0.1\\:4711:type=gc-count");
+        MetricParams params = MetricParams.createFromString("url=127.0.0.1\\:4711:gc-time");
         JMXMetric instance = new JMXMetric(params, new EmulatorJMXConnector());
         instance.getValue(res);
         System.out.println(res.toString());
@@ -43,7 +43,7 @@ public class JMXMetricTest extends TestCase {
     public void testGetValue_class() throws Exception {
         System.out.println("getValue class");
         StringBuffer res = new StringBuffer();
-        MetricParams params = MetricParams.createFromString("url=127.0.0.1\\:4711:type=class-count");
+        MetricParams params = MetricParams.createFromString("url=127.0.0.1\\:4711:gc-time");
         JMXMetric instance = new JMXMetric(params, new EmulatorJMXConnector());
         instance.getValue(res);
         System.out.println(res.toString());

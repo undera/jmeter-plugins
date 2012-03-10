@@ -17,7 +17,7 @@ public class JMXMetric extends AbstractPerfMonMetric {
 
     public JMXMetric(MetricParams params, JMXConnectorHelper jmxHelper) {
         super(null);
-        String url = "";
+        String url = "localhost:4711";
         String user = "";
         String pwd = "";
 
@@ -38,7 +38,7 @@ public class JMXMetric extends AbstractPerfMonMetric {
         MBeanServerConnection mBeanServerConn = jmxHelper.getServerConnection(url, user, pwd);
 
         try {
-            dataProvider = AbstractJMXDataProvider.getProvider(mBeanServerConn, params.params);
+            dataProvider = AbstractJMXDataProvider.getProvider(mBeanServerConn, params.type);
         } catch (Exception ex) {
             log.error("Failed to get MX Bean data provider", ex);
             throw new RuntimeException("Failed to get MX Bean data provider", ex);

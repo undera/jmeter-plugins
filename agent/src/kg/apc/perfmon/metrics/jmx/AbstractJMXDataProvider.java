@@ -26,21 +26,19 @@ abstract public class AbstractJMXDataProvider {
         beans = getMXBeans(mBeanServerConn);
     }
 
-    public static AbstractJMXDataProvider getProvider(MBeanServerConnection mBeanServerConn, String[] params) throws Exception {
-        for (int i = 0; i < params.length; i++) {
-            if (params[i].startsWith("type=")) {
-                String sType = MetricParams.getParamValue(params[i]);
-                if (sType.startsWith("gc-")) {
-                    return new GCDataProvider(mBeanServerConn, true);
-                } else if (sType.startsWith("class-")) {
-                    return new ClassesDataProvider(mBeanServerConn, false);
-                } else if (sType.startsWith("compile-")) {
-                    return new CompilerDataProvider(mBeanServerConn, true);
-                } else if (sType.startsWith("memorypool-")) {
-                    return new MemoryPoolDataProvider(mBeanServerConn, false);
-                } else if (sType.startsWith("memory-")) {
-                    return new MemoryDataProvider(mBeanServerConn, false);
-                }
+    public static AbstractJMXDataProvider getProvider(MBeanServerConnection mBeanServerConn, String type) throws Exception {
+        if (type.startsWith("type=")) {
+            String sType = MetricParams.getParamValue(type);
+            if (sType.startsWith("gc-")) {
+                return new GCDataProvider(mBeanServerConn, true);
+            } else if (sType.startsWith("class-")) {
+                return new ClassesDataProvider(mBeanServerConn, false);
+            } else if (sType.startsWith("compile-")) {
+                return new CompilerDataProvider(mBeanServerConn, true);
+            } else if (sType.startsWith("memorypool-")) {
+                return new MemoryPoolDataProvider(mBeanServerConn, false);
+            } else if (sType.startsWith("memory-")) {
+                return new MemoryDataProvider(mBeanServerConn, false);
             }
         }
         throw new IllegalArgumentException("Can't define JMX type");

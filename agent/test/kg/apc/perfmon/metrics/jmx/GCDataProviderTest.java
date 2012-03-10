@@ -67,7 +67,7 @@ public class GCDataProviderTest extends TestCase {
         }
 
         public long getCollectionTime() {
-            throw new UnsupportedOperationException("Not supported yet.");
+            return System.currentTimeMillis();
         }
 
         public String getName() {

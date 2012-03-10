@@ -40,7 +40,7 @@ public class AbstractJMXDataProviderTest extends TestCase {
     public void testGetProvider() throws Exception {
         System.out.println("getProvider");
         MBeanServerConnection mBeanServerConn = new EmulatorMBeanServerConnection();
-        String[] params = {"type=gc-count"};
+        String params = "type=gc-count";
         Class expResult = GCDataProvider.class;
         AbstractJMXDataProvider result = AbstractJMXDataProvider.getProvider(mBeanServerConn, params);
         assertEquals(expResult, result.getClass());

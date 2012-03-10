@@ -1,33 +1,15 @@
 package kg.apc.jmeter.vizualizers;
 // TODO: rows in settings should have color markers for better experience
-import java.util.List;
-import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.GraphicsEnvironment;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import kg.apc.jmeter.JMeterPluginsUtils;
+import java.util.List;
+import javax.swing.*;
 import kg.apc.charting.AbstractGraphRow;
+import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.gui.ComponentBorder;
 import kg.apc.jmeter.gui.DialogFactory;
@@ -172,6 +154,7 @@ public class PerfMonGui
         List<String> items = new LinkedList<String>(AgentConnector.metrics);
         // add metrics from new agent
         items.add("TCP");
+        items.add("JMX");
         items.add("EXEC");
         items.add("TAIL");
         metricTypesBox = new JComboBox(items.toArray());
@@ -180,12 +163,12 @@ public class PerfMonGui
         final JTextField wizEditor = new JTextField();
         wizEditor.setBorder(null);
         JButton wiz = new JButton("...");
-        if(!GraphicsEnvironment.isHeadless()) {
+        if (!GraphicsEnvironment.isHeadless()) {
             wiz.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     Frame parent = GuiPackage.getInstance().getMainFrame();
-                    String type = grid.getValueAt(grid.getSelectedRow(),2).toString();
+                    String type = grid.getValueAt(grid.getSelectedRow(), 2).toString();
 
                     JPerfmonParamsPanel dlgContent = new JPerfmonParamsPanel(type, wizEditor);
                     dlgContent.setMinWidth(400);

@@ -1,4 +1,3 @@
-//"metrics:jmx:url=localhost\:4711:type=memorypool-usage	jmx:url=localhost\:4711:type=memory-usage	jmx:url=localhost\:4711:type=class-count	jmx:url=localhost\:4711:type=gc-time	jmx:url=localhost\:4711:type=compile-time"
 package kg.apc.perfmon.metrics.jmx;
 
 import java.io.IOException;
@@ -27,19 +26,16 @@ abstract public class AbstractJMXDataProvider {
     }
 
     public static AbstractJMXDataProvider getProvider(MBeanServerConnection mBeanServerConn, String type) throws Exception {
-        if (type.startsWith("type=")) {
-            String sType = MetricParams.getParamValue(type);
-            if (sType.startsWith("gc-")) {
-                return new GCDataProvider(mBeanServerConn, true);
-            } else if (sType.startsWith("class-")) {
-                return new ClassesDataProvider(mBeanServerConn, false);
-            } else if (sType.startsWith("compile-")) {
-                return new CompilerDataProvider(mBeanServerConn, true);
-            } else if (sType.startsWith("memorypool-")) {
-                return new MemoryPoolDataProvider(mBeanServerConn, false);
-            } else if (sType.startsWith("memory-")) {
-                return new MemoryDataProvider(mBeanServerConn, false);
-            }
+        if (type.startsWith("gc-")) {
+            return new GCDataProvider(mBeanServerConn, true);
+        } else if (type.startsWith("class-")) {
+            return new ClassesDataProvider(mBeanServerConn, false);
+        } else if (type.startsWith("compile-")) {
+            return new CompilerDataProvider(mBeanServerConn, true);
+        } else if (type.startsWith("memorypool-")) {
+            return new MemoryPoolDataProvider(mBeanServerConn, false);
+        } else if (type.startsWith("memory-")) {
+            return new MemoryDataProvider(mBeanServerConn, false);
         }
         throw new IllegalArgumentException("Can't define JMX type");
     }

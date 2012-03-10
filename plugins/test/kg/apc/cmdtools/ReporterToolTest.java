@@ -81,7 +81,8 @@ public class ReporterToolTest {
         int expResult = 0;
         int result = instance.processParams(PluginsCMD.argsArrayToListIterator(args));
         assertEquals(expResult, result);
-        assertTrue(65 == f.length() || 68 == f.length()); // 65 at linux, 68 at windows because of \r\n
+        System.out.println(f.length());
+        assertTrue(66 == f.length() || 68 == f.length()); // 66 at linux, 68 at windows because of \r\n
     }
 
     @Test

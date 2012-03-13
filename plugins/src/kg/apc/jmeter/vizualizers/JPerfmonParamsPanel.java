@@ -159,16 +159,13 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
     private static String[] jmxMetricsPrimary = {
         "gc-time", "Time spent in garbage collection, milliseconds",
         "memory-usage", "Heap memory used by VM, bytes",
+        "memory-committed", "Heap memory committed by VM, bytes",
         "memorypool-usage", "Heap memory pool usage, bytes",
-        "class-count", "Loaded class count in VM"
+        "memorypool-committed", "Heap memory pool committed size, bytes",
+        "class-count", "Loaded class count in VM",
+        "compile-time", "Time spent in compilation, milliseconds"
     };
     
-    private static String[] jmxMetricsAdditional = {
-        "memory-committed", "Heap memory committed by VM, bytes",
-        "compile-time", "Time spent in compilation, milliseconds",
-        "memorypool-committed", "Heap memory pool committed size, bytes"
-    };
-
     /** Creates new form JPerfmonParamsDialog */
     public JPerfmonParamsPanel(String type, JTextField parentField) {
         this.parent = parentField;
@@ -280,6 +277,26 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
                 i++;
             }
         }
+        //check jmx
+        if(METRIC_JMX.equals(type)) {
+            int i=0;
+            while(i<elements.length) {
+                if(elements[i].startsWith("url=")) {
+                    String[] tmp = elements[i].substring(4).split("\\\\:");
+                    jTextFieldJmxHost.setText(tmp[0]);
+                    if(tmp.length > 1) {
+                        jTextFieldJmxPort.setText(tmp[1]);
+                    }
+                }
+                if(elements[i].startsWith("user=")) {
+                    jTextFieldJmxUser.setText(elements[i].substring(5));
+                }
+                if(elements[i].startsWith("password=")) {
+                    jTextFieldJmxPassword.setText(elements[i].substring(9));
+                }
+                i++;
+            }
+        }
 
         //set metric selected, exec or tail command
         if(METRIC_EXEC.equals(type)) {
@@ -336,13 +353,13 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
     private void initRules() {
         rules.put(METRIC_CPU, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_PROCESS_SCOPE | OPTION_CPU_CORE_SCOPE);
         rules.put(METRIC_MEM, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_PROCESS_SCOPE);
-        rules.put(METRIC_SWAP, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC);
+        rules.put(METRIC_SWAP, OPTION_PRIMARY_METRIC);
         rules.put(METRIC_DISKIO, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_FILESYSTEM_SCOPE);
         rules.put(METRIC_NETIO, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_NET_INTERFACE_SCOPE);
         rules.put(METRIC_TCP, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC);
         rules.put(METRIC_EXEC, OPTION_EXEC);
         rules.put(METRIC_TAIL, OPTION_TAIL);
-        rules.put(METRIC_JMX, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_JMX);
+        rules.put(METRIC_JMX, OPTION_PRIMARY_METRIC | OPTION_JMX);
     }
 
     private void fillMetrics(String[] metrics, JPanel panel) {
@@ -387,11 +404,19 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
             additionalMetrics = null;
         } else if (type.equals(METRIC_JMX)) {
             primaryMetrics = jmxMetricsPrimary;
-            additionalMetrics = jmxMetricsAdditional;
+            additionalMetrics = null;
         }
 
         //show/hide relevent panels
         if (rules.containsKey(metricType)) {
+            //handle metric layouts, 2 collumn if one panel only
+            if((rules.get(metricType) & OPTION_PRIMARY_METRIC) != 0
+                && (rules.get(metricType) & OPTION_ADDITIONAL_METRIC) == 0) {
+                jPanelPrimaryMetrics.setLayout(new java.awt.GridLayout(0, 2));
+            } else {
+                jPanelPrimaryMetrics.setLayout(new java.awt.GridLayout(0, 1));
+            }
+            
             jPanelScope.setVisible((rules.get(metricType) & OPTION_PROCESS_SCOPE) != 0);
             jPanelPID.setVisible((rules.get(metricType) & OPTION_PROCESS_SCOPE) != 0);
             if ((rules.get(metricType) & OPTION_PRIMARY_METRIC) != 0) {
@@ -451,6 +476,35 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         return ret;
     }
 
+    private String getJmxParamsString() {
+        StringBuilder ret = new StringBuilder("");
+
+        String host = jTextFieldJmxHost.getText().trim();
+        int port = getIntValue(jTextFieldJmxPort.getText(), -1);
+
+        if(port != -1 && host.length() == 0) {
+            host = "localhost";
+        }
+
+        String user = jTextFieldJmxUser.getText().trim();
+        String password = jTextFieldJmxPassword.getText().trim();
+
+        if(host.length()>0) {
+            String url = "url=" + host;
+            if(port != -1) {
+               url = url + "\\:" + port;
+            }
+            addStringItem(ret, url);
+        }
+
+        if(user.length() != 0 && password.length() != 0) {
+            addStringItem(ret, "user=" + user);
+            addStringItem(ret, "password=" + password);
+        }
+
+        return ret.toString();
+    }
+
     private void addStringItem(StringBuilder buf, String item) {
         if(item != null && item.length()>0) {
             if(buf.length() > 0) buf.append(separator);
@@ -480,6 +534,8 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
             }
         } else if (type.equals(METRIC_TCP)) {
         } else if (type.equals(METRIC_SWAP)) {
+        } else if (type.equals(METRIC_JMX)) {
+            addStringItem(ret, getJmxParamsString());
         }
 
         //add the metric label
@@ -944,48 +1000,62 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanelJmxParams.add(jLabel3, gridBagConstraints);
 
-        jTextFieldJmxHost.setText("jTextField1");
+        jTextFieldJmxHost.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanelJmxParams.add(jTextFieldJmxHost, gridBagConstraints);
 
         jLabel4.setText("Port:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanelJmxParams.add(jLabel4, gridBagConstraints);
 
-        jTextFieldJmxPort.setText("jTextField1");
+        jTextFieldJmxPort.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanelJmxParams.add(jTextFieldJmxPort, gridBagConstraints);
 
         jLabel5.setText("User:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanelJmxParams.add(jLabel5, gridBagConstraints);
 
-        jTextFieldJmxUser.setText("jTextField1");
+        jTextFieldJmxUser.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanelJmxParams.add(jTextFieldJmxUser, gridBagConstraints);
 
         jLabel6.setText("Password:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanelJmxParams.add(jLabel6, gridBagConstraints);
 
-        jTextFieldJmxPassword.setText("jTextField1");
+        jTextFieldJmxPassword.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanelJmxParams.add(jTextFieldJmxPassword, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();

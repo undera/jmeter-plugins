@@ -993,7 +993,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         gridBagConstraints.weighty = 1.0;
         add(jPanelStretch, gridBagConstraints);
 
-        jPanelJmxParams.setBorder(javax.swing.BorderFactory.createTitledBorder("JMX Connection Parameters (if empty, local to agent)"));
+        jPanelJmxParams.setBorder(javax.swing.BorderFactory.createTitledBorder("JMX Connection Parameters (if empty, localhost:4711)"));
         jPanelJmxParams.setLayout(new java.awt.GridBagLayout());
 
         jLabel3.setText("Host:");

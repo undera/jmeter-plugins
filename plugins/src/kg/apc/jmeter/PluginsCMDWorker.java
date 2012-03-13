@@ -11,7 +11,6 @@ import org.apache.jmeter.JMeter;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
-import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 
 /**
@@ -125,7 +124,11 @@ public class PluginsCMDWorker {
             } catch (IOException e) {
                 log.warn("Error loading system property file: " + sysProp, e);
             } finally {
-                JOrphanUtils.closeQuietly(fis);
+                try {
+                    fis.close();
+                } catch (IOException ex) {
+                    log.warn("There was problem closing file stream", ex);
+                }
             }
         }
     }

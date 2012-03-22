@@ -633,6 +633,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         jTextFieldJmxUser = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTextFieldJmxPassword = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -993,20 +994,20 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         gridBagConstraints.weighty = 1.0;
         add(jPanelStretch, gridBagConstraints);
 
-        jPanelJmxParams.setBorder(javax.swing.BorderFactory.createTitledBorder("JMX Connection Parameters (if empty, localhost:4711)"));
+        jPanelJmxParams.setBorder(javax.swing.BorderFactory.createTitledBorder("JMX Connection Parameters"));
         jPanelJmxParams.setLayout(new java.awt.GridBagLayout());
 
         jLabel3.setText("Host:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanelJmxParams.add(jLabel3, gridBagConstraints);
 
         jTextFieldJmxHost.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -1015,14 +1016,14 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         jLabel4.setText("Port:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanelJmxParams.add(jLabel4, gridBagConstraints);
 
         jTextFieldJmxPort.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
@@ -1031,14 +1032,14 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         jLabel5.setText("User:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanelJmxParams.add(jLabel5, gridBagConstraints);
 
         jTextFieldJmxUser.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanelJmxParams.add(jTextFieldJmxUser, gridBagConstraints);
@@ -1046,17 +1047,27 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         jLabel6.setText("Password:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         jPanelJmxParams.add(jLabel6, gridBagConstraints);
 
         jTextFieldJmxPassword.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanelJmxParams.add(jTextFieldJmxPassword, gridBagConstraints);
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
+        jLabel7.setText("If no host/port specified, local to agent on port 4711");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 2, 0);
+        jPanelJmxParams.add(jLabel7, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1131,6 +1142,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelExec;
     private javax.swing.JLabel jLabelFileSystem;
     private javax.swing.JLabel jLabelMetricLabel;

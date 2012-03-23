@@ -1,6 +1,5 @@
 package kg.apc.jmeter.samplers;
 
-import kg.apc.io.SocketChannelWithTimeouts;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,8 +11,10 @@ import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.AbstractSelectableChannel;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import kg.apc.io.SocketChannelWithTimeouts;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -33,7 +34,9 @@ public class HTTPRawSampler extends AbstractIPSampler {
     protected static final Logger log = LoggingManager.getLoggerForClass();
     private static final Pattern anyContent = Pattern.compile(".+", Pattern.DOTALL);
     private SocketChannel savedSock;
-
+    private static final int fileSendingChunk=JMeterUtils.getPropDefault("kg.apc.jmeter.samplers.FileReadChunkSize", 1024 * 4);
+    
+    
     public HTTPRawSampler() {
         super();
     }
@@ -54,7 +57,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
         recvBuf.clear();
 
         boolean firstPack = true;
-        int cnt = 0;
+        int cnt;
         int responseSize = 0;
 
         if (log.isDebugEnabled()) {
@@ -238,7 +241,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
         FileInputStream is = new FileInputStream(new File(filename));
         FileChannel source = is.getChannel();
 
-        ByteBuffer sendBuf = ByteBuffer.allocateDirect(1024);// is it efficient enough?
+        ByteBuffer sendBuf = ByteBuffer.allocateDirect(fileSendingChunk);
         while (source.read(sendBuf) > 0) {
             sendBuf.flip();
             if (log.isDebugEnabled()) {

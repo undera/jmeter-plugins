@@ -1,13 +1,6 @@
 package kg.apc.emulators;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.util.Locale;
 import java.util.Random;
 import java.util.logging.Level;

@@ -39,6 +39,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
     
     public HTTPRawSampler() {
         super();
+        log.debug("File reading chunk size: "+fileSendingChunk);
     }
 
     @Override

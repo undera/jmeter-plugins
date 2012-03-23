@@ -92,18 +92,13 @@ public class LockFileGui extends AbstractConfigGui {
         editConstraints.weightx = 1.0;
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+
         addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Lock file name: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 0, tfFileName = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Also check filemask: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 1, tfFileMask = new JTextField(20));
-
-        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-
-        editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
-        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 2);
-
-        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

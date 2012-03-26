@@ -20,9 +20,7 @@ import org.apache.log.Logger;
 public class LockFileGui extends AbstractConfigGui {
 
     public static final String WIKIPAGE = "LockFile";
-    
     public static Logger log = LoggingManager.getLoggerForClass();
-
     private JTextField tfFileName;
     private JTextField tfFileMask;
 

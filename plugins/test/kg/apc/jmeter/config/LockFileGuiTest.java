@@ -1,40 +1,31 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.config;
 
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
 
 /**
  *
  * @author direvius
  */
 public class LockFileGuiTest {
-    
+
     public LockFileGuiTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-      TestJMeterUtils.createJmeterEnv();
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -47,7 +38,7 @@ public class LockFileGuiTest {
         System.out.println("getStaticLabel");
         LockFileGui instance = new LockFileGui();
         String result = instance.getStaticLabel();
-        assert result.length()>0;
+        assert result.length() > 0;
     }
 
     /**
@@ -58,7 +49,7 @@ public class LockFileGuiTest {
         System.out.println("getLabelResource");
         LockFileGui instance = new LockFileGui();
         String result = instance.getLabelResource();
-        assert result.length()>0;
+        assert result.length() > 0;
     }
 
     /**

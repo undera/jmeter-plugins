@@ -1,34 +1,24 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.config;
 
-import org.apache.jorphan.util.JMeterStopTestNowException;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.jorphan.util.JMeterStopTestNowException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import org.junit.*;
 
 /**
  *
  * @author direvius
  */
 public class LockFileTest {
-    
+
     private LockFile testInstance;
-    
+
     public LockFileTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
@@ -36,14 +26,14 @@ public class LockFileTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
         testInstance = new LockFile();
         testInstance.setFilename("test.lock");
         testInstance.setFilemask("testmask*.lock");
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -59,12 +49,12 @@ public class LockFileTest {
         assert (f.exists());
         f.delete();
     }
-    
+
     /**
      * Test of testStarted method, of class LockFile. Unhappy scenario
      */
     @Test
-    public void testTestStartedUnhappy(){
+    public void testTestStartedUnhappy() {
         System.out.println("testStarted Unhappy");
         testInstance.testStarted();
         File f = new File("test.lock");
@@ -74,20 +64,20 @@ public class LockFileTest {
             fail("Could not create lock file by hands");
         }
         boolean thrown = false;
-        try{
+        try {
             testInstance.testStarted();
-        }catch(JMeterStopTestNowException e){
+        } catch (JMeterStopTestNowException e) {
             thrown = true;
         }
         assert thrown;
         f.delete();
     }
-    
+
     /**
      * Test of testStarted method, of class LockFile. Unhappy by mask scenario
      */
     @Test
-    public void testTestStartedUnhappyMask(){
+    public void testTestStartedUnhappyMask() {
         System.out.println("testStarted Unhappy by mask");
         testInstance.testStarted();
         File f = new File("testmask123.lock");
@@ -97,9 +87,9 @@ public class LockFileTest {
             fail("Could not create lock file by hands");
         }
         boolean thrown = false;
-        try{
+        try {
             testInstance.testStarted();
-        }catch(JMeterStopTestNowException e){
+        } catch (JMeterStopTestNowException e) {
             thrown = true;
         }
         assert thrown;
@@ -144,7 +134,6 @@ public class LockFileTest {
         instance.testIterationStart(lie);
     }
 
-
     /**
      * Test of filename property, of class LockFile.
      */
@@ -156,7 +145,6 @@ public class LockFileTest {
         instance.setFilename(filename);
         assertEquals(filename, instance.getFilename());
     }
-
 
     /**
      * Test of filemask property, of class LockFile.

@@ -821,6 +821,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         jPanelCpuCore.setLayout(new java.awt.GridBagLayout());
 
         buttonGroupCpuCores.add(jRadioCpuAllCores);
+        jRadioCpuAllCores.setSelected(true);
         jRadioCpuAllCores.setText("All Cores (default)");
         jRadioCpuAllCores.setActionCommand("all");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -963,7 +964,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         jPanelMetricLabel.setBorder(javax.swing.BorderFactory.createTitledBorder("Metric Label"));
         jPanelMetricLabel.setLayout(new java.awt.GridBagLayout());
 
-        jLabelMetricLabel.setText("Chart label name (if empty, will be Params):");
+        jLabelMetricLabel.setText("Chart label name (if empty, will be 'Metric parameter'):");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;

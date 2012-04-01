@@ -335,6 +335,7 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="buttonGroupCpuCores"/>
             </Property>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="All Cores (default)"/>
             <Property name="actionCommand" type="java.lang.String" value="all"/>
           </Properties>
@@ -544,7 +545,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelMetricLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Chart label name (if empty, will be Params):"/>
+            <Property name="text" type="java.lang.String" value="Chart label name (if empty, will be &apos;Metric parameter&apos;):"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

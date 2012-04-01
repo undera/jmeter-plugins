@@ -2,19 +2,19 @@
 // TODO: https://groups.google.com/forum/#!topic/jmeter-plugins/qflK3oCjv4c
 package kg.apc.jmeter.graphs;
 
-import kg.apc.jmeter.vizualizers.CompositeResultCollector;
-import kg.apc.jmeter.vizualizers.JSettingsPanel;
-import kg.apc.charting.ColorsDispatcher;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
 import javax.swing.JPanel;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
+import kg.apc.charting.ColorsDispatcher;
 import kg.apc.charting.GraphPanelChart;
+import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.vizualizers.CompositeResultCollector;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
+import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
 import org.apache.jmeter.gui.tree.JMeterTreeNode;
@@ -69,8 +69,6 @@ public abstract class AbstractGraphPanelVisualizer
     private static final long REPAINT_INTERVAL = 500;
     public static final String INTERVAL_PROPERTY = "interval_grouping";
     public static final String GRAPH_AGGREGATED = "graph_aggregated";
-    public static final String INCLUDE_SAMPLE_LABELS = "include_sample_labels";
-    public static final String EXCLUDE_SAMPLE_LABELS = "exclude_sample_labels";
     private JSettingsPanel settingsPanel = null;
 
     /**
@@ -101,10 +99,11 @@ public abstract class AbstractGraphPanelVisualizer
     }
 
     /**
-     * Provide a JPanel with BorderLayout, holder of the GraphPanelChart,
-     * which will be placed in the BorderLayout.CENTER. It can be overridden
-     * to create custom Visualizer layout. Note the JMeter file panel can be
-     * retrieved with getFilePanel() and moved in.
+     * Provide a JPanel with BorderLayout, holder of the GraphPanelChart, which
+     * will be placed in the BorderLayout.CENTER. It can be overridden to create
+     * custom Visualizer layout. Note the JMeter file panel can be retrieved
+     * with getFilePanel() and moved in.
+     *
      * @return a JPanel with a BorderLayout
      */
     protected JPanel getGraphPanelContainer() {
@@ -132,7 +131,6 @@ public abstract class AbstractGraphPanelVisualizer
      * Basically, all what is calling getChartSettings()
      */
     protected void setExtraChartSettings() {
-       
     }
 
     /**
@@ -170,7 +168,8 @@ public abstract class AbstractGraphPanelVisualizer
 
     /**
      *
-     * @retur     */
+     * @retur
+     */
     @Override
     public Image getImage() {
         return graphPanel.getGraphImage();
@@ -193,7 +192,7 @@ public abstract class AbstractGraphPanelVisualizer
 
     @Override
     public TestElement createTestElement() {
-        if (collector == null) {
+        if (collector == null || !(collector instanceof CorrectedResultCollector)) {
             collector = new CorrectedResultCollector();
         }
         return super.createTestElement();
@@ -204,8 +203,8 @@ public abstract class AbstractGraphPanelVisualizer
         super.modifyTestElement(c);
         c.setProperty(new LongProperty(INTERVAL_PROPERTY, interval));
         c.setProperty(new BooleanProperty(GRAPH_AGGREGATED, isAggregate));
-        c.setProperty(new StringProperty(INCLUDE_SAMPLE_LABELS, graphPanel.getRowSelectorPanel().getIncludeSampleLabels()));
-        c.setProperty(new StringProperty(EXCLUDE_SAMPLE_LABELS, graphPanel.getRowSelectorPanel().getExcludeSampleLabels()));
+        c.setProperty(new StringProperty(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS, graphPanel.getRowSelectorPanel().getIncludeSampleLabels()));
+        c.setProperty(new StringProperty(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS, graphPanel.getRowSelectorPanel().getExcludeSampleLabels()));
     }
 
     @Override
@@ -216,8 +215,8 @@ public abstract class AbstractGraphPanelVisualizer
         if (intervalProp > 0) {
             setGranulation(intervalProp);
         }
-        graphPanel.getRowSelectorPanel().setIncludeSampleLabels(el.getPropertyAsString(INCLUDE_SAMPLE_LABELS));
-        graphPanel.getRowSelectorPanel().setExcludeSampleLabels(el.getPropertyAsString(EXCLUDE_SAMPLE_LABELS));
+        graphPanel.getRowSelectorPanel().setIncludeSampleLabels(el.getPropertyAsString(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS));
+        graphPanel.getRowSelectorPanel().setExcludeSampleLabels(el.getPropertyAsString(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS));
 
         switchModel(aggregatedProp);
     }
@@ -296,7 +295,7 @@ public abstract class AbstractGraphPanelVisualizer
             boolean showInLegend,
             Color color,
             boolean canCompose) {
-        AbstractGraphRow row = null;
+        AbstractGraphRow row;
         if (!model.containsKey(label)) {
             row = AbstractGraphRow.instantiateNewRow(rowType);
             row.setLabel(label);
@@ -335,7 +334,7 @@ public abstract class AbstractGraphPanelVisualizer
             boolean canCompose) {
         return getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, null, canCompose);
     }
-    
+
     protected boolean isFromTransactionControler(SampleResult res) {
         if (res.getResponseMessage() != null) {
             // FIXME: isn't the odd way? there is isTransactionSampleEvent in SampleEvent

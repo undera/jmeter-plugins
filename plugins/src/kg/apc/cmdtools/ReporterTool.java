@@ -33,7 +33,8 @@ public class ReporterTool extends AbstractCMDTool {
                 + "--limit-rows <num of points> " // limit number of points in row ||
                 + "--force-y <limit> " // force Y axis limit ||
                 + "--hide-low-counts <limit> " // hide points with sample count below limit ||
-                // TODO: add rows enabling/disabling function
+                + "--include-labels <labels list> " // filter samples
+                + "--exclude-labels <labels list> " // filter samples
                 + "]");
     }
 
@@ -164,6 +165,20 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 worker.setGranulation(Integer.parseInt((String) args.next()));
+            } else if (nextArg.equalsIgnoreCase("--include-labels")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing granulation specification");
+                }
+
+                worker.setIncludeLabels((String) args.next());
+            } else if (nextArg.equalsIgnoreCase("--exclude-labels")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing granulation specification");
+                }
+
+                worker.setExcludeLabels((String) args.next());
             } else {
                 throw new UnsupportedOperationException("Unrecognized option: " + nextArg);
             }

@@ -157,6 +157,22 @@ public class PluginsCMDWorkerTest {
         assertEquals(expResult, result);
     }
 
+    @Test
+    public void testDoJob_csv_filtered() throws IOException {
+        System.out.println("doJob");
+        File csvfile = File.createTempFile("test", ".csv");
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setInputFile(basedir + "/short.jtl");
+        instance.setOutputCSVFile(csvfile.getAbsolutePath());
+        instance.setPluginType("ResponseTimesDistribution");
+        instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);
+        instance.setIncludeLabels("test");
+        int result = instance.doJob();
+        int expResult = 0;
+        assertEquals(expResult, result);
+        // TODO: add windows check here, like above
+        assertEquals(21, csvfile.length()); 
+    }
     /**
      * Test of setGraphWidth method, of class PluginsCMDWorker.
      */

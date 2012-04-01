@@ -7,8 +7,8 @@ import java.util.Properties;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
+import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import org.apache.jmeter.JMeter;
-import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -38,6 +38,8 @@ public class PluginsCMDWorker {
     private int granulation = -1;
     private int relativeTimes = -1;
     private int gradient = -1;
+    private String includeLabels = "";
+    private String excludeLabels = "";
 
     public PluginsCMDWorker() {
         prepareJMeterEnv();
@@ -187,15 +189,20 @@ public class PluginsCMDWorker {
 
         setOptions(gui);
 
-        ResultCollector rc = new ResultCollector();
+        CorrectedResultCollector rc = new CorrectedResultCollector();
         log.debug("Using JTL file: " + inputFile);
+        rc.setExcludeLabels(excludeLabels);
+        rc.setIncludeLabels(includeLabels);
         rc.setFilename(inputFile);
         rc.setListener(gui);
+        rc.testStarted();
         rc.loadExistingFile();
+        rc.testEnded();
 
         // to handle issue 64 and since it must be cheap - set options again
         setOptions(gui);
 
+        
         if ((exportMode & EXPORT_PNG) == EXPORT_PNG) {
             try {
                 gui.getGraphPanelChart().saveGraphToPNG(new File(outputPNG), graphWidth, graphHeight);
@@ -307,5 +314,13 @@ public class PluginsCMDWorker {
 
     public void setGradient(int logicValue) {
         gradient = logicValue;
+    }
+
+    public void setIncludeLabels(String string) {
+        includeLabels = string;
+    }
+
+    public void setExcludeLabels(String string) {
+        excludeLabels = string;
     }
 }

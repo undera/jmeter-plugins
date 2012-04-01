@@ -1,6 +1,5 @@
 package kg.apc.jmeter.graphs;
 
-import kg.apc.jmeter.graphs.JRowsSelectorPanel;
 import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -13,7 +12,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author z000205
+ * @author Stephane Hoblingre
  */
 public class JRowsSelectorPanelTest {
 
@@ -86,4 +85,49 @@ public class JRowsSelectorPanelTest {
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of getIncludeSampleLabels method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testGetIncludeSampleLabels() {
+        System.out.println("getIncludeSampleLabels");
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        String expResult = "";
+        String result = instance.getIncludeSampleLabels();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setIncludeSampleLabels method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testSetIncludeSampleLabels() {
+        System.out.println("setIncludeSampleLabels");
+        String str = "label1;label2";
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        instance.setIncludeSampleLabels(str);
+    }
+
+    /**
+     * Test of getExcludeSampleLabels method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testGetExcludeSampleLabels() {
+        System.out.println("getExcludeSampleLabels");
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        String expResult = "";
+        String result = instance.getExcludeSampleLabels();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setExcludeSampleLabels method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testSetExcludeSampleLabels() {
+        System.out.println("setExcludeSampleLabels");
+        String str = "label1;label2";
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        instance.setExcludeSampleLabels(str);
+    }
 }

@@ -23,6 +23,7 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.BooleanProperty;
 import org.apache.jmeter.testelement.property.LongProperty;
+import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.GraphListener;
 import org.apache.jmeter.visualizers.ImageVisualizer;
@@ -68,6 +69,8 @@ public abstract class AbstractGraphPanelVisualizer
     private static final long REPAINT_INTERVAL = 500;
     public static final String INTERVAL_PROPERTY = "interval_grouping";
     public static final String GRAPH_AGGREGATED = "graph_aggregated";
+    public static final String INCLUDE_SAMPLE_LABELS = "include_sample_labels";
+    public static final String EXCLUDE_SAMPLE_LABELS = "exclude_sample_labels";
     private JSettingsPanel settingsPanel = null;
 
     /**
@@ -201,6 +204,8 @@ public abstract class AbstractGraphPanelVisualizer
         super.modifyTestElement(c);
         c.setProperty(new LongProperty(INTERVAL_PROPERTY, interval));
         c.setProperty(new BooleanProperty(GRAPH_AGGREGATED, isAggregate));
+        c.setProperty(new StringProperty(INCLUDE_SAMPLE_LABELS, graphPanel.getRowSelectorPanel().getIncludeSampleLabels()));
+        c.setProperty(new StringProperty(EXCLUDE_SAMPLE_LABELS, graphPanel.getRowSelectorPanel().getExcludeSampleLabels()));
     }
 
     @Override
@@ -211,6 +216,9 @@ public abstract class AbstractGraphPanelVisualizer
         if (intervalProp > 0) {
             setGranulation(intervalProp);
         }
+        graphPanel.getRowSelectorPanel().setIncludeSampleLabels(el.getPropertyAsString(INCLUDE_SAMPLE_LABELS));
+        graphPanel.getRowSelectorPanel().setExcludeSampleLabels(el.getPropertyAsString(EXCLUDE_SAMPLE_LABELS));
+
         switchModel(aggregatedProp);
     }
 

@@ -200,4 +200,14 @@ public class GraphPanelTest
       String toolTipText = "Tooltip test";
       instance.replaceRowTab(tabLabel, object, toolTipText);
    }
+
+    /**
+     * Test of getRowSelectorPanel method, of class GraphPanel.
+     */
+    @Test
+    public void testGetRowSelectorPanel() {
+        System.out.println("getRowSelectorPanel");
+        JRowsSelectorPanel result = instance.getRowSelectorPanel();
+        assertNotNull(result);
+    }
 }

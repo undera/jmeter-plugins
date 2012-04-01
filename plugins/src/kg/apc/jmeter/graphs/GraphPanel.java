@@ -139,6 +139,10 @@ public class GraphPanel
         return graphPanelObject;
     }
 
+    public JRowsSelectorPanel getRowSelectorPanel() {
+        return rowsTab;
+    }
+
     /**
      * check if the row bellows to the selected model and add it to the table
      * @param row

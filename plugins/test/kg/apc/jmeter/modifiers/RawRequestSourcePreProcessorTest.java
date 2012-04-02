@@ -1,15 +1,11 @@
 package kg.apc.jmeter.modifiers;
 
-import org.apache.jmeter.threads.JMeterVariables;
-import org.apache.jmeter.threads.JMeterContextService;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.RuntimeEOFException;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jmeter.threads.JMeterVariables;
 import static org.junit.Assert.*;
+import org.junit.*;
 
 /**
  *
@@ -227,5 +223,19 @@ public class RawRequestSourcePreProcessorTest {
             //System.out.println(n+" "+result);
             assertTrue(result.length() > 0);
         }
+    }
+
+    @Test
+    public void testProcess_bug2() {
+        System.out.println("bug with binary data");
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.setFileName(basedir + "/protobuf.one.ammo");
+        instance.setRewindOnEOF(false);
+        instance.process();
+        String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
+        assertEquals(3130, result.length());
+        assertEquals(12, result.charAt(1));
+        assertEquals(0, result.charAt(2));
+        assertEquals(8, result.charAt(4));
     }
 }

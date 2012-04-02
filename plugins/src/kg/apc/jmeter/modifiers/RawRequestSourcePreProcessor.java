@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 import kg.apc.jmeter.EndOfFileException;
 import kg.apc.jmeter.RuntimeEOFException;
 import org.apache.commons.io.IOExceptionWithCause;
@@ -34,6 +35,7 @@ public class RawRequestSourcePreProcessor
     private FileChannel file;
     private final ByteBuffer metaBuf = ByteBuffer.allocateDirect(1024);
     private final ByteBuffer oneByte = ByteBuffer.allocateDirect(1);
+    private final Charset binaryCharset = Charset.forName("ASCII");
 
     public RawRequestSourcePreProcessor() {
         super();
@@ -105,7 +107,7 @@ public class RawRequestSourcePreProcessor
             log.debug("Chunk : " + new String(dst));
         }
 
-        return new String(dst);
+        return new String(dst, binaryCharset);
     }
 
     private int getNextChunkSize() throws IOException {

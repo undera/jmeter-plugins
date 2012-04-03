@@ -1,13 +1,13 @@
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import java.awt.Color;
 import java.util.Iterator;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphPanelChartElement;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.elements.GraphPanelChartSimpleElement;
 import kg.apc.charting.rows.GraphRowSimple;
+import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -18,8 +18,8 @@ import org.apache.log.Logger;
  */
 public class ThreadsStateOverTimeGui
         extends AbstractOverTimeVisualizer {
-    private static final Logger log = LoggingManager.getLoggerForClass();
 
+    private static final Logger log = LoggingManager.getLoggerForClass();
     private long lastAggUpdateTime = 0;
 
     /**
@@ -30,10 +30,10 @@ public class ThreadsStateOverTimeGui
         graphPanel.getGraphObject().setYAxisLabel("Number of active threads");
     }
 
-   @Override
+    @Override
     protected void setExtraChartSettings() {
-       graphPanel.getGraphObject().getChartSettings().enableDrawFinalZeroingLines();
-   }
+        graphPanel.getGraphObject().getChartSettings().enableDrawFinalZeroingLines();
+    }
 
     private double getAllThreadCount(long time) {
         double ret = 0;
@@ -121,6 +121,9 @@ public class ThreadsStateOverTimeGui
 
     @Override
     public void add(SampleResult res) {
+        if (!isSampleIncluded(res)) {
+            return;
+        }
         super.add(res);
         String threadName = res.getThreadName();
         // SUBString to extract thread group name from thread name

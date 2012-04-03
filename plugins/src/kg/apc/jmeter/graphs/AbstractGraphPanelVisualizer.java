@@ -5,7 +5,9 @@ package kg.apc.jmeter.graphs;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ConcurrentSkipListMap;
 import javax.swing.JPanel;
 import kg.apc.charting.AbstractGraphRow;
@@ -70,6 +72,9 @@ public abstract class AbstractGraphPanelVisualizer
     public static final String INTERVAL_PROPERTY = "interval_grouping";
     public static final String GRAPH_AGGREGATED = "graph_aggregated";
     private JSettingsPanel settingsPanel = null;
+    //
+    private List<String> includes = new ArrayList<String>(0);
+    private List<String> excludes = new ArrayList<String>(0);
 
     /**
      *
@@ -217,6 +222,10 @@ public abstract class AbstractGraphPanelVisualizer
         }
         graphPanel.getRowSelectorPanel().setIncludeSampleLabels(el.getPropertyAsString(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS));
         graphPanel.getRowSelectorPanel().setExcludeSampleLabels(el.getPropertyAsString(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS));
+
+        if (el instanceof CorrectedResultCollector) {
+            setUpFiltering((CorrectedResultCollector) el);
+        }
 
         switchModel(aggregatedProp);
     }
@@ -380,5 +389,21 @@ public abstract class AbstractGraphPanelVisualizer
         if (cfgUseRelativeTime != null) {
             graph.getChartSettings().setUseRelativeTime("true".equalsIgnoreCase(cfgUseRelativeTime.trim()));
         }
+    }
+
+    protected boolean isSampleIncluded(SampleResult res) {
+        if (!includes.isEmpty() && !includes.contains(res.getSampleLabel())) {
+            return false;
+        }
+
+        if (!excludes.isEmpty() && excludes.contains(res.getSampleLabel())) {
+            return false;
+        }
+        return true;
+    }
+
+    public void setUpFiltering(CorrectedResultCollector rc) {
+        includes = rc.getList(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS);
+        excludes = rc.getList(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS);
     }
 }

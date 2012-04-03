@@ -190,11 +190,14 @@ public class PluginsCMDWorker {
         setOptions(gui);
 
         CorrectedResultCollector rc = new CorrectedResultCollector();
-        log.debug("Using JTL file: " + inputFile);
         rc.setExcludeLabels(excludeLabels);
         rc.setIncludeLabels(includeLabels);
+        log.debug("Using JTL file: " + inputFile);
         rc.setFilename(inputFile);
         rc.setListener(gui);
+
+        gui.configure(rc);
+
         rc.testStarted();
         rc.loadExistingFile();
         rc.testEnded();

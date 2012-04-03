@@ -1,6 +1,5 @@
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
@@ -11,16 +10,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
 import kg.apc.charting.GraphPanelChart;
+import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import org.apache.jmeter.gui.util.HeaderAsPropertyRenderer;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.save.CSVSaveService;
@@ -38,9 +33,8 @@ import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 
 /**
- * OMG, I had to copy full contents of StatVisualizer
- * just to make its data visible to JMeterPluginsCMD
- * This class is just invisible in menu;
+ * OMG, I had to copy full contents of StatVisualizer just to make its data
+ * visible to JMeterPluginsCMD This class is just invisible in menu;
  *
  * @see StatVisualizer
  * @author undera
@@ -127,7 +121,11 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
 
     @Override
     public void add(SampleResult res) {
-        SamplingStatCalculator row = null;
+        if (!isSampleIncluded(res)) {
+            return;
+        }
+
+        SamplingStatCalculator row;
         final String sampleLabel = res.getSampleLabel(useGroupName.isSelected());
         synchronized (tableRows) {
             row = tableRows.get(sampleLabel);

@@ -5,12 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.util.JMeterUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import org.junit.*;
 
 /**
  *
@@ -121,8 +118,8 @@ public class PluginsCMDWorkerTest {
         int expResult = 0;
         assertEquals(expResult, result);
         System.out.println(pngfile.length());
-        assertTrue(16000<pngfile.length()); // win/linux different
         assertTrue(73==csvfile.length() || 77==csvfile.length()); // win/linux diff
+        assertTrue(16000<pngfile.length()); // win/linux different
     }
 
     /**
@@ -159,7 +156,7 @@ public class PluginsCMDWorkerTest {
 
     @Test
     public void testDoJob_csv_filtered() throws IOException {
-        System.out.println("doJob");
+        System.out.println("doJob fil1");
         File csvfile = File.createTempFile("test", ".csv");
         //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir + "/short.jtl");

@@ -1,11 +1,11 @@
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.graphs.AbstractVsThreadVisualizer;
+import java.text.DecimalFormatSymbols;
+import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.rows.GraphRowAverages;
 import kg.apc.charting.rows.GraphRowOverallAverages;
-import kg.apc.charting.AbstractGraphRow;
-import java.text.DecimalFormatSymbols;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.graphs.AbstractVsThreadVisualizer;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.gui.RateRenderer;
 
@@ -42,6 +42,10 @@ public class ThroughputVsThreadsGui
     @Override
     public void add(SampleResult res)
     {
+        if (!isSampleIncluded(res)) {
+            return;
+        }
+
         long time = res.getTime();
         if (time < 1)
         {

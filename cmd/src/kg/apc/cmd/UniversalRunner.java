@@ -26,6 +26,7 @@ public final class UniversalRunner {
     private static final String jarDirectory;
 
     static {
+        System.setProperty("java.awt.headless", "true");
         //System.setProperty("user.dir", new File(System.getProperty("user.dir")).getParent());
         List jars = new LinkedList();
         final String initial_classpath = System.getProperty(JAVA_CLASS_PATH);

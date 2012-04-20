@@ -1,6 +1,8 @@
 package kg.apc.charting.plotters;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.ChartSettings;
 import kg.apc.charting.CubicSpline;
@@ -26,6 +28,10 @@ public class CSplineRowPlotter extends AbstractRowPlotter {
 
    @Override
    protected void postPaintRow(AbstractGraphRow row, Graphics2D g2d) {
+      if(chartSettings.getLineWidth() == 0) return;
+      Stroke oldStroke = g2d.getStroke();
+      g2d.setStroke(new BasicStroke(chartSettings.getLineWidth()));
+
       if (row.size() >= 3) {
          CubicSpline cs = new CubicSpline(row);
          long minX = row.getMinX();
@@ -58,5 +64,6 @@ public class CSplineRowPlotter extends AbstractRowPlotter {
             prevY = y;
          }
       }
+      g2d.setStroke(oldStroke);
    }
 }

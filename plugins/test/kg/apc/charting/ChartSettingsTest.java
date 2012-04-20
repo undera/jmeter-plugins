@@ -393,4 +393,27 @@ public class ChartSettingsTest {
         ChartSettings instance = new ChartSettings();
         instance.setExpendRows(expendRows);
     }
+
+    /**
+     * Test of getLineWidth method, of class ChartSettings.
+     */
+    @Test
+    public void testGetLineWidth() {
+        System.out.println("getLineWidth");
+        ChartSettings instance = new ChartSettings();
+        float expResult = 1.0F;
+        float result = instance.getLineWidth();
+        assertEquals(expResult, result, 0.0);
+    }
+
+    /**
+     * Test of setLineWidth method, of class ChartSettings.
+     */
+    @Test
+    public void testSetLineWidth() {
+        System.out.println("setLineWidth");
+        float lineWidth = 0.0F;
+        ChartSettings instance = new ChartSettings();
+        instance.setLineWidth(lineWidth);
+    }
 }

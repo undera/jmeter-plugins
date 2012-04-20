@@ -144,7 +144,8 @@ public class ThreadsStateOverTimeGui
                 | JSettingsPanel.LIMIT_POINT_OPTION
                 | JSettingsPanel.AGGREGATE_OPTION
                 | JSettingsPanel.RELATIVE_TIME_OPTION
-                | JSettingsPanel.MAXY_OPTION);
+                | JSettingsPanel.MAXY_OPTION
+                | JSettingsPanel.MARKERS_OPTION);
     }
 
     @Override

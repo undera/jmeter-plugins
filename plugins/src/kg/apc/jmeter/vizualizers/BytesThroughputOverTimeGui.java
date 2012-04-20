@@ -68,7 +68,8 @@ public class BytesThroughputOverTimeGui
                 | JSettingsPanel.FINAL_ZEROING_OPTION
                 | JSettingsPanel.LIMIT_POINT_OPTION
                 | JSettingsPanel.MAXY_OPTION
-                | JSettingsPanel.RELATIVE_TIME_OPTION);
+                | JSettingsPanel.RELATIVE_TIME_OPTION
+                | JSettingsPanel.MARKERS_OPTION);
     }
 
     @Override

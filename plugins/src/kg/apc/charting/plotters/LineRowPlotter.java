@@ -1,6 +1,8 @@
 package kg.apc.charting.plotters;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import kg.apc.charting.ChartSettings;
 import org.apache.jorphan.gui.NumberRenderer;
 
@@ -17,6 +19,10 @@ public class LineRowPlotter extends AbstractRowPlotter {
 
    @Override
    protected void processPoint(Graphics2D g2d, int granulation) {
+      if(chartSettings.getLineWidth() == 0) return;
+      Stroke oldStroke = g2d.getStroke();
+      g2d.setStroke(new BasicStroke(chartSettings.getLineWidth()));
+
       boolean valid = isChartPointValid(x, y);
       if (mustDrawFirstZeroingLine && valid) {
          mustDrawFirstZeroingLine = false;
@@ -35,5 +41,6 @@ public class LineRowPlotter extends AbstractRowPlotter {
             }
          }
       }
+      g2d.setStroke(oldStroke);
    }
 }

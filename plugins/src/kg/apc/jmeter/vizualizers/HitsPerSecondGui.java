@@ -73,7 +73,8 @@ public class HitsPerSecondGui
                 | JSettingsPanel.FINAL_ZEROING_OPTION
                 | JSettingsPanel.LIMIT_POINT_OPTION
                 | JSettingsPanel.RELATIVE_TIME_OPTION
-                | JSettingsPanel.MAXY_OPTION);
+                | JSettingsPanel.MAXY_OPTION
+                | JSettingsPanel.MARKERS_OPTION);
     }
 
     @Override

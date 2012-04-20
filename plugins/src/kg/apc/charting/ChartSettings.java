@@ -49,6 +49,8 @@ public class ChartSettings {
     private int chartType = CHART_TYPE_DEFAULT;
     private int chartMarkers = CHART_MARKERS_DEFAULT;
 
+    private float lineWidth = 1.0f;
+
     //Strokes
     // The stroke used to paint Graph's dashed lines
    private final static Stroke dashStroke = new BasicStroke(
@@ -212,4 +214,12 @@ public class ChartSettings {
    public void setExpendRows(boolean expendRows) {
       this.expendRows = expendRows;
    }
+
+   public float getLineWidth() {
+        return lineWidth;
+    }
+
+    public void setLineWidth(float lineWidth) {
+        this.lineWidth = lineWidth;
+    }
 }

@@ -30,7 +30,13 @@ public class CSplineRowPlotter extends AbstractRowPlotter {
    protected void postPaintRow(AbstractGraphRow row, Graphics2D g2d) {
       if(chartSettings.getLineWidth() == 0) return;
       Stroke oldStroke = g2d.getStroke();
-      g2d.setStroke(new BasicStroke(chartSettings.getLineWidth()));
+      BasicStroke newStroke;
+      if(chartSettings.getLineWidth() > 1) {
+         newStroke = new BasicStroke(chartSettings.getLineWidth(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+      } else {
+         newStroke = new BasicStroke(chartSettings.getLineWidth());
+      }
+      g2d.setStroke(newStroke);
 
       if (row.size() >= 3) {
          CubicSpline cs = new CubicSpline(row);

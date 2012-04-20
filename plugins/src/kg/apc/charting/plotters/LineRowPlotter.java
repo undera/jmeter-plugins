@@ -21,7 +21,13 @@ public class LineRowPlotter extends AbstractRowPlotter {
    protected void processPoint(Graphics2D g2d, int granulation) {
       if(chartSettings.getLineWidth() == 0) return;
       Stroke oldStroke = g2d.getStroke();
-      g2d.setStroke(new BasicStroke(chartSettings.getLineWidth()));
+      BasicStroke newStroke;
+      if(chartSettings.getLineWidth() > 1) {
+         newStroke = new BasicStroke(chartSettings.getLineWidth(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+      } else {
+         newStroke = new BasicStroke(chartSettings.getLineWidth());
+      }
+      g2d.setStroke(newStroke);
 
       boolean valid = isChartPointValid(x, y);
       if (mustDrawFirstZeroingLine && valid) {

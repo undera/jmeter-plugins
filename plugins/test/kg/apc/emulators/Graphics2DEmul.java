@@ -135,7 +135,7 @@ public class Graphics2DEmul extends Graphics2D{
 
    @Override
    public void setStroke(Stroke s) {
-      throw new UnsupportedOperationException("Not supported yet.");
+      trace("setStroke");
    }
 
    @Override

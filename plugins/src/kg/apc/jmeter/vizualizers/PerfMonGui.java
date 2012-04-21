@@ -64,7 +64,8 @@ public class PerfMonGui
                 | JSettingsPanel.LIMIT_POINT_OPTION
                 | JSettingsPanel.MAXY_OPTION
                 | JSettingsPanel.RELATIVE_TIME_OPTION
-                | JSettingsPanel.AUTO_EXPAND_OPTION);
+                | JSettingsPanel.AUTO_EXPAND_OPTION
+                | JSettingsPanel.MARKERS_OPTION_DISABLED);
     }
 
     @Override

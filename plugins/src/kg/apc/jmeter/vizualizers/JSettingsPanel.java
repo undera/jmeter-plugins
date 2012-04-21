@@ -31,6 +31,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
     public final static int CHART_TYPE_OPTION = 1 << 10;
     public final static int MARKERS_OPTION = 1 << 11;
     public final static int AUTO_EXPAND_OPTION = 1 << 12;
+    public final static int MARKERS_OPTION_DISABLED = 1 << 13;
 
     private SettingsInterface parent = null;
     private int originalTooltipDisplayTime = 0;
@@ -49,8 +50,9 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         boolean showRelativeTimeOption = (options & RELATIVE_TIME_OPTION) != 0;
         boolean showMaxYOption = (options & MAXY_OPTION) != 0;
         boolean showGraphTypeOption = (options & CHART_TYPE_OPTION) != 0;
-        boolean showMarkersOption = (options & MARKERS_OPTION) != 0;
+        boolean showMarkersOption = (options & MARKERS_OPTION) != 0 || (options & MARKERS_OPTION_DISABLED) != 0;
         boolean showAutoExpandOption = (options & AUTO_EXPAND_OPTION) != 0;
+        boolean markerOptionDisabled = (options & MARKERS_OPTION_DISABLED) != 0;
 
         initComponents();
         this.parent = parent;
@@ -67,7 +69,8 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
                 showMaxYOption,
                 showGraphTypeOption,
                 showMarkersOption,
-                showAutoExpandOption);
+                showAutoExpandOption,
+                markerOptionDisabled);
         registerJTextfieldForRefresh(jTextFieldMaxY);
     }
 
@@ -84,7 +87,8 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             boolean showMaxYOption,
             boolean showGraphTypeOption,
             boolean showMarkersOption,
-            boolean showAutoExpandOption)
+            boolean showAutoExpandOption,
+            boolean markerOptionDisabled)
     {
         jPanelTimeLineContainer.setVisible(
                 showTimelineOption ||
@@ -154,7 +158,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             jLabelLineWidth.setVisible(false);
             jComboBoxLineWidth.setVisible(false);
         } else {
-            jCheckBoxDrawMarkers.setSelected(true);
+            jCheckBoxDrawMarkers.setSelected(!markerOptionDisabled);
         }
     }
 

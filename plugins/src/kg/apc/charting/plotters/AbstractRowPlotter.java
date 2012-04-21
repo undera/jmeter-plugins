@@ -1,5 +1,6 @@
 package kg.apc.charting.plotters;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -20,6 +21,9 @@ import org.apache.jorphan.gui.NumberRenderer;
 public abstract class AbstractRowPlotter {
 
    private final static int labelSpacing = 5;
+
+   private float currentStrokeWidth = 1.0f;
+   private Stroke lineStroke = new BasicStroke(currentStrokeWidth);
 
    protected ChartSettings chartSettings = null;
    protected NumberRenderer labelRenderer = null;
@@ -234,5 +238,17 @@ public abstract class AbstractRowPlotter {
             g2d.setStroke(oldStroke);
          }
       }
+   }
+
+   protected Stroke getLineStroke() {
+      if (currentStrokeWidth != chartSettings.getLineWidth()) {
+         if (chartSettings.getLineWidth() > 1) {
+            lineStroke = new BasicStroke(chartSettings.getLineWidth(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+         } else {
+            lineStroke = new BasicStroke(chartSettings.getLineWidth());
+         }
+         currentStrokeWidth = chartSettings.getLineWidth();
+      }
+      return lineStroke;
    }
 }

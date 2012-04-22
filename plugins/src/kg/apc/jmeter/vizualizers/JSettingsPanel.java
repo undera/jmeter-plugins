@@ -615,7 +615,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         gridBagConstraints.weighty = 1.0;
         jPanelAllSettingsContainer.add(jPanelGraphPreviewContainer, gridBagConstraints);
 
-        jPanelGraphStyle.setBorder(javax.swing.BorderFactory.createTitledBorder("Graph Type"));
+        jPanelGraphStyle.setBorder(javax.swing.BorderFactory.createTitledBorder("Graph Options"));
         jPanelGraphStyle.setLayout(new java.awt.GridBagLayout());
 
         jLabelChartType.setText("Chart type:");

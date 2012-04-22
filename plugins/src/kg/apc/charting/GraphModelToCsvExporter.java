@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListSet;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.gui.NumberRenderer;
 
 /**
@@ -45,7 +46,8 @@ public class GraphModelToCsvExporter
         if(xAxisRenderer != null && xAxisRenderer instanceof DividerRenderer) {
            this.xAxisRenderer = new DividerRenderer(((DividerRenderer)xAxisRenderer).getFactor());
         } else if(xAxisRenderer != null && xAxisRenderer instanceof DateTimeRenderer) {
-           dateFormatter = new SimpleDateFormat("HH:mm:ss" + decimalSeparator + "S");
+           String format = JMeterUtils.getPropDefault("jmeterPlugin.csvTimeFormat", "HH:mm:ss" + decimalSeparator + "S");
+           dateFormatter = new SimpleDateFormat(format);
         }
     }
 

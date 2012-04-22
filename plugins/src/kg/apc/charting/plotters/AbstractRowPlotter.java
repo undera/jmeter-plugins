@@ -96,7 +96,7 @@ public abstract class AbstractRowPlotter {
 
       if (row.isDrawThickLines()) {
          olStroke = g2d.getStroke();
-         g2d.setStroke(chartSettings.getThickStroke());
+         lineStroke = chartSettings.getThickStroke();
       }
 
       g2d.setColor(color);

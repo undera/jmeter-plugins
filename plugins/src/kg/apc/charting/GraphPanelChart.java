@@ -917,8 +917,11 @@ public class GraphPanelChart
     private void registerPopup(boolean allowCsvExport) {
         this.setComponentPopupMenu(popup);
         JMenuItem itemCopy = new JMenuItem("Copy Image to Clipboard");
+        itemCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/copy.png")));
         JMenuItem itemSave = new JMenuItem("Save Image as...");
+        itemSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/save.png")));
         JMenuItem itemExport = new JMenuItem("Export to CSV...");
+        itemExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/export.png")));
         itemCopy.addActionListener(new CopyAction());
         itemSave.addActionListener(new SaveAction());
         itemExport.addActionListener(new CsvExportAction());

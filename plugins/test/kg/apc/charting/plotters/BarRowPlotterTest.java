@@ -67,7 +67,7 @@ public class BarRowPlotterTest {
       instance.setBoundsValues(g2d.getBounds(), minXVal, maxXVal, minYVal, maxYVal);
       //instance.processPoint(g2d, granulation);
       instance.paintRow(g2d, testRow, color, 1, 1);
-      String expResult = "setColor: java.awt.Color[r=255,g=0,b=0]|setComposite: java.awt.AlphaComposite|fillRect: (10;9) - w:79 h:601|setComposite: java.awt.AlphaComposite|setComposite: java.awt.AlphaComposite|fillRect: (250;189) - w:79 h:421|setComposite: java.awt.AlphaComposite|setComposite: java.awt.AlphaComposite|fillRect: (410;69) - w:79 h:541|setComposite: java.awt.AlphaComposite|";
+      String expResult = "setStroke|setColor: java.awt.Color[r=255,g=0,b=0]|setComposite: java.awt.AlphaComposite|fillRect: (10;9) - w:79 h:601|setComposite: java.awt.AlphaComposite|setComposite: java.awt.AlphaComposite|fillRect: (250;189) - w:79 h:421|setComposite: java.awt.AlphaComposite|setComposite: java.awt.AlphaComposite|fillRect: (410;69) - w:79 h:541|setComposite: java.awt.AlphaComposite|setStroke|";
       String result = g2d.getResult();
       assertEquals(expResult, result);
    }

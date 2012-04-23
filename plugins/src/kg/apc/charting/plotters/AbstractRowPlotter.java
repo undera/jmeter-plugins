@@ -94,9 +94,12 @@ public abstract class AbstractRowPlotter {
 
       mustDrawFirstZeroingLine = chartSettings.isDrawFinalZeroingLines();
 
+      olStroke = g2d.getStroke();
+
       if (row.isDrawThickLines()) {
-         olStroke = g2d.getStroke();
-         lineStroke = chartSettings.getThickStroke();
+         g2d.setStroke(chartSettings.getThickStroke());
+      } else {
+         g2d.setStroke(getLineStroke());
       }
 
       g2d.setColor(color);
@@ -172,9 +175,7 @@ public abstract class AbstractRowPlotter {
 
       postPaintRow(row, g2d);
 
-      if(olStroke != null) {
-         g2d.setStroke(olStroke);
-      }
+      g2d.setStroke(olStroke);
    }
 
    protected abstract void processPoint(Graphics2D g2d, int granulation);
@@ -226,6 +227,9 @@ public abstract class AbstractRowPlotter {
    }
 
    private void processFinalLines(AbstractGraphRow row, Graphics2D g2d) {
+      
+      if(chartSettings.getLineWidth() == 0) return;
+
       Stroke oldStroke = null;
 
       if (row.isDrawLine() && chartSettings.isDrawFinalZeroingLines()) {
@@ -240,15 +244,14 @@ public abstract class AbstractRowPlotter {
       }
    }
 
-   protected Stroke getLineStroke() {
-      if (currentStrokeWidth != chartSettings.getLineWidth()) {
-         if (chartSettings.getLineWidth() > 1) {
-            lineStroke = new BasicStroke(chartSettings.getLineWidth(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-         } else {
-            lineStroke = new BasicStroke(chartSettings.getLineWidth());
-         }
-         currentStrokeWidth = chartSettings.getLineWidth();
+   private Stroke getLineStroke() {
+      if (chartSettings.getLineWidth() > 1) {
+         lineStroke = new BasicStroke(chartSettings.getLineWidth(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+      } else {
+         lineStroke = new BasicStroke(chartSettings.getLineWidth());
       }
+      currentStrokeWidth = chartSettings.getLineWidth();
+
       return lineStroke;
    }
 }

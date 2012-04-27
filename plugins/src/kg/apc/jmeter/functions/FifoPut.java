@@ -8,55 +8,74 @@ import org.apache.jmeter.functions.AbstractFunction;
 import org.apache.jmeter.functions.InvalidVariableException;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
-import org.apache.jmeter.threads.JMeterVariables;
 
-public class UpperCase extends AbstractFunction {
+/**
+ *
+ * @author undera
+ */
+public class FifoPut extends AbstractFunction {
 
     private static final List<String> desc = new LinkedList<String>();
-    private static final String KEY = "__uppercase";
+    private static final String KEY = "__fifoPut";
 
     static {
-        desc.add("String to convert to uppercase");
-        desc.add("Name of variable in which to store the result (optional)");
+        desc.add("Queue name to put value");
+        desc.add("String value to put into FIFO queue");
     }
     private Object[] values;
 
     /**
      * No-arg constructor.
      */
-    public UpperCase() {
+    public FifoPut() {
+        FifoMap.getInstance().clear();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {
+     *
+     * @inheritDoc}
+     */
     @Override
     public synchronized String execute(SampleResult previousResult, Sampler currentSampler)
             throws InvalidVariableException {
-        JMeterVariables vars = getVariables();
-        String res = ((CompoundVariable) values[0]).execute().toUpperCase();
-
-        if (vars != null && values.length > 1) {
-            String varName = ((CompoundVariable) values[1]).execute().trim();
-            vars.put(varName, res);
+        String fifoName = ((CompoundVariable) values[0]).execute();
+        String value = ((CompoundVariable) values[1]).execute();
+        try {
+            FifoMap.getInstance().put(fifoName, value);
+        } catch (InterruptedException ex) {
+            value = "INTERRUPTED";
         }
 
-        return res;
-
+        return value;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {
+     *
+     * @inheritDoc}
+     */
     @Override
     public synchronized void setParameters(Collection<CompoundVariable> parameters) throws InvalidVariableException {
-        checkMinParameterCount(parameters, 1);
+        checkMinParameterCount(parameters, 2);
         values = parameters.toArray();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {
+     *
+     * @inheritDoc}
+     */
     @Override
     public String getReferenceKey() {
         return KEY;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {
+     *
+     * @inheritDoc}
+     */
     @Override
     public List<String> getArgumentDesc() {
         return desc;

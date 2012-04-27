@@ -10,15 +10,17 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterVariables;
 
-public class Substring extends AbstractFunction {
+/**
+ *
+ * @author undera
+ */
+public class FifoPop extends AbstractFunction {
 
     private static final List<String> desc = new LinkedList<String>();
-    private static final String KEY = "__substring";
+    private static final String KEY = "__fifoPop";
 
     static {
-        desc.add("String to get part of");
-        desc.add("Begin index (first is 0)");
-        desc.add("End index");
+        desc.add("FIFO queue name to pop value");
         desc.add("Name of variable in which to store the result (optional)");
     }
     private Object[] values;
@@ -26,52 +28,63 @@ public class Substring extends AbstractFunction {
     /**
      * No-arg constructor.
      */
-    public Substring() {
+    public FifoPop() {
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {
+     *
+     * @inheritDoc}
+     */
     @Override
     public synchronized String execute(SampleResult previousResult, Sampler currentSampler)
             throws InvalidVariableException {
+        String fifoName = ((CompoundVariable) values[0]).execute();
 
-        Double sum = 0D;
-        String str = getParameter(0);
-
-        int begin = Integer.parseInt(getParameter(1));
-        int len = Integer.parseInt(getParameter(2));
-
-        String totalString = str.substring(begin, len);
-
-        JMeterVariables vars = getVariables();
-
-        String varName = getParameter(3);
-        if (vars != null && varName != null && varName.length() > 0) {// vars will be null on TestPlan
-            vars.put(varName, totalString);
+        String value;
+        try {
+            value = FifoMap.getInstance().pop(fifoName);
+        } catch (InterruptedException ex) {
+            value="INTERRUPTED";
         }
 
-        return totalString;
+        JMeterVariables vars = getVariables();
+        if (vars != null && values.length > 1) {
+            String varName = ((CompoundVariable) values[1]).execute().trim();
+            vars.put(varName, value);
+        }
+
+        return value;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {
+     *
+     * @inheritDoc}
+     */
     @Override
     public synchronized void setParameters(Collection<CompoundVariable> parameters) throws InvalidVariableException {
-        checkMinParameterCount(parameters, 3);
+        checkMinParameterCount(parameters, 1);
         values = parameters.toArray();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {
+     *
+     * @inheritDoc}
+     */
     @Override
     public String getReferenceKey() {
         return KEY;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {
+     *
+     * @inheritDoc}
+     */
     @Override
     public List<String> getArgumentDesc() {
         return desc;
-    }
-
-    private String getParameter(int i) {
-        return ((CompoundVariable) values[i]).execute();
     }
 }

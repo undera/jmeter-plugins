@@ -36,8 +36,8 @@ public class FifoMap extends ConcurrentHashMap<String, LinkedBlockingDeque<Strin
 
     public String get(String fifoName) {
         LinkedBlockingDeque<String> fifo = getFifo(fifoName);
-
-        return fifo.peekLast();
+        String value = fifo.peekLast();
+        return value == null ? "" : value;
     }
 
     public String pop(String fifoName) throws InterruptedException {

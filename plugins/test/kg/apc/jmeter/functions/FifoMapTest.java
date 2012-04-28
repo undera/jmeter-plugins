@@ -61,7 +61,8 @@ public class FifoMapTest {
     @Test
     public void testGet() throws Exception {
         System.out.println("get");
-        assertNull(FifoMap.getInstance().get("testget"));
+        assertEquals("", FifoMap.getInstance().get("testget"));
+        FifoMap.getInstance().put("testget", "testget");
         assertEquals("testget", FifoMap.getInstance().get("testget"));
     }
 

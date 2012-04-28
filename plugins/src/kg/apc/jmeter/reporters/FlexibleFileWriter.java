@@ -48,6 +48,8 @@ public class FlexibleFileWriter
     private static final String OVERWRITE = "overwrite";
     private static final String FILENAME = "filename";
     private static final String COLUMNS = "columns";
+    private static final String HEADER = "header";
+    private static final String FOOTER = "footer";
     private static final String VAR_PREFIX = "variable#";
     protected volatile FileChannel fileChannel;
     private int[] compiledVars;
@@ -76,6 +78,8 @@ public class FlexibleFileWriter
             openFile();
         } catch (FileNotFoundException ex) {
             log.error("Cannot open file " + getFilename(), ex);
+        } catch (IOException ex) {
+            log.error("Cannot write file header " + getFilename(), ex);
         }
     }
 
@@ -122,10 +126,25 @@ public class FlexibleFileWriter
         setProperty(OVERWRITE, ov);
     }
 
+    public void setFileHeader(String str) {
+        setProperty(HEADER, str);
+    }
+
+    public String getFileHeader() {
+        return getPropertyAsString(HEADER);
+    }
+
+    public void setFileFooter(String str) {
+        setProperty(FOOTER, str);
+    }
+
+    public String getFileFooter() {
+        return getPropertyAsString(FOOTER);
+    }
+
     /**
-     * making this once to be efficient
-     * and avoid manipulating strings
-     * in switch operators
+     * making this once to be efficient and avoid manipulating strings in switch
+     * operators
      */
     private void compileColumns() {
         log.debug("Compiling columns string: " + getColumns());
@@ -164,15 +183,25 @@ public class FlexibleFileWriter
         }
     }
 
-    protected void openFile() throws FileNotFoundException {
+    protected void openFile() throws IOException {
         String filename = getFilename();
         FileOutputStream fos = new FileOutputStream(filename, !isOverwrite());
         fileChannel = fos.getChannel();
+
+        String header = getFileHeader();
+        if (!header.isEmpty()) {
+            fileChannel.write(ByteBuffer.wrap(header.getBytes()));
+        }
     }
 
     private synchronized void closeFile() {
         if (fileChannel != null && fileChannel.isOpen()) {
             try {
+                String footer = getFileFooter();
+                if (!footer.isEmpty()) {
+                    fileChannel.write(ByteBuffer.wrap(footer.getBytes()));
+                }
+
                 fileChannel.force(false);
                 fileChannel.close();
             } catch (IOException ex) {
@@ -241,7 +270,7 @@ public class FlexibleFileWriter
     }
 
     /**
-     * 
+     *
      * @param buf
      * @param result
      * @param fieldID

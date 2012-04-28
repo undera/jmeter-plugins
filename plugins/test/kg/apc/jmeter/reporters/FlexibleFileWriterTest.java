@@ -1,8 +1,8 @@
 package kg.apc.jmeter.reporters;
 
-import kg.apc.emulators.FileChannelEmul;
 import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
+import kg.apc.emulators.FileChannelEmul;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
@@ -12,10 +12,10 @@ import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -297,5 +297,51 @@ public class FlexibleFileWriterTest {
         boolean ov = false;
         FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.setOverwrite(ov);
+    }
+
+    /**
+     * Test of setFileHeader method, of class FlexibleFileWriter.
+     */
+    @Test
+    public void testSetFileHeader() {
+        System.out.println("setFileHeader");
+        String str = "";
+        kg.apc.jmeter.reporters.FlexibleFileWriter instance = new kg.apc.jmeter.reporters.FlexibleFileWriter();
+        instance.setFileHeader(str);
+    }
+
+    /**
+     * Test of getFileHeader method, of class FlexibleFileWriter.
+     */
+    @Test
+    public void testGetFileHeader() {
+        System.out.println("getFileHeader");
+        kg.apc.jmeter.reporters.FlexibleFileWriter instance = new kg.apc.jmeter.reporters.FlexibleFileWriter();
+        String expResult = "";
+        String result = instance.getFileHeader();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setFileFooter method, of class FlexibleFileWriter.
+     */
+    @Test
+    public void testSetFileFooter() {
+        System.out.println("setFileFooter");
+        String str = "";
+        kg.apc.jmeter.reporters.FlexibleFileWriter instance = new kg.apc.jmeter.reporters.FlexibleFileWriter();
+        instance.setFileFooter(str);
+    }
+
+    /**
+     * Test of getFileFooter method, of class FlexibleFileWriter.
+     */
+    @Test
+    public void testGetFileFooter() {
+        System.out.println("getFileFooter");
+        kg.apc.jmeter.reporters.FlexibleFileWriter instance = new kg.apc.jmeter.reporters.FlexibleFileWriter();
+        String expResult = "";
+        String result = instance.getFileFooter();
+        assertEquals(expResult, result);
     }
 }

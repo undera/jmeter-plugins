@@ -15,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
@@ -32,6 +33,8 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
     private JTextField filename;
     private JTextField columns;
     private JCheckBox overwrite;
+    private JTextArea header;
+    private JTextArea footer;
     private JButton browseButton;
     private String[] fields = {
         "startTime", "Epoch time when the request was started",
@@ -88,6 +91,8 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
             fw.setFilename(filename.getText());
             fw.setColumns(columns.getText());
             fw.setOverwrite(overwrite.isSelected());
+            fw.setFileHeader(header.getText());
+            fw.setFileFooter(footer.getText());
         }
     }
 
@@ -104,6 +109,9 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
                 + "sentBytes|\\t|receivedBytes|\\t|"
                 + "isSuccessful|\\t|responseCode|\\r\\n");
         overwrite.setSelected(false);
+        header.setText("endTimeMillis\tresponseTime\tlatency\tsentBytes\t"
+                + "receivedBytes\tisSuccessful\tresponseCode\n");
+        footer.setText("");
     }
 
     @Override
@@ -113,6 +121,8 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
         filename.setText(fw.getFilename());
         columns.setText(fw.getColumns());
         overwrite.setSelected(fw.isOverwrite());
+        header.setText(fw.getFileHeader());
+        footer.setText(fw.getFileFooter());
     }
 
     private void init() {
@@ -134,19 +144,28 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Filename: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 1, filename = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
-
         GuiBuilderHelper.strechButtonToComponent(filename, browseButton);
-
         browseButton.addActionListener(new BrowseAction(filename));
 
+        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Overwrite existing file: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 2, overwrite=new JCheckBox());
+
+        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Write File Header: ", JLabel.RIGHT));
+        header = new JTextArea();
+        header.setLineWrap(true);
+        addToPanel(mainPanel, editConstraints, 1, 3, GuiBuilderHelper.getTextAreaScrollPaneContainer(header, 3));
+        
         editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Record each sample as: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 4, columns = new JTextField(20));
 
-        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Record each sample as: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, columns = new JTextField(20));
-
-        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Overwrite existing file: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 3, overwrite=new JCheckBox());
+        editConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
+        addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Write File Footer: ", JLabel.RIGHT));
+        footer = new JTextArea();
+        footer.setLineWrap(true);
+        addToPanel(mainPanel, editConstraints, 1, 5, GuiBuilderHelper.getTextAreaScrollPaneContainer(footer, 3));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
@@ -164,7 +183,7 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
         labelConstraints.fill = GridBagConstraints.HORIZONTAL;
         labelConstraints.gridwidth = 2;
 
-        ret.add(new JLabel("Available fields (click any button to copy the field to clipboard):"), labelConstraints);
+        ret.add(new JLabel("Available sample fields (click any button to copy the field to clipboard):"), labelConstraints);
 
         GridBagConstraints buttonConstraints = new GridBagConstraints();
         buttonConstraints.insets = new Insets(4, 0, 0, 0);

@@ -16,7 +16,7 @@
 It contains test results written in specified format.</stringProp>
         <stringProp name="filename">testResults.tsv</stringProp>
         <stringProp name="columns">endTime|\t|responseTime|\t|sentBytes|\t|receivedBytes|\t|responseCode|\r\n</stringProp>
-        <boolProp name="overwrite">false</boolProp>
+        <boolProp name="overwrite">true</boolProp>
         <stringProp name="header">endTime	responseTime	sentBytes	receivedBytes	responseCode
 </stringProp>
         <stringProp name="footer">-- end-of-file</stringProp>

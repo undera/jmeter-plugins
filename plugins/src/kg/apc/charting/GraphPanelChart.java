@@ -48,7 +48,6 @@ import kg.apc.charting.plotters.AbstractRowPlotter;
 import kg.apc.charting.plotters.BarRowPlotter;
 import kg.apc.charting.plotters.CSplineRowPlotter;
 import kg.apc.charting.plotters.LineRowPlotter;
-
 import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -310,7 +309,7 @@ public class GraphPanelChart
         minYVal = Double.MAX_VALUE;
 
         Iterator<Entry<String, AbstractGraphRow>> it = rows.entrySet().iterator();
-        Entry<String, AbstractGraphRow> row = null;
+        Entry<String, AbstractGraphRow> row;
         AbstractGraphRow rowValue = null;
         int barValue = 0;
         while (it.hasNext()) {

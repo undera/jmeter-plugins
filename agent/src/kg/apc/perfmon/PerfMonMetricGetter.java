@@ -59,6 +59,7 @@ public class PerfMonMetricGetter {
             ByteBuffer buf = getMetricsLine();
             controller.sendToClient(channel, buf);
         } else if (cmdType.equals("metrics")) {
+            log.info("Starting measures: "+params);
             setUpMetrics(params.split(TAB));
             // this will make it sending channel
             controller.registerWritingChannel(channel, this);

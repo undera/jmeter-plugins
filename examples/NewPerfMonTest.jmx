@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.1">
+<jmeterTestPlan version="1.2" properties="2.2">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments">This test plan is used while debugging new PerfMon Agent</stringProp>
@@ -46,7 +46,7 @@
             <bytes>true</bytes>
           </value>
         </objProp>
-        <stringProp name="filename"></stringProp>
+        <stringProp name="filename">/tmp/cpuproc_${__time}.jtl</stringProp>
         <longProp name="interval_grouping">1000</longProp>
         <boolProp name="graph_aggregated">false</boolProp>
         <collectionProp name="metricConnections">
@@ -112,7 +112,7 @@
             <bytes>true</bytes>
           </value>
         </objProp>
-        <stringProp name="filename"></stringProp>
+        <stringProp name="filename">/tmp/cputotal_${__time}.jtl</stringProp>
         <longProp name="interval_grouping">1000</longProp>
         <boolProp name="graph_aggregated">false</boolProp>
         <collectionProp name="metricConnections">
@@ -128,9 +128,9 @@
             <stringProp name="66952">CPU</stringProp>
             <stringProp name="-887328209">system</stringProp>
           </collectionProp>
-          <collectionProp name="1439807391">
+          <collectionProp name="1443033468">
             <stringProp name="1211246942">${host}</stringProp>
-            <stringProp name="1600768">4444</stringProp>
+            <stringProp name="1600795">4450</stringProp>
             <stringProp name="66952">CPU</stringProp>
             <stringProp name="3227604">idle</stringProp>
           </collectionProp>
@@ -212,11 +212,11 @@
             <stringProp name="2567248">TAIL</stringProp>
             <stringProp name="-1425530769">/tmp/ping.log</stringProp>
           </collectionProp>
-          <collectionProp name="467561498">
+          <collectionProp name="1185008626">
             <stringProp name="1211246942">${host}</stringProp>
             <stringProp name="1600768">4444</stringProp>
             <stringProp name="2142353">EXEC</stringProp>
-            <stringProp name="-128701370">/bin/sh:-c:free | grep Mem | awk &apos;{print $7}&apos;</stringProp>
+            <stringProp name="-754429209">label=test:/bin/sh:-c:free | grep Mem | awk &apos;{print $7}&apos;</stringProp>
           </collectionProp>
           <collectionProp name="-1215858206">
             <stringProp name="1211246942">${host}</stringProp>
@@ -481,7 +481,7 @@
             <bytes>true</bytes>
           </value>
         </objProp>
-        <stringProp name="filename"></stringProp>
+        <stringProp name="filename">/tmp/disk_${__time}.jtl</stringProp>
         <longProp name="interval_grouping">1000</longProp>
         <boolProp name="graph_aggregated">false</boolProp>
         <collectionProp name="metricConnections">
@@ -710,14 +710,14 @@
             <label>true</label>
             <code>true</code>
             <message>true</message>
-            <threadName>true</threadName>
+            <threadName>false</threadName>
             <dataType>true</dataType>
             <encoding>false</encoding>
-            <assertions>true</assertions>
-            <subresults>true</subresults>
+            <assertions>false</assertions>
+            <subresults>false</subresults>
             <responseData>false</responseData>
             <samplerData>false</samplerData>
-            <xml>true</xml>
+            <xml>false</xml>
             <fieldNames>false</fieldNames>
             <responseHeaders>false</responseHeaders>
             <requestHeaders>false</requestHeaders>
@@ -730,7 +730,7 @@
         <stringProp name="TestPlan.comments">&quot;bound&quot;, &quot;close&quot;, &quot;close_wait&quot;,
         &quot;closing&quot;, &quot;estab&quot;, &quot;fin_wait1&quot;, &quot;fin_wait2&quot;, &quot;idle&quot;,
         &quot;inbound&quot;, &quot;last_ack&quot;, &quot;listen&quot;, &quot;outbound&quot;, &quot;syn_recv&quot;, &quot;time_wait&quot;</stringProp>
-        <stringProp name="filename"></stringProp>
+        <stringProp name="filename">/tmp/tcp_${__time}.csv</stringProp>
         <longProp name="interval_grouping">1000</longProp>
         <boolProp name="graph_aggregated">false</boolProp>
         <collectionProp name="metricConnections">
@@ -823,6 +823,72 @@
             <stringProp name="1600768">4444</stringProp>
             <stringProp name="82881">TCP</stringProp>
             <stringProp name="36745127">time_wait</stringProp>
+          </collectionProp>
+        </collectionProp>
+      </kg.apc.jmeter.perfmon.PerfMonCollector>
+      <hashTree/>
+      <kg.apc.jmeter.perfmon.PerfMonCollector guiclass="kg.apc.jmeter.vizualizers.PerfMonGui" testclass="kg.apc.jmeter.perfmon.PerfMonCollector" testname="JMX" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>true</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+        <longProp name="interval_grouping">1000</longProp>
+        <boolProp name="graph_aggregated">false</boolProp>
+        <collectionProp name="metricConnections">
+          <collectionProp name="1351483155">
+            <stringProp name="1211246942">${host}</stringProp>
+            <stringProp name="1600768">4444</stringProp>
+            <stringProp name="73589">JMX</stringProp>
+            <stringProp name="-1155476367">memorypool-usage</stringProp>
+          </collectionProp>
+          <collectionProp name="1878181927">
+            <stringProp reference="../../collectionProp/stringProp"/>
+            <stringProp reference="../../collectionProp/stringProp[2]"/>
+            <stringProp reference="../../collectionProp/stringProp[3]"/>
+            <stringProp name="-396899883">memory-usage</stringProp>
+          </collectionProp>
+          <collectionProp name="-553272146">
+            <stringProp reference="../../collectionProp/stringProp"/>
+            <stringProp reference="../../collectionProp/stringProp[2]"/>
+            <stringProp reference="../../collectionProp/stringProp[3]"/>
+            <stringProp name="-196996834">gc-time</stringProp>
+          </collectionProp>
+          <collectionProp name="-458747313">
+            <stringProp reference="../../collectionProp/stringProp"/>
+            <stringProp reference="../../collectionProp/stringProp[2]"/>
+            <stringProp reference="../../collectionProp/stringProp[3]"/>
+            <stringProp name="93880871">compile-time</stringProp>
+          </collectionProp>
+          <collectionProp name="1670901323">
+            <stringProp reference="../../collectionProp/stringProp"/>
+            <stringProp reference="../../collectionProp/stringProp[2]"/>
+            <stringProp reference="../../collectionProp/stringProp[3]"/>
+            <stringProp name="-1855974278">class-count</stringProp>
           </collectionProp>
         </collectionProp>
       </kg.apc.jmeter.perfmon.PerfMonCollector>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.1">
+<jmeterTestPlan version="1.2" properties="2.2">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -83,6 +83,7 @@ Connection: close&#xd;
           <kg.apc.jmeter.reporters.FlexibleFileWriter guiclass="kg.apc.jmeter.reporters.FlexibleFileWriterGui" testclass="kg.apc.jmeter.reporters.FlexibleFileWriter" testname="jp@gc - Flexible File Writer" enabled="true">
             <stringProp name="filename">testResults.txt</stringProp>
             <stringProp name="columns">endTimeMillis|\t|responseTime|\t|latency|\t|sentBytes|\t|receivedBytes|\t|isSuccessful|\t|responseCode|\r\n</stringProp>
+            <boolProp name="overwrite">false</boolProp>
           </kg.apc.jmeter.reporters.FlexibleFileWriter>
           <hashTree/>
           <kg.apc.jmeter.reporters.LoadosophiaUploader guiclass="kg.apc.jmeter.reporters.LoadosophiaUploaderGui" testclass="kg.apc.jmeter.reporters.LoadosophiaUploader" testname="jp@gc - Loadosophia.org Uploader" enabled="true">
@@ -219,6 +220,32 @@ See plugin help for details.</stringProp>
           </GaussianRandomTimer>
           <hashTree/>
         </hashTree>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="for_exclude2" enabled="true">
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(100,1000)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,100)}</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="for_exclude1" enabled="true">
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(100,1000)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,100)}</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.ThreadsStateOverTimeGui" testclass="ResultCollector" testname="Active Threads Over Time" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
@@ -253,6 +280,8 @@ See plugin help for details.</stringProp>
           <stringProp name="filename"></stringProp>
           <longProp name="interval_grouping">500</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.ResponseCodesPerSecondGui" testclass="ResultCollector" testname="Response Codes per Second" enabled="true">
@@ -288,6 +317,8 @@ See plugin help for details.</stringProp>
           <stringProp name="filename"></stringProp>
           <longProp name="interval_grouping">1000</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.ResponseTimesOverTimeGui" testclass="ResultCollector" testname="Response Times Over Time" enabled="true">
@@ -324,6 +355,8 @@ See plugin help for details.</stringProp>
           <stringProp name="filename"></stringProp>
           <longProp name="interval_grouping">1000</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels">for_exclude1</stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.TimesVsThreadsGui" testclass="ResultCollector" testname="Response Times vs Threads" enabled="true">
@@ -360,6 +393,8 @@ See plugin help for details.</stringProp>
           <stringProp name="filename"></stringProp>
           <longProp name="interval_grouping">500</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.ResponseTimesPercentilesGui" testclass="ResultCollector" testname="Response Times Percentiles" enabled="true">
@@ -396,6 +431,8 @@ See plugin help for details.</stringProp>
           <stringProp name="filename"></stringProp>
           <longProp name="interval_grouping">500</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels">for_exclude1,for_exclude2</stringProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGui" testclass="ResultCollector" testname="Response Times Distribution" enabled="true">
@@ -432,6 +469,8 @@ See plugin help for details.</stringProp>
           <stringProp name="filename"></stringProp>
           <longProp name="interval_grouping">100</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.LatenciesOverTimeGui" testclass="ResultCollector" testname="Response Latencies Over Time" enabled="true">
@@ -468,6 +507,8 @@ See plugin help for details.</stringProp>
           <stringProp name="filename"></stringProp>
           <longProp name="interval_grouping">500</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.TransactionsPerSecondGui" testclass="ResultCollector" testname="Transactions per Second" enabled="true">
@@ -504,6 +545,8 @@ See plugin help for details.</stringProp>
           <stringProp name="filename"></stringProp>
           <longProp name="interval_grouping">1000</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.ThroughputVsThreadsGui" testclass="ResultCollector" testname="Transaction Throughput vs Threads" enabled="true">
@@ -540,6 +583,8 @@ See plugin help for details.</stringProp>
           <stringProp name="filename"></stringProp>
           <longProp name="interval_grouping">500</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.BytesThroughputOverTimeGui" testclass="ResultCollector" testname="Bytes Throughput Over Time" enabled="true">
@@ -576,6 +621,8 @@ See plugin help for details.</stringProp>
           <stringProp name="filename"></stringProp>
           <longProp name="interval_grouping">1000</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.HitsPerSecondGui" testclass="ResultCollector" testname="Hits per Second" enabled="true">
@@ -612,6 +659,8 @@ See plugin help for details.</stringProp>
           <stringProp name="filename"></stringProp>
           <longProp name="interval_grouping">1000</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </ResultCollector>
         <hashTree/>
         <kg.apc.jmeter.vizualizers.CompositeResultCollector guiclass="kg.apc.jmeter.vizualizers.CompositeGraphGui" testclass="kg.apc.jmeter.vizualizers.CompositeResultCollector" testname="jp@gc - Composite Graph" enabled="true">
@@ -661,6 +710,8 @@ See plugin help for details.</stringProp>
               <stringProp name="643969001">localhost - CPU, %</stringProp>
             </collectionProp>
           </collectionProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </kg.apc.jmeter.vizualizers.CompositeResultCollector>
         <hashTree/>
         <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
@@ -761,6 +812,8 @@ See plugin help for details.</stringProp>
               <stringProp name="0"></stringProp>
             </collectionProp>
           </collectionProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
         </kg.apc.jmeter.perfmon.PerfMonCollector>
         <hashTree/>
       </hashTree>

@@ -39,6 +39,7 @@ public class PluginsCMDWorker {
     private int relativeTimes = -1;
     private int gradient = -1;
     private int autoScaleRows = -1;
+    private float lineWeight=-1;
     private String includeLabels = "";
     private String excludeLabels = "";
 
@@ -263,6 +264,10 @@ public class PluginsCMDWorker {
         if (relativeTimes >= 0) {
             graph.setUseRelativeTime(relativeTimes > 0);
         }
+        if (lineWeight>=0) {
+            graph.getChartSettings().setLineWidth(lineWeight);
+        }
+        
         
         if (gradient >= 0) {
             graph.getChartSettings().setDrawGradient(gradient > 0);
@@ -333,5 +338,9 @@ public class PluginsCMDWorker {
 
     public void setAutoScaleRows(int logicValue) {
         autoScaleRows = logicValue;
+    }
+
+    public void setLineWeight(float parseInt) {
+        lineWeight=parseInt;
     }
 }

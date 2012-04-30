@@ -36,6 +36,7 @@ public class ReporterTool extends AbstractCMDTool {
                 + "--include-labels <labels list> " // filter samples
                 + "--exclude-labels <labels list> " // filter samples
                 + "--auto-scale <yes/no> " // scaling for composites ||
+                + "--line-weight <num of pixels> " // set graph row line thikness ||
                 + "]");
     }
 
@@ -159,6 +160,13 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 worker.setHideLowCounts(Integer.parseInt((String) args.next()));
+            } else if (nextArg.equalsIgnoreCase("--line-weight")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing line thickness specification");
+                }
+
+                worker.setLineWeight(Float.parseFloat((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--granulation")) {
 
                 if (!args.hasNext()) {

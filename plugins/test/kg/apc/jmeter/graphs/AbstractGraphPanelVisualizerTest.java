@@ -469,4 +469,28 @@ public class AbstractGraphPanelVisualizerTest {
             return "debug";
         }
     }
+
+    /**
+     * Test of isSampleIncluded method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testIsSampleIncluded() {
+        System.out.println("isSampleIncluded");
+        SampleResult res = null;
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        boolean expResult = true;
+        boolean result = instance.isSampleIncluded(res);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setUpFiltering method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testSetUpFiltering() {
+        System.out.println("setUpFiltering");
+        CorrectedResultCollector rc = new CorrectedResultCollector();
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        instance.setUpFiltering(rc);
+    }
 }

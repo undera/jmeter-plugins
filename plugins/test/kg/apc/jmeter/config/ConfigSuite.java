@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({VariablesFromCSVTest.class, VariableFromCsvFileReaderTest.class, VariablesFromCSVFileBeanInfoTest.class, TestCsvFileActionTest.class, VariablesFromCSVGuiTest.class, VariablesFromCSVFileTest.class})
+@Suite.SuiteClasses({VariablesFromCSVTest.class, VariableFromCsvFileReaderTest.class, LockFileGuiTest.class, VariablesFromCSVFileBeanInfoTest.class, TestCsvFileActionTest.class, VariablesFromCSVGuiTest.class, LockFileTest.class, VariablesFromCSVFileTest.class})
 public class ConfigSuite {
 
    @BeforeClass

@@ -35,6 +35,8 @@ public class ReporterTool extends AbstractCMDTool {
                 + "--hide-low-counts <limit> " // hide points with sample count below limit ||
                 + "--include-labels <labels list> " // filter samples
                 + "--exclude-labels <labels list> " // filter samples
+                + "--auto-scale <yes/no> " // scaling for composites ||
+                + "--line-weight <num of pixels> " // set graph row line thikness ||
                 + "]");
     }
 
@@ -158,6 +160,13 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 worker.setHideLowCounts(Integer.parseInt((String) args.next()));
+            } else if (nextArg.equalsIgnoreCase("--line-weight")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing line thickness specification");
+                }
+
+                worker.setLineWeight(Float.parseFloat((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--granulation")) {
 
                 if (!args.hasNext()) {
@@ -179,6 +188,13 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 worker.setExcludeLabels((String) args.next());
+            } else if (nextArg.equalsIgnoreCase("--auto-scale")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing auto-zoom flag value");
+                }
+
+                worker.setAutoScaleRows(getLogicValue((String) args.next()));
             } else {
                 throw new UnsupportedOperationException("Unrecognized option: " + nextArg);
             }

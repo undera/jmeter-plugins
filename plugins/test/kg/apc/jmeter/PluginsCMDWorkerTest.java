@@ -118,8 +118,8 @@ public class PluginsCMDWorkerTest {
         int expResult = 0;
         assertEquals(expResult, result);
         System.out.println(pngfile.length());
-        assertTrue(73==csvfile.length() || 77==csvfile.length()); // win/linux diff
-        assertTrue(16000<pngfile.length()); // win/linux different
+        assertTrue(73 == csvfile.length() || 77 == csvfile.length()); // win/linux diff
+        assertTrue(16000 < pngfile.length()); // win/linux different
     }
 
     /**
@@ -168,8 +168,9 @@ public class PluginsCMDWorkerTest {
         int expResult = 0;
         assertEquals(expResult, result);
         // TODO: add windows check here, like above
-        assertEquals(21, csvfile.length()); 
+        assertEquals(21, csvfile.length());
     }
+
     /**
      * Test of setGraphWidth method, of class PluginsCMDWorker.
      */
@@ -289,5 +290,45 @@ public class PluginsCMDWorkerTest {
         int logicValue = 0;
         //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setGradient(logicValue);
+    }
+
+    /**
+     * Test of setIncludeLabels method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetIncludeLabels() {
+        System.out.println("setIncludeLabels");
+        String string = "";
+        instance.setIncludeLabels(string);
+    }
+
+    /**
+     * Test of setExcludeLabels method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetExcludeLabels() {
+        System.out.println("setExcludeLabels");
+        String string = "";
+        instance.setExcludeLabels(string);
+    }
+
+    /**
+     * Test of setAutoScaleRows method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetAutoScaleRows() {
+        System.out.println("setAutoScaleRows");
+        int logicValue = 0;
+        instance.setAutoScaleRows(logicValue);
+    }
+
+    /**
+     * Test of setLineWeight method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetLineWeight() {
+        System.out.println("setLineWeight");
+        float parseInt = 0.0F;
+        instance.setLineWeight(parseInt);
     }
 }

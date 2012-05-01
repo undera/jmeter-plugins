@@ -2,9 +2,17 @@
  <!-- For build instructions please visit http://code.google.com/p/jmeter-plugins/wiki/BuildingFromSource -->
 <project name="JMeterPluginsAll" default="dist" basedir=".">
     <description>Subprojects wrapper</description>
-    <target name="dist" depends="clean">
+    <target name="dist">
+        <ant dir="cmd" target="clean"/>    
+        <ant dir="cmd" target="test"/>    
         <ant dir="cmd" target="jar"/>    
+
+        <ant dir="agent" target="clean"/>    
+        <ant dir="agent" target="test"/>    
         <ant dir="agent" target="jar"/>    
+
+        <ant dir="plugins" target="clean"/>    
+        <ant dir="plugins" target="test"/>    
         <ant dir="plugins" target="jar"/>    
         
         <antcall target="package" />
@@ -62,9 +70,5 @@
         </zip>
     </target>
     
-    <target name="clean">
-        <ant dir="cmd" target="clean"/>    
-        <ant dir="agent" target="clean"/>    
-        <ant dir="plugins" target="clean"/>    
-    </target>
+  
 </project>

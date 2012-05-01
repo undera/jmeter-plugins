@@ -38,6 +38,8 @@ public class PluginsCMDWorker {
     private int granulation = -1;
     private int relativeTimes = -1;
     private int gradient = -1;
+    private int autoScaleRows = -1;
+    private float lineWeight = -1;
     private String includeLabels = "";
     private String excludeLabels = "";
 
@@ -205,7 +207,7 @@ public class PluginsCMDWorker {
         // to handle issue 64 and since it must be cheap - set options again
         setOptions(gui);
 
-        
+
         if ((exportMode & EXPORT_PNG) == EXPORT_PNG) {
             try {
                 gui.getGraphPanelChart().saveGraphToPNG(new File(outputPNG), graphWidth, graphHeight);
@@ -262,6 +264,10 @@ public class PluginsCMDWorker {
         if (relativeTimes >= 0) {
             graph.setUseRelativeTime(relativeTimes > 0);
         }
+        if (lineWeight >= 0) {
+            graph.getChartSettings().setLineWidth(lineWeight);
+        }
+
 
         if (gradient >= 0) {
             graph.getChartSettings().setDrawGradient(gradient > 0);
@@ -280,6 +286,9 @@ public class PluginsCMDWorker {
         }
         if (forceY >= 0) {
             graph.getChartSettings().setForcedMaxY(forceY);
+        }
+        if (autoScaleRows >= 0) {
+            graph.getChartSettings().setExpendRows(autoScaleRows > 0);
         }
     }
 
@@ -325,5 +334,13 @@ public class PluginsCMDWorker {
 
     public void setExcludeLabels(String string) {
         excludeLabels = string;
+    }
+
+    public void setAutoScaleRows(int logicValue) {
+        autoScaleRows = logicValue;
+    }
+
+    public void setLineWeight(float parseInt) {
+        lineWeight = parseInt;
     }
 }

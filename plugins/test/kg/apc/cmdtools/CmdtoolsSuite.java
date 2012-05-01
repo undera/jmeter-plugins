@@ -2,8 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package kg.apc.jmeter.modifiers;
+package kg.apc.cmdtools;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,8 +16,8 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({FifoPopPreProcessorGuiTest.class, CheckConsistencyActionTest.class, AnchorModifierGuiTest.class, RawRequestSourcePreProcessorTest.class, RawRequestSourcePreProcessorGuiTest.class, AnchorModifierTest.class, FifoPutPostProcessorTest.class, FifoMapTest.class, FifoPopPreProcessorTest.class})
-public class ModifiersSuite {
+@Suite.SuiteClasses({kg.apc.cmdtools.ReporterToolTest.class})
+public class CmdtoolsSuite {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -35,5 +34,5 @@ public class ModifiersSuite {
     @After
     public void tearDown() throws Exception {
     }
-
+    
 }

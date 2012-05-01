@@ -157,4 +157,92 @@ public class LockFileTest {
         instance.setFilemask(filemask);
         assertEquals(filemask, instance.getFilemask());
     }
+
+    /**
+     * Test of testStarted method, of class LockFile.
+     */
+    @Test
+    public void testTestStarted_0args() {
+        System.out.println("testStarted");
+        LockFile instance = new LockFile();
+        instance.testStarted();
+    }
+
+    /**
+     * Test of testStarted method, of class LockFile.
+     */
+    @Test
+    public void testTestStarted_String() {
+        System.out.println("testStarted");
+        String string = "";
+        LockFile instance = new LockFile();
+        instance.testStarted(string);
+    }
+
+    /**
+     * Test of testEnded method, of class LockFile.
+     */
+    @Test
+    public void testTestEnded_0args() {
+        System.out.println("testEnded");
+        LockFile instance = new LockFile();
+        instance.testEnded();
+    }
+
+    /**
+     * Test of testEnded method, of class LockFile.
+     */
+    @Test
+    public void testTestEnded_String() {
+        System.out.println("testEnded");
+        String string = "";
+        LockFile instance = new LockFile();
+        instance.testEnded(string);
+    }
+
+    /**
+     * Test of getFilename method, of class LockFile.
+     */
+    @Test
+    public void testGetFilename() {
+        System.out.println("getFilename");
+        LockFile instance = new LockFile();
+        String expResult = "";
+        String result = instance.getFilename();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setFilename method, of class LockFile.
+     */
+    @Test
+    public void testSetFilename() {
+        System.out.println("setFilename");
+        String filename = "";
+        LockFile instance = new LockFile();
+        instance.setFilename(filename);
+    }
+
+    /**
+     * Test of getFilemask method, of class LockFile.
+     */
+    @Test
+    public void testGetFilemask() {
+        System.out.println("getFilemask");
+        LockFile instance = new LockFile();
+        String expResult = "";
+        String result = instance.getFilemask();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setFilemask method, of class LockFile.
+     */
+    @Test
+    public void testSetFilemask() {
+        System.out.println("setFilemask");
+        String filemask = "";
+        LockFile instance = new LockFile();
+        instance.setFilemask(filemask);
+    }
 }

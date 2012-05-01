@@ -247,4 +247,16 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         instance.setLatency(time);
     }
+
+    /**
+     * Test of interrupt method, of class DummySampler.
+     */
+    @Test
+    public void testInterrupt() {
+        System.out.println("interrupt");
+        DummySampler instance = new DummySampler();
+        boolean expResult = true;
+        boolean result = instance.interrupt();
+        assertEquals(expResult, result);
+    }
 }

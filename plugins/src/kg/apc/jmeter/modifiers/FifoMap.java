@@ -1,18 +1,16 @@
-package kg.apc.jmeter.functions;
+package kg.apc.jmeter.modifiers;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
-import org.apache.jmeter.util.JMeterUtils;
 
 /**
  *
  * @author undera
  */
 public class FifoMap extends ConcurrentHashMap<String, LinkedBlockingDeque<String>> {
-
+    public static final String TIMEOUT_PROP="kg.apc.jmeter.functions.FifoTimeout";
     private static FifoMap instance;
-    private static long timeout = JMeterUtils.getPropDefault("kg.apc.jmeter.functions.FifoTimeout", Long.MAX_VALUE);
 
     private FifoMap() {
     }
@@ -40,13 +38,13 @@ public class FifoMap extends ConcurrentHashMap<String, LinkedBlockingDeque<Strin
         return value == null ? "" : value;
     }
 
-    public String pop(String fifoName) throws InterruptedException {
+    public String pop(String fifoName, long timeout) throws InterruptedException {
         LinkedBlockingDeque<String> fifo = getFifo(fifoName);
         final String value = fifo.pollLast(timeout, TimeUnit.SECONDS);
         return value;
     }
 
     public void put(String fifoName, String v) throws InterruptedException {
-        getFifo(fifoName).offerFirst(v, timeout, TimeUnit.SECONDS);
+        getFifo(fifoName).offerFirst(v, Long.MAX_VALUE, TimeUnit.SECONDS);
     }
 }

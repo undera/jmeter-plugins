@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.perfmon;
 
 import java.io.IOException;
@@ -115,5 +111,18 @@ public class UnavailableAgentConnectorTest {
         PerfMonSampleGenerator collector = new Gen();
         UnavailableAgentConnector instance = new UnavailableAgentConnector(new IOException());
         instance.generateSamples(collector);
+    }
+
+    /**
+     * Test of addMetric method, of class UnavailableAgentConnector.
+     */
+    @Test
+    public void testAddMetric() {
+        System.out.println("addMetric");
+        String metric = "";
+        String params = "";
+        String label = "";
+        UnavailableAgentConnector instance = new UnavailableAgentConnector(new IOException());
+        instance.addMetric(metric, params, label);
     }
 }

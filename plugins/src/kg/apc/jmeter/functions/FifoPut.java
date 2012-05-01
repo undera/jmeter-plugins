@@ -1,5 +1,6 @@
 package kg.apc.jmeter.functions;
 
+import kg.apc.jmeter.modifiers.FifoMap;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;

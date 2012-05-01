@@ -5,10 +5,8 @@ import java.io.OutputStream;
 import kg.apc.emulators.SocketEmulatorInputStream;
 import kg.apc.emulators.SocketEmulatorOutputStream;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import org.junit.*;
-
+import static org.junit.Assert.*;
 /**
  *
  * @author undera
@@ -159,5 +157,30 @@ public class DNSJavaTCPClientImplTest {
         int i = 0;
         DNSJavaTCPClientImpl instance = new DNSJavaTCPClientImpl();
         instance.setEolByte(i);
+    }
+
+    /**
+     * Test of getLengthPrefix method, of class DNSJavaTCPClientImpl.
+     */
+    @Test
+    public void testGetLengthPrefix() {
+        System.out.println("getLengthPrefix");
+        int length = 0;
+        DNSJavaTCPClientImpl instance = new DNSJavaTCPClientImpl();
+        byte[] expResult = null;
+        byte[] result = instance.getLengthPrefix(length);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getCharset method, of class DNSJavaTCPClientImpl.
+     */
+    @Test
+    public void testGetCharset() {
+        System.out.println("getCharset");
+        DNSJavaTCPClientImpl instance = new DNSJavaTCPClientImpl();
+        String expResult = "";
+        String result = instance.getCharset();
+        assertEquals(expResult, result);
     }
 }

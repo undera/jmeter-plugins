@@ -260,7 +260,7 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
             }
         } else {
             if (log.isDebugEnabled()) {
-               // log.debug("Skip existing: " + newUrl.toString());
+                // log.debug("Skip existing: " + newUrl.toString());
             }
         }
     }

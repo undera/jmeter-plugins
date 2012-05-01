@@ -123,4 +123,17 @@ public class DNSJavaDecoderTest {
         Record result = instance.getRecord(recstr);
         assertTrue(result.toString().endsWith("A"));
     }
+
+    /**
+     * Test of getMessageBytes method, of class DNSJavaDecoder.
+     */
+    @Test
+    public void testGetMessageBytes() {
+        System.out.println("getMessageBytes");
+        String data = "";
+        DNSJavaDecoder instance = new DNSJavaDecoder();
+        byte[] expResult = null;
+        byte[] result = instance.getMessageBytes(data);
+        assertEquals(expResult, result);
+    }
 }

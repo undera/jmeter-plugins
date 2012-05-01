@@ -1,5 +1,6 @@
 package kg.apc.jmeter.functions;
 
+import kg.apc.jmeter.modifiers.FifoMap;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.apache.jmeter.functions.InvalidVariableException;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jmeter.util.JMeterUtils;
 
 /**
  *
@@ -18,6 +20,7 @@ public class FifoPop extends AbstractFunction {
 
     private static final List<String> desc = new LinkedList<String>();
     private static final String KEY = "__fifoPop";
+    private long timeout;
 
     static {
         desc.add("FIFO queue name to pop value");
@@ -29,6 +32,7 @@ public class FifoPop extends AbstractFunction {
      * No-arg constructor.
      */
     public FifoPop() {
+        timeout=JMeterUtils.getPropDefault(FifoMap.TIMEOUT_PROP, Long.MAX_VALUE);
     }
 
     /**
@@ -43,7 +47,7 @@ public class FifoPop extends AbstractFunction {
 
         String value;
         try {
-            value = FifoMap.getInstance().pop(fifoName);
+            value = FifoMap.getInstance().pop(fifoName, timeout);
         } catch (InterruptedException ex) {
             value="INTERRUPTED";
         }

@@ -1,4 +1,4 @@
-package kg.apc.jmeter.functions;
+package kg.apc.jmeter.modifiers;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -75,8 +75,8 @@ public class FifoMapTest {
         String fifoName = "test";
         FifoMap instance = FifoMap.getInstance();
         // we rely on testPut method, since we have a singletone
-        assertEquals("val1", instance.pop(fifoName));
-        assertEquals("val2", instance.pop(fifoName));
-        assertEquals("test", instance.pop(""));
+        assertEquals("val1", instance.pop(fifoName, 0));
+        assertEquals("val2", instance.pop(fifoName, 0));
+        assertEquals("test", instance.pop("", 0));
     }
 }

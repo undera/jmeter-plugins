@@ -116,4 +116,19 @@ public class UnavailableAgentConnectorTest {
         UnavailableAgentConnector instance = new UnavailableAgentConnector(new IOException());
         instance.generateSamples(collector);
     }
+
+    /**
+     * Test of addMetric method, of class UnavailableAgentConnector.
+     */
+    @Test
+    public void testAddMetric() {
+        System.out.println("addMetric");
+        String metric = "";
+        String params = "";
+        String label = "";
+        UnavailableAgentConnector instance = null;
+        instance.addMetric(metric, params, label);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

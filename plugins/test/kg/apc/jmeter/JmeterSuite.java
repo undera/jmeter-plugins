@@ -30,7 +30,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({PluginsCMDWorkerTest.class, SamplersSuite.class, RuntimeEOFExceptionTest.class, ThreadsSuite.class, JMeterPluginsUtilsTest.class, kg.apc.cmdtools.ReporterToolTest.class, EndOfFileExceptionTest.class, TimersSuite.class, GuiSuite.class, ControlSuite.class, ConfigSuite.class, VizualizersSuite.class, GraphsSuite.class, FunctionsSuite.class, ModifiersSuite.class, PerfmonSuite.class, ReportersSuite.class, DcerpcSuite.class, ImgSuite.class})
+@Suite.SuiteClasses({PluginsCMDWorkerTest.class, SamplersSuite.class, RuntimeEOFExceptionTest.class, ThreadsSuite.class, JMeterPluginsUtilsTest.class, EndOfFileExceptionTest.class, TimersSuite.class, GuiSuite.class, ControlSuite.class, ConfigSuite.class, VizualizersSuite.class, GraphsSuite.class, FunctionsSuite.class, ModifiersSuite.class, PerfmonSuite.class, ReportersSuite.class, DcerpcSuite.class, ImgSuite.class})
 public class JmeterSuite {
 
     @BeforeClass

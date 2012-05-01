@@ -1,6 +1,5 @@
 package kg.apc.cmdtools;
 
-import kg.apc.cmdtools.HelloWorldTool;
 import java.io.PrintStream;
 import java.util.ListIterator;
 import junit.framework.Test;

@@ -6,20 +6,20 @@ import java.awt.GridBagLayout;
 import javax.swing.*;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
-import org.apache.jmeter.processor.gui.AbstractPreProcessorGui;
+import org.apache.jmeter.processor.gui.AbstractPostProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
 /**
  *
  * @author undera
  */
-public class FifoPutPreProcessorGui extends AbstractPreProcessorGui {
+public class FifoPutPostProcessorGui extends AbstractPostProcessorGui {
 
     public static final String WIKIPAGE = "InterThreadCommunication";
     private JTextField queueName;
     private JTextArea value;
 
-    public FifoPutPreProcessorGui() {
+    public FifoPutPostProcessorGui() {
         super();
         init();
         initFields();

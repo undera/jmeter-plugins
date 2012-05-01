@@ -4,6 +4,7 @@ import java.util.List;
 import kg.apc.emulators.TestJMeterUtils;
 import org.junit.*;
 import static org.junit.Assert.*;
+
 /**
  *
  * @author undera
@@ -48,11 +49,8 @@ public class CorrectedResultCollectorTest {
         System.out.println("getList");
         String prop = "";
         CorrectedResultCollector instance = new CorrectedResultCollector();
-        List expResult = null;
         List result = instance.getList(prop);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -64,8 +62,6 @@ public class CorrectedResultCollectorTest {
         String excludeLabels = "";
         CorrectedResultCollector instance = new CorrectedResultCollector();
         instance.setExcludeLabels(excludeLabels);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -77,7 +73,5 @@ public class CorrectedResultCollectorTest {
         String labels = "";
         CorrectedResultCollector instance = new CorrectedResultCollector();
         instance.setIncludeLabels(labels);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

@@ -27,7 +27,7 @@ public class FifoPutPostProcessorGui extends AbstractPostProcessorGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Inter-Thread Communication PreProcessor");
+        return JMeterPluginsUtils.prefixLabel("Inter-Thread Communication PostProcessor");
     }
 
     @Override

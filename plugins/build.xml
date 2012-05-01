@@ -122,7 +122,7 @@
             </condition>
         </fail>
         
-        <copy todir="${jmeter.lib.ext}" file="${dist.jar}" verbose="true" />
+        <copy tofile="${dist.dir}/JMeterPlugins.jar" file="${dist.jar}" verbose="true" />
 
         <!-- If you failed here, consider setting in project.properties
         dist.jar=${dist.dir}/JMeterPlugins.jar -->
@@ -133,6 +133,8 @@
                 </not>
             </condition>
         </fail>
+
+        <copy todir="${jmeter.lib.ext}" file="${dist.jar}" verbose="true" />
 
         <!--  SH: handle plugin nameupdater.properties -->
         <zip destfile="${dist.jar}" update="yes">

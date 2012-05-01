@@ -1,6 +1,7 @@
 package kg.apc.jmeter.functions;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.samplers.SampleResult;
@@ -46,6 +47,10 @@ public class FifoGetTest {
         SampleResult previousResult = null;
         Sampler currentSampler = null;
         FifoGet instance = new FifoGet();
+        LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
+        list.add(new CompoundVariable("test"));
+        list.add(new CompoundVariable("test"));
+        instance.setParameters(list);
         String expResult = "";
         String result = instance.execute(previousResult, currentSampler);
         assertEquals(expResult, result);
@@ -57,9 +62,11 @@ public class FifoGetTest {
     @Test
     public void testSetParameters() throws Exception {
         System.out.println("setParameters");
-        Collection<CompoundVariable> parameters = null;
+        LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
+        list.add(new CompoundVariable("test"));
+        list.add(new CompoundVariable("test"));
         FifoGet instance = new FifoGet();
-        instance.setParameters(parameters);
+        instance.setParameters(list);
     }
 
     /**
@@ -69,7 +76,7 @@ public class FifoGetTest {
     public void testGetReferenceKey() {
         System.out.println("getReferenceKey");
         FifoGet instance = new FifoGet();
-        String expResult = "";
+        String expResult = "__fifoGet";
         String result = instance.getReferenceKey();
         assertEquals(expResult, result);
     }
@@ -81,8 +88,7 @@ public class FifoGetTest {
     public void testGetArgumentDesc() {
         System.out.println("getArgumentDesc");
         FifoGet instance = new FifoGet();
-        List expResult = null;
         List result = instance.getArgumentDesc();
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 }

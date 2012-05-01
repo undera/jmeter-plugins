@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kg.apc.jmeter.perfmon;
 
 import java.io.IOException;
@@ -126,9 +122,7 @@ public class UnavailableAgentConnectorTest {
         String metric = "";
         String params = "";
         String label = "";
-        UnavailableAgentConnector instance = null;
+        UnavailableAgentConnector instance = new UnavailableAgentConnector(new IOException());
         instance.addMetric(metric, params, label);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

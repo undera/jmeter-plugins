@@ -167,9 +167,9 @@ public class DNSJavaTCPClientImplTest {
         System.out.println("getLengthPrefix");
         int length = 0;
         DNSJavaTCPClientImpl instance = new DNSJavaTCPClientImpl();
-        byte[] expResult = null;
+        int expResult = 2;
         byte[] result = instance.getLengthPrefix(length);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result.length);
     }
 
     /**
@@ -179,7 +179,7 @@ public class DNSJavaTCPClientImplTest {
     public void testGetCharset() {
         System.out.println("getCharset");
         DNSJavaTCPClientImpl instance = new DNSJavaTCPClientImpl();
-        String expResult = "";
+        String expResult = "UTF-8";
         String result = instance.getCharset();
         assertEquals(expResult, result);
     }

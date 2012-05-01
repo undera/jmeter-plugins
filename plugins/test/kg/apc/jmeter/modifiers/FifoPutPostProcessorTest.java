@@ -13,7 +13,7 @@ import org.junit.BeforeClass;
  * @author undera
  */
 public class FifoPutPostProcessorTest {
-    
+
     public FifoPutPostProcessorTest() {
     }
 
@@ -24,11 +24,11 @@ public class FifoPutPostProcessorTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -41,8 +41,6 @@ public class FifoPutPostProcessorTest {
         System.out.println("testStarted");
         FifoPutPostProcessor instance = new FifoPutPostProcessor();
         instance.testStarted();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -54,8 +52,6 @@ public class FifoPutPostProcessorTest {
         String host = "";
         FifoPutPostProcessor instance = new FifoPutPostProcessor();
         instance.testStarted(host);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -66,8 +62,6 @@ public class FifoPutPostProcessorTest {
         System.out.println("testEnded");
         FifoPutPostProcessor instance = new FifoPutPostProcessor();
         instance.testEnded();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -79,8 +73,6 @@ public class FifoPutPostProcessorTest {
         String host = "";
         FifoPutPostProcessor instance = new FifoPutPostProcessor();
         instance.testEnded(host);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -92,8 +84,6 @@ public class FifoPutPostProcessorTest {
         LoopIterationEvent event = null;
         FifoPutPostProcessor instance = new FifoPutPostProcessor();
         instance.testIterationStart(event);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -104,8 +94,6 @@ public class FifoPutPostProcessorTest {
         System.out.println("process");
         FifoPutPostProcessor instance = new FifoPutPostProcessor();
         instance.process();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -118,8 +106,6 @@ public class FifoPutPostProcessorTest {
         String expResult = "";
         String result = instance.getValue();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -132,7 +118,27 @@ public class FifoPutPostProcessorTest {
         String expResult = "";
         String result = instance.getQueueName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setQueueName method, of class FifoPutPostProcessor.
+     */
+    @Test
+    public void testSetQueueName() {
+        System.out.println("setQueueName");
+        String text = "";
+        FifoPutPostProcessor instance = new FifoPutPostProcessor();
+        instance.setQueueName(text);
+    }
+
+    /**
+     * Test of setValue method, of class FifoPutPostProcessor.
+     */
+    @Test
+    public void testSetValue() {
+        System.out.println("setValue");
+        String text = "";
+        FifoPutPostProcessor instance = new FifoPutPostProcessor();
+        instance.setValue(text);
     }
 }

@@ -255,10 +255,8 @@ public class DummySamplerTest {
     public void testInterrupt() {
         System.out.println("interrupt");
         DummySampler instance = new DummySampler();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.interrupt();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

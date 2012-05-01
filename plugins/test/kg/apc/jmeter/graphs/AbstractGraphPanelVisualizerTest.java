@@ -478,11 +478,9 @@ public class AbstractGraphPanelVisualizerTest {
         System.out.println("isSampleIncluded");
         SampleResult res = null;
         AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.isSampleIncluded(res);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -491,10 +489,8 @@ public class AbstractGraphPanelVisualizerTest {
     @Test
     public void testSetUpFiltering() {
         System.out.println("setUpFiltering");
-        CorrectedResultCollector rc = null;
+        CorrectedResultCollector rc = new CorrectedResultCollector();
         AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
         instance.setUpFiltering(rc);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

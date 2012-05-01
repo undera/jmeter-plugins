@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.*;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.processor.gui.AbstractPreProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
@@ -12,14 +13,13 @@ import org.apache.jmeter.testelement.TestElement;
  *
  * @author undera
  */
-public class FifoPopPreProcessorGui extends AbstractPreProcessorGui {
+public class FifoPutPreProcessorGui extends AbstractPreProcessorGui {
 
     public static final String WIKIPAGE = "InterThreadCommunication";
     private JTextField queueName;
-    private JTextField variableName;
-    private JTextField timeout;
+    private JTextArea value;
 
-    public FifoPopPreProcessorGui() {
+    public FifoPutPreProcessorGui() {
         super();
         init();
         initFields();
@@ -38,17 +38,16 @@ public class FifoPopPreProcessorGui extends AbstractPreProcessorGui {
     @Override
     public void configure(TestElement element) {
         super.configure(element);
-        if (element instanceof FifoPopPreProcessor) {
-            FifoPopPreProcessor el = (FifoPopPreProcessor) element;
+        if (element instanceof FifoPutPostProcessor) {
+            FifoPutPostProcessor el = (FifoPutPostProcessor) element;
             queueName.setText(el.getQueueName());
-            variableName.setText(el.getVarName());
-            timeout.setText(el.getTimeout());
+            value.setText(el.getValue());
         }
     }
 
     @Override
     public TestElement createTestElement() {
-        FifoPopPreProcessor preproc = new FifoPopPreProcessor();
+        FifoPutPostProcessor preproc = new FifoPutPostProcessor();
         modifyTestElement(preproc);
         preproc.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
         return preproc;
@@ -57,10 +56,9 @@ public class FifoPopPreProcessorGui extends AbstractPreProcessorGui {
     @Override
     public void modifyTestElement(TestElement te) {
         configureTestElement(te);
-        if (te instanceof FifoPopPreProcessor) {
-            FifoPopPreProcessor preproc = (FifoPopPreProcessor) te;
-            preproc.setTimeout(timeout.getText());
-            preproc.setVarName(variableName.getText());
+        if (te instanceof FifoPutPostProcessor) {
+            FifoPutPostProcessor preproc = (FifoPutPostProcessor) te;
+            preproc.setValue(value.getText());
             preproc.setQueueName(queueName.getText());
         }
     }
@@ -87,14 +85,16 @@ public class FifoPopPreProcessorGui extends AbstractPreProcessorGui {
         editConstraints.weightx = 1.0;
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-        addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("FIFO Queue Name to Get Data From: ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("FIFO Queue Name to Put Data Into: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 0, queueName = new JTextField(20));
 
-        addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Variable Name to Store Data: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 1, variableName = new JTextField(20));
+        editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
-        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Timeout: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, timeout = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Value to Put: ", JLabel.RIGHT));
+        editConstraints.fill = GridBagConstraints.BOTH;
+        value = new JTextArea();
+        addToPanel(mainPanel, editConstraints, 1, 6, GuiBuilderHelper.getTextAreaScrollPaneContainer(value, 10));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
@@ -109,7 +109,6 @@ public class FifoPopPreProcessorGui extends AbstractPreProcessorGui {
 
     private void initFields() {
         queueName.setText("SYNC_FIFO");
-        variableName.setText("gotData");
-        timeout.setText("");
+        value.setText("");
     }
 }

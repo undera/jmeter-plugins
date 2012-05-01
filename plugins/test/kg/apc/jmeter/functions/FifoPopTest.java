@@ -1,7 +1,9 @@
 package kg.apc.jmeter.functions;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import kg.apc.jmeter.modifiers.FifoMap;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
@@ -17,7 +19,7 @@ import org.junit.BeforeClass;
  * @author undera
  */
 public class FifoPopTest {
-    
+
     public FifoPopTest() {
     }
 
@@ -28,11 +30,11 @@ public class FifoPopTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -46,7 +48,12 @@ public class FifoPopTest {
         SampleResult previousResult = null;
         Sampler currentSampler = null;
         FifoPop instance = new FifoPop();
-        String expResult = "";
+        LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
+        list.add(new CompoundVariable("test"));
+        list.add(new CompoundVariable("test"));
+        instance.setParameters(list);
+        FifoMap.getInstance().put("test", "test");
+        String expResult = "test";
         String result = instance.execute(previousResult, currentSampler);
         assertEquals(expResult, result);
     }
@@ -57,9 +64,11 @@ public class FifoPopTest {
     @Test
     public void testSetParameters() throws Exception {
         System.out.println("setParameters");
-        Collection<CompoundVariable> parameters = null;
+        LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
+        list.add(new CompoundVariable("test"));
+        list.add(new CompoundVariable("test"));
         FifoPop instance = new FifoPop();
-        instance.setParameters(parameters);
+        instance.setParameters(list);
     }
 
     /**
@@ -69,7 +78,7 @@ public class FifoPopTest {
     public void testGetReferenceKey() {
         System.out.println("getReferenceKey");
         FifoPop instance = new FifoPop();
-        String expResult = "";
+        String expResult = "__fifoPop";
         String result = instance.getReferenceKey();
         assertEquals(expResult, result);
     }
@@ -81,8 +90,7 @@ public class FifoPopTest {
     public void testGetArgumentDesc() {
         System.out.println("getArgumentDesc");
         FifoPop instance = new FifoPop();
-        List expResult = null;
         List result = instance.getArgumentDesc();
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 }

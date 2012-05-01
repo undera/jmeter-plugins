@@ -49,4 +49,12 @@ public class FifoPutPostProcessor extends AbstractTestElement
     public String getQueueName() {
         return getPropertyAsString(QUEUE);
     }
+
+    public void setQueueName(String text) {
+        setProperty(QUEUE, text);
+    }
+
+    public void setValue(String text) {
+        setProperty(VALUE, text);
+    }
 }

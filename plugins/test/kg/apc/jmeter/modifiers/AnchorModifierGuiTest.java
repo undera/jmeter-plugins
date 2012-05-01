@@ -1,5 +1,6 @@
 package kg.apc.jmeter.modifiers;
 
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,22 +14,23 @@ import org.junit.BeforeClass;
  * @author undera
  */
 public class AnchorModifierGuiTest {
-    
+
     public AnchorModifierGuiTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -40,9 +42,8 @@ public class AnchorModifierGuiTest {
     public void testGetStaticLabel() {
         System.out.println("getStaticLabel");
         AnchorModifierGui instance = new AnchorModifierGui();
-        String expResult = "";
         String result = instance.getStaticLabel();
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 
     /**
@@ -52,9 +53,8 @@ public class AnchorModifierGuiTest {
     public void testGetLabelResource() {
         System.out.println("getLabelResource");
         AnchorModifierGui instance = new AnchorModifierGui();
-        String expResult = "";
         String result = instance.getLabelResource();
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 
     /**
@@ -64,11 +64,8 @@ public class AnchorModifierGuiTest {
     public void testCreateTestElement() {
         System.out.println("createTestElement");
         AnchorModifierGui instance = new AnchorModifierGui();
-        TestElement expResult = null;
         TestElement result = instance.createTestElement();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -77,10 +74,8 @@ public class AnchorModifierGuiTest {
     @Test
     public void testModifyTestElement() {
         System.out.println("modifyTestElement");
-        TestElement modifier = null;
+        TestElement modifier = new AnchorModifier();
         AnchorModifierGui instance = new AnchorModifierGui();
         instance.modifyTestElement(modifier);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 }

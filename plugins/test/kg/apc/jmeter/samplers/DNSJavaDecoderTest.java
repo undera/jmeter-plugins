@@ -49,7 +49,7 @@ public class DNSJavaDecoderTest {
         String res = JOrphanUtils.baToHexString(JMeterPluginsUtils.byteBufferToString(result).getBytes("cp866"));
         System.out.println(exp);
         System.out.println(res);
-        assertEquals(exp.substring(8), res.substring(res.length()-exp.length()+8));
+        assertEquals(exp.substring(8), res.substring(res.length() - exp.length() + 8));
     }
 
     /**
@@ -66,9 +66,9 @@ public class DNSJavaDecoderTest {
         String res = JOrphanUtils.baToHexString(JMeterPluginsUtils.byteBufferToString(result).getBytes("cp866"));
         System.out.println(exp);
         System.out.println(res);
-        assertEquals(exp.substring(8), res.substring(res.length()-exp.length()+8));
+        assertEquals(exp.substring(8), res.substring(res.length() - exp.length() + 8));
     }
-    
+
     @Test
     public void testEncode_withFlagsMac() throws UnsupportedEncodingException {
         System.out.println("encode f");
@@ -80,7 +80,7 @@ public class DNSJavaDecoderTest {
         String res = JOrphanUtils.baToHexString(JMeterPluginsUtils.byteBufferToString(result).getBytes("cp866"));
         System.out.println(exp);
         System.out.println(res);
-        assertEquals(exp.substring(8), res.substring(res.length()-exp.length()+8));
+        assertEquals(exp.substring(8), res.substring(res.length() - exp.length() + 8));
     }
 
     /**
@@ -89,7 +89,7 @@ public class DNSJavaDecoderTest {
     @Test
     public void testDecode() {
         System.out.println("decode");
-        String resp="567f818000010007000000000667726f75707306676f6f676c6503636f6d0000010001c00c000500010000463a000b0667726f757073016cc013c02f000100010000011a00044a7d2765c02f000100010000011a00044a7d2771c02f000100010000011a00044a7d278ac02f000100010000011a00044a7d2766c02f000100010000011a00044a7d2764c02f000100010000011a00044a7d278b";
+        String resp = "567f818000010007000000000667726f75707306676f6f676c6503636f6d0000010001c00c000500010000463a000b0667726f757073016cc013c02f000100010000011a00044a7d2765c02f000100010000011a00044a7d2771c02f000100010000011a00044a7d278ac02f000100010000011a00044a7d2766c02f000100010000011a00044a7d2764c02f000100010000011a00044a7d278b";
         byte[] buf = BinaryTCPClientImpl.hexStringToByteArray(resp);
         DNSJavaDecoder instance = new DNSJavaDecoder();
         String expResult = "NOERROR";
@@ -102,7 +102,7 @@ public class DNSJavaDecoderTest {
     public void testDecode_tcp() {
         System.out.println("decode");
         // 0038 byte prefix must not be passed to parser
-        String resp="bcd581800001000200000000036e6e6d0272750000010001c00c00010001000027540004596fbd95c00c00010001000027540004596fbd94";
+        String resp = "bcd581800001000200000000036e6e6d0272750000010001c00c00010001000027540004596fbd95c00c00010001000027540004596fbd94";
         byte[] buf = BinaryTCPClientImpl.hexStringToByteArray(resp);
         DNSJavaDecoder instance = new DNSJavaDecoder();
         String expResult = "NOERROR";
@@ -110,8 +110,7 @@ public class DNSJavaDecoderTest {
         System.out.println(result);
         assertTrue(result.contains(expResult));
     }
-    
-    
+
     /**
      * Test of getRecord method, of class DNSJavaDecoder.
      */
@@ -130,10 +129,10 @@ public class DNSJavaDecoderTest {
     @Test
     public void testGetMessageBytes() {
         System.out.println("getMessageBytes");
-        String data = "";
+        String data = ". A IN";
         DNSJavaDecoder instance = new DNSJavaDecoder();
-        byte[] expResult = null;
+        int expResult = 17;
         byte[] result = instance.getMessageBytes(data);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result.length);
     }
 }

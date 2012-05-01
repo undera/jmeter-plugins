@@ -1,6 +1,7 @@
 package kg.apc.jmeter.functions;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.samplers.SampleResult;
@@ -46,7 +47,11 @@ public class FifoPutTest {
         SampleResult previousResult = null;
         Sampler currentSampler = null;
         FifoPut instance = new FifoPut();
-        String expResult = "";
+        String expResult = "test";
+        LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
+        list.add(new CompoundVariable("test"));
+        list.add(new CompoundVariable("test"));
+        instance.setParameters(list);
         String result = instance.execute(previousResult, currentSampler);
         assertEquals(expResult, result);
     }
@@ -57,9 +62,11 @@ public class FifoPutTest {
     @Test
     public void testSetParameters() throws Exception {
         System.out.println("setParameters");
-        Collection<CompoundVariable> parameters = null;
+         LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
+        list.add(new CompoundVariable("test"));
+        list.add(new CompoundVariable("test"));
         FifoPut instance = new FifoPut();
-        instance.setParameters(parameters);
+        instance.setParameters(list);
     }
 
     /**
@@ -69,7 +76,7 @@ public class FifoPutTest {
     public void testGetReferenceKey() {
         System.out.println("getReferenceKey");
         FifoPut instance = new FifoPut();
-        String expResult = "";
+        String expResult = "__fifoPut";
         String result = instance.getReferenceKey();
         assertEquals(expResult, result);
     }
@@ -81,8 +88,7 @@ public class FifoPutTest {
     public void testGetArgumentDesc() {
         System.out.println("getArgumentDesc");
         FifoPut instance = new FifoPut();
-        List expResult = null;
         List result = instance.getArgumentDesc();
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 }

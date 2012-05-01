@@ -72,17 +72,17 @@
 
     -->
 
-   <!-- APC: before making main jar we make cmd's jar -->
+    <!-- APC: before making main jar we make cmd's jar -->
    
     <target name="-post-jar">      
         <jar compress="${jar.compress}" index="${jar.index}" jarfile="${dist.dir}/CMDRunner.jar"		
-	      manifest="manifest.mf">
+             manifest="manifest.mf">
             <fileset dir="${build.dir}/classes"/>		
         </jar>
         
-          <!-- APC: for easy debugging environment we copy JAR
-           to jmeter/lib/ext, defined by property jmeter.lib.ext
-           in private.properties file -->
+        <!-- APC: for easy debugging environment we copy JAR
+        to jmeter/lib/ext, defined by property jmeter.lib.ext
+        in private.properties file -->
         <fail message="jmeter.lib.ext not available">
             <condition>
                 <not>
@@ -104,6 +104,38 @@
         </copy>
     </target>
 
-    <import file="coverage.xml"/>
+    <!-- Comment code below to disable code coverage -->
+    <!-- http://javadude.wordpress.com/2009/09/25/tutorial-getting-started-with-netbeans-and-junit-plus-cobertura-part-2/ -->
+    <property name="cobertura.dir" value="/usr/share/java" />
+    <path id="cobertura.classpath">
+        <fileset dir="${cobertura.dir}">
+            <include name="cobertura.jar" />
+            <include name="lib/**/*.jar" />
+        </fileset>
+    </path>
+    <taskdef classpathref="cobertura.classpath" resource="tasks.properties" />
+    
+    <property environment="env"/>
+    <taskdef classpath="cobertura.jar" resource="tasks.properties"/>
+    <target name="-pre-compile-test">
+        <delete dir="${build.instrumented.dir}" />
+        <delete dir="${build.report.cobertura.dir}" />
+        <mkdir dir="${build.instrumented.dir}" />
+        <mkdir dir="${build.report.cobertura.dir}" />
+        <cobertura-instrument todir="${build.instrumented.dir}">
+            <fileset dir="${build.classes.dir}">
+                <include name="**/*.class"/>
+            </fileset>
+        </cobertura-instrument>
+    </target>
+    
+    <target depends="init,compile-test,-pre-test-run,-do-test-run" if="have.tests" name="-post-test-run">
+        <fail if="tests.failed">Some tests failed; see details above.</fail>
+        <!-- You can disable the html portion if you are using the hudson plugin and rely on the xml -->
+        <cobertura-report format="html" srcdir="${src.dir}" destdir="${build.report.cobertura.dir}"/>
+        <!-- Used by the hudson plug-in -->
+        <cobertura-report format="xml" srcdir="${src.dir}" destdir="${build.report.cobertura.dir}"/>
+        <delete file="cobertura.ser" />
+    </target>
         
 </project>

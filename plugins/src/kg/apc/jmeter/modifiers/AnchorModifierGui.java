@@ -60,7 +60,7 @@ public class AnchorModifierGui extends AbstractPreProcessorGui {
         jScrollPane1.setViewportView(info);
         jScrollPane1.setBorder(null);
 
-        info.setText("This item will create a HTTP request to all links found in a page.");
+        info.setText("This item will create one HTTP request per link found in a page.");
 
         add(jScrollPane1, BorderLayout.CENTER);
     }

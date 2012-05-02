@@ -64,7 +64,9 @@ public class ResponseTimesPercentilesGui
         return new JSettingsPanel(this,
                 JSettingsPanel.GRADIENT_OPTION
                 | JSettingsPanel.MAXY_OPTION
-                | JSettingsPanel.AGGREGATE_OPTION);
+                | JSettingsPanel.AGGREGATE_OPTION
+                | JSettingsPanel.LIMIT_POINT_OPTION
+                | JSettingsPanel.MARKERS_OPTION_DISABLED);
     }
 
     @Override

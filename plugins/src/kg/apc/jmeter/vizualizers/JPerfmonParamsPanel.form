@@ -545,7 +545,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelMetricLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Chart label name (if empty, will be &apos;Metric parameter&apos;):"/>
+            <Property name="text" type="java.lang.String" value="Chart label name (if empty, will be &apos;Metric parameter&apos; value):"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

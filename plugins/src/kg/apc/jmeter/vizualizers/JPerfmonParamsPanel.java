@@ -964,7 +964,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         jPanelMetricLabel.setBorder(javax.swing.BorderFactory.createTitledBorder("Metric Label"));
         jPanelMetricLabel.setLayout(new java.awt.GridBagLayout());
 
-        jLabelMetricLabel.setText("Chart label name (if empty, will be 'Metric parameter'):");
+        jLabelMetricLabel.setText("Chart label name (if empty, will be 'Metric parameter' value):");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;

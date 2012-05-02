@@ -10,6 +10,7 @@ public class AnchorModifierGui extends AbstractPreProcessorGui {
     private static final String WIKIPAGE = "SpiderPreProcessor";
 
     public AnchorModifierGui() {
+        super();
         init();
     }
 
@@ -18,10 +19,12 @@ public class AnchorModifierGui extends AbstractPreProcessorGui {
         return JMeterPluginsUtils.prefixLabel("Spider PreProcessor");
     }
 
+    @Override
     public String getLabelResource() {
         return this.getClass().getName();
     }
 
+    @Override
     public TestElement createTestElement() {
         AnchorModifier modifier = new AnchorModifier();
         modifyTestElement(modifier);
@@ -34,6 +37,7 @@ public class AnchorModifierGui extends AbstractPreProcessorGui {
      * @see
      * org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
      */
+    @Override
     public void modifyTestElement(TestElement modifier) {
         configureTestElement(modifier);
     }
@@ -43,7 +47,5 @@ public class AnchorModifierGui extends AbstractPreProcessorGui {
         setBorder(makeBorder());
 
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
-
-        add(makeTitlePanel(), BorderLayout.NORTH);
     }
 }

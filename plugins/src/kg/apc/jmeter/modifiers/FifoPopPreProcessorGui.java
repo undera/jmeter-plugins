@@ -87,6 +87,9 @@ public class FifoPopPreProcessorGui extends AbstractPreProcessorGui {
         editConstraints.weightx = 1.0;
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+
         addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("FIFO Queue Name to Get Data From: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 0, queueName = new JTextField(20));
 

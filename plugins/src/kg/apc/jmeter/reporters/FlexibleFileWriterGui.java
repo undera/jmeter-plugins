@@ -160,8 +160,8 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
         addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Record each sample as: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 4, columns = new JTextField(20));
 
-        editConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
-        labelConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
         addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Write File Footer: ", JLabel.RIGHT));
         footer = new JTextArea();
         footer.setLineWrap(true);

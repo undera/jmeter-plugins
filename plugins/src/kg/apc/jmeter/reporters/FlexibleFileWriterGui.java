@@ -37,25 +37,25 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
     private JTextArea footer;
     private JButton browseButton;
     private String[] fields = {
-        "startTime", "Epoch time when the request was started",
         "endTime", "Epoch time when the request was ended",
-        "responseTime", "Response time, time to full response loaded",
-        "latency", "Latency, time to first response byte received (if available)",
-        "responseCode", "Response code (eg. 200, 404, etc.)",
-        "responseMessage", "Response message (eg. OK, Not Found, etc.)",
-        "responseHeaders", "Response headers (if present in sample)",
-        "responseData", "Response data",
-        "requestData", "Request data from sample",
-        "sentBytes", "Number of request bytes sent (if available)",
-        "receivedBytes", "Number of request bytes received (if available)",
-        "threadName", "Name of thread in Thread Group that processed the request",
-        "sampleLabel", "Name of the sampler that made the request",
-        "isSuccsessful", "If response was marked as successful",
-        "isFailed", "If response was marked as failed (surrogate field)",
-        "startTimeMillis", "Same as startTime, but divided by 1000 (surrogate field, eg. 1311121131.062)",
         "endTimeMillis", "Same as endTime, but divided by 1000 (surrogate field, eg. 1311122631.104)",
-        "responseTimeMicros", "Same as responseTime, but multiplied by 1000 (surrogate field)",
+        "isFailed", "If response was marked as failed (surrogate field)",
+        "isSuccsessful", "If response was marked as successful",
+        "latency", "Latency, time to first response byte received (if available)",
         "latencyMicros", "Same as latency, but multiplied by 1000 (surrogate field)",
+        "receivedBytes", "Number of request bytes received (if available)",
+        "requestData", "Request data from sample",
+        "responseCode", "Response code (eg. 200, 404, etc.)",
+        "responseData", "Response data",
+        "responseHeaders", "Response headers (if present in sample)",
+        "responseMessage", "Response message (eg. OK, Not Found, etc.)",
+        "responseTime", "Response time, time to full response loaded",
+        "responseTimeMicros", "Same as responseTime, but multiplied by 1000 (surrogate field)",
+        "sampleLabel", "Name of the sampler that made the request",
+        "sentBytes", "Number of request bytes sent (if available)",
+        "startTime", "Epoch time when the request was started",
+        "startTimeMillis", "Same as startTime, but divided by 1000 (surrogate field, eg. 1311121131.062)",
+        "threadName", "Name of thread in Thread Group that processed the request",
         "variable#<N>", "Sample variable with index N (eg. variable#2), see help for details"
     };
 
@@ -160,8 +160,8 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
         addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Record each sample as: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 4, columns = new JTextField(20));
 
-        editConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
-        labelConstraints.insets = new java.awt.Insets(0, 0, 0, 0);
+        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
         addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Write File Footer: ", JLabel.RIGHT));
         footer = new JTextArea();
         footer.setLineWrap(true);

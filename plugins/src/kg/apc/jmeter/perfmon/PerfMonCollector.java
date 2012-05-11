@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import kg.apc.perfmon.client.Transport;
 import kg.apc.perfmon.client.TransportFactory;
 import kg.apc.perfmon.metrics.MetricParams;
 import org.apache.jmeter.gui.GuiPackage;
-import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
@@ -22,7 +22,7 @@ import org.apache.log.Logger;
  * @author APC
  */
 public class PerfMonCollector
-        extends ResultCollector
+        extends CorrectedResultCollector
         implements Runnable, PerfMonSampleGenerator {
 
     private static boolean autoGenerateFiles = false;

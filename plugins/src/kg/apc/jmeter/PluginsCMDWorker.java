@@ -7,6 +7,7 @@ import java.util.Properties;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
+import kg.apc.jmeter.perfmon.PerfMonCollector;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import org.apache.jmeter.JMeter;
 import org.apache.jmeter.util.JMeterUtils;
@@ -191,7 +192,12 @@ public class PluginsCMDWorker {
 
         setOptions(gui);
 
-        CorrectedResultCollector rc = new CorrectedResultCollector();
+        CorrectedResultCollector rc;
+        if(gui instanceof kg.apc.jmeter.vizualizers.PerfMonGui) {
+           rc = new PerfMonCollector();
+        } else {
+           rc = new CorrectedResultCollector();
+        }
         rc.setExcludeLabels(excludeLabels);
         rc.setIncludeLabels(includeLabels);
         log.debug("Using JTL file: " + inputFile);

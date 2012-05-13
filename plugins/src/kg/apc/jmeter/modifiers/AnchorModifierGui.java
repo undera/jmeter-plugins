@@ -1,6 +1,8 @@
 package kg.apc.jmeter.modifiers;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -9,10 +11,18 @@ import org.apache.jmeter.testelement.TestElement;
 
 public class AnchorModifierGui extends AbstractPreProcessorGui {
 
-    private static final String WIKIPAGE = "SpiderPreProcessor";
+    private static final String WIKIPAGE = "Spider";
 
     public AnchorModifierGui() {
         init();
+    }
+    
+    //do not insert this vizualiser in any JMeter menu
+    private Collection<String> emptyCollection = new ArrayList<String>();
+
+    @Override
+    public Collection<String> getMenuCategories() {
+        return emptyCollection;
     }
 
     @Override

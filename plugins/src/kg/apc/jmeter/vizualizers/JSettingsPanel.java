@@ -268,7 +268,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
         jLabelLogo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/logoSimple.png"))); // NOI18N
-        jLabelLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabelLogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelLogoMouseClicked(evt);
@@ -395,7 +395,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jPanelTimeLineContainer.add(jCheckBoxRelativeTime, gridBagConstraints);
 
         jCheckBoxAutoExpand.setSelected(true);
-        jCheckBoxAutoExpand.setText("Auto expand rows");
+        jCheckBoxAutoExpand.setText("Auto-zoom rows for best fit");
         jCheckBoxAutoExpand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxAutoExpandActionPerformed(evt);

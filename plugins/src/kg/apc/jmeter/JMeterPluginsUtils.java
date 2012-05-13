@@ -1,12 +1,6 @@
 package kg.apc.jmeter;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -33,7 +27,7 @@ import org.apache.jmeter.util.JMeterUtils;
  */
 public abstract class JMeterPluginsUtils {
 
-    public static String PLUGINS_VERSION = "0.5.2 RC2";
+    public static String PLUGINS_VERSION = "0.5.2";
     private static String PLUGINS_PREFIX = "jp@gc - ";
     private static boolean prefixPlugins = true;
     public static final String WIKI_BASE = "http://code.google.com/p/jmeter-plugins/wiki/";
@@ -110,7 +104,7 @@ public abstract class JMeterPluginsUtils {
 
     private static List<Object> getArrayListForArray(Object[] rowData) {
         ArrayList<Object> res = new ArrayList<Object>();
-        for (int n = 0; n < rowData.length; n++) // note that we must use ArrayList
+        for (int n = 0; n < rowData.length; n++) // note that we MUST use ArrayList
         {
             res.add(rowData[n]);
         }

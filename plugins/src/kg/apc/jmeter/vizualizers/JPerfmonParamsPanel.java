@@ -3,9 +3,11 @@ package kg.apc.jmeter.vizualizers;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import javax.swing.AbstractButton;
@@ -33,6 +35,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
     private final static int OPTION_EXEC = 1 << 6;
     private final static int OPTION_TAIL = 1 << 7;
     private final static int OPTION_JMX = 1 << 8;
+    private final static int OPTION_UNIT = 1 << 9;
     private JTextField parent = null;
     private String type = null;
 
@@ -49,6 +52,9 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
     private final static String METRIC_JMX = "JMX";
 
     private HashMap<String, Integer> rules = new HashMap<String, Integer>();
+
+    private ArrayList<String> unitRules = new ArrayList<String>();
+
     //CPU metrics
     private static String[] cpuMetricsPrimary = {
         "combined" + defaultMarker, "Get the combined CPU usage, in percent (%)",
@@ -72,13 +78,13 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
     private static String[] memMetricsPrimary = {
         "usedperc" + defaultMarker, "Relative memory usage, in percent (%)",
         "freeperc", "Relative free memory, in percent (%)",
-        "used", "Memory used, in bytes",
-        "free", "Free memory, in bytes",};
+        "used", "Size of Memory used",
+        "free", "Size of Free memory"};
     private static String[] memMetricsAdditional = {
         "actualused", "Actual memory usage, in percent (%)",
         "actualfree", "Actual free memory, in percent (%)",
-        "ram", "Server physical memory, in bytes",
-        "total", "Total memory, in bytes",};
+        "ram", "Size of Server physical memory",
+        "total", "Size of Total memory"};
     private static String[] memProcessMetricsPrimary = {
         "resident" + defaultMarker, "Process resident memory usage, in bytes",
         "virtual", "Process virtual memory usage, in bytes",
@@ -171,11 +177,57 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         this.parent = parentField;
         this.type = type;
         initRules();
+        initUnitRules();
         initComponents();
         initMetrics(type);
         showProcessScopePanels();
         makePtqlLink();
         initFields();
+    }
+
+    private void initUnitRules() {
+       //TODO: map all metrics...
+       //memory
+       unitRules.add(METRIC_MEM + memMetricsPrimary[4]);
+       unitRules.add(METRIC_MEM + memMetricsPrimary[6]);
+       unitRules.add(METRIC_MEM + memMetricsAdditional[4]);
+       unitRules.add(METRIC_MEM + memMetricsAdditional[6]);
+
+       //swap
+
+       //tcp
+
+       //diskio
+
+       //netio
+    }
+
+    private boolean isUnitRelevent(String metric) {
+       return unitRules.contains(type + metric);
+    }
+
+    private void enableUnit(String metric) {
+       boolean show = isUnitRelevent(metric);
+       jLabelUnit.setEnabled(show);
+       jComboBoxUnit.setEnabled(show);
+    }
+
+    private String getUnit() {
+       int unit = jComboBoxUnit.getSelectedIndex();
+       switch(unit) {
+          case 1:
+             return "kb";
+          case 2:
+             return "mb";
+          default:
+             return "b";
+       }
+    }
+
+    private void setUnit(String unit) {
+       if("kb".equalsIgnoreCase(unit)) jComboBoxUnit.setSelectedIndex(1);
+       else if("mb".equalsIgnoreCase(unit)) jComboBoxUnit.setSelectedIndex(2);
+       else jComboBoxUnit.setSelectedIndex(0);
     }
 
     //extract exec or tail command (handle label)
@@ -321,6 +373,16 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
             }
             i++;
         }
+
+        //set unit
+        i=0;
+        while(i<elements.length) {
+            if(elements[i].startsWith("unit=")) {
+                setUnit(elements[i].substring(5));
+                break;
+            }
+            i++;
+        }
     }
 
     private void initMetricRadios(String metricName) {
@@ -329,6 +391,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
             JRadioButton radio = (JRadioButton)enu.nextElement();
             if(metricName.equals(radio.getActionCommand())) {
                 radio.setSelected(true);
+                enableUnit(metricName);
             }
         }
     }
@@ -352,11 +415,11 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
 
     private void initRules() {
         rules.put(METRIC_CPU, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_PROCESS_SCOPE | OPTION_CPU_CORE_SCOPE);
-        rules.put(METRIC_MEM, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_PROCESS_SCOPE);
-        rules.put(METRIC_SWAP, OPTION_PRIMARY_METRIC);
-        rules.put(METRIC_DISKIO, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_FILESYSTEM_SCOPE);
-        rules.put(METRIC_NETIO, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_NET_INTERFACE_SCOPE);
-        rules.put(METRIC_TCP, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC);
+        rules.put(METRIC_MEM, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_PROCESS_SCOPE | OPTION_UNIT);
+        rules.put(METRIC_SWAP, OPTION_PRIMARY_METRIC | OPTION_UNIT);
+        rules.put(METRIC_DISKIO, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_FILESYSTEM_SCOPE | OPTION_UNIT);
+        rules.put(METRIC_NETIO, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_NET_INTERFACE_SCOPE | OPTION_UNIT);
+        rules.put(METRIC_TCP, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_UNIT);
         rules.put(METRIC_EXEC, OPTION_EXEC);
         rules.put(METRIC_TAIL, OPTION_TAIL);
         rules.put(METRIC_JMX, OPTION_PRIMARY_METRIC | OPTION_JMX);
@@ -364,6 +427,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
 
     private void fillMetrics(String[] metrics, JPanel panel) {
         if (metrics != null) {
+           MetricActionListener listener = new MetricActionListener();
             for (int i = 0; i < metrics.length / 2; i++) {
                 JRadioButton radio = new JRadioButton(metrics[2 * i]);
                 String action = metrics[2 * i];
@@ -372,6 +436,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
                 }
                 radio.setActionCommand(action);
                 radio.setToolTipText(metrics[2 * i + 1]);
+                radio.addActionListener(listener);
                 buttonGroupMetrics.add(radio);
                 panel.add(radio);
             }
@@ -435,6 +500,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
             jPanelFileSystem.setVisible((rules.get(metricType) & OPTION_FILESYSTEM_SCOPE) != 0);
             jPanelNetInterface.setVisible((rules.get(metricType) & OPTION_NET_INTERFACE_SCOPE) != 0);
             jPanelJmxParams.setVisible((rules.get(metricType) & OPTION_JMX) != 0);
+            jPanelUnit.setVisible((rules.get(metricType) & OPTION_UNIT) != 0);
         }
     }
 
@@ -544,6 +610,13 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
             addStringItem(ret, "label=" + tmp.trim());
         }
 
+        //add the metric unit
+        if (buttonGroupMetrics.getSelection() != null) {
+           if(isUnitRelevent(buttonGroupMetrics.getSelection().getActionCommand())) {
+              addStringItem(ret, "unit=" + getUnit());
+           }
+        }
+
         if (type.equals(METRIC_EXEC)) {
             addStringItem(ret, jTextFieldExec.getText().trim());
         } else if (type.equals(METRIC_TAIL)) {
@@ -574,509 +647,543 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
      * always regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
+   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+   private void initComponents() {
+      java.awt.GridBagConstraints gridBagConstraints;
 
-        buttonGroupPID = new javax.swing.ButtonGroup();
-        buttonGroupMetrics = new javax.swing.ButtonGroup();
-        buttonGroupCpuCores = new javax.swing.ButtonGroup();
-        buttonGroupScope = new javax.swing.ButtonGroup();
-        jPanelPID = new javax.swing.JPanel();
-        jRadioPID = new javax.swing.JRadioButton();
-        jTextFieldPID = new javax.swing.JTextField();
-        jRadioProcessName = new javax.swing.JRadioButton();
-        jTextFieldPorcessName = new javax.swing.JTextField();
-        jLabelOccurence = new javax.swing.JLabel();
-        jTextFieldOccurence = new javax.swing.JTextField();
-        jRadioPtql = new javax.swing.JRadioButton();
-        jTextFieldPtql = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabelPtqlHelp = new javax.swing.JLabel();
-        jPanelButtons = new javax.swing.JPanel();
-        jButtonApply = new javax.swing.JButton();
-        jButtonCancel = new javax.swing.JButton();
-        jPanelPrimaryMetrics = new javax.swing.JPanel();
-        jPanelAdditionaMetrics = new javax.swing.JPanel();
-        jPanelCustomCommand = new javax.swing.JPanel();
-        jLabelExec = new javax.swing.JLabel();
-        jTextFieldExec = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaExecHelp = new javax.swing.JTextArea();
-        jPanelCpuCore = new javax.swing.JPanel();
-        jRadioCpuAllCores = new javax.swing.JRadioButton();
-        jRadioCustomCpuCore = new javax.swing.JRadioButton();
-        jTextFieldCoreIndex = new javax.swing.JTextField();
-        jPanelScope = new javax.swing.JPanel();
-        jRadioScopeAll = new javax.swing.JRadioButton();
-        jRadioScopePerProcess = new javax.swing.JRadioButton();
-        jPanelTailCommand = new javax.swing.JPanel();
-        jLabelTail = new javax.swing.JLabel();
-        jTextFieldTail = new javax.swing.JTextField();
-        jPanelFileSystem = new javax.swing.JPanel();
-        jLabelFileSystem = new javax.swing.JLabel();
-        jTextFieldFileSystem = new javax.swing.JTextField();
-        jPanelNetInterface = new javax.swing.JPanel();
-        jLabelNetInterface = new javax.swing.JLabel();
-        jTextFieldNetInterface = new javax.swing.JTextField();
-        jPanelMetricLabel = new javax.swing.JPanel();
-        jLabelMetricLabel = new javax.swing.JLabel();
-        jTextFieldMetricLabel = new javax.swing.JTextField();
-        jPanelStretch = new javax.swing.JPanel();
-        jPanelJmxParams = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextFieldJmxHost = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextFieldJmxPort = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextFieldJmxUser = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextFieldJmxPassword = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+      buttonGroupPID = new javax.swing.ButtonGroup();
+      buttonGroupMetrics = new javax.swing.ButtonGroup();
+      buttonGroupCpuCores = new javax.swing.ButtonGroup();
+      buttonGroupScope = new javax.swing.ButtonGroup();
+      jPanelPID = new javax.swing.JPanel();
+      jRadioPID = new javax.swing.JRadioButton();
+      jTextFieldPID = new javax.swing.JTextField();
+      jRadioProcessName = new javax.swing.JRadioButton();
+      jTextFieldPorcessName = new javax.swing.JTextField();
+      jLabelOccurence = new javax.swing.JLabel();
+      jTextFieldOccurence = new javax.swing.JTextField();
+      jRadioPtql = new javax.swing.JRadioButton();
+      jTextFieldPtql = new javax.swing.JTextField();
+      jLabel2 = new javax.swing.JLabel();
+      jLabelPtqlHelp = new javax.swing.JLabel();
+      jPanelButtons = new javax.swing.JPanel();
+      jButtonApply = new javax.swing.JButton();
+      jButtonCancel = new javax.swing.JButton();
+      jPanelPrimaryMetrics = new javax.swing.JPanel();
+      jPanelAdditionaMetrics = new javax.swing.JPanel();
+      jPanelCustomCommand = new javax.swing.JPanel();
+      jLabelExec = new javax.swing.JLabel();
+      jTextFieldExec = new javax.swing.JTextField();
+      jLabel1 = new javax.swing.JLabel();
+      jScrollPane1 = new javax.swing.JScrollPane();
+      jTextAreaExecHelp = new javax.swing.JTextArea();
+      jPanelCpuCore = new javax.swing.JPanel();
+      jRadioCpuAllCores = new javax.swing.JRadioButton();
+      jRadioCustomCpuCore = new javax.swing.JRadioButton();
+      jTextFieldCoreIndex = new javax.swing.JTextField();
+      jPanelScope = new javax.swing.JPanel();
+      jRadioScopeAll = new javax.swing.JRadioButton();
+      jRadioScopePerProcess = new javax.swing.JRadioButton();
+      jPanelTailCommand = new javax.swing.JPanel();
+      jLabelTail = new javax.swing.JLabel();
+      jTextFieldTail = new javax.swing.JTextField();
+      jPanelFileSystem = new javax.swing.JPanel();
+      jLabelFileSystem = new javax.swing.JLabel();
+      jTextFieldFileSystem = new javax.swing.JTextField();
+      jPanelNetInterface = new javax.swing.JPanel();
+      jLabelNetInterface = new javax.swing.JLabel();
+      jTextFieldNetInterface = new javax.swing.JTextField();
+      jPanelMetricLabel = new javax.swing.JPanel();
+      jLabelMetricLabel = new javax.swing.JLabel();
+      jTextFieldMetricLabel = new javax.swing.JTextField();
+      jPanelStretch = new javax.swing.JPanel();
+      jPanelJmxParams = new javax.swing.JPanel();
+      jLabel3 = new javax.swing.JLabel();
+      jTextFieldJmxHost = new javax.swing.JTextField();
+      jLabel4 = new javax.swing.JLabel();
+      jTextFieldJmxPort = new javax.swing.JTextField();
+      jLabel5 = new javax.swing.JLabel();
+      jTextFieldJmxUser = new javax.swing.JTextField();
+      jLabel6 = new javax.swing.JLabel();
+      jTextFieldJmxPassword = new javax.swing.JTextField();
+      jLabel7 = new javax.swing.JLabel();
+      jPanelUnit = new javax.swing.JPanel();
+      jLabelUnit = new javax.swing.JLabel();
+      jComboBoxUnit = new javax.swing.JComboBox();
 
-        setLayout(new java.awt.GridBagLayout());
+      setLayout(new java.awt.GridBagLayout());
 
-        jPanelPID.setBorder(javax.swing.BorderFactory.createTitledBorder("Process Identification"));
-        jPanelPID.setLayout(new java.awt.GridBagLayout());
+      jPanelPID.setBorder(javax.swing.BorderFactory.createTitledBorder("Process Identification"));
+      jPanelPID.setLayout(new java.awt.GridBagLayout());
 
-        buttonGroupPID.add(jRadioPID);
-        jRadioPID.setText("Process ID");
-        jRadioPID.setActionCommand("pid");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanelPID.add(jRadioPID, gridBagConstraints);
+      buttonGroupPID.add(jRadioPID);
+      jRadioPID.setText("Process ID");
+      jRadioPID.setActionCommand("pid");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      jPanelPID.add(jRadioPID, gridBagConstraints);
 
-        jTextFieldPID.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextFieldPID.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        jPanelPID.add(jTextFieldPID, gridBagConstraints);
+      jTextFieldPID.setMinimumSize(new java.awt.Dimension(60, 20));
+      jTextFieldPID.setPreferredSize(new java.awt.Dimension(60, 20));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 1;
+      gridBagConstraints.gridy = 1;
+      jPanelPID.add(jTextFieldPID, gridBagConstraints);
 
-        buttonGroupPID.add(jRadioProcessName);
-        jRadioProcessName.setText("Process Name");
-        jRadioProcessName.setActionCommand("name");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanelPID.add(jRadioProcessName, gridBagConstraints);
+      buttonGroupPID.add(jRadioProcessName);
+      jRadioProcessName.setText("Process Name");
+      jRadioProcessName.setActionCommand("name");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      jPanelPID.add(jRadioProcessName, gridBagConstraints);
 
-        jTextFieldPorcessName.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextFieldPorcessName.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        jPanelPID.add(jTextFieldPorcessName, gridBagConstraints);
+      jTextFieldPorcessName.setMinimumSize(new java.awt.Dimension(60, 20));
+      jTextFieldPorcessName.setPreferredSize(new java.awt.Dimension(60, 20));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 1;
+      gridBagConstraints.gridy = 2;
+      jPanelPID.add(jTextFieldPorcessName, gridBagConstraints);
 
-        jLabelOccurence.setText(", occurence: ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        jPanelPID.add(jLabelOccurence, gridBagConstraints);
+      jLabelOccurence.setText(", occurence: ");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 2;
+      gridBagConstraints.gridy = 2;
+      jPanelPID.add(jLabelOccurence, gridBagConstraints);
 
-        jTextFieldOccurence.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextFieldOccurence.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanelPID.add(jTextFieldOccurence, gridBagConstraints);
+      jTextFieldOccurence.setMinimumSize(new java.awt.Dimension(60, 20));
+      jTextFieldOccurence.setPreferredSize(new java.awt.Dimension(60, 20));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 3;
+      gridBagConstraints.gridy = 2;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      gridBagConstraints.weightx = 1.0;
+      jPanelPID.add(jTextFieldOccurence, gridBagConstraints);
 
-        buttonGroupPID.add(jRadioPtql);
-        jRadioPtql.setText("PTQL Query");
-        jRadioPtql.setActionCommand("ptql");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanelPID.add(jRadioPtql, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanelPID.add(jTextFieldPtql, gridBagConstraints);
+      buttonGroupPID.add(jRadioPtql);
+      jRadioPtql.setText("PTQL Query");
+      jRadioPtql.setActionCommand("ptql");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 3;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      jPanelPID.add(jRadioPtql, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 1;
+      gridBagConstraints.gridy = 3;
+      gridBagConstraints.gridwidth = 4;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      jPanelPID.add(jTextFieldPtql, gridBagConstraints);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        jPanelPID.add(jLabel2, gridBagConstraints);
+      jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 5;
+      gridBagConstraints.gridy = 3;
+      gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+      jPanelPID.add(jLabel2, gridBagConstraints);
 
-        jLabelPtqlHelp.setText("Help");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 3;
-        jPanelPID.add(jLabelPtqlHelp, gridBagConstraints);
+      jLabelPtqlHelp.setText("Help");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 6;
+      gridBagConstraints.gridy = 3;
+      jPanelPID.add(jLabelPtqlHelp, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(jPanelPID, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 3;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      add(jPanelPID, gridBagConstraints);
 
-        jButtonApply.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/tick.png"))); // NOI18N
-        jButtonApply.setText("Apply");
-        jButtonApply.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonApplyActionPerformed(evt);
-            }
-        });
-        jPanelButtons.add(jButtonApply);
+      jButtonApply.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/tick.png"))); // NOI18N
+      jButtonApply.setText("Apply");
+      jButtonApply.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButtonApplyActionPerformed(evt);
+         }
+      });
+      jPanelButtons.add(jButtonApply);
 
-        jButtonCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/cross.png"))); // NOI18N
-        jButtonCancel.setText("Cancel");
-        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelActionPerformed(evt);
-            }
-        });
-        jPanelButtons.add(jButtonCancel);
+      jButtonCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/cross.png"))); // NOI18N
+      jButtonCancel.setText("Cancel");
+      jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButtonCancelActionPerformed(evt);
+         }
+      });
+      jPanelButtons.add(jButtonCancel);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
-        add(jPanelButtons, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 13;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
+      add(jPanelButtons, gridBagConstraints);
 
-        jPanelPrimaryMetrics.setBorder(javax.swing.BorderFactory.createTitledBorder("Primary Metrics"));
-        jPanelPrimaryMetrics.setLayout(new java.awt.GridLayout(0, 1));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        add(jPanelPrimaryMetrics, gridBagConstraints);
+      jPanelPrimaryMetrics.setBorder(javax.swing.BorderFactory.createTitledBorder("Primary Metrics"));
+      jPanelPrimaryMetrics.setLayout(new java.awt.GridLayout(0, 1));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+      gridBagConstraints.weightx = 1.0;
+      add(jPanelPrimaryMetrics, gridBagConstraints);
 
-        jPanelAdditionaMetrics.setBorder(javax.swing.BorderFactory.createTitledBorder("Additional Metrics"));
-        jPanelAdditionaMetrics.setLayout(new java.awt.GridLayout(0, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        add(jPanelAdditionaMetrics, gridBagConstraints);
+      jPanelAdditionaMetrics.setBorder(javax.swing.BorderFactory.createTitledBorder("Additional Metrics"));
+      jPanelAdditionaMetrics.setLayout(new java.awt.GridLayout(0, 2));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 1;
+      gridBagConstraints.gridy = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+      gridBagConstraints.weightx = 1.0;
+      add(jPanelAdditionaMetrics, gridBagConstraints);
 
-        jPanelCustomCommand.setBorder(javax.swing.BorderFactory.createTitledBorder("Custom Exec Command"));
-        jPanelCustomCommand.setLayout(new java.awt.GridBagLayout());
+      jPanelCustomCommand.setBorder(javax.swing.BorderFactory.createTitledBorder("Custom Exec Command"));
+      jPanelCustomCommand.setLayout(new java.awt.GridBagLayout());
 
-        jLabelExec.setText("Command to run:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelCustomCommand.add(jLabelExec, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-        jPanelCustomCommand.add(jTextFieldExec, gridBagConstraints);
+      jLabelExec.setText("Command to run:");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 0;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      jPanelCustomCommand.add(jLabelExec, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.weightx = 1.0;
+      gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+      jPanelCustomCommand.add(jTextFieldExec, gridBagConstraints);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
-        jLabel1.setText("Quick help:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
-        jPanelCustomCommand.add(jLabel1, gridBagConstraints);
+      jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
+      jLabel1.setText("Quick help:");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 2;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+      jPanelCustomCommand.add(jLabel1, gridBagConstraints);
 
-        jTextAreaExecHelp.setColumns(20);
-        jTextAreaExecHelp.setEditable(false);
-        jTextAreaExecHelp.setLineWrap(true);
-        jTextAreaExecHelp.setRows(15);
-        jTextAreaExecHelp.setText("This metric type interprets parameter string as path to process to start and arguments to pass to the process. Parameters separated with colon.\nThe process must print out to standard output single line containing single numeric metric value.\n\nExample1: Monitoring Linux cached memory size, used free utility output:\n/bin/sh:-c:free | grep Mem | awk '{print $7}'\n\nExample2: Monitoring MySQL select query count:\n/bin/sh:-c:echo \"show global status like 'Com_select'\" | mysql -u root | awk '$1 ==\"Com_select\" {print $2}'");
-        jTextAreaExecHelp.setWrapStyleWord(true);
-        jTextAreaExecHelp.setOpaque(false);
-        jScrollPane1.setViewportView(jTextAreaExecHelp);
+      jTextAreaExecHelp.setColumns(20);
+      jTextAreaExecHelp.setEditable(false);
+      jTextAreaExecHelp.setLineWrap(true);
+      jTextAreaExecHelp.setRows(15);
+      jTextAreaExecHelp.setText("This metric type interprets parameter string as path to process to start and arguments to pass to the process. Parameters separated with colon.\nThe process must print out to standard output single line containing single numeric metric value.\n\nExample1: Monitoring Linux cached memory size, used free utility output:\n/bin/sh:-c:free | grep Mem | awk '{print $7}'\n\nExample2: Monitoring MySQL select query count:\n/bin/sh:-c:echo \"show global status like 'Com_select'\" | mysql -u root | awk '$1 ==\"Com_select\" {print $2}'");
+      jTextAreaExecHelp.setWrapStyleWord(true);
+      jTextAreaExecHelp.setOpaque(false);
+      jScrollPane1.setViewportView(jTextAreaExecHelp);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weighty = 1.0;
-        jPanelCustomCommand.add(jScrollPane1, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 3;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+      gridBagConstraints.weighty = 1.0;
+      jPanelCustomCommand.add(jScrollPane1, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        add(jPanelCustomCommand, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 5;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+      gridBagConstraints.weightx = 1.0;
+      gridBagConstraints.weighty = 1.0;
+      add(jPanelCustomCommand, gridBagConstraints);
 
-        jPanelCpuCore.setBorder(javax.swing.BorderFactory.createTitledBorder("CPU Cores"));
-        jPanelCpuCore.setLayout(new java.awt.GridBagLayout());
+      jPanelCpuCore.setBorder(javax.swing.BorderFactory.createTitledBorder("CPU Cores"));
+      jPanelCpuCore.setLayout(new java.awt.GridBagLayout());
 
-        buttonGroupCpuCores.add(jRadioCpuAllCores);
-        jRadioCpuAllCores.setSelected(true);
-        jRadioCpuAllCores.setText("All Cores (default)");
-        jRadioCpuAllCores.setActionCommand("all");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelCpuCore.add(jRadioCpuAllCores, gridBagConstraints);
+      buttonGroupCpuCores.add(jRadioCpuAllCores);
+      jRadioCpuAllCores.setSelected(true);
+      jRadioCpuAllCores.setText("All Cores (default)");
+      jRadioCpuAllCores.setActionCommand("all");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 0;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      jPanelCpuCore.add(jRadioCpuAllCores, gridBagConstraints);
 
-        buttonGroupCpuCores.add(jRadioCustomCpuCore);
-        jRadioCustomCpuCore.setText("Custom CPU Index (0 based)");
-        jRadioCustomCpuCore.setActionCommand("index");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelCpuCore.add(jRadioCustomCpuCore, gridBagConstraints);
+      buttonGroupCpuCores.add(jRadioCustomCpuCore);
+      jRadioCustomCpuCore.setText("Custom CPU Index (0 based)");
+      jRadioCustomCpuCore.setActionCommand("index");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      jPanelCpuCore.add(jRadioCustomCpuCore, gridBagConstraints);
 
-        jTextFieldCoreIndex.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextFieldCoreIndex.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.weightx = 1.0;
-        jPanelCpuCore.add(jTextFieldCoreIndex, gridBagConstraints);
+      jTextFieldCoreIndex.setMinimumSize(new java.awt.Dimension(60, 20));
+      jTextFieldCoreIndex.setPreferredSize(new java.awt.Dimension(60, 20));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 1;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      gridBagConstraints.weightx = 1.0;
+      jPanelCpuCore.add(jTextFieldCoreIndex, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(jPanelCpuCore, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 4;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      add(jPanelCpuCore, gridBagConstraints);
 
-        jPanelScope.setBorder(javax.swing.BorderFactory.createTitledBorder("Scope"));
-        jPanelScope.setLayout(new java.awt.GridLayout(0, 1));
+      jPanelScope.setBorder(javax.swing.BorderFactory.createTitledBorder("Scope"));
+      jPanelScope.setLayout(new java.awt.GridLayout(0, 1));
 
-        buttonGroupScope.add(jRadioScopeAll);
-        jRadioScopeAll.setSelected(true);
-        jRadioScopeAll.setText("All");
-        jRadioScopeAll.setActionCommand("all");
-        jRadioScopeAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioScopeAllActionPerformed(evt);
-            }
-        });
-        jPanelScope.add(jRadioScopeAll);
+      buttonGroupScope.add(jRadioScopeAll);
+      jRadioScopeAll.setSelected(true);
+      jRadioScopeAll.setText("All");
+      jRadioScopeAll.setActionCommand("all");
+      jRadioScopeAll.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jRadioScopeAllActionPerformed(evt);
+         }
+      });
+      jPanelScope.add(jRadioScopeAll);
 
-        buttonGroupScope.add(jRadioScopePerProcess);
-        jRadioScopePerProcess.setText("Per Process");
-        jRadioScopePerProcess.setActionCommand("process");
-        jRadioScopePerProcess.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioScopePerProcessActionPerformed(evt);
-            }
-        });
-        jPanelScope.add(jRadioScopePerProcess);
+      buttonGroupScope.add(jRadioScopePerProcess);
+      jRadioScopePerProcess.setText("Per Process");
+      jRadioScopePerProcess.setActionCommand("process");
+      jRadioScopePerProcess.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jRadioScopePerProcessActionPerformed(evt);
+         }
+      });
+      jPanelScope.add(jRadioScopePerProcess);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(jPanelScope, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      add(jPanelScope, gridBagConstraints);
 
-        jPanelTailCommand.setBorder(javax.swing.BorderFactory.createTitledBorder("Custom Tail Command"));
-        jPanelTailCommand.setLayout(new java.awt.GridBagLayout());
+      jPanelTailCommand.setBorder(javax.swing.BorderFactory.createTitledBorder("Custom Tail Command"));
+      jPanelTailCommand.setLayout(new java.awt.GridBagLayout());
 
-        jLabelTail.setText("Path of the file to tail:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelTailCommand.add(jLabelTail, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-        jPanelTailCommand.add(jTextFieldTail, gridBagConstraints);
+      jLabelTail.setText("Path of the file to tail:");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 0;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      jPanelTailCommand.add(jLabelTail, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.weightx = 1.0;
+      gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+      jPanelTailCommand.add(jTextFieldTail, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        add(jPanelTailCommand, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 6;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.weightx = 1.0;
+      add(jPanelTailCommand, gridBagConstraints);
 
-        jPanelFileSystem.setBorder(javax.swing.BorderFactory.createTitledBorder("Filesystem Filter"));
-        jPanelFileSystem.setLayout(new java.awt.GridBagLayout());
+      jPanelFileSystem.setBorder(javax.swing.BorderFactory.createTitledBorder("Filesystem Filter"));
+      jPanelFileSystem.setLayout(new java.awt.GridBagLayout());
 
-        jLabelFileSystem.setText("Filesystem to monitor (if empty: all), eg \"C\\:\\\" or \"/home\":");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelFileSystem.add(jLabelFileSystem, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-        jPanelFileSystem.add(jTextFieldFileSystem, gridBagConstraints);
+      jLabelFileSystem.setText("Filesystem to monitor (if empty: all), eg \"C\\:\\\" or \"/home\":");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 0;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      jPanelFileSystem.add(jLabelFileSystem, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.weightx = 1.0;
+      gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+      jPanelFileSystem.add(jTextFieldFileSystem, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        add(jPanelFileSystem, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 7;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.weightx = 1.0;
+      add(jPanelFileSystem, gridBagConstraints);
 
-        jPanelNetInterface.setBorder(javax.swing.BorderFactory.createTitledBorder("Network Interface Filter"));
-        jPanelNetInterface.setLayout(new java.awt.GridBagLayout());
+      jPanelNetInterface.setBorder(javax.swing.BorderFactory.createTitledBorder("Network Interface Filter"));
+      jPanelNetInterface.setLayout(new java.awt.GridBagLayout());
 
-        jLabelNetInterface.setText("Network interface to monitor (if empty: all), eg \"eth0\":");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelNetInterface.add(jLabelNetInterface, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-        jPanelNetInterface.add(jTextFieldNetInterface, gridBagConstraints);
+      jLabelNetInterface.setText("Network interface to monitor (if empty: all), eg \"eth0\":");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 0;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      jPanelNetInterface.add(jLabelNetInterface, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.weightx = 1.0;
+      gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+      jPanelNetInterface.add(jTextFieldNetInterface, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        add(jPanelNetInterface, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 8;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.weightx = 1.0;
+      add(jPanelNetInterface, gridBagConstraints);
 
-        jPanelMetricLabel.setBorder(javax.swing.BorderFactory.createTitledBorder("Metric Label"));
-        jPanelMetricLabel.setLayout(new java.awt.GridBagLayout());
+      jPanelMetricLabel.setBorder(javax.swing.BorderFactory.createTitledBorder("Metric Label"));
+      jPanelMetricLabel.setLayout(new java.awt.GridBagLayout());
 
-        jLabelMetricLabel.setText("Chart label name (if empty, will be 'Metric parameter' value):");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelMetricLabel.add(jLabelMetricLabel, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-        jPanelMetricLabel.add(jTextFieldMetricLabel, gridBagConstraints);
+      jLabelMetricLabel.setText("Chart label name (if empty, will be 'Metric parameter' value):");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 0;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      jPanelMetricLabel.add(jLabelMetricLabel, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.weightx = 1.0;
+      gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+      jPanelMetricLabel.add(jTextFieldMetricLabel, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        add(jPanelMetricLabel, gridBagConstraints);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 11;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      add(jPanelMetricLabel, gridBagConstraints);
 
-        jPanelStretch.setMinimumSize(new java.awt.Dimension(0, 0));
-        jPanelStretch.setPreferredSize(new java.awt.Dimension(0, 0));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weighty = 1.0;
-        add(jPanelStretch, gridBagConstraints);
+      jPanelStretch.setMinimumSize(new java.awt.Dimension(0, 0));
+      jPanelStretch.setPreferredSize(new java.awt.Dimension(0, 0));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 12;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+      gridBagConstraints.weighty = 1.0;
+      add(jPanelStretch, gridBagConstraints);
 
-        jPanelJmxParams.setBorder(javax.swing.BorderFactory.createTitledBorder("JMX Connection Parameters"));
-        jPanelJmxParams.setLayout(new java.awt.GridBagLayout());
+      jPanelJmxParams.setBorder(javax.swing.BorderFactory.createTitledBorder("JMX Connection Parameters"));
+      jPanelJmxParams.setLayout(new java.awt.GridBagLayout());
 
-        jLabel3.setText("Host:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelJmxParams.add(jLabel3, gridBagConstraints);
+      jLabel3.setText("Host:");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+      jPanelJmxParams.add(jLabel3, gridBagConstraints);
 
-        jTextFieldJmxHost.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPanelJmxParams.add(jTextFieldJmxHost, gridBagConstraints);
+      jTextFieldJmxHost.setPreferredSize(new java.awt.Dimension(60, 20));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 1;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.weightx = 1.0;
+      gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+      jPanelJmxParams.add(jTextFieldJmxHost, gridBagConstraints);
 
-        jLabel4.setText("Port:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelJmxParams.add(jLabel4, gridBagConstraints);
+      jLabel4.setText("Port:");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 2;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+      jPanelJmxParams.add(jLabel4, gridBagConstraints);
 
-        jTextFieldJmxPort.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPanelJmxParams.add(jTextFieldJmxPort, gridBagConstraints);
+      jTextFieldJmxPort.setPreferredSize(new java.awt.Dimension(60, 20));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 3;
+      gridBagConstraints.gridy = 1;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.weightx = 1.0;
+      gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+      jPanelJmxParams.add(jTextFieldJmxPort, gridBagConstraints);
 
-        jLabel5.setText("User:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelJmxParams.add(jLabel5, gridBagConstraints);
+      jLabel5.setText("User:");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 2;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+      jPanelJmxParams.add(jLabel5, gridBagConstraints);
 
-        jTextFieldJmxUser.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPanelJmxParams.add(jTextFieldJmxUser, gridBagConstraints);
+      jTextFieldJmxUser.setPreferredSize(new java.awt.Dimension(60, 20));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 1;
+      gridBagConstraints.gridy = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+      jPanelJmxParams.add(jTextFieldJmxUser, gridBagConstraints);
 
-        jLabel6.setText("Password:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelJmxParams.add(jLabel6, gridBagConstraints);
+      jLabel6.setText("Password:");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 2;
+      gridBagConstraints.gridy = 2;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+      jPanelJmxParams.add(jLabel6, gridBagConstraints);
 
-        jTextFieldJmxPassword.setPreferredSize(new java.awt.Dimension(60, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPanelJmxParams.add(jTextFieldJmxPassword, gridBagConstraints);
+      jTextFieldJmxPassword.setPreferredSize(new java.awt.Dimension(60, 20));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 3;
+      gridBagConstraints.gridy = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+      jPanelJmxParams.add(jTextFieldJmxPassword, gridBagConstraints);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
-        jLabel7.setText("If no host/port specified, local to agent on port 4711");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 2, 0);
-        jPanelJmxParams.add(jLabel7, gridBagConstraints);
+      jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/vizualizers/information.png"))); // NOI18N
+      jLabel7.setText("If no host/port specified, local to agent on port 4711");
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 3;
+      gridBagConstraints.gridwidth = 4;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+      gridBagConstraints.insets = new java.awt.Insets(4, 0, 2, 0);
+      jPanelJmxParams.add(jLabel7, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        add(jPanelJmxParams, gridBagConstraints);
-    }// </editor-fold>//GEN-END:initComponents
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 9;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+      add(jPanelJmxParams, gridBagConstraints);
+
+      jPanelUnit.setBorder(javax.swing.BorderFactory.createTitledBorder("Metric Unit"));
+      jPanelUnit.setLayout(new java.awt.GridBagLayout());
+
+      jLabelUnit.setText("Retrieve metric from agent in:");
+      jLabelUnit.setEnabled(false);
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 0;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      gridBagConstraints.insets = new java.awt.Insets(0, 2, 2, 2);
+      jPanelUnit.add(jLabelUnit, gridBagConstraints);
+
+      jComboBoxUnit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Bytes (b)", "Kilobytes (Kb)", "Megabytes (Mb)" }));
+      jComboBoxUnit.setEnabled(false);
+      jComboBoxUnit.setMaximumSize(new java.awt.Dimension(32767, 20));
+      jComboBoxUnit.setPreferredSize(new java.awt.Dimension(130, 20));
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 1;
+      gridBagConstraints.gridy = 0;
+      gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+      gridBagConstraints.weightx = 1.0;
+      gridBagConstraints.insets = new java.awt.Insets(0, 2, 2, 2);
+      jPanelUnit.add(jComboBoxUnit, gridBagConstraints);
+
+      gridBagConstraints = new java.awt.GridBagConstraints();
+      gridBagConstraints.gridx = 0;
+      gridBagConstraints.gridy = 10;
+      gridBagConstraints.gridwidth = 2;
+      gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+      add(jPanelUnit, gridBagConstraints);
+   }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
         getAssociatedDialog().dispose();
@@ -1118,6 +1225,9 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
 
             fillMetrics(primaryMetrics, jPanelPrimaryMetrics);
             fillMetrics(additionalMetrics, jPanelAdditionaMetrics);
+
+            jLabelUnit.setEnabled(false);
+            jComboBoxUnit.setEnabled(false);
         }
         repack();
     }
@@ -1130,62 +1240,72 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         showProcessScopePanels();
     }//GEN-LAST:event_jRadioScopePerProcessActionPerformed
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroupCpuCores;
-    private javax.swing.ButtonGroup buttonGroupMetrics;
-    private javax.swing.ButtonGroup buttonGroupPID;
-    private javax.swing.ButtonGroup buttonGroupScope;
-    private javax.swing.JButton jButtonApply;
-    private javax.swing.JButton jButtonCancel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabelExec;
-    private javax.swing.JLabel jLabelFileSystem;
-    private javax.swing.JLabel jLabelMetricLabel;
-    private javax.swing.JLabel jLabelNetInterface;
-    private javax.swing.JLabel jLabelOccurence;
-    private javax.swing.JLabel jLabelPtqlHelp;
-    private javax.swing.JLabel jLabelTail;
-    private javax.swing.JPanel jPanelAdditionaMetrics;
-    private javax.swing.JPanel jPanelButtons;
-    private javax.swing.JPanel jPanelCpuCore;
-    private javax.swing.JPanel jPanelCustomCommand;
-    private javax.swing.JPanel jPanelFileSystem;
-    private javax.swing.JPanel jPanelJmxParams;
-    private javax.swing.JPanel jPanelMetricLabel;
-    private javax.swing.JPanel jPanelNetInterface;
-    private javax.swing.JPanel jPanelPID;
-    private javax.swing.JPanel jPanelPrimaryMetrics;
-    private javax.swing.JPanel jPanelScope;
-    private javax.swing.JPanel jPanelStretch;
-    private javax.swing.JPanel jPanelTailCommand;
-    private javax.swing.JRadioButton jRadioCpuAllCores;
-    private javax.swing.JRadioButton jRadioCustomCpuCore;
-    private javax.swing.JRadioButton jRadioPID;
-    private javax.swing.JRadioButton jRadioProcessName;
-    private javax.swing.JRadioButton jRadioPtql;
-    private javax.swing.JRadioButton jRadioScopeAll;
-    private javax.swing.JRadioButton jRadioScopePerProcess;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextAreaExecHelp;
-    private javax.swing.JTextField jTextFieldCoreIndex;
-    private javax.swing.JTextField jTextFieldExec;
-    private javax.swing.JTextField jTextFieldFileSystem;
-    private javax.swing.JTextField jTextFieldJmxHost;
-    private javax.swing.JTextField jTextFieldJmxPassword;
-    private javax.swing.JTextField jTextFieldJmxPort;
-    private javax.swing.JTextField jTextFieldJmxUser;
-    private javax.swing.JTextField jTextFieldMetricLabel;
-    private javax.swing.JTextField jTextFieldNetInterface;
-    private javax.swing.JTextField jTextFieldOccurence;
-    private javax.swing.JTextField jTextFieldPID;
-    private javax.swing.JTextField jTextFieldPorcessName;
-    private javax.swing.JTextField jTextFieldPtql;
-    private javax.swing.JTextField jTextFieldTail;
-    // End of variables declaration//GEN-END:variables
+   private class MetricActionListener implements java.awt.event.ActionListener {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+         JPerfmonParamsPanel.this.enableUnit(e.getActionCommand());
+      }
+   }
+
+   // Variables declaration - do not modify//GEN-BEGIN:variables
+   private javax.swing.ButtonGroup buttonGroupCpuCores;
+   private javax.swing.ButtonGroup buttonGroupMetrics;
+   private javax.swing.ButtonGroup buttonGroupPID;
+   private javax.swing.ButtonGroup buttonGroupScope;
+   private javax.swing.JButton jButtonApply;
+   private javax.swing.JButton jButtonCancel;
+   private javax.swing.JComboBox jComboBoxUnit;
+   private javax.swing.JLabel jLabel1;
+   private javax.swing.JLabel jLabel2;
+   private javax.swing.JLabel jLabel3;
+   private javax.swing.JLabel jLabel4;
+   private javax.swing.JLabel jLabel5;
+   private javax.swing.JLabel jLabel6;
+   private javax.swing.JLabel jLabel7;
+   private javax.swing.JLabel jLabelExec;
+   private javax.swing.JLabel jLabelFileSystem;
+   private javax.swing.JLabel jLabelMetricLabel;
+   private javax.swing.JLabel jLabelNetInterface;
+   private javax.swing.JLabel jLabelOccurence;
+   private javax.swing.JLabel jLabelPtqlHelp;
+   private javax.swing.JLabel jLabelTail;
+   private javax.swing.JLabel jLabelUnit;
+   private javax.swing.JPanel jPanelAdditionaMetrics;
+   private javax.swing.JPanel jPanelButtons;
+   private javax.swing.JPanel jPanelCpuCore;
+   private javax.swing.JPanel jPanelCustomCommand;
+   private javax.swing.JPanel jPanelFileSystem;
+   private javax.swing.JPanel jPanelJmxParams;
+   private javax.swing.JPanel jPanelMetricLabel;
+   private javax.swing.JPanel jPanelNetInterface;
+   private javax.swing.JPanel jPanelPID;
+   private javax.swing.JPanel jPanelPrimaryMetrics;
+   private javax.swing.JPanel jPanelScope;
+   private javax.swing.JPanel jPanelStretch;
+   private javax.swing.JPanel jPanelTailCommand;
+   private javax.swing.JPanel jPanelUnit;
+   private javax.swing.JRadioButton jRadioCpuAllCores;
+   private javax.swing.JRadioButton jRadioCustomCpuCore;
+   private javax.swing.JRadioButton jRadioPID;
+   private javax.swing.JRadioButton jRadioProcessName;
+   private javax.swing.JRadioButton jRadioPtql;
+   private javax.swing.JRadioButton jRadioScopeAll;
+   private javax.swing.JRadioButton jRadioScopePerProcess;
+   private javax.swing.JScrollPane jScrollPane1;
+   private javax.swing.JTextArea jTextAreaExecHelp;
+   private javax.swing.JTextField jTextFieldCoreIndex;
+   private javax.swing.JTextField jTextFieldExec;
+   private javax.swing.JTextField jTextFieldFileSystem;
+   private javax.swing.JTextField jTextFieldJmxHost;
+   private javax.swing.JTextField jTextFieldJmxPassword;
+   private javax.swing.JTextField jTextFieldJmxPort;
+   private javax.swing.JTextField jTextFieldJmxUser;
+   private javax.swing.JTextField jTextFieldMetricLabel;
+   private javax.swing.JTextField jTextFieldNetInterface;
+   private javax.swing.JTextField jTextFieldOccurence;
+   private javax.swing.JTextField jTextFieldPID;
+   private javax.swing.JTextField jTextFieldPorcessName;
+   private javax.swing.JTextField jTextFieldPtql;
+   private javax.swing.JTextField jTextFieldTail;
+   // End of variables declaration//GEN-END:variables
 }

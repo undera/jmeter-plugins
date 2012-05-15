@@ -1,5 +1,6 @@
 package kg.apc.perfmon.metrics;
 
+import java.util.Hashtable;
 import kg.apc.perfmon.PerfMonMetricGetter;
 import kg.apc.perfmon.metrics.jmx.JMXConnectorHelper;
 import org.apache.jorphan.logging.LoggingManager;
@@ -15,9 +16,21 @@ public abstract class AbstractPerfMonMetric {
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected static final String PARAMS_DELIMITER = PerfMonMetricGetter.DVOETOCHIE;
     protected final SigarProxy sigarProxy;
+    private final static Hashtable unitDividingFactors = new Hashtable();
 
     public AbstractPerfMonMetric(SigarProxy aSigar) {
         sigarProxy = aSigar;
+        unitDividingFactors.put("b", new Integer(1));
+        unitDividingFactors.put("kb", new Integer(1024));
+        unitDividingFactors.put("mb", new Integer(1024*1024));
+    }
+    
+    protected int getUnitDividingFactor(String unit) {
+        if(!unitDividingFactors.containsKey(unit)) {
+            return 1;
+        } else {
+            return ((Integer)unitDividingFactors.get(unit)).intValue();
+        }
     }
 
     abstract public void getValue(StringBuffer res) throws Exception;

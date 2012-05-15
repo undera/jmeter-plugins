@@ -22,6 +22,7 @@ class MemTotalMetric extends AbstractMemMetric {
     public static final String[] types = {"actualfree", "actualused", "free", "freeperc",
         "ram", "total", "used", "usedperc"};
     private int type = -1;
+    private int dividingFactor = 1;
     
     public MemTotalMetric(SigarProxy aSigar, MetricParamsSigar params) {
         super(aSigar, params);
@@ -33,6 +34,7 @@ class MemTotalMetric extends AbstractMemMetric {
                 throw new IllegalArgumentException("Invalid total mem type: " + params.type);
             }
         }
+        dividingFactor = getUnitDividingFactor(params.getUnit());
     }
     
     public void getValue(StringBuffer res) throws SigarException {
@@ -67,6 +69,7 @@ class MemTotalMetric extends AbstractMemMetric {
             default:
                 throw new SigarException("Unknown total mem type " + type);
         }
+        val = val/dividingFactor;
         res.append(Double.toString(val));
     }
 }

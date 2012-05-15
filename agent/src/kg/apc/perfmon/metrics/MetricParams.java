@@ -15,6 +15,15 @@ public class MetricParams {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
+    String label = "";
+    long PID = -1;
+    int coreID = -1;
+    String fs = "";
+    String iface = "";
+    String[] params = new String[0];
+    String type = "";
+    String unit = "";
+    
     protected static void parseParams(String metricParams, MetricParams inst) throws NumberFormatException {
         StringTokenizer tokens = tokenizeString(metricParams);
 
@@ -42,14 +51,7 @@ public class MetricParams {
 
         inst.params = (String[]) params.toArray(new String[0]);
     }
-    String label = "";
-    long PID = -1;
-    int coreID = -1;
-    String fs = "";
-    String iface = "";
-    String[] params = new String[0];
-    String type = "";
-
+    
     protected MetricParams() {
     }
 
@@ -64,6 +66,8 @@ public class MetricParams {
             this.fs = getParamValue(token);
         } else if (token.startsWith("core=")) {
             this.coreID = Integer.parseInt(getParamValue(token));
+        } else if (token.startsWith("unit=")) {
+            this.unit = getParamValue(token);
         } else {
             params.add(token);
             this.type = token;
@@ -97,6 +101,10 @@ public class MetricParams {
 
     public String getLabel() {
         return label;
+    }
+    
+    public String getUnit() {
+        return unit;
     }
 
     public static String getParamValue(String token) {

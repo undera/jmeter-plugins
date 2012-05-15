@@ -40,16 +40,20 @@ class MemTotalMetric extends AbstractMemMetric {
     public void getValue(StringBuffer res) throws SigarException {
         Mem mem = sigarProxy.getMem();
         double val;
+        int factor = 1;
         switch (type) {
             
             case ACTUAL_FREE:
                 val = mem.getActualFree();
+                factor = dividingFactor;
                 break;
             case ACTUAL_USED:
                 val = mem.getActualUsed();
+                factor = dividingFactor;
                 break;
             case FREE:
                 val = mem.getFree();
+                factor = dividingFactor;
                 break;
             case FREE_PERCENT:
                 val = mem.getFreePercent();
@@ -59,9 +63,11 @@ class MemTotalMetric extends AbstractMemMetric {
                 break;
             case TOTAL:
                 val = mem.getTotal();
+                factor = dividingFactor;
                 break;
             case USED:
                 val = mem.getUsed();
+                factor = dividingFactor;
                 break;
             case USED_PERCENT:
                 val = mem.getUsedPercent();

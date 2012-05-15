@@ -81,9 +81,9 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         "used", "Size of Memory used",
         "free", "Size of Free memory"};
     private static String[] memMetricsAdditional = {
-        "actualused", "Actual memory usage, in percent (%)",
-        "actualfree", "Actual free memory, in percent (%)",
-        "ram", "Size of Server physical memory",
+        "actualused", "Size of Actual memory usage",
+        "actualfree", "Size of Actual free memory",
+        "ram", "Server physical memory in Mb",
         "total", "Size of Total memory"};
     private static String[] memProcessMetricsPrimary = {
         "resident" + defaultMarker, "Process resident memory usage, in bytes",
@@ -190,7 +190,8 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
        //memory
        unitRules.add(METRIC_MEM + memMetricsPrimary[4]);
        unitRules.add(METRIC_MEM + memMetricsPrimary[6]);
-       unitRules.add(METRIC_MEM + memMetricsAdditional[4]);
+       unitRules.add(METRIC_MEM + memMetricsAdditional[0]);
+       unitRules.add(METRIC_MEM + memMetricsAdditional[2]);
        unitRules.add(METRIC_MEM + memMetricsAdditional[6]);
 
        //swap

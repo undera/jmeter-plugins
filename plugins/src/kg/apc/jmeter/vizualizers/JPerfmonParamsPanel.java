@@ -86,9 +86,9 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         "ram", "Server physical memory in Mb",
         "total", "Size of Total memory"};
     private static String[] memProcessMetricsPrimary = {
-        "resident" + defaultMarker, "Process resident memory usage, in bytes",
-        "virtual", "Process virtual memory usage, in bytes",
-        "shared", "Process shared memory usage, in bytes"
+        "resident" + defaultMarker, "Size of Process resident memory usage",
+        "virtual", "Size of Process virtual memory usage",
+        "shared", "Size of Process shared memory usage"
     };
     private static String[] memProcessMetricsAdditional = {
         "pagefaults", "Process page faults count",
@@ -154,11 +154,11 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
     };
     //SWAP
     private static String[] swapMetricsPrimary = {
-        "used" + defaultMarker, "Description to update",
+        "used" + defaultMarker, "Size of used swap",
         "pagein", "Number of page in",
         "pageout", "Number of page out",
-        "free", "Description to update",
-        "total", "Description to update"
+        "free", "Size of free swap",
+        "total", "Size of total swap"
     };
 
     //JMX
@@ -185,17 +185,28 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         initFields();
     }
 
+    private void addUnitRule(String type, String metric) {
+       if(metric.endsWith(defaultMarker)) metric = metric.substring(0, metric.length() - defaultMarker.length());
+       unitRules.add(type + metric);
+    }
+
     private void initUnitRules() {
        //TODO: map all metrics...
        //memory
-       unitRules.add(METRIC_MEM + memMetricsPrimary[4]);
-       unitRules.add(METRIC_MEM + memMetricsPrimary[6]);
-       unitRules.add(METRIC_MEM + memMetricsAdditional[0]);
-       unitRules.add(METRIC_MEM + memMetricsAdditional[2]);
-       unitRules.add(METRIC_MEM + memMetricsAdditional[6]);
+       addUnitRule(METRIC_MEM, memMetricsPrimary[4]);
+       addUnitRule(METRIC_MEM, memMetricsPrimary[6]);
+       addUnitRule(METRIC_MEM, memMetricsAdditional[0]);
+       addUnitRule(METRIC_MEM, memMetricsAdditional[2]);
+       addUnitRule(METRIC_MEM, memMetricsAdditional[6]);
+
+       addUnitRule(METRIC_MEM, memProcessMetricsPrimary[0]);
+       addUnitRule(METRIC_MEM, memProcessMetricsPrimary[2]);
+       addUnitRule(METRIC_MEM, memProcessMetricsPrimary[4]);
 
        //swap
-
+       addUnitRule(METRIC_SWAP, swapMetricsPrimary[0]);
+       addUnitRule(METRIC_SWAP, swapMetricsPrimary[6]);
+       addUnitRule(METRIC_SWAP, swapMetricsPrimary[8]);
        //tcp
 
        //diskio

@@ -75,7 +75,7 @@ class MemTotalMetric extends AbstractMemMetric {
             default:
                 throw new SigarException("Unknown total mem type " + type);
         }
-        val = val/dividingFactor;
+        val = val/factor;
         res.append(Double.toString(val));
     }
 }

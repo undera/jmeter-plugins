@@ -625,7 +625,10 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         //add the metric unit
         if (buttonGroupMetrics.getSelection() != null) {
            if(isUnitRelevent(buttonGroupMetrics.getSelection().getActionCommand())) {
-              addStringItem(ret, "unit=" + getUnit());
+              String unit = getUnit();
+              if(!"b".equalsIgnoreCase(unit)) {
+                 addStringItem(ret, "unit=" + getUnit());
+              }
            }
         }
 

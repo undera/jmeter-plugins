@@ -29,7 +29,6 @@ import org.apache.jorphan.gui.RateRenderer;
 import org.apache.jorphan.gui.RendererUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.reflect.Functor;
-import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 
 /**
@@ -245,7 +244,11 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
             } catch (IOException e) {
                 log.warn(e.getMessage());
             } finally {
-                JOrphanUtils.closeQuietly(writer);
+                try {
+                    writer.close();
+                } catch (IOException ex) {
+                    log.warn("There was problem closing file stream", ex);
+                }
             }
         }
 

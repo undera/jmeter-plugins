@@ -18,6 +18,7 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import kg.apc.jmeter.threads.UltimateThreadGroupGui;
+import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
@@ -171,39 +172,46 @@ public class VariableThroughputTimerGui
         }
     }
 
+    private int getIntFromRow(int row, int col) {
+       int ret;
+       try {
+         ret = Integer.valueOf(new CompoundVariable(tableModel.getValueAt(row, col).toString()).execute());
+       } catch (NumberFormatException ex) {
+          ret = -1;
+       }
+       return ret;
+    }
+
     private void updateChart(VariableThroughputTimer tg) {
         model.clear();
+        chart.clearErrorMessage();
         AbstractGraphRow row = new GraphRowExactValues();
-        row.setColor(Color.RED);
+        row.setColor(Color.BLUE);
         row.setDrawLine(true);
         row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
         row.setDrawThickLines(true);
 
         long now = System.currentTimeMillis();
 
+        int rowsCount = tableModel.getRowCount();
+        row.add(now, 0);
+        row.add(now, tg.getRPSForSecond(0));
+
+        int duration = 0;
+        for(int i=0; i<rowsCount; i++) {
+           row.add(now+(duration+1)*1000, tg.getRPSForSecond(duration+1));
+           int rowVal = getIntFromRow(i, 2);
+           if(rowVal < 0) {
+              chart.setErrorMessage("The values entered cannot be rendered in preview...");
+              break;
+           }
+           duration = duration + rowVal;
+           row.add(now+duration*1000, tg.getRPSForSecond(duration));
+        }
+
         chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now - 1)); //-1 because row.add(thread.getStartTime() - 1, 0)
         chart.setForcedMinX(now);
-        row.add(now, 0);
 
-        int n = 0;
-        double rps;
-        double prevRPS = 0;
-        while ((rps = tg.getRPSForSecond(n)) >= 0) {
-            if (rps != prevRPS) {
-                if (n > 0 && row.getElement(now + (n - 1) * 1000) == null) {
-                    row.add(now + (n - 1) * 1000, prevRPS);
-                }
-                row.add(now + n * 1000, rps);
-                log.debug("Rps " + rps);
-                prevRPS = rps;
-            }
-            n++;
-        }
-        if (n > 0 && row.getElement(now + (n - 1) * 1000) == null) {
-            row.add(now + (n - 1) * 1000, prevRPS);
-        }
-
-        row.setColor(Color.blue);
         model.put("Expected RPS", row);
         chart.invalidateCache();
         chart.repaint();

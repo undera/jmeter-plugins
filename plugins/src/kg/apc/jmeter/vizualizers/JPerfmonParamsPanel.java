@@ -207,7 +207,6 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
        addUnitRule(METRIC_SWAP, swapMetricsPrimary[0]);
        addUnitRule(METRIC_SWAP, swapMetricsPrimary[6]);
        addUnitRule(METRIC_SWAP, swapMetricsPrimary[8]);
-       //tcp
 
        //diskio
        addUnitRule(METRIC_DISKIO, diskIOMetricsPrimary[6]);
@@ -221,6 +220,8 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
        addUnitRule(METRIC_DISKIO, diskIOMetricsAdditional[14]);
 
        //netio
+       addUnitRule(METRIC_NETIO, netIOMetricsPrimary[0]);
+       addUnitRule(METRIC_NETIO, netIOMetricsPrimary[2]);
 
        //jmx
     }
@@ -442,7 +443,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         rules.put(METRIC_SWAP, OPTION_PRIMARY_METRIC | OPTION_UNIT);
         rules.put(METRIC_DISKIO, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_FILESYSTEM_SCOPE | OPTION_UNIT);
         rules.put(METRIC_NETIO, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_NET_INTERFACE_SCOPE | OPTION_UNIT);
-        rules.put(METRIC_TCP, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_UNIT);
+        rules.put(METRIC_TCP, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC);
         rules.put(METRIC_EXEC, OPTION_EXEC);
         rules.put(METRIC_TAIL, OPTION_TAIL);
         rules.put(METRIC_JMX, OPTION_PRIMARY_METRIC | OPTION_JMX | OPTION_UNIT);

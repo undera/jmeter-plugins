@@ -37,6 +37,7 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
     private int type = -1;
     private final String[] interfaces;
     private double prev = -1;
+    private int dividingFactor = 1;
 
     public NetworkIOMetric(SigarProxy aSigar, MetricParams params) {
         super(aSigar);
@@ -63,6 +64,7 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
         }
 
         interfaces = (String[]) list.toArray(new String[0]);
+        dividingFactor = getUnitDividingFactor(params.getUnit());
     }
 
     static void logAvailableInterfaces(SigarProxy sigar) {
@@ -82,6 +84,7 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
     public void getValue(StringBuffer res) throws SigarException {
         double val = 0;
         double cur;
+        int factor = 1;
         for (int n = 0; n < interfaces.length; n++) {
             NetInterfaceStat usage;
             try {
@@ -93,6 +96,7 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
             switch (type) {
                 case RX_BYTES:
                     val += usage.getRxBytes();
+                    factor = dividingFactor;
                     break;
                 case RX_DROPPED:
                     val += usage.getRxDropped();
@@ -111,6 +115,7 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
                     break;
                 case TX_BYTES:
                     val += usage.getTxBytes();
+                    factor = dividingFactor;
                     break;
                 case TX_CARRIER:
                     val += usage.getTxCarrier();
@@ -152,6 +157,7 @@ class NetworkIOMetric extends AbstractPerfMonMetric {
                 val = prev > 0 ? cur - prev : 0;
                 prev = cur;
         }
+        val = val/factor;
         res.append(Double.toString(val));
     }
 }

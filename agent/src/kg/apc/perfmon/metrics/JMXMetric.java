@@ -14,6 +14,7 @@ public class JMXMetric extends AbstractPerfMonMetric {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private final AbstractJMXDataProvider dataProvider;
+    private int dividingFactor = 1;
 
     public JMXMetric(MetricParams params, JMXConnectorHelper jmxHelper) {
         super(null);
@@ -43,9 +44,15 @@ public class JMXMetric extends AbstractPerfMonMetric {
             log.error("Failed to get MX Bean data provider", ex);
             throw new RuntimeException("Failed to get MX Bean data provider", ex);
         }
+
+        dividingFactor = getUnitDividingFactor(params.getUnit());
     }
 
     public void getValue(StringBuffer res) throws Exception {
-        dataProvider.getValue(res);
+        if(dataProvider.isBytesValue()) {
+            dataProvider.getValue(res, dividingFactor);
+        } else {
+            dataProvider.getValue(res);
+        }
     }
 }

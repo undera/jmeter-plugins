@@ -128,7 +128,7 @@ public class PerfMonWorker implements Runnable {
         }
 
         if(started) {
-           log.info("JP@GC Agent v" + version + " started...");
+           log.info("JP@GC Agent v" + version + " started");
         }
     }
 

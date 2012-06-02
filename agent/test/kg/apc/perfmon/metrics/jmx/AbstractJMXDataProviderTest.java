@@ -84,6 +84,25 @@ public class AbstractJMXDataProviderTest extends TestCase {
         instance.getValue(res);
     }
 
+    /**
+     * Test of getValue method, of class AbstractJMXDataProvider.
+     */
+    public void testGetValue_2Params() throws Exception {
+        System.out.println("getValue_2Params");
+        StringBuffer res = new StringBuffer();
+        AbstractJMXDataProvider instance = new AbstractJMXDataProviderImpl();
+        instance.getValue(res, 1024);
+    }
+
+    /**
+     * Test of isByteValue method, of class AbstractJMXDataProvider.
+     */
+    public void testIsBytesValue() throws Exception {
+        System.out.println("isBytesValue");
+        AbstractJMXDataProvider instance = new AbstractJMXDataProviderImpl();
+        assertFalse(instance.isBytesValue());
+    }
+
     public class AbstractJMXDataProviderImpl extends AbstractJMXDataProvider {
 
         public AbstractJMXDataProviderImpl() throws Exception {

@@ -18,6 +18,7 @@ abstract public class AbstractJMXDataProvider {
     protected final Set beans;
     private final boolean isDiff;
     private long prevValue = 0;
+    protected boolean bytesValue = false;
 
     public AbstractJMXDataProvider(MBeanServerConnection mBeanServerConn, boolean diff) throws Exception {
         isDiff = diff;
@@ -66,7 +67,15 @@ abstract public class AbstractJMXDataProvider {
 
     abstract protected long getValueFromBean(Object bean);
 
+    public boolean isBytesValue() {
+       return bytesValue;
+    }
+
     public void getValue(StringBuffer res) {
+       getValue(res, 1);
+    }
+
+    public void getValue(StringBuffer res, int divider) {
         Iterator it = beans.iterator();
         long value = 0;
         while (it.hasNext()) {
@@ -83,6 +92,8 @@ abstract public class AbstractJMXDataProvider {
                 prevValue = oldVal;
             }
         }
+
+        value = value/divider;
 
         res.append(Long.toString(value));
     }

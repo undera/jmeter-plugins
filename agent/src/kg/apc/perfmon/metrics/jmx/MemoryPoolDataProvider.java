@@ -17,6 +17,7 @@ class MemoryPoolDataProvider extends AbstractJMXDataProvider {
     public MemoryPoolDataProvider(MBeanServerConnection mBeanServerConn, boolean diff, int aType) throws Exception {
         super(mBeanServerConn, diff);
         type = aType;
+        bytesValue = true;
     }
 
     protected String getMXBeanType() {

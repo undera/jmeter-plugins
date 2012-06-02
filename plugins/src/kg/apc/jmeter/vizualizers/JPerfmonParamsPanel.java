@@ -224,6 +224,10 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
        addUnitRule(METRIC_NETIO, netIOMetricsPrimary[2]);
 
        //jmx
+       addUnitRule(METRIC_JMX, jmxMetricsPrimary[2]);
+       addUnitRule(METRIC_JMX, jmxMetricsPrimary[4]);
+       addUnitRule(METRIC_JMX, jmxMetricsPrimary[6]);
+       addUnitRule(METRIC_JMX, jmxMetricsPrimary[8]);
     }
 
     private boolean isUnitRelevent(String metric) {

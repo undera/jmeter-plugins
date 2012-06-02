@@ -48,6 +48,7 @@ import kg.apc.charting.plotters.AbstractRowPlotter;
 import kg.apc.charting.plotters.BarRowPlotter;
 import kg.apc.charting.plotters.CSplineRowPlotter;
 import kg.apc.charting.plotters.LineRowPlotter;
+import kg.apc.jmeter.gui.CustomNumberRenderer;
 import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -109,6 +110,8 @@ public class GraphPanelChart
     //save file path. We remember last folder used.
     private static String savePath = null;
     private ChartSettings chartSettings = new ChartSettings();
+
+    private CustomNumberRenderer nbFormatter = new CustomNumberRenderer("#,#00.#", ' ');
 
     public ChartSettings getChartSettings() {
         return chartSettings;
@@ -245,8 +248,8 @@ public class GraphPanelChart
         setBackground(Color.white);
         setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.lightGray, Color.darkGray));
 
-        yAxisLabelRenderer = new NumberRenderer("#.#");
-        xAxisLabelRenderer = new NumberRenderer("#.#");
+        yAxisLabelRenderer = new CustomNumberRenderer("#,###.#", ' ');
+        xAxisLabelRenderer = new CustomNumberRenderer("#,###.#", ' ');
         legendRect = new Rectangle();
         yAxisRect = new Rectangle();
         xAxisRect = new Rectangle();
@@ -562,6 +565,11 @@ public class GraphPanelChart
         }
     }
 
+    private String getNiceNumber(int nb) {
+       nbFormatter.setValue(nb);
+       return nbFormatter.getText();
+    }
+
     private void paintLegend(Graphics g) {
         FontMetrics fm = g.getFontMetrics(g.getFont());
         int rectH = fm.getHeight();
@@ -593,7 +601,7 @@ public class GraphPanelChart
                 if (zoomFactor != 1) {
                     if (zoomFactor > 1) {
                         int iZoomFactor = (int) zoomFactor;
-                        rowLabel = rowLabel + " (x" + iZoomFactor + ")";
+                        rowLabel = rowLabel + " (x" + getNiceNumber(iZoomFactor) + ")";
                     } else {
                         rowLabel = rowLabel + " (x" + zoomFactor + ")";
                     }

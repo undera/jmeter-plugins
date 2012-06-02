@@ -112,16 +112,23 @@ public class PerfMonWorker implements Runnable {
         log.debug("Start accepting connections");
         isFinished = false;
         writerThread.start();
+        boolean started = false;
         try {
             listenUDP();
+            started = true;
         } catch (IOException ex) {
             log.error("Can't accept UDP connections", ex);
         }
 
         try {
             listenTCP();
+            started = true;
         } catch (IOException ex) {
             log.error("Can't accept TCP connections", ex);
+        }
+
+        if(started) {
+           log.info("JP@GC Agent v" + version + " started...");
         }
     }
 

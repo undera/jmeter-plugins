@@ -210,8 +210,19 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
        //tcp
 
        //diskio
+       addUnitRule(METRIC_DISKIO, diskIOMetricsPrimary[6]);
+       addUnitRule(METRIC_DISKIO, diskIOMetricsPrimary[8]);
+
+       addUnitRule(METRIC_DISKIO, diskIOMetricsAdditional[0]);
+       addUnitRule(METRIC_DISKIO, diskIOMetricsAdditional[4]);
+       addUnitRule(METRIC_DISKIO, diskIOMetricsAdditional[6]);
+       addUnitRule(METRIC_DISKIO, diskIOMetricsAdditional[8]);
+       addUnitRule(METRIC_DISKIO, diskIOMetricsAdditional[10]);
+       addUnitRule(METRIC_DISKIO, diskIOMetricsAdditional[14]);
 
        //netio
+
+       //jmx
     }
 
     private boolean isUnitRelevent(String metric) {
@@ -434,7 +445,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         rules.put(METRIC_TCP, OPTION_PRIMARY_METRIC | OPTION_ADDITIONAL_METRIC | OPTION_UNIT);
         rules.put(METRIC_EXEC, OPTION_EXEC);
         rules.put(METRIC_TAIL, OPTION_TAIL);
-        rules.put(METRIC_JMX, OPTION_PRIMARY_METRIC | OPTION_JMX);
+        rules.put(METRIC_JMX, OPTION_PRIMARY_METRIC | OPTION_JMX | OPTION_UNIT);
     }
 
     private void fillMetrics(String[] metrics, JPanel panel) {

@@ -33,6 +33,7 @@ class DiskIOMetric extends AbstractPerfMonMetric {
     private int type = -1;
     private final String[] filesystems;
     private double prev = -1;
+    private int dividingFactor = 1;
 
     public DiskIOMetric(SigarProxy aSigar, MetricParamsSigar params) {
         super(aSigar);
@@ -55,6 +56,7 @@ class DiskIOMetric extends AbstractPerfMonMetric {
         }
 
         filesystems = (String[]) list.toArray(new String[0]);
+        dividingFactor = getUnitDividingFactor(params.getUnit());
     }
 
     private void getAllDiskFilesystems(SigarProxy aSigar, LinkedList list) {
@@ -93,17 +95,20 @@ class DiskIOMetric extends AbstractPerfMonMetric {
         long used = 0;
         long total = 0;
         double cur;
+        int factor = 1;
         for (int n = 0; n < filesystems.length; n++) {
             FileSystemUsage usage = sigarProxy.getFileSystemUsage(filesystems[n]);
             switch (type) {
                 case AVAILABLE:
                     val += usage.getAvail();
+                    factor = dividingFactor;
                     break;
                 case DISK_QUEUE:
                     val += usage.getDiskQueue();
                     break;
                 case READ_BYTES:
                     val += usage.getDiskReadBytes();
+                    factor = dividingFactor;
                     break;
                 case READS:
                     val += usage.getDiskReads();
@@ -113,21 +118,26 @@ class DiskIOMetric extends AbstractPerfMonMetric {
                     break;
                 case WRITE_BYTES:
                     val += usage.getDiskWriteBytes();
+                    factor = dividingFactor;
                     break;
                 case WRITES:
                     val += usage.getDiskWrites();
                     break;
                 case FILES:
                     val += usage.getFiles();
+                    factor = dividingFactor;
                     break;
                 case FREE:
                     val += usage.getFree();
+                    factor = dividingFactor;
                     break;
                 case FREE_FILES:
                     val += usage.getFreeFiles();
+                    factor = dividingFactor;
                     break;
                 case TOTAL:
                     val += usage.getTotal();
+                    factor = dividingFactor;
                     break;
                 case USE_PERCENT:
                     // special case for multiple percentages
@@ -140,9 +150,10 @@ class DiskIOMetric extends AbstractPerfMonMetric {
                     break;
                 case USED:
                     val = usage.getUsed();
+                    factor = dividingFactor;
                     break;
                 default:
-                    throw new SigarException("Unknown swap type " + type);
+                    throw new SigarException("Unknown disk I/O type " + type);
             }
         }
 
@@ -178,6 +189,7 @@ class DiskIOMetric extends AbstractPerfMonMetric {
                 break;
         }
 
+        val = val/factor;
         res.append(Double.toString(val));
     }
 }

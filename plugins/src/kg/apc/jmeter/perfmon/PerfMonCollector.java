@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
+import kg.apc.perfmon.PerfMonMetricGetter;
 import kg.apc.perfmon.client.Transport;
 import kg.apc.perfmon.client.TransportFactory;
 import kg.apc.perfmon.metrics.MetricParams;
@@ -172,10 +173,19 @@ public class PerfMonCollector
             label = host + " " + metric + " " + params;
         } else {
             label = host + " " + metric + " " + paramsParsed.getLabel();
-            // TODO: God, I need to test this case properly or find better way to do this
-            params = params.replaceAll(":label=" + paramsParsed.getLabel() + ":", "");
-            params = params.replaceAll("label=" + paramsParsed.getLabel() + ":", "");
-            params = params.replaceAll(":label=" + paramsParsed.getLabel(), "");
+
+            String[] tokens = params.split("(?<!\\\\)" + PerfMonMetricGetter.DVOETOCHIE);
+
+            params = "";
+
+            for(int i=0; i<tokens.length; i++) {
+               if(!tokens[i].startsWith("label=")) {
+                  if(params.length() != 0) {
+                     params = params + PerfMonMetricGetter.DVOETOCHIE;
+                  }
+                  params = params + tokens[i];
+               }
+            }
         }
 
         try {

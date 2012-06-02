@@ -30,7 +30,7 @@ public class MetricParams {
        List params = new LinkedList();
 
        for(int i=0; i<tokens.length; i++) {
-          inst.populateParams(tokens[i], params);
+          inst.populateParams(tokens[i].replaceAll("\\\\:", ":"), params);
        }
 
        inst.params = (String[]) params.toArray(new String[0]);
@@ -45,7 +45,7 @@ public class MetricParams {
         } else if (token.startsWith("iface=")) {
             this.iface = getParamValue(token);
         } else if (token.startsWith("label=")) {
-            this.label = getParamValue(token.replaceAll("\\\\:", ":"));
+            this.label = getParamValue(token);
         } else if (token.startsWith("fs=")) {
             this.fs = getParamValue(token);
         } else if (token.startsWith("core=")) {

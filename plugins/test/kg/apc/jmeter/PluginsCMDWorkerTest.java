@@ -155,6 +155,21 @@ public class PluginsCMDWorkerTest {
     }
 
     @Test
+    public void testDoJob_csv_createdir() throws IOException {
+        System.out.println("doJob");
+        //PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setInputFile(basedir + "/short.jtl");
+        File rfile=File.createTempFile("testDir", "");
+        rfile.delete();
+        instance.setOutputCSVFile(rfile.getAbsolutePath().concat(File.separator).concat("testFile.csv"));
+        instance.setPluginType("ResponseTimesDistribution");
+        instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);
+        int result = instance.doJob();
+        int expResult = 0;
+        assertEquals(expResult, result);
+    }
+
+    @Test
     public void testDoJob_csv_filtered() throws IOException {
         System.out.println("doJob fil1");
         File csvfile = File.createTempFile("test", ".csv");

@@ -214,17 +214,25 @@ public class PluginsCMDWorker {
         setOptions(gui);
 
 
+        
+        
         if ((exportMode & EXPORT_PNG) == EXPORT_PNG) {
+            File pngFile=new File(outputPNG);
+            forceDir(pngFile);
+            
             try {
-                gui.getGraphPanelChart().saveGraphToPNG(new File(outputPNG), graphWidth, graphHeight);
+                gui.getGraphPanelChart().saveGraphToPNG(pngFile, graphWidth, graphHeight);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         }
 
         if ((exportMode & EXPORT_CSV) == EXPORT_CSV) {
+            File csvFile=new File(outputCSV);
+            forceDir(csvFile);
+            
             try {
-                gui.getGraphPanelChart().saveGraphToCSV(new File(outputCSV));
+                gui.getGraphPanelChart().saveGraphToCSV(csvFile);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -348,5 +356,11 @@ public class PluginsCMDWorker {
 
     public void setLineWeight(float parseInt) {
         lineWeight = parseInt;
+    }
+
+    private void forceDir(File resultFile) {
+        if (!resultFile.getParentFile().mkdirs() && !resultFile.getParentFile().exists()) {
+            throw new RuntimeException("Failed to create directory for "+resultFile.getAbsolutePath());
+        }
     }
 }

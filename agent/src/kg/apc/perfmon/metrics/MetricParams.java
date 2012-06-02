@@ -2,7 +2,6 @@ package kg.apc.perfmon.metrics;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -25,31 +24,16 @@ public class MetricParams {
     String unit = "";
     
     protected static void parseParams(String metricParams, MetricParams inst) throws NumberFormatException {
-        StringTokenizer tokens = tokenizeString(metricParams);
+       //for split, avoid ':' preceeded with '\', ie do not process "\:"
+       String[] tokens = metricParams.split("(?<!\\\\)" + AbstractPerfMonMetric.PARAMS_DELIMITER);
 
-        List params = new LinkedList();
-        while (true) {
-            String token;
-            try {
-                token = tokens.nextToken();
+       List params = new LinkedList();
 
-                String buff = "";
-                String tmp;
+       for(int i=0; i<tokens.length; i++) {
+          inst.populateParams(tokens[i], params);
+       }
 
-                while (token.endsWith("\\")) {
-                    tmp = token.substring(0, token.length() - 1) + AbstractPerfMonMetric.PARAMS_DELIMITER;
-                    token = tokens.nextToken();
-                    buff += tmp;
-                }
-
-                token = buff + token;
-            } catch (NoSuchElementException e) {
-                break;
-            }
-            inst.populateParams(token, params);
-        }
-
-        inst.params = (String[]) params.toArray(new String[0]);
+       inst.params = (String[]) params.toArray(new String[0]);
     }
     
     protected MetricParams() {

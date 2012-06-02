@@ -45,7 +45,7 @@ public class MetricParams {
         } else if (token.startsWith("iface=")) {
             this.iface = getParamValue(token);
         } else if (token.startsWith("label=")) {
-            this.label = getParamValue(token);
+            this.label = getParamValue(token.replaceAll("\\\\:", ":"));
         } else if (token.startsWith("fs=")) {
             this.fs = getParamValue(token);
         } else if (token.startsWith("core=")) {

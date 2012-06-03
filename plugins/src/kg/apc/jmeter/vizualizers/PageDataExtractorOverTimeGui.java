@@ -13,10 +13,12 @@ import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.reporters.ResultCollector;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
+import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -40,6 +42,8 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
    private static String[] defaultValues = new String[]{
       "", ""
    };
+
+   private CollectionProperty regExps = null;
 
    public PageDataExtractorOverTimeGui() {
       setGranulation(1000);
@@ -83,7 +87,7 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
 
     private Component createRegExpPanel() {
         JPanel panel = new JPanel(new BorderLayout(5, 5));
-        panel.setBorder(BorderFactory.createTitledBorder("Regular Expressions to Apply"));
+        panel.setBorder(BorderFactory.createTitledBorder("Regular Expressions Data Extractors"));
         panel.setPreferredSize(new Dimension(150, 150));
 
         JScrollPane scroll = new JScrollPane(createGrid());
@@ -130,6 +134,7 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
         if (te instanceof ResultCollector) {
             ResultCollector rc = (ResultCollector) te;
             CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(tableModel, REGEXPS_PROPERTY);
+            regExps = rows;
             rc.setProperty(rows);
         }
         super.configureTestElement(te);
@@ -145,5 +150,29 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
         } else {
             log.warn("Received null property instead of collection");
         }
+    }
+
+    private void processPage(String pageBody, String regExpKey, String regExpValue) {
+       
+    }
+
+    @Override
+    public void add(SampleResult res) {
+        if (!isSampleIncluded(res) || regExps == null) {
+            return;
+        }
+
+        String pageBody = res.getResponseDataAsString();
+        
+        PropertyIterator iter = regExps.iterator();
+        while(iter.hasNext()) {
+           CollectionProperty props = (CollectionProperty)iter.next();
+           String regExpKey = props.get(0).getStringValue();
+           String regExpValue = props.get(1).getStringValue();
+
+           processPage(pageBody, regExpKey, regExpValue);
+        }
+
+        updateGui(null);
     }
 }

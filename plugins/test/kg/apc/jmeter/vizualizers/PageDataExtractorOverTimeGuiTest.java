@@ -3,6 +3,7 @@ package kg.apc.jmeter.vizualizers;
 import org.apache.jmeter.reporters.ResultCollector;
 import kg.apc.emulators.TestJMeterUtils;
 import javax.swing.JPanel;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -123,5 +124,19 @@ public class PageDataExtractorOverTimeGuiTest {
       TestElement te = new ResultCollector();
       PageDataExtractorOverTimeGui instance = new PageDataExtractorOverTimeGui();
       instance.configure(te);
+   }
+
+   /**
+    * Test of add method, of class PageDataExtractorOverTimeGui.
+    */
+   @Test
+   public void testAdd() {
+      System.out.println("add");
+      SampleResult res = new SampleResult();
+      res.setAllThreads(1);
+      res.setThreadName("test 1-2");
+      res.setResponseData("aa=10\nbb=20");
+      PageDataExtractorOverTimeGui instance = new PageDataExtractorOverTimeGui();
+      instance.add(res);
    }
 }

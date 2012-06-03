@@ -1,7 +1,9 @@
 package kg.apc.jmeter.vizualizers;
 
+import org.apache.jmeter.reporters.ResultCollector;
 import kg.apc.emulators.TestJMeterUtils;
 import javax.swing.JPanel;
+import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -90,4 +92,36 @@ public class PageDataExtractorOverTimeGuiTest {
       assertNotNull(result);
    }
 
+   /**
+    * Test of createTestElement method, of class PageDataExtractorOverTimeGui.
+    */
+   @Test
+   public void testCreateTestElement() {
+      System.out.println("createTestElement");
+      PageDataExtractorOverTimeGui instance = new PageDataExtractorOverTimeGui();
+      TestElement result = instance.createTestElement();
+      assertTrue(result instanceof ResultCollector);
+   }
+
+   /**
+    * Test of modifyTestElement method, of class PageDataExtractorOverTimeGui.
+    */
+   @Test
+   public void testModifyTestElement() {
+      System.out.println("modifyTestElement");
+      TestElement te = new ResultCollector();
+      PageDataExtractorOverTimeGui instance = new PageDataExtractorOverTimeGui();
+      instance.modifyTestElement(te);
+   }
+
+   /**
+    * Test of configure method, of class PageDataExtractorOverTimeGui.
+    */
+   @Test
+   public void testConfigure() {
+      System.out.println("configure");
+      TestElement te = new ResultCollector();
+      PageDataExtractorOverTimeGui instance = new PageDataExtractorOverTimeGui();
+      instance.configure(te);
+   }
 }

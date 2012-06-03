@@ -12,6 +12,11 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import org.apache.jmeter.gui.util.PowerTableModel;
+import org.apache.jmeter.reporters.ResultCollector;
+import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -20,6 +25,8 @@ import org.apache.log.Logger;
  * @author Stephane Hoblingre
  */
 public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
+
+   private static final String REGEXPS_PROPERTY = "regexps";
 
    private static final Logger log = LoggingManager.getLoggerForClass();
    private PowerTableModel tableModel;
@@ -103,5 +110,40 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
     private void createTableModel() {
         tableModel = new PowerTableModel(columnIdentifiers, columnClasses);
         grid.setModel(tableModel);
+    }
+
+    @Override
+    public TestElement createTestElement() {
+        TestElement te = new ResultCollector();
+        modifyTestElement(te);
+        te.setComment(JMeterPluginsUtils.getWikiLinkText(getWikiPage()));
+        return te;
+    }
+
+    @Override
+    public void modifyTestElement(TestElement te) {
+        super.modifyTestElement(te);
+        if (grid.isEditing()) {
+            grid.getCellEditor().stopCellEditing();
+        }
+
+        if (te instanceof ResultCollector) {
+            ResultCollector rc = (ResultCollector) te;
+            CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(tableModel, REGEXPS_PROPERTY);
+            rc.setProperty(rows);
+        }
+        super.configureTestElement(te);
+    }
+
+    @Override
+    public void configure(TestElement te) {
+        super.configure(te);
+        ResultCollector rc = (ResultCollector) te;
+        JMeterProperty regexpValues = rc.getProperty(REGEXPS_PROPERTY);
+        if (!(regexpValues instanceof NullProperty)) {
+            JMeterPluginsUtils.collectionPropertyToTableModelRows((CollectionProperty) regexpValues, tableModel);
+        } else {
+            log.warn("Received null property instead of collection");
+        }
     }
 }

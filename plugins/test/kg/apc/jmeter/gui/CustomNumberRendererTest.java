@@ -42,5 +42,9 @@ public class CustomNumberRendererTest {
       instance.setValue(1000000);
       String result = instance.getText();
       assertTrue("1 000 000".equals(result));
+      instance = new CustomNumberRenderer("#.#");
+      instance.setValue(1000000);
+      result = instance.getText();
+      assertTrue("1000000".equals(result));
    }
 }

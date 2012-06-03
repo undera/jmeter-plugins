@@ -23,7 +23,7 @@ public class CustomNumberRenderer extends NumberRenderer {
     public CustomNumberRenderer(String format, char groupingSeparator) {
         super();
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setGroupingSeparator(' ');
+        symbols.setGroupingSeparator(groupingSeparator);
         customFormatter = new DecimalFormat(format, symbols);
     }
 

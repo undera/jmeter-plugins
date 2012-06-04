@@ -402,6 +402,17 @@ public abstract class AbstractGraphPanelVisualizer
         return true;
     }
 
+    protected boolean isSampleIncluded(String sampleLabel) {
+        if (!includes.isEmpty() && !includes.contains(sampleLabel)) {
+            return false;
+        }
+
+        if (!excludes.isEmpty() && excludes.contains(sampleLabel)) {
+            return false;
+        }
+        return true;
+    }
+
     public void setUpFiltering(CorrectedResultCollector rc) {
         includes = rc.getList(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS);
         excludes = rc.getList(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS);

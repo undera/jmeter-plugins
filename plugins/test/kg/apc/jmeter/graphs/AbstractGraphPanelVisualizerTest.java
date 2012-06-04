@@ -493,4 +493,17 @@ public class AbstractGraphPanelVisualizerTest {
         AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
         instance.setUpFiltering(rc);
     }
+
+    /**
+    * Test of isSampleIncluded method, of class AbstractGraphPanelVisualizer.
+    */
+   @Test
+   public void testIsSampleIncluded_String() {
+      System.out.println("isSampleIncluded");
+      String sampleLabel = "test";
+      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+      boolean expResult = true;
+      boolean result = instance.isSampleIncluded(sampleLabel);
+      assertEquals(expResult, result);
+   }
 }

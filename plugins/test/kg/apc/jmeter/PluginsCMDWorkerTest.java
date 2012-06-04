@@ -182,8 +182,8 @@ public class PluginsCMDWorkerTest {
         int result = instance.doJob();
         int expResult = 0;
         assertEquals(expResult, result);
-        // TODO: add windows check here, like above
-        assertEquals(21, csvfile.length());
+        //windows = 22, linux = 21
+        assertTrue(csvfile.length() == 21 || csvfile.length() == 22);
     }
 
     /**

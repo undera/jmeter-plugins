@@ -179,8 +179,9 @@ public class DNSJavaTCPClientImplTest {
     public void testGetCharset() {
         System.out.println("getCharset");
         DNSJavaTCPClientImpl instance = new DNSJavaTCPClientImpl();
-        String expResult = "UTF-8";
+        String expLinuxResult = "UTF-8";
+        String expWinResult = "windows-1252";
         String result = instance.getCharset();
-        assertEquals(expResult, result);
+        assertTrue(expLinuxResult.equals(result) || expWinResult.equals(result));
     }
 }

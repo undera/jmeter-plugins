@@ -121,7 +121,7 @@ public class PageDataExtractorOverTimeGuiTest {
    @Test
    public void testConfigure() {
       System.out.println("configure");
-      TestElement te = new ResultCollector();
+      TestElement te = new CorrectedResultCollector();
       PageDataExtractorOverTimeGui instance = new PageDataExtractorOverTimeGui();
       instance.configure(te);
    }

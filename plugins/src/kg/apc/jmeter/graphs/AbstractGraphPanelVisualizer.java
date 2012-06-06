@@ -4,11 +4,17 @@ package kg.apc.jmeter.graphs;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentSkipListMap;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.ColorsDispatcher;
@@ -76,6 +82,11 @@ public abstract class AbstractGraphPanelVisualizer
     private List<String> includes = new ArrayList<String>(0);
     private List<String> excludes = new ArrayList<String>(0);
 
+    private JPanel container;
+    private boolean filePanelVisible = true;
+    private boolean maximized = false;
+    private JButton maximizeButton;
+
     /**
      *
      */
@@ -98,9 +109,54 @@ public abstract class AbstractGraphPanelVisualizer
         setBorder(makeBorder());
         setLayout(new BorderLayout());
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), getWikiPage()), BorderLayout.NORTH);
-        JPanel container = getGraphPanelContainer();
+        container = getGraphPanelContainer();
         container.add(createGraphPanel(), BorderLayout.CENTER);
         add(container, BorderLayout.CENTER);
+    }
+
+
+   @Override
+    protected Component createTitleLabel() {
+        JPanel pan = new JPanel(new BorderLayout());
+        JLabel titleLabel = new JLabel(getStaticLabel());
+        Font curFont = titleLabel.getFont();
+        titleLabel.setFont(curFont.deriveFont((float) curFont.getSize() + 4));
+        pan.add(titleLabel, BorderLayout.WEST);
+        maximizeButton = new JButton(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/maximize.png")));
+        maximizeButton.setOpaque(false);
+        maximizeButton.setContentAreaFilled(false);
+        maximizeButton.setFocusable(false);
+        maximizeButton.setMaximumSize(new java.awt.Dimension(25, 20));
+        maximizeButton.setMinimumSize(new java.awt.Dimension(25, 20));
+        maximizeButton.setPreferredSize(new java.awt.Dimension(25, 20));
+        //maximizeButton.setBorderPainted(false);
+
+        maximizeButton.addActionListener(new MaximizeAction());
+        
+        pan.add(maximizeButton, BorderLayout.EAST);
+        return pan;
+    }
+
+    protected void enableMaximize(boolean enable) {
+       maximizeButton.setVisible(enable);
+    }
+
+    protected void hideFilePanel() {
+       filePanelVisible = false;
+       getFilePanel().setVisible(false);
+    }
+
+    private void toogleMaximize() {
+       maximized = !maximized;
+       Component[] components = container.getComponents();
+       for(int i=0; i<components.length; i++) {
+          Component cmp = components[i];
+          if(!(cmp instanceof GraphPanel)) {
+             cmp.setVisible(!maximized);
+          }
+       }
+
+       getFilePanel().setVisible(!maximized && filePanelVisible);
     }
 
     /**
@@ -416,5 +472,20 @@ public abstract class AbstractGraphPanelVisualizer
     public void setUpFiltering(CorrectedResultCollector rc) {
         includes = rc.getList(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS);
         excludes = rc.getList(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS);
+    }
+
+    private class MaximizeAction
+            implements ActionListener {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+         toogleMaximize();
+         if(!maximized) {
+            maximizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/maximize.png")));
+         } else {
+            maximizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/restore.png")));
+         }
+      }
+       
     }
 }

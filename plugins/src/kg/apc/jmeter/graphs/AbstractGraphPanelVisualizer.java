@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -115,25 +117,34 @@ public abstract class AbstractGraphPanelVisualizer
     }
 
 
-   @Override
+    @Override
     protected Component createTitleLabel() {
-        JPanel pan = new JPanel(new BorderLayout());
+        JPanel pan = new JPanel(new GridBagLayout());
         JLabel titleLabel = new JLabel(getStaticLabel());
         Font curFont = titleLabel.getFont();
         titleLabel.setFont(curFont.deriveFont((float) curFont.getSize() + 4));
-        pan.add(titleLabel, BorderLayout.WEST);
-        maximizeButton = new JButton(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/maximize.png")));
-        maximizeButton.setOpaque(false);
-        maximizeButton.setContentAreaFilled(false);
-        maximizeButton.setFocusable(false);
-        maximizeButton.setMaximumSize(new java.awt.Dimension(25, 20));
-        maximizeButton.setMinimumSize(new java.awt.Dimension(25, 20));
-        maximizeButton.setPreferredSize(new java.awt.Dimension(25, 20));
-        //maximizeButton.setBorderPainted(false);
 
+        GridBagConstraints labelConstraints = new GridBagConstraints();
+        labelConstraints.weightx = 1.0;
+        labelConstraints.fill = GridBagConstraints.HORIZONTAL;
+        labelConstraints.gridx = 0;
+        labelConstraints.gridy = 0;
+        
+        pan.add(titleLabel, labelConstraints);
+
+        GridBagConstraints buttonConstraints = new GridBagConstraints();
+        buttonConstraints.gridx = 1;
+        buttonConstraints.gridy = 0;
+        buttonConstraints.insets = new java.awt.Insets(0, 0, 0, 1);
+
+        maximizeButton = new JButton(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/maximize.png")));
+        maximizeButton.setFocusable(false);
+        maximizeButton.setPreferredSize(new java.awt.Dimension(20, 20));
+        maximizeButton.setToolTipText("Maximize Panel");
+        
         maximizeButton.addActionListener(new MaximizeAction());
         
-        pan.add(maximizeButton, BorderLayout.EAST);
+        pan.add(maximizeButton, buttonConstraints);
         return pan;
     }
 
@@ -482,8 +493,10 @@ public abstract class AbstractGraphPanelVisualizer
          toogleMaximize();
          if(!maximized) {
             maximizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/maximize.png")));
+            maximizeButton.setToolTipText("Maximize Panel");
          } else {
             maximizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/restore.png")));
+            maximizeButton.setToolTipText("Restore Panel");
          }
       }
        

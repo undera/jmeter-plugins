@@ -110,9 +110,11 @@ public class PerfMonCollector
             }
         }
 
-        log.debug("PerfMon metrics will be stored in " + getProperty(FILENAME));
+        log.debug("PerfMon metrics will be stored in " + getPropertyAsString(FILENAME));
         if (!getSaveConfig().saveAsXml()) {
             perfMonNotifier.addFile(getPropertyAsString(FILENAME));
+        } else {
+            log.warn("Perfmon file saving setting is XML, cannot upload it to Loadosophia.org: " + getPropertyAsString(FILENAME));
         }
         initiateConnectors();
 

@@ -68,7 +68,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
                 }
 
                 isSaving = false;
-                sendJTLToLoadosophia(new File(fileName), perfMonNotifier.getFiles());
+                sendFilesToLoadosophia(new File(fileName), perfMonNotifier.getFiles());
             } catch (IOException ex) {
                 informUser("Failed to upload results to Loadosophia.org, see log for detais");
                 log.error("Failed to upload results to loadosophia", ex);
@@ -108,7 +108,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         setSaveConfig(conf);
     }
 
-    private void sendJTLToLoadosophia(File targetFile, LinkedList<String> perfMonFiles) throws IOException {
+    private void sendFilesToLoadosophia(File targetFile, LinkedList<String> perfMonFiles) throws IOException {
         if (targetFile.length() == 0) {
             throw new IOException("Cannot send empty file to Loadosophia.org");
         }
@@ -125,6 +125,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         while (it.hasNext()) {
             File perfmonFile = new File(it.next());
             if (!perfmonFile.exists()) {
+                log.debug("File not exists, skipped: "+perfmonFile.getAbsolutePath());
                 continue;
             }
             partsList.add(new FilePart("perfmon_" + index, new FilePartSource(gzipFile(perfmonFile))));

@@ -26,12 +26,12 @@ public class LoadosophiaUploadingNotifier {
     }
 
     public void startCollecting() {
-        log.debug("Clearing files list, start files collection");
-        files.clear();
+        log.debug("Start files collection");
     }
 
     public void endCollecting() {
-        log.debug("Ended files collection");
+        log.debug("Ended files collection, clear files list");
+        files.clear();
     }
 
     public LinkedList<String> getFiles() {

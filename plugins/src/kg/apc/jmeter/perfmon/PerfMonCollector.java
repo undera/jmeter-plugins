@@ -102,7 +102,7 @@ public class PerfMonCollector
             } else {
                 try {
                     File tmpFile = File.createTempFile("perfmon_", ".jtl");
-                    tmpFile.deleteOnExit();
+                    tmpFile.delete(); // required to have CSV header
                     setupSaving(tmpFile.getAbsolutePath());
                 } catch (IOException ex) {
                     log.info("PerfMon metrics will not be recorded! Please run the test with -JforcePerfmonFile=true", ex);
@@ -111,10 +111,10 @@ public class PerfMonCollector
         }
 
         log.debug("PerfMon metrics will be stored in " + getPropertyAsString(FILENAME));
-        if (!getSaveConfig().saveAsXml()) {
+        if (!getSaveConfig().saveAsXml() && getSaveConfig().saveFieldNames()) {
             perfMonNotifier.addFile(getPropertyAsString(FILENAME));
         } else {
-            log.warn("Perfmon file saving setting is XML, cannot upload it to Loadosophia.org: " + getPropertyAsString(FILENAME));
+            log.warn("Perfmon file saving setting is not CSV with header line, cannot upload it to Loadosophia.org: " + getPropertyAsString(FILENAME));
         }
         initiateConnectors();
 

@@ -6,12 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
@@ -188,7 +183,7 @@ public class LoadosophiaUploaderGui
     }
 
     private String getTempDir() {
-        File f = null;
+        File f;
         try {
             f = File.createTempFile("jmeterplugins", ".tmp");
             f.deleteOnExit();

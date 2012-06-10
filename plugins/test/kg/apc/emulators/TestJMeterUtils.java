@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import kg.apc.jmeter.DirectoryAnchor;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.gui.GuiPackage;
@@ -42,6 +43,7 @@ public abstract class TestJMeterUtils {
         //propsFile=new File("/home/undera/NetBeansProjects/jmeter/trunk/bin/jmeter.properties");
 
         JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
+        JMeterUtils.setJMeterHome(new DirectoryAnchor().toString());
         JMeterUtils.setLocale(new Locale("ignoreResources"));
 
         jMeterTreeModel = new JMeterTreeModel();
@@ -93,7 +95,7 @@ public abstract class TestJMeterUtils {
         boolean isWinOs = System.getProperty("os.name").toLowerCase().indexOf("win") >= 0;
 
         //fix only files in "document and settings", for computer with no admin / C: drive access...
-        if(isWinOs) {
+        if (isWinOs) {
             ret = ret.replace("Documents%20and%20Settings", "DOCUME~1");
             ret = ret.replace("Local%20Settings", "LOCALS~1");
             ret = ret.replace("Application%20Data", "APPLIC~1");
@@ -105,10 +107,10 @@ public abstract class TestJMeterUtils {
     public static String convertStreamToString(InputStream is)
             throws IOException {
         /*
-         * To convert the InputStream to String we use the
-         * Reader.read(char[] buffer) method. We iterate until the
-         * Reader return -1 which means there's no more data to
-         * read. We use the StringWriter class to produce the string.
+         * To convert the InputStream to String we use the Reader.read(char[]
+         * buffer) method. We iterate until the Reader return -1 which means
+         * there's no more data to read. We use the StringWriter class to
+         * produce the string.
          */
         if (is != null) {
             Writer writer = new StringWriter();

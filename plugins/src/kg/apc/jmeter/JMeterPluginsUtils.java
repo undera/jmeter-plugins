@@ -18,6 +18,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.gui.util.PowerTableModel;
+import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.util.JMeterUtils;
 
@@ -108,7 +109,7 @@ public abstract class JMeterPluginsUtils {
         {
             res.add(rowData[n]);
         }
-        
+
         return res;
     }
 
@@ -160,8 +161,9 @@ public abstract class JMeterPluginsUtils {
     }
 
     /**
-     * Find in panel appropriate place and put hyperlink there.
-     * I know that it is stupid way. But the result is so good!
+     * Find in panel appropriate place and put hyperlink there. I know that it
+     * is stupid way. But the result is so good!
+     *
      * @param panel - supposed to be result of makeTitlePanel()
      * @param helpPage wiki page name, not full URL
      * @return original panel
@@ -236,6 +238,39 @@ public abstract class JMeterPluginsUtils {
             }
         }
         return null;
+    }
+
+    public static void doBestCSVSetup(SampleSaveConfiguration conf) {
+        conf.setAsXml(false);
+        conf.setFieldNames(true);
+
+        conf.setFormatter(null);
+        conf.setSamplerData(false);
+        conf.setRequestHeaders(false);
+        conf.setFileName(false);
+        conf.setIdleTime(false);
+        conf.setSuccess(true);
+        conf.setMessage(true);
+        conf.setEncoding(false);
+        conf.setThreadCounts(true);
+        conf.setFieldNames(true);
+        conf.setAssertions(false);
+        conf.setResponseData(false);
+        conf.setSubresults(false);
+        conf.setLatency(true);
+        conf.setLabel(true);
+
+        conf.setThreadName(false);
+        conf.setBytes(true);
+        conf.setHostname(false);
+        conf.setAssertionResultsFailureMessage(false);
+        conf.setResponseHeaders(false);
+        conf.setUrl(false);
+        conf.setTime(true);
+        conf.setTimestamp(true);
+        conf.setCode(true);
+        conf.setDataType(false);
+        conf.setSampleCount(false);
     }
 
     public static void openInBrowser(String string) {

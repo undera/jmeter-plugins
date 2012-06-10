@@ -5,13 +5,15 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.reporters.LoadosophiaUploadingNotifier;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import kg.apc.perfmon.PerfMonMetricGetter;
 import kg.apc.perfmon.client.Transport;
 import kg.apc.perfmon.client.TransportFactory;
 import kg.apc.perfmon.metrics.MetricParams;
-import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.samplers.SampleEvent;
+import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.util.JMeterUtils;
@@ -37,6 +39,7 @@ public class PerfMonCollector
     private HashMap<String, Long> oldValues = new HashMap<String, Long>();
     private static String autoFileBaseName = null;
     private static int counter = 0;
+    private LoadosophiaUploadingNotifier perfMonNotifier = LoadosophiaUploadingNotifier.getInstance();
 
     static {
         autoGenerateFiles = (JMeterUtils.getPropDefault("forcePerfmonFile", "false")).trim().equalsIgnoreCase("true");
@@ -92,19 +95,25 @@ public class PerfMonCollector
 
     @Override
     public void testStarted(String host) {
-        //if we run in non gui mode, ensure the data will be saved
-        if (GuiPackage.getInstance() == null) {
-            if (getProperty(FILENAME) == null || getProperty(FILENAME).getStringValue().trim().length() == 0) {
-                if (autoGenerateFiles) {
-                    setupSaving();
-                } else {
-                    log.warn("PerfMon metrics will not be recorded! Please run the test with -JforcePerfmonFile=true");
-                }
+        //ensure the data will be saved
+        if (getProperty(FILENAME) == null || getProperty(FILENAME).getStringValue().trim().length() == 0) {
+            if (autoGenerateFiles) {
+                setupSaving(getAutoFileName());
             } else {
-                log.info("PerfMon metrics will be stored in " + getProperty(FILENAME));
+                try {
+                    File tmpFile = File.createTempFile("perfmon_", ".jtl");
+                    tmpFile.deleteOnExit();
+                    setupSaving(tmpFile.getAbsolutePath());
+                } catch (IOException ex) {
+                    log.info("PerfMon metrics will not be recorded! Please run the test with -JforcePerfmonFile=true", ex);
+                }
             }
         }
 
+        log.debug("PerfMon metrics will be stored in " + getProperty(FILENAME));
+        if (!getSaveConfig().saveAsXml()) {
+            perfMonNotifier.addFile(getPropertyAsString(FILENAME));
+        }
         initiateConnectors();
 
         workerThread = new Thread(this);
@@ -113,8 +122,10 @@ public class PerfMonCollector
         super.testStarted(host);
     }
 
-    private void setupSaving() {
-        String fileName = getAutoFileName();
+    private void setupSaving(String fileName) {
+        SampleSaveConfiguration config = getSaveConfig();
+        JMeterPluginsUtils.doBestCSVSetup(config);
+        setSaveConfig(config);
         setFilename(fileName);
         log.info("PerfMon metrics will be stored in " + new File(fileName).getAbsolutePath());
     }
@@ -178,13 +189,13 @@ public class PerfMonCollector
 
             params = "";
 
-            for(int i=0; i<tokens.length; i++) {
-               if(!tokens[i].startsWith("label=")) {
-                  if(params.length() != 0) {
-                     params = params + PerfMonMetricGetter.DVOETOCHIE;
-                  }
-                  params = params + tokens[i];
-               }
+            for (int i = 0; i < tokens.length; i++) {
+                if (!tokens[i].startsWith("label=")) {
+                    if (params.length() != 0) {
+                        params = params + PerfMonMetricGetter.DVOETOCHIE;
+                    }
+                    params = params + tokens[i];
+                }
             }
         }
 

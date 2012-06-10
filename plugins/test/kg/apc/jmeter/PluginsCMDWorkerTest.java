@@ -34,10 +34,7 @@ public class PluginsCMDWorkerTest {
 
     @Before
     public void setUp() {
-        //JMeterUtils.setJMeterHome(TestJMeterUtils.getTempDir());
-        JMeterUtils.setJMeterHome("");
         instance = new PluginsCMDWorker();
-        //JMeterUtils.setProperty("saveservice_properties", "jmeter.properties");
     }
 
     @After
@@ -105,7 +102,6 @@ public class PluginsCMDWorkerTest {
     public void testDoJob() throws IOException {
         System.out.println("doJob");
         //PluginsCMDWorker instance = new PluginsCMDWorker();
-        JMeterUtils.setProperty("saveservice_properties", basedir + "/saveservice.properties");
         instance.setInputFile(basedir + "/short.jtl");
         File pngfile = File.createTempFile("test", ".png");
         instance.setOutputPNGFile(pngfile.getAbsolutePath());
@@ -117,6 +113,7 @@ public class PluginsCMDWorkerTest {
         int result = instance.doJob();
         int expResult = 0;
         assertEquals(expResult, result);
+        System.out.println(csvfile.length());
         System.out.println(pngfile.length());
         assertTrue(73 == csvfile.length() || 77 == csvfile.length()); // win/linux diff
         assertTrue(16000 < pngfile.length()); // win/linux different

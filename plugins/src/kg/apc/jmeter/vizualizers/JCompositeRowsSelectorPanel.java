@@ -1,7 +1,5 @@
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.jmeter.graphs.CompositeNotifierInterface;
-import kg.apc.jmeter.graphs.GraphRendererInterface;
 import java.awt.event.InputEvent;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -10,14 +8,11 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-import kg.apc.jmeter.JMeterPluginsUtils;
+import javax.swing.tree.*;
 import kg.apc.charting.AbstractGraphRow;
+import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.graphs.CompositeNotifierInterface;
+import kg.apc.jmeter.graphs.GraphRendererInterface;
 
 /**
  *

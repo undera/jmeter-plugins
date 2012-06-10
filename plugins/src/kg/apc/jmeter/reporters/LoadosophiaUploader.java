@@ -6,16 +6,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.LinkedList;
 import java.util.zip.GZIPOutputStream;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.multipart.FilePart;
-import org.apache.commons.httpclient.methods.multipart.FilePartSource;
-import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.Part;
-import org.apache.commons.httpclient.methods.multipart.StringPart;
+import org.apache.commons.httpclient.methods.multipart.*;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.TestListener;
@@ -37,6 +35,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
     private String fileName;
     private static final Object LOCK = new Object();
     private boolean isSaving;
+    private LoadosophiaUploadingNotifier perfMonNotifier = LoadosophiaUploadingNotifier.getInstance();
 
     public LoadosophiaUploader() {
         super();
@@ -55,6 +54,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             }
         }
         super.testStarted(host);
+        perfMonNotifier.startCollecting();
     }
 
     @Override
@@ -67,13 +67,14 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
                 }
 
                 isSaving = false;
-                sendJTLToLoadosophia(new File(fileName));
+                sendJTLToLoadosophia(new File(fileName), perfMonNotifier.getFiles());
             } catch (IOException ex) {
                 informUser("Failed to upload results to Loadosophia.org, see log for detais");
                 log.error("Failed to upload results to loadosophia", ex);
             }
         }
         clearData();
+        perfMonNotifier.endCollecting();
     }
 
     private void setupSaving() throws IOException {
@@ -95,47 +96,18 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         tmpFile.delete(); // IMPORTANT! this is required to have CSV headers
         informUser("Storing results for upload to Loadosophia.org: " + fileName);
         setFilename(fileName);
-        // OMG, I spent a 2 days finding that setting properties in testStarted
+        // OMG, I spent 2 days finding that setting properties in testStarted
         // marks them temporary, though they cleared in some places.
         // So we do dirty(?) hack here...
         clearTemporary(getProperty(FILENAME));
 
         SampleSaveConfiguration conf = (SampleSaveConfiguration) getSaveConfig();
-        conf.setAsXml(false);
-        conf.setFieldNames(true);
-
-        conf.setFormatter(null);
-        conf.setSamplerData(false);
-        conf.setRequestHeaders(false);
-        conf.setFileName(false);
-        conf.setIdleTime(false);
-        conf.setSuccess(true);
-        conf.setMessage(true);
-        conf.setEncoding(false);
-        conf.setThreadCounts(true);
-        conf.setFieldNames(true);
-        conf.setAssertions(false);
-        conf.setResponseData(false);
-        conf.setSubresults(false);
-        conf.setLatency(true);
-        conf.setLabel(true);
-
-        conf.setThreadName(false);
-        conf.setBytes(true);
-        conf.setHostname(false);
-        conf.setAssertionResultsFailureMessage(false);
-        conf.setResponseHeaders(false);
-        conf.setUrl(false);
-        conf.setTime(true);
-        conf.setTimestamp(true);
-        conf.setCode(true);
-        conf.setDataType(false);
-        conf.setSampleCount(false);
+        JMeterPluginsUtils.doBestCSVSetup(conf);
 
         setSaveConfig(conf);
     }
 
-    private void sendJTLToLoadosophia(File targetFile) throws IOException {
+    private void sendJTLToLoadosophia(File targetFile, LinkedList<String> perfMonFiles) throws IOException {
         if (targetFile.length() == 0) {
             throw new IOException("Cannot send empty file to Loadosophia.org");
         }

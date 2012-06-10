@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.zip.GZIPOutputStream;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -112,18 +113,31 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
             throw new IOException("Cannot send empty file to Loadosophia.org");
         }
 
-        HttpClient uploader = new HttpClient();
-        PostMethod filePost = new PostMethod(getUploaderURI());
-        Part[] parts = {
-            new StringPart("projectKey", getProject()),
-            new StringPart("uploadToken", getUploadToken()),
-            new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile)))
-        };
-
+        log.info("Preparing files to send");
+        LinkedList<Part> partsList = new LinkedList<Part>();
+        partsList.add(new StringPart("projectKey", getProject()));
+        partsList.add(new StringPart("uploadToken", getUploadToken()));
+        partsList.add(new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile))));
         targetFile.delete();
 
+        Iterator<String> it = perfMonFiles.iterator();
+        int index=0;
+        while (it.hasNext()) {
+            File perfmonFile = new File(it.next());
+            if (!perfmonFile.exists()) {
+                continue;
+            }
+            partsList.add(new FilePart("perfmon_" + index, new FilePartSource(gzipFile(perfmonFile))));
+            perfmonFile.delete();
+            index++;
+        }
+        Part[] parts =  partsList.toArray(new Part[0]);
+
         informUser("Starting upload to Loadosophia.org");
-        filePost.setRequestEntity(new MultipartRequestEntity(parts, filePost.getParams()));
+        HttpClient uploader = new HttpClient();
+        PostMethod filePost = new PostMethod(getUploaderURI());
+        MultipartRequestEntity multipartRequest = new MultipartRequestEntity(parts, filePost.getParams());
+        filePost.setRequestEntity(multipartRequest);
 
         int result = uploader.executeMethod(filePost);
         if (result != HttpStatus.SC_ACCEPTED) {
@@ -139,6 +153,10 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
 
         informUser("Finished upload to Loadosophia.org successfully");
         informUser("Go to https://loadosophia.org/service/upload/ to see processing status.");
+    }
+
+    private File gzipFile(String perfmonFile) throws IOException {
+        return gzipFile(new File(perfmonFile));
     }
 
     private File gzipFile(File src) throws IOException {

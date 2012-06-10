@@ -1,7 +1,10 @@
 package kg.apc.jmeter.reporters;
 
+import java.io.File;
+import java.io.IOException;
 import org.apache.jmeter.util.JMeterUtils;
 import kg.apc.emulators.TestJMeterUtils;
+import kg.apc.io.FileSystem;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
@@ -58,20 +61,28 @@ public class LoadosophiaUploaderTest {
      * Test of testEnded method, of class LoadosophiaUploader.
      */
     @Test
-    public void testTestEnded() {
+    public void testTestEnded() throws IOException {
         System.out.println("testEnded");
         LoadosophiaUploader instance = new LoadosophiaUploader();
         instance.setStoreDir(TestJMeterUtils.getTempDir());
         instance.setFilePrefix("UnitTest");
         instance.setUploaderURI("http://localhost/uploader/");
         instance.setProject("DEFAULT");
-        instance.setUploadToken("0000000000000000000000000000000000000000000000000000000000000000");
+        instance.setUploadToken("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
         instance.testStarted();
+        
         SampleResult res = new SampleResult();
         res.sampleStart();
         res.sampleEnd();
         SampleEvent event = new SampleEvent(res, "test");
         instance.sampleOccurred(event);
+        
+        FileSystem.copyFile(instance.getFilename(), instance.getFilename()+".perfmon1");
+        LoadosophiaUploadingNotifier.getInstance().addFile(instance.getFilename()+".perfmon1");
+                
+        FileSystem.copyFile(instance.getFilename(), instance.getFilename()+".perfmon2");
+        LoadosophiaUploadingNotifier.getInstance().addFile(instance.getFilename()+".perfmon2");
+
         instance.testEnded();
     }
 

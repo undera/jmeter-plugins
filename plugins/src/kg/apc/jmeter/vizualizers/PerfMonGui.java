@@ -251,9 +251,11 @@ public class PerfMonGui
     @Override
     public void add(SampleResult res) {
         if (res.isSuccessful()) {
-            super.add(res);
-            addPerfMonRecord(res.getSampleLabel(), normalizeTime(res.getStartTime()), PerfMonSampleResult.getValue(res));
-            updateGui(null);
+            if(isSampleIncluded(res)) {
+                super.add(res);
+                addPerfMonRecord(res.getSampleLabel(), normalizeTime(res.getStartTime()), PerfMonSampleResult.getValue(res));
+                updateGui(null);
+            }
         } else {
             addErrorMessage(res.getResponseMessage(), res.getStartTime());
         }

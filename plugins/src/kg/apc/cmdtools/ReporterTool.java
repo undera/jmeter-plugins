@@ -2,6 +2,7 @@
 package kg.apc.cmdtools;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 import java.util.ListIterator;
 import kg.apc.jmeter.PluginsCMDWorker;
 import org.apache.jorphan.logging.LoggingManager;
@@ -37,6 +38,7 @@ public class ReporterTool extends AbstractCMDTool {
                 + "--exclude-labels <labels list> " // filter samples
                 + "--auto-scale <yes/no> " // scaling for composites ||
                 + "--line-weight <num of pixels> " // set graph row line thikness ||
+                + "--extractor-regexps <regExps list> " // set graph row line thikness ||
                 + "]");
     }
 
@@ -195,11 +197,33 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 worker.setAutoScaleRows(getLogicValue((String) args.next()));
+            } else if (nextArg.equalsIgnoreCase("--extractor-regexps")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing regular expressions");
+                }
+
+                storeRegExps((String) args.next(), worker);
             } else {
                 throw new UnsupportedOperationException("Unrecognized option: " + nextArg);
             }
         }
 
         return worker.doJob();
+    }
+
+    private void storeRegExps(String regExps, PluginsCMDWorker worker) {
+        String[] regStrings = regExps.split("\\{;\\}");
+
+        if(regStrings.length % 2 != 0) {
+           throw new IllegalArgumentException("Regular expressions must be succession of key/value pairs separated by {;}");
+        }
+
+        HashMap<String, String> pairs = new HashMap<String, String>();
+        for(int i=0; i<regStrings.length; i = i+2) {
+           pairs.put(regStrings[i], regStrings[i+1]);
+        }
+
+        worker.setCmdRegExps(pairs);
     }
 }

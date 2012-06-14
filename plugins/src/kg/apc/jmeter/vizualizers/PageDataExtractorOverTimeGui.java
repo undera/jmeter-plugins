@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -47,6 +48,8 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
    };
    private CollectionProperty regExps = null;
    private HashMap<String, Pattern> patterns = new HashMap<String, Pattern>();
+
+   private HashMap<String, String> cmdRegExps = null;
 
    public PageDataExtractorOverTimeGui() {
       setGranulation(1000);
@@ -216,22 +219,37 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
    public void add(SampleResult res) {
       super.add(res);
 
-      if (regExps == null) {
+      if (regExps == null && cmdRegExps == null) {
          return;
       }
 
       String pageBody = res.getResponseDataAsString();
       long time = normalizeTime(res.getEndTime());
 
-      PropertyIterator iter = regExps.iterator();
-      while (iter.hasNext()) {
-         CollectionProperty props = (CollectionProperty) iter.next();
-         String regExpKey = props.get(0).getStringValue();
-         String regExpValue = props.get(1).getStringValue();
+      if(cmdRegExps == null) {
+         PropertyIterator iter = regExps.iterator();
+         while (iter.hasNext()) {
+            CollectionProperty props = (CollectionProperty) iter.next();
+            String regExpKey = props.get(0).getStringValue();
+            String regExpValue = props.get(1).getStringValue();
 
-         processPage(pageBody, regExpKey, regExpValue, time);
+            processPage(pageBody, regExpKey, regExpValue, time);
+         }
+      } else {
+         Iterator<String> regExpKeysIter = cmdRegExps.keySet().iterator();
+         while (regExpKeysIter.hasNext()) {
+            String regExpKey = regExpKeysIter.next();
+            String regExpValue = cmdRegExps.get(regExpKey);
+
+            processPage(pageBody, regExpKey, regExpValue, time);
+         }
       }
 
       updateGui(null);
+   }
+
+   //for cmdLine tool only
+   public void setCmdRegExps (HashMap<String, String> cmdRegExps) {
+      this.cmdRegExps = cmdRegExps;
    }
 }

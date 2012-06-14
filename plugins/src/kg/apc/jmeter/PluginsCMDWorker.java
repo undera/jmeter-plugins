@@ -3,12 +3,14 @@ package kg.apc.jmeter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Properties;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
+import kg.apc.jmeter.vizualizers.PageDataExtractorOverTimeGui;
 import org.apache.jmeter.JMeter;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
@@ -43,6 +45,7 @@ public class PluginsCMDWorker {
     private float lineWeight = -1;
     private String includeLabels = "";
     private String excludeLabels = "";
+    private HashMap<String, String> cmdRegExps = null;
 
     public PluginsCMDWorker() {
         prepareJMeterEnv();
@@ -304,6 +307,11 @@ public class PluginsCMDWorker {
         if (autoScaleRows >= 0) {
             graph.getChartSettings().setExpendRows(autoScaleRows > 0);
         }
+        if (cmdRegExps != null) {
+           if(gui instanceof PageDataExtractorOverTimeGui) {
+              ((PageDataExtractorOverTimeGui)gui).setCmdRegExps(cmdRegExps);
+           }
+        }
     }
 
     public void setAggregate(int logicValue) {
@@ -356,6 +364,10 @@ public class PluginsCMDWorker {
 
     public void setLineWeight(float parseInt) {
         lineWeight = parseInt;
+    }
+
+    public void setCmdRegExps (HashMap<String, String> cmdRegExps) {
+        this.cmdRegExps = cmdRegExps;
     }
 
     private void forceDir(File resultFile) {

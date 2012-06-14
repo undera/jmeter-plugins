@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.util.HashMap;
 import org.apache.jmeter.reporters.ResultCollector;
 import kg.apc.emulators.TestJMeterUtils;
 import javax.swing.JPanel;
@@ -138,5 +139,17 @@ public class PageDataExtractorOverTimeGuiTest {
       res.setResponseData("aa=10\nbb=20");
       PageDataExtractorOverTimeGui instance = new PageDataExtractorOverTimeGui();
       instance.add(res);
+   }
+
+   /**
+    * Test of setCmdRegExps method, of class PageDataExtractorOverTimeGui.
+    */
+   @Test
+   public void testSetCmdRegExps() {
+      System.out.println("setCmdRegExps");
+      HashMap<String, String> cmdRegExps = new HashMap<String, String>();
+      cmdRegExps.put("regKey", "regVal");
+      PageDataExtractorOverTimeGui instance = new PageDataExtractorOverTimeGui();
+      instance.setCmdRegExps(cmdRegExps);
    }
 }

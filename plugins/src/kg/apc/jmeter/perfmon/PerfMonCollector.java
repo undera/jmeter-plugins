@@ -183,7 +183,10 @@ public class PerfMonCollector
         MetricParams paramsParsed = MetricParams.createFromString(params);
         String label;
         if (paramsParsed.getLabel().isEmpty()) {
-            label = host + " " + metric + " " + params;
+            label = host + " " + metric;
+            if(params != null && !params.isEmpty()) {
+                label = label + " " + params;
+            }
         } else {
             label = host + " " + metric + " " + paramsParsed.getLabel();
 

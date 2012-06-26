@@ -65,9 +65,9 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
     };
     private static String[] cpuProcessMetricsPrimary = {
         "percent" + defaultMarker, "Get the process combined CPU usage, in percent (%)",
-        "total", "Get the process total time CPU usage, in ms",
-        "system", "Get the system time CPU usage, in ms",
-        "user", "Get the user time CPU usage, in ms"
+        "total", "Get the process cpu time (sum of User and System) per second, in ms",
+        "system", "Get the process cpu kernel time per second, in ms",
+        "user", "Get the process cpu user time per second, in ms"
     };
     private static String[] cpuMetricsAdditional = {
         "irq", "Get the irq CPU usage, in percent (%)",

@@ -38,7 +38,7 @@ class CPUProcMetric extends AbstractCPUMetric {
 
         switch (type) {
             case PERCENT:
-                val = cpu.getPercent();
+                val = 100 * cpu.getPercent();
                 break;
             case TOTAL:
                 cur = cpu.getTotal();

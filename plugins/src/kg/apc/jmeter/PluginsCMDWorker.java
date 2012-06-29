@@ -371,8 +371,11 @@ public class PluginsCMDWorker {
     }
 
     private void forceDir(File resultFile) {
-        if (!resultFile.getParentFile().mkdirs() && !resultFile.getParentFile().exists()) {
-            throw new RuntimeException("Failed to create directory for "+resultFile.getAbsolutePath());
+        File parent = resultFile.getParentFile();
+        if(parent != null) {
+            if (!parent.mkdirs() && !parent.exists()) {
+                throw new RuntimeException("Failed to create directory for "+resultFile.getAbsolutePath());
+            }
         }
     }
 }

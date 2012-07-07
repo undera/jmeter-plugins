@@ -96,7 +96,8 @@ public class HTTPRawSamplerTest {
         assertEquals(ByteBuffer.wrap(req.getBytes()), instance.sockEmul.getWrittenBytes());
         assertTrue(result.isSuccessful());
         assertEquals("200", result.getResponseCode());
-        assertTrue( result.getResponseDataAsString().length()>6000);
+        System.out.println("Len: " + result.getResponseDataAsString().length());
+        assertTrue(result.getResponseDataAsString().length() > 6000);
         assertTrue(!instance.sockEmul.isOpen());
     }
 

@@ -182,6 +182,7 @@ public class DNSJavaTCPClientImplTest {
         String expLinuxResult = "UTF-8";
         String expWinResult = "windows-1252";
         String result = instance.getCharset();
+        System.out.println(result);
         assertTrue(expLinuxResult.equals(result) || expWinResult.equals(result));
     }
 }

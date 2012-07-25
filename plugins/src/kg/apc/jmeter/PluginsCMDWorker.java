@@ -209,9 +209,9 @@ public class PluginsCMDWorker {
 
         gui.configure(rc);
 
-        rc.testStarted();
+        //rc.testStarted();
         rc.loadExistingFile();
-        rc.testEnded();
+        //rc.testEnded();
 
         // to handle issue 64 and since it must be cheap - set options again
         setOptions(gui);

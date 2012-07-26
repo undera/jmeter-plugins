@@ -33,6 +33,9 @@ public class UltimateThreadGroup
     private int threadsToSchedule;
     private CollectionProperty currentRecord;
 
+    private long tgStartTime = -1;
+    private final long tolerance = 1000;
+
     /**
      *
      */
@@ -44,6 +47,7 @@ public class UltimateThreadGroup
      *
      * @param thread
      */
+    @Override
     public void scheduleThread(JMeterThread thread) {
         log.debug("Scheduling thread: " + thread.getThreadName());
         if (threadsToSchedule < 1) {
@@ -54,6 +58,9 @@ public class UltimateThreadGroup
             currentRecord = (CollectionProperty) scheduleIT.next();
             threadsToSchedule = currentRecord.get(0).getIntValue();
         }
+        if(tgStartTime == -1 || System.currentTimeMillis()-tgStartTime > tolerance) {
+           tgStartTime = System.currentTimeMillis();
+        }
 
         int numThreads = currentRecord.get(0).getIntValue();
         int initialDelay = currentRecord.get(1).getIntValue();
@@ -61,7 +68,7 @@ public class UltimateThreadGroup
         int flightTime = currentRecord.get(3).getIntValue();
         int endRampUp = currentRecord.get(4).getIntValue();
 
-        long ascentPoint = System.currentTimeMillis() + 1000 * initialDelay;
+        long ascentPoint = tgStartTime + 1000 * initialDelay;
         final int rampUpDelayForThread = (int) Math.floor(1000 * startRampUp * (double) threadsToSchedule / numThreads);
         long startTime = ascentPoint + rampUpDelayForThread;
         long descentPoint = startTime + 1000 * flightTime + 1000 * startRampUp - rampUpDelayForThread;
@@ -108,6 +115,7 @@ public class UltimateThreadGroup
         return result;
     }
 
+    @Override
     public void testStarted() {
         JMeterProperty data = getData();
         if (!(data instanceof NullProperty)) {
@@ -116,17 +124,21 @@ public class UltimateThreadGroup
         threadsToSchedule = 0;
     }
 
+    @Override
     public void testStarted(String host) {
         testStarted();
     }
 
+    @Override
     public void testEnded() {
     }
 
+    @Override
     public void testEnded(String host) {
         testEnded();
     }
 
+    @Override
     public void testIterationStart(LoopIterationEvent event) {
     }
 }

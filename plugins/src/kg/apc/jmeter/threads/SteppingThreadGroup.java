@@ -1,7 +1,5 @@
 package kg.apc.jmeter.threads;
 
-import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.apache.jmeter.testelement.TestListener;
 import org.apache.log.Logger;
 
 import org.apache.jmeter.threads.AbstractThreadGroup;
@@ -13,7 +11,7 @@ import org.apache.jorphan.logging.LoggingManager;
  * @author apc
  */
 public class SteppingThreadGroup
-        extends AbstractThreadGroup implements TestListener {
+        extends AbstractThreadGroup {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     /**
@@ -41,7 +39,9 @@ public class SteppingThreadGroup
      */
     private static final String FLIGHT_TIME = "flighttime";
     private static final String RAMPUP = "rampUp";
-    private long testStartTime;
+
+    private long tgStartTime = -1;
+    private final long tolerance = 1000;
 
     /**
      *
@@ -56,6 +56,10 @@ public class SteppingThreadGroup
      */
     @Override
     public void scheduleThread(JMeterThread thread) {
+        if(tgStartTime == -1 || System.currentTimeMillis()-tgStartTime > tolerance) {
+           tgStartTime = System.currentTimeMillis();
+        }
+
         int inUserCount = getInUserCountAsInt();
         int outUserCount = getOutUserCountAsInt();
 
@@ -63,7 +67,7 @@ public class SteppingThreadGroup
         if(outUserCount == 0) outUserCount = getNumThreads();
 
         int threadGroupDelay = 1000 * getThreadGroupDelayAsInt();
-        long ascentPoint = testStartTime + threadGroupDelay;
+        long ascentPoint = tgStartTime + threadGroupDelay;
         int inUserPeriod = 1000 * getInUserPeriodAsInt();
         int additionalRampUp = 1000 * getRampUpAsInt() / inUserCount;
         int flightTime = 1000 * getFlightTimeAsInt();
@@ -204,28 +208,5 @@ public class SteppingThreadGroup
 
     public String getNumThreadsAsString() {
         return getPropertyAsString(NUM_THREADS);
-    }
-
-    @Override
-    public void testStarted() {
-        testStartTime = System.currentTimeMillis();
-    }
-
-    @Override
-    public void testStarted(String string) {
-        testStarted();
-    }
-
-    @Override
-    public void testEnded() {
-    }
-
-    @Override
-    public void testEnded(String string) {
-        testEnded();
-    }
-
-    @Override
-    public void testIterationStart(LoopIterationEvent lie) {
     }
 }

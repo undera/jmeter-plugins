@@ -1,7 +1,6 @@
 package kg.apc.jmeter.threads;
 
 import org.apache.jmeter.control.LoopController;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jorphan.collections.HashTree;
 import org.junit.After;
@@ -366,56 +365,5 @@ public class SteppingThreadGroupTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of testStarted method, of class SteppingThreadGroup.
-     */
-    @Test
-    public void testTestStarted_0args() {
-        System.out.println("testStarted");
-        SteppingThreadGroup instance = new SteppingThreadGroup();
-        instance.testStarted();
-    }
-
-    /**
-     * Test of testStarted method, of class SteppingThreadGroup.
-     */
-    @Test
-    public void testTestStarted_String() {
-        System.out.println("testStarted");
-        String string = "";
-        SteppingThreadGroup instance = new SteppingThreadGroup();
-        instance.testStarted(string);
-    }
-
-    /**
-     * Test of testEnded method, of class SteppingThreadGroup.
-     */
-    @Test
-    public void testTestEnded_0args() {
-        System.out.println("testEnded");
-        SteppingThreadGroup instance = new SteppingThreadGroup();
-        instance.testEnded();
-    }
-
-    /**
-     * Test of testEnded method, of class SteppingThreadGroup.
-     */
-    @Test
-    public void testTestEnded_String() {
-        System.out.println("testEnded");
-        String string = "";
-        SteppingThreadGroup instance = new SteppingThreadGroup();
-        instance.testEnded(string);
-    }
-
-    /**
-     * Test of testIterationStart method, of class SteppingThreadGroup.
-     */
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoopIterationEvent lie = null;
-        SteppingThreadGroup instance = new SteppingThreadGroup();
-        instance.testIterationStart(lie);
-    }
+   
 }

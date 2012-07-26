@@ -279,7 +279,6 @@ public class SteppingThreadGroupGui
         hashTree.add(new LoopController());
         JMeterThread thread = new JMeterThread(hashTree, null, null);
 
-        tg.testStarted();
         long now = System.currentTimeMillis();
 
         // test start

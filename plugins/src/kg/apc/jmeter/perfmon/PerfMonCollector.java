@@ -34,12 +34,14 @@ public class PerfMonCollector
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String DATA_PROPERTY = "metricConnections";
     private int interval;
-    private Thread workerThread;
+    private Thread workerThread = null;
     private Map<Object, PerfMonAgentConnector> connectors = new HashMap<Object, PerfMonAgentConnector>();
     private HashMap<String, Long> oldValues = new HashMap<String, Long>();
     private static String autoFileBaseName = null;
     private static int counter = 0;
     private LoadosophiaUploadingNotifier perfMonNotifier = LoadosophiaUploadingNotifier.getInstance();
+
+    private static boolean started = false;
 
     static {
         autoGenerateFiles = (JMeterUtils.getPropDefault("forcePerfmonFile", "false")).trim().equalsIgnoreCase("true");
@@ -93,8 +95,22 @@ public class PerfMonCollector
         }
     }
 
+    //ensure we start only once (if multiple slaves)
+    private synchronized static boolean isStarted() {
+       if(!started) {
+          started = true;
+          return false;
+       } else {
+          return true;
+       }
+    }
+
     @Override
     public void testStarted(String host) {
+        if(isStarted()) {
+           return;
+        }
+
         //ensure the data will be saved
         if (getProperty(FILENAME) == null || getProperty(FILENAME).getStringValue().trim().length() == 0) {
             if (autoGenerateFiles) {
@@ -134,13 +150,16 @@ public class PerfMonCollector
 
     @Override
     public void testEnded(String host) {
+        if(workerThread == null) {
+           return;
+        }
         workerThread.interrupt();
         shutdownConnectors();
 
         //reset autoFileName for next test run
         autoFileBaseName = null;
         counter = 0;
-
+        started = false;
         super.testEnded(host);
     }
 

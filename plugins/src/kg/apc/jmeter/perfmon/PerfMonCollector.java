@@ -153,13 +153,13 @@ public class PerfMonCollector
         if(workerThread == null) {
            return;
         }
+        started = false;
         workerThread.interrupt();
         shutdownConnectors();
 
         //reset autoFileName for next test run
         autoFileBaseName = null;
         counter = 0;
-        started = false;
         super.testEnded(host);
     }
 

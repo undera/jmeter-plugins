@@ -283,6 +283,21 @@ public abstract class JMeterPluginsUtils {
         }
     }
 
+    public static float getFloatFromString(String stringValue, float defaultValue) {
+       float ret;
+       if(stringValue != null) {
+          try {
+            ret = Float.valueOf(stringValue);
+          } catch (NumberFormatException ex) {
+            ret = defaultValue;
+          }
+       } else {
+          ret = defaultValue;
+       }
+
+       return ret;
+    }
+
     public static int getSecondsForShortString(String string) {
         int res = 0;
         string = string.trim();

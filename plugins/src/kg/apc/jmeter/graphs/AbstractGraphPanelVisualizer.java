@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import kg.apc.charting.AbstractGraphRow;
+import kg.apc.charting.ChartSettings;
 import kg.apc.charting.ColorsDispatcher;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -449,6 +450,17 @@ public abstract class AbstractGraphPanelVisualizer
         String cfgUseRelativeTime = JMeterUtils.getProperty("jmeterPlugin.useRelativeTime");
         if (cfgUseRelativeTime != null) {
             graph.getChartSettings().setUseRelativeTime("true".equalsIgnoreCase(cfgUseRelativeTime.trim()));
+        }
+        String cfgGraphLineWitdh = JMeterUtils.getProperty("jmeterPlugin.graphLineWidth");
+        if (cfgGraphLineWitdh != null) {
+            graph.getChartSettings().setLineWidth(JMeterPluginsUtils.getFloatFromString(cfgGraphLineWitdh, 1.0f));
+        }
+        String cfgGraphLineMarker = JMeterUtils.getProperty("jmeterPlugin.drawLineMarker");
+        if (cfgGraphLineMarker != null) {
+            boolean removeMarkers = "false".equalsIgnoreCase(cfgGraphLineMarker.trim());
+            if(removeMarkers) {
+               graph.getChartSettings().setChartMarkers(ChartSettings.CHART_MARKERS_NO);
+            }
         }
     }
 

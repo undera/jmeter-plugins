@@ -240,4 +240,17 @@ public class JMeterPluginsUtilsTest {
         JMeterPluginsUtils.collectionPropertyToTableModelCols(prop, model);
         assertEquals(prop.size(), model.getColumnCount());
     }
+
+   /**
+    * Test of getFloatFromString method, of class JMeterPluginsUtils.
+    */
+   @Test
+   public void testGetFloatFromString() {
+      System.out.println("getFloatFromString");
+      String stringValue = "5.3";
+      float defaultValue = 1.0F;
+      float expResult = 5.3F;
+      float result = JMeterPluginsUtils.getFloatFromString(stringValue, defaultValue);
+      assertEquals(expResult, result, 0.0);
+   }
 }

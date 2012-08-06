@@ -160,7 +160,13 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         } else {
             jCheckBoxDrawMarkers.setSelected(!markerOptionDisabled);
         }
-        jComboBoxLineWidth.setSelectedItem(parent.getGraphPanelChart().getChartSettings().getLineWidth());
+        float width = parent.getGraphPanelChart().getChartSettings().getLineWidth();
+        if(width%1 == 0) {
+           jComboBoxLineWidth.setSelectedItem((int)width);
+        } else {
+           jComboBoxLineWidth.setSelectedItem(width);
+        }
+        
         if(parent.getGraphPanelChart().getChartSettings().getChartMarkers() == ChartSettings.CHART_MARKERS_NO) {
            jCheckBoxDrawMarkers.setSelected(false);
         }

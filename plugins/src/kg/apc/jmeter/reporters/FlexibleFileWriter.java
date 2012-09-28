@@ -262,10 +262,15 @@ public class FlexibleFileWriter
     }
 
     private void appendSampleVariable(ByteBuffer buf, SampleEvent evt, int varID) {
-        log.info("Len:" + SampleEvent.getVarCount());
-        log.info("0:" + evt.getVarValue(0));
-        if (evt.getVarValue(varID) != null) {
-            buf.put(evt.getVarValue(varID).getBytes());
+        if(SampleEvent.getVarCount() < varID+1) {
+            buf.put(("UNDEFINED_variable#" + varID).getBytes());
+            log.warn("variable#" + varID + " does not exist!");
+        } else {
+            log.info("Len:" + SampleEvent.getVarCount());
+            log.info("0:" + evt.getVarValue(0));
+            if (evt.getVarValue(varID) != null) {
+                buf.put(evt.getVarValue(varID).getBytes());
+            }
         }
     }
 

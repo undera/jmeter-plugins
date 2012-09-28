@@ -41,7 +41,7 @@ public class PerfMonCollector
     private static int counter = 0;
     private LoadosophiaUploadingNotifier perfMonNotifier = LoadosophiaUploadingNotifier.getInstance();
 
-    private static boolean started = false;
+    private static String workerHost = null;
 
     static {
         autoGenerateFiles = (JMeterUtils.getPropDefault("forcePerfmonFile", "false")).trim().equalsIgnoreCase("true");
@@ -95,19 +95,20 @@ public class PerfMonCollector
         }
     }
 
-    //ensure we start only once (if multiple slaves)
-    private synchronized static boolean isStarted() {
-       if(!started) {
-          started = true;
-          return false;
-       } else {
+    //ensure we start only on one host (if multiple slaves)
+    private synchronized static boolean isWorkingHost(String host) {
+       if(workerHost == null) {
+          workerHost = host;
           return true;
+       } else {
+          return host.equals(workerHost);
        }
     }
 
     @Override
     public void testStarted(String host) {
-        if(isStarted()) {
+       
+        if(!isWorkingHost(host)) {
            return;
         }
 
@@ -153,7 +154,7 @@ public class PerfMonCollector
         if(workerThread == null) {
            return;
         }
-        started = false;
+        workerHost = null;
         workerThread.interrupt();
         shutdownConnectors();
 

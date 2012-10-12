@@ -29,7 +29,7 @@ import org.hyperic.sigar.SigarProxyCache;
  */
 public class PerfMonWorker implements Runnable {
 
-    private static String version = "2.1.1";
+    private static String version = "2.1.2";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int tcpPort = 4444;
     private int udpPort = 4444;

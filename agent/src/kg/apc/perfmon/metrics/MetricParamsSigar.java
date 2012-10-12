@@ -47,6 +47,7 @@ class MetricParamsSigar extends MetricParams {
         try {
             long index = parts.length > 1 ? Long.parseLong(parts[1]) : 0;
             PID = getPIDByProcName(parts[0], index);
+            if(PID <= 0) log.warn("Enable to find process from name: " + name);
         } catch (ArrayIndexOutOfBoundsException e) {
             log.warn("Error processing token: " + token, e);
             PID = -1;
@@ -61,7 +62,9 @@ class MetricParamsSigar extends MetricParams {
     private long getPIDByPTQL(String token) {
         String query = token.substring(token.indexOf("=") + 1);
         try {
-            return new ProcessFinder(sigar).findSingleProcess(query);
+            long pid = new ProcessFinder(sigar).findSingleProcess(query);
+            if(pid <= 0) log.warn("Enable to find process from query: " + query);
+            return pid;
         } catch (SigarException ex) {
             log.warn("Error querying PTQL: " + query, ex);
             return -1;

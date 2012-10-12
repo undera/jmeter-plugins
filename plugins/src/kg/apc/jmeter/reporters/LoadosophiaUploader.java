@@ -15,6 +15,7 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.*;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.TestListener;
@@ -233,4 +234,9 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
     public void setStoreDir(String prefix) {
         setProperty(STORE_DIR, prefix);
     }
+
+   @Override
+   public void testIterationStart(LoopIterationEvent lie) {
+      //TODO: should be handled ?
+   }
 }

@@ -10,7 +10,6 @@ import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
-import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -20,7 +19,7 @@ import org.apache.log.Logger;
  * @author apc
  */
 public class UltimateThreadGroup
-        extends AbstractThreadGroup
+        extends AbstractSimpleThreadGroup
         implements Serializable, TestListener {
     //private static final Logger log = LoggingManager.getLoggerForClass();
 
@@ -48,7 +47,7 @@ public class UltimateThreadGroup
      * @param thread
      */
     @Override
-    public void scheduleThread(JMeterThread thread) {
+    public void scheduleThread(JMeterThread thread, long now) {
         log.debug("Scheduling thread: " + thread.getThreadName());
         if (threadsToSchedule < 1) {
             if (!scheduleIT.hasNext()) {

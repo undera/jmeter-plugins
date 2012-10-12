@@ -2,7 +2,6 @@ package kg.apc.jmeter.threads;
 
 import org.apache.log.Logger;
 
-import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jorphan.logging.LoggingManager;
 
@@ -11,7 +10,7 @@ import org.apache.jorphan.logging.LoggingManager;
  * @author apc
  */
 public class SteppingThreadGroup
-        extends AbstractThreadGroup {
+        extends AbstractSimpleThreadGroup {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     /**
@@ -55,10 +54,7 @@ public class SteppingThreadGroup
      * @param thread
      */
     @Override
-    public void scheduleThread(JMeterThread thread) {
-        if(tgStartTime == -1 || System.currentTimeMillis()-tgStartTime > tolerance) {
-           tgStartTime = System.currentTimeMillis();
-        }
+    protected void scheduleThread(JMeterThread thread, long tgStartTime) {
 
         int inUserCount = getInUserCountAsInt();
         int outUserCount = getOutUserCountAsInt();

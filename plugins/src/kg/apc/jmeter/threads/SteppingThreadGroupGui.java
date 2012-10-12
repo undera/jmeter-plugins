@@ -291,7 +291,7 @@ public class SteppingThreadGroupGui
         // users in
         for (int n = 0; n < numThreads; n++) {
             thread.setThreadNum(n);
-            tg.scheduleThread(thread);
+            tg.scheduleThread(thread, now);
             row.add(thread.getStartTime() - 1, 0);
             row.add(thread.getStartTime(), 1);
         }
@@ -299,7 +299,7 @@ public class SteppingThreadGroupGui
         // users out
         for (int n = 0; n < numThreads; n++) {
             thread.setThreadNum(n);
-            tg.scheduleThread(thread);
+            tg.scheduleThread(thread, now);
             row.add(thread.getEndTime() - 1, 0);
             row.add(thread.getEndTime(), -1);
         }

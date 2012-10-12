@@ -1,7 +1,7 @@
 package kg.apc.jmeter.reporters;
 
-import java.io.File;
 import java.io.IOException;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.util.JMeterUtils;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.io.FileSystem;
@@ -200,4 +200,15 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         instance.setStoreDir(prefix);
     }
+
+   /**
+    * Test of testIterationStart method, of class LoadosophiaUploader.
+    */
+   @Test
+   public void testTestIterationStart() {
+      System.out.println("testIterationStart");
+      LoopIterationEvent lie = null;
+      LoadosophiaUploader instance = new LoadosophiaUploader();
+      instance.testIterationStart(lie);
+   }
 }

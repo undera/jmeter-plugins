@@ -128,7 +128,7 @@ public class PerfMonGuiTest {
         PerfMonCollector collector = (PerfMonCollector) instance.createTestElement();
         //collector.setListener(instance);
         collector.testStarted();
-        collector.testIterationStart(null);
+        //collector.testIterationStart(null);
         Thread.sleep(2000);
         collector.testEnded();
         //assertEquals(5, instance.model.firstEntry().getValue().size());

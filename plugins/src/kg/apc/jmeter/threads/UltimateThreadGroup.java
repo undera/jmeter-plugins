@@ -44,7 +44,7 @@ public class UltimateThreadGroup
      * @param thread
      */
     @Override
-    public void scheduleThread(JMeterThread thread, long tgStartTime) {
+    protected void scheduleThread(JMeterThread thread, long tgStartTime) {
         log.debug("Scheduling thread: " + thread.getThreadName());
         if (threadsToSchedule < 1) {
             if (!scheduleIT.hasNext()) {

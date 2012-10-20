@@ -105,8 +105,8 @@ public class GraphPanelChart
     private String errorMessage = null;
     // Chart's gradient background end color
     private final static Color gradientColor = new Color(229, 236, 246);
-    // Chart's Axis Color. For good results, use gradient color - (30, 30, 30)
-    private final static Color axisColor = new Color(199, 206, 216);
+    // Chart's Axis Color. For good results, use gradient color - (40, 40, 40)
+    private final static Color axisColor = new Color(189, 196, 206);
     //save file path. We remember last folder used.
     private static String savePath = null;
     private ChartSettings chartSettings = new ChartSettings();

@@ -44,7 +44,7 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
 
     //JMeter 2.7 compatibility
     public void scheduleThread(JMeterThread thread) {
-       if(tgStartTime == -1 || System.currentTimeMillis()-tgStartTime > tolerance) {
+       if(System.currentTimeMillis()-tgStartTime > tolerance) {
            tgStartTime = System.currentTimeMillis();
        }
        scheduleThread(thread, tgStartTime);

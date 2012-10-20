@@ -32,9 +32,6 @@ public class UltimateThreadGroup
     private int threadsToSchedule;
     private CollectionProperty currentRecord;
 
-    private long tgStartTime = -1;
-    private final long tolerance = 1000;
-
     /**
      *
      */
@@ -47,7 +44,7 @@ public class UltimateThreadGroup
      * @param thread
      */
     @Override
-    public void scheduleThread(JMeterThread thread, long now) {
+    public void scheduleThread(JMeterThread thread, long tgStartTime) {
         log.debug("Scheduling thread: " + thread.getThreadName());
         if (threadsToSchedule < 1) {
             if (!scheduleIT.hasNext()) {
@@ -56,9 +53,6 @@ public class UltimateThreadGroup
 
             currentRecord = (CollectionProperty) scheduleIT.next();
             threadsToSchedule = currentRecord.get(0).getIntValue();
-        }
-        if(tgStartTime == -1 || System.currentTimeMillis()-tgStartTime > tolerance) {
-           tgStartTime = System.currentTimeMillis();
         }
 
         int numThreads = currentRecord.get(0).getIntValue();

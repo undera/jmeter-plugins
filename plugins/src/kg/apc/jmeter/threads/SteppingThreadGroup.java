@@ -39,9 +39,6 @@ public class SteppingThreadGroup
     private static final String FLIGHT_TIME = "flighttime";
     private static final String RAMPUP = "rampUp";
 
-    private long tgStartTime = -1;
-    private final long tolerance = 1000;
-
     /**
      *
      */

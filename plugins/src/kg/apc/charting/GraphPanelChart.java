@@ -113,6 +113,8 @@ public class GraphPanelChart
 
     private CustomNumberRenderer nbFormatter = new CustomNumberRenderer("#,#00.#", ' ');
 
+    private final static int legendAdjust = 3;
+
     public ChartSettings getChartSettings() {
         return chartSettings;
     }
@@ -623,12 +625,14 @@ public class GraphPanelChart
                 oldComposite = ((Graphics2D) g).getComposite();
                 ((Graphics2D) g).setComposite(chartSettings.getBarComposite());
             }
-            g.fillRect(currentX, currentY, rectW, rectH);
+            g.fillRect(currentX+legendAdjust+1, currentY+legendAdjust+1, rectW-2*legendAdjust, rectH-2*legendAdjust);
             if (isBarChart) {
                 ((Graphics2D) g).setComposite(oldComposite);
             }
-            g.setColor(Color.black);
-            g.drawRect(currentX, currentY, rectW, rectH);
+            g.setColor(color.darker());
+            g.drawRect(currentX+legendAdjust+1, currentY+legendAdjust+1, rectW-2*legendAdjust, rectH-2*legendAdjust);
+
+            g.setColor(Color.BLACK);
 
             // draw legend item label
             currentX += rectW + spacing / 2;

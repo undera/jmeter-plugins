@@ -253,4 +253,27 @@ public class JMeterPluginsUtilsTest {
       float result = JMeterPluginsUtils.getFloatFromString(stringValue, defaultValue);
       assertEquals(expResult, result, 0.0);
    }
+
+    /**
+     * Test of collectionPropertyToTableModelRows method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testCollectionPropertyToTableModelRows_CollectionProperty_PowerTableModel() {
+        System.out.println("collectionPropertyToTableModelRows");
+        CollectionProperty prop = JMeterPluginsUtils.tableModelColsToCollectionProperty(getTestModel(), "");
+        PowerTableModel model = getTestModel();
+        JMeterPluginsUtils.collectionPropertyToTableModelRows(prop, model);
+    }
+
+    /**
+     * Test of collectionPropertyToTableModelRows method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testCollectionPropertyToTableModelRows_3args() {
+        System.out.println("collectionPropertyToTableModelRows");
+        CollectionProperty prop = JMeterPluginsUtils.tableModelColsToCollectionProperty(getTestModel(), "");
+        PowerTableModel model = getTestModel();
+        Class[] columnClasses = {String.class, String.class};
+        JMeterPluginsUtils.collectionPropertyToTableModelRows(prop, model, columnClasses);
+    }
 }

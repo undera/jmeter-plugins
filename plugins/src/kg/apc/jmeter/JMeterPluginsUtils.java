@@ -20,6 +20,7 @@ import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.util.JMeterUtils;
 
 /**
@@ -28,7 +29,7 @@ import org.apache.jmeter.util.JMeterUtils;
  */
 public abstract class JMeterPluginsUtils {
 
-    public static String PLUGINS_VERSION = "0.5.5";
+    public static String PLUGINS_VERSION = "0.5.6 snapshot";
     private static String PLUGINS_PREFIX = "jp@gc - ";
     private static boolean prefixPlugins = true;
     public static final String WIKI_BASE = "http://code.google.com/p/jmeter-plugins/wiki/";
@@ -78,6 +79,20 @@ public abstract class JMeterPluginsUtils {
         model.clearData();
         for (int rowN = 0; rowN < prop.size(); rowN++) {
             ArrayList<String> rowObject = (ArrayList<String>) prop.get(rowN).getObjectValue();
+            model.addRow(rowObject.toArray());
+        }
+        model.fireTableDataChanged();
+    }
+
+    public static void collectionPropertyToTableModelRows(CollectionProperty prop, PowerTableModel model, Class[] columnClasses) {
+        model.clearData();
+        for (int rowN = 0; rowN < prop.size(); rowN++) {
+            ArrayList<StringProperty> rowStrings = (ArrayList<StringProperty>) prop.get(rowN).getObjectValue();
+            ArrayList<Object> rowObject = new ArrayList<Object>(rowStrings.size());
+
+            for (int i = 0; i < columnClasses.length && i < rowStrings.size(); i++) {
+                rowObject.add(convertToClass(rowStrings.get(i), columnClasses[i]));
+            }
             model.addRow(rowObject.toArray());
         }
         model.fireTableDataChanged();
@@ -158,6 +173,13 @@ public abstract class JMeterPluginsUtils {
         } else {
             return "";
         }
+    }
+
+    private static Object convertToClass(StringProperty value, Class aClass) {
+        if (Boolean.class.equals(aClass)) {
+            return Boolean.valueOf(value.getStringValue());
+        }
+        return value;
     }
 
     /**

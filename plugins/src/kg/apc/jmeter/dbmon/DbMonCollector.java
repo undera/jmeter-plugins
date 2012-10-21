@@ -1,7 +1,6 @@
 package kg.apc.jmeter.dbmon;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -108,18 +107,20 @@ public class DbMonCollector
             if (autoGenerateFiles) {
                 setupSaving(getAutoFileName());
             } else {
+                /* autosave should be activated if loadsophia uses these data
                 try {
                     File tmpFile = File.createTempFile("dbmon_", ".jtl");
                     tmpFile.delete(); // required to have CSV header
                     setupSaving(tmpFile.getAbsolutePath());
                 } catch (IOException ex) {
                     log.info("DbMon metrics will not be recorded! Please run the test with -JforceDbmonFile=true", ex);
-                }
+                }*/
+                log.info("DbMon metrics will not be recorded! Please specify a file name in the gui or run the test with -JforceDbmonFile=true");
             }
         }
-
-        log.debug("DbMon metrics will be stored in " + getPropertyAsString(FILENAME));
+        
         /* uncomment to upload to Loadsophia
+        log.debug("DbMon metrics will be stored in " + getPropertyAsString(FILENAME));
         if (!getSaveConfig().saveAsXml() && getSaveConfig().saveFieldNames()) {
             dbMonNotifier.addFile(getPropertyAsString(FILENAME));
         } else {

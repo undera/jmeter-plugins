@@ -21,6 +21,12 @@ public class DbMonSampleResult
         setResponseMessage(new Double(value).toString());
     }
 
+    @Override
+    public void setResponseMessage(String msg) {
+        super.setResponseMessage(msg);
+        setStartTime(ts);
+    }
+
     @Deprecated
     public double getValue() {
         return Double.valueOf(getResponseMessage());

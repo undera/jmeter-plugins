@@ -6,4 +6,5 @@ package kg.apc.jmeter.dbmon;
  */
 public interface DbMonSampleGenerator {
     public void generateSample(double d, String string);
+    public void generateErrorSample(String errorMsg);
 }

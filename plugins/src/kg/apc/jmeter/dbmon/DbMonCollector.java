@@ -128,7 +128,9 @@ public class DbMonCollector
         try {
             initiateConnectors();
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            //throw new RuntimeException(ex);
+            log.error("Enable to start dbmon", ex);
+            generateErrorSample(ex.getMessage());
         }
 
         workerThread = new Thread(this);
@@ -206,6 +208,15 @@ public class DbMonCollector
         res.setSampleLabel(label);
         res.setValue(value);
         res.setSuccessful(true);
+        SampleEvent e = new SampleEvent(res, DBMON);
+        super.sampleOccurred(e);
+    }
+
+    @Override
+    public void generateErrorSample(String errorMsg) {
+        DbMonSampleResult res = new DbMonSampleResult();
+        res.setResponseMessage(errorMsg);
+        res.setSuccessful(false);
         SampleEvent e = new SampleEvent(res, DBMON);
         super.sampleOccurred(e);
     }

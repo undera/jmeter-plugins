@@ -72,7 +72,7 @@ public class DbMonGui
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("DbMon Sample Collector");
+        return JMeterPluginsUtils.prefixLabel("DbMon Samples Collector");
     }
 
     @Override

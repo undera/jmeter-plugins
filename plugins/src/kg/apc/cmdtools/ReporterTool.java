@@ -2,7 +2,7 @@
 package kg.apc.cmdtools;
 
 import java.io.PrintStream;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.ListIterator;
 import kg.apc.jmeter.PluginsCMDWorker;
 import org.apache.jorphan.logging.LoggingManager;
@@ -215,15 +215,17 @@ public class ReporterTool extends AbstractCMDTool {
     private void storeRegExps(String regExps, PluginsCMDWorker worker) {
         String[] regStrings = regExps.split("\\{;\\}");
 
-        if(regStrings.length % 2 != 0) {
-           throw new IllegalArgumentException("Regular expressions must be succession of key/value pairs separated by {;}");
+        if(regStrings.length % 3 != 0) {
+           throw new IllegalArgumentException("Regular expressions must be succession of key/value/isDelta(true or false) separated by {;}");
         }
 
-        HashMap<String, String> pairs = new HashMap<String, String>();
-        for(int i=0; i<regStrings.length; i = i+2) {
-           pairs.put(regStrings[i], regStrings[i+1]);
+        ArrayList<Object> data = new ArrayList<Object>();
+        for(int i=0; i<regStrings.length; i = i+3) {
+           data.add(regStrings[i]);
+           data.add(regStrings[i+1]);
+           data.add("true".equalsIgnoreCase(regStrings[i+2]));
         }
 
-        worker.setCmdRegExps(pairs);
+        worker.setCmdRegExps(data);
     }
 }

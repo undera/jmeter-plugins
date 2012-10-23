@@ -3,6 +3,7 @@ package kg.apc.jmeter.vizualizers;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -38,18 +39,20 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
    private PowerTableModel tableModel;
    private JTable grid;
    public static final String[] columnIdentifiers = new String[]{
-      "Regular Expression for Key", "Regular Expression for Value"
+      "Regular Expression for Key", "Regular Expression for Value", "Delta"
    };
    public static final Class[] columnClasses = new Class[]{
-      String.class, String.class
+      String.class, String.class, Boolean.class
    };
-   private static String[] defaultValues = new String[]{
-      "", ""
+   private static Object[] defaultValues = new Object[]{
+      "", "", false
    };
    private CollectionProperty regExps = null;
    private HashMap<String, Pattern> patterns = new HashMap<String, Pattern>();
 
-   private HashMap<String, String> cmdRegExps = null;
+   private ArrayList<Object> cmdRegExps = null;
+
+   private HashMap<String, Double> oldValues = new HashMap<String, Double>();
 
    public PageDataExtractorOverTimeGui() {
       setGranulation(1000);
@@ -87,6 +90,9 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
       createTableModel();
       grid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
       grid.setMinimumSize(new Dimension(200, 100));
+      grid.getColumnModel().getColumn(0).setPreferredWidth(350);
+      grid.getColumnModel().getColumn(1).setPreferredWidth(350);
+      grid.getColumnModel().getColumn(2).setPreferredWidth(50);
 
       return grid;
    }
@@ -150,14 +156,14 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
       CorrectedResultCollector rc = (CorrectedResultCollector) te;
       JMeterProperty regexpValues = rc.getProperty(REGEXPS_PROPERTY);
       if (!(regexpValues instanceof NullProperty)) {
-         JMeterPluginsUtils.collectionPropertyToTableModelRows((CollectionProperty) regexpValues, tableModel);
+         JMeterPluginsUtils.collectionPropertyToTableModelRows((CollectionProperty) regexpValues, tableModel, columnClasses);
          regExps = (CollectionProperty) regexpValues;
       } else {
          log.warn("Received null property instead of collection");
       }
    }
 
-   private void processPage(String pageBody, String regExpKey, String regExpValue, long time) {
+   private void processPage(String pageBody, String regExpKey, String regExpValue, boolean isDelta, long time) {
       Pattern patternKey = patterns.get(regExpKey);
       if (patternKey == null) {
          try {
@@ -190,7 +196,15 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
 
             try {
                double value = Double.parseDouble(sValue);
-               addRecord(key, time, value);
+               if(isDelta) {
+                   if(oldValues.containsKey(key)) {
+                       double tmp = oldValues.get(key) - value;
+                       addRecord(key, time, tmp);
+                   }
+                   oldValues.put(key, value);
+               } else {
+                   addRecord(key, time, value);
+               }
             } catch (NumberFormatException ex) {
                log.error("Value extracted is not a number: " + sValue);
             }
@@ -232,24 +246,32 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
             CollectionProperty props = (CollectionProperty) iter.next();
             String regExpKey = props.get(0).getStringValue();
             String regExpValue = props.get(1).getStringValue();
+            Boolean isDelta = props.get(2).getBooleanValue();
 
-            processPage(pageBody, regExpKey, regExpValue, time);
+            processPage(pageBody, regExpKey, regExpValue, isDelta, time);
          }
       } else {
-         Iterator<String> regExpKeysIter = cmdRegExps.keySet().iterator();
-         while (regExpKeysIter.hasNext()) {
-            String regExpKey = regExpKeysIter.next();
-            String regExpValue = cmdRegExps.get(regExpKey);
+         Iterator<Object> regExpIter = cmdRegExps.iterator();
+         while (regExpIter.hasNext()) {
+            String regExpKey = (String)regExpIter.next();
+            String regExpValue = (String)regExpIter.next();
+            boolean isDelta = (Boolean)regExpIter.next();
 
-            processPage(pageBody, regExpKey, regExpValue, time);
+            processPage(pageBody, regExpKey, regExpValue, isDelta, time);
          }
       }
 
       updateGui(null);
    }
 
+    @Override
+    public void clearData() {
+        oldValues.clear();
+        super.clearData();
+    }
+
    //for cmdLine tool only
-   public void setCmdRegExps (HashMap<String, String> cmdRegExps) {
+   public void setCmdRegExps (ArrayList<Object> cmdRegExps) {
       this.cmdRegExps = cmdRegExps;
    }
 }

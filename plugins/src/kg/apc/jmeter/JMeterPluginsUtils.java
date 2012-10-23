@@ -93,6 +93,13 @@ public abstract class JMeterPluginsUtils {
             for (int i = 0; i < columnClasses.length && i < rowStrings.size(); i++) {
                 rowObject.add(convertToClass(rowStrings.get(i), columnClasses[i]));
             }
+            //for now work only if new fields are added at the end...
+            //needed for retro compatibility if new fields added
+            if(rowObject.size() < columnClasses.length) {
+                for(int i=rowObject.size(); i<columnClasses.length; i++) {
+                    rowObject.add(new Object());
+                }
+            }
             model.addRow(rowObject.toArray());
         }
         model.fireTableDataChanged();

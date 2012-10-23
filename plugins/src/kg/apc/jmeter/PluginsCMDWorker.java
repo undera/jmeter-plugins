@@ -3,12 +3,13 @@ package kg.apc.jmeter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Properties;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
+import kg.apc.jmeter.dbmon.DbMonCollector;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import kg.apc.jmeter.vizualizers.PageDataExtractorOverTimeGui;
 import org.apache.jmeter.JMeter;
@@ -45,7 +46,7 @@ public class PluginsCMDWorker {
     private float lineWeight = -1;
     private String includeLabels = "";
     private String excludeLabels = "";
-    private HashMap<String, String> cmdRegExps = null;
+    private ArrayList<Object> cmdRegExps = null;
 
     public PluginsCMDWorker() {
         prepareJMeterEnv();
@@ -198,6 +199,8 @@ public class PluginsCMDWorker {
         CorrectedResultCollector rc;
         if(gui instanceof kg.apc.jmeter.vizualizers.PerfMonGui) {
            rc = new PerfMonCollector();
+        } else if(gui instanceof kg.apc.jmeter.vizualizers.DbMonGui) {
+           rc = new DbMonCollector();
         } else {
            rc = new CorrectedResultCollector();
         }
@@ -366,7 +369,7 @@ public class PluginsCMDWorker {
         lineWeight = parseInt;
     }
 
-    public void setCmdRegExps (HashMap<String, String> cmdRegExps) {
+    public void setCmdRegExps (ArrayList<Object> cmdRegExps) {
         this.cmdRegExps = cmdRegExps;
     }
 

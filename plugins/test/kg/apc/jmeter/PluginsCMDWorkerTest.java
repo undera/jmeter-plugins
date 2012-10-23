@@ -3,6 +3,7 @@ package kg.apc.jmeter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.util.JMeterUtils;
 import static org.junit.Assert.assertEquals;
@@ -342,5 +343,16 @@ public class PluginsCMDWorkerTest {
         System.out.println("setLineWeight");
         float parseInt = 0.0F;
         instance.setLineWeight(parseInt);
+    }
+
+    /**
+     * Test of setCmdRegExps method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetCmdRegExps() {
+        System.out.println("setCmdRegExps");
+        ArrayList<Object> cmdRegExps = new ArrayList<Object>();
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setCmdRegExps(cmdRegExps);
     }
 }

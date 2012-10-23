@@ -1,6 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import org.apache.jmeter.reporters.ResultCollector;
 import kg.apc.emulators.TestJMeterUtils;
 import javax.swing.JPanel;
@@ -147,9 +147,21 @@ public class PageDataExtractorOverTimeGuiTest {
    @Test
    public void testSetCmdRegExps() {
       System.out.println("setCmdRegExps");
-      HashMap<String, String> cmdRegExps = new HashMap<String, String>();
-      cmdRegExps.put("regKey", "regVal");
+      ArrayList<Object> data = new ArrayList<Object>();
+      data.add("regKey");
+      data.add("regVal");
+      data.add(true);
       PageDataExtractorOverTimeGui instance = new PageDataExtractorOverTimeGui();
-      instance.setCmdRegExps(cmdRegExps);
+      instance.setCmdRegExps(data);
    }
+
+    /**
+     * Test of clearData method, of class PageDataExtractorOverTimeGui.
+     */
+    @Test
+    public void testClearData() {
+        System.out.println("clearData");
+        PageDataExtractorOverTimeGui instance = new PageDataExtractorOverTimeGui();
+        instance.clearData();
+    }
 }

@@ -33,7 +33,7 @@ public class DbMonGui
     private JTextArea errorTextArea;
     private JScrollPane errorPane;
     public static final String[] columnIdentifiers = new String[]{
-        "JDBC pool variable name", "Chart label", "Delta", "SQL query (must return a single value)"
+        "JDBC pool variable name", "Chart label", "Delta", "SQL query (must return a single numeric value)"
     };
     public static final Class[] columnClasses = new Class[]{
         String.class, String.class, Boolean.class, String.class

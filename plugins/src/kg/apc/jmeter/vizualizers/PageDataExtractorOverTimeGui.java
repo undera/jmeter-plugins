@@ -164,6 +164,8 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
    }
 
    private void processPage(String pageBody, String regExpKey, String regExpValue, boolean isDelta, long time) {
+      //handle multiple keys with same name found with the regexp
+      ArrayList<String> labels = new ArrayList<String>();
       Pattern patternKey = patterns.get(regExpKey);
       if (patternKey == null) {
          try {
@@ -192,6 +194,15 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
          while (mKey.find() && mValue.find()) {
             found = true;
             String key = mKey.group(1);
+            
+            if(labels.contains(key)) {
+                int i = 2;
+                while(labels.contains(key + "_" + i)) i++;
+                key = key + "_" + i;
+            }
+            
+            labels.add(key);
+            
             String sValue = mValue.group(1);
 
             try {

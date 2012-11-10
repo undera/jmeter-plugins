@@ -39,7 +39,7 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
    private PowerTableModel tableModel;
    private JTable grid;
    public static final String[] columnIdentifiers = new String[]{
-      "Regular Expression for Key", "Regular Expression for Value", "Delta"
+      "Chart label", "Regular expression value extractor", "Delta"
    };
    public static final Class[] columnClasses = new Class[]{
       String.class, String.class, Boolean.class
@@ -99,7 +99,7 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
 
    private Component createRegExpPanel() {
       JPanel panel = new JPanel(new BorderLayout(5, 5));
-      panel.setBorder(BorderFactory.createTitledBorder("Regular Expressions Data Extractors"));
+      panel.setBorder(BorderFactory.createTitledBorder("Regular Expressions Data Extractor"));
       panel.setPreferredSize(new Dimension(150, 150));
 
       JScrollPane scroll = new JScrollPane(createGrid());
@@ -163,19 +163,8 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
       }
    }
 
-   private void processPage(String pageBody, String regExpKey, String regExpValue, boolean isDelta, long time) {
-      //handle multiple keys with same name found with the regexp
-      ArrayList<String> labels = new ArrayList<String>();
-      Pattern patternKey = patterns.get(regExpKey);
-      if (patternKey == null) {
-         try {
-            patternKey = Pattern.compile(regExpKey);
-            patterns.put(regExpKey, patternKey);
-         } catch (PatternSyntaxException ex) {
-            log.error("Error compiling pattern: " + regExpKey);
-         }
-      }
-      Pattern patternValue = patterns.get(regExpValue);
+   private void processPage(String pageBody, String label, String regExpValue, boolean isDelta, long time) {
+      Pattern patternValue = patterns.get(label);
       if (patternValue == null) {
          try {
             patternValue = Pattern.compile(regExpValue);
@@ -185,24 +174,20 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
          }
       }
 
-      if (patternKey != null && patternValue != null) {
-         Matcher mKey = patternKey.matcher(pageBody);
+      if (patternValue != null) {
          Matcher mValue = patternValue.matcher(pageBody);
 
-         boolean found = false;
+         int counter = 0;
 
-         while (mKey.find() && mValue.find()) {
-            found = true;
-            String key = mKey.group(1);
-            
-            if(labels.contains(key)) {
-                int i = 2;
-                while(labels.contains(key + "_" + i)) i++;
-                key = key + "_" + i;
+         while (mValue.find()) {
+            counter++;
+            String key;
+            if(counter > 1) {
+                key = label + " (" + counter + ")";
+            } else {
+                key = label;
             }
-            
-            labels.add(key);
-            
+          
             String sValue = mValue.group(1);
 
             try {
@@ -220,22 +205,22 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
                log.error("Value extracted is not a number: " + sValue);
             }
          }
-         if (!found) {
-            log.warn("No data found for regExpKey: " + regExpKey + " and regExpValue: " + regExpValue);
+         if (counter == 0) {
+            log.warn("No data found for regExpValue: " + regExpValue);
          }
       }
    }
 
-   private void addRecord(String keyName, long time, double value) {
+   private void addRecord(String label, long time, double value) {
 
-      if (!isSampleIncluded(keyName)) {
+      if (!isSampleIncluded(label)) {
          return;
       }
 
-      AbstractGraphRow row = model.get(keyName);
+      AbstractGraphRow row = model.get(label);
 
       if (row == null) {
-         row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, keyName, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, true);
+         row = getNewRow(model, AbstractGraphRow.ROW_AVERAGES, label, AbstractGraphRow.MARKER_SIZE_SMALL, false, false, false, true, true);
       }
       row.add(time, value);
    }
@@ -255,20 +240,20 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
          PropertyIterator iter = regExps.iterator();
          while (iter.hasNext()) {
             CollectionProperty props = (CollectionProperty) iter.next();
-            String regExpKey = props.get(0).getStringValue();
+            String label = props.get(0).getStringValue();
             String regExpValue = props.get(1).getStringValue();
             Boolean isDelta = props.get(2).getBooleanValue();
 
-            processPage(pageBody, regExpKey, regExpValue, isDelta, time);
+            processPage(pageBody, label, regExpValue, isDelta, time);
          }
       } else {
          Iterator<Object> regExpIter = cmdRegExps.iterator();
          while (regExpIter.hasNext()) {
-            String regExpKey = (String)regExpIter.next();
+            String label = (String)regExpIter.next();
             String regExpValue = (String)regExpIter.next();
             boolean isDelta = (Boolean)regExpIter.next();
 
-            processPage(pageBody, regExpKey, regExpValue, isDelta, time);
+            processPage(pageBody, label, regExpValue, isDelta, time);
          }
       }
 

@@ -72,6 +72,9 @@ public class DatagramChannelEmul extends DatagramChannel {
     public int write(ByteBuffer src) throws IOException {
         log.debug("Emulating write: " + getString(src));
         writtenBytes = src;
+        while (src.hasRemaining()) {
+            src.get();
+        }
         return src.capacity();
     }
 

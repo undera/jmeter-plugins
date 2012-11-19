@@ -59,9 +59,6 @@ public class HTTPRawSamplerTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of sample method, of class HTTPRawSampler.
-     */
     @Test
     public void testSample() throws MalformedURLException, IOException {
         System.out.println("sample");
@@ -78,6 +75,25 @@ public class HTTPRawSamplerTest {
         assertTrue(result.isSuccessful());
         assertEquals("200", result.getResponseCode());
         assertEquals("TEST", result.getResponseDataAsString());
+        assertTrue(!instance.sockEmul.isOpen());
+    }
+
+    @Test
+    public void testSample_302() throws MalformedURLException, IOException {
+        System.out.println("sample");
+        String req = "GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
+        String resp = "HTTP/1.1 302 Found\r\nConnection: close\r\n\r\n";
+        instance.setRequestData(req);
+        instance.setParseResult(true);
+
+        instance.sockEmul.setBytesToRead(ByteBuffer.wrap(resp.getBytes()));
+
+        SampleResult result = instance.sample(null);
+        //System.err.println(result.getResponseDataAsString().length());
+        assertEquals(ByteBuffer.wrap(req.getBytes()), instance.sockEmul.getWrittenBytes());
+        assertTrue(result.isSuccessful());
+        assertEquals("302", result.getResponseCode());
+        assertEquals("", result.getResponseDataAsString());
         assertTrue(!instance.sockEmul.isOpen());
     }
 

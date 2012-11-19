@@ -24,7 +24,7 @@ import org.apache.log.Logger;
  * @author undera
  */
 public class HTTPRawSampler extends AbstractIPSampler {
-
+    
     private static final String FILE_NAME = "fileName";
     private static final String KEEPALIVE = "keepalive";
     private static final String PARSE = "parse";
@@ -34,14 +34,13 @@ public class HTTPRawSampler extends AbstractIPSampler {
     protected static final Logger log = LoggingManager.getLoggerForClass();
     private static final Pattern anyContent = Pattern.compile(".+", Pattern.DOTALL);
     private SocketChannel savedSock;
-    private static final int fileSendingChunk=JMeterUtils.getPropDefault("kg.apc.jmeter.samplers.FileReadChunkSize", 1024 * 4);
-    
+    private static final int fileSendingChunk = JMeterUtils.getPropDefault("kg.apc.jmeter.samplers.FileReadChunkSize", 1024 * 4);
     
     public HTTPRawSampler() {
         super();
-        log.debug("File reading chunk size: "+fileSendingChunk);
+        log.debug("File reading chunk size: " + fileSendingChunk);
     }
-
+    
     @Override
     public SampleResult sample(Entry entry) {
         SampleResult res = super.sample(entry);
@@ -50,21 +49,21 @@ public class HTTPRawSampler extends AbstractIPSampler {
         }
         return res;
     }
-
+    
     protected byte[] readResponse(SocketChannel channel, SampleResult res) throws IOException {
         ByteArrayOutputStream response = new ByteArrayOutputStream();
-
+        
         ByteBuffer recvBuf = getRecvBuf();
         recvBuf.clear();
-
+        
         boolean firstPack = true;
         int cnt;
         int responseSize = 0;
-
+        
         if (log.isDebugEnabled()) {
             log.debug("Start reading response");
         }
-
+        
         try {
             while ((cnt = channel.read(recvBuf)) != -1) {
                 responseSize += cnt;
@@ -78,10 +77,10 @@ public class HTTPRawSampler extends AbstractIPSampler {
                     recvBuf.get(bytes);
                     response.write(bytes);
                 }
-
+                
                 recvBuf.clear();
             }
-
+            
             if (response.size() < 1) {
                 log.warn("Read no bytes from socket, seems it was closed. Let it be so.");
                 channel.close();
@@ -90,30 +89,30 @@ public class HTTPRawSampler extends AbstractIPSampler {
             channel.close();
             throw ex;
         }
-
+        
         if (log.isDebugEnabled()) {
             log.debug("Done reading response");
         }
-
+        
         res.sampleEnd();
         if (!isUseKeepAlive()) {
             channel.close();
         }
-
+        
         res.setBytes(responseSize);
         return response.toByteArray();
     }
-
+    
     private void parseResponse(SampleResult res) {
         Scanner scanner = new Scanner(res.getResponseDataAsString());
         scanner.useDelimiter(RNpattern);
-
+        
         if (!scanner.hasNextLine()) {
             return;
         }
-
+        
         String httpStatus = scanner.nextLine();
-
+        
         int s = httpStatus.indexOf(SPACE);
         int e = httpStatus.indexOf(SPACE, s + 1);
         if (s < e) {
@@ -131,11 +130,11 @@ public class HTTPRawSampler extends AbstractIPSampler {
         } else {
             return;
         }
-
+        
         if (!scanner.hasNextLine()) {
             return;
         }
-
+        
         int n = 1;
         String headers = EMPTY;
         String line;
@@ -144,15 +143,19 @@ public class HTTPRawSampler extends AbstractIPSampler {
             n++;
         }
         res.setResponseHeaders(headers);
-
-        res.setResponseData(scanner.next(anyContent).getBytes());
-
+        
+        if (scanner.hasNext()) {
+            res.setResponseData(scanner.next(anyContent).getBytes());
+        } else {
+            res.setResponseData("".getBytes());
+        }
+        
     }
-
+    
     @Override
     protected byte[] processIO(SampleResult res) throws Exception {
         SocketChannel sock = (SocketChannel) getSocketChannel();
-
+        
         if (!getRequestData().isEmpty()) {
             ByteBuffer sendBuf = ByteBuffer.wrap(getRequestData().getBytes()); // cannot cache it because of variable processing
             sock.write(sendBuf);
@@ -163,12 +166,12 @@ public class HTTPRawSampler extends AbstractIPSampler {
         }
         return readResponse(sock, res);
     }
-
+    
     protected SocketChannel getSocketChannel() throws IOException {
         if (isUseKeepAlive() && savedSock != null) {
             return savedSock;
         }
-
+        
         int port;
         try {
             port = Integer.parseInt(getPort());
@@ -183,15 +186,15 @@ public class HTTPRawSampler extends AbstractIPSampler {
         savedSock.connect(address);
         return savedSock;
     }
-
+    
     public boolean isUseKeepAlive() {
         return getPropertyAsBoolean(KEEPALIVE);
     }
-
+    
     public void setUseKeepAlive(boolean selected) {
         setProperty(KEEPALIVE, selected);
     }
-
+    
     @Override
     protected AbstractSelectableChannel getChannel() throws IOException {
         int t = getTimeoutAsInt();
@@ -204,23 +207,23 @@ public class HTTPRawSampler extends AbstractIPSampler {
             return SocketChannel.open();
         }
     }
-
+    
     public boolean isParseResult() {
         return getPropertyAsBoolean(PARSE);
     }
-
+    
     public void setParseResult(boolean selected) {
         setProperty(PARSE, selected);
     }
-
+    
     public String getFileToSend() {
         return getPropertyAsString(FILE_NAME);
     }
-
+    
     public void setFileToSend(String text) {
         setProperty(FILE_NAME, text);
     }
-
+    
     @Override
     public boolean interrupt() {
         if (savedSock != null && savedSock.isOpen()) {
@@ -233,15 +236,15 @@ public class HTTPRawSampler extends AbstractIPSampler {
         }
         return true;
     }
-
+    
     private void sendFile(String filename, SocketChannel sock) throws IOException {
         if (filename.isEmpty()) {
             return;
         }
-
+        
         FileInputStream is = new FileInputStream(new File(filename));
         FileChannel source = is.getChannel();
-
+        
         ByteBuffer sendBuf = ByteBuffer.allocateDirect(fileSendingChunk);
         while (source.read(sendBuf) > 0) {
             sendBuf.flip();

@@ -126,7 +126,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         while (it.hasNext()) {
             File perfmonFile = new File(it.next());
             if (!perfmonFile.exists()) {
-                log.debug("File not exists, skipped: "+perfmonFile.getAbsolutePath());
+                log.warn("File not exists, skipped: "+perfmonFile.getAbsolutePath());
                 continue;
             }
             partsList.add(new FilePart("perfmon_" + index, new FilePartSource(gzipFile(perfmonFile))));

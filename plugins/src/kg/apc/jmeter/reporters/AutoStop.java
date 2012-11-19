@@ -1,7 +1,11 @@
 package kg.apc.jmeter.reporters;
 
 import java.io.Serializable;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import kg.apc.charting.elements.GraphPanelChartAverageElement;
+import org.apache.jmeter.JMeter;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.util.NoThreadClone;
@@ -11,6 +15,7 @@ import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleListener;
 import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -38,7 +43,6 @@ public class AutoStop
     private long errRateExceededStart = 0;
     private long respLatencyExceededStart = 0;
     private int stopTries = 0;
-
     //optimization: not convert String to number for each sample
     private int testValueRespTime = 0;
     private int testValueRespTimeSec = 0;
@@ -122,11 +126,11 @@ public class AutoStop
         avgRespTime = new GraphPanelChartAverageElement();
         errorRate = new GraphPanelChartAverageElement();
         avgRespLatency = new GraphPanelChartAverageElement();
-        
+
         errRateExceededStart = 0;
         respTimeExceededStart = 0;
         respLatencyExceededStart = 0;
-        
+
         //init test values
         testValueError = getErrorRateAsFloat();
         testValueErrorSec = getErrorRateSecsAsInt();
@@ -269,14 +273,37 @@ public class AutoStop
 
     private void stopTest() {
         stopTries++;
-        if (stopTries > 10) {
-            log.info("Tries more than 10, stop it NOW!");
-            StandardJMeterEngine.stopEngineNow();
-        } else if (stopTries > 5) {
-            log.info("Tries more than 5, stop it!");
-            StandardJMeterEngine.stopEngine();
+
+        if (JMeter.isNonGUI()) {
+            log.info("Stopping JMeter via UDP call");
+            stopTestViaUDP("StopTestNow");
         } else {
-            JMeterContextService.getContext().getEngine().askThreadsToStop();
+            if (stopTries > 10) {
+                log.info("Tries more than 10, stop it NOW!");
+                StandardJMeterEngine.stopEngineNow();
+            } else if (stopTries > 5) {
+                log.info("Tries more than 5, stop it!");
+                StandardJMeterEngine.stopEngine();
+            } else {
+                JMeterContextService.getContext().getEngine().askThreadsToStop();
+            }
         }
+    }
+
+    private void stopTestViaUDP(String command) {
+        try {
+            int port = JMeterUtils.getPropDefault("jmeterengine.nongui.port", JMeter.UDP_PORT_DEFAULT);
+            log.info("Sending " + command + " request to port " + port);
+            DatagramSocket socket = new DatagramSocket();
+            byte[] buf = command.getBytes("ASCII");
+            InetAddress address = InetAddress.getByName("localhost");
+            DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
+            socket.send(packet);
+            socket.close();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            log.error(e.getMessage());
+        }
+
     }
 }

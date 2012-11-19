@@ -1,6 +1,5 @@
 package kg.apc.jmeter.samplers;
 
-import kg.apc.io.DatagramChannelWithTimeouts;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -8,15 +7,15 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.spi.AbstractSelectableChannel;
+import kg.apc.io.DatagramChannelWithTimeouts;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.ThreadListener;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 /**
  *
- * @author undera
+ *  @author undera
  */
 public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, ThreadListener {
 
@@ -81,7 +80,10 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         }
 
         ByteBuffer sendBuf = encoder.encode(getRequestData());
-        channel.write(sendBuf);
+
+        while (sendBuf.remaining() > 0) {
+            channel.write(sendBuf);
+        }
 
         if (!isWaitResponse()) {
             res.latencyEnd();

@@ -1,7 +1,10 @@
 package kg.apc.jmeter.modifiers;
 
+import java.nio.charset.Charset;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.RuntimeEOFException;
+import org.apache.jmeter.engine.util.CompoundVariable;
+import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import static org.junit.Assert.*;
@@ -9,7 +12,7 @@ import org.junit.*;
 
 /**
  *
- * @author undera
+ *  @author undera
  */
 public class RawRequestSourcePreProcessorTest {
 
@@ -55,7 +58,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     * Test of process method, of class RawRequestSourcePreProcessor.
+     *  Test of process method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testProcess() {
@@ -72,7 +75,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     * Test of process method, of class RawRequestSourcePreProcessor.
+     *  Test of process method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testProcess_zeroterminated() {
@@ -93,7 +96,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     * Test of process method, of class RawRequestSourcePreProcessor.
+     *  Test of process method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testProcess_nonzeroterminated() {
@@ -113,7 +116,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     * Test of process method, of class RawRequestSourcePreProcessor.
+     *  Test of process method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testProcess_broken() {
@@ -143,7 +146,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     * Test of getVarName method, of class RawRequestSourcePreProcessor.
+     *  Test of getVarName method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testGetVarName() {
@@ -155,7 +158,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     * Test of setVarName method, of class RawRequestSourcePreProcessor.
+     *  Test of setVarName method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testSetVarName() {
@@ -166,7 +169,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     * Test of getFileName method, of class RawRequestSourcePreProcessor.
+     *  Test of getFileName method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testGetFileName() {
@@ -178,7 +181,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     * Test of setFileName method, of class RawRequestSourcePreProcessor.
+     *  Test of setFileName method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testSetFileName() {
@@ -189,7 +192,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     * Test of setRewindOnEOF method, of class RawRequestSourcePreProcessor.
+     *  Test of setRewindOnEOF method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testSetRewindOnEOF() {
@@ -200,7 +203,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     * Test of getRewindOnEOF method, of class RawRequestSourcePreProcessor.
+     *  Test of getRewindOnEOF method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testGetRewindOnEOF() {
@@ -229,13 +232,15 @@ public class RawRequestSourcePreProcessorTest {
     public void testProcess_bug2() {
         System.out.println("bug with binary data");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.setEncodeHex(true);
         instance.setFileName(basedir + "/protobuf.one.ammo");
+        instance.setVarName("rawData");
         instance.setRewindOnEOF(false);
         instance.process();
-        String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
-        assertEquals(3130, result.length());
-        assertEquals(12, result.charAt(1));
-        assertEquals(0, result.charAt(2));
-        assertEquals(8, result.charAt(4));
+        byte[] ar = BinaryTCPClientImpl.hexStringToByteArray(JMeterContextService.getContext().getVariables().get(instance.getVarName()));
+
+        assertTrue(63 != ar[210]);
+        assertEquals(3130, ar.length);
+        assertEquals(12, ar[1]);
     }
 }

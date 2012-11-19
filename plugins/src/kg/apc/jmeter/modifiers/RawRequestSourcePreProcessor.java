@@ -17,11 +17,12 @@ import org.apache.jmeter.testelement.property.BooleanProperty;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
+import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 
 /**
  *
- * @author undera
+ *      @author undera
  */
 public class RawRequestSourcePreProcessor
         extends AbstractTestElement
@@ -32,10 +33,11 @@ public class RawRequestSourcePreProcessor
     public static final String VARIABLE_NAME = "variable_name";
     public static final String FILENAME = "filename";
     public static final String REWIND = "rewind";
+    public static final String ENCODE_HEX = "isHex";
     private FileChannel file;
     private final ByteBuffer metaBuf = ByteBuffer.allocateDirect(1024);
     private final ByteBuffer oneByte = ByteBuffer.allocateDirect(1);
-    private final Charset binaryCharset = Charset.forName("ASCII");
+    public static final Charset binaryCharset = Charset.forName("UTF8");
 
     public RawRequestSourcePreProcessor() {
         super();
@@ -79,6 +81,7 @@ public class RawRequestSourcePreProcessor
             log.error("Error reading next chunk", ex);
             throw new RuntimeException("Error reading next chunk", ex);
         }
+
         final JMeterVariables vars = JMeterContextService.getContext().getVariables();
         if (vars != null) {
             vars.put(getVarName(), rawData);
@@ -107,7 +110,11 @@ public class RawRequestSourcePreProcessor
             log.debug("Chunk : " + new String(dst));
         }
 
-        return new String(dst, binaryCharset);
+        if (isHexEncode()) {
+            return JOrphanUtils.baToHexString(dst);
+        } else {
+            return new String(dst, binaryCharset);
+        }
     }
 
     private int getNextChunkSize() throws IOException {
@@ -182,5 +189,13 @@ public class RawRequestSourcePreProcessor
 
     public boolean getRewindOnEOF() {
         return getPropertyAsBoolean(REWIND);
+    }
+
+    public boolean isHexEncode() {
+        return getPropertyAsBoolean(ENCODE_HEX);
+    }
+
+    public void setEncodeHex(boolean b) {
+        setProperty(ENCODE_HEX, b);
     }
 }

@@ -12,7 +12,7 @@ import org.apache.jmeter.testelement.TestElement;
 
 /**
  *
- * @author undera
+ *   @author undera
  */
 public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
 
@@ -23,6 +23,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
     private JButton browseButton;
     private JButton checkButton;
     private JTextArea checkInfo;
+    private JCheckBox encodeHex;
 
     public RawRequestSourcePreProcessorGui() {
         super();
@@ -46,6 +47,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
         rewindOnEOF.setSelected(element.getPropertyAsBoolean(RawRequestSourcePreProcessor.REWIND));
         variableName.setText(element.getPropertyAsString(RawRequestSourcePreProcessor.VARIABLE_NAME));
         fileName.setText(element.getPropertyAsString(RawRequestSourcePreProcessor.FILENAME));
+        encodeHex.setSelected(element.getPropertyAsBoolean(RawRequestSourcePreProcessor.ENCODE_HEX));
     }
 
     @Override
@@ -64,6 +66,7 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
             preproc.setRewindOnEOF(rewindOnEOF.isSelected());
             preproc.setVarName(variableName.getText());
             preproc.setFileName(fileName.getText());
+            preproc.setEncodeHex(encodeHex.isSelected());
         }
     }
 
@@ -105,15 +108,18 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Variable name: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 2, variableName = new JTextField(20));
 
+        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Encode read data as HEX: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 3, encodeHex = new JCheckBox());
+
         editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 2);
 
-        addToPanel(mainPanel, labelConstraints, 0, 3, checkButton = new JButton("Check File Consistency"));
+        addToPanel(mainPanel, labelConstraints, 0, 4, checkButton = new JButton("Check File Consistency"));
 
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
         checkInfo = new JTextArea();
-        addToPanel(mainPanel, editConstraints, 1, 3, GuiBuilderHelper.getTextAreaScrollPaneContainer(checkInfo, 10));
+        addToPanel(mainPanel, editConstraints, 1, 4, GuiBuilderHelper.getTextAreaScrollPaneContainer(checkInfo, 10));
         checkButton.addActionListener(new CheckConsistencyAction(fileName, checkInfo));
         checkInfo.setEditable(false);
         checkInfo.setOpaque(false);
@@ -134,5 +140,6 @@ public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
         variableName.setText("rawData");
         fileName.setText("");
         checkInfo.setText("");
+        encodeHex.setSelected(false);
     }
 }

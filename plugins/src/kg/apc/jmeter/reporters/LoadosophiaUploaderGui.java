@@ -4,16 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.io.File;
-import java.io.IOException;
+import java.util.Arrays;
 import javax.swing.*;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
-import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 
 /**
@@ -23,14 +20,14 @@ import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 public class LoadosophiaUploaderGui
         extends AbstractVisualizer {
 
-    public static final String DEFAULT_UPLOADER_URI = "https://loadosophia.org/uploader/";
     public static final String WIKIPAGE = "LoadosophiaUploader";
-    private JTextField filePrefix;
+    private JTextField testTitle;
     private JTextArea uploadToken;
     private JTextField projectKey;
     private JTextArea infoArea;
     private JTextField storeDir;
     private JButton browseButton;
+    private JComboBox colorFlag;
 
     public LoadosophiaUploaderGui() {
         super();
@@ -66,11 +63,11 @@ public class LoadosophiaUploaderGui
         super.modifyTestElement(te);
         if (te instanceof LoadosophiaUploader) {
             LoadosophiaUploader fw = (LoadosophiaUploader) te;
-            fw.setFilePrefix(filePrefix.getText());
             fw.setProject(projectKey.getText());
             fw.setUploadToken(uploadToken.getText());
-            fw.setUploaderURI(JMeterUtils.getPropDefault("loadosophia.uploaderURI", DEFAULT_UPLOADER_URI));
             fw.setStoreDir(storeDir.getText());
+            fw.setColorFlag(indexToColor(colorFlag.getSelectedIndex()));
+            fw.setTitle(testTitle.getText());
         }
     }
 
@@ -78,10 +75,11 @@ public class LoadosophiaUploaderGui
     public void configure(TestElement element) {
         super.configure(element);
         LoadosophiaUploader fw = (LoadosophiaUploader) element;
-        filePrefix.setText(fw.getFilePrefix());
         projectKey.setText(fw.getProject());
         uploadToken.setText(fw.getUploadToken());
         storeDir.setText(fw.getStoreDir());
+        colorFlag.setSelectedIndex(colorToIndex(fw.getColorFlag()));
+        testTitle.setText(fw.getTitle());
     }
 
     private void init() {
@@ -113,26 +111,29 @@ public class LoadosophiaUploaderGui
         GuiBuilderHelper.strechButtonToComponent(storeDir, browseButton);
         browseButton.addActionListener(new BrowseAction(storeDir, true));
 
-        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Filename Prefix: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, filePrefix = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Test Title: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 2, testTitle = new JTextField(20));
+
+        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Color Flag: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 3, colorFlag = new JComboBox(LoadosophiaUploader.colors));
 
         editConstraints.fill = GridBagConstraints.BOTH;
 
         editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
-        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Upload Token: ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Upload Token: ", JLabel.RIGHT));
 
         uploadToken = new JTextArea();
         uploadToken.setLineWrap(true);
-        addToPanel(mainPanel, editConstraints, 1, 3, GuiBuilderHelper.getTextAreaScrollPaneContainer(uploadToken, 6));
+        addToPanel(mainPanel, editConstraints, 1, 4, GuiBuilderHelper.getTextAreaScrollPaneContainer(uploadToken, 6));
 
-        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Info Area: ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Info Area: ", JLabel.RIGHT));
         infoArea = new JTextArea();
         infoArea.setEditable(false);
         infoArea.setOpaque(false);
-        
-        addToPanel(mainPanel, editConstraints, 1, 4, GuiBuilderHelper.getTextAreaScrollPaneContainer(infoArea, 6));
+
+        addToPanel(mainPanel, editConstraints, 1, 5, GuiBuilderHelper.getTextAreaScrollPaneContainer(infoArea, 6));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
@@ -140,16 +141,10 @@ public class LoadosophiaUploaderGui
     }
 
     private void initFields() {
-        Object root = GuiPackage.getInstance().getTreeModel().getRoot();
-        if (root instanceof TestElement) {
-            filePrefix.setText(((TestElement) root).getName().replaceAll("\\s", "_"));
-        } else {
-            filePrefix.setText("TestPlan");
-        }
-
+        testTitle.setText("");
         projectKey.setText("DEFAULT");
         uploadToken.setText("Replace this text with upload token received at Loadosophia.org\nRemember that anyone who has this token can upload files to your account.\nPlease, treat your token as confidential data.\nSee plugin help for details.");
-        storeDir.setText(getTempDir());
+        storeDir.setText(System.getProperty("java.io.tmpdir"));
     }
 
     private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {
@@ -182,14 +177,11 @@ public class LoadosophiaUploaderGui
         return false;
     }
 
-    private String getTempDir() {
-        File f;
-        try {
-            f = File.createTempFile("jmeterplugins", ".tmp");
-            f.deleteOnExit();
-        } catch (IOException ex) {
-            return "";
-        }
-        return f.getParent();
+    private String indexToColor(int selectedIndex) {
+        return LoadosophiaUploader.colors[selectedIndex];
+    }
+
+    private int colorToIndex(String colorFlag) {
+        return Arrays.asList(LoadosophiaUploader.colors).indexOf(colorFlag);
     }
 }

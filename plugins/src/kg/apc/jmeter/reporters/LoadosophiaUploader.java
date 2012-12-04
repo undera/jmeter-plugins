@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.Iterator;
@@ -19,6 +20,7 @@ import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -29,8 +31,9 @@ import org.apache.log.Logger;
 public class LoadosophiaUploader extends ResultCollector implements TestListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    public static final String URI = "uploaderURI";
-    public static final String FILE_PREFIX = "filePrefix";
+    public static final String ADDRESS = "address";
+    public static final String TITLE = "title";
+    public static final String COLOR = "color";
     public static final String UPLOAD_TOKEN = "uploadToken";
     public static final String PROJECT = "project";
     public static final String STORE_DIR = "storeDir";
@@ -38,9 +41,14 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
     private static final Object LOCK = new Object();
     private boolean isSaving;
     private LoadosophiaUploadingNotifier perfMonNotifier = LoadosophiaUploadingNotifier.getInstance();
+    private String address;
+    public static final String COLOR_NONE = "none";
+    public static final String[] colors = {COLOR_NONE, "red", "green", "blue", "gray", "orange", "violet", "cyan", "black"};
+    private static final String STATUS_DONE = "4";
 
     public LoadosophiaUploader() {
         super();
+        address = JMeterUtils.getPropDefault("loadosophia.address", "https://loadosophia.org/");
     }
 
     @Override
@@ -69,7 +77,25 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
                 }
 
                 isSaving = false;
-                sendFilesToLoadosophia(new File(fileName), perfMonNotifier.getFiles());
+                int queueID = sendFilesToLoadosophia(new File(fileName), perfMonNotifier.getFiles());
+                String results;
+                if (!getTitle().trim().isEmpty() || !getColorFlag().equals(COLOR_NONE)) {
+                    int testID = getTestByUpload(queueID);
+
+                    if (!getTitle().trim().isEmpty()) {
+                        setTestTitle(testID, getTitle().trim());
+                    }
+
+                    if (!getColorFlag().equals(COLOR_NONE)) {
+                        setTestColor(testID, getColorFlag());
+                    }
+
+                    results = address + "gui/" + testID + "/";
+                } else {
+                    results = address + "api/file/status/" + queueID + "/?redirect=true";
+                }
+
+                informUser("Uploaded successfully, go to results: " + results);
             } catch (IOException ex) {
                 informUser("Failed to upload results to Loadosophia.org, see log for detais");
                 log.error("Failed to upload results to loadosophia", ex);
@@ -87,7 +113,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
 
         File tmpFile;
         try {
-            tmpFile = File.createTempFile(getFilePrefix() + "_", ".jtl", new File(dir));
+            tmpFile = File.createTempFile("Loadosophia_", ".jtl", new File(dir));
         } catch (IOException ex) {
             informUser("Unable to create temp file: " + ex.getMessage());
             informUser("Try to set another directory in the above field.");
@@ -109,7 +135,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         setSaveConfig(conf);
     }
 
-    private void sendFilesToLoadosophia(File targetFile, LinkedList<String> perfMonFiles) throws IOException {
+    private int sendFilesToLoadosophia(File targetFile, LinkedList<String> perfMonFiles) throws IOException {
         if (targetFile.length() == 0) {
             throw new IOException("Cannot send empty file to Loadosophia.org");
         }
@@ -117,48 +143,25 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         log.info("Preparing files to send");
         LinkedList<Part> partsList = new LinkedList<Part>();
         partsList.add(new StringPart("projectKey", getProject()));
-        partsList.add(new StringPart("uploadToken", getUploadToken()));
         partsList.add(new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile))));
         targetFile.delete();
 
         Iterator<String> it = perfMonFiles.iterator();
-        int index=0;
+        int index = 0;
         while (it.hasNext()) {
             File perfmonFile = new File(it.next());
             if (!perfmonFile.exists()) {
-                log.warn("File not exists, skipped: "+perfmonFile.getAbsolutePath());
+                log.warn("File not exists, skipped: " + perfmonFile.getAbsolutePath());
                 continue;
             }
             partsList.add(new FilePart("perfmon_" + index, new FilePartSource(gzipFile(perfmonFile))));
             perfmonFile.delete();
             index++;
         }
-        Part[] parts =  partsList.toArray(new Part[0]);
 
         informUser("Starting upload to Loadosophia.org");
-        HttpClient uploader = new HttpClient();
-        PostMethod filePost = new PostMethod(getUploaderURI());
-        MultipartRequestEntity multipartRequest = new MultipartRequestEntity(parts, filePost.getParams());
-        filePost.setRequestEntity(multipartRequest);
-
-        int result = uploader.executeMethod(filePost);
-        if (result != HttpStatus.SC_ACCEPTED) {
-            String fname = targetFile.getAbsolutePath() + ".html";
-            informUser("Saving server error response to: " + fname);
-            FileOutputStream fos = new FileOutputStream(fname);
-            FileChannel resultFile = fos.getChannel();
-            resultFile.write(ByteBuffer.wrap(filePost.getResponseBody()));
-            resultFile.close();
-            HttpException $e = new HttpException("Upload returned not 202 ACCEPTED status: " + result);
-            throw $e;
-        }
-
-        informUser("Finished upload to Loadosophia.org successfully");
-        informUser("Go to https://loadosophia.org/service/upload/ to see processing status.");
-    }
-
-    private File gzipFile(String perfmonFile) throws IOException {
-        return gzipFile(new File(perfmonFile));
+        String[] fields = doRequest(partsList, getUploaderURI(), HttpStatus.SC_OK);
+        return Integer.parseInt(fields[0]);
     }
 
     private File gzipFile(File src) throws IOException {
@@ -202,20 +205,12 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         return getPropertyAsString(UPLOAD_TOKEN);
     }
 
-    public void setUploaderURI(String uri) {
-        setProperty(URI, uri);
+    public void setTitle(String prefix) {
+        setProperty(TITLE, prefix);
     }
 
-    public String getUploaderURI() {
-        return getPropertyAsString(URI);
-    }
-
-    public void setFilePrefix(String prefix) {
-        setProperty(FILE_PREFIX, prefix);
-    }
-
-    public String getFilePrefix() {
-        return getPropertyAsString(FILE_PREFIX);
+    public String getTitle() {
+        return getPropertyAsString(TITLE);
     }
 
     private void informUser(String string) {
@@ -223,7 +218,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         if (getVisualizer() != null && getVisualizer() instanceof LoadosophiaUploaderGui) {
             ((LoadosophiaUploaderGui) getVisualizer()).inform(string);
         } else {
-            log.info("No Visualizer");
+            log.info(string);
         }
     }
 
@@ -235,8 +230,81 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         setProperty(STORE_DIR, prefix);
     }
 
-   @Override
-   public void testIterationStart(LoopIterationEvent lie) {
-      //TODO: should be handled ?
-   }
+    @Override
+    public void testIterationStart(LoopIterationEvent lie) {
+    }
+
+    public void setColorFlag(String color) {
+        setProperty(COLOR, color);
+    }
+
+    public String getColorFlag() {
+        return getPropertyAsString(COLOR);
+    }
+
+    private String getUploaderURI() {
+        return address + "api/file/upload/?format=csv";
+    }
+
+    private int getTestByUpload(int queueID) throws IOException {
+        while (true) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException("Failed to get test ID");
+            }
+
+            String[] status = get_upload_status(queueID);
+            if (status.length > 2 && !status[2].isEmpty()) {
+                throw new RuntimeException("Loadosophia processing error: " + status[2]);
+            }
+
+            if (status[1].equals(STATUS_DONE)) {
+                return Integer.parseInt(status[0]);
+            }
+        }
+    }
+
+    private void setTestTitle(int testID, String trim) throws IOException {
+        String uri = address + "api/test/edit/title/" + testID + "/?title=" + URLEncoder.encode(trim, "UTF-8");
+        doRequest(new LinkedList<Part>(), uri, HttpStatus.SC_NO_CONTENT);
+    }
+
+    private void setTestColor(int testID, String colorFlag) throws IOException {
+        String uri = address + "api/test/edit/color/" + testID + "/?color=" + colorFlag;
+        doRequest(new LinkedList<Part>(), uri, HttpStatus.SC_NO_CONTENT);
+    }
+
+    private String[] get_upload_status(int queueID) throws IOException {
+        String uri = address + "api/file/status/" + queueID + "/?format=csv";
+        return doRequest(new LinkedList<Part>(), uri, HttpStatus.SC_OK);
+    }
+
+    private String[] doRequest(LinkedList<Part> parts, String URL, int expectedSC) throws IOException {
+        log.debug("Request " + URL);
+        parts.add(new StringPart("token", getUploadToken()));
+
+        HttpClient uploader = new HttpClient();
+        PostMethod postRequest = new PostMethod(URL);
+        MultipartRequestEntity multipartRequest = new MultipartRequestEntity(parts.toArray(new Part[0]), postRequest.getParams());
+        postRequest.setRequestEntity(multipartRequest);
+        int result = uploader.executeMethod(postRequest);
+        if (result != expectedSC) {
+            String fname = File.createTempFile("error_", ".html").getAbsolutePath();
+            informUser("Saving server error response to: " + fname);
+            FileOutputStream fos = new FileOutputStream(fname);
+            FileChannel resultFile = fos.getChannel();
+            resultFile.write(ByteBuffer.wrap(postRequest.getResponseBody()));
+            resultFile.close();
+            HttpException $e = new HttpException("Request returned not " + expectedSC + " status code: " + result);
+            throw $e;
+        }
+        byte[] bytes = postRequest.getResponseBody();
+        if (bytes == null) {
+            bytes = new byte[0];
+        }
+        String response = new String(bytes);
+        String[] fields = response.trim().split(";");
+        return fields;
+    }
 }

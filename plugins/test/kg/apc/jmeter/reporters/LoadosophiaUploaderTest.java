@@ -52,7 +52,7 @@ public class LoadosophiaUploaderTest {
     public void testTestStarted() {
         System.out.println("testStarted");
         LoadosophiaUploader instance = new LoadosophiaUploader();
-        instance.setFilePrefix("UnitTest");
+        instance.setTitle("UnitTest");
         instance.setStoreDir(TestJMeterUtils.getTempDir());
         instance.testStarted();
     }
@@ -63,50 +63,28 @@ public class LoadosophiaUploaderTest {
     @Test
     public void testTestEnded() throws IOException {
         System.out.println("testEnded");
+        JMeterUtils.setProperty("loadosophia.address", "http://localhost/");
         LoadosophiaUploader instance = new LoadosophiaUploader();
         instance.setStoreDir(TestJMeterUtils.getTempDir());
-        instance.setFilePrefix("UnitTest");
-        instance.setUploaderURI("http://localhost/uploader/");
+        instance.setTitle("UnitTest");
+        instance.setColorFlag("gray");
         instance.setProject("DEFAULT");
         instance.setUploadToken("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
         instance.testStarted();
-        
+
         SampleResult res = new SampleResult();
         res.sampleStart();
         res.sampleEnd();
         SampleEvent event = new SampleEvent(res, "test");
         instance.sampleOccurred(event);
-        
-        FileSystem.copyFile(instance.getFilename(), instance.getFilename()+".perfmon1");
-        LoadosophiaUploadingNotifier.getInstance().addFile(instance.getFilename()+".perfmon1");
-                
-        FileSystem.copyFile(instance.getFilename(), instance.getFilename()+".perfmon2");
-        LoadosophiaUploadingNotifier.getInstance().addFile(instance.getFilename()+".perfmon2");
+
+        FileSystem.copyFile(instance.getFilename(), instance.getFilename() + ".perfmon1");
+        LoadosophiaUploadingNotifier.getInstance().addFile(instance.getFilename() + ".perfmon1");
+
+        FileSystem.copyFile(instance.getFilename(), instance.getFilename() + ".perfmon2");
+        LoadosophiaUploadingNotifier.getInstance().addFile(instance.getFilename() + ".perfmon2");
 
         instance.testEnded();
-    }
-
-    /**
-     * Test of getUploaderURI method, of class LoadosophiaUploader.
-     */
-    @Test
-    public void testGetUploaderURI() {
-        System.out.println("getUploaderURI");
-        LoadosophiaUploader instance = new LoadosophiaUploader();
-        String expResult = "";
-        String result = instance.getUploaderURI();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setUploaderURI method, of class LoadosophiaUploader.
-     */
-    @Test
-    public void testSetUploaderURI() {
-        System.out.println("setUploaderURI");
-        String uri = "";
-        LoadosophiaUploader instance = new LoadosophiaUploader();
-        instance.setUploaderURI(uri);
     }
 
     /**
@@ -117,7 +95,7 @@ public class LoadosophiaUploaderTest {
         System.out.println("setFilePrefix");
         String prefix = "";
         LoadosophiaUploader instance = new LoadosophiaUploader();
-        instance.setFilePrefix(prefix);
+        instance.setTitle(prefix);
     }
 
     /**
@@ -174,7 +152,7 @@ public class LoadosophiaUploaderTest {
         System.out.println("getFilePrefix");
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
-        String result = instance.getFilePrefix();
+        String result = instance.getTitle();
         assertEquals(expResult, result);
     }
 
@@ -201,14 +179,14 @@ public class LoadosophiaUploaderTest {
         instance.setStoreDir(prefix);
     }
 
-   /**
-    * Test of testIterationStart method, of class LoadosophiaUploader.
-    */
-   @Test
-   public void testTestIterationStart() {
-      System.out.println("testIterationStart");
-      LoopIterationEvent lie = null;
-      LoadosophiaUploader instance = new LoadosophiaUploader();
-      instance.testIterationStart(lie);
-   }
+    /**
+     * Test of testIterationStart method, of class LoadosophiaUploader.
+     */
+    @Test
+    public void testTestIterationStart() {
+        System.out.println("testIterationStart");
+        LoopIterationEvent lie = null;
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        instance.testIterationStart(lie);
+    }
 }

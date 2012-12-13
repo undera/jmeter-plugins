@@ -28,23 +28,23 @@ public class TransportFactory {
     public static Transport getTransport(SocketAddress addr) throws IOException {
         Transport trans;
         try {
-            log.debug("Connecting UDP");
-            trans = UDPInstance(addr);
+            log.debug("Connecting TCP");
+            trans = TCPInstance(addr);
             if (!trans.test()) {
-                throw new IOException("Agent is unreachable via UDP");
+                throw new IOException("Agent is unreachable via TCP");
             }
             return trans;
         } catch (IOException e) {
-            log.info("Can't connect UDP transport for host: " + addr.toString(), e);
+            log.info("Can't connect TCP transport for host: " + addr.toString(), e);
             try {
-                log.debug("Connecting TCP");
-                trans = TCPInstance(addr);
+                log.debug("Connecting UDP");
+                trans = UDPInstance(addr);
                 if (!trans.test()) {
-                    throw new IOException("Agent is unreachable via TCP");
+                    throw new IOException("Agent is unreachable via UDP");
                 }
                 return trans;
             } catch (IOException ex) {
-                log.info("Can't connect TCP transport for host: " + addr.toString(), ex);
+                log.info("Can't connect UDP transport for host: " + addr.toString(), ex);
                 throw ex;
             }
         }

@@ -15,18 +15,23 @@ import org.apache.log.Logger;
 
 /**
  *
- *  @author undera
+ * @author undera
  */
 public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, ThreadListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String ENCODECLASS = "encodeclass";
     public static final String WAITRESPONSE = "waitresponse";
+    public static final String CLOSECHANNEL = "closechannel";
     private DatagramChannel channel;
     private UDPTrafficDecoder encoder;
 
     public boolean isWaitResponse() {
         return getPropertyAsBoolean(WAITRESPONSE);
+    }
+
+    public boolean isCloseChannel() {
+        return getPropertyAsBoolean(CLOSECHANNEL);
     }
 
     public String getEncoderClass() {
@@ -35,6 +40,10 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
 
     public void setWaitResponse(boolean selected) {
         setProperty(WAITRESPONSE, selected);
+    }
+
+    public void setCloseChannel(boolean selected) {
+        setProperty(CLOSECHANNEL, selected);
     }
 
     public void setEncoderClass(String text) {
@@ -88,11 +97,21 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         if (!isWaitResponse()) {
             res.latencyEnd();
             res.sampleEnd();
+
+            if (isCloseChannel()) {
+                channel.close();
+            }
+
             return new byte[0];
         }
 
         try {
             ByteArrayOutputStream response = readResponse(res);
+
+            if (isCloseChannel()) {
+                channel.close();
+            }
+
             return encoder.decode(response.toByteArray());
         } catch (IOException ex) {
             channel.close();
@@ -130,7 +149,9 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
             encoder = (UDPTrafficDecoder) o;
             log.debug("Using decoder: " + encoder);
         } catch (Exception ex) {
-            log.warn("Problem loading encoder " + getEncoderClass() + ", raw data will be used", ex);
+            if (!getEncoderClass().isEmpty()) {
+                log.warn("Problem loading encoder " + getEncoderClass() + ", raw data will be used", ex);
+            }
             encoder = this;
         }
     }

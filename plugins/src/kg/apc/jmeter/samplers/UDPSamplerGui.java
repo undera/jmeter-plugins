@@ -24,6 +24,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
     private JTextField hostName;
     private JTextField port;
     private JCheckBox waitResponse;
+    private JCheckBox closeChannel;
     private JTextField timeout;
     private JTextField messageEncodeClass;
     private JTextArea requestData;
@@ -53,6 +54,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
             port.setText(sampler.getPort());
             timeout.setText(sampler.getTimeout());
             waitResponse.setSelected(sampler.isWaitResponse());
+            closeChannel.setSelected(sampler.isCloseChannel());
             messageEncodeClass.setText(sampler.getEncoderClass());
             requestData.setText(sampler.getRequestData());
         }
@@ -81,6 +83,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
             sampler.setHostName(hostName.getText());
             sampler.setPort(port.getText());
             sampler.setWaitResponse(waitResponse.isSelected());
+            sampler.setCloseChannel(closeChannel.isSelected());
             sampler.setTimeout(timeout.getText());
             sampler.setRequestData(transformCRLF(requestData.getText()));
             sampler.setEncoderClass(messageEncodeClass.getText());
@@ -131,20 +134,23 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Wait for Response: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 3, waitResponse = new JCheckBox());
 
-        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Response Timeout: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 4, timeout = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Close UDP Socket: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 4, closeChannel = new JCheckBox());
 
-        addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Data Encode/Decode class: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 5, messageEncodeClass = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Response Timeout: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 5, timeout = new JTextField(20));
+
+        addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Data Encode/Decode class: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 6, messageEncodeClass = new JTextField(20));
 
         editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
-        addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Request Data: ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 7, new JLabel("Request Data: ", JLabel.RIGHT));
 
         editConstraints.fill = GridBagConstraints.BOTH;
         requestData = new JTextArea();
-        addToPanel(mainPanel, editConstraints, 1, 6, GuiBuilderHelper.getTextAreaScrollPaneContainer(requestData, 10));
+        addToPanel(mainPanel, editConstraints, 1, 7, GuiBuilderHelper.getTextAreaScrollPaneContainer(requestData, 10));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
@@ -162,6 +168,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         port.setText("");
         timeout.setText("1000");
         waitResponse.setSelected(true);
+        closeChannel.setSelected(false);
         messageEncodeClass.setText(HexStringUDPDecoder.class.getCanonicalName());
         requestData.setText("");
     }

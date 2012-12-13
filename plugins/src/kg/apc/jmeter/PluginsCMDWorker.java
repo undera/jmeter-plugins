@@ -11,7 +11,9 @@ import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
 import kg.apc.jmeter.dbmon.DbMonCollector;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
+import kg.apc.jmeter.vizualizers.DbMonGui;
 import kg.apc.jmeter.vizualizers.PageDataExtractorOverTimeGui;
+import kg.apc.jmeter.vizualizers.PerfMonGui;
 import org.apache.jmeter.JMeter;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
@@ -47,6 +49,7 @@ public class PluginsCMDWorker {
     private String includeLabels = "";
     private String excludeLabels = "";
     private ArrayList<Object> cmdRegExps = null;
+    private int successFilter = -1;
 
     public PluginsCMDWorker() {
         prepareJMeterEnv();
@@ -197,15 +200,21 @@ public class PluginsCMDWorker {
         setOptions(gui);
 
         CorrectedResultCollector rc;
-        if(gui instanceof kg.apc.jmeter.vizualizers.PerfMonGui) {
-           rc = new PerfMonCollector();
-        } else if(gui instanceof kg.apc.jmeter.vizualizers.DbMonGui) {
-           rc = new DbMonCollector();
+        if (gui instanceof PerfMonGui) {
+            rc = new PerfMonCollector();
+        } else if (gui instanceof DbMonGui) {
+            rc = new DbMonCollector();
         } else {
-           rc = new CorrectedResultCollector();
+            rc = new CorrectedResultCollector();
         }
         rc.setExcludeLabels(excludeLabels);
         rc.setIncludeLabels(includeLabels);
+
+        if (successFilter >= 0) {
+            rc.setErrorLogging(successFilter == 0);
+            rc.setSuccessOnlyLogging(successFilter != 0);
+        }
+
         log.debug("Using JTL file: " + inputFile);
         rc.setFilename(inputFile);
         rc.setListener(gui);
@@ -220,12 +229,12 @@ public class PluginsCMDWorker {
         setOptions(gui);
 
 
-        
-        
+
+
         if ((exportMode & EXPORT_PNG) == EXPORT_PNG) {
-            File pngFile=new File(outputPNG);
+            File pngFile = new File(outputPNG);
             forceDir(pngFile);
-            
+
             try {
                 gui.getGraphPanelChart().saveGraphToPNG(pngFile, graphWidth, graphHeight);
             } catch (IOException ex) {
@@ -234,9 +243,9 @@ public class PluginsCMDWorker {
         }
 
         if ((exportMode & EXPORT_CSV) == EXPORT_CSV) {
-            File csvFile=new File(outputCSV);
+            File csvFile = new File(outputCSV);
             forceDir(csvFile);
-            
+
             try {
                 gui.getGraphPanelChart().saveGraphToCSV(csvFile);
             } catch (IOException ex) {
@@ -311,9 +320,9 @@ public class PluginsCMDWorker {
             graph.getChartSettings().setExpendRows(autoScaleRows > 0);
         }
         if (cmdRegExps != null) {
-           if(gui instanceof PageDataExtractorOverTimeGui) {
-              ((PageDataExtractorOverTimeGui)gui).setCmdRegExps(cmdRegExps);
-           }
+            if (gui instanceof PageDataExtractorOverTimeGui) {
+                ((PageDataExtractorOverTimeGui) gui).setCmdRegExps(cmdRegExps);
+            }
         }
     }
 
@@ -369,15 +378,19 @@ public class PluginsCMDWorker {
         lineWeight = parseInt;
     }
 
-    public void setCmdRegExps (ArrayList<Object> cmdRegExps) {
+    public void setCmdRegExps(ArrayList<Object> cmdRegExps) {
         this.cmdRegExps = cmdRegExps;
+    }
+
+    public void setSuccessFilter(int logicValue) {
+        successFilter = logicValue;
     }
 
     private void forceDir(File resultFile) {
         File parent = resultFile.getParentFile();
-        if(parent != null) {
+        if (parent != null) {
             if (!parent.mkdirs() && !parent.exists()) {
-                throw new RuntimeException("Failed to create directory for "+resultFile.getAbsolutePath());
+                throw new RuntimeException("Failed to create directory for " + resultFile.getAbsolutePath());
             }
         }
     }

@@ -38,7 +38,8 @@ public class ReporterTool extends AbstractCMDTool {
                 + "--exclude-labels <labels list> " // filter samples
                 + "--auto-scale <yes/no> " // scaling for composites ||
                 + "--line-weight <num of pixels> " // set graph row line thikness ||
-                + "--extractor-regexps <regExps list> " // set graph row line thikness ||
+                + "--extractor-regexps <regExps list> " 
+                + "--success-filter <true/false> " 
                 + "]");
     }
 
@@ -204,6 +205,13 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 storeRegExps((String) args.next(), worker);
+            } else if (nextArg.equalsIgnoreCase("--success-filter")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing success filter flag");
+                }
+
+                worker.setSuccessFilter(getLogicValue((String) args.next()));
             } else {
                 throw new UnsupportedOperationException("Unrecognized option: " + nextArg);
             }

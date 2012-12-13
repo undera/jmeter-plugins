@@ -22,6 +22,9 @@ public abstract class AbstractCMDTool {
         if (string.equalsIgnoreCase("yes")) {
             return 1;
         }
+        if (string.equalsIgnoreCase("true")) {
+            return 1;
+        }
         return 0;
     }
 

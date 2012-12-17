@@ -79,4 +79,17 @@ public class FifoMapTest {
         assertEquals("val2", instance.pop(fifoName, 0));
         assertEquals("test", instance.pop("", 0));
     }
+
+    /**
+     * Test of length method, of class FifoMap.
+     */
+    @Test
+    public void testLength() {
+        System.out.println("length");
+        String fifoName = "";
+        FifoMap instance = FifoMap.getInstance();
+        int expResult = 0;
+        int result = instance.length(fifoName);
+        assertEquals(expResult, result);
+    }
 }

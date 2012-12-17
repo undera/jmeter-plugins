@@ -47,4 +47,8 @@ public class FifoMap extends ConcurrentHashMap<String, LinkedBlockingDeque<Strin
     public void put(String fifoName, String v) throws InterruptedException {
         getFifo(fifoName).offerFirst(v, Long.MAX_VALUE, TimeUnit.SECONDS);
     }
+    
+    public int length(String fifoName) {
+        return getFifo(fifoName).size();
+    }
 }

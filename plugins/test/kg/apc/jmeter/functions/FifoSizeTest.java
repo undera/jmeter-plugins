@@ -1,95 +1,93 @@
 package kg.apc.jmeter.functions;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import kg.apc.jmeter.modifiers.FifoMap;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
 
 /**
  *
  * @author undera
  */
-public class FifoPopTest {
-
-    public FifoPopTest() {
+public class FifoSizeTest {
+    
+    public FifoSizeTest() {
     }
-
+    
     @BeforeClass
-    public static void setUpClass() throws Exception {
+    public static void setUpClass() {
     }
-
+    
     @AfterClass
-    public static void tearDownClass() throws Exception {
+    public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of execute method, of class FifoPop.
+     * Test of execute method, of class FifoSize.
      */
     @Test
     public void testExecute() throws Exception {
         System.out.println("execute");
         SampleResult previousResult = null;
         Sampler currentSampler = null;
-        FifoPop instance = new FifoPop();
         LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
         list.add(new CompoundVariable("test"));
         list.add(new CompoundVariable("test"));
+        FifoSize instance = new FifoSize();
         instance.setParameters(list);
-        FifoMap.getInstance().put("test", "test");
-        String expResult = "test";
+        String expResult = "";
         String result = instance.execute(previousResult, currentSampler);
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of setParameters method, of class FifoPop.
+     * Test of setParameters method, of class FifoSize.
      */
     @Test
     public void testSetParameters() throws Exception {
         System.out.println("setParameters");
-        LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
-        list.add(new CompoundVariable("test"));
-        list.add(new CompoundVariable("test"));
-        FifoPop instance = new FifoPop();
-        instance.setParameters(list);
+        Collection<CompoundVariable> parameters = null;
+        FifoSize instance = new FifoSize();
+        instance.setParameters(parameters);
     }
 
     /**
-     * Test of getReferenceKey method, of class FifoPop.
+     * Test of getReferenceKey method, of class FifoSize.
      */
     @Test
     public void testGetReferenceKey() {
         System.out.println("getReferenceKey");
-        FifoPop instance = new FifoPop();
-        String expResult = "__fifoPop";
+        FifoSize instance = new FifoSize();
+        String expResult = "";
         String result = instance.getReferenceKey();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of getArgumentDesc method, of class FifoPop.
+     * Test of getArgumentDesc method, of class FifoSize.
      */
     @Test
     public void testGetArgumentDesc() {
         System.out.println("getArgumentDesc");
-        FifoPop instance = new FifoPop();
+        FifoSize instance = new FifoSize();
+        List expResult = null;
         List result = instance.getArgumentDesc();
-        assertNotNull(result);
+        assertEquals(expResult, result);
     }
 }

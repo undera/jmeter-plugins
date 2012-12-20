@@ -62,9 +62,11 @@ public class FifoSizeTest {
     @Test
     public void testSetParameters() throws Exception {
         System.out.println("setParameters");
-        Collection<CompoundVariable> parameters = null;
+        LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
+        list.add(new CompoundVariable("test"));
+        list.add(new CompoundVariable("test"));
         FifoSize instance = new FifoSize();
-        instance.setParameters(parameters);
+        instance.setParameters(list);
     }
 
     /**
@@ -74,7 +76,7 @@ public class FifoSizeTest {
     public void testGetReferenceKey() {
         System.out.println("getReferenceKey");
         FifoSize instance = new FifoSize();
-        String expResult = "";
+        String expResult = "__fifoSize";
         String result = instance.getReferenceKey();
         assertEquals(expResult, result);
     }
@@ -86,8 +88,7 @@ public class FifoSizeTest {
     public void testGetArgumentDesc() {
         System.out.println("getArgumentDesc");
         FifoSize instance = new FifoSize();
-        List expResult = null;
         List result = instance.getArgumentDesc();
-        assertEquals(expResult, result);
+        assertEquals(2, result.size());
     }
 }

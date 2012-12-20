@@ -9,7 +9,8 @@ import java.util.concurrent.TimeUnit;
  * @author undera
  */
 public class FifoMap extends ConcurrentHashMap<String, LinkedBlockingDeque<String>> {
-    public static final String TIMEOUT_PROP="kg.apc.jmeter.functions.FifoTimeout";
+
+    public static final String TIMEOUT_PROP = "kg.apc.jmeter.functions.FifoTimeout";
     private static FifoMap instance;
 
     private FifoMap() {
@@ -44,11 +45,13 @@ public class FifoMap extends ConcurrentHashMap<String, LinkedBlockingDeque<Strin
         return value;
     }
 
+    public int length(String fifoName) {
+        LinkedBlockingDeque<String> fifo = getFifo(fifoName);
+        final int size=fifo.size();
+        return size;
+    }
+
     public void put(String fifoName, String v) throws InterruptedException {
         getFifo(fifoName).offerFirst(v, Long.MAX_VALUE, TimeUnit.SECONDS);
-    }
-    
-    public int length(String fifoName) {
-        return getFifo(fifoName).size();
     }
 }

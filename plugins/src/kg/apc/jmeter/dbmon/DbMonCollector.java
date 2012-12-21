@@ -193,7 +193,7 @@ public class DbMonCollector
         dbMonSamplers.clear();
     }
 
-    private void processConnectors() {
+    protected void processConnectors() {
         for (DbMonSampler sampler: dbMonSamplers) {
             sampler.generateSamples(this);
         }        

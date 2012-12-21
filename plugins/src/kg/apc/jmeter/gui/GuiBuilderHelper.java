@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,10 +25,10 @@ public class GuiBuilderHelper {
       return ret;
    }
 
-   public static void strechButtonToComponent(JComponent component, JButton button) {
-      int bWidth = (int)button.getPreferredSize().getWidth();
-      int bHeight = (int)component.getPreferredSize().getHeight();
-      button.setPreferredSize(new Dimension(bWidth, bHeight));
+   public static void strechItemToComponent(JComponent component, JComponent item) {
+      int iWidth = (int)item.getPreferredSize().getWidth();
+      int iHeight = (int)component.getPreferredSize().getHeight();
+      item.setPreferredSize(new Dimension(iWidth, iHeight));
    }
 
    public static JPanel getComponentWithMargin(Component component, int top, int left, int bottom, int right) {

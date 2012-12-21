@@ -108,7 +108,7 @@ public class LoadosophiaUploaderGui
         addToPanel(mainPanel, editConstraints, 1, 1, storeDir = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 2, 1, browseButton = new JButton("Browse..."));
 
-        GuiBuilderHelper.strechButtonToComponent(storeDir, browseButton);
+        GuiBuilderHelper.strechItemToComponent(storeDir, browseButton);
         browseButton.addActionListener(new BrowseAction(storeDir, true));
 
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Test Title: ", JLabel.RIGHT));
@@ -116,6 +116,8 @@ public class LoadosophiaUploaderGui
 
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Color Flag: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 3, colorFlag = new JComboBox(LoadosophiaUploader.colors));
+
+        GuiBuilderHelper.strechItemToComponent(storeDir, colorFlag);
 
         editConstraints.fill = GridBagConstraints.BOTH;
 
@@ -178,7 +180,11 @@ public class LoadosophiaUploaderGui
     }
 
     private String indexToColor(int selectedIndex) {
-        return LoadosophiaUploader.colors[selectedIndex];
+        if(selectedIndex > 0) {
+            return LoadosophiaUploader.colors[selectedIndex];
+        } else {
+            return LoadosophiaUploader.COLOR_NONE;
+        }
     }
 
     private int colorToIndex(String colorFlag) {

@@ -183,7 +183,7 @@ public class PerfMonGui
             });
         }
         wiz.setMargin(new Insets(0, 6, 5, 6));
-        GuiBuilderHelper.strechButtonToComponent(wizEditor, wiz);
+        GuiBuilderHelper.strechItemToComponent(wizEditor, wiz);
         ComponentBorder bd = new ComponentBorder(wiz);
 
         bd.install(wizEditor);

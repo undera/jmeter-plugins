@@ -104,7 +104,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         addToPanel(mainPanel, editConstraints, 1, 0, fileName = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 2, 0, browseButton = new JButton("Browse..."));
 
-        GuiBuilderHelper.strechButtonToComponent(fileName, browseButton);
+        GuiBuilderHelper.strechItemToComponent(fileName, browseButton);
 
         editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);

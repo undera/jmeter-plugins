@@ -58,7 +58,7 @@ public class GuiBuilderHelperTest {
       System.out.println("strechButtonToComponent");
       JComponent component = new JTextField();
       JButton button = new JButton();
-      GuiBuilderHelper.strechButtonToComponent(component, button);
+      GuiBuilderHelper.strechItemToComponent(component, button);
       assertTrue(component.getHeight() == button.getHeight());
    }
 

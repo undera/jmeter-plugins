@@ -160,7 +160,7 @@ public class HTTPRawSamplerGui
         addToPanel(mainPanel, editConstraints, 1, 6, fileName = new JTextField(20));
         addToPanel(mainPanel, labelConstraints, 2, 6, browseButton = new JButton("Browse..."));
 
-        GuiBuilderHelper.strechButtonToComponent(fileName, browseButton);
+        GuiBuilderHelper.strechItemToComponent(fileName, browseButton);
 
         browseButton.addActionListener(new BrowseAction(fileName));
 

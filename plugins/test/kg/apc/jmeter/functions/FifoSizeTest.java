@@ -51,7 +51,7 @@ public class FifoSizeTest {
         list.add(new CompoundVariable("test"));
         FifoSize instance = new FifoSize();
         instance.setParameters(list);
-        String expResult = "";
+        String expResult = "0";
         String result = instance.execute(previousResult, currentSampler);
         assertEquals(expResult, result);
     }

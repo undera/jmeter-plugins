@@ -180,7 +180,7 @@ public class LoadosophiaUploaderGui
     }
 
     private String indexToColor(int selectedIndex) {
-        if(selectedIndex > 0) {
+        if(selectedIndex >= 0) {
             return LoadosophiaUploader.colors[selectedIndex];
         } else {
             return LoadosophiaUploader.COLOR_NONE;

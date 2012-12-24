@@ -70,10 +70,7 @@ public class TestCsvFileActionTest {
         JTextArea infoArea = new JTextArea();
         ActionEvent e = null;
         TestCsvFileAction instance = new TestCsvFileAction(file, prefix, separator, infoArea);
-        try {
-            instance.actionPerformed(e);
-            fail();
-        } catch (IllegalArgumentException ex) {
-        }
+        instance.actionPerformed(e);
+        assertTrue(infoArea.getText().startsWith("Problem detected:"));
     }
 }

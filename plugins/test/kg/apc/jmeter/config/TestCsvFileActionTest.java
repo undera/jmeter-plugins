@@ -16,19 +16,19 @@ import static org.junit.Assert.*;
  */
 public class TestCsvFileActionTest {
 
-   private final String fileName;
+    private final String fileName;
 
     public TestCsvFileActionTest() {
-       fileName = TestCsvFileActionTest.class.getResource("csvFileTest.csv").getPath();
+        fileName = TestCsvFileActionTest.class.getResource("csvFileTest.csv").getPath();
     }
 
-   @BeforeClass
-   public static void setUpClass() throws Exception {
-   }
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
 
-   @AfterClass
-   public static void tearDownClass() throws Exception {
-   }
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
 
     @Before
     public void setUp() {
@@ -38,23 +38,42 @@ public class TestCsvFileActionTest {
     public void tearDown() {
     }
 
-   /**
-    * Test of actionPerformed method, of class TestCsvFileAction.
-    */
-   @Test
-   public void testActionPerformed() {
-      System.out.println("actionPerformed");
-      JTextField file = new JTextField(fileName);
-      JTextField prefix = new JTextField("");
-      JTextField separator = new JTextField(",");
-      JTextArea infoArea = new JTextArea();
-      ActionEvent e = null;
-      TestCsvFileAction instance = new TestCsvFileAction(file, prefix, separator, infoArea);
-      instance.actionPerformed(e);
-      assertTrue(infoArea.getText().startsWith("File successfuly parsed, 2"));
-      file.setText(fileName + ".notFound");
-      instance.actionPerformed(e);
-      assertTrue(infoArea.getText().startsWith("Problem detected:"));
-   }
+    /**
+     * Test of actionPerformed method, of class TestCsvFileAction.
+     */
+    @Test
+    public void testActionPerformed() {
+        System.out.println("actionPerformed");
+        JTextField file = new JTextField(fileName);
+        JTextField prefix = new JTextField("");
+        JTextField separator = new JTextField(",");
+        JTextArea infoArea = new JTextArea();
+        ActionEvent e = null;
+        TestCsvFileAction instance = new TestCsvFileAction(file, prefix, separator, infoArea);
+        instance.actionPerformed(e);
+        assertTrue(infoArea.getText().startsWith("File successfuly parsed, 2"));
+        file.setText(fileName + ".notFound");
+        instance.actionPerformed(e);
+        assertTrue(infoArea.getText().startsWith("Problem detected:"));
+    }
 
+    /**
+     * @see https://groups.google.com/forum/#!topic/jmeter-plugins/gWn7MTgvTfE
+     */
+    @Test
+    public void testActionPerformed_eternal_loop() {
+        System.out.println("actionPerformed");
+        String fileName1 = TestCsvFileActionTest.class.getResource("CSVSample_user.csv").getPath();
+        JTextField file = new JTextField(fileName1);
+        JTextField prefix = new JTextField("");
+        JTextField separator = new JTextField("");
+        JTextArea infoArea = new JTextArea();
+        ActionEvent e = null;
+        TestCsvFileAction instance = new TestCsvFileAction(file, prefix, separator, infoArea);
+        try {
+            instance.actionPerformed(e);
+            fail();
+        } catch (IllegalArgumentException ex) {
+        }
+    }
 }

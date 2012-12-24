@@ -8,6 +8,7 @@ import org.apache.jmeter.util.JMeterUtils;
 /**
  *
  * @author apc
+ * @deprecated 
  */
 public class VariablesFromCSVFileBeanInfo
      extends BeanInfoSupport

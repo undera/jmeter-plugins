@@ -84,6 +84,7 @@ public class VariablesFromCSVFile
       this.delimiter = delimiter;
    }
 
+    @Override
    public void iterationStart(LoopIterationEvent iterEvent)
    {
       int threanNo = JMeterContextService.getContext().getThreadNum();
@@ -110,7 +111,7 @@ public class VariablesFromCSVFile
 
       try
       {
-         String line = null;
+         String line ;
          while ((line = server.readLine(alias, false)) != null)
          {
             processCSVFileLine(line, delim, variables);

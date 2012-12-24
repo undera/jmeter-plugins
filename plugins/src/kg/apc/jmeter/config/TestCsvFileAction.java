@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class TestCsvFileAction implements ActionListener {
+
     private final JTextField filename;
     private final JTextField prefix;
     private final JTextField separator;
@@ -22,7 +23,7 @@ public class TestCsvFileAction implements ActionListener {
         this.infoArea = infoArea;
     }
 
-   @Override
+    @Override
     public void actionPerformed(ActionEvent e) {
         infoArea.setText("");
         infoArea.setForeground(Color.black);
@@ -36,36 +37,40 @@ public class TestCsvFileAction implements ActionListener {
             reportError("File '" + filename.getText() + "' was not found...");
             return;
         } else {
-            VariableFromCsvFileReader reader = new VariableFromCsvFileReader(filename.getText());
-            Map<String,String> vars = reader.getDataAsMap(prefix.getText(), separator.getText());
-            Iterator<String> iter = vars.keySet().iterator();
-            while(iter.hasNext()) {
-               String var = iter.next();
-               String value = vars.get(var);
-               if(!"".equals(value)) {
-                  noValues = false;
-               }
-               msgVars = msgVars + "${" + var + "} = " + vars.get(var) + "\n";
-               count++;
+            try {
+                VariableFromCsvFileReader reader = new VariableFromCsvFileReader(filename.getText());
+                Map<String, String> vars = reader.getDataAsMap(prefix.getText(), separator.getText());
+                Iterator<String> iter = vars.keySet().iterator();
+                while (iter.hasNext()) {
+                    String var = iter.next();
+                    String value = vars.get(var);
+                    if (!"".equals(value)) {
+                        noValues = false;
+                    }
+                    msgVars = msgVars + "${" + var + "} = " + vars.get(var) + "\n";
+                    count++;
+                }
+            } catch (Exception ex) {
+                reportError("Error processing file: " + ex.toString());
             }
         }
-        if(count == 0) {
-           reportError("File parsed, but no variable found.");
-        } else if(noValues) {
-           reportOk("WARNING: File parsed, " + count + " variable" + (count>1?"s":"") + " found, but no variable have value!");
-           reportOk(msgVars);
+        if (count == 0) {
+            reportError("File parsed, but no variable found.");
+        } else if (noValues) {
+            reportOk("WARNING: File parsed, " + count + " variable" + (count > 1 ? "s" : "") + " found, but no variable have value!");
+            reportOk(msgVars);
         } else {
-           reportOk("File successfuly parsed, " + count + " variable" + (count>1?"s":"") + " found:");
-           reportOk(msgVars);
+            reportOk("File successfuly parsed, " + count + " variable" + (count > 1 ? "s" : "") + " found:");
+            reportOk(msgVars);
         }
     }
 
     private void reportError(String msg) {
-        infoArea.setText(infoArea.getText() + "Problem detected: " + msg+"\n");
+        infoArea.setText(infoArea.getText() + "Problem detected: " + msg + "\n");
         infoArea.setForeground(Color.red);
     }
 
     private void reportOk(String string) {
-        infoArea.setText(infoArea.getText() + string+ "\n" );
+        infoArea.setText(infoArea.getText() + string + "\n");
     }
 }

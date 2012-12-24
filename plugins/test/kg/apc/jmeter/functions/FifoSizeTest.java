@@ -1,6 +1,5 @@
 package kg.apc.jmeter.functions;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.jmeter.engine.util.CompoundVariable;

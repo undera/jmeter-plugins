@@ -199,12 +199,21 @@ public class DbMonCollector
     }
 
     @Override
+    public void sampleOccurred(SampleEvent event) {
+        // just dropping regular test samples
+    }
+    
+    protected void dbMonSampleOccurred(SampleEvent event) {
+        super.sampleOccurred(event);
+    }
+
+    @Override
     public void generateSample(double value, String label) {
         DbMonSampleResult res = new DbMonSampleResult();
         res.setSampleLabel(label);
         res.setValue(value);
         res.setSuccessful(true);
         SampleEvent e = new SampleEvent(res, DBMON);
-        sampleOccurred(e);
+        dbMonSampleOccurred(e);
     }
 }

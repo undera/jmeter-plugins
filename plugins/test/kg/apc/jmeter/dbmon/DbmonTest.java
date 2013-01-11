@@ -127,7 +127,7 @@ public class DbmonTest implements TestConnection.TestConnectionDataProvider {
         }
         
         @Override
-        public void sampleOccurred(SampleEvent event) {
+        public void dbMonSampleOccurred(SampleEvent event) {
             super.sampleOccurred(event);
             double value = DbMonSampleResult.getValue(event.getResult());
             latestSamples.put(event.getResult().getSampleLabel(), value);

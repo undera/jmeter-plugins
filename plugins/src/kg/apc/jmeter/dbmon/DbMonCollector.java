@@ -76,14 +76,13 @@ public class DbMonCollector
 
     @Override
     public synchronized void run() {
-        while (true) {
-            processConnectors();
-            try {
+        try {
+            while (true) {
+                processConnectors();
                 this.wait(interval);
-            } catch (InterruptedException ex) {
-                log.debug("Monitoring thread was interrupted", ex);
-                break;
             }
+        } catch (InterruptedException ex) {
+            log.debug("Monitoring thread was interrupted", ex);
         }
     }
 
@@ -200,17 +199,12 @@ public class DbMonCollector
     }
 
     @Override
-    public void sampleOccurred(SampleEvent event) {
-        // just dropping regular test samples
-    }
-
-    @Override
     public void generateSample(double value, String label) {
         DbMonSampleResult res = new DbMonSampleResult();
         res.setSampleLabel(label);
         res.setValue(value);
         res.setSuccessful(true);
         SampleEvent e = new SampleEvent(res, DBMON);
-        super.sampleOccurred(e);
+        sampleOccurred(e);
     }
 }

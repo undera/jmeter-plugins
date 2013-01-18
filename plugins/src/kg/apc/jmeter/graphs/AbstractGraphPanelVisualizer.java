@@ -184,6 +184,7 @@ public abstract class AbstractGraphPanelVisualizer
     protected GraphPanel createGraphPanel() {
         graphPanel = new GraphPanel();
         graphPanel.getGraphObject().setRows(model);
+        graphPanel.getGraphObject().setPrecisionLabel(interval);
         setOptionsFromProperties(graphPanel.getGraphObject());
         setExtraChartSettings();
         // should be placed after creating graph panel

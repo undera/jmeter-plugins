@@ -1,9 +1,10 @@
 package kg.apc.jmeter.modifiers;
 
-import java.nio.charset.Charset;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.RuntimeEOFException;
-import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
@@ -12,7 +13,7 @@ import org.junit.*;
 
 /**
  *
- *  @author undera
+ * @author undera
  */
 public class RawRequestSourcePreProcessorTest {
 
@@ -45,6 +46,7 @@ public class RawRequestSourcePreProcessorTest {
     public void testProcess_crlf_metaline() {
         System.out.println("crlf_metaline");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.testStarted();
         instance.setFileName(basedir + "/rawdata_crlf_metaline.txt");
         instance.setRewindOnEOF(true);
         for (int n = 1; n < 10; n++) {
@@ -58,12 +60,13 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     *  Test of process method, of class RawRequestSourcePreProcessor.
+     * Test of process method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testProcess() {
         System.out.println("process zeroterm looped");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.testStarted();
         instance.setFileName(basedir + "/rawdata_zeroterm_looped.txt");
         instance.setRewindOnEOF(true);
         for (int n = 1; n < 10; n++) {
@@ -75,12 +78,13 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     *  Test of process method, of class RawRequestSourcePreProcessor.
+     * Test of process method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testProcess_zeroterminated() {
         System.out.println("zeroterm");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.testStarted();
         instance.setFileName(basedir + "/rawdata_zeroterm_looped.txt");
         int n = 1;
         try {
@@ -96,12 +100,13 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     *  Test of process method, of class RawRequestSourcePreProcessor.
+     * Test of process method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testProcess_nonzeroterminated() {
         System.out.println("nonzeroterm");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.testStarted();
         instance.setFileName(basedir + "/rawdata_nonzeroterm.txt");
         int n = 1;
         try {
@@ -116,12 +121,13 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     *  Test of process method, of class RawRequestSourcePreProcessor.
+     * Test of process method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testProcess_broken() {
         System.out.println("broken");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.testStarted();
         instance.setFileName(basedir + "/rawdata_broken.txt");
         boolean ok = false;
         int n = 1;
@@ -146,7 +152,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     *  Test of getVarName method, of class RawRequestSourcePreProcessor.
+     * Test of getVarName method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testGetVarName() {
@@ -158,7 +164,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     *  Test of setVarName method, of class RawRequestSourcePreProcessor.
+     * Test of setVarName method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testSetVarName() {
@@ -169,7 +175,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     *  Test of getFileName method, of class RawRequestSourcePreProcessor.
+     * Test of getFileName method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testGetFileName() {
@@ -181,7 +187,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     *  Test of setFileName method, of class RawRequestSourcePreProcessor.
+     * Test of setFileName method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testSetFileName() {
@@ -192,7 +198,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     *  Test of setRewindOnEOF method, of class RawRequestSourcePreProcessor.
+     * Test of setRewindOnEOF method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testSetRewindOnEOF() {
@@ -203,7 +209,7 @@ public class RawRequestSourcePreProcessorTest {
     }
 
     /**
-     *  Test of getRewindOnEOF method, of class RawRequestSourcePreProcessor.
+     * Test of getRewindOnEOF method, of class RawRequestSourcePreProcessor.
      */
     @Test
     public void testGetRewindOnEOF() {
@@ -218,6 +224,7 @@ public class RawRequestSourcePreProcessorTest {
     public void testProcess_bug1() {
         System.out.println("bug with chunk sizes");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.testStarted();
         instance.setFileName(basedir + "/DNSJavaDecoderToRawData.out");
         instance.setRewindOnEOF(false);
         for (int n = 1; n < 1000; n++) {
@@ -232,6 +239,7 @@ public class RawRequestSourcePreProcessorTest {
     public void testProcess_bug2() {
         System.out.println("bug with binary data");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.testStarted();
         instance.setEncodeHex(true);
         instance.setFileName(basedir + "/protobuf.one.ammo");
         instance.setVarName("rawData");
@@ -242,5 +250,13 @@ public class RawRequestSourcePreProcessorTest {
         assertTrue(63 != ar[210]);
         assertEquals(3130, ar.length);
         assertEquals(12, ar[1]);
+    }
+
+    @Test
+    public void testSerialization() throws IOException {
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(instance);
     }
 }

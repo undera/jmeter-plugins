@@ -4,10 +4,14 @@ import kg.apc.charting.rows.GraphRowAverages;
 import java.awt.Graphics;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.Transferable;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.emulators.TestGraphics;
 import kg.apc.emulators.TestJMeterUtils;
+import kg.apc.jmeter.modifiers.RawRequestSourcePreProcessor;
 import org.apache.jorphan.gui.NumberRenderer;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -381,4 +385,12 @@ public class GraphPanelChartTest {
       GraphPanelChart instance = new GraphPanelChart();
       instance.invalidateCache();
    }
+   
+    @Test
+    public void testSerialization() throws IOException {
+        GraphPanelChart instance = new GraphPanelChart();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(instance);
+    }
 }

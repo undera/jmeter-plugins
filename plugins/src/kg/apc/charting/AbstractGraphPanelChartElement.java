@@ -1,10 +1,12 @@
 package kg.apc.charting;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author apc
  */
-public abstract class AbstractGraphPanelChartElement {
+public abstract class AbstractGraphPanelChartElement implements Serializable {
 
     /**
      *

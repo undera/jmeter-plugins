@@ -1,5 +1,6 @@
 package kg.apc.jmeter.reporters;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -8,7 +9,7 @@ import org.apache.log.Logger;
  *
  * @author undera
  */
-public class LoadosophiaUploadingNotifier {
+public class LoadosophiaUploadingNotifier implements Serializable {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static LoadosophiaUploadingNotifier instance;

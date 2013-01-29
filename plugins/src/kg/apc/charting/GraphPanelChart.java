@@ -29,6 +29,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -1163,7 +1164,7 @@ public class GraphPanelChart
         }
     }
 
-    private class HoverMotionListener extends java.awt.event.MouseMotionAdapter {
+    private class HoverMotionListener extends java.awt.event.MouseMotionAdapter implements Serializable {
 
         @Override
         public void mouseDragged(java.awt.event.MouseEvent evt) {

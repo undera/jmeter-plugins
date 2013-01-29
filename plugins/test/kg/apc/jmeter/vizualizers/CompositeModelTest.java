@@ -1,5 +1,8 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import kg.apc.jmeter.graphs.CompositeNotifierInterface;
 import java.util.Iterator;
 import kg.apc.charting.AbstractGraphRow;
@@ -17,6 +20,7 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class CompositeModelTest {
+
     private CompositeNotifierInterface notifier;
 
     public CompositeModelTest() {
@@ -24,14 +28,12 @@ public class CompositeModelTest {
     }
 
     @BeforeClass
-    public static void setUpClass() throws Exception
-    {
+    public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
-    public static void tearDownClass() throws Exception
-    {
+    public static void tearDownClass() throws Exception {
     }
 
     @Before
@@ -46,8 +48,7 @@ public class CompositeModelTest {
      * Test of setNotifier method, of class CompositeModel.
      */
     @Test
-    public void testSetNotifier()
-    {
+    public void testSetNotifier() {
         System.out.println("setNotifier");
         CompositeModel instance = new CompositeModel();
         instance.setNotifier(notifier);
@@ -57,8 +58,7 @@ public class CompositeModelTest {
      * Test of clear method, of class CompositeModel.
      */
     @Test
-    public void testClear()
-    {
+    public void testClear() {
         System.out.println("clear");
         CompositeModel instance = new CompositeModel();
         instance.clear();
@@ -68,8 +68,7 @@ public class CompositeModelTest {
      * Test of addRow method, of class CompositeModel.
      */
     @Test
-    public void testAddRow()
-    {
+    public void testAddRow() {
         System.out.println("addRow");
         String vizualizerName = "Test";
         AbstractGraphRow row = new GraphRowAverages();
@@ -82,8 +81,7 @@ public class CompositeModelTest {
      * Test of clearRows method, of class CompositeModel.
      */
     @Test
-    public void testClearRows()
-    {
+    public void testClearRows() {
         System.out.println("clearRows");
         String vizualizerName = "";
         CompositeModel instance = new CompositeModel();
@@ -95,8 +93,7 @@ public class CompositeModelTest {
      * Test of containsVisualizer method, of class CompositeModel.
      */
     @Test
-    public void testContainsVisualizer()
-    {
+    public void testContainsVisualizer() {
         System.out.println("containsVisualizer");
         String vizualizerName = "";
         CompositeModel instance = new CompositeModel();
@@ -109,8 +106,7 @@ public class CompositeModelTest {
      * Test of getVizualizerNamesIterator method, of class CompositeModel.
      */
     @Test
-    public void testGetVizualizerNamesIterator()
-    {
+    public void testGetVizualizerNamesIterator() {
         System.out.println("getVizualizerNamesIterator");
         CompositeModel instance = new CompositeModel();
         Iterator result = instance.getVizualizerNamesIterator();
@@ -121,8 +117,7 @@ public class CompositeModelTest {
      * Test of getRowsIterator method, of class CompositeModel.
      */
     @Test
-    public void testGetRowsIterator()
-    {
+    public void testGetRowsIterator() {
         System.out.println("getRowsIterator");
         String vizualizerName = "";
         CompositeModel instance = new CompositeModel();
@@ -134,8 +129,7 @@ public class CompositeModelTest {
      * Test of getRow method, of class CompositeModel.
      */
     @Test
-    public void testGetRow()
-    {
+    public void testGetRow() {
         System.out.println("getRow");
         String testName = "";
         String rowName = "";
@@ -149,4 +143,11 @@ public class CompositeModelTest {
         assertNotNull(result);
     }
 
+    @Test
+    public void testSerialization() throws IOException {
+        CompositeModel instance = new CompositeModel();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(instance);
+    }
 }

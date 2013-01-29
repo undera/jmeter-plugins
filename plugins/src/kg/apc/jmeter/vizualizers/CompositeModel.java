@@ -1,5 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.charting.AbstractGraphRow;
@@ -9,7 +10,7 @@ import kg.apc.jmeter.graphs.CompositeNotifierInterface;
  *
  * @author Stephane Hoblingre
  */
-public class CompositeModel {
+public class CompositeModel implements Serializable {
 
     private ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>> models = null;
     private Iterator<AbstractGraphRow> emptyIterator = null;
@@ -17,7 +18,6 @@ public class CompositeModel {
 
     public CompositeModel() {
         models = new ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>>();
-        emptyIterator = new ConcurrentSkipListMap<String, AbstractGraphRow>().values().iterator();
     }
 
     //needed to refresh tree if row model changed
@@ -65,6 +65,9 @@ public class CompositeModel {
         if (rows != null) {
             return rows.values().iterator();
         } else {
+            if (emptyIterator == null) {
+                emptyIterator = new ConcurrentSkipListMap<String, AbstractGraphRow>().values().iterator();
+            }
             return emptyIterator;
         }
     }

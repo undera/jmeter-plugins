@@ -13,6 +13,7 @@ import org.apache.commons.io.IOExceptionWithCause;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.processor.PreProcessor;
 import org.apache.jmeter.testelement.AbstractTestElement;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.testelement.property.BooleanProperty;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
@@ -26,7 +27,7 @@ import org.apache.log.Logger;
  */
 public class RawRequestSourcePreProcessor
         extends AbstractTestElement
-        implements PreProcessor, NoThreadClone {
+        implements PreProcessor, NoThreadClone, TestStateListener {
 
     public static final String regexp = "\\s";
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -35,8 +36,8 @@ public class RawRequestSourcePreProcessor
     public static final String REWIND = "rewind";
     public static final String ENCODE_HEX = "isHex";
     private FileChannel file;
-    private final ByteBuffer metaBuf = ByteBuffer.allocateDirect(1024);
-    private final ByteBuffer oneByte = ByteBuffer.allocateDirect(1);
+    private ByteBuffer metaBuf = null;
+    private ByteBuffer oneByte = null;
     public static final Charset binaryCharset = Charset.forName("UTF8");
 
     public RawRequestSourcePreProcessor() {
@@ -197,5 +198,26 @@ public class RawRequestSourcePreProcessor
 
     public void setEncodeHex(boolean b) {
         setProperty(ENCODE_HEX, b);
+    }
+
+    @Override
+    public void testStarted() {
+        testStarted("");
+    }
+
+    @Override
+    public void testStarted(String host) {
+        // performance concerns and copying ability
+        metaBuf=ByteBuffer.allocateDirect(1024);
+        oneByte=ByteBuffer.allocateDirect(1);
+    }
+
+    @Override
+    public void testEnded() {
+        
+    }
+
+    @Override
+    public void testEnded(String host) {
     }
 }

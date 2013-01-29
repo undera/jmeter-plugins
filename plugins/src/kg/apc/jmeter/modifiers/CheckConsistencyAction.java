@@ -35,6 +35,7 @@ public class CheckConsistencyAction implements ActionListener {
         int cnt = 0;
         try {
             RawRequestSourcePreProcessor preproc = new RawRequestSourcePreProcessor();
+            preproc.testStarted();
             preproc.setFileName(fname);
             preproc.setVarName("test");
             preproc.setRewindOnEOF(false);

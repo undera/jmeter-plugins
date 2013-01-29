@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.reporters.LoadosophiaUploadingNotifier;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
@@ -35,7 +36,7 @@ public class PerfMonCollector
     public static final String DATA_PROPERTY = "metricConnections";
     private int interval;
     private Thread workerThread = null;
-    private Map<Object, PerfMonAgentConnector> connectors = new HashMap<Object, PerfMonAgentConnector>();
+    private Map<Object, PerfMonAgentConnector> connectors = new ConcurrentHashMap<Object, PerfMonAgentConnector>();
     private HashMap<String, Long> oldValues = new HashMap<String, Long>();
     private static String autoFileBaseName = null;
     private static int counter = 0;

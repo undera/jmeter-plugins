@@ -223,15 +223,16 @@ public class ReporterTool extends AbstractCMDTool {
     private void storeRegExps(String regExps, PluginsCMDWorker worker) {
         String[] regStrings = regExps.split("\\{;\\}");
 
-        if(regStrings.length % 3 != 0) {
-           throw new IllegalArgumentException("Regular expressions must be succession of key/value/isDelta(true or false) separated by {;}");
+        if(regStrings.length % 4 != 0) {
+           throw new IllegalArgumentException("Regular expressions must be succession of key/value/isDelta(true or false)/isRegExpLabel(true or false) separated by {;}");
         }
 
         ArrayList<Object> data = new ArrayList<Object>();
-        for(int i=0; i<regStrings.length; i = i+3) {
+        for(int i=0; i<regStrings.length; i = i+4) {
            data.add(regStrings[i]);
            data.add(regStrings[i+1]);
            data.add("true".equalsIgnoreCase(regStrings[i+2]));
+           data.add("true".equalsIgnoreCase(regStrings[i+3]));
         }
 
         worker.setCmdRegExps(data);

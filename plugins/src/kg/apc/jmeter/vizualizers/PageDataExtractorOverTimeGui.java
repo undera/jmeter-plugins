@@ -39,13 +39,13 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
    private PowerTableModel tableModel;
    private JTable grid;
    public static final String[] columnIdentifiers = new String[]{
-      "Chart label", "Regular expression value extractor", "Delta"
+      "Chart label", "Regular expression value extractor", "Delta", "RegExp label"
    };
    public static final Class[] columnClasses = new Class[]{
-      String.class, String.class, Boolean.class
+      String.class, String.class, Boolean.class, Boolean.class
    };
    private static Object[] defaultValues = new Object[]{
-      "", "", false
+      "", "", false, false
    };
    private CollectionProperty regExps = null;
    private HashMap<String, Pattern> patterns = new HashMap<String, Pattern>();
@@ -93,7 +93,8 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
       grid.getColumnModel().getColumn(0).setPreferredWidth(350);
       grid.getColumnModel().getColumn(1).setPreferredWidth(350);
       grid.getColumnModel().getColumn(2).setPreferredWidth(50);
-
+      grid.getColumnModel().getColumn(3).setPreferredWidth(110);
+      
       return grid;
    }
 
@@ -163,8 +164,71 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
       }
    }
 
-   private void processPage(String pageBody, String label, String regExpValue, boolean isDelta, long time) {
-      Pattern patternValue = patterns.get(label);
+   private void processPageRegExpLabel(String pageBody, String regExpKey, String regExpValue, boolean isDelta, long time) {
+      //handle multiple keys with same name found with the regexp
+      ArrayList<String> labels = new ArrayList<String>();
+      Pattern patternKey = patterns.get(regExpKey);
+      if (patternKey == null) {
+         try {
+            patternKey = Pattern.compile(regExpKey);
+            patterns.put(regExpKey, patternKey);
+         } catch (PatternSyntaxException ex) {
+            log.error("Error compiling pattern: " + regExpKey);
+         }
+      }
+      Pattern patternValue = patterns.get(regExpValue);
+      if (patternValue == null) {
+         try {
+            patternValue = Pattern.compile(regExpValue);
+            patterns.put(regExpValue, patternValue);
+         } catch (PatternSyntaxException ex) {
+            log.error("Error compiling pattern: " + regExpValue);
+         }
+      }
+
+      if (patternKey != null && patternValue != null) {
+         Matcher mKey = patternKey.matcher(pageBody);
+         Matcher mValue = patternValue.matcher(pageBody);
+
+         boolean found = false;
+
+         while (mKey.find() && mValue.find()) {
+            found = true;
+            String key = mKey.group(1);
+
+            if(labels.contains(key)) {
+                int i = 2;
+                while(labels.contains(key + "_" + i)) i++;
+                key = key + "_" + i;
+            }
+
+            labels.add(key);
+
+            String sValue = mValue.group(1);
+
+            try {
+               double value = Double.parseDouble(sValue);
+               if(isDelta) {
+                   if(oldValues.containsKey(key)) {
+                       double delta = value - oldValues.get(key);
+                       addRecord(key, time, delta);
+                   }
+                   oldValues.put(key, value);
+               } else {
+                   addRecord(key, time, value);
+               }
+            } catch (NumberFormatException ex) {
+               log.error("Value extracted is not a number: " + sValue);
+            }
+         }
+         if (!found) {
+            log.warn("No data found for regExpKey: " + regExpKey + " and regExpValue: " + regExpValue);
+         }
+      }
+   }
+
+   private void processPageLabel(String pageBody, String label, String regExpValue, boolean isDelta, long time) {
+      Pattern patternValue = patterns.get(regExpValue);
       if (patternValue == null) {
          try {
             patternValue = Pattern.compile(regExpValue);
@@ -194,8 +258,8 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
                double value = Double.parseDouble(sValue);
                if(isDelta) {
                    if(oldValues.containsKey(key)) {
-                       double tmp = oldValues.get(key) - value;
-                       addRecord(key, time, tmp);
+                       double delta = value - oldValues.get(key);
+                       addRecord(key, time, delta);
                    }
                    oldValues.put(key, value);
                } else {
@@ -243,8 +307,13 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
             String label = props.get(0).getStringValue();
             String regExpValue = props.get(1).getStringValue();
             Boolean isDelta = props.get(2).getBooleanValue();
+            Boolean isLabelRegExp = props.get(3).getBooleanValue();
 
-            processPage(pageBody, label, regExpValue, isDelta, time);
+            if(isLabelRegExp) {
+                processPageRegExpLabel(pageBody, label, regExpValue, isDelta, time);
+            } else {
+                processPageLabel(pageBody, label, regExpValue, isDelta, time);
+            }
          }
       } else {
          Iterator<Object> regExpIter = cmdRegExps.iterator();
@@ -252,8 +321,13 @@ public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer {
             String label = (String)regExpIter.next();
             String regExpValue = (String)regExpIter.next();
             boolean isDelta = (Boolean)regExpIter.next();
+            boolean isLabelRegExp = (Boolean)regExpIter.next();
 
-            processPage(pageBody, label, regExpValue, isDelta, time);
+            if(isLabelRegExp) {
+                processPageRegExpLabel(pageBody, label, regExpValue, isDelta, time);
+            } else {
+                processPageLabel(pageBody, label, regExpValue, isDelta, time);
+            }
          }
       }
 

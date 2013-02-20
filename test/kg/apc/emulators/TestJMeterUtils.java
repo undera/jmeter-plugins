@@ -35,7 +35,7 @@ public abstract class TestJMeterUtils {
     public static void createJmeterEnv() {
         File propsFile = null;
         try {
-            propsFile = File.createTempFile("jmeter-plugins", "testProps");
+            propsFile = File.createTempFile("jmeter-plugins", ".properties");
             propsFile.deleteOnExit();
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
@@ -63,6 +63,7 @@ public abstract class TestJMeterUtils {
         ThreadGroup threadGroup = new org.apache.jmeter.threads.ThreadGroup();
         threadGroup.setName("test thread group");
         JMeterContextService.getContext().setThreadGroup(threadGroup);
+        JMeterUtils.setProperty("sample_variables", "TEST1,TEST2,TEST3"); // for Flexible File Writer Test        
     }
 
     public static String getTempDir() {

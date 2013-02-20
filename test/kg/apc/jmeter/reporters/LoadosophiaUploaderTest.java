@@ -64,7 +64,7 @@ public class LoadosophiaUploaderTest {
     public void testTestEnded() throws IOException {
         System.out.println("testEnded");
         JMeterUtils.setProperty("loadosophia.address", "http://localhost/");
-        LoadosophiaUploader instance = new LoadosophiaUploader();
+        LoadosophiaUploader instance = new LoadosophiaUploaderEmul();
         instance.setStoreDir(TestJMeterUtils.getTempDir());
         instance.setTitle("UnitTest");
         instance.setColorFlag("gray");
@@ -188,5 +188,14 @@ public class LoadosophiaUploaderTest {
         LoopIterationEvent lie = null;
         LoadosophiaUploader instance = new LoadosophiaUploader();
         instance.testIterationStart(lie);
+    }
+
+    private static class LoadosophiaUploaderEmul extends LoadosophiaUploader {
+
+        @Override
+        protected String[] get_upload_status(int queueID) throws IOException {
+            String[] str = {"0", "4"};
+            return str;
+        }
     }
 }

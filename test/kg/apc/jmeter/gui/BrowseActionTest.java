@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  */
 public class BrowseActionTest {
 
-    private static class BrowseActionEmul extends BrowseAction{
+    private static class BrowseActionEmul extends BrowseAction {
 
         public BrowseActionEmul(JTextField t) {
             super(t);
@@ -57,7 +57,7 @@ public class BrowseActionTest {
         System.out.println("actionPerformed");
         ActionEvent e = null;
         BrowseAction instance = new BrowseActionEmul(new JTextField());
-        instance.actionPerformed(e);
+        // instance.actionPerformed(e); don't enable, since it opens modal dialog
     }
 
     /**
@@ -70,5 +70,4 @@ public class BrowseActionTest {
         JFileChooser result = instance.getFileChooser();
         assertNotNull(result);
     }
-
 }

@@ -37,7 +37,9 @@ public class BrowseAction implements ActionListener {
 
     protected JFileChooser getFileChooser() {
         JFileChooser ret = new JFileChooser(lastPath);
-        if(isDirectoryBrowse) ret.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        if(isDirectoryBrowse) {
+            ret.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        }
 
         return ret;
     }

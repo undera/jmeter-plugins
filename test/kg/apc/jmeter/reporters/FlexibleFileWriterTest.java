@@ -39,7 +39,6 @@ public class FlexibleFileWriterTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
-        JMeterUtils.setProperty("sample_variables", "TEST1,TEST2,TEST3");
     }
 
     @AfterClass
@@ -80,13 +79,15 @@ public class FlexibleFileWriterTest {
 
     @Test
     public void testSampleOccurred_var() {
-        System.out.println("sampleOccurred");
+        System.out.println("sampleOccurred-var");
         SampleResult res = new SampleResult();
         res.setResponseData("test".getBytes());
         JMeterVariables vars = new JMeterVariables();
         vars.put("TEST1", "TEST");
         SampleEvent e = new SampleEvent(res, "Test", vars);
         FlexibleFileWriter instance = new FlexibleFileWriter();
+        System.out.println("prop: "+JMeterUtils.getProperty("sample_variables"));
+        System.out.println("count: "+SampleEvent.getVarCount());
         instance.setColumns("variable#0| |variable#| |variable#4t");
         instance.testStarted();
         for (int n = 0; n < 10; n++) {

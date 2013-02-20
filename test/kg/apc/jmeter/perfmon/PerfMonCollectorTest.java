@@ -100,7 +100,6 @@ public class PerfMonCollectorTest {
         PerfMonCollector instance = new PerfMonCollectorEmul();
         instance.setData(JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, PerfMonCollector.DATA_PROPERTY));
         instance.testStarted();
-        Thread.sleep(1500);
         instance.testEnded();
     }
 
@@ -109,6 +108,7 @@ public class PerfMonCollectorTest {
         System.out.println("testStarted");
         PerfMonCollector instance = new PerfMonCollector();
         instance.testStarted();
+        instance.testEnded();
     }
 
     @Test

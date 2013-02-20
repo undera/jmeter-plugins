@@ -1,7 +1,5 @@
 package kg.apc.charting;
 
-import kg.apc.charting.GraphModelToCsvExporter;
-import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.rows.GraphRowAverages;
 import java.io.File;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -24,13 +22,11 @@ public class GraphModelToCsvExporterTest {
     }
 
     @BeforeClass
-    public static void setUpClass() throws Exception
-    {
+    public static void setUpClass() throws Exception {
     }
 
     @AfterClass
-    public static void tearDownClass() throws Exception
-    {
+    public static void tearDownClass() throws Exception {
     }
 
     @Before
@@ -41,8 +37,7 @@ public class GraphModelToCsvExporterTest {
     public void tearDown() {
     }
 
-    private ConcurrentSkipListMap<String, AbstractGraphRow> createTestModel()
-    {
+    private ConcurrentSkipListMap<String, AbstractGraphRow> createTestModel() {
         ConcurrentSkipListMap<String, AbstractGraphRow> testModel = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         Calendar now = Calendar.getInstance();
         now.set(Calendar.HOUR_OF_DAY, 10);
@@ -73,12 +68,8 @@ public class GraphModelToCsvExporterTest {
         return testModel;
     }
 
-    /**
-     * Test of writeCsvFile method, of class GraphModelToCsvExporter.
-     */
     @Test
-    public void testWriteCsvFile() throws Exception
-    {
+    public void testWriteCsvFile() throws Exception {
         File referenceFile = new File(GraphModelToCsvExporterTest.class.getResource("export.csv").toURI());
         File testFile = new File(referenceFile.getParent() + "/testExport.csv");
 
@@ -89,5 +80,4 @@ public class GraphModelToCsvExporterTest {
         testFile.delete();
         assertTrue(success);
     }
-
 }

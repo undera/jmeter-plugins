@@ -1,6 +1,5 @@
 package kg.apc.charting;
 
-import kg.apc.charting.DateTimeRenderer;
 import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;

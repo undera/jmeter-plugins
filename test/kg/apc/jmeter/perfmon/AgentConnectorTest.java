@@ -45,7 +45,7 @@ public class AgentConnectorTest {
         agent = new ServerAgent(testPort);
         agent.startServiceAsThread();
         //wait the Server Agent starts
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
     }
 
     @AfterClass

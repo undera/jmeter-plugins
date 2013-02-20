@@ -1,6 +1,5 @@
 package kg.apc.charting;
 
-import kg.apc.charting.DividerRenderer;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -275,7 +275,7 @@ public class LoadosophiaUploader extends ResultCollector implements TestListener
         doRequest(new LinkedList<Part>(), uri, HttpStatus.SC_NO_CONTENT);
     }
 
-    private String[] get_upload_status(int queueID) throws IOException {
+    protected String[] get_upload_status(int queueID) throws IOException {
         String uri = address + "api/file/status/" + queueID + "/?format=csv";
         return doRequest(new LinkedList<Part>(), uri, HttpStatus.SC_OK);
     }

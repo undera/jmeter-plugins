@@ -1,6 +1,5 @@
 package kg.apc.charting;
 
-import kg.apc.charting.ColorsDispatcher;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;

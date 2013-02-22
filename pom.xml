@@ -8,6 +8,35 @@
     <packaging>jar</packaging>
 
     <name>JMeter Plugins at Google Code</name>
+    <description>Custom plugins set for Apache JMeter</description>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <url>http://code.google.com/p/jmeter-plugins/</url>
+    <scm>
+        <url>https://github.com/undera/perfmon-agent</url>
+        <connection>https://github.com/undera/perfmon-agent.git</connection>
+        <developerConnection>git@github.com:undera/perfmon-agent.git</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <email>apc@apc.kg</email>
+        </developer>
+    </developers>
+    <distributionManagement>        
+        <snapshotRepository>
+            <id>sonatype-snapshot</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>            
+        </snapshotRepository>
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>            
+        </repository>
+    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,18 +54,13 @@
     <dependencies>
         <dependency>
             <groupId>kg.apc</groupId>
-            <artifactId>cmdrunner</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>  
-            <!-- ${basedir} -->
-            <systemPath>/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/CMDRunner.jar</systemPath>    
+            <artifactId>perfmon</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>kg.apc</groupId>
-            <artifactId>perfmon</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>  
-            <systemPath>/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/sigar/ServerAgent.jar</systemPath>    
+            <artifactId>cmdrunner</artifactId>
+            <version>1.0.0</version>
         </dependency>
         
         <dependency>
@@ -145,8 +169,85 @@
 
     <build>
         <sourceDirectory>src</sourceDirectory>
-        <testSourceDirectory>test</testSourceDirectory>
+        <testSourceDirectory>test1</testSourceDirectory>
+        <resources>
+            <resource>
+                <includes>
+                    <include>**/*.png</include>
+                    <include>**/*.properties</include>
+                </includes>
+                <directory>src</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <includes>
+                    <include>**/*.txt</include>
+                    <include>**/*.raw</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.jtl</include>
+                    <include>**/*.csv</include>
+                    <include>**/*.out</include>
+                    <include>**/*.ammo</include>
+                </includes>
+                <directory>test1</directory>
+            </testResource>
+        </testResources>
+        
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>                        
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>                        
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>                        
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <phase>deploy</phase>                        
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+                        
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

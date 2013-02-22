@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.jmeter.perfmon.OldAgentConnectorTest.class, kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest.class, kg.apc.jmeter.perfmon.AgentConnectorTest.class, kg.apc.jmeter.perfmon.NewAgentConnectorTest.class, kg.apc.jmeter.perfmon.PerfMonExceptionTest.class, kg.apc.jmeter.perfmon.PerfMonAgentConnectorTest.class, kg.apc.jmeter.perfmon.PerfMonSampleGeneratorTest.class, kg.apc.jmeter.perfmon.PerfMonSampleResultTest.class, kg.apc.jmeter.perfmon.PerfMonCollectorTest.class})
+@Suite.SuiteClasses({kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest.class,kg.apc.jmeter.perfmon.NewAgentConnectorTest.class, kg.apc.jmeter.perfmon.PerfMonExceptionTest.class, kg.apc.jmeter.perfmon.PerfMonAgentConnectorTest.class, kg.apc.jmeter.perfmon.PerfMonSampleGeneratorTest.class, kg.apc.jmeter.perfmon.PerfMonSampleResultTest.class})
 public class PerfmonSuite {
 
     @BeforeClass

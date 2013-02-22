@@ -41,7 +41,6 @@ public class PerfMonCollector
     private static String autoFileBaseName = null;
     private static int counter = 0;
     private LoadosophiaUploadingNotifier perfMonNotifier = LoadosophiaUploadingNotifier.getInstance();
-
     private static String workerHost = null;
 
     static {
@@ -98,19 +97,19 @@ public class PerfMonCollector
 
     //ensure we start only on one host (if multiple slaves)
     private synchronized static boolean isWorkingHost(String host) {
-       if(workerHost == null) {
-          workerHost = host;
-          return true;
-       } else {
-          return host.equals(workerHost);
-       }
+        if (workerHost == null) {
+            workerHost = host;
+            return true;
+        } else {
+            return host.equals(workerHost);
+        }
     }
 
     @Override
     public void testStarted(String host) {
-       
-        if(!isWorkingHost(host)) {
-           return;
+
+        if (!isWorkingHost(host)) {
+            return;
         }
 
         //ensure the data will be saved
@@ -152,8 +151,8 @@ public class PerfMonCollector
 
     @Override
     public void testEnded(String host) {
-        if(workerThread == null) {
-           return;
+        if (workerThread == null) {
+            return;
         }
         workerHost = null;
         workerThread.interrupt();
@@ -205,7 +204,7 @@ public class PerfMonCollector
         String label;
         if (paramsParsed.getLabel().isEmpty()) {
             label = host + " " + metric;
-            if(params != null && !params.isEmpty()) {
+            if (params != null && !params.isEmpty()) {
                 label = label + " " + params;
             }
         } else {
@@ -231,12 +230,7 @@ public class PerfMonCollector
             } else {
                 PerfMonAgentConnector connector = getConnector(host, port);
                 connector.addMetric(metric, params, label);
-
-                if (connector instanceof OldAgentConnector) {
-                    connectors.put(stringKey, connector);
-                } else {
-                    connectors.put(addr, connector);
-                }
+                connectors.put(addr, connector);
             }
         } catch (IOException e) {
             log.error("Problems creating connector", e);
@@ -245,16 +239,11 @@ public class PerfMonCollector
     }
 
     protected PerfMonAgentConnector getConnector(String host, int port) throws IOException {
-        try {
-            log.debug("Trying new connector");
-            Transport transport = TransportFactory.getTransport(new InetSocketAddress(host, port));
-            NewAgentConnector conn = new NewAgentConnector();
-            conn.setTransport(transport);
-            return conn;
-        } catch (IOException e) {
-            log.debug("Using old connector");
-            return new OldAgentConnector(host, port);
-        }
+        log.debug("Trying new connector");
+        Transport transport = TransportFactory.getTransport(new InetSocketAddress(host, port));
+        NewAgentConnector conn = new NewAgentConnector();
+        conn.setTransport(transport);
+        return conn;
     }
 
     private void shutdownConnectors() {
@@ -288,14 +277,12 @@ public class PerfMonCollector
     //need floating point precision for memory and cpu
     @Override
     public void generateSample(double value, String label) {
-        if (value != AgentConnector.AGENT_ERROR) {
-            PerfMonSampleResult res = new PerfMonSampleResult();
-            res.setSampleLabel(label);
-            res.setValue(value);
-            res.setSuccessful(true);
-            SampleEvent e = new SampleEvent(res, PERFMON);
-            super.sampleOccurred(e);
-        }
+        PerfMonSampleResult res = new PerfMonSampleResult();
+        res.setSampleLabel(label);
+        res.setValue(value);
+        res.setSuccessful(true);
+        SampleEvent e = new SampleEvent(res, PERFMON);
+        super.sampleOccurred(e);
     }
 
     @Override

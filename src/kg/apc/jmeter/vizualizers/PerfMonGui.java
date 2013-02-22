@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.*;
@@ -14,7 +15,6 @@ import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.gui.ComponentBorder;
 import kg.apc.jmeter.gui.DialogFactory;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
-import kg.apc.jmeter.perfmon.AgentConnector;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
 import kg.apc.jmeter.perfmon.PerfMonSampleResult;
 import org.apache.jmeter.gui.GuiPackage;
@@ -34,6 +34,7 @@ import org.apache.log.Logger;
 public class PerfMonGui
         extends AbstractOverTimeVisualizer {
 
+    public static final List<String> metrics = Arrays.asList(new String[]{"CPU", "Memory", "Swap", "Disks I/O", "Network I/O"});
     private static final Logger log = LoggingManager.getLoggerForClass();
     private PowerTableModel tableModel;
     private JTable grid;
@@ -152,7 +153,7 @@ public class PerfMonGui
         panel.add(scroll, BorderLayout.CENTER);
         panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
 
-        List<String> items = new LinkedList<String>(AgentConnector.metrics);
+        List<String> items = new LinkedList<String>(metrics);
         // add metrics from new agent
         items.add("TCP");
         items.add("JMX");
@@ -251,7 +252,7 @@ public class PerfMonGui
     @Override
     public void add(SampleResult res) {
         if (res.isSuccessful()) {
-            if(isSampleIncluded(res)) {
+            if (isSampleIncluded(res)) {
                 super.add(res);
                 addPerfMonRecord(res.getSampleLabel(), normalizeTime(res.getStartTime()), PerfMonSampleResult.getValue(res));
                 updateGui(null);

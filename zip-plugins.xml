@@ -5,7 +5,6 @@
     <formats>
         <format>zip</format>
     </formats>
-            <fileMode>0644</fileMode>
     
     <files>
         <file>

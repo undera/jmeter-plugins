@@ -42,6 +42,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.6</java-version>
         <jmeter.version>2.8</jmeter.version>
+        <cmdrunner-version>1.0.1</cmdrunner-version>
     </properties>
 
     <repositories>
@@ -60,7 +61,7 @@
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>cmdrunner</artifactId>
-            <version>1.0.0</version>
+            <version>${cmdrunner-version}</version>
         </dependency>
         
         <dependency>
@@ -274,7 +275,7 @@
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <excludeGroupIds>org.apache.jmeter,javax.activation,org.apache.avalon,org.apache.bsf,avalon,commons-codec,commons-collections,commons-httpclient,commons-io,commons-jexl,commons-lang,commons-logging,commons-net,excalibur,org.apache.geronimo.specs,org.htmlparser,org.apache.httpcomponents,jcharts,logkit,oro,xalan,xerces,xml-apis,xpp3,bsf,org.beanshell,org.apache.xmlgraphics</excludeGroupIds>
-                            <excludeArtifactIds>commons-jexl,js,jtidy,junit,mail,serializer,soap,xstream,xmlenc,jdom</excludeArtifactIds>
+                            <excludeArtifactIds>commons-jexl,js,jtidy,junit,mail,serializer,soap,xstream,xmlenc,jdom,perfmon,ant,jetty</excludeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>
@@ -283,11 +284,22 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <finalName>JMeterPlugins</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
+                    <appendAssemblyId>true</appendAssemblyId>
                     <descriptors>
-                        <descriptor>zip.xml</descriptor>
+                        <descriptor>zip-plugins.xml</descriptor>
+                        <descriptor>zip-libs.xml</descriptor>
                     </descriptors>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
             </plugin>
         </plugins>
     </build>

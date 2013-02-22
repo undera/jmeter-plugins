@@ -5,21 +5,27 @@
     <formats>
         <format>zip</format>
     </formats>
-    
-    <moduleSets>
-        <moduleSet>
-            <binaries>
-                <includes>
-                    <include>kg.apc*</include>
-                </includes>
-            </binaries>
-        </moduleSet>
-    </moduleSets>
+            <fileMode>0644</fileMode>
     
     <files>
         <file>
+            <destName>JMeterPlugins.jar</destName>
+            <source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
+            <fileMode>0644</fileMode>
+        </file>
+        <file>
             <destName>CMDRunner.jar</destName>
             <source>${project.build.directory}/lib/cmdrunner-${cmdrunner-version}.jar</source>
+            <fileMode>0644</fileMode>
+        </file>
+        <file>
+            <source>NOTICE</source>
+        </file>
+        <file>
+            <source>README</source>
+        </file>
+        <file>
+            <source>LICENSE</source>
         </file>
     </files>
     
@@ -31,13 +37,6 @@
             </includes>
             <fileMode>0755</fileMode>
             <outputDirectory>.</outputDirectory>            
-        </fileSet>
-        <fileSet>
-            <directory>${project.build.directory}</directory>
-            <includes>
-                <include>lib/*</include>
-            </includes>
-            <outputDirectory>.</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

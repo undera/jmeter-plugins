@@ -6,7 +6,6 @@
  *
  * Licensed under the under the Apache License, Version 2.0.
  */
-
 package com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.gui;
 
 import java.awt.BorderLayout;
@@ -16,58 +15,60 @@ import org.apache.jmeter.processor.gui.AbstractPostProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
 import com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.JSONFormatter;
+import kg.apc.jmeter.JMeterPluginsUtils;
 
 /**
- * Java class representing GUI for the JSON Format Post Processor component in JMeter
- * 
+ * Java class representing GUI for the JSON Format Post Processor component in
+ * JMeter
+ *
  * @author Bakir Jusufbegovic / AtlantBH
  */
-public class JSONFormatterGui extends AbstractPostProcessorGui{
+public class JSONFormatterGui extends AbstractPostProcessorGui {
 
-	private static final long serialVersionUID = 1L;
-	
-	public JSONFormatterGui()
-	{
-		super();
-		init();
-	}
-	
-	public void init()
-	{
-		setLayout(new BorderLayout());
+    private static final long serialVersionUID = 1L;
+    private static final String WIKIPAGE = "JSONFormatter";
+
+    public JSONFormatterGui() {
+        super();
+        init();
+    }
+
+    public void init() {
+        setLayout(new BorderLayout());
         setBorder(makeBorder());
-        add(makeTitlePanel(), BorderLayout.NORTH);
-        
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
+
         VerticalPanel panel = new VerticalPanel();
         panel.setBorder(BorderFactory.createEtchedBorder());
-        
-        add(panel,BorderLayout.CENTER);
-	}
-	
-	@Override
-	public void clearGui(){
-		super.clearGui();
-	}
-	
-	@Override
-	public TestElement createTestElement() {
-		JSONFormatter formatter = new JSONFormatter();
-		modifyTestElement(formatter);
-		return formatter;
-	}
 
-	@Override
-	public String getLabelResource() {
-		return "JSON Format Post Processor";
-	}
-	
-	@Override
-	public String getStaticLabel() {
-		return "JSON Format Post Processor";
-	}
+        add(panel, BorderLayout.CENTER);
+    }
 
-	@Override
-	public void modifyTestElement(TestElement element) {
-		super.configureTestElement(element);		
-	}
+    @Override
+    public void clearGui() {
+        super.clearGui();
+    }
+
+    @Override
+    public TestElement createTestElement() {
+        JSONFormatter formatter = new JSONFormatter();
+        modifyTestElement(formatter);
+        formatter.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
+        return formatter;
+    }
+
+    @Override
+    public String getLabelResource() {
+        return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public String getStaticLabel() {
+        return JMeterPluginsUtils.prefixLabel("JSON Format Post Processor");
+    }
+
+    @Override
+    public void modifyTestElement(TestElement element) {
+        super.configureTestElement(element);
+    }
 }

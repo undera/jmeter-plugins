@@ -6,7 +6,6 @@
  *
  * Licensed under the under the Apache License, Version 2.0.
  */
-
 package com.atlantbh.jmeter.plugins.xmlformatter.gui;
 
 import java.awt.BorderLayout;
@@ -18,47 +17,49 @@ import org.apache.jmeter.processor.gui.AbstractPostProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
 import com.atlantbh.jmeter.plugins.xmlformatter.XMLFormatPostProcessor;
+import kg.apc.jmeter.JMeterPluginsUtils;
 
 /**
  * Class that exposes {@link XMLFormatPostProcessor} as PostProcessor.
  *
  */
-public class XMLFormatPostProcessorGui extends AbstractPostProcessorGui 
-{
+public class XMLFormatPostProcessorGui extends AbstractPostProcessorGui {
 
-	private static final long serialVersionUID = 2058383675974452993L;
+    private static final long serialVersionUID = 2058383675974452993L;
+    private static final String WIKIPAGE = "XMLFormatPostProcessor";
 
-	public XMLFormatPostProcessorGui() {
-		init();
-	}
+    public XMLFormatPostProcessorGui() {
+        init();
+    }
 
-	private void init() {
+    private void init() {
         setBorder(makeBorder());
         setLayout(new BorderLayout());
         JPanel vertPanel = new VerticalPanel();
-        vertPanel.add(makeTitlePanel());
-        
+        vertPanel.add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
         add(vertPanel, BorderLayout.NORTH);
-	}
+    }
 
-	public TestElement createTestElement() {
-		XMLFormatPostProcessor te = new XMLFormatPostProcessor();
-		modifyTestElement(te);
-		return te;
-	}
+    @Override
+    public TestElement createTestElement() {
+        XMLFormatPostProcessor te = new XMLFormatPostProcessor();
+        modifyTestElement(te);
+        te.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
+        return te;
+    }
 
-	public String getLabelResource() {
-		return "xml_format_post_processor_label";
-	}
-	
-	public String getStaticLabel()
-	{
-		return "XML Format Post Processor";	
-	}
-	
-	public void modifyTestElement(TestElement te) {
-		configureTestElement(te);
-	}
+    @Override
+    public String getLabelResource() {
+        return this.getClass().getSimpleName();
+    }
 
+    @Override
+    public String getStaticLabel() {
+        return JMeterPluginsUtils.prefixLabel("XML Format Post Processor");
+    }
 
+    @Override
+    public void modifyTestElement(TestElement te) {
+        configureTestElement(te);
+    }
 }

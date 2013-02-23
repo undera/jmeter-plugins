@@ -11,7 +11,6 @@
  *
  *  If you want to contact the author please see http://smartrics.blogspot.com
  */
-
 package com.atlantbh.jmeter.plugins.rest.gui;
 
 import java.awt.BorderLayout;
@@ -33,13 +32,15 @@ import org.apache.jorphan.gui.JLabeledTextArea;
 import org.apache.jorphan.gui.JLabeledTextField;
 
 import com.atlantbh.jmeter.plugins.rest.RestSampler;
+import kg.apc.jmeter.JMeterPluginsUtils;
 
 /**
  * Frontend to the REST sampler.
- * 
- * It only eposes GET/POST/PUT/DELETE.
+ *
+ * It only exposes GET/POST/PUT/DELETE.
  */
 public class RestGui extends AbstractSamplerGui {
+
     private static final long serialVersionUID = -5576774730632101012L;
     private JCheckBox useKeepAlive;
     private JCheckBox automaticRedirect;
@@ -49,17 +50,20 @@ public class RestGui extends AbstractSamplerGui {
     private JLabeledTextField resource;
     private JLabeledTextField port;
     private JLabeledChoice httpMethods;
+    private static final String WIKIPAGE = "RESTSampler";
 
     public RestGui() {
         init();
     }
 
+    @Override
     public String getLabelResource() {
-        return "rest_sampler_title"; //$NON-NLS-1$
+       return this.getClass().getSimpleName();
     }
 
+    @Override
     public String getStaticLabel() {
-        return "Rest Sampler";
+        return JMeterPluginsUtils.prefixLabel("REST Sampler");
     }
 
     /*
@@ -67,9 +71,11 @@ public class RestGui extends AbstractSamplerGui {
      *
      * @see org.apache.jmeter.gui.JMeterGUIComponent#createTestElement()
      */
+    @Override
     public TestElement createTestElement() {
         RestSampler sampler = new RestSampler();
         modifyTestElement(sampler);
+        sampler.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
         return sampler;
     }
 
@@ -87,8 +93,10 @@ public class RestGui extends AbstractSamplerGui {
     /**
      * Modifies a given TestElement to mirror the data in the gui components.
      *
-     * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
+     * @see
+     * org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
      */
+    @Override
     public void modifyTestElement(TestElement s) {
         super.configureTestElement(s);
         if (s instanceof RestSampler) {
@@ -107,6 +115,7 @@ public class RestGui extends AbstractSamplerGui {
     /**
      * Implements JMeterGUIComponent.clearGui
      */
+    @Override
     public void clearGui() {
         super.clearGui();
         clear();
@@ -114,8 +123,9 @@ public class RestGui extends AbstractSamplerGui {
 
     private JPanel getResourceConfigPanel() {
         automaticRedirect = new JCheckBox(JMeterUtils.getResString("follow_redirects"));
-        httpMethods = new JLabeledChoice("Method", new String[] { "GET", "POST", "PUT", "DELETE" });
+        httpMethods = new JLabeledChoice("Method", new String[]{"GET", "POST", "PUT", "DELETE"});
         httpMethods.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 JLabeledChoice c = (JLabeledChoice) e.getSource();
                 String text = c.getText();
@@ -159,7 +169,7 @@ public class RestGui extends AbstractSamplerGui {
     private void init() {
         setLayout(new BorderLayout());
         setBorder(makeBorder());
-        add(makeTitlePanel(), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
         VerticalPanel panel = new VerticalPanel();
         panel.setBorder(BorderFactory.createEtchedBorder());
         panel.add(getResourceConfigPanel(), BorderLayout.NORTH);
@@ -167,6 +177,7 @@ public class RestGui extends AbstractSamplerGui {
         add(panel, BorderLayout.CENTER);
     }
 
+    @Override
     public void configure(TestElement el) {
         super.configure(el);
         RestSampler sampler = (RestSampler) el;
@@ -180,6 +191,7 @@ public class RestGui extends AbstractSamplerGui {
         hostBaseUrl.setText(sampler.getHostBaseUrl());
     }
 
+    @Override
     public Dimension getPreferredSize() {
         return getMinimumSize();
     }

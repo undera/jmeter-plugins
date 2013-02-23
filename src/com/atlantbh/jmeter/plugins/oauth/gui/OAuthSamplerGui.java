@@ -6,7 +6,6 @@
  *
  * Licensed under the under the Apache License, Version 2.0.
  */
-
 package com.atlantbh.jmeter.plugins.oauth.gui;
 
 import java.awt.BorderLayout;
@@ -28,13 +27,15 @@ import org.apache.jorphan.gui.JLabeledTextArea;
 import org.apache.jorphan.gui.JLabeledTextField;
 
 import com.atlantbh.jmeter.plugins.oauth.OAuthSampler;
+import kg.apc.jmeter.JMeterPluginsUtils;
 
 /**
  * Frontend to the OAuth sampler.
- * 
+ *
  * It only exposes GET/POST/PUT/DELETE.
  */
 public class OAuthSamplerGui extends AbstractSamplerGui {
+
     private static final long serialVersionUID = -5576774730632101012L;
     private JCheckBox useKeepAlive;
     private JCheckBox automaticRedirect;
@@ -46,17 +47,20 @@ public class OAuthSamplerGui extends AbstractSamplerGui {
     private JLabeledTextField resource;
     private JLabeledTextField port;
     private JLabeledChoice httpMethods;
+    private static final String WIKIPAGE = "OAuthSampler";
 
     public OAuthSamplerGui() {
         init();
     }
 
+    @Override
     public String getLabelResource() {
-        return "rest_sampler_title"; //$NON-NLS-1$
+        return this.getClass().getSimpleName();
     }
 
+    @Override
     public String getStaticLabel() {
-        return "OAuth Sampler";
+        return JMeterPluginsUtils.prefixLabel("OAuth Sampler");
     }
 
     /*
@@ -64,15 +68,17 @@ public class OAuthSamplerGui extends AbstractSamplerGui {
      *
      * @see org.apache.jmeter.gui.JMeterGUIComponent#createTestElement()
      */
+    @Override
     public TestElement createTestElement() {
         OAuthSampler sampler = new OAuthSampler();
         modifyTestElement(sampler);
+        sampler.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
         return sampler;
     }
 
     public void clear() {
-    	this.consumerKey.setText("");
-    	this.consumerSecret.setText("");
+        this.consumerKey.setText("");
+        this.consumerSecret.setText("");
         this.httpMethods.setText("GET");
         this.hostBaseUrl.setText("");
         this.headers.setText("");
@@ -86,8 +92,10 @@ public class OAuthSamplerGui extends AbstractSamplerGui {
     /**
      * Modifies a given TestElement to mirror the data in the gui components.
      *
-     * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
+     * @see
+     * org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
      */
+    @Override
     public void modifyTestElement(TestElement s) {
         super.configureTestElement(s);
         if (s instanceof OAuthSampler) {
@@ -108,17 +116,19 @@ public class OAuthSamplerGui extends AbstractSamplerGui {
     /**
      * Implements JMeterGUIComponent.clearGui
      */
+    @Override
     public void clearGui() {
         super.clearGui();
         clear();
     }
 
     private JPanel getResourceConfigPanel() {
-    	consumerKey = new JLabeledTextField("Consumer Key",25);
-    	consumerSecret = new JLabeledTextField("Consumer Secret",25);
+        consumerKey = new JLabeledTextField("Consumer Key", 25);
+        consumerSecret = new JLabeledTextField("Consumer Secret", 25);
         automaticRedirect = new JCheckBox(JMeterUtils.getResString("follow_redirects"));
-        httpMethods = new JLabeledChoice("Method", new String[] { "GET", "POST", "PUT", "DELETE" });
+        httpMethods = new JLabeledChoice("Method", new String[]{"GET", "POST", "PUT", "DELETE"});
         httpMethods.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 JLabeledChoice c = (JLabeledChoice) e.getSource();
                 String text = c.getText();
@@ -148,7 +158,7 @@ public class OAuthSamplerGui extends AbstractSamplerGui {
         HorizontalPanel panel3 = new HorizontalPanel();
         panel3.add(resource);
         resourceConfigPanel.add(panel1);
-        resourceConfigPanel.add(oAuthPanel);        
+        resourceConfigPanel.add(oAuthPanel);
         resourceConfigPanel.add(panel2);
         resourceConfigPanel.add(panel3);
         return resourceConfigPanel;
@@ -166,7 +176,7 @@ public class OAuthSamplerGui extends AbstractSamplerGui {
     private void init() {
         setLayout(new BorderLayout());
         setBorder(makeBorder());
-        add(makeTitlePanel(), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
         VerticalPanel panel = new VerticalPanel();
         panel.setBorder(BorderFactory.createEtchedBorder());
         panel.add(getResourceConfigPanel(), BorderLayout.NORTH);
@@ -174,6 +184,7 @@ public class OAuthSamplerGui extends AbstractSamplerGui {
         add(panel, BorderLayout.CENTER);
     }
 
+    @Override
     public void configure(TestElement el) {
         super.configure(el);
         OAuthSampler sampler = (OAuthSampler) el;
@@ -189,6 +200,7 @@ public class OAuthSamplerGui extends AbstractSamplerGui {
         hostBaseUrl.setText(sampler.getHostBaseUrl());
     }
 
+    @Override
     public Dimension getPreferredSize() {
         return getMinimumSize();
     }

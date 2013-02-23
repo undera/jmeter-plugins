@@ -6,7 +6,6 @@
  *
  * Licensed under the under the Apache License, Version 2.0.
  */
-
 package com.atlantbh.jmeter.plugins.hbasecomponents.samplers.gui;
 
 import java.awt.BorderLayout;
@@ -24,109 +23,108 @@ import org.apache.jorphan.gui.JLabeledTextArea;
 import org.apache.jorphan.gui.JLabeledTextField;
 
 import com.atlantbh.jmeter.plugins.hbasecomponents.samplers.HBaseScanSampler;
+import kg.apc.jmeter.JMeterPluginsUtils;
 
 /**
  * GUI for {@link HBaseScanSampler}
  *
  */
-public class HBaseScanSamplerGui  extends AbstractSamplerGui{
+public class HBaseScanSamplerGui extends AbstractSamplerGui {
 
-	private static final long serialVersionUID = -4115128550923988380L;
+    private static final long serialVersionUID = -4115128550923988380L;
+    private JLabeledTextField connTF;
+    private JLabeledTextField tableTF;
+    private JLabeledTextField startRowKeyTF;
+    private JLabeledTextField endRowKeyTF;
+    private JLabeledTextField recordCountTF;
+    private JLabeledTextArea filtersTA;
+    private JCheckBox emitVarsCB;
+    private JCheckBox latestTimestampRows;
+    private static final String WIKIPAGE = "HBaseScanSampler";
 
-	private JLabeledTextField connTF;
-	private JLabeledTextField tableTF;
-	private JLabeledTextField startRowKeyTF;
-	private JLabeledTextField endRowKeyTF;
-	private JLabeledTextField recordCountTF;
-	private JLabeledTextArea filtersTA;
-	private JCheckBox emitVarsCB;
-	private JCheckBox latestTimestampRows;
-	
-	
-	public HBaseScanSamplerGui() {
-		super();
-		init();
-	}
-	
-	private void init() {
-		setBorder(makeBorder());
+    public HBaseScanSamplerGui() {
+        super();
+        init();
+    }
+
+    private void init() {
+        setBorder(makeBorder());
         setLayout(new BorderLayout(0, 10));
-	
+
         JPanel vertPanel = new VerticalPanel();
-        vertPanel.add(makeTitlePanel());		
+        vertPanel.add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
         add(vertPanel, BorderLayout.NORTH);
-		
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		
-		mainPanel.add(connTF = createTF("Connection name"));
-		mainPanel.add(tableTF = createTF("Table"));
-		mainPanel.add(startRowKeyTF = createTF("Start rowKey"));
-		mainPanel.add(endRowKeyTF = createTF("End rowKey"));
-		mainPanel.add(recordCountTF = createTF("Limit"));
 
-		filtersTA = new JLabeledTextArea("Filters");
-		mainPanel.add(filtersTA);
-	
-		emitVarsCB = new JCheckBox("Create variable for each row");
-		latestTimestampRows = new JCheckBox("Retrieve most recent record");
-		
-		mainPanel.add(emitVarsCB);
-		mainPanel.add(latestTimestampRows);
-	
-		add(mainPanel, BorderLayout.CENTER);		
-	}
-	
-	public String getStaticLabel() {
-		return "HBase Scan Sampler";	
-	}	
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-	@Override
-	public String getLabelResource() {
-		return "hbase_scan_sampler";
-	}	
-	
-	@Override
-	public TestElement createTestElement() {
-		HBaseScanSampler sampler = new HBaseScanSampler();
-        configureTestElement(sampler);
+        mainPanel.add(connTF = createTF("Connection name"));
+        mainPanel.add(tableTF = createTF("Table"));
+        mainPanel.add(startRowKeyTF = createTF("Start rowKey"));
+        mainPanel.add(endRowKeyTF = createTF("End rowKey"));
+        mainPanel.add(recordCountTF = createTF("Limit"));
+
+        filtersTA = new JLabeledTextArea("Filters");
+        mainPanel.add(filtersTA);
+
+        emitVarsCB = new JCheckBox("Create variable for each row");
+        latestTimestampRows = new JCheckBox("Retrieve most recent record");
+
+        mainPanel.add(emitVarsCB);
+        mainPanel.add(latestTimestampRows);
+
+        add(mainPanel, BorderLayout.CENTER);
+    }
+
+    public String getStaticLabel() {
+        return JMeterPluginsUtils.prefixLabel("HBase Scan Sampler");
+    }
+
+    @Override
+    public String getLabelResource() {
+        return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public TestElement createTestElement() {
+        HBaseScanSampler sampler = new HBaseScanSampler();
+        configureTestElement(sampler);// FIXME: why here? modifyTestElement does it explicitly!
+        sampler.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
         modifyTestElement(sampler);
-        return sampler;	
-	}
+        return sampler;
+    }
 
+    @Override
+    public void modifyTestElement(TestElement te) {
+        HBaseScanSampler sampler = (HBaseScanSampler) te;
 
+        sampler.setConnectionName(connTF.getText());
+        sampler.setTableName(tableTF.getText());
+        sampler.setStartKey(startRowKeyTF.getText());
+        sampler.setEndKey(endRowKeyTF.getText());
+        sampler.setLimit(recordCountTF.getText());
+        sampler.setFilter(filtersTA.getText());
+        sampler.setOmitVars(emitVarsCB.isSelected());
+        sampler.setLatestTimestampRows(latestTimestampRows.isSelected());
 
-	@Override
-	public void modifyTestElement(TestElement te) {
-		HBaseScanSampler sampler = (HBaseScanSampler)te;
+        super.configureTestElement(sampler);
+    }
 
-		sampler.setConnectionName(connTF.getText());
-		sampler.setTableName(tableTF.getText());
-		sampler.setStartKey(startRowKeyTF.getText());
-		sampler.setEndKey(endRowKeyTF.getText());
-		sampler.setLimit(recordCountTF.getText());
-		sampler.setFilter(filtersTA.getText());
-		sampler.setOmitVars(emitVarsCB.isSelected());
-		sampler.setLatestTimestampRows(latestTimestampRows.isSelected());
-		
-		super.configureTestElement(sampler);	
-	}
-	
     //TODO typeCB
-	public void configure(TestElement el) {
+    public void configure(TestElement el) {
         super.configure(el);
         HBaseScanSampler sampler = (HBaseScanSampler) el;
 
-		connTF.setText(sampler.getConnectionName());
-		tableTF.setText(sampler.getTableName());
-		startRowKeyTF.setText(sampler.getStartKey());
-		endRowKeyTF.setText(sampler.getEndKey());
-		recordCountTF.setText(sampler.getLimit());
-		filtersTA.setText(sampler.getFilter());
-		emitVarsCB.setSelected(sampler.getOmitVars());
-		latestTimestampRows.setSelected(sampler.getLatestTimestampRows());
-    }			
-	
+        connTF.setText(sampler.getConnectionName());
+        tableTF.setText(sampler.getTableName());
+        startRowKeyTF.setText(sampler.getStartKey());
+        endRowKeyTF.setText(sampler.getEndKey());
+        recordCountTF.setText(sampler.getLimit());
+        filtersTA.setText(sampler.getFilter());
+        emitVarsCB.setSelected(sampler.getOmitVars());
+        latestTimestampRows.setSelected(sampler.getLatestTimestampRows());
+    }
+
     //TODO typeCB
     public void clearGui() {
         super.clearGui();
@@ -138,15 +136,13 @@ public class HBaseScanSamplerGui  extends AbstractSamplerGui{
         filtersTA.setText("");
         emitVarsCB.setSelected(false);
         latestTimestampRows.setSelected(false);
-    }  	
-    
-	private JLabeledTextField createTF(String name) {
-		JLabeledTextField tf = new JLabeledTextField(name);
-		tf.setMaximumSize(new Dimension(10000, 26));
-		tf.setBorder(new EmptyBorder(3, 0, 3, 0));
-		tf.getComponents()[0].setPreferredSize(new Dimension(180, tf.getComponents()[0].getPreferredSize().height));
-		return tf;
-	}    
+    }
 
- 
+    private JLabeledTextField createTF(String name) {
+        JLabeledTextField tf = new JLabeledTextField(name);
+        tf.setMaximumSize(new Dimension(10000, 26));
+        tf.setBorder(new EmptyBorder(3, 0, 3, 0));
+        tf.getComponents()[0].setPreferredSize(new Dimension(180, tf.getComponents()[0].getPreferredSize().height));
+        return tf;
+    }
 }

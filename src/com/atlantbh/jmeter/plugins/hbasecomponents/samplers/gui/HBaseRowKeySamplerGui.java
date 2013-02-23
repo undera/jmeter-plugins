@@ -66,6 +66,7 @@ public class HBaseRowKeySamplerGui extends AbstractSamplerGui {
         add(mainPanel, BorderLayout.CENTER);
     }
 
+    @Override
     public String getStaticLabel() {
         return JMeterPluginsUtils.prefixLabel("HBase Rowkey Sampler");
     }
@@ -98,6 +99,7 @@ public class HBaseRowKeySamplerGui extends AbstractSamplerGui {
     }
 
     //TODO typeCB
+    @Override
     public void configure(TestElement el) {
         super.configure(el);
         HBaseRowkeySampler sampler = (HBaseRowkeySampler) el;
@@ -110,6 +112,7 @@ public class HBaseRowKeySamplerGui extends AbstractSamplerGui {
     }
 
     //TODO typeCB
+    @Override
     public void clearGui() {
         super.clearGui();
         tableTF.setText("");

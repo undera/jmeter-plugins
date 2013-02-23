@@ -58,7 +58,7 @@ public class HBaseConnectionGui extends AbstractConfigGui {
     }
 
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("HBase Connection");
+        return JMeterPluginsUtils.prefixLabel("HBase Connection Config");
     }
 
     @Override

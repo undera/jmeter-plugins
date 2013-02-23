@@ -76,7 +76,7 @@ public class HdfsOperationsGui extends AbstractSamplerGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("HDFS operations");
+        return JMeterPluginsUtils.prefixLabel("HDFS Operations Sampler");
     }
 
     @Override

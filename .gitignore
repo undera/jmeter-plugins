@@ -1,3 +1,4 @@
 /plugins/target/
 /target/
 /nbactions.xml
+/dependency-reduced-pom.xml

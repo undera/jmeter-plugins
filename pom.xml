@@ -274,8 +274,11 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
+                            <!--
                             <excludeGroupIds>org.apache.jmeter,javax.activation,org.apache.avalon,org.apache.bsf,avalon,commons-codec,commons-collections,commons-httpclient,commons-io,commons-jexl,commons-lang,commons-logging,commons-net,excalibur,org.apache.geronimo.specs,org.htmlparser,org.apache.httpcomponents,jcharts,logkit,oro,xalan,xerces,xml-apis,xpp3,bsf,org.beanshell,org.apache.xmlgraphics</excludeGroupIds>
                             <excludeArtifactIds>commons-jexl,js,jtidy,junit,mail,serializer,soap,xstream,xmlenc,jdom,perfmon,ant,jetty</excludeArtifactIds>
+                            -->
+                            <includeArtifactIds>cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,jackson,jackson-mapper-asl,json-lib,json-path,qpid-client,qpid-common,spring-core,spring-jms,zookeeper</includeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>

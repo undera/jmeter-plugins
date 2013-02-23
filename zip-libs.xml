@@ -15,12 +15,11 @@
     <fileSets>
         <fileSet>
             <fileMode>0644</fileMode>
-            <directory>${project.build.directory}</directory>
-            <includes>
-                <include>lib/*</include>
-            </includes>
+            <directory>${project.build.directory}/lib</directory>
             <excludes>
                 <exclude>*.pom</exclude>
+                <exclude>perfmon-*</exclude>
+                <exclude>cmdrunner-*</exclude>
             </excludes>
             <outputDirectory>.</outputDirectory>            
         </fileSet>

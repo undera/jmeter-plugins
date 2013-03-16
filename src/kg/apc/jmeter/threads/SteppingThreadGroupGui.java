@@ -73,6 +73,7 @@ public class SteppingThreadGroupGui
     private GraphPanelChart chart;
     private JTextField initialDelay;
     private JTextField incUserCount;
+    private JTextField incUserCountBurst;
     private JTextField incUserPeriod;
     private JTextField flightTime;
     private JTextField decUserCount;
@@ -125,6 +126,7 @@ public class SteppingThreadGroupGui
         totalThreads.setText("100");
         initialDelay.setText("0");
         incUserCount.setText("10");
+        incUserCountBurst.setText("0");
         incUserPeriod.setText("30");
         flightTime.setText("60");
         decUserCount.setText("5");
@@ -149,8 +151,15 @@ public class SteppingThreadGroupGui
         panel.add(new JLabel("seconds.", JLabel.LEFT));
         panel.add(new JLabel());
         panel.add(new JLabel());
-
+ 
+        panel.add(new JLabel());
         panel.add(new JLabel("Then start", JLabel.RIGHT));
+        incUserCountBurst = new JTextField(5);
+        panel.add(incUserCountBurst);
+        panel.add(new JLabel("threads: ", JLabel.LEFT));
+        panel.add(new JLabel(""));
+
+        panel.add(new JLabel("Next, add", JLabel.RIGHT));
         incUserCount = new JTextField(5);
         panel.add(incUserCount);
         panel.add(new JLabel("threads every", JLabel.CENTER));
@@ -183,6 +192,7 @@ public class SteppingThreadGroupGui
         registerJTextfieldForGraphRefresh(totalThreads);
         registerJTextfieldForGraphRefresh(initialDelay);
         registerJTextfieldForGraphRefresh(incUserCount);
+        registerJTextfieldForGraphRefresh(incUserCountBurst);
         registerJTextfieldForGraphRefresh(incUserPeriod);
         registerJTextfieldForGraphRefresh(flightTime);
         registerJTextfieldForGraphRefresh(decUserCount);
@@ -215,6 +225,7 @@ public class SteppingThreadGroupGui
         tgForPreview.setNumThreads(new CompoundVariable(totalThreads.getText()).execute());
         tgForPreview.setThreadGroupDelay(new CompoundVariable(initialDelay.getText()).execute());
         tgForPreview.setInUserCount(new CompoundVariable(incUserCount.getText()).execute());
+        tgForPreview.setInUserCountBurst(new CompoundVariable(incUserCountBurst.getText()).execute());
         tgForPreview.setInUserPeriod(new CompoundVariable(incUserPeriod.getText()).execute());
         tgForPreview.setOutUserCount(new CompoundVariable(decUserCount.getText()).execute());
         tgForPreview.setOutUserPeriod(new CompoundVariable(decUserPeriod.getText()).execute());
@@ -236,6 +247,7 @@ public class SteppingThreadGroupGui
             tg.setProperty(SteppingThreadGroup.NUM_THREADS, totalThreads.getText());
             tg.setThreadGroupDelay(initialDelay.getText());
             tg.setInUserCount(incUserCount.getText());
+            tg.setInUserCountBurst(incUserCountBurst.getText());
             tg.setInUserPeriod(incUserPeriod.getText());
             tg.setOutUserCount(decUserCount.getText());
             tg.setOutUserPeriod(decUserPeriod.getText());
@@ -254,6 +266,7 @@ public class SteppingThreadGroupGui
         totalThreads.setText(tg.getNumThreadsAsString());
         initialDelay.setText(tg.getThreadGroupDelay());
         incUserCount.setText(tg.getInUserCount());
+        incUserCountBurst.setText(tg.getInUserCountBurst());
         incUserPeriod.setText(tg.getInUserPeriod());
         decUserCount.setText(tg.getOutUserCount());
         decUserPeriod.setText(tg.getOutUserPeriod());

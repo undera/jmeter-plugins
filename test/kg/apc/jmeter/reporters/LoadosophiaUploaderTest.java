@@ -194,13 +194,13 @@ public class LoadosophiaUploaderTest {
         }
 
         @Override
-        protected String[] get_upload_status(int queueID) throws IOException {
+        protected String[] getUploadStatus(int queueID) throws IOException {
             String[] str = {"0", "4"};
             return str;
         }
 
         @Override
-        protected String[] doRequest(LinkedList<Part> parts, String URL, int expectedSC) throws IOException {
+        protected String[] multipartPost(LinkedList<Part> parts, String URL, int expectedSC) throws IOException {
             String[] str = {"0", "4"};
             return str;
         }

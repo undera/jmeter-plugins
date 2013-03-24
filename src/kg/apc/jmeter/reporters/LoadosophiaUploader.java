@@ -27,6 +27,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     public static final String UPLOAD_TOKEN = "uploadToken";
     public static final String PROJECT = "project";
     public static final String STORE_DIR = "storeDir";
+    public static final String USE_ONLINE = "useOnline";
     private String fileName;
     private static final Object LOCK = new Object();
     private boolean isSaving;
@@ -54,12 +55,15 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                 log.error("Error setting up saving", ex);
             }
 
-            try {
-                this.APIClient.startOnline();
-                this.isOnlineInitiated = true;
-            } catch (IOException ex) {
-                log.warn("Failed to initiate active test", ex);
-                this.isOnlineInitiated = false;
+            if (isUseOnline()) {
+                try {
+                    informUser("Started active test: " + this.APIClient.startOnline());
+                    this.isOnlineInitiated = true;
+                } catch (IOException ex) {
+                    informUser("Failed to start active test");
+                    log.warn("Failed to initiate active test", ex);
+                    this.isOnlineInitiated = false;
+                }
             }
         }
         super.testStarted(host);
@@ -185,5 +189,13 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     @Override
     public void notifyAbout(String info) {
         informUser(info);
+    }
+
+    public boolean isUseOnline() {
+        return getPropertyAsBoolean(USE_ONLINE);
+    }
+
+    public void setUseOnline(boolean selected) {
+        setProperty(USE_ONLINE, selected);
     }
 }

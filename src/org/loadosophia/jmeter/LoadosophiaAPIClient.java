@@ -32,6 +32,7 @@ public class LoadosophiaAPIClient {
     public static final String COLOR_NONE = "none";
     public static final String[] colors = {COLOR_NONE, "red", "green", "blue", "gray", "orange", "violet", "cyan", "black"};
     public static final String STATUS_DONE = "4";
+    private final HttpClient httpClient = new HttpClient();
     private final StatusNotifierCallback notifier;
     private final String project;
     private final String address;
@@ -58,7 +59,6 @@ public class LoadosophiaAPIClient {
         LinkedList<Part> partsList = new LinkedList<Part>();
         partsList.add(new StringPart("projectKey", project));
         partsList.add(new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile))));
-        targetFile.delete();
 
         Iterator<String> it = perfMonFiles.iterator();
         int index = 0;
@@ -74,14 +74,14 @@ public class LoadosophiaAPIClient {
         }
 
         notifier.notifyAbout("Starting upload to Loadosophia.org");
-        String[] fields = doRequest(partsList, getUploaderURI(), HttpStatus.SC_OK);
+        String[] fields = multipartPost(partsList, getUploaderURI(), HttpStatus.SC_OK);
         int queueID = Integer.parseInt(fields[0]);
         results.setQueueID(queueID);
 
         if (!title.trim().isEmpty() || !colorFlag.equals(COLOR_NONE)) {
             int testID = getTestByUpload(queueID);
             results.setTestID(testID);
-            
+
             if (!title.trim().isEmpty()) {
                 setTestTitle(testID, title.trim());
             }
@@ -97,32 +97,20 @@ public class LoadosophiaAPIClient {
         return results;
     }
 
-    public void startOnline() throws IOException {
-        /*
-         self.log.info("Initiating Loadosophia.org active test...")
-         data = urllib.urlencode({'projectKey': project, 'token':self.token, 'title': title})
-        
-         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookie_jar))
-         url = self.address + "api/active/receiver/start/"
-         response = opener.open(url, data)
-         if response.getcode() != 201:
-         self.log.warn("Failed to start active test: %s", response.getcode())        
-         self.log.debug("Failed to start active test: %s", response.read())        
-         self.cookie_jar.clear_session_cookies()
-         */
+    public String startOnline() throws IOException {
+        String uri = address + "api/active/receiver/start/";
+        LinkedList<Part> partsList = new LinkedList<Part>();
+        partsList.add(new StringPart("token", token));
+        partsList.add(new StringPart("projectKey", project));
+        partsList.add(new StringPart("title", title));
+        String[] res = multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
+        return res[0];
     }
 
     public void endOnline() throws IOException {
-        /*
-         * self.log.debug("Ending Loadosophia online test")
-         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cookie_jar))
-         url = self.address + "api/active/receiver/stop/"
-         response = opener.open(url)
-         if response.getcode() != 205:
-         self.log.warn("Failed to end active test: %s", response.getcode())        
-         self.log.debug("Failed to end active test: %s", response.read())        
-         self.cookie_jar.clear_session_cookies()
-         */
+        String uri = address + "api/active/receiver/stop/";
+        LinkedList<Part> partsList = new LinkedList<Part>();
+        String[] res = multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
     }
 
     private File gzipFile(File src) throws IOException {
@@ -147,6 +135,8 @@ public class LoadosophiaAPIClient {
         out.finish();
         out.close();
 
+        src.delete();
+
         return new File(outFilename);
     }
 
@@ -158,7 +148,7 @@ public class LoadosophiaAPIClient {
                 throw new RuntimeException("Failed to get test ID");
             }
 
-            String[] status = get_upload_status(queueID);
+            String[] status = getUploadStatus(queueID);
             if (status.length > 2 && !status[2].isEmpty()) {
                 throw new RuntimeException("Loadosophia processing error: " + status[2]);
             }
@@ -171,32 +161,31 @@ public class LoadosophiaAPIClient {
 
     private void setTestTitle(int testID, String trim) throws IOException {
         String uri = address + "api/test/edit/title/" + testID + "/?title=" + URLEncoder.encode(trim, "UTF-8");
-        doRequest(new LinkedList<Part>(), uri, HttpStatus.SC_NO_CONTENT);
+        multipartPost(new LinkedList<Part>(), uri, HttpStatus.SC_NO_CONTENT);
     }
 
     private void setTestColor(int testID, String colorFlag) throws IOException {
         String uri = address + "api/test/edit/color/" + testID + "/?color=" + colorFlag;
-        doRequest(new LinkedList<Part>(), uri, HttpStatus.SC_NO_CONTENT);
+        multipartPost(new LinkedList<Part>(), uri, HttpStatus.SC_NO_CONTENT);
     }
 
     private String getUploaderURI() {
         return address + "api/file/upload/?format=csv";
     }
 
-    protected String[] get_upload_status(int queueID) throws IOException {
+    protected String[] getUploadStatus(int queueID) throws IOException {
         String uri = address + "api/file/status/" + queueID + "/?format=csv";
-        return doRequest(new LinkedList<Part>(), uri, HttpStatus.SC_OK);
+        return multipartPost(new LinkedList<Part>(), uri, HttpStatus.SC_OK);
     }
 
-    protected String[] doRequest(LinkedList<Part> parts, String URL, int expectedSC) throws IOException {
+    protected String[] multipartPost(LinkedList<Part> parts, String URL, int expectedSC) throws IOException {
         log.debug("Request " + URL);
         parts.add(new StringPart("token", token));
 
-        HttpClient uploader = new HttpClient();
         PostMethod postRequest = new PostMethod(URL);
         MultipartRequestEntity multipartRequest = new MultipartRequestEntity(parts.toArray(new Part[0]), postRequest.getParams());
         postRequest.setRequestEntity(multipartRequest);
-        int result = uploader.executeMethod(postRequest);
+        int result = httpClient.executeMethod(postRequest);
         if (result != expectedSC) {
             String fname = File.createTempFile("error_", ".html").getAbsolutePath();
             notifier.notifyAbout("Saving server error response to: " + fname);

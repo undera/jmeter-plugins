@@ -1,10 +1,12 @@
 package kg.apc.jmeter.reporters;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.util.JMeterUtils;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.io.FileSystem;
+import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
@@ -13,6 +15,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.loadosophia.jmeter.LoadosophiaAPIClient;
+import org.loadosophia.jmeter.StatusNotifierCallback;
 
 /**
  *
@@ -132,9 +136,6 @@ public class LoadosophiaUploaderTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getUploadToken method, of class LoadosophiaUploader.
-     */
     @Test
     public void testGetUploadToken() {
         System.out.println("getUploadToken");
@@ -144,9 +145,6 @@ public class LoadosophiaUploaderTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getFilePrefix method, of class LoadosophiaUploader.
-     */
     @Test
     public void testGetFilePrefix() {
         System.out.println("getFilePrefix");
@@ -156,9 +154,6 @@ public class LoadosophiaUploaderTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getStoreDir method, of class LoadosophiaUploader.
-     */
     @Test
     public void testGetStoreDir() {
         System.out.println("getStoreDir");
@@ -168,9 +163,6 @@ public class LoadosophiaUploaderTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of setStoreDir method, of class LoadosophiaUploader.
-     */
     @Test
     public void testSetStoreDir() {
         System.out.println("setStoreDir");
@@ -179,9 +171,6 @@ public class LoadosophiaUploaderTest {
         instance.setStoreDir(prefix);
     }
 
-    /**
-     * Test of testIterationStart method, of class LoadosophiaUploader.
-     */
     @Test
     public void testTestIterationStart() {
         System.out.println("testIterationStart");
@@ -193,7 +182,25 @@ public class LoadosophiaUploaderTest {
     private static class LoadosophiaUploaderEmul extends LoadosophiaUploader {
 
         @Override
+        protected LoadosophiaAPIClient getAPIClient() {
+            return new FakeAPIClient(this);
+        }
+    }
+
+    private static class FakeAPIClient extends LoadosophiaAPIClient {
+
+        public FakeAPIClient(StatusNotifierCallback informer) {
+            super(informer, "TEST", "TEST", COLOR_NONE, "TEST", "TEST");
+        }
+
+        @Override
         protected String[] get_upload_status(int queueID) throws IOException {
+            String[] str = {"0", "4"};
+            return str;
+        }
+
+        @Override
+        protected String[] doRequest(LinkedList<Part> parts, String URL, int expectedSC) throws IOException {
             String[] str = {"0", "4"};
             return str;
         }

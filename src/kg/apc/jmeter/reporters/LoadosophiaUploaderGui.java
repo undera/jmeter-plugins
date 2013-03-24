@@ -12,6 +12,7 @@ import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
+import org.loadosophia.jmeter.LoadosophiaAPIClient;
 
 /**
  *
@@ -115,7 +116,7 @@ public class LoadosophiaUploaderGui
         addToPanel(mainPanel, editConstraints, 1, 2, testTitle = new JTextField(20));
 
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Color Flag: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 3, colorFlag = new JComboBox(LoadosophiaUploader.colors));
+        addToPanel(mainPanel, editConstraints, 1, 3, colorFlag = new JComboBox(LoadosophiaAPIClient.colors));
 
         GuiBuilderHelper.strechItemToComponent(storeDir, colorFlag);
 
@@ -181,13 +182,13 @@ public class LoadosophiaUploaderGui
 
     private String indexToColor(int selectedIndex) {
         if(selectedIndex >= 0) {
-            return LoadosophiaUploader.colors[selectedIndex];
+            return LoadosophiaAPIClient.colors[selectedIndex];
         } else {
-            return LoadosophiaUploader.COLOR_NONE;
+            return LoadosophiaAPIClient.COLOR_NONE;
         }
     }
 
     private int colorToIndex(String colorFlag) {
-        return Arrays.asList(LoadosophiaUploader.colors).indexOf(colorFlag);
+        return Arrays.asList(LoadosophiaAPIClient.colors).indexOf(colorFlag);
     }
 }

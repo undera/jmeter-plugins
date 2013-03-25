@@ -2,9 +2,12 @@ package kg.apc.jmeter.reporters;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.LinkedBlockingDeque;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.reporters.ResultCollector;
+import org.apache.jmeter.samplers.SampleEvent;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.util.JMeterUtils;
@@ -18,7 +21,7 @@ import org.loadosophia.jmeter.StatusNotifierCallback;
  *
  * @author undera
  */
-public class LoadosophiaUploader extends ResultCollector implements StatusNotifierCallback, TestListener {
+public class LoadosophiaUploader extends ResultCollector implements StatusNotifierCallback, Runnable, TestListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String ADDRESS = "address";
@@ -35,6 +38,9 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     private String address;
     private boolean isOnlineInitiated = false;
     private LoadosophiaAPIClient APIClient;
+    private LinkedBlockingDeque<SampleEvent> processingQueue;
+    private Thread processorThread;
+    private int totalSampleCount;
 
     public LoadosophiaUploader() {
         super();
@@ -55,16 +61,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                 log.error("Error setting up saving", ex);
             }
 
-            if (isUseOnline()) {
-                try {
-                    informUser("Started active test: " + this.APIClient.startOnline());
-                    this.isOnlineInitiated = true;
-                } catch (IOException ex) {
-                    informUser("Failed to start active test");
-                    log.warn("Failed to initiate active test", ex);
-                    this.isOnlineInitiated = false;
-                }
-            }
+            initiateOnline();
         }
         super.testStarted(host);
         perfMonNotifier.startCollecting();
@@ -74,11 +71,8 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     public void testEnded(String host) {
         super.testEnded(host);
         synchronized (LOCK) {
-            try {
-                isOnlineInitiated = false;
-                APIClient.endOnline();
-            } catch (IOException ex) {
-                log.warn("Failed to finalize active test", ex);
+            if (isOnlineInitiated) {
+                finishOnline();
             }
 
             try {
@@ -197,5 +191,71 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
 
     public void setUseOnline(boolean selected) {
         setProperty(USE_ONLINE, selected);
+    }
+
+    @Override
+    public void sampleOccurred(SampleEvent event) {
+        super.sampleOccurred(event);
+        if (isOnlineInitiated) {
+            try {
+                processingQueue.putLast(event);
+            } catch (InterruptedException ex) {
+                log.warn("Interrupted while putting sample event to deque");
+            }
+        }
+    }
+
+    @Override
+    public void run() {
+        while (isOnlineInitiated) {
+            try {
+                SampleEvent event = processingQueue.takeFirst();
+                aggregateSample(event.getResult());
+            } catch (InterruptedException ex) {
+                log.warn("Interrupted while taking sample event from deque");
+            }
+        }
+    }
+
+    private void initiateOnline() {
+        if (isUseOnline()) {
+            try {
+                log.info("Starting Loadosophia online test");
+                informUser("Started active test: " + this.APIClient.startOnline());
+                processingQueue = new LinkedBlockingDeque<SampleEvent>();
+                processorThread = new Thread(this);
+                processorThread.setDaemon(true);
+                this.isOnlineInitiated = true;
+                processorThread.start();
+            } catch (IOException ex) {
+                informUser("Failed to start active test");
+                log.warn("Failed to initiate active test", ex);
+                this.isOnlineInitiated = false;
+            }
+        }
+    }
+
+    private void finishOnline() {
+        isOnlineInitiated = false;
+        processorThread.interrupt();
+        SampleEvent se;
+        log.debug("Reading dequeue rests");
+        while ((se = processingQueue.pollFirst()) != null) {
+            aggregateSample(se.getResult());
+        }
+        log.debug("Online samples processed: " + totalSampleCount);
+        log.info("Ending Loadosophia online test");
+        try {
+            APIClient.endOnline();
+        } catch (IOException ex) {
+            log.warn("Failed to finalize active test", ex);
+        }
+    }
+
+    private void aggregateSample(SampleResult res) {
+        totalSampleCount++;
+        if (log.isDebugEnabled()) {
+            log.debug("Got sample to process: " + res.getThreadName());
+        }
     }
 }

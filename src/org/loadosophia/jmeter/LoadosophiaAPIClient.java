@@ -103,14 +103,17 @@ public class LoadosophiaAPIClient {
         partsList.add(new StringPart("token", token));
         partsList.add(new StringPart("projectKey", project));
         partsList.add(new StringPart("title", title));
-        String[] res = multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
+        String[] res = multipartPost(partsList, uri, HttpStatus.SC_CREATED);
         return res[0];
+    }
+
+    public void sendOnlineData() {
     }
 
     public void endOnline() throws IOException {
         String uri = address + "api/active/receiver/stop/";
         LinkedList<Part> partsList = new LinkedList<Part>();
-        String[] res = multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
+        String[] res = multipartPost(partsList, uri, HttpStatus.SC_RESET_CONTENT);
     }
 
     private File gzipFile(File src) throws IOException {

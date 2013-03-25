@@ -205,4 +205,103 @@ public class LoadosophiaUploaderTest {
             return str;
         }
     }
+
+    @Test
+    public void testSetTitle() {
+        System.out.println("setTitle");
+        String prefix = "";
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        instance.setTitle(prefix);
+    }
+
+    @Test
+    public void testGetTitle() {
+        System.out.println("getTitle");
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        String expResult = "";
+        String result = instance.getTitle();
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testSetColorFlag() {
+        System.out.println("setColorFlag");
+        String color = "";
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        instance.setColorFlag(color);
+    }
+
+    @Test
+    public void testGetColorFlag() {
+        System.out.println("getColorFlag");
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        String expResult = "";
+        String result = instance.getColorFlag();
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testGetAPIClient() {
+        System.out.println("getAPIClient");
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        LoadosophiaAPIClient result = instance.getAPIClient();
+        assertNotNull(result);
+    }
+
+    @Test
+    public void testNotifyAbout() {
+        System.out.println("notifyAbout");
+        String info = "";
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        instance.notifyAbout(info);
+    }
+
+    @Test
+    public void testIsUseOnline() {
+        System.out.println("isUseOnline");
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        boolean expResult = false;
+        boolean result = instance.isUseOnline();
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testSetUseOnline() {
+        System.out.println("setUseOnline");
+        boolean selected = false;
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        instance.setUseOnline(selected);
+    }
+
+    @Test
+    public void testSampleOccurred() {
+        System.out.println("sampleOccurred");
+        SampleResult res = new SampleResult();
+        SampleEvent event = new SampleEvent(res, "test");
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        instance.sampleOccurred(event);
+    }
+
+    @Test
+    public void testRun() {
+        System.out.println("run");
+        LoadosophiaUploader instance = new LoadosophiaUploader();
+        instance.run();
+    }
+
+    @Test
+    public void testOnlineProcessor() throws InterruptedException {
+        System.out.println("onlineProcessor");
+        LoadosophiaUploader instance = new LoadosophiaUploaderEmul();
+        instance.setUseOnline(true);
+        instance.testStarted("");
+        for (int i = 0; i < 100; i++) {
+            SampleResult res = new SampleResult();
+            res.setThreadName("test " + i);
+            SampleEvent event = new SampleEvent(res, "test " + i);
+            instance.sampleOccurred(event);
+        }
+        Thread.sleep(10);
+        instance.testEnded("");
+    }
 }

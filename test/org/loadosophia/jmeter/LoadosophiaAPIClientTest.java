@@ -37,14 +37,11 @@ public class LoadosophiaAPIClientTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of sendFiles method, of class LoadosophiaAPIClient.
-     */
     @Test
     public void testSendFiles() throws Exception {
         System.out.println("sendFiles");
         File targetFile = File.createTempFile(".jtl", "temp");
-        PrintStream ps=new PrintStream(targetFile);
+        PrintStream ps = new PrintStream(targetFile);
         ps.print("test");
         ps.close();
         LinkedList<String> perfMonFiles = new LinkedList<String>();
@@ -53,9 +50,6 @@ public class LoadosophiaAPIClientTest {
         assertEquals(0, result.getQueueID());
     }
 
-    /**
-     * Test of startOnline method, of class LoadosophiaAPIClient.
-     */
     @Test
     public void testStartOnline() throws Exception {
         System.out.println("startOnline");
@@ -65,9 +59,6 @@ public class LoadosophiaAPIClientTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of endOnline method, of class LoadosophiaAPIClient.
-     */
     @Test
     public void testEndOnline() throws Exception {
         System.out.println("endOnline");
@@ -75,9 +66,6 @@ public class LoadosophiaAPIClientTest {
         instance.endOnline();
     }
 
-    /**
-     * Test of getUploadStatus method, of class LoadosophiaAPIClient.
-     */
     @Test
     public void testGetUploadStatus() throws Exception {
         System.out.println("getUploadStatus");
@@ -88,9 +76,6 @@ public class LoadosophiaAPIClientTest {
         assertArrayEquals(expResult, result);
     }
 
-    /**
-     * Test of multipartPost method, of class LoadosophiaAPIClient.
-     */
     @Test
     public void testMultipartPost() throws Exception {
         System.out.println("multipartPost");
@@ -120,8 +105,6 @@ public class LoadosophiaAPIClientTest {
             String[] res = {"4", "4"};
             return res;
         }
-        
-        
     }
 
     private static class FakeInformer implements StatusNotifierCallback {

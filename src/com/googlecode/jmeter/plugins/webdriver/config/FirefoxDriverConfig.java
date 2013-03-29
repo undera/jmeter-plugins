@@ -18,7 +18,7 @@ public class FirefoxDriverConfig extends ConfigTestElement implements ThreadList
     @Override
     public void threadStarted() {
         if(webdrivers.containsKey(currentThreadName())) {
-            log.warn("Thread: "+currentThreadName()+" already has a FirefoxDriver associated with it.  Was there multiple FirefoxConfigs created for a single Thread Group?");
+            log.warn("Thread: "+currentThreadName()+" already has a FirefoxDriver associated with it.  Ware there multiple FirefoxConfigs created for a single Thread Group?");
             return;
         }
         webdrivers.put(currentThreadName(), new FirefoxDriver());

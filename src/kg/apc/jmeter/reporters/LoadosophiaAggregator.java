@@ -1,6 +1,8 @@
 package kg.apc.jmeter.reporters;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +25,7 @@ public class LoadosophiaAggregator {
     private SortedMap<Long, List<SampleResult>> buffer = new TreeMap<Long, List<SampleResult>>();
     private final long SEND_SECONDS = 5;
     private long lastTime = 0;
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
     public void addSample(SampleResult res) {
         if (log.isDebugEnabled()) {
@@ -65,11 +68,12 @@ public class LoadosophiaAggregator {
 
     private JSONObject getAggregateSecond(List<SampleResult> raw) {
         /*
-          "rc": item.http_codes,
+         "rc": item.http_codes,
          "net": item.net_codes
          */
         JSONObject result = new JSONObject();
-        result.put("ts", raw.iterator().next().getEndTime() / 1000);
+        Date ts = new Date(raw.iterator().next().getEndTime());
+        result.put("ts", format.format(ts));
 
         int threads = 0;
         int avg_rt = 0;
@@ -90,8 +94,8 @@ public class LoadosophiaAggregator {
         return result;
     }
 
-    public static JSONArray getQuantilesJSON(Long[] rtimes) {
-        JSONArray result = new JSONArray();
+    public static JSONObject getQuantilesJSON(Long[] rtimes) {
+        JSONObject result = new JSONObject();
         Arrays.sort(rtimes);
 
         double[] quantiles = {0.25, 0.50, 0.75, 0.80, 0.90, 0.95, 0.98, 0.99, 1.00};
@@ -106,9 +110,7 @@ public class LoadosophiaAggregator {
                 timing = timings.pop();
                 level -= 1.0 / rtimes.length;
             }
-            JSONObject obj = new JSONObject();
-            obj.element(String.valueOf(quan * 100), timing);
-            result.add(obj);
+            result.element(String.valueOf(quan * 100), timing);
         }
 
         return result;

@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.zip.GZIPOutputStream;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
@@ -105,10 +106,17 @@ public class LoadosophiaAPIClient {
         partsList.add(new StringPart("projectKey", project));
         partsList.add(new StringPart("title", title));
         String[] res = multipartPost(partsList, uri, HttpStatus.SC_CREATED);
-        return res[0];
+        JSONObject obj = JSONObject.fromObject(res[0]);
+        return address + "gui/active/" + obj.optString("OnlineID", "N/A") + "/";
     }
 
-    public void sendOnlineData(JSONArray data) {
+    public void sendOnlineData(JSONArray data) throws IOException {
+        String uri = address + "api/active/receiver/data/";
+        LinkedList<Part> partsList = new LinkedList<Part>();
+        String dataStr = data.toString();
+        log.debug("Sending active test data: " + dataStr);
+        partsList.add(new StringPart("data", dataStr));
+        String[] res = multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
     }
 
     public void endOnline() throws IOException {

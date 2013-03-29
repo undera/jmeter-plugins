@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -209,10 +210,14 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                 SampleEvent event = processingQueue.poll(1, TimeUnit.SECONDS);
                 if (event != null) {
                     aggregator.addSample(event.getResult());
-                } 
-                
+                }
+
                 if (aggregator.haveDataToSend()) {
-                    apiClient.sendOnlineData(aggregator.getDataToSend());
+                    try {
+                        apiClient.sendOnlineData(aggregator.getDataToSend());
+                    } catch (IOException ex) {
+                        log.warn("Failed to send active test data", ex);
+                    }
                 }
             } catch (InterruptedException ex) {
                 log.warn("Interrupted while taking sample event from deque");

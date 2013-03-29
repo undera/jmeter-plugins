@@ -10,6 +10,7 @@ import java.nio.channels.FileChannel;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.zip.GZIPOutputStream;
+import net.sf.json.JSONArray;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
@@ -107,7 +108,7 @@ public class LoadosophiaAPIClient {
         return res[0];
     }
 
-    public void sendOnlineData() {
+    public void sendOnlineData(JSONArray data) {
     }
 
     public void endOnline() throws IOException {

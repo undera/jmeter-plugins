@@ -2,12 +2,13 @@ package kg.apc.jmeter.reporters;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
-import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.util.JMeterUtils;
@@ -37,10 +38,10 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     private LoadosophiaUploadingNotifier perfMonNotifier = LoadosophiaUploadingNotifier.getInstance();
     private String address;
     private boolean isOnlineInitiated = false;
-    private LoadosophiaAPIClient APIClient;
-    private LinkedBlockingDeque<SampleEvent> processingQueue;
+    private LoadosophiaAPIClient apiClient;
+    private BlockingQueue<SampleEvent> processingQueue;
     private Thread processorThread;
-    private int totalSampleCount;
+    private LoadosophiaAggregator aggregator;
 
     public LoadosophiaUploader() {
         super();
@@ -50,7 +51,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     @Override
     public void testStarted(String host) {
         synchronized (LOCK) {
-            this.APIClient = getAPIClient();
+            this.apiClient = getAPIClient();
 
             try {
                 if (!isSaving) {
@@ -81,7 +82,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                 }
 
                 isSaving = false;
-                LoadosophiaUploadResults uploadResult = this.APIClient.sendFiles(new File(fileName), perfMonNotifier.getFiles());
+                LoadosophiaUploadResults uploadResult = this.apiClient.sendFiles(new File(fileName), perfMonNotifier.getFiles());
                 informUser("Uploaded successfully, go to results: " + uploadResult.getRedirectLink());
             } catch (IOException ex) {
                 informUser("Failed to upload results to Loadosophia.org, see log for detais");
@@ -197,11 +198,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     public void sampleOccurred(SampleEvent event) {
         super.sampleOccurred(event);
         if (isOnlineInitiated) {
-            try {
-                processingQueue.putLast(event);
-            } catch (InterruptedException ex) {
-                log.warn("Interrupted while putting sample event to deque");
-            }
+            processingQueue.add(event);
         }
     }
 
@@ -209,8 +206,14 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     public void run() {
         while (isOnlineInitiated) {
             try {
-                SampleEvent event = processingQueue.takeFirst();
-                aggregateSample(event.getResult());
+                SampleEvent event = processingQueue.poll(1, TimeUnit.SECONDS);
+                if (event != null) {
+                    aggregator.addSample(event.getResult());
+                } 
+                
+                if (aggregator.haveDataToSend()) {
+                    apiClient.sendOnlineData(aggregator.getDataToSend());
+                }
             } catch (InterruptedException ex) {
                 log.warn("Interrupted while taking sample event from deque");
             }
@@ -221,11 +224,12 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
         if (isUseOnline()) {
             try {
                 log.info("Starting Loadosophia online test");
-                informUser("Started active test: " + this.APIClient.startOnline());
-                processingQueue = new LinkedBlockingDeque<SampleEvent>();
+                informUser("Started active test: " + apiClient.startOnline());
+                aggregator = new LoadosophiaAggregator();
+                processingQueue = new LinkedBlockingQueue<SampleEvent>();
                 processorThread = new Thread(this);
                 processorThread.setDaemon(true);
-                this.isOnlineInitiated = true;
+                isOnlineInitiated = true;
                 processorThread.start();
             } catch (IOException ex) {
                 informUser("Failed to start active test");
@@ -238,24 +242,19 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     private void finishOnline() {
         isOnlineInitiated = false;
         processorThread.interrupt();
-        SampleEvent se;
-        log.debug("Reading dequeue rests");
-        while ((se = processingQueue.pollFirst()) != null) {
-            aggregateSample(se.getResult());
+        while (!processorThread.isInterrupted()) {
+            log.debug("Waiting for bg thread to stop...");
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ex) {
+                log.warn("Interrupted sleep", ex);
+            }
         }
-        log.debug("Online samples processed: " + totalSampleCount);
         log.info("Ending Loadosophia online test");
         try {
-            APIClient.endOnline();
+            apiClient.endOnline();
         } catch (IOException ex) {
             log.warn("Failed to finalize active test", ex);
-        }
-    }
-
-    private void aggregateSample(SampleResult res) {
-        totalSampleCount++;
-        if (log.isDebugEnabled()) {
-            log.debug("Got sample to process: " + res.getThreadName());
         }
     }
 }

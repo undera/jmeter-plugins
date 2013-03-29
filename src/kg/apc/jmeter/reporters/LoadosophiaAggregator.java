@@ -1,10 +1,12 @@
 package kg.apc.jmeter.reporters;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.SortedMap;
+import java.util.Stack;
+import java.util.TreeMap;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.samplers.SampleResult;
@@ -18,24 +20,28 @@ import org.apache.log.Logger;
 public class LoadosophiaAggregator {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private Map<Long, List<SampleResult>> buffer = new HashMap<Long, List<SampleResult>>();
+    private SortedMap<Long, List<SampleResult>> buffer = new TreeMap<Long, List<SampleResult>>();
     private final long SEND_SECONDS = 5;
+    private long lastTime = 0;
 
     public void addSample(SampleResult res) {
         if (log.isDebugEnabled()) {
             log.debug("Got sample to process: " + res);
         }
 
-        Long time = res.getEndTime();
-
+        Long time = res.getEndTime() / 1000;
         if (!buffer.containsKey(time)) {
-            Iterator<Long> it = buffer.keySet().iterator();
-            if (it.hasNext()) {
-                time = it.next();
-            } else {
-                buffer.put(time, new LinkedList<SampleResult>());
+            // we need to create new sec list
+            if (time < lastTime) {
+                // a problem with times sequence - taking last available
+                Iterator<Long> it = buffer.keySet().iterator();
+                while (it.hasNext()) {
+                    time = it.next();
+                }
             }
+            buffer.put(time, new LinkedList<SampleResult>());
         }
+        lastTime = time;
         buffer.get(time).add(res);
     }
 
@@ -48,29 +54,63 @@ public class LoadosophiaAggregator {
         Iterator<Long> it = buffer.keySet().iterator();
         int cnt = 0;
         while (cnt < SEND_SECONDS && it.hasNext()) {
-            List<SampleResult> raw = buffer.get(it.next());
+            Long sec = it.next();
+            List<SampleResult> raw = buffer.get(sec);
             data.add(getAggregateSecond(raw));
+            it.remove();
+            cnt++;
         }
-        /*
-         for sec in data_buffer:
-         item = sec.overall
-         json_item = {
-         "ts": str(sec.time),
-         "threads": item.active_threads,
-         "rps": item.RPS,
-         "planned_rps": item.planned_requests,
-         "avg_rt": item.avg_response_time,
-         "quantiles": item.quantiles,
-         "rc": item.http_codes,
-         "net": item.net_codes
-         }
-         */
         return data;
     }
 
     private JSONObject getAggregateSecond(List<SampleResult> raw) {
-        JSONObject res = new JSONObject();
-        res.put("ts", 10);
-        return res;
+        /*
+          "rc": item.http_codes,
+         "net": item.net_codes
+         */
+        JSONObject result = new JSONObject();
+        result.put("ts", raw.iterator().next().getEndTime() / 1000);
+
+        int threads = 0;
+        int avg_rt = 0;
+        Long[] rtimes = new Long[raw.size()];
+        int cnt = 0;
+        for (Iterator<SampleResult> it = raw.iterator(); it.hasNext();) {
+            SampleResult res = it.next();
+            threads += res.getAllThreads();
+            avg_rt += res.getTime();
+            rtimes[cnt] = new Long(res.getTime());
+            cnt++;
+        }
+        result.put("rps", cnt);
+        result.put("threads", threads / cnt);
+        result.put("avg_rt", avg_rt / cnt);
+        result.put("quantiles", getQuantilesJSON(rtimes));
+        result.put("planned_rps", 0); // JMeter has no such feature like Yandex.Tank
+        return result;
+    }
+
+    public static JSONArray getQuantilesJSON(Long[] rtimes) {
+        JSONArray result = new JSONArray();
+        Arrays.sort(rtimes);
+
+        double[] quantiles = {0.25, 0.50, 0.75, 0.80, 0.90, 0.95, 0.98, 0.99, 1.00};
+
+        Stack<Long> timings = new Stack();
+        timings.addAll(Arrays.asList(rtimes));
+        double level = 1.0;
+        long timing = 0;
+        for (int qn = quantiles.length - 1; qn >= 0; qn--) {
+            double quan = quantiles[qn];
+            while (level >= quan) {
+                timing = timings.pop();
+                level -= 1.0 / rtimes.length;
+            }
+            JSONObject obj = new JSONObject();
+            obj.element(String.valueOf(quan * 100), timing);
+            result.add(obj);
+        }
+
+        return result;
     }
 }

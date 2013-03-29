@@ -37,9 +37,25 @@ public class LoadosophiaAggregatorTest {
     @Test
     public void testAddSample() {
         System.out.println("addSample");
-        SampleResult res = new SampleResult();
         LoadosophiaAggregator instance = new LoadosophiaAggregator();
-        instance.addSample(res);
+        instance.addSample(new SampleResult());
+        assertEquals(false, instance.haveDataToSend());
+        instance.addSample(new SampleResult(System.currentTimeMillis() + 1000, 1));
+        instance.addSample(new SampleResult(System.currentTimeMillis() + 2000, 1));
+        instance.addSample(new SampleResult(System.currentTimeMillis() + 3000, 1));
+        instance.addSample(new SampleResult(System.currentTimeMillis() + 3000, 3));
+        instance.addSample(new SampleResult(System.currentTimeMillis() + 3000, 2));
+        instance.addSample(new SampleResult(System.currentTimeMillis() + 4000, 1));
+        instance.addSample(new SampleResult(System.currentTimeMillis() + 5000, 1));
+        instance.addSample(new SampleResult(System.currentTimeMillis() + 6000, 1));
+        assertEquals(true, instance.haveDataToSend());
+        String str = instance.getDataToSend().toString();
+        System.out.println("JSON: " + str);
+        assertTrue(!str.equals("[]"));
+        assertTrue(!str.equals(""));
+        JSONArray test = JSONArray.fromObject(str);
+        assertEquals(5, test.size());
+        assertEquals(false, instance.haveDataToSend());
     }
 
     @Test
@@ -58,5 +74,13 @@ public class LoadosophiaAggregatorTest {
         String expResult = "[]";
         JSONArray result = instance.getDataToSend();
         assertEquals(expResult, result.toString());
+    }
+
+    @Test
+    public void testGetQuantiles() {
+        System.out.println("getQuantiles");
+        Long[] rtimes = {new Long(1), 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L};
+        JSONArray result = LoadosophiaAggregator.getQuantilesJSON(rtimes);
+        assertEquals("[{\"100.0\":10},{\"99.0\":10},{\"98.0\":10},{\"95.0\":10},{\"90.0\":9},{\"80.0\":8},{\"75.0\":8},{\"50.0\":5},{\"25.0\":3}]", result.toString());
     }
 }

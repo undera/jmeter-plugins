@@ -118,4 +118,8 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
     public DatagramChannel connect(SocketAddress remote) throws IOException {
         return channel.connect(remote);
     }
+
+    public SocketAddress getRemoteAddress() throws IOException {
+        return null;
+    }
 }

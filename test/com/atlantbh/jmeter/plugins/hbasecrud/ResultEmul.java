@@ -17,6 +17,8 @@ package com.atlantbh.jmeter.plugins.hbasecrud;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.Result;
 
@@ -24,7 +26,7 @@ import org.apache.hadoop.hbase.client.Result;
  *
  * @author undera
  */
-class ResultEmul extends Result {
+public class ResultEmul extends Result {
 
     public ResultEmul() {
     }
@@ -32,5 +34,15 @@ class ResultEmul extends Result {
     @Override
     public List<KeyValue> list() {
         return new LinkedList<KeyValue>();
+    }
+
+    @Override
+    public NavigableMap<byte[], NavigableMap<byte[], byte[]>> getNoVersionMap() {
+        return new TreeMap<byte[], NavigableMap<byte[], byte[]>>();
+    }
+
+    @Override
+    public NavigableMap<byte[], NavigableMap<byte[], NavigableMap<Long, byte[]>>> getMap() {
+        return new TreeMap<byte[], NavigableMap<byte[], NavigableMap<Long, byte[]>>>();
     }
 }

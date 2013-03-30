@@ -20,9 +20,9 @@ import org.apache.hadoop.hbase.client.HTablePool;
 public class HBaseConnectionVariable implements Serializable {
 	private static final long serialVersionUID = -4476571761212844047L;
 
-	private String zkHost;
+	private String zkHost="localhost";
 	private String name;
-	private HTablePool tablePool = null;
+	protected HTablePool tablePool = null;
 	
 	public HBaseConnectionVariable() {
 	}

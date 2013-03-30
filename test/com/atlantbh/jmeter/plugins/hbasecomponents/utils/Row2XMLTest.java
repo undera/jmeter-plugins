@@ -15,6 +15,7 @@
  */
 package com.atlantbh.jmeter.plugins.hbasecomponents.utils;
 
+import com.atlantbh.jmeter.plugins.hbasecrud.ResultEmul;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.After;
@@ -29,22 +30,22 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class Row2XMLTest {
-    
+
     public Row2XMLTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -55,14 +56,11 @@ public class Row2XMLTest {
     @Test
     public void testRow2xmlstring() throws Exception {
         System.out.println("row2xmlstring");
-        Result result_2 = null;
+        Result result_2 = new ResultEmul();
         JMeterVariables vars = null;
         int index = 0;
         String expResult = "";
         String result = Row2XML.row2xmlstring(result_2, vars, index);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -71,13 +69,10 @@ public class Row2XMLTest {
     @Test
     public void testRow2xmlStringLatest() {
         System.out.println("row2xmlStringLatest");
-        Result result_2 = null;
-        JMeterVariables vars = null;
+        Result result_2 = new ResultEmul();
+        JMeterVariables vars = new JMeterVariables();
         int index = 0;
         String expResult = "";
         String result = Row2XML.row2xmlStringLatest(result_2, vars, index);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
-    }
+         }
 }

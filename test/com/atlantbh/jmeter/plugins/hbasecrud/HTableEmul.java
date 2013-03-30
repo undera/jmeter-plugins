@@ -34,11 +34,11 @@ import org.apache.hadoop.hbase.client.Scan;
  *
  * @author undera
  */
-class HTableEmul implements HTableInterface {
+public class HTableEmul implements HTableInterface {
 
     @Override
     public byte[] getTableName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "test".getBytes();
     }
 
     @Override

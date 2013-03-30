@@ -81,7 +81,7 @@ public class OperatorNodeTest {
     @Test
     public void testAddOperator() throws Exception {
         System.out.println("addOperator");
-        String operator = "";
+        String operator = "AND";
         OperatorNode instance = new OperatorNode();
         instance.addOperator(operator);
         // TODO review the generated test code and remove the default call to fail.

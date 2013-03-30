@@ -59,7 +59,10 @@ public class ChooseRandomTest {
         SampleResult previousResult = null;
         Sampler currentSampler = null;
         Collection<CompoundVariable> parameters = new ArrayList<CompoundVariable>();
-        parameters.add(new CompoundVariable("1.256"));
+        for (int i = 0; i < 1000; i++) {
+            parameters.add(new CompoundVariable(String.valueOf(i)));
+
+        }
         parameters.add(new CompoundVariable("4.3346"));
         parameters.add(new CompoundVariable("5.3346"));
         ChooseRandom instance = new ChooseRandom();

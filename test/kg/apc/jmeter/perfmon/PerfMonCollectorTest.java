@@ -15,6 +15,8 @@
  */
 package kg.apc.jmeter.perfmon;
 
+import java.io.IOException;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
@@ -36,6 +38,7 @@ public class PerfMonCollectorTest {
 
     @BeforeClass
     public static void setUpClass() {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
@@ -56,7 +59,7 @@ public class PerfMonCollectorTest {
     @Test
     public void testSetData() {
         System.out.println("setData");
-        CollectionProperty rows = null;
+        CollectionProperty rows = new CollectionProperty();
         PerfMonCollector instance = new PerfMonCollector();
         instance.setData(rows);
         // TODO review the generated test code and remove the default call to fail.
@@ -72,9 +75,6 @@ public class PerfMonCollectorTest {
         PerfMonCollector instance = new PerfMonCollector();
         JMeterProperty expResult = null;
         JMeterProperty result = instance.getMetricSettings();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-
     }
 
     /**
@@ -83,7 +83,7 @@ public class PerfMonCollectorTest {
     @Test
     public void testSampleOccurred() {
         System.out.println("sampleOccurred");
-        SampleEvent event = null;
+        SampleEvent event = new SampleEvent(new PerfMonSampleResult(), "test");
         PerfMonCollector instance = new PerfMonCollector();
         instance.sampleOccurred(event);
         // TODO review the generated test code and remove the default call to fail.
@@ -136,10 +136,11 @@ public class PerfMonCollectorTest {
         int port = 0;
         PerfMonCollector instance = new PerfMonCollector();
         PerfMonAgentConnector expResult = null;
-        PerfMonAgentConnector result = instance.getConnector(host, port);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-
+        try {
+            PerfMonAgentConnector result = instance.getConnector(host, port);
+            fail();
+        } catch (IOException e) {
+        }
     }
 
     /**
@@ -176,7 +177,7 @@ public class PerfMonCollectorTest {
     @Test
     public void testGenerate2Samples_3args() {
         System.out.println("generate2Samples");
-        long[] values = null;
+        long[] values = {1L, 2L};
         String label1 = "";
         String label2 = "";
         PerfMonCollector instance = new PerfMonCollector();
@@ -191,7 +192,7 @@ public class PerfMonCollectorTest {
     @Test
     public void testGenerate2Samples_4args() {
         System.out.println("generate2Samples");
-        long[] values = null;
+        long[] values = {1L, 2L};
         String label1 = "";
         String label2 = "";
         double dividingFactor = 0.0;

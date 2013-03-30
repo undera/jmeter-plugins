@@ -33,18 +33,18 @@ public class DbMonSampler {
         try {
             stmt = connection.createStatement();
             rs = stmt.executeQuery(sql);
-        
+
             if (rs.next()) {
                 final double val = rs.getDouble(1);
                 if (sampleDeltaValue) {
-                    if(!Double.isNaN(oldValue)) {
+                    if (!Double.isNaN(oldValue)) {
                         collector.generateSample(val - oldValue, metricName);
                     }
                     oldValue = val;
                 } else {
                     collector.generateSample(val, metricName);
                 }
-                
+
             }
         } catch (SQLException ex) {
             log.error("Error executing query: " + sql, ex);

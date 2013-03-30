@@ -46,16 +46,18 @@ public class LoadosophiaAPIClientTest {
         ps.print("test");
         ps.close();
         LinkedList<String> perfMonFiles = new LinkedList<String>();
-        LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul();
+        String[] fake = {"4", "4"};
+        LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         LoadosophiaUploadResults result = instance.sendFiles(targetFile, perfMonFiles);
-        assertEquals(0, result.getQueueID());
+        assertEquals(4, result.getQueueID());
     }
 
     @Test
     public void testStartOnline() throws Exception {
         System.out.println("startOnline");
-        LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul();
-        String expResult = "0";
+        String[] fake = {"{\"OnlineID\": \"test\"}", ""};
+        LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
+        String expResult = "http://localhost:9999/gui/active/test/";
         String result = instance.startOnline();
         assertEquals(expResult, result);
     }
@@ -63,7 +65,8 @@ public class LoadosophiaAPIClientTest {
     @Test
     public void testEndOnline() throws Exception {
         System.out.println("endOnline");
-        LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul();
+        String[] fake = {"4", "4"};
+        LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         instance.endOnline();
     }
 
@@ -71,7 +74,8 @@ public class LoadosophiaAPIClientTest {
     public void testGetUploadStatus() throws Exception {
         System.out.println("getUploadStatus");
         int queueID = 0;
-        LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul();
+        String[] fake = {"4", "4"};
+        LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         String[] expResult = {"4", "4"};
         String[] result = instance.getUploadStatus(queueID);
         assertArrayEquals(expResult, result);
@@ -83,7 +87,8 @@ public class LoadosophiaAPIClientTest {
         LinkedList<Part> parts = null;
         String URL = "";
         int expectedSC = 0;
-        LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul();
+        String[] fake = {"0", ""};
+        LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         String[] expResult = {"0", ""};
         String[] result = instance.multipartPost(parts, URL, expectedSC);
         assertArrayEquals(expResult, result);
@@ -91,20 +96,21 @@ public class LoadosophiaAPIClientTest {
 
     private static class LoadosophiaAPIClientEmul extends LoadosophiaAPIClient {
 
-        public LoadosophiaAPIClientEmul() {
+        private final String[] arr;
+
+        public LoadosophiaAPIClientEmul(String[] exp) {
             super(new FakeInformer(), "http://localhost:9999/", COLOR_NONE, COLOR_NONE, COLOR_NONE, COLOR_NONE);
+            arr = exp;
         }
 
         @Override
         protected String[] multipartPost(LinkedList<Part> parts, String URL, int expectedSC) throws IOException {
-            String[] res = {"0", ""};
-            return res;
+            return arr;
         }
 
         @Override
         protected String[] getUploadStatus(int queueID) throws IOException {
-            String[] res = {"4", "4"};
-            return res;
+            return arr;
         }
     }
 
@@ -125,10 +131,10 @@ public class LoadosophiaAPIClientTest {
     @Test
     public void testSendOnlineData() throws Exception {
         System.out.println("sendOnlineData");
-        JSONArray data = null;
-        LoadosophiaAPIClient instance = null;
+        JSONArray data = new JSONArray();
+        String[] fake = {"0", ""};
+        LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         instance.sendOnlineData(data);
-        // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 }

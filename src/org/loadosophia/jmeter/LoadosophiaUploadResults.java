@@ -6,7 +6,7 @@ package org.loadosophia.jmeter;
  */
 public class LoadosophiaUploadResults {
 
-    private String redirect;
+    private String redirect = "";
     private int testID;
     private int queueID;
 

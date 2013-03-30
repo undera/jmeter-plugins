@@ -27,22 +27,22 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class DbMonSamplerTest {
-    
+
     public DbMonSamplerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -53,10 +53,10 @@ public class DbMonSamplerTest {
     @Test
     public void testGenerateSamples() {
         System.out.println("generateSamples");
-        DbMonSampleGenerator collector = null;
-        DbMonSampler instance = null;
+        DbMonSampleGenerator collector = new DbMonSampleGeneratorEmul();
+        DbMonSampler instance = new DbMonSampler(new ConnectionEmul(), null, true, null);
         instance.generateSamples(collector);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 }

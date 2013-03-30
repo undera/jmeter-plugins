@@ -81,6 +81,7 @@ public class DbMonSampleResultTest {
     public void testGetValue_0args() {
         System.out.println("getValue");
         DbMonSampleResult instance = new DbMonSampleResult();
+        instance.setResponseMessage("0");
         double expResult = 0.0;
         double result = instance.getValue();
         assertEquals(expResult, result, 0.0);
@@ -94,7 +95,8 @@ public class DbMonSampleResultTest {
     @Test
     public void testGetValue_SampleResult() {
         System.out.println("getValue");
-        SampleResult res = null;
+        SampleResult res = new SampleResult();
+        res.setResponseMessage("0");
         double expResult = 0.0;
         double result = DbMonSampleResult.getValue(res);
         assertEquals(expResult, result, 0.0);

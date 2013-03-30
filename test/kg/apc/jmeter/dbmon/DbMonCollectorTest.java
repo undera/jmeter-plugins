@@ -15,7 +15,9 @@
  */
 package kg.apc.jmeter.dbmon;
 
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleEvent;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.junit.After;
@@ -36,6 +38,7 @@ public class DbMonCollectorTest {
 
     @BeforeClass
     public static void setUpClass() {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass
@@ -56,7 +59,7 @@ public class DbMonCollectorTest {
     @Test
     public void testSetData() {
         System.out.println("setData");
-        CollectionProperty rows = null;
+        CollectionProperty rows = new CollectionProperty();
         DbMonCollector instance = new DbMonCollector();
         instance.setData(rows);
     }
@@ -68,9 +71,7 @@ public class DbMonCollectorTest {
     public void testGetSamplerSettings() {
         System.out.println("getSamplerSettings");
         DbMonCollector instance = new DbMonCollector();
-        JMeterProperty expResult = null;
         JMeterProperty result = instance.getSamplerSettings();
-        assertEquals(expResult, result);
     }
 
     /**
@@ -93,7 +94,7 @@ public class DbMonCollectorTest {
         DbMonCollector instance = new DbMonCollector();
         instance.testStarted(host);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -106,7 +107,7 @@ public class DbMonCollectorTest {
         DbMonCollector instance = new DbMonCollector();
         instance.testEnded(host);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -118,7 +119,7 @@ public class DbMonCollectorTest {
         DbMonCollector instance = new DbMonCollector();
         instance.processConnectors();
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -131,7 +132,7 @@ public class DbMonCollectorTest {
         DbMonCollector instance = new DbMonCollector();
         instance.sampleOccurred(event);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -140,11 +141,11 @@ public class DbMonCollectorTest {
     @Test
     public void testDbMonSampleOccurred() {
         System.out.println("dbMonSampleOccurred");
-        SampleEvent event = null;
+        SampleEvent event = new SampleEvent(new SampleResult(), "test");
         DbMonCollector instance = new DbMonCollector();
         instance.dbMonSampleOccurred(event);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -158,6 +159,6 @@ public class DbMonCollectorTest {
         DbMonCollector instance = new DbMonCollector();
         instance.generateSample(value, label);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 }

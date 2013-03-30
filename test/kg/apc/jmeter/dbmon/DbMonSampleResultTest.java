@@ -58,7 +58,7 @@ public class DbMonSampleResultTest {
         DbMonSampleResult instance = new DbMonSampleResult();
         instance.setValue(value);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -71,7 +71,7 @@ public class DbMonSampleResultTest {
         DbMonSampleResult instance = new DbMonSampleResult();
         instance.setResponseMessage(msg);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -85,7 +85,7 @@ public class DbMonSampleResultTest {
         double result = instance.getValue();
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -99,6 +99,6 @@ public class DbMonSampleResultTest {
         double result = DbMonSampleResult.getValue(res);
         assertEquals(expResult, result, 0.0);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 }

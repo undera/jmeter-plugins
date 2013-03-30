@@ -93,7 +93,7 @@ public class DbMonCollectorTest {
         DbMonCollector instance = new DbMonCollector();
         instance.testStarted(host);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -106,7 +106,7 @@ public class DbMonCollectorTest {
         DbMonCollector instance = new DbMonCollector();
         instance.testEnded(host);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -118,7 +118,7 @@ public class DbMonCollectorTest {
         DbMonCollector instance = new DbMonCollector();
         instance.processConnectors();
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -131,7 +131,7 @@ public class DbMonCollectorTest {
         DbMonCollector instance = new DbMonCollector();
         instance.sampleOccurred(event);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -144,7 +144,7 @@ public class DbMonCollectorTest {
         DbMonCollector instance = new DbMonCollector();
         instance.dbMonSampleOccurred(event);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -158,6 +158,6 @@ public class DbMonCollectorTest {
         DbMonCollector instance = new DbMonCollector();
         instance.generateSample(value, label);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 }

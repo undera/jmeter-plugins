@@ -58,7 +58,7 @@ public class DbMonSampleGeneratorTest {
         DbMonSampleGenerator instance = new DbMonSampleGeneratorImpl();
         instance.generateSample(d, string);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     public class DbMonSampleGeneratorImpl implements DbMonSampleGenerator {

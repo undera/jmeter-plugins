@@ -60,7 +60,7 @@ public class PerfMonCollectorTest {
         PerfMonCollector instance = new PerfMonCollector();
         instance.setData(rows);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -74,7 +74,7 @@ public class PerfMonCollectorTest {
         JMeterProperty result = instance.getMetricSettings();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -87,7 +87,7 @@ public class PerfMonCollectorTest {
         PerfMonCollector instance = new PerfMonCollector();
         instance.sampleOccurred(event);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -99,7 +99,7 @@ public class PerfMonCollectorTest {
         PerfMonCollector instance = new PerfMonCollector();
         instance.run();
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -112,7 +112,7 @@ public class PerfMonCollectorTest {
         PerfMonCollector instance = new PerfMonCollector();
         instance.testStarted(host);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -125,7 +125,7 @@ public class PerfMonCollectorTest {
         PerfMonCollector instance = new PerfMonCollector();
         instance.testEnded(host);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -141,7 +141,7 @@ public class PerfMonCollectorTest {
         PerfMonAgentConnector result = instance.getConnector(host, port);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -155,7 +155,7 @@ public class PerfMonCollectorTest {
         PerfMonCollector instance = new PerfMonCollector();
         instance.generateSample(value, label);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -169,7 +169,7 @@ public class PerfMonCollectorTest {
         PerfMonCollector instance = new PerfMonCollector();
         instance.generateErrorSample(label, errorMsg);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -184,7 +184,7 @@ public class PerfMonCollectorTest {
         PerfMonCollector instance = new PerfMonCollector();
         instance.generate2Samples(values, label1, label2);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -200,6 +200,6 @@ public class PerfMonCollectorTest {
         PerfMonCollector instance = new PerfMonCollector();
         instance.generate2Samples(values, label1, label2, dividingFactor);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 }

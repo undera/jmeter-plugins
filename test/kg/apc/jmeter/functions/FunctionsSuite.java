@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DoubleSumTest.class, LowerCaseTest.class, MD5Test.class, IsDefinedTest.class, FifoPopTest.class, StrLenTest.class, FifoPutTest.class, UpperCaseTest.class, FifoGetTest.class, SubstringTest.class})
+@Suite.SuiteClasses({UpperCaseTest.class, IsDefinedTest.class, DoubleSumTest.class, FifoSizeTest.class, FifoGetTest.class, SubstringTest.class, MD5Test.class, FifoPopTest.class, LowerCaseTest.class, FifoPutTest.class, StrLenTest.class})
 public class FunctionsSuite {
 
    @BeforeClass

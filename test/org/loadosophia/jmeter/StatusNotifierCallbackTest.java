@@ -57,7 +57,7 @@ public class StatusNotifierCallbackTest {
         StatusNotifierCallback instance = new StatusNotifierCallbackImpl();
         instance.notifyAbout(info);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     public class StatusNotifierCallbackImpl implements StatusNotifierCallback {

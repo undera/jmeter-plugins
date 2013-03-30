@@ -129,6 +129,6 @@ public class LoadosophiaAPIClientTest {
         LoadosophiaAPIClient instance = null;
         instance.sendOnlineData(data);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 }

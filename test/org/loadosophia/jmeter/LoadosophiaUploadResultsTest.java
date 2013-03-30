@@ -58,7 +58,7 @@ public class LoadosophiaUploadResultsTest {
         String result = instance.getRedirectLink();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -71,7 +71,7 @@ public class LoadosophiaUploadResultsTest {
         LoadosophiaUploadResults instance = new LoadosophiaUploadResults();
         instance.setRedirectLink(string);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -84,7 +84,7 @@ public class LoadosophiaUploadResultsTest {
         LoadosophiaUploadResults instance = new LoadosophiaUploadResults();
         instance.setQueueID(aQueueID);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -97,7 +97,7 @@ public class LoadosophiaUploadResultsTest {
         LoadosophiaUploadResults instance = new LoadosophiaUploadResults();
         instance.setTestID(aTestID);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -111,7 +111,7 @@ public class LoadosophiaUploadResultsTest {
         int result = instance.getTestID();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -125,6 +125,6 @@ public class LoadosophiaUploadResultsTest {
         int result = instance.getQueueID();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 }

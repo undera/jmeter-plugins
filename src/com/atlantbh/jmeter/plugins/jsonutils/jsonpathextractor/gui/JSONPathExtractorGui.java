@@ -36,7 +36,7 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
         init();
     }
 
-    public void init() {
+    private void init() {
         setLayout(new BorderLayout());
         setBorder(makeBorder());
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);

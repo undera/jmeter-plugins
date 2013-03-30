@@ -125,7 +125,7 @@ public class HbaseCrudGui extends AbstractSamplerGui {
         add(panel, BorderLayout.CENTER);
     }
 
-    public void registerCheckBoxForItemListener(JCheckBox checkBox, final JLabeledTextField textField) {
+    private void registerCheckBoxForItemListener(JCheckBox checkBox, final JLabeledTextField textField) {
         checkBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {

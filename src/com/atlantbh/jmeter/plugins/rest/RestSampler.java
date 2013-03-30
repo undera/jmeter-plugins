@@ -6,7 +6,6 @@
  *
  * Licensed under the under the Apache License, Version 2.0.
  */
-
 package com.atlantbh.jmeter.plugins.rest;
 
 import java.io.IOException;
@@ -27,6 +26,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.methods.TraceMethod;
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampler2;
 import org.apache.jorphan.logging.LoggingManager;
@@ -36,18 +36,13 @@ import org.apache.log.Logger;
 import org.apache.jmeter.samplers.SampleResult;
 
 public class RestSampler extends HTTPSampler2 {
+
     private static final long serialVersionUID = -5877623539165274730L;
-
     private static final Logger log = LoggingManager.getLoggerForClass();
-
     public static final String REQUEST_BODY = "RestSampler.request_body";
-
     public static final String PORT_NUMBER = "RestSampler.port_number";
-
     public static final String RESOURCE = "RestSampler.resource";
-
     public static final String BASE_HOST = "RestSampler.base_host";
-
     public static final String REQUEST_HEADERS = "RestSampler.request_headers";
 
     public RestSampler() {
@@ -76,15 +71,14 @@ public class RestSampler extends HTTPSampler2 {
     public String getResource() {
         return getPropertyAsString(RESOURCE);
     }
-	
+
     public void setPortNumber(String data) {
-		setProperty(PORT_NUMBER, data);
-	}
-	
-    public String getPortNumber()
-	{
-		return getPropertyAsString(PORT_NUMBER);
-	}
+        setProperty(PORT_NUMBER, data);
+    }
+
+    public String getPortNumber() {
+        return getPropertyAsString(PORT_NUMBER);
+    }
 
     public void setHostBaseUrl(final String data) {
         setProperty(BASE_HOST, data);
@@ -94,14 +88,14 @@ public class RestSampler extends HTTPSampler2 {
         return getPropertyAsString(BASE_HOST);
     }
 
-    public URL getUrl() throws MalformedURLException{
+    public URL getUrl() throws MalformedURLException {
         String validHost = toValidUrl(getHostBaseUrl());
         URL u = null;
         if (validHost != null && getResource() != null) {
             String fullUrl = validHost + ":" + getPortNumber() + "/" + getResource();
             u = toURL(fullUrl);
         }
-       
+
         return u;
     }
 
@@ -109,18 +103,18 @@ public class RestSampler extends HTTPSampler2 {
         return "Base host url: " + getHostBaseUrl() + ", resource: " + getResource() + ", Method: " + getMethod();
     }
 
-    private String toValidUrl(String u) throws MalformedURLException{
-    	URL url = new URL(u);
-    	String urlStr = url.toString();
+    private String toValidUrl(String u) throws MalformedURLException {
+        URL url = new URL(u);
+        String urlStr = url.toString();
         if (urlStr.endsWith("/")) {
             url = toURL(urlStr.substring(0, urlStr.length() - 1));
             urlStr = url.toString();
         }
-            return urlStr;
+        return urlStr;
     }
 
-    private URL toURL(String u) throws MalformedURLException{
-    	return new URL(u);
+    private URL toURL(String u) throws MalformedURLException {
+        return new URL(u);
     }
 
     private void overrideHeaders(HttpMethodBase httpMethod) {
@@ -128,81 +122,82 @@ public class RestSampler extends HTTPSampler2 {
         String[] header = headers.split(System.getProperty("line.separator"));
         for (String kvp : header) {
             int pos = kvp.indexOf(':');
-            if (pos < 0)
+            if (pos < 0) {
                 pos = kvp.indexOf('=');
+            }
             if (pos > 0) {
                 String k = kvp.substring(0, pos).trim();
                 String v = "";
-                if (kvp.length() > pos + 1)
+                if (kvp.length() > pos + 1) {
                     v = kvp.substring(pos + 1).trim();
+                }
                 httpMethod.addRequestHeader(k, v);
             }
         }
     }
-    
-    protected HttpClient setupConnection(URL u, HttpMethodBase httpMethod) throws IOException
-    {
-    	HTTPSampleResult temp = new HTTPSampleResult();
-    	return super.setupConnection(u, httpMethod, temp);
+
+    protected HttpClient setupConnection(URL u, HttpMethodBase httpMethod) throws IOException {
+        HTTPSampleResult temp = new HTTPSampleResult();
+        return super.setupConnection(u, httpMethod, temp);
     }
-    
-    protected HTTPSampleResult sample(URL url, String method, boolean areFollowingRedirect, int frameDepth){
-    	throw new RuntimeException("Not implemented - should not be called");
+
+    protected HTTPSampleResult sample(URL url, String method, boolean areFollowingRedirect, int frameDepth) {
+        throw new NotImplementedException("Not implemented - should not be called");
     }
-    
+
     /**
      * Method invoked by JMeter when a sample needs to happen. It's actually an
      * indirect call from the main sampler interface. it's resolved in the base
      * class.
-     * 
+     *
      * This is a copy and paste from the HTTPSampler2 - quick and dirty hack as
      * that class is not very extensible. The reason to extend and slightly
      * modify is that I needed to get the body content from a text field in the
      * GUI rather than a file.
      */
-	public SampleResult sample() {
-    	HttpMethodBase httpMethod = null;
+    public SampleResult sample() {
+        HttpMethodBase httpMethod = null;
         HttpClient client = null;
         InputStream instream = null;
         SampleResult res = new SampleResult();
-        try {        	
-        	res.setSuccessful(false);
+        try {
+            res.setSuccessful(false);
             res.setResponseCode("000");
             res.setSampleLabel(getName());
             res.setURL(getUrl());
             res.setDataEncoding("UTF-8");
             res.setDataType("text/xml");
-            res.setMonitor(isMonitor());        
+            res.setMonitor(isMonitor());
             res.sampleStart();
-            
-        	String urlStr = getUrl().toString();
-        	
-        	String request = getMethod().toString() + " " + urlStr + "\n";
-        	request += getRequestBody().toString();
-        	res.setSamplerData(request);
-        	
+
+            String urlStr = getUrl().toString();
+
+            String request = getMethod().toString() + " " + urlStr + "\n";
+            request += getRequestBody().toString();
+            res.setSamplerData(request);
+
             log.debug("Start : sample " + urlStr);
             log.debug("method " + getMethod());
-            
+
             httpMethod = createHttpMethod(getMethod(), urlStr);
             // Set any default request headers
             setDefaultRequestHeaders(httpMethod);
-            
+
             // Setup connection
             client = setupConnection(getUrl(), httpMethod);
             // Handle the various methods
             if (httpMethod instanceof EntityEnclosingMethod) {
-            	
-            	((EntityEnclosingMethod)httpMethod).setRequestEntity(new StringRequestEntity(getRequestBody(), "text/xml", "UTF-8"));
-            	//res.setQueryString(getRequestBody());
+
+                ((EntityEnclosingMethod) httpMethod).setRequestEntity(new StringRequestEntity(getRequestBody(), "text/xml", "UTF-8"));
+                //res.setQueryString(getRequestBody());
                 //String postBody = sendData((EntityEnclosingMethod) httpMethod);
                 //res.setResponseData(postBody.getBytes());
-            	
-            	//String postBody = "";
-            	//try { postBody = Base64Util.processStargateRequest(getRequestBody());}
-            	//catch (Exception e) {postBody =getRequestBody(); e.printStackTrace();}
-            	//
-            	//res.setSamplerData(/*res.getSamplerData() + "\r\n*/"ORIGINAL CONTENT:\r\n\r\n" + getRequestBody() + "\r\n\r\nSENT CONTENT:\r\n\r\n" + postBody);
+
+                //String postBody = "";
+                //try { postBody = Base64Util.processStargateRequest(getRequestBody());}
+                //catch (Exception e) {postBody =getRequestBody(); e.printStackTrace();}
+                //
+                //res.setSamplerData(/*res.getSamplerData() + "\r\n*/"ORIGINAL CONTENT:\r\n\r\n" + getRequestBody() + "\r\n\r\nSENT CONTENT:\r\n\r\n" + postBody);
             }
             overrideHeaders(httpMethod);
             res.setRequestHeaders(getConnectionHeaders(httpMethod));
@@ -233,7 +228,7 @@ public class RestSampler extends HTTPSampler2 {
             //	{
             //		log.error(e.getMessage());
             //	}
-            
+
             res.sampleEnd();
             // Done with the sampling proper.
 
@@ -258,39 +253,38 @@ public class RestSampler extends HTTPSampler2 {
 
             String responseHeaders = getResponseHeaders(httpMethod);
             res.setResponseHeaders(responseHeaders);
-            
+
             /*if (res.isRedirect()) {
-               final Header headerLocation = httpMethod.getResponseHeader(HEADER_LOCATION);
-                if (headerLocation == null) { // HTTP protocol violation, but
-                    // avoids NPE
-                    throw new IllegalArgumentException("Missing location header");
-                }
-                res.setRedirectLocation(headerLocation.getValue());
-            }
+             final Header headerLocation = httpMethod.getResponseHeader(HEADER_LOCATION);
+             if (headerLocation == null) { // HTTP protocol violation, but
+             // avoids NPE
+             throw new IllegalArgumentException("Missing location header");
+             }
+             res.setRedirectLocation(headerLocation.getValue());
+             }
 
-            // If we redirected automatically, the URL may have changed
-            if (getAutoRedirects()) {
-                res.setURL(new URL(httpMethod.getURI().toString()));
-            }
+             // If we redirected automatically, the URL may have changed
+             if (getAutoRedirects()) {
+             res.setURL(new URL(httpMethod.getURI().toString()));
+             }
 
-            // Store any cookies received in the cookie manager:
-            saveConnectionCookies(httpMethod, res.getURL(), getCookieManager());
+             // Store any cookies received in the cookie manager:
+             saveConnectionCookies(httpMethod, res.getURL(), getCookieManager());
 
-            // Save cache information
-            final CacheManager cacheManager = getCacheManager();
-            if (cacheManager != null) {
-                cacheManager.saveDetails(httpMethod, res);
-            }
+             // Save cache information
+             final CacheManager cacheManager = getCacheManager();
+             if (cacheManager != null) {
+             cacheManager.saveDetails(httpMethod, res);
+             }
 
-            // Follow redirects and download page resources if appropriate:
-            res = resultProcessing(areFollowingRedirect, frameDepth, res);
-			*/
+             // Follow redirects and download page resources if appropriate:
+             res = resultProcessing(areFollowingRedirect, frameDepth, res);
+             */
             log.debug("End : sample");
             httpMethod.releaseConnection();
-            
+
             return res;
-        } 
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             res.sampleEnd();
             log.warn(e.getMessage());
             res.setResponseMessage(e.getMessage());
@@ -318,11 +312,10 @@ public class RestSampler extends HTTPSampler2 {
     }
 
     private void setDefaultRequestHeaders(HttpMethodBase httpMethod) {
-		// TODO Auto-generated method stub
-		
-	}
+        // TODO Auto-generated method stub
+    }
 
-	private HttpMethodBase createHttpMethod(String method, String urlStr) {
+    private HttpMethodBase createHttpMethod(String method, String urlStr) {
         HttpMethodBase httpMethod;
         // May generate IllegalArgumentException
         if (method.equals(POST)) {

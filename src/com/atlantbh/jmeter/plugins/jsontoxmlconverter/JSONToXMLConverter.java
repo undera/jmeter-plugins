@@ -36,7 +36,7 @@ public class JSONToXMLConverter extends AbstractSampler {
     }
 
     @Deprecated
-    public String ConvertToXML(String jsonData) {
+    private String ConvertToXML(String jsonData) {
         XMLSerializer serializer = new XMLSerializer();
         JSON json = JSONSerializer.toJSON(jsonData);
         serializer.setRootName("xmlOutput");
@@ -45,7 +45,7 @@ public class JSONToXMLConverter extends AbstractSampler {
         return xml;
     }
 
-    public void convertToXML() {
+    private void convertToXML() {
         XMLSerializer serializer = new XMLSerializer();
         JSON json = JSONSerializer.toJSON(this.getJsonInput());
         serializer.setRootName("xmlOutput");

@@ -6,7 +6,6 @@
  *
  * Licensed under the under the Apache License, Version 2.0.
  */
-
 package com.atlantbh.jmeter.plugins.hbasecomponents.utils.filter;
 
 /**
@@ -14,40 +13,41 @@ package com.atlantbh.jmeter.plugins.hbasecomponents.utils.filter;
  *
  */
 public class ExpressionNode extends Node {
-	private String columnFamily;
-	private String qualifier;
-	private String value;
-	private String oper;
 
-	public String getColumnFamily() {
-		return columnFamily;
-	}
+    private String columnFamily;
+    private String qualifier;
+    private String value;
+    private String oper;
 
-	public void setColumnFamily(String columnFamily) {
-		this.columnFamily = columnFamily;
-	}
+    public String getColumnFamily() {
+        return columnFamily;
+    }
 
-	public String getQualifier() {
-		return qualifier;
-	}
+    public void setColumnFamily(String columnFamily) {
+        this.columnFamily = columnFamily;
+    }
 
-	public void setQualifier(String qualifier) {
-		this.qualifier = qualifier;
-	}
+    public String getQualifier() {
+        return qualifier;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public void setQualifier(String qualifier) {
+        this.qualifier = qualifier;
+    }
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    public String getValue() {
+        return value;
+    }
 
-	public void setOper(String oper) {
-		this.oper = oper;
-	}
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	public String getOper() {
-		return oper;
-	}
+    public void setOper(String oper) {
+        this.oper = oper;
+    }
+
+    public String getOper() {
+        return oper;
+    }
 }

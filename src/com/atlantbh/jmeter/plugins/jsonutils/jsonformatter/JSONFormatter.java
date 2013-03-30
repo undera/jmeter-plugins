@@ -29,7 +29,7 @@ public class JSONFormatter extends AbstractTestElement implements PostProcessor 
         super();
     }
 
-    public String formatJSON(String json) {
+    private String formatJSON(String json) {
 
         if (json.startsWith("[") && json.endsWith("]")) {
             return JSONArray.fromObject(json).toString(4);

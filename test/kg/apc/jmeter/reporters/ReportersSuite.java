@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package kg.apc.jmeter.reporters;
 
 import org.junit.After;
@@ -17,7 +16,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({LoadosophiaUploaderTest.class, ConsoleStatusLoggerGuiTest.class, FlexibleFileWriterGuiTest.class, JAutoStopPanelTest.class, FlexibleFileWriterThreadTest.class, LoadosophiaAggregatorTest.class, LoadosophiaUploaderGuiTest.class, AutoStopGuiTest.class, AutoStopTest.class, ConsoleStatusLoggerTest.class, FlexibleFileWriterTest.class, LoadosophiaUploadingNotifierTest.class})
+@Suite.SuiteClasses({LoadosophiaUploaderTest.class, ConsoleStatusLoggerGuiTest.class, FlexibleFileWriterGuiTest.class, JAutoStopPanelTest.class,LoadosophiaAggregatorTest.class, LoadosophiaUploaderGuiTest.class, AutoStopGuiTest.class, AutoStopTest.class, ConsoleStatusLoggerTest.class, FlexibleFileWriterTest.class, LoadosophiaUploadingNotifierTest.class})
 public class ReportersSuite {
 
     @BeforeClass
@@ -35,5 +34,4 @@ public class ReportersSuite {
     @After
     public void tearDown() throws Exception {
     }
-
 }

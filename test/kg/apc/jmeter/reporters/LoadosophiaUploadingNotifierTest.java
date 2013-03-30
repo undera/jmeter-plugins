@@ -58,7 +58,7 @@ public class LoadosophiaUploadingNotifierTest {
         LoadosophiaUploadingNotifier result = LoadosophiaUploadingNotifier.getInstance();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -70,7 +70,7 @@ public class LoadosophiaUploadingNotifierTest {
         LoadosophiaUploadingNotifier instance = null;
         instance.startCollecting();
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -82,7 +82,7 @@ public class LoadosophiaUploadingNotifierTest {
         LoadosophiaUploadingNotifier instance = null;
         instance.endCollecting();
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -96,7 +96,7 @@ public class LoadosophiaUploadingNotifierTest {
         LinkedList result = instance.getFiles();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -109,6 +109,6 @@ public class LoadosophiaUploadingNotifierTest {
         LoadosophiaUploadingNotifier instance = null;
         instance.addFile(file);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 }

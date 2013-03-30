@@ -79,17 +79,22 @@ public class LoadosophiaAggregator {
         int avg_rt = 0;
         Long[] rtimes = new Long[raw.size()];
         int cnt = 0;
+        int failedCount = 0;
         for (Iterator<SampleResult> it = raw.iterator(); it.hasNext();) {
             SampleResult res = it.next();
             threads += res.getAllThreads();
             avg_rt += res.getTime();
             rtimes[cnt] = new Long(res.getTime());
+            if (!res.isSuccessful()) {
+                failedCount++;
+            }
             cnt++;
         }
         result.put("rps", cnt);
         result.put("threads", threads / cnt);
         result.put("avg_rt", avg_rt / cnt);
         result.put("quantiles", getQuantilesJSON(rtimes));
+        result.put("net", getNetJSON(failedCount, cnt - failedCount));
         result.put("planned_rps", 0); // JMeter has no such feature like Yandex.Tank
         return result;
     }
@@ -113,6 +118,13 @@ public class LoadosophiaAggregator {
             result.element(String.valueOf(quan * 100), timing);
         }
 
+        return result;
+    }
+
+    private JSONObject getNetJSON(int failedCount, int succCount) {
+        JSONObject result = new JSONObject();
+        result.put("0", succCount);
+        result.put("1", failedCount);
         return result;
     }
 }

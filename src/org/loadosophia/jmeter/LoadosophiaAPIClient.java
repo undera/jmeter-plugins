@@ -191,7 +191,7 @@ public class LoadosophiaAPIClient {
     }
 
     protected String[] multipartPost(LinkedList<Part> parts, String URL, int expectedSC) throws IOException {
-        log.debug("Request " + URL);
+        log.debug("Request POST: " + URL);
         parts.add(new StringPart("token", token));
 
         PostMethod postRequest = new PostMethod(URL);

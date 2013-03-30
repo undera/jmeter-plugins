@@ -70,4 +70,17 @@ public class FileSystemTest {
         assert !result;
         file.delete();
     }
+
+    /**
+     * Test of copyFile method, of class FileSystem.
+     */
+    @Test
+    public void testCopyFile() throws Exception {
+        System.out.println("copyFile");
+        String source = "";
+        String destination = "";
+        FileSystem.copyFile(source, destination);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

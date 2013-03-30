@@ -355,4 +355,15 @@ public class PluginsCMDWorkerTest {
         PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setCmdRegExps(cmdRegExps);
     }
+
+    /**
+     * Test of setSuccessFilter method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetSuccessFilter() {
+        System.out.println("setSuccessFilter");
+        int logicValue = 0;
+        PluginsCMDWorker instance = new PluginsCMDWorker();
+        instance.setSuccessFilter(logicValue);
+    }
 }

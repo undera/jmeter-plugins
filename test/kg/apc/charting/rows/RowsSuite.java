@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author APC
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GraphRowOverallAveragesTest.class, GraphRowAveragesTest.class, GraphRowExactValuesTest.class, GraphRowPercentilesTest.class, GraphRowSumValuesTest.class, GraphRowSimpleTest.class})
+@Suite.SuiteClasses({GraphRowSimpleTest.class, GraphRowExactValuesTest.class, GraphRowPercentilesTest.class, GraphRowAveragesTest.class, GraphRowSumValuesTest.class, GraphRowOverallAveragesTest.class})
 public class RowsSuite {
 
    @BeforeClass

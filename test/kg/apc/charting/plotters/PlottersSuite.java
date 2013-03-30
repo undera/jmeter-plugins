@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author z000205
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({BarRowPlotterTest.class, CSplineRowPlotterTest.class, LineRowPlotterTest.class, AbstractRowPlotterTest.class})
+@Suite.SuiteClasses({LineRowPlotterTest.class, BarRowPlotterTest.class, AbstractRowPlotterTest.class, CSplineRowPlotterTest.class})
 public class PlottersSuite {
 
    @BeforeClass

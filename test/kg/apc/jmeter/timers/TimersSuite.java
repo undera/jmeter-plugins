@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({VariableThroughputTimerGuiTest.class, VariableThroughputTimerTest.class})
+@Suite.SuiteClasses({VariableThroughputTimerTest.class, VariableThroughputTimerGuiTest.class})
 public class TimersSuite {
 
     @BeforeClass

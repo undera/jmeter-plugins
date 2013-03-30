@@ -286,4 +286,31 @@ public class UDPSamplerTest {
         boolean result = instance.interrupt();
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of isCloseChannel method, of class UDPSampler.
+     */
+    @Test
+    public void testIsCloseChannel() {
+        System.out.println("isCloseChannel");
+        UDPSampler instance = new UDPSampler();
+        boolean expResult = false;
+        boolean result = instance.isCloseChannel();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setCloseChannel method, of class UDPSampler.
+     */
+    @Test
+    public void testSetCloseChannel() {
+        System.out.println("setCloseChannel");
+        boolean selected = false;
+        UDPSampler instance = new UDPSampler();
+        instance.setCloseChannel(selected);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

@@ -6,7 +6,9 @@ import java.awt.Component;
 import java.nio.ByteBuffer;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.gui.util.PowerTableModel;
+import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -275,5 +277,16 @@ public class JMeterPluginsUtilsTest {
         PowerTableModel model = getTestModel();
         Class[] columnClasses = {String.class, String.class};
         JMeterPluginsUtils.collectionPropertyToTableModelRows(prop, model, columnClasses);
+    }
+
+    /**
+     * Test of doBestCSVSetup method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testDoBestCSVSetup() {
+        System.out.println("doBestCSVSetup");
+        TestJMeterUtils.createJmeterEnv();
+        SampleSaveConfiguration conf = new SampleSaveConfiguration();
+        JMeterPluginsUtils.doBestCSVSetup(conf);
     }
 }

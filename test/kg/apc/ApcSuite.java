@@ -4,6 +4,10 @@
  */
 package kg.apc;
 
+import kg.apc.charting.ChartingSuite;
+import kg.apc.cmdtools.CmdtoolsSuite;
+import kg.apc.io.IoSuite;
+import kg.apc.jmeter.JmeterSuite;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,7 +20,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({kg.apc.io.IoSuite.class, kg.apc.charting.ChartingSuite.class, kg.apc.jmeter.JmeterSuite.class})
+@Suite.SuiteClasses({ChartingSuite.class, IoSuite.class, JmeterSuite.class, CmdtoolsSuite.class})
 public class ApcSuite {
 
     @BeforeClass

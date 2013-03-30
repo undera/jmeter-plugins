@@ -84,4 +84,18 @@ public class LoadosophiaAggregatorTest {
         JSONObject result = LoadosophiaAggregator.getQuantilesJSON(rtimes);
         assertEquals("{\"100.0\":10,\"99.0\":10,\"98.0\":10,\"95.0\":10,\"90.0\":9,\"80.0\":8,\"75.0\":8,\"50.0\":5,\"25.0\":3}", result.toString());
     }
+
+    /**
+     * Test of getQuantilesJSON method, of class LoadosophiaAggregator.
+     */
+    @Test
+    public void testGetQuantilesJSON() {
+        System.out.println("getQuantilesJSON");
+        Long[] rtimes = null;
+        JSONObject expResult = null;
+        JSONObject result = LoadosophiaAggregator.getQuantilesJSON(rtimes);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }

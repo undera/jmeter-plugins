@@ -77,4 +77,17 @@ public class GuiBuilderHelperTest {
       assertTrue(component.getParent().equals(result));
    }
 
+    /**
+     * Test of strechItemToComponent method, of class GuiBuilderHelper.
+     */
+    @Test
+    public void testStrechItemToComponent() {
+        System.out.println("strechItemToComponent");
+        JComponent component = null;
+        JComponent item = null;
+        GuiBuilderHelper.strechItemToComponent(component, item);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

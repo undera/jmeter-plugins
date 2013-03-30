@@ -1,5 +1,6 @@
 package kg.apc.jmeter.modifiers;
 
+import java.util.Collection;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
@@ -77,5 +78,16 @@ public class AnchorModifierGuiTest {
         TestElement modifier = new AnchorModifier();
         AnchorModifierGui instance = new AnchorModifierGui();
         instance.modifyTestElement(modifier);
+    }
+
+    /**
+     * Test of getMenuCategories method, of class AnchorModifierGui.
+     */
+    @Test
+    public void testGetMenuCategories() {
+        System.out.println("getMenuCategories");
+        AnchorModifierGui instance = new AnchorModifierGui();
+        Collection result = instance.getMenuCategories();
+        assertEquals(0, result.size());
     }
 }

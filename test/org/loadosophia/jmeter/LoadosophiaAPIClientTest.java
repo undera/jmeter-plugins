@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.LinkedList;
+import net.sf.json.JSONArray;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -116,5 +117,18 @@ public class LoadosophiaAPIClientTest {
         public void notifyAbout(String info) {
             System.out.println(info);
         }
+    }
+
+    /**
+     * Test of sendOnlineData method, of class LoadosophiaAPIClient.
+     */
+    @Test
+    public void testSendOnlineData() throws Exception {
+        System.out.println("sendOnlineData");
+        JSONArray data = null;
+        LoadosophiaAPIClient instance = null;
+        instance.sendOnlineData(data);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

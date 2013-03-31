@@ -50,20 +50,25 @@ public class SteppingThreadGroupGui
 
         @Override
         public void insertUpdate(DocumentEvent e) {
-           if(tf.hasFocus()) update();
+            if (tf.hasFocus()) {
+                update();
+            }
         }
-        
+
         @Override
         public void removeUpdate(DocumentEvent e) {
-           if(tf.hasFocus()) update();
+            if (tf.hasFocus()) {
+                update();
+            }
         }
 
         @Override
         public void changedUpdate(DocumentEvent e) {
-           if(tf.hasFocus()) update();
+            if (tf.hasFocus()) {
+                update();
+            }
         }
     }
-
     public static final String WIKIPAGE = "SteppingThreadGroup";
     /**
      *
@@ -138,26 +143,26 @@ public class SteppingThreadGroupGui
         JPanel panel = new JPanel(new GridLayout(0, 5, 5, 5));
         panel.setBorder(BorderFactory.createTitledBorder("Threads Scheduling Parameters"));
 
-        panel.add(new JLabel());
         panel.add(new JLabel("This group will start", JLabel.RIGHT));
         totalThreads = new JTextField(5);
         panel.add(totalThreads);
         panel.add(new JLabel("threads:", JLabel.LEFT));
         panel.add(new JLabel());
+        panel.add(new JLabel());
 
         panel.add(new JLabel("First, wait for", JLabel.RIGHT));
         initialDelay = new JTextField(5);
         panel.add(initialDelay);
-        panel.add(new JLabel("seconds.", JLabel.LEFT));
+        panel.add(new JLabel("seconds;", JLabel.LEFT));
         panel.add(new JLabel());
         panel.add(new JLabel());
- 
-        panel.add(new JLabel());
+
         panel.add(new JLabel("Then start", JLabel.RIGHT));
         incUserCountBurst = new JTextField(5);
         panel.add(incUserCountBurst);
-        panel.add(new JLabel("threads: ", JLabel.LEFT));
+        panel.add(new JLabel("threads; ", JLabel.LEFT));
         panel.add(new JLabel(""));
+        panel.add(new JLabel());
 
         panel.add(new JLabel("Next, add", JLabel.RIGHT));
         incUserCount = new JTextField(5);
@@ -168,11 +173,11 @@ public class SteppingThreadGroupGui
         panel.add(new JLabel("seconds, ", JLabel.LEFT));
 
         panel.add(new JLabel());
+        panel.add(new JLabel());
         panel.add(new JLabel("using ramp-up", JLabel.RIGHT));
         rampUp = new JTextField(5);
         panel.add(rampUp);
         panel.add(new JLabel("seconds.", JLabel.LEFT));
-        panel.add(new JLabel());
 
         panel.add(new JLabel("Then hold load for", JLabel.RIGHT));
         flightTime = new JTextField(5);
@@ -232,8 +237,12 @@ public class SteppingThreadGroupGui
         tgForPreview.setFlightTime(new CompoundVariable(flightTime.getText()).execute());
         tgForPreview.setRampUp(new CompoundVariable(rampUp.getText()).execute());
 
-        if(tgForPreview.getInUserCountAsInt() == 0) tgForPreview.setInUserCount(new CompoundVariable(totalThreads.getText()).execute());
-        if(tgForPreview.getOutUserCountAsInt() == 0) tgForPreview.setOutUserCount(new CompoundVariable(totalThreads.getText()).execute());
+        if (tgForPreview.getInUserCountAsInt() == 0) {
+            tgForPreview.setInUserCount(new CompoundVariable(totalThreads.getText()).execute());
+        }
+        if (tgForPreview.getOutUserCountAsInt() == 0) {
+            tgForPreview.setOutUserCount(new CompoundVariable(totalThreads.getText()).execute());
+        }
 
         updateChart(tgForPreview);
     }

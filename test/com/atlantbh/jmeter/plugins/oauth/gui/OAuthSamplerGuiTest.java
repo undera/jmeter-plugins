@@ -15,7 +15,9 @@
  */
 package com.atlantbh.jmeter.plugins.oauth.gui;
 
+import com.atlantbh.jmeter.plugins.oauth.OAuthSampler;
 import java.awt.Dimension;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -29,22 +31,23 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class OAuthSamplerGuiTest {
-    
+
     public OAuthSamplerGuiTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
+        TestJMeterUtils.createJmeterEnv();
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -58,9 +61,6 @@ public class OAuthSamplerGuiTest {
         OAuthSamplerGui instance = new OAuthSamplerGui();
         String expResult = "";
         String result = instance.getLabelResource();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -72,9 +72,6 @@ public class OAuthSamplerGuiTest {
         OAuthSamplerGui instance = new OAuthSamplerGui();
         String expResult = "";
         String result = instance.getStaticLabel();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -86,9 +83,6 @@ public class OAuthSamplerGuiTest {
         OAuthSamplerGui instance = new OAuthSamplerGui();
         TestElement expResult = null;
         TestElement result = instance.createTestElement();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -100,7 +94,7 @@ public class OAuthSamplerGuiTest {
         OAuthSamplerGui instance = new OAuthSamplerGui();
         instance.clear();
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -109,11 +103,11 @@ public class OAuthSamplerGuiTest {
     @Test
     public void testModifyTestElement() {
         System.out.println("modifyTestElement");
-        TestElement s = null;
+        TestElement s = new OAuthSampler();
         OAuthSamplerGui instance = new OAuthSamplerGui();
         instance.modifyTestElement(s);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -125,7 +119,7 @@ public class OAuthSamplerGuiTest {
         OAuthSamplerGui instance = new OAuthSamplerGui();
         instance.clearGui();
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -134,11 +128,11 @@ public class OAuthSamplerGuiTest {
     @Test
     public void testConfigure() {
         System.out.println("configure");
-        TestElement el = null;
+        TestElement el = new OAuthSampler();
         OAuthSamplerGui instance = new OAuthSamplerGui();
         instance.configure(el);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -150,8 +144,5 @@ public class OAuthSamplerGuiTest {
         OAuthSamplerGui instance = new OAuthSamplerGui();
         Dimension expResult = null;
         Dimension result = instance.getPreferredSize();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 }

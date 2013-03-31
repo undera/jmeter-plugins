@@ -27,22 +27,22 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class TaskLayerTest {
-    
+
     public TaskLayerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -54,13 +54,10 @@ public class TaskLayerTest {
     public void testGetTaskLevelCountersByJobId() throws Exception {
         System.out.println("getTaskLevelCountersByJobId");
         String jobTracker = "";
-        String jobId = "";
-        TaskLayer instance = new TaskLayer();
+        String jobId = "0_0";
+        TaskLayer instance = new TaskLayerEmul();
         String expResult = "";
         String result = instance.getTaskLevelCountersByJobId(jobTracker, jobId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -70,12 +67,9 @@ public class TaskLayerTest {
     public void testGetTaskStatisticsByJobId() throws Exception {
         System.out.println("getTaskStatisticsByJobId");
         String jobTracker = "";
-        String jobId = "";
-        TaskLayer instance = new TaskLayer();
+        String jobId = "0_0";
+        TaskLayer instance = new TaskLayerEmul();
         String expResult = "";
         String result = instance.getTaskStatisticsByJobId(jobTracker, jobId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 }

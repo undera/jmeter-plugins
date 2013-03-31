@@ -29,22 +29,22 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class JobStatisticsTest {
-    
+
     public JobStatisticsTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -59,7 +59,7 @@ public class JobStatisticsTest {
         JobStatistics instance = new JobStatistics();
         instance.setJobTracker(jobTracker);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -73,7 +73,7 @@ public class JobStatisticsTest {
         String result = instance.getJobTracker();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -86,7 +86,7 @@ public class JobStatisticsTest {
         JobStatistics instance = new JobStatistics();
         instance.setJobId(jobId);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -100,7 +100,7 @@ public class JobStatisticsTest {
         String result = instance.getJobId();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -113,7 +113,7 @@ public class JobStatisticsTest {
         JobStatistics instance = new JobStatistics();
         instance.setJobIdAndGroup(jobIdAndGroup);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -127,7 +127,7 @@ public class JobStatisticsTest {
         String result = instance.getJobIdAndGroup();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -140,7 +140,7 @@ public class JobStatisticsTest {
         JobStatistics instance = new JobStatistics();
         instance.setJobCountersByIdBool(jobCountersById);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -154,7 +154,7 @@ public class JobStatisticsTest {
         boolean result = instance.isJobCountersByIdBool();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -167,7 +167,7 @@ public class JobStatisticsTest {
         JobStatistics instance = new JobStatistics();
         instance.setJobCountersByIdAndGroupBool(jobCountersByIdAndGroup);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -181,7 +181,7 @@ public class JobStatisticsTest {
         boolean result = instance.isJobCountersByIdAndGroupBool();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -194,7 +194,7 @@ public class JobStatisticsTest {
         JobStatistics instance = new JobStatistics();
         instance.setJobStatisticsByIdBool(jobStatistics);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -208,7 +208,7 @@ public class JobStatisticsTest {
         boolean result = instance.isJobStatisticsByIdBool();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -221,7 +221,7 @@ public class JobStatisticsTest {
         JobStatistics instance = new JobStatistics();
         instance.setTaskCountersByIdBool(taskCountersById);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -235,7 +235,7 @@ public class JobStatisticsTest {
         boolean result = instance.isTaskCountersByIdBool();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -248,7 +248,7 @@ public class JobStatisticsTest {
         JobStatistics instance = new JobStatistics();
         instance.setTaskStatisticsByIdBool(taskStatisticsById);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -262,7 +262,7 @@ public class JobStatisticsTest {
         boolean result = instance.isTaskStatisticsByIdBool();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -275,8 +275,5 @@ public class JobStatisticsTest {
         JobStatistics instance = new JobStatistics();
         SampleResult expResult = null;
         SampleResult result = instance.sample(arg0);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 }

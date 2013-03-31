@@ -333,4 +333,15 @@ public class FlexibleFileWriterTest {
         String result = instance.getFileFooter();
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of openFile method, of class FlexibleFileWriter.
+     */
+    @Test
+    public void testOpenFile() throws Exception {
+        System.out.println("openFile");
+        FlexibleFileWriter instance = new FlexibleFileWriter();
+        instance.setFilename(File.createTempFile(".tmp", "ffw").getAbsolutePath());
+        instance.openFile();
+    }
 }

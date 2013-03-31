@@ -17,31 +17,18 @@ package com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics;
 
 import java.io.IOException;
 import org.apache.hadoop.mapred.JobClient;
-import org.apache.hadoop.mapred.JobID;
-import org.apache.hadoop.mapred.RunningJob;
-import org.apache.hadoop.mapred.TaskReport;
 
 /**
  *
  * @author undera
  */
-class JobClientEmul extends JobClient {
+class TaskLayerEmul extends TaskLayer {
 
-    public JobClientEmul() {
+    public TaskLayerEmul() {
     }
 
     @Override
-    public RunningJob getJob(JobID jobid) throws IOException {
-        return new RunningJobEmul();
-    }
-
-    @Override
-    public TaskReport[] getMapTaskReports(JobID jobId) throws IOException {
-        return new TaskReport[0];
-    }
-
-    @Override
-    public TaskReport[] getReduceTaskReports(JobID jobId) throws IOException {
-        return new TaskReport[0];
+    protected JobClient prepareJobClient(String jobTracker) throws IOException {
+        return new JobClientEmul();
     }
 }

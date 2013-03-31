@@ -91,11 +91,8 @@ public class LoadosophiaAggregatorTest {
     @Test
     public void testGetQuantilesJSON() {
         System.out.println("getQuantilesJSON");
-        Long[] rtimes = null;
+        Long[] rtimes = new Long[0];
         JSONObject expResult = null;
         JSONObject result = LoadosophiaAggregator.getQuantilesJSON(rtimes);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 }

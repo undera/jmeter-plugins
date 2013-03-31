@@ -68,7 +68,8 @@ public class LoadosophiaUploaderTest {
     public void testTestEnded() throws IOException {
         System.out.println("testEnded");
         JMeterUtils.setProperty("loadosophia.address", "http://localhost/");
-        LoadosophiaUploader instance = new LoadosophiaUploaderEmul();
+        String[] response = {"0", "4"};
+        LoadosophiaUploader instance = new LoadosophiaUploaderEmul(response);
         instance.setStoreDir(TestJMeterUtils.getTempDir());
         instance.setTitle("UnitTest");
         instance.setColorFlag("gray");
@@ -181,28 +182,39 @@ public class LoadosophiaUploaderTest {
 
     private static class LoadosophiaUploaderEmul extends LoadosophiaUploader {
 
+        private final String[] response;
+
+        private LoadosophiaUploaderEmul(String[] aresponse) {
+            response = aresponse;
+        }
+
         @Override
         protected LoadosophiaAPIClient getAPIClient() {
-            return new FakeAPIClient(this);
+            return new FakeAPIClient(this, response);
         }
     }
 
     private static class FakeAPIClient extends LoadosophiaAPIClient {
 
+        public String[] response = {"0", "4"};
+
         public FakeAPIClient(StatusNotifierCallback informer) {
             super(informer, "TEST", "TEST", COLOR_NONE, "TEST", "TEST");
         }
 
+        private FakeAPIClient(StatusNotifierCallback aThis, String[] aresponse) {
+            super(aThis, "TEST", "TEST", COLOR_NONE, "TEST", "TEST");
+            response = aresponse;
+        }
+
         @Override
         protected String[] getUploadStatus(int queueID) throws IOException {
-            String[] str = {"0", "4"};
-            return str;
+            return response;
         }
 
         @Override
         protected String[] multipartPost(LinkedList<Part> parts, String URL, int expectedSC) throws IOException {
-            String[] str = {"0", "4"};
-            return str;
+            return response;
         }
     }
 
@@ -292,7 +304,8 @@ public class LoadosophiaUploaderTest {
     @Test
     public void testOnlineProcessor() throws InterruptedException {
         System.out.println("onlineProcessor");
-        LoadosophiaUploader instance = new LoadosophiaUploaderEmul();
+        String[] response = {"{}", "4"};
+        LoadosophiaUploader instance = new LoadosophiaUploaderEmul(response);
         instance.setUseOnline(true);
         instance.testStarted("");
         for (int i = 0; i < 100; i++) {

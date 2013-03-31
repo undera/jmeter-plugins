@@ -28,22 +28,22 @@ import static org.junit.Assert.*;
  * @author undera
  */
 public class LoadosophiaUploadingNotifierTest {
-    
+
     public LoadosophiaUploadingNotifierTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -54,11 +54,7 @@ public class LoadosophiaUploadingNotifierTest {
     @Test
     public void testGetInstance() {
         System.out.println("getInstance");
-        LoadosophiaUploadingNotifier expResult = null;
         LoadosophiaUploadingNotifier result = LoadosophiaUploadingNotifier.getInstance();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -67,10 +63,10 @@ public class LoadosophiaUploadingNotifierTest {
     @Test
     public void testStartCollecting() {
         System.out.println("startCollecting");
-        LoadosophiaUploadingNotifier instance = null;
+        LoadosophiaUploadingNotifier instance = LoadosophiaUploadingNotifier.getInstance();
         instance.startCollecting();
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -79,10 +75,10 @@ public class LoadosophiaUploadingNotifierTest {
     @Test
     public void testEndCollecting() {
         System.out.println("endCollecting");
-        LoadosophiaUploadingNotifier instance = null;
+        LoadosophiaUploadingNotifier instance = LoadosophiaUploadingNotifier.getInstance();
         instance.endCollecting();
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -91,12 +87,12 @@ public class LoadosophiaUploadingNotifierTest {
     @Test
     public void testGetFiles() {
         System.out.println("getFiles");
-        LoadosophiaUploadingNotifier instance = null;
-        LinkedList expResult = null;
+        LoadosophiaUploadingNotifier instance = LoadosophiaUploadingNotifier.getInstance();
+        LinkedList expResult = new LinkedList();
         LinkedList result = instance.getFiles();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -106,9 +102,9 @@ public class LoadosophiaUploadingNotifierTest {
     public void testAddFile() {
         System.out.println("addFile");
         String file = "";
-        LoadosophiaUploadingNotifier instance = null;
+        LoadosophiaUploadingNotifier instance = LoadosophiaUploadingNotifier.getInstance();
         instance.addFile(file);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 }

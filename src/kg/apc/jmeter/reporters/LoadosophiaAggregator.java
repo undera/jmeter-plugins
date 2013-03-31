@@ -114,7 +114,7 @@ public class LoadosophiaAggregator {
         long timing = 0;
         for (int qn = quantiles.length - 1; qn >= 0; qn--) {
             double quan = quantiles[qn];
-            while (level >= quan) {
+            while (level >= quan && !timings.empty()) {
                 timing = timings.pop();
                 level -= 1.0 / rtimes.length;
             }

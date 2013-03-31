@@ -220,6 +220,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                 }
             } catch (InterruptedException ex) {
                 log.warn("Interrupted while taking sample event from deque");
+                break;
             }
         }
     }

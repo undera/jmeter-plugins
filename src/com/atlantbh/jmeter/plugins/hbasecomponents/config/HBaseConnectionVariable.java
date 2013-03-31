@@ -43,7 +43,7 @@ public class HBaseConnectionVariable implements Serializable {
 		return tablePool.getTable(tableName);
 	}
 	
-	public void putTable(HTableInterface table) {
+	public void putTable(HTableInterface table) throws IOException {
 		tablePool.putTable(table);
 	}
 	

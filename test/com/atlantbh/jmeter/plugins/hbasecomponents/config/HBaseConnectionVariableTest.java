@@ -16,6 +16,7 @@
 package com.atlantbh.jmeter.plugins.hbasecomponents.config;
 
 import com.atlantbh.jmeter.plugins.hbasecrud.HTableEmul;
+import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.junit.After;
@@ -77,7 +78,7 @@ public class HBaseConnectionVariableTest {
      * Test of putTable method, of class HBaseConnectionVariable.
      */
     @Test
-    public void testPutTable() {
+    public void testPutTable() throws IOException {
         System.out.println("putTable");
         HTableInterface table = new HTableEmul();
         HBaseConnectionVariable instance = new HBaseConnectionVariableEmul();

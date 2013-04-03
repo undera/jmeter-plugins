@@ -32,6 +32,7 @@ public class ProxyFactory {
             .setHttpProxy(httpProxy.toUnifiedForm())
             .setSslProxy(httpsProxy.toUnifiedForm())
             .setFtpProxy(ftpProxy.toUnifiedForm())
+            .setSocksProxy(socksProxy.toUnifiedForm())
             .setNoProxy(noProxy);
     }
 

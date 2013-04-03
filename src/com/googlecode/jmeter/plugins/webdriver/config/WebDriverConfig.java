@@ -6,21 +6,25 @@ import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.openqa.selenium.Proxy;
 
-public abstract class WebDriverConfig extends ConfigTestElement {
-    private static final String PROXY_PAC_URL = "proxy_pac_url";
-    private static final String HTTP_HOST = "http_host";
-    private static final String HTTP_PORT = "http_port";
-    private static final String USE_HTTP_FOR_ALL_PROTOCOLS = "use_http_for_all_protocols";
-    private static final String HTTPS_HOST = "https_host";
-    private static final String HTTPS_PORT = "https_port";
-    private static final String FTP_HOST = "ftp_host";
-    private static final String FTP_PORT = "ftp_port";
-    private static final String SOCKS_HOST = "socks_host";
-    private static final String SOCKS_PORT = "socks_port";
-    private static final String NO_PROXY = "no_proxy";
-    private static final String PROXY_TYPE = "proxy_type";
+public class WebDriverConfig extends ConfigTestElement {
+    private static final String PROXY_PAC_URL = "WebDriverSampler.proxy_pac_url";
+    private static final String HTTP_HOST = "WebDriverSampler.http_host";
+    private static final String HTTP_PORT = "WebDriverSampler.http_port";
+    private static final String USE_HTTP_FOR_ALL_PROTOCOLS = "WebDriverSampler.use_http_for_all_protocols";
+    private static final String HTTPS_HOST = "WebDriverSampler.https_host";
+    private static final String HTTPS_PORT = "WebDriverSampler.https_port";
+    private static final String FTP_HOST = "WebDriverSampler.ftp_host";
+    private static final String FTP_PORT = "WebDriverSampler.ftp_port";
+    private static final String SOCKS_HOST = "WebDriverSampler.socks_host";
+    private static final String SOCKS_PORT = "WebDriverSampler.socks_port";
+    private static final String NO_PROXY = "WebDriverSampler.no_proxy";
+    private static final String PROXY_TYPE = "WebDriverSampler.proxy_type";
 
     private final ProxyFactory proxyFactory;
+
+    public WebDriverConfig() {
+        this(ProxyFactory.getInstance());
+    }
 
     protected WebDriverConfig(ProxyFactory proxyFactory) {
         this.proxyFactory = proxyFactory;
@@ -122,6 +126,12 @@ public abstract class WebDriverConfig extends ConfigTestElement {
         return ProxyType.valueOf(getPropertyAsString(PROXY_TYPE, ProxyType.SYSTEM.name()));
     }
 
+    /**
+     * Call this method to create a {@link Proxy} instance for use when creating a {@link org.openqa.selenium.WebDriver}
+     * instance.  The values/settings of the proxy depends entirely on the values set on this config instance.
+     *
+     * @return a {@link Proxy}
+     */
     public Proxy createProxy() {
         switch(getProxyType()) {
             case PROXY_PAC:

@@ -7,36 +7,21 @@ import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-public class WebDriverConfigGui extends AbstractConfigGui {
+public class WebDriverConfigGui extends AbstractConfigGui implements ItemListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     private static final long serialVersionUID = 241L;
 
-    private JTextField server;
-
-    private JTextField port;
-
-    private JTextField remoteFile;
-
-    private JTextField localFile;
-
-    private JTextArea inputData;
-
-    private JCheckBox binaryMode;
-
-    private JCheckBox saveResponseData;
-
-    private JRadioButton getBox;
-
-    private JRadioButton putBox;
+    private static final int PROXY_FIELD_INDENT = 28;
 
     private JRadioButton directProxy; // synonymous with no proxy
 
@@ -49,6 +34,26 @@ public class WebDriverConfigGui extends AbstractConfigGui {
     private JRadioButton pacUrlProxy;
 
     private JTextField pacUrl;
+
+    private JTextField httpProxyHost;
+
+    private JTextField httpProxyPort;
+
+    private JCheckBox useHttpSettingsForAllProxies;
+
+    private JTextField httpsProxyHost;
+
+    private JTextField httpsProxyPort;
+
+    private JTextField ftpProxyHost;
+
+    private JTextField ftpProxyPort;
+
+    private JTextField socksProxyHost;
+
+    private JTextField socksProxyPort;
+
+    private JTextArea noProxyList;
 
     public WebDriverConfigGui() {
         init();
@@ -96,11 +101,6 @@ public class WebDriverConfigGui extends AbstractConfigGui {
         return element;
     }
 
-    /**
-     * Modifies a given TestElement to mirror the data in the gui components.
-     *
-     * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
-     */
     @Override
     public void modifyTestElement(TestElement element) {
         configureTestElement(element);
@@ -122,139 +122,109 @@ public class WebDriverConfigGui extends AbstractConfigGui {
         }
     }
 
-    /**
-     * Implements JMeterGUIComponent.clearGui
-     */
     @Override
     public void clearGui() {
         super.clearGui();
 
-        server.setText(""); //$NON-NLS-1$
-        port.setText(""); //$NON-NLS-1$
-        remoteFile.setText(""); //$NON-NLS-1$
-        localFile.setText(""); //$NON-NLS-1$
-        inputData.setText(""); //$NON-NLS-1$
-        binaryMode.setSelected(false);
-        saveResponseData.setSelected(false);
-        getBox.setSelected(true);
-        putBox.setSelected(false);
-
         systemProxy.setSelected(true);
     }
 
-    private JPanel createServerPanel() {
-        JLabel label = new JLabel(JMeterUtils.getResString("server")); //$NON-NLS-1$
-
-        server = new JTextField(10);
-        label.setLabelFor(server);
-
-        JPanel serverPanel = new JPanel(new BorderLayout(5, 0));
-        serverPanel.add(label, BorderLayout.WEST);
-        serverPanel.add(server, BorderLayout.CENTER);
-        return serverPanel;
-    }
-
-    private JPanel getPortPanel() {
-        port = new JTextField(4);
-
-        JLabel label = new JLabel(JMeterUtils.getResString("web_server_port")); // $NON-NLS-1$
-        label.setLabelFor(port);
-
-        JPanel panel = new JPanel(new BorderLayout(5, 0));
-        panel.add(label, BorderLayout.WEST);
-        panel.add(port, BorderLayout.CENTER);
-
-        return panel;
-    }
-
-    private JPanel createLocalFilenamePanel() {
-        JLabel label = new JLabel(JMeterUtils.getResString("ftp_local_file")); //$NON-NLS-1$
-
-        localFile = new JTextField(10);
-        label.setLabelFor(localFile);
-
-        JPanel filenamePanel = new JPanel(new BorderLayout(5, 0));
-        filenamePanel.add(label, BorderLayout.WEST);
-        filenamePanel.add(localFile, BorderLayout.CENTER);
-        return filenamePanel;
-    }
-
-    private JPanel createLocalFileContentsPanel() {
-        JLabel label = new JLabel(JMeterUtils.getResString("ftp_local_file_contents")); //$NON-NLS-1$
-
-        inputData = new JTextArea();
-        label.setLabelFor(inputData);
-
-        JPanel contentsPanel = new JPanel(new BorderLayout(5, 0));
-        contentsPanel.add(label, BorderLayout.WEST);
-        contentsPanel.add(inputData, BorderLayout.CENTER);
-        return contentsPanel;
-    }
-
-    private JPanel createRemoteFilenamePanel() {
-        JLabel label = new JLabel(JMeterUtils.getResString("ftp_remote_file")); //$NON-NLS-1$
-
-        remoteFile = new JTextField(10);
-        label.setLabelFor(remoteFile);
-
-        JPanel filenamePanel = new JPanel(new BorderLayout(5, 0));
-        filenamePanel.add(label, BorderLayout.WEST);
-        filenamePanel.add(remoteFile, BorderLayout.CENTER);
-        return filenamePanel;
-    }
-
-    private JPanel createOptionsPanel() {
-
-        ButtonGroup group = new ButtonGroup();
-
-        getBox = new JRadioButton(JMeterUtils.getResString("ftp_get")); //$NON-NLS-1$
-        group.add(getBox);
-        getBox.setSelected(true);
-
-        putBox = new JRadioButton(JMeterUtils.getResString("ftp_put")); //$NON-NLS-1$
-        group.add(putBox);
-
-        binaryMode = new JCheckBox(JMeterUtils.getResString("ftp_binary_mode")); //$NON-NLS-1$
-        saveResponseData = new JCheckBox(JMeterUtils.getResString("ftp_save_response_data")); //$NON-NLS-1$
-
-
-        JPanel optionsPanel = new HorizontalPanel();
-        optionsPanel.add(getBox);
-        optionsPanel.add(putBox);
-        optionsPanel.add(binaryMode);
-        optionsPanel.add(saveResponseData);
-        return optionsPanel;
-    }
-
-    private JPanel createProxySelectionPanel() {
-        JPanel selectionsPanel = new VerticalPanel();
-        ButtonGroup group = new ButtonGroup();
-
-        directProxy = new JRadioButton("No proxy");
-        group.add(directProxy);
-        selectionsPanel.add(directProxy);
-        autoDetectProxy = new JRadioButton("Auto-detect proxy settings for this network");
-        group.add(autoDetectProxy);
-        selectionsPanel.add(autoDetectProxy);
-        systemProxy = new JRadioButton("Use system proxy settings");
-        group.add(systemProxy);
-        selectionsPanel.add(systemProxy);
-        manualProxy = new JRadioButton("Manual proxy configuration");
-        group.add(manualProxy);
-        selectionsPanel.add(manualProxy);
+    private void createPacUrlProxy(JPanel panel, ButtonGroup group) {
         pacUrlProxy = new JRadioButton("Automatic proxy configuration URL");
         group.add(pacUrlProxy);
-        selectionsPanel.add(pacUrlProxy);
+        panel.add(pacUrlProxy);
+
+        pacUrlProxy.addItemListener(this);
 
         JPanel pacUrlPanel = new HorizontalPanel();
         pacUrl = new JTextField();
         pacUrl.setEnabled(false);
         pacUrlPanel.add(pacUrl, BorderLayout.CENTER);
-        selectionsPanel.add(pacUrlPanel);
+        pacUrlPanel.setBorder(BorderFactory.createEmptyBorder(0, PROXY_FIELD_INDENT, 0, 0));
+        panel.add(pacUrlPanel);
+    }
 
-        systemProxy.setSelected(true);
+    private void createManualProxy(JPanel panel, ButtonGroup group) {
+        manualProxy = new JRadioButton("Manual proxy configuration");
+        group.add(manualProxy);
+        panel.add(manualProxy);
 
-        return selectionsPanel;
+        manualProxy.addItemListener(this);
+
+        JPanel manualPanel = new VerticalPanel();
+        manualPanel.setBorder(BorderFactory.createEmptyBorder(0, PROXY_FIELD_INDENT, 0, 0));
+
+        httpProxyHost = new JTextField();
+        httpProxyPort = new JTextField();
+        manualPanel.add(createProxyHostAndPortPanel(httpProxyHost, httpProxyPort, "HTTP Proxy:"));
+        useHttpSettingsForAllProxies = new JCheckBox("Use HTTP proxy server for all protocols");
+        useHttpSettingsForAllProxies.setSelected(true);
+        useHttpSettingsForAllProxies.setEnabled(false);
+        useHttpSettingsForAllProxies.addItemListener(this);
+        manualPanel.add(useHttpSettingsForAllProxies);
+
+        httpsProxyHost = new JTextField();
+        httpsProxyPort = new JTextField();
+        manualPanel.add(createProxyHostAndPortPanel(httpsProxyHost, httpsProxyPort, "SSL Proxy:"));
+
+        ftpProxyHost = new JTextField();
+        ftpProxyPort = new JTextField();
+        manualPanel.add(createProxyHostAndPortPanel(ftpProxyHost, ftpProxyPort, "FTP Proxy:"));
+
+        socksProxyHost = new JTextField();
+        socksProxyPort = new JTextField();
+        manualPanel.add(createProxyHostAndPortPanel(socksProxyHost, socksProxyPort, "SOCKS Proxy:"));
+
+        manualPanel.add(createNoProxyPanel());
+
+        panel.add(manualPanel);
+    }
+
+    private JPanel createNoProxyPanel() {
+        JPanel noProxyPanel = new VerticalPanel();
+        JLabel noProxyListLabel = new JLabel("No Proxy for:");
+        noProxyPanel.add(noProxyListLabel);
+
+        noProxyList = new JTextArea(3,10);
+        noProxyList.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        noProxyList.setEnabled(false);
+        noProxyPanel.add(noProxyList);
+
+        JLabel noProxyExample = new JLabel("Example: .jmeter.org, .com.au, 192.168.1.0/24");
+        noProxyPanel.add(noProxyExample);
+
+        return noProxyPanel;
+    }
+
+    private JPanel createProxyHostAndPortPanel(JTextField proxyHost, JTextField proxyPort, String label) {
+        JPanel httpPanel = new HorizontalPanel();
+        JLabel httpProxyHostLabel = new JLabel(label);
+        httpPanel.add(httpProxyHostLabel);
+        httpPanel.add(proxyHost);
+        proxyHost.setEnabled(false);
+        JLabel httpProxyPortLabel = new JLabel("Port:");
+        httpPanel.add(httpProxyPortLabel);
+        httpPanel.add(proxyPort);
+        proxyPort.setEnabled(false);
+        return httpPanel;
+    }
+
+    private void createSystemProxy(JPanel panel, ButtonGroup group) {
+        systemProxy = new JRadioButton("Use system proxy settings");
+        group.add(systemProxy);
+        panel.add(systemProxy);
+    }
+
+    private void createAutoDetectProxy(JPanel panel, ButtonGroup group) {
+        autoDetectProxy = new JRadioButton("Auto-detect proxy settings for this network");
+        group.add(autoDetectProxy);
+        panel.add(autoDetectProxy);
+    }
+
+    private void createDirectProxy(JPanel panel, ButtonGroup group) {
+        directProxy = new JRadioButton("No proxy");
+        group.add(directProxy);
+        panel.add(directProxy);
     }
 
     private void init() {
@@ -264,17 +234,36 @@ public class WebDriverConfigGui extends AbstractConfigGui {
         add(makeTitlePanel(), BorderLayout.NORTH);
 
         // MAIN PANEL
-        VerticalPanel mainPanel = new VerticalPanel();
-        JPanel serverPanel = new HorizontalPanel();
-        serverPanel.add(createServerPanel(), BorderLayout.CENTER);
-        serverPanel.add(getPortPanel(), BorderLayout.EAST);
-        mainPanel.add(serverPanel);
-        mainPanel.add(createRemoteFilenamePanel());
-        mainPanel.add(createLocalFilenamePanel());
-        mainPanel.add(createLocalFileContentsPanel());
-        mainPanel.add(createOptionsPanel());
-        mainPanel.add(createProxySelectionPanel());
+        JPanel mainPanel = new VerticalPanel();
+        ButtonGroup group = new ButtonGroup();
+
+        createDirectProxy(mainPanel, group);
+        createAutoDetectProxy(mainPanel, group);
+        createSystemProxy(mainPanel, group);
+        createManualProxy(mainPanel, group);
+        createPacUrlProxy(mainPanel, group);
+
+        systemProxy.setSelected(true);
 
         add(mainPanel, BorderLayout.CENTER);
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent itemEvent) {
+        if(itemEvent.getSource() == pacUrlProxy) {
+            pacUrl.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
+        } else if(itemEvent.getSource() == manualProxy) {
+            httpProxyHost.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
+            httpProxyPort.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
+            useHttpSettingsForAllProxies.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
+            noProxyList.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
+        } else if(itemEvent.getSource() == useHttpSettingsForAllProxies) {
+            httpsProxyHost.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
+            httpsProxyPort.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
+            ftpProxyHost.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
+            ftpProxyPort.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
+            socksProxyHost.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
+            socksProxyPort.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
+        }
     }
 }

@@ -372,7 +372,7 @@ public abstract class JMeterPluginsUtils {
         return res;
     }
 
-    private static String getVersion() {
+    public static String getVersion() {
         Properties props = new Properties();
         try {
             props.load(JMeterPluginsUtils.class.getResourceAsStream("version.properties"));

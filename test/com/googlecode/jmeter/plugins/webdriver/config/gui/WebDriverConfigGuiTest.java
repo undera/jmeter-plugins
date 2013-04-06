@@ -87,7 +87,7 @@ public class WebDriverConfigGuiTest {
 
     @Test
     public void shouldSetHttpPort() {
-        gui.httpProxyPort.setValue(123);
+        gui.httpProxyPort.setText("123");
         final WebDriverConfig testElement = (WebDriverConfig) gui.createTestElement();
         assertThat(testElement.getHttpPort(), is(123));
     }
@@ -120,7 +120,7 @@ public class WebDriverConfigGuiTest {
 
     @Test
     public void shouldSetHttpsPort() {
-        gui.httpsProxyPort.setValue(123);
+        gui.httpsProxyPort.setText("123");
         final WebDriverConfig testElement = (WebDriverConfig) gui.createTestElement();
         assertThat(testElement.getHttpsPort(), is(123));
     }
@@ -140,7 +140,7 @@ public class WebDriverConfigGuiTest {
 
     @Test
     public void shouldSetFtpPort() {
-        gui.ftpProxyPort.setValue(123);
+        gui.ftpProxyPort.setText("123");
         final WebDriverConfig testElement = (WebDriverConfig) gui.createTestElement();
         assertThat(testElement.getFtpPort(), is(123));
     }
@@ -160,7 +160,7 @@ public class WebDriverConfigGuiTest {
 
     @Test
     public void shouldSetSocksPort() {
-        gui.socksProxyPort.setValue(123);
+        gui.socksProxyPort.setText("123");
         final WebDriverConfig testElement = (WebDriverConfig) gui.createTestElement();
         assertThat(testElement.getSocksPort(), is(123));
     }
@@ -189,14 +189,14 @@ public class WebDriverConfigGuiTest {
         gui.directProxy.setSelected(true);
         gui.pacUrl.setText("pac-url");
         gui.httpProxyHost.setText("http-host");
-        gui.httpProxyPort.setValue(123);
+        gui.httpProxyPort.setText("123");
         gui.useHttpSettingsForAllProtocols.setSelected(false);
         gui.httpsProxyHost.setText("https-host");
-        gui.httpsProxyPort.setValue(123);
+        gui.httpsProxyPort.setText("123");
         gui.ftpProxyHost.setText("ftp-host");
-        gui.ftpProxyPort.setValue(123);
+        gui.ftpProxyPort.setText("123");
         gui.socksProxyHost.setText("socks-host");
-        gui.socksProxyPort.setValue(123);
+        gui.socksProxyPort.setText("123");
         gui.noProxyList.setText("no-proxy-host");
 
         gui.clearGui();
@@ -204,14 +204,14 @@ public class WebDriverConfigGuiTest {
         assertThat(gui.systemProxy.isSelected(), is(true));
         assertThat(gui.pacUrl.getText(), is(""));
         assertThat(gui.httpProxyHost.getText(), is(""));
-        assertThat((Integer)gui.httpProxyPort.getValue(), is(8080));
+        assertThat(gui.httpProxyPort.getText(), is("8080"));
         assertThat(gui.useHttpSettingsForAllProtocols.isSelected(), is(true));
         assertThat(gui.httpsProxyHost.getText(), is(""));
-        assertThat((Integer)gui.httpsProxyPort.getValue(), is(8080));
+        assertThat(gui.httpsProxyPort.getText(), is("8080"));
         assertThat(gui.ftpProxyHost.getText(), is(""));
-        assertThat((Integer)gui.ftpProxyPort.getValue(), is(8080));
+        assertThat(gui.ftpProxyPort.getText(), is("8080"));
         assertThat(gui.socksProxyHost.getText(), is(""));
-        assertThat((Integer)gui.socksProxyPort.getValue(), is(8080));
+        assertThat(gui.socksProxyPort.getText(), is("8080"));
         assertThat(gui.noProxyList.getText(), is("localhost"));
     }
 
@@ -236,14 +236,14 @@ public class WebDriverConfigGuiTest {
         assertThat(gui.autoDetectProxy.isSelected(), is(true));
         assertThat(gui.pacUrl.getText(), is(config.getProxyPacUrl()));
         assertThat(gui.httpProxyHost.getText(), is(config.getHttpHost()));
-        assertThat((Integer)gui.httpProxyPort.getValue(), is(config.getHttpPort()));
+        assertThat(gui.httpProxyPort.getText(), is(String.valueOf(config.getHttpPort())));
         assertThat(gui.useHttpSettingsForAllProtocols.isSelected(), is(config.isUseHttpSettingsForAllProtocols()));
         assertThat(gui.httpsProxyHost.getText(), is(config.getHttpsHost()));
-        assertThat((Integer)gui.httpsProxyPort.getValue(), is(config.getHttpsPort()));
+        assertThat(gui.httpsProxyPort.getText(), is(String.valueOf(config.getHttpsPort())));
         assertThat(gui.ftpProxyHost.getText(), is(config.getFtpHost()));
-        assertThat((Integer)gui.ftpProxyPort.getValue(), is(config.getFtpPort()));
+        assertThat(gui.ftpProxyPort.getText(), is(String.valueOf(config.getFtpPort())));
         assertThat(gui.socksProxyHost.getText(), is(config.getSocksHost()));
-        assertThat((Integer)gui.socksProxyPort.getValue(), is(config.getSocksPort()));
+        assertThat(gui.socksProxyPort.getText(), is(String.valueOf(config.getSocksPort())));
         assertThat(gui.noProxyList.getText(), is(config.getNoProxyHost()));
     }
 

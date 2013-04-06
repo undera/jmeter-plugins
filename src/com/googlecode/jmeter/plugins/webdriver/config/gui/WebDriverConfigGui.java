@@ -104,14 +104,14 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
             }
             pacUrl.setText(webDriverConfig.getProxyPacUrl());
             httpProxyHost.setText(webDriverConfig.getHttpHost());
-            httpProxyPort.setValue(webDriverConfig.getHttpPort());
+            httpProxyPort.setText(String.valueOf(webDriverConfig.getHttpPort()));
             useHttpSettingsForAllProtocols.setSelected(webDriverConfig.isUseHttpSettingsForAllProtocols());
             httpsProxyHost.setText(webDriverConfig.getHttpsHost());
-            httpsProxyPort.setValue(webDriverConfig.getHttpsPort());
+            httpsProxyPort.setText(String.valueOf(webDriverConfig.getHttpsPort()));
             ftpProxyHost.setText(webDriverConfig.getFtpHost());
-            ftpProxyPort.setValue(webDriverConfig.getFtpPort());
+            ftpProxyPort.setText(String.valueOf(webDriverConfig.getFtpPort()));
             socksProxyHost.setText(webDriverConfig.getSocksHost());
-            socksProxyPort.setValue(webDriverConfig.getSocksPort());
+            socksProxyPort.setText(String.valueOf(webDriverConfig.getSocksPort()));
             noProxyList.setText(webDriverConfig.getNoProxyHost());
         }
     }
@@ -141,14 +141,14 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
             }
             webDriverConfig.setProxyPacUrl(pacUrl.getText());
             webDriverConfig.setHttpHost(httpProxyHost.getText());
-            webDriverConfig.setHttpPort((Integer) httpProxyPort.getValue());
+            webDriverConfig.setHttpPort(Integer.parseInt(httpProxyPort.getText()));
             webDriverConfig.setUseHttpSettingsForAllProtocols(useHttpSettingsForAllProtocols.isSelected());
             webDriverConfig.setHttpsHost(httpsProxyHost.getText());
-            webDriverConfig.setHttpsPort((Integer) httpsProxyPort.getValue());
+            webDriverConfig.setHttpsPort(Integer.parseInt(httpsProxyPort.getText()));
             webDriverConfig.setFtpHost(ftpProxyHost.getText());
-            webDriverConfig.setFtpPort((Integer) ftpProxyPort.getValue());
+            webDriverConfig.setFtpPort(Integer.parseInt(ftpProxyPort.getText()));
             webDriverConfig.setSocksHost(socksProxyHost.getText());
-            webDriverConfig.setSocksPort((Integer) socksProxyPort.getValue());
+            webDriverConfig.setSocksPort(Integer.parseInt(socksProxyPort.getText()));
             webDriverConfig.setNoProxyHost(noProxyList.getText());
         }
     }
@@ -160,14 +160,14 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
         systemProxy.setSelected(true);
         pacUrl.setText("");
         httpProxyHost.setText("");
-        httpProxyPort.setValue(DEFAULT_PROXY_PORT);
+        httpProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
         useHttpSettingsForAllProtocols.setSelected(true);
         httpsProxyHost.setText("");
-        httpsProxyPort.setValue(DEFAULT_PROXY_PORT);
+        httpsProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
         ftpProxyHost.setText("");
-        ftpProxyPort.setValue(DEFAULT_PROXY_PORT);
+        ftpProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
         socksProxyHost.setText("");
-        socksProxyPort.setValue(DEFAULT_PROXY_PORT);
+        socksProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
         noProxyList.setText(DEFAULT_NO_PROXY_LIST);
     }
 
@@ -198,7 +198,7 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
 
         httpProxyHost = new JTextField();
         httpProxyPort = new JFormattedTextField(NUMBER_FORMAT);
-        httpProxyPort.setValue(DEFAULT_PROXY_PORT);
+        httpProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
         manualPanel.add(createProxyHostAndPortPanel(httpProxyHost, httpProxyPort, "HTTP Proxy:"));
         useHttpSettingsForAllProtocols = new JCheckBox("Use HTTP proxy server for all protocols");
         useHttpSettingsForAllProtocols.setSelected(true);
@@ -208,17 +208,17 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
 
         httpsProxyHost = new JTextField();
         httpsProxyPort = new JFormattedTextField(NUMBER_FORMAT);
-        httpsProxyPort.setValue(DEFAULT_PROXY_PORT);
+        httpsProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
         manualPanel.add(createProxyHostAndPortPanel(httpsProxyHost, httpsProxyPort, "SSL Proxy:"));
 
         ftpProxyHost = new JTextField();
         ftpProxyPort = new JFormattedTextField(NUMBER_FORMAT);
-        ftpProxyPort.setValue(DEFAULT_PROXY_PORT);
+        ftpProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
         manualPanel.add(createProxyHostAndPortPanel(ftpProxyHost, ftpProxyPort, "FTP Proxy:"));
 
         socksProxyHost = new JTextField();
         socksProxyPort = new JFormattedTextField(NUMBER_FORMAT);
-        socksProxyPort.setValue(DEFAULT_PROXY_PORT);
+        socksProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
         manualPanel.add(createProxyHostAndPortPanel(socksProxyHost, socksProxyPort, "SOCKS Proxy:"));
 
         manualPanel.add(createNoProxyPanel());

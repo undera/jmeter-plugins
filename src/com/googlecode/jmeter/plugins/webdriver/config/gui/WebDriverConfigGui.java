@@ -14,8 +14,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.NumberFormat;
 
 public class WebDriverConfigGui extends AbstractConfigGui implements ItemListener {
+
+    private static final NumberFormat NUMBER_FORMAT = NumberFormat.getIntegerInstance();
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
@@ -23,37 +26,45 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
 
     private static final int PROXY_FIELD_INDENT = 28;
 
-    private JRadioButton directProxy; // synonymous with no proxy
+    private static final int DEFAULT_PROXY_PORT = 8080;
 
-    private JRadioButton autoDetectProxy;
+    private static final String DEFAULT_NO_PROXY_LIST = "localhost";
 
-    private JRadioButton systemProxy;
+    static {
+        NUMBER_FORMAT.setGroupingUsed(false);
+    }
 
-    private JRadioButton manualProxy;
+    JRadioButton directProxy; // synonymous with no proxy
 
-    private JRadioButton pacUrlProxy;
+    JRadioButton autoDetectProxy;
 
-    private JTextField pacUrl;
+    JRadioButton systemProxy;
 
-    private JTextField httpProxyHost;
+    JRadioButton manualProxy;
 
-    private JTextField httpProxyPort;
+    JRadioButton pacUrlProxy;
 
-    private JCheckBox useHttpSettingsForAllProxies;
+    JTextField pacUrl;
 
-    private JTextField httpsProxyHost;
+    JTextField httpProxyHost;
 
-    private JTextField httpsProxyPort;
+    JFormattedTextField httpProxyPort;
 
-    private JTextField ftpProxyHost;
+    JCheckBox useHttpSettingsForAllProtocols;
 
-    private JTextField ftpProxyPort;
+    JTextField httpsProxyHost;
 
-    private JTextField socksProxyHost;
+    JFormattedTextField httpsProxyPort;
 
-    private JTextField socksProxyPort;
+    JTextField ftpProxyHost;
 
-    private JTextArea noProxyList;
+    JFormattedTextField ftpProxyPort;
+
+    JTextField socksProxyHost;
+
+    JFormattedTextField socksProxyPort;
+
+    JTextArea noProxyList;
 
     public WebDriverConfigGui() {
         init();
@@ -91,6 +102,17 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
                 default:
                     systemProxy.setSelected(true); // fallback to system proxy
             }
+            pacUrl.setText(webDriverConfig.getProxyPacUrl());
+            httpProxyHost.setText(webDriverConfig.getHttpHost());
+            httpProxyPort.setValue(webDriverConfig.getHttpPort());
+            useHttpSettingsForAllProtocols.setSelected(webDriverConfig.isUseHttpSettingsForAllProtocols());
+            httpsProxyHost.setText(webDriverConfig.getHttpsHost());
+            httpsProxyPort.setValue(webDriverConfig.getHttpsPort());
+            ftpProxyHost.setText(webDriverConfig.getFtpHost());
+            ftpProxyPort.setValue(webDriverConfig.getFtpPort());
+            socksProxyHost.setText(webDriverConfig.getSocksHost());
+            socksProxyPort.setValue(webDriverConfig.getSocksPort());
+            noProxyList.setText(webDriverConfig.getNoProxyHost());
         }
     }
 
@@ -117,8 +139,17 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
             } else {
                 webDriverConfig.setProxyType(ProxyType.SYSTEM); // fallback
             }
-
-            log.info("Proxy type is: "+webDriverConfig.getProxyType());
+            webDriverConfig.setProxyPacUrl(pacUrl.getText());
+            webDriverConfig.setHttpHost(httpProxyHost.getText());
+            webDriverConfig.setHttpPort((Integer) httpProxyPort.getValue());
+            webDriverConfig.setUseHttpSettingsForAllProtocols(useHttpSettingsForAllProtocols.isSelected());
+            webDriverConfig.setHttpsHost(httpsProxyHost.getText());
+            webDriverConfig.setHttpsPort((Integer) httpsProxyPort.getValue());
+            webDriverConfig.setFtpHost(ftpProxyHost.getText());
+            webDriverConfig.setFtpPort((Integer) ftpProxyPort.getValue());
+            webDriverConfig.setSocksHost(socksProxyHost.getText());
+            webDriverConfig.setSocksPort((Integer) socksProxyPort.getValue());
+            webDriverConfig.setNoProxyHost(noProxyList.getText());
         }
     }
 
@@ -127,6 +158,17 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
         super.clearGui();
 
         systemProxy.setSelected(true);
+        pacUrl.setText("");
+        httpProxyHost.setText("");
+        httpProxyPort.setValue(DEFAULT_PROXY_PORT);
+        useHttpSettingsForAllProtocols.setSelected(true);
+        httpsProxyHost.setText("");
+        httpsProxyPort.setValue(DEFAULT_PROXY_PORT);
+        ftpProxyHost.setText("");
+        ftpProxyPort.setValue(DEFAULT_PROXY_PORT);
+        socksProxyHost.setText("");
+        socksProxyPort.setValue(DEFAULT_PROXY_PORT);
+        noProxyList.setText(DEFAULT_NO_PROXY_LIST);
     }
 
     private void createPacUrlProxy(JPanel panel, ButtonGroup group) {
@@ -155,24 +197,28 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
         manualPanel.setBorder(BorderFactory.createEmptyBorder(0, PROXY_FIELD_INDENT, 0, 0));
 
         httpProxyHost = new JTextField();
-        httpProxyPort = new JTextField();
+        httpProxyPort = new JFormattedTextField(NUMBER_FORMAT);
+        httpProxyPort.setValue(DEFAULT_PROXY_PORT);
         manualPanel.add(createProxyHostAndPortPanel(httpProxyHost, httpProxyPort, "HTTP Proxy:"));
-        useHttpSettingsForAllProxies = new JCheckBox("Use HTTP proxy server for all protocols");
-        useHttpSettingsForAllProxies.setSelected(true);
-        useHttpSettingsForAllProxies.setEnabled(false);
-        useHttpSettingsForAllProxies.addItemListener(this);
-        manualPanel.add(useHttpSettingsForAllProxies);
+        useHttpSettingsForAllProtocols = new JCheckBox("Use HTTP proxy server for all protocols");
+        useHttpSettingsForAllProtocols.setSelected(true);
+        useHttpSettingsForAllProtocols.setEnabled(false);
+        useHttpSettingsForAllProtocols.addItemListener(this);
+        manualPanel.add(useHttpSettingsForAllProtocols);
 
         httpsProxyHost = new JTextField();
-        httpsProxyPort = new JTextField();
+        httpsProxyPort = new JFormattedTextField(NUMBER_FORMAT);
+        httpsProxyPort.setValue(DEFAULT_PROXY_PORT);
         manualPanel.add(createProxyHostAndPortPanel(httpsProxyHost, httpsProxyPort, "SSL Proxy:"));
 
         ftpProxyHost = new JTextField();
-        ftpProxyPort = new JTextField();
+        ftpProxyPort = new JFormattedTextField(NUMBER_FORMAT);
+        ftpProxyPort.setValue(DEFAULT_PROXY_PORT);
         manualPanel.add(createProxyHostAndPortPanel(ftpProxyHost, ftpProxyPort, "FTP Proxy:"));
 
         socksProxyHost = new JTextField();
-        socksProxyPort = new JTextField();
+        socksProxyPort = new JFormattedTextField(NUMBER_FORMAT);
+        socksProxyPort.setValue(DEFAULT_PROXY_PORT);
         manualPanel.add(createProxyHostAndPortPanel(socksProxyHost, socksProxyPort, "SOCKS Proxy:"));
 
         manualPanel.add(createNoProxyPanel());
@@ -186,6 +232,7 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
         noProxyPanel.add(noProxyListLabel);
 
         noProxyList = new JTextArea(3,10);
+        noProxyList.setText(DEFAULT_NO_PROXY_LIST);
         noProxyList.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         noProxyList.setEnabled(false);
         noProxyPanel.add(noProxyList);
@@ -255,9 +302,9 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
         } else if(itemEvent.getSource() == manualProxy) {
             httpProxyHost.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
             httpProxyPort.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
-            useHttpSettingsForAllProxies.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
+            useHttpSettingsForAllProtocols.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
             noProxyList.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
-        } else if(itemEvent.getSource() == useHttpSettingsForAllProxies) {
+        } else if(itemEvent.getSource() == useHttpSettingsForAllProtocols) {
             httpsProxyHost.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
             httpsProxyPort.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
             ftpProxyHost.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);

@@ -1,0 +1,29 @@
+package com.googlecode.jmeter.plugins.webdriver.config.gui;
+
+import kg.apc.emulators.TestJMeterUtils;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import static org.junit.Assert.assertThat;
+import static org.junit.internal.matchers.StringContains.containsString;
+
+public class FirefoxDriverConfigGuiTest {
+
+    private FirefoxDriverConfigGui gui;
+
+    @BeforeClass
+    public static void setupJMeterEnv() {
+        TestJMeterUtils.createJmeterEnv();
+    }
+
+    @Before
+    public void createConfig() {
+        gui = new FirefoxDriverConfigGui();
+    }
+
+    @Test
+    public void shouldReturnStaticLabel() {
+        assertThat(gui.getStaticLabel(), containsString("Firefox Driver Config"));
+    }
+}

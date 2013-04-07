@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -14,10 +16,12 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.internal.matchers.IsCollectionContaining.hasItem;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.verifyNew;
@@ -50,24 +54,24 @@ public class FirefoxDriverConfigTest {
     @Test
     public void shouldCreateWebDriverWhenThreadStartedIsInvoked() throws Exception {
         FirefoxDriver mockFirefoxDriver = Mockito.mock(FirefoxDriver.class);
-        whenNew(FirefoxDriver.class).withNoArguments().thenReturn(mockFirefoxDriver);
+        whenNew(FirefoxDriver.class).withParameterTypes(Capabilities.class).withArguments(isA(Capabilities.class)).thenReturn(mockFirefoxDriver);
 
         config.threadStarted();
 
         assertThat(config.getCurrentThreadBrowser(), is(mockFirefoxDriver));
-        verifyNew(FirefoxDriver.class, times(1)).withNoArguments();
+        verifyNew(FirefoxDriver.class, times(1)).withArguments(isA(Capabilities.class));
     }
 
     @Test
     public void shouldOnlyCreateSingleWebDriverEvenWhenThreadStartedIsCalledMultipleTimes() throws Exception {
         FirefoxDriver mockFirefoxDriver = Mockito.mock(FirefoxDriver.class);
-        whenNew(FirefoxDriver.class).withNoArguments().thenReturn(mockFirefoxDriver);
+        whenNew(FirefoxDriver.class).withParameterTypes(Capabilities.class).withArguments(isA(Capabilities.class)).thenReturn(mockFirefoxDriver);
 
         config.threadStarted();
         config.threadStarted();
 
         assertThat(config.getCurrentThreadBrowser(), is(mockFirefoxDriver));
-        verifyNew(FirefoxDriver.class, times(1)).withNoArguments();
+        verifyNew(FirefoxDriver.class, times(1)).withArguments(isA(Capabilities.class));
     }
 
     @Test
@@ -98,7 +102,7 @@ public class FirefoxDriverConfigTest {
         // mock the browsers that will be created per thread
         FirefoxDriver firstFirefox = Mockito.mock(FirefoxDriver.class);
         FirefoxDriver secondFirefox = Mockito.mock(FirefoxDriver.class);
-        whenNew(FirefoxDriver.class).withNoArguments().thenReturn(firstFirefox, secondFirefox);
+        whenNew(FirefoxDriver.class).withParameterTypes(Capabilities.class).withArguments(isA(Capabilities.class)).thenReturn(firstFirefox, secondFirefox);
 
         // the list will store the returned browsers for each thread so they can be verified.
         final List<FirefoxDriver> firefoxesFromThread = new CopyOnWriteArrayList<FirefoxDriver>();
@@ -125,6 +129,12 @@ public class FirefoxDriverConfigTest {
         assertThat(firefoxesFromThread.size(), is(2));
         assertThat(firefoxesFromThread, hasItem(firstFirefox));
         assertThat(firefoxesFromThread, hasItem(secondFirefox));
-        verifyNew(FirefoxDriver.class, times(2)).withNoArguments();
+        verifyNew(FirefoxDriver.class, times(2)).withArguments(isA(Capabilities.class));
+    }
+
+    @Test
+    public void shouldHaveProxyInCapability() {
+        final Capabilities capabilities = config.createCapabilities();
+        assertThat(capabilities.getCapability(CapabilityType.PROXY), is(notNullValue()));
     }
 }

@@ -1,15 +1,17 @@
 package com.googlecode.jmeter.plugins.webdriver.config;
 
-import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.testelement.ThreadListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class FirefoxDriverConfig extends ConfigTestElement implements ThreadListener {
+public class FirefoxDriverConfig extends WebDriverConfig implements ThreadListener {
 
     private static final long serialVersionUID = 9239127462983L;
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -21,7 +23,13 @@ public class FirefoxDriverConfig extends ConfigTestElement implements ThreadList
             log.warn("Thread: "+currentThreadName()+" already has a FirefoxDriver associated with it.  Ware there multiple FirefoxConfigs created for a single Thread Group?");
             return;
         }
-        webdrivers.put(currentThreadName(), new FirefoxDriver());
+        webdrivers.put(currentThreadName(), new FirefoxDriver(createCapabilities()));
+    }
+
+    Capabilities createCapabilities() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.PROXY, createProxy());
+        return capabilities;
     }
 
     @Override

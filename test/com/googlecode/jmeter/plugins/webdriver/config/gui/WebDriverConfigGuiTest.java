@@ -9,10 +9,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.awt.event.ItemListener;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class WebDriverConfigGuiTest {
+
     private WebDriverConfigGui gui;
 
     @BeforeClass
@@ -292,5 +295,111 @@ public class WebDriverConfigGuiTest {
         assertThat(gui.systemProxy.isSelected(), is(true));
     }
 
-    // test itemlistener callbacks
+    @Test
+    public void shouldImplementItemListener() {
+        assertThat(gui, is(CoreMatchers.instanceOf(ItemListener.class)));
+    }
+
+    @Test
+    public void shouldEnablePacUrlWhenPacUrlProxySelected() {
+        gui.pacUrlProxy.setSelected(true);
+        assertThat(gui.pacUrl.isEnabled(), is(true));
+    }
+
+    @Test
+    public void shouldDisablePacUrlWhenPacUrlProxyNotSelected() {
+        gui.pacUrlProxy.setSelected(false);
+        assertThat(gui.pacUrl.isEnabled(), is(false));
+    }
+
+    @Test
+    public void shouldDisablePacUrlByDefault() {
+        assertThat(gui.pacUrl.isEnabled(), is(false));
+    }
+
+    @Test
+    public void shouldEnableAllManualProxiesWhenManualProxySelectedAndUseHttpForAllProtocolsNotSelected() {
+        gui.manualProxy.setSelected(true);
+        gui.useHttpSettingsForAllProtocols.setSelected(false);
+
+        assertThat(gui.httpProxyHost.isEnabled(), is(true));
+        assertThat(gui.httpProxyPort.isEnabled(), is(true));
+        assertThat(gui.useHttpSettingsForAllProtocols.isEnabled(), is(true));
+        assertThat(gui.httpsProxyHost.isEnabled(), is(true));
+        assertThat(gui.httpsProxyPort.isEnabled(), is(true));
+        assertThat(gui.ftpProxyHost.isEnabled(), is(true));
+        assertThat(gui.ftpProxyPort.isEnabled(), is(true));
+        assertThat(gui.socksProxyHost.isEnabled(), is(true));
+        assertThat(gui.socksProxyPort.isEnabled(), is(true));
+        assertThat(gui.noProxyList.isEnabled(), is(true));
+    }
+
+    @Test
+    public void shouldEnableHttpAndNoProxyListWhenManualProxySelectedAndUseHttpForAllProtocolsSelected() {
+        gui.manualProxy.setSelected(true);
+        gui.useHttpSettingsForAllProtocols.setSelected(true);
+
+        assertThat(gui.httpProxyHost.isEnabled(), is(true));
+        assertThat(gui.httpProxyPort.isEnabled(), is(true));
+        assertThat(gui.useHttpSettingsForAllProtocols.isEnabled(), is(true));
+        assertThat(gui.httpsProxyHost.isEnabled(), is(false));
+        assertThat(gui.httpsProxyPort.isEnabled(), is(false));
+        assertThat(gui.ftpProxyHost.isEnabled(), is(false));
+        assertThat(gui.ftpProxyPort.isEnabled(), is(false));
+        assertThat(gui.socksProxyHost.isEnabled(), is(false));
+        assertThat(gui.socksProxyPort.isEnabled(), is(false));
+        assertThat(gui.noProxyList.isEnabled(), is(true));
+    }
+
+    @Test
+    public void shouldDisableManualProxiesWhenManualProxyNotSelectedAndUseHttpForAllProtocolsNotSelected() {
+        gui.manualProxy.setSelected(false);
+        gui.useHttpSettingsForAllProtocols.setSelected(false);
+
+        assertThat(gui.httpProxyHost.isEnabled(), is(false));
+        assertThat(gui.httpProxyPort.isEnabled(), is(false));
+        assertThat(gui.useHttpSettingsForAllProtocols.isEnabled(), is(false));
+        assertThat(gui.httpsProxyHost.isEnabled(), is(false));
+        assertThat(gui.httpsProxyPort.isEnabled(), is(false));
+        assertThat(gui.ftpProxyHost.isEnabled(), is(false));
+        assertThat(gui.ftpProxyPort.isEnabled(), is(false));
+        assertThat(gui.socksProxyHost.isEnabled(), is(false));
+        assertThat(gui.socksProxyPort.isEnabled(), is(false));
+        assertThat(gui.noProxyList.isEnabled(), is(false));
+    }
+
+    @Test
+    public void shouldDisableManualProxiesWhenManualProxyNotSelectedAndUseHttpForAllProtocolsSelected() {
+        gui.manualProxy.setSelected(false);
+        gui.useHttpSettingsForAllProtocols.setSelected(true);
+
+        assertThat(gui.httpProxyHost.isEnabled(), is(false));
+        assertThat(gui.httpProxyPort.isEnabled(), is(false));
+        assertThat(gui.useHttpSettingsForAllProtocols.isEnabled(), is(false));
+        assertThat(gui.httpsProxyHost.isEnabled(), is(false));
+        assertThat(gui.httpsProxyPort.isEnabled(), is(false));
+        assertThat(gui.ftpProxyHost.isEnabled(), is(false));
+        assertThat(gui.ftpProxyPort.isEnabled(), is(false));
+        assertThat(gui.socksProxyHost.isEnabled(), is(false));
+        assertThat(gui.socksProxyPort.isEnabled(), is(false));
+        assertThat(gui.noProxyList.isEnabled(), is(false));
+    }
+
+    @Test
+    public void shouldDisableManualProxiesWhenSwitchingToNonManualProxy() {
+        gui.manualProxy.setSelected(true);
+        gui.useHttpSettingsForAllProtocols.setSelected(false);
+        gui.systemProxy.setSelected(true);
+
+        assertThat(gui.httpProxyHost.isEnabled(), is(false));
+        assertThat(gui.httpProxyPort.isEnabled(), is(false));
+        assertThat(gui.useHttpSettingsForAllProtocols.isEnabled(), is(false));
+        assertThat(gui.httpsProxyHost.isEnabled(), is(false));
+        assertThat(gui.httpsProxyPort.isEnabled(), is(false));
+        assertThat(gui.ftpProxyHost.isEnabled(), is(false));
+        assertThat(gui.ftpProxyPort.isEnabled(), is(false));
+        assertThat(gui.socksProxyHost.isEnabled(), is(false));
+        assertThat(gui.socksProxyPort.isEnabled(), is(false));
+        assertThat(gui.noProxyList.isEnabled(), is(false));
+    }
 }

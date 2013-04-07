@@ -304,13 +304,19 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
             httpProxyPort.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
             useHttpSettingsForAllProtocols.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
             noProxyList.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
+            enableOtherProtocolsOnlyIfManualProxySelectedAndUseHttpSettingsIsNotSelected();
         } else if(itemEvent.getSource() == useHttpSettingsForAllProtocols) {
-            httpsProxyHost.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
-            httpsProxyPort.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
-            ftpProxyHost.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
-            ftpProxyPort.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
-            socksProxyHost.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
-            socksProxyPort.setEnabled(itemEvent.getStateChange() == ItemEvent.DESELECTED);
+            enableOtherProtocolsOnlyIfManualProxySelectedAndUseHttpSettingsIsNotSelected();
         }
+    }
+
+    private void enableOtherProtocolsOnlyIfManualProxySelectedAndUseHttpSettingsIsNotSelected() {
+        final boolean enabledState = !useHttpSettingsForAllProtocols.isSelected() && manualProxy.isSelected();
+        httpsProxyHost.setEnabled(enabledState);
+        httpsProxyPort.setEnabled(enabledState);
+        ftpProxyHost.setEnabled(enabledState);
+        ftpProxyPort.setEnabled(enabledState);
+        socksProxyHost.setEnabled(enabledState);
+        socksProxyPort.setEnabled(enabledState);
     }
 }

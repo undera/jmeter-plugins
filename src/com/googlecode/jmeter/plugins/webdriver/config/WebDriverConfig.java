@@ -7,6 +7,11 @@ import org.apache.jmeter.config.ConfigTestElement;
 import org.openqa.selenium.Proxy;
 
 public class WebDriverConfig extends ConfigTestElement {
+    /**
+     * This is the key used to store a WebDriver instance in the {@link org.apache.jmeter.threads.JMeterVariables} object.
+     */
+    public static final String BROWSER = "Browser";
+
     private static final String PROXY_PAC_URL = "WebDriverSampler.proxy_pac_url";
     private static final String HTTP_HOST = "WebDriverSampler.http_host";
     private static final String HTTP_PORT = "WebDriverSampler.http_port";

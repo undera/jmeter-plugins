@@ -1,6 +1,8 @@
 package com.googlecode.jmeter.plugins.webdriver.config.gui;
 
+import com.googlecode.jmeter.plugins.webdriver.config.FirefoxDriverConfig;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.jmeter.testelement.TestElement;
 
 public class FirefoxDriverConfigGui extends WebDriverConfigGui {
     @Override
@@ -13,23 +15,10 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui {
         return getClass().getCanonicalName();
     }
 
-//    @Override
-//    public void configure(TestElement element) {
-//        super.configure(element);
-//    }
-//
-//    @Override
-//    public TestElement createTestElement() {
-//        return super.createTestElement();
-//    }
-//
-//    @Override
-//    public void modifyTestElement(TestElement element) {
-//        super.modifyTestElement(element);
-//    }
-//
-//    @Override
-//    public void clearGui() {
-//        super.clearGui();
-//    }
+    @Override
+    public TestElement createTestElement() {
+        FirefoxDriverConfig element = new FirefoxDriverConfig();
+        modifyTestElement(element);
+        return element;
+    }
 }

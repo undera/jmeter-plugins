@@ -295,7 +295,7 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper,selenium-java</includeArtifactIds>
+                            <includeArtifactIds>cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper,selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,guava,json,commons-exec,commons-io</includeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>

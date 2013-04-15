@@ -33,7 +33,7 @@ import org.apache.log.Logger;
 
 /**
  * OMG, I had to copy full contents of StatVisualizer just to make its data
- * visible to JMeterPluginsCMD This class is just invisible in menu;
+ * visible to JMeterPluginsCMD. This class is just invisible in menu;
  *
  * @see StatVisualizer
  * @author undera
@@ -41,7 +41,7 @@ import org.apache.log.Logger;
 public class AggregateReportGui extends AbstractGraphPanelVisualizer {
 
     private Collection<String> emptyCollection = new ArrayList<String>();
-    private static final long serialVersionUID = 240L;
+    private static final long serialVersionUID = 241L;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String USE_GROUP_NAME = "useGroupName";
     private static final String SAVE_HEADERS = "saveHeaders";
@@ -55,7 +55,8 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         "aggregate_report_max",
         "aggregate_report_error%",
         "aggregate_report_rate",
-        "aggregate_report_bandwidth"};
+        "aggregate_report_bandwidth",
+        "aggregate_report_stddev",};
     private final String TOTAL_ROW_LABEL = JMeterUtils.getResString("aggregate_report_total_label");
     private JTable myJTable;
     private JScrollPane myScrollPane;
@@ -84,11 +85,11 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
                     new Functor("getMax"),
                     new Functor("getErrorPercentage"),
                     new Functor("getRate"),
-                    new Functor("getKBPerSecond")
-                },
-                new Functor[]{null, null, null, null, null, null, null, null, null, null},
+                    new Functor("getKBPerSecond"),
+                    new Functor("getStandardDeviation"),},
+                new Functor[]{null, null, null, null, null, null, null, null, null, null, null},
                 new Class[]{String.class, Long.class, Long.class, Long.class, Long.class,
-                    Long.class, Long.class, String.class, String.class, String.class});
+                    Long.class, Long.class, String.class, String.class, String.class, String.class});
         clearData();
         init();
     }
@@ -111,6 +112,7 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         new NumberRenderer("#0.00%"), // Error %age 
         new RateRenderer("#.0"), // Throughput 
         new NumberRenderer("#.0"), // pageSize   
+        new NumberRenderer("#0.00"), // Std Dev.
     };
 
     @Override

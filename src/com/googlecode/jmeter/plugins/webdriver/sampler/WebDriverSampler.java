@@ -38,14 +38,23 @@ public class WebDriverSampler extends AbstractSampler {
 	private static final Logger LOGGER = LoggingManager.getLoggerForClass();
 	
 	private static final long serialVersionUID = 234L;
-	
-	@Override
+
+    private final transient ScriptEngineManager scriptEngineManager;
+
+    public WebDriverSampler() {
+        this(new ScriptEngineManager());
+    }
+
+    WebDriverSampler(ScriptEngineManager scriptEngineManager) {
+        this.scriptEngineManager = scriptEngineManager;
+    }
+
+    @Override
 	public SampleResult sample(Entry e) {
         LOGGER.info("sampling web");
         
         // BSF Code copied liberally from BSFSampler
-        final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-        
+
         final SampleResult res = new SampleResult();
         res.setSampleLabel(getName());
         res.setSamplerData(toString());
@@ -58,7 +67,7 @@ public class WebDriverSampler extends AbstractSampler {
         res.setResponseMessageOK();
         res.setResponseCodeOK();
 
-        LOGGER.info("Current thread name: '"+getThreadName()+"', has browser: '"+getThreadContext().getVariables().getObject(WebDriverConfig.BROWSER)+"'");
+        LOGGER.info("Current thread name: '"+getThreadName()+"', has browser: '"+getWebDriver()+"'");
 
         try {
             final ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
@@ -104,13 +113,13 @@ public class WebDriverSampler extends AbstractSampler {
     private void initManager(ScriptEngine scriptEngine, SampleResult res) throws BSFException {
    		final String scriptParameters = getParameters();
 
-        Bindings global = scriptEngine.createBindings();
+        Bindings global = new SimpleBindings();
         global.put("log", LOGGER); // $NON-NLS-1$
         global.put("Label", getName()); // $NON-NLS-1$
         global.put("OUT", System.out); // $NON-NLS-1$
         scriptEngine.setBindings(global, ScriptContext.GLOBAL_SCOPE);
 
-        Bindings perExecution = scriptEngine.createBindings();
+        Bindings perExecution = new SimpleBindings();
         perExecution.put("SampleResult", res); // $NON-NLS-1$
         perExecution.put("Parameters", scriptParameters); // $NON-NLS-1$
         String[] args = JOrphanUtils.split(scriptParameters, " ");//$NON-NLS-1$

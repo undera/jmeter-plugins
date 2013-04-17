@@ -1,7 +1,6 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler;
 
 import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
-import org.apache.bsf.BSFException;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
@@ -19,18 +18,6 @@ import javax.script.*;
  */
 public class WebDriverSampler extends AbstractSampler {
 	
-	/**
-	 * This declares the 'websampler' variable, which is a shorthand for accessing <code>org.openqa.selenium</code> and
-	 * <code>org.openqa.selenium.support.ui</code> classes without specifying the full package name.  The shorthand for
-	 * accessing these classes is as follows:
-	 * <pre>
-	 * with(websampler) {
-	 *     var element = browser.findElement(By.id('myId'));
-	 * }
-	 * </pre>
-	 */
-	private static final String SCRIPT_UTILITY = "var websampler = JavaImporter(org.openqa.selenium, org.openqa.selenium.support.ui, org.openqa.selenium.interactions.touch)";
-
     public static final String SCRIPT = "WebDriverSampler.script";
 
 	public static final String PARAMETERS = "WebDriverSampler.parameters";
@@ -39,22 +26,17 @@ public class WebDriverSampler extends AbstractSampler {
 	
 	private static final long serialVersionUID = 234L;
 
+    private static final String DEFAULT_ENGINE = "JavaScript";
+
     private final transient ScriptEngineManager scriptEngineManager;
 
     public WebDriverSampler() {
-        this(new ScriptEngineManager());
-    }
-
-    WebDriverSampler(ScriptEngineManager scriptEngineManager) {
-        this.scriptEngineManager = scriptEngineManager;
+        this.scriptEngineManager = new ScriptEngineManager();
+        initialiseGlobalVariables();
     }
 
     @Override
 	public SampleResult sample(Entry e) {
-        LOGGER.info("sampling web");
-        
-        // BSF Code copied liberally from BSFSampler
-
         final SampleResult res = new SampleResult();
         res.setSampleLabel(getName());
         res.setSamplerData(toString());
@@ -62,7 +44,6 @@ public class WebDriverSampler extends AbstractSampler {
         res.setContentType("text/plain"); // $NON-NLS-1$
         res.setDataEncoding("UTF-8");
 
-        // Assume we will be successful
         res.setSuccessful(true);
         res.setResponseMessageOK();
         res.setResponseCodeOK();
@@ -70,29 +51,14 @@ public class WebDriverSampler extends AbstractSampler {
         LOGGER.info("Current thread name: '"+getThreadName()+"', has browser: '"+getWebDriver()+"'");
 
         try {
-            final ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
-            initManager(scriptEngine, res);
+            final ScriptEngine scriptEngine = createScriptEngineWith(res);
+            final Object outcome = scriptEngine.eval(getScript());
 
-            // utility importer
-            scriptEngine.eval(SCRIPT_UTILITY);
-
-            final Object outcome;
-            if(scriptEngine instanceof Compilable) {
-                LOGGER.info("Compiling!");
-                CompiledScript compiled = ((Compilable)scriptEngine).compile(getScript());
-                outcome = compiled.eval();
-            } else {
-                LOGGER.info("Interpreting!");
-                outcome = scriptEngine.eval(getScript());
-            }
-
-            // setup status and data useful for verification
-            res.setResponseData(getWebDriver().getPageSource().getBytes());
+            res.setResponseData(getWebDriver().getPageSource(), null);
             if(outcome instanceof Boolean) { // only set this if the return value is boolean
                 res.setSuccessful((Boolean) outcome);
             }
 
-            // fail the response if unsuccessful
             if(!res.isSuccessful()) {
                 res.setResponseCode("500");
                 res.setResponseMessage("Failed to find/verify expected content on page");
@@ -101,32 +67,11 @@ public class WebDriverSampler extends AbstractSampler {
         } catch (Exception ex) {
             res.setResponseMessage(ex.toString());
             res.setResponseCode("500");
-            if(ex.getMessage() != null) {
-                res.setResponseData(ex.getMessage().getBytes());
-            }
             res.setSuccessful(false);
         }
 
         return res;
 	}
-
-    private void initManager(ScriptEngine scriptEngine, SampleResult res) throws BSFException {
-   		final String scriptParameters = getParameters();
-
-        Bindings global = new SimpleBindings();
-        global.put("log", LOGGER); // $NON-NLS-1$
-        global.put("Label", getName()); // $NON-NLS-1$
-        global.put("OUT", System.out); // $NON-NLS-1$
-        scriptEngine.setBindings(global, ScriptContext.GLOBAL_SCOPE);
-
-        Bindings perExecution = new SimpleBindings();
-        perExecution.put("SampleResult", res); // $NON-NLS-1$
-        perExecution.put("Parameters", scriptParameters); // $NON-NLS-1$
-        String[] args = JOrphanUtils.split(scriptParameters, " ");//$NON-NLS-1$
-        perExecution.put("args", args);//$NON-NLS-1$
-        perExecution.put("Browser", getWebDriver());
-        scriptEngine.setBindings(perExecution, ScriptContext.ENGINE_SCOPE);
-    }
 
 	public String getScript() {
 		return getPropertyAsString(SCRIPT);
@@ -146,5 +91,26 @@ public class WebDriverSampler extends AbstractSampler {
 
     private WebDriver getWebDriver() {
         return (WebDriver) getThreadContext().getVariables().getObject(WebDriverConfig.BROWSER);
+    }
+
+    private void initialiseGlobalVariables() {
+        Bindings globalBindings = new SimpleBindings();
+        globalBindings.put("log", LOGGER);
+        globalBindings.put("OUT", System.out);
+        scriptEngineManager.setBindings(globalBindings);
+    }
+
+    ScriptEngine createScriptEngineWith(SampleResult sampleResult) {
+        final ScriptEngine scriptEngine = scriptEngineManager.getEngineByName(DEFAULT_ENGINE);
+        Bindings engineBindings = new SimpleBindings();
+        engineBindings.put("Label", getName());
+        engineBindings.put("SampleResult", sampleResult);
+        final String scriptParameters = getParameters();
+        engineBindings.put("Parameters", scriptParameters);
+        String[] args = JOrphanUtils.split(scriptParameters, " ");
+        engineBindings.put("args", args);
+        engineBindings.put("Browser", getWebDriver());
+        scriptEngine.setBindings(engineBindings, ScriptContext.ENGINE_SCOPE);
+        return scriptEngine;
     }
 }

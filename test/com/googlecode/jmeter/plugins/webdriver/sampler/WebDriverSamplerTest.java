@@ -7,38 +7,34 @@ import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.log.Logger;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.openqa.selenium.WebDriver;
 
-import javax.script.*;
-
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
 import java.io.PrintStream;
+import java.net.MalformedURLException;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.internal.matchers.StringContains.containsString;
+import static org.mockito.Mockito.*;
 
 public class WebDriverSamplerTest {
 
-    private ScriptEngineManager scriptEngineManager;
     private WebDriverSampler sampler;
     private JMeterVariables variables;
     private WebDriver browser;
 
     @Before
     public void createSampler() {
-        scriptEngineManager = Mockito.mock(ScriptEngineManager.class);
         browser = Mockito.mock(WebDriver.class);
-        when(browser.getPageSource()).thenReturn("");
+        when(browser.getPageSource()).thenReturn("page source");
         variables = new JMeterVariables();
         variables.putObject(WebDriverConfig.BROWSER, browser);
         JMeterContextService.getContext().setVariables(variables);
-        sampler = new WebDriverSampler(scriptEngineManager);
+        sampler = new WebDriverSampler();
     }
 
     @Test
@@ -54,18 +50,25 @@ public class WebDriverSamplerTest {
     }
 
     @Test
-    public void shouldReturnSuccessfulSampleResultWhenEvalScriptCompletes() throws ScriptException {
-        final ArgumentCaptor<Bindings> globalBindingsCaptor = ArgumentCaptor.forClass(Bindings.class);
-        final ArgumentCaptor<Bindings> engineBindingsCaptor = ArgumentCaptor.forClass(Bindings.class);
-        final ScriptEngine scriptEngine = Mockito.mock(ScriptEngine.class);
-        when(scriptEngineManager.getEngineByName("JavaScript")).thenReturn(scriptEngine);
-        when(scriptEngine.eval("script")).thenReturn(null);
-
+    public void shouldHaveExpectedInstanceVariablesOnScriptContext() {
         sampler.setName("name");
-        sampler.setScript("script");
-        final String parameters = "parameter1 parameter2";
-        final String[] args = parameters.split(" ");
-        sampler.setParameters(parameters);
+        sampler.setParameters("p1 p2 p3");
+        final SampleResult sampleResult = new SampleResult();
+        final ScriptEngine scriptEngine = sampler.createScriptEngineWith(sampleResult);
+        final ScriptContext scriptContext = scriptEngine.getContext();
+        assertThat(scriptContext.getAttribute("log"), is(instanceOf(Logger.class)));
+        assertThat((PrintStream) scriptContext.getAttribute("OUT"), is(System.out));
+        assertThat((String) scriptContext.getAttribute("Label"), is(sampler.getName()));
+        assertThat((String) scriptContext.getAttribute("Parameters"), is(sampler.getParameters()));
+        assertThat((String[]) scriptContext.getAttribute("args"), is(new String[]{"p1", "p2", "p3"}));
+        assertThat(scriptContext.getAttribute("Browser"), is(instanceOf(WebDriver.class)));
+        assertThat((SampleResult) scriptContext.getAttribute("SampleResult"), is(sampleResult));
+    }
+
+    @Test
+    public void shouldReturnSuccessfulSampleResultWhenEvalScriptCompletes() throws MalformedURLException {
+        sampler.setName("name");
+        sampler.setScript("var x = 'hello';");
         final SampleResult sampleResult = sampler.sample(null);
 
         assertThat(sampleResult.isResponseCodeOK(), is(true));
@@ -75,22 +78,46 @@ public class WebDriverSamplerTest {
         assertThat(sampleResult.getDataEncodingNoDefault(), is("UTF-8"));
         assertThat(sampleResult.getDataType(), is(SampleResult.TEXT));
         assertThat(sampleResult.getSampleLabel(), is("name"));
-
-        verify(scriptEngine).setBindings(globalBindingsCaptor.capture(), eq(ScriptContext.GLOBAL_SCOPE));
-        Bindings globalBindings = globalBindingsCaptor.getValue();
-        assertThat(globalBindings.get("log"), is(instanceOf(Logger.class)));
-        assertThat((String) globalBindings.get("Label"), is("name"));
-        assertThat(globalBindings.get("OUT"), is(instanceOf(PrintStream.class)));
-
-        verify(scriptEngine).setBindings(engineBindingsCaptor.capture(), eq(ScriptContext.ENGINE_SCOPE));
-        Bindings engineBindings = engineBindingsCaptor.getValue();
-        assertThat((SampleResult) engineBindings.get("SampleResult"), is(sampleResult));
-        assertThat((String) engineBindings.get("Parameters"), is(parameters));
-        assertThat((String[]) engineBindings.get("args"), is(args));
-        assertThat((WebDriver) engineBindings.get("Browser"), is(browser));
+        assertThat(sampleResult.getResponseDataAsString(), is("page source"));
 
         verify(browser, times(1)).getPageSource();
-        verify(scriptEngineManager, times(1)).getEngineByName("JavaScript");
-        verify(scriptEngine, times(1)).eval("script");
+    }
+
+    @Test
+    public void shouldReturnSuccessfulSampleResultWhenLastStatementFromEvalScriptIsTrue() throws MalformedURLException {
+        sampler.setScript("true");
+        final SampleResult sampleResult = sampler.sample(null);
+
+        assertThat(sampleResult.isResponseCodeOK(), is(true));
+        assertThat(sampleResult.getResponseMessage(), is("OK"));
+        assertThat(sampleResult.isSuccessful(), is(true));
+        assertThat(sampleResult.getResponseDataAsString(), is("page source"));
+
+        verify(browser, times(1)).getPageSource();
+    }
+
+    @Test
+    public void shouldReturnFailureSampleResultWhenLastStatementFromEvalScriptIsFalse() throws MalformedURLException {
+        sampler.setScript("false");
+        final SampleResult sampleResult = sampler.sample(null);
+
+        assertThat(sampleResult.isResponseCodeOK(), is(false));
+        assertThat(sampleResult.getResponseMessage(), is("Failed to find/verify expected content on page"));
+        assertThat(sampleResult.isSuccessful(), is(false));
+        assertThat(sampleResult.getResponseDataAsString(), is("page source"));
+
+        verify(browser, times(1)).getPageSource();
+    }
+
+    @Test
+    public void shouldReturnFailureSampleResultWhenEvalScriptIsInvalid() {
+        sampler.setScript("x.methodThatDoesNotExist();");
+        final SampleResult sampleResult = sampler.sample(null);
+
+        assertThat(sampleResult.isResponseCodeOK(), is(false));
+        assertThat(sampleResult.getResponseMessage(), containsString("javax.script.ScriptException"));
+        assertThat(sampleResult.isSuccessful(), is(false));
+
+        verify(browser, never()).getPageSource();
     }
 }

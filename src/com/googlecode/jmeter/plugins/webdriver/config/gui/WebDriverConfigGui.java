@@ -80,7 +80,6 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
         return getClass().getCanonicalName();
     }
 
-
     @Override
     public void configure(TestElement element) {
         super.configure(element);

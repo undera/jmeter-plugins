@@ -1,9 +1,9 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler.gui;
 
 import com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jmeter.util.JMeterUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,22 +12,27 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 
 	private static final long serialVersionUID = -3484685528176139410L;
 
-	private JTextField parameters;// parameters to pass to script file (or script)
+	JTextField parameters;
 
-	private JTextArea scriptField;// script area
+	JTextArea script;
 
 	public WebDriverSamplerGui() {
 		createGui();
 	}
 
-	@Override
-	public String getLabelResource() {
-		return "web";
-	}
+    @Override
+    public String getStaticLabel() {
+        return JMeterPluginsUtils.prefixLabel("Web Driver Sampler");
+    }
+
+    @Override
+    public String getLabelResource() {
+        return getClass().getCanonicalName();
+    }
 
     @Override
     public void configure(TestElement element) {
-        scriptField.setText(element.getPropertyAsString(WebDriverSampler.SCRIPT));
+        script.setText(element.getPropertyAsString(WebDriverSampler.SCRIPT));
         parameters.setText(element.getPropertyAsString(WebDriverSampler.PARAMETERS));
         super.configure(element);
     }
@@ -43,7 +48,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 	public void modifyTestElement(TestElement element) {
 		element.clear();
 		this.configureTestElement(element);
-		element.setProperty(WebDriverSampler.SCRIPT, scriptField.getText());
+		element.setProperty(WebDriverSampler.SCRIPT, script.getText());
 		element.setProperty(WebDriverSampler.PARAMETERS, parameters.getText());
 	}
 
@@ -52,7 +57,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         super.clearGui();
 
         parameters.setText(""); //$NON-NLS-1$
-        scriptField.setText(""); //$NON-NLS-1$
+        script.setText(""); //$NON-NLS-1$
     }
 
 	private void createGui() {
@@ -72,8 +77,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 	}
 
 	private JPanel createParameterPanel() {
-		JLabel label = new JLabel(
-				JMeterUtils.getResString("web_script_parameters")); // $NON-NLS-1$
+		JLabel label = new JLabel("Parameters (-> String Parameters and String[] args)");
 
 		parameters = new JTextField(10);
 		parameters.setName(WebDriverSampler.PARAMETERS);
@@ -86,20 +90,19 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 	}
 
 	private JPanel createScriptPanel() {
-		scriptField = new JTextArea();
-		scriptField.setRows(4);
-		scriptField.setLineWrap(true);
-		scriptField.setWrapStyleWord(true);
+		script = new JTextArea();
+		script.setRows(4);
+		script.setLineWrap(true);
+		script.setWrapStyleWord(true);
 
-		JLabel label = new JLabel(JMeterUtils.getResString("web_script")); // $NON-NLS-1$
-		label.setLabelFor(scriptField);
+		JLabel label = new JLabel("Script (see below for variables that are defined)"); // $NON-NLS-1$
+		label.setLabelFor(script);
 
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(label, BorderLayout.NORTH);
-		panel.add(new JScrollPane(scriptField), BorderLayout.CENTER);
+		panel.add(new JScrollPane(script), BorderLayout.CENTER);
 
-		JTextArea explain = new JTextArea(
-				JMeterUtils.getResString("web_script_variables")); //$NON-NLS-1$
+		JTextArea explain = new JTextArea("The following variables are defined for the script\\:\\nLabel, Parameters, args, log, Browser, SampleResult, OUT");
 		explain.setLineWrap(true);
 		explain.setEditable(false);
 		explain.setBackground(this.getBackground());

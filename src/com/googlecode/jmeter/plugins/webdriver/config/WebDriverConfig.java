@@ -146,10 +146,11 @@ public class WebDriverConfig extends ConfigTestElement {
             case AUTO_DETECT:
                 return proxyFactory.getAutodetectProxy();
             case MANUAL:
-                ProxyHostPort http = new ProxyHostPort(getHttpHost(), getHttpPort());
                 if(isUseHttpSettingsForAllProtocols()) {
-                    return proxyFactory.getManualProxy(http, http, http, http, getNoProxyHost());
+                    ProxyHostPort proxy = new ProxyHostPort(getHttpHost(), getHttpPort());
+                    return proxyFactory.getManualProxy(proxy, proxy, proxy, proxy, getNoProxyHost());
                 }
+                ProxyHostPort http = new ProxyHostPort(getHttpHost(), getHttpPort());
                 ProxyHostPort https = new ProxyHostPort(getHttpsHost(), getHttpsPort());
                 ProxyHostPort ftp = new ProxyHostPort(getFtpHost(), getFtpPort());
                 ProxyHostPort socks = new ProxyHostPort(getSocksHost(), getSocksPort());

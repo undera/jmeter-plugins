@@ -4,6 +4,7 @@ import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.gui.JMeterGUIComponent;
+import org.apache.jmeter.testelement.TestElement;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -25,7 +26,7 @@ public class WebDriverConfigGuiTest {
 
     @Before
     public void createGui() {
-        gui = new WebDriverConfigGui();
+        gui = new WebDriverConfigGuiImpl();
     }
 
     @Test
@@ -220,7 +221,7 @@ public class WebDriverConfigGuiTest {
 
     @Test
     public void shouldSetValuesOnConfigure() {
-        WebDriverConfig config = new WebDriverConfig();
+        WebDriverConfig config = new WebDriverConfigImpl();
         config.setProxyType(ProxyType.AUTO_DETECT);
         config.setProxyPacUrl("pac-url");
         config.setHttpHost("http-host");
@@ -252,7 +253,7 @@ public class WebDriverConfigGuiTest {
 
     @Test
     public void shouldSetNoProxyOnConfigure() {
-        WebDriverConfig config = new WebDriverConfig();
+        WebDriverConfig config = new WebDriverConfigImpl();
         config.setProxyType(ProxyType.DIRECT);
         gui.configure(config);
 
@@ -261,7 +262,7 @@ public class WebDriverConfigGuiTest {
 
     @Test
     public void shouldSetAutoDetectProxyOnConfigure() {
-        WebDriverConfig config = new WebDriverConfig();
+        WebDriverConfig config = new WebDriverConfigImpl();
         config.setProxyType(ProxyType.AUTO_DETECT);
         gui.configure(config);
 
@@ -270,7 +271,7 @@ public class WebDriverConfigGuiTest {
 
     @Test
     public void shouldSetManualProxyOnConfigure() {
-        WebDriverConfig config = new WebDriverConfig();
+        WebDriverConfig config = new WebDriverConfigImpl();
         config.setProxyType(ProxyType.MANUAL);
         gui.configure(config);
 
@@ -279,7 +280,7 @@ public class WebDriverConfigGuiTest {
 
     @Test
     public void shouldSetPacUrlProxyOnConfigure() {
-        WebDriverConfig config = new WebDriverConfig();
+        WebDriverConfig config = new WebDriverConfigImpl();
         config.setProxyType(ProxyType.PROXY_PAC);
         gui.configure(config);
 
@@ -288,7 +289,7 @@ public class WebDriverConfigGuiTest {
 
     @Test
     public void shouldSetSystemProxyOnConfigure() {
-        WebDriverConfig config = new WebDriverConfig();
+        WebDriverConfig config = new WebDriverConfigImpl();
         config.setProxyType(ProxyType.SYSTEM);
         gui.configure(config);
 
@@ -401,5 +402,18 @@ public class WebDriverConfigGuiTest {
         assertThat(gui.socksProxyHost.isEnabled(), is(false));
         assertThat(gui.socksProxyPort.isEnabled(), is(false));
         assertThat(gui.noProxyList.isEnabled(), is(false));
+    }
+
+    private static class WebDriverConfigGuiImpl extends WebDriverConfigGui {
+
+        @Override
+        public TestElement createTestElement() {
+            final WebDriverConfigImpl config = new WebDriverConfigImpl();
+            modifyTestElement(config);
+            return config;
+        }
+    }
+
+    private static class WebDriverConfigImpl extends WebDriverConfig {
     }
 }

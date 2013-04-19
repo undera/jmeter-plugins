@@ -6,7 +6,7 @@ import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.openqa.selenium.Proxy;
 
-public class WebDriverConfig extends ConfigTestElement {
+public abstract class WebDriverConfig extends ConfigTestElement {
     /**
      * This is the key used to store a WebDriver instance in the {@link org.apache.jmeter.threads.JMeterVariables} object.
      */
@@ -27,7 +27,7 @@ public class WebDriverConfig extends ConfigTestElement {
 
     private final ProxyFactory proxyFactory;
 
-    public WebDriverConfig() {
+    protected WebDriverConfig() {
         this(ProxyFactory.getInstance());
     }
 

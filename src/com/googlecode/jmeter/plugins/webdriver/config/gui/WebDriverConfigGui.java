@@ -16,7 +16,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.NumberFormat;
 
-public class WebDriverConfigGui extends AbstractConfigGui implements ItemListener {
+public abstract class WebDriverConfigGui extends AbstractConfigGui implements ItemListener {
 
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getIntegerInstance();
 
@@ -113,13 +113,6 @@ public class WebDriverConfigGui extends AbstractConfigGui implements ItemListene
             socksProxyPort.setText(String.valueOf(webDriverConfig.getSocksPort()));
             noProxyList.setText(webDriverConfig.getNoProxyHost());
         }
-    }
-
-    @Override
-    public TestElement createTestElement() {
-        WebDriverConfig element = new WebDriverConfig();
-        modifyTestElement(element);
-        return element;
     }
 
     @Override

@@ -65,7 +65,6 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
     JTextArea noProxyList;
 
     public WebDriverConfigGui() {
-        init();
     }
 
     @Override
@@ -264,13 +263,7 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
         panel.add(directProxy);
     }
 
-    private void init() {
-        setLayout(new BorderLayout(0, 5));
-
-        setBorder(makeBorder());
-        add(makeTitlePanel(), BorderLayout.NORTH);
-
-        // MAIN PANEL
+    protected JPanel createProxyPanel() {
         JPanel mainPanel = new VerticalPanel();
         ButtonGroup group = new ButtonGroup();
 
@@ -281,8 +274,7 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
         createPacUrlProxy(mainPanel, group);
 
         systemProxy.setSelected(true);
-
-        add(mainPanel, BorderLayout.CENTER);
+        return mainPanel;
     }
 
     @Override

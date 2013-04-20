@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.awt.*;
 import java.awt.event.ItemListener;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -405,6 +406,11 @@ public class WebDriverConfigGuiTest {
     }
 
     private static class WebDriverConfigGuiImpl extends WebDriverConfigGui {
+
+        public WebDriverConfigGuiImpl() {
+            setLayout(new BorderLayout(0, 5));
+            add(createProxyPanel(), BorderLayout.CENTER);
+        }
 
         @Override
         public TestElement createTestElement() {

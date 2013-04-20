@@ -6,18 +6,15 @@ import org.apache.jmeter.testelement.ThreadListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class FirefoxDriverConfig extends WebDriverConfig implements ThreadListener, LoopIterationListener {
 
     private static final long serialVersionUID = 9239127462983L;
     private static final Logger log = LoggingManager.getLoggerForClass();
-    static final Map<String, FirefoxDriver> webdrivers = new ConcurrentHashMap<String, FirefoxDriver>();
 
     @Override
     public void threadStarted() {
@@ -36,18 +33,14 @@ public class FirefoxDriverConfig extends WebDriverConfig implements ThreadListen
 
     @Override
     public void threadFinished() {
-        final FirefoxDriver firefoxDriver = webdrivers.remove(currentThreadName());
+        final WebDriver firefoxDriver = webdrivers.remove(currentThreadName());
         if(firefoxDriver != null) {
             firefoxDriver.quit();
         }
     }
 
-    public FirefoxDriver getCurrentThreadBrowser() {
+    public WebDriver getCurrentThreadBrowser() {
         return webdrivers.get(currentThreadName());
-    }
-
-    String currentThreadName() {
-        return Thread.currentThread().getName();
     }
 
     @Override

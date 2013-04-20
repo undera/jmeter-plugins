@@ -6,6 +6,7 @@ import org.apache.jmeter.testelement.ThreadListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.remote.CapabilityType;
@@ -22,7 +23,6 @@ public class ChromeDriverConfig extends WebDriverConfig implements ThreadListene
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String CHROME_SERVICE_PATH = "ChromeDriverConfig.chromedriver_path";
 
-    static final Map<String, ChromeDriver> webdrivers = new ConcurrentHashMap<String, ChromeDriver>();
     static final Map<String, ChromeDriverService> services = new ConcurrentHashMap<String, ChromeDriverService>();
 
     @Override
@@ -50,7 +50,7 @@ public class ChromeDriverConfig extends WebDriverConfig implements ThreadListene
 
     @Override
     public void threadFinished() {
-        final ChromeDriver chromeDriverDriver = webdrivers.remove(currentThreadName());
+        final WebDriver chromeDriverDriver = webdrivers.remove(currentThreadName());
         if(chromeDriverDriver != null) {
             chromeDriverDriver.quit();
         }
@@ -60,12 +60,8 @@ public class ChromeDriverConfig extends WebDriverConfig implements ThreadListene
         }
     }
 
-    public ChromeDriver getCurrentThreadBrowser() {
+    public WebDriver getCurrentThreadBrowser() {
         return webdrivers.get(currentThreadName());
-    }
-
-    String currentThreadName() {
-        return Thread.currentThread().getName();
     }
 
     @Override

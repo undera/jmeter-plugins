@@ -64,7 +64,7 @@ public class FirefoxDriverConfigTest {
 
         config.threadStarted();
 
-        assertThat(config.getCurrentThreadBrowser(), is(mockFirefoxDriver));
+        assertThat((FirefoxDriver) config.getCurrentThreadBrowser(), is(mockFirefoxDriver));
         verifyNew(FirefoxDriver.class, times(1)).withArguments(isA(Capabilities.class));
     }
 
@@ -76,7 +76,7 @@ public class FirefoxDriverConfigTest {
         config.threadStarted();
         config.threadStarted();
 
-        assertThat(config.getCurrentThreadBrowser(), is(mockFirefoxDriver));
+        assertThat((FirefoxDriver) config.getCurrentThreadBrowser(), is(mockFirefoxDriver));
         verifyNew(FirefoxDriver.class, times(1)).withArguments(isA(Capabilities.class));
     }
 
@@ -115,13 +115,13 @@ public class FirefoxDriverConfigTest {
         Thread firstThread = new Thread() {
             public void run() {
                 config.threadStarted();
-                firefoxesFromThread.add(config.getCurrentThreadBrowser());
+                firefoxesFromThread.add((FirefoxDriver) config.getCurrentThreadBrowser());
             }
         };
         Thread secondThread = new Thread() {
             public void run() {
                 config.threadStarted();
-                firefoxesFromThread.add(config.getCurrentThreadBrowser());
+                firefoxesFromThread.add((FirefoxDriver) config.getCurrentThreadBrowser());
             }
         };
 

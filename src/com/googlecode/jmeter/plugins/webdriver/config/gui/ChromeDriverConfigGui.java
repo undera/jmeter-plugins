@@ -29,6 +29,15 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
     }
 
     @Override
+    public void configure(TestElement element) {
+        super.configure(element);
+        if(element instanceof ChromeDriverConfig) {
+            ChromeDriverConfig config = (ChromeDriverConfig)element;
+            chromeServicePath.setText(config.getChromeDriverPath());
+        }
+    }
+
+    @Override
     public TestElement createTestElement() {
         ChromeDriverConfig element = new ChromeDriverConfig();
         modifyTestElement(element);

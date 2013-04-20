@@ -5,12 +5,18 @@ import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyHostPort;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.WebDriver;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class WebDriverConfig extends ConfigTestElement {
     /**
      * This is the key used to store a WebDriver instance in the {@link org.apache.jmeter.threads.JMeterVariables} object.
      */
     public static final String BROWSER = "Browser";
+
+    protected static final Map<String, WebDriver> webdrivers = new ConcurrentHashMap<String, WebDriver>();
 
     private static final String PROXY_PAC_URL = "WebDriverConfig.proxy_pac_url";
     private static final String HTTP_HOST = "WebDriverConfig.http_host";
@@ -159,4 +165,9 @@ public abstract class WebDriverConfig extends ConfigTestElement {
                 return proxyFactory.getSystemProxy();
         }
     }
+
+    protected String currentThreadName() {
+        return Thread.currentThread().getName();
+    }
+
 }

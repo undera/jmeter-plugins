@@ -5,6 +5,9 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.testelement.TestElement;
 
 public class FirefoxDriverConfigGui extends WebDriverConfigGui {
+
+    private static final long serialVersionUID = 1239147462983L;
+
     @Override
     public String getStaticLabel() {
         return JMeterPluginsUtils.prefixLabel("Firefox Driver Config");

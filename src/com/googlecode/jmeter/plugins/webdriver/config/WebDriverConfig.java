@@ -12,18 +12,18 @@ public abstract class WebDriverConfig extends ConfigTestElement {
      */
     public static final String BROWSER = "Browser";
 
-    private static final String PROXY_PAC_URL = "WebDriverSampler.proxy_pac_url";
-    private static final String HTTP_HOST = "WebDriverSampler.http_host";
-    private static final String HTTP_PORT = "WebDriverSampler.http_port";
-    private static final String USE_HTTP_FOR_ALL_PROTOCOLS = "WebDriverSampler.use_http_for_all_protocols";
-    private static final String HTTPS_HOST = "WebDriverSampler.https_host";
-    private static final String HTTPS_PORT = "WebDriverSampler.https_port";
-    private static final String FTP_HOST = "WebDriverSampler.ftp_host";
-    private static final String FTP_PORT = "WebDriverSampler.ftp_port";
-    private static final String SOCKS_HOST = "WebDriverSampler.socks_host";
-    private static final String SOCKS_PORT = "WebDriverSampler.socks_port";
-    private static final String NO_PROXY = "WebDriverSampler.no_proxy";
-    private static final String PROXY_TYPE = "WebDriverSampler.proxy_type";
+    private static final String PROXY_PAC_URL = "WebDriverConfig.proxy_pac_url";
+    private static final String HTTP_HOST = "WebDriverConfig.http_host";
+    private static final String HTTP_PORT = "WebDriverConfig.http_port";
+    private static final String USE_HTTP_FOR_ALL_PROTOCOLS = "WebDriverConfig.use_http_for_all_protocols";
+    private static final String HTTPS_HOST = "WebDriverConfig.https_host";
+    private static final String HTTPS_PORT = "WebDriverConfig.https_port";
+    private static final String FTP_HOST = "WebDriverConfig.ftp_host";
+    private static final String FTP_PORT = "WebDriverConfig.ftp_port";
+    private static final String SOCKS_HOST = "WebDriverConfig.socks_host";
+    private static final String SOCKS_PORT = "WebDriverConfig.socks_port";
+    private static final String NO_PROXY = "WebDriverConfig.no_proxy";
+    private static final String PROXY_TYPE = "WebDriverConfig.proxy_type";
 
     private final ProxyFactory proxyFactory;
 

@@ -22,8 +22,6 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
-    private static final long serialVersionUID = 241L;
-
     private static final int PROXY_FIELD_INDENT = 28;
 
     private static final int DEFAULT_PROXY_PORT = 8080;

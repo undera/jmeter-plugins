@@ -1,9 +1,11 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler.gui;
 
 import com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler;
+import jsyntaxpane.DefaultSyntaxKit;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jorphan.logging.LoggingManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,9 +14,15 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 
 	private static final long serialVersionUID = -3484685528176139410L;
 
+    private static final org.apache.log.Logger LOGGER = LoggingManager.getLoggerForClass();
+
+    static {
+        DefaultSyntaxKit.initKit();
+    }
+
 	JTextField parameters;
 
-	JTextArea script;
+	JEditorPane script;
 
 	public WebDriverSamplerGui() {
 		createGui();
@@ -77,32 +85,32 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 	}
 
 	private JPanel createParameterPanel() {
-		JLabel label = new JLabel("Parameters (-> String Parameters and String[] args)");
+		final JLabel label = new JLabel("Parameters (-> String Parameters and String[] args)");
 
 		parameters = new JTextField(10);
 		parameters.setName(WebDriverSampler.PARAMETERS);
 		label.setLabelFor(parameters);
 
-		JPanel parameterPanel = new JPanel(new BorderLayout(5, 0));
+		final JPanel parameterPanel = new JPanel(new BorderLayout(5, 0));
 		parameterPanel.add(label, BorderLayout.WEST);
 		parameterPanel.add(parameters, BorderLayout.CENTER);
 		return parameterPanel;
 	}
 
 	private JPanel createScriptPanel() {
-		script = new JTextArea();
-		script.setRows(4);
-		script.setLineWrap(true);
-		script.setWrapStyleWord(true);
+		script = new JEditorPane();
+        final JScrollPane scrollPane = new JScrollPane(script);
+        script.setContentType("text/javascript");
+        script.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
-		JLabel label = new JLabel("Script (see below for variables that are defined)"); // $NON-NLS-1$
+        final JLabel label = new JLabel("Script (see below for variables that are defined)"); // $NON-NLS-1$
 		label.setLabelFor(script);
 
-		JPanel panel = new JPanel(new BorderLayout());
+		final JPanel panel = new JPanel(new BorderLayout());
 		panel.add(label, BorderLayout.NORTH);
-		panel.add(new JScrollPane(script), BorderLayout.CENTER);
+        panel.add(scrollPane, BorderLayout.CENTER);
 
-		JTextArea explain = new JTextArea("The following variables are defined for the script\\:\\nLabel, Parameters, args, log, Browser, SampleResult, OUT");
+		final JTextArea explain = new JTextArea("The following variables are defined for the script\\:\\nLabel, Parameters, args, log, Browser, SampleResult, OUT");
 		explain.setLineWrap(true);
 		explain.setEditable(false);
 		explain.setBackground(this.getBackground());

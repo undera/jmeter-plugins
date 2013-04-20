@@ -1,6 +1,7 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler.gui;
 
 import com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler;
+import jsyntaxpane.syntaxkits.JavaScriptSyntaxKit;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.gui.JMeterGUIComponent;
 import org.hamcrest.CoreMatchers;
@@ -8,6 +9,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import javax.swing.text.EditorKit;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.internal.matchers.StringContains.containsString;
@@ -37,6 +41,11 @@ public class WebDriverSamplerGuiTest {
     }
 
     @Test
+    public void shouldReturnCanonicalClassNameAsLabelResource() {
+        assertThat(gui.getLabelResource(), is(gui.getClass().getCanonicalName()));
+    }
+
+    @Test
     public void shouldSetParameters() {
         gui.parameters.setText("parameter1 parameter2");
         final WebDriverSampler testElement = (WebDriverSampler) gui.createTestElement();
@@ -48,6 +57,12 @@ public class WebDriverSamplerGuiTest {
         gui.script.setText("some script");
         final WebDriverSampler testElement = (WebDriverSampler) gui.createTestElement();
         assertThat(testElement.getScript(), is("some script"));
+    }
+
+    @Test
+    public void shouldHaveAJavascriptSyntaxEditor() {
+        final EditorKit editorKit = gui.script.getEditorKitForContentType("text/javascript");
+        assertThat(editorKit, is(instanceOf(JavaScriptSyntaxKit.class)));
     }
 
     @Test

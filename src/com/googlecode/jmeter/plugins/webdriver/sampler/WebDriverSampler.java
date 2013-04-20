@@ -65,6 +65,7 @@ public class WebDriverSampler extends AbstractSampler {
             }
 
         } catch (Exception ex) {
+            LOGGER.error(ex.getMessage());
             res.setResponseMessage(ex.toString());
             res.setResponseCode("500");
             res.setSuccessful(false);

@@ -65,6 +65,7 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
     JTextArea noProxyList;
 
     public WebDriverConfigGui() {
+        createGui();
     }
 
     @Override
@@ -158,6 +159,19 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
         socksProxyHost.setText("");
         socksProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
         noProxyList.setText(DEFAULT_NO_PROXY_LIST);
+    }
+
+    private void createGui() {
+        setLayout(new BorderLayout(0, 5));
+
+        setBorder(makeBorder());
+        add(makeTitlePanel(), BorderLayout.NORTH);
+
+        final JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.add("Proxy", createProxyPanel());
+        tabbedPane.add(browserName(), createBrowserPanel());
+
+        add(tabbedPane, BorderLayout.CENTER);
     }
 
     private void createPacUrlProxy(JPanel panel, ButtonGroup group) {
@@ -276,6 +290,10 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
         systemProxy.setSelected(true);
         return mainPanel;
     }
+
+    protected abstract JPanel createBrowserPanel();
+
+    protected abstract String browserName();
 
     @Override
     public void itemStateChanged(ItemEvent itemEvent) {

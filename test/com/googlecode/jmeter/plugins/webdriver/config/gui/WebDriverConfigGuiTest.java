@@ -4,12 +4,14 @@ import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.gui.JMeterGUIComponent;
+import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
 import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemListener;
 
@@ -410,6 +412,16 @@ public class WebDriverConfigGuiTest {
         public WebDriverConfigGuiImpl() {
             setLayout(new BorderLayout(0, 5));
             add(createProxyPanel(), BorderLayout.CENTER);
+        }
+
+        @Override
+        protected JPanel createBrowserPanel() {
+            return new VerticalPanel();
+        }
+
+        @Override
+        protected String browserName() {
+            return "Mock Web Driver";
         }
 
         @Override

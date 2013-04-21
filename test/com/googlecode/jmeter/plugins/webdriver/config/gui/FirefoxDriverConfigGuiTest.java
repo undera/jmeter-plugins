@@ -31,6 +31,11 @@ public class FirefoxDriverConfigGuiTest {
     }
 
     @Test
+    public void shouldReturnCanonicalClassNameAsLabelResource() {
+        assertThat(gui.getLabelResource(), is(gui.getClass().getCanonicalName()));
+    }
+
+    @Test
     public void shouldReturnFirefoxDriverConfig() {
         assertThat(gui.createTestElement(), is(instanceOf(FirefoxDriverConfig.class)));
     }

@@ -38,6 +38,11 @@ public class WebDriverConfigGuiTest {
     }
 
     @Test
+    public void shouldReturnCanonicalClassNameAsLabelResource() {
+        assertThat(gui.getLabelResource(), is(gui.getClass().getCanonicalName()));
+    }
+
+    @Test
     public void shouldCreateSystemProxyByDefault() {
         final WebDriverConfig testElement = (WebDriverConfig) gui.createTestElement();
         assertThat(testElement.getProxyType(), is(ProxyType.SYSTEM));

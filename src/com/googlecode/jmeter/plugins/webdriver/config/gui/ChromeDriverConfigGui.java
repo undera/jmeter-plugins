@@ -50,6 +50,12 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
     }
 
     @Override
+    public void clearGui() {
+        super.clearGui();
+        chromeServicePath.setText("");
+    }
+
+    @Override
     protected JPanel createBrowserPanel() {
         return createServicePanel();  //To change body of implemented methods use File | Settings | File Templates.
     }

@@ -2,7 +2,6 @@ package com.googlecode.jmeter.plugins.webdriver.config.gui;
 
 import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
@@ -66,11 +65,6 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
 
     public WebDriverConfigGui() {
         createGui();
-    }
-
-    @Override
-    public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Web Driver Config");
     }
 
     @Override

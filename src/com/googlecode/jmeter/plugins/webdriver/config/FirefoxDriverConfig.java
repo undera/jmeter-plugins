@@ -14,12 +14,12 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class FirefoxDriverConfig extends WebDriverConfig implements ThreadListener, LoopIterationListener {
 
     private static final long serialVersionUID = 9239127462983L;
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger LOGGER = LoggingManager.getLoggerForClass();
 
     @Override
     public void threadStarted() {
         if(webdrivers.containsKey(currentThreadName())) {
-            log.warn("Thread: "+currentThreadName()+" already has a FirefoxDriver associated with it.  Ware there multiple FirefoxDriverConfigs created for a single Thread Group?");
+            LOGGER.warn("Thread: " + currentThreadName() + " already has a FirefoxDriver associated with it.  Ware there multiple FirefoxDriverConfigs created for a single Thread Group?");
             return;
         }
         webdrivers.put(currentThreadName(), new FirefoxDriver(createCapabilities()));

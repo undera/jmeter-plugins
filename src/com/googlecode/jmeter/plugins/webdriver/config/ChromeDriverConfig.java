@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChromeDriverConfig extends WebDriverConfig implements ThreadListener, LoopIterationListener {
 
     private static final long serialVersionUID = 9239127462983L;
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger LOGGER = LoggingManager.getLoggerForClass();
     private static final String CHROME_SERVICE_PATH = "ChromeDriverConfig.chromedriver_path";
 
     static final Map<String, ChromeDriverService> services = new ConcurrentHashMap<String, ChromeDriverService>();
@@ -28,7 +28,7 @@ public class ChromeDriverConfig extends WebDriverConfig implements ThreadListene
     @Override
     public void threadStarted() {
         if(webdrivers.containsKey(currentThreadName())) {
-            log.warn("Thread: "+currentThreadName()+" already has a ChromeDriver associated with it.  Ware there multiple ChromeDriverConfigs created for a single Thread Group?");
+            LOGGER.warn("Thread: " + currentThreadName() + " already has a ChromeDriver associated with it.  Ware there multiple ChromeDriverConfigs created for a single Thread Group?");
             return;
         }
         final ChromeDriverService service;
@@ -38,7 +38,7 @@ public class ChromeDriverConfig extends WebDriverConfig implements ThreadListene
             services.put(currentThreadName(), service);
             webdrivers.put(currentThreadName(), new ChromeDriver(service, createCapabilities()));
         } catch (IOException e) {
-            log.error("Failed to start chrome service", e);
+            LOGGER.error("Failed to start chrome service", e);
         }
     }
 

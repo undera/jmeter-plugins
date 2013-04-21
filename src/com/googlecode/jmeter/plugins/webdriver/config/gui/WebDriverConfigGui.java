@@ -6,8 +6,6 @@ import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +16,6 @@ import java.text.NumberFormat;
 public abstract class WebDriverConfigGui extends AbstractConfigGui implements ItemListener {
 
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getIntegerInstance();
-
-    private static final Logger log = LoggingManager.getLoggerForClass();
 
     private static final int PROXY_FIELD_INDENT = 28;
 

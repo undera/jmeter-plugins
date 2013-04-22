@@ -37,6 +37,10 @@ public class WebDriverSampler extends AbstractSampler {
 
     @Override
 	public SampleResult sample(Entry e) {
+        if(getWebDriver() == null) {
+            throw new IllegalArgumentException("Browser has not been configured.  Please ensure at least 1 WebDriverConfig is created for a ThreadGroup.");
+        }
+
         final SampleResult res = new SampleResult();
         res.setSampleLabel(getName());
         res.setSamplerData(toString());

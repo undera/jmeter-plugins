@@ -18,6 +18,7 @@ import java.net.MalformedURLException;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import static org.junit.internal.matchers.StringContains.containsString;
 import static org.mockito.Mockito.*;
 
@@ -119,5 +120,13 @@ public class WebDriverSamplerTest {
         assertThat(sampleResult.isSuccessful(), is(false));
 
         verify(browser, never()).getPageSource();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenBrowserNotConfigured() {
+        variables.remove(WebDriverConfig.BROWSER);
+        sampler.setScript("var x=1;");
+        sampler.sample(null);
+        fail("Did not throw expected exception"); // should throw exception if Browser is null
     }
 }

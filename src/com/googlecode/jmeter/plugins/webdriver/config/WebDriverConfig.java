@@ -4,19 +4,25 @@ import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyFactory;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyHostPort;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 import org.apache.jmeter.config.ConfigTestElement;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
+import org.apache.jmeter.engine.event.LoopIterationListener;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class WebDriverConfig extends ConfigTestElement {
+public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestElement implements LoopIterationListener {
     /**
      * This is the key used to store a WebDriver instance in the {@link org.apache.jmeter.threads.JMeterVariables} object.
      */
     public static final String BROWSER = "Browser";
 
-    protected static final Map<String, WebDriver> webdrivers = new ConcurrentHashMap<String, WebDriver>();
+    /**
+     * Ideally we would have stored the WebDriver instances in the JMeterVariables object, however the JMeterVariables
+     * is cleared BEFORE threadFinished() callback is called (hence would never be able to quit the WebDriver).
+     */
+    private static final Map<String, WebDriver> webdrivers = new ConcurrentHashMap<String, WebDriver>();
 
     private static final String PROXY_PAC_URL = "WebDriverConfig.proxy_pac_url";
     private static final String HTTP_HOST = "WebDriverConfig.http_host";
@@ -166,8 +172,36 @@ public abstract class WebDriverConfig extends ConfigTestElement {
         }
     }
 
+    @Override
+    public void iterationStart(LoopIterationEvent loopIterationEvent) {
+        getThreadContext().getVariables().putObject(WebDriverConfig.BROWSER, getThreadBrowser());
+    }
+
     protected String currentThreadName() {
         return Thread.currentThread().getName();
     }
 
+    protected T getThreadBrowser() {
+        return (T) webdrivers.get(currentThreadName());
+    }
+
+    protected boolean hasThreadBrowser() {
+        return webdrivers.containsKey(currentThreadName());
+    }
+
+    protected void setThreadBrowser(T browser) {
+        webdrivers.put(currentThreadName(), browser);
+    }
+
+    protected T removeThreadBrowser() {
+        return (T) webdrivers.remove(currentThreadName());
+    }
+
+    void clearThreadBrowsers() {
+        webdrivers.clear();
+    }
+
+    Map<String, WebDriver> getThreadBrowsers() {
+        return webdrivers;
+    }
 }

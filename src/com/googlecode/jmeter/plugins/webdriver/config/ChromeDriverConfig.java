@@ -1,12 +1,9 @@
 package com.googlecode.jmeter.plugins.webdriver.config;
 
-import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.apache.jmeter.engine.event.LoopIterationListener;
 import org.apache.jmeter.testelement.ThreadListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.remote.CapabilityType;
@@ -17,18 +14,17 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ChromeDriverConfig extends WebDriverConfig implements ThreadListener, LoopIterationListener {
+public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements ThreadListener {
 
     private static final long serialVersionUID = 9239127462983L;
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
     private static final String CHROME_SERVICE_PATH = "ChromeDriverConfig.chromedriver_path";
-
-    static final Map<String, ChromeDriverService> services = new ConcurrentHashMap<String, ChromeDriverService>();
+    private static final Map<String, ChromeDriverService> services = new ConcurrentHashMap<String, ChromeDriverService>();
 
     @Override
     public void threadStarted() {
-        if(webdrivers.containsKey(currentThreadName())) {
-            LOGGER.warn("Thread: " + currentThreadName() + " already has a ChromeDriver associated with it.  Ware there multiple ChromeDriverConfigs created for a single Thread Group?");
+        if(hasThreadBrowser()) {
+            LOGGER.warn("Thread: " + currentThreadName() + " already has a WebDriver("+ getThreadBrowser()+") associated with it. ThreadGroup can only contain a single WebDriverConfig.");
             return;
         }
         final ChromeDriverService service;
@@ -36,21 +32,15 @@ public class ChromeDriverConfig extends WebDriverConfig implements ThreadListene
             service = new ChromeDriverService.Builder().usingDriverExecutable(new File(getChromeDriverPath())).build();
             service.start();
             services.put(currentThreadName(), service);
-            webdrivers.put(currentThreadName(), new ChromeDriver(service, createCapabilities()));
+            setThreadBrowser(new ChromeDriver(service, createCapabilities()));
         } catch (IOException e) {
             LOGGER.error("Failed to start chrome service", e);
         }
     }
 
-    Capabilities createCapabilities() {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(CapabilityType.PROXY, createProxy());
-        return capabilities;
-    }
-
     @Override
     public void threadFinished() {
-        final WebDriver chromeDriverDriver = webdrivers.remove(currentThreadName());
+        final ChromeDriver chromeDriverDriver = removeThreadBrowser();
         if(chromeDriverDriver != null) {
             chromeDriverDriver.quit();
         }
@@ -58,15 +48,6 @@ public class ChromeDriverConfig extends WebDriverConfig implements ThreadListene
         if(service != null && service.isRunning()) {
             service.stop();
         }
-    }
-
-    public WebDriver getCurrentThreadBrowser() {
-        return webdrivers.get(currentThreadName());
-    }
-
-    @Override
-    public void iterationStart(LoopIterationEvent loopIterationEvent) {
-        getThreadContext().getVariables().putObject(WebDriverConfig.BROWSER, getCurrentThreadBrowser());
     }
 
     public void setChromeDriverPath(String path) {
@@ -77,5 +58,13 @@ public class ChromeDriverConfig extends WebDriverConfig implements ThreadListene
         return getPropertyAsString(CHROME_SERVICE_PATH);
     }
 
+    Capabilities createCapabilities() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.PROXY, createProxy());
+        return capabilities;
+    }
 
+    Map<String, ChromeDriverService> getServices() {
+        return services;
+    }
 }

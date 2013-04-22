@@ -15,13 +15,9 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.internal.matchers.IsCollectionContaining.hasItem;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -48,7 +44,7 @@ public class FirefoxDriverConfigTest {
 
     @After
     public void resetConfig() {
-        FirefoxDriverConfig.webdrivers.clear();
+        config.clearThreadBrowsers();
         JMeterContextService.getContext().setVariables(null);
     }
 
@@ -64,7 +60,7 @@ public class FirefoxDriverConfigTest {
 
         config.threadStarted();
 
-        assertThat((FirefoxDriver) config.getCurrentThreadBrowser(), is(mockFirefoxDriver));
+        assertThat(config.getThreadBrowser(), is(mockFirefoxDriver));
         verifyNew(FirefoxDriver.class, times(1)).withArguments(isA(Capabilities.class));
     }
 
@@ -76,66 +72,31 @@ public class FirefoxDriverConfigTest {
         config.threadStarted();
         config.threadStarted();
 
-        assertThat((FirefoxDriver) config.getCurrentThreadBrowser(), is(mockFirefoxDriver));
+        assertThat(config.getThreadBrowser(), is(mockFirefoxDriver));
         verifyNew(FirefoxDriver.class, times(1)).withArguments(isA(Capabilities.class));
     }
 
     @Test
     public void shouldQuitWebDriverWhenThreadFinishedIsInvoked() throws Exception {
         FirefoxDriver mockFirefoxDriver = Mockito.mock(FirefoxDriver.class);
-        FirefoxDriverConfig.webdrivers.put(config.currentThreadName(), mockFirefoxDriver);
+        config.setThreadBrowser(mockFirefoxDriver);
 
         config.threadFinished();
 
-        assertThat(config.getCurrentThreadBrowser(), is(nullValue()));
+        assertThat(config.getThreadBrowser(), is(nullValue()));
         verify(mockFirefoxDriver, times(1)).quit();
     }
 
     @Test
     public void shouldBeAbleToCallThreadFinishedMultipleTimes() throws Exception {
         FirefoxDriver mockFirefoxDriver = Mockito.mock(FirefoxDriver.class);
-        FirefoxDriverConfig.webdrivers.put(config.currentThreadName(), mockFirefoxDriver);
+        config.setThreadBrowser(mockFirefoxDriver);
 
         config.threadFinished();
         config.threadFinished();
 
-        assertThat(config.getCurrentThreadBrowser(), is(nullValue()));
+        assertThat(config.getThreadBrowser(), is(nullValue()));
         verify(mockFirefoxDriver, times(1)).quit();
-    }
-
-    @Test
-    public void shouldCreateWebDriverPerThreadWhenThreadStartedIsInvoked() throws Exception {
-        // mock the browsers that will be created per thread
-        FirefoxDriver firstFirefox = Mockito.mock(FirefoxDriver.class);
-        FirefoxDriver secondFirefox = Mockito.mock(FirefoxDriver.class);
-        whenNew(FirefoxDriver.class).withParameterTypes(Capabilities.class).withArguments(isA(Capabilities.class)).thenReturn(firstFirefox, secondFirefox);
-
-        // the list will store the returned browsers for each thread so they can be verified.
-        final List<FirefoxDriver> firefoxesFromThread = new CopyOnWriteArrayList<FirefoxDriver>();
-        Thread firstThread = new Thread() {
-            public void run() {
-                config.threadStarted();
-                firefoxesFromThread.add((FirefoxDriver) config.getCurrentThreadBrowser());
-            }
-        };
-        Thread secondThread = new Thread() {
-            public void run() {
-                config.threadStarted();
-                firefoxesFromThread.add((FirefoxDriver) config.getCurrentThreadBrowser());
-            }
-        };
-
-        // start and wait for threads to finish
-        firstThread.start();
-        secondThread.start();
-        firstThread.join();
-        secondThread.join();
-
-        // assertions
-        assertThat(firefoxesFromThread.size(), is(2));
-        assertThat(firefoxesFromThread, hasItem(firstFirefox));
-        assertThat(firefoxesFromThread, hasItem(secondFirefox));
-        verifyNew(FirefoxDriver.class, times(2)).withArguments(isA(Capabilities.class));
     }
 
     @Test
@@ -158,6 +119,6 @@ public class FirefoxDriverConfigTest {
         config.iterationStart(null);
 
         assertThat(variables.getObject(WebDriverConfig.BROWSER), is(notNullValue()));
-        assertThat((FirefoxDriver) variables.getObject(WebDriverConfig.BROWSER), is(config.getCurrentThreadBrowser()));
+        assertThat((FirefoxDriver) variables.getObject(WebDriverConfig.BROWSER), is(config.getThreadBrowser()));
     }
 }

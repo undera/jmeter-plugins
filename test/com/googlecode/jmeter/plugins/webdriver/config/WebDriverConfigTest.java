@@ -3,28 +3,43 @@ package com.googlecode.jmeter.plugins.webdriver.config;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyFactory;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyHostPort;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
+import org.apache.jmeter.engine.event.LoopIterationListener;
+import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jmeter.threads.JMeterVariables;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.WebDriver;
 
 import java.net.MalformedURLException;
+import java.util.Collections;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.internal.matchers.IsCollectionContaining.hasItem;
 import static org.mockito.Mockito.*;
 
 public class WebDriverConfigTest {
 
-    private WebDriverConfig config;
-
     private ProxyFactory proxyFactory;
+    private WebDriverConfig config;
+    private JMeterVariables variables;
 
     @Before
     public void createConfig() {
         proxyFactory = mock(ProxyFactory.class);
         config = new WebDriverConfigImpl(proxyFactory);
+        variables = new JMeterVariables();
+        JMeterContextService.getContext().setVariables(variables);
     }
+
+    @After
+    public void resetConfig() {
+        config.clearThreadBrowsers();
+        JMeterContextService.getContext().setVariables(null);
+    }
+
 
     @Test
     public void shouldAssignProxyPacUrl() {
@@ -223,6 +238,106 @@ public class WebDriverConfigTest {
 
         assertThat(proxy, is(notNullValue()));
         verify(proxyFactory, times(1)).getConfigUrlProxy(isA(String.class));
+    }
+
+    @Test
+    public void shouldAddBrowserForCurrentThread() {
+        WebDriver browser = mock(WebDriver.class);
+
+        config.setThreadBrowser(browser);
+
+        assertThat(config.getThreadBrowsers().size(), is(1));
+        assertThat(config.getThreadBrowsers().values(), hasItem(browser));
+    }
+
+    @Test
+    public void shouldOnlyHaveOneBrowserForCurrentThread() {
+        WebDriver firstBrowser = mock(WebDriver.class);
+        WebDriver secondBrowser = mock(WebDriver.class);
+
+        config.setThreadBrowser(firstBrowser);
+        config.setThreadBrowser(secondBrowser);
+
+        assertThat(config.getThreadBrowsers().size(), is(1));
+        assertThat(config.getThreadBrowsers().values(), hasItem(secondBrowser));
+    }
+
+    @Test
+    public void shouldBeAbleToAddMultipleBrowsersForEachThread() throws InterruptedException {
+        // mock the browsers that will be created per thread
+        final WebDriver firstBrowser = mock(WebDriver.class);
+        final WebDriver secondBrowser = mock(WebDriver.class);
+
+        Thread firstThread = new Thread() {
+            public void run() {
+                config.setThreadBrowser(firstBrowser);
+            }
+        };
+        Thread secondThread = new Thread() {
+            public void run() {
+                config.setThreadBrowser(secondBrowser);
+            }
+        };
+
+        // start and wait for threads to finish
+        firstThread.start();
+        secondThread.start();
+        firstThread.join();
+        secondThread.join();
+
+        // assertions
+        assertThat(config.getThreadBrowsers().size(), is(2));
+        assertThat(config.getThreadBrowsers().values(), hasItem(firstBrowser));
+        assertThat(config.getThreadBrowsers().values(), hasItem(secondBrowser));
+    }
+
+    @Test
+    public void shouldHaveBrowserForCurrentThread() {
+        WebDriver browser = mock(WebDriver.class);
+
+        config.setThreadBrowser(browser);
+
+        assertThat(config.hasThreadBrowser(), is(true));
+    }
+
+    @Test
+    public void shouldNotHaveBrowserForCurrentThread() {
+        assertThat(config.hasThreadBrowser(), is(false));
+    }
+
+    @Test
+    public void shouldRemoveBrowserFromCurrentThread() {
+        WebDriver browser = mock(WebDriver.class);
+        config.setThreadBrowser(browser);
+
+        final WebDriver removed = config.removeThreadBrowser();
+
+        assertThat(config.getThreadBrowsers(), is(Collections.emptyMap()));
+        assertThat(browser, is(removed));
+    }
+
+    @Test
+    public void shouldRemoveBrowserFromCurrentThreadEvenIfNoBrowserPresent() {
+        final WebDriver removed = config.removeThreadBrowser();
+
+        assertThat(config.getThreadBrowsers(), is(Collections.emptyMap()));
+        assertThat(removed, is(nullValue()));
+    }
+
+    @Test
+    public void shouldImplementLoopIterationListener() {
+        assertThat(config, is(instanceOf(LoopIterationListener.class)));
+    }
+
+    @Test
+    public void shouldAddWebDriverToJMeterVariablesWhenIterationStarts() throws Exception {
+        WebDriver browser = mock(WebDriver.class);
+        config.setThreadBrowser(browser);
+
+        config.iterationStart(null);
+
+        assertThat(variables.getObject(WebDriverConfig.BROWSER), is(notNullValue()));
+        assertThat((WebDriver) variables.getObject(WebDriverConfig.BROWSER), is(browser));
     }
 
     private static class WebDriverConfigImpl extends WebDriverConfig {

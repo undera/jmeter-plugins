@@ -10,7 +10,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> implements ThreadListener {
 
-    private static final long serialVersionUID = 9239127462983L;
+    private static final long serialVersionUID = 100L;
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
 
     @Override

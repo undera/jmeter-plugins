@@ -6,15 +6,15 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class WebDriverSamplerGui extends AbstractSamplerGui {
 
-	private static final long serialVersionUID = -3484685528176139410L;
-
-    private static final org.apache.log.Logger LOGGER = LoggingManager.getLoggerForClass();
+    private static final long serialVersionUID = 100L;
+    private static final Logger LOGGER = LoggingManager.getLoggerForClass();
 
     static {
         DefaultSyntaxKit.initKit();

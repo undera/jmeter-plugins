@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements ThreadListener {
 
-    private static final long serialVersionUID = 9239127462983L;
+    private static final long serialVersionUID = 100L;
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
     private static final String CHROME_SERVICE_PATH = "ChromeDriverConfig.chromedriver_path";
     private static final Map<String, ChromeDriverService> services = new ConcurrentHashMap<String, ChromeDriverService>();

@@ -17,17 +17,12 @@ import javax.script.*;
  * provides a scripting mechanism via. Javascript to control the browser instance.
  */
 public class WebDriverSampler extends AbstractSampler {
-	
+
+    private static final long serialVersionUID = 100L;
     public static final String SCRIPT = "WebDriverSampler.script";
-
 	public static final String PARAMETERS = "WebDriverSampler.parameters";
-    
 	private static final Logger LOGGER = LoggingManager.getLoggerForClass();
-	
-	private static final long serialVersionUID = 234L;
-
     private static final String DEFAULT_ENGINE = "JavaScript";
-
     private final transient ScriptEngineManager scriptEngineManager;
 
     public WebDriverSampler() {

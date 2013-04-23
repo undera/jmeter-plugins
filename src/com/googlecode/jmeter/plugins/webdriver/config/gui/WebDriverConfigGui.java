@@ -15,12 +15,10 @@ import java.text.NumberFormat;
 
 public abstract class WebDriverConfigGui extends AbstractConfigGui implements ItemListener {
 
+    private static final long serialVersionUID = 100L;
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getIntegerInstance();
-
     private static final int PROXY_FIELD_INDENT = 28;
-
     private static final int DEFAULT_PROXY_PORT = 8080;
-
     private static final String DEFAULT_NO_PROXY_LIST = "localhost";
 
     static {

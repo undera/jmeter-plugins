@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestElement implements LoopIterationListener {
+
+    private static final long serialVersionUID = 100L;
+
     /**
      * This is the key used to store a WebDriver instance in the {@link org.apache.jmeter.threads.JMeterVariables} object.
      */

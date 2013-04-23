@@ -10,8 +10,7 @@ import javax.swing.*;
 
 public class ChromeDriverConfigGui extends WebDriverConfigGui {
 
-    private static final long serialVersionUID = 1239147462983L;
-
+    private static final long serialVersionUID = 100L;
     JTextField chromeServicePath;
 
     @Override

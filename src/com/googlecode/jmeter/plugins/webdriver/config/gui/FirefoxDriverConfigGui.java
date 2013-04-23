@@ -9,7 +9,7 @@ import javax.swing.*;
 
 public class FirefoxDriverConfigGui extends WebDriverConfigGui {
 
-    private static final long serialVersionUID = 1239147462983L;
+    private static final long serialVersionUID = 100L;
 
     @Override
     public String getStaticLabel() {

@@ -19,7 +19,7 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> implemen
             LOGGER.warn("Thread: " + currentThreadName() + " already has a WebDriver("+ getThreadBrowser()+") associated with it. ThreadGroup can only contain a single WebDriverConfig.");
             return;
         }
-        setThreadBrowser(new FirefoxDriver(createCapabilities()));
+        setThreadBrowser(createBrowser());
     }
 
     Capabilities createCapabilities() {
@@ -34,5 +34,10 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> implemen
         if(firefoxDriver != null) {
             firefoxDriver.quit();
         }
+    }
+
+    @Override
+    protected FirefoxDriver createBrowser() {
+        return new FirefoxDriver(createCapabilities());
     }
 }

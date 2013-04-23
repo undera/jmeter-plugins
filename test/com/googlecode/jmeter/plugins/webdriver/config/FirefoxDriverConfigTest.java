@@ -54,6 +54,17 @@ public class FirefoxDriverConfigTest {
     }
 
     @Test
+    public void shouldCreateFirefox() throws Exception {
+        FirefoxDriver mockFirefoxDriver = Mockito.mock(FirefoxDriver.class);
+        whenNew(FirefoxDriver.class).withParameterTypes(Capabilities.class).withArguments(isA(Capabilities.class)).thenReturn(mockFirefoxDriver);
+
+        final FirefoxDriver browser = config.createBrowser();
+
+        assertThat(browser, is(mockFirefoxDriver));
+        verifyNew(FirefoxDriver.class, times(1)).withArguments(isA(Capabilities.class));
+    }
+
+    @Test
     public void shouldCreateWebDriverWhenThreadStartedIsInvoked() throws Exception {
         FirefoxDriver mockFirefoxDriver = Mockito.mock(FirefoxDriver.class);
         whenNew(FirefoxDriver.class).withParameterTypes(Capabilities.class).withArguments(isA(Capabilities.class)).thenReturn(mockFirefoxDriver);

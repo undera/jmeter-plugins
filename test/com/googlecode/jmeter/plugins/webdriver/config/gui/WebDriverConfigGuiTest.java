@@ -10,6 +10,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,11 +36,6 @@ public class WebDriverConfigGuiTest {
     @Test
     public void shouldImplementJMeterGUIComponent() {
         assertThat(gui, is(CoreMatchers.instanceOf(JMeterGUIComponent.class)));
-    }
-
-    @Test
-    public void shouldReturnCanonicalClassNameAsLabelResource() {
-        assertThat(gui.getLabelResource(), is(gui.getClass().getCanonicalName()));
     }
 
     @Test
@@ -260,6 +256,16 @@ public class WebDriverConfigGuiTest {
     }
 
     @Test
+    public void shouldSetExperimentalValuesOnConfigure() {
+        WebDriverConfig config = new WebDriverConfigImpl();
+        config.setRecreateBrowserOnIterationStart(true);
+
+        gui.configure(config);
+
+        assertThat(gui.recreateBrowserOnIterationStart.isSelected(), is(true));
+    }
+
+    @Test
     public void shouldSetNoProxyOnConfigure() {
         WebDriverConfig config = new WebDriverConfigImpl();
         config.setProxyType(ProxyType.DIRECT);
@@ -412,6 +418,15 @@ public class WebDriverConfigGuiTest {
         assertThat(gui.noProxyList.isEnabled(), is(false));
     }
 
+    @Test
+    public void shouldSetRecreateBrowser() {
+        gui.recreateBrowserOnIterationStart.setSelected(true);
+        final WebDriverConfig testElement = (WebDriverConfig) gui.createTestElement();
+        assertThat(testElement.isRecreateBrowserOnIterationStart(), is(true));
+    }
+
+
+
     private static class WebDriverConfigGuiImpl extends WebDriverConfigGui {
 
         public WebDriverConfigGuiImpl() {
@@ -430,6 +445,11 @@ public class WebDriverConfigGuiTest {
         }
 
         @Override
+        public String getLabelResource() {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
         public TestElement createTestElement() {
             final WebDriverConfigImpl config = new WebDriverConfigImpl();
             modifyTestElement(config);
@@ -438,5 +458,9 @@ public class WebDriverConfigGuiTest {
     }
 
     private static class WebDriverConfigImpl extends WebDriverConfig {
+        @Override
+        protected WebDriver createBrowser() {
+            return null;
+        }
     }
 }

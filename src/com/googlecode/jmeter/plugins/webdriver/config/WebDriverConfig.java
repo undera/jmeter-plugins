@@ -6,6 +6,8 @@ import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 
@@ -15,6 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestElement implements LoopIterationListener {
 
     private static final long serialVersionUID = 100L;
+    private static final Logger LOGGER = LoggingManager.getLoggerForClass();
+
 
     /**
      * This is the key used to store a WebDriver instance in the {@link org.apache.jmeter.threads.JMeterVariables} object.
@@ -39,6 +43,10 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     private static final String SOCKS_PORT = "WebDriverConfig.socks_port";
     private static final String NO_PROXY = "WebDriverConfig.no_proxy";
     private static final String PROXY_TYPE = "WebDriverConfig.proxy_type";
+    /*
+     * THE FOLLOWING CONFIGS ARE EXPERIMENTAL AND ARE SUBJECT TO CHANGE/REMOVAL.
+     */
+    private static final String RECREATE_ON_ITERATION_START = "WebDriverConfig.reset_per_iteration";
 
     private final ProxyFactory proxyFactory;
 
@@ -177,12 +185,26 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
+        if(isRecreateBrowserOnIterationStart()) {
+            final T browser = getThreadBrowser();
+            if(browser != null) {
+                browser.quit();
+            }
+            setThreadBrowser(createBrowser());
+        }
         getThreadContext().getVariables().putObject(WebDriverConfig.BROWSER, getThreadBrowser());
     }
 
     protected String currentThreadName() {
         return Thread.currentThread().getName();
     }
+
+    /**
+     * This method will always return a new instance of a {@link WebDriver} class.
+     *
+     * @return a new {@link WebDriver} object.
+     */
+    protected abstract T createBrowser();
 
     protected T getThreadBrowser() {
         return (T) webdrivers.get(currentThreadName());
@@ -193,7 +215,9 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     }
 
     protected void setThreadBrowser(T browser) {
-        webdrivers.put(currentThreadName(), browser);
+        if(browser != null) {
+            webdrivers.put(currentThreadName(), browser);
+        }
     }
 
     protected T removeThreadBrowser() {
@@ -206,5 +230,13 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
     Map<String, WebDriver> getThreadBrowsers() {
         return webdrivers;
+    }
+
+    public boolean isRecreateBrowserOnIterationStart() {
+        return getPropertyAsBoolean(RECREATE_ON_ITERATION_START);
+    }
+
+    public void setRecreateBrowserOnIterationStart(boolean recreate) {
+        setProperty(RECREATE_ON_ITERATION_START, recreate);
     }
 }

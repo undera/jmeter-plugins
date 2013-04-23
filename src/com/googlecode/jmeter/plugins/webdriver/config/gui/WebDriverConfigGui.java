@@ -57,13 +57,13 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
 
     JTextArea noProxyList;
 
+    /*
+     * THE FOLLOWING ATTRIBUTES ARE EXPERIMENTAL - USE WITH CAUTION
+     */
+    JCheckBox recreateBrowserOnIterationStart;
+
     public WebDriverConfigGui() {
         createGui();
-    }
-
-    @Override
-    public String getLabelResource() {
-        return getClass().getCanonicalName();
     }
 
     @Override
@@ -98,6 +98,9 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
             socksProxyHost.setText(webDriverConfig.getSocksHost());
             socksProxyPort.setText(String.valueOf(webDriverConfig.getSocksPort()));
             noProxyList.setText(webDriverConfig.getNoProxyHost());
+
+            // EXPERIMENTAL
+            recreateBrowserOnIterationStart.setSelected(webDriverConfig.isRecreateBrowserOnIterationStart());
         }
     }
 
@@ -128,6 +131,9 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
             webDriverConfig.setSocksHost(socksProxyHost.getText());
             webDriverConfig.setSocksPort(Integer.parseInt(socksProxyPort.getText()));
             webDriverConfig.setNoProxyHost(noProxyList.getText());
+
+            // EXPERIMENTAL
+            webDriverConfig.setRecreateBrowserOnIterationStart(recreateBrowserOnIterationStart.isSelected());
         }
     }
 
@@ -158,8 +164,25 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
         final JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Proxy", createProxyPanel());
         tabbedPane.add(browserName(), createBrowserPanel());
+        tabbedPane.add("Experimental", createExperimentalPanel());
 
         add(tabbedPane, BorderLayout.CENTER);
+    }
+
+    private JPanel createExperimentalPanel() {
+        JPanel panel = new VerticalPanel();
+
+        // LABEL
+        JLabel experimentalLabel = new JLabel("EXPERIMENTAL PROPERTIES - USE AT YOUR DISCRETION");
+        experimentalLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
+        panel.add(experimentalLabel);
+
+        // EXPERIMENTAL PROPERTIES
+        recreateBrowserOnIterationStart = new JCheckBox("Create a new Browser at the start of each iteration");
+        recreateBrowserOnIterationStart.setSelected(false);
+        panel.add(recreateBrowserOnIterationStart);
+
+        return panel;
     }
 
     private void createPacUrlProxy(JPanel panel, ButtonGroup group) {

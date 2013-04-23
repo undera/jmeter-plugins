@@ -27,15 +27,7 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
             LOGGER.warn("Thread: " + currentThreadName() + " already has a WebDriver("+ getThreadBrowser()+") associated with it. ThreadGroup can only contain a single WebDriverConfig.");
             return;
         }
-        final ChromeDriverService service;
-        try {
-            service = new ChromeDriverService.Builder().usingDriverExecutable(new File(getChromeDriverPath())).build();
-            service.start();
-            services.put(currentThreadName(), service);
-            setThreadBrowser(new ChromeDriver(service, createCapabilities()));
-        } catch (IOException e) {
-            LOGGER.error("Failed to start chrome service", e);
-        }
+        setThreadBrowser(createBrowser());
     }
 
     @Override
@@ -66,5 +58,27 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
 
     Map<String, ChromeDriverService> getServices() {
         return services;
+    }
+
+    @Override
+    protected ChromeDriver createBrowser() {
+        final ChromeDriverService service = getThreadService();
+        return service != null ? new ChromeDriver(service, createCapabilities()) : null;
+    }
+
+    private ChromeDriverService getThreadService() {
+        ChromeDriverService service = services.get(currentThreadName());
+        if(service != null) {
+            return service;
+        }
+        try {
+            service = new ChromeDriverService.Builder().usingDriverExecutable(new File(getChromeDriverPath())).build();
+            service.start();
+            services.put(currentThreadName(), service);
+        } catch (IOException e) {
+            LOGGER.error("Failed to start chrome service", e);
+            service = null;
+        }
+        return service;
     }
 }

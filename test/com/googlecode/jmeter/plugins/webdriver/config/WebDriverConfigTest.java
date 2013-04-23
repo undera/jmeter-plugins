@@ -3,6 +3,7 @@ package com.googlecode.jmeter.plugins.webdriver.config;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyFactory;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyHostPort;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
+import edu.emory.mathcs.backport.java.util.Arrays;
 import org.apache.jmeter.engine.event.LoopIterationListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
@@ -14,6 +15,8 @@ import org.openqa.selenium.WebDriver;
 
 import java.net.MalformedURLException;
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
@@ -241,11 +244,24 @@ public class WebDriverConfigTest {
     }
 
     @Test
-    public void shouldAddBrowserForCurrentThread() {
+    public void shouldSetBrowserForCurrentThread() {
         WebDriver browser = mock(WebDriver.class);
 
         config.setThreadBrowser(browser);
 
+        assertThat(config.getThreadBrowsers().size(), is(1));
+        assertThat(config.getThreadBrowsers().values(), hasItem(browser));
+    }
+
+    @Test
+    public void shouldNotSetNullBrowserForCurrentThread() {
+        WebDriver browser = mock(WebDriver.class);
+
+        config.setThreadBrowser(browser);
+        assertThat(config.getThreadBrowsers().size(), is(1));
+        assertThat(config.getThreadBrowsers().values(), hasItem(browser));
+
+        config.setThreadBrowser(null);
         assertThat(config.getThreadBrowsers().size(), is(1));
         assertThat(config.getThreadBrowsers().values(), hasItem(browser));
     }
@@ -330,7 +346,7 @@ public class WebDriverConfigTest {
     }
 
     @Test
-    public void shouldAddWebDriverToJMeterVariablesWhenIterationStarts() throws Exception {
+    public void shouldAddBrowserToJMeterVariablesWhenIterationStarts() throws Exception {
         WebDriver browser = mock(WebDriver.class);
         config.setThreadBrowser(browser);
 
@@ -340,9 +356,50 @@ public class WebDriverConfigTest {
         assertThat((WebDriver) variables.getObject(WebDriverConfig.BROWSER), is(browser));
     }
 
+    @Test
+    public void shouldAssignRecreateBrowserOnIterationStart() {
+        config.setRecreateBrowserOnIterationStart(true);
+
+        assertThat(config.isRecreateBrowserOnIterationStart(), is(true));
+    }
+
+    @Test
+    public void byDefaultShouldNotRecreateBrowserOnIterationStart() {
+        assertThat(config.isRecreateBrowserOnIterationStart(), is(false));
+    }
+
+    @Test
+    public void shouldRecreateBrowserOnEachIterationStart() {
+        final WebDriver firstBrowser = mock(WebDriver.class);
+        final WebDriver secondBrowser = mock(WebDriver.class);
+        this.config = new WebDriverConfigImpl(proxyFactory, firstBrowser, secondBrowser);
+        this.config.setRecreateBrowserOnIterationStart(true);
+
+        config.iterationStart(null);
+        assertThat((WebDriver) variables.getObject(WebDriverConfig.BROWSER), is(firstBrowser));
+        config.iterationStart(null);
+        assertThat((WebDriver) variables.getObject(WebDriverConfig.BROWSER), is(secondBrowser));
+
+        verify(firstBrowser, times(1)).quit();
+    }
+
     private static class WebDriverConfigImpl extends WebDriverConfig {
-        public WebDriverConfigImpl(ProxyFactory proxyFactory) {
+
+        final List<WebDriver> browsers = new CopyOnWriteArrayList<WebDriver>();
+
+        /**
+         *
+         * @param proxyFactory mock ProxyFactory to use
+         * @param browsers the list of browsers (in order) to return when createBrowser() method is invoked.
+         */
+        public WebDriverConfigImpl(ProxyFactory proxyFactory, WebDriver... browsers) {
             super(proxyFactory);
+            this.browsers.addAll(Arrays.asList(browsers));
+        }
+
+        @Override
+        protected WebDriver createBrowser() {
+            return (browsers.isEmpty() ? null : browsers.remove(0));
         }
     };
 }

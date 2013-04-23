@@ -59,6 +59,39 @@ public class ChromeDriverConfigTest {
     }
 
     @Test
+    public void shouldCreateChrome() throws Exception {
+        ChromeDriver mockChromeDriver = mock(ChromeDriver.class);
+        whenNew(ChromeDriver.class).withParameterTypes(ChromeDriverService.class, Capabilities.class).withArguments(isA(ChromeDriverService.class), isA(Capabilities.class)).thenReturn(mockChromeDriver);
+        ChromeDriverService.Builder mockServiceBuilder = mock(ChromeDriverService.Builder.class);
+        whenNew(ChromeDriverService.Builder.class).withNoArguments().thenReturn(mockServiceBuilder);
+        when(mockServiceBuilder.usingDriverExecutable(isA(File.class))).thenReturn(mockServiceBuilder);
+        ChromeDriverService mockService = mock(ChromeDriverService.class);
+        when(mockServiceBuilder.build()).thenReturn(mockService);
+
+        final ChromeDriver browser = config.createBrowser();
+
+        assertThat(browser, is(mockChromeDriver));
+        verifyNew(ChromeDriver.class, times(1)).withArguments(isA(ChromeDriverService.class), isA(Capabilities.class));
+        verify(mockServiceBuilder, times(1)).build();
+    }
+
+    @Test
+    public void shouldNotCreateChromeWhenStartingServiceThrowsAnException() throws Exception {
+        ChromeDriverService.Builder mockServiceBuilder = mock(ChromeDriverService.Builder.class);
+        whenNew(ChromeDriverService.Builder.class).withNoArguments().thenReturn(mockServiceBuilder);
+        when(mockServiceBuilder.usingDriverExecutable(isA(File.class))).thenReturn(mockServiceBuilder);
+        ChromeDriverService mockService = mock(ChromeDriverService.class);
+        when(mockServiceBuilder.build()).thenReturn(mockService);
+        doThrow(new IOException("Stubbed exception")).when(mockService).start();
+
+        final ChromeDriver browser = config.createBrowser();
+
+        assertThat(browser, is(nullValue()));
+        assertThat(config.getServices(), is(Collections.<String, ChromeDriverService>emptyMap()));
+        verify(mockServiceBuilder, times(1)).build();
+    }
+
+    @Test
     public void shouldCreateWebDriverWhenThreadStartedIsInvoked() throws Exception {
         ChromeDriver mockChromeDriver = mock(ChromeDriver.class);
         whenNew(ChromeDriver.class).withParameterTypes(ChromeDriverService.class, Capabilities.class).withArguments(isA(ChromeDriverService.class), isA(Capabilities.class)).thenReturn(mockChromeDriver);
@@ -94,22 +127,6 @@ public class ChromeDriverConfigTest {
         assertThat(config.getServices().size(), is(1));
         assertThat(config.getServices().values(), hasItem(mockService));
         verifyNew(ChromeDriver.class, times(1)).withArguments(isA(ChromeDriverService.class), isA(Capabilities.class));
-        verify(mockServiceBuilder, times(1)).build();
-    }
-
-    @Test
-    public void shouldNotContainWebDriverWhenStartingServiceThrowsAnException() throws Exception {
-        ChromeDriverService.Builder mockServiceBuilder = mock(ChromeDriverService.Builder.class);
-        whenNew(ChromeDriverService.Builder.class).withNoArguments().thenReturn(mockServiceBuilder);
-        when(mockServiceBuilder.usingDriverExecutable(isA(File.class))).thenReturn(mockServiceBuilder);
-        ChromeDriverService mockService = mock(ChromeDriverService.class);
-        when(mockServiceBuilder.build()).thenReturn(mockService);
-        doThrow(new IOException("Stubbed exception")).when(mockService).start();
-
-        config.threadStarted();
-
-        assertThat(config.getThreadBrowser(), is(nullValue()));
-        assertThat(config.getServices(), is(Collections.<String, ChromeDriverService>emptyMap()));
         verify(mockServiceBuilder, times(1)).build();
     }
 

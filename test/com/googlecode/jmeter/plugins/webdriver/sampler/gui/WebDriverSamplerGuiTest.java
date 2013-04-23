@@ -11,10 +11,8 @@ import org.junit.Test;
 
 import javax.swing.text.EditorKit;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
-import static org.junit.internal.matchers.StringContains.containsString;
 
 public class WebDriverSamplerGuiTest {
 

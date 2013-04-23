@@ -15,11 +15,9 @@ import javax.script.ScriptEngine;
 import java.io.PrintStream;
 import java.net.MalformedURLException;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import static org.junit.internal.matchers.StringContains.containsString;
 import static org.mockito.Mockito.*;
 
 public class WebDriverSamplerTest {

@@ -21,17 +21,13 @@ public class FileSystem {
     }
 
     public static void copyFile(String source, String destination) throws IOException {
-        FileChannel in = null;
         FileChannel out = null;
         try {
-            in = new FileInputStream(source).getChannel();
+            FileChannel in = new FileInputStream(source).getChannel();
             File outFile = new File(destination);
             out = new FileOutputStream(outFile).getChannel();
             in.transferTo(0, in.size(), out);
         } finally {
-            if (in != null) {
-                in.close();
-            }
             if (out != null) {
                 out.close();
             }

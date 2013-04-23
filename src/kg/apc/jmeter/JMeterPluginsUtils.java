@@ -7,10 +7,10 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import org.apache.jmeter.engine.util.CompoundVariable;
+import org.apache.jmeter.gui.AbstractJMeterGuiComponent;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -30,7 +31,6 @@ import org.apache.jmeter.util.JMeterUtils;
  */
 public abstract class JMeterPluginsUtils {
 
-    public static String PLUGINS_VERSION = "0.5.7 snapshot";
     private static String PLUGINS_PREFIX = "jp@gc - ";
     private static boolean prefixPlugins = true;
     public static final String WIKI_BASE = "http://code.google.com/p/jmeter-plugins/wiki/";
@@ -96,8 +96,8 @@ public abstract class JMeterPluginsUtils {
             }
             //for now work only if new fields are added at the end...
             //needed for retro compatibility if new fields added
-            if(rowObject.size() < columnClasses.length) {
-                for(int i=rowObject.size(); i<columnClasses.length; i++) {
+            if (rowObject.size() < columnClasses.length) {
+                for (int i = rowObject.size(); i < columnClasses.length; i++) {
                     rowObject.add(new Object());
                 }
             }
@@ -215,7 +215,7 @@ public abstract class JMeterPluginsUtils {
         Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.blue);
         link.setBorder(border);
 
-        JLabel version = new JLabel("v" + PLUGINS_VERSION);
+        JLabel version = new JLabel("v" + getVersion());
         version.setFont(version.getFont().deriveFont(Font.PLAIN).deriveFont(11F));
         version.setForeground(Color.GRAY);
 
@@ -314,18 +314,18 @@ public abstract class JMeterPluginsUtils {
     }
 
     public static float getFloatFromString(String stringValue, float defaultValue) {
-       float ret;
-       if(stringValue != null) {
-          try {
-            ret = Float.valueOf(stringValue);
-          } catch (NumberFormatException ex) {
+        float ret;
+        if (stringValue != null) {
+            try {
+                ret = Float.valueOf(stringValue);
+            } catch (NumberFormatException ex) {
+                ret = defaultValue;
+            }
+        } else {
             ret = defaultValue;
-          }
-       } else {
-          ret = defaultValue;
-       }
+        }
 
-       return ret;
+        return ret;
     }
 
     public static int getSecondsForShortString(String string) {
@@ -370,6 +370,16 @@ public abstract class JMeterPluginsUtils {
         }
 
         return res;
+    }
+
+    private static String getVersion() {
+        Properties props = new Properties();
+        try {
+            props.load(JMeterPluginsUtils.class.getResourceAsStream("version.properties"));
+        } catch (IOException ex) {
+            props.setProperty("version", "N/A");
+        }
+        return props.getProperty("version");
     }
 
     private static class URIOpener extends MouseAdapter {

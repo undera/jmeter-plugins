@@ -62,31 +62,32 @@ public class SteppingThreadGroupTest {
         hashtree.add(new LoopController());
         JMeterThread thread = new JMeterThread(hashtree, null, null);
         SteppingThreadGroup instance = new SteppingThreadGroup();
-        instance.setNumThreads(10);
+        instance.setNumThreads(15);
         instance.setInUserCount("5");
+        instance.setInUserCountBurst("10");
         instance.setInUserPeriod("30");
         instance.setRampUp("10");
         instance.setThreadGroupDelay("5");
         instance.setFlightTime("60");
 
         long s1 = -1, s2;
-        for (int n = 0; n < 5; n++) {
+        for (int n = 0; n < 10; n++) {
             thread.setThreadNum(n);
             instance.scheduleThread(thread);
             s2 = thread.getStartTime();
             if (s1 >= 0) {
-                assertEquals(2000, s2 - s1);
+                assertEquals(1000, s2 - s1);
             }
             s1 = s2;
         }
 
-        thread.setThreadNum(6);
+        thread.setThreadNum(10);
         instance.scheduleThread(thread);
         s2 = thread.getStartTime();
-        assertEquals(34000, s2 - s1);
+        assertEquals(31000, s2 - s1);
         s1 = s2;
 
-        for (int n = 7; n < 9; n++) {
+        for (int n = 11; n < 15; n++) {
             thread.setThreadNum(n);
             instance.scheduleThread(thread);
             s2 = thread.getStartTime();
@@ -154,6 +155,18 @@ public class SteppingThreadGroupTest {
         String result = instance.getInUserCount();
         assertEquals(expResult, result);
     }
+    
+    /**
+     * Test of getInUserCountBurst method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testGetInUserCountBurst() {
+        System.out.println("getInUserCountBurst");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        String expResult = "";
+        String result = instance.getInUserCountBurst();
+        assertEquals(expResult, result);
+    }
 
     /**
      * Test of setInUserCount method, of class SteppingThreadGroup.
@@ -164,6 +177,17 @@ public class SteppingThreadGroupTest {
         String delay = "";
         SteppingThreadGroup instance = new SteppingThreadGroup();
         instance.setInUserCount(delay);
+    }
+    
+    /**
+     * Test of setInUserCountBurst method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testSetInUserCountBurst() {
+        System.out.println("setInUserCountBurst");
+        String delay = "";
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        instance.setInUserCountBurst(delay);
     }
 
     /**
@@ -291,6 +315,18 @@ public class SteppingThreadGroupTest {
         SteppingThreadGroup instance = new SteppingThreadGroup();
         int expResult = 0;
         int result = instance.getInUserCountAsInt();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getInUserCountBurstAsInt method, of class SteppingThreadGroup.
+     */
+    @Test
+    public void testGetInUserCountBurstAsInt() {
+        System.out.println("getInUserCountBurstAsInt");
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        int expResult = 0;
+        int result = instance.getInUserCountBurstAsInt();
         assertEquals(expResult, result);
     }
 

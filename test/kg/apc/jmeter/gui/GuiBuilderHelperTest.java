@@ -2,6 +2,7 @@ package kg.apc.jmeter.gui;
 
 import java.awt.Component;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -76,5 +77,18 @@ public class GuiBuilderHelperTest {
       JPanel result = GuiBuilderHelper.getComponentWithMargin(component, top, left, bottom, right);
       assertTrue(component.getParent().equals(result));
    }
+
+    /**
+     * Test of strechItemToComponent method, of class GuiBuilderHelper.
+     */
+    @Test
+    public void testStrechItemToComponent() {
+        System.out.println("strechItemToComponent");
+        JComponent component = new JCheckBox();
+        JComponent item = new JCheckBox();
+        GuiBuilderHelper.strechItemToComponent(component, item);
+        // TODO review the generated test code and remove the default call to fail.
+        
+    }
 
 }

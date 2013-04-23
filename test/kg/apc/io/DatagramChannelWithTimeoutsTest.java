@@ -261,4 +261,18 @@ public class DatagramChannelWithTimeoutsTest {
     }
      * 
      */
+
+    /**
+     * Test of getRemoteAddress method, of class DatagramChannelWithTimeouts.
+     */
+    @Test
+    public void testGetRemoteAddress() throws Exception {
+        System.out.println("getRemoteAddress");
+        DatagramChannelWithTimeouts instance = new DatagramChannelWithTimeouts();
+        SocketAddress expResult = null;
+        SocketAddress result = instance.getRemoteAddress();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        
+    }
 }

@@ -259,4 +259,69 @@ public class RawRequestSourcePreProcessorTest {
         ObjectOutputStream oos = new ObjectOutputStream(bos);
         oos.writeObject(instance);
     }
+
+    /**
+     * Test of isHexEncode method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testIsHexEncode() {
+        System.out.println("isHexEncode");
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        boolean expResult = false;
+        boolean result = instance.isHexEncode();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setEncodeHex method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testSetEncodeHex() {
+        System.out.println("setEncodeHex");
+        boolean b = false;
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.setEncodeHex(b);
+    }
+
+    /**
+     * Test of testStarted method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testTestStarted_0args() {
+        System.out.println("testStarted");
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.testStarted();
+    }
+
+    /**
+     * Test of testStarted method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testTestStarted_String() {
+        System.out.println("testStarted");
+        String host = "";
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.testStarted(host);
+    }
+
+    /**
+     * Test of testEnded method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testTestEnded_0args() {
+        System.out.println("testEnded");
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.testEnded();
+    }
+
+    /**
+     * Test of testEnded method, of class RawRequestSourcePreProcessor.
+     */
+    @Test
+    public void testTestEnded_String() {
+        System.out.println("testEnded");
+        String host = "";
+        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
+        instance.testEnded(host);
+    }
 }

@@ -496,46 +496,59 @@ public class AbstractGraphPanelVisualizerTest {
     }
 
     /**
-    * Test of isSampleIncluded method, of class AbstractGraphPanelVisualizer.
-    */
-   @Test
-   public void testIsSampleIncluded_String() {
-      System.out.println("isSampleIncluded");
-      String sampleLabel = "test";
-      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-      boolean expResult = true;
-      boolean result = instance.isSampleIncluded(sampleLabel);
-      assertEquals(expResult, result);
-   }
+     * Test of isSampleIncluded method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testIsSampleIncluded_String() {
+        System.out.println("isSampleIncluded");
+        String sampleLabel = "test";
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        boolean expResult = true;
+        boolean result = instance.isSampleIncluded(sampleLabel);
+        assertEquals(expResult, result);
+    }
 
-   /**
-    * Test of createTitleLabel method, of class AbstractGraphPanelVisualizer.
-    */
-   @Test
-   public void testCreateTitleLabel() {
-      System.out.println("createTitleLabel");
-      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-      Component result = instance.createTitleLabel();
-   }
+    /**
+     * Test of createTitleLabel method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testCreateTitleLabel() {
+        System.out.println("createTitleLabel");
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        Component result = instance.createTitleLabel();
+    }
 
-   /**
-    * Test of enableMaximize method, of class AbstractGraphPanelVisualizer.
-    */
-   @Test
-   public void testEnableMaximize() {
-      System.out.println("enableMaximize");
-      boolean enable = false;
-      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-      instance.enableMaximize(enable);
-   }
+    /**
+     * Test of enableMaximize method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testEnableMaximize() {
+        System.out.println("enableMaximize");
+        boolean enable = false;
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        instance.enableMaximize(enable);
+    }
 
-   /**
-    * Test of hideFilePanel method, of class AbstractGraphPanelVisualizer.
-    */
-   @Test
-   public void testHideFilePanel() {
-      System.out.println("hideFilePanel");
-      AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-      instance.hideFilePanel();
-   }
+    /**
+     * Test of hideFilePanel method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testHideFilePanel() {
+        System.out.println("hideFilePanel");
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        instance.hideFilePanel();
+    }
+
+    /**
+     * Test of isSampleIncluded method, of class AbstractGraphPanelVisualizer.
+     */
+    @Test
+    public void testIsSampleIncluded_SampleResult() {
+        System.out.println("isSampleIncluded");
+        SampleResult res = null;
+        AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
+        boolean expResult = true;
+        boolean result = instance.isSampleIncluded(res);
+        assertEquals(expResult, result);
+    }
 }

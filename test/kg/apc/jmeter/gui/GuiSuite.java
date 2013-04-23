@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ComponentBorderTest.class, JAbsrtactDialogPanelTest.class, GuiBuilderHelperTest.class, DeleteRowActionTest.class, CopyRowActionTest.class, AddRowActionTest.class, DialogFactoryTest.class, ButtonPanelAddCopyRemoveTest.class, BrowseActionTest.class})
+@Suite.SuiteClasses({BrowseActionTest.class, DialogFactoryTest.class, CopyRowActionTest.class, AddRowActionTest.class, GuiBuilderHelperTest.class, JAbsrtactDialogPanelTest.class, DeleteRowActionTest.class, ComponentBorderTest.class, CustomNumberRendererTest.class, ButtonPanelAddCopyRemoveTest.class})
 public class GuiSuite {
 
     @BeforeClass

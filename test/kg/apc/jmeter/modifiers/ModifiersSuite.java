@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({FifoPopPreProcessorGuiTest.class, CheckConsistencyActionTest.class, AnchorModifierGuiTest.class, RawRequestSourcePreProcessorTest.class, RawRequestSourcePreProcessorGuiTest.class, AnchorModifierTest.class, FifoPutPostProcessorTest.class, FifoMapTest.class, FifoPopPreProcessorTest.class})
+@Suite.SuiteClasses({CheckConsistencyActionTest.class, FifoPutPostProcessorGuiTest.class, RawRequestSourcePreProcessorTest.class, AnchorModifierGuiTest.class, FifoMapTest.class, RawRequestSourcePreProcessorGuiTest.class, AnchorModifierTest.class, FifoPutPostProcessorTest.class, FifoPopPreProcessorGuiTest.class, FifoPopPreProcessorTest.class})
 public class ModifiersSuite {
 
     @BeforeClass

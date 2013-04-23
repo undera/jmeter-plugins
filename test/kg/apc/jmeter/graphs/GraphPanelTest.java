@@ -23,159 +23,143 @@ import static org.junit.Assert.*;
  *
  * @author apc
  */
-public class GraphPanelTest
-{
-   private GraphPanel instance;
+public class GraphPanelTest {
 
-   /**
-    *
-    */
-   public GraphPanelTest()
-   {
-   }
+    private GraphPanel instance;
 
-   /**
-    *
-    * @throws Exception
-    */
-   @BeforeClass
-   public static void setUpClass()
-        throws Exception
-   {
-       TestJMeterUtils.createJmeterEnv();
-   }
+    /**
+     *
+     */
+    public GraphPanelTest() {
+    }
 
-   /**
-    *
-    * @throws Exception
-    */
-   @AfterClass
-   public static void tearDownClass()
-        throws Exception
-   {
-   }
+    /**
+     *
+     * @throws Exception
+     */
+    @BeforeClass
+    public static void setUpClass()
+            throws Exception {
+        TestJMeterUtils.createJmeterEnv();
+    }
 
-   /**
-    *
-    */
-   @Before
-   public void setUp()
-   {
-      instance = new GraphPanel();
-      instance.getSettingsTab().add(new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), JSettingsPanel.GRADIENT_OPTION));
-      instance.getGraphObject().setRows(new ConcurrentSkipListMap<String, AbstractGraphRow>());
-   }
+    /**
+     *
+     * @throws Exception
+     */
+    @AfterClass
+    public static void tearDownClass()
+            throws Exception {
+    }
 
-   /**
-    *
-    */
-   @After
-   public void tearDown()
-   {
-   }
+    /**
+     *
+     */
+    @Before
+    public void setUp() {
+        instance = new GraphPanel();
+        instance.getSettingsTab().add(new JSettingsPanel(new AbstractGraphPanelVisualizerImpl(), JSettingsPanel.GRADIENT_OPTION));
+        instance.getGraphObject().setRows(new ConcurrentSkipListMap<String, AbstractGraphRow>());
+    }
 
-   /**
-    * Test of updateGui method, of class GraphPanel.
-    */
-   @Test
-   public void testUpdateGui_Graphs()
-   {
-      System.out.println("updateGui");
-      instance.setSelectedIndex(0);
-      instance.updateGui();
-      instance.setSelectedIndex(1);
-      instance.updateGui();
-      instance.setSelectedIndex(2);
-      instance.updateGui();
-   }
+    /**
+     *
+     */
+    @After
+    public void tearDown() {
+    }
 
-   /**
-    * Test of getGraphImage method, of class GraphPanel.
-    */
-   @Test
-   public void testGetGraphImage()
-   {
-      System.out.println("getGraphImage");
-      Image expResult = null;
-      Image result = instance.getGraphImage();
-      assertEquals(expResult, result);
-   }
+    /**
+     * Test of updateGui method, of class GraphPanel.
+     */
+    @Test
+    public void testUpdateGui_Graphs() {
+        System.out.println("updateGui");
+        instance.setSelectedIndex(0);
+        instance.updateGui();
+        instance.setSelectedIndex(1);
+        instance.updateGui();
+        instance.setSelectedIndex(2);
+        instance.updateGui();
+    }
 
-   /**
-    * Test of getGraphObject method, of class GraphPanel.
-    */
-   @Test
-   public void testGetGraphObject()
-   {
-      System.out.println("getGraphObject");
-      GraphPanelChart result = instance.getGraphObject();
-      assertEquals(GraphPanelChart.class.getName(), result.getClass().getName());
-   }
+    /**
+     * Test of getGraphImage method, of class GraphPanel.
+     */
+    @Test
+    public void testGetGraphImage() {
+        System.out.println("getGraphImage");
+        Image expResult = null;
+        Image result = instance.getGraphImage();
+        assertEquals(expResult, result);
+    }
 
-   /**
-    * Test of addRow method, of class GraphPanel.
-    */
-   @Test
-   public void testAddRow()
-   {
-      System.out.println("addRow");
-      AbstractGraphRow row = new GraphRowOverallAverages();
-      instance.addRow(row);
-   }
+    /**
+     * Test of getGraphObject method, of class GraphPanel.
+     */
+    @Test
+    public void testGetGraphObject() {
+        System.out.println("getGraphObject");
+        GraphPanelChart result = instance.getGraphObject();
+        assertEquals(GraphPanelChart.class.getName(), result.getClass().getName());
+    }
 
-   /**
-    * Test of stateChanged method, of class GraphPanel.
-    */
-   @Test
-   public void testStateChanged()
-   {
-      System.out.println("stateChanged");
-      ChangeEvent e = null;
-      //instance.stateChanged(e);
-   }
+    /**
+     * Test of addRow method, of class GraphPanel.
+     */
+    @Test
+    public void testAddRow() {
+        System.out.println("addRow");
+        AbstractGraphRow row = new GraphRowOverallAverages();
+        instance.addRow(row);
+    }
 
-   /**
-    * Test of clearRowsTab method, of class GraphPanel.
-    */
-   @Test
-   public void testClearRowsTab()
-   {
-      System.out.println("clearRowsTab");
-      instance.clearRowsTab();
-   }
+    /**
+     * Test of stateChanged method, of class GraphPanel.
+     */
+    @Test
+    public void testStateChanged() {
+        System.out.println("stateChanged");
+        ChangeEvent e = null;
+        //instance.stateChanged(e);
+    }
 
-   @Test
-   public void testUpdateGui()
-   {
-      System.out.println("updateGui");
-      instance.updateGui();
-   }
+    /**
+     * Test of clearRowsTab method, of class GraphPanel.
+     */
+    @Test
+    public void testClearRowsTab() {
+        System.out.println("clearRowsTab");
+        instance.clearRowsTab();
+    }
 
-   @Test
-   public void testGetSettingsTab()
-   {
-      System.out.println("getSettingsTab");
-      JComponent result = instance.getSettingsTab();
-      assertNotNull(result);
-   }
+    @Test
+    public void testUpdateGui() {
+        System.out.println("updateGui");
+        instance.updateGui();
+    }
 
-        public class AbstractGraphPanelVisualizerImpl
-         extends AbstractGraphPanelVisualizer
-   {
-      public String getLabelResource()
-      {
-         return "test";
-      }
+    @Test
+    public void testGetSettingsTab() {
+        System.out.println("getSettingsTab");
+        JComponent result = instance.getSettingsTab();
+        assertNotNull(result);
+    }
 
-              @Override
-        protected JSettingsPanel createSettingsPanel()
-        {
+    public class AbstractGraphPanelVisualizerImpl
+            extends AbstractGraphPanelVisualizer {
+
+        public String getLabelResource() {
+            return "test";
+        }
+
+        @Override
+        protected JSettingsPanel createSettingsPanel() {
             return new JSettingsPanel(this, JSettingsPanel.GRADIENT_OPTION);
         }
 
         @Override
-        public void add(SampleResult sr)
-        {
+        public void add(SampleResult sr) {
         }
 
         @Override
@@ -183,23 +167,23 @@ public class GraphPanelTest
             return "";
         }
 
-      @Override
-      public String getStaticLabel() {
-         return "";
-      }
-   }
+        @Override
+        public String getStaticLabel() {
+            return "";
+        }
+    }
 
-   /**
-    * Test of replaceRowTab method, of class GraphPanel.
-    */
-   @Test
-   public void testReplaceRowTab() {
-      System.out.println("replaceRowTab");
-      String tabLabel = "Test";
-      Component object = new JLabel("TestLabel");
-      String toolTipText = "Tooltip test";
-      instance.replaceRowTab(tabLabel, object, toolTipText);
-   }
+    /**
+     * Test of replaceRowTab method, of class GraphPanel.
+     */
+    @Test
+    public void testReplaceRowTab() {
+        System.out.println("replaceRowTab");
+        String tabLabel = "Test";
+        Component object = new JLabel("TestLabel");
+        String toolTipText = "Tooltip test";
+        instance.replaceRowTab(tabLabel, object, toolTipText);
+    }
 
     /**
      * Test of getRowSelectorPanel method, of class GraphPanel.

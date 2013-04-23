@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  * @author direvius
  */
 public class FileSystemTest {
-    
+
     public FileSystemTest() {
     }
 
@@ -25,11 +25,11 @@ public class FileSystemTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -52,8 +52,10 @@ public class FileSystemTest {
         assert result;
         file.delete();
     }
+
     /**
-     * Test of checkFileExistByPattern method, of class FileSystem. Unhappy scenario
+     * Test of checkFileExistByPattern method, of class FileSystem. Unhappy
+     * scenario
      */
     @Test
     public void testCheckFileExistByPatternUnhappy() {
@@ -69,5 +71,18 @@ public class FileSystemTest {
         boolean result = FileSystem.checkFileExistByPattern(dir, pattern);
         assert !result;
         file.delete();
+    }
+
+    /**
+     * Test of copyFile method, of class FileSystem.
+     */
+    @Test
+    public void testCopyFile() throws Exception {
+        System.out.println("copyFile");
+        File file = File.createTempFile("abc", "zyx");
+        
+        String source = file.getAbsolutePath();
+        String destination = file.getParent()+File.separator+"testnew";
+        FileSystem.copyFile(source, destination);
     }
 }

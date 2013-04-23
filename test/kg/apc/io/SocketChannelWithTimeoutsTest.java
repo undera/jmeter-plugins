@@ -254,4 +254,18 @@ public class SocketChannelWithTimeoutsTest {
         SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         instance.setReadTimeout(t);
     }
+
+    /**
+     * Test of getRemoteAddress method, of class SocketChannelWithTimeouts.
+     */
+    @Test
+    public void testGetRemoteAddress() throws Exception {
+        System.out.println("getRemoteAddress");
+        SocketChannelWithTimeouts instance = new SocketChannelWithTimeouts();
+        SocketAddress expResult = null;
+        SocketAddress result = instance.getRemoteAddress();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        
+    }
 }

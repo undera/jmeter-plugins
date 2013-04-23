@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
  * @author undera
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({DbmonTest.class})
+@Suite.SuiteClasses({DbMonSampleGeneratorTest.class, DbMonCollectorTest.class, DbMonSamplerTest.class, DbMonSampleResultTest.class})
 public class DbmonSuite {
 
     @BeforeClass

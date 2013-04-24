@@ -14,12 +14,15 @@ import org.openqa.selenium.WebDriver;
 
 import java.net.MalformedURLException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -252,8 +255,8 @@ public class WebDriverConfigTest {
 
         config.setThreadBrowser(browser);
 
-        assertThat(config.getThreadBrowsers().size(), is(1));
-        assertThat(config.getThreadBrowsers().values(), hasItem(browser));
+        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasSize(1));
+        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(browser));
     }
 
     @Test
@@ -261,12 +264,12 @@ public class WebDriverConfigTest {
         WebDriver browser = mock(WebDriver.class);
 
         config.setThreadBrowser(browser);
-        assertThat(config.getThreadBrowsers().size(), is(1));
-        assertThat(config.getThreadBrowsers().values(), hasItem(browser));
+        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasSize(1));
+        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(browser));
 
         config.setThreadBrowser(null);
-        assertThat(config.getThreadBrowsers().size(), is(1));
-        assertThat(config.getThreadBrowsers().values(), hasItem(browser));
+        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasSize(1));
+        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(browser));
     }
 
     @Test
@@ -277,8 +280,8 @@ public class WebDriverConfigTest {
         config.setThreadBrowser(firstBrowser);
         config.setThreadBrowser(secondBrowser);
 
-        assertThat(config.getThreadBrowsers().size(), is(1));
-        assertThat(config.getThreadBrowsers().values(), hasItem(secondBrowser));
+        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasSize(1));
+        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(secondBrowser));
     }
 
     @Test
@@ -305,9 +308,9 @@ public class WebDriverConfigTest {
         secondThread.join();
 
         // assertions
-        assertThat(config.getThreadBrowsers().size(), is(2));
-        assertThat(config.getThreadBrowsers().values(), hasItem(firstBrowser));
-        assertThat(config.getThreadBrowsers().values(), hasItem(secondBrowser));
+        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasSize(2));
+        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(firstBrowser));
+        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(secondBrowser));
     }
 
     @Test
@@ -331,7 +334,7 @@ public class WebDriverConfigTest {
 
         final WebDriver removed = config.removeThreadBrowser();
 
-        assertThat(config.getThreadBrowsers(), is(Collections.emptyMap()));
+        assertThat((Map<String, WebDriver>)config.getThreadBrowsers(), is(Collections.<String, WebDriver>emptyMap()));
         assertThat(browser, is(removed));
     }
 
@@ -339,7 +342,7 @@ public class WebDriverConfigTest {
     public void shouldRemoveBrowserFromCurrentThreadEvenIfNoBrowserPresent() {
         final WebDriver removed = config.removeThreadBrowser();
 
-        assertThat(config.getThreadBrowsers(), is(Collections.emptyMap()));
+        assertThat((Map<String, WebDriver>)config.getThreadBrowsers(), is(Collections.<String, WebDriver>emptyMap()));
         assertThat(removed, is(nullValue()));
     }
 

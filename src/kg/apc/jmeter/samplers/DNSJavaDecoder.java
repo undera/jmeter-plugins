@@ -2,8 +2,12 @@ package kg.apc.jmeter.samplers;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Set;
+
 import org.apache.jorphan.util.JOrphanUtils;
 import org.xbill.DNS.*;
+
+import com.google.common.collect.Sets;
 
 /**
  *
@@ -13,6 +17,15 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
 
     public static final String NL = "\n";
     public static final String SPACE = " ";
+    private static final Set<String> opcodes = Sets.newTreeSet();
+    static {
+        opcodes.add(Opcode.string(Opcode.IQUERY));
+        opcodes.add(Opcode.string(Opcode.NOTIFY));
+        opcodes.add(Opcode.string(Opcode.QUERY));
+        opcodes.add(Opcode.string(Opcode.STATUS));
+        opcodes.add(Opcode.string(Opcode.UPDATE));
+    }
+    
 
     @Override
     public ByteBuffer encode(String data) {
@@ -23,9 +36,16 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
         Message msg = new Message();
         String recs[] = data.split(NL);
         for (int n = 0; n < recs.length; n++) {
-            if (recs[n].length() <= 3) {
-                Header head = msg.getHeader();
-                int val = Integer.parseInt(recs[n].trim());
+            // Set Opcode
+            Header head = msg.getHeader();
+            String value = recs[n].trim();
+            if (opcodes.contains(value)) {
+                head.setOpcode(Opcode.value(value));
+                msg.setHeader(head);
+            }
+            else if (recs[n].length() <= 3) {
+                
+                int val = Integer.parseInt(value);
                 if (val < 0) {
                     head.unsetFlag(-val);
                 } else {
@@ -33,7 +53,7 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
                 }
                 msg.setHeader(head);
             } else {
-                msg.addRecord(getRecord(recs[n].trim()), Section.QUESTION);
+                msg.addRecord(getRecord(value), Section.QUESTION);
             }
         }
         return msg.toWire();

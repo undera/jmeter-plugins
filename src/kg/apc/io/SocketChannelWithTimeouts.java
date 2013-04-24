@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketException;
+import java.net.SocketOption;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.util.Set;
+
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -155,6 +158,49 @@ public class SocketChannelWithTimeouts extends SocketChannel {
     }
 
     public SocketAddress getRemoteAddress() throws IOException {
+        return null;
+    }
+
+    @Override
+    public SocketAddress getLocalAddress() throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T> T getOption(SocketOption<T> name) throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Set<SocketOption<?>> supportedOptions() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public SocketChannel bind(SocketAddress local) throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T> SocketChannel setOption(SocketOption<T> name, T value)
+            throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public SocketChannel shutdownInput() throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public SocketChannel shutdownOutput() throws IOException {
+        // TODO Auto-generated method stub
         return null;
     }
 }

@@ -238,4 +238,16 @@ class StatementEmul implements Statement {
     public boolean isWrapperFor(Class<?> type) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void closeOnCompletion() throws SQLException {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public boolean isCloseOnCompletion() throws SQLException {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

@@ -445,8 +445,13 @@ public class WebDriverConfigGuiTest {
         }
 
         @Override
+        protected String getWikiPage() {
+            return null;
+        }
+
+        @Override
         public String getLabelResource() {
-            return null;  //To change body of implemented methods use File | Settings | File Templates.
+            return null;
         }
 
         @Override

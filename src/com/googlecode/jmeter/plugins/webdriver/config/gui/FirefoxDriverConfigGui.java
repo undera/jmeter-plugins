@@ -32,6 +32,11 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui {
     }
 
     @Override
+    protected String getWikiPage() {
+        return "FirefoxDriverConfig";
+    }
+
+    @Override
     public TestElement createTestElement() {
         FirefoxDriverConfig element = new FirefoxDriverConfig();
         modifyTestElement(element);

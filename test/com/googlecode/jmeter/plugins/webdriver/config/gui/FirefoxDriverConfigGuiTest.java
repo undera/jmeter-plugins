@@ -29,6 +29,11 @@ public class FirefoxDriverConfigGuiTest {
     }
 
     @Test
+    public void shouldReturnWikiPage() {
+        assertThat(gui.getWikiPage(), is("FirefoxDriverConfig"));
+    }
+
+    @Test
     public void shouldReturnCanonicalClassNameAsLabelResource() {
         assertThat(gui.getLabelResource(), is(gui.getClass().getCanonicalName()));
     }

@@ -2,6 +2,7 @@ package com.googlecode.jmeter.plugins.webdriver.config.gui;
 
 import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
@@ -159,7 +160,7 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
         setLayout(new BorderLayout(0, 5));
 
         setBorder(makeBorder());
-        add(makeTitlePanel(), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), getWikiPage()), BorderLayout.NORTH);
 
         final JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.add("Proxy", createProxyPanel());
@@ -305,6 +306,8 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
     protected abstract JPanel createBrowserPanel();
 
     protected abstract String browserName();
+
+    protected abstract String getWikiPage();
 
     @Override
     public void itemStateChanged(ItemEvent itemEvent) {

@@ -29,6 +29,11 @@ public class ChromeDriverConfigGuiTest {
     }
 
     @Test
+    public void shouldReturnWikiPage() {
+        assertThat(gui.getWikiPage(), is("ChromeDriverConfig"));
+    }
+
+    @Test
     public void shouldReturnCanonicalClassNameAsLabelResource() {
         assertThat(gui.getLabelResource(), is(gui.getClass().getCanonicalName()));
     }

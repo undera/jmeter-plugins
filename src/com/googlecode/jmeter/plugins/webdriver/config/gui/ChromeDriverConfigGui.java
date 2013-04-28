@@ -56,12 +56,17 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
 
     @Override
     protected JPanel createBrowserPanel() {
-        return createServicePanel();  //To change body of implemented methods use File | Settings | File Templates.
+        return createServicePanel();
     }
 
     @Override
     protected String browserName() {
-        return "Chrome";  //To change body of implemented methods use File | Settings | File Templates.
+        return "Chrome";
+    }
+
+    @Override
+    protected String getWikiPage() {
+        return "ChromeDriverConfig";
     }
 
     private JPanel createServicePanel() {

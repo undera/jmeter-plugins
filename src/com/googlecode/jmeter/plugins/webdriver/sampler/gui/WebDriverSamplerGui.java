@@ -73,7 +73,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 		setBorder(makeBorder());
 
 		Box box = Box.createVerticalBox();
-		box.add(makeTitlePanel());
+		box.add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), "WebDriverSampler"));
 		box.add(createParameterPanel());
 		add(box, BorderLayout.NORTH);
 

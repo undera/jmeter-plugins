@@ -10,6 +10,7 @@ import org.apache.log.Logger;
 import org.openqa.selenium.WebDriver;
 
 import javax.script.*;
+import java.net.URL;
 
 
 /**
@@ -53,8 +54,12 @@ public class WebDriverSampler extends AbstractSampler {
             final ScriptEngine scriptEngine = createScriptEngineWith(res);
             final Object outcome = scriptEngine.eval(getScript());
 
+            // setup the data in the SampleResult
             res.setResponseData(getWebDriver().getPageSource(), null);
-            if(outcome instanceof Boolean) { // only set this if the return value is boolean
+            res.setURL(new URL(getWebDriver().getCurrentUrl()));
+
+            // only set this if the return value is boolean
+            if(outcome instanceof Boolean) {
                 res.setSuccessful((Boolean) outcome);
             }
 

@@ -14,6 +14,7 @@ import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import java.io.PrintStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
@@ -30,6 +31,7 @@ public class WebDriverSamplerTest {
     public void createSampler() {
         browser = Mockito.mock(WebDriver.class);
         when(browser.getPageSource()).thenReturn("page source");
+        when(browser.getCurrentUrl()).thenReturn("http://google.com.au");
         variables = new JMeterVariables();
         variables.putObject(WebDriverConfig.BROWSER, browser);
         JMeterContextService.getContext().setVariables(variables);
@@ -78,8 +80,10 @@ public class WebDriverSamplerTest {
         assertThat(sampleResult.getDataType(), is(SampleResult.TEXT));
         assertThat(sampleResult.getSampleLabel(), is("name"));
         assertThat(sampleResult.getResponseDataAsString(), is("page source"));
+        assertThat(sampleResult.getURL(), is(new URL("http://google.com.au")));
 
         verify(browser, times(1)).getPageSource();
+        verify(browser, times(1)).getCurrentUrl();
     }
 
     @Test
@@ -91,8 +95,10 @@ public class WebDriverSamplerTest {
         assertThat(sampleResult.getResponseMessage(), is("OK"));
         assertThat(sampleResult.isSuccessful(), is(true));
         assertThat(sampleResult.getResponseDataAsString(), is("page source"));
+        assertThat(sampleResult.getURL(), is(new URL("http://google.com.au")));
 
         verify(browser, times(1)).getPageSource();
+        verify(browser, times(1)).getCurrentUrl();
     }
 
     @Test
@@ -104,8 +110,10 @@ public class WebDriverSamplerTest {
         assertThat(sampleResult.getResponseMessage(), is("Failed to find/verify expected content on page"));
         assertThat(sampleResult.isSuccessful(), is(false));
         assertThat(sampleResult.getResponseDataAsString(), is("page source"));
+        assertThat(sampleResult.getURL(), is(new URL("http://google.com.au")));
 
         verify(browser, times(1)).getPageSource();
+        verify(browser, times(1)).getCurrentUrl();
     }
 
     @Test
@@ -118,6 +126,20 @@ public class WebDriverSamplerTest {
         assertThat(sampleResult.isSuccessful(), is(false));
 
         verify(browser, never()).getPageSource();
+        verify(browser, never()).getCurrentUrl();
+    }
+
+    @Test
+    public void shouldReturnFailureSampleResultWhenBrowserURLIsInvalid() {
+        when(browser.getCurrentUrl()).thenReturn("unknown://uri");
+        sampler.setScript("var x = 'hello';");
+        final SampleResult sampleResult = sampler.sample(null);
+
+        assertThat(sampleResult.isResponseCodeOK(), is(false));
+        assertThat(sampleResult.getResponseMessage(), containsString("MalformedURLException"));
+        assertThat(sampleResult.isSuccessful(), is(false));
+
+        verify(browser, times(1)).getCurrentUrl();
     }
 
     @Test(expected = IllegalArgumentException.class)

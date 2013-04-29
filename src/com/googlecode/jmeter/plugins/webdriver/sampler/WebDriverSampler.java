@@ -40,7 +40,7 @@ public class WebDriverSampler extends AbstractSampler {
         res.setSampleLabel(getName());
         res.setSamplerData(toString());
         res.setDataType(SampleResult.TEXT);
-        res.setContentType("text/plain"); // $NON-NLS-1$
+        res.setContentType("text/plain");
         res.setDataEncoding("UTF-8");
 
         res.setSuccessful(true);

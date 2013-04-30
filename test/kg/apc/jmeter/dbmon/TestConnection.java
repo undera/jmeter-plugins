@@ -1466,6 +1466,4 @@ class TestConnection implements Connection {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }
-
-    
 }

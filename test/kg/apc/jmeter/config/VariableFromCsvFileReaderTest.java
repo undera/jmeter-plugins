@@ -158,4 +158,17 @@ public class VariableFromCsvFileReaderTest {
         assertEquals("incorrect value for var1", "val1", variables.get("var1"));
     }
 
+    /**
+     * Test getDataAsMap() with empty separator. see https://groups.google.com/forum/#!topic/jmeter-plugins/gWn7MTgvTfE
+     */
+    @Test(expected=IllegalArgumentException.class)
+    public void testEmptySeparator() {
+        String prefix = "";
+        String separator = "";
+        String csvData = "name,value,description\nvar0,val0,a comment\nvar1,val1";
+        BufferedReader input = new BufferedReader(new StringReader(csvData));
+        VariableFromCsvFileReader instance = new VariableFromCsvFileReader(input);
+
+        Map variables = instance.getDataAsMap(prefix, separator, 1);
+    }
 }

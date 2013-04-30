@@ -1,7 +1,6 @@
 package kg.apc.jmeter.modifiers;
 
 import org.junit.*;
-import org.junit.runners.MethodSorters;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -10,7 +9,6 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author undera
  */
-@FixMethodOrder(MethodSorters.JVM)
 public class FifoMapTest {
 
     public FifoMapTest() {
@@ -26,6 +24,7 @@ public class FifoMapTest {
 
     @Before
     public void setUp() {
+        FifoMap.getInstance().clear();
     }
 
     @After
@@ -72,9 +71,14 @@ public class FifoMapTest {
     @Test
     public void testPop() throws Exception {
         System.out.println("pop");
+
+        // setup
         String fifoName = "test";
         FifoMap instance = FifoMap.getInstance();
-        // we rely on testPut method, since we have a singletone
+        instance.put(fifoName, "val1");
+        instance.put(fifoName, "val2");
+        instance.put("", "test");
+        // test and assert
         assertEquals("val1", instance.pop(fifoName, 0));
         assertEquals("val2", instance.pop(fifoName, 0));
         assertEquals("test", instance.pop("", 0));

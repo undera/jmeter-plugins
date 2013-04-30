@@ -16,17 +16,16 @@
 package com.atlantbh.jmeter.plugins.hbasecomponents.config;
 
 import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runners.MethodSorters;
+
 import static org.junit.Assert.*;
 
 /**
  *
  * @author undera
  */
+@FixMethodOrder(MethodSorters.JVM)
 public class HBaseConnectionTest {
     
     public HBaseConnectionTest() {

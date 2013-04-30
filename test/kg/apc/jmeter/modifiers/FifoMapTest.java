@@ -1,16 +1,16 @@
 package kg.apc.jmeter.modifiers;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.BeforeClass;
+import org.junit.*;
+import org.junit.runners.MethodSorters;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  *
  * @author undera
  */
+@FixMethodOrder(MethodSorters.JVM)
 public class FifoMapTest {
 
     public FifoMapTest() {

@@ -48,7 +48,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
      */
     private static final String RECREATE_ON_ITERATION_START = "WebDriverConfig.reset_per_iteration";
 
-    private final ProxyFactory proxyFactory;
+    private final transient ProxyFactory proxyFactory;
 
     protected WebDriverConfig() {
         this(ProxyFactory.getInstance());

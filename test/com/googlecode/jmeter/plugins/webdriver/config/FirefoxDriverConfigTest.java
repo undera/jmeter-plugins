@@ -15,6 +15,8 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.io.*;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -46,6 +48,21 @@ public class FirefoxDriverConfigTest {
     public void resetConfig() {
         config.clearThreadBrowsers();
         JMeterContextService.getContext().setVariables(null);
+    }
+
+    @Test
+    public void shouldBeAbleToSerialiseAndDeserialise() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        ObjectOutputStream output = new ObjectOutputStream(bytes);
+
+        output.writeObject(config);
+        output.flush();
+        output.close();
+
+        ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray()));
+        final FirefoxDriverConfig deserializedConfig = (FirefoxDriverConfig) input.readObject();
+
+        assertThat(deserializedConfig, is(config));
     }
 
     @Test

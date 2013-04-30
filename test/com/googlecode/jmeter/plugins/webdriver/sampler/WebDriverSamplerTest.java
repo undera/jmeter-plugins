@@ -12,11 +12,13 @@ import org.openqa.selenium.WebDriver;
 
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
@@ -36,6 +38,21 @@ public class WebDriverSamplerTest {
         variables.putObject(WebDriverConfig.BROWSER, browser);
         JMeterContextService.getContext().setVariables(variables);
         sampler = new WebDriverSampler();
+    }
+
+    @Test
+    public void shouldBeAbleToSerialiseAndDeserialise() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        ObjectOutputStream output = new ObjectOutputStream(bytes);
+
+        output.writeObject(sampler);
+        output.flush();
+        output.close();
+
+        ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray()));
+        final WebDriverSampler deserializedSampler = (WebDriverSampler) input.readObject();
+
+        assertThat(deserializedSampler, is(sampler));
     }
 
     @Test

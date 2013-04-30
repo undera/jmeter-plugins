@@ -15,8 +15,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -51,6 +50,21 @@ public class ChromeDriverConfigTest {
         config.clearThreadBrowsers();
         config.getServices().clear();
         JMeterContextService.getContext().setVariables(null);
+    }
+
+    @Test
+    public void shouldBeAbleToSerialiseAndDeserialise() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        ObjectOutputStream output = new ObjectOutputStream(bytes);
+
+        output.writeObject(config);
+        output.flush();
+        output.close();
+
+        ObjectInputStream input = new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray()));
+        final ChromeDriverConfig deserializedConfig = (ChromeDriverConfig) input.readObject();
+
+        assertThat(deserializedConfig, is(config));
     }
 
     @Test

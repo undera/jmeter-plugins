@@ -12,22 +12,18 @@ import org.junit.Test;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class WebDriverConfigTest {
 
@@ -48,7 +44,6 @@ public class WebDriverConfigTest {
         config.clearThreadBrowsers();
         JMeterContextService.getContext().setVariables(null);
     }
-
 
     @Test
     public void shouldAssignProxyPacUrl() {

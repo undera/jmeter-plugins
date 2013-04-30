@@ -1,5 +1,7 @@
 package kg.apc.jmeter.config;
 
+import java.io.BufferedReader;
+import java.io.StringReader;
 import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -48,5 +50,22 @@ public class VariableFromCsvFileReaderTest {
       Map result = instance.getDataAsMap(prefix, separator);
       assertTrue(result.size() == 2);
    }
+
+    /**
+     * Test of getDataAsMap using a BufferedReader as input instead of a named file.
+     */
+    @Test
+    public void testGetDataAsMapBufferedReaderInput() {
+        String prefix = "";
+        String separator = ",";
+        String csvData = "var0,val0\nvar1,val1";
+        BufferedReader input = new BufferedReader(new StringReader(csvData));
+        VariableFromCsvFileReader instance = new VariableFromCsvFileReader(input);
+
+        Map variables = instance.getDataAsMap(prefix, separator);
+
+        assertEquals("incorrect value for var0", "val0", variables.get("var0"));
+        assertEquals("incorrect value for var1", "val1", variables.get("var1"));
+    }
 
 }

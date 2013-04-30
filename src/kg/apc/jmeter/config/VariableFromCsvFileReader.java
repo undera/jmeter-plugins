@@ -1,7 +1,6 @@
 package kg.apc.jmeter.config;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,10 +17,28 @@ import org.apache.log.Logger;
 public class VariableFromCsvFileReader {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private File file;
+    private BufferedReader input;
 
+    /**
+     * Initialize a new CSV reader for the named file.
+     *
+     * @param csvFileName name of the CSV input file
+     */
     public VariableFromCsvFileReader(String csvFileName) {
-        file = new File(csvFileName);
+        try {
+            input = new BufferedReader(new FileReader(csvFileName));
+        } catch (FileNotFoundException ex) {
+            log.error("File not found: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * Initialize a new CSV reader with a BufferedReader as input.
+     *
+     * @param input the CSV input
+     */
+    public VariableFromCsvFileReader(BufferedReader input) {
+        this.input = input;
     }
 
     public Map<String, String> getDataAsMap(String prefix, String separator) {
@@ -30,11 +47,10 @@ public class VariableFromCsvFileReader {
         }
 
         HashMap ret = new HashMap<String, String>();
-        if (file.exists()) {
+        if (input != null) {
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                String line = reader.readLine();
-                while (line != null) {
+                String line;
+                while ((line = input.readLine()) != null) {
                     String[] lineValues = JOrphanUtils.split(line, separator, false);
 
                     switch (lineValues.length) {
@@ -49,11 +65,7 @@ public class VariableFromCsvFileReader {
                             log.warn("Bad format for line: " + line);
                             break;
                     }
-
-                    line = reader.readLine();
                 }
-            } catch (FileNotFoundException ex) {
-                log.error("File not found: " + ex.getMessage());
             } catch (IOException ex) {
                 log.error("Error while reading: " + ex.getMessage());
             }

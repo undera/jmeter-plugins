@@ -32,7 +32,6 @@ import java.sql.Statement;
 import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.Executor;
 
 /**
  *
@@ -286,36 +285,5 @@ class ConnectionEmul implements Connection {
     @Override
     public boolean isWrapperFor(Class<?> type) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setSchema(String schema) throws SQLException {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public String getSchema() throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void abort(Executor executor) throws SQLException {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void setNetworkTimeout(Executor executor, int milliseconds)
-            throws SQLException {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public int getNetworkTimeout() throws SQLException {
-        // TODO Auto-generated method stub
-        return 0;
     }
 }

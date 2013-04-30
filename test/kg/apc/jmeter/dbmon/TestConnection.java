@@ -33,7 +33,6 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.Executor;
 
 /**
  * This class could be replaced by a mock framework
@@ -512,18 +511,6 @@ class TestConnection implements Connection {
         @Override
         public boolean isWrapperFor(Class<?> iface) throws SQLException {
             throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public void closeOnCompletion() throws SQLException {
-            // TODO Auto-generated method stub
-            
-        }
-
-        @Override
-        public boolean isCloseOnCompletion() throws SQLException {
-            // TODO Auto-generated method stub
-            return false;
         }
     }
     
@@ -1478,52 +1465,5 @@ class TestConnection implements Connection {
         public boolean isWrapperFor(Class<?> iface) throws SQLException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
-
-        @Override
-        public <T> T getObject(int columnIndex, Class<T> type)
-                throws SQLException {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        @Override
-        public <T> T getObject(String columnLabel, Class<T> type)
-                throws SQLException {
-            // TODO Auto-generated method stub
-            return null;
-        }
     }
-
-    @Override
-    public void setSchema(String schema) throws SQLException {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public String getSchema() throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void abort(Executor executor) throws SQLException {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void setNetworkTimeout(Executor executor, int milliseconds)
-            throws SQLException {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public int getNetworkTimeout() throws SQLException {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    
 }

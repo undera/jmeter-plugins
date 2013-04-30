@@ -2,16 +2,12 @@ package kg.apc.emulators;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.net.SocketAddress;
 import java.net.SocketException;
-import java.net.SocketOption;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
-import java.nio.channels.MembershipKey;
-import java.util.Set;
 import java.util.logging.Level;
+
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -138,56 +134,5 @@ public class DatagramChannelEmul extends DatagramChannel {
     @Override
     public int send(ByteBuffer src, SocketAddress target) throws IOException {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public MembershipKey join(InetAddress group, NetworkInterface interf)
-            throws IOException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public MembershipKey join(InetAddress group, NetworkInterface interf,
-            InetAddress source) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public SocketAddress getLocalAddress() throws IOException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public <T> T getOption(SocketOption<T> name) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Set<SocketOption<?>> supportedOptions() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public DatagramChannel bind(SocketAddress local) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public <T> DatagramChannel setOption(SocketOption<T> name, T value)
-            throws IOException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public SocketAddress getRemoteAddress() throws IOException {
-        // TODO Auto-generated method stub
-        return null;
     }
 }

@@ -161,6 +161,12 @@
             <artifactId>qpid-client</artifactId>
             <version>0.20</version>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -318,6 +324,15 @@
                     </execution>
                 </executions>
 
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.14.1</version>
+                <configuration>
+                    <!-- several of the unit tests require a large heap -->
+                    <argLine>-Xmx784m</argLine>
+                </configuration>
             </plugin>
         </plugins>
     </build>

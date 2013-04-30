@@ -3,74 +3,66 @@ package kg.apc.jmeter.config;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class TestCsvFileAction implements ActionListener {
 
-    private final JTextField filename;
-    private final JTextField prefix;
-    private final JTextField separator;
-    private final JTextArea infoArea;
+    private final VariablesFromCSVGui variablesCsvUi;
 
-    public TestCsvFileAction(JTextField fileName, JTextField prefix, JTextField separator, JTextArea infoArea) {
-        this.filename = fileName;
-        this.prefix = prefix;
-        this.separator = separator;
-        this.infoArea = infoArea;
+    public TestCsvFileAction(VariablesFromCSVGui variablesCsvUi) {
+        this.variablesCsvUi = variablesCsvUi;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        JTextArea infoArea = variablesCsvUi.getCheckInfoTextArea();
         infoArea.setText("");
         infoArea.setForeground(Color.black);
+
+        VariablesFromCSV testElem = (VariablesFromCSV)variablesCsvUi.createTestElement();
 
         boolean noValues = true;
         String msgVars = "";
         int count = 0;
 
-        File f = new File(filename.getText());
-        if (!f.exists()) {
-            reportError("File '" + filename.getText() + "' was not found...");
-            return;
-        } else {
-            try {
-                VariableFromCsvFileReader reader = new VariableFromCsvFileReader(filename.getText());
-                Map<String, String> vars = reader.getDataAsMap(prefix.getText(), separator.getText());
-                Iterator<String> iter = vars.keySet().iterator();
-                while (iter.hasNext()) {
-                    String var = iter.next();
-                    String value = vars.get(var);
-                    if (!"".equals(value)) {
-                        noValues = false;
-                    }
-                    msgVars = msgVars + "${" + var + "} = " + vars.get(var) + "\n";
-                    count++;
+        try {
+            Map<String, String> vars = testElem.getArgumentsAsMap();
+            Iterator<String> iter = vars.keySet().iterator();
+
+            while (iter.hasNext()) {
+                String var = iter.next();
+                String value = vars.get(var);
+                if (!"".equals(value)) {
+                    noValues = false;
                 }
-            } catch (Exception ex) {
-                reportError("Error processing file: " + ex.toString());
+                msgVars = msgVars + "${" + var + "} = " + vars.get(var) + "\n";
+                count++;
             }
-        }
-        if (count == 0) {
-            reportError("File parsed, but no variable found.");
-        } else if (noValues) {
-            reportOk("WARNING: File parsed, " + count + " variable" + (count > 1 ? "s" : "") + " found, but no variable have value!");
-            reportOk(msgVars);
-        } else {
-            reportOk("File successfuly parsed, " + count + " variable" + (count > 1 ? "s" : "") + " found:");
-            reportOk(msgVars);
+
+            if (count == 0) {
+                reportError("File parsed, but no variable found.");
+            } else if (noValues) {
+                reportOk("WARNING: File parsed, " + count + " variable" + (count > 1 ? "s" : "") + " found, but no variable have value!");
+                reportOk(msgVars);
+            } else {
+                reportOk("File successfuly parsed, " + count + " variable" + (count > 1 ? "s" : "") + " found:");
+                reportOk(msgVars);
+            }
+        } catch (Exception ex) {
+                reportError("Error processing file: " + ex.toString());
         }
     }
 
     private void reportError(String msg) {
+        JTextArea infoArea = variablesCsvUi.getCheckInfoTextArea();
         infoArea.setText(infoArea.getText() + "Problem detected: " + msg + "\n");
         infoArea.setForeground(Color.red);
     }
 
     private void reportOk(String string) {
+        JTextArea infoArea = variablesCsvUi.getCheckInfoTextArea();
         infoArea.setText(infoArea.getText() + string + "\n");
     }
 }

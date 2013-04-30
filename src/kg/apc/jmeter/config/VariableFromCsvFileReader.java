@@ -51,6 +51,22 @@ public class VariableFromCsvFileReader {
      * @return a map of (name, value) pairs
      */
     public Map<String, String> getDataAsMap(String prefix, String separator) {
+        return getDataAsMap(prefix, separator, 0);
+    }
+
+    /**
+     * Parses (name, value) pairs from the input and returns the result as a Map, with the option to skip the first line.
+     * The name is taken from the first column and value from the second column. If an input line contains only one
+     * column its value is defaulted to an empty string. Any extra columns are ignored.
+     *
+     * If the input contains headers, call with skipLines equal to the number of lines of headers.
+     *
+     * @param prefix a prefix to apply to the mapped variable names
+     * @param separator the field delimiter
+     * @param skipLines the number of lines at the beginning of the input to skip
+     * @return a map of (name, value) pairs
+     */
+    public Map<String, String> getDataAsMap(String prefix, String separator, int skipLines) {
         if (separator.isEmpty()) {
             throw new IllegalArgumentException("CSV separator cannot be empty");
         }
@@ -61,14 +77,15 @@ public class VariableFromCsvFileReader {
                 String line;
                 int lineNum = 0;
                 while ((line = input.readLine()) != null) {
-                    ++lineNum;
-                    String[] lineValues = JOrphanUtils.split(line, separator, false);
+                    if (++lineNum > skipLines) {
+                        String[] lineValues = JOrphanUtils.split(line, separator, false);
 
-                    if (lineValues.length == 1) {
-                        log.warn("Less than 2 columns at line: " + line);
-                        variables.put(prefix + lineValues[0], "");
-                    } else if (lineValues.length >= 2) {
-                        variables.put(prefix + lineValues[0], lineValues[1]);
+                        if (lineValues.length == 1) {
+                            log.warn("Less than 2 columns at line: " + line);
+                            variables.put(prefix + lineValues[0], "");
+                        } else if (lineValues.length >= 2) {
+                            variables.put(prefix + lineValues[0], lineValues[1]);
+                        }
                     }
                 }
             } catch (IOException ex) {

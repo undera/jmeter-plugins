@@ -140,4 +140,22 @@ public class VariableFromCsvFileReaderTest {
         assertNull("var1 should not be mapped", variables.get("var1"));
     }
 
+    /**
+     * Test getDataAsMap() skipping the first input line which is a header.
+     */
+    @Test
+    public void testSkipHeaderLine() {
+        String prefix = "";
+        String separator = ",";
+        String csvData = "name,value,description\nvar0,val0,a comment\nvar1,val1";
+        BufferedReader input = new BufferedReader(new StringReader(csvData));
+        VariableFromCsvFileReader instance = new VariableFromCsvFileReader(input);
+
+        Map variables = instance.getDataAsMap(prefix, separator, 1);
+
+        assertNull("header line was interpreted as variable data", variables.get("name"));
+        assertEquals("incorrect value for var0", "val0", variables.get("var0"));
+        assertEquals("incorrect value for var1", "val1", variables.get("var1"));
+    }
+
 }

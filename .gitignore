@@ -2,3 +2,5 @@
 /target/
 /nbactions.xml
 /dependency-reduced-pom.xml
+.idea/
+*.iml

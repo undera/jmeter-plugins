@@ -46,7 +46,7 @@ public class VariableFromCsvFileReader {
             throw new IllegalArgumentException("CSV separator cannot be empty");
         }
 
-        HashMap ret = new HashMap<String, String>();
+        Map<String, String> variables = new HashMap<String, String>();
         if (input != null) {
             try {
                 String line;
@@ -56,10 +56,10 @@ public class VariableFromCsvFileReader {
                     switch (lineValues.length) {
                         case 1:
                             log.warn("Less than 2 columns at line: " + line);
-                            ret.put(prefix + lineValues[0], "");
+                            variables.put(prefix + lineValues[0], "");
                             break;
                         case 2:
-                            ret.put(prefix + lineValues[0], lineValues[1]);
+                            variables.put(prefix + lineValues[0], lineValues[1]);
                             break;
                         default:
                             log.warn("Bad format for line: " + line);
@@ -70,6 +70,6 @@ public class VariableFromCsvFileReader {
                 log.error("Error while reading: " + ex.getMessage());
             }
         }
-        return ret;
+        return variables;
     }
 }

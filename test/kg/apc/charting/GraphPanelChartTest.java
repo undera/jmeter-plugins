@@ -11,7 +11,6 @@ import java.io.ObjectOutputStream;
 import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.emulators.TestGraphics;
 import kg.apc.emulators.TestJMeterUtils;
-import kg.apc.jmeter.modifiers.RawRequestSourcePreProcessor;
 import org.apache.jorphan.gui.NumberRenderer;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -335,7 +334,7 @@ public class GraphPanelChartTest {
     @Test
     public void testSaveGraphToPNG() throws Exception {
         System.out.println("saveGraphToPNG");
-        File file = new File(TestJMeterUtils.getTempDir() + "/test.png");
+        File file = File.createTempFile("test", ".png");
         int w = 100;
         int h = 100;
         GraphPanelChart instance = new GraphPanelChart();
@@ -350,20 +349,20 @@ public class GraphPanelChartTest {
     @Test
     public void testSaveGraphToCSV() throws Exception {
         System.out.println("saveGraphToCSV");
-        File file = new File(TestJMeterUtils.getTempDir() + "/test.csv");
+        File file = File.createTempFile("test", ".csv");
         GraphPanelChart instance = new GraphPanelChart();
         final ConcurrentSkipListMap<String, AbstractGraphRow> rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
         instance.setRows(rows);
         instance.saveGraphToCSV(file);
     }
 
-   @Test
-   public void testSetYAxisLabel() {
-      System.out.println("setYAxisLabel");
-      String yAxisLabel = "";
-      GraphPanelChart instance = new GraphPanelChart();
-      instance.setYAxisLabel(yAxisLabel);
-   }
+    @Test
+    public void testSetYAxisLabel() {
+        System.out.println("setYAxisLabel");
+        String yAxisLabel = "";
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.setYAxisLabel(yAxisLabel);
+    }
 
     /**
      * Test of getChartSettings method, of class GraphPanelChart.
@@ -376,16 +375,16 @@ public class GraphPanelChartTest {
         assertNotNull(result);
     }
 
-   /**
-    * Test of invalidateCache method, of class GraphPanelChart.
-    */
-   @Test
-   public void testInvalidateCache() {
-      System.out.println("invalidateCache");
-      GraphPanelChart instance = new GraphPanelChart();
-      instance.invalidateCache();
-   }
-   
+    /**
+     * Test of invalidateCache method, of class GraphPanelChart.
+     */
+    @Test
+    public void testInvalidateCache() {
+        System.out.println("invalidateCache");
+        GraphPanelChart instance = new GraphPanelChart();
+        instance.invalidateCache();
+    }
+
     @Test
     public void testSerialization() throws IOException {
         GraphPanelChart instance = new GraphPanelChart();

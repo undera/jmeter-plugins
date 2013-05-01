@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileOutputStream;
 import kg.apc.emulators.TestJMeterUtils;
 import org.junit.After;
@@ -89,7 +90,7 @@ public class ColorsDispatcherTest {
     @Test
     public void testDemoTable() throws FileNotFoundException, IOException {
         System.out.println("test");
-        FileOutputStream os = new FileOutputStream(TestJMeterUtils.getTempDir() + "/test.html");
+        FileOutputStream os = new FileOutputStream(File.createTempFile("test", ".html"));
         os.write("<html><body><p style='width: 100%'>".getBytes());
         ArrayList<Color> assignedColors = new ArrayList<Color>();
         for (int factor_i = 256; factor_i > 0; factor_i /= 2) {
@@ -112,7 +113,7 @@ public class ColorsDispatcherTest {
                         System.out.println("Existing " + r + " " + g + " " + b);
                     } else if ((r + g + b) / 3 < 32) {
                         System.out.println("Too dark " + r + " " + g + " " + b);
-                    } else if ((r + g + b) / 3 > 256-64) {
+                    } else if ((r + g + b) / 3 > 256 - 64) {
                         System.out.println("Too light " + r + " " + g + " " + b);
                     } else {
                         System.err.println("New " + r + " " + g + " " + b);

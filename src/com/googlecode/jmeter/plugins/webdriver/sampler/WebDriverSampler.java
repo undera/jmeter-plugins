@@ -43,31 +43,21 @@ public class WebDriverSampler extends AbstractSampler {
         res.setDataType(SampleResult.TEXT);
         res.setContentType("text/plain");
         res.setDataEncoding("UTF-8");
-
         res.setSuccessful(true);
-        res.setResponseMessageOK();
-        res.setResponseCodeOK();
 
         LOGGER.info("Current thread name: '"+getThreadName()+"', has browser: '"+getWebDriver()+"'");
 
         try {
             final ScriptEngine scriptEngine = createScriptEngineWith(res);
-            final Object outcome = scriptEngine.eval(getScript());
+            scriptEngine.eval(getScript());
 
             // setup the data in the SampleResult
             res.setResponseData(getWebDriver().getPageSource(), null);
             res.setURL(new URL(getWebDriver().getCurrentUrl()));
-
-            // only set this if the return value is boolean
-            if(outcome instanceof Boolean) {
-                res.setSuccessful((Boolean) outcome);
+            res.setResponseCode(res.isSuccessful() ? "200" : "500");
+            if(res.isSuccessful()) {
+                res.setResponseMessageOK();
             }
-
-            if(!res.isSuccessful()) {
-                res.setResponseCode("500");
-                res.setResponseMessage("Failed to find/verify expected content on page");
-            }
-
         } catch (Exception ex) {
             LOGGER.error(ex.getMessage());
             res.setResponseMessage(ex.toString());

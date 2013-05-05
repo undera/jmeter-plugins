@@ -1,15 +1,8 @@
 package kg.apc.jmeter.config;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import java.awt.*;
+import javax.swing.*;
+
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
@@ -56,6 +49,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         fileName.setText(element.getPropertyAsString(VariablesFromCSV.FILENAME));
         variablePrefix.setText(element.getPropertyAsString(VariablesFromCSV.VARIABLE_PREFIX));
         separator.setText(element.getPropertyAsString(VariablesFromCSV.SEPARATOR));
+        // TODO will non integer value for skipLines make it through to this point when a test plan is loaded?
         skipLines.setText(element.getPropertyAsString(VariablesFromCSV.SKIP_LINES));
         storeSysProp.setSelected(element.getPropertyAsBoolean(VariablesFromCSV.STORE_SYS_PROP));
     }
@@ -76,6 +70,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
             varsCsv.setFileName(fileName.getText());
             varsCsv.setVariablePrefix(variablePrefix.getText());
             varsCsv.setSeparator(separator.getText());
+            // TODO handle invalid integers here or with input validation on swing component?
             varsCsv.setSkipLines(Integer.parseInt(skipLines.getText()));
             varsCsv.setStoreAsSystemProperty(storeSysProp.isSelected());
         }
@@ -121,7 +116,10 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         addToPanel(mainPanel, editConstraints, 1, 2, separator = new JTextField(20));
 
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Skip initial lines: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 3, skipLines = new JTextField(20));
+        skipLines = new JTextField(20);
+        skipLines.setInputVerifier(new SkipLinesVerifier());
+        skipLines.setToolTipText("Number of initial lines of input to skip. Must be an integer >= 0.");
+        addToPanel(mainPanel, editConstraints, 1, 3, skipLines);
 
         addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Store variables also in System Properties: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 4, storeSysProp = new JCheckBox());
@@ -161,5 +159,34 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         separator.setText(";");
         skipLines.setText("0");
         storeSysProp.setSelected(false);
+    }
+
+    final class SkipLinesVerifier extends InputVerifier {
+        Color warningBackground;
+
+        public SkipLinesVerifier() {
+            super();
+            // light red background with ~90% transparency
+            warningBackground = new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), 24);
+        }
+        public boolean shouldYieldFocus(JComponent input) {
+            boolean isValidInput = verify(input);
+            if (isValidInput) {
+                input.setBackground(Color.WHITE);
+            } else {
+                input.setBackground(warningBackground);
+            }
+            return isValidInput;
+        }
+
+        public boolean verify(JComponent input) {
+            JTextField tf = (JTextField) input;
+            try {
+                int inputInt = Integer.parseInt(tf.getText());
+                return (inputInt >= 0);
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
     }
 }

@@ -59,7 +59,8 @@ public class VariableFromCsvFileReader {
      * The name is taken from the first column and value from the second column. If an input line contains only one
      * column its value is defaulted to an empty string. Any extra columns are ignored.
      *
-     * If the input contains headers, call with skipLines equal to the number of lines of headers.
+     * If the input contains headers, call with skipLines equal to the number of lines of headers. A negative value for
+     * skipLines yields the same result as 0.
      *
      * @param prefix a prefix to apply to the mapped variable names
      * @param separator the field delimiter

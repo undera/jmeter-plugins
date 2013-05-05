@@ -104,5 +104,4 @@ public class VariablesFromCSVGuiTest {
       VariablesFromCSVGui instance = new VariablesFromCSVGui();
       instance.clearGui();
    }
-
 }

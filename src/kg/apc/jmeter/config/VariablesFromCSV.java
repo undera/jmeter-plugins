@@ -61,7 +61,6 @@ public class VariablesFromCSV extends Arguments{
         return getPropertyAsInt(SKIP_LINES, 0);
     }
 
-    // TODO how will JMeter handle a non-integer value in test plan?
     public void setSkipLines(int skipLines) {
         setProperty(SKIP_LINES, skipLines);
     }

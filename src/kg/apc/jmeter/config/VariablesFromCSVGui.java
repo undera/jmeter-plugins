@@ -49,7 +49,6 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         fileName.setText(element.getPropertyAsString(VariablesFromCSV.FILENAME));
         variablePrefix.setText(element.getPropertyAsString(VariablesFromCSV.VARIABLE_PREFIX));
         separator.setText(element.getPropertyAsString(VariablesFromCSV.SEPARATOR));
-        // TODO will non integer value for skipLines make it through to this point when a test plan is loaded?
         skipLines.setText(element.getPropertyAsString(VariablesFromCSV.SKIP_LINES));
         storeSysProp.setSelected(element.getPropertyAsBoolean(VariablesFromCSV.STORE_SYS_PROP));
     }
@@ -70,7 +69,6 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
             varsCsv.setFileName(fileName.getText());
             varsCsv.setVariablePrefix(variablePrefix.getText());
             varsCsv.setSeparator(separator.getText());
-            // TODO handle invalid integers here or with input validation on swing component?
             varsCsv.setSkipLines(Integer.parseInt(skipLines.getText()));
             varsCsv.setStoreAsSystemProperty(storeSysProp.isSelected());
         }

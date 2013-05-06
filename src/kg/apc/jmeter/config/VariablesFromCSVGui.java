@@ -6,6 +6,7 @@ import javax.swing.*;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
+import kg.apc.jmeter.gui.IntegerInputVerifier;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.testelement.TestElement;
 
@@ -115,7 +116,8 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
 
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Skip initial lines: ", JLabel.RIGHT));
         skipLines = new JTextField(20);
-        skipLines.setInputVerifier(new SkipLinesVerifier());
+        Color lightRed = new Color(255, 202, 197);
+        skipLines.setInputVerifier(new IntegerInputVerifier(0, Integer.MAX_VALUE, skipLines.getBackground(), lightRed));
         skipLines.setToolTipText("Number of initial lines of input to skip. Must be an integer >= 0.");
         addToPanel(mainPanel, editConstraints, 1, 3, skipLines);
 
@@ -159,32 +161,4 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         storeSysProp.setSelected(false);
     }
 
-    final class SkipLinesVerifier extends InputVerifier {
-        Color warningBackground;
-
-        public SkipLinesVerifier() {
-            super();
-            // light red background with ~90% transparency
-            warningBackground = new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), 24);
-        }
-        public boolean shouldYieldFocus(JComponent input) {
-            boolean isValidInput = verify(input);
-            if (isValidInput) {
-                input.setBackground(Color.WHITE);
-            } else {
-                input.setBackground(warningBackground);
-            }
-            return isValidInput;
-        }
-
-        public boolean verify(JComponent input) {
-            JTextField tf = (JTextField) input;
-            try {
-                int inputInt = Integer.parseInt(tf.getText());
-                return (inputInt >= 0);
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        }
-    }
 }

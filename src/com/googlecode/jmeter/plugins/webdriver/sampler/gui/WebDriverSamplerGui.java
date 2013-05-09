@@ -110,7 +110,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 		panel.add(label, BorderLayout.NORTH);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-		final JTextArea explain = new JTextArea("The following variables are defined for the script: Label, Parameters, args, log, Browser, SampleResult, OUT");
+		final JTextArea explain = new JTextArea("The following variables are defined for the script: Name, Parameters, args, Log, Browser, SampleResult");
 		explain.setLineWrap(true);
 		explain.setEditable(false);
 		explain.setBackground(this.getBackground());

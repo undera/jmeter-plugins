@@ -90,15 +90,14 @@ public class WebDriverSampler extends AbstractSampler {
 
     private void initialiseGlobalVariables() {
         Bindings globalBindings = new SimpleBindings();
-        globalBindings.put("log", LOGGER);
-        globalBindings.put("OUT", System.out);
+        globalBindings.put("Log", LOGGER);
         scriptEngineManager.setBindings(globalBindings);
     }
 
     ScriptEngine createScriptEngineWith(SampleResult sampleResult) {
         final ScriptEngine scriptEngine = scriptEngineManager.getEngineByName(DEFAULT_ENGINE);
         Bindings engineBindings = new SimpleBindings();
-        engineBindings.put("Label", getName());
+        engineBindings.put("Name", getName());
         engineBindings.put("SampleResult", sampleResult);
         final String scriptParameters = getParameters();
         engineBindings.put("Parameters", scriptParameters);

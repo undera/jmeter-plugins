@@ -75,9 +75,8 @@ public class WebDriverSamplerTest {
         final SampleResult sampleResult = new SampleResult();
         final ScriptEngine scriptEngine = sampler.createScriptEngineWith(sampleResult);
         final ScriptContext scriptContext = scriptEngine.getContext();
-        assertThat(scriptContext.getAttribute("log"), is(instanceOf(Logger.class)));
-        assertThat((PrintStream) scriptContext.getAttribute("OUT"), is(System.out));
-        assertThat((String) scriptContext.getAttribute("Label"), is(sampler.getName()));
+        assertThat(scriptContext.getAttribute("Log"), is(instanceOf(Logger.class)));
+        assertThat((String) scriptContext.getAttribute("Name"), is(sampler.getName()));
         assertThat((String) scriptContext.getAttribute("Parameters"), is(sampler.getParameters()));
         assertThat((String[]) scriptContext.getAttribute("args"), is(new String[]{"p1", "p2", "p3"}));
         assertThat(scriptContext.getAttribute("Browser"), is(instanceOf(WebDriver.class)));

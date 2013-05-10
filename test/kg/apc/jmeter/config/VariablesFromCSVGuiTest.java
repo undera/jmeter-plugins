@@ -23,14 +23,14 @@ public class VariablesFromCSVGuiTest {
     public VariablesFromCSVGuiTest() {
     }
 
-   @BeforeClass
-   public static void setUpClass() throws Exception {
-      TestJMeterUtils.createJmeterEnv();
-   }
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
+    }
 
-   @AfterClass
-   public static void tearDownClass() throws Exception {
-   }
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
 
     @Before
     public void setUp() {
@@ -40,60 +40,60 @@ public class VariablesFromCSVGuiTest {
     public void tearDown() {
     }
 
-   /**
-    * Test of getStaticLabel method, of class VariablesFromCSVGui.
-    */
-   @Test
-   public void testGetStaticLabel() {
-      System.out.println("getStaticLabel");
-      VariablesFromCSVGui instance = new VariablesFromCSVGui();
-      String result = instance.getStaticLabel();
-      assertTrue(result.length()>0);
-   }
+    /**
+     * Test of getStaticLabel method, of class VariablesFromCSVGui.
+     */
+    @Test
+    public void testGetStaticLabel() {
+        System.out.println("getStaticLabel");
+        VariablesFromCSVGui instance = new VariablesFromCSVGui();
+        String result = instance.getStaticLabel();
+        assertTrue(result.length()>0);
+    }
 
-   /**
-    * Test of getLabelResource method, of class VariablesFromCSVGui.
-    */
-   @Test
-   public void testGetLabelResource() {
-      System.out.println("getLabelResource");
-      VariablesFromCSVGui instance = new VariablesFromCSVGui();
-      String result = instance.getLabelResource();
-      assertTrue(result.length()>0);
-   }
+    /**
+     * Test of getLabelResource method, of class VariablesFromCSVGui.
+     */
+    @Test
+    public void testGetLabelResource() {
+        System.out.println("getLabelResource");
+        VariablesFromCSVGui instance = new VariablesFromCSVGui();
+        String result = instance.getLabelResource();
+        assertTrue(result.length()>0);
+    }
 
-   /**
-    * Test of configure method, of class VariablesFromCSVGui.
-    */
-   @Test
-   public void testConfigure() {
-      System.out.println("configure");
-      TestElement element = new VariablesFromCSV();
-      VariablesFromCSVGui instance = new VariablesFromCSVGui();
-      instance.configure(element);
-   }
+    /**
+     * Test of configure method, of class VariablesFromCSVGui.
+     */
+    @Test
+    public void testConfigure() {
+        System.out.println("configure");
+        TestElement element = new VariablesFromCSV();
+        VariablesFromCSVGui instance = new VariablesFromCSVGui();
+        instance.configure(element);
+    }
 
-   /**
-    * Test of createTestElement method, of class VariablesFromCSVGui.
-    */
-   @Test
-   public void testCreateTestElement() {
-      System.out.println("createTestElement");
-      VariablesFromCSVGui instance = new VariablesFromCSVGui();
-      TestElement result = instance.createTestElement();
-      assertTrue(result instanceof VariablesFromCSV);
-   }
+    /**
+     * Test of createTestElement method, of class VariablesFromCSVGui.
+     */
+    @Test
+    public void testCreateTestElement() {
+        System.out.println("createTestElement");
+        VariablesFromCSVGui instance = new VariablesFromCSVGui();
+        TestElement result = instance.createTestElement();
+        assertTrue(result instanceof VariablesFromCSV);
+    }
 
-   /**
-    * Test of modifyTestElement method, of class VariablesFromCSVGui.
-    */
-   @Test
-   public void testModifyTestElement() {
-      System.out.println("modifyTestElement");
-      TestElement te = new VariablesFromCSV();
-      VariablesFromCSVGui instance = new VariablesFromCSVGui();
-      instance.modifyTestElement(te);
-   }
+    /**
+     * Test of modifyTestElement method, of class VariablesFromCSVGui.
+     */
+    @Test
+    public void testModifyTestElement() {
+        System.out.println("modifyTestElement");
+        TestElement te = new VariablesFromCSV();
+        VariablesFromCSVGui instance = new VariablesFromCSVGui();
+        instance.modifyTestElement(te);
+    }
 
     /**
      * Test configure() with skipLines property not present in test element, simulating the scenario where
@@ -115,13 +115,13 @@ public class VariablesFromCSVGuiTest {
         assertEquals("skipLines not set to default", VariablesFromCSV.SKIP_LINES_DEFAULT, te.getSkipLines());
     }
 
-   /**
-    * Test of clearGui method, of class VariablesFromCSVGui.
-    */
-   @Test
-   public void testClearGui() {
-      System.out.println("clearGui");
-      VariablesFromCSVGui instance = new VariablesFromCSVGui();
-      instance.clearGui();
-   }
+    /**
+     * Test of clearGui method, of class VariablesFromCSVGui.
+     */
+    @Test
+    public void testClearGui() {
+        System.out.println("clearGui");
+        VariablesFromCSVGui instance = new VariablesFromCSVGui();
+        instance.clearGui();
+    }
 }

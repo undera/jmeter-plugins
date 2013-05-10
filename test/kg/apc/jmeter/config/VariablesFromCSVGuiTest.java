@@ -95,6 +95,26 @@ public class VariablesFromCSVGuiTest {
       instance.modifyTestElement(te);
    }
 
+    /**
+     * Test configure() with skipLines property not present in test element, simulating the scenario where
+     * a test plan is loaded and the serialized state of the plugin is missing the skipLines property.
+     */
+    @Test
+    public void testConfigureSkipLinesMissing() {
+        VariablesFromCSV te = new VariablesFromCSV();
+        VariablesFromCSVGui gui = new VariablesFromCSVGui();
+
+        // Given skipLines property is missing from TestElement
+        te.removeProperty(VariablesFromCSV.SKIP_LINES);
+
+        // When configure() is called followed by modifyTestElement()
+        gui.configure(te);
+        gui.modifyTestElement(te);
+
+        // Then skipLines should have default value
+        assertEquals("skipLines not set to default", VariablesFromCSV.SKIP_LINES_DEFAULT, te.getSkipLines());
+    }
+
    /**
     * Test of clearGui method, of class VariablesFromCSVGui.
     */

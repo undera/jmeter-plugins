@@ -47,11 +47,14 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
     @Override
     public void configure(TestElement element) {
         super.configure(element);
-        fileName.setText(element.getPropertyAsString(VariablesFromCSV.FILENAME));
-        variablePrefix.setText(element.getPropertyAsString(VariablesFromCSV.VARIABLE_PREFIX));
-        separator.setText(element.getPropertyAsString(VariablesFromCSV.SEPARATOR));
-        skipLines.setText(element.getPropertyAsString(VariablesFromCSV.SKIP_LINES));
-        storeSysProp.setSelected(element.getPropertyAsBoolean(VariablesFromCSV.STORE_SYS_PROP));
+        if (element instanceof VariablesFromCSV) {
+            VariablesFromCSV varsCsv = (VariablesFromCSV)element;
+            fileName.setText(varsCsv.getFileName());
+            variablePrefix.setText(varsCsv.getVariablePrefix());
+            separator.setText(varsCsv.getSeparator());
+            skipLines.setText(Integer.toString(varsCsv.getSkipLines()));
+            storeSysProp.setSelected(varsCsv.isStoreAsSystemProperty());
+        }
     }
 
     @Override

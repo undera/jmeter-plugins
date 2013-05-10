@@ -75,12 +75,12 @@ public class WebDriverSamplerTest {
         final SampleResult sampleResult = new SampleResult();
         final ScriptEngine scriptEngine = sampler.createScriptEngineWith(sampleResult);
         final ScriptContext scriptContext = scriptEngine.getContext();
-        assertThat(scriptContext.getAttribute("Log"), is(instanceOf(Logger.class)));
-        assertThat((String) scriptContext.getAttribute("Name"), is(sampler.getName()));
-        assertThat((String) scriptContext.getAttribute("Parameters"), is(sampler.getParameters()));
+        assertThat(scriptContext.getAttribute("log"), is(instanceOf(Logger.class)));
+        assertThat((String) scriptContext.getAttribute("name"), is(sampler.getName()));
+        assertThat((String) scriptContext.getAttribute("parameters"), is(sampler.getParameters()));
         assertThat((String[]) scriptContext.getAttribute("args"), is(new String[]{"p1", "p2", "p3"}));
-        assertThat(scriptContext.getAttribute("Browser"), is(instanceOf(WebDriver.class)));
-        assertThat((SampleResult) scriptContext.getAttribute("SampleResult"), is(sampleResult));
+        assertThat(scriptContext.getAttribute("browser"), is(instanceOf(WebDriver.class)));
+        assertThat((SampleResult) scriptContext.getAttribute("sampleResult"), is(sampleResult));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class WebDriverSamplerTest {
 
     @Test
     public void shouldReturnSuccessfulSampleResultWhenScriptSetsSampleResultToSuccess() throws MalformedURLException {
-        sampler.setScript("SampleResult.setSuccessful(true);");
+        sampler.setScript("sampleResult.setSuccessful(true);");
         final SampleResult sampleResult = sampler.sample(null);
 
         assertThat(sampleResult.isSuccessful(), is(true));
@@ -119,7 +119,7 @@ public class WebDriverSamplerTest {
 
     @Test
     public void shouldReturnFailureSampleResultWhenScriptSetsSampleResultToFailure() throws MalformedURLException {
-        sampler.setScript("SampleResult.setSuccessful(false);");
+        sampler.setScript("sampleResult.setSuccessful(false);");
         final SampleResult sampleResult = sampler.sample(null);
 
         assertThat(sampleResult.isSuccessful(), is(false));

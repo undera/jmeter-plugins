@@ -90,20 +90,20 @@ public class WebDriverSampler extends AbstractSampler {
 
     private void initialiseGlobalVariables() {
         Bindings globalBindings = new SimpleBindings();
-        globalBindings.put("Log", LOGGER);
+        globalBindings.put("log", LOGGER);
         scriptEngineManager.setBindings(globalBindings);
     }
 
     ScriptEngine createScriptEngineWith(SampleResult sampleResult) {
         final ScriptEngine scriptEngine = scriptEngineManager.getEngineByName(DEFAULT_ENGINE);
         Bindings engineBindings = new SimpleBindings();
-        engineBindings.put("Name", getName());
-        engineBindings.put("SampleResult", sampleResult);
+        engineBindings.put("name", getName());
+        engineBindings.put("sampleResult", sampleResult);
         final String scriptParameters = getParameters();
-        engineBindings.put("Parameters", scriptParameters);
+        engineBindings.put("parameters", scriptParameters);
         String[] args = JOrphanUtils.split(scriptParameters, " ");
         engineBindings.put("args", args);
-        engineBindings.put("Browser", getWebDriver());
+        engineBindings.put("browser", getWebDriver());
         scriptEngine.setBindings(engineBindings, ScriptContext.ENGINE_SCOPE);
         return scriptEngine;
     }

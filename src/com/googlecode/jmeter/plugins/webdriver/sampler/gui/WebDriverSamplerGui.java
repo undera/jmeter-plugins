@@ -85,7 +85,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 	}
 
 	private JPanel createParameterPanel() {
-		final JLabel label = new JLabel("Parameters (-> String parameters and String[] args)");
+		final JLabel label = new JLabel("Parameters");
 
 		parameters = new JTextField(10);
 		parameters.setName(WebDriverSampler.PARAMETERS);
@@ -103,14 +103,14 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         script.setContentType("text/javascript");
         script.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
-        final JLabel label = new JLabel("Script (see below for variables that are defined)"); // $NON-NLS-1$
+        final JLabel label = new JLabel("Script (see below for variables that are defined)");
 		label.setLabelFor(script);
 
 		final JPanel panel = new JPanel(new BorderLayout());
 		panel.add(label, BorderLayout.NORTH);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-		final JTextArea explain = new JTextArea("The following variables are defined for the script: name, parameters, args, log, browser, sampleResult");
+		final JTextArea explain = new JTextArea("The following variables are defined for the script: WDS.name, WDS.parameters, WDS.args, WDS.log, WDS.browser, WDS.sampleResult");
 		explain.setLineWrap(true);
 		explain.setEditable(false);
 		explain.setBackground(this.getBackground());

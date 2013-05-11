@@ -75,12 +75,13 @@ public class WebDriverSamplerTest {
         final SampleResult sampleResult = new SampleResult();
         final ScriptEngine scriptEngine = sampler.createScriptEngineWith(sampleResult);
         final ScriptContext scriptContext = scriptEngine.getContext();
-        assertThat(scriptContext.getAttribute("log"), is(instanceOf(Logger.class)));
-        assertThat((String) scriptContext.getAttribute("name"), is(sampler.getName()));
-        assertThat((String) scriptContext.getAttribute("parameters"), is(sampler.getParameters()));
-        assertThat((String[]) scriptContext.getAttribute("args"), is(new String[]{"p1", "p2", "p3"}));
-        assertThat(scriptContext.getAttribute("browser"), is(instanceOf(WebDriver.class)));
-        assertThat((SampleResult) scriptContext.getAttribute("sampleResult"), is(sampleResult));
+        final WebDriverScriptable scriptable = (WebDriverScriptable) scriptContext.getAttribute("WDS");
+        assertThat(scriptable.getLog(), is(instanceOf(Logger.class)));
+        assertThat(scriptable.getName(), is(sampler.getName()));
+        assertThat(scriptable.getParameters(), is(sampler.getParameters()));
+        assertThat(scriptable.getArgs(), is(new String[]{"p1", "p2", "p3"}));
+        assertThat(scriptable.getBrowser(), is(instanceOf(WebDriver.class)));
+        assertThat(scriptable.getSampleResult(), is(sampleResult));
     }
 
     @Test
@@ -104,7 +105,7 @@ public class WebDriverSamplerTest {
 
     @Test
     public void shouldReturnSuccessfulSampleResultWhenScriptSetsSampleResultToSuccess() throws MalformedURLException {
-        sampler.setScript("sampleResult.setSuccessful(true);");
+        sampler.setScript("WDS.sampleResult.setSuccessful(true);");
         final SampleResult sampleResult = sampler.sample(null);
 
         assertThat(sampleResult.isSuccessful(), is(true));
@@ -119,7 +120,7 @@ public class WebDriverSamplerTest {
 
     @Test
     public void shouldReturnFailureSampleResultWhenScriptSetsSampleResultToFailure() throws MalformedURLException {
-        sampler.setScript("sampleResult.setSuccessful(false);");
+        sampler.setScript("WDS.sampleResult.setSuccessful(false);");
         final SampleResult sampleResult = sampler.sample(null);
 
         assertThat(sampleResult.isSuccessful(), is(false));

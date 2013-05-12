@@ -96,8 +96,10 @@ public class VariablesFromCSVGuiTest {
     }
 
     /**
-     * Test configure() with skipLines property not present in test element, simulating the scenario where
-     * a test plan is loaded and the serialized state of the plugin is missing the skipLines property.
+     * Test configure() with skipLines property not present in test element, simulating the scenario when
+     * a test plan is loaded from serialized state that is missing the skipLines property. Non-integer values
+     * in a saved test plan will trigger an exception in JMeter code before the element is configured, which is
+     * outside the scope of a unit test.
      */
     @Test
     public void testConfigureSkipLinesMissing() {

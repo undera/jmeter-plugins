@@ -4,7 +4,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins</artifactId>
-    <version>1.0.1-RC1</version>
+    <version>1.1.0-RC1</version>
     <packaging>jar</packaging>
 
     <name>JMeter Plugins at Google Code</name>
@@ -43,6 +43,8 @@
         <java-version>1.6</java-version>
         <jmeter.version>2.8</jmeter.version>
         <cmdrunner-version>1.0.1</cmdrunner-version>
+        <selenium.version>2.32.0</selenium.version>
+        <powermock.version>1.5</powermock.version>
     </properties>
 
     <repositories>
@@ -162,9 +164,37 @@
             <version>0.20</version>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.5</version>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.sciss</groupId>
+            <artifactId>jsyntaxpane</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit-dep</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>${powermock.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -278,7 +308,7 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper</includeArtifactIds>
+                            <includeArtifactIds>cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,hbase-common,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper,selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,guava,json,commons-exec,jsyntaxpane</includeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>
@@ -331,7 +361,7 @@
                 <version>2.14.1</version>
                 <configuration>
                     <!-- several of the unit tests require a large heap -->
-                    <argLine>-Xmx784m</argLine>
+                    <argLine>-Xmx1280m</argLine>
                 </configuration>
             </plugin>
         </plugins>

@@ -80,9 +80,9 @@ public class FileSystemTest {
     public void testCopyFile() throws Exception {
         System.out.println("copyFile");
         File file = File.createTempFile("abc", "zyx");
-        
+
         String source = file.getAbsolutePath();
-        String destination = file.getParent()+File.separator+"testnew";
+        String destination = source + ".testnew";
         FileSystem.copyFile(source, destination);
     }
 }

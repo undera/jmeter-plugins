@@ -23,12 +23,12 @@ import org.junit.Test;
  * @author mabo
  */
 public class DbmonTest implements TestConnection.TestConnectionDataProvider {
+
     public static final String TEST_CONNECTION = "testConnection";
     public static final String QUERY1 = "select value1 from table1";
     public static final String QUERY2 = "select value2 from table1";
     public static final String PROBE1 = "probe1";
     public static final String PROBE2 = "probe2";
-
     private PowerTableModel dataModel;
     private boolean threadStoped = false;
     private Map<String, Double> latestSamples = new HashMap<String, Double>();
@@ -40,28 +40,28 @@ public class DbmonTest implements TestConnection.TestConnectionDataProvider {
         JMeterContextService.getContext().getVariables().putObject(TEST_CONNECTION, new TestDataSource());
 
         dataModel = new PowerTableModel(DbMonGui.columnIdentifiers, DbMonGui.columnClasses);
-        dataModel.addRow(new Object[]{ TEST_CONNECTION, PROBE1, false, QUERY1});
-        dataModel.addRow(new Object[]{ TEST_CONNECTION, PROBE2, true, QUERY2});
+        dataModel.addRow(new Object[]{TEST_CONNECTION, PROBE1, false, QUERY1});
+        dataModel.addRow(new Object[]{TEST_CONNECTION, PROBE2, true, QUERY2});
     }
-    
+
     @Test
     public void testRun() throws InterruptedException {
         DbMonCollector instance = new TestDbMonCollector();
         instance.setData(JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, DbMonCollector.DATA_PROPERTY));
         instance.testStarted();
-        
+
         setQueryResult(QUERY1, 1);
         setQueryResult(QUERY2, 1);
         instance.processConnectors();
         assertLastSample(PROBE1, 1);
         assertNull(latestSamples.get(PROBE2)); // Deleta can not produce values at first loop
-        
+
         setQueryResult(QUERY1, -2);
         setQueryResult(QUERY2, 2);
         instance.processConnectors();
         assertLastSample(PROBE1, -2);
         assertLastSample(PROBE2, 1);
-        
+
         setQueryResult(QUERY1, 13);
         setQueryResult(QUERY2, 1);
         instance.processConnectors();
@@ -69,13 +69,13 @@ public class DbmonTest implements TestConnection.TestConnectionDataProvider {
         assertLastSample(PROBE2, -1);
 
         instance.testEnded();
-        assertSampleGeneratorThreadIsStoped();        
+        assertSampleGeneratorThreadIsStoped();
     }
 
     public void setQueryResult(String sql, double value) {
         queryResults.put(sql, value);
     }
-    
+
     @Override
     public ResultSet getQueryResult(String sql) {
         return TestConnection.resultSet(queryResults.get(sql));
@@ -96,6 +96,7 @@ public class DbmonTest implements TestConnection.TestConnectionDataProvider {
     }
 
     private class TestDataSource implements DataSourceComponent {
+
         @Override
         public Connection getConnection() throws SQLException {
             return new TestConnection(DbmonTest.this);
@@ -105,15 +106,15 @@ public class DbmonTest implements TestConnection.TestConnectionDataProvider {
         public void configure(Configuration c) throws ConfigurationException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
-        
     }
-    
+
     private class TestDbMonCollector extends DbMonCollector {
+
         @Override
         public void run() {
             try {
                 // Override run to controll the entire flow from the test
-                Thread.sleep(24*60*60*1000);
+                Thread.sleep(24 * 60 * 60 * 1000);
             } catch (InterruptedException ex) {
                 synchronized (DbmonTest.this) {
                     threadStoped = true;
@@ -121,13 +122,12 @@ public class DbmonTest implements TestConnection.TestConnectionDataProvider {
                 }
             }
         }
-        
+
         @Override
         public void dbMonSampleOccurred(SampleEvent event) {
             super.sampleOccurred(event);
             double value = DbMonSampleResult.getValue(event.getResult());
             latestSamples.put(event.getResult().getSampleLabel(), value);
         }
-
     }
 }

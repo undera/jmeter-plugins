@@ -251,6 +251,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
             log.debug("Waiting for bg thread to stop...");
             try {
                 Thread.sleep(50);
+                processorThread.interrupt();
             } catch (InterruptedException ex) {
                 log.warn("Interrupted sleep", ex);
             }

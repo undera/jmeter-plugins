@@ -1,7 +1,6 @@
 package kg.apc.jmeter.config;
 
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import java.awt.event.ActionEvent;
 
 import static org.mockito.Mockito.*;

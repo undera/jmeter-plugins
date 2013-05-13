@@ -19,7 +19,7 @@ import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  *

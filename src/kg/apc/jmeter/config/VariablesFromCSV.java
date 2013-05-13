@@ -12,12 +12,13 @@ public class VariablesFromCSV extends Arguments{
     public static final String VARIABLE_PREFIX = "variablesPrefix";
     public static final String FILENAME = "filename";
     public static final String SEPARATOR = "delimiter";
+    public static final String SKIP_LINES = "skipLines";
     public static final String STORE_SYS_PROP = "storeSysProp";
 
-    //It seems org.apache.jmeter.engine.Precompiler requires only this method
+    //It seems org.apache.jmeter.engine.Precompiler requires only thishttps://groups.google.com/forum/#!topic/jmeter-plugins/gWn7MTgvTfE method
     @Override
     public Map<String, String> getArgumentsAsMap() {
-       Map<String, String> variables = new VariableFromCsvFileReader(getFileName()).getDataAsMap(getVariablePrefix(), getSeparator());
+       Map<String, String> variables = new VariableFromCsvFileReader(getFileName()).getDataAsMap(getVariablePrefix(), getSeparator(), getSkipLines());
        //store in System Properties also
        if(isStoreAsSystemProperty()) {
           Iterator<String> iter = variables.keySet().iterator();
@@ -54,6 +55,14 @@ public class VariablesFromCSV extends Arguments{
 
     public void setSeparator(String separator) {
         setProperty(SEPARATOR, separator);
+    }
+
+    public int getSkipLines() {
+        return getPropertyAsInt(SKIP_LINES, 0);
+    }
+
+    public void setSkipLines(int skipLines) {
+        setProperty(SKIP_LINES, skipLines);
     }
 
     public boolean isStoreAsSystemProperty() {

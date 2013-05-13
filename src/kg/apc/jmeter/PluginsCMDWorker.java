@@ -52,6 +52,7 @@ public class PluginsCMDWorker {
     private int successFilter = -1;
 
     public PluginsCMDWorker() {
+        log.info("Using JMeterPluginsCMD v. " + JMeterPluginsUtils.getVersion());
         prepareJMeterEnv();
     }
 
@@ -62,7 +63,7 @@ public class PluginsCMDWorker {
         }
 
         String homeDir = UniversalRunner.getJARLocation();
-
+        log.debug("Orig jmeter home dir: " + homeDir);
         File dir = new File(homeDir);
         while (dir != null && dir.exists()
                 && dir.getName().equals("ext")
@@ -76,7 +77,11 @@ public class PluginsCMDWorker {
 
         homeDir = dir.getParent();
 
-        log.debug("Creating jmeter env using JMeter home: " + homeDir);
+        if (!isJMeterHome(homeDir)) {
+            homeDir = getJMeterHomeFromCP(System.getProperty("java.class.path"));
+        }
+
+        log.debug("Final jmeter home dir: " + homeDir);
         JMeterUtils.setJMeterHome(homeDir);
         initializeProperties();
     }
@@ -88,11 +93,12 @@ public class PluginsCMDWorker {
      * @see JMeter
      */
     private void initializeProperties() {
-        JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterHome() + File.separator
+        JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterHome()
+                + File.separator
                 + "bin" + File.separator
                 + "jmeter.properties");
 
-        JMeterUtils.initLogging();
+        //JMeterUtils.initLogging();
         JMeterUtils.initLocale();
 
         Properties jmeterProps = JMeterUtils.getJMeterProperties();
@@ -109,7 +115,7 @@ public class PluginsCMDWorker {
                     Properties tmp = new Properties();
                     tmp.load(fis);
                     jmeterProps.putAll(tmp);
-                    LoggingManager.setLoggingLevels(tmp);//Do what would be done earlier
+                    LoggingManager.setLoggingLevels(jmeterProps);//Do what would be done earlier
                 }
             } catch (IOException e) {
                 log.warn("Error loading user property file: " + userProp, e);
@@ -393,5 +399,24 @@ public class PluginsCMDWorker {
                 throw new RuntimeException("Failed to create directory for " + resultFile.getAbsolutePath());
             }
         }
+    }
+
+    private boolean isJMeterHome(String homeDir) {
+        File f = new File(homeDir + File.separator + "lib" + File.separator + "ext");
+        return f.exists() && f.isDirectory();
+    }
+
+    public static String getJMeterHomeFromCP(String classpathSTR) {
+        log.debug("Trying to get JMeter home from classpath");
+        String[] paths = classpathSTR.split(":");
+        for (int i = 0; i < paths.length; i++) {
+            String string = paths[i];
+            log.debug("Testing " + string);
+            if (string.endsWith("ApacheJMeter_core.jar")) {
+                File f=new File(string);
+                return f.getParentFile().getParentFile().getParentFile().getAbsolutePath();
+            }
+        }
+        throw new Error("Failed to find JMeter home dir from classpath");
     }
 }

@@ -7,6 +7,7 @@ import java.util.ListIterator;
 import kg.apc.jmeter.PluginsCMDWorker;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.apache.log.Priority;
 
 /**
  *
@@ -38,13 +39,14 @@ public class ReporterTool extends AbstractCMDTool {
                 + "--exclude-labels <labels list> " // filter samples
                 + "--auto-scale <yes/no> " // scaling for composites ||
                 + "--line-weight <num of pixels> " // set graph row line thikness ||
-                + "--extractor-regexps <regExps list> " 
-                + "--success-filter <true/false> " 
+                + "--extractor-regexps <regExps list> "
+                + "--success-filter <true/false> "
                 + "]");
     }
 
     @Override
     protected int processParams(ListIterator args) throws UnsupportedOperationException, IllegalArgumentException {
+        LoggingManager.setPriority(Priority.INFO);
         // first process params without worker created
         while (args.hasNext()) {
             String nextArg = (String) args.next();
@@ -223,16 +225,16 @@ public class ReporterTool extends AbstractCMDTool {
     private void storeRegExps(String regExps, PluginsCMDWorker worker) {
         String[] regStrings = regExps.split("\\{;\\}");
 
-        if(regStrings.length % 4 != 0) {
-           throw new IllegalArgumentException("Regular expressions must be succession of key/value/isDelta(true or false)/isRegExpLabel(true or false) separated by {;}");
+        if (regStrings.length % 4 != 0) {
+            throw new IllegalArgumentException("Regular expressions must be succession of key/value/isDelta(true or false)/isRegExpLabel(true or false) separated by {;}");
         }
 
         ArrayList<Object> data = new ArrayList<Object>();
-        for(int i=0; i<regStrings.length; i = i+4) {
-           data.add(regStrings[i]);
-           data.add(regStrings[i+1]);
-           data.add("true".equalsIgnoreCase(regStrings[i+2]));
-           data.add("true".equalsIgnoreCase(regStrings[i+3]));
+        for (int i = 0; i < regStrings.length; i = i + 4) {
+            data.add(regStrings[i]);
+            data.add(regStrings[i + 1]);
+            data.add("true".equalsIgnoreCase(regStrings[i + 2]));
+            data.add("true".equalsIgnoreCase(regStrings[i + 3]));
         }
 
         worker.setCmdRegExps(data);

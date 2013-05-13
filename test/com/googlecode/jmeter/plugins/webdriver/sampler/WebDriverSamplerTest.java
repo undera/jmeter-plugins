@@ -18,6 +18,7 @@ import java.net.URL;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -74,13 +75,13 @@ public class WebDriverSamplerTest {
         final SampleResult sampleResult = new SampleResult();
         final ScriptEngine scriptEngine = sampler.createScriptEngineWith(sampleResult);
         final ScriptContext scriptContext = scriptEngine.getContext();
-        assertThat(scriptContext.getAttribute("log"), is(instanceOf(Logger.class)));
-        assertThat((PrintStream) scriptContext.getAttribute("OUT"), is(System.out));
-        assertThat((String) scriptContext.getAttribute("Label"), is(sampler.getName()));
-        assertThat((String) scriptContext.getAttribute("Parameters"), is(sampler.getParameters()));
-        assertThat((String[]) scriptContext.getAttribute("args"), is(new String[]{"p1", "p2", "p3"}));
-        assertThat(scriptContext.getAttribute("Browser"), is(instanceOf(WebDriver.class)));
-        assertThat((SampleResult) scriptContext.getAttribute("SampleResult"), is(sampleResult));
+        final WebDriverScriptable scriptable = (WebDriverScriptable) scriptContext.getAttribute("WDS");
+        assertThat(scriptable.getLog(), is(instanceOf(Logger.class)));
+        assertThat(scriptable.getName(), is(sampler.getName()));
+        assertThat(scriptable.getParameters(), is(sampler.getParameters()));
+        assertThat(scriptable.getArgs(), is(new String[]{"p1", "p2", "p3"}));
+        assertThat(scriptable.getBrowser(), is(instanceOf(WebDriver.class)));
+        assertThat(scriptable.getSampleResult(), is(sampleResult));
     }
 
     @Test
@@ -93,7 +94,6 @@ public class WebDriverSamplerTest {
         assertThat(sampleResult.getResponseMessage(), is("OK"));
         assertThat(sampleResult.isSuccessful(), is(true));
         assertThat(sampleResult.getContentType(), is("text/plain"));
-        assertThat(sampleResult.getDataEncodingNoDefault(), is("UTF-8"));
         assertThat(sampleResult.getDataType(), is(SampleResult.TEXT));
         assertThat(sampleResult.getSampleLabel(), is("name"));
         assertThat(sampleResult.getResponseDataAsString(), is("page source"));
@@ -104,13 +104,13 @@ public class WebDriverSamplerTest {
     }
 
     @Test
-    public void shouldReturnSuccessfulSampleResultWhenLastStatementFromEvalScriptIsTrue() throws MalformedURLException {
-        sampler.setScript("true");
+    public void shouldReturnSuccessfulSampleResultWhenScriptSetsSampleResultToSuccess() throws MalformedURLException {
+        sampler.setScript("WDS.sampleResult.setSuccessful(true);");
         final SampleResult sampleResult = sampler.sample(null);
 
-        assertThat(sampleResult.isResponseCodeOK(), is(true));
-        assertThat(sampleResult.getResponseMessage(), is("OK"));
         assertThat(sampleResult.isSuccessful(), is(true));
+        assertThat(sampleResult.getResponseCode(), is("200"));
+        assertThat(sampleResult.getResponseMessage(), is("OK"));
         assertThat(sampleResult.getResponseDataAsString(), is("page source"));
         assertThat(sampleResult.getURL(), is(new URL("http://google.com.au")));
 
@@ -119,13 +119,13 @@ public class WebDriverSamplerTest {
     }
 
     @Test
-    public void shouldReturnFailureSampleResultWhenLastStatementFromEvalScriptIsFalse() throws MalformedURLException {
-        sampler.setScript("false");
+    public void shouldReturnFailureSampleResultWhenScriptSetsSampleResultToFailure() throws MalformedURLException {
+        sampler.setScript("WDS.sampleResult.setSuccessful(false);");
         final SampleResult sampleResult = sampler.sample(null);
 
-        assertThat(sampleResult.isResponseCodeOK(), is(false));
-        assertThat(sampleResult.getResponseMessage(), is("Failed to find/verify expected content on page"));
         assertThat(sampleResult.isSuccessful(), is(false));
+        assertThat(sampleResult.getResponseCode(), is("500"));
+        assertThat(sampleResult.getResponseMessage(), not("OK"));
         assertThat(sampleResult.getResponseDataAsString(), is("page source"));
         assertThat(sampleResult.getURL(), is(new URL("http://google.com.au")));
 

@@ -62,6 +62,7 @@ public class FifoMapTest {
         System.out.println("get");
         assertEquals("", FifoMap.getInstance().get("testget"));
         FifoMap.getInstance().put("testget", "testget");
+        FifoMap.getInstance().put("testget1", "testget1");
         assertEquals("testget", FifoMap.getInstance().get("testget"));
     }
 

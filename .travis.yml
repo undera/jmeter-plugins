@@ -2,5 +2,8 @@ language: java
 jdk:
   - openjdk6
 before_script:
-  - "echo $JAVA_OPTS"
-  - "export JAVA_OPTS=-Xmx512m"
+ - "export DISPLAY=:99.0"
+ - "sh -e /etc/init.d/xvfb start"
+script: "mvn test -B"
+after_script:
+ - "sh -e /etc/init.d/xvfb stop"

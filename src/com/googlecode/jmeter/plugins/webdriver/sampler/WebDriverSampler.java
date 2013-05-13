@@ -5,7 +5,6 @@ import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
-import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 import org.openqa.selenium.WebDriver;
 
@@ -28,7 +27,6 @@ public class WebDriverSampler extends AbstractSampler {
 
     public WebDriverSampler() {
         this.scriptEngineManager = new ScriptEngineManager();
-        initialiseGlobalVariables();
     }
 
     @Override
@@ -43,31 +41,21 @@ public class WebDriverSampler extends AbstractSampler {
         res.setDataType(SampleResult.TEXT);
         res.setContentType("text/plain");
         res.setDataEncoding("UTF-8");
-
         res.setSuccessful(true);
-        res.setResponseMessageOK();
-        res.setResponseCodeOK();
 
         LOGGER.info("Current thread name: '"+getThreadName()+"', has browser: '"+getWebDriver()+"'");
 
         try {
             final ScriptEngine scriptEngine = createScriptEngineWith(res);
-            final Object outcome = scriptEngine.eval(getScript());
+            scriptEngine.eval(getScript());
 
             // setup the data in the SampleResult
             res.setResponseData(getWebDriver().getPageSource(), null);
             res.setURL(new URL(getWebDriver().getCurrentUrl()));
-
-            // only set this if the return value is boolean
-            if(outcome instanceof Boolean) {
-                res.setSuccessful((Boolean) outcome);
+            res.setResponseCode(res.isSuccessful() ? "200" : "500");
+            if(res.isSuccessful()) {
+                res.setResponseMessageOK();
             }
-
-            if(!res.isSuccessful()) {
-                res.setResponseCode("500");
-                res.setResponseMessage("Failed to find/verify expected content on page");
-            }
-
         } catch (Exception ex) {
             LOGGER.error(ex.getMessage());
             res.setResponseMessage(ex.toString());
@@ -98,23 +86,16 @@ public class WebDriverSampler extends AbstractSampler {
         return (WebDriver) getThreadContext().getVariables().getObject(WebDriverConfig.BROWSER);
     }
 
-    private void initialiseGlobalVariables() {
-        Bindings globalBindings = new SimpleBindings();
-        globalBindings.put("log", LOGGER);
-        globalBindings.put("OUT", System.out);
-        scriptEngineManager.setBindings(globalBindings);
-    }
-
     ScriptEngine createScriptEngineWith(SampleResult sampleResult) {
         final ScriptEngine scriptEngine = scriptEngineManager.getEngineByName(DEFAULT_ENGINE);
         Bindings engineBindings = new SimpleBindings();
-        engineBindings.put("Label", getName());
-        engineBindings.put("SampleResult", sampleResult);
-        final String scriptParameters = getParameters();
-        engineBindings.put("Parameters", scriptParameters);
-        String[] args = JOrphanUtils.split(scriptParameters, " ");
-        engineBindings.put("args", args);
-        engineBindings.put("Browser", getWebDriver());
+        WebDriverScriptable scriptable = new WebDriverScriptable();
+        scriptable.setName(getName());
+        scriptable.setParameters(getParameters());
+        scriptable.setLog(LOGGER);
+        scriptable.setSampleResult(sampleResult);
+        scriptable.setBrowser(getWebDriver());
+        engineBindings.put("WDS", scriptable);
         scriptEngine.setBindings(engineBindings, ScriptContext.ENGINE_SCOPE);
         return scriptEngine;
     }

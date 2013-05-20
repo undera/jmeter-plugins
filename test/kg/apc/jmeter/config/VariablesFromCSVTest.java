@@ -140,4 +140,53 @@ public class VariablesFromCSVTest {
         VariablesFromCSV instance = new VariablesFromCSV();
         instance.setStoreAsSystemProperty(storeAsSysProp);
     }
+
+    /**
+     * Test skipLines property default.
+     */
+    @Test
+    public void skipLinesDefault() {
+        VariablesFromCSV element = new VariablesFromCSV();
+        assertEquals("getSkipLines() did not return SKIP_LINES_DEFAULT",
+                VariablesFromCSV.SKIP_LINES_DEFAULT, element.getSkipLines());
+    }
+
+    /**
+     * Test skipLines round trip.
+     */
+    @Test
+    public void skipLinesRoundTrip() {
+        VariablesFromCSV element = new VariablesFromCSV();
+        int skipLines = 2;
+        element.setSkipLines(skipLines);
+        assertEquals("value returned by getter does not match", skipLines, element.getSkipLines());
+    }
+
+    /**
+     * Test skipLines with underlying property explicitly set to non-integer. This should only occur if a caller
+     * explicitly sets underlying property. When an element is created from a saved test plan, JMeter SaveService
+     * appears to call the setSkipLines(int) method, so this test is merely to document expected behavior in abnormal
+     * situations.
+     */
+    @Test
+    public void skipLinesNonInteger() {
+        VariablesFromCSV element = new VariablesFromCSV();
+        element.setProperty(VariablesFromCSV.SKIP_LINES, "a");
+        assertEquals("getSkipLines() did not return SKIP_LINES_DEFAULT",
+                VariablesFromCSV.SKIP_LINES_DEFAULT, element.getSkipLines());
+    }
+
+    /**
+     * Test skipLines with underlying property explicitly set to empty string. This should only occur if a caller
+     * explicitly sets underlying property. When an element is created from a saved test plan, JMeter SaveService
+     * appears to call the setSkipLines(int) method, so this test is merely to document expected behavior in abnormal
+     * situations.
+     */
+    @Test
+    public void skipLinesEmptyString() {
+        VariablesFromCSV element = new VariablesFromCSV();
+        element.setProperty(VariablesFromCSV.SKIP_LINES, "");
+        assertEquals("getSkipLines() did not return SKIP_LINES_DEFAULT",
+                VariablesFromCSV.SKIP_LINES_DEFAULT, element.getSkipLines());
+    }
 }

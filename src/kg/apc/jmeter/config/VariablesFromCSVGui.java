@@ -1,6 +1,7 @@
 package kg.apc.jmeter.config;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
@@ -10,9 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
+import kg.apc.jmeter.gui.IntegerInputVerifier;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.testelement.TestElement;
 
@@ -53,11 +56,14 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
     @Override
     public void configure(TestElement element) {
         super.configure(element);
-        fileName.setText(element.getPropertyAsString(VariablesFromCSV.FILENAME));
-        variablePrefix.setText(element.getPropertyAsString(VariablesFromCSV.VARIABLE_PREFIX));
-        separator.setText(element.getPropertyAsString(VariablesFromCSV.SEPARATOR));
-        skipLines.setText(element.getPropertyAsString(VariablesFromCSV.SKIP_LINES));
-        storeSysProp.setSelected(element.getPropertyAsBoolean(VariablesFromCSV.STORE_SYS_PROP));
+        if (element instanceof VariablesFromCSV) {
+            VariablesFromCSV varsCsv = (VariablesFromCSV)element;
+            fileName.setText(varsCsv.getFileName());
+            variablePrefix.setText(varsCsv.getVariablePrefix());
+            separator.setText(varsCsv.getSeparator());
+            skipLines.setText(Integer.toString(varsCsv.getSkipLines()));
+            storeSysProp.setSelected(varsCsv.isStoreAsSystemProperty());
+        }
     }
 
     @Override
@@ -121,7 +127,11 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         addToPanel(mainPanel, editConstraints, 1, 2, separator = new JTextField(20));
 
         addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Skip initial lines: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 3, skipLines = new JTextField(20));
+        skipLines = new JTextField(20);
+        Color lightRed = new Color(255, 202, 197);
+        skipLines.setInputVerifier(new IntegerInputVerifier(0, Integer.MAX_VALUE, skipLines.getBackground(), lightRed));
+        skipLines.setToolTipText("Number of initial lines of input to skip. Must be an integer >= 0.");
+        addToPanel(mainPanel, editConstraints, 1, 3, skipLines);
 
         addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Store variables also in System Properties: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 4, storeSysProp = new JCheckBox());
@@ -162,4 +172,5 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         skipLines.setText("0");
         storeSysProp.setSelected(false);
     }
+
 }

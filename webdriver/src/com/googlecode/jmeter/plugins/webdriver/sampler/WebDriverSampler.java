@@ -25,8 +25,21 @@ public class WebDriverSampler extends AbstractSampler {
     private static final String DEFAULT_ENGINE = "JavaScript";
     private final transient ScriptEngineManager scriptEngineManager;
 
+    private static final String preloading =     "importPackage(org.openqa.selenium); " +
+    	    "_s = function(){return WDS.sampleResult.sampleStart.apply(WDS.sampleResult,arguments)};" +
+    	    "_e = function(){return WDS.sampleResult.sampleEnd.apply(WDS.sampleResult,arguments)};" +
+    	    "measure = function(f){_s();f.apply();_e();};" +    	    
+    	    "$ID = function(){return WDS.browser.findElementById.apply(WDS.browser,arguments)};" +
+    	    "$$ = function(){return WDS.browser.findElementsByCssSelector.apply(WDS.browser, arguments)};" +
+    	    "$ = function(){return WDS.browser.findElementByCssSelector.apply(WDS.browser, arguments)};" +
+    	    "go = function(){return WDS.browser.get.apply(WDS.browser,arguments)};";
+    
     public WebDriverSampler() {
         this.scriptEngineManager = new ScriptEngineManager();
+    }
+    
+    public String toString(){
+    	return getScript();
     }
 
     @Override
@@ -47,11 +60,13 @@ public class WebDriverSampler extends AbstractSampler {
 
         try {
             final ScriptEngine scriptEngine = createScriptEngineWith(res);
-            scriptEngine.eval(getScript());
+            scriptEngine.eval(preloading + getScript());
 
             // setup the data in the SampleResult
             res.setResponseData(getWebDriver().getPageSource(), null);
-            res.setURL(new URL(getWebDriver().getCurrentUrl()));
+            String currentURL = getWebDriver().getCurrentUrl();            
+            res.setURL(new URL(currentURL));
+            res.setResponseHeaders("URL: "+ currentURL);
             res.setResponseCode(res.isSuccessful() ? "200" : "500");
             if(res.isSuccessful()) {
                 res.setResponseMessageOK();

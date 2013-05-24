@@ -43,11 +43,13 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     private static final String SOCKS_PORT = "WebDriverConfig.socks_port";
     private static final String NO_PROXY = "WebDriverConfig.no_proxy";
     private static final String PROXY_TYPE = "WebDriverConfig.proxy_type";
+        
     /*
      * THE FOLLOWING CONFIGS ARE EXPERIMENTAL AND ARE SUBJECT TO CHANGE/REMOVAL.
      */
     private static final String RECREATE_ON_ITERATION_START = "WebDriverConfig.reset_per_iteration";
-
+    private static final String DEV_MODE = "WebDriverConfig.dev_mode";
+    
     private final transient ProxyFactory proxyFactory;
 
     protected WebDriverConfig() {
@@ -241,5 +243,13 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
     public void setRecreateBrowserOnIterationStart(boolean recreate) {
         setProperty(RECREATE_ON_ITERATION_START, recreate);
+    }
+    
+    public boolean isDevMode() {
+        return getPropertyAsBoolean(DEV_MODE);
+    }
+
+    public void setDevMode(boolean devMode) {
+        setProperty(DEV_MODE, devMode);
     }
 }

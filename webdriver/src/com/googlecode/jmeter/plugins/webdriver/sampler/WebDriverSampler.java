@@ -28,8 +28,12 @@ public class WebDriverSampler extends AbstractSampler {
     private static final String preloading =     "importPackage(org.openqa.selenium); " +
     	    "_s = function(){return WDS.sampleResult.sampleStart.apply(WDS.sampleResult,arguments)};" +
     	    "_e = function(){return WDS.sampleResult.sampleEnd.apply(WDS.sampleResult,arguments)};" +
-    	    "measure = function(f){_s();f.apply();_e();};" +    	    
+    	    "measure = function(f){_s();f.apply();_e();};" +  
+    	    "_iW = function(t){return WDS.browser.manage().timeouts().implicitlyWait(t,java.util.concurrent.TimeUnit.SECONDS)};"+
+    	    "_iWait = function(f,t){_iW(t);f.apply();_iW(0);};" +
+    	    "iWait = function(f){_iWait(f,7);};" +
     	    "$ID = function(){return WDS.browser.findElementById.apply(WDS.browser,arguments)};" +
+    	    "$x = function(){return WDS.browser.findElementByXPath.apply(WDS.browser,arguments)};" +
     	    "$$ = function(){return WDS.browser.findElementsByCssSelector.apply(WDS.browser, arguments)};" +
     	    "$ = function(){return WDS.browser.findElementByCssSelector.apply(WDS.browser, arguments)};" +
     	    "go = function(){return WDS.browser.get.apply(WDS.browser,arguments)};";

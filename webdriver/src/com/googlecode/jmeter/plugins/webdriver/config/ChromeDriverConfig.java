@@ -36,11 +36,11 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
     @Override
     public void threadFinished() {
         final ChromeDriver chromeDriverDriver = removeThreadBrowser();
-        if (chromeDriverDriver != null) {
+        if (chromeDriverDriver != null && !isDevMode()) {
             chromeDriverDriver.quit();
         }
         final ChromeDriverService service = services.remove(currentThreadName());
-        if (service != null && service.isRunning()) {
+        if (service != null && service.isRunning() && !isDevMode()) {
             service.stop();
         }
     }

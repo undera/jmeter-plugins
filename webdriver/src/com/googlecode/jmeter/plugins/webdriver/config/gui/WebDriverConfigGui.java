@@ -186,7 +186,7 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
         recreateBrowserOnIterationStart.setSelected(false);
         panel.add(recreateBrowserOnIterationStart);
         
-        devMode = new JCheckBox("Development Mode (keep open browser on error)");
+        devMode = new JCheckBox("Development Mode (keep browser opened on error)");
         devMode.setSelected(false);
         panel.add(devMode);
 

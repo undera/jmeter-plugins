@@ -9,6 +9,7 @@
 package com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations;
 
 import java.io.IOException;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -36,9 +37,8 @@ public class HdfsOperations extends AbstractSampler {
     public HdfsOperations() {
     }
 
-    ;
-	
-	public HdfsOperations(String nameNode) throws IOException {
+
+    public HdfsOperations(String nameNode) throws IOException {
         config = new Configuration();
         config.set("fs.default.name", nameNode);
         hdfs = FileSystem.get(config);

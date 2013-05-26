@@ -122,7 +122,7 @@ public class JCompositeRowsSelectorPanelTest {
         System.out.println("addItemsToComposite");
         String testplan = "testplan";
         String row = "row";
-        JCompositeRowsSelectorPanel instance = new JCompositeRowsSelectorPanel(new CompositeModel(), new CompositeGraphGui());;
+        JCompositeRowsSelectorPanel instance = new JCompositeRowsSelectorPanel(new CompositeModel(), new CompositeGraphGui());
         instance.addItemsToComposite(testplan, row);
     }
 

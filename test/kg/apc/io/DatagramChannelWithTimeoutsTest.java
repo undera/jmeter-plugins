@@ -13,12 +13,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import kg.apc.emulators.DatagramChannelEmul;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
 
 /**
  *
@@ -68,7 +63,7 @@ public class DatagramChannelWithTimeoutsTest {
     public void testOpen() throws Exception {
         System.out.println("open");
         DatagramChannel result = DatagramChannelWithTimeoutsEmul.open();
-        assertNotNull(result);
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -81,7 +76,7 @@ public class DatagramChannelWithTimeoutsTest {
         ByteBuffer dst = ByteBuffer.allocateDirect(1024);
         int expResult = 4;
         int result = instance.read(dst);
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -95,7 +90,7 @@ public class DatagramChannelWithTimeoutsTest {
         int length = 0;
         try {
             long result = instance.read(dsts, offset, length);
-            fail("exception expected");
+            Assert.fail("exception expected");
         } catch (UnsupportedOperationException e) {
         }
     }
@@ -109,7 +104,7 @@ public class DatagramChannelWithTimeoutsTest {
         ByteBuffer src = ByteBuffer.wrap("test".getBytes());
         int expResult = 4;
         int result = instance.write(src);
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -123,8 +118,7 @@ public class DatagramChannelWithTimeoutsTest {
         int length = 0;
         long expResult = 0L;
         try {
-            long result = instance.write(srcs, offset, length);
-            fail("exception expected");
+            Assert.fail("exception expected");
         } catch (UnsupportedOperationException e) {
         }
     }
@@ -137,7 +131,7 @@ public class DatagramChannelWithTimeoutsTest {
         System.out.println("implCloseSelectableChannel");
         try{
         instance.implCloseSelectableChannel();
-            fail("Exception expected");
+            Assert.fail("Exception expected");
         } catch (UnsupportedOperationException e) {
         }
     }
@@ -151,7 +145,7 @@ public class DatagramChannelWithTimeoutsTest {
         try {
             boolean block = false;
             instance.implConfigureBlocking(block);
-            fail("Exception expected");
+            Assert.fail("Exception expected");
         } catch (UnsupportedOperationException e) {
         }
     }
@@ -164,7 +158,7 @@ public class DatagramChannelWithTimeoutsTest {
         System.out.println("isConnected");
         boolean expResult = true;
         boolean result = instance.isConnected();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -184,7 +178,7 @@ public class DatagramChannelWithTimeoutsTest {
     public void testSocket() {
         System.out.println("socket");
         DatagramSocket result = instance.socket();
-        assertNotNull(result);
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -195,7 +189,7 @@ public class DatagramChannelWithTimeoutsTest {
         System.out.println("connect");
         SocketAddress remote = new InetSocketAddress("localhost", 123);
         DatagramChannel result = instance.connect(remote);
-        assertNotNull(result);
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -205,7 +199,7 @@ public class DatagramChannelWithTimeoutsTest {
     public void testDisconnect() throws Exception {
         System.out.println("disconnect");
         DatagramChannel result = instance.disconnect();
-        assertNotNull(result);
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -217,8 +211,7 @@ public class DatagramChannelWithTimeoutsTest {
         ByteBuffer dst = null;
         SocketAddress expResult = null;
         try {
-            SocketAddress result = instance.receive(dst);
-            fail("exception expected");
+            Assert.fail("exception expected");
         } catch (UnsupportedOperationException e) {
         }
     }
@@ -231,7 +224,7 @@ public class DatagramChannelWithTimeoutsTest {
         System.out.println("send");
         try {
             instance.send(null, null);
-            fail("exception expected");
+            Assert.fail("exception expected");
         } catch (UnsupportedOperationException e) {
         }
     }
@@ -271,8 +264,6 @@ public class DatagramChannelWithTimeoutsTest {
         DatagramChannelWithTimeouts instance = new DatagramChannelWithTimeouts();
         SocketAddress expResult = null;
         SocketAddress result = instance.getRemoteAddress();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
+        Assert.assertEquals(expResult, result);
     }
 }

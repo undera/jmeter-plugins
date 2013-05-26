@@ -18,6 +18,7 @@ import org.apache.log.Logger;
  *
  * @author apc
  * @see CSVDataSet
+ * @deprecated 
  */
 public class VariablesFromCSVFile
       extends ConfigTestElement

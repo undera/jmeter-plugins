@@ -5,5 +5,5 @@ public enum ProxyType {
     AUTO_DETECT,
     SYSTEM,
     MANUAL,
-    PROXY_PAC;
+    PROXY_PAC
 }

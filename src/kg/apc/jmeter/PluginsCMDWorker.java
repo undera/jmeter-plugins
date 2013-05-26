@@ -121,7 +121,9 @@ public class PluginsCMDWorker {
                 log.warn("Error loading user property file: " + userProp, e);
             } finally {
                 try {
-                    fis.close();
+                    if (fis != null) {
+                        fis.close();
+                    }
                 } catch (IOException ex) {
                     log.warn("There was problem closing file stream", ex);
                 }
@@ -143,7 +145,9 @@ public class PluginsCMDWorker {
                 log.warn("Error loading system property file: " + sysProp, e);
             } finally {
                 try {
-                    fis.close();
+                    if (fis != null) {
+                        fis.close();
+                    }
                 } catch (IOException ex) {
                     log.warn("There was problem closing file stream", ex);
                 }
@@ -409,11 +413,10 @@ public class PluginsCMDWorker {
     public static String getJMeterHomeFromCP(String classpathSTR) {
         log.debug("Trying to get JMeter home from classpath");
         String[] paths = classpathSTR.split(":");
-        for (int i = 0; i < paths.length; i++) {
-            String string = paths[i];
+        for (String string : paths) {
             log.debug("Testing " + string);
             if (string.endsWith("ApacheJMeter_core.jar")) {
-                File f=new File(string);
+                File f = new File(string);
                 return f.getParentFile().getParentFile().getParentFile().getAbsolutePath();
             }
         }

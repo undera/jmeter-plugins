@@ -1,20 +1,18 @@
 package kg.apc.jmeter.samplers;
 
-import java.io.File;
-import java.nio.channels.SocketChannel;
-import java.nio.channels.spi.AbstractSelectableChannel;
 import kg.apc.emulators.SocketChannelEmul;
-import java.io.IOException;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.util.JMeterUtils;
+import org.junit.*;
+
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.ByteBuffer;
-import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.util.JMeterUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import java.nio.channels.SocketChannel;
+import java.nio.channels.spi.AbstractSelectableChannel;
+
 import static org.junit.Assert.*;
 
 /**
@@ -49,6 +47,7 @@ public class HTTPRawSamplerTest {
 
     @Before
     public void setUp() {
+        JMeterUtils.setProperty(AbstractIPSampler.RESULT_DATA_LIMIT, Integer.toString(Integer.MAX_VALUE));
         instance = new HTTPRawSamplerEmul();
         instance.setHostName("169.254.250.25");
         instance.setPort("80");

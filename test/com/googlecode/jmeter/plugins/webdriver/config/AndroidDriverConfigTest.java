@@ -20,12 +20,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
@@ -34,8 +36,8 @@ import static org.powermock.api.mockito.PowerMockito.verifyNew;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 /**
- *
- * @author cpl_rewinds
+ * @author Sergey Marakhov
+ * @author Linh Pham
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(AndroidDriverConfig.class)
@@ -86,6 +88,14 @@ public class AndroidDriverConfigTest {
 
         assertThat(browser, is(mockAndroidDriver));
         verifyNew(AndroidDriver.class, times(1)).withArguments(isA(URL.class), isA(DesiredCapabilities.class));
+    }
+
+    @Test
+    public void shouldHandleInvalidUrl() throws Exception {
+        whenNew(AndroidDriver.class).withParameterTypes(URL.class, DesiredCapabilities.class).withArguments(isA(URL.class), isA(DesiredCapabilities.class)).thenThrow(new MalformedURLException("testing123"));
+
+        final AndroidDriver browser = config.createBrowser();
+        assertNull(browser);
     }
 
     @Test

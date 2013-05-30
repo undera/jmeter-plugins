@@ -10,6 +10,10 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * @author Sergey Marakhov
+ * @author Linh Pham
+ */
 public class AndroidDriverConfig extends WebDriverConfig<AndroidDriver> implements ThreadListener {
     private static final long serialVersionUID = 100L;
 
@@ -47,7 +51,8 @@ public class AndroidDriverConfig extends WebDriverConfig<AndroidDriver> implemen
         try {
             return new AndroidDriver(new URL(getAndroidDriverUrl()), createCapabilities());
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error("Invalid URL: " + getAndroidDriverUrl(), e);
+            return null;
         }
     }
 

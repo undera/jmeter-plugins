@@ -185,6 +185,9 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
+
+        LOGGER.info("iterationStart()");
+
         if(isRecreateBrowserOnIterationStart()) {
             final T browser = getThreadBrowser();
             if(browser != null) {

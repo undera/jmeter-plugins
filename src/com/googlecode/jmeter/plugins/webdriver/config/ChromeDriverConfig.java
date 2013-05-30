@@ -23,8 +23,11 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
 
     @Override
     public void threadStarted() {
-        if(hasThreadBrowser()) {
-            LOGGER.warn("Thread: " + currentThreadName() + " already has a WebDriver("+ getThreadBrowser()+") associated with it. ThreadGroup can only contain a single WebDriverConfig.");
+
+        LOGGER.info("ChromeDriverConfig.threadStarted()");
+
+        if (hasThreadBrowser()) {
+            LOGGER.warn("Thread: " + currentThreadName() + " already has a WebDriver(" + getThreadBrowser() + ") associated with it. ThreadGroup can only contain a single WebDriverConfig.");
             return;
         }
         setThreadBrowser(createBrowser());
@@ -33,11 +36,11 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
     @Override
     public void threadFinished() {
         final ChromeDriver chromeDriverDriver = removeThreadBrowser();
-        if(chromeDriverDriver != null) {
+        if (chromeDriverDriver != null) {
             chromeDriverDriver.quit();
         }
         final ChromeDriverService service = services.remove(currentThreadName());
-        if(service != null && service.isRunning()) {
+        if (service != null && service.isRunning()) {
             service.stop();
         }
     }
@@ -68,7 +71,7 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
 
     private ChromeDriverService getThreadService() {
         ChromeDriverService service = services.get(currentThreadName());
-        if(service != null) {
+        if (service != null) {
             return service;
         }
         try {

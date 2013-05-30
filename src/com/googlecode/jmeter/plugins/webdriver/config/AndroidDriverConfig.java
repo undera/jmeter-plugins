@@ -51,7 +51,7 @@ public class AndroidDriverConfig extends WebDriverConfig<AndroidDriver> implemen
         try {
             return new AndroidDriver(new URL(getAndroidDriverUrl()), createCapabilities());
         } catch (MalformedURLException e) {
-            LOGGER.error("Invalid URL: " + getAndroidDriverUrl(), e);
+            LOGGER.error("MalformedURLException thrown for invalid URL: " + getAndroidDriverUrl());
             return null;
         }
     }

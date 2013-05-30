@@ -13,6 +13,7 @@ public class VariablesFromCSV extends Arguments{
     public static final String FILENAME = "filename";
     public static final String SEPARATOR = "delimiter";
     public static final String SKIP_LINES = "skipLines";
+    public static final int SKIP_LINES_DEFAULT = 0;
     public static final String STORE_SYS_PROP = "storeSysProp";
 
     //It seems org.apache.jmeter.engine.Precompiler requires only thishttps://groups.google.com/forum/#!topic/jmeter-plugins/gWn7MTgvTfE method
@@ -58,7 +59,7 @@ public class VariablesFromCSV extends Arguments{
     }
 
     public int getSkipLines() {
-        return getPropertyAsInt(SKIP_LINES, 0);
+        return getPropertyAsInt(SKIP_LINES, SKIP_LINES_DEFAULT);
     }
 
     public void setSkipLines(int skipLines) {

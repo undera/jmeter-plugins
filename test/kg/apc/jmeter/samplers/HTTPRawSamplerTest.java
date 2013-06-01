@@ -100,7 +100,7 @@ public class HTTPRawSamplerTest {
     public void testSample_hugeparse() throws MalformedURLException, IOException {
         System.out.println("sample");
         String req = "GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
-        String resp = "HTTP/1.1 200 OK\r\nConnection: close\r\n\r\n" + TestJMeterUtils.getTestData(10000000);
+        String resp = "HTTP/1.1 200 OK\r\nConnection: close\r\n\r\n" + TestJMeterUtils.getTestData(1000000);
         instance.setRequestData(req);
         instance.setParseResult(true);
 

@@ -72,7 +72,8 @@ public class FifoMapTest {
     @Test
     public void testPop() throws Exception {
         System.out.println("pop");
-        // setup data
+
+        // setup
         String fifoName = "test";
         FifoMap instance = FifoMap.getInstance();
         instance.put(fifoName, "val1");

@@ -79,7 +79,7 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
             service.start();
             services.put(currentThreadName(), service);
         } catch (IOException e) {
-            LOGGER.error("Failed to start chrome service", e);
+            LOGGER.error("Failed to start chrome service");
             service = null;
         }
         return service;

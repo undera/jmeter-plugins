@@ -15,13 +15,11 @@
  */
 package kg.apc.jmeter.reporters;
 
+import org.junit.*;
+
 import java.util.LinkedList;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -40,8 +38,14 @@ public class LoadosophiaUploadingNotifierTest {
     public static void tearDownClass() {
     }
 
+    /**
+     * We will need to call {@link LoadosophiaUploadingNotifier#endCollecting()} to ensure that the files are cleared.
+     * Since the {@link LoadosophiaUploadingNotifier} is a singleton, other tests might add files to the instance,
+     * hence causing some of the unit tests here to fail.
+     */
     @Before
     public void setUp() {
+        LoadosophiaUploadingNotifier.getInstance().endCollecting();
     }
 
     @After

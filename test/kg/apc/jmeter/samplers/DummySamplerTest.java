@@ -2,11 +2,8 @@ package kg.apc.jmeter.samplers;
 
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+
 import static org.junit.Assert.*;
 
 /**
@@ -45,10 +42,13 @@ public class DummySamplerTest {
     }
 
     /**
-     * 
+     * Call interrupted to unset the interrupted state, as other classes that implement Interruptible will have an
+     * exception thrown as a consequence. eg. HTTPRawSamplerTest.testProcessIO_fileOnly() will always have a
+     * java.nio.channels.ClsedByInterruptedException thrown.
      */
     @After
     public void tearDown() {
+        Thread.interrupted();
     }
 
     /**

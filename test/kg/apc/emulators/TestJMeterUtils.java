@@ -1,24 +1,22 @@
 package kg.apc.emulators;
 
-import java.io.*;
-import java.util.Locale;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import kg.apc.jmeter.DirectoryAnchor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeListener;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
-import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.threads.JMeterThread;
-import org.apache.jmeter.threads.JMeterThreadMonitor;
-import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jmeter.threads.*;
 import org.apache.jmeter.threads.ThreadGroup;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.HashTree;
 import org.junit.Test;
+
+import java.io.*;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -77,10 +75,7 @@ public abstract class TestJMeterUtils {
     }
 
     public static String getTestData(int i) {
-        byte[] bytes = new byte[i];
-        Random r = new Random();
-        r.nextBytes(bytes);
-        return new String(bytes);
+        return RandomStringUtils.randomAlphanumeric(i);
     }
 
     /**

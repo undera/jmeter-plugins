@@ -361,7 +361,7 @@
                 <version>2.14.1</version>
                 <configuration>
                     <!-- several of the unit tests require a large heap -->
-                    <argLine>-Xmx1280m</argLine>
+                    <argLine>-Xmx1024m</argLine>
                 </configuration>
             </plugin>
         </plugins>

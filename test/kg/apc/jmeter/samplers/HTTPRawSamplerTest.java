@@ -1,20 +1,18 @@
 package kg.apc.jmeter.samplers;
 
-import java.io.File;
-import java.nio.channels.SocketChannel;
-import java.nio.channels.spi.AbstractSelectableChannel;
 import kg.apc.emulators.SocketChannelEmul;
-import java.io.IOException;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.util.JMeterUtils;
+import org.junit.*;
+
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.ByteBuffer;
-import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.util.JMeterUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import java.nio.channels.SocketChannel;
+import java.nio.channels.spi.AbstractSelectableChannel;
+
 import static org.junit.Assert.*;
 
 /**
@@ -49,6 +47,7 @@ public class HTTPRawSamplerTest {
 
     @Before
     public void setUp() {
+        JMeterUtils.setProperty(AbstractIPSampler.RESULT_DATA_LIMIT, Integer.toString(Integer.MAX_VALUE));
         instance = new HTTPRawSamplerEmul();
         instance.setHostName("169.254.250.25");
         instance.setPort("80");
@@ -100,8 +99,9 @@ public class HTTPRawSamplerTest {
     @Test
     public void testSample_hugeparse() throws MalformedURLException, IOException {
         System.out.println("sample");
+        final int testDataSize = 1000000;
         String req = "GET / HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n";
-        String resp = "HTTP/1.1 200 OK\r\nConnection: close\r\n\r\n" + TestJMeterUtils.getTestData(10000000);
+        String resp = "HTTP/1.1 200 OK\r\nConnection: close\r\n\r\n" + TestJMeterUtils.getTestData(testDataSize);
         instance.setRequestData(req);
         instance.setParseResult(true);
 
@@ -113,7 +113,7 @@ public class HTTPRawSamplerTest {
         assertTrue(result.isSuccessful());
         assertEquals("200", result.getResponseCode());
         System.out.println("Len: " + result.getResponseDataAsString().length());
-        assertTrue(result.getResponseDataAsString().length() > 6000);
+        assertEquals(testDataSize, result.getResponseDataAsString().length());
         assertTrue(!instance.sockEmul.isOpen());
     }
 

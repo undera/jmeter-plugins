@@ -1,19 +1,16 @@
 package kg.apc.io;
 
-import kg.apc.io.DatagramChannelWithTimeouts;
-import java.nio.channels.SelectionKey;
-import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
+import kg.apc.emulators.DatagramChannelEmul;
 import kg.apc.emulators.SelectorEmul;
+import org.junit.*;
+
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
-import kg.apc.emulators.DatagramChannelEmul;
-import kg.apc.jmeter.JMeterPluginsUtils;
-import org.junit.*;
+import java.nio.channels.SelectionKey;
 
 /**
  *
@@ -118,6 +115,7 @@ public class DatagramChannelWithTimeoutsTest {
         int length = 0;
         long expResult = 0L;
         try {
+            long result = instance.write(srcs, offset, length);
             Assert.fail("exception expected");
         } catch (UnsupportedOperationException e) {
         }
@@ -211,6 +209,7 @@ public class DatagramChannelWithTimeoutsTest {
         ByteBuffer dst = null;
         SocketAddress expResult = null;
         try {
+            SocketAddress result = instance.receive(dst);
             Assert.fail("exception expected");
         } catch (UnsupportedOperationException e) {
         }

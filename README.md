@@ -1,7 +1,7 @@
+[![Build Status](https://travis-ci.org/undera/jmeter-plugins.png?branch=master)](https://travis-ci.org/undera/jmeter-plugins)
+
 JMeter Plugins at Google Code
 =============================
-
-[![Build Status](https://travis-ci.org/undera/jmeter-plugins.png?branch=master)](https://travis-ci.org/undera/jmeter-plugins)
 
 What is it?
 -----------

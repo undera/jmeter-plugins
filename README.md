@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/undera/jmeter-plugins.png?branch=master)](https://travis-ci.org/undera/jmeter-plugins)
-
 JMeter Plugins at Google Code
 =============================
 
@@ -13,7 +12,8 @@ Installation and Usage
 * Just copy the JAR file into JMeter's lib/ext directory.
 * Then you can start JMeter and add additional items to your Test Plan.
 * Java version 1.6 and JMeter 2.4 are required.
-Reac the [full installation guide](http://code.google.com/p/jmeter-plugins/wiki/PluginInstall) for more detailed information.
+
+Read the [full installation guide](http://code.google.com/p/jmeter-plugins/wiki/PluginInstall) for more detailed information.
 
 Latest Downloads, Project Page, Troubleshooting, Feedback
 ---------------------------------------------------------

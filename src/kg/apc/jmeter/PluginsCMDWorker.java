@@ -412,7 +412,18 @@ public class PluginsCMDWorker {
 
     public static String getJMeterHomeFromCP(String classpathSTR) {
         log.debug("Trying to get JMeter home from classpath");
-        String[] paths = classpathSTR.split(":");
+        
+        //This dirty way of doing it should be changed as it is OS sensitive
+        
+        String splitter;
+        
+        if(classpathSTR.indexOf(';') != -1) {
+            splitter = ";";
+        } else {
+            splitter = ":";
+        }
+        
+        String[] paths = classpathSTR.split(splitter);
         for (String string : paths) {
             log.debug("Testing " + string);
             if (string.endsWith("ApacheJMeter_core.jar")) {

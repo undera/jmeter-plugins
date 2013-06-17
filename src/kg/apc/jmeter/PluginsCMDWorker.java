@@ -413,7 +413,7 @@ public class PluginsCMDWorker {
     public static String getJMeterHomeFromCP(String classpathSTR) {
         log.debug("Trying to get JMeter home from classpath");
         
-        //This dirty way of doing it should be changed as it is OS sensitive
+        //FIXME: This dirty way of doing it should be changed as it is OS sensitive
         
         String splitter;
         

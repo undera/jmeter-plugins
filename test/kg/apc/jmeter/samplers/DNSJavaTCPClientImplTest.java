@@ -181,8 +181,9 @@ public class DNSJavaTCPClientImplTest {
         DNSJavaTCPClientImpl instance = new DNSJavaTCPClientImpl();
         String expLinuxResult = "UTF-8";
         String expWinResult = "windows-1252";
+        String expMacResult = "MacRoman";
         String result = instance.getCharset();
         System.out.println(result);
-        assertTrue(expLinuxResult.equals(result) || expWinResult.equals(result));
+        assertTrue(expLinuxResult.equals(result) || expWinResult.equals(result) || expMacResult.equals(result));
     }
 }

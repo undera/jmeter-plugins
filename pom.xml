@@ -45,6 +45,7 @@
         <cmdrunner-version>1.0.1</cmdrunner-version>
         <selenium.version>2.33.0</selenium.version>
         <powermock.version>1.5</powermock.version>
+        <cobertura-maven.version>2.5.2</cobertura-maven.version>
     </properties>
 
     <repositories>
@@ -362,6 +363,16 @@
                 <configuration>
                     <!-- several of the unit tests require a large heap -->
                     <argLine>-Xmx1024m</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>${cobertura-maven.version}</version>
+                <configuration>
+                    <formats>
+                        <format>xml</format>
+                    </formats>
                 </configuration>
             </plugin>
         </plugins>

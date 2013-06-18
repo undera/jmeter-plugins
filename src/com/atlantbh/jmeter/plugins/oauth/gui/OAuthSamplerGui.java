@@ -126,13 +126,13 @@ public class OAuthSamplerGui extends AbstractSamplerGui {
         consumerKey = new JLabeledTextField("Consumer Key", 25);
         consumerSecret = new JLabeledTextField("Consumer Secret", 25);
         automaticRedirect = new JCheckBox(JMeterUtils.getResString("follow_redirects"));
-        httpMethods = new JLabeledChoice("Method", new String[]{"GET", "POST", "PUT", "DELETE"});
+        httpMethods = new JLabeledChoice("Method", new String[]{"GET", "POST", "PUT", "DELETE", "PATCH"});
         httpMethods.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 JLabeledChoice c = (JLabeledChoice) e.getSource();
                 String text = c.getText();
-                if ("PUT".equals(text) || "POST".equals(text)) {
+                if ("PUT".equals(text) || "POST".equals(text) || "PATCH".equals(text)) {
                     automaticRedirect.setSelected(false);
                     automaticRedirect.setEnabled(false);
                 } else {

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.List;
-import javax.management.remote.JMXConnector;
+import javax.management.MBeanServerConnection;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -171,14 +171,14 @@ public class JMXMonCollector
             Hashtable attributes = new Hashtable();
             String[] buffer = { username, password };
             attributes.put("jmx.remote.credentials", (String[]) buffer);
-            JMXConnector conn = JMXConnectorFactory.connect(u,attributes);
             
+            MBeanServerConnection conn = JMXConnectorFactory.connect(u,attributes).getMBeanServerConnection();           
             
             initiateConnector(conn, label, isDelta, objectName, attribute);
         }
     }
 
-    private void initiateConnector(JMXConnector conn, String name, boolean delta, String objectName, String attribute) {
+    private void initiateConnector(MBeanServerConnection conn, String name, boolean delta, String objectName, String attribute) {
         jmxMonSamplers.add(new JMXMonSampler(conn, name, delta, objectName, attribute));
     }
 

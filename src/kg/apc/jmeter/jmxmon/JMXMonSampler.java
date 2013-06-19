@@ -10,7 +10,6 @@ import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
-import javax.management.remote.JMXConnector;
 
 /**
  *
@@ -21,13 +20,13 @@ public class JMXMonSampler {
     private String metricName;
     private String objectName;
     private String attribute;
-    private final JMXConnector connection;
+    private final MBeanServerConnection remote;
     private boolean sampleDeltaValue = true;
     private double oldValue = Double.NaN;
 
-    public JMXMonSampler(JMXConnector conn, String name, boolean sampleDeltaValue, String objectName, String attribute) {
+    public JMXMonSampler(MBeanServerConnection remote , String name, boolean sampleDeltaValue, String objectName, String attribute) {
         this.metricName = name;
-        this.connection = conn;
+        this.remote = remote;
         this.objectName = objectName;
         this.attribute = attribute;
         this.sampleDeltaValue = sampleDeltaValue;
@@ -35,7 +34,6 @@ public class JMXMonSampler {
 
     public void generateSamples(JMXMonSampleGenerator collector) {
         try {
-            final MBeanServerConnection remote = connection.getMBeanServerConnection();
 
             // Construct the fully qualified name of the bean.
             ObjectName beanName = new ObjectName(objectName);

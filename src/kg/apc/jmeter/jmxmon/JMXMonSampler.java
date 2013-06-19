@@ -24,7 +24,7 @@ public class JMXMonSampler {
     private boolean sampleDeltaValue = true;
     private double oldValue = Double.NaN;
 
-    public JMXMonSampler(MBeanServerConnection remote , String name, boolean sampleDeltaValue, String objectName, String attribute) {
+    public JMXMonSampler(MBeanServerConnection remote, String name, String objectName, String attribute, boolean sampleDeltaValue) {
         this.metricName = name;
         this.remote = remote;
         this.objectName = objectName;

@@ -179,7 +179,7 @@ public class JMXMonCollector
     }
 
     private void initiateConnector(MBeanServerConnection conn, String name, boolean delta, String objectName, String attribute) {
-        jmxMonSamplers.add(new JMXMonSampler(conn, name, delta, objectName, attribute));
+        jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, delta));
     }
 
 

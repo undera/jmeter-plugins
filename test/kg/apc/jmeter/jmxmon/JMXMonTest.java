@@ -1,23 +1,28 @@
 package kg.apc.jmeter.jmxmon;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
+import javax.management.MBeanServerConnection;
+import javax.management.remote.JMXConnectorFactory;
+import javax.management.remote.JMXServiceURL;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.vizualizers.JMXMonGui;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.SampleEvent;
-import org.apache.jmeter.threads.JMeterContextService;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
- * @author mabo
+ * @author cyberw
  */
-public class JMXMonTest implements TestConnection.TestConnectionDataProvider {
+public class JMXMonTest {
     public static final String URL = "service:jmx:rmi:///jndi/rmi://localhost:6969/jmxrmi";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
@@ -37,11 +42,10 @@ public class JMXMonTest implements TestConnection.TestConnectionDataProvider {
     @Before
     public void setUp() {
         TestJMeterUtils.createJmeterEnv();
-        // JMeterContextService.getContext().getVariables().putObject(TEST_CONNECTION, new TestDataSource());
 
         dataModel = new PowerTableModel(JMXMonGui.columnIdentifiers, JMXMonGui.columnClasses);
         dataModel.addRow(new Object[]{ PROBE1, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE1, false });
-        dataModel.addRow(new Object[]{ PROBE2, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE1, false });
+        dataModel.addRow(new Object[]{ PROBE2, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE2, true });
     }
     
     @Test
@@ -50,20 +54,20 @@ public class JMXMonTest implements TestConnection.TestConnectionDataProvider {
         instance.setData(JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, JMXMonCollector.DATA_PROPERTY));
         instance.testStarted();
         
-        setQueryResult(PROBE1, 1);
-        setQueryResult(PROBE2, 1);
+        setQueryResult(ATTRIBUTE1, 1);
+        setQueryResult(ATTRIBUTE2, 1);
         instance.processConnectors();
         assertLastSample(PROBE1, 1);
         assertNull(latestSamples.get(PROBE2)); // Deleta can not produce values at first loop
         
-        setQueryResult(PROBE1, -2);
-        setQueryResult(PROBE2, 2);
+        setQueryResult(ATTRIBUTE1, -2);
+        setQueryResult(ATTRIBUTE2, 2);
         instance.processConnectors();
         assertLastSample(PROBE1, -2);
         assertLastSample(PROBE2, 1);
         
-        setQueryResult(PROBE1, 13);
-        setQueryResult(PROBE2, 1);
+        setQueryResult(ATTRIBUTE1, 13);
+        setQueryResult(ATTRIBUTE2, 1);
         instance.processConnectors();
         assertLastSample(PROBE1, 13);
         assertLastSample(PROBE2, -1);
@@ -72,14 +76,14 @@ public class JMXMonTest implements TestConnection.TestConnectionDataProvider {
         assertSampleGeneratorThreadIsStoped();        
     }
 
-    public void setQueryResult(String probeName, double value) {
-        queryResults.put(probeName, value);
+    public void setQueryResult(String attribute, double value) {
+        queryResults.put(attribute, value);
     }
     
 //    @Override
-    public ResultSet getQueryResult(String probeName) {
-        return TestConnection.resultSet(queryResults.get(probeName));
-    }
+//    public ResultSet getQueryResult(String probeName) {
+//        return TestConnection.resultSet(queryResults.get(probeName));
+//    }
 
     private void assertSampleGeneratorThreadIsStoped() throws InterruptedException {
         synchronized (this) {
@@ -126,6 +130,12 @@ public class JMXMonTest implements TestConnection.TestConnectionDataProvider {
                     JMXMonTest.this.notifyAll();
                 }
             }
+        }
+        
+        @Override
+        protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String name, boolean delta, String objectName, String attribute) throws MalformedURLException, IOException {
+            MBeanServerConnection conn = new MBeanServerConnectionEmul(queryResults);
+            jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, delta));
         }
         
         @Override

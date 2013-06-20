@@ -35,7 +35,7 @@ public class JMXMonCollector
     public static final String DATA_PROPERTY = "samplers";
     private int interval;
     private Thread workerThread = null;
-    private List<JMXMonSampler> jmxMonSamplers = new ArrayList<JMXMonSampler>();
+    protected List<JMXMonSampler> jmxMonSamplers = new ArrayList<JMXMonSampler>();
     private static String autoFileBaseName = null;
     private static int counter = 0;
     private static String workerHost = null;
@@ -130,7 +130,7 @@ public class JMXMonCollector
         JMeterPluginsUtils.doBestCSVSetup(config);
         setSaveConfig(config);
         setFilename(fileName);
-        log.info("DbMon metrics will be stored in " + new File(fileName).getAbsolutePath());
+        log.info("JMXMon metrics will be stored in " + new File(fileName).getAbsolutePath());
     }
 
     @Override
@@ -172,13 +172,12 @@ public class JMXMonCollector
             String[] buffer = { username, password };
             attributes.put("jmx.remote.credentials", (String[]) buffer);
             
-            MBeanServerConnection conn = JMXConnectorFactory.connect(u,attributes).getMBeanServerConnection();           
-            
-            initiateConnector(conn, label, isDelta, objectName, attribute);
+            initiateConnector(u, attributes, label, isDelta, objectName, attribute);
         }
     }
 
-    private void initiateConnector(MBeanServerConnection conn, String name, boolean delta, String objectName, String attribute) {
+    protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String name, boolean delta, String objectName, String attribute) throws MalformedURLException, IOException {
+        MBeanServerConnection conn = JMXConnectorFactory.connect(u,attributes).getMBeanServerConnection();
         jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, delta));
     }
 
@@ -190,7 +189,7 @@ public class JMXMonCollector
     protected void processConnectors() {
         for (JMXMonSampler sampler: jmxMonSamplers) {
             sampler.generateSamples(this);
-        }        
+        }
     }
 
     @Override

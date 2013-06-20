@@ -16,6 +16,7 @@
 package kg.apc.jmeter.jmxmon;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Set;
 import javax.management.Attribute;
 import javax.management.AttributeList;
@@ -43,9 +44,10 @@ import javax.management.ReflectionException;
  */
 class MBeanServerConnectionEmul implements MBeanServerConnection
  {
+    private final Map<String, Double> queryResults;
 
-    public MBeanServerConnectionEmul() {
-        
+    MBeanServerConnectionEmul(Map<String, Double> queryResults) {
+        this.queryResults = queryResults;
     }
     
     @Override
@@ -100,7 +102,7 @@ class MBeanServerConnectionEmul implements MBeanServerConnection
 
     @Override
     public Object getAttribute(ObjectName name, String attribute) throws MBeanException, AttributeNotFoundException, InstanceNotFoundException, ReflectionException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return queryResults.get(attribute);
     }
 
     @Override

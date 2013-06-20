@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author undera
+ * @author cyberw
  */
 public class JMXMonSampleResultTest {
     

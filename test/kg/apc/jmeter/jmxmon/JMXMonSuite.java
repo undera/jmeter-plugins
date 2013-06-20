@@ -13,7 +13,7 @@ import org.junit.runners.Suite;
 
 /**
  *
- * @author undera
+ * @author cyberw
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({JMXMonSampleGeneratorTest.class, JMXMonCollectorTest.class, JMXMonSamplerTest.class, JMXMonSampleResultTest.class})

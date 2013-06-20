@@ -38,15 +38,17 @@ public class JMXMonSampler {
             // Construct the fully qualified name of the bean.
             ObjectName beanName = new ObjectName(objectName);
 
-             final double val = Double.parseDouble(remote.getAttribute(beanName, attribute).toString());
-             if (sampleDeltaValue) {
-                 if (!Double.isNaN(oldValue)) {
-                     collector.generateSample(val - oldValue, metricName);
-                 }
-                 oldValue = val;
-             } else {
-                 collector.generateSample(val, metricName);
-             }
+            Object o = remote.getAttribute(beanName, attribute);
+
+            final double val = Double.parseDouble(o.toString());
+            if (sampleDeltaValue) {
+                if (!Double.isNaN(oldValue)) {
+                    collector.generateSample(val - oldValue, metricName);
+                }
+                oldValue = val;
+            } else {
+                collector.generateSample(val, metricName);
+            }
         } catch (MalformedURLException ex) {
             java.util.logging.Logger.getLogger(JMXMonSampler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

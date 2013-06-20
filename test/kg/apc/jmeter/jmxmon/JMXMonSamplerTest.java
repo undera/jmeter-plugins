@@ -15,6 +15,8 @@
  */
 package kg.apc.jmeter.jmxmon;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -23,7 +25,7 @@ import org.junit.Test;
 
 /**
  *
- * @author undera
+ * @author cyberw
  */
 public class JMXMonSamplerTest {
 
@@ -53,10 +55,11 @@ public class JMXMonSamplerTest {
     public void testGenerateSamples() {
         System.out.println("generateSamples");
         JMXMonSampleGenerator collector = new JMXMonSampleGeneratorEmul();
-        // (MBeanServerConnection remote , String name, boolean sampleDeltaValue, String objectName, String attribute) {
-        JMXMonSampler instance = new JMXMonSampler(new MBeanServerConnectionEmul(), "name", "objectName", "attribute", true);
-        instance.generateSamples(collector);
-        // TODO review the generated test code and remove the default call to fail.
 
+        // empty query results
+        Map<String, Double> queryResults = new HashMap<String, Double>();
+        queryResults.put("attribute",1.0);
+        JMXMonSampler instance = new JMXMonSampler(new MBeanServerConnectionEmul(queryResults), "name", "Something:name=objectName", "attribute", true);
+        instance.generateSamples(collector);
     }
 }

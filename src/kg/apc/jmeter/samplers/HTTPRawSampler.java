@@ -254,5 +254,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
             sock.write(sendBuf);
             sendBuf.rewind();
         }
+        
+        source.close();
     }
 }

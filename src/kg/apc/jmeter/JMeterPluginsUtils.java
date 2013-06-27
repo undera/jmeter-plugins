@@ -33,7 +33,7 @@ public abstract class JMeterPluginsUtils {
 
     private static String PLUGINS_PREFIX = "jp@gc - ";
     private static boolean prefixPlugins = true;
-    public static final String WIKI_BASE = "http://code.google.com/p/jmeter-plugins/wiki/";
+    public static final String WIKI_BASE = "http://jmeter-plugins.org/wiki/";
 
     // just prefix all the labels to be distinguished
     public static String prefixLabel(String label) {

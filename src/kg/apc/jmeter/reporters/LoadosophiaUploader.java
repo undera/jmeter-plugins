@@ -18,10 +18,6 @@ import org.loadosophia.jmeter.LoadosophiaAPIClient;
 import org.loadosophia.jmeter.LoadosophiaUploadResults;
 import org.loadosophia.jmeter.StatusNotifierCallback;
 
-/**
- *
- * @author undera
- */
 public class LoadosophiaUploader extends ResultCollector implements StatusNotifierCallback, Runnable, TestListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -207,6 +203,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
         while (isOnlineInitiated) {
             try {
                 SampleEvent event = processingQueue.poll(1, TimeUnit.SECONDS);
+                log.debug("Event: " + event);
                 if (event != null) {
                     aggregator.addSample(event.getResult());
                 }

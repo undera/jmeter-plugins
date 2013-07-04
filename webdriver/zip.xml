@@ -1,6 +1,6 @@
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
-    <id>${project.version}</id>
+    <id>WebDriver-${project.version}</id>
     <baseDirectory>/</baseDirectory>
     <formats>
         <format>zip</format>
@@ -8,34 +8,26 @@
     
     <files>
         <file>
-            <destName>JMeterPlugins.jar</destName>
+            <destName>JMeterPlugins-WebDriver.jar</destName>
             <source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
             <fileMode>0644</fileMode>
         </file>
         <file>
-            <destName>CMDRunner.jar</destName>
-            <source>${project.build.directory}/lib/cmdrunner-${cmdrunner-version}.jar</source>
-            <fileMode>0644</fileMode>
+            <source>../LICENSE</source>
         </file>
         <file>
-            <source>NOTICE</source>
-        </file>
-        <file>
-            <source>README</source>
-        </file>
-        <file>
-            <source>LICENSE</source>
+            <source>../README</source>
         </file>
     </files>
     
     <fileSets>
         <fileSet>
-            <directory>${basedir}</directory>
-            <includes>
-                <include>JMeterPluginsCMD.*</include>
-            </includes>
-            <fileMode>0755</fileMode>
-            <outputDirectory>.</outputDirectory>            
+            <fileMode>0644</fileMode>
+            <directory>${project.build.directory}/lib</directory>
+            <excludes>
+                <exclude>*.pom</exclude>
+            </excludes>
+            <outputDirectory>lib</outputDirectory>            
         </fileSet>
     </fileSets>
 </assembly>

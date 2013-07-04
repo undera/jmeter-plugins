@@ -11,6 +11,7 @@
             <destName>JMeterPlugins-WebDriver.jar</destName>
             <source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
             <fileMode>0644</fileMode>
+            <outputDirectory>lib/ext</outputDirectory>   
         </file>
         <file>
             <source>../LICENSE</source>

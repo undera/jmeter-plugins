@@ -106,26 +106,6 @@ public abstract class JMeterPluginsUtils {
         model.fireTableDataChanged();
     }
 
-    @Deprecated
-    public static CollectionProperty tableModelColsToCollectionProperty(PowerTableModel model, String propname) {
-        CollectionProperty rows = new CollectionProperty(propname, new ArrayList<Object>());
-        for (int colN = 0; colN < model.getColumnCount(); colN++) {
-            List<?> item = model.getColumnData(model.getColumnName(colN));
-            rows.addItem(item);
-        }
-        return rows;
-    }
-
-    @Deprecated
-    public static void collectionPropertyToTableModelCols(CollectionProperty prop, PowerTableModel model) {
-        model.clearData();
-        for (int colN = 0; colN < prop.size(); colN++) {
-            ArrayList<String> rowObject = (ArrayList<String>) prop.get(colN).getObjectValue();
-            model.setColumnData(colN, rowObject);
-        }
-        model.fireTableDataChanged();
-    }
-
     private static List<Object> getArrayListForArray(Object[] rowData) {
         ArrayList<Object> res = new ArrayList<Object>();
         for (int n = 0; n < rowData.length; n++) // note that we MUST use ArrayList
@@ -211,7 +191,7 @@ public abstract class JMeterPluginsUtils {
         link.setForeground(Color.blue);
         link.setFont(link.getFont().deriveFont(Font.PLAIN));
         link.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        link.addMouseListener(new URIOpener(WIKI_BASE + helpPage + "?utm_source=jmeter&utm_medium=helplink&utm_campaign=" + helpPage));
+        link.addMouseListener(new URIOpener(WIKI_BASE + helpPage + "/?utm_source=jmeter&utm_medium=helplink&utm_campaign=" + helpPage));
         Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.blue);
         link.setBorder(border);
 

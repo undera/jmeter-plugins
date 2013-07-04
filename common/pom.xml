@@ -92,6 +92,13 @@
                 </includes>
                 <directory>test</directory>
             </testResource>
+            <testResource>
+                <includes>
+                    <include>**/*.png</include>
+                    <include>**/*.properties</include>
+                </includes>
+                <directory>src</directory>
+            </testResource>
         </testResources>
         
         <plugins>

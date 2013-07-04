@@ -219,30 +219,7 @@ public class JMeterPluginsUtilsTest {
         assertEquals("[[1, 2], [3, 4]]", result.toString());
     }
 
-    /**
-     * Test of tableModelColsToCollectionProperty method, of class JMeterPluginsUtils.
-     */
-    @Test
-    public void testTableModelColsToCollectionProperty() {
-        System.out.println("tableModelColsToCollectionProperty");
-        PowerTableModel model = getTestModel();
-        String propname = "";
-        CollectionProperty result = JMeterPluginsUtils.tableModelColsToCollectionProperty(model, propname);
-        assertEquals("[[1, 3], [2, 4]]", result.toString());
-    }
-
-    /**
-     * Test of collectionPropertyToTableModelCols method, of class JMeterPluginsUtils.
-     */
-    @Test
-    public void testCollectionPropertyToTableModelCols() {
-        System.out.println("collectionPropertyToTableModelCols");
-        CollectionProperty prop = JMeterPluginsUtils.tableModelColsToCollectionProperty(getTestModel(), "");
-        PowerTableModel model = getTestModel();
-        JMeterPluginsUtils.collectionPropertyToTableModelCols(prop, model);
-        assertEquals(prop.size(), model.getColumnCount());
-    }
-
+   
    /**
     * Test of getFloatFromString method, of class JMeterPluginsUtils.
     */
@@ -256,28 +233,6 @@ public class JMeterPluginsUtilsTest {
       assertEquals(expResult, result, 0.0);
    }
 
-    /**
-     * Test of collectionPropertyToTableModelRows method, of class JMeterPluginsUtils.
-     */
-    @Test
-    public void testCollectionPropertyToTableModelRows_CollectionProperty_PowerTableModel() {
-        System.out.println("collectionPropertyToTableModelRows");
-        CollectionProperty prop = JMeterPluginsUtils.tableModelColsToCollectionProperty(getTestModel(), "");
-        PowerTableModel model = getTestModel();
-        JMeterPluginsUtils.collectionPropertyToTableModelRows(prop, model);
-    }
-
-    /**
-     * Test of collectionPropertyToTableModelRows method, of class JMeterPluginsUtils.
-     */
-    @Test
-    public void testCollectionPropertyToTableModelRows_3args() {
-        System.out.println("collectionPropertyToTableModelRows");
-        CollectionProperty prop = JMeterPluginsUtils.tableModelColsToCollectionProperty(getTestModel(), "");
-        PowerTableModel model = getTestModel();
-        Class[] columnClasses = {String.class, String.class};
-        JMeterPluginsUtils.collectionPropertyToTableModelRows(prop, model, columnClasses);
-    }
 
     /**
      * Test of doBestCSVSetup method, of class JMeterPluginsUtils.

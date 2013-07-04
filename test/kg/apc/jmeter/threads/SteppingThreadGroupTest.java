@@ -97,6 +97,32 @@ public class SteppingThreadGroupTest {
             s1 = s2;
         }
     }
+    
+    @Test
+    public void testScheduleThreadIntegerOverflow() {
+        System.out.println("scheduleThreadIntegerOverflow");
+        HashTree hashtree = new HashTree();
+        hashtree.add(new LoopController());
+        JMeterThread thread = new JMeterThread(hashtree, null, null);
+        SteppingThreadGroup instance = new SteppingThreadGroup();
+        int numThreads = 3;
+        instance.setNumThreads(numThreads);
+        int inUserCount = 1;
+        instance.setInUserCount("" + inUserCount);
+        instance.setInUserCountBurst("0");
+        int inUserPeriod = 224985600;
+        instance.setInUserPeriod("" + inUserPeriod);
+        instance.setRampUp("0");
+        instance.setThreadGroupDelay("0");
+        int flightTime = 33;
+        instance.setFlightTime("" + flightTime);
+        
+        thread.setThreadNum(0);
+        instance.scheduleThread(thread);
+        
+        assertEquals(1000L * ((inUserCount + 1) * inUserPeriod + inUserCount * flightTime), thread.getEndTime() - thread.getStartTime());
+        
+    }
 
     /**
      * Test of getThreadGroupDelay method, of class SteppingThreadGroup.

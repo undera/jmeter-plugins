@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import kg.apc.jmeter.dcerpc.BinaryUtils;
+import kg.apc.io.BinaryUtils;
 import org.apache.jmeter.protocol.tcp.sampler.TCPClient;
 import org.apache.jorphan.logging.LoggingManager;
 

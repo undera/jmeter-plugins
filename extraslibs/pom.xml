@@ -309,11 +309,10 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>JMeterPlugins</finalName>
+                    <finalName>JMeterPlugins-ExtrasLibs</finalName>
                     <appendAssemblyId>true</appendAssemblyId>
                     <descriptors>
-                        <descriptor>zip-plugins.xml</descriptor>
-                        <descriptor>zip-libs.xml</descriptor>
+                        <descriptor>zip.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

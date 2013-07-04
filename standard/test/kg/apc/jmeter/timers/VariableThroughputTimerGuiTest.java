@@ -130,20 +130,6 @@ public class VariableThroughputTimerGuiTest {
         assertEquals(4, instance.grid.getRowCount());
     }
 
-    @Test
-    public void testConfigure_upgrade() {
-        System.out.println("configure upgrade");
-        VariableThroughputTimer tg = new VariableThroughputTimer();
-        CollectionProperty rows = JMeterPluginsUtils.tableModelColsToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
-        System.err.println(rows);
-        tg.setData(rows);
-        VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
-        //tg.setProperty(new ObjectProperty(AbstractThreadGroup.MAIN_CONTROLLER, tg));
-        instance.configure(tg);
-        assertEquals(4, instance.tableModel.getRowCount());
-        assertEquals(4, instance.grid.getRowCount());
-    }
-
     /**
      *
      */

@@ -166,12 +166,7 @@ public class UltimateThreadGroupGui
             CollectionProperty columns = (CollectionProperty) threadValues;
 
             tableModel.removeTableModelListener(this);
-            try {
-                JMeterPluginsUtils.collectionPropertyToTableModelRows(columns, tableModel);
-            } catch (IllegalArgumentException ex) {
-                log.error("Error loading schedule, need to upgrade property", ex);
-                JMeterPluginsUtils.collectionPropertyToTableModelCols(columns, tableModel);
-            }
+            JMeterPluginsUtils.collectionPropertyToTableModelRows(columns, tableModel);
             tableModel.addTableModelListener(this);
             updateUI();
         } else {

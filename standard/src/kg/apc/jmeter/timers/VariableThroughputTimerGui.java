@@ -150,12 +150,7 @@ public class VariableThroughputTimerGui
         CollectionProperty columns = (CollectionProperty) threadValues;
 
         tableModel.removeTableModelListener(this);
-        try {
-            JMeterPluginsUtils.collectionPropertyToTableModelRows(columns, tableModel);
-        } catch (IllegalArgumentException ex) {
-            log.error("Error loading data from property, will try to upgrade property", ex);
-            JMeterPluginsUtils.collectionPropertyToTableModelCols(columns, tableModel);
-        }
+        JMeterPluginsUtils.collectionPropertyToTableModelRows(columns, tableModel);
         tableModel.addTableModelListener(this);
         buttons.checkDeleteButtonStatus();
         updateUI();
@@ -173,13 +168,13 @@ public class VariableThroughputTimerGui
     }
 
     private int getIntFromRow(int row, int col) {
-       int ret;
-       try {
-         ret = Integer.valueOf(new CompoundVariable(tableModel.getValueAt(row, col).toString()).execute());
-       } catch (NumberFormatException ex) {
-          ret = -1;
-       }
-       return ret;
+        int ret;
+        try {
+            ret = Integer.valueOf(new CompoundVariable(tableModel.getValueAt(row, col).toString()).execute());
+        } catch (NumberFormatException ex) {
+            ret = -1;
+        }
+        return ret;
     }
 
     private void updateChart(VariableThroughputTimer tg) {
@@ -198,15 +193,15 @@ public class VariableThroughputTimerGui
         row.add(now, tg.getRPSForSecond(0));
 
         int duration = 0;
-        for(int i=0; i<rowsCount; i++) {
-           row.add(now+(duration+1)*1000, tg.getRPSForSecond(duration+1));
-           int rowVal = getIntFromRow(i, 2);
-           if(rowVal < 0) {
-              chart.setErrorMessage("The values entered cannot be rendered in preview...");
-              break;
-           }
-           duration = duration + rowVal;
-           row.add(now+duration*1000, tg.getRPSForSecond(duration));
+        for (int i = 0; i < rowsCount; i++) {
+            row.add(now + (duration + 1) * 1000, tg.getRPSForSecond(duration + 1));
+            int rowVal = getIntFromRow(i, 2);
+            if (rowVal < 0) {
+                chart.setErrorMessage("The values entered cannot be rendered in preview...");
+                break;
+            }
+            duration = duration + rowVal;
+            row.add(now + duration * 1000, tg.getRPSForSecond(duration));
         }
 
         chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now - 1)); //-1 because row.add(thread.getStartTime() - 1, 0)

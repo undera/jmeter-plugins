@@ -130,19 +130,6 @@ public class UltimateThreadGroupGuiTest {
         assertEquals(3, instance.grid.getRowCount());
     }
 
-    @Test
-    public void testConfigure_upgrade() {
-        System.out.println("configure_upgrade");
-        UltimateThreadGroup tg = new UltimateThreadGroup();
-        PowerTableModel model = UltimateThreadGroupTest.getTestModel();
-        CollectionProperty data = JMeterPluginsUtils.tableModelColsToCollectionProperty(model, UltimateThreadGroup.DATA_PROPERTY);
-        tg.setData(data);
-        UltimateThreadGroupGui instance = new UltimateThreadGroupGui();
-        instance.configure(tg);
-        assertEquals(3, instance.tableModel.getRowCount());
-        assertEquals(3, instance.grid.getRowCount());
-    }
-
     /**
      *
      */

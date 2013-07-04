@@ -1,0 +1,12 @@
+== Building JMeter-Plugins ==
+
+a) Checkout latest source code from GitHub:
+{{{
+git clone https://github.com/undera/jmeter-plugins.git
+}}}
+
+b) {{{ some monospace code }}}
+
+== some more ==
+test
+

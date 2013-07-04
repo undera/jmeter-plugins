@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.functions.AbstractFunction;
 import org.apache.jmeter.functions.InvalidVariableException;
-import org.apache.jmeter.functions.LongSum;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterVariables;
@@ -15,7 +14,6 @@ import org.apache.jmeter.threads.JMeterVariables;
 /**
  * Provides a DoubleSum function that adds two or more Double values.
  * Mostly copied from LongSum
- * @see LongSum
  */
 public class DoubleSum extends AbstractFunction {
 

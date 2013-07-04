@@ -4,3 +4,6 @@
 /dependency-reduced-pom.xml
 .idea/
 *.iml
+/common/target/
+/webdriver/target/
+/hadoop/target/

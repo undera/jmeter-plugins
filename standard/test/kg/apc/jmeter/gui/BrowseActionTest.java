@@ -4,7 +4,6 @@ import kg.apc.emulators.FileChooserEmul;
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
-import org.apache.jmeter.gui.GuiPackage;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

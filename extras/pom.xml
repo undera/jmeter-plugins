@@ -89,6 +89,11 @@
             <version>${jmeter.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.jmeter</groupId>
+            <artifactId>jorphan</artifactId>
+            <version>${jmeter.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-junit4</artifactId>
             <version>${powermock.version}</version>
@@ -128,6 +133,14 @@
                     <include>**/*.ammo</include>
                 </includes>
                 <directory>test</directory>
+            </testResource>
+            <testResource>
+                <includes>
+                    <include>**/*.png</include>
+                    <include>**/*.properties</include>
+                </includes>
+                <directory>src</directory>
+                <filtering>true</filtering>
             </testResource>
         </testResources>
         

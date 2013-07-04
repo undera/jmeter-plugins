@@ -1,11 +1,9 @@
 package kg.apc.jmeter.modifiers;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.BeforeClass;
+import org.junit.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  *
@@ -26,6 +24,7 @@ public class FifoMapTest {
 
     @Before
     public void setUp() {
+        FifoMap.getInstance().clear();
     }
 
     @After
@@ -63,6 +62,7 @@ public class FifoMapTest {
         System.out.println("get");
         assertEquals("", FifoMap.getInstance().get("testget"));
         FifoMap.getInstance().put("testget", "testget");
+        FifoMap.getInstance().put("testget1", "testget1");
         assertEquals("testget", FifoMap.getInstance().get("testget"));
     }
 
@@ -72,9 +72,14 @@ public class FifoMapTest {
     @Test
     public void testPop() throws Exception {
         System.out.println("pop");
+
+        // setup
         String fifoName = "test";
         FifoMap instance = FifoMap.getInstance();
-        // we rely on testPut method, since we have a singletone
+        instance.put(fifoName, "val1");
+        instance.put(fifoName, "val2");
+        instance.put("", "test");
+        // test and assert
         assertEquals("val1", instance.pop(fifoName, 0));
         assertEquals("val2", instance.pop(fifoName, 0));
         assertEquals("test", instance.pop("", 0));

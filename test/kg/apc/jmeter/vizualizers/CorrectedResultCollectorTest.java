@@ -1,9 +1,13 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.util.List;
 import kg.apc.emulators.TestJMeterUtils;
 import org.junit.*;
-import static org.junit.Assert.*;
+
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 /**
  *
@@ -39,6 +43,18 @@ public class CorrectedResultCollectorTest {
         System.out.println("testStarted");
         CorrectedResultCollector instance = new CorrectedResultCollector();
         instance.testStarted();
+        assertThat(instance.getSaveConfig().saveThreadCounts(), is(true));
+    }
+
+    /**
+     * Test of testStarted method, of class CorrectedResultCollector.
+     */
+    @Test
+    public void testTestStartedHost() {
+        System.out.println("testStarted(String)");
+        CorrectedResultCollector instance = new CorrectedResultCollector();
+        instance.testStarted("");
+        assertThat(instance.getSaveConfig().saveThreadCounts(), is(true));
     }
 
     /**

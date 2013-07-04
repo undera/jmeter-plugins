@@ -1,12 +1,13 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -23,6 +24,12 @@ public class CorrectedResultCollector extends ResultCollector {
     public void testStarted() {
         setupSaving();
         super.testStarted();
+    }
+
+    @Override
+    public void testStarted(String host) {
+        setupSaving();
+        super.testStarted(host);
     }
 
     private void setupSaving() {

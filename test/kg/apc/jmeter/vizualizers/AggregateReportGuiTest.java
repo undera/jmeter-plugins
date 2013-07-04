@@ -1,5 +1,7 @@
 package kg.apc.jmeter.vizualizers;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.charting.GraphPanelChart;
@@ -54,15 +56,23 @@ public class AggregateReportGuiTest {
      * Test of add method, of class StatVisualizerAccessorGui.
      */
     @Test
-    public void testAdd() {
+    public void testAdd() throws IOException {
         System.out.println("add");
-        SampleResult res = new SampleResult();
         AggregateReportGui instance = new AggregateReportGui();
+
+        SampleResult res = new SampleResult();
         instance.add(res);
 
-        ResultCollector rc=new ResultCollector();
+        SampleResult res2 = new SampleResult();
+        instance.add(res2);
+
+        ResultCollector rc = new ResultCollector();
         rc.setListener(instance);
         rc.sampleOccurred(new SampleEvent(res, ""));
+        rc.sampleOccurred(new SampleEvent(res2, ""));
+
+        File f = File.createTempFile("test", ".csv");
+        instance.getGraphPanelChart().saveGraphToCSV(f);
     }
 
     /**
@@ -152,11 +162,11 @@ public class AggregateReportGuiTest {
         assertTrue(result.isEmpty());
     }
 
-   @Test
-   public void testGetStaticLabel() {
-      System.out.println("getStaticLabel");
-      AggregateReportGui instance = new AggregateReportGui();
-      String result = instance.getStaticLabel();
-      assertNotNull(result);
-   }
+    @Test
+    public void testGetStaticLabel() {
+        System.out.println("getStaticLabel");
+        AggregateReportGui instance = new AggregateReportGui();
+        String result = instance.getStaticLabel();
+        assertNotNull(result);
+    }
 }

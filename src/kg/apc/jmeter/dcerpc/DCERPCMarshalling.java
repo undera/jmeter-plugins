@@ -2,6 +2,7 @@
 package kg.apc.jmeter.dcerpc;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.jorphan.util.JOrphanUtils;
@@ -280,7 +281,7 @@ public class DCERPCMarshalling
 
       byte[] tail = new byte[ba.length - pos];
       System.arraycopy(ba, pos, tail, 0, tail.length);
-      System.err.println(tail);
+      System.err.println(Arrays.toString(tail));
 
       return (integers.length() > 0 ? "{" + integers + "}" : "") + JOrphanUtils.baToHexString(tail);
    }

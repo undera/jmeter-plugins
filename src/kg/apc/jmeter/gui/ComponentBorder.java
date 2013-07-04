@@ -25,7 +25,7 @@ public class ComponentBorder implements Border {
         TOP,
         LEFT,
         BOTTOM,
-        RIGHT;
+        RIGHT
     }
     public static final float LEADING = 0.0f;
     public static final float CENTER = 0.5f;

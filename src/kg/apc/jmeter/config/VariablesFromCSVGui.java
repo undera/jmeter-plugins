@@ -1,6 +1,7 @@
 package kg.apc.jmeter.config;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
@@ -10,9 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
+import kg.apc.jmeter.gui.IntegerInputVerifier;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.testelement.TestElement;
 
@@ -27,6 +30,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
     private JTextField fileName;
     private JTextField variablePrefix;
     private JTextField separator;
+    private JTextField skipLines;
     private JCheckBox storeSysProp;
     
     private JButton browseButton;
@@ -52,10 +56,14 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
     @Override
     public void configure(TestElement element) {
         super.configure(element);
-        fileName.setText(element.getPropertyAsString(VariablesFromCSV.FILENAME));
-        variablePrefix.setText(element.getPropertyAsString(VariablesFromCSV.VARIABLE_PREFIX));
-        separator.setText(element.getPropertyAsString(VariablesFromCSV.SEPARATOR));
-        storeSysProp.setSelected(element.getPropertyAsBoolean(VariablesFromCSV.STORE_SYS_PROP));
+        if (element instanceof VariablesFromCSV) {
+            VariablesFromCSV varsCsv = (VariablesFromCSV)element;
+            fileName.setText(varsCsv.getFileName());
+            variablePrefix.setText(varsCsv.getVariablePrefix());
+            separator.setText(varsCsv.getSeparator());
+            skipLines.setText(Integer.toString(varsCsv.getSkipLines()));
+            storeSysProp.setSelected(varsCsv.isStoreAsSystemProperty());
+        }
     }
 
     @Override
@@ -74,6 +82,7 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
             varsCsv.setFileName(fileName.getText());
             varsCsv.setVariablePrefix(variablePrefix.getText());
             varsCsv.setSeparator(separator.getText());
+            varsCsv.setSkipLines(Integer.parseInt(skipLines.getText()));
             varsCsv.setStoreAsSystemProperty(storeSysProp.isSelected());
         }
     }
@@ -117,25 +126,36 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Separator (use '\\t' for tab): ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 2, separator = new JTextField(20));
 
-        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Store variables also in System Properties: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 3, storeSysProp = new JCheckBox());
+        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Skip initial lines: ", JLabel.RIGHT));
+        skipLines = new JTextField(20);
+        Color lightRed = new Color(255, 202, 197);
+        skipLines.setInputVerifier(new IntegerInputVerifier(0, Integer.MAX_VALUE, skipLines.getBackground(), lightRed));
+        skipLines.setToolTipText("Number of initial lines of input to skip. Must be an integer >= 0.");
+        addToPanel(mainPanel, editConstraints, 1, 3, skipLines);
+
+        addToPanel(mainPanel, labelConstraints, 0, 4, new JLabel("Store variables also in System Properties: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 4, storeSysProp = new JCheckBox());
 
         editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 2);
 
-        addToPanel(mainPanel, labelConstraints, 0, 4, checkButton = new JButton("Test CSV File"));
+        addToPanel(mainPanel, labelConstraints, 0, 5, checkButton = new JButton("Test CSV File"));
 
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
         checkInfo = new JTextArea();
-        addToPanel(mainPanel, editConstraints, 1, 4, GuiBuilderHelper.getTextAreaScrollPaneContainer(checkInfo, 10));
-        checkButton.addActionListener(new TestCsvFileAction(fileName, variablePrefix, separator, checkInfo));
+        addToPanel(mainPanel, editConstraints, 1, 5, GuiBuilderHelper.getTextAreaScrollPaneContainer(checkInfo, 10));
+        checkButton.addActionListener(new TestCsvFileAction(this));
         checkInfo.setEditable(false);
         checkInfo.setOpaque(false);
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
         add(container, BorderLayout.CENTER);
+    }
+
+    public JTextArea getCheckInfoTextArea() {
+        return checkInfo;
     }
 
     private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {
@@ -149,6 +169,8 @@ public class VariablesFromCSVGui extends AbstractConfigGui {
         fileName.setText("");
         checkInfo.setText("");
         separator.setText(";");
+        skipLines.setText("0");
         storeSysProp.setSelected(false);
     }
+
 }

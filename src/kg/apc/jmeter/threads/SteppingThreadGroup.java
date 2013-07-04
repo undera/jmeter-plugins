@@ -77,13 +77,13 @@ public class SteppingThreadGroup
                 : 1 + (thread.getThreadNum() - inUserCountBurst) / inUserCount;
         int rampUpBucketThreadCount = thread.getThreadNum() < inUserCountBurst ? inUserCountBurst : inUserCount;
 
-        int threadGroupDelay = 1000 * getThreadGroupDelayAsInt();
+        long threadGroupDelay = 1000 * getThreadGroupDelayAsInt();
         long ascentPoint = tgStartTime + threadGroupDelay;
-        int inUserPeriod = 1000 * getInUserPeriodAsInt();
-        int additionalRampUp = 1000 * getRampUpAsInt() / rampUpBucketThreadCount;
-        int flightTime = 1000 * getFlightTimeAsInt();
-        int outUserPeriod = 1000 * getOutUserPeriodAsInt();
-
+        long inUserPeriod = 1000 * getInUserPeriodAsInt();
+        long additionalRampUp = 1000 * getRampUpAsInt() / rampUpBucketThreadCount;
+        long flightTime = 1000 * getFlightTimeAsInt();
+        long outUserPeriod = 1000 * getOutUserPeriodAsInt();
+        
         long rampUpDuration = 1000 * getRampUpAsInt();
         long iterationDuration = inUserPeriod + rampUpDuration;
         //number of complete iteration, ie full (in user time + rampup duration) used

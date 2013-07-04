@@ -28,6 +28,7 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.methods.TraceMethod;
 import org.apache.commons.lang.NotImplementedException;
 
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampler2;
 import org.apache.jmeter.samplers.SampleResult;
@@ -293,6 +294,13 @@ public class OAuthSampler extends HTTPSampler2 {
             httpMethod = new DeleteMethod(urlStr);
         } else if (method.equals(GET)) {
             httpMethod = new GetMethod(urlStr);
+        }  else if (method.equals(PATCH)) {
+            httpMethod = new PutMethod(urlStr) {
+                @Override
+                public String getName() {
+                    return "PATCH";
+                }
+            };
         } else {
             log.error("Unexpected method (converted to GET): " + method);
             httpMethod = new GetMethod(urlStr);

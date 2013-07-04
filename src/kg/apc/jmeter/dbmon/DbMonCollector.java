@@ -1,12 +1,5 @@
 package kg.apc.jmeter.dbmon;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import org.apache.jmeter.protocol.jdbc.config.DataSourceElement;
@@ -17,6 +10,14 @@ import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+
+import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -103,6 +104,17 @@ public class DbMonCollector
            return;
         }
 
+        initCollector();
+        super.testStarted(host);
+    }
+
+    @Override
+    public void testStarted() {
+        initCollector();
+        super.testStarted();
+    }
+
+    private void initCollector() {
         //ensure the data will be saved
         if (getProperty(FILENAME) == null || getProperty(FILENAME).getStringValue().trim().length() == 0) {
             if (autoGenerateFiles) {
@@ -119,7 +131,7 @@ public class DbMonCollector
                 log.info("DbMon metrics will not be recorded! Please specify a file name in the gui or run the test with -JforceDbmonFile=true");
             }
         }
-        
+
         /* uncomment to upload to Loadsophia
         log.debug("DbMon metrics will be stored in " + getPropertyAsString(FILENAME));
         if (!getSaveConfig().saveAsXml() && getSaveConfig().saveFieldNames()) {
@@ -136,8 +148,6 @@ public class DbMonCollector
 
         workerThread = new Thread(this);
         workerThread.start();
-
-        super.testStarted(host);
     }
 
     private void setupSaving(String fileName) {

@@ -50,7 +50,7 @@ public class ButtonPanelAddCopyRemoveTest {
    public void testCheckDeleteButtonStatus() {
       System.out.println("checkDeleteButtonStatus");
       Object[] defaultValues=new String[]{"", "", ""};
-      ButtonPanelAddCopyRemove instance = new ButtonPanelAddCopyRemove(null, null, defaultValues);;
+      ButtonPanelAddCopyRemove instance = new ButtonPanelAddCopyRemove(null, null, defaultValues);
       instance.checkDeleteButtonStatus();
    }
 

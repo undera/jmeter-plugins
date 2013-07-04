@@ -1,10 +1,6 @@
 package kg.apc.jmeter.vizualizers;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import kg.apc.emulators.TestJMeterUtils;
-import kg.apc.jmeter.modifiers.RawRequestSourcePreProcessor;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

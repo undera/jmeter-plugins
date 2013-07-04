@@ -8,12 +8,7 @@ import java.util.Properties;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
-import kg.apc.jmeter.perfmon.PerfMonCollector;
-import kg.apc.jmeter.dbmon.DbMonCollector;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
-import kg.apc.jmeter.vizualizers.DbMonGui;
-import kg.apc.jmeter.vizualizers.PageDataExtractorOverTimeGui;
-import kg.apc.jmeter.vizualizers.PerfMonGui;
 import org.apache.jmeter.JMeter;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
@@ -210,13 +205,7 @@ public class PluginsCMDWorker {
         setOptions(gui);
 
         CorrectedResultCollector rc;
-        if (gui instanceof PerfMonGui) {
-            rc = new PerfMonCollector();
-        } else if (gui instanceof DbMonGui) {
-            rc = new DbMonCollector();
-        } else {
-            rc = new CorrectedResultCollector();
-        }
+        rc = (CorrectedResultCollector) gui.createTestElement();
         rc.setExcludeLabels(excludeLabels);
         rc.setIncludeLabels(includeLabels);
 
@@ -329,11 +318,14 @@ public class PluginsCMDWorker {
         if (autoScaleRows >= 0) {
             graph.getChartSettings().setExpendRows(autoScaleRows > 0);
         }
+        
+        /* TODO: fix this feature loss
         if (cmdRegExps != null) {
             if (gui instanceof PageDataExtractorOverTimeGui) {
                 ((PageDataExtractorOverTimeGui) gui).setCmdRegExps(cmdRegExps);
             }
         }
+        */
     }
 
     public void setAggregate(int logicValue) {
@@ -412,17 +404,17 @@ public class PluginsCMDWorker {
 
     public static String getJMeterHomeFromCP(String classpathSTR) {
         log.debug("Trying to get JMeter home from classpath");
-        
+
         //FIXME: This dirty way of doing it should be changed as it is OS sensitive
-        
+
         String splitter;
-        
-        if(classpathSTR.indexOf(';') != -1) {
+
+        if (classpathSTR.indexOf(';') != -1) {
             splitter = ";";
         } else {
             splitter = ":";
         }
-        
+
         String[] paths = classpathSTR.split(splitter);
         for (String string : paths) {
             log.debug("Testing " + string);

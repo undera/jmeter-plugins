@@ -42,8 +42,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.6</java-version>
         <jmeter.version>2.8</jmeter.version>
-        <cmdrunner-version>1.0.1</cmdrunner-version>
-        <selenium.version>2.33.0</selenium.version>
         <powermock.version>1.5</powermock.version>
         <cobertura-maven.version>2.5.2</cobertura-maven.version>
     </properties>
@@ -61,16 +59,10 @@
             <artifactId>jmeter-plugins-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
         <dependency>
-            <groupId>kg.apc</groupId>
-            <artifactId>perfmon</artifactId>
-            <version>2.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>kg.apc</groupId>
-            <artifactId>cmdrunner</artifactId>
-            <version>${cmdrunner-version}</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jmeter-plugins-extras</artifactId>
+            <version>${project.version}</version>
         </dependency>
         
         <dependency>
@@ -78,12 +70,45 @@
             <artifactId>ApacheJMeter_core</artifactId>
             <version>${jmeter.version}</version>
         </dependency>
-        <!--
+        <dependency>
+            <groupId>org.apache.jmeter</groupId>
+            <artifactId>ApacheJMeter_java</artifactId>
+            <version>${jmeter.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_http</artifactId>
             <version>${jmeter.version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>2.5.6</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>0.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.qpid</groupId>
+            <artifactId>qpid-client</artifactId>
+            <version>0.20</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dnsjava</groupId>
+            <artifactId>dnsjava</artifactId>
+            <version>2.0.6</version>
+        </dependency>
+        <!--
+        
         <dependency>
             <groupId>org.apache.jmeter</groupId>
             <artifactId>jorphan</artifactId>
@@ -92,11 +117,6 @@
         <dependency>
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_components</artifactId>
-            <version>${jmeter.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.jmeter</groupId>
-            <artifactId>ApacheJMeter_java</artifactId>
             <version>${jmeter.version}</version>
         </dependency>
         <dependency>
@@ -115,40 +135,9 @@
             <version>${jmeter.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.dnsjava</groupId>
-            <artifactId>dnsjava</artifactId>
-            <version>2.0.6</version>
-        </dependency>
-        <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <version>2.4</version>
-            <classifier>jdk15</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>0.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jms</artifactId>
-            <version>2.5.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.qpid</groupId>
-            <artifactId>qpid-client</artifactId>
-            <version>0.20</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
         </dependency>
         <dependency>
             <groupId>de.sciss</groupId>

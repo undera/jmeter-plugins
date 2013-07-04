@@ -1,6 +1,5 @@
-package kg.apc.jmeter.vizualizers;
+package kg.apc.jmeter;
 
-import javax.swing.JTextField;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -10,11 +9,11 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Stephane Hoblingre
+ * @author undera
  */
-public class JPerfmonParamsPanelTest {
+public class RuntimeEOFExceptionTest {
 
-    public JPerfmonParamsPanelTest() {
+    public RuntimeEOFExceptionTest() {
     }
 
     @BeforeClass
@@ -35,8 +34,7 @@ public class JPerfmonParamsPanelTest {
 
     @Test
     public void testSomeMethod() {
-        JPerfmonParamsPanel instance = new JPerfmonParamsPanel("CPU", new JTextField("core=2:pid=1234:label=myLabel:total"));
-        assertNotNull(instance);
+        new RuntimeEOFException("test");
     }
 
 }

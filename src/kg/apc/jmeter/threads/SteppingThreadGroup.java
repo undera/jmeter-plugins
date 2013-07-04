@@ -72,14 +72,14 @@ public class SteppingThreadGroup
             1 + (thread.getThreadNum() - inUserCountBurst) / inUserCount;
         int rampUpBucketThreadCount = thread.getThreadNum() < inUserCountBurst ? inUserCountBurst : inUserCount;
 
-        long threadGroupDelay = 1000 * getThreadGroupDelayAsInt();
+        long threadGroupDelay = 1000L * getThreadGroupDelayAsInt();
         long ascentPoint = tgStartTime + threadGroupDelay;
-        long inUserPeriod = 1000 * getInUserPeriodAsInt();
-        long additionalRampUp = 1000 * getRampUpAsInt() / rampUpBucketThreadCount;
-        long flightTime = 1000 * getFlightTimeAsInt();
-        long outUserPeriod = 1000 * getOutUserPeriodAsInt();
+        long inUserPeriod = 1000L * getInUserPeriodAsInt();
+        long additionalRampUp = 1000L * getRampUpAsInt() / rampUpBucketThreadCount;
+        long flightTime = 1000L * getFlightTimeAsInt();
+        long outUserPeriod = 1000L * getOutUserPeriodAsInt();
         
-        long rampUpDuration = 1000 * getRampUpAsInt();
+        long rampUpDuration = 1000L * getRampUpAsInt();
         long iterationDuration = inUserPeriod + rampUpDuration;
         //number of complete iteration, ie full (in user time + rampup duration) used
         int iterationCountTotal = getNumThreads() < inUserCountBurst ? 1 :
@@ -87,7 +87,7 @@ public class SteppingThreadGroup
 
         int lastIterationUserCount = (getNumThreads() - inUserCountBurst) % inUserCount;
         if(lastIterationUserCount == 0) lastIterationUserCount = inUserCount;
-        long descentPoint = ascentPoint + iterationCountTotal * iterationDuration + (1000 * getRampUpAsInt() / inUserCount) * lastIterationUserCount + flightTime;
+        long descentPoint = ascentPoint + iterationCountTotal * iterationDuration + (1000L * getRampUpAsInt() / inUserCount) * lastIterationUserCount + flightTime;
         
         long rampUpBucketStartTime = ascentPoint + rampUpBucket * iterationDuration;
         int rampUpBucketThreadPosition = thread.getThreadNum() < inUserCountBurst ? thread.getThreadNum() :

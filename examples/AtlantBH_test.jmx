@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.4" jmeter="2.9-SNAPSHOT.20130129">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1361642699000</longProp>
+        <longProp name="ThreadGroup.end_time">1361642699000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnection guiclass="com.atlantbh.jmeter.plugins.hbasecomponents.config.gui.HBaseConnectionGui" testclass="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnection" testname="jp@gc - HBase Connection" enabled="true">
+          <stringProp name="ZK_NAME"></stringProp>
+          <stringProp name="ZK_HOST"></stringProp>
+        </com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnection>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobStatistics guiclass="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.gui.JobStatisticsGui" testclass="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobStatistics" testname="jp@gc - Hadoop Job Tracker Sampler" enabled="true">
+          <stringProp name="JOBTRACKER"></stringProp>
+          <stringProp name="JOBID"></stringProp>
+          <stringProp name="JOBIDANDGROUP"></stringProp>
+          <boolProp name="JOBCOUNTERSBYIDBOOL">true</boolProp>
+          <boolProp name="JOBCOUNTERSBYIDANDGROUPBOOL">false</boolProp>
+          <boolProp name="JOBSTATISTICSBYID">false</boolProp>
+          <boolProp name="TASKCOUNTERSBYIDBOOL">false</boolProp>
+          <boolProp name="TASKSTATISTICSBYIDBOOL">false</boolProp>
+        </com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobStatistics>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrud guiclass="com.atlantbh.jmeter.plugins.hbasecrud.gui.HbaseCrudGui" testclass="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrud" testname="jp@gc - HBase CRUD Sampler" enabled="true">
+          <stringProp name="HBASEZOOKEEPERQUORUM"></stringProp>
+          <stringProp name="HBASESOURCETABLE"></stringProp>
+          <stringProp name="ROWKEY"></stringProp>
+          <stringProp name="FULLCOLUMNNAMESLIST"></stringProp>
+          <stringProp name="COLUMNFAMILYCOLUMNNAMELIST"></stringProp>
+          <stringProp name="FILTERCOLUMNSFORTIMESTAMP"></stringProp>
+          <boolProp name="ADDORUPDATEDATAONRECORDBOOL">true</boolProp>
+          <boolProp name="DELETEDATAFROMRECORDBOOL">false</boolProp>
+          <boolProp name="LATESTTIMESTAMPOPERATIONBOOL">true</boolProp>
+          <boolProp name="LATESTTIMESTAMPOPERATIONWITHFILTERBOOL">false</boolProp>
+        </com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrud>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.hbasecomponents.samplers.HBaseRowkeySampler guiclass="com.atlantbh.jmeter.plugins.hbasecomponents.samplers.gui.HBaseRowKeySamplerGui" testclass="com.atlantbh.jmeter.plugins.hbasecomponents.samplers.HBaseRowkeySampler" testname="jp@gc - HBase Rowkey Sampler" enabled="true">
+          <stringProp name="HB_CONNAME"></stringProp>
+          <stringProp name="HB_TABLE"></stringProp>
+          <stringProp name="HB_ROWKEY"></stringProp>
+          <boolProp name="HB_OMITVARS">false</boolProp>
+          <boolProp name="HB_LATEST_TIMESTAMP_ROWS">false</boolProp>
+        </com.atlantbh.jmeter.plugins.hbasecomponents.samplers.HBaseRowkeySampler>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.hbasecomponents.samplers.HBaseScanSampler guiclass="com.atlantbh.jmeter.plugins.hbasecomponents.samplers.gui.HBaseScanSamplerGui" testclass="com.atlantbh.jmeter.plugins.hbasecomponents.samplers.HBaseScanSampler" testname="jp@gc - HBase Scan Sampler" enabled="true">
+          <stringProp name="HBS_CONN"></stringProp>
+          <stringProp name="HBS_TABLE"></stringProp>
+          <stringProp name="HBS_START"></stringProp>
+          <stringProp name="HBS_END"></stringProp>
+          <stringProp name="HBS_LIMIT">5</stringProp>
+          <stringProp name="HBS_FILTER"></stringProp>
+          <boolProp name="HBS_OMITVARS">false</boolProp>
+          <boolProp name="HBS_LATEST_TIMESTAMP_ROWS">false</boolProp>
+        </com.atlantbh.jmeter.plugins.hbasecomponents.samplers.HBaseScanSampler>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations guiclass="com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.gui.HdfsOperationsGui" testclass="com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations" testname="jp@gc - HDFS operations" enabled="true">
+          <stringProp name="NAMENODE"></stringProp>
+          <stringProp name="INPUTPATH"></stringProp>
+          <stringProp name="OUTPUTPATH"></stringProp>
+        </com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.jsontoxmlconverter.JSONToXMLConverter guiclass="com.atlantbh.jmeter.plugins.jsontoxmlconverter.gui.JSONToXMLConverterGui" testclass="com.atlantbh.jmeter.plugins.jsontoxmlconverter.JSONToXMLConverter" testname="jp@gc - JSON to XML Converter" enabled="true">
+          <stringProp name="JSONINPUT"></stringProp>
+        </com.atlantbh.jmeter.plugins.jsontoxmlconverter.JSONToXMLConverter>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.oauth.OAuthSampler guiclass="com.atlantbh.jmeter.plugins.oauth.gui.OAuthSamplerGui" testclass="com.atlantbh.jmeter.plugins.oauth.OAuthSampler" testname="jp@gc - OAuth Sampler" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="OAuthSampler.consumer_key"></stringProp>
+          <stringProp name="OAuthSampler.consumer_secret"></stringProp>
+          <stringProp name="OAuthSampler.request_body"></stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">true</boolProp>
+          <stringProp name="OAuthSampler.base_host"></stringProp>
+          <stringProp name="OAuthSampler.resource"></stringProp>
+          <stringProp name="OAuthSampler.port_number">8080</stringProp>
+          <stringProp name="OAuthSampler.request_headers"></stringProp>
+        </com.atlantbh.jmeter.plugins.oauth.OAuthSampler>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.rest.RestSampler guiclass="com.atlantbh.jmeter.plugins.rest.gui.RestGui" testclass="com.atlantbh.jmeter.plugins.rest.RestSampler" testname="jp@gc - REST Sampler" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="RestSampler.request_body"></stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">true</boolProp>
+          <stringProp name="RestSampler.base_host"></stringProp>
+          <stringProp name="RestSampler.resource"></stringProp>
+          <stringProp name="RestSampler.port_number">8080</stringProp>
+          <stringProp name="RestSampler.request_headers"></stringProp>
+        </com.atlantbh.jmeter.plugins.rest.RestSampler>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.JSONFormatter guiclass="com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.gui.JSONFormatterGui" testclass="com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.JSONFormatter" testname="jp@gc - JSON Format Post Processor" enabled="true"/>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor guiclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.gui.JSONPathExtractorGui" testclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor" testname="jp@gc - JSON Path Extractor" enabled="true">
+          <stringProp name="VAR"></stringProp>
+          <stringProp name="JSONPATH"></stringProp>
+        </com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.xmlformatter.XMLFormatPostProcessor guiclass="com.atlantbh.jmeter.plugins.xmlformatter.gui.XMLFormatPostProcessorGui" testclass="com.atlantbh.jmeter.plugins.xmlformatter.XMLFormatPostProcessor" testname="jp@gc - XML Format Post Processor" enabled="true"/>
+        <hashTree/>
+        <com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion guiclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.gui.JSONPathAssertionGui" testclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion" testname="jp@gc - JSON Path Assertion" enabled="true">
+          <stringProp name="JSON_PATH"></stringProp>
+          <stringProp name="EXPECTED_VALUE"></stringProp>
+          <boolProp name="JSONVALIDATION">false</boolProp>
+        </com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion>
+        <hashTree/>
+        <JavaSampler guiclass="JavaTestSamplerGui" testclass="JavaSampler" testname="Java Request" enabled="true">
+          <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="connection.url" elementType="Argument">
+                <stringProp name="Argument.name">connection.url</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="binding.url" elementType="Argument">
+                <stringProp name="Argument.name">binding.url</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="message" elementType="Argument">
+                <stringProp name="Argument.name">message</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="direction" elementType="Argument">
+                <stringProp name="Argument.name">direction</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="header.properties" elementType="Argument">
+                <stringProp name="Argument.name">header.properties</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="header.property.reference" elementType="Argument">
+                <stringProp name="Argument.name">header.property.reference</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="message.selector" elementType="Argument">
+                <stringProp name="Argument.name">message.selector</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="receive.timeout" elementType="Argument">
+                <stringProp name="Argument.name">receive.timeout</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="classname">com.atlantbh.jmeter.plugins.jmstools.JmsUtil</stringProp>
+        </JavaSampler>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

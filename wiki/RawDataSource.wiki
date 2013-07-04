@@ -1,0 +1,49 @@
+#labels PreProcessor
+= Raw Data Source <sup><font color=gray size="1">since 0.4.1</font></sup>=
+
+This !PreProcessor allows more flexible file reading than
+[http://jakarta.apache.org/jmeter/usermanual/component_reference.html#CSV_Data_Set_Config CSV Data Set Config]:
+  * length-prefixed format allows storing and reading binary data, this is useful when you use TCP or Raw samplers
+  * it is [http://jakarta.apache.org/jmeter/usermanual/test_plan.html#preprocessors PreProcessor], so it may be placed in different scopes and affect selected samplers
+  * it is shared between all threads, so file may be read consecutively by parallel threads
+
+The plugin makes [HTTP Raw Request and UDP Request usage easier and allows
+load testing with huge datasets at high request rate.
+
+[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/rawdatasource.png]
+
+== Raw File Format ==
+
+File reader use length-prefixed binary file format. It reads data until newline
+and tries to interpret it as next chunk length. Then it reads file for calculated length
+and assigns data to variable. Then repeats.
+
+Chunk example:
+
+{{{
+675
+GET /img/spaw2/js/spaw.js.php HTTP/1.1
+Host: apc.kg
+Connection: keep-alive
+Referer: http://apc.kg/blog/247/comment/
+Accept: */*
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.13 (KHTML, like Gecko) Ubuntu/10.10 Chromium/9.0.597.94 Chrome/9.0.597.94 Safari/534.13
+Accept-Encoding: gzip,deflate,sdch
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4
+Accept-Charset: windows-1251,utf-8;q=0.7,*;q=0.3
+Cookie: __utmz=50250230.1297072279.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); PHPSESSID=a8df1f5d8a623f8c62e5e4e849c64a14; __utma=50250230.838534113.1297072279.1297238127.1298628733.5; __utmc=50250230; __utmb=50250230.10.10.1298628733
+
+
+}}}
+
+Make note that you may have several extra newlines after chunk data before next chunk size.
+Also you may have any data after chunk size before newline (separated from size with space),
+it will be used in future versions as chunk marker.
+
+== Example ==
+
+[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/RawDataSourceExample.jmx Download Example Test Plan]
+
+[https://raw.github.com/undera/jmeter-plugins/master/test/kg/apc/jmeter/modifiers/DNSJavaDecoderToRawData.out Raw File Example #1 - HEX-encoded binary data for DNS requests]
+
+[https://raw.github.com/undera/jmeter-plugins/master/test/kg/apc/jmeter/modifiers/rawdata_crlf_metaline.txt Raw File Example #2 - Raw HTTP Requests]

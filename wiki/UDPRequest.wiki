@@ -1,0 +1,38 @@
+#labels Sampler
+= UDP Request <sup><font color=gray size="1">since 0.4.1</font></sup>=
+
+This plugin adds [http://en.wikipedia.org/wiki/User_Datagram_Protocol UDP] protocol support to JMeter.
+With this plugin you can load test DNS, NTP, TFTP, Boot servers and many-many other systems.
+
+Since UDP may be used both in one-way and two-way communications, there is option
+to wait for response and corresponding timeout setting.
+
+[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/UDPRequest.png]
+
+== Encode/Decode Class ==
+
+Most of UDP applications use binary packet data, which cannot be directly specified
+in JMeter GUI. UDP Request use encode/decode classe
+(like [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#TCP_Sampler TCP Sampler] do)
+to convert request data from GUI into UDP packet data and response data back from binary
+to GUI-visible text data.
+
+There is embedded encode/decode classes:
+|| *Full Class Name* || *Comments* ||
+|| kg.apc.jmeter.samplers.HexStringUDPDecoder || This is most useful implementation, converts data from/to HEX-encoded sequences. For example, {{{6a6d6574657220706c7567696e73}}} corresponds to {{{jmeter plugins}}}. ||
+|| kg.apc.jmeter.samplers.DNSJavaDecoder || This implementation requires [http://sourceforge.net/projects/dnsjava/ DNSJava] library to be placed in JMeter's _lib_ folder. Request data must contain three fields, separated with spaces: name, type, class. Example: {{{www.com. A IN}}}. Response data converted to text using DNSJava. Request flags can be set using +/- integer value on new line, eg {{{7}}} sets _reqursion desired_ flag.||
+|| kg.apc.jmeter.samplers.UDPSampler || This implementation used as default when no valid class name specified in GUI. It makes no conversion on data. ||
+
+Anyone can write his own encoder/decoder,
+implementing {{{kg.apc.jmeter.samplers.UDPTrafficDecoder}}} interface.
+
+== Read Buffer Length ==
+
+UDP Request reads response using buffer with default length of 4KB. 
+You may override this value by setting JMeter property {{{kg.apc.jmeter.samplers.ReceiveBufferSize}}} in bytes.
+
+== Example ==
+
+[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/UDPRequestExample.jmx Download Example Test Plan]
+
+Article: [http://apc.kg/read/jmeter_dns/ Performance Testing DNS Server with JMeter]

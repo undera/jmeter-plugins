@@ -1,0 +1,13 @@
+#summary GUI guidelines for developers
+
+= Plugin GUI Guidelines =
+
+If you plan to integrate plugins in the jp@gc distribution, please follow these guidelines.
+
+== Fields #1 ==
+
+[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/gui_rules1.png]
+
+== Fields #2 ==
+
+[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/gui_rules2.png]

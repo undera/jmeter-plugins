@@ -12,6 +12,7 @@ Planning for future versions:
     * latency distribution and latency percentiles - common solution?
     * RPS vs Response Time graph ($10 bounty for implementing it)
     * Possibility to filter data for time period
+    * allow using regexps in rows filtering on post-test file loading, or CMD
   * Distributed testing
     * Config Plugin (or maybe listener accepting distr test online status): Distributed Test Control Panel ($50-$75 bounty for implementing it)
     * custom thread groups reporting machinename in distributed mode automatically

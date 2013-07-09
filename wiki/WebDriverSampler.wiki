@@ -1,7 +1,5 @@
 #labels Sampler
-= Web Driver Sampler<sup><font color=gray size="1">since 1.1.0</font></sup>=
-
-<g:plusone size="medium"></g:plusone>
+= Web Driver Sampler <sup><font color=gray size="1">since 1.1.0</font></sup>=
 
 <wiki:toc max_depth="4" />
 

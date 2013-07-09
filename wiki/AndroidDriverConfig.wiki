@@ -1,8 +1,6 @@
 #labels Config
 = Android Driver Config<sup><font color=gray size="1">under review</font></sup>=
 
-<g:plusone size="medium"></g:plusone>
-
 <wiki:toc max_depth="4" />
 
 == Introduction ==
@@ -12,7 +10,7 @@ Different browsers have different levels of setup complexity.  In the overall sc
 
 On startup, the user is presented with the following:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/web-driver/android-driver-config.png]
+[/img/wiki/web-driver/android-driver-config.png]
 
 The main part of the Android Driver Config configuration UI lies in the tabs:
   # Proxy
@@ -59,6 +57,7 @@ For networks that have a proxy configuration server (PAC), and its name and the 
 This tab contains the configuration for the Android driver host port on the host PC. This port is used for forwarding HTTP requests from host PC's Web Driver to Android Web Driver application on the Android device. By default, the port on Android device is 8080, we decided to keep that port as is, we only provide configuration for the host PC's port. 
 
 This port is related to the adb command for port forwarding as presented in [http://code.google.com/p/selenium/wiki/AndroidDriver Selenium Android Driver]:
+
 {{{
 	./adb -s <serialId> forward tcp:<host port> tcp:8080 
 }}}

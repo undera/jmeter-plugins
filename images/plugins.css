@@ -1,0 +1,75 @@
+body {
+    background-color: white;
+}
+
+.menu1 {
+    border-top: 0.5em solid #ebeff9;
+}
+
+.menu1 td {
+    font-size: 1em;
+    background: #ebeff9;
+    padding: 0.4em 1em;
+    border-bottom: 1px solid #6b90da;
+}
+
+
+.menu1 td.hl {
+    background-color: white;
+    background-image: none;
+    border: 1px solid #6b90da;
+    border-bottom: none;
+}
+
+a.hl, .hl a, .hl {
+    color: black;
+    text-decoration: none;
+}
+
+table.breadcrumbs td {
+    border-bottom: 1px solid #c9d7f1;
+}
+
+table.breadcrumbs {
+    position: fixed; 
+    z-index: 999;
+}
+
+#toppanel {
+    padding-top: 1.2em;
+}
+
+
+td.logo {
+    padding: 1em;
+}
+
+td.header_title {
+    white-space: nowrap;
+    font-weight: normal;
+    width: 100%; 
+    font-size: 1.4em;
+    color: #666;
+}
+
+td.header_right {
+    vertical-align: middle;
+}
+
+.main td.root
+{
+    border: none;
+    background-color: transparent;
+    padding: 5px 10px;
+}
+
+h1, h2, h3, h4
+{
+    color: black;
+}
+
+table.wiki pre {
+    background-color: #EEE;
+    font-size: 1.2em;
+    padding: 1em;
+}

@@ -19,4 +19,4 @@ You need to define the following:
 
 Response shows the name of the file and the location to which it has been copied, if the file already exists it will show the message that the file already exists.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/HDFSOperations1.png]
+[/img/wiki/HDFSOperations1.png]

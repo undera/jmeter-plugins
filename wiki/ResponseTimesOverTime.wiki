@@ -7,4 +7,4 @@ Well, this is history now, as the Response Times Over Time Listener is now part 
 This graph will display for each sampler the average response time in milliseconds.
 And here is how it looks like:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/response_times_over_time.png]
+[/img/wiki/response_times_over_time.png]

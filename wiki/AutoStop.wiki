@@ -9,7 +9,7 @@ if one of the criteria has been met.
 After 5 tries of "shutdown test" component will switch to more insistent "stop test",
 after 5 more it will try to "stop NOW".
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/AutoStop1.png]
+[/img/wiki/AutoStop1.png]
 
 == AutoStop on Response Time/Latency ==
 
@@ -24,6 +24,6 @@ Test will be stopped only if specified error rate exceeded for _sequentially_ N 
 To disable auto-stop on rate criteria, just set error rate to zero.
 
 == Examples ==
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/AutoStopExample_Time.jmx Example AutoStop on Response Time JMX]
+[/img/examples/AutoStopExample_Time.jmx Example AutoStop on Response Time JMX]
 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/AutoStopExample_ErrRate.jmx Example AutoStop on Error Rate JMX]
+[/img/examples/AutoStopExample_ErrRate.jmx Example AutoStop on Error Rate JMX]

@@ -16,7 +16,7 @@ is quite convenient to use. But in advanced load testing you may notice several 
   * option to limit response data stored in results (lower memory consumption)
   * actually it is raw TCP sampler, so you can try to test non-HTTP servers
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/rawrequest.png]
+[/img/wiki/rawrequest.png]
 
 == Using Raw Request ==
 Together with obvious options like hostname and port you should know that:
@@ -45,6 +45,6 @@ to your test plan gives you fast reading of any data into variable, which may be
 
 == Example ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/RawRequestExample.jmx Download Test Plan]
+[/img/examples/RawRequestExample.jmx Download Test Plan]
 
 [http://jmeter.512774.n5.nabble.com/fileupload-test-with-JMeter-td4267154.html Hidden Feature :)] and [https://groups.google.com/forum/#!topic/jmeter-plugins/VDqXDNDCr6w post on it]

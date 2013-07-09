@@ -3,8 +3,8 @@
 
 This graph will display the amount of bytes sent and received by JMeter during the load test.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/bytes_throughput_over_time.png]
+[/img/wiki/bytes_throughput_over_time.png]
 
 == Example ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/BytesThroughputExample.jmx Download Example Test Plan]
+[/img/examples/BytesThroughputExample.jmx Download Example Test Plan]

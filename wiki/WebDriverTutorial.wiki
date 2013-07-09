@@ -23,17 +23,17 @@ To get started, first follow the [PluginInstall installation instructions] and t
 
 Your basic Test Plan should look like this after adding the Thread Group:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/web-driver/web-driver-tutorial-thread-group.png]
+[/img/wiki/web-driver/web-driver-tutorial-thread-group.png]
 
 === Firefox Driver Config ===
 Add a Firefox Driver Config to your Thread Group.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/web-driver/web-driver-tutorial-firefox-config.png]
+[/img/wiki/web-driver/web-driver-tutorial-firefox-config.png]
 
 === Web Driver Sampler ===
 Add a Web Driver Sampler to your Thread Group.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/web-driver/web-driver-tutorial-web-sampler.png]
+[/img/wiki/web-driver/web-driver-tutorial-web-sampler.png]
 
 Add the following *Javascript* code to the Script section to navigate to Google.
 
@@ -46,7 +46,7 @@ WDS.sampleResult.sampleEnd()
 === View Results Table ===
 Add a View Results in Table to your Thread Group and then *run* your test.  You should see something like the screenshot below that captures the result of the sample.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/web-driver/web-driver-tutorial-view-results-in-table.png]
+[/img/wiki/web-driver/web-driver-tutorial-view-results-in-table.png]
 
 == 10 Minute Guide ==
 The 2 minute guide is useful to get something up and running, but at the cost of some understanding.  This section hopefully fills in some of the gaps/questions that can come from going through the previous guide. 

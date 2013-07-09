@@ -5,4 +5,4 @@ This graph will display the response time distribution of the test. The X axis s
 
 == Sample result ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/response_times_distribution.png]
+[/img/wiki/response_times_distribution.png]

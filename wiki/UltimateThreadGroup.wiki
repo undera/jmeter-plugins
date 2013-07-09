@@ -10,8 +10,8 @@
 = Example =
 Let's configure Ultimate Thread Group as following:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/ultimate_thread_group1.png]
+[/img/wiki/ultimate_thread_group1.png]
 
 And then try to run test. Look how predictable our [ActiveThreadsOverTime active threads] graph is:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/ultimate_thread_group2.png]
+[/img/wiki/ultimate_thread_group2.png]

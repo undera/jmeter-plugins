@@ -32,11 +32,11 @@ You need to do similar configuration if you plan to use the save to file functio
 
 Click the Configure button:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/config_active_thread_count_button.png]
+[/img/wiki/config_active_thread_count_button.png]
 
 And select the option:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/config_active_thread_count.png]
+[/img/wiki/config_active_thread_count.png]
 
 == Plugin ==
 

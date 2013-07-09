@@ -7,4 +7,4 @@ This graph shows how Response Time changes with amount of parallel threads. Natu
 
 Example graph:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/timevsthreads.png]
+[/img/wiki/timevsthreads.png]

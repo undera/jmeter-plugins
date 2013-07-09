@@ -1,8 +1,6 @@
 #labels Config
 = Chrome Driver Config<sup><font color=gray size="1">since 1.1.0</font></sup>=
 
-<g:plusone size="medium"></g:plusone>
-
 <wiki:toc max_depth="4" />
 
 == Introduction ==
@@ -14,7 +12,7 @@ Different browsers have different levels of setup complexity.  In the overall sc
 
 On startup, the user is presented with the following:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/web-driver/chrome-driver-config.png]
+[/img/wiki/web-driver/chrome-driver-config.png]
 
 The main part of the Chrome configuration UI lies in the tabs:
   # Proxy
@@ -52,7 +50,7 @@ Specify the name/IP Address of the FTP proxy server and its associated port to u
 ==== SOCKS Proxy/Port ====
 Specify the name/IP Address of the SOCKS proxy server and its associated port to use when the browser makes external network connections.
 
-==== No Proxy for =====
+==== No Proxy for ====
 This is a comma separated list of all host(s) and/or IP Address(es) that will bypass the proxy server.
 
 === Automatic proxy configuration URL ===
@@ -64,7 +62,7 @@ For Web Driver controls to work against Chrome, it is important to:
   # Unzip the binary to a specific location
   # Specify the chrome binary in the input field in this tab.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/web-driver/chrome-driver-tab.png]
+[/img/wiki/web-driver/chrome-driver-tab.png]
 
 == Experimental ==
 As new features from the [Roadmap] are added, new and experimental features will generally get added to this section first.  This allows the early adopters to use these features and provide feedback on them.  However, it should be recognised that *all features added to this tab are subject to change/removal* so depend on them at your own peril!

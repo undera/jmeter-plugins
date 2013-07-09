@@ -7,7 +7,7 @@ File formats restricted to XML and CSV, fields order predefined. So you may find
 
 Flexible File Writer plugin allows writing test results in flexible format, specified via GUI.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/FlexibleFileWriter.png]
+[/img/wiki/FlexibleFileWriter.png]
 
 Make note that JMeter variables/functions in filename field processed only once
 when test starts and file opened for writing.
@@ -25,6 +25,7 @@ extra bytes to file, so you must specify newline characters manually
 (\r, \n, \t works for newlines and tabs).
 
 For example, simple tab separated file specified as:
+
 {{{
     startTime|\t|responseTime|\t|responseCode|\t|isSuccsessful|\r\n
 }}}
@@ -71,6 +72,6 @@ Variable indexes are zero based, e.g. var1 have index '0', var2 have index '1'.
 
 == Example and Tutorials ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/FlexibleFileWriterExample.jmx Download Example Test Plan]
+[/img/examples/FlexibleFileWriterExample.jmx Download Example Test Plan]
 
 [FFWTutorials Tutorials]

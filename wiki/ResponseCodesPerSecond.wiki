@@ -4,4 +4,4 @@ This graph will display the response code per second returned during the test.
 
 == Sample result ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/response_codes_per_second.png]
+[/img/wiki/response_codes_per_second.png]

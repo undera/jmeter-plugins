@@ -1,4 +1,4 @@
-
+<div style='white-space: nowrap'>
 [http://apc.kg/img/jpgc/download-icon.png]
 [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-1.1.0.zip Download version 1.1.0]
 
@@ -13,4 +13,4 @@
 
 [http://apc.kg/img/jpgc/donate_paypal.gif] *[http://jmeter-plugins.googlecode.com/svn/wiki/img/donate.html Support the project with donation]*
 
-<p style='width: 20em;'></p>
+</div>

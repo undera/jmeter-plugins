@@ -25,4 +25,4 @@ The following values should be specified when using this sampler, depending on t
 
 The response is in xml format.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/HadoopJobTracker2.png]
+[/img/wiki/HadoopJobTracker2.png]

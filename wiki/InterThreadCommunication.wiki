@@ -12,16 +12,16 @@ There may be any number of FIFOs and they differ by "queue name".
 
 Inter-thread communication plugins usually attached as a child of samplers that 
 provide or utilize data transmission. Download 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/SynchronizationPluginsExample.jmx example test plan]
+[/img/examples/SynchronizationPluginsExample.jmx example test plan]
 that demonstrates the process.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/synchronization.png]
+[/img/wiki/synchronization.png]
 
 == Functions ==
 
 There are 4 functions for inter-thread communication in JP@GC: fifoPut, fifoGet, fifoPop, fifoSize. 
 
-There is [http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/SynchronizationExample.jmx example test plan] to see how it works.
+There is [/img/examples/SynchronizationExample.jmx example test plan] to see how it works.
 
 fifoPut puts a value into queue and returns stored value. fifoPut parameters:
   # Name of FIFO queue

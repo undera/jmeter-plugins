@@ -13,4 +13,4 @@ This plugin requires additional libs to be installed in JMeter's {{{lib}}} direc
 
 HBase rowkey sampler is used to retrieve a specific record by specifying the rowkey of the hbase table. You need to specify the Connection name (name which is specified in the Hbase connection config element), Table: hbase table name, Rowkey. rowkey of the specific record. The possibility exists to check the checkbox to retrieve  the most recent record, as a record might be updated and you are interested in the latest data, have this parameter turned on.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/HBaseRowkey1.png]
+[/img/wiki/HBaseRowkey1.png]

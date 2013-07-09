@@ -6,4 +6,4 @@ This graph will display the percentiles for the response time values. X Axis rep
 The precision of the graph was updated in version 0.4.1 to {{{0.1}}} granularity. The percentiles are calculated in the range {{{[0.1 .. 99.9]}}} so outliers values will not break the graph Y range.
  
 == Sample Result==
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/response_times_percentiles.png]
+[/img/wiki/response_times_percentiles.png]

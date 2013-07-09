@@ -5,7 +5,7 @@ This is special plugin in for uploading results to
 [http://loadosophia.org/?utm_source=jpgc&utm_medium=link&utm_campaign=wiki Loadosophia.org] 
 immediately after test end. 
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/loadosophia_uploader.png]
+[/img/wiki/loadosophia_uploader.png]
 
 == Installation Notice ==
 

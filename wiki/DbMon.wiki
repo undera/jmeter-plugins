@@ -1,6 +1,6 @@
 #summary DbMon query sampler
 
-<font size="5"><B>!DbMon Sample Collector</B><sup><font color=gray size="1"> since 0.5.6</font></sup></font>
+<font size="5"><B>DbMon Sample Collector</B><sup><font color=gray size="1"> since 0.5.6</font></sup></font>
 
 <wiki:toc max_depth="3" />
 
@@ -8,7 +8,8 @@
 Many databases provide performance counters accessible via sql. DbMon lets you plot these values over time when the test is running. The plugin can also plot other values that is accessible via sql.
 
 This screenshot show the plugin when it is used to plot read and write transactions for a SQLServer
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/dbmon.png]
+
+[/img/wiki/dbmon.png]
 
 =Usage=
 ==GUI Mode==

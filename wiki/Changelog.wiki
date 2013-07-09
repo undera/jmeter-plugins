@@ -35,11 +35,10 @@
   * add "Close UDP Socket" option to UDP sampler (issue 133)
   * add fifoSize function
 
-
-
 == [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-0.5.5.zip 0.5.5] <i><font color=gray size="1">October 19, 2012</font></i>==
   * *JMeter 2.8 compatible*
   * some issues fixed (issue 204, issue 205)
+
 
 == [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-0.5.4.zip 0.5.4] <i><font color=gray size="1">September 3, 2012</font></i>==
   * Enable command line tool for Page Data Extractor
@@ -49,6 +48,7 @@
     * Removed space at end of labels in perfmon (if default metric used)
     * Fix percent value returned by agent for CPU per Process (x100)
     * Agent again JRE 1.4 compatible
+
 
 == [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-0.5.3.zip 0.5.3] <i><font color=gray size="1">June 13, 2012</font></i>==
   * *[LoadosophiaUploader Loadosophia.org Uploader] tries to send [PerfMon] data too*
@@ -110,80 +110,80 @@
   * Graph hover info showing hovered points values
 
 == [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-0.4.1.zip 0.4.1] <i><font color=gray size="1">Apr 24, 2011</font></i>==
- * *[ThroughputShapingTimer Throughput Shaping Timer] - another "killer" feature*
- * [JMeterPluginsCMD Command-line tool] to save csv and/or image for JTL file.
- * [RawRequest HTTP Raw Request] Sampler
- * [RawDataSource Raw Data Source] !PreProcessor
- * [FlexibleFileWriter Flexible File Writer]
- * [AutoStop] listener - using average response time or error rate as stop criteria
- * [PerfMon]: Keep collecting and showing metrics for other servers if one of the servers lost connection
- * [PerfMon]: Ability to auto stop the Server Agent at end of the test
- * [UDPRequest UDP Sampler]
- * [ConsoleStatusLogger console runtime status logger] listener
- * Added "Bytes Sent" in [BytesThroughput Bytes Throughput] graph
- * Better display of trimmed charts if maxY is forced in settings
- * added prefix for all plugin menu items
- * default description with link to help page for every plugin
- * sample test plans at wiki pages
- * copy row ability in UltimateThreadGroup and PerfMon GUI
- * proper handling of transaction controllers and samplers which download embedded resources in hit/sec, response codes and latency graphs
- * changed row colors generation to new algorithm, more regular
- * [RespTimePercentiles percentiles graph] use fractions like 99.9
- * important fix: issue 38
+  * *[ThroughputShapingTimer Throughput Shaping Timer] - another "killer" feature*
+  * [JMeterPluginsCMD Command-line tool] to save csv and/or image for JTL file.
+  * [RawRequest HTTP Raw Request] Sampler
+  * [RawDataSource Raw Data Source] !PreProcessor
+  * [FlexibleFileWriter Flexible File Writer]
+  * [AutoStop] listener - using average response time or error rate as stop criteria
+  * [PerfMon]: Keep collecting and showing metrics for other servers if one of the servers lost connection
+  * [PerfMon]: Ability to auto stop the Server Agent at end of the test
+  * [UDPRequest UDP Sampler]
+  * [ConsoleStatusLogger console runtime status logger] listener
+  * Added "Bytes Sent" in [BytesThroughput Bytes Throughput] graph
+  * Better display of trimmed charts if maxY is forced in settings
+  * added prefix for all plugin menu items
+  * default description with link to help page for every plugin
+  * sample test plans at wiki pages
+  * copy row ability in UltimateThreadGroup and PerfMon GUI
+  * proper handling of transaction controllers and samplers which download embedded resources in hit/sec, response codes and latency graphs
+  * changed row colors generation to new algorithm, more regular
+  * [RespTimePercentiles percentiles graph] use fractions like 99.9
+  * important fix: issue 38
 
 == [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-0.4.0.zip 0.4.0] <i><font color=gray size="1">Feb 13, 2011</font></i>==
- * *Possibility to [CompositeGraph compose several graphs to one]*
- * [RespTimesDistribution Response Times Distribution] graph
- * [RespTimePercentiles Response Times Percentiles] graph (Y-axis: Resp Time & X-axis: 0-100%)
- * [HitsPerSecond Server Hits per Seconds] graph
- * [BytesThroughput Bytes Throughput Over Time] graph
- * [LatenciesOverTime Latencies Over Time] graph
- * [ResponseCodesPerSecond Response Codes per Second] graph
- * Save perfmon metrics in a file if jmeter is used in non gui mode or in distributed test mode
- * Load perfmon files in Perfmon graphs
- * Export graph data to CSV
- * Setting to hide non representative values for graphs with threads count as X axis
- * Setting to force graph's maximum Y axis value 
- * Setting to aggregate all rows/bars in a graph
- * Preview of graph while changing settings
- * Axis labels on all graphs, with granularity information for time based graphs
- * Better graph scaling, especially when limit number of points is selected
- * Ability to display relative test time in graphs
+  * *Possibility to [CompositeGraph compose several graphs to one]*
+  * [RespTimesDistribution Response Times Distribution] graph
+  * [RespTimePercentiles Response Times Percentiles] graph (Y-axis: Resp Time & X-axis: 0-100%)
+  * [HitsPerSecond Server Hits per Seconds] graph
+  * [BytesThroughput Bytes Throughput Over Time] graph
+  * [LatenciesOverTime Latencies Over Time] graph
+  * [ResponseCodesPerSecond Response Codes per Second] graph
+  * Save perfmon metrics in a file if jmeter is used in non gui mode or in distributed test mode
+  * Load perfmon files in Perfmon graphs
+  * Export graph data to CSV
+  * Setting to hide non representative values for graphs with threads count as X axis
+  * Setting to force graph's maximum Y axis value 
+  * Setting to aggregate all rows/bars in a graph
+  * Preview of graph while changing settings
+  * Axis labels on all graphs, with granularity information for time based graphs
+  * Better graph scaling, especially when limit number of points is selected
+  * Ability to display relative test time in graphs
 
 == [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-0.3.0.zip 0.3.0] <i><font color=gray size="1">Nov 4, 2010</font></i>==
- * *[PerfMon Performance Monitoring] plugin and server agent*
- * [TransactionsPerSecond Transactions per second] graph
- * [TotalTransactionsPerSecond Total Successful/Failed Transactions per second] graph
- * Possibility to [PluginInstall configure] part of the plugin
- * Charts display improved (auto scaling + beautification)
- * Added save as PNG image functionality on all graphs
- * Some bugs fixed (issue #3, graphs display bugs)
- * "Settings" tab, containing multiple options, including grouping values on timeline graphs
+  * *[PerfMon Performance Monitoring] plugin and server agent*
+  * [TransactionsPerSecond Transactions per second] graph
+  * [TotalTransactionsPerSecond Total Successful/Failed Transactions per second] graph
+  * Possibility to [PluginInstall configure] part of the plugin
+  * Charts display improved (auto scaling + beautification)
+  * Added save as PNG image functionality on all graphs
+  * Some bugs fixed (issue #3, graphs display bugs)
+  * "Settings" tab, containing multiple options, including grouping values on timeline graphs
 
 == [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-0.2.1.zip 0.2.1] <i><font color=gray size="1">Aug 9, 2010</font></i>==
- * *[UltimateThreadGroup Ultimate Thread Group], the real killer*
- * *the most wanted [ResponseTimesOverTime Response Times Over Time] Graph*
- * [ThroughputOverTime Transaction Throughput Over Time] Graph
- * Auto-update GUI for [SteppingThreadGroup Stepping Thread Group] (thanks to Stéphane Hoblingre for the patch)
- * Copy to Clipboard on all graphs (thanks to Stéphane Hoblingre for the patch)
- * Anti-aliasing on all graphs (thanks to Stéphane Hoblingre for the patch)
+  * *[UltimateThreadGroup Ultimate Thread Group], the real killer*
+  * *the most wanted [ResponseTimesOverTime Response Times Over Time] Graph*
+  * [ThroughputOverTime Transaction Throughput Over Time] Graph
+  * Auto-update GUI for [SteppingThreadGroup Stepping Thread Group] (thanks to Stéphane Hoblingre for the patch)
+  * Copy to Clipboard on all graphs (thanks to Stéphane Hoblingre for the patch)
+  * Anti-aliasing on all graphs (thanks to Stéphane Hoblingre for the patch)
 
 == [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-0.2.0.zip 0.2.0] <i><font color=gray size="1">Apr 9, 2010</font></i>==
- * displayable rows selection in [http://code.google.com/p/jmeter-plugins/w/list?q=label:Graph graph listeners]
- * new [DummySampler Dummy Sampler] helps debugging and programming tests
- * *new [SteppingThreadGroup Stepping Thread Group] with alternative users scheduling*
+  * displayable rows selection in [http://code.google.com/p/jmeter-plugins/w/list?q=label:Graph graph listeners]
+  * new [DummySampler Dummy Sampler] helps debugging and programming tests
+  * *new [SteppingThreadGroup Stepping Thread Group] with alternative users scheduling*
 
 == [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-0.1.0.zip 0.1.0] <i><font color=gray size="1">Jan 28, 2010</font></i>==
- * [SamplesVsThreads Samples vs Active Threads listener] split to [ResponseTimesVsThreads Response Times vs Threads] and [TransactionThroughputVsThreads Transaction Throughput vs Threads]
- * *new listener [ActiveThreadsOverTime Active Threads Over Time]*
- * unique [ParameterizedController Parameterized Controller] added, helping re-use test plan modules
- * [DCERPCSampler DCERPC TCPClient class] allowing to test DCE RPC
- * [VariablesFromCSV Variables from CSV] config item
+  * [SamplesVsThreads Samples vs Active Threads listener] split to [ResponseTimesVsThreads Response Times vs Threads] and [TransactionThroughputVsThreads Transaction Throughput vs Threads]
+  * *new listener [ActiveThreadsOverTime Active Threads Over Time]*
+  * unique [ParameterizedController Parameterized Controller] added, helping re-use test plan modules
+  * [DCERPCSampler DCERPC TCPClient class] allowing to test DCE RPC
+  * [VariablesFromCSV Variables from CSV] config item
 
 == [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-0.0.2.zip 0.0.2] <i><font color=gray size="1">Dec 13, 2009</font></i>==
- * added graph mode switch "response times/throughput"
- * improved graph resizing
- * added Y axis limit
+  * added graph mode switch "response times/throughput"
+  * improved graph resizing
+  * added Y axis limit
 
 == [http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-0.0.1.zip 0.0.1] <i><font color=gray size="1">Jul 5, 2009</font></i>==
- * *[ResponseTimesVsThreads Response times vs active threads] graph implemented*
+  * *[ResponseTimesVsThreads Response times vs active threads] graph implemented*

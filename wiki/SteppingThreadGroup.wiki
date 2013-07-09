@@ -13,16 +13,16 @@ In JMeter version 2.4 new plugin type was introduced: custom Thread Groups. Step
  * decrease load by portions
 
 == Example ==
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/SteppingThreadGroupExample.jmx Download Example Test Plan]
+[/img/examples/SteppingThreadGroupExample.jmx Download Example Test Plan]
 
 Following screenshot shows Stepping Thread Group set to generate load increasing by 10 users each 2 minutes:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/stepping_thread_group1.png]
+[/img/wiki/stepping_thread_group1.png]
 
 
 Actual test run shows following activity graph:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/active_threads_over_time_stepping.png]
+[/img/wiki/active_threads_over_time_stepping.png]
 
 == See Also ==
 

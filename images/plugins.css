@@ -68,8 +68,16 @@ h1, h2, h3, h4
     color: black;
 }
 
-table.wiki pre {
+table.wiki pre, table.wiki tt {
     background-color: #EEE;
     font-size: 1.2em;
+    padding: 0px 0.25em;
+}
+
+table.wiki pre {
     padding: 1em;
+}
+
+td.footer {
+    border-top: 2px solid #ccc;
 }

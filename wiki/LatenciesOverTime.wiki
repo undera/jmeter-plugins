@@ -7,4 +7,4 @@ of the server response.
 
 == Sample result ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/response_latencies_over_time.png]
+[/img/wiki/response_latencies_over_time.png]

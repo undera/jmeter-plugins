@@ -14,4 +14,4 @@ OAuth sampler is an extended REST sampler which in addition includes the propert
   * Consumer Secret
   * These two properties together authenticate the Consumer to the Service Provider.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/OAuth-Sampler.png]
+[/img/wiki/OAuth-Sampler.png]

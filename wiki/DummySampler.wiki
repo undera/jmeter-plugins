@@ -8,8 +8,8 @@ a [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#BeanShel
 or [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Regular_Expression_Extractor RegExp Extractor]
 without repeating whole test or waiting for exact condition in application under test.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/dummy_sampler.png]
+[/img/wiki/dummy_sampler.png]
 
 == Example ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/DummySamplerExample.jmx Download Example Test Plan]
+[/img/examples/DummySamplerExample.jmx Download Example Test Plan]

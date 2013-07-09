@@ -62,7 +62,7 @@ This port is related to the adb command for port forwarding as presented in [htt
 	./adb -s <serialId> forward tcp:<host port> tcp:8080 
 }}}
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/web-driver/android-driver-host-port-config.png]
+[/img/wiki/web-driver/android-driver-host-port-config.png]
 
 === Before running the tests from JMeter ===
 Make sure you have an Android device connected to your host PC and adb port forwarding command has been run.

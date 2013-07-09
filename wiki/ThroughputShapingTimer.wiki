@@ -30,13 +30,13 @@ For example, if your service response time may be 2.5sec and target rps is 1230,
 It is better to have some threads overhead to handle unexpected response time spikes. But beware of too much overhead, it will lead to "final spike".
 
 == Example ==
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/ThroughputShapingExample.jmx Example JMX for Throughput Shaping Timer]
+[/img/examples/ThroughputShapingExample.jmx Example JMX for Throughput Shaping Timer]
 
 Shaping Timer setting in example test plan:
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/throughput_shaping_timer1.png]
+[/img/wiki/throughput_shaping_timer1.png]
 
 Actual RPS provided:
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/throughput_shaping_timer2.png]
+[/img/wiki/throughput_shaping_timer2.png]
 
 == Special Property Processing ==
 

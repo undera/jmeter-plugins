@@ -9,7 +9,7 @@ Unlike most Samplers, the Web Driver Sampler provides the reader with an empty e
 == General concepts ==
 When a new Web Driver Sampler is added, the user interface will resemble something as follows:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/web-driver/web-driver-tutorial-web-sampler.png]
+[/img/wiki/web-driver/web-driver-tutorial-web-sampler.png]
 
 The main fields that the scripter can make use of are:
 

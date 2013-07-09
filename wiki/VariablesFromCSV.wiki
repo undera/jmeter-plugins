@@ -12,7 +12,7 @@ Second_Variable,and here value 2
 
 Let's create test plan with _Variables From CSV File_, _Thread Group_, _Debug Sampler_ and _View Results Tree_. Then configure _Variables From CSV File_, give it filename _testvariables.csv_, optional variable prefix `MyVar_` and column separator ','. Now your plan should look like this:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/varsfromcsv1.png]
+[/img/wiki/varsfromcsv1.png]
 
 Save this test plan to _c:\temp\test1.jmx_.
 

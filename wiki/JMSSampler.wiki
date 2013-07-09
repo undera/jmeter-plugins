@@ -20,7 +20,7 @@ To send or receive a message the following needs to specified:
   * message (if we are sending a message)
 
 Connection and Binding URL correspond to Apache QPID server and queue respectively used for either sending or receiving a message. In the message fileld, we define a message we would like to send.
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/JMSsend1.png]
+[/img/wiki/JMSsend1.png]
 
 A definition of whether we are a sender or a receipient is defined in direction using either SEND or RECEIVE.
 
@@ -30,4 +30,4 @@ Message selector is used as a filter for received messages (ex: variable=’valu
 
 Receive timeout is the amount of time a receiver waits for a message to be received. In the case of QPID, it means a time for a message to arrive to a  specific queue. Tomeout is defined in ms. If not  provided, default value is 3000ms or 30 sec.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/JMSreceive1.png]
+[/img/wiki/JMSreceive1.png]

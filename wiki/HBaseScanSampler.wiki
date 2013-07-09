@@ -20,4 +20,4 @@ Same values should be specified as in the hbase rowkey sampler, with additionall
 
 With this sampler you have the same possibility to create a variable for each row, in this way the returned values will be stored in the same matter as with a jdbc request, while by default, an xml response will be returned. If you are using the default option you can extract the values and store them by using an xpath extractor post processor. Also, you can retrieve only the latest record by checking the checkbox Retrieve most recent record.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/HBaseScan1.png]
+[/img/wiki/HBaseScan1.png]

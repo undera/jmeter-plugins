@@ -16,4 +16,4 @@ Legend items represents Thread Groups in your test plan.
 
 == Example ==
 
-[/img/examples/ActiveThreadsOverTimeExample.jmx]
+[/img/examples/ActiveThreadsOverTimeExample.jmx Download Example Test Plan]

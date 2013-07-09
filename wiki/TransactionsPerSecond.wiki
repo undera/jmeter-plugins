@@ -8,10 +8,10 @@ This graph shows the number of transactions per second for each sampler. It coun
 == Result ==
 === Normal display ===
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/transactions_per_seconds.png]
+[/img/wiki/transactions_per_seconds.png]
 
 === Aggregated display ===
 
 The aggragated display replace the old *Total Transaction per Seconds* graph. You can set this parameter in the Settings panel.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/total_transactions_per_seconds.png]
+[/img/wiki/total_transactions_per_seconds.png]

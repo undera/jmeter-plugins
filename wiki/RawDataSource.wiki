@@ -10,7 +10,7 @@ This !PreProcessor allows more flexible file reading than
 The plugin makes [HTTP Raw Request and UDP Request usage easier and allows
 load testing with huge datasets at high request rate.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/rawdatasource.png]
+[/img/wiki/rawdatasource.png]
 
 == Raw File Format ==
 
@@ -42,7 +42,7 @@ it will be used in future versions as chunk marker.
 
 == Example ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/RawDataSourceExample.jmx Download Example Test Plan]
+[/img/examples/RawDataSourceExample.jmx Download Example Test Plan]
 
 [https://raw.github.com/undera/jmeter-plugins/master/test/kg/apc/jmeter/modifiers/DNSJavaDecoderToRawData.out Raw File Example #1 - HEX-encoded binary data for DNS requests]
 

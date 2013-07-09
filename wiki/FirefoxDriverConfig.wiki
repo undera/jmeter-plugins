@@ -12,7 +12,7 @@ Different browsers have different levels of setup complexity.  In the overall sc
 
 On startup, the user is presented with the following:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/web-driver/firefox-driver-config.png]
+[/img/wiki/web-driver/firefox-driver-config.png]
 
 The main part of the Firefox configuration UI lies in the tabs:
   # Proxy

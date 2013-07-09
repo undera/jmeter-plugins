@@ -16,9 +16,9 @@ you must add it before reloading files.*
 
 == ScreenShots ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/composite_chart.png]
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/composite_selector.png]
+[/img/wiki/composite_chart.png]
+[/img/wiki/composite_selector.png]
 
 == Example ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/CompositeGraphExample.jmx Download Example Test Plan]
+[/img/examples/CompositeGraphExample.jmx Download Example Test Plan]

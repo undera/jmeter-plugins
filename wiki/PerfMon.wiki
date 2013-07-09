@@ -13,7 +13,7 @@ on [http://support.hyperic.com/display/SIGAR/Home#Home-overview almost all platf
 
 Here is how the plugin looks like. It shows the CPU usage of 4 servers involved in the load test:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/servers_performance_monitoring.png]
+[/img/wiki/servers_performance_monitoring.png]
 
 =Metrics collected=
 
@@ -30,7 +30,7 @@ performance data for JMeter. The agent uses
 the [http://support.hyperic.com/display/SIGAR/Home SIGAR] open source library. 
 It is composed of a Java common part and native libraries per OS.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/agent_architecture.png]
+[/img/wiki/agent_architecture.png]
 
 ==Installation==
 

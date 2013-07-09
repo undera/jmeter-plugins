@@ -8,4 +8,4 @@ So basically, it shows the statistical maximum possible number of transactions f
 Here is an example. In the bellow graph, for the 'Search' transaction we can see that in the current scenario, we can go up to 120 transactions per second.
 
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/throughput_over_time.png]
+[/img/wiki/throughput_over_time.png]

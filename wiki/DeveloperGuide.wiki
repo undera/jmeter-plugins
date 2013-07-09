@@ -1,6 +1,3 @@
-#summary Rules and instructions for project members/committers.
-#labels Phase-Implementation
-
 = Code & Commits =
 Primary repository located here: https://github.com/undera/jmeter-plugins
 Every change must be noted in [Roadmap] immediately after commit to track progress and mention changes in [Changelog] on release. See also [BuildingFromSource]

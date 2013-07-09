@@ -9,8 +9,8 @@ Jmeter response for xml is not formatted, the xml format post processor provides
 This post processor should be added at the begin of your test, which will format all your xml’s returned in your test.
 
 Unformatted xml:
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/Unformattedxml1.png]
+[/img/wiki/Unformattedxml1.png]
 
 Formatted xml (when using xml format post processor)
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/Formatted-xml1.png]
+[/img/wiki/Formatted-xml1.png]
 In the examples above following webservice has been used: Translation Engine from WebserviceX.NET

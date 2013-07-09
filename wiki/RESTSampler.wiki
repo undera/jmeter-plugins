@@ -18,4 +18,4 @@ With projects which include REST-based Web services we needed the possibility to
   * Headers: if there are any headers which should be part of the request
   * Body: xml payload to be sent
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/REST-Sampler.png]
+[/img/wiki/REST-Sampler.png]

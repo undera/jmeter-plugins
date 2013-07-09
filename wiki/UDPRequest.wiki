@@ -7,7 +7,7 @@ With this plugin you can load test DNS, NTP, TFTP, Boot servers and many-many ot
 Since UDP may be used both in one-way and two-way communications, there is option
 to wait for response and corresponding timeout setting.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/UDPRequest.png]
+[/img/wiki/UDPRequest.png]
 
 == Encode/Decode Class ==
 
@@ -33,6 +33,6 @@ You may override this value by setting JMeter property {{{kg.apc.jmeter.samplers
 
 == Example ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/UDPRequestExample.jmx Download Example Test Plan]
+[/img/examples/UDPRequestExample.jmx Download Example Test Plan]
 
 Article: [http://apc.kg/read/jmeter_dns/ Performance Testing DNS Server with JMeter]

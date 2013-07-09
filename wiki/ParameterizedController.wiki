@@ -28,9 +28,9 @@ We defined 2 parameters, and our module will be called with their different valu
 Add [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#View_Results_Tree View Results Tree]
 listener to test plan to visualize results. Now your test plan should look like this:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/parameterizedcontroller.png]
+[/img/wiki/parameterizedcontroller.png]
 
 Run the test. Go to the View Results Tree and investigate Response data tabs for both samples.
 You'l see that var1 and var2 had different values inside different Parameterized Controllers.
 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/ParameterizedControllerExample.jmx Download Example Test Plan]
+[/img/examples/ParameterizedControllerExample.jmx Download Example Test Plan]

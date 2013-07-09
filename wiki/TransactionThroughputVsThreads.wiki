@@ -16,4 +16,4 @@ In the bellow graph, we can see for the transaction named 'First Access':
  * If two users access the application, both will have a maximum of 4 transactions per seconds
  * etc.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/throughputvsthreads.png]
+[/img/wiki/throughputvsthreads.png]

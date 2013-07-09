@@ -7,15 +7,15 @@ It uses regular expressions to get key/value pairs.
 
 Consider this real time health page:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/PageDataExtractorServlet.png]
+[/img/wiki/PageDataExtractorServlet.png]
 
 To plot a chart from these data, do a simple Test Plan, add a fixed timer to define the delay between 2 servlet call:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/PageDataExtractorTP.png]
+[/img/wiki/PageDataExtractorTP.png]
 
 Use the following regular expression and run the test:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/PageDataExtractor.png]
+[/img/wiki/PageDataExtractor.png]
 
 Note we didn't want the last value, so we added "server_SRV3_TOTAL_version" in the "exclude label" field of Row Panel.
 
@@ -35,4 +35,4 @@ java -jar CMDRunner.jar --tool Reporter --generate-png test.png --input-jtl resu
 
 == Sample Test Plan ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/PageDataExtractorExample.jmx Download Example Test Plan]
+[/img/examples/PageDataExtractorExample.jmx Download Example Test Plan]

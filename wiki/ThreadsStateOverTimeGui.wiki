@@ -10,12 +10,12 @@ ${__machineName()}_My Threadgroup name
 
 Active Threads Over Time is a simple listener showing how many active threads are there in each thread group during test run.<br>The plugin produces graph like shown below:
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/active_threads_over_time.png]
+[/img/wiki/active_threads_over_time.png]
 
 Legend items represents Thread Groups in your test plan.
 
 == Example ==
 
-[http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/ActiveThreadsOverTimeExample.jmx]
+[/img/examples/ActiveThreadsOverTimeExample.jmx]
 
 

@@ -16,4 +16,4 @@ If you wish to convert a json text into xml, use the sampler JSON to XML Convert
 
 To use this sampler enter your JSON text at JSON Input, the response will be the text transformed into XML.
 
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/JSONToXML1.png]
+[/img/wiki/JSONToXML1.png]

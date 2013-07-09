@@ -96,12 +96,6 @@ public class JMXMonTest {
 
     private void assertLastSample(String probeName, double expected) {
         final Double actual = latestSamples.get(probeName);
-        if (actual == null) {
-            for (String s : latestSamples.keySet())
-                System.out.println("Key: " + s);
-            System.exit(-1);
-            assertTrue(false);
-        }
         assertEquals(expected, actual, 0.0001);
     }
 /*

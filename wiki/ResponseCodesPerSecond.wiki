@@ -1,0 +1,7 @@
+= Response Codes per Second <sup><font color=gray size="1">since 0.4.0</font></sup>=
+
+This graph will display the response code per second returned during the test.
+
+== Sample result ==
+
+[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/response_codes_per_second.png]

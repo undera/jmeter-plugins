@@ -1,0 +1,17 @@
+#labels Sampler
+
+= OAuth Sampler <sup><font color=gray size="1">since 1.0.0</font></sup>=
+
+_This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
+released as [https://github.com/ATLANTBH/jmeter-components jmeter-components], 
+then merged into JP@GC._
+
+OAuth is an authentication protocol which provides the possibility to users to hand out tokens instead of credentials to their data hosted by a given service provider. The token grants  access for specific resources for a defined period of time.
+
+OAuth sampler is an extended REST sampler which in addition includes the properties needed for this authorization:
+
+  * Consumer Key
+  * Consumer Secret
+  * These two properties together authenticate the Consumer to the Service Provider.
+
+[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/OAuth-Sampler.png]

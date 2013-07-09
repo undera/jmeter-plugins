@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.4" jmeter="2.9-SNAPSHOT.20130129">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments">This test plan demonstrates using JSON Path Extractor
+to get values from JSON responses using JSONPath syntax.
+See http://goessner.net/articles/JsonPath/index.html#e2 for syntax details.</stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+        <stringProp name="TestPlan.comments">This item simply initiates single Dummy Sampler call.</stringProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1362044832000</longProp>
+        <longProp name="ThreadGroup.end_time">1362044832000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler" enabled="true">
+          <stringProp name="TestPlan.comments">This sampler used to simulate JSON response from some server.
+Look into Response Data field to see example json.</stringProp>
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">Example JSON taken from http://stackoverflow.com/questions/5541285/about-the-path-syntax-of-this-json</stringProp>
+          <stringProp name="RESPONSE_DATA">{
+   &quot;returnValue&quot;:true,
+   &quot;results&quot;:[
+      {
+         &quot;_id&quot;:&quot;++HUS_WBo9OoOpWA&quot;,
+         &quot;_kind&quot;:&quot;com.palm.media.audio.file:1&quot;,
+         &quot;_rev&quot;:3357,
+         &quot;album&quot;:&quot;Elements of Love: Ballads&quot;,
+         &quot;albumArtist&quot;:&quot;Earth, Wind &amp; Fire&quot;,
+         &quot;artist&quot;:&quot;Earth, Wind &amp; Fire&quot;,
+         &quot;bookmark&quot;:0,
+         &quot;createdTime&quot;:0,
+         &quot;disc&quot;:{
+            &quot;position&quot;:1,
+            &quot;total&quot;:1
+         },
+         &quot;duration&quot;:0,
+         &quot;genre&quot;:&quot;Rhythm &amp; Blues&quot;,
+         &quot;isRingtone&quot;:false,
+         &quot;modifiedTime&quot;:1300682209,
+         &quot;path&quot;:&quot;/media/internal/Track 03 - Devotion.mp3&quot;,
+         &quot;searchKey&quot;:&quot;Earth, Wind &amp; Fire Elements of Love: Ballads Devotion&quot;,
+         &quot;size&quot;:6976284,
+         &quot;sortKey&quot;:{
+            &quot;trackAndDisc&quot;:100003
+         },
+         &quot;thumbnails&quot;:[
+            {
+               &quot;_id&quot;:&quot;d1e&quot;,
+               &quot;data&quot;:&quot;/media/internal/Track 03 - Devotion.mp3:216:5998&quot;,
+               &quot;type&quot;:&quot;embedded&quot;
+            }
+         ],
+         &quot;title&quot;:&quot;Devotion&quot;,
+         &quot;track&quot;:{
+            &quot;position&quot;:3,
+            &quot;total&quot;:0
+         }
+      }
+   ]
+}</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(100,1000)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,100)}</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree>
+          <com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor guiclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.gui.JSONPathExtractorGui" testclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor" testname="jp@gc - JSON Path Extractor" enabled="true">
+            <stringProp name="TestPlan.comments">This extractor sets variable &apos;Name&apos; value into value from JSON text. 
+Run the test and look into View Results Tree.</stringProp>
+            <stringProp name="VAR">MyValue</stringProp>
+            <stringProp name="JSONPATH">$.results[0].thumbnails[0].data</stringProp>
+          </com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor>
+          <hashTree/>
+        </hashTree>
+        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="true">
+          <stringProp name="TestPlan.comments">This sampler used to visualize variables in View Results Tree</stringProp>
+          <boolProp name="displayJMeterProperties">false</boolProp>
+          <boolProp name="displayJMeterVariables">true</boolProp>
+          <boolProp name="displaySystemProperties">false</boolProp>
+        </DebugSampler>
+        <hashTree/>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+          </value>
+        </objProp>
+        <stringProp name="TestPlan.comments">Run the test and look into Debug Sampler&apos;s response data. 
+You should see MyValue=...</stringProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

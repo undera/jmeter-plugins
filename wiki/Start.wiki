@@ -1,4 +1,4 @@
-<table width="100%"><tr><td align="left">http://apc.kg/img/jpgc/JMeterpluginsLogo5.png</td><td align="left">[http://blazemeter.com/?utm_source=jmpl&utm_medium=cpc&utm_content=jmpisnsr&utm_campaign=JMeter%2BPlug%2BIn%2BWiki http://apc.kg/img/jpgc/bz_large.jpg]</td></tr></table>
+<table width="100%"><tr><td align="left">[http://apc.kg/img/jpgc/JMeterpluginsLogo5.png]</td><td align="left">[http://blazemeter.com/?utm_source=jmpl&utm_medium=cpc&utm_content=jmpisnsr&utm_campaign=JMeter%2BPlug%2BIn%2BWiki http://apc.kg/img/jpgc/bz_large.jpg]</td></tr></table>
 This project is a сustom set of plugins for [http://jakarta.apache.org/jmeter/ Apache JMeter], not affiliated with Apache Software Foundation.
 
 == Download & Install ==

@@ -1,9 +1,12 @@
 /plugins/target/
 /target/
-/nbactions.xml
-/dependency-reduced-pom.xml
+nbactions.xml
+dependency-reduced-pom.xml
 .idea/
 *.iml
 /common/target/
 /webdriver/target/
 /hadoop/target/
+/extras/target/
+/extraslibs/target/
+/standard/target/

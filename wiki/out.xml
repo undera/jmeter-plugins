@@ -1,0 +1,20 @@
+<url title="JMeter Plugins" template="pwe.tpl" 
+     custom_logo="http://www.apc.kg/img/jpgc/logoSimple.png"
+     keywords="jmeter, plugins, load, performance, analysis, graphs, hadoop, webdriver, selenium"
+     description="A custom set of plugins for Apache JMeter, not affiliated with Apache Software Foundation, graphs, load shapers, new functions."    
+    
+     class="PWE\Modules\RedirectAccepted\RedirectAccepted" 
+     base="http://jmeter-plugins.googlecode.com/" 
+     accept="1">
+    <url 
+        class="PWE\Modules\RedirectAccepted\RedirectAccepted" 
+        base="http://code.google.com/p/jmeter-plugins/wiki/"
+        link="wiki" no_final_slash="1" accept="1">
+    </url>
+
+    <url link="Start" title="Start Page" menu="1" menu_icon="http://www.totzyv.ru/images/home.gif" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/wiki2/Start"/>
+    <url link="#" title="Downloads" menu="1" menu_icon="http://apc.kg/img/jpgc/download-icon.png" />
+    <url link="wiki2" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" accept="1" menu="1" menu_icon="https://hr.cch.com/images/icon_book.gif" title="Documentation"/>
+    <url link="support" menu="1" menu_icon="http://support.rurem.tv/wp-content/themes/rurem/images/icon-support.png" title="Support Forums" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="http://groups.google.com/forum/#!forum/jmeter-plugins" accept="1" />
+    <url link="#" title="Source Code" menu="1" menu_icon="http://www.trevorbedford.com/images/github.png"/>
+</url>

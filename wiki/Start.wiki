@@ -1,101 +1,112 @@
-<table width="100%"><tr><td align="left">[http://apc.kg/img/jpgc/JMeterpluginsLogo5.png]</td><td align="left">[http://blazemeter.com/?utm_source=jmpl&utm_medium=cpc&utm_content=jmpisnsr&utm_campaign=JMeter%2BPlug%2BIn%2BWiki http://apc.kg/img/jpgc/bz_large.jpg]</td></tr></table>
-This project is a сustom set of plugins for [http://jakarta.apache.org/jmeter/ Apache JMeter], not affiliated with Apache Software Foundation.
+= Project Documentation Wiki =
+  * [PluginInstall Installation Procedure] to have correct setup
+  * [Changelog] to see latest changes
+  * [Roadmap] to see upcoming improvements and fresh ideas
 
-== Download & Install ==
-[http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-1.1.0.zip Version 1.1.0] was released on 1st of July, 2013.
-
-The prerequisite is to run *JMeter 2.8* or above with a *JRE 1.6* or above.
-Follow [PluginInstall installation procedure] after download.
-
-== Latest Update ==
-The latest version introduces amazing ability of [WebDriverSampler WebDriver testing], now JMeter _IS_ a browser :). There were also some other changes, see the [Changelog changelog] for full detail.
-
-Happy Load Testing!
-
-== Package Contents ==
 <table><tr>
-<td valign="top">
-*Timeline Graphs*
+<td valign="top" style="background-color: #DDF; border-radius: 1em; padding: 1em;">
+== Standard Set ==
+Basic plugins for everyday needs. Does not require additional libs to run.
+
+=== Graphs ===
   * [PerfMon PerfMon Metrics Collector] and [PerfMonAgent Server Agent]
   * [ActiveThreadsOverTime Active Threads Over Time]
-  * [ResponseCodesPerSecond Response Codes per Second]
   * [ResponseTimesOverTime Response Times Over Time]
-  * [LatenciesOverTime Response Latencies Over Time]
   * [TransactionsPerSecond Transactions per Second]
   * [HitsPerSecond Server Hits per Seconds]
-  * [BytesThroughput Bytes Throughput Over Time]
-  * [PageDataExtractor Extracted Data Over Time] 
   * [CompositeGraph Composite Timeline Graph]
-  * [DbMon DbMon Sample Collector]
-
-*Pivot Graphs*
-  * [ResponseTimesVsThreads Response Times vs Threads]
-  * [TransactionThroughputVsThreads Transaction Throughput vs Threads]
-
-*Distribution Graphs*
-  * [RespTimesDistribution Response Times Distribution]
-  * [RespTimePercentiles Response Times Percentiles]
-
-*Custom Thread Groups*
+  
+=== Thread Groups & Timers ===
   * [SteppingThreadGroup Stepping Thread Group]
   * [UltimateThreadGroup Ultimate Thread Group]
+  * [ThroughputShapingTimer Throughput Shaping Timer] 
 
-*Listeners*
+=== Listeners ===
   * [LoadosophiaUploader Loadosophia.org Uploader] 
-  * [AutoStop] Trigger
   * [FlexibleFileWriter Flexible File Writer] 
   * [ConsoleStatusLogger Non-GUI Console Status Logger] 
 
-</td>
-<td width="50">[http://apc.kg/img/null.gif]</td>
-<td valign="top">
-*Samplers*
-  * [WebDriverSampler] Web Driver Sampler for full browser tests [http://apc.kg/img/jpgc/new_wog.gif]
+=== Others ===
+  * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
+  * [InterThreadCommunication Inter-Thread Communication]
+  * [Functions Custom JMeter Functions] 
+  * [ParameterizedController Parameterized Controller] to re-use test plan modules
+  * [VariablesFromCSV Variables from CSV] configuration item
+  * [RawDataSource Raw Data Source]
+  * [LockFile Lock Files]
+
+=== Samplers ===
   * [DummySampler Dummy Sampler] for debugging and programming tests
+
+</td>
+<td valign="top" style="background-color: #DFD; border-radius: 1em; padding: 1em; width: 50%;">
+== Extras Set ==
+Additional plugins for extended and complex testing. Does not require additional libs to run.
+
+=== Graphs ===
+  * [ResponseCodesPerSecond Response Codes per Second]
+  * [LatenciesOverTime Response Latencies Over Time]
+  * [BytesThroughput Bytes Throughput Over Time]
+  * [PageDataExtractor Extracted Data Over Time] 
+  * [DbMon DbMon Sample Collector]
+  * [ResponseTimesVsThreads Response Times vs Threads]
+  * [TransactionThroughputVsThreads Transaction Throughput vs Threads]
+  * [RespTimesDistribution Response Times Distribution]
+  * [RespTimePercentiles Response Times Percentiles]
+
+=== Listeners ===
+  * [AutoStop] Trigger
+
+=== Samplers ===
   * [UDPRequest UDP Sampler]
   * [RawRequest HTTP Raw Request]
-  * [DCERPCSampler DCERPC TCPClient class] allowing to test DCE RPC
+
+=== Others ===
+  * [XMLFormatPostProcessor XML Format PostProcessor]
+</td>
+</tr><tr>
+<td valign="top" style="background-color: #FFD; border-radius: 1em; padding: 1em;">
+== Extras with Libs Set ==
+Additional plugins that _do require_ additional libs to run.
+
+=== Samplers ===
   * [JSONToXMLConverter JSON To XML Converter] 
   * [JMSSampler JMS Sampler] classes for Java Request Sampler
+  * [OAuthSampler OAuth Sampler]
+  * [RESTSampler REST Sampler]
+
+=== Others ===
+  * [JSONPathExtractor JSON Path Extractor]
+  * [JSONPathAssertion JSON Path Assertion]
+  * [JSONFormatter JSON Formatter PostProcessor]
+
+</td>
+<td valign="top" style="background-color: #FDF; border-radius: 1em; padding: 1em;">
+== WebDriver Set ==
+Selenium/WebDriver testing ability.
+
+  * [WebDriverSampler] Web Driver Sampler for full browser tests [/img/icons/new_wog.gif]
+  * fixme: put here all WebDriver plugins
+
+</td>
+</tr><tr>
+<td valign="top" style="background-color: #FDD; border-radius: 1em; padding: 1em;">
+== Hadoop Set ==
+Hadoop/HBase testing plugins.
+  * [HBaseConnection HBase Connection Config]
   * [HDFSOperations HDFS Operations]
   * [HadoopJobTracker Hadoop Job Tracker Sampler]
   * [HBaseCRUDSampler HBase CRUD Sampler]
   * [HBaseScanSampler HBase Scan Sampler]
   * [HBaseRowkeySampler HBase Rowkey Sampler]
-  * [OAuthSampler OAuth Sampler]
-  * [RESTSampler REST Sampler]
-
-*Various*
-  * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
-  * [ThroughputShapingTimer Throughput Shaping Timer] 
-  * [ParameterizedController Parameterized Controller] to re-use test plan modules
-  * [VariablesFromCSV Variables from CSV] configuration item
-  * [RawDataSource Raw Data Source]
-  * [LockFile Lock Files]
-  * [InterThreadCommunication Inter-Thread Communication]
-  * [Functions Custom JMeter Functions] 
-  * [JSONPathExtractor JSON Path Extractor]
-  * [JSONPathAssertion JSON Path Assertion]
-  * [XMLFormatPostProcessor XML Format PostProcessor]
-  * [JSONFormatter JSON Formatter PostProcessor]
-  * [HBaseConnection HBase Connection Config]
-</td>
 
 </tr></table>
 
-See also: [Changelog] and [Roadmap].
 
-== Usage ==
-
-Once installed, you can use the plugins as standard JMeter objects, they will appear in the JMeter menus.<br>
-You can save, copy to clipboard or export the graphs data by right-clicking them, and modify the rendering in different ways.<br>
-All possibilities are described [SettingsPanel here].
-
-==Feedback Welcome!==
-We have a [http://groups.google.com/group/jmeter-plugins Google Group] to duscuss plugins usage, development and other essential questions.
-
-Also, you can try JMeter Mailing Lists to get community support on JMeter. 
-
-==Spare Some Change?==
-
-If you like this little project, you can spare few coins for its authors :-)<br>Donations can be made securely via !PayPal, see [http://jmeter-plugins.googlecode.com/svn/wiki/img/donate.html donation] page. 
+= Developing Plugins =
+  * [DeveloperGuide]
+  * [BuildingFromSource]
+  * [PluginsGuiGuidelines]
+  * [WritingPlugins]
+  * [Roadmap] and [Changelog]
+  

@@ -11,6 +11,6 @@
 [http://apc.kg/img/jpgc/chart-bar-icon.png]
 [http://loadosophia.org/?utm_source=jpgc&utm_medium=link&utm_campaign=sidebar Analyze your test results online]
 
-[http://apc.kg/img/jpgc/donate_paypal.gif] *[http://jmeter-plugins.googlecode.com/svn/wiki/img/donate.html Support the project with donation]*
+[http://apc.kg/img/jpgc/donate_paypal.gif] *[/donations/ Support the project with donation]*
 
 </div>

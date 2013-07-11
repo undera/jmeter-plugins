@@ -1,0 +1,112 @@
+= Project Documentation Wiki =
+  * [PluginInstall Installation Procedure] to have correct setup
+  * [Changelog] to see latest changes
+  * [Roadmap] to see upcoming improvements and fresh ideas
+
+<table style="border-spacing:1em;"><tr>
+<td valign="top" style="background-color: #DDF; border: 1px solid #AAD; border-radius: 1em; padding: 1em;">
+== Standard Set ==
+Basic plugins for everyday needs. Does not require additional libs to run.
+
+=== Graphs ===
+  * [PerfMon PerfMon Metrics Collector] and [PerfMonAgent Server Agent]
+  * [ActiveThreadsOverTime Active Threads Over Time]
+  * [ResponseTimesOverTime Response Times Over Time]
+  * [TransactionsPerSecond Transactions per Second]
+  * [HitsPerSecond Server Hits per Seconds]
+  * [CompositeGraph Composite Timeline Graph]
+  
+=== Thread Groups & Timers ===
+  * [SteppingThreadGroup Stepping Thread Group]
+  * [UltimateThreadGroup Ultimate Thread Group]
+  * [ThroughputShapingTimer Throughput Shaping Timer] 
+
+=== Listeners ===
+  * [LoadosophiaUploader Loadosophia.org Uploader] 
+  * [FlexibleFileWriter Flexible File Writer] 
+  * [ConsoleStatusLogger Non-GUI Console Status Logger] 
+
+=== Others ===
+  * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
+  * [InterThreadCommunication Inter-Thread Communication]
+  * [Functions Custom JMeter Functions] 
+  * [ParameterizedController Parameterized Controller] to re-use test plan modules
+  * [VariablesFromCSV Variables from CSV] configuration item
+  * [RawDataSource Raw Data Source]
+  * [LockFile Lock Files]
+
+=== Samplers ===
+  * [DummySampler Dummy Sampler] for debugging and programming tests
+
+</td>
+<td valign="top" style="background-color: #DFD; border: 1px solid #ADA; border-radius: 1em; padding: 1em; width: 50%;">
+== Extras Set ==
+Additional plugins for extended and complex testing. Does not require additional libs to run.
+
+=== Graphs ===
+  * [ResponseCodesPerSecond Response Codes per Second]
+  * [LatenciesOverTime Response Latencies Over Time]
+  * [BytesThroughput Bytes Throughput Over Time]
+  * [PageDataExtractor Extracted Data Over Time] 
+  * [DbMon DbMon Sample Collector]
+  * [ResponseTimesVsThreads Response Times vs Threads]
+  * [TransactionThroughputVsThreads Transaction Throughput vs Threads]
+  * [RespTimesDistribution Response Times Distribution]
+  * [RespTimePercentiles Response Times Percentiles]
+
+=== Listeners ===
+  * [AutoStop] Trigger
+
+=== Samplers ===
+  * [UDPRequest UDP Sampler]
+  * [RawRequest HTTP Raw Request]
+
+=== Others ===
+  * [XMLFormatPostProcessor XML Format PostProcessor]
+</td>
+</tr><tr>
+<td valign="top" style="background-color: #FFD; border: 1px solid #DDA; border-radius: 1em; padding: 1em;">
+== Extras with Libs Set ==
+Additional plugins that _do require_ additional libs to run.
+
+=== Samplers ===
+  * [JSONToXMLConverter JSON To XML Converter] 
+  * [JMSSampler JMS Sampler] classes for Java Request Sampler
+  * [OAuthSampler OAuth Sampler]
+  * [RESTSampler REST Sampler]
+
+=== Others ===
+  * [JSONPathExtractor JSON Path Extractor]
+  * [JSONPathAssertion JSON Path Assertion]
+  * [JSONFormatter JSON Formatter PostProcessor]
+
+</td>
+<td valign="top" style="background-color: #FDF; border: 1px solid #DAD; border-radius: 1em; padding: 1em;">
+== WebDriver Set ==
+Selenium/WebDriver testing ability.
+
+  * [WebDriverSampler] Web Driver Sampler for full browser tests [/img/icons/new_wog.gif]
+  * fixme: put here all WebDriver plugins
+
+</td>
+</tr><tr>
+<td valign="top" style="background-color: #FDD; border: 1px solid #DAA; border-radius: 1em; padding: 1em;">
+== Hadoop Set ==
+Hadoop/HBase testing plugins.
+  * [HBaseConnection HBase Connection Config]
+  * [HDFSOperations HDFS Operations]
+  * [HadoopJobTracker Hadoop Job Tracker Sampler]
+  * [HBaseCRUDSampler HBase CRUD Sampler]
+  * [HBaseScanSampler HBase Scan Sampler]
+  * [HBaseRowkeySampler HBase Rowkey Sampler]
+
+</tr></table>
+
+
+= Developing Plugins =
+  * [DeveloperGuide]
+  * [BuildingFromSource]
+  * [PluginsGuiGuidelines]
+  * [WritingPlugins]
+  * [Roadmap] and [Changelog]
+  

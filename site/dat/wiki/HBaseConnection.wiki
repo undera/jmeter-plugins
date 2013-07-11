@@ -1,0 +1,16 @@
+#labels Config
+= HBase Connection Config<sup><font color=gray size="1">since 1.0.0</font></sup>=
+
+_This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
+released as [https://github.com/ATLANTBH/jmeter-components jmeter-components], 
+then merged into JP@GC._
+
+== Installation Notice ==
+
+This plugin requires additional libs to be installed in JMeter's {{{lib}}} directory. See [PluginInstall installation instruction] for details.
+
+== Description ==
+
+HBase connection a config element and is used to define the connection to the HBase which will be shared among the samplers in the test plan. The Connection name is the name which will be referenced in the HBase samplers, and zk host is the zookeeper host.
+
+[/img/wiki/HBaseConnection1.png]

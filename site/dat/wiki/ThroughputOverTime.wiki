@@ -1,0 +1,11 @@
+#labels Listener,Graph,Deprecated
+= Transaction Throughput Over Time <sup><font color=gray size="1">since 0.2.1</font></sup>=
+
+This listener will show the statistical average transaction throughtput over time. The formula to calculate the values is:
+average(<active threads> x 1 second / <1 thread response time>)
+So basically, it shows the statistical maximum possible number of transactions for the given scenario.
+
+Here is an example. In the bellow graph, for the 'Search' transaction we can see that in the current scenario, we can go up to 120 transactions per second.
+
+
+[/img/wiki/throughput_over_time.png]

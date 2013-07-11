@@ -1,9 +1,10 @@
 language: java
 jdk:
   - openjdk6
-install: "mvn clean -B"
+install: "mvn clean --batch-mode"
 before_script:
  - "export DISPLAY=:99.0"
  - "sh -e /etc/init.d/xvfb start"
+script: "mvn test --fail-at-end --batch-mode"
 after_script:
  - "sh -e /etc/init.d/xvfb stop"

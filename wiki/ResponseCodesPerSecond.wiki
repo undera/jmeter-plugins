@@ -1,7 +1,0 @@
-= Response Codes per Second <sup><font color=gray size="1">since 0.4.0</font></sup>=
-
-This graph will display the response code per second returned during the test.
-
-== Sample result ==
-
-[/img/wiki/response_codes_per_second.png]

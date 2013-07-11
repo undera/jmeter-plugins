@@ -1,9 +1,0 @@
-#labels Listener,Graph,Deprecated
-<font color=red>
-Warning! This plugin is deprecated since version 0.1.0! Please use [ResponseTimesVsThreads Response Times vs Threads] and [TransactionThroughputVsThreads Transaction Throughput vs Threads] instead.
-</font>
-
-= Samples vs Active Threads Listener <sup><font color=gray size="1">since 0.0.2</font></sup>=
-This listener shows responce times in correspondence with active threads count. Three types of data can be shown: raw response times, average response times, response time averages for active threads count. Make note that data shown in separate color for each sampler in test plan.
-See sample image below (items in legend represents samplers in test plan):
-/img/wiki/dotchart_graph.png

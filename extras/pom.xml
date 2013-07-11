@@ -64,6 +64,12 @@
             <artifactId>jmeter-plugins-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>jmeter-plugins-standard</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
         
         <dependency>
             <groupId>kg.apc</groupId>

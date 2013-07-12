@@ -148,6 +148,7 @@ table.wiki .toc-list1 {
     border: 1px dotted silver;
     margin: 1em;
     padding: 0.5em;
+    background-color: #EEE;
 }
 
 .file_download a {
@@ -158,7 +159,6 @@ table.wiki .toc-list1 {
 
 .file_download i {
     padding-left: 2em;
-
 }
 
 .file_download b {

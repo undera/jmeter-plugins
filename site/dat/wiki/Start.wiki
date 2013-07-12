@@ -110,3 +110,4 @@ Hadoop/HBase testing plugins.
   * [WritingPlugins]
   * [Roadmap] and [Changelog]
   * Code Coverage Reports
+  * [Contributors Contibutors List] - write down yourself, if you took your part

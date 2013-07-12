@@ -1,13 +1,22 @@
 =Latest Stable Release=
 
+<download:JMeterPlugins-Standard-1.1.1.zip;Standard Set>
+
+<download:JMeterPlugins-Extras-1.1.1.zip;Extras Set>
+
+<download:JMeterPlugins-Extras-Libs-1.1.1.zip;Extras with Libs Set>
+
+<download:JMeterPlugins-WebDriver-1.1.1.zip;WebDriver Set>
+
+<download:JMeterPlugins-Hadoop-1.1.1.zip;Hadoop Set>
+
+=Previous Releases=
 <download:JMeterPlugins-1.1.0.zip;WebDriver release>
 
 <download:JMeterPlugins-libs-1.1.0.zip;Additional libraries for 1.1.0 version, WebDriver included>
 
 <download:ServerAgent-2.2.1.zip;PerfMon Agent>
 
-
-=Previous Releases=
 <download:JMeterPlugins-1.0.0.zip;JP@GC with AtlantBH's jmeter-components merged in>
 
 <download:JMeterPlugins-0.5.6.zip;New DbMon, new loadsophia features, bug fixes and other minor updates  >

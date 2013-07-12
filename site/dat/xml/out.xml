@@ -14,9 +14,9 @@
 
     <url link="home" title="Home" menu="1" menu_icon="/img/icons/home.gif" class="PWE\Modules\HTMLPage\HTMLPage" src="index.html"/>
     <url link="downloads" title="Downloads" menu="1" menu_icon="/img/icons/download-icon.png" 
-         class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl" start_page="latest"
+         class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl" start_page="all"
          files_base="files" download_link="../file">
-        <url link="file" files_base="files" class="PWE\Modules\FileDownloads\FileDownloads" accept="1" />
+        <url link="file" files_base="files" class="PWE\Modules\FileDownloads\FileDownloads" accept="2" />
     </url>
     <url link="wiki2" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" start_page="Start"
          accept="1" menu="1" menu_icon="/img/icons/icon_book.gif" title="Documentation"/>

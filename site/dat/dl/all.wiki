@@ -54,3 +54,5 @@
 <download:JMeterPlugins-0.0.1.zip;One visualization plugin>
 
 =Developer Snapshots=
+
+<downloads-dir:nightly>

@@ -5,6 +5,7 @@ dependency-reduced-pom.xml
 .idea/
 *.iml
 .directory
+eg_globals.xml
 /common/target/
 /webdriver/target/
 /hadoop/target/

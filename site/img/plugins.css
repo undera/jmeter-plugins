@@ -89,7 +89,7 @@ table.wiki .sidebar {
     border-left: 2px solid #ccc;
 }
 
-table.wiki .sidebar sup {
+table.wiki .sidebar sup, table.wiki .sidebar font {
     display: none;
 }
 
@@ -141,3 +141,32 @@ table.wiki .toc-list1 {
     background-color: #FDD; 
     border-color: #DAA; 
 }
+
+/* Downloads */
+.file_download {
+    display: block;
+    border: 1px dotted silver;
+    margin: 1em;
+    padding: 0.5em;
+}
+
+.file_download a {
+    background-image: url('/img/icons/download-icon.png'); 
+    background-repeat: no-repeat;
+    padding-left: 2em;
+}
+
+.file_download i {
+    padding-left: 2em;
+
+}
+
+.file_download b {
+    font-size: larger;
+}
+
+.file_download .filesize, .filedate {
+    color: gray;
+    font-weight: bold;
+}
+

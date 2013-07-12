@@ -1,7 +1,5 @@
-#labels Performance,Monitoring,Graph,Restrict-AddWikiComment-Commit
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 <font size="5"><B>Servers Performance Monitoring</B><sup><font color=gray size="1">since 0.3.0</font></sup></font>
-
-<wiki:toc max_depth="3" />
 
 =Introduction=
 

@@ -4,7 +4,7 @@
   * [Roadmap] to see upcoming improvements and fresh ideas
 
 <table style="border-spacing:1em;"><tr>
-<td valign="top" style="background-color: #DDF; border: 1px solid #AAD; border-radius: 1em; padding: 1em;">
+<td class="plugins_set standard_set" style="width: 50%">
 == Standard Set ==
 Basic plugins for everyday needs. Does not require additional libs to run.
 
@@ -39,7 +39,7 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [DummySampler Dummy Sampler] for debugging and programming tests
 
 </td>
-<td valign="top" style="background-color: #DFD; border: 1px solid #ADA; border-radius: 1em; padding: 1em; width: 50%;">
+<td class="plugins_set extras_set" style="width: 50%">
 == Extras Set ==
 Additional plugins for extended and complex testing. Does not require additional libs to run.
 
@@ -65,7 +65,7 @@ Additional plugins for extended and complex testing. Does not require additional
   * [XMLFormatPostProcessor XML Format PostProcessor]
 </td>
 </tr><tr>
-<td valign="top" style="background-color: #FFD; border: 1px solid #DDA; border-radius: 1em; padding: 1em;">
+<td class="plugins_set extraslibs_set">
 == Extras with Libs Set ==
 Additional plugins that _do require_ additional libs to run.
 
@@ -81,7 +81,7 @@ Additional plugins that _do require_ additional libs to run.
   * [JSONFormatter JSON Formatter PostProcessor]
 
 </td>
-<td valign="top" style="background-color: #FDF; border: 1px solid #DAD; border-radius: 1em; padding: 1em;">
+<td class="plugins_set webdriver_set">
 == WebDriver Set ==
 Selenium/WebDriver testing ability.
 
@@ -90,7 +90,7 @@ Selenium/WebDriver testing ability.
 
 </td>
 </tr><tr>
-<td valign="top" style="background-color: #FDD; border: 1px solid #DAA; border-radius: 1em; padding: 1em;">
+<td class="plugins_set hadoop_set">
 == Hadoop Set ==
 Hadoop/HBase testing plugins.
   * [HBaseConnection HBase Connection Config]

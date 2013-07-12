@@ -81,3 +81,42 @@ table.wiki pre {
 td.footer {
     border-top: 2px solid #ccc;
 }
+
+
+/* Plugin Sets */
+.plugins_set {
+    border-radius: 1em; 
+    padding: 1em; 
+    border-style: solid;
+    border-width: 1px;
+    vertical-align: top;
+}
+
+.plugins_set h2 {
+    margin-top: 0px;
+}
+
+.standard_set {
+    background-color: #DDF; 
+    border-color: #AAD; 
+}
+
+.extras_set {
+    background-color: #DFD; 
+    border-color: #ADA; 
+}
+
+.extraslibs_set {
+    background-color: #FFD; 
+    border-color: #DDA; 
+}
+
+.webdriver_set {
+    background-color: #FDF; 
+    border-color: #DAD; 
+}
+
+.hadoop_set {
+    background-color: #FDD; 
+    border-color: #DAA; 
+}

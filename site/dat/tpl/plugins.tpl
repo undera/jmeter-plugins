@@ -33,9 +33,17 @@
 {/block}
 
 {block name="header_right"}
-    <div style='padding: 0em 0.5em; white-space: nowrap;'>
-        <a href="http://blazemeter.com/?utm_source=jmplinnerpages&amp;utm_medium=cpc&amp;utm_content=jmpininnerpgs&amp;utm_campaign=JMeter%2BPlug%2BIn%2BWiki" 
-           target="_blank"><img src="/img/site/bz_small.jpg" alt=""></a>
+    <div style="white-space: nowrap; vertical-align: middle;">
+        <div style="display: inline-block; vertical-align: middle; font-style: italic;">
+            <a href="http://jmeter.apache.org/" target="_blank" style="float:right; margin-left: 2em;"><img src="/img/site/jmeter-logo.png" alt="hadoop/hdfs"/></a>
+            This project is an independent<br/> set of plugins
+            for <a href="http://jakarta.apache.org/jmeter/">Apache JMeter</a>. 
+        </div>
+
+        <div style='display: inline-block; vertical-align: middle; padding: 0em 0.5em;'>
+            <a href="http://blazemeter.com/?utm_source=jmplinnerpages&amp;utm_medium=cpc&amp;utm_content=jmpininnerpgs&amp;utm_campaign=JMeter%2BPlug%2BIn%2BWiki" 
+               target="_blank"><img src="/img/site/bz_small.jpg" alt=""></a>
+        </div>
     </div>
 {/block}
 

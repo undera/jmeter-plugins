@@ -12,7 +12,7 @@
         link="wiki" no_final_slash="1" accept="1">
     </url>
 
-    <url link="Start" title="Start Page" menu="1" menu_icon="/img/icons/home.gif" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/wiki2/Start"/>
+    <url link="home" title="Home" menu="1" menu_icon="/img/icons/home.gif" class="PWE\Modules\HTMLPage\HTMLPage" src="index.html"/>
     <url link="#" title="Downloads" menu="1" menu_icon="/img/icons/download-icon.png" />
     <url link="wiki2" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" start_page="Start"
         accept="1" menu="1" menu_icon="/img/icons/icon_book.gif" title="Documentation"/>

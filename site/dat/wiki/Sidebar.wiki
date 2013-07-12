@@ -1,10 +1,4 @@
 <div style='white-space: nowrap'>
-[http://apc.kg/img/jpgc/download-icon.png]
-[http://code.google.com/p/jmeter-plugins/downloads/detail?name=JMeterPlugins-1.1.0.zip Download version 1.1.0]
-
-[http://apc.kg/img/jpgc/help.png]
-[http://groups.google.com/group/jmeter-plugins Got question on this plugin?]
-
 [http://apc.kg/img/jpgc/twitter-logo.gif]
 [https://twitter.com/#!/jmeter_plugins Follow us on Twitter]
 

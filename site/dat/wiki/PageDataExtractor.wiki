@@ -22,15 +22,18 @@ Note we didn't want the last value, so we added "server_SRV3_TOTAL_version" in t
 == Console mode ==
 
 If you want to run the script in non GUI mode, you need the set the result format to XML and add the "Save Response Data" option:<BR>
+
 {{{
 jmeter -n -Jjmeter.save.saveservice.response_data=true -t PageDataExtractorExample.jmx -l out.jtl
 }}}
 
-== Cmd Line Tool ==
+== CMDLine Tool ==
 
 You must use the --extractor-regexps parameter for the command line tool and pass as arguments keyRegExp and valueRegExp pairs, all separated by {;}. For instance:
+
 {{{
-java -jar CMDRunner.jar --tool Reporter --generate-png test.png --input-jtl results.jtl --plugin-type PageDataExtractorOverTime --extractor-regexps (serv.*)={;}serv.*=(.*)<BR> --width 800 --height 600
+java -jar CMDRunner.jar --tool Reporter --generate-png test.png --input-jtl results.jtl --width 800 --height 600 \
+  --plugin-type PageDataExtractorOverTime --extractor-regexps (serv.*)={;}serv.*=(.*)
 }}}
 
 == Sample Test Plan ==

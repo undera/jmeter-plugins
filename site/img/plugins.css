@@ -68,6 +68,11 @@ h1, h2, h3, h4
     color: black;
 }
 
+td.footer {
+    border-top: 2px solid #ccc;
+}
+
+/* WIKI */
 table.wiki pre, table.wiki tt {
     background-color: #EEE;
     font-size: 1.2em;
@@ -78,10 +83,26 @@ table.wiki pre {
     padding: 1em;
 }
 
-td.footer {
-    border-top: 2px solid #ccc;
+table.wiki .sidebar {
+    white-space: nowrap;
+    padding-left: 1em;
+    border-left: 2px solid #ccc;
 }
 
+table.wiki .sidebar sup {
+    display: none;
+}
+
+table.wiki .toc-list {
+    margin-bottom: 0.75em;
+    white-space: nowrap;
+    list-style-type: decimal;
+}
+
+table.wiki .toc-list1 {
+    padding-bottom: 1em;
+    border-bottom: 2px dotted #ccc;
+}
 
 /* Plugin Sets */
 .plugins_set {

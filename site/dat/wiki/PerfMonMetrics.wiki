@@ -1,10 +1,5 @@
-#summary List of supported metrics
-#labels Phase-Support
-
-<wiki:toc max_depth=3 />
-
 = Common Considerations =
-!PerfMon Server Agent did support only few metrics in versions up to 0.4.2. 
+PerfMon Server Agent did support only few metrics in versions up to 0.4.2. 
 The old agent still supported in [PerfMon PerfMon Metrics Collector] version 0.5.0+.
 However, version 0.5.0 ships new [PerfMonAgent ServerAgent] which provide over 75 
 separate metrics, support per-process CPU and Memory metrics and even 
@@ -42,23 +37,16 @@ CPU and Memory.
 Some example metric parameter strings: 
 {{{
 ### CPU ###
-
 combined - measure total CPU usage, equals to 100-idle value
-
 core=2:user - measure user process CPU usage for third core in system (core numbering starts at 0)
-
 name=java#2:user - will monitor second java process instance for user time spent
-
 pid=14523:percent - will monitor process with PID 14523 for total CPU usage percentage 
-
 name=httpd - omitting metric type will use default 'percent'
- 
-### Disk IO ###
 
+### Disk IO ###
 fs=/home:writes - will monitor /home filesystem for number of write operations
 
 ### Network IO ###
-
 iface=eth0:tx - will monitor interface eth0 for transmitted packet rate
 }}}
 
@@ -89,7 +77,7 @@ Additional
   * system 
   * user
 
-= Memory Metrics ==
+= Memory Metrics =
 == Total ==
 Primary
   * *usedperc* - relative memory usage in percents
@@ -158,8 +146,10 @@ Since version 0.5.2 Server Agent has ability to monitor some [http://docs.oracle
 values inside Java Virtual Machine. To enable JMX monitoring you must start Java 
 with some special properties enabled, like described [http://docs.oracle.com/javase/6/docs/technotes/guides/management/agent.html here].
 Here's simpliest (and not so secure) options to start Java with JMX enabled:
+
 {{{
-java -Dcom.sun.management.jmxremote.port=4711 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.ssl=false <other options>
+java -Dcom.sun.management.jmxremote.port=4711 -Dcom.sun.management.jmxremote.authenticate=false \
+  -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.ssl=false <other options>
 }}}
 
 By default the Server Agent will try to connect to JMX server at localhost with port 4711. 

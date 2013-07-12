@@ -4,8 +4,7 @@
 
 ==Installation==
 
-*You do not need any root/admin privilege*. You just unzip somewhere on the 
-server the ServerAgent-X.X.X.zip archive contents. Then launch the agent using {{{startAgent.sh}}} script on Unix, or {{{startAgent.bat}}} script on Windows.
+*You do not need any root/admin privilege*. You can just unzip the the ServerAgent-X.X.X.zip somewhere on the server. Then launch the agent using {{{startAgent.sh}}} script on Unix, or {{{startAgent.bat}}} script on Windows.
 
 The agent is written in Java, so you will need JRE 1.4+ to run it. 
 Note you can create yourself the agent package which includes its own JRE 
@@ -76,19 +75,23 @@ connect third-party client app to agent.
 ServerAgent has simple text protocol and can work on UDP and TCP transports. Most of cases will use TCP.
 
 To have your first talk with the agent, start it locally. Then use telnet utility to connect to it:
+
 {{{
 user@ubuntu:~$ telnet localhost 4444
 Trying 127.0.0.1...
 Connected to localhost.
 Escape character is '^]'.
 }}}
+
 If connection has succeeded, you should see "Accepting new TCP connection" message in ServerAgent console log. Type "test" and press Enter in telnet chat, server should answer with short "Yep":
+
 {{{
 test
 Yep
 }}}
 
 Type "exit":
+
 {{{
 exit
 Connection closed by foreign host.
@@ -106,15 +109,18 @@ Possible commands are:
 
 === Specifying Metrics ===
 Metrics list consists of metric specifications, separated by TAB character. Metric collection output consists of float values, TAB separated. Example:
+
 {{{
 metrics-single:cpu<TAB>memory
 22.05736894164194<TAB>57.52359562205553
 }}}
 Each metric specification consists of several fields, colon-separated. Short example:
+
 {{{
 metrics-single:cpu:idle    memory:free
 80.02238388360381    57.52359562205553
 }}}
+
 Fields number is metric-type specific. Possible metric types are:
   * cpu
   * memory
@@ -126,7 +132,9 @@ Fields number is metric-type specific. Possible metric types are:
   * exec
   * jmx
 
-Fields corresponding to each metric type are describer at [PerfMonMetrics metrics] page. Last example (Yep, ServerAgent can be shell exec vulnerability. If you have issue with this, ask me and I'll introduce 'secure' mode, disabling insecure metric types):
+Fields corresponding to each metric type are described at [PerfMonMetrics metrics] page. 
+Last example (Yep, ServerAgent can be shell exec vulnerability. If you have issue with this, ask me and I'll introduce 'secure' mode, disabling insecure metric types):
+
 {{{
 metrics-single:exec:/bin/sh:-c:free | grep Mem | awk '{print $7}'
 1152488

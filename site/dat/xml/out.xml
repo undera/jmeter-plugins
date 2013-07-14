@@ -9,7 +9,7 @@
       class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/"/>
     <url link="downloads" title="Downloads" menu="1" menu_icon="/img/icons/download-icon.png" 
          class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl" start_page="all"
-         files_base="files" download_link="../file">
+         files_base="files" download_link="../file" accept="1">
         <url link="file" files_base="files" class="PWE\Modules\FileDownloads\FileDownloads" accept="2" />
     </url>
     <url link="wiki" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" start_page="Start"

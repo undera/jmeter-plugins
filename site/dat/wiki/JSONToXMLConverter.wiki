@@ -1,14 +1,9 @@
-#labels Sampler
-= JSON to XML Converter<sup><font color=gray size="1">since 1.0.0</font></sup>=
+<div style="float: right" class="plugins_set extraslibs_set">Available in [ExtrasWithLibsSet Extras With Libs Set]</div>
+= JSON to XML Converter<sup><font color=gray size="1"> since 1.0.0</font></sup>=
 
-_This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
+<i>This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
 released as [https://github.com/ATLANTBH/jmeter-components jmeter-components], 
-then merged into JP@GC._
-
-== Installation Notice ==
-
-This plugin requires additional libs to be installed in JMeter's {{{lib}}} directory. See [PluginInstall installation instruction] for details.
-
+then merged into JP@GC.</i>
 
 == Description ==
 

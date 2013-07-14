@@ -128,8 +128,8 @@ table.wiki .toc-list1 {
 }
 
 .extraslibs_set {
-    background-color: #FFD; 
-    border-color: #DDA; 
+    background-color: #FDD; 
+    border-color: #DAA; 
 }
 
 .webdriver_set {
@@ -138,8 +138,8 @@ table.wiki .toc-list1 {
 }
 
 .hadoop_set {
-    background-color: #FDD; 
-    border-color: #DAA; 
+    background-color: #FFD; 
+    border-color: #DDA; 
 }
 
 /* Downloads */

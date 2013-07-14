@@ -25,6 +25,7 @@ will be printed to standard output, informing you on problems gathering metrics
 (logging verbosity regulated with {{{--loglevel parameter}}}).
 
 You can specify the listening ports as arguments (0 disables listening), default is 4444:
+
 {{{
 $ ./startAgent.sh --udp-port 0 --tcp-port 3450
 INFO    2011-11-25 19:02:14.315 [kg.apc.p] (): Binding TCP to 3450
@@ -33,6 +34,7 @@ INFO    2011-11-25 19:02:14.315 [kg.apc.p] (): Binding TCP to 3450
 You can use the {{{--auto-shutdown}}} option when starting the agent to automatically 
 stop it once the test is finished. It is recommended to use this feature only with 
 TCP connections:
+
 {{{
 $ undera@undera-HP:/tmp/serverAgent$ ./startAgent.sh --udp-port 0 --auto-shutdown
 INFO    2011-11-25 19:48:59.321 [kg.apc.p] (): Agent will shutdown when all clients disconnected
@@ -40,6 +42,7 @@ INFO    2011-11-25 19:48:59.424 [kg.apc.p] (): Binding TCP to 4444
 }}}
 
 You can use the {{{--sysinfo}}} option to view available system objects:
+
 {{{
 $ ./startAgent.sh --sysinfo
 INFO    2011-11-25 19:51:25.517 [kg.apc.p] (): *** Logging available processes ***

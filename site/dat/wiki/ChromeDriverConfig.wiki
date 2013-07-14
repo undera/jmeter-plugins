@@ -1,7 +1,5 @@
-#labels Config
+<div style="float: right" class="plugins_set webdriver_set">Available in [WebDriverSet WebDriver Set]</div>
 = Chrome Driver Config<sup><font color=gray size="1">since 1.1.0</font></sup>=
-
-<wiki:toc max_depth="4" />
 
 == Introduction ==
 Add this configuration to enable browser based performance testing using Chrome.  This document covers the various configuration options available on the Chrome browser.  For an overview of performing client sider performance testing, refer to the [WebDriverTutorial Web Driver Tutorial].

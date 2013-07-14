@@ -1,4 +1,4 @@
-#labels Tools
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = JMeterPluginsCMD Command Line Tool <sup><font color=gray size="1">since 0.4.1</font></sup>=
 
 There is small command-line utility for generating graphs out of JTL files. It behave just like right-click context menu on all graphs. The tool can generate PNG, CSV or both.
@@ -10,11 +10,13 @@ The tool requires JMeter 2.4 to function properly (2.3 will work only for PNG ge
 == Usage and Parameters ==
 
 Generating PNG:
+
 {{{
 java -jar CMDRunner.jar --tool Reporter --generate-png test.png --input-jtl results.jtl --plugin-type ResponseTimesOverTime --width 800 --height 600
 }}}
 
 Generating CSV:
+
 {{{
 java -jar CMDRunner.jar --tool Reporter --generate-csv test.csv --input-jtl results.jtl --plugin-type ResponseTimesOverTime
 }}}
@@ -48,20 +50,22 @@ like [SettingsPanel GUI settings] do with optional parameters:
 || {{{--extractor-regexps <regExps list>}}} || list of keyRegExp and valRegExp pairs separated with {;} ||
 
 == Plugin Type Classes ==
+Make note that you need to install corresponding plugins set to have Extras plugins available in CMD.
+
 Most of class names are self-explanatory:
 
-  * !AggregateReport = JMeter's native Aggregate Report, can be saved only as CSV
-  * !ThreadsStateOverTime = Active Threads Over Time
-  * !BytesThroughputOverTime
-  * !HitsPerSecond
-  * !LatenciesOverTime
-  * !PerfMon = [PerfMon] Metrics Collector
-  * !ResponseCodesPerSecond
-  * !ResponseTimesDistribution
-  * !ResponseTimesOverTime
-  * !ResponseTimesPercentiles
-  * !ThroughputOverTime
-  * !ThroughputVsThreads
-  * !TimesVsThreads = Response Times VS Threads
-  * !TransactionsPerSecond
-  * !PageDataExtractorOverTime
+  * AggregateReport = JMeter's native Aggregate Report, can be saved only as CSV
+  * ThreadsStateOverTime = Active Threads Over Time
+  * BytesThroughputOverTime
+  * HitsPerSecond
+  * LatenciesOverTime
+  * PerfMon = [PerfMon] Metrics Collector
+  * ResponseCodesPerSecond
+  * ResponseTimesDistribution
+  * ResponseTimesOverTime
+  * ResponseTimesPercentiles
+  * ThroughputOverTime
+  * ThroughputVsThreads
+  * TimesVsThreads = Response Times VS Threads
+  * TransactionsPerSecond
+  * PageDataExtractorOverTime

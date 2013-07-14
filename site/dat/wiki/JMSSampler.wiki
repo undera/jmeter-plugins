@@ -1,17 +1,13 @@
-#labels Class,Sampler
+<div style="float: right" class="plugins_set extraslibs_set">Available in [ExtrasWithLibsSet Extras With Libs Set]</div>
 = JMS Send and Receive Sampler <sup><font color=gray size="1">since 1.0.0</font></sup>=
 
-_This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
+<i>This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
 released as [https://github.com/ATLANTBH/jmeter-components jmeter-components], 
-then merged into JP@GC._
-
-== Installation Notice ==
-
-This plugin requires additional libs to be installed in JMeter's {{{lib}}} directory. See [PluginInstall installation instruction] for details.
+then merged into JP@GC.</i>
 
 == Description ==
 
-If you are using JMS (Java Message Service) to send and receive messages between two or more clients, we have created a sampler which enables you to send and receive messages. It is incorporated into the Java request sampler, to use this sampler choose from the classname dropdown list: com.atlantbh.jmeter.plugins.jmstools.JMSUtil.
+If you are using JMS (Java Message Service) to send and receive messages between two or more clients, we have created a sampler which enables you to send and receive messages. It is incorporated into the Java request sampler, to use this sampler choose from the classname dropdown list: {{{com.atlantbh.jmeter.plugins.jmstools.JMSUtil}}}.
 
 To send or receive a message the following needs to specified:
   * connection URL

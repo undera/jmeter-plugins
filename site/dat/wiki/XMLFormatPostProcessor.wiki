@@ -1,9 +1,9 @@
-#labels PostProcessor
+<div style="float: right" class="plugins_set extras_set">Available in [ExtrasSet Extras Set]</div>
 = XML Format Post Processor <sup><font color=gray size="1">since 1.0.0</font></sup>=
 
-_This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
+<i>This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
 released as [https://github.com/ATLANTBH/jmeter-components jmeter-components], 
-then merged into JP@GC._
+then merged into JP@GC.</i>
 
 Jmeter response for xml is not formatted, the xml format post processor provides you the possibility to have your responses formatted.
 This post processor should be added at the begin of your test, which will format all your xml’s returned in your test.

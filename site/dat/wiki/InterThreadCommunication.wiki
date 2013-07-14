@@ -1,4 +1,4 @@
-#labels PreProcessor,PostProcessor,Functions
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Inter-Thread Communication <sup><font color=gray size="1">since 0.5.2</font></sup>=
 
 JP@GC offers global string queues for inter-thread communication. These queues
@@ -8,7 +8,7 @@ This allows you having separate Thread Groups with some synchronization
 and parameter passing between them. 
 There may be any number of FIFOs and they differ by "queue name".
 
-== !PostProcessor & !PreProcessor ==
+== PostProcessor & PreProcessor ==
 
 Inter-thread communication plugins usually attached as a child of samplers that 
 provide or utilize data transmission. Download 
@@ -61,9 +61,9 @@ ${__fifoPop(sync_tokens, gotToken)}
 
 == Note on Clearing Queues==
 === For Plugins ===
-!PreProcessor and !PostProcessor clear queues at test start and test stop.
+PreProcessor and PostProcessor clear queues at test start and test stop.
 
-=== For Functions ==
+=== For Functions ===
 When you stop JMeter test, queues are not cleared
 automatically (if you haven't used Pre/PostProcessors), 
 so when starting new test you may have some values from previous 

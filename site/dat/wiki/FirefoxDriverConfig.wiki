@@ -1,9 +1,5 @@
-#labels Config
+<div style="float: right" class="plugins_set webdriver_set">Available in [WebDriverSet WebDriver Set]</div>
 = Firefox Driver Config<sup><font color=gray size="1">since 1.1.0</font></sup>=
-
-<g:plusone size="medium"></g:plusone>
-
-<wiki:toc max_depth="4" />
 
 == Introduction ==
 Add this configuration to enable browser based performance testing using Firefox.  This document covers the various configuration options available on the Firefox browser.  For an overview of performing client sider performance testing, refer to the [WebDriverTutorial Web Driver Tutorial].  
@@ -53,7 +49,7 @@ Specify the name/IP Address of the SOCKS proxy server and its associated port to
 This is a comma separated list of all host(s) and/or IP Address(es) that will bypass the proxy server.
 
 === Automatic proxy configuration URL ===
-For networks that have a proxy configuration server (PAC), and its name and the location of the PAC file is known, please use this option.  The usual configuration for this is http://proxy-server/proxy.pac
+For networks that have a proxy configuration server (PAC), and its name and the location of the PAC file is known, please use this option.  The usual configuration for this is {{{http://proxy-server/proxy.pac}}}
 
 == Firefox ==
 This tab is intentionally left empty.  As more features get added, this tab will contain customisations specific to the Firefox browser instance used for the tests.  See the [Roadmap] document for future plans.

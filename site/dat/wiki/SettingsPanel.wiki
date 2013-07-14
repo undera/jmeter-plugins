@@ -1,8 +1,6 @@
 #labels Graph,Configuration
 =Customizing Graphs Plugins=
 
-<wiki:toc max_depth="3" />
-
 ==Filtering Samples==
 
 You may ignore results by sampler names, setting Include/Exclude criteria
@@ -37,7 +35,7 @@ A preview panel will show in real time the impact of the changes.
 By default, the Graphs plugins are aggregating the values received by JMeter for intervals of 500 ms or 1 sec. You can change this default value for a bigger one if you plan to have long test runs. It will result in less memory used, lesser points in the Graphs. The drawback is you will loose some granularity as this option has impact on the metrics collected. It is recommended to use instead the [SettingsPanel#Limit_number_of_points_in_row Limit number of points] option, except if you have real memory problems because of huge tests. This option will be saved in the test plan.
 
 || *Normal display* || *Run of the same test with bigger grouping value* ||
-|| [/img/wiki/settings/normal2.png] || [http://jmeter-plugins.googlecode.com/svn-history/wiki/img/settings/limit_nb_points.png] ||
+|| [/img/wiki/settings/normal2.png] || [/img/wiki/settings/limit_nb_points.png] ||
 
 === Standard / Aggregate Display ===
 
@@ -48,14 +46,14 @@ all the values and display a single row. Note you can switch in real time betwee
 This option is saved in the test plan.
 
 || *Standard display* || *Aggregate display* ||
-|| [/img/wiki/settings/normal.png] || [http://jmeter-plugins.googlecode.com/svn-history/wiki/img/settings/aggregated.png] ||
+|| [/img/wiki/settings/normal.png] || [/img/wiki/settings/aggregated.png] ||
 
 === Relative Time ===
 
 This option will display time based graphs X axis relative to the test start time.
 
 || *Standard time* || *Relative time* ||
-|| [/img/wiki/settings/noRelative.png] || [http://jmeter-plugins.googlecode.com/svn-history/wiki/img/settings/relative.png] ||
+|| [/img/wiki/settings/noRelative.png] || [/img/wiki/settings/relative.png] ||
 
 ===Rendering Options===
 Some of these options can be set globally using the user.properties file as described in the [PluginInstall installation procedure].<br>
@@ -65,7 +63,7 @@ You can change them dynamically during the test, they will not be saved in the t
 Enable or disable the gradient paint as background of the chart. It may be useful to remove it if you plan to print the chart.
 
 || *Gradient enabled* || *Gradient disabled* ||
-|| [/img/wiki/settings/normal.png] || [http://jmeter-plugins.googlecode.com/svn-history/wiki/img/settings/no_gradient.png] ||
+|| [/img/wiki/settings/normal.png] || [/img/wiki/settings/no_gradient.png] ||
 
 ====Draw Zeroing Lines====
 This option draw at the beginning and at the end of each row a vertical
@@ -73,7 +71,7 @@ line from the point to the horizontal axis. It can be nice for the thread
 state over time graph for instance.
 
 || *Without Final zeroing lines* || *With Final zeroing lines* ||
-|| [/img/wiki/settings/normal.png] || [http://jmeter-plugins.googlecode.com/svn-history/wiki/img/settings/final_zeroing_lines.png] ||
+|| [/img/wiki/settings/normal.png] || [/img/wiki/settings/final_zeroing_lines.png] ||
 
 ====Draw Current X Line====
 This option will draw a vertical line to show which value is updated in the chart. This can be used for non time based Graphs, such as Response time vs Threads:
@@ -85,7 +83,7 @@ This option will draw a vertical line to show which value is updated in the char
 This is the most helpful option. It will dynamically reduce the number of points of the rows for better readability. You just specify how many maximum points can be displayed, and the chart will adapt itself. *This can be enabled/disable in real time, with no impact on the metrics collected*.
 
 || *Normal display* || *Display with limit number of point enabled* ||
-|| [/img/wiki/settings/normal2.png] || [http://jmeter-plugins.googlecode.com/svn-history/wiki/img/settings/limit_nb_points.png] ||
+|| [/img/wiki/settings/normal2.png] || [/img/wiki/settings/limit_nb_points.png] ||
 
 ====Prevent X Axis Range to Adapt to Outliers====
 
@@ -97,7 +95,7 @@ and all other ones become difficult to see. By selecting this option,
 these kind of values will be ignored when drawing the graph.
 
 || *Normal display* || *With option to prevent outliers* ||
-|| [/img/wiki/settings/outliers.png] || [http://jmeter-plugins.googlecode.com/svn-history/wiki/img/settings/outliers_fixed.png] ||
+|| [/img/wiki/settings/outliers.png] || [/img/wiki/settings/outliers_fixed.png] ||
 
 ====Hide Non-representative Points====
 

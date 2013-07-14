@@ -1,9 +1,9 @@
-#labels Sampler
+<div style="float: right" class="plugins_set extraslibs_set">Available in [ExtrasWithLibsSet Extras With Libs Set]</div>
 = REST Sampler <sup><font color=gray size="1">since 1.0.0</font></sup>=
 
-_This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
+<i>This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
 released as [https://github.com/ATLANTBH/jmeter-components jmeter-components], 
-then merged into JP@GC._
+then merged into JP@GC.</i>
 
 As there is a trend on creating Web Services based on REST as it is easier to build and consume than using SOAP-services.
 

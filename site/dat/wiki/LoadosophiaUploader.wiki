@@ -1,4 +1,4 @@
-#labels Featured
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Loadosophia.org Uploader <sup><font color=gray size="1">since 0.4.2</font></sup>=
 
 This is special plugin in for uploading results to 
@@ -6,10 +6,6 @@ This is special plugin in for uploading results to
 immediately after test end. 
 
 [/img/wiki/loadosophia_uploader.png]
-
-== Installation Notice ==
-
-This plugin requires additional libs to be installed in JMeter's {{{lib}}} directory. See [PluginInstall installation instruction] for details.
 
 ==Fields==
 

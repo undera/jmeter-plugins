@@ -1,4 +1,4 @@
-#labels Listener
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Console Status Logger <sup><font color=gray size="1">since 0.4.1</font></sup>=
 
 
@@ -15,3 +15,5 @@ Example info:
 #2  Threads: 4500/5000      Samples: 130    Latency: 51     Resp.Time: 51   Errors: 0%
 #3  Threads: 5000/5000      Samples: 153    Latency: 81     Resp.Time: 81   Errors: 0%
 }}}
+
+TODO: add screenshot

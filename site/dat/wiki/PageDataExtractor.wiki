@@ -1,3 +1,4 @@
+<div style="float: right" class="plugins_set extras_set">Available in [ExtrasSet Extras Set]</div>
 = Page Data Extractor <sup><font color=gray size="1">since 0.5.3</font></sup>=
 
 This graph will plot data extracted from page results (status, health pages, etc.).<BR>
@@ -17,7 +18,7 @@ Use the following regular expression and run the test:
 
 [/img/wiki/PageDataExtractor.png]
 
-Note we didn't want the last value, so we added "server_SRV3_TOTAL_version" in the "exclude label" field of Row Panel.
+Note we didn't want the last value, so we added {{{server_SRV3_TOTAL_version}}} in the "exclude label" field of Row Panel.
 
 == Console mode ==
 
@@ -29,7 +30,7 @@ jmeter -n -Jjmeter.save.saveservice.response_data=true -t PageDataExtractorExamp
 
 == CMDLine Tool ==
 
-You must use the --extractor-regexps parameter for the command line tool and pass as arguments keyRegExp and valueRegExp pairs, all separated by {;}. For instance:
+You must use the {{{--extractor-regexps}}} parameter for the command line tool and pass as arguments keyRegExp and valueRegExp pairs, all separated by {;}. For instance:
 
 {{{
 java -jar CMDRunner.jar --tool Reporter --generate-png test.png --input-jtl results.jtl --width 800 --height 600 \

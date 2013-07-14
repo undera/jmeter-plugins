@@ -30,10 +30,6 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
   * [InterThreadCommunication Inter-Thread Communication]
   * [Functions Custom JMeter Functions] 
-  * [ParameterizedController Parameterized Controller] to re-use test plan modules
-  * [VariablesFromCSV Variables from CSV] configuration item
-  * [RawDataSource Raw Data Source]
-  * [LockFile Lock Files]
 
 === Samplers ===
   * [DummySampler Dummy Sampler] for debugging and programming tests
@@ -62,7 +58,11 @@ Additional plugins for extended and complex testing. Does not require additional
   * [RawRequest HTTP Raw Request]
 
 === Others ===
+  * [VariablesFromCSV Variables from CSV] configuration item
+  * [ParameterizedController Parameterized Controller] to re-use test plan modules
+  * [RawDataSource Raw Data Source]
   * [XMLFormatPostProcessor XML Format PostProcessor]
+  * [LockFile Lock Files]
 </td>
 </tr><tr>
 <td class="plugins_set extraslibs_set">
@@ -85,8 +85,10 @@ Additional plugins that _do require_ additional libs to run.
 == WebDriver Set ==
 Selenium/WebDriver testing ability.
 
-  * [WebDriverSampler] Web Driver Sampler for full browser tests [/img/icons/new_wog.gif]
-  * fixme: put here all WebDriver plugins
+  * [WebDriverSampler WebDriver Sampler] for full browser tests [/img/icons/new_wog.gif]
+  * [AndroidDriverConfig]
+  * [ChromeDriverConfig]
+  * [FirefoxDriverConfig]
 
 </td>
 </tr><tr>
@@ -107,7 +109,6 @@ Hadoop/HBase testing plugins.
   * [DeveloperGuide]
   * [BuildingFromSource]
   * [PluginsGuiGuidelines]
-  * [WritingPlugins]
   * [Roadmap] and [Changelog]
   * Code Coverage Reports
   * [Contributors Contibutors List] - write down yourself, if you took your part

@@ -1,4 +1,4 @@
-#labels Timer
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Throughput Shaping Timer <sup><font color=gray size="1">since 0.4.1</font></sup>=
 
 Long time JMeter users had to try their tests on and on,
@@ -59,5 +59,4 @@ Duration value in every function may be specified with shorthand case-insensitiv
 
 Duration setting may be combined like _1d11h23m6s_.
 
-Example of load profile string:
-  _load_profile=const(10,10s) line(10,100,1m) step(5,25,5,1h)_
+Example of load profile string: {{{load_profile=const(10,10s) line(10,100,1m) step(5,25,5,1h)}}}

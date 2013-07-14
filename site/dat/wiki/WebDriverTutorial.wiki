@@ -1,9 +1,5 @@
 = Web Driver Tutorial<sup><font color=gray size="1">since 1.1.0</font></sup>=
-
-<g:plusone size="medium"></g:plusone>
-
-<wiki:toc max_depth="3" />
-
+  
 == Introduction ==
 Web Driver Sampler automates the execution and collection of Performance metrics on the Browser (client-side). A large part of performance testing, up to this point, has been on the server side of things.  However, with the advancement of technology, HTML5, JS and CSS improvements, more and more logic and behaviour have been pushed down to the client. This adds to the overall perceived performance of website/webapp, but this metric is not available in JMeter. Things that add to the overall browser execution time may include:
 

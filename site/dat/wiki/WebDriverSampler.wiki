@@ -1,7 +1,5 @@
-#labels Sampler
+<div style="float: right" class="plugins_set webdriver_set">Available in [WebDriverSet WebDriver Set]</div>
 = Web Driver Sampler <sup><font color=gray size="1">since 1.1.0</font></sup>=
-
-<wiki:toc max_depth="4" />
 
 == Introduction ==
 Unlike most Samplers, the Web Driver Sampler provides the reader with an empty editor field, much like a blank canvas.  Do not be dismayed, as with great responsibility comes great power! This wiki will document what each of these fields does, and will also detail some of the common use cases that the scripter may have. If the reader has not yet done so, it is *highly recommended* that they quickly go over the [WebDriverTutorial 2 minute tutorial] before continuing on with this section.
@@ -84,10 +82,10 @@ The `WDS.log` object is just a reference to the `Apache Logger` instance, and al
 Whenever strings are specified in the `Parameters` field, they are automatically split by the space character and made available as an `args` array.  Furthermore, the args string is trimmed to minimise scripting errors. It is also possible to pass in JMeter variables to the Script context. The table below should illustrate this:
 
 || JMeter Variable || Parameter || WDS.parameter || WDS.args.length || WDS.args ||
-|| _(None)_ || _(None)_ || '' || 0 || `[ ]` ||
-|| _(None)_ || hello || 'hello' || 1 || ['hello'] ||
-|| _(None)_ || hello jmeter || 'hello jmeter' || 2 || ['hello', 'jmeter'] ||
-|| suffix='plugins' || hello jmeter ${suffix} || 'hello jmeter plugins' || 3 || ['hello', 'jmeter', 'plugins'] ||
+|| _(None)_ || _(None)_ || '' || 0 || {{{[ ]}}} ||
+|| _(None)_ || hello || 'hello' || 1 || {{{['hello']}}} ||
+|| _(None)_ || hello jmeter || 'hello jmeter' || 2 || {{{['hello', 'jmeter']}}} ||
+|| suffix='plugins' || hello jmeter ${suffix} || 'hello jmeter plugins' || 3 || {{{['hello', 'jmeter', 'plugins']}}} ||
 
 Declaring JMeter variables is outside the scope of this document.  Rather the scripter should refer to the [http://jmeter.apache.org/usermanual/ comprehensive documentation] on the JMeter website.
 

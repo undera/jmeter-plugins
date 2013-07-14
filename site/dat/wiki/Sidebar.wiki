@@ -7,4 +7,9 @@
 
 [/img/icons/donate_paypal.gif] *[/donations/ Support the project with donation]*
 
+<br/>
+
+<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+<div class="yashare-auto-init" data-yashareL10n="en"  data-yashareType="button" data-yashareQuickServices="facebook,twitter,gplus"></div> 
+
 </div>

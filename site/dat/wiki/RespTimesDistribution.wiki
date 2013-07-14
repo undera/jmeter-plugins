@@ -1,4 +1,4 @@
-#labels Listener,Graph
+<div style="float: right" class="plugins_set extras_set">Available in [ExtrasSet Extras Set]</div>
 = Response Times Distribution <sup><font color=gray size="1">since 0.4.0</font></sup>=
 
 This graph will display the response time distribution of the test. The X axis shows the response times grouped by interval, and the Y axis the number of samples which are contained in each interval.

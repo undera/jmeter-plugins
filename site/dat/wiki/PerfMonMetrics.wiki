@@ -35,6 +35,7 @@ Make note that metric types are different for per-process and total metrics for
 CPU and Memory. 
 
 Some example metric parameter strings: 
+
 {{{
 ### CPU ###
 combined - measure total CPU usage, equals to 100-idle value
@@ -169,6 +170,7 @@ Available JMX metric types:
   * compile-time - time spent in compilation, milliseconds ([http://docs.oracle.com/javase/6/docs/api/java/lang/management/CompilationMXBean.html#getTotalCompilationTime() used method])
 
 Examples:
+
 {{{
 gc-time - monitor GC time at localhost:4711
 memory-usage:url=somehost.com\:4715 - use alternative hostname/password
@@ -217,11 +219,13 @@ to run complex sequences of parameterized calls.
 
 Example1: Monitoring Linux _cached_ memory size (unavailable via SIGAR lib in default metrics), 
 used _free_ utility output:
+
 {{{
 /bin/sh:-c:free | grep Mem | awk '{print $7}'
 }}}
 
 Example2: Monitoring MySQL _select_ query count:
+
 {{{
 /bin/sh:-c:echo "show global status like 'Com_select'" | mysql -u root | awk ' $1 =="Com_select" {print $2}'
 }}}
@@ -230,6 +234,7 @@ Example2: Monitoring MySQL _select_ query count:
 Another way to collect cutom metrics is to read lines off the end of the file.
 Metric parameter for tail type is path to file to read. Lines added to file must 
 contain single numeric metric. Example: 
+
 {{{
 123
 342

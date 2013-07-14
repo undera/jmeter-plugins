@@ -1,13 +1,9 @@
-#labels Config
+<div style="float: right" class="plugins_set hadoop_set">Available in [HadoopSet Hadoop Set]</div>
 = HBase Connection Config<sup><font color=gray size="1">since 1.0.0</font></sup>=
 
-_This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
+<i>This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
 released as [https://github.com/ATLANTBH/jmeter-components jmeter-components], 
-then merged into JP@GC._
-
-== Installation Notice ==
-
-This plugin requires additional libs to be installed in JMeter's {{{lib}}} directory. See [PluginInstall installation instruction] for details.
+then merged into JP@GC.</i>
 
 == Description ==
 

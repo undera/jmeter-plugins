@@ -1,11 +1,11 @@
 #labels Phase-Requirements,Phase-Design,Featured
 = Next Version =
  
-== Future Plans ==
+  * Maintenance release, changing homepage and distribution archives
 
-Planning for future versions:
+= Ideas for Future Versions =
 
-  * Graph plugins
+==Graph plugins==
     * disable legend at rows and settings tabs
     * smart grid lines for timeline charts - on minutes, hours, 10s, 5s...
     * Turn all !OverTime graphs into one universal graph?, the same for distribution and pivot?
@@ -13,12 +13,13 @@ Planning for future versions:
     * RPS vs Response Time graph ($10 bounty for implementing it)
     * Possibility to filter data for time period
     * allow using regexps in rows filtering on post-test file loading, or CMD
-  * Distributed testing
+
+==Distributed testing==
     * Config Plugin (or maybe listener accepting distr test online status): Distributed Test Control Panel ($50-$75 bounty for implementing it)
     * custom thread groups reporting machinename in distributed mode automatically
-  * FFW
+==FFW==
     * use opened files pool in Flexible File Writer and provide dynamic file selection - the same for Raw Data Source?
-  * Web Driver Plugins
+==Web Driver Plugins==
     * Enhance Web Driver Sampler by providing a Web Driver Defaults config so that default JS code/functions can be declared and shared between Samplers. (Issue 273)
     * Support Mac accelerator keys on Web Driver Sampler editor.  (Issue 272)
     * Include more options in the GUI for configuring Web Driver instances as documented on the [https://code.google.com/p/selenium/wiki/DesiredCapabilities Selenium website]. (Issue 275)
@@ -29,10 +30,10 @@ Planning for future versions:
     * Write data collected from W3C Timings in the [http://www.softwareishard.com/blog/har-12-spec/ HAR file format]. (Issue 280)
     * Provide support for sampling IE browser (Issue 276)
     * Provide support for sampling Opera browser (Issue 282)
-  * Other    
+==Other==    
     * Find a way to compare 2 runs
     * implement functions iif, base64 ($5 bounty for implementing it)
-    * one more [Autostop] criteria: when reached desired number of samples, duration criteria
+    * one more [AutoStop] criteria: when reached desired number of samples, duration criteria
     * random CSV data set [http://sqa.stackexchange.com/questions/3115/getting-a-random-line-from-a-file-with-jmeter?atw=1 a need] ($25 bounty for implementing it)
     * a way to specify Composite config in CMD tool
     * add "Default value" field for JSONPathExtractor

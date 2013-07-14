@@ -6,7 +6,7 @@
 
 <download:JMeterPlugins-Extras-1.1.1.zip;Extras Set>
 
-<download:JMeterPlugins-Extras-Libs-1.1.1.zip;Extras with Libs Set>
+<download:JMeterPlugins-ExtrasLibs-1.1.1.zip;Extras with Libs Set>
 
 <download:JMeterPlugins-WebDriver-1.1.1.zip;WebDriver Set>
 

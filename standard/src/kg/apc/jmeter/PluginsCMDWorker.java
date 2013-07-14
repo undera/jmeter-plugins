@@ -3,7 +3,7 @@ package kg.apc.jmeter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.Properties;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.cmd.UniversalRunner;
@@ -28,7 +28,7 @@ public class PluginsCMDWorker {
     private String inputFile;
     private String outputCSV;
     private String outputPNG;
-    private String pluginType;
+    private AbstractGraphPanelVisualizer pluginType;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int aggregate = -1;
     private int zeroing = -1;
@@ -43,7 +43,6 @@ public class PluginsCMDWorker {
     private float lineWeight = -1;
     private String includeLabels = "";
     private String excludeLabels = "";
-    private ArrayList<Object> cmdRegExps = null;
     private int successFilter = -1;
 
     public PluginsCMDWorker() {
@@ -167,7 +166,7 @@ public class PluginsCMDWorker {
     }
 
     public void setPluginType(String string) {
-        pluginType = string;
+        pluginType = getGUIObject(string);
     }
 
     private void checkParams() {
@@ -200,12 +199,12 @@ public class PluginsCMDWorker {
     public int doJob() {
         checkParams();
 
-        AbstractGraphPanelVisualizer gui = getGUIObject(pluginType);
+        AbstractGraphPanelVisualizer pluginInstance = pluginType;
 
-        setOptions(gui);
+        setOptions(pluginInstance);
 
         CorrectedResultCollector rc;
-        rc = (CorrectedResultCollector) gui.createTestElement();
+        rc = (CorrectedResultCollector) pluginInstance.createTestElement();
         rc.setExcludeLabels(excludeLabels);
         rc.setIncludeLabels(includeLabels);
 
@@ -216,26 +215,23 @@ public class PluginsCMDWorker {
 
         log.debug("Using JTL file: " + inputFile);
         rc.setFilename(inputFile);
-        rc.setListener(gui);
+        rc.setListener(pluginInstance);
 
-        gui.configure(rc);
+        pluginInstance.configure(rc);
 
         //rc.testStarted();
         rc.loadExistingFile();
         //rc.testEnded();
 
         // to handle issue 64 and since it must be cheap - set options again
-        setOptions(gui);
-
-
-
+        setOptions(pluginInstance);
 
         if ((exportMode & EXPORT_PNG) == EXPORT_PNG) {
             File pngFile = new File(outputPNG);
             forceDir(pngFile);
 
             try {
-                gui.getGraphPanelChart().saveGraphToPNG(pngFile, graphWidth, graphHeight);
+                pluginInstance.getGraphPanelChart().saveGraphToPNG(pngFile, graphWidth, graphHeight);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -246,7 +242,7 @@ public class PluginsCMDWorker {
             forceDir(csvFile);
 
             try {
-                gui.getGraphPanelChart().saveGraphToCSV(csvFile);
+                pluginInstance.getGraphPanelChart().saveGraphToCSV(csvFile);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -318,14 +314,7 @@ public class PluginsCMDWorker {
         if (autoScaleRows >= 0) {
             graph.getChartSettings().setExpendRows(autoScaleRows > 0);
         }
-        
-        /* TODO: fix this feature loss
-        if (cmdRegExps != null) {
-            if (gui instanceof PageDataExtractorOverTimeGui) {
-                ((PageDataExtractorOverTimeGui) gui).setCmdRegExps(cmdRegExps);
-            }
-        }
-        */
+
     }
 
     public void setAggregate(int logicValue) {
@@ -380,10 +369,6 @@ public class PluginsCMDWorker {
         lineWeight = parseInt;
     }
 
-    public void setCmdRegExps(ArrayList<Object> cmdRegExps) {
-        this.cmdRegExps = cmdRegExps;
-    }
-
     public void setSuccessFilter(int logicValue) {
         successFilter = logicValue;
     }
@@ -424,5 +409,14 @@ public class PluginsCMDWorker {
             }
         }
         throw new Error("Failed to find JMeter home dir from classpath");
+    }
+
+    public void processUnknownOption(String nextArg, ListIterator args) {
+        if (pluginType != null && pluginType instanceof CMDLineArgumentsProcessor) {
+            CMDLineArgumentsProcessor obj = (CMDLineArgumentsProcessor) pluginType;
+            obj.processCMDOption(nextArg, args);
+        }
+
+        throw new UnsupportedOperationException("Unrecognized option: " + nextArg);
     }
 }

@@ -76,4 +76,19 @@ public class ReporterToolTest {
             FilesTestTools.compareFiles(new File(basedir + "/issue96.semicolon.txt"), f);
         }
     }
+    
+      @Test
+    public void testProcessParams_Extracted() throws IOException {
+        System.out.println("processParams outliers");
+        File f = File.createTempFile("test", ".csv");
+        String str =
+                "--plugin-type PageDataExtractorOverTime  "
+                + "--hide-low-counts 5 "
+                + "--generate-csv " + f.getAbsolutePath() + " "
+                + "--input-jtl " + basedir + "/issue96.jtl";
+        String[] args = str.split(" +");
+        ReporterTool instance = new ReporterTool();
+        int result = instance.processParams(PluginsCMD.argsArrayToListIterator(args));
+        assertEquals(0, result);
+    }
 }

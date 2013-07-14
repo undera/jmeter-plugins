@@ -9,10 +9,6 @@ import org.apache.jmeter.util.JMeterUtils;
 import static org.junit.Assert.*;
 import org.junit.*;
 
-/**
- *
- * @author undera
- */
 public class ReporterToolTest {
 
     private final String basedir;

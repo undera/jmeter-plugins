@@ -1,10 +1,10 @@
 <div style='white-space: nowrap'>
-[http://apc.kg/img/jpgc/twitter-logo.gif]
+[/img/icons/twitter-logo.gif]
 [https://twitter.com/#!/jmeter_plugins Follow us on Twitter]
 
-[http://apc.kg/img/jpgc/chart-bar-icon.png]
+[/img/icons/chart-bar-icon.png]
 [http://loadosophia.org/?utm_source=jpgc&utm_medium=link&utm_campaign=sidebar Analyze your test results online]
 
-[http://apc.kg/img/jpgc/donate_paypal.gif] *[/donations/ Support the project with donation]*
+[/img/icons/donate_paypal.gif] *[/donations/ Support the project with donation]*
 
 </div>

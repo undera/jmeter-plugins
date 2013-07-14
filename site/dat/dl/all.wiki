@@ -55,4 +55,6 @@
 
 =Developer Snapshots=
 
+Developer builds are uploaded nightly, in case of stable build. Use at your own risk.
+
 <downloads-dir:nightly>

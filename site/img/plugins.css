@@ -165,8 +165,12 @@ table.wiki .toc-list1 {
     font-size: larger;
 }
 
-.file_download .filesize, .filedate {
+.file_download .filesize, .file_download .filedate {
     color: gray;
     font-weight: bold;
 }
 
+.file_download .count {
+    color: gray;
+  float:right;
+}

@@ -2,7 +2,7 @@
 Everyone who provided pull request or other contribution, deserves mentioning on this page.
 
 == Committers ==
-  * Andrey Pohilko - project founder, wrote many plugins
+  * Andrey Pohilko [http://about.me/undera] - project founder, wrote many plugins
   * Stephane Hoblingre - implemented first [PerfMon] version, added rich graphs settings, wrote many plugins
   * Cheen-Pin Lim - added [WebDriverSet WebDriver] testing ability
 

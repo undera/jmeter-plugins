@@ -1,0 +1,15 @@
+<div style='white-space: nowrap'>
+[/img/icons/twitter-logo.gif]
+[https://twitter.com/#!/jmeter_plugins Follow us on Twitter]
+
+[/img/icons/chart-bar-icon.png]
+[http://loadosophia.org/?utm_source=jpgc&utm_medium=link&utm_campaign=sidebar Analyze your test results online]
+
+[/img/icons/donate_paypal.gif] *[/donations/ Support the project with donation]*
+
+<br/>
+
+<script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+<div class="yashare-auto-init" data-yashareL10n="en"  data-yashareType="button" data-yashareQuickServices="facebook,twitter,gplus"></div> 
+
+</div>

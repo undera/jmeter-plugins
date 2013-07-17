@@ -1,9 +1,0 @@
-#labels Listener,Graph,Deprecated
-= Total Transactions Per Second <sup><font color=gray size="1">since 0.3.0</font></sup> / <sup><font color=red size="1">deprecated since 0.4.0</font></sup>=
-
-This graph shows the total number of successful and failed transactions per second.
-It counts for each seconds the number of finished transactions.
-
-Example graph:
-
-[http://jmeter-plugins.googlecode.com/svn-history/wiki/img/total_transactions_per_seconds.png]

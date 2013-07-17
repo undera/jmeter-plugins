@@ -2,9 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>kg.apc</groupId>
+    <parent>
+        <groupId>kg.apc</groupId>
+        <artifactId>jmeter-plugins</artifactId>
+        <version>1.1.1</version>
+    </parent>
     <artifactId>jmeter-plugins-webdriver</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>JMeter Plugins - WebDriver Set</name>
@@ -25,6 +28,9 @@
     <developers>
         <developer>
             <email>apc@apc.kg</email>
+        </developer>
+        <developer>
+            <email>cheenpin.lim@gmail.com</email>
         </developer>
     </developers>
     <distributionManagement>        

@@ -1,0 +1,10 @@
+<div style="float: right" class="plugins_set extras_set">Available in [ExtrasSet Extras Set]</div>
+= Response Times vs Threads <sup><font color=gray size="1">since 0.0.1</font></sup>=
+
+[/img/icons/warning.gif] <font color="brown"><b>Don't forget to [PluginInstall#Configuration set up saving thread counts] when running in non-GUI mode!</b></font>
+
+This graph shows how Response Time changes with amount of parallel threads. Naturally, server takes longer to respond when a lot of users requests it simultaneously. This graph visualizes such dependencies.
+
+Example graph:
+
+[/img/wiki/timevsthreads.png]

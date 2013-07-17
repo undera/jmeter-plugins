@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.swing.*;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -39,7 +41,7 @@ public class JMXMonGui
         String.class, String.class, String.class, String.class, String.class, String.class, Boolean.class
     };
     private static Object[] defaultValues = new Object[]{
-        "", "", "",  "", "", "", false
+        "", "", "", "", "", "", false
     };
 
     public JMXMonGui() {
@@ -58,6 +60,15 @@ public class JMXMonGui
                 | JSettingsPanel.RELATIVE_TIME_OPTION
                 | JSettingsPanel.AUTO_EXPAND_OPTION
                 | JSettingsPanel.MARKERS_OPTION_DISABLED);
+    }
+    //do not insert this vizualiser in any JMeter menu
+    private Collection<String> emptyCollection = new ArrayList<String>();
+
+    // Andrey: it must stay hidden until
+    // Unit tests fixed and wiki page added
+    @Override
+    public Collection<String> getMenuCategories() {
+        return emptyCollection;
     }
 
     @Override
@@ -209,7 +220,7 @@ public class JMXMonGui
     @Override
     public void add(SampleResult res) {
         if (res.isSuccessful()) {
-            if(isSampleIncluded(res)) {
+            if (isSampleIncluded(res)) {
                 super.add(res);
                 addJmxMonRecord(res.getSampleLabel(), normalizeTime(res.getStartTime()), JMXMonSampleResult.getValue(res));
                 updateGui(null);

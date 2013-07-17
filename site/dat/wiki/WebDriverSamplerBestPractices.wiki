@@ -1,0 +1,16 @@
+#labels Deprecated
+= Web Driver Sampler Best Practices =
+This document captures some of the more common setup and configuration when using Web Driver Samplers in your client side performance tests.
+
+== Keep the Samplers focused ==
+The Web Driver Sampler do allow the scripter a lot of flexibility and control over what can be achieved within this sampler. However, it is recommended that the scripter keep to a single task within each sampler, so that the timing can be captured within each Sampler.  Assuming the following are the sequence of tasks:
+
+  # Go to a URL
+  # Edit an item
+  # Save an item
+  # Load a list of items
+
+It would be advisable to use a *separate* Web Driver Sampler for each of the tasks above. This has several advantages:
+
+  # Each of the tasks above will have a name and its metrics can be captured and aggregated by JMeter
+  # Problems/performance regressions with any one of those tasks is visible and easily diagnosed (especially if the performance tests are a part of CI)

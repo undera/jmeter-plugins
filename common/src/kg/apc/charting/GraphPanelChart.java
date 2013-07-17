@@ -75,7 +75,7 @@ public class GraphPanelChart
     CSplineRowPlotter cSplineRowPlotter = null;
     AbstractRowPlotter currentPlotter = null;
     JPopupMenu popup = new JPopupMenu();
-    private static final String AD_TEXT = "http://apc.kg/plugins";
+    private static final String AD_TEXT = "jmeter-plugins.org";
     private static final String NO_SAMPLES = "Waiting for samples...";
     private static final int spacing = 5;
     private static final int previewInset = 4;

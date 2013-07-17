@@ -1,0 +1,117 @@
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
+= Custom JMeter Functions =
+
+In addition to standard [http://jakarta.apache.org/jmeter/usermanual/functions.html JMeter functions] we provide:
+
+== chooseRandom<sup><font color=gray size="1">since 1.0.1</font></sup> ==
+
+This function choose single random value from the list of its arguments. The 
+last argument is not taken into choice, it is interpreted as variable name
+to store the result.
+
+Parameters:
+  # First value to choose from
+  # Second value to choose from
+  # ... any number of further choices ...
+  # Mandatory variable to store result
+
+Example, choosing random color and assigning it to randomColor variable:
+
+{{{
+${__chooseRandom(red, green, blue, orange, violet, magenta, randomColor)}
+}}}
+
+== doubleSum<sup><font color=gray size="1">since 0.4.2</font></sup> ==
+
+This function used to compute the sum of two or more floating point values.
+
+Parameters:
+  # First value to sum - required
+  # Second value to sim - required
+  # More values to sum - optional
+  # Last argument - variable name to store the result
+
+Example, returning 8.3 and also saving it to variable {{{sumVariable}}}:
+
+{{{
+${__doubleSum(3.5, 4.7, sumVariable)}
+}}}
+
+== isDefined<sup><font color=gray size="1">since 0.4.2</font></sup> ==
+
+This function used to determine if variable was already defined. 
+Returns 1 if variable was defined, 0 instead.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+
+Example, getting defined status for variable name 'testVar':
+
+{{{
+${__isDefined(testVar)}
+}}}
+
+== MD5<sup><font color=gray size="1">since 0.4.2</font></sup> ==
+
+This function used to calculate MD5 hash of constant string or variable value.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+  # Second argument - variable name to store the result
+
+Example, calculating MD5 for 'test':
+
+{{{
+${__MD5(test)}
+}}}
+
+== strLen<sup><font color=gray size="1">since 0.4.2</font></sup> ==
+
+This function used to compute the length of constant string or variable value.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+  # Second argument - variable name to store the result
+
+Example, returning 11 and also saving it to variable {{{lenVariable}}}:
+
+{{{
+${__strLen(test string, lenVariable)}
+}}}
+
+Example, returning length of variable {{{varName}}}:
+
+{{{
+${__strLen(${varName})}
+}}}
+
+== uppercase and lowercase<sup><font color=gray size="1">since 0.4.2</font></sup> ==
+
+This functions used to transform the case of constant string or variable value.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+  # Second argument - variable name to store the result
+
+Example, transforming 'test' into 'TEST' and also saving it to variable {{{someVariable}}}:
+
+{{{
+${__uppercase(test, someVariable)}
+}}}
+
+== substring<sup><font color=gray size="1">since 0.4.2</font></sup> ==
+
+This function is wrapper for Java [http://download.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true#substring String.substring] method.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+  # Begin index
+  # End index
+  # Optional variable to store result
+
+Example, getting 'str' from 'test string':
+
+{{{
+${__substring(test string, 5, 8)}
+}}}
+

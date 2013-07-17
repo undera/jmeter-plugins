@@ -200,13 +200,6 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 worker.setAutoScaleRows(getLogicValue((String) args.next()));
-            } else if (nextArg.equalsIgnoreCase("--extractor-regexps")) {
-
-                if (!args.hasNext()) {
-                    throw new IllegalArgumentException("Missing regular expressions");
-                }
-
-                storeRegExps((String) args.next(), worker);
             } else if (nextArg.equalsIgnoreCase("--success-filter")) {
 
                 if (!args.hasNext()) {
@@ -215,28 +208,11 @@ public class ReporterTool extends AbstractCMDTool {
 
                 worker.setSuccessFilter(getLogicValue((String) args.next()));
             } else {
-                throw new UnsupportedOperationException("Unrecognized option: " + nextArg);
+                worker.processUnknownOption(nextArg, args);
+               
             }
         }
 
         return worker.doJob();
-    }
-
-    private void storeRegExps(String regExps, PluginsCMDWorker worker) {
-        String[] regStrings = regExps.split("\\{;\\}");
-
-        if (regStrings.length % 4 != 0) {
-            throw new IllegalArgumentException("Regular expressions must be succession of key/value/isDelta(true or false)/isRegExpLabel(true or false) separated by {;}");
-        }
-
-        ArrayList<Object> data = new ArrayList<Object>();
-        for (int i = 0; i < regStrings.length; i = i + 4) {
-            data.add(regStrings[i]);
-            data.add(regStrings[i + 1]);
-            data.add("true".equalsIgnoreCase(regStrings[i + 2]));
-            data.add("true".equalsIgnoreCase(regStrings[i + 3]));
-        }
-
-        worker.setCmdRegExps(data);
     }
 }

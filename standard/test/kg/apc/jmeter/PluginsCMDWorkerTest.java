@@ -3,9 +3,7 @@ package kg.apc.jmeter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.util.JMeterUtils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.*;
@@ -91,7 +89,7 @@ public class PluginsCMDWorkerTest {
     @Test
     public void testSetPluginType() {
         System.out.println("setPluginType");
-        String string = "";
+        String string = "ResponseTimesOverTime";
         //  PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setPluginType(string);
     }
@@ -101,14 +99,14 @@ public class PluginsCMDWorkerTest {
      */
     @Test
     public void testDoJob() throws IOException {
-        System.out.println("doJob");
+        System.out.println("doJob 1");
         //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir + "/short.jtl");
         File pngfile = File.createTempFile("test", ".png");
         instance.setOutputPNGFile(pngfile.getAbsolutePath());
         File csvfile = File.createTempFile("test", ".csv");
         instance.setOutputCSVFile(csvfile.getAbsolutePath());
-        instance.setPluginType("ResponseTimesDistribution");
+        instance.setPluginType("ResponseTimesOverTime");
         instance.addExportMode(PluginsCMDWorker.EXPORT_PNG);
         instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);
         int result = instance.doJob();
@@ -116,7 +114,7 @@ public class PluginsCMDWorkerTest {
         assertEquals(expResult, result);
         System.out.println(csvfile.length());
         System.out.println(pngfile.length());
-        assertTrue(73 == csvfile.length() || 77 == csvfile.length()); // win/linux diff
+        assertTrue(73 == csvfile.length() || 295 == csvfile.length()); // win/linux diff
         assertTrue(16000 < pngfile.length()); // win/linux different
     }
 
@@ -125,11 +123,11 @@ public class PluginsCMDWorkerTest {
      */
     @Test
     public void testDoJob_png() throws IOException {
-        System.out.println("doJob");
+        System.out.println("doJob 2");
         //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir + "/short.jtl");
         instance.setOutputPNGFile(File.createTempFile("test", ".png").getAbsolutePath());
-        instance.setPluginType("ResponseTimesDistribution");
+        instance.setPluginType("ResponseTimesOverTime");
         instance.addExportMode(PluginsCMDWorker.EXPORT_PNG);
         int result = instance.doJob();
         int expResult = 0;
@@ -141,11 +139,11 @@ public class PluginsCMDWorkerTest {
      */
     @Test
     public void testDoJob_csv() throws IOException {
-        System.out.println("doJob");
+        System.out.println("doJob 3");
         //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir + "/short.jtl");
         instance.setOutputCSVFile(File.createTempFile("test", ".csv").getAbsolutePath());
-        instance.setPluginType("ResponseTimesDistribution");
+        instance.setPluginType("ResponseTimesOverTime");
         instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);
         int result = instance.doJob();
         int expResult = 0;
@@ -154,13 +152,13 @@ public class PluginsCMDWorkerTest {
 
     @Test
     public void testDoJob_csv_createdir() throws IOException {
-        System.out.println("doJob");
+        System.out.println("doJob 4");
         //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir + "/short.jtl");
         File rfile = File.createTempFile("testDir", "");
         rfile.delete();
         instance.setOutputCSVFile(rfile.getAbsolutePath().concat(File.separator).concat("testFile.csv"));
-        instance.setPluginType("ResponseTimesDistribution");
+        instance.setPluginType("ResponseTimesOverTime");
         instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);
         int result = instance.doJob();
         int expResult = 0;
@@ -174,14 +172,15 @@ public class PluginsCMDWorkerTest {
         //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir + "/short.jtl");
         instance.setOutputCSVFile(csvfile.getAbsolutePath());
-        instance.setPluginType("ResponseTimesDistribution");
+        instance.setPluginType("ResponseTimesOverTime");
         instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);
         instance.setIncludeLabels("test");
         int result = instance.doJob();
         int expResult = 0;
         assertEquals(expResult, result);
-        //windows = 22, linux = 21
-        assertTrue(csvfile.length() == 21 || csvfile.length() == 22);
+        System.err.println(csvfile.length());
+        //windows = 22, linux = 13
+        assertTrue(csvfile.length() == 13 || csvfile.length() == 14);
     }
 
     /**
@@ -346,17 +345,6 @@ public class PluginsCMDWorkerTest {
     }
 
     /**
-     * Test of setCmdRegExps method, of class PluginsCMDWorker.
-     */
-    @Test
-    public void testSetCmdRegExps() {
-        System.out.println("setCmdRegExps");
-        ArrayList<Object> cmdRegExps = new ArrayList<Object>();
-        PluginsCMDWorker instance = new PluginsCMDWorker();
-        instance.setCmdRegExps(cmdRegExps);
-    }
-
-    /**
      * Test of setSuccessFilter method, of class PluginsCMDWorker.
      */
     @Test
@@ -372,8 +360,8 @@ public class PluginsCMDWorkerTest {
         System.out.println("getJMeterHomeFromCP");
         String classpathLinuxSTR = ":/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_jms.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_jdbc.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/hbase-0.90.1-cdh3u0.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/jackson-core-asl-1.5.2.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/json-lib-2.4-jdk15.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_core.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_report.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/jmeter-plugins-1.0.1-RC1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_monitors.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_components.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_native.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/hadoop-core-0.20.2-cdh3u0.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_functions.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_junit.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_ftp.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_ldap.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ezmorph-1.0.6.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_java.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_http.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/qpid-client-0.12.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/spring-core-2.5.3.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/dnsjava-2.0.6.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/CMDRunner.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/commons-beanutils-1.8.0.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/jackson-mapper-asl-1.5.2.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/json-smart-1.1.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/spring-jms-2.5.3.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/qpid-common-0.12.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/zookeeper-3.3.3-cdh3u0.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_mail.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/json-path-0.8.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/ext/ApacheJMeter_tcp.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/htmlparser-2.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/commons-collections-3.2.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/httpclient-4.2.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/xercesImpl-2.9.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/activation-1.1.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/xmlpull-1.1.3.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/htmllexer-2.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/commons-lang-2.6.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/jtidy-r938.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/excalibur-datasource-1.1.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/jdom-1.1.2.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/commons-io-2.2.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/commons-jexl-2.1.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/rhino-1.7R3.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/jodd-core-3.4.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/httpcore-4.2.2.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/commons-jexl-1.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/commons-httpclient-3.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/tika-core-1.3.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/httpclient-4.2.3.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/tika-parsers-1.3.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/xml-apis-1.3.04.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/bshclient.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/httpmime-4.2.3.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/jsoup-1.7.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/serializer-2.7.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/geronimo-jms_1.1_spec-1.1.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/httpcore-4.2.3.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/xalan-2.7.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/commons-logging-1.1.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/junit-4.10.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/commons-net-3.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/httpmime-4.2.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/slf4j-api-1.7.2.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/bsh-2.0b5.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/commons-codec-1.6.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/logkit-2.0.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/xmlgraphics-commons-1.3.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/excalibur-pool-1.2.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/xstream-1.4.2.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/avalon-framework-4.1.4.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/soap-2.3.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/bsf-api-3.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/commons-lang3-3.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/js-1.7R2.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/excalibur-logger-1.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/rhino-1.7R4.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/xpp3_min-1.1.4c.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/mail-1.4.4.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/excalibur-instrument-1.0.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/bsf-2.4.0.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/jcharts-0.7.5.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/oro-2.0.8.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/jodd-lagarto-3.4.1.jar:/home/undera/NetBeansProjects/JMeter/trunk/lib/jorphan.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/jmeter-plugins-1.0.1-RC1.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/CMDRunner.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/original-jmeter-plugins-1.0.1-RC1.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/qpid-client-0.20.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/hbase-0.94.5.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/json-lib-2.4-jdk15.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/qpid-common-0.20.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/hadoop-core-1.1.2.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/ezmorph-1.0.6.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/spring-core-2.5.6.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/zookeeper-3.4.5.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/spring-jms-2.5.6.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/jackson-mapper-asl-1.8.8.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/dnsjava-2.0.6.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/cmdrunner-1.0.1.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/commons-beanutils-1.8.0.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/perfmon-2.2.1.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/json-smart-1.1.1.jar:/home/undera/NetBeansProjects/jmeter-plugins/target/lib/json-path-0.8.1.jar";
         String classpathWinSTR = "D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_jms.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_jdbc.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\hbase-0.90.1-cdh3u0.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\jackson-core-asl-1.5.2.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\json-lib-2.4-jdk15.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_core.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_report.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\jmeter-plugins-1.0.1-RC1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_monitors.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_components.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_native.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\hadoop-core-0.20.2-cdh3u0.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_functions.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_junit.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_ftp.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_ldap.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ezmorph-1.0.6.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_java.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_http.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\qpid-client-0.12.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\spring-core-2.5.3.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\dnsjava-2.0.6.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\CMDRunner.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\commons-beanutils-1.8.0.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\jackson-mapper-asl-1.5.2.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\json-smart-1.1.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\spring-jms-2.5.3.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\qpid-common-0.12.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\zookeeper-3.3.3-cdh3u0.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_mail.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\json-path-0.8.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\ext\\ApacheJMeter_tcp.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\htmlparser-2.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\commons-collections-3.2.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\httpclient-4.2.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\xercesImpl-2.9.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\activation-1.1.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\xmlpull-1.1.3.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\htmllexer-2.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\commons-lang-2.6.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\jtidy-r938.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\excalibur-datasource-1.1.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\jdom-1.1.2.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\commons-io-2.2.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\commons-jexl-2.1.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\rhino-1.7R3.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\jodd-core-3.4.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\httpcore-4.2.2.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\commons-jexl-1.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\commons-httpclient-3.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\tika-core-1.3.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\httpclient-4.2.3.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\tika-parsers-1.3.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\xml-apis-1.3.04.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\bshclient.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\httpmime-4.2.3.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\jsoup-1.7.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\serializer-2.7.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\geronimo-jms_1.1_spec-1.1.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\httpcore-4.2.3.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\xalan-2.7.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\commons-logging-1.1.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\junit-4.10.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\commons-net-3.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\httpmime-4.2.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\slf4j-api-1.7.2.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\bsh-2.0b5.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\commons-codec-1.6.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\logkit-2.0.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\xmlgraphics-commons-1.3.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\excalibur-pool-1.2.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\xstream-1.4.2.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\avalon-framework-4.1.4.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\soap-2.3.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\bsf-api-3.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\commons-lang3-3.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\js-1.7R2.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\excalibur-logger-1.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\rhino-1.7R4.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\xpp3_min-1.1.4c.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\mail-1.4.4.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\excalibur-instrument-1.0.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\bsf-2.4.0.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\jcharts-0.7.5.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\oro-2.0.8.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\jodd-lagarto-3.4.1.jar;D:\\Java\\NetBeansProjects\\JMeter\\trunk\\lib\\jorphan.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\jmeter-plugins-1.0.1-RC1.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\CMDRunner.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\original-jmeter-plugins-1.0.1-RC1.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\qpid-client-0.20.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\hbase-0.94.5.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\json-lib-2.4-jdk15.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\qpid-common-0.20.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\hadoop-core-1.1.2.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\ezmorph-1.0.6.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\spring-core-2.5.6.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\zookeeper-3.4.5.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\spring-jms-2.5.6.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\jackson-mapper-asl-1.8.8.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\dnsjava-2.0.6.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\cmdrunner-1.0.1.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\commons-beanutils-1.8.0.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\perfmon-2.2.1.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\json-smart-1.1.1.jar;D:\\Java\\NetBeansProjects\\jmeter-plugins\\target\\lib\\json-path-0.8.1.jar";
-        
-        if(System.getProperty("os.name").toLowerCase().indexOf("windows") != -1) {
+
+        if (System.getProperty("os.name").toLowerCase().indexOf("windows") != -1) {
             String expWinResult = "D:\\Java\\NetBeansProjects\\JMeter\\trunk";
             String resultWin = PluginsCMDWorker.getJMeterHomeFromCP(classpathWinSTR);
             assertEquals(expWinResult, resultWin);

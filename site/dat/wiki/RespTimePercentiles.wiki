@@ -1,0 +1,9 @@
+<div style="float: right" class="plugins_set extras_set">Available in [ExtrasSet Extras Set]</div>
+= Response Times Percentiles <sup><font color=gray size="1">since 0.4.0</font></sup>=
+
+This graph will display the percentiles for the response time values. X Axis represents percentage, Y Axis Response time values. One point (P, Value) means for the whole scenario, P percent of the values are bellow Value ms.
+
+The precision of the graph was updated in version 0.4.1 to {{{0.1}}} granularity. The percentiles are calculated in the range {{{[0.1 .. 99.9]}}} so outliers values will not break the graph Y range.
+ 
+== Sample Result==
+[/img/wiki/response_times_percentiles.png]

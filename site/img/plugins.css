@@ -1,0 +1,176 @@
+body {
+    background-color: white;
+}
+
+.menu1 {
+    border-top: 0.5em solid #ebeff9;
+}
+
+.menu1 td {
+    font-size: 1em;
+    background: #ebeff9;
+    padding: 0.4em 1em;
+    border-bottom: 1px solid #6b90da;
+}
+
+
+.menu1 td.hl {
+    background-color: white;
+    background-image: none;
+    border: 1px solid #6b90da;
+    border-bottom: none;
+}
+
+a.hl, .hl a, .hl {
+    color: black;
+    text-decoration: none;
+}
+
+table.breadcrumbs td {
+    border-bottom: 1px solid #c9d7f1;
+}
+
+table.breadcrumbs {
+    position: fixed; 
+    z-index: 999;
+}
+
+#toppanel {
+    padding-top: 1.2em;
+}
+
+
+td.logo {
+    padding: 1em;
+}
+
+td.header_title {
+    white-space: nowrap;
+    font-weight: normal;
+    width: 100%; 
+    font-size: 1.4em;
+    color: #666;
+}
+
+td.header_right {
+    vertical-align: middle;
+}
+
+.main td.root
+{
+    border: none;
+    background-color: transparent;
+    padding: 5px 10px;
+}
+
+h1, h2, h3, h4
+{
+    color: black;
+}
+
+td.footer {
+    border-top: 2px solid #ccc;
+}
+
+/* WIKI */
+table.wiki pre, table.wiki tt {
+    background-color: #EEE;
+    font-size: 1.2em;
+    padding: 0px 0.25em;
+}
+
+table.wiki pre {
+    padding: 1em;
+}
+
+table.wiki .sidebar {
+    white-space: nowrap;
+    padding-left: 1em;
+    border-left: 2px solid #ccc;
+}
+
+table.wiki .sidebar sup, table.wiki .sidebar font {
+    display: none;
+}
+
+table.wiki .toc-list {
+    margin-bottom: 0.75em;
+    white-space: nowrap;
+    list-style-type: decimal;
+}
+
+table.wiki .toc-list1 {
+    padding-bottom: 1em;
+    border-bottom: 2px dotted #ccc;
+}
+
+/* Plugin Sets */
+.plugins_set {
+    border-radius: 1em; 
+    padding: 1em; 
+    border-style: solid;
+    border-width: 1px;
+    vertical-align: top;
+}
+
+.plugins_set h2 {
+    margin-top: 0px;
+}
+
+.standard_set {
+    background-color: #DDF; 
+    border-color: #AAD; 
+}
+
+.extras_set {
+    background-color: #DFD; 
+    border-color: #ADA; 
+}
+
+.extraslibs_set {
+    background-color: #FDD; 
+    border-color: #DAA; 
+}
+
+.webdriver_set {
+    background-color: #FDF; 
+    border-color: #DAD; 
+}
+
+.hadoop_set {
+    background-color: #FFD; 
+    border-color: #DDA; 
+}
+
+/* Downloads */
+.file_download {
+    display: block;
+    border: 1px dotted silver;
+    margin: 1em;
+    padding: 0.5em;
+    background-color: #EEE;
+}
+
+.file_download a {
+    background-image: url('/img/icons/download-icon.png'); 
+    background-repeat: no-repeat;
+    padding-left: 2em;
+}
+
+.file_download i {
+    padding-left: 2em;
+}
+
+.file_download b {
+    font-size: larger;
+}
+
+.file_download .filesize, .file_download .filedate {
+    color: gray;
+    font-weight: bold;
+}
+
+.file_download .count {
+    color: gray;
+  float:right;
+}

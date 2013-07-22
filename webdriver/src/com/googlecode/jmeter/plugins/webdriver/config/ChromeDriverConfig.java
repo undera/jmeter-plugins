@@ -5,6 +5,7 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -19,8 +20,12 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
     private static final long serialVersionUID = 100L;
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
     private static final String CHROME_SERVICE_PATH = "ChromeDriverConfig.chromedriver_path";
+    private static final String CHROME_SERVICE_ARGS = "ChromeDriverConfig.chromedriver_args";
     private static final Map<String, ChromeDriverService> services = new ConcurrentHashMap<String, ChromeDriverService>();
 
+    private static volatile ChromeDriverService freeSharedService = null;
+    private static volatile ChromeDriver freeSharedBrowser = null;
+    
     @Override
     public void threadStarted() {
 
@@ -36,11 +41,19 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
     @Override
     public void threadFinished() {
         final ChromeDriver chromeDriverDriver = removeThreadBrowser();
-        if (chromeDriverDriver != null && !isDevMode()) {
+        final ChromeDriverService service = services.remove(currentThreadName());
+        
+        if(isDevMode()){
+        	freeSharedBrowser = chromeDriverDriver;
+        	freeSharedService = service;
+        	return;
+        }
+        
+        if(chromeDriverDriver != null) {
             chromeDriverDriver.quit();
         }
-        final ChromeDriverService service = services.remove(currentThreadName());
-        if (service != null && service.isRunning() && !isDevMode()) {
+        
+        if(service != null && service.isRunning() ) {
             service.stop();
         }
     }
@@ -52,10 +65,21 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
     public String getChromeDriverPath() {
         return getPropertyAsString(CHROME_SERVICE_PATH);
     }
+    
+    public void setChromeDriverArgs(String path) {
+        setProperty(CHROME_SERVICE_ARGS, path);
+    }
+
+    public String getChromeDriverArgs() {
+        return getPropertyAsString(CHROME_SERVICE_ARGS);
+    }
 
     Capabilities createCapabilities() {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(CapabilityType.PROXY, createProxy());
+	ChromeOptions opts = new ChromeOptions();
+	opts.addArguments(getChromeDriverArgs().split(";"));
+    DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+    capabilities.setCapability(CapabilityType.PROXY, createProxy());
+	capabilities.setCapability(ChromeOptions.CAPABILITY, opts);
         return capabilities;
     }
 
@@ -65,6 +89,21 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
 
     @Override
     protected ChromeDriver createBrowser() {
+    	if(isDevMode())
+        	synchronized (ChromeDriverConfig.class) {
+        		if(freeSharedBrowser != null){                	
+        			ChromeDriver dr = freeSharedBrowser;
+        			freeSharedBrowser = null; 
+        			try{
+        				dr.getRemoteStatus();
+        				dr.navigate().to("about:blank");
+        				return dr;
+        			}catch(Exception e){
+        				LOGGER.error("Invalid browser?:",e);
+        			}
+                	
+                }	            
+        	}
         final ChromeDriverService service = getThreadService();
         return service != null ? new ChromeDriver(service, createCapabilities()) : null;
     }
@@ -74,7 +113,19 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
         if (service != null) {
             return service;
         }
+        
         try {
+        	if(isDevMode())
+            	synchronized (ChromeDriverConfig.class) {
+            		if(freeSharedService != null){
+            			ChromeDriverService serv = freeSharedService;
+                    	services.put(currentThreadName(), serv);
+                    	freeSharedService = null;  
+                    	if(!serv.isRunning())
+                    		serv.start();
+                    	return serv;
+                    }	            
+            	}
             service = new ChromeDriverService.Builder().usingDriverExecutable(new File(getChromeDriverPath())).build();
             service.start();
             services.put(currentThreadName(), service);

@@ -18,7 +18,7 @@ Parameters:
 Example, choosing random color and assigning it to randomColor variable:
 
 {{{
-${__chooseRandom(red, green, blue, orange, violet, magenta, randomColor)}
+${__chooseRandom(red,green,blue,orange,violet,magenta,randomColor)}
 }}}
 
 == doubleSum<sup><font color=gray size="1">since 0.4.2</font></sup> ==

@@ -4,8 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 import javax.swing.*;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -24,7 +22,7 @@ import org.apache.log.Logger;
 
 /**
  *
- * @author Marten Bohlin
+ * @author Lars Holmberg / cyberw
  */
 public class JMXMonGui
         extends AbstractOverTimeVisualizer {
@@ -61,16 +59,7 @@ public class JMXMonGui
                 | JSettingsPanel.AUTO_EXPAND_OPTION
                 | JSettingsPanel.MARKERS_OPTION_DISABLED);
     }
-    //do not insert this vizualiser in any JMeter menu
-    private Collection<String> emptyCollection = new ArrayList<String>();
-
-    // Andrey: it must stay hidden until
-    // Unit tests fixed and wiki page added
-    @Override
-    public Collection<String> getMenuCategories() {
-        return emptyCollection;
-    }
-
+    
     @Override
     public String getWikiPage() {
         return "JMXMon";

@@ -40,7 +40,6 @@ public class JMXMonTest {
     @Before
     public void setUp() {
         TestJMeterUtils.createJmeterEnv();
-
         dataModel = new PowerTableModel(JMXMonGui.columnIdentifiers, JMXMonGui.columnClasses);
         dataModel.addRow(new Object[]{ PROBE1, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE1, false });
         dataModel.addRow(new Object[]{ PROBE2, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE2, true });
@@ -48,7 +47,6 @@ public class JMXMonTest {
     
     @Test
     public void testRun() throws InterruptedException {
-        // FIXME: this test is broken, need to enable assertions back and fix it in "Test All" mode
         JMXMonCollector instance = new TestJMXMonCollector();
         instance.setData(JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, JMXMonCollector.DATA_PROPERTY));
         instance.testStarted();
@@ -56,23 +54,23 @@ public class JMXMonTest {
         setQueryResult(ATTRIBUTE1, 1);
         setQueryResult(ATTRIBUTE2, 1);
         instance.processConnectors();
-        //assertLastSample(PROBE1, 1);
-        //assertNull(latestSamples.get(PROBE2)); // Deleta can not produce values at first loop
+        assertLastSample(PROBE1, 1);
+        assertNull(latestSamples.get(PROBE2)); // Delta can not produce values at first loop
         
         setQueryResult(ATTRIBUTE1, -2);
         setQueryResult(ATTRIBUTE2, 2);
         instance.processConnectors();
-        //assertLastSample(PROBE1, -2);
-        //assertLastSample(PROBE2, 1);
+        assertLastSample(PROBE1, -2);
+        assertLastSample(PROBE2, 1);
         
         setQueryResult(ATTRIBUTE1, 13);
         setQueryResult(ATTRIBUTE2, 1);
         instance.processConnectors();
-        //assertLastSample(PROBE1, 13);
-        //assertLastSample(PROBE2, -1);
+        assertLastSample(PROBE1, 13);
+        assertLastSample(PROBE2, -1);
 
         instance.testEnded();
-        //assertSampleGeneratorThreadIsStoped();        
+        assertSampleGeneratorThreadIsStoped();        
     }
 
     public void setQueryResult(String attribute, double value) {
@@ -97,20 +95,7 @@ public class JMXMonTest {
         final Double actual = latestSamples.get(probeName);
         assertEquals(expected, actual, 0.0001);
     }
-/*
-    private class TestDataSource implements DataSourceComponent {
-        @Override
-        public Connection getConnection() throws SQLException {
-            return new TestConnection(JMXMonTest.this);
-        }
 
-        @Override
-        public void configure(Configuration c) throws ConfigurationException {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-        
-    }
-  */  
     private class TestJMXMonCollector extends JMXMonCollector {
         @Override
         public void run() {

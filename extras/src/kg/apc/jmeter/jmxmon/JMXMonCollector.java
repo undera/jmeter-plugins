@@ -135,10 +135,10 @@ public class JMXMonCollector
 
     @Override
     public void testEnded(String host) {
+        workerHost = null;
         if(workerThread == null) {
            return;
         }
-        workerHost = null;
         workerThread.interrupt();
         shutdownConnectors();
 

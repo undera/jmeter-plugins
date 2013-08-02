@@ -2,10 +2,12 @@ package kg.apc.jmeter.jmxmon;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import javax.management.MBeanServerConnection;
+import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -40,9 +42,10 @@ public class JMXMonTest {
     @Before
     public void setUp() {
         TestJMeterUtils.createJmeterEnv();
+
         dataModel = new PowerTableModel(JMXMonGui.columnIdentifiers, JMXMonGui.columnClasses);
-        dataModel.addRow(new Object[]{ PROBE1, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE1, "", false });
-        dataModel.addRow(new Object[]{ PROBE2, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE2, "", true });
+        dataModel.addRow(new Object[]{ PROBE1, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE1, false });
+        dataModel.addRow(new Object[]{ PROBE2, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE2, true });
     }
     
     @Test
@@ -55,7 +58,7 @@ public class JMXMonTest {
         setQueryResult(ATTRIBUTE2, 1);
         instance.processConnectors();
         assertLastSample(PROBE1, 1);
-        assertNull(latestSamples.get(PROBE2)); // Delta can not produce values at first loop
+        assertNull(latestSamples.get(PROBE2)); // Deleta can not produce values at first loop
         
         setQueryResult(ATTRIBUTE1, -2);
         setQueryResult(ATTRIBUTE2, 2);
@@ -70,8 +73,7 @@ public class JMXMonTest {
         assertLastSample(PROBE2, -1);
 
         instance.testEnded();
-        assertSampleGeneratorThreadIsStoped();
-                
+        assertSampleGeneratorThreadIsStoped();        
     }
 
     public void setQueryResult(String attribute, double value) {
@@ -96,7 +98,20 @@ public class JMXMonTest {
         final Double actual = latestSamples.get(probeName);
         assertEquals(expected, actual, 0.0001);
     }
+/*
+    private class TestDataSource implements DataSourceComponent {
+        @Override
+        public Connection getConnection() throws SQLException {
+            return new TestConnection(JMXMonTest.this);
+        }
 
+        @Override
+        public void configure(Configuration c) throws ConfigurationException {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+        
+    }
+  */  
     private class TestJMXMonCollector extends JMXMonCollector {
         @Override
         public void run() {
@@ -112,9 +127,9 @@ public class JMXMonTest {
         }
         
         @Override
-        protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String name, boolean delta, String objectName, String attribute, String key) throws MalformedURLException, IOException {
+        protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String name, boolean delta, String objectName, String attribute) throws MalformedURLException, IOException {
             MBeanServerConnection conn = new MBeanServerConnectionEmul(queryResults);
-            jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, key, delta));
+            jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, delta));
         }
         
         @Override
@@ -123,12 +138,5 @@ public class JMXMonTest {
             double value = JMXMonSampleResult.getValue(event.getResult());
             latestSamples.put(event.getResult().getSampleLabel(), value);
         }
-
-        @Override
-        public void testEnded() {
-            super.testEnded(); //To change body of generated methods, choose Tools | Templates.
-        }
-        
-        
     }
 }

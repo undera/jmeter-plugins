@@ -4,8 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 import javax.swing.*;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.jmeter.JMeterPluginsUtils;
@@ -24,7 +22,7 @@ import org.apache.log.Logger;
 
 /**
  *
- * @author Marten Bohlin
+ * @author Lars Holmberg / cyberw
  */
 public class JMXMonGui
         extends AbstractOverTimeVisualizer {
@@ -35,13 +33,13 @@ public class JMXMonGui
     private JTextArea errorTextArea;
     private JScrollPane errorPane;
     public static final String[] columnIdentifiers = new String[]{
-        "Label", "URL", "Username", "Password", "Object Name", "Attribute", "Delta"
+        "Label", "URL", "Username", "Password", "Object Name", "Attribute", "Key", "Delta"
     };
     public static final Class[] columnClasses = new Class[]{
-        String.class, String.class, String.class, String.class, String.class, String.class, Boolean.class
+        String.class, String.class, String.class, String.class, String.class, String.class, String.class, Boolean.class
     };
     private static Object[] defaultValues = new Object[]{
-        "", "", "", "", "", "", false
+        "", "", "", "", "", "", "", false
     };
 
     public JMXMonGui() {
@@ -61,16 +59,7 @@ public class JMXMonGui
                 | JSettingsPanel.AUTO_EXPAND_OPTION
                 | JSettingsPanel.MARKERS_OPTION_DISABLED);
     }
-    //do not insert this vizualiser in any JMeter menu
-    private Collection<String> emptyCollection = new ArrayList<String>();
-
-    // Andrey: it must stay hidden until
-    // Unit tests fixed and wiki page added
-    @Override
-    public Collection<String> getMenuCategories() {
-        return emptyCollection;
-    }
-
+    
     @Override
     public String getWikiPage() {
         return "JMXMon";
@@ -173,6 +162,7 @@ public class JMXMonGui
         grid.getColumnModel().getColumn(4).setPreferredWidth(200);
         grid.getColumnModel().getColumn(5).setPreferredWidth(100);
         grid.getColumnModel().getColumn(6).setPreferredWidth(50);
+        grid.getColumnModel().getColumn(7).setPreferredWidth(50);
 
         return grid;
     }

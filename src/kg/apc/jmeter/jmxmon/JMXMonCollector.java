@@ -135,10 +135,10 @@ public class JMXMonCollector
 
     @Override
     public void testEnded(String host) {
-        workerHost = null;
         if(workerThread == null) {
            return;
         }
+        workerHost = null;
         workerThread.interrupt();
         shutdownConnectors();
 
@@ -165,21 +165,20 @@ public class JMXMonCollector
             String password = ((JMeterProperty) row.get(3)).getStringValue();            
             String objectName = ((JMeterProperty) row.get(4)).getStringValue();
             String attribute = ((JMeterProperty) row.get(5)).getStringValue();
-            String key = ((JMeterProperty) row.get(6)).getStringValue();
-            boolean isDelta = ((JMeterProperty) row.get(7)).getBooleanValue();
+            boolean isDelta = ((JMeterProperty) row.get(6)).getBooleanValue();
             
             JMXServiceURL u = new JMXServiceURL(jmxUrl);
             Hashtable attributes = new Hashtable();
             String[] buffer = { username, password };
             attributes.put("jmx.remote.credentials", (String[]) buffer);
             
-            initiateConnector(u, attributes, label, isDelta, objectName, attribute, key);
+            initiateConnector(u, attributes, label, isDelta, objectName, attribute);
         }
     }
 
-    protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String name, boolean delta, String objectName, String attribute, String key) throws MalformedURLException, IOException {
+    protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String name, boolean delta, String objectName, String attribute) throws MalformedURLException, IOException {
         MBeanServerConnection conn = JMXConnectorFactory.connect(u,attributes).getMBeanServerConnection();
-        jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, key, delta));
+        jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, delta));
     }
 
 

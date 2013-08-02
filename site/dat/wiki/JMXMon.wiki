@@ -1,0 +1,21 @@
+<div style="float: right" class="plugins_set extras_set">Available in [ExtrasSet Extras Set]</div>
+<font size="5"><B>JMXMon Sample Collector<sup><font color=gray size="1"> since X.X.X</font></sup></B></font>
+
+=Introduction=
+JMXMon lets you plot JMX performance metrics over time when the test is running.
+
+
+todo: add screenshot
+
+=Usage=
+==GUI Mode==
+Just add a "JMXMon Samples Collector" listener where appropriate.
+
+Here are some typical values you might want to use:
+
+URI: service: jmx:rmi:///jndi/rmi://YOURHOST:6969/jmxrmi
+Object name: java.lang:type=Memory
+Attribute: HeapMemoryUsage
+Key (for composite JMX values): used
+
+To change how often the a sample should be taken set the parameter "jmeterPlugin.jmxmon.interval" to the interval in milliseconds, default is every second.

@@ -10,9 +10,6 @@ import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
-import javax.management.openmbean.CompositeDataSupport;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 /**
  *
@@ -20,22 +17,19 @@ import org.apache.log.Logger;
  */
 public class JMXMonSampler {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
     private String metricName;
     private String objectName;
     private String attribute;
-    private String key; // for use with complex types
     private final MBeanServerConnection remote;
     private boolean sampleDeltaValue = true;
     private double oldValue = Double.NaN;
 
-    public JMXMonSampler(MBeanServerConnection remote, String name, String objectName, String attribute, String key, boolean sampleDeltaValue) {
+    public JMXMonSampler(MBeanServerConnection remote, String name, String objectName, String attribute, boolean sampleDeltaValue) {
         this.metricName = name;
         this.remote = remote;
         this.objectName = objectName;
         this.attribute = attribute;
         this.sampleDeltaValue = sampleDeltaValue;
-        this.key = key;
     }
 
     public void generateSamples(JMXMonSampleGenerator collector) {
@@ -45,23 +39,8 @@ public class JMXMonSampler {
             ObjectName beanName = new ObjectName(objectName);
 
             Object o = remote.getAttribute(beanName, attribute);
-            
-            
-            final double val;
-            if (o instanceof CompositeDataSupport) {
-                if (key == null || key.equals("")) {
-                    log.error("Got composite object from JMX, but no key specified ");
-                    return;
-                }                    
-                CompositeDataSupport cds = (CompositeDataSupport)o;
-                log.info("CDS: " + cds.toString());
-                val = Double.parseDouble(cds.get(key).toString());
-            } else {
-                if (key != null || !key.equals("")) {
-                    log.error("key specified, but didnt get composite object from JMX. Will continue anyway.");
-                }                    
-                val = Double.parseDouble(o.toString());
-            }
+
+            final double val = Double.parseDouble(o.toString());
             if (sampleDeltaValue) {
                 if (!Double.isNaN(oldValue)) {
                     collector.generateSample(val - oldValue, metricName);
@@ -70,22 +49,22 @@ public class JMXMonSampler {
             } else {
                 collector.generateSample(val, metricName);
             }
-        } catch (MalformedURLException ex) {          
-            log.error(ex.getMessage());
+        } catch (MalformedURLException ex) {
+            java.util.logging.Logger.getLogger(JMXMonSampler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            log.error(ex.getMessage());
+            java.util.logging.Logger.getLogger(JMXMonSampler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ReflectionException ex) {
-            log.error(ex.getMessage());
+            java.util.logging.Logger.getLogger(JMXMonSampler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MalformedObjectNameException ex) {
-            log.error(ex.getMessage());
+            java.util.logging.Logger.getLogger(JMXMonSampler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException ex) {
-            log.error(ex.getMessage());
+            java.util.logging.Logger.getLogger(JMXMonSampler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MBeanException ex) {
-            log.error(ex.getMessage());
+            java.util.logging.Logger.getLogger(JMXMonSampler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (AttributeNotFoundException ex) {
-            log.error(ex.getMessage());
+            java.util.logging.Logger.getLogger(JMXMonSampler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstanceNotFoundException ex) {
-            log.error(ex.getMessage());
+            java.util.logging.Logger.getLogger(JMXMonSampler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

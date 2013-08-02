@@ -59,7 +59,7 @@ public class JMXMonSamplerTest {
         // empty query results
         Map<String, Double> queryResults = new HashMap<String, Double>();
         queryResults.put("attribute",1.0);
-        JMXMonSampler instance = new JMXMonSampler(new MBeanServerConnectionEmul(queryResults), "name", "Something:name=objectName", "attribute", "", true);
+        JMXMonSampler instance = new JMXMonSampler(new MBeanServerConnectionEmul(queryResults), "name", "Something:name=objectName", "attribute", true);
         instance.generateSamples(collector);
     }
 }

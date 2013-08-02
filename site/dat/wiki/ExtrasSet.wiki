@@ -7,6 +7,7 @@ Additional plugins for extended and complex testing. Does not require additional
   * [BytesThroughput Bytes Throughput Over Time]
   * [PageDataExtractor Extracted Data Over Time] 
   * [DbMon DbMon Sample Collector]
+  * [JMXMon JMX Monitoring Collector]
   * [ResponseTimesVsThreads Response Times vs Threads]
   * [TransactionThroughputVsThreads Transaction Throughput vs Threads]
   * [RespTimesDistribution Response Times Distribution]

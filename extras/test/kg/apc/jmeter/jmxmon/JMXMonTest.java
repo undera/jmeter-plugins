@@ -21,7 +21,7 @@ import org.junit.Test;
  * @author cyberw
  */
 public class JMXMonTest {
-    public static final String URL = "service:jmx:rmi:///jndi/rmi://secc2273.ssnhm.com:6969/jmxrmi";//"service:jmx:rmi:///jndi/rmi://localhost:6969/jmxrmi";
+    public static final String URL = "service:jmx:rmi:///jndi/rmi://localhost:6969/jmxrmi";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String OBJ_NAME1 = "Something:name=objectName1";

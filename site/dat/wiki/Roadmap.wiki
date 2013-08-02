@@ -1,7 +1,7 @@
 #labels Phase-Requirements,Phase-Design,Featured
 = Next Version =
  
-  * Maintenance release, changing homepage and distribution archives
+  * [JMXMon JMX Monitoring Collector] added
 
 = Ideas for Future Versions =
 

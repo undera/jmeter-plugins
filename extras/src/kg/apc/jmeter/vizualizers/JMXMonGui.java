@@ -33,13 +33,13 @@ public class JMXMonGui
     private JTextArea errorTextArea;
     private JScrollPane errorPane;
     public static final String[] columnIdentifiers = new String[]{
-        "Label", "URL", "Username", "Password", "Object Name", "Attribute", "Delta"
+        "Label", "URL", "Username", "Password", "Object Name", "Attribute", "Key", "Delta"
     };
     public static final Class[] columnClasses = new Class[]{
-        String.class, String.class, String.class, String.class, String.class, String.class, Boolean.class
+        String.class, String.class, String.class, String.class, String.class, String.class, String.class, Boolean.class
     };
     private static Object[] defaultValues = new Object[]{
-        "", "", "", "", "", "", false
+        "", "", "", "", "", "", "", false
     };
 
     public JMXMonGui() {
@@ -162,6 +162,7 @@ public class JMXMonGui
         grid.getColumnModel().getColumn(4).setPreferredWidth(200);
         grid.getColumnModel().getColumn(5).setPreferredWidth(100);
         grid.getColumnModel().getColumn(6).setPreferredWidth(50);
+        grid.getColumnModel().getColumn(7).setPreferredWidth(50);
 
         return grid;
     }

@@ -165,20 +165,21 @@ public class JMXMonCollector
             String password = ((JMeterProperty) row.get(3)).getStringValue();            
             String objectName = ((JMeterProperty) row.get(4)).getStringValue();
             String attribute = ((JMeterProperty) row.get(5)).getStringValue();
-            boolean isDelta = ((JMeterProperty) row.get(6)).getBooleanValue();
+            String key = ((JMeterProperty) row.get(6)).getStringValue();
+            boolean isDelta = ((JMeterProperty) row.get(7)).getBooleanValue();
             
             JMXServiceURL u = new JMXServiceURL(jmxUrl);
             Hashtable attributes = new Hashtable();
             String[] buffer = { username, password };
             attributes.put("jmx.remote.credentials", (String[]) buffer);
             
-            initiateConnector(u, attributes, label, isDelta, objectName, attribute);
+            initiateConnector(u, attributes, label, isDelta, objectName, attribute, key);
         }
     }
 
-    protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String name, boolean delta, String objectName, String attribute) throws MalformedURLException, IOException {
+    protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String name, boolean delta, String objectName, String attribute, String key) throws MalformedURLException, IOException {
         MBeanServerConnection conn = JMXConnectorFactory.connect(u,attributes).getMBeanServerConnection();
-        jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, delta));
+        jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, key, delta));
     }
 
 

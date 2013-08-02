@@ -21,7 +21,7 @@ import org.junit.Test;
  * @author cyberw
  */
 public class JMXMonTest {
-    public static final String URL = "service:jmx:rmi:///jndi/rmi://localhost:6969/jmxrmi";
+    public static final String URL = "service:jmx:rmi:///jndi/rmi://secc2273.ssnhm.com:6969/jmxrmi";//"service:jmx:rmi:///jndi/rmi://localhost:6969/jmxrmi";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String OBJ_NAME1 = "Something:name=objectName1";
@@ -41,8 +41,8 @@ public class JMXMonTest {
     public void setUp() {
         TestJMeterUtils.createJmeterEnv();
         dataModel = new PowerTableModel(JMXMonGui.columnIdentifiers, JMXMonGui.columnClasses);
-        dataModel.addRow(new Object[]{ PROBE1, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE1, false });
-        dataModel.addRow(new Object[]{ PROBE2, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE2, true });
+        dataModel.addRow(new Object[]{ PROBE1, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE1, "", false });
+        dataModel.addRow(new Object[]{ PROBE2, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE2, "", true });
     }
     
     @Test
@@ -70,7 +70,8 @@ public class JMXMonTest {
         assertLastSample(PROBE2, -1);
 
         instance.testEnded();
-        assertSampleGeneratorThreadIsStoped();        
+        assertSampleGeneratorThreadIsStoped();
+                
     }
 
     public void setQueryResult(String attribute, double value) {
@@ -111,9 +112,9 @@ public class JMXMonTest {
         }
         
         @Override
-        protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String name, boolean delta, String objectName, String attribute) throws MalformedURLException, IOException {
+        protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String name, boolean delta, String objectName, String attribute, String key) throws MalformedURLException, IOException {
             MBeanServerConnection conn = new MBeanServerConnectionEmul(queryResults);
-            jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, delta));
+            jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, key, delta));
         }
         
         @Override

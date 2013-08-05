@@ -13,9 +13,12 @@ Just add a "JMXMon Samples Collector" listener where appropriate.
 
 Here are some typical values you might want to use:
 
-URI: service: jmx:rmi:///jndi/rmi://YOURHOST:6969/jmxrmi
+URI: service:jmx:rmi:///jndi/rmi://YOURHOST:6969/jmxrmi
+
 Object name: java.lang:type=Memory
+
 Attribute: HeapMemoryUsage
+
 Key (for composite JMX values): used
 
 To change how often the a sample should be taken set the parameter "jmeterPlugin.jmxmon.interval" to the interval in milliseconds, default is every second.

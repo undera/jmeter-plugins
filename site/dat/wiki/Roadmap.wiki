@@ -1,7 +1,7 @@
-#labels Phase-Requirements,Phase-Design,Featured
 = Next Version =
- 
+
   * [JMXMon JMX Monitoring Collector] added
+  * Fix unnecessary console error message in CMDTool
 
 = Ideas for Future Versions =
 

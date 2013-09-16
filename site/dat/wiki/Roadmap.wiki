@@ -37,6 +37,7 @@
     * random CSV data set [http://sqa.stackexchange.com/questions/3115/getting-a-random-line-from-a-file-with-jmeter?atw=1 a need] ($25 bounty for implementing it)
     * a way to specify Composite config in CMD tool
     * add "Default value" field for JSONPathExtractor
+    * convert JsonToXmlConverter into post-processor
     * *More ideas, folks???*
 
 See also:

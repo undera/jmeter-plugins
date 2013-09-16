@@ -865,7 +865,7 @@ public class GraphPanelChart
 
     /**
      *
-     * @param i
+     * @param minX
      */
     public void setForcedMinX(long minX) {
         forcedMinX = minX;

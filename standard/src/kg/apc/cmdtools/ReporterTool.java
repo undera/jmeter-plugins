@@ -1,18 +1,13 @@
-// TODO: add SummaryReport support
 package kg.apc.cmdtools;
 
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.ListIterator;
 import kg.apc.jmeter.PluginsCMDWorker;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.apache.log.Priority;
 
-/**
- *
- * @author undera
- */
+import java.io.PrintStream;
+import java.util.ListIterator;
+
 public class ReporterTool extends AbstractCMDTool {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -209,7 +204,6 @@ public class ReporterTool extends AbstractCMDTool {
                 worker.setSuccessFilter(getLogicValue((String) args.next()));
             } else {
                 worker.processUnknownOption(nextArg, args);
-               
             }
         }
 

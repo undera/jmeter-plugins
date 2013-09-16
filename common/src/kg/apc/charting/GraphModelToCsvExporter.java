@@ -1,5 +1,8 @@
 package kg.apc.charting;
 
+import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.gui.NumberRenderer;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -11,15 +14,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListSet;
-import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.gui.NumberRenderer;
 
 /**
- *
  * @author Stéphane Hoblingre
  */
-public class GraphModelToCsvExporter
-{
+public class GraphModelToCsvExporter {
     private AbstractMap<String, AbstractGraphRow> model = null;
     private File destFile = null;
     private String csvSeparator;
@@ -35,19 +34,18 @@ public class GraphModelToCsvExporter
             String csvSeparator,
             String xAxisLabel,
             NumberRenderer xAxisRenderer,
-            int hideNonRepValLimit)
-    {
+            int hideNonRepValLimit) {
         this.destFile = destFile;
         this.model = rows;
         this.csvSeparator = csvSeparator;
         this.decimalSeparator = new DecimalFormatSymbols().getDecimalSeparator();
         this.xAxisLabel = xAxisLabel;
         this.hideNonRepValLimit = hideNonRepValLimit;
-        if(xAxisRenderer != null && xAxisRenderer instanceof DividerRenderer) {
-           this.xAxisRenderer = new DividerRenderer(((DividerRenderer)xAxisRenderer).getFactor());
-        } else if(xAxisRenderer != null && xAxisRenderer instanceof DateTimeRenderer) {
-           String format = JMeterUtils.getPropDefault("jmeterPlugin.csvTimeFormat", "HH:mm:ss" + decimalSeparator + "S");
-           dateFormatter = new SimpleDateFormat(format);
+        if (xAxisRenderer != null && xAxisRenderer instanceof DividerRenderer) {
+            this.xAxisRenderer = new DividerRenderer(((DividerRenderer) xAxisRenderer).getFactor());
+        } else if (xAxisRenderer != null && xAxisRenderer instanceof DateTimeRenderer) {
+            String format = JMeterUtils.getPropDefault("jmeterPlugin.csvTimeFormat", "HH:mm:ss" + decimalSeparator + "S");
+            dateFormatter = new SimpleDateFormat(format);
         }
     }
 
@@ -58,17 +56,15 @@ public class GraphModelToCsvExporter
             String csvSeparator,
             char decimalSeparator,
             NumberRenderer renderer,
-            int hideNonRepValLimit)
-    {
+            int hideNonRepValLimit) {
         this(rows, destFile, csvSeparator, "Elapsed time", renderer, hideNonRepValLimit);
         this.decimalSeparator = decimalSeparator;
         dateFormatter = new SimpleDateFormat("HH:mm:ss" + decimalSeparator + "S");
     }
 
-    private String xValueFormatter(long xValue)
-    {
+    private String xValueFormatter(long xValue) {
         String ret;
-        if(xAxisRenderer != null) {
+        if (xAxisRenderer != null) {
             xAxisRenderer.setValue(xValue);
             ret = xAxisRenderer.getText();
         } else if (dateFormatter != null) {
@@ -79,33 +75,29 @@ public class GraphModelToCsvExporter
         return ret;
     }
 
-    public void writeCsvFile() throws IOException
-    {
+    public void writeCsvFile() throws IOException {
         //first, get all X values and rows names
         ConcurrentSkipListSet<Long> xValues = new ConcurrentSkipListSet<Long>();
         Iterator<Entry<String, AbstractGraphRow>> it = model.entrySet().iterator();
         ArrayList<String> rawsName = new ArrayList<String>();
-        while(it.hasNext())
-        {
+        while (it.hasNext()) {
             Entry<String, AbstractGraphRow> row = it.next();
             rawsName.add(row.getKey());
             Iterator<Entry<Long, AbstractGraphPanelChartElement>> itRow = row.getValue().iterator();
-            while (itRow.hasNext())
-            {
+            while (itRow.hasNext()) {
                 Entry<Long, AbstractGraphPanelChartElement> element = itRow.next();
-                    if(element.getValue().isPointRepresentative(hideNonRepValLimit)) {
-                        xValues.add(element.getKey());
-                    }
+                if (element.getValue().isPointRepresentative(hideNonRepValLimit)) {
+                    xValues.add(element.getKey());
                 }
             }
+        }
 
         //write file...
         //1st line
         BufferedWriter writer = new BufferedWriter(new FileWriter(destFile));
         writer.write(xAxisLabel);
-   
-        for(int i=0; i<rawsName.size(); i++)
-        {
+
+        for (int i = 0; i < rawsName.size(); i++) {
             writer.write(csvSeparator);
             writer.write(rawsName.get(i));
         }
@@ -114,20 +106,16 @@ public class GraphModelToCsvExporter
         writer.flush();
 
         //data lines
-
         Iterator<Long> itXValues = xValues.iterator();
-        while(itXValues.hasNext())
-        {
+        while (itXValues.hasNext()) {
             long xValue = itXValues.next();
             writer.write(xValueFormatter(xValue));
-         
-            for(int i=0; i<rawsName.size(); i++)
-            {
+
+            for (int i = 0; i < rawsName.size(); i++) {
                 writer.write(csvSeparator);
                 AbstractGraphRow row = model.get(rawsName.get(i));
                 AbstractGraphPanelChartElement value = row.getElement(xValue);
-                if(value != null)
-                {
+                if (value != null) {
                     writer.write("" + value.getValue());
                 }
             }

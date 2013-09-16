@@ -413,10 +413,11 @@ public class PluginsCMDWorker {
 
     public void processUnknownOption(String nextArg, ListIterator args) {
         if (pluginType != null && pluginType instanceof CMDLineArgumentsProcessor) {
+            log.debug("Trying to process unknown option using CMDLineArgumentsProcessor: " + nextArg);
             CMDLineArgumentsProcessor obj = (CMDLineArgumentsProcessor) pluginType;
             obj.processCMDOption(nextArg, args);
+        } else {
+            throw new UnsupportedOperationException("Unrecognized option: " + nextArg);
         }
-
-        throw new UnsupportedOperationException("Unrecognized option: " + nextArg);
     }
 }

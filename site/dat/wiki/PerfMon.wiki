@@ -44,3 +44,9 @@ then run the test. The values will be displayed at real time chart.
 If you run JMeter in non GUI mode and want to save monitoring data to file, 
 just configure result file saving in GUI as you do with other listeners. After 
 running the test you may load saved file into GUI and see the values timeline.
+
+==JMeter Properties==
+
+  * jmeterPlugin.perfmon.interval - metrics collection interval in milliseconds
+  * jmeterPlugin.perfmon.useUDP - true/false, enabling UDP connection try after failed TCP connection attempt
+  

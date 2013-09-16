@@ -1,11 +1,5 @@
 package kg.apc.jmeter.perfmon;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.reporters.LoadosophiaUploadingNotifier;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
@@ -21,10 +15,14 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author APC
- */
+import java.io.File;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class PerfMonCollector
         extends CorrectedResultCollector
         implements Runnable, PerfMonSampleGenerator {
@@ -77,7 +75,6 @@ public class PerfMonCollector
         return getProperty(DATA_PROPERTY);
     }
 
-    @Override
     public void sampleOccurred(SampleEvent event) {
         // just dropping regular test samples
     }
@@ -240,7 +237,31 @@ public class PerfMonCollector
 
     protected PerfMonAgentConnector getConnector(String host, int port) throws IOException {
         log.debug("Trying new connector");
-        Transport transport = TransportFactory.getTransport(new InetSocketAddress(host, port));
+        SocketAddress addr = new InetSocketAddress(host, port);
+        Transport transport = null;
+        try {
+            transport = TransportFactory.TCPInstance(addr);
+            if (!transport.test()) {
+                throw new IOException("Agent is unreachable via TCP");
+            }
+        } catch (IOException e) {
+            log.info("Can't connect TCP transport for host: " + addr.toString(), e);
+            boolean useUDP = JMeterUtils.getPropDefault("jmeterPlugin.perfmon.useUDP", false);
+            if (!useUDP) {
+                throw e;
+            } else {
+                try {
+                    log.debug("Connecting UDP");
+                    transport = TransportFactory.UDPInstance(addr);
+                    if (!transport.test()) {
+                        throw new IOException("Agent is unreachable via UDP");
+                    }
+                } catch (IOException ex) {
+                    log.info("Can't connect UDP transport for host: " + addr.toString(), ex);
+                    throw ex;
+                }
+            }
+        }
         NewAgentConnector conn = new NewAgentConnector();
         conn.setTransport(transport);
         return conn;

@@ -2,6 +2,7 @@
 
   * [JMXMon JMX Monitoring Collector] added
   * Fix unnecessary console error message in CMDTool
+  * disable UDP in PerfMon and enable it only via property setting
 
 = Ideas for Future Versions =
 
@@ -13,7 +14,6 @@
     * RPS vs Response Time graph ($10 bounty for implementing it)
     * Possibility to filter data for time period
     * allow using regexps in rows filtering on post-test file loading, or CMD
-    * disable UDP in PerfMon and enable it only via property setting
 
 ==Distributed testing==
     * Config Plugin (or maybe listener accepting distr test online status): Distributed Test Control Panel ($50-$75 bounty for implementing it)

@@ -15,8 +15,6 @@
  */
 package kg.apc.jmeter.jmxmon;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -25,41 +23,46 @@ import org.junit.Test;
 
 /**
  *
- * @author cyberw
+ * @author undera
  */
-public class JMXMonSamplerTest {
-
-    public JMXMonSamplerTest() {
+public class JMXMonSampleGeneratorTest {
+    
+    public JMXMonSampleGeneratorTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of generateSamples method, of class JMXMonSampler.
+     * Test of generateSample method, of class JMXMonSampleGenerator.
      */
     @Test
-    public void testGenerateSamples() {
-        System.out.println("generateSamples");
-        JMXMonSampleGenerator collector = new JMXMonSampleGeneratorEmul();
+    public void testGenerateSample() {
+        System.out.println("generateSample");
+        double d = 0.0;
+        String string = "";
+        JMXMonSampleGenerator instance = new JMXMonSampleGeneratorImpl();
+        instance.generateSample(d, string);
+        // TODO review the generated test code and remove the default call to fail.
+        
+    }
 
-        // empty query results
-        Map<String, Double> queryResults = new HashMap<String, Double>();
-        queryResults.put("attribute",1.0);
-        JMXMonSampler instance = new JMXMonSampler(new MBeanServerConnectionEmul(queryResults), "name", "Something:name=objectName", "attribute", "", true);
-        instance.generateSamples(collector);
+    public class JMXMonSampleGeneratorImpl implements JMXMonSampleGenerator {
+
+        public void generateSample(double d, String string) {
+        }
     }
 }

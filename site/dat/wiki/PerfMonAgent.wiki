@@ -71,7 +71,7 @@ The {{{--interval <seconds>}}} argument can be used to change metrics collection
 
 Server Agent uses simple plain-text protocol, anyone can use agent's 
 capabilities implementing client, based on kg.apc.perfmon.client.Transport 
-interface. If anyone's interested, let me know and I'll describe how to
+interface. If anyone's interested, start the topic on the support forums and I'll describe how to
 connect third-party client app to agent.
 
 

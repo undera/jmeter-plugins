@@ -1,7 +1,7 @@
 #labels Phase-Requirements,Phase-Design,Featured
 = Next Version =
  
-  * Maintenance release, changing homepage and distribution archives
+  * [JMXMon JMX Monitoring Collector] added
 
 = Ideas for Future Versions =
 
@@ -13,6 +13,7 @@
     * RPS vs Response Time graph ($10 bounty for implementing it)
     * Possibility to filter data for time period
     * allow using regexps in rows filtering on post-test file loading, or CMD
+    * disable UDP in PerfMon and enable it only via property setting
 
 ==Distributed testing==
     * Config Plugin (or maybe listener accepting distr test online status): Distributed Test Control Panel ($50-$75 bounty for implementing it)
@@ -31,11 +32,11 @@
     * Provide support for sampling IE browser (Issue 276)
     * Provide support for sampling Opera browser (Issue 282)
 ==Other==    
-    * Find a way to compare 2 runs
     * implement functions iif, base64 ($5 bounty for implementing it)
     * one more [AutoStop] criteria: when reached desired number of samples, duration criteria
     * random CSV data set [http://sqa.stackexchange.com/questions/3115/getting-a-random-line-from-a-file-with-jmeter?atw=1 a need] ($25 bounty for implementing it)
     * a way to specify Composite config in CMD tool
+    * a way to change granulation for CSV export (https://groups.google.com/forum/#!topic/jmeter-plugins/N7Lz7eCPPSs)
     * add "Default value" field for JSONPathExtractor
     * convert JsonToXmlConverter into post-processor
     * *More ideas, folks???*

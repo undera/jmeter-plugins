@@ -54,7 +54,7 @@ public class DbMonSamplerTest {
     public void testGenerateSamples() {
         System.out.println("generateSamples");
         DbMonSampleGenerator collector = new DbMonSampleGeneratorEmul();
-        DbMonSampler instance = new DbMonSampler(new ConnectionEmul(), null, true, null);
+        DbMonSampler instance = new DbMonSampler(new ConnectionEmul(), "poolName", null, true, null);
         instance.generateSamples(collector);
         // TODO review the generated test code and remove the default call to fail.
 

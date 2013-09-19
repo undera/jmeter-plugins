@@ -1,8 +1,10 @@
 = Next Version =
-
-  * [JMXMon JMX Monitoring Collector] added
+  * Add [HtmlUnitDriver WebDriver]* for the [WebDriverSampler WebDriver]
+  * [JMXMon JMX Monitoring Collector] added 
+  * Fix JMXMon Samples Collector use one jmx connection for the same URL and close connections when test ended
+  * Fix DbMon Samples Collector use one jdbc connection for the same Pool Name and close connections when test ended
   * Fix unnecessary console error message in CMDTool
-  * disable UDP in PerfMon and enable it only via property setting
+  * Disable UDP in PerfMon and enable it only via property setting
 
 = Ideas for Future Versions =
 

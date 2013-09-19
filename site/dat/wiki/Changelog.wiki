@@ -1,4 +1,7 @@
 = Changelog =
+  * *Add HtmlUnitDriver* for the [WebDriverSampler WebDriver]
+  * Fix JMXMon Samples Collector use one jmx connection for the same URL and close connections when test ended
+  * Fix DbMon Samples Collector use one jdbc connection for the same pool name and close connections when test ended   
 
 == [/downloads/file/JMeterPlugins-1.1.0.zip 1.1.0] <i><font color=gray size="1">July 1, 2013</font></i>==
   * *add [WebDriverSampler WebDriver] sampler*

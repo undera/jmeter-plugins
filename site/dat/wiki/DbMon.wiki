@@ -6,7 +6,7 @@ Many databases provide performance counters accessible via sql. DbMon lets you p
 
 This screenshot show the plugin when it is used to plot read and write transactions for a SQLServer
 
-todo: add screenshot
+[/img/wiki/dbmon_samples_collector.png]
 
 =Usage=
 ==GUI Mode==

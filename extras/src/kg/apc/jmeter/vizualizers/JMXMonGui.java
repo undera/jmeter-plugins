@@ -136,7 +136,7 @@ public class JMXMonGui
 
     private Component createSamplerPanel() {
         JPanel panel = new JPanel(new BorderLayout(5, 5));
-        panel.setBorder(BorderFactory.createTitledBorder("Database Samplers"));
+        panel.setBorder(BorderFactory.createTitledBorder("JMX Samplers"));
         panel.setPreferredSize(new Dimension(150, 150));
 
         JScrollPane scroll = new JScrollPane(createGrid());

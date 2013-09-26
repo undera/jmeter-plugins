@@ -48,13 +48,13 @@ public class DbmonTest implements TestConnection.TestConnectionDataProvider {
     public void testRun() throws InterruptedException {
         DbMonCollector instance = new TestDbMonCollector();
         instance.setData(JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, DbMonCollector.DATA_PROPERTY));
-        instance.testStarted();
+        instance.testStarted("localhost");
 
         setQueryResult(QUERY1, 1);
         setQueryResult(QUERY2, 1);
         instance.processConnectors();
         assertLastSample(PROBE1, 1);
-        assertNull(latestSamples.get(PROBE2)); // Deleta can not produce values at first loop
+        assertNull(latestSamples.get(PROBE2)); // Delta can not produce values at first loop
 
         setQueryResult(QUERY1, -2);
         setQueryResult(QUERY2, 2);

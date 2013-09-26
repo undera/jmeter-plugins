@@ -81,17 +81,24 @@ public class DbMonCollectorTest {
 
     /**
      * Test of testStarted method, of class DbMonCollector.
-     */
-    @Test
-    public void testTestStarted() {
-        System.out.println("testStarted");
-        String host = "";
+
+    public void testTestStarted(String host) {
+        System.out.println("Begin testStarted, host ="+ host);
         DbMonCollector instance = new DbMonCollector();
         instance.testStarted(host);
         // TODO review the generated test code and remove the default call to fail.
 
     }
+*/
+    public void testTestStarted() {
+        System.out.println("testStarted");
+        DbMonCollector instance = new DbMonCollector();
+        String host = "";
 
+        instance.testStarted(host);
+        // TODO review the generated test code and remove the default call to fail.
+
+    }
     /**
      * Test of testEnded method, of class DbMonCollector.
      */

@@ -112,9 +112,9 @@ public class JMXMonTest {
         }
         
         @Override
-        protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String name, boolean delta, String objectName, String attribute, String key) throws MalformedURLException, IOException {
+        protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String jmxUrl, String name, boolean delta, String objectName, String attribute, String key) throws MalformedURLException, IOException {
             MBeanServerConnection conn = new MBeanServerConnectionEmul(queryResults);
-            jmxMonSamplers.add(new JMXMonSampler(conn, name, objectName, attribute, key, delta));
+            jmxMonSamplers.add(new JMXMonSampler(conn, null, jmxUrl, name, objectName, attribute, key, delta));
         }
         
         @Override

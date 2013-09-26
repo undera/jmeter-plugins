@@ -1,7 +1,17 @@
 package kg.apc.jmeter.dbmon;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
+
 import org.apache.jmeter.protocol.jdbc.config.DataSourceElement;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
@@ -11,14 +21,6 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 /**
  *
  * @author Marten Bohlin
@@ -27,7 +29,12 @@ public class DbMonCollector
         extends CorrectedResultCollector
         implements Runnable, DbMonSampleGenerator {
 
-    private static boolean autoGenerateFiles = false;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2521388319652516775L;
+	
+	private static boolean autoGenerateFiles = false;
     private static final String DBMON = "DbMon";
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String DATA_PROPERTY = "samplers";
@@ -36,9 +43,7 @@ public class DbMonCollector
     private List<DbMonSampler> dbMonSamplers = new ArrayList<DbMonSampler>();
     private static String autoFileBaseName = null;
     private static int counter = 0;
-    /* uncomment to upload to Loadsophia
-    private LoadosophiaUploadingNotifier dbMonNotifier = LoadosophiaUploadingNotifier.getInstance();
-    */
+ 
     private static String workerHost = null;
 
     static {
@@ -97,8 +102,15 @@ public class DbMonCollector
        }
     }
 
+    public void testStarted() {
+    	log.debug("Start testStarted");
+        super.testStarted();
+        log.debug("End   testStarted host");
+    }
+
     @Override
     public void testStarted(String host) {
+    	log.debug("Start testStarted host = " + host);
 
         if(!isWorkingHost(host)) {
            return;
@@ -106,15 +118,11 @@ public class DbMonCollector
 
         initCollector();
         super.testStarted(host);
-    }
-
-    @Override
-    public void testStarted() {
-        initCollector();
-        super.testStarted();
+        log.debug("End   testStarted host = " + host);
     }
 
     private void initCollector() {
+    	log.debug("Start initCollector");
         //ensure the data will be saved
         if (getProperty(FILENAME) == null || getProperty(FILENAME).getStringValue().trim().length() == 0) {
             if (autoGenerateFiles) {
@@ -148,6 +156,7 @@ public class DbMonCollector
 
         workerThread = new Thread(this);
         workerThread.start();
+        log.debug("End   initCollector");
     }
 
     private void setupSaving(String fileName) {
@@ -160,10 +169,13 @@ public class DbMonCollector
 
     @Override
     public void testEnded(String host) {
+    	log.debug("Start testEnded");
         if(workerThread == null) {
-           return;
+        	log.debug("End   testEnded workerThread == null");
+        	return;
         }
         workerHost = null;
+        
         workerThread.interrupt();
         shutdownConnectors();
 
@@ -171,6 +183,7 @@ public class DbMonCollector
         autoFileBaseName = null;
         counter = 0;
         super.testEnded(host);
+        log.debug("End   testEnded");
     }
 
     private void initiateConnectors() throws SQLException {
@@ -185,21 +198,66 @@ public class DbMonCollector
         for (int i = 0; i < rows.size(); i++) {
             ArrayList<Object> row = (ArrayList<Object>) rows.get(i).getObjectValue();
             String connectionPool = ((JMeterProperty) row.get(0)).getStringValue();
-            Connection conn = DataSourceElement.getConnection(connectionPool);
             String label = ((JMeterProperty) row.get(1)).getStringValue();
             boolean isDelta = ((JMeterProperty) row.get(2)).getBooleanValue();
             String sql = ((JMeterProperty) row.get(3)).getStringValue();
-            initiateConnector(conn, label, isDelta, sql);
+            initiateConnector(connectionPool, label, isDelta, sql);
         }
     }
 
-    private void initiateConnector(Connection conn, String name, boolean delta, String sql) {
-        dbMonSamplers.add(new DbMonSampler(conn, name, delta, sql));
+    private void initiateConnector(String connectionPoolName, String name, boolean delta, String sql) throws SQLException {
+    	Connection conn = findConnectionSamePoolName(connectionPoolName);
+    	
+    	if (conn == null) {
+    		log.debug("create new connection");
+    		conn = DataSourceElement.getConnection(connectionPoolName);
+    	}
+    	else {
+    		log.debug("use same connection");
+    	}
+        dbMonSamplers.add(new DbMonSampler(conn, connectionPoolName, name, delta, sql));
     }
 
+    
+    private Connection findConnectionSamePoolName(String connectionPoolName) {
+    	Connection conn = null;
+    	boolean continueFind = true;
+    	Iterator<DbMonSampler> it = dbMonSamplers.iterator();
+    	
+    	while (it.hasNext() && continueFind) {
+    		DbMonSampler dbMonSampler = it.next();
+    		String connectionPoolNameTmp = dbMonSampler.getPoolName();
+    		if (connectionPoolNameTmp != null && connectionPoolNameTmp.equals(connectionPoolName)) {
+    			conn = dbMonSampler.getConnection();
+    			continueFind = false;
+    		}
+    	}
+    	
+    	return conn;
+    }
 
     private void shutdownConnectors() {
+    	log.debug("Start shutdownConnectors");
+    	Iterator<DbMonSampler> it = dbMonSamplers.iterator();
+    	
+    	while (it.hasNext()) {
+    		DbMonSampler dbMonSampler = it.next();
+    		Connection connJdbc = dbMonSampler.getConnection();
+    		if (connJdbc != null) {
+    			try {
+    				connJdbc.close();
+    				log.debug("connJdbc is closed");
+    			}
+    			catch (Exception ex) {
+    				log.debug("Can't close jdbc connector, but continue");
+    			}
+    		}
+    		else {
+    			log.debug("connJdbc == null, don't try to close connection");
+    		}
+    	}
         dbMonSamplers.clear();
+        log.debug("End   shutdownConnectors");
     }
 
     protected void processConnectors() {

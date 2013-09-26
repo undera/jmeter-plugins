@@ -102,6 +102,12 @@ public class DbMonCollector
        }
     }
 
+    public void testStarted() {
+    	log.debug("Start testStarted");
+        super.testStarted();
+        log.debug("End   testStarted host");
+    }
+
     @Override
     public void testStarted(String host) {
     	log.debug("Start testStarted host = " + host);

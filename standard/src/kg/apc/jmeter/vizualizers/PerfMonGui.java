@@ -27,10 +27,6 @@ import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author APC
- */
 public class PerfMonGui
         extends AbstractOverTimeVisualizer {
 

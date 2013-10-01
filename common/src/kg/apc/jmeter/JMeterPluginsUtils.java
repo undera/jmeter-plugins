@@ -1,5 +1,16 @@
 package kg.apc.jmeter;
 
+import org.apache.jmeter.engine.util.CompoundVariable;
+import org.apache.jmeter.gui.AbstractJMeterGuiComponent;
+import org.apache.jmeter.gui.util.PowerTableModel;
+import org.apache.jmeter.samplers.SampleSaveConfiguration;
+import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.apache.jmeter.testelement.property.StringProperty;
+import org.apache.jmeter.util.JMeterUtils;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
@@ -11,24 +22,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import org.apache.jmeter.engine.util.CompoundVariable;
-import org.apache.jmeter.gui.AbstractJMeterGuiComponent;
-import org.apache.jmeter.gui.util.PowerTableModel;
-import org.apache.jmeter.samplers.SampleSaveConfiguration;
-import org.apache.jmeter.testelement.property.CollectionProperty;
-import org.apache.jmeter.testelement.property.StringProperty;
-import org.apache.jmeter.util.JMeterUtils;
 
-/**
- *
- * @author undera
- */
 public abstract class JMeterPluginsUtils {
 
     private static String PLUGINS_PREFIX = "jp@gc - ";
@@ -174,7 +168,7 @@ public abstract class JMeterPluginsUtils {
      * Find in panel appropriate place and put hyperlink there. I know that it
      * is stupid way. But the result is so good!
      *
-     * @param panel - supposed to be result of makeTitlePanel()
+     * @param panel    - supposed to be result of makeTitlePanel()
      * @param helpPage wiki page name, not full URL
      * @return original panel
      * @see AbstractJMeterGuiComponent

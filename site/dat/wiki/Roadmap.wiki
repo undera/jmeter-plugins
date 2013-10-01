@@ -39,6 +39,7 @@
     * a way to change granulation for CSV export (https://groups.google.com/forum/#!topic/jmeter-plugins/N7Lz7eCPPSs)
     * add "Default value" field for JSONPathExtractor
     * convert JsonToXmlConverter into post-processor
+    * enable proxy settings for Loadosophia Uploader (https://groups.google.com/forum/#!topic/jmeter-plugins/ezpmnAM7FH8)
     * *More ideas, folks???*
 
 See also:

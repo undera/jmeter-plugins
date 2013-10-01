@@ -5,7 +5,7 @@
     <parent>
         <groupId>kg.apc</groupId>
         <artifactId>jmeter-plugins</artifactId>
-        <version>1.1.1</version>
+        <version>1.1.2</version>
     </parent>
     <artifactId>jmeter-plugins-standard</artifactId>
     <packaging>jar</packaging>
@@ -45,7 +45,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.6</java-version>
         <jmeter.version>2.8</jmeter.version>
-        <cmdrunner-version>1.0.1</cmdrunner-version>
+        <cmdrunner-version>1.0.2</cmdrunner-version>
         <selenium.version>2.33.0</selenium.version>
         <powermock.version>1.5</powermock.version>
         <cobertura-maven.version>2.5.2</cobertura-maven.version>

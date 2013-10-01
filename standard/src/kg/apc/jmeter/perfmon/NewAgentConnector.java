@@ -9,10 +9,6 @@ import kg.apc.perfmon.client.Transport;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public class NewAgentConnector implements PerfMonAgentConnector {
 
     private static final Logger log = LoggingManager.getLoggerForClass();

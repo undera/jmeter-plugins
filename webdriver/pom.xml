@@ -77,6 +77,18 @@
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
         </dependency>
+        <!-- begin need this libraries for HtmlUnitDriver -->
+        <dependency>
+	        <groupId>xml-apis</groupId>
+	        <artifactId>xml-apis</artifactId>
+	        <version>1.4.01</version>
+        </dependency>
+        <dependency>
+	       <groupId>org.w3c.css</groupId>
+	       <artifactId>sac</artifactId>
+	       <version>1.3</version>
+        </dependency>
+        <!-- end need this libraries for HtmlUnitDriver -->
         <dependency>
             <groupId>de.sciss</groupId>
             <artifactId>jsyntaxpane</artifactId>
@@ -217,7 +229,9 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-android-driver,guava,json,commons-exec,jsyntaxpane</includeArtifactIds>
+                            <includeArtifactIds>selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-android-driver,selenium-htmlunit-driver,
+                            	guava,json,commons-exec,jsyntaxpane,htmlunit,htmlunit-core-js,nekohtml,cssparser,jetty-websocket,xercesImpl,xml-apis,sac
+                            </includeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>

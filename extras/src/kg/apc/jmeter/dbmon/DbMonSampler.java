@@ -16,13 +16,15 @@ public class DbMonSampler {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private String metricName;
     private String sql;
+    private String poolName;
     private final Connection connection;
     private boolean sampleDeltaValue = true;
     private double oldValue = Double.NaN;
 
-    public DbMonSampler(Connection conn, String name, boolean sampleDeltaValue, String sql) {
+    public DbMonSampler(Connection conn, String poolName, String name, boolean sampleDeltaValue, String sql) {
         this.metricName = name;
         this.connection = conn;
+        this.poolName = poolName;
         this.sql = sql;
         this.sampleDeltaValue = sampleDeltaValue;
     }
@@ -73,4 +75,40 @@ public class DbMonSampler {
             }
         }
     }
+
+	public String getMetricName() {
+		return metricName;
+	}
+
+	public void setMetricName(String metricName) {
+		this.metricName = metricName;
+	}
+
+	public String getSql() {
+		return sql;
+	}
+
+	public void setSql(String sql) {
+		this.sql = sql;
+	}
+
+	public boolean isSampleDeltaValue() {
+		return sampleDeltaValue;
+	}
+
+	public void setSampleDeltaValue(boolean sampleDeltaValue) {
+		this.sampleDeltaValue = sampleDeltaValue;
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public String getPoolName() {
+		return poolName;
+	}
+
+	public void setPoolName(String poolName) {
+		this.poolName = poolName;
+	}
 }

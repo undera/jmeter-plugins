@@ -13,7 +13,7 @@ public class DistributedTestControlGui extends AbstractConfigGui {
 
     public static final String WIKIPAGE = "DistributedTestControl";
     public static Logger log = LoggingManager.getLoggerForClass();
-    private ServersListPanel mainPanel;
+    private ServersListPanel serversPanel;
 
     public DistributedTestControlGui() {
         super();
@@ -35,7 +35,7 @@ public class DistributedTestControlGui extends AbstractConfigGui {
     public void configure(TestElement te) {
         super.configure(te);
         // fill controls
-        mainPanel.loadFromTestElement((DistributedTestControl) te);
+        serversPanel.loadFromTestElement((DistributedTestControl) te);
     }
 
     @Override
@@ -47,10 +47,9 @@ public class DistributedTestControlGui extends AbstractConfigGui {
 
     @Override
     public void modifyTestElement(TestElement te) {
-        log.debug("[Lockfile plugin] modifyTestElement");
         configureTestElement(te);
         // fill props
-        mainPanel.saveToTestElement((DistributedTestControl) te);
+        serversPanel.saveToTestElement((DistributedTestControl) te);
     }
 
     @Override
@@ -64,10 +63,16 @@ public class DistributedTestControlGui extends AbstractConfigGui {
         setBorder(makeBorder());
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
 
-        mainPanel=new ServersListPanel();
+        serversPanel = new ServersListPanel();
+
+        JPanel buttonPanel = new JPanel();
+        JButton btnAdd = new JButton("Add Slave Server");
+        btnAdd.addActionListener(new AddRemoteServerAction(serversPanel));
+        buttonPanel.add(btnAdd);
 
         JPanel container = new JPanel(new BorderLayout());
-        container.add(mainPanel, BorderLayout.NORTH);
+        container.add(buttonPanel, BorderLayout.NORTH);
+        container.add(serversPanel, BorderLayout.CENTER);
         add(container, BorderLayout.CENTER);
     }
 
@@ -78,6 +83,6 @@ public class DistributedTestControlGui extends AbstractConfigGui {
     }
 
     private void initFields() {
-        mainPanel.clear();
+        serversPanel.clear();
     }
 }

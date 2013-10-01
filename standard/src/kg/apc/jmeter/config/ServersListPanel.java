@@ -16,6 +16,7 @@ public class ServersListPanel extends JPanel {
 
     public void clear() {
         serversList.clear();
+        removeAll();
     }
 
     public void saveToTestElement(DistributedTestControl te) {
@@ -27,12 +28,13 @@ public class ServersListPanel extends JPanel {
         CollectionProperty servers = te.getData();
         clear();
         for (int n = 0; n < servers.size(); n++) {
-            serversList.add(servers.get(n).getStringValue());
+            add(servers.get(n).getStringValue());
         }
     }
 
-    public void add() {
-        serversList.add("");
+    public void add(String stringValue) {
+        serversList.add(stringValue);
+        add(new JMeterServerPanel(stringValue));
     }
 
     public int getCount() {

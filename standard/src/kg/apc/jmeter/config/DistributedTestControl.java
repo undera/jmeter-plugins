@@ -27,7 +27,6 @@ public class DistributedTestControl extends ConfigTestElement
         // TODO: don't run in slave mode, only in master
     }
 
-
     public CollectionProperty getData() {
         return (CollectionProperty) getProperty(DATA_PROP);
     }

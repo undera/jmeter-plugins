@@ -1,40 +1,57 @@
 package kg.apc.jmeter.config;
 
 import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class ServersListPanel extends JPanel {
-    private List<String> serversList;
+    private static final Logger log = LoggingManager.getLoggerForClass();
+
+    private List<JMeterServerPanel> serversList;
 
     public ServersListPanel() {
         super();
-        serversList = new LinkedList<String>();
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        serversList = new LinkedList<JMeterServerPanel>();
     }
 
     public void clear() {
         serversList.clear();
         removeAll();
+        repaint();
     }
 
     public void saveToTestElement(DistributedTestControl te) {
-        CollectionProperty data = new CollectionProperty(DistributedTestControl.DATA_PROP, serversList);
+        ArrayList<String> names = new ArrayList<String>(getCount());
+        for(JMeterServerPanel srv:serversList) {
+            names.add(srv.getServerName());
+        }
+
+        CollectionProperty data = new CollectionProperty(DistributedTestControl.DATA_PROP, names);
+        log.debug("Saving: " + data.toString());
         te.setData(data);
     }
 
     public void loadFromTestElement(DistributedTestControl te) {
         CollectionProperty servers = te.getData();
+        log.debug("Loading: " + servers.toString());
         clear();
         for (int n = 0; n < servers.size(); n++) {
+            log.debug("Adding: " + servers.get(n).toString());
             add(servers.get(n).getStringValue());
         }
     }
 
     public void add(String stringValue) {
-        serversList.add(stringValue);
-        add(new JMeterServerPanel(stringValue));
+        JMeterServerPanel panel = new JMeterServerPanel(stringValue);
+        serversList.add(panel);
+        add(panel);
+        repaint();
     }
 
     public int getCount() {

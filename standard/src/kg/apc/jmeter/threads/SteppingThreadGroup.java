@@ -5,55 +5,23 @@ import org.apache.log.Logger;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jorphan.logging.LoggingManager;
 
-/**
- *
- * @author apc
- */
 public class SteppingThreadGroup
         extends AbstractSimpleThreadGroup {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    /**
-     *
-     */
     private static final String THREAD_GROUP_DELAY = "Threads initial delay";
-    /**
-     *
-     */
     private static final String INC_USER_PERIOD = "Start users period";
-    /**
-     *
-     */
     private static final String INC_USER_COUNT = "Start users count";
-    /**
-     *
-     */
     private static final String INC_USER_COUNT_BURST = "Start users count burst";
-    /**
-     *
-     */
     private static final String DEC_USER_PERIOD = "Stop users period";
-    /**
-     *
-     */
     private static final String DEC_USER_COUNT = "Stop users count";
-    /**
-     *
-     */
     private static final String FLIGHT_TIME = "flighttime";
     private static final String RAMPUP = "rampUp";
 
-    /**
-     *
-     */
     public SteppingThreadGroup() {
         super();
     }
 
-    /**
-     *
-     * @param thread
-     */
     @Override
     protected void scheduleThread(JMeterThread thread, long tgStartTime) {
 
@@ -110,10 +78,6 @@ public class SteppingThreadGroup
         thread.setScheduled(true);
     }
 
-    /**
-     *
-     * @return
-     */
     public String getThreadGroupDelay() {
         return getPropertyAsString(THREAD_GROUP_DELAY);
     }
@@ -122,10 +86,6 @@ public class SteppingThreadGroup
         setProperty(THREAD_GROUP_DELAY, delay);
     }
 
-    /**
-     *
-     * @return
-     */
     public String getInUserPeriod() {
         return getPropertyAsString(INC_USER_PERIOD);
     }
@@ -134,10 +94,6 @@ public class SteppingThreadGroup
         setProperty(INC_USER_PERIOD, value);
     }
 
-    /**
-     *
-     * @return
-     */
     public String getInUserCount() {
         return getPropertyAsString(INC_USER_COUNT);
     }
@@ -154,10 +110,6 @@ public class SteppingThreadGroup
         setProperty(INC_USER_COUNT_BURST, text);
     }
 
-    /**
-     *
-     * @return
-     */
     public String getFlightTime() {
         return getPropertyAsString(FLIGHT_TIME);
     }
@@ -166,10 +118,6 @@ public class SteppingThreadGroup
         setProperty(FLIGHT_TIME, delay);
     }
 
-    /**
-     *
-     * @return
-     */
     public String getOutUserPeriod() {
         return getPropertyAsString(DEC_USER_PERIOD);
     }
@@ -178,10 +126,6 @@ public class SteppingThreadGroup
         setProperty(DEC_USER_PERIOD, delay);
     }
 
-    /**
-     *
-     * @return
-     */
     public String getOutUserCount() {
         return getPropertyAsString(DEC_USER_COUNT);
     }

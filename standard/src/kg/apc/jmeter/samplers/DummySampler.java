@@ -5,10 +5,6 @@ import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.Interruptible;
 import org.apache.jmeter.samplers.SampleResult;
 
-/**
- *
- * @author apc
- */
 public class DummySampler
         extends AbstractSampler implements Interruptible {
 
@@ -29,7 +25,7 @@ public class DummySampler
             res.sampleStart();
             try {
                 Thread.sleep(getResponseTime());
-            } catch (InterruptedException ex) {
+            } catch (InterruptedException ignored) {
             }
             res.sampleEnd();
         } else {
@@ -55,10 +51,6 @@ public class DummySampler
         return res;
     }
 
-    /**
-     *
-     * @param selected
-     */
     public void setSuccessful(boolean selected) {
         setProperty(IS_SUCCESSFUL, selected);
     }
@@ -67,26 +59,14 @@ public class DummySampler
         setProperty(IS_WAITING, selected);
     }
 
-    /**
-     *
-     * @param text
-     */
     public void setResponseCode(String text) {
         setProperty(RESPONSE_CODE, text);
     }
 
-    /**
-     *
-     * @param text
-     */
     public void setResponseMessage(String text) {
         setProperty(RESPONSE_MESSAGE, text);
     }
 
-    /**
-     *
-     * @param text
-     */
     public void setResponseData(String text) {
         setProperty(RESPONSE_DATA, text);
     }
@@ -131,15 +111,11 @@ public class DummySampler
         return getPropertyAsString(REQUEST_DATA);
     }
 
-    /**
-     *
-     * @return
-     */
     public int getResponseTime() {
         int time = 0;
         try {
             time = Integer.valueOf(getPropertyAsString(RESPONSE_TIME));
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
         return time;
     }
@@ -148,7 +124,7 @@ public class DummySampler
         int time = 0;
         try {
             time = Integer.valueOf(getPropertyAsString(LATENCY));
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
         return time;
     }

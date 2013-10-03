@@ -1,9 +1,5 @@
 package kg.apc.jmeter.threads;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -14,35 +10,24 @@ import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author apc
- */
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 public class UltimateThreadGroup
         extends AbstractSimpleThreadGroup
         implements Serializable, TestListener {
-    //private static final Logger log = LoggingManager.getLoggerForClass();
 
-    /**
-     *
-     */
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String DATA_PROPERTY = "ultimatethreadgroupdata";
     private PropertyIterator scheduleIT;
     private int threadsToSchedule;
     private CollectionProperty currentRecord;
 
-    /**
-     *
-     */
     public UltimateThreadGroup() {
         super();
     }
 
-    /**
-     *
-     * @param thread
-     */
     @Override
     protected void scheduleThread(JMeterThread thread, long tgStartTime) {
         log.debug("Scheduling thread: " + thread.getThreadName());
@@ -73,14 +58,9 @@ public class UltimateThreadGroup
         threadsToSchedule--;
     }
 
-    /**
-     *
-     * @return
-     */
     public JMeterProperty getData() {
         //log.info("getData: "+getProperty(DATA_PROPERTY));
-        JMeterProperty prop = getProperty(DATA_PROPERTY);
-        return prop;
+        return getProperty(DATA_PROPERTY);
     }
 
     void setData(CollectionProperty rows) {
@@ -96,9 +76,8 @@ public class UltimateThreadGroup
         if (!(threadValues instanceof NullProperty)) {
             CollectionProperty columns = (CollectionProperty) threadValues;
             List<?> rows = (List<?>) columns.getObjectValue();
-            Iterator<?> iter = rows.iterator();
-            while (iter.hasNext()) {
-                CollectionProperty prop = (CollectionProperty) iter.next();
+            for (Object row1 : rows) {
+                CollectionProperty prop = (CollectionProperty) row1;
                 ArrayList<JMeterProperty> row = (ArrayList<JMeterProperty>) prop.getObjectValue();
                 //log.info(prop.getStringValue());
                 result += row.get(0).getIntValue();

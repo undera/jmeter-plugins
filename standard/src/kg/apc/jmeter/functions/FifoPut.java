@@ -1,19 +1,16 @@
 package kg.apc.jmeter.functions;
 
 import kg.apc.jmeter.modifiers.FifoMap;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.functions.AbstractFunction;
 import org.apache.jmeter.functions.InvalidVariableException;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 
-/**
- *
- * @author undera
- */
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 public class FifoPut extends AbstractFunction {
 
     private static final List<String> desc = new LinkedList<String>();
@@ -23,20 +20,13 @@ public class FifoPut extends AbstractFunction {
         desc.add("Queue name to put value");
         desc.add("String value to put into FIFO queue");
     }
+
     private Object[] values;
 
-    /**
-     * No-arg constructor.
-     */
     public FifoPut() {
         FifoMap.getInstance().clear();
     }
 
-    /**
-     * {
-     *
-     * @inheritDoc}
-     */
     @Override
     public synchronized String execute(SampleResult previousResult, Sampler currentSampler)
             throws InvalidVariableException {
@@ -51,32 +41,17 @@ public class FifoPut extends AbstractFunction {
         return value;
     }
 
-    /**
-     * {
-     *
-     * @inheritDoc}
-     */
     @Override
     public synchronized void setParameters(Collection<CompoundVariable> parameters) throws InvalidVariableException {
         checkMinParameterCount(parameters, 2);
         values = parameters.toArray();
     }
 
-    /**
-     * {
-     *
-     * @inheritDoc}
-     */
     @Override
     public String getReferenceKey() {
         return KEY;
     }
 
-    /**
-     * {
-     *
-     * @inheritDoc}
-     */
     @Override
     public List<String> getArgumentDesc() {
         return desc;

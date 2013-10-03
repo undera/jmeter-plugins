@@ -14,7 +14,6 @@ import org.apache.jmeter.threads.JMeterVariables;
 /**
  * Provides a DoubleSum function that adds two or more Double values.
  * Mostly copied from LongSum
- * @see LongSum
  */
 public class StrLen extends AbstractFunction {
 

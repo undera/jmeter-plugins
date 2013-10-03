@@ -11,10 +11,6 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterVariables;
 
-/**
- *
- * @author undera
- */
 public class FifoGet extends AbstractFunction {
 
     private static final List<String> desc = new LinkedList<String>();
@@ -26,17 +22,9 @@ public class FifoGet extends AbstractFunction {
     }
     private Object[] values;
 
-    /**
-     * No-arg constructor.
-     */
     public FifoGet() {
     }
 
-    /**
-     * {
-     *
-     * @inheritDoc}
-     */
     @Override
     public synchronized String execute(SampleResult previousResult, Sampler currentSampler)
             throws InvalidVariableException {
@@ -53,32 +41,17 @@ public class FifoGet extends AbstractFunction {
         return value;
     }
 
-    /**
-     * {
-     *
-     * @inheritDoc}
-     */
     @Override
     public synchronized void setParameters(Collection<CompoundVariable> parameters) throws InvalidVariableException {
         checkMinParameterCount(parameters, 1);
         values = parameters.toArray();
     }
 
-    /**
-     * {
-     *
-     * @inheritDoc}
-     */
     @Override
     public String getReferenceKey() {
         return KEY;
     }
 
-    /**
-     * {
-     *
-     * @inheritDoc}
-     */
     @Override
     public List<String> getArgumentDesc() {
         return desc;

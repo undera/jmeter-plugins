@@ -17,3 +17,8 @@ Legend items represents Thread Groups in your test plan.
 == Example ==
 
 [/img/examples/ActiveThreadsOverTimeExample.jmx Download Example Test Plan]
+
+== Online Graph for Active Threads ==
+
+On [https://loadosophia.org/?utm_source=jpgc&utm_medium=wiki&utm_campaign=ATOT Loadosophia.org] service you can see the online version of "Active Threads" graph on "Delivered Load" composite graph.
+ See example [https://loadosophia.org/examples/80342/zoom/tps/?utm_source=jpgc&utm_medium=wiki&utm_campaign=ATOT here].

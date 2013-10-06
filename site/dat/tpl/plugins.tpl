@@ -41,15 +41,13 @@
                 <td>
                     This project is an independent<br/> set of plugins
                     for <a href="http://jakarta.apache.org/jmeter/">Apache JMeter</a>.
-
                 </td>
                 <td>
                     <a href="http://jmeter.apache.org/" target="_blank"><img
                                 src="/img/site/jmeter-logo.png" alt="Apache JMeter"/></a>
-
                 </td>
                 <td>
-                    <a href="http://blazemeter.com/?utm_source=jmplinnerpages&amp;utm_medium=cpc&amp;utm_content=jmpininnerpgs&amp;utm_campaign=JMeter%2BPlug%2BIn%2BWiki"
+                    <a href="http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki"
                        target="_blank"><img src="/img/site/bz_small.jpg" alt=""></a>
                 </td>
             </tr>
@@ -69,4 +67,10 @@
 
 {block name="content" prepend}
     {include file="counter.tpl"}
+{/block}
+
+{block name="footer_center"}
+<td style="font-size: 80%;">
+<span style="color: gray;">Licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a></span>
+</td>
 {/block}

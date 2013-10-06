@@ -1,7 +1,15 @@
 = Changelog =
-  * *Add HtmlUnitDriver* for the [WebDriverSampler WebDriver]
+== Upcoming Version 1.1.2 ==
+  * Add *[HtmlUnitDriver HtmlUnitDriver]* for the [WebDriverSampler WebDriver]
+  * [JMXMon JMX Monitoring Collector] added
   * Fix JMXMon Samples Collector use one jmx connection for the same URL and close connections when test ended
-  * Fix DbMon Samples Collector use one jdbc connection for the same pool name and close connections when test ended   
+  * Fix DbMon Samples Collector use one jdbc connection for the same Pool Name and close connections when test ended
+  * Fix unnecessary console error message in CMDTool
+  * Disable UDP in PerfMon and enable it only via property setting
+
+== [/downloads/file/JMeterPlugins-1.1.1.zip 1.1.1] <i><font color=gray size="1">July 14, 2013</font></i>==
+  * *Project has moved to new homepage, http://jmeter-plugins.org/*
+  * add Loadosophia.org active tests support
 
 == [/downloads/file/JMeterPlugins-1.1.0.zip 1.1.0] <i><font color=gray size="1">July 1, 2013</font></i>==
   * *add [WebDriverSampler WebDriver] sampler*

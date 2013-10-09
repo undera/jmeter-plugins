@@ -71,6 +71,8 @@ Now go to "Chosen OS" sampler and replace constant {{{current_os}}} value with {
 
 BTW, rename the _Regular Expression Extractor_ to "Extract OS_ID", this will make your test plan more obvious.
 
+[/img/wiki/async_tutorial/undera-514d.png]
+
 === Reaching the Download URL ===
 
 Now we have a "total variety" situation: we have dynamic "Chosen OS" page and should make next request in scenario only to appropriate OS family links. That's easier than it sound. Just look into "Chosen OS" page HTML and you'll find that the next page is "/downloads/mirror.php?id=414361", varying only the "id" parameter. We'll use the same trick with _Regular Expression Extractor_ random choice. Add another _Regular Expression Extractor_ as a child of
@@ -85,9 +87,7 @@ Again, rename it to "Extract MIRROR".
 
 Now add next _HTTP Request_, rename it to "No, Thanks" and set {{{ ${MIRROR} }}} variable reference in _Path_ field. Then add another _Regular Expression Extractor_ and name it "Extract DOWNLOAD". Set reference name to "DOWNLOAD" and regexp to {{{ <a href="([^"]+)">No thanks }}} . You already know how to fill all other fields.
 
-That's the life of JMeter user: do a request, extract some value, do the next request with extracted value. Quite boring, but the resulting test plan with its flexibility worth some patience.
-
-So tighten the belt, we already have our download URL in {{{ ${DOWNLOAD} }}} variable!
+That's the life of JMeter user: do a request, extract some value, do the next request with extracted value. Quite boring, but the resulting test plan with its flexibility worth some patience. So tighten the belt, we already have our download URL in {{{ ${DOWNLOAD} }}} variable!
 
 === Putting the URL into FIFO ===
 
@@ -97,11 +97,11 @@ That's the easiest part: right-click the "No, Thanks" sampler and add _Inter-Thr
 
 == Step 3: Creating Async Worker Scenario ==
 
-Now let's create a consumer on another side of the pipe. We already have a thread group, just add new _HTTP Request_ inside it. Name it "Do Download" and set {{{ ${URL} }}} variable reference in its _Path_ field.
+Now let's create a consumer on another side of the pipe. We already have the "Async Workers" thread group, just add new _HTTP Request_ inside it. Name it "Do Download" and set {{{ ${URL} }}} variable reference in its _Path_ field.
 
 Then add an _Inter-Thread Communication PreProcessor_ as a child of _HTTP Request_. Set  queue name to "URLS" and variable name to "URL". Set timeout to some huge value, like thousand or million seconds.
 
-Finally, add a _View Results Tree_ listener as a child of Async TG.
+Finally, add a _View Results Tree_ listener as a child of Async Workers.
 
 [/img/wiki/async_tutorial/undera-fe26.png]
 
@@ -112,15 +112,15 @@ Finally, add a _View Results Tree_ listener as a child of Async TG.
 With all the precautions and a popcorn bucket let's run the test. All the action from the Main TG should be visible as a successful samples in its _View Results Tree_ listener. Async Worker's results will be in _View Results Tree_, too, depending on the speed of your Internet connection.
 
 Here's what happens inside JMeter engine:
-  # Main TG starts its single thread and Async TG starts ten threads
-  # All Async TG try to execute the "Do Download" sampler and call PreProcessor to prepare the sampler. All threads freeze waiting when a value in FIFO will appear.
+  # Main TG starts its single thread and Async Workers starts ten threads
+  # All Async Workers threads try to execute the "Do Download" sampler and call PreProcessor to prepare the sampler. All threads freeze waiting when a value in FIFO will appear.
   # Main TG thread do its first loop, reaching "No, Thanks" sampler, first calls RegExp Extractor to get download URL, then puts extracted value into FIFO
-  # One of Async TG threads gets unlocked with URL value from FIFO, it starts download request.
-  # Main TG thread starts second loop, everything repeats, one more Async TG thread is unlocked with every new URL value in FIFO
+  # One of Async Workers threads gets unlocked with URL value from FIFO, it starts download request.
+  # Main TG thread starts second loop, everything repeats, one more Async Workers thread is unlocked with every new URL value in FIFO
   # ... again and again ...
-  # We end up with Main TG done its work, and Async TG with all 10 threads downloading different MySQL Workbench packages
+  # We end up with Main TG done its work, and Async Workers with all 10 threads downloading different MySQL Workbench packages
 
-Beware that FIFO queue will wait a thousand or million seconds before timeout. So any error samples in Main TG may lead to missing URL to wake a thread in Async TG. To overcome this, you may increase iteration count for Main TG, so more URLs will be passed via FIFO, ensuring all Async TG threads will receive one to download.
+Beware that FIFO queue will wait a thousand or million seconds before timeout. So any error samples in Main TG may lead to missing URL to wake a thread in Async Workers. To overcome this, you may increase iteration count for Main TG, so more URLs will be passed via FIFO, ensuring all Async Workers threads will receive one to download.
 
 == Download Resulting Test Plan ==
 

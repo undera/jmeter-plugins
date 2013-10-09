@@ -6,3 +6,7 @@ This graph will display the response time distribution of the test. The X axis s
 == Sample result ==
 
 [/img/wiki/response_times_distribution.png]
+
+== Online Version ==
+
+An online version of aggregated response times distribution is available on [https://loadosophia.org/?utm_source=jpgc&utm_medium=wiki&utm_campaign=RTD Loadosophia.org] service, see [https://loadosophia.org/examples/80738/zoom/QAndDist/?utm_source=jpgc&utm_medium=wiki&utm_campaign=RTD example].

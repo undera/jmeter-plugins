@@ -8,10 +8,6 @@ import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JMeterUtils;
 
-/**
- *
- * @author undera
- */
 public class FifoPopPreProcessor extends AbstractTestElement
         implements PreProcessor, TestListener {
 
@@ -60,7 +56,12 @@ public class FifoPopPreProcessor extends AbstractTestElement
     }
 
     private long getTimeoutAsLong() {
-        return Long.parseLong(getTimeout());
+        String timeout = getTimeout();
+        if (timeout.isEmpty()) {
+            return Long.MAX_VALUE;
+        } else {
+            return Long.parseLong(timeout);
+        }
     }
 
     public String getTimeout() {

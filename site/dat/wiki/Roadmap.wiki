@@ -1,11 +1,3 @@
-= Next Version =
-  * Add [HtmlUnitDriver WebDriver]* for the [WebDriverSampler WebDriver]
-  * [JMXMon JMX Monitoring Collector] added 
-  * Fix JMXMon Samples Collector use one jmx connection for the same URL and close connections when test ended
-  * Fix DbMon Samples Collector use one jdbc connection for the same Pool Name and close connections when test ended
-  * Fix unnecessary console error message in CMDTool
-  * Disable UDP in PerfMon and enable it only via property setting
-
 = Ideas for Future Versions =
 
 ==Graph plugins==
@@ -13,13 +5,12 @@
     * smart grid lines for timeline charts - on minutes, hours, 10s, 5s...
     * Turn all !OverTime graphs into one universal graph?, the same for distribution and pivot?
     * latency distribution and latency percentiles - common solution?
-    * RPS vs Response Time graph ($10 bounty for implementing it)
+    * RPS vs Response Time graph
     * Possibility to filter data for time period
     * allow using regexps in rows filtering on post-test file loading, or CMD
 
 ==Distributed testing==
-    * Config Plugin (or maybe listener accepting distr test online status): Distributed Test Control Panel ($50-$75 bounty for implementing it)
-    * custom thread groups reporting machinename in distributed mode automatically
+    * Config Plugin (or maybe listener accepting distr test online status): Distributed Test Control Panel
 ==FFW==
     * use opened files pool in Flexible File Writer and provide dynamic file selection - the same for Raw Data Source?
 ==Web Driver Plugins==
@@ -34,9 +25,9 @@
     * Provide support for sampling IE browser (Issue 276)
     * Provide support for sampling Opera browser (Issue 282)
 ==Other==    
-    * implement functions iif, base64 ($5 bounty for implementing it)
+    * implement functions iif, base64
     * one more [AutoStop] criteria: when reached desired number of samples, duration criteria
-    * random CSV data set [http://sqa.stackexchange.com/questions/3115/getting-a-random-line-from-a-file-with-jmeter?atw=1 a need] ($25 bounty for implementing it)
+    * random CSV data set [http://sqa.stackexchange.com/questions/3115/getting-a-random-line-from-a-file-with-jmeter?atw=1 a need]
     * a way to specify Composite config in CMD tool
     * a way to change granulation for CSV export (https://groups.google.com/forum/#!topic/jmeter-plugins/N7Lz7eCPPSs)
     * add "Default value" field for JSONPathExtractor

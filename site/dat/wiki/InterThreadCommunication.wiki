@@ -70,3 +70,8 @@ so when starting new test you may have some values from previous
 run in FIFOs. Queues are cleared with the first fifoPut call. To fight this issue
 you may choose queue names that changes with every test run (eg. relying on 
 test start time, etc).
+
+
+== Tutorial ==
+
+You can learn inter-thread communication by reading the "[AsyncDownloadTutorial Async Download Tutorial]".

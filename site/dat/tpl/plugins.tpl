@@ -38,19 +38,19 @@
 {block name="header_right"}
         <table style="white-space: nowrap; vertical-align: middle;">
             <tr>
-                <td>
-                    This project is an independent<br/> set of plugins
-                    for <a href="http://jakarta.apache.org/jmeter/">Apache JMeter</a>.
-
-                </td>
-                <td>
-                    <a href="http://jmeter.apache.org/" target="_blank"><img
-                                src="/img/site/jmeter-logo.png" alt="Apache JMeter"/></a>
-
-                </td>
-                <td>
-                    <a href="http://blazemeter.com/?utm_source=jmplinnerpages&amp;utm_medium=cpc&amp;utm_content=jmpininnerpgs&amp;utm_campaign=JMeter%2BPlug%2BIn%2BWiki"
+                <td style="padding: 0 1em;">
+                    <a href="http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki"
                        target="_blank"><img src="/img/site/bz_small.jpg" alt=""></a>
+                </td>
+                <td style="padding: 0 1em;">
+                    <div style="background-color: #ffffd6; border: 1px solid #EE9900; height: 56px; font-size: 80%;
+padding: 2px 4px; vertical-align: middle; cursor: pointer;" onclick="window.location.href='http://loadosophia.org/?utm_source=jpgc&utm_medium=header&utm_campaign=sponsorship';">
+                <a href="http://loadosophia.org/?utm_source=jpgc&utm_medium=header&utm_campaign=sponsorship" style="text-decoration: none; color: black;">
+                        <span style="color: gray">Sponsored by:</span><br/>
+                        <span style="font-size: 120%; font-weight: bold; color: #cc6600;">Loadosophia.org &ndash;</span><br/>
+                        load test results<br/> analysis service
+                    </a>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -69,4 +69,10 @@
 
 {block name="content" prepend}
     {include file="counter.tpl"}
+{/block}
+
+{block name="footer_center"}
+<td style="font-size: 80%;">
+<span style="color: gray;">Licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a></span>
+</td>
 {/block}

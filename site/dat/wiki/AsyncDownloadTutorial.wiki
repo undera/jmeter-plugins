@@ -2,23 +2,23 @@
 
 == Preface ==
 
-This tutorial is the solution for following request on JMeter mailing list:
+This tutorial is the solution for the following request on JMeter mailing list:
 [http://jmeter.512774.n5.nabble.com/Asynchronous-HTTP-Request-Sampler-td5718271.html]
 
 The user has asked how can he do an asynchronous download in JMeter, making main thread still iterating while lengthy operation is in progress. The solution that use [InterThreadCommunication Inter-Thread Communication features] from JMeter-Plugins.org is described below. It will take MySQL Workbench website as a sample service.
 
 The prerequisite for this tutorial is to have JMeter 2.8 or newer with the latest [StandardSet Standard Set] from JMeter-Plugins.org.
 
-The whole idea is to have 2 separate Thread Groups: first for main threads, iterating over site pages, and second as asynchronous download workers pool. The solution will use single FIFO pipe from [InterThreadCommunication Inter-Thread Communication] plugins to pass a download URLs for asynchronous download.
+The whole idea is to have 2 separate Thread Groups: first for main threads, iterating over site pages, and use second Thread Group as asynchronous download workers pool. The solution will use single FIFO queue from [InterThreadCommunication Inter-Thread Communication] plugins to pass download URLs for asynchronous download.
 
-This tutorial will also be interesting for those who wants to see the typical way to program dynamic scenario in JMeter, parsing responses and passing parsed values to firther requests. See the "Adding Variety" section below.
+This tutorial will also be interesting for those who wants to see the typical way to program dynamic scenario in JMeter, parsing responses and passing parsed values for firther requests. See the "Adding Variety" section below.
 
 
 == Step 1: Creating Thread Groups ==
 
 Let's open fresh JMeter instance and add first Thread Group. Rename it to "Main TG", set up this thread group to have 1 thread and do 10 loops. Select _Start Next Thread Loop on error_ option.
 
-Add second Thread Group and rename it to "Async Workers". This thread group must be original simple "Thread Group". Configure threads count for it to 10. That's important, because worker threads will serve long download requests while first thread group will be iterating again and again on short page requests. Set iteration count to 1.
+Add second Thread Group and rename it to "Async Workers". Configure threads count for it to 10. That's important, because worker threads will serve long download requests while first thread group will be iterating again and again on short page requests. Set iteration count to 1.
 
 [/img/wiki/async_tutorial/undera-d399.png]
 
@@ -29,18 +29,18 @@ Let's create a scenario that will start from [http://dev.mysql.com/downloads/], 
 
 First of all, let's add _HTTP Request Defaults_ element to save some time on configuring requests. Put the element on test plan root and set Web Server Name to "dev.mysql.com".
 
-Next, add the _HTTP Request_ and rename it to "Downloads". Set _Path_ field to "/downloads/". This sampler will just add some "real" work for our test.
+Next, add the _HTTP Request_ as a child of Main TG and rename it to "Downloads". Set _Path_ field to "/downloads/". This sampler will just add some "real" work for our test.
 
-Then we'll simulate navigating via "MySQL Workbench" link, adding one more _HTTP Request_ to "Main TG", rename it to "MySQL Workbench" and set _Path_ field to "/downloads/tools/workbench/".
+Then we'll simulate navigating via "MySQL Workbench" link, adding one more _HTTP Request_ to "Main TG". Rename it to "MySQL Workbench" and set _Path_ field to "/downloads/tools/workbench/".
 
-Next step is simulating select OS family from combo-box. Using Chromium "Developer Tools" or "Firebug" plugin in Firefox we may find that a POST request is made to the same "/downloads/tools/workbench/" URL with OS id as a param. Let's add a _HTTP Request_ and name it "Chosen OS" with desired URL in _Path_ field. "Developer Tools" show that 2 POST fields are present: {{{current_os=3}}} and {{{version=6.0}}}. Let's try adding just {{{current_os=3}}} to POST parameters in the sampler and check if it is enough.
+Next step is simulating the choice of OS family from combo-box. Using Chromium "Developer Tools" or "Firebug" plugin in Firefox we may find that a POST request is made to the same "/downloads/tools/workbench/" URL with OS id as a param. Let's add a _HTTP Request_ and name it "Chosen OS" with desired URL in _Path_ field. "Developer Tools" show that 2 POST fields are present: {{{current_os=3}}} and {{{version=6.0}}}. Let's try adding just {{{current_os=3}}} to POST parameters in the sampler and check if it is enough.
 
 Add a _View Results Tree_ listener as a child of Main TG and run the test. You should see successful samples appearing in _View Results Tree_, assuring the Main TG does its work. Check one of the "Chosen OS" samples and look into "Response Data" tab in "HTML" mode. You should see the page with Windows downloads. Everything goes OK.
 
 
 === Adding Variety ===
 
-Now let's do some variety in our test. Let's different threads in Main TG use different OS family for download. To do this, let's return to previous page and find which "OS id" used for different OS families on that site. Searching through page HTML source shows this block:
+Now let's introduce some variety into our test. Each request will use different OS family for download. To do this, let's return to previous page and find which "OS id" used for different OS families on that site. Searching through the page's HTML source shows this block:
 
 [[[
 <label for="current_os">Select Platform:</label><br />
@@ -57,6 +57,8 @@ Now let's do some variety in our test. Let's different threads in Main TG use di
 
 That's it, now we'll use _Regular Expression Extractor_'s feature to fetch random regexp match from previous request. Let's add _Regular Expression Extractor_ as a child of "MySQL Workbench" sampler. Using "RegExp Tester" feature of _View Results Tree_ we find the Regular Expression field: {{{<option [^>]+ value="([1-9][0-9]*)">}}}
 
+<img src="/img/wiki/async_tutorial/undera-0e30.png" width="700"/>
+
 Other fields for _Regular Expression Extractor_ filled with:
   * _Reference Name_ set to "OS_ID" - this is our variable name
   * _Template_ set to {{{$1$}}} - that's the reference to our "value catch group" in braces
@@ -65,7 +67,7 @@ Other fields for _Regular Expression Extractor_ filled with:
 
 [/img/wiki/async_tutorial/undera-0a4f.png]
 
-Now go to "Chosen OS" sampler and replace constant {{{current_os}}} value with {{{ ${OS_ID} }}} variable reference. Now run the test and make sure that different "Chosen OS" samples in _View Results Tree_ was containing different OS Families inside.
+Now go to "Chosen OS" sampler and replace constant {{{current_os}}} value with {{{ ${OS_ID} }}} variable reference. Next, run the test and make sure that different "Chosen OS" samples in _View Results Tree_ was containing different OS Families inside.
 
 BTW, rename the _Regular Expression Extractor_ to "Extract OS_ID", this will make your test plan more obvious.
 

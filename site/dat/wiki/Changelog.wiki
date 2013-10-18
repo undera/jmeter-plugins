@@ -6,6 +6,7 @@
   * Fix DbMon Samples Collector use one jdbc connection for the same Pool Name and close connections when test ended
   * Fix unnecessary console error message in CMDTool
   * Disable UDP in PerfMon and enable it only via property setting
+  * AutoStop plugin is now printing the reason it stopped the test to the JMeter log file
 
 == [/downloads/file/JMeterPlugins-1.1.1.zip 1.1.1] <i><font color=gray size="1">July 14, 2013</font></i>==
   * *Project has moved to new homepage, http://jmeter-plugins.org/*

@@ -10,6 +10,7 @@ import java.nio.channels.FileChannel;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.zip.GZIPOutputStream;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.httpclient.HttpClient;
@@ -24,10 +25,6 @@ import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public class LoadosophiaAPIClient {
 
     private static final Logger log = LoggingManager.getLoggerForClass();

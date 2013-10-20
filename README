@@ -1,18 +1,18 @@
-#   J M E T E R   P L U G I N S   at   G O O G L E   C O D E
+#   J M E T E R - P L U G I N S . ORG
 
 1. What is it?
 This library contains additional plugins for Apache JMeter Tool.
-See project site here: http://code.google.com/p/jmeter-plugins/
+See project site here: http://jmeter-plugins.org/
 
 2. Installation and Usage
 Just copy the JAR file into JMeter's lib/ext directory.
 Then you can start JMeter and add additional items to your Test Plan.
 Java version 1.6 and JMeter 2.4 are required.
 Found full installation guide at:
-http://code.google.com/p/jmeter-plugins/wiki/PluginInstall
+http://jmeter-plugins.org/wiki/PluginInstall
 
 3. Latest Downloads, Project Page, Troubleshooting, Feedback
-Visit http://code.google.com/p/jmeter-plugins/ for latest information
+Visit http://jmeter-plugins.org/ for latest information
 and downloads. For troubleshooting and feedback use http://groups.google.com/group/jmeter-plugins
 
 https://travis-ci.org/undera/jmeter-plugins.png

@@ -120,7 +120,7 @@ public class JMeterPluginsUtilsTest {
     public void testOpenInBrowser() {
         System.out.println("openInBrowser");
         // don't do this, because of odd window popups
-        // JMeterPluginsUtils.openInBrowser("http://code.google.com/p/jmeter-plugins/");
+        // JMeterPluginsUtils.openInBrowser("http://jmeter-plugins.org/");
     }
 
     /**

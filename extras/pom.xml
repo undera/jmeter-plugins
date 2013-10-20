@@ -19,7 +19,7 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    <url>http://code.google.com/p/jmeter-plugins/</url>
+    <url>http://jmeter-plugins.org/</url>
     <scm>
         <url>https://github.com/undera/jmeter-plugins</url>
         <connection>https://github.com/undera/jmeter-plugins.git</connection>

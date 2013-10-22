@@ -291,51 +291,9 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         String[] elements = existing.split("(?<!\\\\)" + separator);
         checkProcessScope(existing, elements);
         checkCPUCore(elements);
-
-
-        //check filesystem filter
-        if (METRIC_DISKIO.equals(type)) {
-            int i = 0;
-            while (i < elements.length) {
-                if (elements[i].startsWith("fs=")) {
-                    jTextFieldFileSystem.setText(elements[i].substring(3));
-                    break;
-                }
-                i++;
-            }
-        }
-
-        //check network interface filter
-        if (METRIC_NETIO.equals(type)) {
-            int i = 0;
-            while (i < elements.length) {
-                if (elements[i].startsWith("iface=")) {
-                    jTextFieldNetInterface.setText(elements[i].substring(6));
-                    break;
-                }
-                i++;
-            }
-        }
-        //check jmx
-        if (METRIC_JMX.equals(type)) {
-            int i = 0;
-            while (i < elements.length) {
-                if (elements[i].startsWith("url=")) {
-                    String[] tmp = elements[i].substring(4).split("\\\\:");
-                    jTextFieldJmxHost.setText(tmp[0]);
-                    if (tmp.length > 1) {
-                        jTextFieldJmxPort.setText(tmp[1]);
-                    }
-                }
-                if (elements[i].startsWith("user=")) {
-                    jTextFieldJmxUser.setText(elements[i].substring(5));
-                }
-                if (elements[i].startsWith("password=")) {
-                    jTextFieldJmxPassword.setText(elements[i].substring(9));
-                }
-                i++;
-            }
-        }
+        checkFilesystem(elements);
+        checkNetInterface(elements);
+        checkJMX(elements);
 
         //set metric selected, exec or tail command
         if (METRIC_EXEC.equals(type)) {
@@ -369,6 +327,57 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
                 break;
             }
             i++;
+        }
+    }
+
+    private void checkNetInterface(String[] elements) {
+        //check network interface filter
+        if (METRIC_NETIO.equals(type)) {
+            int i = 0;
+            while (i < elements.length) {
+                if (elements[i].startsWith("iface=")) {
+                    jTextFieldNetInterface.setText(elements[i].substring(6));
+                    break;
+                }
+                i++;
+            }
+        }
+    }
+
+    private void checkFilesystem(String[] elements) {
+        //check filesystem filter
+        if (METRIC_DISKIO.equals(type)) {
+            int i = 0;
+            while (i < elements.length) {
+                if (elements[i].startsWith("fs=")) {
+                    jTextFieldFileSystem.setText(elements[i].substring(3));
+                    break;
+                }
+                i++;
+            }
+        }
+    }
+
+    private void checkJMX(String[] elements) {
+        //check jmx
+        if (METRIC_JMX.equals(type)) {
+            int i = 0;
+            while (i < elements.length) {
+                if (elements[i].startsWith("url=")) {
+                    String[] tmp = elements[i].substring(4).split("\\\\:");
+                    jTextFieldJmxHost.setText(tmp[0]);
+                    if (tmp.length > 1) {
+                        jTextFieldJmxPort.setText(tmp[1]);
+                    }
+                }
+                if (elements[i].startsWith("user=")) {
+                    jTextFieldJmxUser.setText(elements[i].substring(5));
+                }
+                if (elements[i].startsWith("password=")) {
+                    jTextFieldJmxPassword.setText(elements[i].substring(9));
+                }
+                i++;
+            }
         }
     }
 
@@ -542,30 +551,19 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         }
     }
 
-    private int getIntValue(String str, int defaultValue) {
-        int ret;
-        try {
-            ret = Integer.valueOf(str);
-        } catch (NumberFormatException ex) {
-            ret = defaultValue;
-        }
-
-        return ret;
-    }
-
     private String getProcessScopeString() {
         String ret = "";
         if (jRadioScopePerProcess.isSelected()) {
             if (buttonGroupPID.getSelection() != null) {
                 String tmp = buttonGroupPID.getSelection().getActionCommand();
                 if ("pid".equals(tmp)) {
-                    ret += "pid=" + getIntValue(jTextFieldPID.getText().trim(), 0);
+                    ret += "pid=" + jTextFieldPID.getText().trim();
                 } else if ("name".equals(tmp)) {
                     String name = jTextFieldPorcessName.getText().trim();
                     if (name.length() == 0) {
                         name = "unknown";
                     }
-                    ret += "name=" + name + "#" + getIntValue(jTextFieldOccurence.getText().trim(), 1);
+                    ret += "name=" + name + "#" + jTextFieldOccurence.getText().trim();
                 } else if ("ptql".equals(tmp)) {
                     String query = jTextFieldPtql.getText().trim();
                     if (query.length() == 0) {
@@ -584,9 +582,9 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
         StringBuilder ret = new StringBuilder("");
 
         String host = jTextFieldJmxHost.getText().trim();
-        int port = getIntValue(jTextFieldJmxPort.getText(), -1);
+        String port = jTextFieldJmxPort.getText().trim();
 
-        if (port != -1 && host.length() == 0) {
+        if (!port.isEmpty() && host.isEmpty()) {
             host = "localhost";
         }
 
@@ -595,7 +593,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
 
         if (host.length() > 0) {
             String url = "url=" + host;
-            if (port != -1) {
+            if (!port.isEmpty()) {
                 url = url + "\\:" + port;
             }
             addStringItem(ret, url);
@@ -625,7 +623,7 @@ public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
             if (buttonGroupCpuCores.getSelection() != null) {
                 tmp = buttonGroupCpuCores.getSelection().getActionCommand();
                 if ("index".equals(tmp)) {
-                    addStringItem(ret, "core=" + getIntValue(jTextFieldCoreIndex.getText().trim(), 0));
+                    addStringItem(ret, "core=" + jTextFieldCoreIndex.getText().trim());
                 }
             }
             addStringItem(ret, getProcessScopeString());

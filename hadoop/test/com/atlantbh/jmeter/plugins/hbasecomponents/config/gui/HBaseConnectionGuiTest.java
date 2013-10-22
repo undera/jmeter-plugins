@@ -16,6 +16,7 @@
 package com.atlantbh.jmeter.plugins.hbasecomponents.config.gui;
 
 import com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnection;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -35,6 +36,7 @@ public class HBaseConnectionGuiTest {
 
     @BeforeClass
     public static void setUpClass() {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass

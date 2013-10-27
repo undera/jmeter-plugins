@@ -5,3 +5,4 @@ Selenium/WebDriver testing ability.
   * [AndroidDriverConfig]
   * [ChromeDriverConfig]
   * [FirefoxDriverConfig]
+  * [HtmlUnitDriverConfig]

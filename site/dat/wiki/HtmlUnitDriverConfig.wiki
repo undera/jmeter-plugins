@@ -1,5 +1,5 @@
 <div style="float: right" class="plugins_set webdriver_set">Available in [WebDriverSet WebDriver Set]</div>
-= HtmlUnit Driver Config<sup><font color=gray size="1">since 1.2.0</font></sup>=
+= HtmlUnit Driver Config<sup><font color=gray size="1">since 1.1.2</font></sup>=
 
 == Introduction ==
 Add this configuration to enable browser based performance testing using HtmlUnit.  This document covers the various configuration options available on the HtlmUnit browser (GUI-Less browser for Java programs).  For an overview of performing client sider performance testing, refer to the [WebDriverTutorial Web Driver Tutorial].  

@@ -1,17 +1,18 @@
 = Changelog =
-== Upcoming Version 1.1.2 ==
+
+== 1.1.2 <i><font color=gray size="1">October 27, 2013</font></i>==
   * Add *[HtmlUnitDriver HtmlUnitDriver]* for the [WebDriverSampler WebDriver]
   * [JMXMon JMX Monitoring Collector] added
   * Fix JMXMon Samples Collector use one jmx connection for the same URL and close connections when test ended
   * Fix DbMon Samples Collector use one jdbc connection for the same Pool Name and close connections when test ended
   * Fix unnecessary console error message in CMDTool
   * Disable UDP in PerfMon and enable it only via property setting
+  * allow variables in PerfMon params helper dialog
   * AutoStop plugin is now printing the reason it stopped the test to the JMeter log file
   * fix Loadosophia Uploader not working without additional libs
   * fix Extras With Libs set work with JMeter 2.10 (commons-lang is now shipped)
-  * allow variables in PerfMon params helper dialog
 
-== [/downloads/file/JMeterPlugins-1.1.1.zip 1.1.1] <i><font color=gray size="1">July 14, 2013</font></i>==
+== 1.1.1 <i><font color=gray size="1">July 14, 2013</font></i>==
   * *Project has moved to new homepage, http://jmeter-plugins.org/*
   * add Loadosophia.org active tests support
 

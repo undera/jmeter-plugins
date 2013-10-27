@@ -8,6 +8,8 @@ import org.apache.log.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class DistributedTestControlGui extends AbstractConfigGui {
 
@@ -19,6 +21,14 @@ public class DistributedTestControlGui extends AbstractConfigGui {
         super();
         init();
         initFields();
+    }
+
+    //do not insert this vizualiser in any JMeter menu
+    private Collection<String> emptyCollection = new ArrayList<String>();
+
+    @Override
+    public Collection<String> getMenuCategories() {
+        return emptyCollection;
     }
 
     @Override

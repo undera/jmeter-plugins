@@ -2,16 +2,6 @@
 // TODO: https://groups.google.com/forum/#!topic/jmeter-plugins/qflK3oCjv4c
 package kg.apc.jmeter.graphs;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.ConcurrentSkipListMap;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.ChartSettings;
 import kg.apc.charting.ColorsDispatcher;
@@ -37,8 +27,15 @@ import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentSkipListMap;
+
 /**
- *
  * @author apc
  */
 public abstract class AbstractGraphPanelVisualizer
@@ -124,7 +121,7 @@ public abstract class AbstractGraphPanelVisualizer
         labelConstraints.fill = GridBagConstraints.HORIZONTAL;
         labelConstraints.gridx = 0;
         labelConstraints.gridy = 0;
-        
+
         pan.add(titleLabel, labelConstraints);
 
         GridBagConstraints buttonConstraints = new GridBagConstraints();
@@ -136,33 +133,32 @@ public abstract class AbstractGraphPanelVisualizer
         maximizeButton.setFocusable(false);
         maximizeButton.setPreferredSize(new java.awt.Dimension(20, 20));
         maximizeButton.setToolTipText("Maximize Panel");
-        
+
         maximizeButton.addActionListener(new MaximizeAction());
-        
+
         pan.add(maximizeButton, buttonConstraints);
         return pan;
     }
 
     protected void enableMaximize(boolean enable) {
-       maximizeButton.setVisible(enable);
+        maximizeButton.setVisible(enable);
     }
 
     protected void hideFilePanel() {
-       filePanelVisible = false;
-       getFilePanel().setVisible(false);
+        filePanelVisible = false;
+        getFilePanel().setVisible(false);
     }
 
     private void toogleMaximize() {
-       maximized = !maximized;
-       Component[] components = container.getComponents();
-       for(int i=0; i<components.length; i++) {
-          Component cmp = components[i];
-          if(!(cmp instanceof GraphPanel)) {
-             cmp.setVisible(!maximized);
-          }
-       }
+        maximized = !maximized;
+        Component[] components = container.getComponents();
+        for (Component cmp : components) {
+            if (!(cmp instanceof GraphPanel)) {
+                cmp.setVisible(!maximized);
+            }
+        }
 
-       getFilePanel().setVisible(!maximized && filePanelVisible);
+        getFilePanel().setVisible(!maximized && filePanelVisible);
     }
 
     /**
@@ -177,10 +173,6 @@ public abstract class AbstractGraphPanelVisualizer
         return new JPanel(new BorderLayout());
     }
 
-    /**
-     *
-     * @return
-     */
     protected GraphPanel createGraphPanel() {
         graphPanel = new GraphPanel();
         graphPanel.getGraphObject().setRows(model);
@@ -201,10 +193,6 @@ public abstract class AbstractGraphPanelVisualizer
     protected void setExtraChartSettings() {
     }
 
-    /**
-     *
-     * @param sample
-     */
     @Override
     public void updateGui(Sample sample) {
         long time = System.currentTimeMillis();
@@ -234,10 +222,6 @@ public abstract class AbstractGraphPanelVisualizer
         repaint();
     }
 
-    /**
-     *
-     * @retur
-     */
     @Override
     public Image getImage() {
         return graphPanel.getGraphImage();
@@ -316,9 +300,8 @@ public abstract class AbstractGraphPanelVisualizer
         graphPanel.getGraphObject().setRows(selectedModel);
         graphPanel.clearRowsTab();
 
-        Iterator<AbstractGraphRow> rowsIter = selectedModel.values().iterator();
-        while (rowsIter.hasNext()) {
-            graphPanel.addRow(rowsIter.next());
+        for (AbstractGraphRow abstractGraphRow : selectedModel.values()) {
+            graphPanel.addRow(abstractGraphRow);
         }
 
         isAggregate = aggregate;
@@ -328,17 +311,14 @@ public abstract class AbstractGraphPanelVisualizer
     private void addRowToCompositeModels(String rowName, AbstractGraphRow row) {
         GuiPackage gui = GuiPackage.getInstance();
         if (gui == null) {
-            log.warn("No GUI Package present, ignored adding to composite");
+            log.debug("No GUI Package present, ignored adding to composite");
             return;
         }
 
         JMeterTreeModel testTree = gui.getTreeModel();
 
-        Iterator it = testTree.getNodesOfType(CompositeResultCollector.class).iterator();
-        while (it.hasNext()) {
-            //System.out.println("obj");
-            Object obj = it.next();
-            CompositeResultCollector compositeResultCollector = (CompositeResultCollector) ((JMeterTreeNode) obj).getTestElement();
+        for (JMeterTreeNode obj : testTree.getNodesOfType(CompositeResultCollector.class)) {
+            CompositeResultCollector compositeResultCollector = (CompositeResultCollector) obj.getTestElement();
             compositeResultCollector.getCompositeModel().addRow(rowName, row);
         }
     }
@@ -347,11 +327,9 @@ public abstract class AbstractGraphPanelVisualizer
         GuiPackage gui = GuiPackage.getInstance();
         JMeterTreeModel testTree = gui.getTreeModel();
 
-        Iterator it = testTree.getNodesOfType(CompositeResultCollector.class).iterator();
-        while (it.hasNext()) {
+        for (JMeterTreeNode obj : testTree.getNodesOfType(CompositeResultCollector.class)) {
             //System.out.println("obj");
-            Object obj = it.next();
-            CompositeResultCollector compositeResultCollector = (CompositeResultCollector) ((JMeterTreeNode) obj).getTestElement();
+            CompositeResultCollector compositeResultCollector = (CompositeResultCollector) obj.getTestElement();
             compositeResultCollector.getCompositeModel().clearRows(vizualizerName);
         }
     }
@@ -408,12 +386,7 @@ public abstract class AbstractGraphPanelVisualizer
     }
 
     protected boolean isFromTransactionControler(SampleResult res) {
-        if (res.getResponseMessage() != null) {
-            // FIXME: isn't the odd way? there is isTransactionSampleEvent in SampleEvent
-            // accessible via SampleListener interface...
-            return res.getResponseMessage().startsWith("Number of samples in transaction");
-        }
-        return false;
+        return res.getResponseMessage() != null && res.getResponseMessage().startsWith("Number of samples in transaction");
     }
 
     /**
@@ -459,8 +432,8 @@ public abstract class AbstractGraphPanelVisualizer
         String cfgGraphLineMarker = JMeterUtils.getProperty("jmeterPlugin.drawLineMarker");
         if (cfgGraphLineMarker != null) {
             boolean removeMarkers = "false".equalsIgnoreCase(cfgGraphLineMarker.trim());
-            if(removeMarkers) {
-               graph.getChartSettings().setChartMarkers(ChartSettings.CHART_MARKERS_NO);
+            if (removeMarkers) {
+                graph.getChartSettings().setChartMarkers(ChartSettings.CHART_MARKERS_NO);
             }
         }
     }
@@ -495,17 +468,17 @@ public abstract class AbstractGraphPanelVisualizer
     private class MaximizeAction
             implements ActionListener {
 
-      @Override
-      public void actionPerformed(ActionEvent e) {
-         toogleMaximize();
-         if(!maximized) {
-            maximizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/maximize.png")));
-            maximizeButton.setToolTipText("Maximize Panel");
-         } else {
-            maximizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/restore.png")));
-            maximizeButton.setToolTipText("Restore Panel");
-         }
-      }
-       
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            toogleMaximize();
+            if (!maximized) {
+                maximizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/maximize.png")));
+                maximizeButton.setToolTipText("Maximize Panel");
+            } else {
+                maximizeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kg/apc/jmeter/img/restore.png")));
+                maximizeButton.setToolTipText("Restore Panel");
+            }
+        }
+
     }
 }

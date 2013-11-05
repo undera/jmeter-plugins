@@ -66,6 +66,7 @@ public class AutoStop
                     //log.debug((sec - respTimeExceededStart)+" "+getResponseTimeSecsAsInt());
                     if (sec - respTimeExceededStart >= testValueRespTimeSec) {
                         log.info("Average Response Time is more than " + getResponseTime() + " for " + getResponseTimeSecs() + "s. Auto-shutdown test...");
+                        System.out.println("kg.apc.jmeter.reporters.AutoStop - Average Response Time is more than " + getResponseTime() + " for " + getResponseTimeSecs() + "s. Auto-shutdown test...");
                         stopTest();
                     }
                 } else {
@@ -79,6 +80,7 @@ public class AutoStop
                     //log.debug((sec - respTimeExceededStart)+" "+getResponseTimeSecsAsInt());
                     if (sec - respLatencyExceededStart >= testValueRespLatencySec) {
                         log.info("Average Latency Time is more than " + getResponseLatency() + " for " + getResponseLatencySecs() + "s. Auto-shutdown test...");
+                        System.out.println("kg.apc.jmeter.reporters.AutoStop - Average Latency Time is more than " + getResponseLatency() + " for " + getResponseLatencySecs() + "s. Auto-shutdown test...");
                         stopTest();
                     }
                 } else {
@@ -92,6 +94,7 @@ public class AutoStop
                     //log.debug((sec - errRateExceededStart)+" "+getErrorRateSecsAsInt());
                     if (sec - errRateExceededStart >= testValueErrorSec) {
                         log.info("Error rate more than " + getErrorRate() + " for " + getErrorRateSecs() + "s. Auto-shutdown test...");
+                        System.out.println("kg.apc.jmeter.reporters.AutoStop - Error rate more than " + getErrorRate() + " for " + getErrorRateSecs() + "s. Auto-shutdown test...");
                         stopTest();
                     }
                 } else {

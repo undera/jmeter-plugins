@@ -33,6 +33,7 @@
     * add "Default value" field for JSONPathExtractor
     * convert JsonToXmlConverter into post-processor
     * enable proxy settings for Loadosophia Uploader (https://groups.google.com/forum/#!topic/jmeter-plugins/ezpmnAM7FH8)
+    * Allow single-pass generation of all graphs for cmd tool (needs patching SaveService from JMeter core? A kind of meta-reporter plugin should do the trick!)
     * *More ideas, folks???*
 
 See also:

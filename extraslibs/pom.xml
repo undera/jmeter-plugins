@@ -19,7 +19,7 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    <url>http://code.google.com/p/jmeter-plugins/</url>
+    <url>http://jmeter-plugins.org/</url>
     <scm>
         <url>https://github.com/undera/jmeter-plugins</url>
         <connection>https://github.com/undera/jmeter-plugins.git</connection>
@@ -30,14 +30,14 @@
             <email>apc@apc.kg</email>
         </developer>
     </developers>
-    <distributionManagement>        
+    <distributionManagement>
         <snapshotRepository>
             <id>sonatype-snapshot</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>            
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>sonatype</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>            
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -67,7 +67,7 @@
             <artifactId>jmeter-plugins-extras</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_core</artifactId>
@@ -83,7 +83,7 @@
             <artifactId>ApacheJMeter_http</artifactId>
             <version>${jmeter.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jms</artifactId>
@@ -144,7 +144,7 @@
                 <directory>test</directory>
             </testResource>
         </testResources>
-        
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -152,7 +152,7 @@
                 <version>2.9</version>
                 <executions>
                     <execution>
-                        <phase>install</phase>                        
+                        <phase>install</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -165,7 +165,7 @@
                 <version>2.2.1</version>
                 <executions>
                     <execution>
-                        <phase>install</phase>                        
+                        <phase>install</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -193,14 +193,14 @@
                 <version>2.7</version>
                 <executions>
                     <execution>
-                        <phase>deploy</phase>                        
+                        <phase>deploy</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-                        
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -226,7 +226,9 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,hbase-common,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper,selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-android-driver,guava,json,commons-exec,jsyntaxpane,xom</includeArtifactIds>
+                            <includeArtifactIds>
+                                cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,hbase-common,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper,selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-android-driver,guava,json,commons-exec,jsyntaxpane,xom,commons-lang
+                            </includeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>
@@ -247,7 +249,7 @@
                                     <include>kg.apc:*</include>
                                 </includes>
                             </artifactSet>
-                            
+
                         </configuration>
                     </execution>
                 </executions>

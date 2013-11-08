@@ -23,7 +23,7 @@ public class ServersListPanel extends JPanel {
     public void clear() {
         serversList.clear();
         removeAll();
-        repaint();
+        getParent().repaint();
     }
 
     public void saveToTestElement(DistributedTestControl te) {
@@ -50,7 +50,7 @@ public class ServersListPanel extends JPanel {
         JMeterServerPanel panel = new JMeterServerPanel(stringValue, this);
         serversList.add(panel);
         add(panel);
-        repaint();
+        getParent().repaint();
     }
 
     public int getCount() {
@@ -59,6 +59,6 @@ public class ServersListPanel extends JPanel {
 
     public void removeServer(JMeterServerPanel jMeterServerPanel) {
         serversList.remove(jMeterServerPanel);
-        repaint();
+        getParent().repaint();
     }
 }

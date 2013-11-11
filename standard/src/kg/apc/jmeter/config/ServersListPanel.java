@@ -23,7 +23,7 @@ public class ServersListPanel extends JPanel {
     public void clear() {
         serversList.clear();
         removeAll();
-        repaint();
+        getParent().repaint();
     }
 
     public void saveToTestElement(DistributedTestControl te) {
@@ -32,9 +32,8 @@ public class ServersListPanel extends JPanel {
             names.add(srv.getServerName());
         }
 
-        CollectionProperty data = new CollectionProperty(DistributedTestControl.DATA_PROP, names);
-        log.debug("Saving: " + data.toString());
-        te.setData(data);
+        log.debug("Saving: " + names.toString());
+        te.setData(names);
     }
 
     public void loadFromTestElement(DistributedTestControl te) {
@@ -48,13 +47,18 @@ public class ServersListPanel extends JPanel {
     }
 
     public void add(String stringValue) {
-        JMeterServerPanel panel = new JMeterServerPanel(stringValue);
+        JMeterServerPanel panel = new JMeterServerPanel(stringValue, this);
         serversList.add(panel);
         add(panel);
-        repaint();
+        getParent().repaint();
     }
 
     public int getCount() {
         return serversList.size();
+    }
+
+    public void removeServer(JMeterServerPanel jMeterServerPanel) {
+        serversList.remove(jMeterServerPanel);
+        getParent().repaint();
     }
 }

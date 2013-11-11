@@ -3,13 +3,14 @@ package kg.apc.jmeter.config;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 
 public class DistributedTestControlGui extends AbstractConfigGui {
 
@@ -21,14 +22,6 @@ public class DistributedTestControlGui extends AbstractConfigGui {
         super();
         init();
         initFields();
-    }
-
-    //do not insert this vizualiser in any JMeter menu
-    private Collection<String> emptyCollection = new ArrayList<String>();
-
-    @Override
-    public Collection<String> getMenuCategories() {
-        return emptyCollection;
     }
 
     @Override
@@ -50,9 +43,17 @@ public class DistributedTestControlGui extends AbstractConfigGui {
 
     @Override
     public TestElement createTestElement() {
-        DistributedTestControl lockFile = new DistributedTestControl();
-        modifyTestElement(lockFile);
-        return lockFile;
+        String srv_list = JMeterUtils.getPropDefault(DistributedTestControl.PROP_HOSTS, "127.0.0.1");
+        ArrayList<String> data = new ArrayList<String>(Arrays.asList(srv_list.split(",")));
+
+        for (String srv_name : data) {
+            serversPanel.add(srv_name);
+        }
+
+        DistributedTestControl control = new DistributedTestControl();
+        control.setData(data);
+        modifyTestElement(control);
+        return control;
     }
 
     @Override
@@ -79,17 +80,14 @@ public class DistributedTestControlGui extends AbstractConfigGui {
         JButton btnAdd = new JButton("Add Slave Server");
         btnAdd.addActionListener(new AddRemoteServerAction(serversPanel));
         buttonPanel.add(btnAdd);
+        JButton btnStatus = new JButton("Get Status for All");
+        //btnAdd.addActionListener(new AddRemoteServerAction(serversPanel));
+        buttonPanel.add(btnStatus);
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(buttonPanel, BorderLayout.NORTH);
         container.add(serversPanel, BorderLayout.CENTER);
         add(container, BorderLayout.CENTER);
-    }
-
-    private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {
-        constraints.gridx = col;
-        constraints.gridy = row;
-        panel.add(component, constraints);
     }
 
     private void initFields() {

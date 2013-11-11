@@ -12,13 +12,15 @@ The tool requires JMeter 2.4 to function properly (2.3 will work only for PNG ge
 Generating PNG:
 
 {{{
-java -jar CMDRunner.jar --tool Reporter --generate-png test.png --input-jtl results.jtl --plugin-type ResponseTimesOverTime --width 800 --height 600
+java -jar CMDRunner.jar --tool Reporter --generate-png test.png --input-jtl results.jtl \
+  --plugin-type ResponseTimesOverTime --width 800 --height 600
 }}}
 
 Generating CSV:
 
 {{{
-java -jar CMDRunner.jar --tool Reporter --generate-csv test.csv --input-jtl results.jtl --plugin-type ResponseTimesOverTime
+java -jar CMDRunner.jar --tool Reporter --generate-csv test.csv \
+  --input-jtl results.jtl --plugin-type ResponseTimesOverTime
 }}}
 
 Yoy may generate CSV and PNG in single tool run. {{{--help}}} will show you short help list on available parameters.

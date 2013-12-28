@@ -80,6 +80,7 @@ Additional plugins that _do require_ additional libs to run.
   * [JSONPathExtractor JSON Path Extractor]
   * [JSONPathAssertion JSON Path Assertion]
   * [JSONFormatter JSON Formatter PostProcessor]
+  * [RedisDataSet Redis Data Set][/img/icons/new_wog.gif]
 
 </td>
 <td class="plugins_set webdriver_set">

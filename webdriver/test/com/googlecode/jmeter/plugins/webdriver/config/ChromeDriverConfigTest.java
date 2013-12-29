@@ -1,7 +1,5 @@
 package com.googlecode.jmeter.plugins.webdriver.config;
 
-import org.apache.jmeter.engine.event.LoopIterationListener;
-import org.apache.jmeter.testelement.ThreadListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.After;
@@ -18,7 +16,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.io.*;
 import java.util.Collections;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.hasItem;
@@ -65,11 +64,6 @@ public class ChromeDriverConfigTest {
         final ChromeDriverConfig deserializedConfig = (ChromeDriverConfig) input.readObject();
 
         assertThat(deserializedConfig, is(config));
-    }
-
-    @Test
-    public void shouldImplementThreadListener() {
-        assertThat(config, is(instanceOf(ThreadListener.class)));
     }
 
     @Test
@@ -197,27 +191,5 @@ public class ChromeDriverConfigTest {
     public void shouldHaveProxyInCapability() {
         final Capabilities capabilities = config.createCapabilities();
         assertThat(capabilities.getCapability(CapabilityType.PROXY), is(notNullValue()));
-    }
-
-    @Test
-    public void shouldImplementLoopIterationListener() {
-        assertThat(config, is(instanceOf(LoopIterationListener.class)));
-    }
-
-    @Test
-    public void shouldAddWebDriverToJMeterVariablesWhenIterationStarts() throws Exception {
-        ChromeDriver mockChromeDriver = mock(ChromeDriver.class);
-        whenNew(ChromeDriver.class).withParameterTypes(ChromeDriverService.class, Capabilities.class).withArguments(isA(ChromeDriverService.class), isA(Capabilities.class)).thenReturn(mockChromeDriver);
-        ChromeDriverService.Builder mockServiceBuilder = mock(ChromeDriverService.Builder.class);
-        whenNew(ChromeDriverService.Builder.class).withNoArguments().thenReturn(mockServiceBuilder);
-        when(mockServiceBuilder.usingDriverExecutable(isA(File.class))).thenReturn(mockServiceBuilder);
-        ChromeDriverService mockService = mock(ChromeDriverService.class);
-        when(mockServiceBuilder.build()).thenReturn(mockService);
-
-        config.threadStarted();
-        config.iterationStart(null);
-
-        assertThat(variables.getObject(WebDriverConfig.BROWSER), is(notNullValue()));
-        assertThat((ChromeDriver) variables.getObject(WebDriverConfig.BROWSER), is(config.getThreadBrowser()));
     }
 }

@@ -6,6 +6,7 @@ import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
+import org.apache.jmeter.testelement.ThreadListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.Proxy;
@@ -14,7 +15,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestElement implements LoopIterationListener {
+public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestElement implements LoopIterationListener, ThreadListener {
 
     private static final long serialVersionUID = 100L;
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
@@ -199,6 +200,24 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
         }
         getThreadContext().getVariables().putObject(WebDriverConfig.BROWSER, getThreadBrowser());
     }
+
+    @Override
+    public void threadStarted() {
+        if(hasThreadBrowser()) {
+            LOGGER.warn("Thread: " + currentThreadName() + " already has a WebDriver("+ getThreadBrowser()+") associated with it. ThreadGroup can only contain a single WebDriverConfig.");
+            return;
+        }
+        setThreadBrowser(createBrowser());
+    }
+
+    @Override
+    public void threadFinished() {
+        final T browser = removeThreadBrowser();
+        if(browser != null) {
+            browser.quit();
+        }
+    }
+
 
     protected String currentThreadName() {
         return Thread.currentThread().getName();

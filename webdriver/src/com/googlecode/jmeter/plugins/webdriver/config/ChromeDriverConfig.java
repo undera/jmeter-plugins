@@ -1,6 +1,5 @@
 package com.googlecode.jmeter.plugins.webdriver.config;
 
-import org.apache.jmeter.testelement.ThreadListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.Capabilities;
@@ -14,7 +13,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements ThreadListener {
+public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
 
     private static final long serialVersionUID = 100L;
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
@@ -22,23 +21,8 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> implements
     private static final Map<String, ChromeDriverService> services = new ConcurrentHashMap<String, ChromeDriverService>();
 
     @Override
-    public void threadStarted() {
-
-        LOGGER.info("ChromeDriverConfig.threadStarted()");
-
-        if (hasThreadBrowser()) {
-            LOGGER.warn("Thread: " + currentThreadName() + " already has a WebDriver(" + getThreadBrowser() + ") associated with it. ThreadGroup can only contain a single WebDriverConfig.");
-            return;
-        }
-        setThreadBrowser(createBrowser());
-    }
-
-    @Override
     public void threadFinished() {
-        final ChromeDriver chromeDriverDriver = removeThreadBrowser();
-        if (chromeDriverDriver != null) {
-            chromeDriverDriver.quit();
-        }
+        super.threadFinished();
         final ChromeDriverService service = services.remove(currentThreadName());
         if (service != null && service.isRunning()) {
             service.stop();

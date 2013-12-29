@@ -62,7 +62,8 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
      * THE FOLLOWING ATTRIBUTES ARE EXPERIMENTAL - USE WITH CAUTION
      */
     JCheckBox recreateBrowserOnIterationStart;
-
+    JCheckBox devMode;
+    
     public WebDriverConfigGui() {
         createGui();
     }
@@ -102,6 +103,7 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
 
             // EXPERIMENTAL
             recreateBrowserOnIterationStart.setSelected(webDriverConfig.isRecreateBrowserOnIterationStart());
+            devMode.setSelected(webDriverConfig.isDevMode());
         }
     }
 
@@ -135,6 +137,7 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
 
             // EXPERIMENTAL
             webDriverConfig.setRecreateBrowserOnIterationStart(recreateBrowserOnIterationStart.isSelected());
+            webDriverConfig.setDevMode(devMode.isSelected());
         }
     }
 
@@ -182,6 +185,10 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
         recreateBrowserOnIterationStart = new JCheckBox("Create a new Browser at the start of each iteration");
         recreateBrowserOnIterationStart.setSelected(false);
         panel.add(recreateBrowserOnIterationStart);
+        
+        devMode = new JCheckBox("Development Mode (keep browser opened on error)");
+        devMode.setSelected(false);
+        panel.add(devMode);
 
         return panel;
     }

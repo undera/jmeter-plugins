@@ -12,9 +12,6 @@ import org.junit.Test;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -382,6 +379,18 @@ public class WebDriverConfigTest {
         assertThat((WebDriver) variables.getObject(WebDriverConfig.BROWSER), is(secondBrowser));
 
         verify(firstBrowser, times(1)).quit();
+    }
+
+    @Test
+    public void shouldAssignDevMode() {
+        config.setDevMode(true);
+
+        assertThat(config.isDevMode(), is(true));
+    }
+
+    @Test
+    public void byDefaultDevModeShouldNotBeSet() {
+        assertThat(config.isDevMode(), is(false));
     }
 
     private static class WebDriverConfigImpl extends WebDriverConfig {

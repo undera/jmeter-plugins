@@ -8,11 +8,12 @@ import org.apache.jmeter.testelement.ThreadListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.SessionNotFoundException;
 
 import java.net.MalformedURLException;
 import java.util.*;
@@ -23,7 +24,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.isA;
 import static org.mockito.Mockito.*;
 
 public class WebDriverConfigTest {
@@ -244,7 +244,7 @@ public class WebDriverConfigTest {
         Proxy proxy = config.createProxy();
 
         assertThat(proxy, is(notNullValue()));
-        verify(proxyFactory, times(1)).getConfigUrlProxy(isA(String.class));
+        verify(proxyFactory, times(1)).getConfigUrlProxy(Mockito.isA(String.class));
     }
 
     @Test
@@ -368,7 +368,7 @@ public class WebDriverConfigTest {
 
         config.threadFinished();
 
-        Assert.assertThat(config.getThreadBrowser(), is(nullValue()));
+        assertThat(config.getThreadBrowser(), is(nullValue()));
         verify(browser, times(1)).quit();
     }
 
@@ -379,7 +379,30 @@ public class WebDriverConfigTest {
         config.threadFinished();
         config.threadFinished();
 
-        Assert.assertThat(config.getThreadBrowser(), is(nullValue()));
+        assertThat(config.getThreadBrowser(), is(nullValue()));
+        verify(browser, times(1)).quit();
+    }
+
+    @Test
+    public void shouldQuitBrowser() {
+        config.quitBrowser(browser);
+
+        verify(browser, times(1)).quit();
+    }
+
+    @Test
+    public void shouldNotQuitBrowserWhenArgumentIsNull() {
+        config.quitBrowser(null);
+
+        verify(browser, times(0)).quit();
+    }
+
+    @Test
+    public void shouldHandleScenarioWhenBrowserHasAlreadyQuit() {
+        doThrow(new SessionNotFoundException()).when(browser).quit();
+
+        config.quitBrowser(browser);
+
         verify(browser, times(1)).quit();
     }
 

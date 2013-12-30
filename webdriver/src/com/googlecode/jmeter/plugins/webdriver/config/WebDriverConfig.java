@@ -11,6 +11,7 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.SessionNotFoundException;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -193,9 +194,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
         if(isRecreateBrowserOnIterationStart()) {
             final T browser = getThreadBrowser();
-            if(browser != null) {
-                browser.quit();
-            }
+            quitBrowser(browser);
             setThreadBrowser(createBrowser());
         }
         getThreadContext().getVariables().putObject(WebDriverConfig.BROWSER, getThreadBrowser());
@@ -213,9 +212,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     @Override
     public void threadFinished() {
         final T browser = removeThreadBrowser();
-        if(browser != null) {
-            browser.quit();
-        }
+        quitBrowser(browser);
     }
 
 
@@ -224,11 +221,28 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     }
 
     /**
-     * This method will always return a new instance of a {@link WebDriver} class.
+     * Creates a new browser at the start of the tests. This method will always return a new instance of a {@link WebDriver}
+     * class and is called per thread.
      *
      * @return a new {@link WebDriver} object.
      */
     protected abstract T createBrowser();
+
+    /**
+     * Quits browser at the end of the tests. This will be envoked per thread/browser instance created.
+     *
+     * @param browser
+     * is the browser instance to quit. Will not quit if argument is null.
+     */
+    protected void quitBrowser(final T browser) {
+        if(browser != null) {
+            try {
+                browser.quit();
+            } catch (SessionNotFoundException e) {
+                LOGGER.warn("Attempting to quit browser instance that has already exited.");
+            }
+        }
+    }
 
     protected T getThreadBrowser() {
         return (T) webdrivers.get(currentThreadName());

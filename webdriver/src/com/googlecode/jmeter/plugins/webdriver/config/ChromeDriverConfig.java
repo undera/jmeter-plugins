@@ -20,15 +20,6 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
     private static final String CHROME_SERVICE_PATH = "ChromeDriverConfig.chromedriver_path";
     private static final Map<String, ChromeDriverService> services = new ConcurrentHashMap<String, ChromeDriverService>();
 
-    @Override
-    public void threadFinished() {
-        super.threadFinished();
-        final ChromeDriverService service = services.remove(currentThreadName());
-        if (service != null && service.isRunning()) {
-            service.stop();
-        }
-    }
-
     public void setChromeDriverPath(String path) {
         setProperty(CHROME_SERVICE_PATH, path);
     }
@@ -51,6 +42,15 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
     protected ChromeDriver createBrowser() {
         final ChromeDriverService service = getThreadService();
         return service != null ? new ChromeDriver(service, createCapabilities()) : null;
+    }
+
+    @Override
+    public void quitBrowser(final ChromeDriver browser) {
+        super.quitBrowser(browser);
+        final ChromeDriverService service = services.remove(currentThreadName());
+        if (service != null && service.isRunning()) {
+            service.stop();
+        }
     }
 
     private ChromeDriverService getThreadService() {

@@ -67,7 +67,7 @@ public class ChromeDriverConfigTest {
     }
 
     @Test
-    public void shouldCreateChrome() throws Exception {
+    public void shouldCreateChromeAndStartService() throws Exception {
         ChromeDriver mockChromeDriver = mock(ChromeDriver.class);
         whenNew(ChromeDriver.class).withParameterTypes(ChromeDriverService.class, Capabilities.class).withArguments(isA(ChromeDriverService.class), isA(Capabilities.class)).thenReturn(mockChromeDriver);
         ChromeDriverService.Builder mockServiceBuilder = mock(ChromeDriverService.Builder.class);
@@ -81,6 +81,8 @@ public class ChromeDriverConfigTest {
         assertThat(browser, is(mockChromeDriver));
         verifyNew(ChromeDriver.class, times(1)).withArguments(isA(ChromeDriverService.class), isA(Capabilities.class));
         verify(mockServiceBuilder, times(1)).build();
+        assertThat(config.getServices().size(), is(1));
+        assertThat(config.getServices().values(), hasItem(mockService));
     }
 
     @Test
@@ -100,89 +102,43 @@ public class ChromeDriverConfigTest {
     }
 
     @Test
-    public void shouldCreateWebDriverWhenThreadStartedIsInvoked() throws Exception {
+    public void shouldQuitWebDriverAndStopServiceWhenQuitBrowserIsInvoked() throws Exception {
         ChromeDriver mockChromeDriver = mock(ChromeDriver.class);
-        whenNew(ChromeDriver.class).withParameterTypes(ChromeDriverService.class, Capabilities.class).withArguments(isA(ChromeDriverService.class), isA(Capabilities.class)).thenReturn(mockChromeDriver);
-        ChromeDriverService.Builder mockServiceBuilder = mock(ChromeDriverService.Builder.class);
-        whenNew(ChromeDriverService.Builder.class).withNoArguments().thenReturn(mockServiceBuilder);
-        when(mockServiceBuilder.usingDriverExecutable(isA(File.class))).thenReturn(mockServiceBuilder);
-        ChromeDriverService mockService = mock(ChromeDriverService.class);
-        when(mockServiceBuilder.build()).thenReturn(mockService);
-
-        config.threadStarted();
-
-        assertThat(config.getThreadBrowser(), is(mockChromeDriver));
-        assertThat(config.getServices().size(), is(1));
-        assertThat(config.getServices().values(), hasItem(mockService));
-        verifyNew(ChromeDriver.class, times(1)).withArguments(isA(ChromeDriverService.class), isA(Capabilities.class));
-        verify(mockServiceBuilder, times(1)).build();
-    }
-
-    @Test
-    public void shouldOnlyCreateSingleWebDriverEvenWhenThreadStartedIsCalledMultipleTimes() throws Exception {
-        ChromeDriver mockChromeDriver = mock(ChromeDriver.class);
-        whenNew(ChromeDriver.class).withParameterTypes(ChromeDriverService.class, Capabilities.class).withArguments(isA(ChromeDriverService.class), isA(Capabilities.class)).thenReturn(mockChromeDriver);
-        ChromeDriverService.Builder mockServiceBuilder = mock(ChromeDriverService.Builder.class);
-        whenNew(ChromeDriverService.Builder.class).withNoArguments().thenReturn(mockServiceBuilder);
-        when(mockServiceBuilder.usingDriverExecutable(isA(File.class))).thenReturn(mockServiceBuilder);
-        ChromeDriverService mockService = mock(ChromeDriverService.class);
-        when(mockServiceBuilder.build()).thenReturn(mockService);
-
-        config.threadStarted();
-        config.threadStarted();
-
-        assertThat(config.getThreadBrowser(), is(mockChromeDriver));
-        assertThat(config.getServices().size(), is(1));
-        assertThat(config.getServices().values(), hasItem(mockService));
-        verifyNew(ChromeDriver.class, times(1)).withArguments(isA(ChromeDriverService.class), isA(Capabilities.class));
-        verify(mockServiceBuilder, times(1)).build();
-    }
-
-    @Test
-    public void shouldQuitWebDriverAndStopServiceWhenThreadFinishedIsInvoked() throws Exception {
-        ChromeDriver mockChromeDriver = mock(ChromeDriver.class);
-        config.setThreadBrowser(mockChromeDriver);
         ChromeDriverService mockService = mock(ChromeDriverService.class);
         when(mockService.isRunning()).thenReturn(true);
         config.getServices().put(config.currentThreadName(), mockService);
 
-        config.threadFinished();
+        config.quitBrowser(mockChromeDriver);
 
-        assertThat(config.getThreadBrowser(), is(nullValue()));
-        verify(mockChromeDriver, times(1)).quit();
+        verify(mockChromeDriver).quit();
         assertThat(config.getServices(), is(Collections.<String, ChromeDriverService>emptyMap()));
         verify(mockService, times(1)).stop();
     }
 
     @Test
-    public void shouldNotStopServiceIfNotRunningWhenThreadFinishedIsInvoked() throws Exception {
+    public void shouldNotStopServiceIfNotRunningWhenQuitBrowserIsInvoked() throws Exception {
         ChromeDriver mockChromeDriver = mock(ChromeDriver.class);
-        config.setThreadBrowser(mockChromeDriver);
         ChromeDriverService mockService = mock(ChromeDriverService.class);
         when(mockService.isRunning()).thenReturn(false);
         config.getServices().put(config.currentThreadName(), mockService);
 
-        config.threadFinished();
+        config.quitBrowser(mockChromeDriver);
 
-        assertThat(config.getThreadBrowser(), is(nullValue()));
-        verify(mockChromeDriver, times(1)).quit();
+        verify(mockChromeDriver).quit();
         assertThat(config.getServices(), is(Collections.<String, ChromeDriverService>emptyMap()));
         verify(mockService, times(0)).stop();
     }
 
     @Test
-    public void shouldBeAbleToCallThreadFinishedMultipleTimes() throws Exception {
+    public void shouldBeAbleToCallQuitBrowserMultipleTimes() throws Exception {
         ChromeDriver mockChromeDriver = mock(ChromeDriver.class);
-        config.setThreadBrowser(mockChromeDriver);
         ChromeDriverService mockService = mock(ChromeDriverService.class);
         when(mockService.isRunning()).thenReturn(true);
         config.getServices().put(config.currentThreadName(), mockService);
 
-        config.threadFinished();
-        config.threadFinished();
+        config.quitBrowser(mockChromeDriver);
+        config.quitBrowser(mockChromeDriver);
 
-        assertThat(config.getThreadBrowser(), is(nullValue()));
-        verify(mockChromeDriver, times(1)).quit();
         assertThat(config.getServices(), is(Collections.<String, ChromeDriverService>emptyMap()));
         verify(mockService, times(1)).stop();
     }

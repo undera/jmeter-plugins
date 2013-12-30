@@ -192,7 +192,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
         LOGGER.info("iterationStart()");
 
-        if(isRecreateBrowserOnIterationStart()) {
+        if(isRecreateBrowserOnIterationStart() && !isDevMode()) {
             final T browser = getThreadBrowser();
             quitBrowser(browser);
             setThreadBrowser(createBrowser());
@@ -202,17 +202,31 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
     @Override
     public void threadStarted() {
+        // don't create new browser if there is one there already
         if(hasThreadBrowser()) {
             LOGGER.warn("Thread: " + currentThreadName() + " already has a WebDriver("+ getThreadBrowser()+") associated with it. ThreadGroup can only contain a single WebDriverConfig.");
             return;
         }
-        setThreadBrowser(createBrowser());
+
+        // create new browser instance
+        final T browser = createBrowser();
+        setThreadBrowser(browser);
+
+        // ensures the browser will quit when JVM exits (especially important in devMode)
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                quitBrowser(browser);
+            }
+        });
     }
 
     @Override
     public void threadFinished() {
-        final T browser = removeThreadBrowser();
-        quitBrowser(browser);
+        if(!isDevMode()) {
+            final T browser = removeThreadBrowser();
+            quitBrowser(browser);
+        }
     }
 
 

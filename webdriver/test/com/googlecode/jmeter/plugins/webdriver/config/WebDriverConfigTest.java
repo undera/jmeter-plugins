@@ -384,6 +384,17 @@ public class WebDriverConfigTest {
     }
 
     @Test
+    public void shouldNotClearNorQuitBrowserWhenDevModeIsEnabled() {
+        config.setThreadBrowser(browser);
+        config.setDevMode(true);
+
+        config.threadFinished();
+
+        assertThat(config.getThreadBrowser(), is(browser));
+        verify(browser, times(0)).quit();
+    }
+
+    @Test
     public void shouldQuitBrowser() {
         config.quitBrowser(browser);
 
@@ -446,6 +457,20 @@ public class WebDriverConfigTest {
         assertThat((WebDriver) variables.getObject(WebDriverConfig.BROWSER), is(secondBrowser));
 
         verify(firstBrowser, times(1)).quit();
+    }
+
+    @Test
+    public void shouldNotRecreateBrowserOnEachIterationStartWhenDevModeIsEnabled() {
+        final WebDriver browser = mock(WebDriver.class);
+        this.config = new WebDriverConfigImpl(proxyFactory, browser);
+        this.config.setRecreateBrowserOnIterationStart(true);
+        this.config.setDevMode(true);
+
+        config.threadStarted();
+        config.iterationStart(null);
+
+        assertThat((WebDriver) variables.getObject(WebDriverConfig.BROWSER), is(browser));
+        verify(browser, times(0)).quit();
     }
 
     @Test

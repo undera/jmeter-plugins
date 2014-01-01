@@ -73,3 +73,8 @@ In the below example, we declare a Redis Data Set which exports cardNumber varia
 
 [/img/wiki/redis/TestPlanWithRedisSet.png]
 
+
+== Examples ==
+[/img/examples/RedisDataSet-RandomKeep.jmx Example Redis Data Set using RANDOM_GET]
+
+[/img/examples/RedisDataSet-RandomRemove.jmx Example Redis Data Set using RANDOM_REMOVE]

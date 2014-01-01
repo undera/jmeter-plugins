@@ -3,6 +3,7 @@
 
 == Description ==
 
+Redis Data Set requires JMeter 2.10 or superior.
 Redis Data Set lets you extract data from a Redis source in 2 modes:
   * RANDOM_REMOVE uses a Redis List, once a value is retrieved it is removed from List, this is useful if you must ensure unique data is used accross test servers 
   * RANDOM_KEEP uses a Redis Set, once a value is retrieved it is removed from Set, this is useful if you accept to have duplicate data accross test servers 
@@ -17,6 +18,7 @@ To use a Redis Data Set you must at least configure:
   * Data Base name
 
 [/img/wiki/redis/RedisDataSet.png]
+
 To use RANDOM_REMOVE mode you need to first insert data this way.
 
 Inserting in a Redis List:
@@ -37,9 +39,11 @@ Inserting in a Redis List:
             }
         }
 }}}
+
 You can then set Redis key to ccList.
 
 In the below example, we declare a Redis Data Set which exports cardNumber variable from a ccList and then use it in a Debug Sampler:
+
 [/img/wiki/redis/TestPlanWithRedisList.png]
 
 To use RANDOM_GET mode you need to first insert data this way.
@@ -66,5 +70,11 @@ Inserting in a Redis Set:
 
 You can then set Redis key to ccSet
 In the below example, we declare a Redis Data Set which exports cardNumber variable from a ccSet and then use it in a Debug Sampler:
+
 [/img/wiki/redis/TestPlanWithRedisSet.png]
 
+
+== Examples ==
+[/img/examples/RedisDataSet-RandomKeep.jmx Example Redis Data Set using RANDOM_GET]
+
+[/img/examples/RedisDataSet-RandomRemove.jmx Example Redis Data Set using RANDOM_REMOVE]

@@ -53,4 +53,4 @@ running the test you may load saved file into GUI and see the values timeline.
 == Seeing PerfMon Data Online ==
 
 There is a feature on [http://loadosophia.org/?utm_source=jpgc&utm_medium=wiki&utm_campaign=PerfMon Loadosophia.org] to see PerfMon collected data in a fancy Web interface.
-[https://loadosophia.org/examples/62562/monitoring/?utm_source=jpgc&utm_medium=wiki&utm_campaign=PerfMon Here's an example].
+[https://loadosophia.org/examples/62562/?utm_source=jpgc&utm_medium=wiki&utm_campaign=PerfMon#tab=4 Here's an example].

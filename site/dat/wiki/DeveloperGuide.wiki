@@ -35,7 +35,7 @@ Example test plans are committed into GitHub repository here: [https://github.co
   # upload plugins zip and libs zip to downloads
   # edit downloads page: move prev release to latest, add new release
   # edit changes list in [Changelog] into released state
-  # edit homepage: latest version info, download links
+  # edit homepage: latest version info, download links, don't forget links from separate sets
   # edit wiki Start page: plugins list with NEW tags
   # announce release:
     * project mailing list

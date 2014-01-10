@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ListIterator;
 import java.util.Properties;
+
+import kg.apc.charting.ChartSettings;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
@@ -15,7 +17,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 /**
- *
  * @author undera
  */
 public class PluginsCMDWorker {
@@ -44,6 +45,7 @@ public class PluginsCMDWorker {
     private String includeLabels = "";
     private String excludeLabels = "";
     private int successFilter = -1;
+    private int markers = -1;
 
     public PluginsCMDWorker() {
         log.info("Using JMeterPluginsCMD v. " + JMeterPluginsUtils.getVersion());
@@ -314,6 +316,9 @@ public class PluginsCMDWorker {
         if (autoScaleRows >= 0) {
             graph.getChartSettings().setExpendRows(autoScaleRows > 0);
         }
+        if (markers >= 0) {
+            graph.getChartSettings().setChartMarkers(markers > 0 ? ChartSettings.CHART_MARKERS_YES : ChartSettings.CHART_MARKERS_NO);
+        }
 
     }
 
@@ -351,6 +356,10 @@ public class PluginsCMDWorker {
 
     public void setGradient(int logicValue) {
         gradient = logicValue;
+    }
+
+    public void setMarkers(int logicValue) {
+        markers = logicValue;
     }
 
     public void setIncludeLabels(String string) {

@@ -22,10 +22,11 @@ public class ReporterTool extends AbstractCMDTool {
                 + "--width <graph width> "
                 + "--height <graph height> "
                 + "--granulation <ms> "
-                + "--relative-times <yes/no> " // aggregate all rows into one ||
-                + "--aggregate-rows <yes/no> " // aggregate all rows into one ||
-                + "--paint-gradient <yes/no> " // paint gradient background ||
-                + "--paint-zeroing <yes/no> " // paint zeroing lines ||
+                + "--relative-times <yes/no> "
+                + "--aggregate-rows <yes/no> "
+                + "--paint-gradient <yes/no> "
+                + "--paint-zeroing <yes/no> "
+                + "--paint-markers <yes/no> "
                 + "--prevent-outliers <yes/no> " // prevent outliers on distribution graph ||
                 + "--limit-rows <num of points> " // limit number of points in row ||
                 + "--force-y <limit> " // force Y axis limit ||
@@ -132,6 +133,13 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 worker.setGradient(getLogicValue((String) args.next()));
+            } else if (nextArg.equalsIgnoreCase("--paint-markers")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing markers flag");
+                }
+
+                worker.setMarkers(getLogicValue((String) args.next()));
             } else if (nextArg.equalsIgnoreCase("--prevent-outliers")) {
 
                 if (!args.hasNext()) {

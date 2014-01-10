@@ -40,6 +40,7 @@ like [SettingsPanel GUI settings] do with optional parameters:
 || {{{--aggregate-rows <yes/no>}}} || aggregate all rows into one ||
 || {{{--paint-gradient <yes/no>}}} || paint gradient background ||
 || {{{--paint-zeroing <yes/no>}}} || paint zeroing lines ||
+|| {{{--paint-markers <yes/no>}}} || paint markers on data points (since 1.1.3) ||
 || {{{--prevent-outliers <yes/no>}}} || prevent outliers on distribution graph ||
 || {{{--limit-rows <num of points>}}} || limit number of points in row ||
 || {{{--force-y <limit>}}} || force Y axis limit ||

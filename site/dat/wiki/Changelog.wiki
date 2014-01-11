@@ -1,6 +1,7 @@
 = Changelog =
-== 1.1.3 <i><font color=gray size="1">???</font></i>==
+== 1.1.3 <i><font color=gray size="1">planning</font></i>==
   * New Redis Data Set for distributed equivalent of CSV Data Set
+  * add --paint-markers option for JMeterPluginsCMD
   
 == 1.1.2 <i><font color=gray size="1">October 27, 2013</font></i>==
   * Add *[HtmlUnitDriver HtmlUnitDriver]* for the [WebDriverSampler WebDriver]

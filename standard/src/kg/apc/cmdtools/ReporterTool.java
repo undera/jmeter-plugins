@@ -22,7 +22,7 @@ public class ReporterTool extends AbstractCMDTool {
                 + "--width <graph width> "
                 + "--height <graph height> "
                 + "--granulation <ms> "
-                + "--relative-times <yes/no> "
+                + "--relative-times <yes/no> " // use relative X axis times, _no_ will set absolute times ||
                 + "--aggregate-rows <yes/no> "
                 + "--paint-gradient <yes/no> "
                 + "--paint-zeroing <yes/no> "

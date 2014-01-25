@@ -80,6 +80,7 @@ public abstract class AbstractGraphPanelVisualizer
     private boolean filePanelVisible = true;
     private boolean maximized = false;
     private JButton maximizeButton;
+    private boolean ignoreCurrentTestStartTime;
 
     /**
      *
@@ -480,5 +481,24 @@ public abstract class AbstractGraphPanelVisualizer
             }
         }
 
+    }
+
+    /**
+     * Ignore current test start time(ie take it from reload test data)
+     * this is needed for visualizer that don't use current tests data
+     * but reload from file 
+     */
+    public void setIgnoreCurrentTestStartTime() {
+        this.ignoreCurrentTestStartTime = true;
+    }
+
+    /**
+     * Ignore current test start time(ie take it from reload test data)
+     * this is needed for visualizer that don't use current tests data
+     * but reload from file 
+     * @return the ignoreTestStartTime
+     */
+    public boolean isIgnoreCurrentTestStartTime() {
+        return ignoreCurrentTestStartTime;
     }
 }

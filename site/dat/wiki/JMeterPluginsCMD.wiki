@@ -44,12 +44,12 @@ like [SettingsPanel GUI settings] do with optional parameters:
 || {{{--limit-rows <num of points>}}} || limit number of points in row ||
 || {{{--force-y <limit>}}} || force Y axis limit ||
 || {{{--hide-low-counts <limit>}}} || hide points with sample count below limit ||
-|| {{{--success-filter <true/false>}}} || filter samples by success flag (since 0.5.6) ||
+|| {{{--success-filter <true/false>}}} || filter samples by success flag (since 0.5.6), possible values are true, false, if not set no filtering on success flag will occur ||
 || {{{--include-labels <labels list>}}} || include in report only samples with specified labels, comma-separated ||
 || {{{--exclude-labels <labels list>}}} || exclude from report samples with specified labels, comma-separated ||
 || {{{--auto-scale <yes/no>}}} || enable/disable auto-scale multipliers for perfmon/composite graph ||
 || {{{--line-weight <num of pixels>}}} || line thickness for graph rows ||
-|| {{{--extractor-regexps <regExps list>}}} || list of keyRegExp and valRegExp pairs separated with {;} ||
+|| {{{--extractor-regexps <regExps list>}}} || list of keyRegExp and valRegExp pairs separated with {;}, only used by PageDataExtractorOverTime ||
 
 == Plugin Type Classes ==
 Make note that you need to install corresponding plugins set to have Extras plugins available in CMD.

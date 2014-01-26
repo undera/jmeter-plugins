@@ -202,7 +202,7 @@ public class PluginsCMDWorker {
         checkParams();
 
         AbstractGraphPanelVisualizer pluginInstance = pluginType;
-
+        pluginType.setIgnoreCurrentTestStartTime();
         setOptions(pluginInstance);
 
         CorrectedResultCollector rc;
@@ -218,7 +218,6 @@ public class PluginsCMDWorker {
         log.debug("Using JTL file: " + inputFile);
         rc.setFilename(inputFile);
         rc.setListener(pluginInstance);
-
         pluginInstance.configure(rc);
 
         //rc.testStarted();

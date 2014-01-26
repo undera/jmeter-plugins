@@ -23,7 +23,10 @@ public abstract class AbstractOverTimeVisualizer
     @Override
     public void add(SampleResult sample) {
         if (relativeStartTime == 0) {
-            relativeStartTime = JMeterContextService.getTestStartTime();
+            // 
+            if(!isIgnoreCurrentTestStartTime()){
+                relativeStartTime = JMeterContextService.getTestStartTime(); 
+            }
             isJtlLoad = false;
             if (relativeStartTime == 0) {
                 relativeStartTime = sample.getStartTime();

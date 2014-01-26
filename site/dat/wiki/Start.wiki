@@ -53,6 +53,8 @@ Additional plugins for extended and complex testing. Does not require additional
 
 === Listeners ===
   * [AutoStop] Trigger
+  * [GraphsGeneratorListener Graphs Generator][/img/icons/new_wog.gif]
+  
 
 === Samplers ===
   * [UDPRequest UDP Sampler]

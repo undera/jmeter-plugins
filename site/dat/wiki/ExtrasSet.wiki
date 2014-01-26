@@ -15,6 +15,7 @@ Additional plugins for extended and complex testing. Does not require additional
 
 == Listeners ==
   * [AutoStop] Trigger
+  * [GraphsGeneratorListener] Graphs Generator
 
 == Samplers ==
   * [UDPRequest UDP Sampler]

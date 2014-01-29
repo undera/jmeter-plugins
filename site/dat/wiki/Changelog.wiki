@@ -3,6 +3,7 @@
   * New Redis Data Set for distributed equivalent of CSV Data Set
   * add --paint-markers option for JMeterPluginsCMD
   * New Graphs Generator Listener to generate Graphs or CSVs after test is finished or by running a fake test
+  * Flexible File Writer allows using \t\r\n in header and footer
   
 == 1.1.2 <i><font color=gray size="1">October 27, 2013</font></i>==
   * Add *[HtmlUnitDriver HtmlUnitDriver]* for the [WebDriverSampler WebDriver]

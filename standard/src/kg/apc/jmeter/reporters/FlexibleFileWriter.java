@@ -2,15 +2,6 @@
 // TODO: buffer file writes to bigger chunks?
 package kg.apc.jmeter.reporters;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
-import java.util.ArrayList;
-import java.util.Arrays;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.util.NoThreadClone;
@@ -24,8 +15,17 @@ import org.apache.jmeter.testelement.TestListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
- *
  * @author undera
  * @see ResultCollector
  */
@@ -162,7 +162,7 @@ public class FlexibleFileWriter
             } else {
                 compiledFields[n] = -1;
                 compiledVars[n] = -1;
-                if (chunks[n].indexOf(VAR_PREFIX) >= 0) {
+                if (chunks[n].contains(VAR_PREFIX)) {
                     log.debug(chunks[n] + " is sample variable");
                     String varN = chunks[n].substring(VAR_PREFIX.length());
                     try {
@@ -189,7 +189,7 @@ public class FlexibleFileWriter
         FileOutputStream fos = new FileOutputStream(filename, !isOverwrite());
         fileChannel = fos.getChannel();
 
-        String header = getFileHeader();
+        String header = JMeterPluginsUtils.replaceRNT(getFileHeader());
         if (!header.isEmpty()) {
             fileChannel.write(ByteBuffer.wrap(header.getBytes()));
         }
@@ -198,7 +198,7 @@ public class FlexibleFileWriter
     private synchronized void closeFile() {
         if (fileChannel != null && fileChannel.isOpen()) {
             try {
-                String footer = getFileFooter();
+                String footer = JMeterPluginsUtils.replaceRNT(getFileFooter());
                 if (!footer.isEmpty()) {
                     fileChannel.write(ByteBuffer.wrap(footer.getBytes()));
                 }
@@ -263,7 +263,7 @@ public class FlexibleFileWriter
     }
 
     private void appendSampleVariable(ByteBuffer buf, SampleEvent evt, int varID) {
-        if(SampleEvent.getVarCount() < varID+1) {
+        if (SampleEvent.getVarCount() < varID + 1) {
             buf.put(("UNDEFINED_variable#" + varID).getBytes());
             log.warn("variable#" + varID + " does not exist!");
         } else {
@@ -274,10 +274,6 @@ public class FlexibleFileWriter
     }
 
     /**
-     *
-     * @param buf
-     * @param result
-     * @param fieldID
      * @return boolean true if existing field found, false instead
      */
     private boolean appendSampleResultField(ByteBuffer buf, SampleResult result, int fieldID) {

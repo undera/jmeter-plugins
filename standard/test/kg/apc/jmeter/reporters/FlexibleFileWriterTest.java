@@ -1,24 +1,19 @@
 package kg.apc.jmeter.reporters;
 
-import java.io.File;
-import java.io.IOException;
 import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JMeterUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import static org.junit.Assert.*;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- *
- * @author undera
- */
+import java.io.File;
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 public class FlexibleFileWriterTest {
 
     public FlexibleFileWriterTest() {
@@ -29,21 +24,6 @@ public class FlexibleFileWriterTest {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of sampleOccurred method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testSampleOccurred() throws IOException {
         System.out.println("sampleOccurred");
@@ -65,7 +45,7 @@ public class FlexibleFileWriterTest {
             // assertEquals(exp, JMeterPluginsUtils.byteBufferToString(written));
         }
         instance.testEnded();
-        assertTrue(tmpFile.length()>0);
+        assertTrue(tmpFile.length() > 0);
     }
 
     @Test
@@ -92,9 +72,6 @@ public class FlexibleFileWriterTest {
         instance.testEnded();
     }
 
-    /**
-     * Test of sampleOccurred method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testSampleOccurred_phout() throws IOException {
         System.out.println("sampleOccurred_phout");
@@ -131,7 +108,6 @@ public class FlexibleFileWriterTest {
 
         res.setSampleLabel("SAMPLELBL");
         res.setThreadName("THRDNAME");
-        String exp = "THRDNAME\tSAMPLELBL";
         SampleEvent e = new SampleEvent(res, "Test");
         instance.sampleOccurred(e);
         //ByteBuffer written = instance.fileEmul.getWrittenBytes();
@@ -140,31 +116,20 @@ public class FlexibleFileWriterTest {
         instance.testEnded();
     }
 
-    /**
-     * Test of sampleStarted method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testSampleStarted() {
         System.out.println("sampleStarted");
-        SampleEvent e = null;
         FlexibleFileWriter instance = new FlexibleFileWriter();
-        instance.sampleStarted(e);
+        instance.sampleStarted(null);
     }
 
-    /**
-     * Test of sampleStopped method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testSampleStopped() {
         System.out.println("sampleStopped");
-        SampleEvent e = null;
         FlexibleFileWriter instance = new FlexibleFileWriter();
-        instance.sampleStopped(e);
+        instance.sampleStopped(null);
     }
 
-    /**
-     * Test of testStarted method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testTestStarted_0args() {
         System.out.println("testStarted");
@@ -172,9 +137,6 @@ public class FlexibleFileWriterTest {
         instance.testStarted();
     }
 
-    /**
-     * Test of testStarted method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testTestStarted_String() {
         System.out.println("testStarted");
@@ -183,9 +145,6 @@ public class FlexibleFileWriterTest {
         instance.testStarted(host);
     }
 
-    /**
-     * Test of testEnded method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testTestEnded_0args() throws IOException {
         System.out.println("testEnded");
@@ -195,9 +154,6 @@ public class FlexibleFileWriterTest {
         instance.testEnded();
     }
 
-    /**
-     * Test of testEnded method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testTestEnded_String() throws IOException {
         System.out.println("testEnded");
@@ -208,20 +164,13 @@ public class FlexibleFileWriterTest {
         instance.testEnded(host);
     }
 
-    /**
-     * Test of testIterationStart method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testTestIterationStart() {
         System.out.println("testIterationStart");
-        LoopIterationEvent event = null;
         FlexibleFileWriter instance = new FlexibleFileWriter();
-        instance.testIterationStart(event);
+        instance.testIterationStart(null);
     }
 
-    /**
-     * Test of setFilename method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testSetFilename() {
         System.out.println("setFilename");
@@ -230,9 +179,6 @@ public class FlexibleFileWriterTest {
         instance.setFilename(name);
     }
 
-    /**
-     * Test of getFilename method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testGetFilename() {
         System.out.println("getFilename");
@@ -242,9 +188,6 @@ public class FlexibleFileWriterTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of setColumns method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testSetColumns() {
         System.out.println("setColumns");
@@ -253,9 +196,6 @@ public class FlexibleFileWriterTest {
         instance.setColumns(cols);
     }
 
-    /**
-     * Test of getColumns method, of class FlexibleCSVWriter.
-     */
     @Test
     public void testGetColumns() {
         System.out.println("getColumns");
@@ -265,78 +205,60 @@ public class FlexibleFileWriterTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of isOverwrite method, of class FlexibleFileWriter.
-     */
     @Test
     public void testIsOverwrite() {
         System.out.println("isOverwrite");
         FlexibleFileWriter instance = new FlexibleFileWriter();
-        boolean expResult = false;
         boolean result = instance.isOverwrite();
-        assertEquals(expResult, result);
+        assertEquals(false, result);
     }
 
-    /**
-     * Test of setOverwrite method, of class FlexibleFileWriter.
-     */
     @Test
     public void testSetOverwrite() {
         System.out.println("setOverwrite");
-        boolean ov = false;
         FlexibleFileWriter instance = new FlexibleFileWriter();
-        instance.setOverwrite(ov);
+        instance.setOverwrite(false);
     }
 
-    /**
-     * Test of setFileHeader method, of class FlexibleFileWriter.
-     */
     @Test
-    public void testSetFileHeader() {
+    public void testSetFileHeader() throws IOException {
         System.out.println("setFileHeader");
-        String str = "";
-        kg.apc.jmeter.reporters.FlexibleFileWriter instance = new kg.apc.jmeter.reporters.FlexibleFileWriter();
+        String str = "Test\\t\\r\\n";
+        FlexibleFileWriter instance = new FlexibleFileWriter();
+        File f = File.createTempFile("ffw_test_", ".txt");
+        instance.setFilename(f.getAbsolutePath());
         instance.setFileHeader(str);
+        instance.testStarted();
+        instance.testEnded();
+        assertEquals(7, f.length());
     }
 
-    /**
-     * Test of getFileHeader method, of class FlexibleFileWriter.
-     */
     @Test
     public void testGetFileHeader() {
         System.out.println("getFileHeader");
-        kg.apc.jmeter.reporters.FlexibleFileWriter instance = new kg.apc.jmeter.reporters.FlexibleFileWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         String expResult = "";
         String result = instance.getFileHeader();
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of setFileFooter method, of class FlexibleFileWriter.
-     */
     @Test
     public void testSetFileFooter() {
         System.out.println("setFileFooter");
         String str = "";
-        kg.apc.jmeter.reporters.FlexibleFileWriter instance = new kg.apc.jmeter.reporters.FlexibleFileWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.setFileFooter(str);
     }
 
-    /**
-     * Test of getFileFooter method, of class FlexibleFileWriter.
-     */
     @Test
     public void testGetFileFooter() {
         System.out.println("getFileFooter");
-        kg.apc.jmeter.reporters.FlexibleFileWriter instance = new kg.apc.jmeter.reporters.FlexibleFileWriter();
+        FlexibleFileWriter instance = new FlexibleFileWriter();
         String expResult = "";
         String result = instance.getFileFooter();
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of openFile method, of class FlexibleFileWriter.
-     */
     @Test
     public void testOpenFile() throws Exception {
         System.out.println("openFile");

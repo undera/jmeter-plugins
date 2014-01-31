@@ -1,23 +1,7 @@
 package kg.apc.jmeter.jmxmon;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.management.MBeanServerConnection;
-import javax.management.remote.JMXConnector;
-import javax.management.remote.JMXConnectorFactory;
-import javax.management.remote.JMXServiceURL;
-
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
-
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -26,33 +10,42 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import javax.management.MBeanServerConnection;
+import javax.management.remote.JMXConnector;
+import javax.management.remote.JMXConnectorFactory;
+import javax.management.remote.JMXServiceURL;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 /**
- *
  * @author Lars Holmberg
  */
 public class JMXMonCollector
         extends CorrectedResultCollector
         implements Runnable, JMXMonSampleGenerator {
 
-   
-	private static final long serialVersionUID = 1437356057522465756L;
-	
-	private static boolean autoGenerateFiles = false;
+
+    private static final long serialVersionUID = 1437356057522465756L;
+
+    private static final boolean autoGenerateFiles;
     private static final String JMXMON = "JmxMon";
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String DATA_PROPERTY = "samplers";
     private int interval;
     private Thread workerThread = null;
     protected List<JMXMonSampler> jmxMonSamplers = new ArrayList<JMXMonSampler>();
-    private static String autoFileBaseName = null;
+    private String autoFileBaseName = null;
     private static int counter = 0;
-    private static String workerHost = null;
+    private String workerHost = null;
 
     static {
         autoGenerateFiles = (JMeterUtils.getPropDefault("forceJmxMonFile", "false")).trim().equalsIgnoreCase("true");
     }
 
-    private static synchronized String getAutoFileName() {
+    private synchronized String getAutoFileName() {
         String ret = "";
         counter++;
         if (autoFileBaseName == null) {
@@ -94,20 +87,20 @@ public class JMXMonCollector
     }
 
     //ensure we start only on one host (if multiple slaves)
-    private synchronized static boolean isWorkingHost(String host) {
-       if(workerHost == null) {
-          workerHost = host;
-          return true;
-       } else {
-          return host.equals(workerHost);
-       }
+    private synchronized boolean isWorkingHost(String host) {
+        if (workerHost == null) {
+            workerHost = host;
+            return true;
+        } else {
+            return host.equals(workerHost);
+        }
     }
 
     @Override
     public void testStarted(String host) {
 
-        if(!isWorkingHost(host)) {
-           return;
+        if (!isWorkingHost(host)) {
+            return;
         }
 
         //ensure the data will be saved
@@ -145,11 +138,11 @@ public class JMXMonCollector
     public void testEnded(String host) {
         log.debug("Start testEnded");
         workerHost = null;
-        if(workerThread == null) {
-           log.debug("End   testEnded workerThread == null");
-           return;
+        if (workerThread == null) {
+            log.debug("End   testEnded workerThread == null");
+            return;
         }
-        
+
         workerThread.interrupt();
         shutdownConnectors();
 
@@ -160,7 +153,7 @@ public class JMXMonCollector
         log.debug("End   testEnded");
     }
 
-    private void initiateConnectors() throws MalformedURLException, IOException {
+    private void initiateConnectors() throws IOException {
         JMeterProperty prop = getSamplerSettings();
         jmxMonSamplers.clear();
         if (!(prop instanceof CollectionProperty)) {
@@ -174,80 +167,75 @@ public class JMXMonCollector
             String label = ((JMeterProperty) row.get(0)).getStringValue();
             String jmxUrl = ((JMeterProperty) row.get(1)).getStringValue();
             String username = ((JMeterProperty) row.get(2)).getStringValue();
-            String password = ((JMeterProperty) row.get(3)).getStringValue();            
+            String password = ((JMeterProperty) row.get(3)).getStringValue();
             String objectName = ((JMeterProperty) row.get(4)).getStringValue();
             String attribute = ((JMeterProperty) row.get(5)).getStringValue();
             String key = ((JMeterProperty) row.get(6)).getStringValue();
             boolean isDelta = ((JMeterProperty) row.get(7)).getBooleanValue();
-            
+
             JMXServiceURL u = new JMXServiceURL(jmxUrl);
             Hashtable attributes = new Hashtable();
-            String[] buffer = { username, password };
+            String[] buffer = {username, password};
             attributes.put("jmx.remote.credentials", (String[]) buffer);
-            
+
             initiateConnector(u, attributes, jmxUrl, label, isDelta, objectName, attribute, key);
         }
     }
 
-    protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String jmxUrl, String name, boolean delta, String objectName, String attribute, String key) throws MalformedURLException, IOException {
-    	JMXConnector jmxConnector = null;
-    	MBeanServerConnection mBeanServerConn = findConnectionSameUrl(jmxUrl);
-    	
-    	if (mBeanServerConn == null) {
-    		log.debug("Create new connection url = " + jmxUrl);
-    		jmxConnector = JMXConnectorFactory.connect(u,attributes);
-    		mBeanServerConn = jmxConnector.getMBeanServerConnection();
-    	}
-    	else {
-    		log.debug("Reused the same connection for url = " + jmxUrl);
-    	}
-    	
+    protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String jmxUrl, String name, boolean delta, String objectName, String attribute, String key) throws IOException {
+        JMXConnector jmxConnector = null;
+        MBeanServerConnection mBeanServerConn = findConnectionSameUrl(jmxUrl);
+
+        if (mBeanServerConn == null) {
+            log.debug("Create new connection url = " + jmxUrl);
+            jmxConnector = JMXConnectorFactory.connect(u, attributes);
+            mBeanServerConn = jmxConnector.getMBeanServerConnection();
+        } else {
+            log.debug("Reused the same connection for url = " + jmxUrl);
+        }
+
         jmxMonSamplers.add(new JMXMonSampler(mBeanServerConn, jmxConnector, jmxUrl, name, objectName, attribute, key, delta));
     }
 
     private MBeanServerConnection findConnectionSameUrl(String url) {
-    	MBeanServerConnection conn = null;
-    	boolean continueFind = true;
-    	Iterator<JMXMonSampler> it = jmxMonSamplers.iterator();
-    	
-    	while (it.hasNext() && continueFind) {
-    		JMXMonSampler jmxSampler = it.next();
-    		String urlTemp = jmxSampler.getUrl();
-    		if (urlTemp != null && urlTemp.equals(url)) {
-    			conn = jmxSampler.getRemote();
-    			continueFind = false;
-    		}
-    	}
-    	
-    	return conn;
+        MBeanServerConnection conn = null;
+        boolean continueFind = true;
+        Iterator<JMXMonSampler> it = jmxMonSamplers.iterator();
+
+        while (it.hasNext() && continueFind) {
+            JMXMonSampler jmxSampler = it.next();
+            String urlTemp = jmxSampler.getUrl();
+            if (urlTemp != null && urlTemp.equals(url)) {
+                conn = jmxSampler.getRemote();
+                continueFind = false;
+            }
+        }
+
+        return conn;
     }
 
     private void shutdownConnectors() {
-    	log.debug("Start shutdownConnectors");
-    	Iterator<JMXMonSampler> it = jmxMonSamplers.iterator();
-    	
-    	while (it.hasNext()) {
-    		JMXMonSampler jmxSampler = it.next();
-    		JMXConnector jmxConnector = jmxSampler.getJmxConnector();
-    		if (jmxConnector != null) {
-    			try {
-    				jmxConnector.close();
-    				log.debug("jmx connector is closed");
-    			}
-    			catch (Exception ex) {
-    				log.debug("Can't close jmx connector, but continue");
-    			}
-    		}
-    		else {
-    			log.debug("jmxConnector == null, don't try to close connection");
-    		}
-    	}
+        log.debug("Start shutdownConnectors");
+
+        for (JMXMonSampler jmxSampler : jmxMonSamplers) {
+            JMXConnector jmxConnector = jmxSampler.getJmxConnector();
+            if (jmxConnector != null) {
+                try {
+                    jmxConnector.close();
+                    log.debug("jmx connector is closed");
+                } catch (Exception ex) {
+                    log.debug("Can't close jmx connector, but continue");
+                }
+            } else {
+                log.debug("jmxConnector == null, don't try to close connection");
+            }
+        }
         jmxMonSamplers.clear();
         log.debug("End  shutdownConnectors");
     }
 
     protected void processConnectors() {
-        for (JMXMonSampler sampler: jmxMonSamplers) {
+        for (JMXMonSampler sampler : jmxMonSamplers) {
             sampler.generateSamples(this);
         }
     }
@@ -256,7 +244,7 @@ public class JMXMonCollector
     public void sampleOccurred(SampleEvent event) {
         // just dropping regular test samples
     }
-    
+
     protected void jmxMonSampleOccurred(SampleEvent event) {
         super.sampleOccurred(event);
     }

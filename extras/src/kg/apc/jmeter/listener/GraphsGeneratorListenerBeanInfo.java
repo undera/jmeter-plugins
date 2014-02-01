@@ -36,6 +36,7 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
     
     private static final String GRAPH_WIDTH = "graphWidth";             //$NON-NLS-1$
     private static final String GRAPH_HEIGHT = "graphHeight";               //$NON-NLS-1$
+    private static final String PAINT_MARKERS = "paintMarkers";             //$NON-NLS-1$
     private static final String PAINT_ZEROING = "paintZeroing";             //$NON-NLS-1$
     private static final String PAINT_GRADIENT = "paintGradient";             //$NON-NLS-1$
     private static final String PREVENT_OUTLIERS = "preventOutliers";             //$NON-NLS-1$
@@ -75,7 +76,7 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
 
                 
         createPropertyGroup("graphs_config",             //$NON-NLS-1$
-                new String[] { GRAPH_WIDTH, GRAPH_HEIGHT, PAINT_ZEROING,
+                new String[] { GRAPH_WIDTH, GRAPH_HEIGHT, PAINT_MARKERS, PAINT_ZEROING,
                     PAINT_GRADIENT, PREVENT_OUTLIERS, RELATIVE_TIMES, AUTO_SCALE_ROWS,
                     LIMIT_ROWS, FORCE_Y, GRANULATION, LINE_WEIGHT});
 
@@ -88,6 +89,13 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT, "600"); //$NON-NLS-1$
         p.setValue(NOT_EXPRESSION, Boolean.FALSE);
+        
+        p = property(PAINT_MARKERS);
+        p.setValue(NOT_UNDEFINED, Boolean.FALSE);
+        p.setValue(DEFAULT, "Undefined");               //$NON-NLS-1$
+        p.setValue(NOT_EXPRESSION, Boolean.TRUE);
+        p.setValue(NOT_OTHER, Boolean.FALSE);
+        p.setValue(TAGS, new String[]{"True", "False"}); // $NON-NLS-1$ $NON-NLS-2$
 
         p = property(PAINT_ZEROING);
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
@@ -156,9 +164,10 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
 
         p = property(SUCCESS_FILTER);
         p.setValue(NOT_UNDEFINED, Boolean.FALSE);
-        p.setValue(DEFAULT, "Undefined");
+        p.setValue(DEFAULT, "Undefined");           //$NON-NLS-1$
         p.setValue(NOT_EXPRESSION, Boolean.TRUE);
         p.setValue(NOT_OTHER, Boolean.FALSE);
+        p.setValue(TAGS, new String[]{"True", "False"}); // $NON-NLS-1$ $NON-NLS-2$
 
         p = property(INCLUDE_LABELS);
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);

@@ -69,26 +69,26 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     private static final long serialVersionUID = -136031193118302572L;
     private static final String[] pluginTypes = new String[] {
-        "ThroughputVsThreads",                  //$NON-NLS-1$
         "ResponseTimesOverTime",                //$NON-NLS-1$
         "HitsPerSecond",                        //$NON-NLS-1$
         "BytesThroughputOverTime",              //$NON-NLS-1$
         "LatenciesOverTime",                    //$NON-NLS-1$
         "ResponseCodesPerSecond",               //$NON-NLS-1$
+        "TransactionsPerSecond",                //$NON-NLS-1$
         "ResponseTimesDistribution",            //$NON-NLS-1$
         "ResponseTimesPercentiles",             //$NON-NLS-1$
+        "ThreadsStateOverTime",                 //$NON-NLS-1$
         "TimesVsThreads",                       //$NON-NLS-1$
-        "TransactionsPerSecond",                //$NON-NLS-1$
-        "ThreadsStateOverTime"                 //$NON-NLS-1$
+        "ThroughputVsThreads"                   //$NON-NLS-1$
     };
     private static final Set<String> TIME_BASED_GRAPHS = new HashSet<String>();
     static {
-        TIME_BASED_GRAPHS.add("ResponseTimesOverTime");
-        TIME_BASED_GRAPHS.add("HitsPerSecond");
-        TIME_BASED_GRAPHS.add("BytesThroughputOverTime");
-        TIME_BASED_GRAPHS.add("LatenciesOverTime");
-        TIME_BASED_GRAPHS.add("ResponseCodesPerSecond");
-        TIME_BASED_GRAPHS.add("TransactionsPerSecond");
+        TIME_BASED_GRAPHS.add("ResponseTimesOverTime");     //$NON-NLS-1$
+        TIME_BASED_GRAPHS.add("HitsPerSecond");             //$NON-NLS-1$
+        TIME_BASED_GRAPHS.add("BytesThroughputOverTime");   //$NON-NLS-1$
+        TIME_BASED_GRAPHS.add("LatenciesOverTime");         //$NON-NLS-1$
+        TIME_BASED_GRAPHS.add("ResponseCodesPerSecond");    //$NON-NLS-1$
+        TIME_BASED_GRAPHS.add("TransactionsPerSecond");     //$NON-NLS-1$
     }
     private String resultsFileName;
     private ExportMode exportMode;

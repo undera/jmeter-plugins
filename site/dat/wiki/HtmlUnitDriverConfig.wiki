@@ -7,7 +7,13 @@ Add this configuration to enable browser based performance testing using HtmlUni
 HtmlUnit is a good compromise between speed of execution and the CPU usage per thread while maintaining Selenium API.
 The main drawback is that there is no screen so it's more difficult to understand the cause of problems and also that the javascript engine is not powerful as browsers such Firefox or Chrome.
 
-Different browsers have different levels of setup complexity.  Using a HtmlUnit Browser is considered to have an *easy level* of setup complexity.
+Different browsers have different levels of setup complexity.  Using a HtmlUnit Browser is considered to have an *medium level* of setup complexity. This is because of the additional installation step required (below).
+
+=== (Additional) Installation step ===
+JMeter ships with *HttpClient v4.2.x*, however for the latest HtmlUnit to work properly, it must be upgraded to *v4.3.x*. So for this to work, the user must remove the following JarFiles from the JMeter lib/ directory:
+  # httpclient-4.2.*.jar
+  # httpcore-4.2.*.jar
+  # httpmime-4.2.*.jar
 
 
 On startup, the user is presented with the following:

@@ -49,6 +49,26 @@ public class FlexibleFileWriterTest {
     }
 
     @Test
+    public void testSampleOccurred_null() throws IOException {
+        System.out.println("sampleOccurred null");
+        SampleResult res = new SampleResult();
+        //res.setResponseData("test".getBytes());
+        SampleEvent e = new SampleEvent(res, "Test");
+        FlexibleFileWriter instance = new FlexibleFileWriter();
+        instance.setColumns(FlexibleFileWriter.AVAILABLE_FIELDS.replace(' ', '|'));
+        String tmpFile = File.createTempFile("ffw_test_", ".txt").getAbsolutePath();
+        instance.setFilename(tmpFile);
+        instance.testStarted();
+        for (int n = 0; n < 10; n++) {
+            res.sampleStart();
+            res.sampleEnd();
+            instance.sampleOccurred(e);
+        }
+        instance.testEnded();
+        assertTrue(tmpFile.length() > 0);
+    }
+
+    @Test
     public void testSampleOccurred_var() throws IOException {
         System.out.println("sampleOccurred-var");
         SampleResult res = new SampleResult();

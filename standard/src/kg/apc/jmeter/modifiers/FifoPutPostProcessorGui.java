@@ -1,18 +1,13 @@
 package kg.apc.jmeter.modifiers;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import javax.swing.*;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.processor.gui.AbstractPostProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
-/**
- *
- * @author undera
- */
+import javax.swing.*;
+import java.awt.*;
+
 public class FifoPutPostProcessorGui extends AbstractPostProcessorGui {
 
     public static final String WIKIPAGE = "InterThreadCommunication";

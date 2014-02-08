@@ -1,9 +1,5 @@
 package org.loadosophia.jmeter;
 
-/**
- *
- * @author undera
- */
 public class LoadosophiaUploadResults {
 
     private String redirect = "";

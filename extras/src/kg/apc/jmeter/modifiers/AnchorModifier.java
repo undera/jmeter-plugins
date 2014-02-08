@@ -267,11 +267,11 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
 
     private String getKeyForURL(HTTPSamplerBase newUrl) {
         PropertyIterator it = newUrl.propertyIterator();
-        String ret = "";
+        StringBuilder ret = new StringBuilder();
         while (it.hasNext()) {
             JMeterProperty p = it.next();
-            ret += p.getName() + "=" + p.getStringValue() + "\t";
+            ret.append(p.getName()).append("=").append(p.getStringValue()).append("\t");
         }
-        return ret;
+        return ret.toString();
     }
 }

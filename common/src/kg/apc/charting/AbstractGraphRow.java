@@ -165,7 +165,7 @@ public abstract class AbstractGraphRow {
         Entry<Long, AbstractGraphPanelChartElement> element;
 
         if (maxPoints > 0) {
-            factor = (int) Math.floor(this.size() / maxPoints) + 1;
+            factor = (int) Math.floor(this.size() / (double)maxPoints) + 1;
         } else {
             factor = 1;
         }

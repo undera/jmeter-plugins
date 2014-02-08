@@ -66,7 +66,7 @@ public class CubicSpline {
       int klo = 0;
       int khi = size - 1;
       while (khi - klo > 1) {
-         k = (khi + klo) >> 1;
+         k = (khi + klo) >>> 1;
          if (x[k] > xx) {
             khi = k;
          } else {

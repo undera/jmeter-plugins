@@ -88,7 +88,7 @@ public class ThroughputVsThreadsGui
         return "TransactionThroughputVsThreads";
     }
 
-    private class CustomRateRenderer
+    private static class CustomRateRenderer
             extends RateRenderer
     {
 

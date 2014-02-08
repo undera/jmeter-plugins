@@ -136,13 +136,13 @@ public class HTTPRawSampler extends AbstractIPSampler {
         }
         
         int n = 1;
-        String headers = EMPTY;
+        StringBuilder headers = new StringBuilder();
         String line;
         while (scanner.hasNextLine() && !(line = scanner.nextLine()).isEmpty()) {
-            headers += line + CRLF;
+            headers.append(line).append(CRLF);
             n++;
         }
-        res.setResponseHeaders(headers);
+        res.setResponseHeaders(headers.toString());
         
         if (scanner.hasNext()) {
             res.setResponseData(scanner.next(anyContent).getBytes());

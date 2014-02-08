@@ -15,15 +15,12 @@ public class FifoMap extends ConcurrentHashMap<String, BlockingQueue<String>> {
 
     public static final String TIMEOUT_PROP = "kg.apc.jmeter.functions.FifoTimeout";
     public static final String CAPACITY_PROP = "kg.apc.jmeter.functions.FifoCapacity";
-    private static FifoMap instance;
+    private static FifoMap instance = new FifoMap();
 
     private FifoMap() {
     }
 
     public static FifoMap getInstance() {
-        if (instance == null) {
-            instance = new FifoMap();
-        }
         return instance;
     }
 

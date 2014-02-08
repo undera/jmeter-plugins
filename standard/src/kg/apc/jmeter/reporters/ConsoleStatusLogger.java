@@ -34,7 +34,7 @@ public class ConsoleStatusLogger extends AbstractListenerElement
     private int errors;
     private long begin;
 
-    private class JMeterLoggerOutputStream extends PrintStream {
+    private static class JMeterLoggerOutputStream extends PrintStream {
 
         public JMeterLoggerOutputStream(Logger log) {
             super(System.out);

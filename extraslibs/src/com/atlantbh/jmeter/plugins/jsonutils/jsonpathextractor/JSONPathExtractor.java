@@ -18,6 +18,8 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 /**
  * This is main class for JSONPath extractor which works on previous sample
@@ -29,6 +31,7 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
 
 	private static final long serialVersionUID = 1L;
 	
+	private static final Logger logger = LoggingManager.getLoggerForClass();
 	private static final String JSONPATH = "JSONPATH";
 	private static final String VAR = "VAR";
 	
@@ -82,15 +85,15 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
 		} 
 		catch (InvalidPathException e) 
 		{
-			System.out.println("Extract failed!. Invalid JSON path: " + e.getMessage());
+		    logger.error("Extract failed!. Invalid JSON path: " + e.getMessage());
 		} 
 		catch (ParseException e) 
 		{
-			System.out.println("Extract failed!. Invalid JSON path: " + e.getMessage());
+		    logger.error("Extract failed!. Invalid JSON path: " + e.getMessage());
 		} 
 		catch (Exception e) 
 		{
-			System.out.println(e.getMessage());
+		    logger.error(e.getMessage());
 		}	
 	}
 }

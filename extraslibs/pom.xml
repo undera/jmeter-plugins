@@ -119,10 +119,22 @@
                 <type>jar</type>
                 <scope>compile</scope>
         </dependency>
-	<dependency>
-            <groupId>xom</groupId>
-            <artifactId>xom</artifactId>
-            <version>1.2.5</version>
+	   <dependency>
+		    <groupId>com.io7m.xom</groupId>
+		    <artifactId>xom</artifactId>
+		    <version>1.2.10</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.3</version>
         </dependency>
     </dependencies>
 

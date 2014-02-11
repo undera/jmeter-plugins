@@ -24,31 +24,30 @@ public class TestCsvFileAction implements ActionListener {
         VariablesFromCSV testElem = (VariablesFromCSV)variablesCsvUi.createTestElement();
 
         boolean noValues = true;
-        String msgVars = "";
+        StringBuilder msgVars = new StringBuilder();
         int count = 0;
 
         try {
             Map<String, String> vars = testElem.getArgumentsAsMap();
-            Iterator<String> iter = vars.keySet().iterator();
-
-            while (iter.hasNext()) {
-                String var = iter.next();
-                String value = vars.get(var);
+            for (Map.Entry<String, String> element : vars.entrySet()) {
+                String var = element.getKey();
+                String value = element.getValue();
                 if (!"".equals(value)) {
                     noValues = false;
                 }
-                msgVars = msgVars + "${" + var + "} = " + vars.get(var) + "\n";
-                count++;
+                msgVars.append("${").append(var).append("} = ")
+                    .append(value).append("\n");
+                count++;                
             }
 
             if (count == 0) {
                 reportError("File parsed, but no variable found.");
             } else if (noValues) {
                 reportOk("WARNING: File parsed, " + count + " variable" + (count > 1 ? "s" : "") + " found, but no variable have value!");
-                reportOk(msgVars);
+                reportOk(msgVars.toString());
             } else {
                 reportOk("File successfuly parsed, " + count + " variable" + (count > 1 ? "s" : "") + " found:");
-                reportOk(msgVars);
+                reportOk(msgVars.toString());
             }
         } catch (Exception ex) {
                 reportError("Error processing file: " + ex.toString());

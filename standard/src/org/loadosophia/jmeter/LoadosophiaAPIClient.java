@@ -113,13 +113,13 @@ public class LoadosophiaAPIClient {
         String dataStr = data.toString();
         log.debug("Sending active test data: " + dataStr);
         partsList.add(new StringPart("data", dataStr));
-        String[] res = multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
+        multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
     }
 
     public void endOnline() throws IOException {
         String uri = address + "api/active/receiver/stop/";
         LinkedList<Part> partsList = new LinkedList<Part>();
-        String[] res = multipartPost(partsList, uri, HttpStatus.SC_RESET_CONTENT);
+        multipartPost(partsList, uri, HttpStatus.SC_RESET_CONTENT);
     }
 
     private File gzipFile(File src) throws IOException {
@@ -192,7 +192,7 @@ public class LoadosophiaAPIClient {
         parts.add(new StringPart("token", token));
 
         PostMethod postRequest = new PostMethod(URL);
-        MultipartRequestEntity multipartRequest = new MultipartRequestEntity(parts.toArray(new Part[0]), postRequest.getParams());
+        MultipartRequestEntity multipartRequest = new MultipartRequestEntity(parts.toArray(new Part[parts.size()]), postRequest.getParams());
         postRequest.setRequestEntity(multipartRequest);
         int result = httpClient.executeMethod(postRequest);
         if (result != expectedSC) {
@@ -202,15 +202,13 @@ public class LoadosophiaAPIClient {
             FileChannel resultFile = fos.getChannel();
             resultFile.write(ByteBuffer.wrap(postRequest.getResponseBody()));
             resultFile.close();
-            HttpException exc = new HttpException("Request returned not " + expectedSC + " status code: " + result);
-            throw exc;
+            throw new HttpException("Request returned not " + expectedSC + " status code: " + result);
         }
         byte[] bytes = postRequest.getResponseBody();
         if (bytes == null) {
             bytes = new byte[0];
         }
         String response = new String(bytes);
-        String[] fields = response.trim().split(";");
-        return fields;
+        return response.trim().split(";");
     }
 }

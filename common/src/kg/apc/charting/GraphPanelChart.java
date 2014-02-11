@@ -787,7 +787,7 @@ public class GraphPanelChart
             it = rows.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, AbstractGraphRow> row = it.next();
-                int rowFactor = (int) Math.floor(row.getValue().size() / chartSettings.getMaxPointPerRow()) + 1;
+                int rowFactor = (int) Math.floor(row.getValue().size() / (double)chartSettings.getMaxPointPerRow()) + 1;
                 if (rowFactor > limitPointFactor) {
                     limitPointFactor = rowFactor;
                 }

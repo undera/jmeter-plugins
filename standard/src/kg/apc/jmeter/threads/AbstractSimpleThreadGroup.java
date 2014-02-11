@@ -31,7 +31,7 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
 
     //JMeter 2.7 Compatibility
     private long tgStartTime = -1;
-    private final long tolerance = 1000;
+    private static final long TOLERANCE = 1000;
 
 
     /**
@@ -44,7 +44,7 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
 
     //JMeter 2.7 compatibility
     public void scheduleThread(JMeterThread thread) {
-       if(System.currentTimeMillis()-tgStartTime > tolerance) {
+       if(System.currentTimeMillis()-tgStartTime > TOLERANCE) {
            tgStartTime = System.currentTimeMillis();
        }
        scheduleThread(thread, tgStartTime);

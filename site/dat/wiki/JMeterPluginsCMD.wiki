@@ -2,7 +2,7 @@
 = JMeterPluginsCMD Command Line Tool <sup><font color=gray size="1">since 0.4.1</font></sup>=
 
 There is small command-line utility for generating graphs out of JTL files. It behave just like right-click context menu on all graphs. The tool can generate PNG, CSV or both.
-
+Note you can use [GraphsGeneratorListener] if you want to bulk generate graphs after a test or for existing results.
 == Installation ==
 The tool is placed inside distribution ZIP. The tool consists of CMDRunner.jar and shell wrappers. Wrappers just shorten call of _"java -jar CMDRunner.jar --tool Reporter ..."_. The tool files must be placed inside _lib/ext_ directory of JMeter installation. The tool requires JMeterPlugins.jar to be placed in _lib/ext_ also.
 The tool requires JMeter 2.4 to function properly (2.3 will work only for PNG generation).

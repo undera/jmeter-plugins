@@ -5,10 +5,6 @@ import org.apache.jmeter.processor.PostProcessor;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.testelement.TestListener;
 
-/**
- *
- * @author undera
- */
 public class FifoPutPostProcessor extends AbstractTestElement
         implements PostProcessor, TestListener {
 

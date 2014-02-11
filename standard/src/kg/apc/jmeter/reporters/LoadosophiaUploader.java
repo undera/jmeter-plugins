@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -21,7 +22,6 @@ import org.loadosophia.jmeter.StatusNotifierCallback;
 public class LoadosophiaUploader extends ResultCollector implements StatusNotifierCallback, Runnable, TestListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    public static final String ADDRESS = "address";
     public static final String TITLE = "title";
     public static final String COLOR = "color";
     public static final String UPLOAD_TOKEN = "uploadToken";
@@ -113,7 +113,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
         // So we do dirty(?) hack here...
         clearTemporary(getProperty(FILENAME));
 
-        SampleSaveConfiguration conf = (SampleSaveConfiguration) getSaveConfig();
+        SampleSaveConfiguration conf = getSaveConfig();
         JMeterPluginsUtils.doBestCSVSetup(conf);
 
         setSaveConfig(conf);
@@ -173,8 +173,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     }
 
     protected LoadosophiaAPIClient getAPIClient() {
-        LoadosophiaAPIClient client = new LoadosophiaAPIClient(this, address, getUploadToken(), getProject(), getColorFlag(), getTitle());
-        return client;
+        return new LoadosophiaAPIClient(this, address, getUploadToken(), getProject(), getColorFlag(), getTitle());
     }
 
     @Override
@@ -203,7 +202,6 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
         while (isOnlineInitiated) {
             try {
                 SampleEvent event = processingQueue.poll(1, TimeUnit.SECONDS);
-                log.debug("Event: " + event);
                 if (event != null) {
                     aggregator.addSample(event.getResult());
                 }
@@ -216,7 +214,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                     }
                 }
             } catch (InterruptedException ex) {
-                log.warn("Interrupted while taking sample event from deque");
+                log.info("Interrupted while taking sample event from deque");
                 break;
             }
         }

@@ -21,7 +21,9 @@ package kg.apc.jmeter.listener;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import kg.apc.jmeter.PluginsCMDWorker;
 
@@ -67,23 +69,34 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     private static final long serialVersionUID = -136031193118302572L;
     private static final String[] pluginTypes = new String[] {
-        "ResponseTimesOverTime",
-        "HitsPerSecond",
-        "BytesThroughputOverTime",
-        "LatenciesOverTime",
-        "ResponseCodesPerSecond",
-        "ResponseTimesDistribution",
-        "ResponseTimesPercentiles",
-        "TimesVsThreads",
-        "TransactionsPerSecond",
-        "ThreadsStateOverTime"
+        "ResponseTimesOverTime",                //$NON-NLS-1$
+        "HitsPerSecond",                        //$NON-NLS-1$
+        "BytesThroughputOverTime",              //$NON-NLS-1$
+        "LatenciesOverTime",                    //$NON-NLS-1$
+        "ResponseCodesPerSecond",               //$NON-NLS-1$
+        "TransactionsPerSecond",                //$NON-NLS-1$
+        "ResponseTimesDistribution",            //$NON-NLS-1$
+        "ResponseTimesPercentiles",             //$NON-NLS-1$
+        "ThreadsStateOverTime",                 //$NON-NLS-1$
+        "TimesVsThreads",                       //$NON-NLS-1$
+        "ThroughputVsThreads"                   //$NON-NLS-1$
     };
+    private static final Set<String> TIME_BASED_GRAPHS = new HashSet<String>();
+    static {
+        TIME_BASED_GRAPHS.add("ResponseTimesOverTime");     //$NON-NLS-1$
+        TIME_BASED_GRAPHS.add("HitsPerSecond");             //$NON-NLS-1$
+        TIME_BASED_GRAPHS.add("BytesThroughputOverTime");   //$NON-NLS-1$
+        TIME_BASED_GRAPHS.add("LatenciesOverTime");         //$NON-NLS-1$
+        TIME_BASED_GRAPHS.add("ResponseCodesPerSecond");    //$NON-NLS-1$
+        TIME_BASED_GRAPHS.add("TransactionsPerSecond");     //$NON-NLS-1$
+    }
     private String resultsFileName;
     private ExportMode exportMode;
     private String filePrefix;
     private int graphWidth;
     private int graphHeight;
     private boolean aggregateRows;
+    private String paintMarkers;
     private boolean paintZeroing;
     private boolean paintGradient;
     private boolean preventOutliers;
@@ -103,7 +116,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     @Override
     public void testEnded() {
-        testEnded("");
+        testEnded("");  //$NON-NLS-1$
     }
 
     /* (non-Javadoc)
@@ -125,8 +138,14 @@ public class GraphsGeneratorListener extends AbstractListenerElement
             worker.setAggregate(aggregateRows?1:0);
             worker.setPreventOutliers(preventOutliers?1:0);
             worker.setAggregate(aggregateRows?1:0);
+            if(!StringUtils.isEmpty(paintMarkers)) {
+                worker.setMarkers("True". //$NON-NLS-1$
+                        equalsIgnoreCase(paintMarkers) ? 1 : 0);                
+            }
             worker.setZeroing(paintZeroing?1:0);
-            worker.setRelativeTimes(relativeTimes?1:0);
+            if(isTimeBasedGraph(pluginTypes[i])) {
+                worker.setRelativeTimes(relativeTimes?1:0);                
+            }
             worker.setGradient(paintGradient?1:0);
             worker.setAutoScaleRows(autoScaleRows?1:0);
             if(!StringUtils.isEmpty(successFilter)) {
@@ -167,6 +186,15 @@ public class GraphsGeneratorListener extends AbstractListenerElement
                 log.error("Error generating file "+fileName+" by plugin:"+pluginTypes[i]);                
             }
         }
+    }
+
+    /**
+     * 
+     * @param graphName
+     * @return boolean
+     */
+    private static boolean isTimeBasedGraph(String graphName) {
+        return TIME_BASED_GRAPHS.contains(graphName);
     }
 
     /* (non-Javadoc)
@@ -498,5 +526,19 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     public void setExportMode(int exportMode) {
         this.exportMode = ExportMode.values()[exportMode];
+    }
+
+    /**
+     * @return the paintMarkers
+     */
+    public String getPaintMarkers() {
+        return paintMarkers;
+    }
+
+    /**
+     * @param paintMarkers the paintMarkers to set
+     */
+    public void setPaintMarkers(String paintMarkers) {
+        this.paintMarkers = paintMarkers;
     }
 }

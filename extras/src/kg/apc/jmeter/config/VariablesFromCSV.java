@@ -24,11 +24,10 @@ public class VariablesFromCSV extends Arguments {
         Map<String, String> variables = new VariableFromCsvFileReader(getFileName()).getDataAsMap(getVariablePrefix(), getSeparator(), getSkipLines());
         //store in System Properties also
         if (isStoreAsSystemProperty()) {
-            Iterator<String> iter = variables.keySet().iterator();
-            while (iter.hasNext()) {
-                String variable = iter.next();
+            for (Map.Entry<String, String> element : variables.entrySet()) {
+                String variable = element.getKey();
                 if (System.getProperty(variable) == null) {
-                    System.setProperty(variable, variables.get(variable));
+                    System.setProperty(variable, element.getValue());
                 }
             }
         }

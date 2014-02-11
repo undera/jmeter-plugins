@@ -352,7 +352,11 @@ public class FlexibleFileWriter
                 break;
 
             case 16:
-                buf.put(result.getSamplerData().getBytes());
+                if (result.getSamplerData() != null) {
+                    buf.put(result.getSamplerData().getBytes());
+                } else {
+                    buf.put(b0);
+                }
                 break;
 
             case 17:

@@ -98,7 +98,7 @@ public class GraphRowSumValues
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    private class ExactEntry
+    private static class ExactEntry
             implements Entry<Long, AbstractGraphPanelChartElement> {
 
         private long key;

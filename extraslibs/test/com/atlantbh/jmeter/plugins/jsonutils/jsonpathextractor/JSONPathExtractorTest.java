@@ -15,41 +15,54 @@
  */
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.threads.JMeterContext;
+import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-/**
- *
- * @author undera
- */
+import static org.junit.Assert.assertEquals;
+
 public class JSONPathExtractorTest {
-    
-    public JSONPathExtractorTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+    private static final String json = "{ \"store\": {\n" +
+            "    \"book\": [ \n" +
+            "      { \"category\": \"reference\",\n" +
+            "        \"author\": \"Nigel Rees\",\n" +
+            "        \"title\": \"Sayings of the Century\",\n" +
+            "        \"price\": 8.95\n" +
+            "      },\n" +
+            "      { \"category\": \"fiction\",\n" +
+            "        \"author\": \"Evelyn Waugh\",\n" +
+            "        \"title\": \"Sword of Honour\",\n" +
+            "        \"price\": 12.99\n" +
+            "      },\n" +
+            "      { \"category\": \"fiction\",\n" +
+            "        \"author\": \"Herman Melville\",\n" +
+            "        \"title\": \"Moby Dick\",\n" +
+            "        \"isbn\": \"0-553-21311-3\",\n" +
+            "        \"price\": 8.99\n" +
+            "      },\n" +
+            "      { \"category\": \"fiction\",\n" +
+            "        \"author\": \"J. R. R. Tolkien\",\n" +
+            "        \"title\": \"The Lord of the Rings\",\n" +
+            "        \"isbn\": \"0-395-19395-8\",\n" +
+            "        \"price\": 22.99\n" +
+            "      }\n" +
+            "    ],\n" +
+            "    \"bicycle\": {\n" +
+            "      \"color\": \"red\",\n" +
+            "      \"price\": 19.95\n" +
+            "    }\n" +
+            "  }\n" +
+            "}";
+
     @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+    public void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
     }
 
-    /**
-     * Test of getJsonPath method, of class JSONPathExtractor.
-     */
     @Test
     public void testGetJsonPath() {
         System.out.println("getJsonPath");
@@ -57,26 +70,17 @@ public class JSONPathExtractorTest {
         String expResult = "";
         String result = instance.getJsonPath();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
-    /**
-     * Test of setJsonPath method, of class JSONPathExtractor.
-     */
     @Test
     public void testSetJsonPath() {
         System.out.println("setJsonPath");
         String jsonPath = "";
         JSONPathExtractor instance = new JSONPathExtractor();
         instance.setJsonPath(jsonPath);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
-    /**
-     * Test of getVar method, of class JSONPathExtractor.
-     */
     @Test
     public void testGetVar() {
         System.out.println("getVar");
@@ -84,48 +88,45 @@ public class JSONPathExtractorTest {
         String expResult = "";
         String result = instance.getVar();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
-    /**
-     * Test of setVar method, of class JSONPathExtractor.
-     */
     @Test
     public void testSetVar() {
         System.out.println("setVar");
         String var = "";
         JSONPathExtractor instance = new JSONPathExtractor();
         instance.setVar(var);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
-    /**
-     * Test of extractJSONPath method, of class JSONPathExtractor.
-     */
     @Test
-    public void testExtractJSONPath() throws Exception {
-        System.out.println("extractJSONPath");
-        String jsonString = "[]";
-        String jsonPath = ".0";
+    public void testProcess_default() {
+        System.out.println("process def");
+        JMeterContext context = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        context.setPreviousResult(res);
+
         JSONPathExtractor instance = new JSONPathExtractor();
-        String expResult = "NULL";
-        String result = instance.extractJSONPath(jsonString, jsonPath);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
+        instance.setDefaultValue("DEFAULT");
+        instance.setVar("test");
+        instance.process();
+        JMeterVariables vars = context.getVariables();
+        assertEquals("DEFAULT", vars.get("test"));
     }
 
-    /**
-     * Test of process method, of class JSONPathExtractor.
-     */
     @Test
     public void testProcess() {
         System.out.println("process");
+        JMeterContext context = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        res.setResponseData(json.getBytes());
+        context.setPreviousResult(res);
+
         JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setDefaultValue("DEFAULT");
+        instance.setVar("test");
+        instance.setJsonPath("$.store.book[*].author");
         instance.process();
-        // TODO review the generated test code and remove the default call to fail.
-        
+        JMeterVariables vars = context.getVariables();
+        assertEquals("[\"Nigel Rees\",\"Evelyn Waugh\",\"Herman Melville\",\"J. R. R. Tolkien\"]", vars.get("test"));
     }
 }

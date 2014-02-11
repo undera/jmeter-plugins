@@ -166,7 +166,7 @@ public class GraphPanel
         return settingsTab;
     }
 
-    private class JGraphPanel extends JPanel implements GraphRendererInterface
+    private static class JGraphPanel extends JPanel implements GraphRendererInterface
     {
         public JGraphPanel()
         {

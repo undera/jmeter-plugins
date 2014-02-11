@@ -23,7 +23,7 @@ public class LoadosophiaAggregator {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private SortedMap<Long, List<SampleResult>> buffer = new TreeMap<Long, List<SampleResult>>();
-    private final long SEND_SECONDS = 5;
+    private static final long SEND_SECONDS = 5;
     private long lastTime = 0;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
@@ -85,7 +85,7 @@ public class LoadosophiaAggregator {
             SampleResult res = it.next();
             threads += res.getAllThreads();
             avg_rt += res.getTime();
-            rtimes[cnt] = new Long(res.getTime());
+            rtimes[cnt] = Long.valueOf(res.getTime());
             rcodes[cnt] = res.getResponseCode();
             if (!res.isSuccessful()) {
                 failedCount++;

@@ -24,6 +24,14 @@ public class DistributedTestControlGui extends AbstractConfigGui {
         initFields();
     }
 
+    //do not insert this vizualiser in any JMeter menu
+    private Collection<String> emptyCollection = new ArrayList<String>();
+ 
+    @Override
+    public Collection<String> getMenuCategories() {
+        return emptyCollection;
+    }
+
     @Override
     public String getStaticLabel() {
         return JMeterPluginsUtils.prefixLabel("Distributed Test Control");

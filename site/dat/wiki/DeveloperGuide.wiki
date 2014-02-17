@@ -38,9 +38,13 @@ Example test plans are committed into GitHub repository here: [https://github.co
   # do mvn clean package
   # upload plugins zip and libs zip to downloads
   # announce release:
-    * project mailing list
-    * twitter link to mailing list announce
-    * linkedIn jmeter group
-    * software-testing.ru forum (for Russian users)
-    * jmeter mailing list (in case of important enough release)
-  # publish maven artifacts (do mvn sign:sign), maybe after a while to prevent buggy artifacts
+    #* project mailing list
+    #* twitter link to mailing list announce
+    #* linkedIn jmeter group
+    #* software-testing.ru forum (for Russian users)
+    #* jmeter mailing list (in case of important enough release)
+  # publish maven artifacts maybe after a while to prevent buggy artifacts
+    #* run maven-bundle.sh
+    #* upload at https://oss.sonatype.org/index.html#staging-upload - login 'undera'
+    #* stage at https://oss.sonatype.org/index.html#stagingRepositories
+    

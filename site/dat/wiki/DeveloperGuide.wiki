@@ -31,12 +31,12 @@ Example test plans are committed into GitHub repository here: [https://github.co
 
 = Release Process =
   # Edit pom.xml and set version name to version releasing
-  # do mvn clean package
-  # upload plugins zip and libs zip to downloads
   # edit downloads page: move prev release to latest, add new release
   # edit changes list in [Changelog] into released state
   # edit homepage: latest version info, download links, don't forget links from separate sets
   # edit wiki Start page: plugins list with NEW tags
+  # do mvn clean package
+  # upload plugins zip and libs zip to downloads
   # announce release:
     * project mailing list
     * twitter link to mailing list announce

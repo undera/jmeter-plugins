@@ -45,7 +45,7 @@ Additional plugins for extended and complex testing. Does not require additional
   * [BytesThroughput Bytes Throughput Over Time]
   * [PageDataExtractor Extracted Data Over Time] 
   * [DbMon DbMon Sample Collector]
-  * [JMXMon JMX Monitoring Collector] [/img/icons/new_wog.gif]
+  * [JMXMon JMX Monitoring Collector]
   * [ResponseTimesVsThreads Response Times vs Threads]
   * [TransactionThroughputVsThreads Transaction Throughput vs Threads]
   * [RespTimesDistribution Response Times Distribution]
@@ -93,7 +93,7 @@ Selenium/WebDriver testing ability.
   * [AndroidDriverConfig]
   * [ChromeDriverConfig]
   * [FirefoxDriverConfig]
-  * [HtmlUnitDriverConfig] [/img/icons/new_wog.gif]
+  * [HtmlUnitDriverConfig]
 
 </td>
 </tr><tr>

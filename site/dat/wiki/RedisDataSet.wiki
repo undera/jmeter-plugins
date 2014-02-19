@@ -6,7 +6,7 @@
 Redis Data Set requires JMeter 2.10 or superior.
 Redis Data Set lets you extract data from a Redis source in 2 modes:
   * RANDOM_REMOVE uses a Redis List, once a value is retrieved it is removed from List, this is useful if you must ensure unique data is used accross test servers 
-  * RANDOM_KEEP uses a Redis Set, once a value is retrieved it is removed from Set, this is useful if you accept to have duplicate data accross test servers 
+  * RANDOM_KEEP uses a Redis Set, retrieved value stays in Set, this is useful if you accept to have duplicate data accross test servers 
 
 To use a Redis Data Set you must at least configure:
   * Redis Key : The list or set name

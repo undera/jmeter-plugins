@@ -1,9 +1,9 @@
 #! /bin/sh
 
-#mvn -Dmaven.test.skip=true clean package javadoc:jar source:jar gpg:sign
+mvn -Dmaven.test.skip=true clean package javadoc:jar source:jar gpg:sign
 
 # 
-for C in common standard extras extraslibs webdriver hadoop; do
+for C in . common standard extras extraslibs webdriver hadoop; do
     tmpdir=`mktemp -d`
     cp $C/target/*.pom $tmpdir
     cp $C/target/*.jar $tmpdir

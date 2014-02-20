@@ -22,6 +22,13 @@
         <connection>https://github.com/undera/jmeter-plugins.git</connection>
         <developerConnection>git@github.com:undera/jmeter-plugins.git</developerConnection>
     </scm>
+    <developers>
+    <developer>
+      <id>team</id>
+  <name>jmeter-plugins.org</name>
+      <email>jmeter-plugins@googlegroups.com</email>
+    </developer>
+  </developers>
     <distributionManagement>        
         <snapshotRepository>
             <id>sonatype-snapshot</id>

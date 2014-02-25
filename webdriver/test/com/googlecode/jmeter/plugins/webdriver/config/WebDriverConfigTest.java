@@ -4,17 +4,17 @@ import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyFactory;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyHostPort;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 import org.apache.jmeter.engine.event.LoopIterationListener;
+import org.apache.jmeter.testelement.ThreadListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.SessionNotFoundException;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -22,19 +22,22 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.isA;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.*;
 
 public class WebDriverConfigTest {
 
     private ProxyFactory proxyFactory;
+    private WebDriver browser;
     private WebDriverConfig config;
     private JMeterVariables variables;
 
     @Before
     public void createConfig() {
         proxyFactory = mock(ProxyFactory.class);
-        config = new WebDriverConfigImpl(proxyFactory);
+        browser = mock(WebDriver.class);
+        config = new WebDriverConfigImpl(proxyFactory, browser);
         variables = new JMeterVariables();
         JMeterContextService.getContext().setVariables(variables);
     }
@@ -241,7 +244,7 @@ public class WebDriverConfigTest {
         Proxy proxy = config.createProxy();
 
         assertThat(proxy, is(notNullValue()));
-        verify(proxyFactory, times(1)).getConfigUrlProxy(isA(String.class));
+        verify(proxyFactory, times(1)).getConfigUrlProxy(Mockito.isA(String.class));
     }
 
     @Test
@@ -251,7 +254,7 @@ public class WebDriverConfigTest {
         config.setThreadBrowser(browser);
 
         assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasSize(1));
-        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(browser));
+        assertThat((Collection<WebDriver>) config.getThreadBrowsers().values(), hasItem(browser));
     }
 
     @Test
@@ -259,12 +262,12 @@ public class WebDriverConfigTest {
         WebDriver browser = mock(WebDriver.class);
 
         config.setThreadBrowser(browser);
-        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasSize(1));
-        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(browser));
+        assertThat((Collection<WebDriver>) config.getThreadBrowsers().values(), hasSize(1));
+        assertThat((Collection<WebDriver>) config.getThreadBrowsers().values(), hasItem(browser));
 
         config.setThreadBrowser(null);
         assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasSize(1));
-        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(browser));
+        assertThat((Collection<WebDriver>) config.getThreadBrowsers().values(), hasItem(browser));
     }
 
     @Test
@@ -276,7 +279,7 @@ public class WebDriverConfigTest {
         config.setThreadBrowser(secondBrowser);
 
         assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasSize(1));
-        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(secondBrowser));
+        assertThat((Collection<WebDriver>) config.getThreadBrowsers().values(), hasItem(secondBrowser));
     }
 
     @Test
@@ -303,7 +306,7 @@ public class WebDriverConfigTest {
         secondThread.join();
 
         // assertions
-        assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasSize(2));
+        assertThat((Collection<WebDriver>) config.getThreadBrowsers().values(), hasSize(2));
         assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(firstBrowser));
         assertThat((Collection<WebDriver>)config.getThreadBrowsers().values(), hasItem(secondBrowser));
     }
@@ -342,13 +345,85 @@ public class WebDriverConfigTest {
     }
 
     @Test
+    public void shouldImplementThreadListener() {
+        assertThat(config, is(instanceOf(ThreadListener.class)));
+    }
+
+    @Test
+    public void shouldCreateWebDriverWhenThreadStartedIsInvoked() throws Exception {
+        config.threadStarted();
+        assertThat(config.getThreadBrowser(), is(browser));
+    }
+
+    @Test
+    public void shouldOnlyCreateSingleWebDriverEvenWhenThreadStartedIsCalledMultipleTimes() throws Exception {
+        config.threadStarted();
+        config.threadStarted();
+        assertThat(config.getThreadBrowser(), is(browser));
+    }
+
+    @Test
+    public void shouldQuitWebDriverWhenThreadFinishedIsInvoked() throws Exception {
+        config.setThreadBrowser(browser);
+
+        config.threadFinished();
+
+        assertThat(config.getThreadBrowser(), is(nullValue()));
+        verify(browser, times(1)).quit();
+    }
+
+    @Test
+    public void shouldBeAbleToCallThreadFinishedMultipleTimes() throws Exception {
+        config.setThreadBrowser(browser);
+
+        config.threadFinished();
+        config.threadFinished();
+
+        assertThat(config.getThreadBrowser(), is(nullValue()));
+        verify(browser, times(1)).quit();
+    }
+
+    @Test
+    public void shouldNotClearNorQuitBrowserWhenDevModeIsEnabled() {
+        config.setThreadBrowser(browser);
+        config.setDevMode(true);
+
+        config.threadFinished();
+
+        assertThat(config.getThreadBrowser(), is(browser));
+        verify(browser, times(0)).quit();
+    }
+
+    @Test
+    public void shouldQuitBrowser() {
+        config.quitBrowser(browser);
+
+        verify(browser, times(1)).quit();
+    }
+
+    @Test
+    public void shouldNotQuitBrowserWhenArgumentIsNull() {
+        config.quitBrowser(null);
+
+        verify(browser, times(0)).quit();
+    }
+
+    @Test
+    public void shouldHandleScenarioWhenBrowserHasAlreadyQuit() {
+        doThrow(new SessionNotFoundException()).when(browser).quit();
+
+        config.quitBrowser(browser);
+
+        verify(browser, times(1)).quit();
+    }
+
+    @Test
     public void shouldImplementLoopIterationListener() {
         assertThat(config, is(instanceOf(LoopIterationListener.class)));
     }
 
     @Test
     public void shouldAddBrowserToJMeterVariablesWhenIterationStarts() throws Exception {
-        WebDriver browser = mock(WebDriver.class);
         config.setThreadBrowser(browser);
 
         config.iterationStart(null);
@@ -384,6 +459,32 @@ public class WebDriverConfigTest {
         verify(firstBrowser, times(1)).quit();
     }
 
+    @Test
+    public void shouldNotRecreateBrowserOnEachIterationStartWhenDevModeIsEnabled() {
+        final WebDriver browser = mock(WebDriver.class);
+        this.config = new WebDriverConfigImpl(proxyFactory, browser);
+        this.config.setRecreateBrowserOnIterationStart(true);
+        this.config.setDevMode(true);
+
+        config.threadStarted();
+        config.iterationStart(null);
+
+        assertThat((WebDriver) variables.getObject(WebDriverConfig.BROWSER), is(browser));
+        verify(browser, times(0)).quit();
+    }
+
+    @Test
+    public void shouldAssignDevMode() {
+        config.setDevMode(true);
+
+        assertThat(config.isDevMode(), is(true));
+    }
+
+    @Test
+    public void byDefaultDevModeShouldNotBeSet() {
+        assertThat(config.isDevMode(), is(false));
+    }
+
     private static class WebDriverConfigImpl extends WebDriverConfig {
 
         final List<WebDriver> browsers = new CopyOnWriteArrayList<WebDriver>();
@@ -400,7 +501,10 @@ public class WebDriverConfigTest {
 
         @Override
         protected WebDriver createBrowser() {
-            return (browsers.isEmpty() ? null : browsers.remove(0));
+            if(browsers.isEmpty()) {
+                throw new IllegalStateException("Unexpected call to createBrowser(). No more instances to return");
+            }
+            return browsers.remove(0);
         }
     }
 }

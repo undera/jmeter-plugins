@@ -151,9 +151,20 @@ public class AutomaticUltimateThreadGroupGui extends AbstractThreadGroupGui impl
 
 				int rampUp = Integer.valueOf(rampUpTF.getText());
 				int durationPerCycle = Integer.valueOf(durationCycleTF.getText()) * 60;
+				int avgResponseTime = Integer.valueOf(avgResponseTimeTF.getText());
+				int avgthinkTime = Integer.valueOf(avgThinkTimeTF.getText());
 
-				for (int c = 0; c < startThreadsCount.length; c++) {
-					startupTime[c] = startThreadsCount[c] * rampUp;
+				int throughputFactor = (avgResponseTime + avgthinkTime) / avgResponseTime;
+
+				Integer[] additionalRealUsersPerCycle = new Integer[virtualUsers.length];
+				
+				for (int c = 0; c < virtualUsers.length; c++) {
+					additionalRealUsersPerCycle[c] = c == 0 ? Integer.valueOf(virtualUsers[c]) * throughputFactor : (Integer.valueOf(virtualUsers[c])
+							- Integer.valueOf(virtualUsers[c - 1])) * throughputFactor;
+				}
+
+				for (int c = 0; c < additionalRealUsersPerCycle.length; c++) {
+					startupTime[c] = additionalRealUsersPerCycle[c] * rampUp;
 				}
 
 				for (int c = 0; c < startupTime.length; c++) {
@@ -211,7 +222,7 @@ public class AutomaticUltimateThreadGroupGui extends AbstractThreadGroupGui impl
 		JPanel panel0 = new JPanel();
 		JPanel panel1 = new JPanel();
 
-		JLabel virtualUsersL = new JLabel("Virtual User Step per Clycle [csv]");
+		JLabel virtualUsersL = new JLabel("Step Virtual User per Cycle [csv]");
 		JLabel rampUpL = new JLabel("Ramp-up per Real User [sec]");
 		JLabel shutdownTimeL = new JLabel("Shutdown Time [min]");
 		JLabel durationCycleL = new JLabel("Duration per Cycle [min]");

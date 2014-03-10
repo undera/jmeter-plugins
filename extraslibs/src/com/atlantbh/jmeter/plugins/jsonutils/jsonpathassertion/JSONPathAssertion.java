@@ -69,7 +69,8 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
             throw new Exception("JSON path or expected value is empty!");
         }
 
-        if (expectedValue.equalsIgnoreCase(JsonPath.read(jsonString, jsonPath).toString())) {
+	String actualValue = JsonPath.read(jsonString, jsonPath).toString();
+        if (expectedValue.equalsIgnoreCase(actualValue)) {
             return true;
         } else {
             throw new Exception(String.format("Path \"%s\" doesn't contain expected value. Expected \"%s\" but was \"%s\"!",

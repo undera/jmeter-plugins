@@ -72,8 +72,8 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         if (expectedValue.equalsIgnoreCase(JsonPath.read(jsonString, jsonPath).toString())) {
             return true;
         } else {
-            throw new Exception(String.format("Response doesn't contain expected value. Expected \"%s\" but was \"%s\"!",
-                    expectedValue, actualValue));
+            throw new Exception(String.format("Path \"%s\" doesn't contain expected value. Expected \"%s\" but was \"%s\"!",
+                    jsonPath, expectedValue, actualValue));
         }
     }
 

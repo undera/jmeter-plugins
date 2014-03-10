@@ -58,7 +58,7 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         if ("".equalsIgnoreCase(jsonPath)) {
             throw new Exception("JSON path is is empty!");
         } else if ("".equalsIgnoreCase(jsonPathResult)) {
-            throw new Exception("Incorrect JSON path");
+            throw new Exception("Incorrect JSON path " + jsonPath);
         } else {
             return true;
         }
@@ -72,7 +72,8 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         if (expectedValue.equalsIgnoreCase(JsonPath.read(jsonString, jsonPath).toString())) {
             return true;
         } else {
-            throw new Exception("Response doesn't contain expected value.");
+            throw new Exception(String.format("Response doesn't contain expected value. Expected \"%s\" but was \"%s\"!",
+                    expectedValue, actualValue));
         }
     }
 

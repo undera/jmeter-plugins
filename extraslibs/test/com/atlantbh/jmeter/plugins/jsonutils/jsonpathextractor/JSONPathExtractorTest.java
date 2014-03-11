@@ -15,118 +15,100 @@
  */
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor;
 
+import static org.junit.Assert.assertEquals;
 import kg.apc.emulators.TestJMeterUtils;
+
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-
 public class JSONPathExtractorTest {
-    private static final String json = "{ \"store\": {\n" +
-            "    \"book\": [ \n" +
-            "      { \"category\": \"reference\",\n" +
-            "        \"author\": \"Nigel Rees\",\n" +
-            "        \"title\": \"Sayings of the Century\",\n" +
-            "        \"price\": 8.95\n" +
-            "      },\n" +
-            "      { \"category\": \"fiction\",\n" +
-            "        \"author\": \"Evelyn Waugh\",\n" +
-            "        \"title\": \"Sword of Honour\",\n" +
-            "        \"price\": 12.99\n" +
-            "      },\n" +
-            "      { \"category\": \"fiction\",\n" +
-            "        \"author\": \"Herman Melville\",\n" +
-            "        \"title\": \"Moby Dick\",\n" +
-            "        \"isbn\": \"0-553-21311-3\",\n" +
-            "        \"price\": 8.99\n" +
-            "      },\n" +
-            "      { \"category\": \"fiction\",\n" +
-            "        \"author\": \"J. R. R. Tolkien\",\n" +
-            "        \"title\": \"The Lord of the Rings\",\n" +
-            "        \"isbn\": \"0-395-19395-8\",\n" +
-            "        \"price\": 22.99\n" +
-            "      }\n" +
-            "    ],\n" +
-            "    \"bicycle\": {\n" +
-            "      \"color\": \"red\",\n" +
-            "      \"price\": 19.95\n" +
-            "    }\n" +
-            "  }\n" +
-            "}";
+	private static final String json = "{ \"store\": {\n" + "    \"book\": [ \n" + "      { \"category\": \"reference\",\n"
+			+ "        \"author\": \"Nigel Rees\",\n" + "        \"title\": \"Sayings of the Century\",\n" + "        \"price\": 8.95\n"
+			+ "      },\n" + "      { \"category\": \"fiction\",\n" + "        \"author\": \"Evelyn Waugh\",\n"
+			+ "        \"title\": \"Sword of Honour\",\n" + "        \"price\": 12.99\n" + "      },\n"
+			+ "      { \"category\": \"fiction\",\n" + "        \"author\": \"Herman Melville\",\n" + "        \"title\": \"Moby Dick\",\n"
+			+ "        \"isbn\": \"0-553-21311-3\",\n" + "        \"price\": 8.99\n" + "      },\n"
+			+ "      { \"category\": \"fiction\",\n" + "        \"author\": \"J. R. R. Tolkien\",\n"
+			+ "        \"title\": \"The Lord of the Rings\",\n" + "        \"isbn\": \"0-395-19395-8\",\n" + "        \"price\": 22.99\n"
+			+ "      }\n" + "    ],\n" + "    \"bicycle\": {\n" + "      \"color\": \"red\",\n" + "      \"price\": 19.95\n" + "    }\n"
+			+ "  }\n" + "}";
 
-    @Before
-    public void setUpClass() throws Exception {
-        TestJMeterUtils.createJmeterEnv();
-    }
+	private static final String jsonArray = "[" + "{\"id\": \"123\", \"value\": 123}," + "{\"id\": \"456\", \"value\": \"String\"}," + "]";
 
-    @Test
-    public void testGetJsonPath() {
-        System.out.println("getJsonPath");
-        JSONPathExtractor instance = new JSONPathExtractor();
-        String expResult = "";
-        String result = instance.getJsonPath();
-        assertEquals(expResult, result);
+	@Before
+	public void setUpClass() throws Exception {
+		TestJMeterUtils.createJmeterEnv();
+	}
 
-    }
+	@Test
+	public void testJsonPathProperty() {
+		JSONPathExtractor instance = new JSONPathExtractor();
+		instance.setJsonPath("");
+		assertEquals("", instance.getJsonPath());
 
-    @Test
-    public void testSetJsonPath() {
-        System.out.println("setJsonPath");
-        String jsonPath = "";
-        JSONPathExtractor instance = new JSONPathExtractor();
-        instance.setJsonPath(jsonPath);
-    }
+		instance.setJsonPath("$.json.path");
+		assertEquals("$.json.path", instance.getJsonPath());
+	}
 
-    @Test
-    public void testGetVar() {
-        System.out.println("getVar");
-        JSONPathExtractor instance = new JSONPathExtractor();
-        String expResult = "";
-        String result = instance.getVar();
-        assertEquals(expResult, result);
-    }
+	@Test
+	public void testVarProperty() {
+		JSONPathExtractor instance = new JSONPathExtractor();
+		assertEquals("", instance.getVar());
 
-    @Test
-    public void testSetVar() {
-        System.out.println("setVar");
-        String var = "";
-        JSONPathExtractor instance = new JSONPathExtractor();
-        instance.setVar(var);
-    }
+		instance.setVar("test");
+		assertEquals("test", instance.getVar());
+	}
 
-    @Test
-    public void testProcess_default() {
-        System.out.println("process def");
-        JMeterContext context = JMeterContextService.getContext();
-        SampleResult res = new SampleResult();
-        context.setPreviousResult(res);
+	@Test
+	public void testProcess_default() {
+		assertEquals("DEFAULT", extractJson(json, null, "DEFAULT"));
+	}
 
-        JSONPathExtractor instance = new JSONPathExtractor();
-        instance.setDefaultValue("DEFAULT");
-        instance.setVar("test");
-        instance.process();
-        JMeterVariables vars = context.getVariables();
-        assertEquals("DEFAULT", vars.get("test"));
-    }
+	@Test
+	public void testProcess_ArrayResult() {
+		assertEquals("[\"Nigel Rees\",\"Evelyn Waugh\",\"Herman Melville\",\"J. R. R. Tolkien\"]",
+				extractJson(json, "$.store.book[*].author"));
+	}
 
-    @Test
-    public void testProcess() {
-        System.out.println("process");
-        JMeterContext context = JMeterContextService.getContext();
-        SampleResult res = new SampleResult();
-        res.setResponseData(json.getBytes());
-        context.setPreviousResult(res);
+	@Test
+	public void testProcess_SingleResult() {
+		assertEquals("Nigel Rees", extractJson(json, "$.store.book[0].author"));
+	}
 
-        JSONPathExtractor instance = new JSONPathExtractor();
-        instance.setDefaultValue("DEFAULT");
-        instance.setVar("test");
-        instance.setJsonPath("$.store.book[*].author");
-        instance.process();
-        JMeterVariables vars = context.getVariables();
-        assertEquals("[\"Nigel Rees\",\"Evelyn Waugh\",\"Herman Melville\",\"J. R. R. Tolkien\"]", vars.get("test"));
-    }
+	@Test
+	public void testSingleResultFromArray() {
+		assertEquals("123", extractJson(jsonArray, "$[?(@.id == '123')].value"));
+		assertEquals("String", extractJson(jsonArray, "$[?(@.id == '456')].value"));
+	}
+
+	@Test
+	public void testMultipleResultsFromArray() {
+		assertEquals("[123,\"String\"]", extractJson(jsonArray, "$[?(@.id <> '')].value"));
+	}
+
+	protected String extractJson(String json, String jsonPath) {
+		return extractJson(json, jsonPath, null);
+	}
+
+	protected String extractJson(String json, String jsonPath, String defaultValue) {
+		JMeterContext context = JMeterContextService.getContext();
+		SampleResult res = new SampleResult();
+		res.setResponseData(json.getBytes());
+		context.setPreviousResult(res);
+
+		JSONPathExtractor instance = new JSONPathExtractor();
+		if (defaultValue != null) {
+			instance.setDefaultValue(defaultValue);
+		}
+		instance.setVar("test");
+		if (jsonPath != null) {
+			instance.setJsonPath(jsonPath);
+		}
+		instance.process();
+
+		return context.getVariables().get("test");
+	}
 }

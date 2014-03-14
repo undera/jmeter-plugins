@@ -30,6 +30,7 @@ import org.apache.jmeter.testbeans.BeanInfoSupport;
 public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
     
     // These names must agree case-wise with the variable and property names
+    private static final String OUTPUT_BASE_FOLDER = "outputBaseFolder";
     private static final String RESULTS_FILE_NAME = "resultsFileName";    //$NON-NLS-1$
     private static final String FILE_PREFIX = "filePrefix";             //$NON-NLS-1$
     private static final String EXPORT_MODE = "exportMode";             //$NON-NLS-1$
@@ -52,14 +53,28 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
     private static final String INCLUDE_LABELS = "includeLabels";                 //$NON-NLS-1$
     private static final String EXCLUDE_LABELS = "excludeLabels";                 //$NON-NLS-1$
     
+    static final String[] FILTER_TAGS = new String[] {
+        "",
+        "True",
+        "False"
+    };
+    static final int FILTER_NONE    = 0;
+    static final int FILTER_TRUE  = 1;
+    static final int FILTER_FALSE = 2;
+    
     
     public GraphsGeneratorListenerBeanInfo() {
         super(GraphsGeneratorListener.class);
 
         createPropertyGroup("output_config",             //$NON-NLS-1$
-                new String[] { RESULTS_FILE_NAME, EXPORT_MODE, FILE_PREFIX });
+                new String[] { OUTPUT_BASE_FOLDER, RESULTS_FILE_NAME, EXPORT_MODE, FILE_PREFIX });
 
-        PropertyDescriptor p = property(RESULTS_FILE_NAME);
+        PropertyDescriptor p = property(OUTPUT_BASE_FOLDER);
+        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(DEFAULT, "");        //$NON-NLS-1$
+        p.setValue(NOT_EXPRESSION, Boolean.FALSE);
+
+        p = property(RESULTS_FILE_NAME);
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);
         p.setValue(DEFAULT, "");        //$NON-NLS-1$
         p.setValue(NOT_EXPRESSION, Boolean.FALSE);
@@ -155,10 +170,11 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
         p.setValue(NOT_EXPRESSION, Boolean.FALSE);
 
         p = property(SUCCESS_FILTER);
-        p.setValue(NOT_UNDEFINED, Boolean.FALSE);
-        p.setValue(DEFAULT, "Undefined");
-        p.setValue(NOT_EXPRESSION, Boolean.TRUE);
-        p.setValue(NOT_OTHER, Boolean.FALSE);
+        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+        p.setValue(DEFAULT, FILTER_TAGS[FILTER_NONE]);
+        p.setValue(NOT_EXPRESSION, Boolean.FALSE);
+        p.setValue(TAGS, FILTER_TAGS);
+        p.setValue(NOT_OTHER, Boolean.FALSE);        
 
         p = property(INCLUDE_LABELS);
         p.setValue(NOT_UNDEFINED, Boolean.TRUE);

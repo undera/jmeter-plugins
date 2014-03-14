@@ -21,6 +21,7 @@ package kg.apc.jmeter.listener;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
+import java.io.File;
 import java.util.ResourceBundle;
 
 import kg.apc.jmeter.PluginsCMDWorker;
@@ -78,6 +79,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
         "TransactionsPerSecond",
         "ThreadsStateOverTime"
     };
+    private String outputBaseFolder;
     private String resultsFileName;
     private ExportMode exportMode;
     private String filePrefix;
@@ -149,7 +151,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
             if(!StringUtils.isEmpty(excludeLabels)) {
                 worker.setExcludeLabels(excludeLabels);
             }
-            String fileName = filePrefix+pluginTypes[i];
+            String fileName = outputBaseFolder+File.separatorChar+filePrefix+pluginTypes[i];
             if(exportMode==ExportMode.PNG) {
                 fileName +=  ".png"; //$NON-NLS-1$
                 worker.setOutputPNGFile(fileName); //$NON-NLS-1$
@@ -498,5 +500,19 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     public void setExportMode(int exportMode) {
         this.exportMode = ExportMode.values()[exportMode];
+    }
+
+    /**
+     * @return the outputBaseFolder
+     */
+    public String getOutputBaseFolder() {
+        return outputBaseFolder;
+    }
+
+    /**
+     * @param outputBaseFolder the outputBaseFolder to set
+     */
+    public void setOutputBaseFolder(String outputBaseFolder) {
+        this.outputBaseFolder = outputBaseFolder;
     }
 }

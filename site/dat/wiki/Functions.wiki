@@ -37,6 +37,22 @@ Example, returning 8.3 and also saving it to variable {{{sumVariable}}}:
 ${__doubleSum(3.5, 4.7, sumVariable)}
 }}}
 
+== env<sup><font color=gray size="1">since 1.1.4</font></sup> ==
+
+This function used to get a value of environment variable. 
+Returns value of environment variable if variable was defined, variable name instead (or default value) .
+
+Parameters:
+  # First value is a name of environment variable - required
+  # Second argument - variable name to store the result - optional
+  # Third argument - default value if environment variable is not set - optional
+
+Example, returning value of ENV_VAR and also saving it to variable someVariable (or defaultValue if ENV_VAR is not set):
+
+{{{
+${__env(ENV_VAR, someVariable, defaultValue)}
+}}}
+
 == isDefined<sup><font color=gray size="1">since 0.4.2</font></sup> ==
 
 This function used to determine if variable was already defined. 

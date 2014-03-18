@@ -387,4 +387,24 @@ public abstract class JMeterPluginsUtils {
         public void mouseExited(MouseEvent e) {
         }
     }
+
+    /**
+     * Get a String value (environment) with default if not present.
+     *
+     * @param propName
+     *            the name of the environment variable.
+     * @param defaultVal
+     *            the default value.
+     * @return The PropDefault value
+     */
+    public static String getEnvDefault(String propName, String defaultVal) {
+        String ans = defaultVal;
+        String value = System.getenv(propName);
+        if(value != null) {
+            ans = value.trim();
+        } else if (defaultVal != null) {
+            ans = defaultVal.trim();
+        }
+        return ans;
+    }
 }

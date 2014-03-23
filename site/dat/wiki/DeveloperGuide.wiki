@@ -8,6 +8,7 @@ to track progress and mention changes in [Changelog] on release. See also [Build
 
 == Unit Tests ==
 Committed code must be covered with unit tests. This practice helps us to maintain some quality level and avoid stupid bugs like NPEs in GUI.
+The easiest way to see the unit tests coverage is to run {{{mvn cobertura:cobertura install}}} command, and look into _target/site/cobertura_ directories for HTML report.
 
 == GUI & Usability ==
 There is strong tradition for the project to be convinient and obvious for users. That's come from our slogan. Every GUI should be designed carefully.

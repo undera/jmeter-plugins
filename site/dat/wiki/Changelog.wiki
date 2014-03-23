@@ -4,6 +4,8 @@
   * fix JMeter startup with Extras (https://groups.google.com/forum/#!topic/jmeter-plugins/YlnXE_WOXXo)
   * Improved JsonAssertion (https://github.com/undera/jmeter-plugins/pull/40)
   * add __env function (https://github.com/undera/jmeter-plugins/pull/44)
+  * Graphs Generator : New field Output Folder for better control on output of CSV or PNG
+  * Graphs Generator : Bug fix on Filter field, default Undefined selection of Combo on Graphs Generator addition lead to empty graphs if not reselected by user, now defaults to empty.
 
 == 1.1.3 <i><font color=gray size="1">February 17, 2014</font></i>==
   * New Redis Data Set for distributed equivalent of CSV Data Set
@@ -193,9 +195,9 @@
   * *[UltimateThreadGroup Ultimate Thread Group], the real killer*
   * *the most wanted [ResponseTimesOverTime Response Times Over Time] Graph*
   * [ThroughputOverTime Transaction Throughput Over Time] Graph
-  * Auto-update GUI for [SteppingThreadGroup Stepping Thread Group] (thanks to Stéphane Hoblingre for the patch)
-  * Copy to Clipboard on all graphs (thanks to Stéphane Hoblingre for the patch)
-  * Anti-aliasing on all graphs (thanks to Stéphane Hoblingre for the patch)
+  * Auto-update GUI for [SteppingThreadGroup Stepping Thread Group] (thanks to St��phane Hoblingre for the patch)
+  * Copy to Clipboard on all graphs (thanks to St��phane Hoblingre for the patch)
+  * Anti-aliasing on all graphs (thanks to St��phane Hoblingre for the patch)
 
 == [/downloads/file/JMeterPlugins-0.2.0.zip 0.2.0] <i><font color=gray size="1">Apr 9, 2010</font></i>==
   * displayable rows selection in [http://code.google.com/p/jmeter-plugins/w/list?q=label:Graph graph listeners]

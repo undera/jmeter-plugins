@@ -12,6 +12,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
 
     private static final long serialVersionUID = 100L;
     JTextField chromeServicePath;
+    JTextField chromeServiceArgs;
 
     @Override
     public String getStaticLabel() {
@@ -29,6 +30,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         if(element instanceof ChromeDriverConfig) {
             ChromeDriverConfig config = (ChromeDriverConfig)element;
             chromeServicePath.setText(config.getChromeDriverPath());
+            chromeServiceArgs.setText(config.getChromeDriverArgs());
         }
     }
 
@@ -45,6 +47,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         if(element instanceof ChromeDriverConfig) {
             ChromeDriverConfig config = (ChromeDriverConfig)element;
             config.setChromeDriverPath(chromeServicePath.getText());
+            config.setChromeDriverArgs(chromeServiceArgs.getText());
         }
     }
 
@@ -77,6 +80,12 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
 
         chromeServicePath = new JTextField();
         chromeServicePanel.add(chromeServicePath);
+        final JLabel chromeDriverServiceArgsLabel = new JLabel("Arguments of Chrome Driver");
+        chromeServicePanel.add(chromeDriverServiceArgsLabel);
+
+        chromeServiceArgs = new JTextField();
+        chromeServicePanel.add(chromeServiceArgs);
+
         browserPanel.add(chromeServicePanel);
         return browserPanel;
     }

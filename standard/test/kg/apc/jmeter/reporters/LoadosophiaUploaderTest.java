@@ -1,25 +1,25 @@
 package kg.apc.jmeter.reporters;
 
-import java.io.IOException;
-import java.util.LinkedList;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.apache.jmeter.util.JMeterUtils;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.io.FileSystem;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+import org.junit.*;
 import org.loadosophia.jmeter.LoadosophiaAPIClient;
 import org.loadosophia.jmeter.StatusNotifierCallback;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 /**
- *
  * @author undera
  */
 public class LoadosophiaUploaderTest {
@@ -68,7 +68,15 @@ public class LoadosophiaUploaderTest {
     public void testTestEnded() throws IOException {
         System.out.println("testEnded");
         JMeterUtils.setProperty("loadosophia.address", "http://localhost/");
-        String[] response = {"0", "4"};
+        LinkedList<String[]> response = new LinkedList<String[]>();
+        String[] v1 = {"0", "4"};
+        response.push(v1);
+        String[] v2 = {"0", "4"};
+        response.push(v2);
+        String[] v3 = {"0", "4"};
+        response.push(v3);
+        String[] v4 = {"0", "4"};
+        response.push(v4);
         LoadosophiaUploader instance = new LoadosophiaUploaderEmul(response);
         instance.setStoreDir(TestJMeterUtils.getTempDir());
         instance.setTitle("UnitTest");
@@ -175,16 +183,15 @@ public class LoadosophiaUploaderTest {
     @Test
     public void testTestIterationStart() {
         System.out.println("testIterationStart");
-        LoopIterationEvent lie = null;
         LoadosophiaUploader instance = new LoadosophiaUploader();
-        instance.testIterationStart(lie);
+        instance.testIterationStart(null);
     }
 
     private static class LoadosophiaUploaderEmul extends LoadosophiaUploader {
 
-        private final String[] response;
+        private final LinkedList<String[]> response;
 
-        private LoadosophiaUploaderEmul(String[] aresponse) {
+        private LoadosophiaUploaderEmul(LinkedList<String[]> aresponse) {
             response = aresponse;
         }
 
@@ -195,26 +202,25 @@ public class LoadosophiaUploaderTest {
     }
 
     private static class FakeAPIClient extends LoadosophiaAPIClient {
+        private static final Logger log = LoggingManager.getLoggerForClass();
 
-        public String[] response = {"0", "4"};
+        private LinkedList<String[]> response;
 
-        public FakeAPIClient(StatusNotifierCallback informer) {
-            super(informer, "TEST", "TEST", COLOR_NONE, "TEST", "TEST");
-        }
-
-        private FakeAPIClient(StatusNotifierCallback aThis, String[] aresponse) {
+        private FakeAPIClient(StatusNotifierCallback aThis, LinkedList<String[]> aresponse) {
             super(aThis, "TEST", "TEST", COLOR_NONE, "TEST", "TEST");
             response = aresponse;
         }
 
         @Override
         protected String[] getUploadStatus(int queueID) throws IOException {
-            return response;
+            String[] resp = response.pop();
+            log.info("Simulating response: " + Arrays.toString(resp));
+            return resp;
         }
 
         @Override
         protected String[] multipartPost(LinkedList<Part> parts, String URL, int expectedSC) throws IOException {
-            return response;
+            return getUploadStatus(0);
         }
     }
 
@@ -304,9 +310,18 @@ public class LoadosophiaUploaderTest {
     @Test
     public void testOnlineProcessor() throws InterruptedException {
         System.out.println("onlineProcessor");
-        String[] response = {"{}", "4"};
+        LinkedList<String[]> response = new LinkedList<String[]>();
+        String[] v1 = {"0", "4"};
+        response.push(v1);
+        response.push(v1);
+        response.push(v1);
+        response.push(v1);
+        response.push(v1);
+        String[] v2 = {"{}", "4"};
+        response.push(v2);
         LoadosophiaUploader instance = new LoadosophiaUploaderEmul(response);
         instance.setUseOnline(true);
+        instance.setStoreDir(TestJMeterUtils.getTempDir());
         instance.testStarted("");
         for (int i = 0; i < 100; i++) {
             SampleResult res = new SampleResult();

@@ -14,3 +14,6 @@ eg_globals.xml
 /extraslibs/target/
 /standard/target/
 *~
+.classpath
+.project
+.settings/

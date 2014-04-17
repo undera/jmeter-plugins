@@ -87,6 +87,24 @@ public class VariableFromCsvFileReaderTest {
     }
 
     /**
+     * Test getDataAsMap() for input with # at the beginning of the line = comments.
+     */
+    @Test
+    public void testComments() {
+        String prefix = "";
+        String separator = ",";
+        String csvData = "var0,val0,a comment\n#var1,val1\nvar2,val2";
+        BufferedReader input = new BufferedReader(new StringReader(csvData));
+        VariableFromCsvFileReader instance = new VariableFromCsvFileReader(input);
+
+        Map variables = instance.getDataAsMap(prefix, separator);
+
+        assertEquals("incorrect value for var0", "val0", variables.get("var0"));
+        assertNull("no value for var1", variables.get("var1"));
+        assertEquals("incorrect value for var1", "val2", variables.get("var2"));
+    }
+
+    /**
      * Test getDataAsMap() with input that contains blank lines.
      */
     @Test
@@ -119,6 +137,23 @@ public class VariableFromCsvFileReaderTest {
 
         assertEquals("incorrect value for var0", "", variables.get("var0"));
         assertEquals("incorrect value for var1", "val1", variables.get("var1"));
+    }
+
+    /**
+     * Tests getDataAsMap() with input that contains multi lines variables.
+     */
+    @Test
+    public void testMutiLine() {
+        String prefix = "";
+        String separator = ",";
+        String csvData = "var0,\"line1\nline2\nline3\"\n\nvar1,val1\nvar2,\"lineA\nlineB\nlineC\nlineD\nlineE\"";
+        BufferedReader input = new BufferedReader(new StringReader(csvData));
+        VariableFromCsvFileReader instance = new VariableFromCsvFileReader(input);
+
+        Map variables = instance.getDataAsMap(prefix, separator);
+        assertEquals("incorrect value for var0", "line1\nline2\nline3", variables.get("var0"));
+        assertEquals("incorrect value for var1", "val1", variables.get("var1"));
+        assertEquals("incorrect value for var2", "lineA\nlineB\nlineC\nlineD\nlineE", variables.get("var2"));
     }
 
     /**

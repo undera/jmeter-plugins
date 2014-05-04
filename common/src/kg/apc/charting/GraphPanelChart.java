@@ -33,7 +33,9 @@ import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
+
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -45,11 +47,13 @@ import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import kg.apc.charting.plotters.AbstractRowPlotter;
 import kg.apc.charting.plotters.BarRowPlotter;
 import kg.apc.charting.plotters.CSplineRowPlotter;
 import kg.apc.charting.plotters.LineRowPlotter;
 import kg.apc.jmeter.gui.CustomNumberRenderer;
+
 import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -1084,6 +1088,25 @@ public class GraphPanelChart
             };
             clipboard.setContents(transferable, GraphPanelChart.this);
         }
+    }
+    
+    
+    public void saveGraphPerRowToPNG(File directory, int w, int h) throws IOException{
+        for(Map.Entry<String, AbstractGraphRow> entry : rows.entrySet()){
+            entry.getValue().setDrawOnChart(false);
+        }
+        
+        for(Map.Entry<String, AbstractGraphRow> entry : rows.entrySet()){
+            
+            AbstractGraphRow row = entry.getValue();
+            String fileName = directory.getAbsolutePath() + File.separator + row.label.replace(' ', '_').replace(':', '_') + ".png";
+            row.setDrawOnChart(true);
+            this.invalidateCache();
+            this.updateUI();
+            saveGraphToPNG(new File(fileName), w, h);
+            row.setDrawOnChart(false);
+        }
+        
     }
 
     public void saveGraphToPNG(File file, int w, int h) throws IOException {

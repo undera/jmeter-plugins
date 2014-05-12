@@ -1,0 +1,373 @@
+= Measuring DNS Server Performance with JMeter =
+Author: Andrey Pohilko
+
+Technology tags: JMeter, PowerDNS, Ubuntu, VirtualBox, DNSPerf, UDP, DNS, Linux
+
+== Preface ==
+For a long time people around the world have been using [http://jakarta.apache.org/jmeter/ JMeter] mostly as 
+[http://en.wikipedia.org/wiki/HTTP HTTP]
+performance testing tool. There is a lot of articles on doing such
+tests, for beginners and advanced users. And only few notes may be
+found on making non-mainstream performance testing with JMeter. 
+
+Nevertheless, JMeter developers have chosen so powerful
+architecture for the tool, that I bless them almost everyday because
+of pleasure extending JMeter. As experienced JMeter plugins developer
+I see infinite testing universe where JMeter is applicable with
+custom functionality plugins or just witty workarounds.
+
+
+One of such rarely used JMeter applications is testing servers
+that use [http://en.wikipedia.org/wiki/User_Datagram_Protocol UDP
+protocol] for communication. UDP protocol itself provide
+lightweight network transport which is expected to work at
+very high request rates, maybe tens of thousands requests per second.
+Sounds a little bit high for JMeter, and this is the challenge that I
+accept. 
+
+The most common UDP application we see in our everyday life is 
+[http://en.wikipedia.org/wiki/Domain_Name_System DNS]
+requests. There is DNS server somewhere inside your [http://en.wikipedia.org/wiki/Internet_Service_Provider ISP]
+that serve all your requests for [http://en.wikipedia.org/wiki/IP_address IP addresses]
+ of Twitter, Facebook, Google. Thousands of Internet
+users send their queries to ISP's DNS server and it sends recursive
+queries to external servers. There's something to stress-test for
+sure!
+
+Last word for preface: I did this tests inside [http://en.wikipedia.org/wiki/Yandex Yandex]
+company, so I'm unable to tell you too much of [http://en.wikipedia.org/wiki/Non-disclosure_agreement NDA]
+covered real case. But I'll say enough to feel the power of JMeter.
+Also this article use a lot of anti-patterns in load environment,
+such as virtual box on the same PC as load generator. I understand
+it, but the aim of the article is to show the path of JMeter advanced
+usage, not give accurate measurement numbers.
+
+==DNS Load Profile & KPIs==
+Time to pay some attention to data domain of our case. How you
+do feel the performance quality of DNS service, from the point of DNS
+user and DNS owner?
+
+As a user I feel 2 main [http://en.wikipedia.org/wiki/Key_performance_indicator KPIs]:
+response time and fail rate. UDP protocol offers non-guaranteed
+delivery, so request or response may be lost somewhere on the network.
+Client application will wait inside its timeout, possibly will retry,
+and, finally will report persistent error to the user. The faster
+client receive responses the happier user is. The lower request
+loss rate the happier user is. 
+
+To measure response time and fail rate properly, system should be
+tested under constant load for some time period. My admin says that
+production request rate is approximately 1 000 requests per second
+([RPS]), with peaks up to 2 000 RPS. I will take this as my primary
+testing mode.
+
+As DNS server owner (or admin) I care
+if my server resources is nearly exhausted, and I can't serve the
+crowd that will come after next ISP's advertisement campaign. I want to
+know the [capacity] limit of my current server and nearest [bottleneck]
+resource. For this sake, I will monitor server's [http://en.wikipedia.org/wiki/Central_processing_unit CPU]
+and other server resources. Also I will test my server with
+infinitely increasing load, to find its capacity limit.
+
+== Setting Up Servers ==
+
+In the real case I used to test [http://www.powerdns.com/ PowerDNS]
+instance set up for caching with disabled recursive queries. For
+demonstration purposes I deployed [http://www.virtualbox.org/ VirtualBox]
+with [https://help.ubuntu.com/community/Installation/MinimalCD Ubuntu-mini
+11.04] at my laptop (so I know that performance should be poor,
+but enough for demonstration). 
+
+While real-case DNS server was configured and filled with [http://en.wikipedia.org/wiki/Cache cache
+data] _by my admin_, at my virtual box I have to install and
+configure _pdns-recursor_ myself, nothing unexpected here. I
+have no data to fill cache, so I'll have to run my queries once, the
+server will cache them and I'll measure cached performance in further
+test runs.
+
+The hardware in real case was rack-mount server with 16-core CPU
+and tens of gigabytes of [http://en.wikipedia.org/wiki/Random-access_memory RAM]
+(or something like this, actually I didn't asked my admin what
+hardware I have). Virtual demo, of course, have its poor virtual
+hardware CPU, hard drive and 512MB or RAM. Real case load generator
+hardware was similar to DNS server's.
+
+Network setup in real case is also not known for sure, something
+like Ethernet to several switches in office building [http://en.wikipedia.org/wiki/Local_area_network LAN],
+thick channel to [http://en.wikipedia.org/wiki/Data_center Data Center], 
+some routers inside DC and, finally, my server's [http://en.wikipedia.org/wiki/Network_interface_controller NIC].
+== Setting Up the Test ==
+
+My preferred way to create [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Test_Plan Test
+Plans] in JMeter is iterative, so I'll describe it that
+way.
+=== Iteration 1: Proof of Concept ===
+
+First of all, I need to verify that JMeter can properly simulate DNS
+requests at all.
+
+I opened JMeter, added simple [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Thread_Group Thread
+Group] to it, left it with 1 thread and 1 iteration. Also I need
+debug print to see if DNS requests works fine, so I add [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#View_Results_Tree View
+Results Tree] in _Test Plan_ root.
+
+Now I need a _UDP Sampler_. Searching in Google and Yandex
+displayed that none is available in public access. Ok, I wrote my own
+(already ;-)) and will show how to use it. I added [http://code.google.com/p/jmeter-plugins/wiki/UDPRequest UDP
+Request] as a child of _Thread Group_.
+
+Now I need example DNS request data to send via JMeter. I'll just
+use [http://www.wireshark.org/ Wireshark] network sniffer
+to grab one DNS request. Wireshark have "capture filter" feature,
+and I configured it as "port 53" to see only DNS requests. Then I
+use [http://en.wikipedia.org/wiki/Nslookup nslookup]
+utility to make a request to my ISP's server. Wireshark caught the
+request and response.
+
+[/img/wiki/article/dns/screenshot1.png  Wireshark captured data]
+
+I right-click _"Domain Name System (query)"_ in bottom
+panel and choose _"Copy ⇒ Bytes (Hex Stream)"_, then paste
+it into _Request Data_ field of _UDP Request_.
+
+Last detail: configure _Hostname_ and _UDP port_ in
+_UDP Request_, setting it to my virtual PowerDNS instance.
+
+[/img/wiki/article/dns/screenshot2.png  UDP Request HEX request settings]
+
+Hitting _Ctrl+R_ (Run Test)  in JMeter gives me the first
+result in _View Results Tree_. The result is _500_ with
+_SocketTimeoutException_, WTF? Calm down, it's OK, because I
+have 1000 ms timeout in Sampler and the server haven't cached my
+request yet. I just repeat test run and see my successful result.
+
+Comparing _[http://en.wikipedia.org/wiki/Hexadecimal HEX]-encoded_
+data from _Response data_ tab with sample response data in
+Wireshark prove that request goes OK.
+
+Time to make something serious and scalable, single static request
+is not real case.
+=== Iteration 2: DNSJava Decoder and CSV Data Source ===
+
+My admin gave me 3.5MB file that contains 150 000 unique DNS
+queries like _"A www.apc.kg."_. _UDP Request_ can
+consume that data with [http://www.dnsjava.org/ DNSJava]
+encode/decode class.
+
+I set up proper _Encode/Decode class_ (don't forget to place
+the library into lib/ext) and changed request into _"apc.kg. A
+IN"._
+
+[/img/wiki/article/dns/screenshot3.png  UDP Request using DNSJava decoder]
+
+Test runs OK, _Response Data_ tab
+shows that DNSJava decodes response bytes back into human-readable
+text info.
+
+The next step is reading request data from admin's large file. The
+file has [http://en.wikipedia.org/wiki/Comma-separated_values CSV]-compatible
+format, so I can use robust [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#CSV_Data_Set_Config CSV
+Data Set Config] element in JMeter. I configured _CSV Data Set_
+to read record type into variable _recType_, and host name into
+_hostName._
+
+[/img/wiki/article/dns/screenshot4.png  Reading data from CSV file]
+
+Note that separator field not empty, it contains single space
+character. Also note [http://en.wikipedia.org/wiki/End-of-file EOF]
+flag settings, I'll use and change them later.
+Now I use those variables in Sampler's request data field:
+_${hostName} ${recType} IN_. One more test run to verify the
+data feed to Sampler. Oh, I'm tired of first failed non-cached
+request, so I increase sampler timeout to 3 seconds. 
+
+Let's increase iteration count in _Thread Group_, say, to 50,
+and see how it works with loops. _View Results Tree_ now full
+with successful results, and it is bad, because _View Results Tree_ listener
+have too poor performance and will slow down our high-rate test. I
+configure it to catch only errors to see only the problems that may
+occur in test.
+
+Let's also check multi-thread work: increase thread count in
+_Thread Group_ to 10 and run the test. No errors in _View
+Results Tree_, and no successful results data or response time
+statistics. Time to add our test some visualization.
+=== Iteration 3: Visualize Test Results ===
+
+First of all, I should see basic summary that comes with [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Aggregate_Report Aggregate
+Report]. Added it and ran test – all 500 requests are present in
+successful. Let's increase iteration count in _Thread Group_ to
+500 to have test that lasts for several seconds, I need a results
+stream to visualize.
+
+Next useful Listener is [http://code.google.com/p/jmeter-plugins/wiki/TransactionsPerSecond Transactions
+per Second], since transaction rate is the main KPI for DNS server
+and our whole test. Another intuitively required listener is [http://code.google.com/p/jmeter-plugins/wiki/ResponseTimesOverTime Response
+Times Over Time].
+
+Important point: average response times is not enough to monitor.
+If you want to evaluate quality of the system, you should operate with
+[http://code.google.com/p/jmeter-plugins/wiki/RespTimesDistribution Response
+Times Distribution] and [http://code.google.com/p/jmeter-plugins/wiki/RespTimePercentiles Percentiles].
+
+To summarize all graphs, I add [http://code.google.com/p/jmeter-plugins/wiki/CompositeGraph Composite
+Graph], run test once and add _Transactions Per Second_ and
+_Response Times Over Time_ to composite view.
+You may say that it is also interesting to see how many threads
+were generating load to server. I'll tell why it is not applicable
+for DNS testing: DNS service is of "[http://www.google.com/search?q=%22open%20workload%22 open
+workload]" type. But OK, let's add [http://code.google.com/p/jmeter-plugins/wiki/ActiveThreadsOverTime Active
+Threads Over Time] to test tree and _Composite Graph_, just
+to play with it.
+
+Now I'll fill server's cache by querying it full requests set from
+admin's data file. For that sake I set loop count to _Infinite_
+in _Thread Group_. _CSV Data Set _settings will stop the
+test when end of file reached. _Composite Graph_ shows how it
+goes:
+
+[/img/wiki/article/dns/screenshot5.png  Composite Graph view]
+=== Iteration 4: Server Performance Monitoring ===
+
+The only remaining thing is server resources monitoring, I want to
+see what becomes [bottleneck] in my tests.
+
+[http://code.google.com/p/jmeter-plugins/ JP@GC plugins
+set] have [http://code.google.com/p/jmeter-plugins/wiki/PerfMon Servers
+Performance Monitoring] graph with server agent in version 0.4.1, but I'll use not
+yet released 0.4.2 _PerfMon Metrics Collector_ graph, because I want to be at the cutting edge of JMeter plugins.
+
+I uploaded _serverAgent_ part to virtual box and started
+_startAgent.sh_, also added  _PerfMon Metrics Collector_ to
+_Test Plan_. Then started local agent to monitor state of my load
+generator. I repeat test run and add perfmon rows to _composite
+graph_.
+
+Playing with several perfmon metrics I see that only CPU makes
+sense in my tests. I will monitor it primarily.
+
+[/img/wiki/article/dns/screenshot6.png  PerfMon Metrics Collector View]
+=== Iteration 5: Throughput Shaper & AutoStop ===
+
+DNS performance is all about how much requests system can serve
+simultaneously, so I need to manipulate request rate. JMeter unable
+to do this by default, it has only indirect manipulation with Timers
+but, fairly, it is totally inconvenient. I have [http://code.google.com/p/jmeter-plugins/wiki/ThroughputShapingTimer Throughput
+Shaping Timer] for this purpose and add it as a child of my
+sampler. Hitting _"Add Row"_ button gives me some
+default request rate profile, then I run test just to check how it goes.
+
+_Composite Graph_ shows that it goes as expected.
+
+[/img/wiki/article/dns/screenshot7.png  Increasing load Composite View]
+
+Also I want JMeter to stop test automatically when the server
+obviously inadequate and failing too much requests. For this sake I
+add [http://code.google.com/p/jmeter-plugins/wiki/AutoStop AutoStop
+Listener] to _Test Plan_ and configure it to stop when error
+rate is higher than 50% for 10 seconds in a row.
+==Running the Tests==
+
+Before running actual tests I need to change _CSV Data Set_
+settings to _recycle on EOF_, to have "infinite" data set.
+Done this.
+=== Performance Test===
+
+My first task is to measure service KPIs at constant load and
+answer question "How the server performs under usual or increased
+constant load?"
+
+I configure _Throughput Shaping Timer_ to [http://en.wikipedia.org/wiki/Climb climb]
+up to 1 000 RPS in one minute, then hold 1 000 RPS for 10 minutes.
+Gradual climb prevents server from strange transition effects.
+
+[/img/wiki/article/dns/screenshot8.png  Throughput Shaper settings]
+
+After running the test I'm looking at _Composite Graph_. My notes:
+  * Load was generated as scheduled
+  * Response times was mainly near 1-2 milliseconds – pretty good
+  * Server's CPU was approximately 20% busy
+  * Local CPU was approximately 60% busy (it's all because VirtualBox, I'm sure)
+  * There was no failures
+
+[/img/wiki/article/dns/screenshot9.png  1000 RPS Composite View]
+
+It seems we can serve 1 000 RPS easily. Let's check how it will
+serve double load 2 000 RPS. I change the rates in shaper to work
+with 2 000 RPS. Notes looking at the graph:
+
+  * Load generated OK
+  * Response times still mainly 1-2 milliseconds (verified with	_Percentiles_ graph)
+  * Server CPU 20-25%, seems no difference with 1 000 RPS
+  * Local CPU 80%, seems VirtualBox spend too much of it for network traffic processing
+  * Still no failures, it's OK
+
+[/img/wiki/article/dns/screenshot10.png  2000 RPS Composite View]
+
+In real case, with good rack-mount load generator and server I had
+even better results, with response times 99% below 1ms.
+=== Stress Test ===
+
+Second task is to check server's capacity limit and see how it
+will die in agony.
+
+I reconfigure shaper to provide constantly increasing load up to
+10 000 RPS in 10 minutes. 
+
+[/img/wiki/article/dns/screenshot11.png  Throughput Shaper ramp-up setting]
+
+Also I think I'll have not enough threads to generate 10K RPS. I
+increase threads to 100, this will be enough  for response times up
+to 10 milliseconds. Running the test! 
+
+_Oops!_ Test shows that JMeter failed to generate request
+rate that we configured. Investigating perfmon I found that bottleneck is my local CPU.
+Seems that placing virtual test server at the same machine as load
+generator was very bad decision. Alas, I don't have ability to place
+my virtual box somewhere else now, but I think it is still enough for
+our demonstration.
+
+[/img/wiki/article/dns/screenshot12.png  Failed Climb]
+
+In real case, when I had rack-mount load generator for JMeter runs
+I was able to produce 20 000-25 000 requests per second and still
+PowerDNS server was serving perfectly. So I failed to shoot it down!
+:)
+== What about DNSPerf? ==
+
+Actually there was more action behind this test in real case.
+First tool that we took for DNS performance tests was [http://www.google.com/search?q=dnsperf DNSPerf].
+But server monitoring showed that request rate is pretty unstable
+with DNSPerf. Then we wrote small shell script that collects [http://en.wikipedia.org/wiki/Ifconfig ifconfig]
+RX/TX packets statistics from the load generator NIC. It revealed that
+DNSPerf generates load poorly. NIC monitoring of JMeter tests showed
+that JMeter generates load as its graphs show. Here's small
+screenshot from Yandex internal task tracker, comparison of the tools
+at 12 000 RPS:
+ 
+[/img/wiki/article/dns/screenshot13.png  DNSPerf vs JMeter]
+
+Well, I'm sorry to say it, but DNSPerf sucks...
+== Conclusion ==
+
+JMeter with custom plugins set becomes powerful test and reporting
+tool, load generation profiles can be easily configured in GUI and it shapes as
+predicted for performance and stress testing.
+
+JMeter is able to generate at least 20 000 DNS requests per
+second, more than enough for regular DNS  server instance.
+PowerDNS can serve up to 4 000 DNS requests per second even in poor
+infrastructure (virtual box placed at the same PC with load
+generator). In good hardware insfrastructure DNSPerf serve perfectly
+more than 20 000 RPS and its limit is still not known.
+
+Using JMeter for DNS (and all other UDP) performance testing gives
+us nice opportunity to have single tool for different technologies.
+No need to adapt another tool into existing process, all habitual
+features like reporting, data sources and test logic are at their
+usual places.
+== Links ==
+
+  * [https://groups.google.com/forum/#!topic/jmeter-plugins/QfI0AcCeFF8 Discuss this article]
+  * [http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/DNS_Test_Example.jmx Download Final Test Plan]
+  * [http://code.google.com/p/jmeter-plugins/ JP@GC Plugins Set - Project Page]

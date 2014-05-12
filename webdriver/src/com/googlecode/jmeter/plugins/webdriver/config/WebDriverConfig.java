@@ -6,15 +6,17 @@ import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
+import org.apache.jmeter.testelement.ThreadListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.SessionNotFoundException;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestElement implements LoopIterationListener {
+public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestElement implements LoopIterationListener, ThreadListener {
 
     private static final long serialVersionUID = 100L;
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
@@ -43,11 +45,13 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     private static final String SOCKS_PORT = "WebDriverConfig.socks_port";
     private static final String NO_PROXY = "WebDriverConfig.no_proxy";
     private static final String PROXY_TYPE = "WebDriverConfig.proxy_type";
+        
     /*
      * THE FOLLOWING CONFIGS ARE EXPERIMENTAL AND ARE SUBJECT TO CHANGE/REMOVAL.
      */
     private static final String RECREATE_ON_ITERATION_START = "WebDriverConfig.reset_per_iteration";
-
+    private static final String DEV_MODE = "WebDriverConfig.dev_mode";
+    
     private final transient ProxyFactory proxyFactory;
 
     protected WebDriverConfig() {
@@ -188,26 +192,71 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
         LOGGER.info("iterationStart()");
 
-        if(isRecreateBrowserOnIterationStart()) {
+        if(isRecreateBrowserOnIterationStart() && !isDevMode()) {
             final T browser = getThreadBrowser();
-            if(browser != null) {
-                browser.quit();
-            }
+            quitBrowser(browser);
             setThreadBrowser(createBrowser());
         }
         getThreadContext().getVariables().putObject(WebDriverConfig.BROWSER, getThreadBrowser());
     }
+
+    @Override
+    public void threadStarted() {
+        // don't create new browser if there is one there already
+        if(hasThreadBrowser()) {
+            LOGGER.warn("Thread: " + currentThreadName() + " already has a WebDriver("+ getThreadBrowser()+") associated with it. ThreadGroup can only contain a single WebDriverConfig.");
+            return;
+        }
+
+        // create new browser instance
+        final T browser = createBrowser();
+        setThreadBrowser(browser);
+
+        // ensures the browser will quit when JVM exits (especially important in devMode)
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                quitBrowser(browser);
+            }
+        });
+    }
+
+    @Override
+    public void threadFinished() {
+        if(!isDevMode()) {
+            final T browser = removeThreadBrowser();
+            quitBrowser(browser);
+        }
+    }
+
 
     protected String currentThreadName() {
         return Thread.currentThread().getName();
     }
 
     /**
-     * This method will always return a new instance of a {@link WebDriver} class.
+     * Creates a new browser at the start of the tests. This method will always return a new instance of a {@link WebDriver}
+     * class and is called per thread.
      *
      * @return a new {@link WebDriver} object.
      */
     protected abstract T createBrowser();
+
+    /**
+     * Quits browser at the end of the tests. This will be envoked per thread/browser instance created.
+     *
+     * @param browser
+     * is the browser instance to quit. Will not quit if argument is null.
+     */
+    protected void quitBrowser(final T browser) {
+        if(browser != null) {
+            try {
+                browser.quit();
+            } catch (SessionNotFoundException e) {
+                LOGGER.warn("Attempting to quit browser instance that has already exited.");
+            }
+        }
+    }
 
     protected T getThreadBrowser() {
         return (T) webdrivers.get(currentThreadName());
@@ -241,5 +290,13 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
     public void setRecreateBrowserOnIterationStart(boolean recreate) {
         setProperty(RECREATE_ON_ITERATION_START, recreate);
+    }
+    
+    public boolean isDevMode() {
+        return getPropertyAsBoolean(DEV_MODE);
+    }
+
+    public void setDevMode(boolean devMode) {
+        setProperty(DEV_MODE, devMode);
     }
 }

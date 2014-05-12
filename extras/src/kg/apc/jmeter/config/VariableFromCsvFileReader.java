@@ -68,31 +68,52 @@ public class VariableFromCsvFileReader {
      * @return a map of (name, value) pairs
      */
     public Map<String, String> getDataAsMap(String prefix, String separator, int skipLines) {
-        if (separator.isEmpty()) {
-            throw new IllegalArgumentException("CSV separator cannot be empty");
-        }
+	if (separator.isEmpty()) {
+	    throw new IllegalArgumentException("CSV separator cannot be empty");
+	}
 
-        Map<String, String> variables = new HashMap<String, String>();
-        if (input != null) {
-            try {
-                String line;
-                int lineNum = 0;
-                while ((line = input.readLine()) != null) {
-                    if (++lineNum > skipLines) {
-                        String[] lineValues = JOrphanUtils.split(line, separator, false);
+	Map<String, String> variables = new HashMap<String, String>();
+	if (input != null) {
+	    try {
+		String line;
+		int lineNum = 0;
+		StringBuilder multiLineValue = new StringBuilder();
+		String multiLineVariable = null;
+		while ((line = input.readLine()) != null) {
+		    if (++lineNum > skipLines) {
+			if (line.startsWith("#")) {
+			    continue;
+			}
+			String[] lineValues = JOrphanUtils.split(line, separator, false);
 
-                        if (lineValues.length == 1) {
-                            log.warn("Less than 2 columns at line: " + line);
-                            variables.put(prefix + lineValues[0], "");
-                        } else if (lineValues.length >= 2) {
-                            variables.put(prefix + lineValues[0], lineValues[1]);
-                        }
-                    }
-                }
-            } catch (IOException ex) {
-                log.error("Error while reading: " + ex.getMessage());
-            }
-        }
-        return variables;
+			if (lineValues.length == 1) {
+			    if (multiLineValue.length() > 0 && lineValues[0].endsWith("\"")) {
+				multiLineValue.append(lineValues[0].substring(0, lineValues[0].length() - 1));
+				variables.put(prefix + multiLineVariable, multiLineValue.toString());
+				// reset memory
+				multiLineValue.setLength(0);
+				multiLineVariable = null;
+			    } else if (multiLineValue.length() > 0) {
+				multiLineValue.append(lineValues[0]).append('\n');
+			    } else {
+				log.warn("Less than 2 columns at line: " + line);
+				variables.put(prefix + lineValues[0], "");
+			    }
+			} else if (lineValues.length >= 2) {
+			    if (lineValues[1].startsWith("\"")) {
+				// multi line value
+				multiLineVariable = lineValues[0];
+				multiLineValue.append(lineValues[1].substring(1)).append('\n');
+			    } else {
+				variables.put(prefix + lineValues[0], lineValues[1]);
+			    }
+			}
+		    }
+		}
+	    } catch (IOException ex) {
+		log.error("Error while reading: " + ex.getMessage());
+	    }
+	}
+	return variables;
     }
 }

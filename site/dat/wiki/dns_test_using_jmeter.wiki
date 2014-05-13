@@ -158,7 +158,7 @@ I set up proper _Encode/Decode class_ (don't forget to place
 the library into lib/ext) and changed request into _"apc.kg. A
 IN"._
 
-[/img/wiki/article/dns/screenshot3.png  UDP Request using DNSJava decoder]
+[/img/wiki/dns/screenshot3.png  UDP Request using DNSJava decoder]
 
 Test runs OK, _Response Data_ tab
 shows that DNSJava decodes response bytes back into human-readable
@@ -171,7 +171,7 @@ Data Set Config] element in JMeter. I configured _CSV Data Set_
 to read record type into variable _recType_, and host name into
 _hostName._
 
-[/img/wiki/article/dns/screenshot4.png  Reading data from CSV file]
+[/img/wiki/dns/screenshot4.png  Reading data from CSV file]
 
 Note that separator field not empty, it contains single space
 character. Also note [http://en.wikipedia.org/wiki/End-of-file EOF]
@@ -226,7 +226,7 @@ in _Thread Group_. _CSV Data Set _settings will stop the
 test when end of file reached. _Composite Graph_ shows how it
 goes:
 
-[/img/wiki/article/dns/screenshot5.png  Composite Graph view]
+[/img/wiki/dns/screenshot5.png  Composite Graph view]
 === Iteration 4: Server Performance Monitoring ===
 
 The only remaining thing is server resources monitoring, I want to
@@ -246,7 +246,7 @@ graph_.
 Playing with several perfmon metrics I see that only CPU makes
 sense in my tests. I will monitor it primarily.
 
-[/img/wiki/article/dns/screenshot6.png  PerfMon Metrics Collector View]
+[/img/wiki/dns/screenshot6.png  PerfMon Metrics Collector View]
 === Iteration 5: Throughput Shaper & AutoStop ===
 
 DNS performance is all about how much requests system can serve
@@ -259,7 +259,7 @@ default request rate profile, then I run test just to check how it goes.
 
 _Composite Graph_ shows that it goes as expected.
 
-[/img/wiki/article/dns/screenshot7.png  Increasing load Composite View]
+[/img/wiki/dns/screenshot7.png  Increasing load Composite View]
 
 Also I want JMeter to stop test automatically when the server
 obviously inadequate and failing too much requests. For this sake I
@@ -281,7 +281,7 @@ I configure _Throughput Shaping Timer_ to [http://en.wikipedia.org/wiki/Climb cl
 up to 1 000 RPS in one minute, then hold 1 000 RPS for 10 minutes.
 Gradual climb prevents server from strange transition effects.
 
-[/img/wiki/article/dns/screenshot8.png  Throughput Shaper settings]
+[/img/wiki/dns/screenshot8.png  Throughput Shaper settings]
 
 After running the test I'm looking at _Composite Graph_. My notes:
   * Load was generated as scheduled
@@ -290,7 +290,7 @@ After running the test I'm looking at _Composite Graph_. My notes:
   * Local CPU was approximately 60% busy (it's all because VirtualBox, I'm sure)
   * There was no failures
 
-[/img/wiki/article/dns/screenshot9.png  1000 RPS Composite View]
+[/img/wiki/dns/screenshot9.png  1000 RPS Composite View]
 
 It seems we can serve 1 000 RPS easily. Let's check how it will
 serve double load 2 000 RPS. I change the rates in shaper to work
@@ -302,7 +302,7 @@ with 2 000 RPS. Notes looking at the graph:
   * Local CPU 80%, seems VirtualBox spend too much of it for network traffic processing
   * Still no failures, it's OK
 
-[/img/wiki/article/dns/screenshot10.png  2000 RPS Composite View]
+[/img/wiki/dns/screenshot10.png  2000 RPS Composite View]
 
 In real case, with good rack-mount load generator and server I had
 even better results, with response times 99% below 1ms.
@@ -314,7 +314,7 @@ will die in agony.
 I reconfigure shaper to provide constantly increasing load up to
 10 000 RPS in 10 minutes. 
 
-[/img/wiki/article/dns/screenshot11.png  Throughput Shaper ramp-up setting]
+[/img/wiki/dns/screenshot11.png  Throughput Shaper ramp-up setting]
 
 Also I think I'll have not enough threads to generate 10K RPS. I
 increase threads to 100, this will be enough  for response times up
@@ -327,7 +327,7 @@ generator was very bad decision. Alas, I don't have ability to place
 my virtual box somewhere else now, but I think it is still enough for
 our demonstration.
 
-[/img/wiki/article/dns/screenshot12.png  Failed Climb]
+[/img/wiki/dns/screenshot12.png  Failed Climb]
 
 In real case, when I had rack-mount load generator for JMeter runs
 I was able to produce 20 000-25 000 requests per second and still
@@ -345,7 +345,7 @@ that JMeter generates load as its graphs show. Here's small
 screenshot from Yandex internal task tracker, comparison of the tools
 at 12 000 RPS:
  
-[/img/wiki/article/dns/screenshot13.png  DNSPerf vs JMeter]
+[/img/wiki/dns/screenshot13.png  DNSPerf vs JMeter]
 
 Well, I'm sorry to say it, but DNSPerf sucks...
 == Conclusion ==

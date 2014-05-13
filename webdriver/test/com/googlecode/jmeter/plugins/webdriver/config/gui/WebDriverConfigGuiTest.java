@@ -425,6 +425,13 @@ public class WebDriverConfigGuiTest {
         assertThat(testElement.isRecreateBrowserOnIterationStart(), is(true));
     }
 
+    @Test
+    public void shouldSetDevMode() {
+        gui.devMode.setSelected(true);
+        final WebDriverConfig testElement = (WebDriverConfig) gui.createTestElement();
+        assertThat(testElement.isDevMode(), is(true));
+    }
+
 
 
     private static class WebDriverConfigGuiImpl extends WebDriverConfigGui {

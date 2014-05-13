@@ -1,7 +1,5 @@
 package com.googlecode.jmeter.plugins.webdriver.config;
 
-import org.apache.jmeter.engine.event.LoopIterationListener;
-import org.apache.jmeter.testelement.ThreadListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.After;
@@ -17,12 +15,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.*;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.verifyNew;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
@@ -67,11 +64,6 @@ public class HtmlUnitDriverConfigTest {
     }
 
     @Test
-    public void shouldImplementThreadListener() {
-        assertThat(config, is(instanceOf(ThreadListener.class)));
-    }
-
-    @Test
     public void shouldCreateHtmlUnit() throws Exception {
         HtmlUnitDriver mockHtmlUnitDriver = Mockito.mock(HtmlUnitDriver.class);
         whenNew(HtmlUnitDriver.class).withParameterTypes(Capabilities.class).withArguments(isA(Capabilities.class)).thenReturn(mockHtmlUnitDriver);
@@ -83,71 +75,8 @@ public class HtmlUnitDriverConfigTest {
     }
 
     @Test
-    public void shouldCreateWebDriverWhenThreadStartedIsInvoked() throws Exception {
-        HtmlUnitDriver mockHtmlUnitDriver = Mockito.mock(HtmlUnitDriver.class);
-        whenNew(HtmlUnitDriver.class).withParameterTypes(Capabilities.class).withArguments(isA(Capabilities.class)).thenReturn(mockHtmlUnitDriver);
-
-        config.threadStarted();
-
-        assertThat(config.getThreadBrowser(), is(mockHtmlUnitDriver));
-        verifyNew(HtmlUnitDriver.class, times(1)).withArguments(isA(Capabilities.class));
-    }
-
-    @Test
-    public void shouldOnlyCreateSingleWebDriverEvenWhenThreadStartedIsCalledMultipleTimes() throws Exception {
-        HtmlUnitDriver mockHtmlUnitDriver = Mockito.mock(HtmlUnitDriver.class);
-        whenNew(HtmlUnitDriver.class).withParameterTypes(Capabilities.class).withArguments(isA(Capabilities.class)).thenReturn(mockHtmlUnitDriver);
-
-        config.threadStarted();
-        config.threadStarted();
-
-        assertThat(config.getThreadBrowser(), is(mockHtmlUnitDriver));
-        verifyNew(HtmlUnitDriver.class, times(1)).withArguments(isA(Capabilities.class));
-    }
-
-    @Test
-    public void shouldQuitWebDriverWhenThreadFinishedIsInvoked() throws Exception {
-        HtmlUnitDriver mockHtmlUnitDriver = Mockito.mock(HtmlUnitDriver.class);
-        config.setThreadBrowser(mockHtmlUnitDriver);
-
-        config.threadFinished();
-
-        assertThat(config.getThreadBrowser(), is(nullValue()));
-        verify(mockHtmlUnitDriver, times(1)).quit();
-    }
-
-    @Test
-    public void shouldBeAbleToCallThreadFinishedMultipleTimes() throws Exception {
-        HtmlUnitDriver mockHtmlUnitDriver = Mockito.mock(HtmlUnitDriver.class);
-        config.setThreadBrowser(mockHtmlUnitDriver);
-
-        config.threadFinished();
-        config.threadFinished();
-
-        assertThat(config.getThreadBrowser(), is(nullValue()));
-        verify(mockHtmlUnitDriver, times(1)).quit();
-    }
-
-    @Test
     public void shouldHaveProxyInCapability() {
         final Capabilities capabilities = config.createCapabilities();
         assertThat(capabilities.getCapability(CapabilityType.PROXY), is(notNullValue()));
-    }
-
-    @Test
-    public void shouldImplementLoopIterationListener() {
-        assertThat(config, is(instanceOf(LoopIterationListener.class)));
-    }
-
-    @Test
-    public void shouldAddWebDriverToJMeterVariablesWhenIterationStarts() throws Exception {
-        HtmlUnitDriver mockHtmlUnitDriver = Mockito.mock(HtmlUnitDriver.class);
-        whenNew(HtmlUnitDriver.class).withParameterTypes(Capabilities.class).withArguments(isA(Capabilities.class)).thenReturn(mockHtmlUnitDriver);
-
-        config.threadStarted();
-        config.iterationStart(null);
-
-        assertThat(variables.getObject(WebDriverConfig.BROWSER), is(notNullValue()));
-        assertThat((HtmlUnitDriver) variables.getObject(WebDriverConfig.BROWSER), is(config.getThreadBrowser()));
     }
 }

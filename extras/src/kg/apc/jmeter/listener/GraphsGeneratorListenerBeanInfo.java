@@ -30,8 +30,10 @@ import org.apache.log.Logger;
  * @since 1.1.3
  */
 public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
+    
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
     // These names must agree case-wise with the variable and property names
+    private static final String OUTPUT_BASE_FOLDER = "outputBaseFolder";
     private static final String RESULTS_FILE_NAME = "resultsFileName";    //$NON-NLS-1$
     private static final String FILE_PREFIX = "filePrefix";             //$NON-NLS-1$
     private static final String EXPORT_MODE = "exportMode";             //$NON-NLS-1$
@@ -55,18 +57,32 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
     private static final String INCLUDE_LABELS = "includeLabels";                 //$NON-NLS-1$
     private static final String EXCLUDE_LABELS = "excludeLabels";                 //$NON-NLS-1$
     
+    static final String[] FILTER_TAGS = new String[] {
+        "",
+        "True",
+        "False"
+    };
+    static final int FILTER_NONE    = 0;
+    static final int FILTER_TRUE  = 1;
+    static final int FILTER_FALSE = 2;
+    
     
     public GraphsGeneratorListenerBeanInfo() {
         super(GraphsGeneratorListener.class);
         try {
             createPropertyGroup("output_config",             //$NON-NLS-1$
-                    new String[] { RESULTS_FILE_NAME, EXPORT_MODE, FILE_PREFIX });
+                    new String[] { OUTPUT_BASE_FOLDER, RESULTS_FILE_NAME, EXPORT_MODE, FILE_PREFIX });
     
-            PropertyDescriptor p = property(RESULTS_FILE_NAME);
+            PropertyDescriptor p = property(OUTPUT_BASE_FOLDER);
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
             p.setValue(DEFAULT, "");        //$NON-NLS-1$
             p.setValue(NOT_EXPRESSION, Boolean.FALSE);
-            
+    
+            p = property(RESULTS_FILE_NAME);
+            p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+            p.setValue(DEFAULT, "");        //$NON-NLS-1$
+            p.setValue(NOT_EXPRESSION, Boolean.FALSE);
+    
             p = property(EXPORT_MODE, GraphsGeneratorListener.ExportMode.class); //$NON-NLS-1$
             p.setValue(DEFAULT, GraphsGeneratorListener.ExportMode.PNG.ordinal());
             p.setValue(NOT_UNDEFINED, Boolean.TRUE); // must be defined
@@ -78,7 +94,7 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
     
                     
             createPropertyGroup("graphs_config",             //$NON-NLS-1$
-                    new String[] { GRAPH_WIDTH, GRAPH_HEIGHT, PAINT_ZEROING,
+                    new String[] { GRAPH_WIDTH, GRAPH_HEIGHT, PAINT_MARKERS, PAINT_ZEROING,
                         PAINT_GRADIENT, PREVENT_OUTLIERS, RELATIVE_TIMES, AUTO_SCALE_ROWS,
                         LIMIT_ROWS, FORCE_Y, GRANULATION, LINE_WEIGHT});
     
@@ -92,13 +108,13 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
             p.setValue(DEFAULT, "600"); //$NON-NLS-1$
             p.setValue(NOT_EXPRESSION, Boolean.FALSE);
     
-        p = property(PAINT_MARKERS);
-        p.setValue(NOT_UNDEFINED, Boolean.FALSE);
-        p.setValue(DEFAULT, "Undefined");               //$NON-NLS-1$
-        p.setValue(NOT_EXPRESSION, Boolean.TRUE);
-        p.setValue(NOT_OTHER, Boolean.FALSE);
-        p.setValue(TAGS, new String[]{"True", "False"}); // $NON-NLS-1$ $NON-NLS-2$
-
+            p = property(PAINT_MARKERS);
+            p.setValue(NOT_UNDEFINED, Boolean.FALSE);
+            p.setValue(DEFAULT, "Undefined");               //$NON-NLS-1$
+            p.setValue(NOT_EXPRESSION, Boolean.TRUE);
+            p.setValue(NOT_OTHER, Boolean.FALSE);
+            p.setValue(TAGS, new String[]{"True", "False"}); // $NON-NLS-1$ $NON-NLS-2$
+    
             p = property(PAINT_ZEROING);
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
             p.setValue(DEFAULT, Boolean.TRUE);
@@ -165,11 +181,11 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
             p.setValue(NOT_EXPRESSION, Boolean.FALSE);
     
             p = property(SUCCESS_FILTER);
-            p.setValue(NOT_UNDEFINED, Boolean.FALSE);
-            p.setValue(DEFAULT, "Undefined");
-            p.setValue(NOT_EXPRESSION, Boolean.TRUE);
-            p.setValue(NOT_OTHER, Boolean.FALSE);
-        p.setValue(TAGS, new String[]{"True", "False"}); // $NON-NLS-1$ $NON-NLS-2$
+            p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+            p.setValue(DEFAULT, FILTER_TAGS[FILTER_NONE]);
+            p.setValue(NOT_EXPRESSION, Boolean.FALSE);
+            p.setValue(TAGS, FILTER_TAGS);
+            p.setValue(NOT_OTHER, Boolean.FALSE);        
     
             p = property(INCLUDE_LABELS);
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
@@ -182,7 +198,7 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
             p.setValue(NOT_EXPRESSION, Boolean.FALSE);
         } catch (NoSuchMethodError e) {
             LOGGER.error("Error initializing component GraphGeneratorListener due to missing method, if your version is lower than 2.10, this" +
-            		"is expected to fail, if not check project dependencies");
+                    "is expected to fail, if not check project dependencies");
         }
     }
 }

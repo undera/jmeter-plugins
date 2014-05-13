@@ -21,6 +21,7 @@ package kg.apc.jmeter.listener;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
+import java.io.File;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -90,6 +91,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
         TIME_BASED_GRAPHS.add("ResponseCodesPerSecond");    //$NON-NLS-1$
         TIME_BASED_GRAPHS.add("TransactionsPerSecond");     //$NON-NLS-1$
     }
+    private String outputBaseFolder;
     private String resultsFileName;
     private ExportMode exportMode;
     private String filePrefix;
@@ -168,7 +170,13 @@ public class GraphsGeneratorListener extends AbstractListenerElement
             if(!StringUtils.isEmpty(excludeLabels)) {
                 worker.setExcludeLabels(excludeLabels);
             }
-            String fileName = filePrefix+pluginTypes[i];
+            String fileName = null;
+            if(!StringUtils.isEmpty(outputBaseFolder)) {
+                fileName = outputBaseFolder+File.separatorChar+filePrefix+pluginTypes[i];
+            } else {
+                // Handle backward compatibility
+                fileName = filePrefix+pluginTypes[i];                
+            }
             if(exportMode==ExportMode.PNG) {
                 fileName +=  ".png"; //$NON-NLS-1$
                 worker.setOutputPNGFile(fileName); //$NON-NLS-1$
@@ -196,7 +204,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
     private static boolean isTimeBasedGraph(String graphName) {
         return TIME_BASED_GRAPHS.contains(graphName);
     }
-
+    
     /* (non-Javadoc)
      * @see org.apache.jmeter.testelement.TestStateListener#testStarted()
      */
@@ -526,6 +534,20 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     public void setExportMode(int exportMode) {
         this.exportMode = ExportMode.values()[exportMode];
+    }
+
+    /**
+     * @return the outputBaseFolder
+     */
+    public String getOutputBaseFolder() {
+        return outputBaseFolder;
+    }
+
+    /**
+     * @param outputBaseFolder the outputBaseFolder to set
+     */
+    public void setOutputBaseFolder(String outputBaseFolder) {
+        this.outputBaseFolder = outputBaseFolder;
     }
 
     /**

@@ -1,12 +1,18 @@
 package kg.apc.jmeter;
 
 import javax.swing.BorderFactory;
+
 import org.apache.jmeter.gui.util.VerticalPanel;
+
 import java.awt.Component;
 import java.nio.ByteBuffer;
+import java.util.Map;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import kg.apc.emulators.TestJMeterUtils;
+
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -15,6 +21,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
@@ -79,7 +86,7 @@ public class JMeterPluginsUtilsTest {
     @Test
     public void testByteBufferToString2() {
         System.out.println("byteBufferToString2");
-        
+
         ByteBuffer buf = ByteBuffer.allocateDirect(2014);
         buf.put("My Test".getBytes());
         buf.flip();
@@ -219,7 +226,7 @@ public class JMeterPluginsUtilsTest {
         assertEquals("[[1, 2], [3, 4]]", result.toString());
     }
 
-   
+
    /**
     * Test of getFloatFromString method, of class JMeterPluginsUtils.
     */
@@ -244,4 +251,22 @@ public class JMeterPluginsUtilsTest {
         SampleSaveConfiguration conf = new SampleSaveConfiguration();
         JMeterPluginsUtils.doBestCSVSetup(conf);
     }
+
+
+    /**
+     * Test of getEnvDefault method, of class JMeterPluginsUtils.
+     */
+    @Test
+    public void testGetEnvDefault() {
+        System.out.println("getEnvDefault");
+        TestJMeterUtils.createJmeterEnv();
+        Map<String, String> env = System.getenv();
+        if (!env.isEmpty()) {
+            String key = env.keySet().iterator().next();
+            assertEquals(env.get(key), JMeterPluginsUtils.getEnvDefault(key, "testGetEnvDefault"));
+            assertEquals("testGetEnvDefault", JMeterPluginsUtils.getEnvDefault(key + "testGetEnvDefault", "testGetEnvDefault"));
+        }
+    }
+
+
 }

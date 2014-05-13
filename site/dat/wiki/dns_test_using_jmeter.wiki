@@ -18,8 +18,7 @@ custom functionality plugins or just witty workarounds.
 
 
 One of such rarely used JMeter applications is testing servers
-that use [http://en.wikipedia.org/wiki/User_Datagram_Protocol UDP
-protocol] for communication. UDP protocol itself provide
+that use [http://en.wikipedia.org/wiki/User_Datagram_Protocol UDP protocol] for communication. UDP protocol itself provide
 lightweight network transport which is expected to work at
 very high request rates, maybe tens of thousands requests per second.
 Sounds a little bit high for JMeter, and this is the challenge that I
@@ -58,13 +57,13 @@ loss rate the happier user is.
 To measure response time and fail rate properly, system should be
 tested under constant load for some time period. My admin says that
 production request rate is approximately 1 000 requests per second
-([RPS]), with peaks up to 2 000 RPS. I will take this as my primary
+(RPS), with peaks up to 2 000 RPS. I will take this as my primary
 testing mode.
 
 As DNS server owner (or admin) I care
 if my server resources is nearly exhausted, and I can't serve the
 crowd that will come after next ISP's advertisement campaign. I want to
-know the [capacity] limit of my current server and nearest [bottleneck]
+know the capacity limit of my current server and nearest bottleneck
 resource. For this sake, I will monitor server's [http://en.wikipedia.org/wiki/Central_processing_unit CPU]
 and other server resources. Also I will test my server with
 infinitely increasing load, to find its capacity limit.
@@ -74,12 +73,10 @@ infinitely increasing load, to find its capacity limit.
 In the real case I used to test [http://www.powerdns.com/ PowerDNS]
 instance set up for caching with disabled recursive queries. For
 demonstration purposes I deployed [http://www.virtualbox.org/ VirtualBox]
-with [https://help.ubuntu.com/community/Installation/MinimalCD Ubuntu-mini
-11.04] at my laptop (so I know that performance should be poor,
+with [https://help.ubuntu.com/community/Installation/MinimalCD Ubuntu-mini 11.04] at my laptop (so I know that performance should be poor,
 but enough for demonstration). 
 
-While real-case DNS server was configured and filled with [http://en.wikipedia.org/wiki/Cache cache
-data] _by my admin_, at my virtual box I have to install and
+While real-case DNS server was configured and filled with [http://en.wikipedia.org/wiki/Cache cache data] _by my admin_, at my virtual box I have to install and
 configure _pdns-recursor_ myself, nothing unexpected here. I
 have no data to fill cache, so I'll have to run my queries once, the
 server will cache them and I'll measure cached performance in further
@@ -98,23 +95,19 @@ thick channel to [http://en.wikipedia.org/wiki/Data_center Data Center],
 some routers inside DC and, finally, my server's [http://en.wikipedia.org/wiki/Network_interface_controller NIC].
 == Setting Up the Test ==
 
-My preferred way to create [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Test_Plan Test
-Plans] in JMeter is iterative, so I'll describe it that
+My preferred way to create [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Test_Plan Test Plans] in JMeter is iterative, so I'll describe it that
 way.
 === Iteration 1: Proof of Concept ===
 
 First of all, I need to verify that JMeter can properly simulate DNS
 requests at all.
 
-I opened JMeter, added simple [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Thread_Group Thread
-Group] to it, left it with 1 thread and 1 iteration. Also I need
-debug print to see if DNS requests works fine, so I add [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#View_Results_Tree View
-Results Tree] in _Test Plan_ root.
+I opened JMeter, added simple [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Thread_Group Thread Group] to it, left it with 1 thread and 1 iteration. Also I need
+debug print to see if DNS requests works fine, so I add [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#View_Results_Tree View Results Tree] in _Test Plan_ root.
 
 Now I need a _UDP Sampler_. Searching in Google and Yandex
 displayed that none is available in public access. Ok, I wrote my own
-(already ;-)) and will show how to use it. I added [http://code.google.com/p/jmeter-plugins/wiki/UDPRequest UDP
-Request] as a child of _Thread Group_.
+(already ;-)) and will show how to use it. I added [http://jmeter-plugins.org/wiki/UDPRequest UDP Request] as a child of _Thread Group_.
 
 Now I need example DNS request data to send via JMeter. I'll just
 use [http://www.wireshark.org/ Wireshark] network sniffer
@@ -166,8 +159,7 @@ text info.
 
 The next step is reading request data from admin's large file. The
 file has [http://en.wikipedia.org/wiki/Comma-separated_values CSV]-compatible
-format, so I can use robust [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#CSV_Data_Set_Config CSV
-Data Set Config] element in JMeter. I configured _CSV Data Set_
+format, so I can use robust [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#CSV_Data_Set_Config CSV Data Set Config] element in JMeter. I configured _CSV Data Set_
 to read record type into variable _recType_, and host name into
 _hostName._
 
@@ -194,30 +186,23 @@ Results Tree_, and no successful results data or response time
 statistics. Time to add our test some visualization.
 === Iteration 3: Visualize Test Results ===
 
-First of all, I should see basic summary that comes with [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Aggregate_Report Aggregate
-Report]. Added it and ran test – all 500 requests are present in
+First of all, I should see basic summary that comes with [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Aggregate_Report Aggregate Report]. Added it and ran test – all 500 requests are present in
 successful. Let's increase iteration count in _Thread Group_ to
 500 to have test that lasts for several seconds, I need a results
 stream to visualize.
 
-Next useful Listener is [http://code.google.com/p/jmeter-plugins/wiki/TransactionsPerSecond Transactions
-per Second], since transaction rate is the main KPI for DNS server
-and our whole test. Another intuitively required listener is [http://code.google.com/p/jmeter-plugins/wiki/ResponseTimesOverTime Response
-Times Over Time].
+Next useful Listener is [http://jmeter-plugins.org/wiki/TransactionsPerSecond Transactions per Second], since transaction rate is the main KPI for DNS server
+and our whole test. Another intuitively required listener is [http://jmeter-plugins.org/wiki/ResponseTimesOverTime Response Times Over Time].
 
 Important point: average response times is not enough to monitor.
 If you want to evaluate quality of the system, you should operate with
-[http://code.google.com/p/jmeter-plugins/wiki/RespTimesDistribution Response
-Times Distribution] and [http://code.google.com/p/jmeter-plugins/wiki/RespTimePercentiles Percentiles].
+[http://jmeter-plugins.org/wiki/RespTimesDistribution Response Times Distribution] and [http://jmeter-plugins.org/wiki/RespTimePercentiles Percentiles].
 
-To summarize all graphs, I add [http://code.google.com/p/jmeter-plugins/wiki/CompositeGraph Composite
-Graph], run test once and add _Transactions Per Second_ and
+To summarize all graphs, I add [http://jmeter-plugins.org/wiki/CompositeGraph Composite Graph], run test once and add _Transactions Per Second_ and
 _Response Times Over Time_ to composite view.
 You may say that it is also interesting to see how many threads
 were generating load to server. I'll tell why it is not applicable
-for DNS testing: DNS service is of "[http://www.google.com/search?q=%22open%20workload%22 open
-workload]" type. But OK, let's add [http://code.google.com/p/jmeter-plugins/wiki/ActiveThreadsOverTime Active
-Threads Over Time] to test tree and _Composite Graph_, just
+for DNS testing: DNS service is of "[http://www.google.com/search?q=%22open%20workload%22 open workload]" type. But OK, let's add [http://jmeter-plugins.org/wiki/ActiveThreadsOverTime Active Threads Over Time] to test tree and _Composite Graph_, just
 to play with it.
 
 Now I'll fill server's cache by querying it full requests set from
@@ -230,11 +215,9 @@ goes:
 === Iteration 4: Server Performance Monitoring ===
 
 The only remaining thing is server resources monitoring, I want to
-see what becomes [bottleneck] in my tests.
+see what becomes bottleneck in my tests.
 
-[http://code.google.com/p/jmeter-plugins/ JP@GC plugins
-set] have [http://code.google.com/p/jmeter-plugins/wiki/PerfMon Servers
-Performance Monitoring] graph with server agent in version 0.4.1, but I'll use not
+[http://jmeter-plugins.org/ JP@GC plugins set] have [http://jmeter-plugins.org/wiki/PerfMon Servers Performance Monitoring] graph with server agent in version 0.4.1, but I'll use not
 yet released 0.4.2 _PerfMon Metrics Collector_ graph, because I want to be at the cutting edge of JMeter plugins.
 
 I uploaded _serverAgent_ part to virtual box and started
@@ -252,8 +235,7 @@ sense in my tests. I will monitor it primarily.
 DNS performance is all about how much requests system can serve
 simultaneously, so I need to manipulate request rate. JMeter unable
 to do this by default, it has only indirect manipulation with Timers
-but, fairly, it is totally inconvenient. I have [http://code.google.com/p/jmeter-plugins/wiki/ThroughputShapingTimer Throughput
-Shaping Timer] for this purpose and add it as a child of my
+but, fairly, it is totally inconvenient. I have [http://jmeter-plugins.org/wiki/ThroughputShapingTimer Throughput Shaping Timer] for this purpose and add it as a child of my
 sampler. Hitting _"Add Row"_ button gives me some
 default request rate profile, then I run test just to check how it goes.
 
@@ -263,8 +245,7 @@ _Composite Graph_ shows that it goes as expected.
 
 Also I want JMeter to stop test automatically when the server
 obviously inadequate and failing too much requests. For this sake I
-add [http://code.google.com/p/jmeter-plugins/wiki/AutoStop AutoStop
-Listener] to _Test Plan_ and configure it to stop when error
+add [http://jmeter-plugins.org/wiki/AutoStop AutoStop Listener] to _Test Plan_ and configure it to stop when error
 rate is higher than 50% for 10 seconds in a row.
 ==Running the Tests==
 
@@ -370,4 +351,4 @@ usual places.
 
   * [https://groups.google.com/forum/#!topic/jmeter-plugins/QfI0AcCeFF8 Discuss this article]
   * [http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/DNS_Test_Example.jmx Download Final Test Plan]
-  * [http://code.google.com/p/jmeter-plugins/ JP@GC Plugins Set - Project Page]
+  * [http://jmeter-plugins.org/ JP@GC Plugins Set - Project Page]

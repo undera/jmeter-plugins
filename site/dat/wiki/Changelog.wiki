@@ -4,6 +4,7 @@
   * fix JMeter startup with Extras (https://groups.google.com/forum/#!topic/jmeter-plugins/YlnXE_WOXXo)
   * Improved JsonAssertion (https://github.com/undera/jmeter-plugins/pull/40)
   * add __env function (https://github.com/undera/jmeter-plugins/pull/44)
+  * allow multiline quoted values in VariablesFromCSV config (https://github.com/undera/jmeter-plugins/pull/49)
   * Graphs Generator : New field Output Folder for better control on output of CSV or PNG
   * Graphs Generator : Bug fix on Filter field, default Undefined selection of Combo on Graphs Generator addition lead to empty graphs if not reselected by user, now defaults to empty.
 	* Included Dev-Mode for WebDriver, which keeps the browser window open

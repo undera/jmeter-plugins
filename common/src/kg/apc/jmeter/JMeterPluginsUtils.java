@@ -264,7 +264,7 @@ public abstract class JMeterPluginsUtils {
         conf.setLatency(true);
         conf.setLabel(true);
 
-        conf.setThreadName(false);
+        conf.setThreadName(true);
         conf.setBytes(true);
         conf.setHostname(false);
         conf.setAssertionResultsFailureMessage(false);

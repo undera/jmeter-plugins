@@ -42,10 +42,7 @@
                     <a href="http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki"
                        target="_blank"><img src="/img/site/bz_small.jpg" alt=""></a>
                 </td>
-                <td style="padding: 0 0.5em;">
-                    <a href="http://ubikloadpack.com/?utm_source=jpgc&utm_medium=cpc&utm_campaign=sponsorship"
-                       target="_blank"><img src="/img/site/ubik.png" alt=""></a>
-                </td>
+                
                 <td style="padding: 0 0.5em;">
                     <div style="background-color: #ffffd6; border: 1px solid #EE9900; height: 56px; font-size: 80%;
 padding: 2px 4px; vertical-align: middle; cursor: pointer;" onclick="window.location.href='http://loadosophia.org/?utm_source=jpgc&utm_medium=header&utm_campaign=sponsorship';">

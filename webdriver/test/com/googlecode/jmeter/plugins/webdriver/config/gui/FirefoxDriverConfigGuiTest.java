@@ -42,4 +42,29 @@ public class FirefoxDriverConfigGuiTest {
     public void shouldReturnFirefoxDriverConfig() {
         assertThat(gui.createTestElement(), is(instanceOf(FirefoxDriverConfig.class)));
     }
+
+    @Test
+    public void shouldSetUserAgentOverride() {
+        gui.useragentOverride.setText("some user agent");
+        final FirefoxDriverConfig testElement = (FirefoxDriverConfig) gui.createTestElement();
+        assertThat(testElement.getUserAgentOverride(), is("some user agent"));
+    }
+
+    @Test
+    public void shouldResetValuesOnClearGui() {
+        gui.useragentOverride.setText("user agent");
+
+        gui.clearGui();
+
+        assertThat(gui.useragentOverride.getText(), is(""));
+    }
+
+    @Test
+    public void shouldSetUserAgentOverrideOnConfigure() {
+        FirefoxDriverConfig config = new FirefoxDriverConfig();
+        config.setUserAgentOverride("user-agent");
+        gui.configure(config);
+
+        assertThat(gui.useragentOverride.getText(), is(config.getUserAgentOverride()));
+    }
 }

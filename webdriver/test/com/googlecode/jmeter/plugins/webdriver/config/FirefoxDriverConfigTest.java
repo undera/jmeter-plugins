@@ -70,8 +70,6 @@ public class FirefoxDriverConfigTest {
         whenNew(FirefoxDriver.class)
             .withParameterTypes(FirefoxBinary.class, FirefoxProfile.class, Capabilities.class)
             .withArguments(isA(FirefoxBinary.class), isA(FirefoxProfile.class), isA(Capabilities.class))
-//            .withParameterTypes(FirefoxProfile.class)
-//            .withArguments(isA(FirefoxProfile.class))
             .thenReturn(mockFirefoxDriver);
 
         final FirefoxDriver browser = config.createBrowser();

@@ -12,6 +12,8 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
 
     private static final long serialVersionUID = 100L;
     private static final String GENERAL_USERAGENT_OVERRIDE = "FirefoxDriverConfig.general.useragent.override";
+    private static final String ENABLE_USERAGENT_OVERRIDE = "FirefoxDriverConfig.general.useragent.override.enabled";
+    private boolean userAgentOverridden;
 
     Capabilities createCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -39,5 +41,13 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
 
     public String getUserAgentOverride() {
         return getPropertyAsString(GENERAL_USERAGENT_OVERRIDE);
+    }
+
+    public boolean isUserAgentOverridden() {
+        return getPropertyAsBoolean(ENABLE_USERAGENT_OVERRIDE);
+    }
+
+    public void setUserAgentOverridden(boolean userAgentOverridden) {
+        setProperty(ENABLE_USERAGENT_OVERRIDE, userAgentOverridden);
     }
 }

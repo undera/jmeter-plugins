@@ -44,27 +44,40 @@ public class FirefoxDriverConfigGuiTest {
     }
 
     @Test
-    public void shouldSetUserAgentOverride() {
-        gui.useragentOverride.setText("some user agent");
+    public void shouldOverrideUserAgent() {
+        gui.userAgentOverrideCheckbox.setSelected(true);
+        gui.userAgentOverrideText.setText("some user agent");
         final FirefoxDriverConfig testElement = (FirefoxDriverConfig) gui.createTestElement();
         assertThat(testElement.getUserAgentOverride(), is("some user agent"));
     }
 
     @Test
-    public void shouldResetValuesOnClearGui() {
-        gui.useragentOverride.setText("user agent");
-
-        gui.clearGui();
-
-        assertThat(gui.useragentOverride.getText(), is(""));
+    public void shouldNotOverrideUserAgent() {
+        gui.userAgentOverrideCheckbox.setSelected(false);
+        gui.userAgentOverrideText.setText("some user agent");
+        final FirefoxDriverConfig testElement = (FirefoxDriverConfig) gui.createTestElement();
+        assertThat(testElement.getUserAgentOverride(), is(not("some user agent")));
     }
 
     @Test
-    public void shouldSetUserAgentOverrideOnConfigure() {
+    public void shouldResetValuesOnClearGui() {
+        gui.userAgentOverrideText.setText("user agent");
+        gui.userAgentOverrideCheckbox.setSelected(true);
+
+        gui.clearGui();
+
+        assertThat(gui.userAgentOverrideText.getText(), is(FirefoxDriverConfigGui.OVERRIDEN_USER_AGENT));
+        assertThat(gui.userAgentOverrideCheckbox.isSelected(), is(false));
+    }
+
+    @Test
+    public void shouldSetFirefoxDriverConfigOnConfigure() {
         FirefoxDriverConfig config = new FirefoxDriverConfig();
         config.setUserAgentOverride("user-agent");
+        config.setUserAgentOverridden(true);
         gui.configure(config);
 
-        assertThat(gui.useragentOverride.getText(), is(config.getUserAgentOverride()));
+        assertThat(gui.userAgentOverrideText.getText(), is(config.getUserAgentOverride()));
+        assertThat(gui.userAgentOverrideCheckbox.isSelected(), is(config.isUserAgentOverridden()));
     }
 }

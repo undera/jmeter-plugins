@@ -1,5 +1,8 @@
 = Changelog =
 
+== 1.1.5 <i><font color=gray size="1">planning</font></i>==
+  * Firefox WebDriver allows its User Agent to be overridden.
+
 == 1.1.4 <i><font color=gray size="1">planning</font></i>==
   * fix JMeter startup with Extras (https://groups.google.com/forum/#!topic/jmeter-plugins/YlnXE_WOXXo)
   * Improved JsonAssertion (https://github.com/undera/jmeter-plugins/pull/40)

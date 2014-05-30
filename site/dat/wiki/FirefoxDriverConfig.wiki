@@ -58,7 +58,9 @@ This is a comma separated list of all host(s) and/or IP Address(es) that will by
 For networks that have a proxy configuration server (PAC), and its name and the location of the PAC file is known, please use this option.  The usual configuration for this is {{{http://proxy-server/proxy.pac}}}
 
 == Firefox ==
-This tab is intentionally left empty.  As more features get added, this tab will contain customisations specific to the Firefox browser instance used for the tests.  See the [Roadmap] document for future plans.
+The Firefox browser allows its user agent to be overridden. To do so, check the 'Override User Agent' checkbox and then paste in the user agent string to use. The UserAgentString.com site has an [http://www.useragentstring.com/pages/useragentstring.php extensive list of user agent strings].
+
+Please see the [Roadmap] document for future plans.
 
 == Experimental ==
 As new features from the [Roadmap] are added, new and experimental features will generally get added to this section first.  This allows the early adopters to use these features and provide feedback on them.  However, it should be recognised that *all features added to this tab are subject to change/removal* so depend on them at your own peril!

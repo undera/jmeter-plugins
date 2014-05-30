@@ -117,7 +117,7 @@ use [http://en.wikipedia.org/wiki/Nslookup nslookup]
 utility to make a request to my ISP's server. Wireshark caught the
 request and response.
 
-[/img/wiki/article/dns/screenshot1.png  Wireshark captured data]
+[/img/wiki/dns/screenshot1.png  Wireshark captured data]
 
 I right-click _"Domain Name System (query)"_ in bottom
 panel and choose _"Copy ⇒ Bytes (Hex Stream)"_, then paste
@@ -126,7 +126,7 @@ it into _Request Data_ field of _UDP Request_.
 Last detail: configure _Hostname_ and _UDP port_ in
 _UDP Request_, setting it to my virtual PowerDNS instance.
 
-[/img/wiki/article/dns/screenshot2.png  UDP Request HEX request settings]
+[/img/wiki/dns/screenshot2.png  UDP Request HEX request settings]
 
 Hitting _Ctrl+R_ (Run Test)  in JMeter gives me the first
 result in _View Results Tree_. The result is _500_ with

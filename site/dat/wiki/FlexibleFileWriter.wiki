@@ -33,6 +33,9 @@ For example, simple tab separated file specified as:
 If you want to have '|' symbol itself to be written to file, use '||' in record
 specification.
 
+There is special property named {{{kg.apc.jmeter.reporters.FFWBufferSize}}} with default of 10KB.
+This property controls the size for the buffer used to compose record to write to file. See [https://groups.google.com/forum/#!topic/jmeter-plugins/Mldv8vs2L3g] for some more details.
+
 == Available Fields ==
 
 || startTime || epoch time when request was started ||

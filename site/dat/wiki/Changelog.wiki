@@ -2,6 +2,7 @@
 
 == 1.1.5 <i><font color=gray size="1">planning</font></i>==
   * Firefox WebDriver allows its User Agent to be overridden.
+  * Extract property for FFW buffer size (https://groups.google.com/forum/#!topic/jmeter-plugins/Mldv8vs2L3g)
 
 == 1.1.4 <i><font color=gray size="1">planning</font></i>==
   * fix JMeter startup with Extras (https://groups.google.com/forum/#!topic/jmeter-plugins/YlnXE_WOXXo)

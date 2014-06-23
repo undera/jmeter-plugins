@@ -12,6 +12,7 @@ import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleListener;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -52,6 +53,8 @@ public class FlexibleFileWriter
     private static final String HEADER = "header";
     private static final String FOOTER = "footer";
     private static final String VAR_PREFIX = "variable#";
+    private static final String WRITE_BUFFER_LEN_PROPERTY = "kg.apc.jmeter.reporters.FFWBufferSize";
+    private final int writeBufferSize = JMeterUtils.getPropDefault(WRITE_BUFFER_LEN_PROPERTY, 1024 * 10);
     protected volatile FileChannel fileChannel;
     private int[] compiledVars;
     private int[] compiledFields;
@@ -220,7 +223,7 @@ public class FlexibleFileWriter
             return;
         }
 
-        ByteBuffer buf = ByteBuffer.allocateDirect(1024 * 10);
+        ByteBuffer buf = ByteBuffer.allocateDirect(writeBufferSize);
         for (int n = 0; n < compiledConsts.length; n++) {
             if (compiledConsts[n] != null) {
                 synchronized (compiledConsts) {

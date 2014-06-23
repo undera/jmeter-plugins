@@ -1,24 +1,18 @@
 package kg.apc.jmeter.functions;
 
-import org.apache.jmeter.threads.JMeterContextService;
 import kg.apc.emulators.TestJMeterUtils;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.apache.jmeter.threads.JMeterContextService;
+import org.junit.*;
 
-/**
- *
- * @author undera
- */
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
 public class IsDefinedTest {
 
     public IsDefinedTest() {
@@ -41,16 +35,13 @@ public class IsDefinedTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of execute method, of class IsDefined.
-     */
     @Test
     public void testExecute() throws Exception {
         System.out.println("execute 1");
         SampleResult previousResult = null;
         Sampler currentSampler = null;
         Collection<CompoundVariable> parameters = new ArrayList<CompoundVariable>();
-        parameters.add(new CompoundVariable("var"));
+        parameters.add(new CompoundVariable("var_to_be_defined1"));
         IsDefined instance = new IsDefined();
         instance.setParameters(parameters);
         String expResult = "0";
@@ -64,9 +55,9 @@ public class IsDefinedTest {
         SampleResult previousResult = null;
         Sampler currentSampler = null;
 
-        JMeterContextService.getContext().getVariables().put("var", "");
+        JMeterContextService.getContext().getVariables().put("var_to_be_defined2", "");
         Collection<CompoundVariable> parameters = new ArrayList<CompoundVariable>();
-        parameters.add(new CompoundVariable("var"));
+        parameters.add(new CompoundVariable("var_to_be_defined2"));
         IsDefined instance = new IsDefined();
         instance.setParameters(parameters);
         String expResult = "1";

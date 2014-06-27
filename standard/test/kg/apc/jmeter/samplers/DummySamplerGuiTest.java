@@ -2,52 +2,20 @@ package kg.apc.jmeter.samplers;
 
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * @author apc
- */
 public class DummySamplerGuiTest {
-    /**
-     *
-     */
     public DummySamplerGuiTest() {
     }
 
-    /**
-     * @throws Exception
-     */
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    /**
-     * @throws Exception
-     */
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    /**
-     *
-     */
-    @Before
-    public void setUp() {
-    }
-
-    /**
-     *
-     */
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of getStaticLabel method, of class DummySamplerGui.
-     */
     @Test
     public void testGetStaticLabel() {
         System.out.println("getStaticLabel");
@@ -56,9 +24,6 @@ public class DummySamplerGuiTest {
         assertTrue(result.length() > 0);
     }
 
-    /**
-     * Test of configure method, of class DummySamplerGui.
-     */
     @Test
     public void testConfigure() {
         System.out.println("configure");
@@ -67,9 +32,6 @@ public class DummySamplerGuiTest {
         instance.configure(element);
     }
 
-    /**
-     * Test of createTestElement method, of class DummySamplerGui.
-     */
     @Test
     public void testCreateTestElement() {
         System.out.println("createTestElement");
@@ -78,9 +40,6 @@ public class DummySamplerGuiTest {
         assertNotNull(result);
     }
 
-    /**
-     * Test of modifyTestElement method, of class DummySamplerGui.
-     */
     @Test
     public void testModifyTestElement() {
         System.out.println("modifyTestElement");
@@ -89,9 +48,6 @@ public class DummySamplerGuiTest {
         instance.modifyTestElement(sampler);
     }
 
-    /**
-     * Test of clearGui method, of class DummySamplerGui.
-     */
     @Test
     public void testClearGui() {
         System.out.println("clearGui");
@@ -99,9 +55,6 @@ public class DummySamplerGuiTest {
         instance.clearGui();
     }
 
-    /**
-     * Test of getLabelResource method, of class DummySamplerGui.
-     */
     @Test
     public void testGetLabelResource() {
         System.out.println("getLabelResource");

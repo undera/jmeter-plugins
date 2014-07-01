@@ -17,7 +17,11 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
 
     static {
-        DefaultSyntaxKit.initKit();
+        if(!GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance()) {
+            DefaultSyntaxKit.initKit();
+        } else {
+            LOGGER.info("Headless environment detected. Disabling JSyntaxPane highlighting.");
+        }
     }
 
 	JTextField parameters;

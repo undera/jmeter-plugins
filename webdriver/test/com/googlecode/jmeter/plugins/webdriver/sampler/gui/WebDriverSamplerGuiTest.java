@@ -1,7 +1,6 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler.gui;
 
 import com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler;
-import jsyntaxpane.syntaxkits.JavaScriptSyntaxKit;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.gui.JMeterGUIComponent;
 import org.hamcrest.CoreMatchers;
@@ -9,9 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javax.swing.text.EditorKit;
-
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class WebDriverSamplerGuiTest {
@@ -55,12 +53,6 @@ public class WebDriverSamplerGuiTest {
         gui.script.setText("some script");
         final WebDriverSampler testElement = (WebDriverSampler) gui.createTestElement();
         assertThat(testElement.getScript(), is("some script"));
-    }
-
-    @Test
-    public void shouldHaveAJavascriptSyntaxEditor() {
-        final EditorKit editorKit = gui.script.getEditorKitForContentType("text/javascript");
-        assertThat(editorKit, is(instanceOf(JavaScriptSyntaxKit.class)));
     }
 
     @Test

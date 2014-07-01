@@ -1,0 +1,12 @@
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
+= Merge Results <sup><font color=gray size="1">since 1.1.4</font></sup>=
+
+Merge Results is a useful tool to compare two or more results files
+
+Simply add two or more files (max 4) in the table, you can add filter on label or offset.
+The results file is made from input files concatenated with a new reference date.
+Each label is prefixed by the one specified in the table (ie: TEST1:LOGIN, TEST2:LOGIN, TEST3:LOGIN...).
+
+The newly created file can be read by classical JMeter report or graph.
+
+[/img/wiki/merge_results.png]

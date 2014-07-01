@@ -1,8 +1,0 @@
-= WebDriver Set =
-Selenium/WebDriver testing ability.
-
-  * [WebDriverSampler WebDriver Sampler] for full browser tests
-  * [AndroidDriverConfig]
-  * [ChromeDriverConfig]
-  * [FirefoxDriverConfig]
-  * [HtmlUnitDriverConfig]

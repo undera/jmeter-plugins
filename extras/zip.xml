@@ -19,6 +19,34 @@
         <file>
             <source>../README</source>
         </file>
+        <file>
+            <source>bin/html-graphviz-generator.cmd</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>
+        <file>
+            <source>bin/html-graphviz-generator.sh</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>
+        <file>
+            <source>bin/style-graphviz.css</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>
+        <file>
+            <source>bin/simple-table-server.cmd</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>
+        <file>
+            <source>bin/simple-table-server.sh</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>
+        <file>
+            <source>bin/startup-simple-table-server.bsh</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>
+        <file>
+            <source>../examples/logins.csv</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>			
     </files>
     
 </assembly>

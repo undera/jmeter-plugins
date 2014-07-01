@@ -1,0 +1,9 @@
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
+= Synthesis Report <sup><font color=gray size="1">since 1.1.4</font></sup>=
+
+Synthesis Report is a mix between Summary Report and Aggregate Report:
+Samples, Average, Min, Max, 90% Line, Std. Dev, Error %, Throughout, KB/sec, Avg.Bytes
+It is possible to include/exclude some samples by adding their labels (with comma separator) or a regular expression in the include/exclude field.
+It is also possible to restrict on an specified time interval (Start/End Offset).
+
+[/img/wiki/synthesis_report.png]

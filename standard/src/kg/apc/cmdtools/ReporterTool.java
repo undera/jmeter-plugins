@@ -37,6 +37,10 @@ public class ReporterTool extends AbstractCMDTool {
                 + "--line-weight <num of pixels> " // set graph row line thikness ||
                 + "--extractor-regexps <regExps list> "
                 + "--success-filter <true/false> "
+                + "--include-label-regex <true/false> " // filter samples label with regex
+                + "--exclude-label-regex <true/false> " // filter samples label with regex
+                + "--start-offset <sec>" // filter samples
+                + "--end-offset <sec>" // filter samples
                 + "]");
     }
 
@@ -210,6 +214,34 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 worker.setSuccessFilter(getLogicValue((String) args.next()));
+            } else if (nextArg.equalsIgnoreCase("--include-label-regex")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing include label regex flag");
+                }
+
+                worker.setIncludeSamplesWithRegex(getLogicValue((String) args.next()));
+            } else if (nextArg.equalsIgnoreCase("--exclude-label-regex")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing exclude label regex flag");
+                }
+
+                worker.setExcludeSamplesWithRegex(getLogicValue((String) args.next()));
+            } else if (nextArg.equalsIgnoreCase("--start-offset")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing start offset flag");
+                }
+
+                worker.setStartOffset((String) args.next());
+            } else if (nextArg.equalsIgnoreCase("--end-offset")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing end offset flag");
+                }
+
+                worker.setEndOffset((String) args.next());
             } else {
                 worker.processUnknownOption(nextArg, args);
             }

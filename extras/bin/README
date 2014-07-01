@@ -1,0 +1,31 @@
+#---------------------------------------------------------------------------
+# Simple Table Server Configuration
+#---------------------------------------------------------------------------
+
+# To run the Simple Table Server when JMeter is starting, you need to declare in jmeter.properties file : 
+beanshell.init.file=startup-simple-table-server.bsh
+
+# and these jmeterPlugin.sts parameters
+# default : 9191
+jmeterPlugin.sts.port=9191
+# default : false 
+jmeterPlugin.sts.loadAndRunOnStartup=true
+# default : JMETER_HOME/bin
+jmeterPlugin.sts.datasetDirectory=D:/usr/vdaburon/bench/Jmeter/sts/data
+# default : true
+jmeterPlugin.sts.addTimestamp=true
+
+# you also need to put the startup-simple-table-server.bsh file in your JMETER_HOME/bin directory
+
+# use simple-table-server.[cmd/sh] to run the STS in standalone mode
+
+#---------------------------------------------------------------------------
+# HTML Graph Visualization Generator
+#---------------------------------------------------------------------------
+
+# put html-graphviz-generator.cmd/sh and style-graphviz.css in your JMETER_HOME/bin directory
+
+# default directory : JMETER_HOME/bin
+#jmeterPlugin.gvg.imageDirectory=D:/outils/jmeter/apache-jmeter-2.11/bin/images
+
+# Do not use '\' in the path directory, it doesn't work, use '/' or '\\' instead

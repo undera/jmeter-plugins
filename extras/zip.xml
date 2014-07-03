@@ -19,6 +19,22 @@
         <file>
             <source>../README</source>
         </file>
+        <file>
+            <source>simple-table-server.cmd</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>
+        <file>
+            <source>simple-table-server.sh</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>
+        <file>
+            <source>simple-table-server.bsh</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>
+        <file>
+            <source>../examples/logins.csv</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>
     </files>
     
 </assembly>

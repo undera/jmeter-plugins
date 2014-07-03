@@ -1,0 +1,40 @@
+<div style="float: right" class="plugins_set extras_set">Available in [ExtrasSet Extras Set]</div>
+= HTTP Simple Table Server <sup><font color=gray size="1">since 1.1.4</font></sup>=
+
+Performance testing with JMeter can be done with several JMeter injectors (on a remote host) and one JMeter controller (with GUI, on your local host).
+Templates are sent to JMeter injectors using RMI protocol.
+Results are brought back periodically to the JMeter controller.
+Unfortunately the dataset and csv files aren't transferred from the controller to injectors.
+
+The main idea is to use a tiny http server in JMeter Plugins to manage the dataset files with simple commands to get / add rows of data in files.
+
+[/img/wiki/http_simple_table_server.png]
+
+== Configuration ==
+#---------------------------------------------------------------------------
+# Simple Table Server Configuration
+#---------------------------------------------------------------------------
+
+#jmeterPlugin.sts.port=9191
+#jmeterPlugin.sts.addTimestamp=true
+#jmeterPlugin.sts.datasetDirectory=D:/outils/jmeter/apache-jmeter-2.11/bin/dataset
+#jmeterPlugin.sts.loadAndRunOnStartup=false
+
+# Do not use '\' in the path directory, it doesn't work well, use '/' or '\\' instead
+
+If you want automatically start a Simple Table Server on JMeter startup simply add "simple-table-server.bsh" in the "beanshell.init.file" property.
+Be sure that startup-simple-table-server.bsh file is in your JMETER_HOME/bin directory.
+
+== Distributed architecture for JMeter ==
+[/img/wiki/http_sts_jmeter_archi_distributed_v4.0/png]
+
+== Example ==
+[/img/examples/demo_sts_add_save.jmx Download Example Test Plan 1]
+[/img/examples/demo_sts_read_first_remove.jmx Download Example Test Plan 2]
+[/img/examples/demo_sts_read_random.jmx Download Example Test Plan 3]
+[/img/examples/demo_sts_read_random_for2slaves.jmx Download Example Test Plan 4]
+
+[/img/examples/login.csv Download logins.csv file]
+
+== Getting Started ==
+When the STS is running go to http://<HOST:PORT>/sts/ to see all available commands.

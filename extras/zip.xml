@@ -32,6 +32,10 @@
             <outputDirectory>bin</outputDirectory>
         </file>
         <file>
+            <source>NanoHttpd-2.1.0_License.txt</source>
+            <outputDirectory>licenses/src</outputDirectory>
+        </file>
+        <file>
             <source>../examples/logins.csv</source>
             <outputDirectory>bin</outputDirectory>
         </file>

@@ -11,8 +11,8 @@
   * allow multiline quoted values in VariablesFromCSV config (https://github.com/undera/jmeter-plugins/pull/49)
   * Graphs Generator : New field Output Folder for better control on output of CSV or PNG
   * Graphs Generator : Bug fix on Filter field, default Undefined selection of Combo on Graphs Generator addition lead to empty graphs if not reselected by user, now defaults to empty.
-	* Included Dev-Mode for WebDriver, which keeps the browser window open
-	between runs.
+  * Included Dev-Mode for WebDriver, which keeps the browser window open between runs.
+  * New HTTP Simple Table Server to manage the dataset.
 
 == 1.1.3 <i><font color=gray size="1">February 17, 2014</font></i>==
   * New Redis Data Set for distributed equivalent of CSV Data Set

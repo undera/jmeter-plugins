@@ -66,6 +66,7 @@ Additional plugins for extended and complex testing. Does not require additional
   * [RawDataSource Raw Data Source]
   * [XMLFormatPostProcessor XML Format PostProcessor]
   * [LockFile Lock Files]
+  * [HttpSimpleTableServer HTTP Simple Table Server]
 </td>
 </tr><tr>
 <td class="plugins_set extraslibs_set">

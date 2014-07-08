@@ -16,7 +16,12 @@ rem   See the License for the specific language governing permissions and
 rem   limitations under the License.
 
 rem   Run the JMeter simple table server in non-GUI mode
-rem   See simple-table-server.properties for default settings
+
+rem   Default settings:
+rem   jmeterPlugin.sts.port=9191
+rem   jmeterPlugin.sts.addTimestamp=true
+rem   jmeterPlugin.sts.datasetDirectory=<JMETER_HOME/bin> (leave it empty)
+rem   jmeterPlugin.sts.loadAndRunOnStartup=true
 
 setlocal
 

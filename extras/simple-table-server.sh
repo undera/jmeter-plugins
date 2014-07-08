@@ -15,12 +15,17 @@
 ##   See the License for the specific language governing permissions and
 ##   limitations under the License.
 
-#   Run the JMeter simple table server in non-GUI mode
-#   P1 = port to use (default 9191)
+##   Run the JMeter simple table server in non-GUI mode
+
+##   Default settings:
+##   jmeterPlugin.sts.port=9191
+##   jmeterPlugin.sts.addTimestamp=true
+##   jmeterPlugin.sts.datasetDirectory=<JMETER_HOME/bin> (leave it empty)
+##   jmeterPlugin.sts.loadAndRunOnStartup=true
 
 cd `dirname $0`
 
 CP=../lib/ext/ApacheJMeter_core.jar:../lib/jorphan.jar:../lib/ext/JMeterPlugins-Extras.jar
 CP=${CP}:../lib/logkit-2.0.jar:../lib/avalon-framework-4.1.4.jar
 
-java -cp $CP org.jmeterplugins.protocol.http.control.HttpSimpleTableServer $1
+java -cp $CP org.jmeterplugins.protocol.http.control.HttpSimpleTableServer

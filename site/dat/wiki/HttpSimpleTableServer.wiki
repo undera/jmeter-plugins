@@ -9,7 +9,7 @@ Unfortunately the dataset and csv files aren't transferred from the controller t
 The main idea is to use a tiny http server in JMeter Plugins to manage the dataset files with simple commands to get / add rows of data in files.
 
 == Configuration ==
-In jmeter.proterties file:
+In jmeter.properties file:
 #---------------------------------------------------------------------------
 # Simple Table Server Configuration
 #---------------------------------------------------------------------------

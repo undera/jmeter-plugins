@@ -27,20 +27,31 @@ The Simple Table Server is a tiny http server which can send http GET/POST reque
 You can set a custom port through the graphical user interface or by overriding the jmeterplugin.sts.port property.
 
 == Distributed architecture for JMeter ==  
+The Simple Table Server runs on the JMeter controller (master) and load generators (slaves) make calls to the STS to get or add some data.  
+At the beginning of the test, the first load generator will load data in memory (initial call) and at the end of the test it asks the STS saving values in a file.  
+All the load generators ask data from the same STS which is started on the JMeter controller.
+
 [/img/wiki/http_sts_jmeter_archi_distributed_v4.0.png]
 
 == Getting Started ==  
 [/img/wiki/http_sts_startup_gui.png]
 
 There are different ways to start the STS:
-  * with JMeter GUI  
+  1. with JMeter GUI  
 [/img/wiki/http_simple_table_server.png]
-  * with simple-table-server.cmd (.sh for UNIX) script
-  * on JMeter startup with properties jmeterPlugin.sts.loadAndRunOnStartup=true jmeterPlugin.sts.port=9191 and beanshell.init.file=startup-simple-table-server.bsh
+  2. with simple-table-server.cmd (.sh for UNIX) script located in your JMETER_HOME/bin directory
+  3. on JMeter startup with following properties in jmeter.properties file:
+  
+  > jmeterPlugin.sts.loadAndRunOnStartup=true  
+  > jmeterPlugin.sts.port=9191
+  
+  > beanshell.init.file=startup-simple-table-server.bsh
 
 When the STS is running go to http://<HOST:PORT>/sts/ to see all available commands.
 
-Example of a dataset file login.csv:
+**Calls are synchronized, all commands are executed one by one.**
+
+Example of a dataset file logins.csv:
 
   > login1;password1  
   > login2;password2  
@@ -49,7 +60,7 @@ Example of a dataset file login.csv:
   > login5;password5  
 
 ### INITFILE - Load file in memory:
-http://hostname:port/sts/INITFILE?FILENAME=login.csv
+http://hostname:port/sts/INITFILE?FILENAME=logins.csv
 
 HTML format:  
   > \<html>\<title>OK\</title>  
@@ -64,7 +75,7 @@ Linked list after this command:
   > login5;password5
 
 ### READ - Get one line from list:
-http://hostname:port/sts/READ?READ_MODE=[FIRST,LAST,RANDOM]&KEEP=[TRUE,FALSE]&FILENAME=login.csv
+http://hostname:port/sts/READ?READ_MODE=[FIRST,LAST,RANDOM]&KEEP=[TRUE,FALSE]&FILENAME=logins.csv
 
 HTML format:  
   > \<html>\<title>OK\</title>  
@@ -147,7 +158,7 @@ Available options:
 
 
 ### LENGTH - Return the number of remaining lines of a linked list:
-http://hostname:port/sts/LENGTH?FILENAME=login.csv
+http://hostname:port/sts/LENGTH?FILENAME=logins.csv
 
 HTML format:  
   > \<html>\<title>OK\</title>  
@@ -160,16 +171,16 @@ http://hostname:port/sts/STATUS
 HTML format:  
   > \<html>\<title>OK\</title>  
   > \<body>  
-  > login.csv = 5\<br />  
+  > logins.csv = 5\<br />  
   > dossier.csv = 1\<br />  
   > \</body>\</html>
 
 ### SAVE - Save the specified linked list in a file to the default location:
-http://hostname:port/sts/SAVE?FILENAME=login.csv
+http://hostname:port/sts/SAVE?FILENAME=logins.csv
 
 If jmeterPlugin.sts.addTimestamp is set to true then a timestamp will be add to the filename,
 the file is stored in JMETER_HOME/bin directory:  
-20140520T16h33m27s.login.csv
+20140520T16h33m27s.logins.csv
 
 HTML format:  
   > \<html>\<title>OK\</title>  
@@ -177,7 +188,7 @@ HTML format:
   > \</html>  
 
 ### RESET - Remove all of the elements from the specified list:
-http://hostname:port/sts/RESET?FILENAME=login.csv
+http://hostname:port/sts/RESET?FILENAME=logins.csv
 
 HTML format:  
   > \<html>\<title>OK\</title>  
@@ -206,8 +217,8 @@ At the end of your Test Plan you can save remaining/adding data with a HTTP Requ
 
 == Example ==
 
-1. Put the login.csv file in your JMETER_HOME/bin directory:  
-[/img/examples/login.csv Download logins.csv file]
+1. Put the logins.csv file in your JMETER_HOME/bin directory:  
+[/img/examples/logins.csv Download logins.csv file]
 
 2. Run the Simple Table Server manually with the simple-table-server.cmd file or automatically with beanShell configuration.
 

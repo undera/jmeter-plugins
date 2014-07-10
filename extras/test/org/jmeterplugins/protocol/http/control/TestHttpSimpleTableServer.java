@@ -121,30 +121,122 @@ public class TestHttpSimpleTableServer extends TestCase {
             out.close();
         }
 
-        // INITFILE (GET)
+        // HELP (GET)
         String result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts");
+        assertTrue(0 < result.length()
+                && result
+                        .startsWith("<html><head><title>URL for the dataset</title><head>"));
+
+        // HELP (GET)
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT + "/sts/");
+        assertTrue(0 < result.length()
+                && result
+                        .startsWith("<html><head><title>URL for the dataset</title><head>"));
+
+        // STATUS (GET) : ERROR EMPTY DATABASE
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/STATUS");
+        assertEquals("<html><title>KO</title>" + CRLF + "<body>"
+                + "Error : Database was empty !</body>" + CRLF + "</html>",
+                result);
+
+        // INITFILE (GET)
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
                 + "/sts/INITFILE?FILENAME=" + filename);
         assertEquals("<html><title>OK</title>" + CRLF + "<body>2</body>" + CRLF
                 + "</html>", result);
+
+        // INITFILE (GET) : ERROR FILE NOT FOUND
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/INITFILE?FILENAME=unknown.txt");
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : file not found !</body>" + CRLF + "</html>",
+                result);
+
+        // INITFILE (GET) : ERROR MISSING FILENAME
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/INITFILE");
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : FILENAME parameter was missing !</body>"
+                + CRLF + "</html>", result);
 
         // Delete the file test-login.csv
         File dataset = new File(DATA_DIR, filename);
         dataset.delete();
 
-        // READ (GET)
+        // READ LAST KEEP=TRUE (GET)
         result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
                 + "/sts/READ?READ_MODE=LAST&FILENAME=" + filename);
         assertEquals("<html><title>OK</title>" + CRLF
                 + "<body>login2;password2</body>" + CRLF + "</html>", result);
 
+        // READ FIRST KEEP=FALSE (GET)
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/READ?READ_MODE=FIRST&KEEP=FALSE&FILENAME=" + filename);
+        assertEquals("<html><title>OK</title>" + CRLF
+                + "<body>login1;password1</body>" + CRLF + "</html>", result);
+
+        // READ (GET) : ERROR UNKNOWN READ_MODE
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/READ?READ_MODE=SECOND&FILENAME=" + filename);
+        assertEquals(
+                "<html><title>KO</title>"
+                        + CRLF
+                        + "<body>Error : READ_MODE value has to be FIRST, LAST or RANDOM !</body>"
+                        + CRLF + "</html>", result);
+
+        // READ (GET) : ERROR MISSING FILENAME
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/READ?READ_MODE=LAST");
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : FILENAME parameter was missing !</body>"
+                + CRLF + "</html>", result);
+
+        // READ (GET) : ERROR UNKNOWN FILENAME
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/READ?FILENAME=unexpected.txt");
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : unexpected.txt not loaded yet !</body>" + CRLF
+                + "</html>", result);
+
+        // READ (GET) : ERROR UNKNOWN KEEP
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/READ?KEEP=NO&FILENAME=" + filename);
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : KEEP value has to be TRUE or FALSE !</body>"
+                + CRLF + "</html>", result);
+
         // LENGTH (GET)
         result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
                 + "/sts/LENGTH?FILENAME=" + filename);
-        assertEquals("<html><title>OK</title>" + CRLF + "<body>2</body>" + CRLF
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>1</body>" + CRLF
                 + "</html>", result);
 
-        // ADD (POST)
+        // LENGTH (POST)
         List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
+        urlParameters.add(new BasicNameValuePair("FILENAME", filename));
+        result = sendHttpPost("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/LENGTH", urlParameters);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>1</body>" + CRLF
+                + "</html>", result);
+
+        // LENGTH (GET) ERROR FILE NOT FOUND
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/LENGTH?FILENAME=unknown.txt");
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : unknown.txt not loaded yet !</body>" + CRLF
+                + "</html>", result);
+
+        // LENGTH (GET) ERROR MISSING FILENAME
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/LENGTH");
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : FILENAME parameter was missing !</body>"
+                + CRLF + "</html>", result);
+
+        // ADD (POST)
+        urlParameters = new ArrayList<NameValuePair>();
         urlParameters.add(new BasicNameValuePair("ADD_MODE", "LAST"));
         urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
         urlParameters.add(new BasicNameValuePair("LINE", "login3;password3"));
@@ -153,10 +245,84 @@ public class TestHttpSimpleTableServer extends TestCase {
         assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
                 + "</html>", result);
 
+        // ADD (GET) : ERROR ADD SHOULD USE POST METHOD
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/ADD?LINE=login4;password4&FILENAME=" + filename);
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : unknown command !</body>" + CRLF + "</html>",
+                result);
+
+        // ADD (POST) : ERROR MISSING LINE
+        urlParameters = new ArrayList<NameValuePair>();
+        urlParameters.add(new BasicNameValuePair("ADD_MODE", "LAST"));
+        urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
+        result = sendHttpPost("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/ADD", urlParameters);
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : LINE parameter was missing !</body>" + CRLF
+                + "</html>", result);
+
+        // ADD (POST) : MISSING ADD_MODE
+        urlParameters = new ArrayList<NameValuePair>();
+        urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
+        urlParameters.add(new BasicNameValuePair("LINE", "login4;password4"));
+        result = sendHttpPost("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/ADD", urlParameters);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        // ADD (POST) : ERROR WRONG ADD MODE
+        urlParameters = new ArrayList<NameValuePair>();
+        urlParameters.add(new BasicNameValuePair("ADD_MODE", "RANDOM"));
+        urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
+        urlParameters.add(new BasicNameValuePair("LINE", "login3;password3"));
+        result = sendHttpPost("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/ADD", urlParameters);
+        assertEquals(
+                "<html><title>KO</title>"
+                        + CRLF
+                        + "<body>Error : ADD_MODE value has to be FIRST or LAST !</body>"
+                        + CRLF + "</html>", result);
+
+        // READ RANDOM KEEP=TRUE (GET)
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/READ?READ_MODE=RANDOM&FILENAME=" + filename);
+        assertTrue(result.startsWith("<html><title>OK</title>"));
+
         // SAVE (GET)
         result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
                 + "/sts/SAVE?FILENAME=" + filename);
         assertEquals("<html><title>OK</title>" + CRLF + "<body>3</body>" + CRLF
+                + "</html>", result);
+
+        // SAVE (GET) : ERROR MAX SIZE REACHED
+        result = sendHttpGet("http://localhost:"
+                + HTTP_SERVER_PORT
+                + "/sts/SAVE?FILENAME=aaaaaaaaaabbbbbbbbbbccccccccccddddddddddeeeeeeeeeeffffffffffgggggggggghhhhhhhhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkllllllllllmmmmmmmmmm.txt"
+                + filename);
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : Maximum size reached (128) !</body>" + CRLF
+                + "</html>", result);
+
+        // SAVE (GET) : ERROR ILLEGAL CHAR
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/SAVE?FILENAME=logins:passwords.csv");
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : Illegal character found !</body>" + CRLF
+                + "</html>", result);
+
+        // SAVE (GET) : ERROR ILLEGAL FILENAME .
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/SAVE?FILENAME=.");
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : Illegal character found !</body>" + CRLF
+                + "</html>", result);
+
+        // SAVE (GET) : ERROR ILLEGAL FILENAME ..
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/SAVE?FILENAME=..");
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : Illegal character found !</body>" + CRLF
                 + "</html>", result);
 
         // Delete the newly saved file test-login.csv
@@ -168,6 +334,20 @@ public class TestHttpSimpleTableServer extends TestCase {
                 + "/sts/RESET?FILENAME=" + filename);
         assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
                 + "</html>", result);
+
+        // RESET (GET) ERROR FILE NOT FOUND
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/RESET?FILENAME=unknown.txt");
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : unknown.txt not found !</body>" + CRLF
+                + "</html>", result);
+
+        // RESET (GET) ERROR MISSING FILENAME
+        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+                + "/sts/RESET");
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : FILENAME parameter was missing !</body>"
+                + CRLF + "</html>", result);
 
         // READ (GET) : ERROR LIST IS EMPTY
         result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT

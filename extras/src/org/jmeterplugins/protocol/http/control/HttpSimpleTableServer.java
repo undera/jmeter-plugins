@@ -306,19 +306,16 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable {
                 out.write(it.next());
                 out.write(lineSeparator);
             }
-        } catch (FileNotFoundException e1) {
+        } catch (IOException e) {
             return "<html><title>KO</title>" + lineSeparator + "<body>Error : "
-                    + e1.getMessage() + "</body>" + lineSeparator + "</html>";
-        } catch (IOException e2) {
-            return "<html><title>KO</title>" + lineSeparator + "<body>Error : "
-                    + e2.getMessage() + "</body>" + lineSeparator + "</html>";
+                    + e.getMessage() + "</body>" + lineSeparator + "</html>";
         } finally {
             if (null != out) {
                 try {
                     out.close();
-                } catch (IOException e3) {
+                } catch (IOException e) {
                     return "<html><title>KO</title>" + lineSeparator
-                            + "<body>Error : " + e3.getMessage() + "</body>"
+                            + "<body>Error : " + e.getMessage() + "</body>"
                             + lineSeparator + "</html>";
                 }
             }
@@ -350,9 +347,12 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable {
                     + "<body>Error : FILENAME parameter was missing !</body>"
                     + lineSeparator + "</html>";
         }
-        if (database.containsKey(filename)) {
-            database.get(filename).clear();
+        if (!database.containsKey(filename)) {
+            return "<html><title>KO</title>" + lineSeparator + "<body>Error : "
+                    + filename + " not found !</body>" + lineSeparator
+                    + "</html>";
         }
+        database.get(filename).clear();
         return "<html><title>OK</title>" + lineSeparator + "<body></body>"
                 + lineSeparator + "</html>";
     }

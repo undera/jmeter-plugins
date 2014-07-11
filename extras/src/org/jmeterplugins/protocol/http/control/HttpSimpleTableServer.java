@@ -306,16 +306,19 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable {
                 out.write(it.next());
                 out.write(lineSeparator);
             }
-        } catch (IOException e) {
+        } catch (FileNotFoundException e1) {
             return "<html><title>KO</title>" + lineSeparator + "<body>Error : "
-                    + e.getMessage() + "</body>" + lineSeparator + "</html>";
+                    + e1.getMessage() + "</body>" + lineSeparator + "</html>";
+        } catch (IOException e2) {
+            return "<html><title>KO</title>" + lineSeparator + "<body>Error : "
+                    + e2.getMessage() + "</body>" + lineSeparator + "</html>";
         } finally {
             if (null != out) {
                 try {
                     out.close();
-                } catch (IOException e) {
+                } catch (IOException e3) {
                     return "<html><title>KO</title>" + lineSeparator
-                            + "<body>Error : " + e.getMessage() + "</body>"
+                            + "<body>Error : " + e3.getMessage() + "</body>"
                             + lineSeparator + "</html>";
                 }
             }

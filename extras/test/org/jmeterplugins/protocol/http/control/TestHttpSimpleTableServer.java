@@ -335,13 +335,6 @@ public class TestHttpSimpleTableServer extends TestCase {
         assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
                 + "</html>", result);
 
-        // RESET (GET) ERROR FILE NOT FOUND
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
-                + "/sts/RESET?FILENAME=unknown.txt");
-        assertEquals("<html><title>KO</title>" + CRLF
-                + "<body>Error : unknown.txt not found !</body>" + CRLF
-                + "</html>", result);
-
         // RESET (GET) ERROR MISSING FILENAME
         result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
                 + "/sts/RESET");

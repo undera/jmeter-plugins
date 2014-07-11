@@ -347,12 +347,9 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable {
                     + "<body>Error : FILENAME parameter was missing !</body>"
                     + lineSeparator + "</html>";
         }
-        if (!database.containsKey(filename)) {
-            return "<html><title>KO</title>" + lineSeparator + "<body>Error : "
-                    + filename + " not found !</body>" + lineSeparator
-                    + "</html>";
+        if (database.containsKey(filename)) {
+            database.get(filename).clear();
         }
-        database.get(filename).clear();
         return "<html><title>OK</title>" + lineSeparator + "<body></body>"
                 + lineSeparator + "</html>";
     }

@@ -96,5 +96,8 @@ public class HttpSimpleTableControlGuiTest {
 
         ActionEvent actionStop = new ActionEvent(new JButton(), 2, "stop");
         instance.actionPerformed(actionStop);
+
+        ActionEvent actionPause = new ActionEvent(new JButton(), 2, "pause");
+        instance.actionPerformed(actionPause);
     }
 }

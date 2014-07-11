@@ -45,19 +45,19 @@ import org.apache.http.util.EntityUtils;
  * @author Felix Henry
  * @author Vincent Daburon
  */
-public class TestHttpSimpleTableServer extends TestCase {
+public class HttpSimpleTableServerTest extends TestCase {
     private final String USER_AGENT = "Mozilla/5.0";
     private static final int HTTP_SERVER_PORT = 9191;
     private static final String DATA_DIR = System.getProperty("user.dir");
     private static final String CRLF = HttpSimpleTableServer.lineSeparator;
 
-    public TestHttpSimpleTableServer(String arg0) {
+    public HttpSimpleTableServerTest(String arg0) {
         super(arg0);
     }
 
     public static Test suite() {
         TestSetup setup = new TestSetup(new TestSuite(
-                TestHttpSimpleTableServer.class)) {
+                HttpSimpleTableServerTest.class)) {
             private HttpSimpleTableServer httpServer;
 
             @Override

@@ -1,11 +1,5 @@
 package kg.apc.jmeter.reporters;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
-
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -18,6 +12,12 @@ import org.apache.log.Logger;
 import org.loadosophia.jmeter.LoadosophiaAPIClient;
 import org.loadosophia.jmeter.LoadosophiaUploadResults;
 import org.loadosophia.jmeter.StatusNotifierCallback;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class LoadosophiaUploader extends ResultCollector implements StatusNotifierCallback, Runnable, TestListener {
 
@@ -193,7 +193,16 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     public void sampleOccurred(SampleEvent event) {
         super.sampleOccurred(event);
         if (isOnlineInitiated) {
-            processingQueue.add(event);
+            try {
+                if (!processingQueue.offer(event, 1, TimeUnit.SECONDS)) {
+                    log.warn("Failed first dequeue insert try, retrying");
+                    if (!processingQueue.offer(event, 1, TimeUnit.SECONDS)) {
+                        log.error("Failed second try to inser into deque, dropped sample");
+                    }
+                }
+            } catch (InterruptedException ex) {
+                log.info("Interrupted while putting sample event into deque", ex);
+            }
         }
     }
 
@@ -214,7 +223,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                     }
                 }
             } catch (InterruptedException ex) {
-                log.info("Interrupted while taking sample event from deque");
+                log.info("Interrupted while taking sample event from deque", ex);
                 break;
             }
         }

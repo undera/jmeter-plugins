@@ -1,15 +1,16 @@
 package kg.apc.jmeter.config;
 
-import java.io.File;
-import java.io.IOException;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jorphan.util.JMeterStopTestNowException;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import org.junit.*;
 
+import java.io.File;
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 /**
- *
  * @author direvius
  */
 public class LockFileTest {
@@ -28,9 +29,11 @@ public class LockFileTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         testInstance = new LockFile();
-        testInstance.setFilename("test.lock");
+        File tmp = File.createTempFile("test", "test");
+        tmp.deleteOnExit();
+        testInstance.setFilename(tmp.getAbsolutePath());
         testInstance.setFilemask("testmask*.lock");
     }
 

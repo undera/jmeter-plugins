@@ -2,7 +2,8 @@ package kg.apc.jmeter.config;
 
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jorphan.util.JMeterStopTestNowException;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,39 +17,29 @@ import static org.junit.Assert.fail;
 public class LockFileTest {
 
     private LockFile testInstance;
+    private File tmpFile;
 
-    public LockFileTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
 
     @Before
     public void setUp() throws IOException {
         testInstance = new LockFile();
-        File tmp = File.createTempFile("test", "test");
-        tmp.deleteOnExit();
-        testInstance.setFilename(tmp.getAbsolutePath());
+        tmpFile = getTmpFile();
+        testInstance.setFilename(tmpFile.getAbsolutePath());
         testInstance.setFilemask("testmask*.lock");
     }
 
-    @After
-    public void tearDown() {
+    private File getTmpFile() throws IOException {
+        File tmp = File.createTempFile("test", "test");
+        tmp.delete();
+        return tmp;
     }
 
-    /**
-     * Test of testStarted method, of class LockFile. Happy Scenario
-     */
+
     @Test
     public void testTestStartedHappy() {
         System.out.println("testStarted Happy");
         testInstance.testStarted();
-        File f = new File("test.lock");
+        File f =tmpFile;
         assert (f.exists());
         f.delete();
     }
@@ -60,7 +51,7 @@ public class LockFileTest {
     public void testTestStartedUnhappy() {
         System.out.println("testStarted Unhappy");
         testInstance.testStarted();
-        File f = new File("test.lock");
+        File f = tmpFile;
         try {
             f.createNewFile();
         } catch (IOException ex) {
@@ -105,7 +96,7 @@ public class LockFileTest {
     @Test
     public void testTestEndedHappy() {
         System.out.println("testEnded Happy");
-        File f = new File("test.lock");
+        File f = tmpFile;
         try {
             f.createNewFile();
         } catch (IOException ex) {
@@ -121,7 +112,7 @@ public class LockFileTest {
     @Test
     public void testTestEndedUnhappy() {
         System.out.println("testEnded Unhappy");
-        File f = new File("test.lock");
+        File f = tmpFile;
         testInstance.testEnded();
         assert !f.exists();
     }

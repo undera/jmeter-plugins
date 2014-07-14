@@ -26,9 +26,9 @@ public class LockFile extends ConfigTestElement
     }
 
     public void testStarted(String string) {
-        log.debug("[LockFile plugin] Test started captured");
+        log.debug("Test started captured");
         if (getFilename() != null && getFilename().length() > 0) {
-            log.info("[LockFile plugin] Checking lockfile at " + getFilename());
+            log.info("Checking lockfile at " + getFilename());
             File file = new File(getFilename());
             String path;
             try {
@@ -38,29 +38,29 @@ public class LockFile extends ConfigTestElement
                     path = new File(".").getCanonicalPath();
                 }
             } catch (IOException ex) {
-                log.error("[LockFile plugin] Failed to get path");
-                throw new JMeterStopTestNowException("[LockFile plugin] Failed to get path");
+                log.error("Failed to get path");
+                throw new JMeterStopTestNowException("Failed to get path");
             }
-            log.info("[LockFile plugin] and by wildcard at " + path + getFilemask());
+            log.info("and by wildcard at " + path + getFilemask());
             if (file.exists()) {
-                log.error("[LockFile plugin] Lock file found: " + getFilename());
-                throw new JMeterStopTestNowException("[LockFile plugin] Lock file found: " + getFilename());
+                log.error("Lock file found: " + getFilename());
+                throw new JMeterStopTestNowException("Lock file found: " + getFilename());
             } else if (getFilemask() != null && getFilemask().length() > 0
                     && FileSystem.checkFileExistByPattern(path, getFilemask())) {
-                log.error("[LockFile plugin] Lock file found by pattern " + getFilemask());
-                throw new JMeterStopTestNowException("[LockFile plugin] Lock file found by pattern " + getFilemask());
+                log.error("Lock file found by pattern " + getFilemask());
+                throw new JMeterStopTestNowException("Lock file found by pattern " + getFilemask());
             } else {
                 try {
-                    log.info("[LockFile plugin] Create lockfile at " + getFilename());
+                    log.info("Create lockfile at " + getFilename());
                     file.createNewFile();
                 } catch (IOException e) {
-                    log.error("[LockFile plugin] Could not create lock file: " + e.getLocalizedMessage());
-                    throw new JMeterStopTestNowException("[LockFile plugin] Could not create lock file: " + e.getLocalizedMessage());
+                    log.error("Could not create lock file: " + e.getLocalizedMessage());
+                    throw new JMeterStopTestNowException("Could not create lock file: " + e.getLocalizedMessage());
                 }
             }
         } else {
-            log.debug("[Lockfile plugin] Filename: " + getFilename());
-            log.warn("[Lockfile plugin] No lockfile set. Ignore.");
+            log.debug("Filename: " + getFilename());
+            log.warn("No lockfile set. Ignore.");
         }
     }
 
@@ -69,11 +69,11 @@ public class LockFile extends ConfigTestElement
     }
 
     public void testEnded(String string) {
-        log.debug("[LockFile plugin] Test ended captured");
+        log.debug("Test ended captured");
         if (getFilename() != null && getFilename().length() > 0) {
             File file = new File(getFilename());
             if (file.exists()) {
-                log.info("[LockFile plugin] Remove lockfile from " + getFilename());
+                log.info("Remove lockfile from " + getFilename());
                 file.delete();
             }
         }
@@ -87,7 +87,7 @@ public class LockFile extends ConfigTestElement
      * @return the filename
      */
     public String getFilename() {
-        log.debug("[LockFile plugin] Return filename: " + getPropertyAsString(FILENAME));
+        log.debug("Return filename: " + getPropertyAsString(FILENAME));
         return getPropertyAsString(FILENAME);
     }
 
@@ -95,7 +95,7 @@ public class LockFile extends ConfigTestElement
      * @param filename the filename to set
      */
     public void setFilename(String filename) {
-        log.debug("[LockFile plugin] Set filename to: " + filename);
+        log.debug("Set filename to: " + filename);
         setProperty(FILENAME, filename);
     }
 
@@ -103,7 +103,7 @@ public class LockFile extends ConfigTestElement
      * @return the filemask
      */
     public String getFilemask() {
-        log.debug("[LockFile plugin] Return filemask: " + getPropertyAsString(FILEMASK));
+        log.debug("Return filemask: " + getPropertyAsString(FILEMASK));
         return getPropertyAsString(FILEMASK);
     }
 
@@ -111,7 +111,7 @@ public class LockFile extends ConfigTestElement
      * @param filename the filename to set
      */
     public void setFilemask(String filemask) {
-        log.debug("[LockFile plugin] Set filemask to: " + filemask);
+        log.debug("Set filemask to: " + filemask);
         setProperty(FILEMASK, filemask);
     }
 }

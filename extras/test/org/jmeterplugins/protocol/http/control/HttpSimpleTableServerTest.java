@@ -20,19 +20,9 @@ package org.jmeterplugins.protocol.http.control;
 
 import junit.framework.TestCase;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -40,8 +30,7 @@ import java.util.Map;
  * @author Vincent Daburon
  */
 public class HttpSimpleTableServerTest extends TestCase {
-    private final String USER_AGENT = "Mozilla/5.0";
-    private static final int HTTP_SERVER_PORT = -1;
+
     private static final String DATA_DIR = System.getProperty("user.dir");
     private static final String CRLF = HttpSimpleTableServer.lineSeparator;
 
@@ -82,21 +71,18 @@ public class HttpSimpleTableServerTest extends TestCase {
                 result);
 
         // INITFILE (GET)
-        result = sendHttpGet(obj, ""
-                + "/sts/INITFILE?FILENAME=" + filename);
+        result = sendHttpGet(obj, "/sts/INITFILE", this.createParm("FILENAME", filename));
         assertEquals("<html><title>OK</title>" + CRLF + "<body>2</body>" + CRLF
                 + "</html>", result);
 
         // INITFILE (GET) : ERROR FILE NOT FOUND
-        result = sendHttpGet(obj, ""
-                + "/sts/INITFILE?FILENAME=unknown.txt");
+        result = sendHttpGet(obj, "/sts/INITFILE", this.createParm("FILENAME", "unknown.txt"));
         assertEquals("<html><title>KO</title>" + CRLF
                         + "<body>Error : file not found !</body>" + CRLF + "</html>",
                 result);
 
         // INITFILE (GET) : ERROR MISSING FILENAME
-        result = sendHttpGet(obj, ""
-                + "/sts/INITFILE");
+        result = sendHttpGet(obj, "/sts/INITFILE", new HashMap<String, String>());
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : FILENAME parameter was missing !</body>"
                 + CRLF + "</html>", result);
@@ -106,20 +92,24 @@ public class HttpSimpleTableServerTest extends TestCase {
         dataset.delete();
 
         // READ LAST KEEP=TRUE (GET)
-        result = sendHttpGet(obj, ""
-                + "/sts/READ?READ_MODE=LAST&FILENAME=" + filename);
+        Map<String, String> map1 = this.createParm("FILENAME", filename);
+        map1.put("READ_MODE", "LAST");
+        result = sendHttpGet(obj, "/sts/READ", map1);
         assertEquals("<html><title>OK</title>" + CRLF
                 + "<body>login2;password2</body>" + CRLF + "</html>", result);
 
         // READ FIRST KEEP=FALSE (GET)
-        result = sendHttpGet(obj, ""
-                + "/sts/READ?READ_MODE=FIRST&KEEP=FALSE&FILENAME=" + filename);
+        Map<String, String> map2 = this.createParm("FILENAME", filename);
+        map2.put("READ_MODE", "FIRST");
+        map2.put("KEEP", "FALSE");
+        result = sendHttpGet(obj, "/sts/READ", map2);
         assertEquals("<html><title>OK</title>" + CRLF
                 + "<body>login1;password1</body>" + CRLF + "</html>", result);
 
         // READ (GET) : ERROR UNKNOWN READ_MODE
-        result = sendHttpGet(obj, ""
-                + "/sts/READ?READ_MODE=SECOND&FILENAME=" + filename);
+        Map<String, String> map3 = this.createParm("FILENAME", filename);
+        map3.put("READ_MODE", "SECOND");
+        result = sendHttpGet(obj, "/sts/READ", map3);
         assertEquals(
                 "<html><title>KO</title>"
                         + CRLF
@@ -127,61 +117,55 @@ public class HttpSimpleTableServerTest extends TestCase {
                         + CRLF + "</html>", result);
 
         // READ (GET) : ERROR MISSING FILENAME
-        result = sendHttpGet(obj, ""
-                + "/sts/READ?READ_MODE=LAST");
+        Map<String, String> map4 = this.createParm("A", filename);
+        map4.put("READ_MODE", "LAST");
+        result = sendHttpGet(obj, "/sts/READ", map4);
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : FILENAME parameter was missing !</body>"
                 + CRLF + "</html>", result);
 
         // READ (GET) : ERROR UNKNOWN FILENAME
-        result = sendHttpGet(obj, ""
-                + "/sts/READ?FILENAME=unexpected.txt");
+        result = sendHttpGet(obj, "/sts/READ", this.createParm("FILENAME", "unexpected.txt"));
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : unexpected.txt not loaded yet !</body>" + CRLF
                 + "</html>", result);
 
         // READ (GET) : ERROR UNKNOWN KEEP
-        result = sendHttpGet(obj, ""
-                + "/sts/READ?KEEP=NO&FILENAME=" + filename);
+        Map<String, String> map5 = this.createParm("FILENAME", filename);
+        map5.put("KEEP", "NO");
+        result = sendHttpGet(obj, "/sts/READ", map5);
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : KEEP value has to be TRUE or FALSE !</body>"
                 + CRLF + "</html>", result);
 
         // LENGTH (GET)
-        result = sendHttpGet(obj, ""
-                + "/sts/LENGTH?FILENAME=" + filename);
+        result = sendHttpGet(obj, "/sts/LENGTH", this.createParm("FILENAME", filename));
         assertEquals("<html><title>OK</title>" + CRLF + "<body>1</body>" + CRLF
                 + "</html>", result);
 
         // LENGTH (POST)
-        List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("FILENAME", filename));
-        result = sendHttpPost(""
-                + "/sts/LENGTH", urlParameters);
+        result = sendHttpPost(obj, "/sts/LENGTH", this.createParm("FILENAME", filename));
         assertEquals("<html><title>OK</title>" + CRLF + "<body>1</body>" + CRLF
                 + "</html>", result);
 
         // LENGTH (GET) ERROR FILE NOT FOUND
-        result = sendHttpGet(obj, ""
-                + "/sts/LENGTH?FILENAME=unknown.txt");
+        result = sendHttpGet(obj, "/sts/LENGTH", this.createParm("FILENAME", "unknown.txt"));
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : unknown.txt not loaded yet !</body>" + CRLF
                 + "</html>", result);
 
         // LENGTH (GET) ERROR MISSING FILENAME
-        result = sendHttpGet(obj, ""
-                + "/sts/LENGTH");
+        result = sendHttpGet(obj, "/sts/LENGTH", this.createParm("A", "unknown.txt"));
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : FILENAME parameter was missing !</body>"
                 + CRLF + "</html>", result);
 
         // ADD (POST)
-        urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("ADD_MODE", "LAST"));
-        urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
-        urlParameters.add(new BasicNameValuePair("LINE", "login3;password3"));
-        result = sendHttpPost(""
-                + "/sts/ADD", urlParameters);
+        Map<String, String> urlParameters = this.createParm("FILENAME", "unknown.txt");
+        urlParameters.put("ADD_MODE", "LAST");
+        urlParameters.put("FILENAME", "test-login.csv");
+        urlParameters.put("LINE", "login3;password3");
+        result = sendHttpPost(obj, "/sts/ADD", urlParameters);
         assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
                 + "</html>", result);
 
@@ -193,31 +177,29 @@ public class HttpSimpleTableServerTest extends TestCase {
                 result);
 
         // ADD (POST) : ERROR MISSING LINE
-        urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("ADD_MODE", "LAST"));
-        urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
-        result = sendHttpPost(""
-                + "/sts/ADD", urlParameters);
+        Map<String, String> urlParameters2 = this.createParm("FILENAME", "unknown.txt");
+        urlParameters2.put("ADD_MODE", "LAST");
+        urlParameters2.put("FILENAME", "test-login.csv");
+        result = sendHttpPost(obj, "/sts/ADD", urlParameters2);
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : LINE parameter was missing !</body>" + CRLF
                 + "</html>", result);
 
         // ADD (POST) : MISSING ADD_MODE
-        urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
-        urlParameters.add(new BasicNameValuePair("LINE", "login4;password4"));
-        result = sendHttpPost(""
-                + "/sts/ADD", urlParameters);
+        Map<String, String> urlParameters3 = this.createParm("FILENAME", "unknown.txt");
+        urlParameters3.put("FILENAME", "test-login.csv");
+        urlParameters3.put("LINE", "login3;password3");
+        result = sendHttpPost(obj, "/sts/ADD", urlParameters3);
         assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
                 + "</html>", result);
 
         // ADD (POST) : ERROR WRONG ADD MODE
-        urlParameters = new ArrayList<NameValuePair>();
-        urlParameters.add(new BasicNameValuePair("ADD_MODE", "RANDOM"));
-        urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
-        urlParameters.add(new BasicNameValuePair("LINE", "login3;password3"));
-        result = sendHttpPost(""
-                + "/sts/ADD", urlParameters);
+        Map<String, String> urlParameters4 = this.createParm("FILENAME", "unknown.txt");
+        urlParameters4.put("ADD_MODE", "RANDOM");
+        urlParameters4.put("FILENAME", "test-login.csv");
+        urlParameters4.put("LINE", "login3;password3");
+
+        result = sendHttpPost(obj, "/sts/ADD", urlParameters4);
         assertEquals(
                 "<html><title>KO</title>"
                         + CRLF
@@ -225,8 +207,7 @@ public class HttpSimpleTableServerTest extends TestCase {
                         + CRLF + "</html>", result);
 
         // READ RANDOM KEEP=TRUE (GET)
-        result = sendHttpGet(obj, ""
-                + "/sts/READ?READ_MODE=RANDOM&FILENAME=" + filename);
+        result = sendHttpGet(obj, "/sts/READ?READ_MODE=RANDOM&FILENAME=" + filename);
         assertTrue(result.startsWith("<html><title>OK</title>"));
 
         // SAVE (GET)
@@ -236,9 +217,7 @@ public class HttpSimpleTableServerTest extends TestCase {
                 + "</html>", result);
 
         // SAVE (GET) : ERROR MAX SIZE REACHED
-        result = sendHttpGet(obj, "http://localhost:"
-                + HTTP_SERVER_PORT
-                + "/sts/SAVE?FILENAME=aaaaaaaaaabbbbbbbbbbccccccccccddddddddddeeeeeeeeeeffffffffffgggggggggghhhhhhhhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkllllllllllmmmmmmmmmm.txt"
+        result = sendHttpGet(obj, "/sts/SAVE?FILENAME=aaaaaaaaaabbbbbbbbbbccccccccccddddddddddeeeeeeeeeeffffffffffgggggggggghhhhhhhhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkllllllllllmmmmmmmmmm.txt"
                 + filename);
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : Maximum size reached (128) !</body>" + CRLF
@@ -296,9 +275,35 @@ public class HttpSimpleTableServerTest extends TestCase {
                 + filename + " = 0<br />" + CRLF + "</body></html>", result);
     }
 
-    private String sendHttpGet(HttpSimpleTableServer obj, String url) throws Exception {
 
-        NanoHTTPD.IHTTPSession sess = new SessionEmulator(url);
+    private Map<String, String> createParm(String filename, String filename1) {
+        Map<String, String> res = new HashMap<String, String>();
+        res.put(filename, filename1);
+        return res;
+    }
+
+    private String sendHttpGet(HttpSimpleTableServer obj, String s, Map<String, String> params) throws IOException {
+        SessionEmulator sess = new SessionEmulator(s);
+
+        if (params != null) {
+            sess.setParms(params);
+        }
+        NanoHTTPD.Response resp = obj.serve(sess);
+        InputStream inputStream = resp.getData();
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(inputStream, writer);
+        return writer.toString();
+    }
+
+    private String sendHttpGet(HttpSimpleTableServer obj, String url) throws Exception {
+        return sendHttpGet(obj, url, null);
+    }
+
+    private String sendHttpPost(HttpSimpleTableServer obj, String url, Map<String, String> parms)
+            throws Exception {
+        SessionEmulator sess = new SessionEmulator(url);
+        sess.setMethod(NanoHTTPD.Method.POST);
+        sess.setBody((parms));
         NanoHTTPD.Response resp = obj.serve(sess);
         InputStream inputStream = resp.getData();
         StringWriter writer = new StringWriter();
@@ -307,23 +312,11 @@ public class HttpSimpleTableServerTest extends TestCase {
         return resp_entity;
     }
 
-    private String sendHttpPost(String url, List<NameValuePair> parms)
-            throws Exception {
-        HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost(url);
-
-        // add header
-        post.setHeader("User-Agent", USER_AGENT);
-
-        post.setEntity(new UrlEncodedFormEntity(parms, "UTF-8"));
-        HttpResponse resp = client.execute(post);
-        HttpEntity resp_entity = resp.getEntity();
-        String result = EntityUtils.toString(resp_entity);
-        return result;
-    }
-
     private class SessionEmulator implements NanoHTTPD.IHTTPSession {
         private final String url;
+        private Map<String, String> parms;
+        private NanoHTTPD.Method method;
+        private Map<String, String> body;
 
         public SessionEmulator(String url) {
             this.url = url;
@@ -336,7 +329,7 @@ public class HttpSimpleTableServerTest extends TestCase {
 
         @Override
         public Map<String, String> getParms() {
-            return null;
+            return this.parms;
         }
 
         @Override
@@ -356,7 +349,7 @@ public class HttpSimpleTableServerTest extends TestCase {
 
         @Override
         public NanoHTTPD.Method getMethod() {
-            return null;
+            return this.method;
         }
 
         @Override
@@ -371,7 +364,20 @@ public class HttpSimpleTableServerTest extends TestCase {
 
         @Override
         public void parseBody(Map<String, String> files) throws IOException, NanoHTTPD.ResponseException {
+            files.putAll(this.body);
+            parms = body;
+        }
 
+        public void setParms(Map<String, String> parms) {
+            this.parms = parms;
+        }
+
+        public void setMethod(NanoHTTPD.Method method) {
+            this.method = method;
+        }
+
+        public void setBody(Map<String, String> body) {
+            this.body = body;
         }
     }
 }

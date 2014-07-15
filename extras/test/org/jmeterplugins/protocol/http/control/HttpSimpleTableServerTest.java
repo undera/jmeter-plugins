@@ -18,27 +18,22 @@
 
 package org.jmeterplugins.protocol.http.control;
 
-import junit.extensions.TestSetup;
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Felix Henry
@@ -50,62 +45,6 @@ public class HttpSimpleTableServerTest extends TestCase {
     private static final String DATA_DIR = System.getProperty("user.dir");
     private static final String CRLF = HttpSimpleTableServer.lineSeparator;
 
-    public HttpSimpleTableServerTest(String arg0) {
-        super(arg0);
-    }
-
-    public static Test suite() {
-        TestSetup setup = new TestSetup(new TestSuite(
-                HttpSimpleTableServerTest.class)) {
-            private HttpSimpleTableServer httpServer;
-
-            @Override
-            protected void setUp() throws Exception {
-                httpServer = startHttpSimpleTableServer(HTTP_SERVER_PORT);
-            }
-
-            @Override
-            protected void tearDown() throws Exception {
-                // Shutdown the http server
-                httpServer.stopServer();
-                httpServer = null;
-            }
-        };
-        return setup;
-    }
-
-    /**
-     * Utility method to handle starting the HttpSimpleTableServer for testing.
-     */
-    public static HttpSimpleTableServer startHttpSimpleTableServer(int port)
-            throws Exception {
-        HttpSimpleTableServer server = null;
-        server = new HttpSimpleTableServerEmul(port, false, DATA_DIR);
-        Exception except = null;
-        try {
-            server.start();
-        } catch (IOException e) {
-            except = e;
-        }
-        for (int i = 0; i < 10; i++) {// Wait up to 1 second
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException ignored) {
-            }
-            if (except != null) {// Already failed
-                throw new Exception("Could not start sts on port: " + port
-                        + ". " + except);
-            }
-            if (server.isAlive()) {
-                break; // succeeded
-            }
-        }
-
-        if (!server.isAlive()) {
-            throw new Exception("Could not start sts on port: " + port);
-        }
-        return server;
-    }
 
     public void testGetRequest() throws Exception {
         // create a file to test the STS
@@ -120,41 +59,43 @@ public class HttpSimpleTableServerTest extends TestCase {
             out.close();
         }
 
+        HttpSimpleTableServer obj = new HttpSimpleTableServerEmul(-1, true, DATA_DIR);
+
         // HELP (GET)
-        String result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        String result = sendHttpGet(obj, ""
                 + "/sts");
         assertTrue(0 < result.length()
                 && result
                 .startsWith("<html><head><title>URL for the dataset</title><head>"));
 
         // HELP (GET)
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT + "/sts/");
+        result = sendHttpGet(obj, "" + "/sts/");
         assertTrue(0 < result.length()
                 && result
                 .startsWith("<html><head><title>URL for the dataset</title><head>"));
 
         // STATUS (GET) : ERROR EMPTY DATABASE
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/STATUS");
         assertEquals("<html><title>KO</title>" + CRLF + "<body>"
                         + "Error : Database was empty !</body>" + CRLF + "</html>",
                 result);
 
         // INITFILE (GET)
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/INITFILE?FILENAME=" + filename);
         assertEquals("<html><title>OK</title>" + CRLF + "<body>2</body>" + CRLF
                 + "</html>", result);
 
         // INITFILE (GET) : ERROR FILE NOT FOUND
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/INITFILE?FILENAME=unknown.txt");
         assertEquals("<html><title>KO</title>" + CRLF
                         + "<body>Error : file not found !</body>" + CRLF + "</html>",
                 result);
 
         // INITFILE (GET) : ERROR MISSING FILENAME
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/INITFILE");
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : FILENAME parameter was missing !</body>"
@@ -165,19 +106,19 @@ public class HttpSimpleTableServerTest extends TestCase {
         dataset.delete();
 
         // READ LAST KEEP=TRUE (GET)
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/READ?READ_MODE=LAST&FILENAME=" + filename);
         assertEquals("<html><title>OK</title>" + CRLF
                 + "<body>login2;password2</body>" + CRLF + "</html>", result);
 
         // READ FIRST KEEP=FALSE (GET)
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/READ?READ_MODE=FIRST&KEEP=FALSE&FILENAME=" + filename);
         assertEquals("<html><title>OK</title>" + CRLF
                 + "<body>login1;password1</body>" + CRLF + "</html>", result);
 
         // READ (GET) : ERROR UNKNOWN READ_MODE
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/READ?READ_MODE=SECOND&FILENAME=" + filename);
         assertEquals(
                 "<html><title>KO</title>"
@@ -186,28 +127,28 @@ public class HttpSimpleTableServerTest extends TestCase {
                         + CRLF + "</html>", result);
 
         // READ (GET) : ERROR MISSING FILENAME
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/READ?READ_MODE=LAST");
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : FILENAME parameter was missing !</body>"
                 + CRLF + "</html>", result);
 
         // READ (GET) : ERROR UNKNOWN FILENAME
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/READ?FILENAME=unexpected.txt");
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : unexpected.txt not loaded yet !</body>" + CRLF
                 + "</html>", result);
 
         // READ (GET) : ERROR UNKNOWN KEEP
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/READ?KEEP=NO&FILENAME=" + filename);
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : KEEP value has to be TRUE or FALSE !</body>"
                 + CRLF + "</html>", result);
 
         // LENGTH (GET)
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/LENGTH?FILENAME=" + filename);
         assertEquals("<html><title>OK</title>" + CRLF + "<body>1</body>" + CRLF
                 + "</html>", result);
@@ -215,20 +156,20 @@ public class HttpSimpleTableServerTest extends TestCase {
         // LENGTH (POST)
         List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
         urlParameters.add(new BasicNameValuePair("FILENAME", filename));
-        result = sendHttpPost("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpPost(""
                 + "/sts/LENGTH", urlParameters);
         assertEquals("<html><title>OK</title>" + CRLF + "<body>1</body>" + CRLF
                 + "</html>", result);
 
         // LENGTH (GET) ERROR FILE NOT FOUND
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/LENGTH?FILENAME=unknown.txt");
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : unknown.txt not loaded yet !</body>" + CRLF
                 + "</html>", result);
 
         // LENGTH (GET) ERROR MISSING FILENAME
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/LENGTH");
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : FILENAME parameter was missing !</body>"
@@ -239,13 +180,13 @@ public class HttpSimpleTableServerTest extends TestCase {
         urlParameters.add(new BasicNameValuePair("ADD_MODE", "LAST"));
         urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
         urlParameters.add(new BasicNameValuePair("LINE", "login3;password3"));
-        result = sendHttpPost("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpPost(""
                 + "/sts/ADD", urlParameters);
         assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
                 + "</html>", result);
 
         // ADD (GET) : ERROR ADD SHOULD USE POST METHOD
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/ADD?LINE=login4;password4&FILENAME=" + filename);
         assertEquals("<html><title>KO</title>" + CRLF
                         + "<body>Error : unknown command !</body>" + CRLF + "</html>",
@@ -255,7 +196,7 @@ public class HttpSimpleTableServerTest extends TestCase {
         urlParameters = new ArrayList<NameValuePair>();
         urlParameters.add(new BasicNameValuePair("ADD_MODE", "LAST"));
         urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
-        result = sendHttpPost("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpPost(""
                 + "/sts/ADD", urlParameters);
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : LINE parameter was missing !</body>" + CRLF
@@ -265,7 +206,7 @@ public class HttpSimpleTableServerTest extends TestCase {
         urlParameters = new ArrayList<NameValuePair>();
         urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
         urlParameters.add(new BasicNameValuePair("LINE", "login4;password4"));
-        result = sendHttpPost("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpPost(""
                 + "/sts/ADD", urlParameters);
         assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
                 + "</html>", result);
@@ -275,7 +216,7 @@ public class HttpSimpleTableServerTest extends TestCase {
         urlParameters.add(new BasicNameValuePair("ADD_MODE", "RANDOM"));
         urlParameters.add(new BasicNameValuePair("FILENAME", "test-login.csv"));
         urlParameters.add(new BasicNameValuePair("LINE", "login3;password3"));
-        result = sendHttpPost("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpPost(""
                 + "/sts/ADD", urlParameters);
         assertEquals(
                 "<html><title>KO</title>"
@@ -284,18 +225,18 @@ public class HttpSimpleTableServerTest extends TestCase {
                         + CRLF + "</html>", result);
 
         // READ RANDOM KEEP=TRUE (GET)
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/READ?READ_MODE=RANDOM&FILENAME=" + filename);
         assertTrue(result.startsWith("<html><title>OK</title>"));
 
         // SAVE (GET)
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/SAVE?FILENAME=" + filename);
         assertEquals("<html><title>OK</title>" + CRLF + "<body>3</body>" + CRLF
                 + "</html>", result);
 
         // SAVE (GET) : ERROR MAX SIZE REACHED
-        result = sendHttpGet("http://localhost:"
+        result = sendHttpGet(obj, "http://localhost:"
                 + HTTP_SERVER_PORT
                 + "/sts/SAVE?FILENAME=aaaaaaaaaabbbbbbbbbbccccccccccddddddddddeeeeeeeeeeffffffffffgggggggggghhhhhhhhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkllllllllllmmmmmmmmmm.txt"
                 + filename);
@@ -304,21 +245,21 @@ public class HttpSimpleTableServerTest extends TestCase {
                 + "</html>", result);
 
         // SAVE (GET) : ERROR ILLEGAL CHAR
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/SAVE?FILENAME=logins:passwords.csv");
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : Illegal character found !</body>" + CRLF
                 + "</html>", result);
 
         // SAVE (GET) : ERROR ILLEGAL FILENAME .
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/SAVE?FILENAME=.");
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : Illegal character found !</body>" + CRLF
                 + "</html>", result);
 
         // SAVE (GET) : ERROR ILLEGAL FILENAME ..
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/SAVE?FILENAME=..");
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : Illegal character found !</body>" + CRLF
@@ -329,43 +270,41 @@ public class HttpSimpleTableServerTest extends TestCase {
         dataset.delete();
 
         // RESET (GET)
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/RESET?FILENAME=" + filename);
         assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
                 + "</html>", result);
 
         // RESET (GET) ERROR MISSING FILENAME
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/RESET");
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : FILENAME parameter was missing !</body>"
                 + CRLF + "</html>", result);
 
         // READ (GET) : ERROR LIST IS EMPTY
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/READ?FILENAME=" + filename);
         assertEquals("<html><title>KO</title>" + CRLF
                         + "<body>Error : No more line !</body>" + CRLF + "</html>",
                 result);
 
         // STATUS (GET)
-        result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
+        result = sendHttpGet(obj, ""
                 + "/sts/STATUS");
         assertEquals("<html><title>OK</title>" + CRLF + "<body>" + CRLF
                 + filename + " = 0<br />" + CRLF + "</body></html>", result);
     }
 
-    private String sendHttpGet(String url) throws Exception {
-        HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet(url);
+    private String sendHttpGet(HttpSimpleTableServer obj, String url) throws Exception {
 
-        // add request header
-        request.addHeader("User-Agent", USER_AGENT);
-
-        HttpResponse resp = client.execute(request);
-        HttpEntity resp_entity = resp.getEntity();
-        String result = EntityUtils.toString(resp_entity);
-        return result;
+        NanoHTTPD.IHTTPSession sess = new SessionEmulator(url);
+        NanoHTTPD.Response resp = obj.serve(sess);
+        InputStream inputStream = resp.getData();
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(inputStream, writer);
+        String resp_entity = writer.toString();
+        return resp_entity;
     }
 
     private String sendHttpPost(String url, List<NameValuePair> parms)
@@ -383,4 +322,56 @@ public class HttpSimpleTableServerTest extends TestCase {
         return result;
     }
 
+    private class SessionEmulator implements NanoHTTPD.IHTTPSession {
+        private final String url;
+
+        public SessionEmulator(String url) {
+            this.url = url;
+        }
+
+        @Override
+        public void execute() throws IOException {
+
+        }
+
+        @Override
+        public Map<String, String> getParms() {
+            return null;
+        }
+
+        @Override
+        public Map<String, String> getHeaders() {
+            return null;
+        }
+
+        @Override
+        public String getUri() {
+            return this.url;
+        }
+
+        @Override
+        public String getQueryParameterString() {
+            return null;
+        }
+
+        @Override
+        public NanoHTTPD.Method getMethod() {
+            return null;
+        }
+
+        @Override
+        public InputStream getInputStream() {
+            return null;
+        }
+
+        @Override
+        public NanoHTTPD.CookieHandler getCookies() {
+            return null;
+        }
+
+        @Override
+        public void parseBody(Map<String, String> files) throws IOException, NanoHTTPD.ResponseException {
+
+        }
+    }
 }

@@ -207,39 +207,38 @@ public class HttpSimpleTableServerTest extends TestCase {
                         + CRLF + "</html>", result);
 
         // READ RANDOM KEEP=TRUE (GET)
-        result = sendHttpGet(obj, "/sts/READ?READ_MODE=RANDOM&FILENAME=" + filename);
+        Map<String, String> urlParameters5 = this.createParm("FILENAME", filename);
+        urlParameters4.put("READ_MODE", "RANDOM");
+        result = sendHttpGet(obj, "/sts/READ", urlParameters5);
         assertTrue(result.startsWith("<html><title>OK</title>"));
 
         // SAVE (GET)
-        result = sendHttpGet(obj, ""
-                + "/sts/SAVE?FILENAME=" + filename);
+        result = sendHttpGet(obj, "/sts/SAVE", this.createParm("FILENAME", filename));
         assertEquals("<html><title>OK</title>" + CRLF + "<body>3</body>" + CRLF
                 + "</html>", result);
 
         // SAVE (GET) : ERROR MAX SIZE REACHED
-        result = sendHttpGet(obj, "/sts/SAVE?FILENAME=aaaaaaaaaabbbbbbbbbbccccccccccddddddddddeeeeeeeeeeffffffffffgggggggggghhhhhhhhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkllllllllllmmmmmmmmmm.txt"
-                + filename);
+
+        result = sendHttpGet(obj, "/sts/SAVE", this.createParm("FILENAME", "aaaaaaaaaabbbbbbbbbbccccccccccddddddddddeeeeeeeeeeffffffffffgggggggggghhhhhhhhhhiiiiiiiiiijjjjjjjjjjkkkkkkkkkkllllllllllmmmmmmmmmm.txt"
+                + filename));
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : Maximum size reached (128) !</body>" + CRLF
                 + "</html>", result);
 
         // SAVE (GET) : ERROR ILLEGAL CHAR
-        result = sendHttpGet(obj, ""
-                + "/sts/SAVE?FILENAME=logins:passwords.csv");
+        result = sendHttpGet(obj, "/sts/SAVE", this.createParm("FILENAME", "logins:passwords.csv"));
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : Illegal character found !</body>" + CRLF
                 + "</html>", result);
 
         // SAVE (GET) : ERROR ILLEGAL FILENAME .
-        result = sendHttpGet(obj, ""
-                + "/sts/SAVE?FILENAME=.");
+        result = sendHttpGet(obj, "/sts/SAVE", this.createParm("FILENAME", "."));
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : Illegal character found !</body>" + CRLF
                 + "</html>", result);
 
         // SAVE (GET) : ERROR ILLEGAL FILENAME ..
-        result = sendHttpGet(obj, ""
-                + "/sts/SAVE?FILENAME=..");
+        result = sendHttpGet(obj, "/sts/SAVE", this.createParm("FILENAME", ".."));
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : Illegal character found !</body>" + CRLF
                 + "</html>", result);
@@ -249,8 +248,7 @@ public class HttpSimpleTableServerTest extends TestCase {
         dataset.delete();
 
         // RESET (GET)
-        result = sendHttpGet(obj, ""
-                + "/sts/RESET?FILENAME=" + filename);
+        result = sendHttpGet(obj, "/sts/RESET" ,this.createParm("FILENAME", filename));
         assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
                 + "</html>", result);
 

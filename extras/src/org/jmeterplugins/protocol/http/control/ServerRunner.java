@@ -18,10 +18,10 @@
 
 package org.jmeterplugins.protocol.http.control;
 
-import java.io.IOException;
-
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+
+import java.io.IOException;
 
 /**
  * @author Felix Henry
@@ -43,20 +43,19 @@ public class ServerRunner {
             try {
                 server.start();
             } catch (IOException ioe) {
-                System.err.println("Couldn't start server:\n" + ioe);
+                System.err.println("Couldn't start server:" + ioe);
                 return;
             }
-            log.info("Server started, Hit Enter to stop.\n");
+            log.info("Server started");
 
-            try {
-                System.in.read();
-            } catch (Throwable ignored) {
+            if (server instanceof KeyWaiter) {
+                ((KeyWaiter) server).waitForKey();
             }
 
             if (server.isAlive()) {
                 server.stop();
             }
         }
-        log.info("Server stopped.\n");
+        log.info("Server stopped.");
     }
 }

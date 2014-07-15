@@ -137,9 +137,9 @@ public abstract class NanoHTTPD {
     private static final String QUERY_STRING_PARAMETER = "NanoHttpd.QUERY_STRING";
     private final String hostname;
     private final int myPort;
-    private ServerSocket myServerSocket;
+    protected ServerSocket myServerSocket;
     private Set<Socket> openConnections = new HashSet<Socket>();
-    private Thread myThread;
+    protected Thread myThread;
     /**
      * Pluggable strategy for asynchronously executing requests.
      */

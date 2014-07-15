@@ -18,31 +18,20 @@
 
 package org.jmeterplugins.protocol.http.control;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Random;
-
 import org.apache.jmeter.gui.Stoppable;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 /**
  * @author Felix Henry
  * @author Vincent Daburon
  */
-public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable {
+public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWaiter {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     public static final String ROOT = "/sts/";
@@ -115,7 +104,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable {
             } catch (IOException ioe) {
                 return new Response(Response.Status.INTERNAL_ERROR,
                         MIME_PLAINTEXT, "SERVER INTERNAL ERROR: IOException: "
-                                + ioe.getMessage());
+                        + ioe.getMessage());
             } catch (ResponseException re) {
                 return new Response(re.getStatus(), MIME_PLAINTEXT,
                         re.getMessage());
@@ -131,7 +120,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable {
     }
 
     protected synchronized String doAction(String uri, Method method,
-            Map<String, String> parms) {
+                                           Map<String, String> parms) {
         String msg = "<html><title>KO</title>" + lineSeparator
                 + "<body>Error : unknown command !</body>" + lineSeparator
                 + "</html>";
@@ -433,5 +422,14 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable {
         log.info("TIMESTAMP : " + timestamp);
         log.info("------------------------------");
         ServerRunner.executeInstance(serv);
+    }
+
+    public void waitForKey() {
+        log.info("Hit Enter to stop");
+        try {
+
+            System.in.read();
+        } catch (Throwable ignored) {
+        }
     }
 }

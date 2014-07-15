@@ -1,13 +1,10 @@
 package org.jmeterplugins.protocol.http.control;
 
 import org.apache.jmeter.util.JMeterUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 public class ServerRunnerTest {
+
     public ServerRunnerTest() {
     }
 
@@ -28,9 +25,9 @@ public class ServerRunnerTest {
     }
 
     @Test
-    public void testRun() {
+    public void testRun() throws InstantiationException, IllegalAccessException {
         System.out.println("run");
-        ServerRunner.run(NanoHTTPD.class);
+        ServerRunner.run(HttpSimpleTableServerEmul.class);
     }
 
     @Test
@@ -39,8 +36,7 @@ public class ServerRunnerTest {
         HttpSimpleTableServer serv = null;
         ServerRunner.executeInstance(serv);
 
-        serv = new HttpSimpleTableServer(9191, false,
-                JMeterUtils.getJMeterBinDir());
+        serv = new HttpSimpleTableServerEmul(-1, false, JMeterUtils.getJMeterBinDir());
         serv.start();
         ServerRunner.executeInstance(serv);
         serv.stopServer();

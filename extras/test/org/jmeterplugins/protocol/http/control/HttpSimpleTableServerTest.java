@@ -18,18 +18,10 @@
 
 package org.jmeterplugins.protocol.http.control;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import junit.extensions.TestSetup;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -41,13 +33,20 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Felix Henry
  * @author Vincent Daburon
  */
 public class HttpSimpleTableServerTest extends TestCase {
     private final String USER_AGENT = "Mozilla/5.0";
-    private static final int HTTP_SERVER_PORT = 9191;
+    private static final int HTTP_SERVER_PORT = -1;
     private static final String DATA_DIR = System.getProperty("user.dir");
     private static final String CRLF = HttpSimpleTableServer.lineSeparator;
 
@@ -81,7 +80,7 @@ public class HttpSimpleTableServerTest extends TestCase {
     public static HttpSimpleTableServer startHttpSimpleTableServer(int port)
             throws Exception {
         HttpSimpleTableServer server = null;
-        server = new HttpSimpleTableServer(port, false, DATA_DIR);
+        server = new HttpSimpleTableServerEmul(port, false, DATA_DIR);
         Exception except = null;
         try {
             server.start();
@@ -126,19 +125,19 @@ public class HttpSimpleTableServerTest extends TestCase {
                 + "/sts");
         assertTrue(0 < result.length()
                 && result
-                        .startsWith("<html><head><title>URL for the dataset</title><head>"));
+                .startsWith("<html><head><title>URL for the dataset</title><head>"));
 
         // HELP (GET)
         result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT + "/sts/");
         assertTrue(0 < result.length()
                 && result
-                        .startsWith("<html><head><title>URL for the dataset</title><head>"));
+                .startsWith("<html><head><title>URL for the dataset</title><head>"));
 
         // STATUS (GET) : ERROR EMPTY DATABASE
         result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
                 + "/sts/STATUS");
         assertEquals("<html><title>KO</title>" + CRLF + "<body>"
-                + "Error : Database was empty !</body>" + CRLF + "</html>",
+                        + "Error : Database was empty !</body>" + CRLF + "</html>",
                 result);
 
         // INITFILE (GET)
@@ -151,7 +150,7 @@ public class HttpSimpleTableServerTest extends TestCase {
         result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
                 + "/sts/INITFILE?FILENAME=unknown.txt");
         assertEquals("<html><title>KO</title>" + CRLF
-                + "<body>Error : file not found !</body>" + CRLF + "</html>",
+                        + "<body>Error : file not found !</body>" + CRLF + "</html>",
                 result);
 
         // INITFILE (GET) : ERROR MISSING FILENAME
@@ -249,7 +248,7 @@ public class HttpSimpleTableServerTest extends TestCase {
         result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
                 + "/sts/ADD?LINE=login4;password4&FILENAME=" + filename);
         assertEquals("<html><title>KO</title>" + CRLF
-                + "<body>Error : unknown command !</body>" + CRLF + "</html>",
+                        + "<body>Error : unknown command !</body>" + CRLF + "</html>",
                 result);
 
         // ADD (POST) : ERROR MISSING LINE
@@ -346,7 +345,7 @@ public class HttpSimpleTableServerTest extends TestCase {
         result = sendHttpGet("http://localhost:" + HTTP_SERVER_PORT
                 + "/sts/READ?FILENAME=" + filename);
         assertEquals("<html><title>KO</title>" + CRLF
-                + "<body>Error : No more line !</body>" + CRLF + "</html>",
+                        + "<body>Error : No more line !</body>" + CRLF + "</html>",
                 result);
 
         // STATUS (GET)
@@ -383,4 +382,5 @@ public class HttpSimpleTableServerTest extends TestCase {
         String result = EntityUtils.toString(resp_entity);
         return result;
     }
+
 }

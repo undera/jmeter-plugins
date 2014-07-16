@@ -54,6 +54,38 @@ class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInte
         jTextFieldExclude.setText(str);
     }
 
+    public boolean isSelectedRegExpInc() {
+        return jCheckBoxInclude.isSelected();
+    }
+
+    public void setSelectedRegExpInc(boolean b) {
+        jCheckBoxInclude.setSelected(b);
+    }
+
+    public boolean isSelectedRegExpExc() {
+        return jCheckBoxExclude.isSelected();
+    }
+
+    public void setSelectedRegExpExc(boolean b) {
+        jCheckBoxExclude.setSelected(b);
+    }
+
+    public String getStartOffset() {
+        return jTextFieldStartOffset.getText();
+    }
+
+    public void setStartOffset(long startOffset) {
+        jTextFieldStartOffset.setText(String.valueOf(startOffset));
+    }
+
+    public String getEndOffset() {
+        return jTextFieldEndOffset.getText();
+    }
+
+    public void setEndOffset(long endOffset) {
+        jTextFieldEndOffset.setText(String.valueOf(endOffset));
+    }
+
     /**
      * This method is called from within the constructor to
      * initialize the form.
@@ -74,7 +106,14 @@ class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInte
         jLabelInclude = new javax.swing.JLabel();
         jTextFieldInclude = new javax.swing.JTextField();
         jLabelExclude = new javax.swing.JLabel();
+        jLabelStartEndOffset = new javax.swing.JLabel();
+        jTextFieldStartOffset = new javax.swing.JTextField();
+        jTextFieldEndOffset = new javax.swing.JTextField();
+        jCheckBoxInclude = new javax.swing.JCheckBox();
         jTextFieldExclude = new javax.swing.JTextField();
+        jCheckBoxExclude = new javax.swing.JCheckBox();
+        jLabelRegExpInclude = new javax.swing.JLabel();
+        jLabelRegExpExclude = new javax.swing.JLabel();
         jPanelGraphPreview = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -111,34 +150,90 @@ class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInte
         jPanelRowsConfig.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanelRowsConfig.setLayout(new java.awt.GridBagLayout());
 
-        jLabelInclude.setText("Include sample labels:");
+        jLabelInclude.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelInclude.setText("Include labels");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 0);
-        jPanelRowsConfig.add(jLabelInclude, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 2, 0, 2);
-        jPanelRowsConfig.add(jTextFieldInclude, gridBagConstraints);
+        jPanelRowsConfig.add(jLabelInclude, gridBagConstraints);
 
-        jLabelExclude.setText("Exclude sample labels:");
+        jLabelExclude.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelExclude.setText("Exclude labels");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        jPanelRowsConfig.add(jLabelExclude, gridBagConstraints);
+
+        jLabelStartEndOffset
+                .setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelStartEndOffset.setText("Start / End offset (sec)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        jPanelRowsConfig.add(jLabelStartEndOffset, gridBagConstraints);
+
+        jTextFieldStartOffset.setMinimumSize(new java.awt.Dimension(30, 20));
+        jTextFieldStartOffset.setPreferredSize(new java.awt.Dimension(75, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 0);
-        jPanelRowsConfig.add(jLabelExclude, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        jPanelRowsConfig.add(jTextFieldStartOffset, gridBagConstraints);
+
+        jTextFieldEndOffset.setMinimumSize(new java.awt.Dimension(30, 20));
+        jTextFieldEndOffset.setPreferredSize(new java.awt.Dimension(75, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 2);
+        jPanelRowsConfig.add(jTextFieldEndOffset, gridBagConstraints);
+
+        jTextFieldInclude.setMinimumSize(new java.awt.Dimension(60, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
+        jPanelRowsConfig.add(jTextFieldInclude, gridBagConstraints);
+
+        jCheckBoxInclude.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanelRowsConfig.add(jCheckBoxInclude, gridBagConstraints);
+
+        jTextFieldExclude.setMinimumSize(new java.awt.Dimension(60, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
         jPanelRowsConfig.add(jTextFieldExclude, gridBagConstraints);
+
+        jCheckBoxExclude.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanelRowsConfig.add(jCheckBoxExclude, gridBagConstraints);
+
+        jLabelRegExpInclude.setText("RegExp");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        jPanelRowsConfig.add(jLabelRegExpInclude, gridBagConstraints);
+
+        jLabelRegExpExclude.setText("RegExp");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        jPanelRowsConfig.add(jLabelRegExpExclude, gridBagConstraints);
 
         jPanelRowsTable.add(jPanelRowsConfig, java.awt.BorderLayout.SOUTH);
 
@@ -179,18 +274,26 @@ class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInte
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox jCheckBoxExclude;
+    private javax.swing.JCheckBox jCheckBoxInclude;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelExclude;
     private javax.swing.JLabel jLabelInclude;
+    private javax.swing.JLabel jLabelRegExpExclude;
+    private javax.swing.JLabel jLabelRegExpInclude;
+    private javax.swing.JLabel jLabelStartEndOffset;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelGraphPreview;
     private javax.swing.JPanel jPanelLogo;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JPanel jPanelRowsConfig;
     private javax.swing.JPanel jPanelRowsTable;
+    private javax.swing.JTextField jTextFieldEndOffset;
     private javax.swing.JTextField jTextFieldExclude;
     private javax.swing.JTextField jTextFieldInclude;
+    private javax.swing.JTextField jTextFieldStartOffset;
+
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -201,6 +304,15 @@ class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInte
     @Override
     public boolean isPreview() {
         return true;
+    }
+
+    public void clearGui() {
+        jTextFieldExclude.setText("");
+        jTextFieldInclude.setText("");
+        jCheckBoxExclude.setSelected(false);
+        jCheckBoxInclude.setSelected(false);
+        jTextFieldStartOffset.setText("");
+        jTextFieldEndOffset.setText("");
     }
 
 }

@@ -11,14 +11,20 @@ The main idea is to use a tiny http server in JMeter Plugins to manage the datas
 == Configuration ==
 
 In jmeter.properties file:
-  > jmeterPlugin.sts.port=9191  
-  > jmeterPlugin.sts.addTimestamp=true  
-  > jmeterPlugin.sts.datasetDirectory=D:/outils/jmeter/apache-jmeter-2.11/bin/dataset  
-  > jmeterPlugin.sts.loadAndRunOnStartup=false
+
+{{{
+jmeterPlugin.sts.port=9191
+jmeterPlugin.sts.addTimestamp=true
+jmeterPlugin.sts.datasetDirectory=D:/outils/jmeter/apache-jmeter-2.11/bin/dataset
+jmeterPlugin.sts.loadAndRunOnStartup=false
+}}}
 
 Do not use '\' in the path directory, it doesn't work well, use '/' or '\\' instead.
 It is also recommended to use UTF-8 as the encoding:
-  > sampleresult.default.encoding=UTF-8
+
+{{{
+sampleresult.default.encoding=UTF-8
+}}}
 
 If you want automatically start a Simple Table Server on JMeter startup simply add "simple-table-server.bsh" in the "beanshell.init.file" property.
 Be sure that startup-simple-table-server.bsh file is in your JMETER_HOME/bin directory.
@@ -26,61 +32,85 @@ Be sure that startup-simple-table-server.bsh file is in your JMETER_HOME/bin dir
 The Simple Table Server is a tiny http server which can send http GET/POST requests on port 9191 (by default).
 You can set a custom port through the graphical user interface or by overriding the jmeterplugin.sts.port property.
 
-== Distributed architecture for JMeter ==  
+== Distributed architecture for JMeter ==
+
 The Simple Table Server runs on the JMeter controller (master) and load generators (slaves) make calls to the STS to get or add some data.  
 At the beginning of the test, the first load generator will load data in memory (initial call) and at the end of the test it asks the STS saving values in a file.  
 All the load generators ask data from the same STS which is started on the JMeter controller.
 
 [/img/wiki/http_sts_jmeter_archi_distributed_v4.0.png]
 
-== Getting Started ==  
+== Getting Started ==
+
 [/img/wiki/http_sts_startup_gui.png]
 
 There are different ways to start the STS:
-  1. with JMeter GUI  
+
+  * with JMeter GUI:
+
 [/img/wiki/http_simple_table_server.png]
-  2. with simple-table-server.cmd (.sh for UNIX) script located in your JMETER_HOME/bin directory
-  3. on JMeter startup with following properties in jmeter.properties file:
-  
-  > jmeterPlugin.sts.loadAndRunOnStartup=true  
-  > jmeterPlugin.sts.port=9191
-  
-  > beanshell.init.file=startup-simple-table-server.bsh
 
-When the STS is running go to http://<HOST:PORT>/sts/ to see all available commands.
+  * with simple-table-server.cmd (.sh for UNIX) script located in your JMETER_HOME/bin directory
+  * on JMeter startup with following properties in jmeter.properties file:
 
-**Calls are synchronized, all commands are executed one by one.**
+{{{
+jmeterPlugin.sts.loadAndRunOnStartup=true
+jmeterPlugin.sts.port=9191
+  
+beanshell.init.file=startup-simple-table-server.bsh
+}}}
+
+When the STS is running go to {{{http://<HOST>:<PORT>/sts/}}} to see all available commands.
+
+*Calls are synchronized, all commands are executed one by one.*
 
 Example of a dataset file logins.csv:
 
-  > login1;password1  
-  > login2;password2  
-  > login3;password3  
-  > login4;password4  
-  > login5;password5  
+{{{
+login1;password1
+login2;password2
+login3;password3
+login4;password4
+login5;password5
+}}}
 
-### INITFILE - Load file in memory:
+=== INITFILE - Load file in memory ===
+
+{{{
 http://hostname:port/sts/INITFILE?FILENAME=logins.csv
+}}}
 
-HTML format:  
-  > \<html>\<title>OK\</title>  
-  > \<body>5\</body> => number of lines read  
-  > \</html>
+HTML format:
 
-Linked list after this command:  
-  > login1;password1  
-  > login2;password2  
-  > login3;password3  
-  > login4;password4  
-  > login5;password5
+{{{
+<html><title>OK</title>
+<body>5</body> => number of lines read
+</html>
+}}}
 
-### READ - Get one line from list:
-http://hostname:port/sts/READ?READ_MODE=[FIRST,LAST,RANDOM]&KEEP=[TRUE,FALSE]&FILENAME=logins.csv
+Linked list after this command:
 
-HTML format:  
-  > \<html>\<title>OK\</title>  
-  > \<body>login1;password1\</body>  
-  > \</html>
+{{{
+login1;password1
+login2;password2
+login3;password3
+login4;password4
+login5;password5
+}}}
+
+=== READ - Get one line from list ===
+
+{{{
+http://hostname:port/sts/READ?READ_MODE={FIRST, LAST, RANDOM}&KEEP={TRUE, FALSE}&FILENAME=logins.csv
+}}}
+
+HTML format:
+
+{{{
+<html><title>OK</title>
+<body>login1;password1</body>
+</html>
+}}}
 
 Available options:
   * READ_MODE=FIRST => login1;password1
@@ -89,64 +119,86 @@ Available options:
   * KEEP=TRUE => the data is kept and put to the end of list
   * KEEP=FALSE => the data is removed
 
-KEEP=TRUE  
-READ_MODE=FIRST => login1;password1  
-Linked list after this command:  
-  > login2;password2  
-  > login3;password3  
-  > login4;password4  
-  > login5;password5  
-  > login1;password1
+KEEP=TRUE, READ_MODE=FIRST => login1;password1
 
-KEEP=TRUE  
-READ_MODE=LAST => login5;password5  
-Linked list after this command:  
-  > login1;password1  
-  > login2;password2  
-  > login3;password3  
-  > login4;password4  
-  > login5;password5
+Linked list after this command:
 
-KEEP=TRUE  
-READ_MODE=RANDOM => login2;password2  
-Linked list after this command:  
-  > login1;password1  
-  > login3;password3  
-  > login4;password4  
-  > login5;password5  
-  > login2;password2
+{{{
+login2;password2
+login3;password3
+login4;password4
+login5;password5
+login1;password1
+}}}
 
-KEEP=FALSE (delete mode)  
-READ_MODE=FIRST => login1;password1  
-Linked list after this command:  
-  > login2;password2  
-  > login3;password3  
-  > login4;password4  
-  > login5;password5
+KEEP=TRUE, READ_MODE=LAST => login5;password5
 
-KEEP=FALSE  
-READ_MODE=LAST => login5;password5  
-Linked list after this command:  
-  > login1;password1  
-  > login2;password2  
-  > login3;password3  
-  > login4;password4
+Linked list after this command:
 
-KEEP=FALSE  
-READ_MODE=RANDOM => login2;password2  
-Linked list after this command:  
-  > login1;password1  
-  > login3;password3  
-  > login4;password4  
-  > login5;password5
+{{{
+login1;password1
+login2;password2
+login3;password3
+login4;password4
+login5;password5
+}}}
 
-### ADD - Add a line into a file: (POST HTTP protocol)
-FILENAME=dossier.csv,LINE=D0001123,ADD_MODE=[FIRST,LAST]
+KEEP=TRUE, READ_MODE=RANDOM => login2;password2
 
-HTML format:  
-  > \<html>\<title>OK\</title>  
-  > \<body>\</body>  
-  > \</html>
+Linked list after this command:
+
+{{{
+login1;password1
+login3;password3
+login4;password4
+login5;password5
+login2;password2
+}}}
+
+KEEP=FALSE (delete mode), READ_MODE=FIRST => login1;password1
+
+Linked list after this command:
+
+{{{
+login2;password2
+login3;password3
+login4;password4
+login5;password5
+}}}
+
+KEEP=FALSE, READ_MODE=LAST => login5;password5
+
+Linked list after this command:
+
+{{{
+login1;password1
+login2;password2
+login3;password3
+login4;password4
+}}}
+
+KEEP=FALSE, READ_MODE=RANDOM => login2;password2
+
+Linked list after this command:
+
+{{{
+login1;password1
+login3;password3
+login4;password4
+login5;password5
+}}}
+
+=== ADD - Add a line into a file: (POST HTTP protocol) ===
+
+FILENAME=dossier.csv, LINE=D0001123, ADD_MODE={FIRST, LAST}
+
+HTML format:
+
+{{{
+<html><title>OK</title>
+<body></body>
+</html>
+}}}
 
 Available options:
   * ADD_MODE=FIRST => add to the top
@@ -156,47 +208,76 @@ Available options:
 
 [/img/wiki/http_sts_add_request.png]
 
+=== LENGTH - Return the number of remaining lines of a linked list ===
 
-### LENGTH - Return the number of remaining lines of a linked list:
+{{{
 http://hostname:port/sts/LENGTH?FILENAME=logins.csv
+}}}
 
-HTML format:  
-  > \<html>\<title>OK\</title>  
-  > \<body>5\</body> => remaining lines  
-  > \</html>
+HTML format:
 
-### STATUS - Display the list of loaded files and the number of remaining lines for each linked list:
+{{{
+<html><title>OK</title>
+<body>5</body> => remaining lines
+</html>
+}}}
+
+=== STATUS - Display the list of loaded files and the number of remaining lines for each linked list ===
+
+{{{
 http://hostname:port/sts/STATUS
+}}}
 
-HTML format:  
-  > \<html>\<title>OK\</title>  
-  > \<body>  
-  > logins.csv = 5\<br />  
-  > dossier.csv = 1\<br />  
-  > \</body>\</html>
+HTML format:
 
-### SAVE - Save the specified linked list in a file to the default location:
+{{{
+<html><title>OK</title>
+<body>
+logins.csv = 5<br />
+dossier.csv = 1<br />
+</body></html>
+}}}
+
+=== SAVE - Save the specified linked list in a file to the default location ===
+
+{{{
 http://hostname:port/sts/SAVE?FILENAME=logins.csv
+}}}
 
 If jmeterPlugin.sts.addTimestamp is set to true then a timestamp will be add to the filename,
-the file is stored in JMETER_HOME/bin directory:  
+the file is stored in JMETER_HOME/bin directory:
+
+{{{
 20140520T16h33m27s.logins.csv
+}}}
 
-HTML format:  
-  > \<html>\<title>OK\</title>  
-  > \<body>5\</body> => number of lines saved  
-  > \</html>  
+HTML format:
 
-### RESET - Remove all of the elements from the specified list:
+{{{
+<html><title>OK</title>
+<body>5</body> => number of lines saved
+</html>
+}}}
+
+=== RESET - Remove all of the elements from the specified list ===
+
+{{{
 http://hostname:port/sts/RESET?FILENAME=logins.csv
+}}}
 
-HTML format:  
-  > \<html>\<title>OK\</title>  
-  > \<body>\</body>  
-  > \</html>
+HTML format:
 
-### STOP - Shutdown the Simple Table Server:
+{{{
+<html><title>OK</title>
+<body></body>
+</html>
+}}}
+
+=== STOP - Shutdown the Simple Table Server ===
+
+{{{
 http://hostname:port/sts/STOP
+}}}
 
 See examples below for further information.
 
@@ -204,39 +285,45 @@ See examples below for further information.
 
 Initialize file using a "setUp Thread Group" by calling URL with one or more HTTP Request Sampler.
 
-Reading a row of data is done by calling READ method at each iteration by a HTTP Request Sampler.  
+Reading a row of data is done by calling READ method at each iteration by a HTTP Request Sampler.
 Then you can use a Regular Expression Extractor to parse the response data.
 
-Reading login:  
+Reading login:
+
 [/img/wiki/http_sts_regex_extractor_read_login.png]
 
-Reading password:  
+Reading password:
+
 [/img/wiki/http_sts_regex_extractor_read_password.png]
 
 At the end of your Test Plan you can save remaining/adding data with a HTTP Request Sampler in a "tearDown Thread Group".
 
 == Example ==
 
-1. Put the logins.csv file in your JMETER_HOME/bin directory:  
-[/img/examples/logins.csv Download logins.csv file]
+  * Put the logins.csv file in your JMETER_HOME/bin directory:
 
-2. Run the Simple Table Server manually with the simple-table-server.cmd file or automatically with beanShell configuration.
+  [/img/examples/logins.csv Download logins.csv file]
 
-3. Run one of the following scripts:
+  * Run the Simple Table Server manually with the simple-table-server.cmd file or automatically with beanShell configuration.
+  * Run one of the following scripts:
 
-In a loop, read random values from a file containing a login and a password at each row:  
+In a loop, read random values from a file containing a login and a password at each row:
+
 [/img/examples/demo_sts_add_save.jmx Download Example Test Plan 1]
 
-Read value from a file containing a login and a password at each row, each value is unique and cannot be read anymore:  
+Read value from a file containing a login and a password at each row, each value is unique and cannot be read anymore:
+
 [/img/examples/demo_sts_read_first_remove.jmx Download Example Test Plan 2]
 
-Add rows in a new linked list and save it in a file when the test is done:  
+Add rows in a new linked list and save it in a file when the test is done:
+
 [/img/examples/demo_sts_read_random.jmx Download Example Test Plan 3]
 
 Read in a random mode a dataset located on the controller machine with severals slaves.
 The first injector loads the dataset in memory while the other injectors are waiting few seconds.
 The different injectors read randomly the data containing logins and passwords.
-When the test is done the first injector save the values in a file with a timestamp as prefix:  
+When the test is done the first injector save the values in a file with a timestamp as prefix:
+
 [/img/examples/demo_sts_read_random_for2slaves.jmx Download Example Test Plan 4]
 
 You can override STS settings using command-line options:
@@ -245,6 +332,8 @@ You can override STS settings using command-line options:
   * DjmeterPlugin.sts.datasetDirectory=\<path/to/your/directory>
   * DjmeterPlugin.sts.addTimestamp=\<true/false>
 
+{{{
 jmeter.bat -DjmeterPlugin.sts.loadAndRunOnStartup=true -DjmeterPlugin.sts.port=9191 -DjmeterPlugin.sts.datasetDirectory=d:\data -n –t testdemo.jmx
+}}}
 
 When it's done see results in the Listener Tree View.

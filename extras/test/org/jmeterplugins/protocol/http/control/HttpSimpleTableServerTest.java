@@ -248,27 +248,24 @@ public class HttpSimpleTableServerTest extends TestCase {
         dataset.delete();
 
         // RESET (GET)
-        result = sendHttpGet(obj, "/sts/RESET" ,this.createParm("FILENAME", filename));
+        result = sendHttpGet(obj, "/sts/RESET", this.createParm("FILENAME", filename));
         assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
                 + "</html>", result);
 
         // RESET (GET) ERROR MISSING FILENAME
-        result = sendHttpGet(obj, ""
-                + "/sts/RESET");
+        result = sendHttpGet(obj, "/sts/RESET", this.createParm("A", filename));
         assertEquals("<html><title>KO</title>" + CRLF
                 + "<body>Error : FILENAME parameter was missing !</body>"
                 + CRLF + "</html>", result);
 
         // READ (GET) : ERROR LIST IS EMPTY
-        result = sendHttpGet(obj, ""
-                + "/sts/READ?FILENAME=" + filename);
+        result = sendHttpGet(obj, "/sts/READ", this.createParm("FILENAME", filename));
         assertEquals("<html><title>KO</title>" + CRLF
                         + "<body>Error : No more line !</body>" + CRLF + "</html>",
                 result);
 
         // STATUS (GET)
-        result = sendHttpGet(obj, ""
-                + "/sts/STATUS");
+        result = sendHttpGet(obj, "/sts/STATUS");
         assertEquals("<html><title>OK</title>" + CRLF + "<body>" + CRLF
                 + filename + " = 0<br />" + CRLF + "</body></html>", result);
     }

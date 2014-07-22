@@ -6,8 +6,6 @@
     * Turn all !OverTime graphs into one universal graph?, the same for distribution and pivot?
     * latency distribution and latency percentiles - common solution?
     * RPS vs Response Time graph
-    * Possibility to filter data for time period
-    * allow using regexps in rows filtering on post-test file loading, or CMD
 
 ==Distributed testing==
     * Config Plugin (or maybe listener accepting distr test online status): Distributed Test Control Panel
@@ -27,7 +25,7 @@
 ==Other==    
     * implement functions iif, base64
     * one more [AutoStop] criteria: when reached desired number of samples, duration criteria
-    * random CSV data set [http://sqa.stackexchange.com/questions/3115/getting-a-random-line-from-a-file-with-jmeter?atw=1 a need]
+    * ~~random CSV data set [http://sqa.stackexchange.com/questions/3115/getting-a-random-line-from-a-file-with-jmeter?atw=1 a need~~ Use the Http STS and READ_MODE=RANDOM
     * a way to specify Composite config in CMD tool
     * a way to change granulation for CSV export (https://groups.google.com/forum/#!topic/jmeter-plugins/N7Lz7eCPPSs)
     * add "Default value" field for JSONPathExtractor

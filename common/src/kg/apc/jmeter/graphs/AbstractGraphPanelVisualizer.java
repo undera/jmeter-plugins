@@ -2,6 +2,24 @@
 // TODO: https://groups.google.com/forum/#!topic/jmeter-plugins/qflK3oCjv4c
 package kg.apc.jmeter.graphs;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentSkipListMap;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.ChartSettings;
 import kg.apc.charting.ColorsDispatcher;
@@ -10,6 +28,7 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.vizualizers.CompositeResultCollector;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
+
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
 import org.apache.jmeter.gui.tree.JMeterTreeNode;
@@ -26,14 +45,6 @@ import org.apache.jmeter.visualizers.Sample;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * @author apc
@@ -75,6 +86,15 @@ public abstract class AbstractGraphPanelVisualizer
     //
     private List<String> includes = new ArrayList<String>(0);
     private List<String> excludes = new ArrayList<String>(0);
+    private String incRegex;
+    private String excRegex;
+    private boolean includeRegexChkboxState;
+    private boolean excludeRegexChkboxState;
+    protected long startTimeRef = 0;
+    protected long startTimeInf;
+    protected long startTimeSup;
+    private long startOffset;
+    private long endOffset;
 
     private JPanel container;
     private boolean filePanelVisible = true;
@@ -214,6 +234,7 @@ public abstract class AbstractGraphPanelVisualizer
 
     @Override
     public void clearData() {
+        startTimeRef = 0;
         clearRowsFromCompositeModels(getModel().getName());
         model.clear();
         modelAggregate.clear();
@@ -243,6 +264,24 @@ public abstract class AbstractGraphPanelVisualizer
         graphPanel.getGraphObject().setPrecisionLabel(granulation);
     }
 
+    /**
+     * Invoked when the target of the listener has changed its state. This
+     * implementation assumes that the target is the FilePanel, and will update
+     * the result collector for the new filename.
+     *
+     * @param e
+     *            the event that has occurred
+     */
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        log.debug("getting new collector");
+        collector = (CorrectedResultCollector) createTestElement();
+        if (collector instanceof CorrectedResultCollector) {
+            setUpFiltering((CorrectedResultCollector) collector);
+        }
+        collector.loadExistingFile();
+    }
+
     @Override
     public TestElement createTestElement() {
         if (collector == null || !(collector instanceof CorrectedResultCollector)) {
@@ -258,6 +297,17 @@ public abstract class AbstractGraphPanelVisualizer
         c.setProperty(new BooleanProperty(GRAPH_AGGREGATED, isAggregate));
         c.setProperty(new StringProperty(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS, graphPanel.getRowSelectorPanel().getIncludeSampleLabels()));
         c.setProperty(new StringProperty(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS, graphPanel.getRowSelectorPanel().getExcludeSampleLabels()));
+        c.setProperty(new StringProperty(CorrectedResultCollector.START_OFFSET,
+                graphPanel.getRowSelectorPanel().getStartOffset()));
+        c.setProperty(new StringProperty(CorrectedResultCollector.END_OFFSET,
+                graphPanel.getRowSelectorPanel().getEndOffset()));
+
+        c.setProperty(new BooleanProperty(
+                CorrectedResultCollector.INCLUDE_REGEX_CHECKBOX_STATE,
+                graphPanel.getRowSelectorPanel().isSelectedRegExpInc()));
+        c.setProperty(new BooleanProperty(
+                CorrectedResultCollector.EXCLUDE_REGEX_CHECKBOX_STATE,
+                graphPanel.getRowSelectorPanel().isSelectedRegExpExc()));
     }
 
     @Override
@@ -270,6 +320,30 @@ public abstract class AbstractGraphPanelVisualizer
         }
         graphPanel.getRowSelectorPanel().setIncludeSampleLabels(el.getPropertyAsString(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS));
         graphPanel.getRowSelectorPanel().setExcludeSampleLabels(el.getPropertyAsString(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS));
+
+        if (!CorrectedResultCollector.EMPTY_FIELD.equals(el
+                .getPropertyAsString(CorrectedResultCollector.START_OFFSET))) {
+            graphPanel
+                    .getRowSelectorPanel()
+                    .setStartOffset(
+                            (el.getPropertyAsLong(CorrectedResultCollector.START_OFFSET)));
+        }
+        if (!CorrectedResultCollector.EMPTY_FIELD.equals(el
+                .getPropertyAsString(CorrectedResultCollector.END_OFFSET))) {
+            graphPanel
+                    .getRowSelectorPanel()
+                    .setEndOffset(
+                            (el.getPropertyAsLong(CorrectedResultCollector.END_OFFSET)));
+        }
+
+        graphPanel
+                .getRowSelectorPanel()
+                .setSelectedRegExpInc(
+                        el.getPropertyAsBoolean(CorrectedResultCollector.INCLUDE_REGEX_CHECKBOX_STATE));
+        graphPanel
+                .getRowSelectorPanel()
+                .setSelectedRegExpExc(
+                        el.getPropertyAsBoolean(CorrectedResultCollector.EXCLUDE_REGEX_CHECKBOX_STATE));
 
         if (el instanceof CorrectedResultCollector) {
             setUpFiltering((CorrectedResultCollector) el);
@@ -440,34 +514,93 @@ public abstract class AbstractGraphPanelVisualizer
     }
 
     protected boolean isSampleIncluded(SampleResult res) {
-        if (!includes.isEmpty() && !includes.contains(res.getSampleLabel())) {
+        if (null == res) {
+            return true;
+        }
+
+        if (startTimeRef == 0) {
+            startTimeRef = res.getStartTime();
+            startTimeInf = startTimeRef - startTimeRef % 1000;
+            startTimeSup = startTimeRef + (1000 - startTimeRef % 1000) % 1000;
+        }
+
+        if (includeRegexChkboxState && !incRegex.isEmpty()
+                && !res.getSampleLabel().matches(incRegex)) {
             return false;
         }
 
-        if (!excludes.isEmpty() && excludes.contains(res.getSampleLabel())) {
+        if (excludeRegexChkboxState && !excRegex.isEmpty()
+                && res.getSampleLabel().matches(excRegex)) {
+            return false;
+        }
+
+        if (!includeRegexChkboxState && !includes.isEmpty()
+                && !includes.contains(res.getSampleLabel())) {
+            return false;
+        }
+
+        if (!excludeRegexChkboxState && !excludes.isEmpty()
+                && excludes.contains(res.getSampleLabel())) {
+            return false;
+        }
+
+        if (startOffset > res.getStartTime() - startTimeInf) {
+            return false;
+        }
+
+        if (endOffset < res.getStartTime() - startTimeSup) {
             return false;
         }
         return true;
     }
 
     protected boolean isSampleIncluded(String sampleLabel) {
-        if (!includes.isEmpty() && !includes.contains(sampleLabel)) {
+        if (includeRegexChkboxState && !incRegex.isEmpty()
+                && !sampleLabel.matches(incRegex)) {
             return false;
         }
 
-        if (!excludes.isEmpty() && excludes.contains(sampleLabel)) {
+        if (excludeRegexChkboxState && !excRegex.isEmpty()
+                && sampleLabel.matches(excRegex)) {
+            return false;
+        }
+
+        if (!includeRegexChkboxState && !includes.isEmpty()
+                && !includes.contains(sampleLabel)) {
+            return false;
+        }
+
+        if (!excludeRegexChkboxState && !excludes.isEmpty()
+                && excludes.contains(sampleLabel)) {
             return false;
         }
         return true;
     }
 
     public void setUpFiltering(CorrectedResultCollector rc) {
-        includes = rc.getList(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS);
-        excludes = rc.getList(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS);
+        startOffset = rc.getTimeDelimiter(
+                CorrectedResultCollector.START_OFFSET, Long.MIN_VALUE);
+        endOffset = rc.getTimeDelimiter(CorrectedResultCollector.END_OFFSET,
+                Long.MAX_VALUE);
+        includeRegexChkboxState = rc
+                .getRegexChkboxState(CorrectedResultCollector.INCLUDE_REGEX_CHECKBOX_STATE);
+        excludeRegexChkboxState = rc
+                .getRegexChkboxState(CorrectedResultCollector.EXCLUDE_REGEX_CHECKBOX_STATE);
+        if (includeRegexChkboxState)
+            incRegex = rc
+                    .getRegex(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS);
+        else
+            includes = rc
+                    .getList(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS);
+        if (excludeRegexChkboxState)
+            excRegex = rc
+                    .getRegex(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS);
+        else
+            excludes = rc
+                    .getList(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS);
     }
 
-    private class MaximizeAction
-            implements ActionListener {
+    private class MaximizeAction implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -500,5 +633,11 @@ public abstract class AbstractGraphPanelVisualizer
      */
     public boolean isIgnoreCurrentTestStartTime() {
         return ignoreCurrentTestStartTime;
+    }
+
+    @Override
+    public void clearGui() {
+        super.clearGui();
+        graphPanel.getRowSelectorPanel().clearGui();
     }
 }

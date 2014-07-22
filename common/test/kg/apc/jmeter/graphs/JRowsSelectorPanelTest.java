@@ -130,4 +130,94 @@ public class JRowsSelectorPanelTest {
         JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
         instance.setExcludeSampleLabels(str);
     }
+
+    /**
+     * Test of isSelectedRegExpInc method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testIsSelectedRegExpInc() {
+        System.out.println("isSelectedRegExpInc");
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        Boolean result = instance.isSelectedRegExpInc();
+        assertFalse(result);
+    }
+
+    /**
+     * Test of setSelectedRegExpInc method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testSetSelectedRegExpInc() {
+        System.out.println("setSelectedRegExpInc");
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        Boolean b = true;
+        instance.setSelectedRegExpInc(b);
+    }
+
+    /**
+     * Test of isSelectedRegExpExc method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testIsSelectedRegExpExc() {
+        System.out.println("isSelectedRegExpExc");
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        Boolean result = instance.isSelectedRegExpExc();
+        assertFalse(result);
+    }
+
+    /**
+     * Test of setSelectedRegExpExc method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testSetSelectedRegExpExc() {
+        System.out.println("setSelectedRegExpExc");
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        Boolean b = true;
+        instance.setSelectedRegExpExc(b);
+    }
+
+    /**
+     * Test of getStartOffset method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testGetStartOffset() {
+        System.out.println("getStartOffset");
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        String expResult = "";
+        String result = instance.getStartOffset();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setStartOffset method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testSetStartOffset() {
+        System.out.println("setStartOffset");
+        long l = 1800;
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        instance.setStartOffset(l);
+    }
+
+    /**
+     * Test of getEndOffset method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testGetEndOffset() {
+        System.out.println("getEndOffset");
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        String expResult = "";
+        String result = instance.getEndOffset();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setStartOffset method, of class JRowsSelectorPanel.
+     */
+    @Test
+    public void testSetEndOffset() {
+        System.out.println("setEndOffset");
+        long l = 1800;
+        JRowsSelectorPanel instance = new JRowsSelectorPanel(new GraphPanel());
+        instance.setEndOffset(l);
+    }
 }

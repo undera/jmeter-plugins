@@ -11,3 +11,4 @@ Everyone who provided pull request or other contribution, deserves mentioning on
   * Mårten Bohlin - [DbMon] author
   * Matthew Fremont - improved [VariablesFromCSV] a lot
   * UbikLoadPack Team [http://ubikloadpack.com] - implemented [RedisDataSet] and [GraphsGeneratorListener]
+  * Vincent Daburon and Felix Henry - [HttpSimpleTableServer] authors

@@ -44,6 +44,10 @@ public class PluginsCMDWorker {
     private float lineWeight = -1;
     private String includeLabels = "";
     private String excludeLabels = "";
+    private String startOffset = "";
+    private String endOffset = "";
+    private int includeSamplesWithRegex = -1;
+    private int excludeSamplesWithRegex = -1;
     private int successFilter = -1;
     private int markers = -1;
 
@@ -209,6 +213,15 @@ public class PluginsCMDWorker {
         rc = (CorrectedResultCollector) pluginInstance.createTestElement();
         rc.setExcludeLabels(excludeLabels);
         rc.setIncludeLabels(includeLabels);
+        rc.setStartOffset(startOffset);
+        rc.setEndOffset(endOffset);
+
+        if (includeSamplesWithRegex >= 0) {
+            rc.setEnabledIncludeRegex(includeSamplesWithRegex != 0);
+        }
+        if (excludeSamplesWithRegex >= 0) {
+            rc.setEnabledExcludeRegex(excludeSamplesWithRegex != 0);
+        }
 
         if (successFilter >= 0) {
             rc.setErrorLogging(successFilter == 0);
@@ -367,6 +380,22 @@ public class PluginsCMDWorker {
 
     public void setExcludeLabels(String string) {
         excludeLabels = string;
+    }
+
+    public void setIncludeSamplesWithRegex(int logicValue) {
+        includeSamplesWithRegex = logicValue;
+    }
+
+    public void setExcludeSamplesWithRegex(int logicValue) {
+        excludeSamplesWithRegex = logicValue;
+    }
+
+    public void setStartOffset(String string) {
+        startOffset = string;
+    }
+
+    public void setEndOffset(String string) {
+        endOffset = string;
     }
 
     public void setAutoScaleRows(int logicValue) {

@@ -30,7 +30,7 @@ public class FifoGet extends AbstractFunction {
             throws InvalidVariableException {
         String fifoName = ((CompoundVariable) values[0]).execute();
 
-        String value = FifoMap.getInstance().get(fifoName);
+        String value = FifoMap.getInstance().get(fifoName).toString();
 
         JMeterVariables vars = getVariables();
         if (vars != null && values.length > 1) {

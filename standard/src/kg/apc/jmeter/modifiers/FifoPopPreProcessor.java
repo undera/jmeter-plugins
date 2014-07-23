@@ -41,7 +41,7 @@ public class FifoPopPreProcessor extends AbstractTestElement
     public void process() {
         String value;
         try {
-            value = FifoMap.getInstance().pop(getQueueName(), getTimeoutAsLong());
+            value = FifoMap.getInstance().pop(getQueueName(), getTimeoutAsLong()).toString();
         } catch (InterruptedException ex) {
             value = "INTERRUPTED";
         }

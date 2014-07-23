@@ -37,7 +37,7 @@ public class FifoPop extends AbstractFunction {
 
         String value;
         try {
-            value = FifoMap.getInstance().pop(fifoName, timeout);
+            value = FifoMap.getInstance().pop(fifoName, timeout).toString();
         } catch (InterruptedException ex) {
             value = "INTERRUPTED";
         }

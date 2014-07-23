@@ -44,9 +44,9 @@ public class HttpSimpleTableServerTest extends TestCase {
         out.write(CRLF);
         out.write("login2;password2");
         out.write(CRLF);
-        if (null != out) {
-            out.close();
-        }
+
+        out.close();
+
 
         HttpSimpleTableServer obj = new HttpSimpleTableServerEmul(-1, true, DATA_DIR);
 

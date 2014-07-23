@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/sh -e
 
 mvn -Dmaven.test.skip=true clean package javadoc:jar source:jar gpg:sign
 

@@ -14,6 +14,7 @@
   * Included Dev-Mode for WebDriver, which keeps the browser window open between runs.
   * New HTTP Simple Table Server to manage the dataset (https://github.com/undera/jmeter-plugins/pull/54)
   * Graphs plugin : Add filter regular expression and period time (https://github.com/undera/jmeter-plugins/pull/56)
+  * add subSampleStart() and subSampleEnd() to sampleResult of WebDriver Sampler
 
 == 1.1.3 <i><font color=gray size="1">February 17, 2014</font></i>==
   * New Redis Data Set for distributed equivalent of CSV Data Set

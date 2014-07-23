@@ -27,7 +27,7 @@ Within the *Script* section, the Sampler automatically injects a WebDriverScript
 == Reader's responsibility ==
 As mentioned previously, this sampler provides the scripter with a lot of control. This means that unlike most samplers, the scripter is responsible for performing several tasks within the *Script* panel:
 
-  # Capture the sample times by calling the `WDS.sampleResult.sampleStart()` and `WDS.sampleResult.sampleEnd()` methods.
+  # Capture the sample times by calling the `WDS.sampleResult.sampleStart()` and `WDS.sampleResult.sampleEnd()` methods. Use `WDS.sampleResult.subSampleStart(String label)` and `WDS.sampleResult.subSampleEnd(boolean successful)` to create intermediary measurements in the middle of the process.
   # Executing the sampler task on the `WDS.browser` instance.
   # Verifying if the task completed successfully. By default the *sampler assumes success*.
 

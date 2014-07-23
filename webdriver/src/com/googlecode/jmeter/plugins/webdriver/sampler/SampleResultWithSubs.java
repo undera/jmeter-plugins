@@ -41,6 +41,9 @@ public class SampleResultWithSubs extends SampleResult {
         if (subSample != null) {
             subSampleEnd(true);
         }
-        super.sampleEnd();
+
+        if (getEndTime() == 0) {
+            super.sampleEnd();
+        }
     }
 }

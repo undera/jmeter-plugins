@@ -37,6 +37,7 @@ public class ReporterTool extends AbstractCMDTool {
                 + "--line-weight <num of pixels> " // set graph row line thikness ||
                 + "--extractor-regexps <regExps list> "
                 + "--success-filter <true/false> "
+                + "--graph-per-row <yes/no>"
                 + "]");
     }
 
@@ -210,6 +211,13 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 worker.setSuccessFilter(getLogicValue((String) args.next()));
+            } else if (nextArg.equalsIgnoreCase("--graph-per-row")) {
+
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing graph-per-row flag");
+                }
+
+                worker.setGraphPerRow(getLogicValue((String) args.next()));
             } else {
                 worker.processUnknownOption(nextArg, args);
             }

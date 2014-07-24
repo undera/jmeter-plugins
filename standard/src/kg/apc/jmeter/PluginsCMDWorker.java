@@ -46,6 +46,7 @@ public class PluginsCMDWorker {
     private String excludeLabels = "";
     private int successFilter = -1;
     private int markers = -1;
+    private int graphPerRow = -1;
 
     public PluginsCMDWorker() {
         log.info("Using JMeterPluginsCMD v. " + JMeterPluginsUtils.getVersion());
@@ -230,9 +231,19 @@ public class PluginsCMDWorker {
         if ((exportMode & EXPORT_PNG) == EXPORT_PNG) {
             File pngFile = new File(outputPNG);
             forceDir(pngFile);
-
+            
+            if(graphPerRow >= 0) {
+                if (!pngFile.mkdirs() && !pngFile.exists()) {
+                    throw new RuntimeException("Failed to create directory for " + pngFile.getAbsolutePath());
+                }
+            }
+            
             try {
-                pluginInstance.getGraphPanelChart().saveGraphToPNG(pngFile, graphWidth, graphHeight);
+                GraphPanelChart panel = pluginInstance.getGraphPanelChart();
+                if(graphPerRow >= 0)
+                    panel.saveGraphPerRowToPNG(pngFile, graphWidth, graphHeight);
+                else
+                    panel.saveGraphToPNG(pngFile, graphWidth, graphHeight);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -331,6 +342,10 @@ public class PluginsCMDWorker {
 
     public void setPreventOutliers(int logicValue) {
         preventOutliers = logicValue;
+    }
+    
+    public void setGraphPerRow(int value){
+        graphPerRow = value;
     }
 
     public void setRowsLimit(int parseInt) {

@@ -35,9 +35,12 @@ public class FifoPop extends AbstractFunction {
             throws InvalidVariableException {
         String fifoName = ((CompoundVariable) values[0]).execute();
 
-        String value;
+        String value = null;
         try {
-            value = FifoMap.getInstance().pop(fifoName, timeout).toString();
+            Object valueObj = FifoMap.getInstance().pop(fifoName, timeout);
+            if (valueObj != null) {
+                value = valueObj.toString();
+            }
         } catch (InterruptedException ex) {
             value = "INTERRUPTED";
         }

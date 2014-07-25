@@ -251,8 +251,8 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     private void finishOnline() {
         isOnlineInitiated = false;
         processorThread.interrupt();
-        while (!processorThread.isInterrupted()) {
-            log.debug("Waiting for bg thread to stop...");
+        while (processorThread.isAlive() && !processorThread.isInterrupted()) {
+            log.info("Waiting for aggregator thread to stop...");
             try {
                 Thread.sleep(50);
                 processorThread.interrupt();

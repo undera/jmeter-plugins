@@ -9,8 +9,13 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+
+// IMPORTANT: we have troubles with Java 6 to 7 compatibility here
+// SEE: http://www.oracle.com/technetwork/java/javase/compatibility-417013.html#incompatibilities
+// maybe should get rid of NIO here...
 
 /**
  * SocketChannel with timeouts. This class performs blocking operations for

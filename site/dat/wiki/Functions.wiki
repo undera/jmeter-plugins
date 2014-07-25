@@ -37,7 +37,7 @@ Example, returning 8.3 and also saving it to variable {{{sumVariable}}}:
 ${__doubleSum(3.5, 4.7, sumVariable)}
 }}}
 
-== env<sup><font color=gray size="1">since 1.1.4</font></sup> ==
+== env<sup><font color=gray size="1">since 1.2.0</font></sup> ==
 
 This function used to get a value of environment variable. 
 Returns value of environment variable if variable was defined, variable name instead (or default value) .

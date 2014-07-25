@@ -35,11 +35,13 @@ for D in `ls` ; do
     if ls $D/target/JMeterPlugins-*.zip 2>/dev/null ; then
         cp $D/target/JMeterPlugins-*.zip upload/files/nightly/
     fi
-
 done
+
 PAT="s/.zip/_$REV.zip/"
 rename $PAT upload/files/nightly/*
 
+# examples
+cp -r examples upload/img/
 
 # upload
 ncftpput -f ~/.jmeter-plugins.org-ncftp.cfg -R -F / upload/*

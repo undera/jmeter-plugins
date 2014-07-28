@@ -112,6 +112,10 @@ public class GraphsGeneratorListener extends AbstractListenerElement
     private String successFilter;
     private String includeLabels;
     private String excludeLabels;
+    private boolean includeSamplesWithRegex;
+    private boolean excludeSamplesWithRegex;
+    private String startOffset;
+    private String endOffset;
 
     /* (non-Javadoc)
      * @see org.apache.jmeter.testelement.TestStateListener#testEnded()
@@ -169,6 +173,14 @@ public class GraphsGeneratorListener extends AbstractListenerElement
             }
             if(!StringUtils.isEmpty(excludeLabels)) {
                 worker.setExcludeLabels(excludeLabels);
+            }
+            worker.setIncludeSamplesWithRegex(includeSamplesWithRegex ? 1 : 0);
+            worker.setExcludeSamplesWithRegex(excludeSamplesWithRegex ? 1 : 0);
+            if (!StringUtils.isEmpty(startOffset)) {
+                worker.setStartOffset(startOffset);
+            }
+            if (!StringUtils.isEmpty(endOffset)) {
+                worker.setEndOffset(endOffset);
             }
             String fileName = null;
             if(!StringUtils.isEmpty(outputBaseFolder)) {
@@ -534,6 +546,66 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     public void setExportMode(int exportMode) {
         this.exportMode = ExportMode.values()[exportMode];
+    }
+
+    /**
+     * @return the includeSamplesWithRegex
+     */
+    public boolean isIncludeSamplesWithRegex() {
+        return includeSamplesWithRegex;
+    }
+
+    /**
+     * @param includeSamplesWithRegex
+     *            the includeSamplesWithRegex to set
+     */
+    public void setIncludeSamplesWithRegex(boolean includeSamplesWithRegex) {
+        this.includeSamplesWithRegex = includeSamplesWithRegex;
+    }
+
+    /**
+     * @return the excludeSamplesWithRegex
+     */
+    public boolean isExcludeSamplesWithRegex() {
+        return excludeSamplesWithRegex;
+    }
+
+    /**
+     * @param excludeSamplesWithRegex
+     *            the excludeSamplesWithRegex to set
+     */
+    public void setExcludeSamplesWithRegex(boolean excludeSamplesWithRegex) {
+        this.excludeSamplesWithRegex = excludeSamplesWithRegex;
+    }
+
+    /**
+     * @return the start offset
+     */
+    public String getStartOffset() {
+        return startOffset;
+    }
+
+    /**
+     * @param startOffset
+     *            the start offset to set
+     */
+    public void setStartOffset(String startOffset) {
+        this.startOffset = startOffset;
+    }
+
+    /**
+     * @return the end offset
+     */
+    public String getEndOffset() {
+        return endOffset;
+    }
+
+    /**
+     * @param startOffset
+     *            the start offset to set
+     */
+    public void setEndOffset(String endOffset) {
+        this.endOffset = endOffset;
     }
 
     /**

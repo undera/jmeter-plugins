@@ -51,6 +51,10 @@ like [SettingsPanel GUI settings] do with optional parameters:
 || {{{--auto-scale <yes/no>}}} || enable/disable auto-scale multipliers for perfmon/composite graph ||
 || {{{--line-weight <num of pixels>}}} || line thickness for graph rows ||
 || {{{--extractor-regexps <regExps list>}}} || list of keyRegExp and valRegExp pairs separated with {;}, only used by PageDataExtractorOverTime ||
+|| {{{--include-label-regex <true/false>}}} || include samples using regular expression ||
+|| {{{--exclude-label-regex <true/false>}}} || exclude samples using regular expression ||
+|| {{{--start-offset <sec>}}} || include in report only samples with (timestamp - relativeStartTime) > startOffset ||
+|| {{{--end-offset <sec>}}} || include in report only samples with (timestamp - relativeStartTime) < endOffset ||
 
 == Plugin Type Classes ==
 Make note that you need to install corresponding plugins set to have Extras plugins available in CMD.

@@ -66,7 +66,11 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
     static final int FILTER_TRUE  = 1;
     static final int FILTER_FALSE = 2;
     
-    
+    private static final String INCLUDE_SAMPLES_WITH_REGEX = "includeSamplesWithRegex"; //$NON-NLS-1$
+    private static final String EXCLUDE_SAMPLES_WITH_REGEX = "excludeSamplesWithRegex"; //$NON-NLS-1$
+    private static final String START_OFFSET = "startOffset"; //$NON-NLS-1$
+    private static final String END_OFFSET = "endOffset"; //$NON-NLS-1$
+
     public GraphsGeneratorListenerBeanInfo() {
         super(GraphsGeneratorListener.class);
         try {
@@ -164,11 +168,13 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
             p.setValue(DEFAULT, "");        //$NON-NLS-1$
             p.setValue(NOT_EXPRESSION, Boolean.FALSE);
-            
-            createPropertyGroup("filtering_config",             //$NON-NLS-1$
-                    new String[] { AGGREGATE_ROWS, LOW_COUNT_LIMIT, 
-                        SUCCESS_FILTER, INCLUDE_LABELS, EXCLUDE_LABELS});
-    
+
+            createPropertyGroup("filtering_config", //$NON-NLS-1$
+                    new String[] { AGGREGATE_ROWS, LOW_COUNT_LIMIT,
+                            SUCCESS_FILTER, INCLUDE_SAMPLES_WITH_REGEX,
+                            INCLUDE_LABELS, EXCLUDE_SAMPLES_WITH_REGEX,
+                            EXCLUDE_LABELS, START_OFFSET, END_OFFSET });
+
             p = property(AGGREGATE_ROWS);
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
             p.setValue(DEFAULT, Boolean.FALSE);
@@ -187,15 +193,38 @@ public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
             p.setValue(TAGS, FILTER_TAGS);
             p.setValue(NOT_OTHER, Boolean.FALSE);        
     
+            p = property(INCLUDE_SAMPLES_WITH_REGEX);
+            p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+            p.setValue(DEFAULT, Boolean.FALSE);
+            p.setValue(NOT_EXPRESSION, Boolean.TRUE);
+            p.setValue(NOT_OTHER, Boolean.TRUE);
+
             p = property(INCLUDE_LABELS);
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
             p.setValue(DEFAULT, "");        //$NON-NLS-1$
             p.setValue(NOT_EXPRESSION, Boolean.FALSE);
     
+            p = property(EXCLUDE_SAMPLES_WITH_REGEX);
+            p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+            p.setValue(DEFAULT, Boolean.FALSE);
+            p.setValue(NOT_EXPRESSION, Boolean.TRUE);
+            p.setValue(NOT_OTHER, Boolean.TRUE);
+
             p = property(EXCLUDE_LABELS);
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
             p.setValue(DEFAULT, "");        //$NON-NLS-1$
             p.setValue(NOT_EXPRESSION, Boolean.FALSE);
+
+            p = property(START_OFFSET);
+            p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+            p.setValue(DEFAULT, ""); //$NON-NLS-1$
+            p.setValue(NOT_EXPRESSION, Boolean.FALSE);
+
+            p = property(END_OFFSET);
+            p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+            p.setValue(DEFAULT, ""); //$NON-NLS-1$
+            p.setValue(NOT_EXPRESSION, Boolean.FALSE);
+
         } catch (NoSuchMethodError e) {
             LOGGER.error("Error initializing component GraphGeneratorListener due to missing method, if your version is lower than 2.10, this" +
                     "is expected to fail, if not check project dependencies");

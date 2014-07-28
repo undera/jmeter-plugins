@@ -3,9 +3,11 @@ package kg.apc.jmeter;
 
 import java.io.File;
 import java.io.IOException;
+
 import kg.apc.emulators.TestJMeterUtils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
 import org.junit.*;
 
 /**
@@ -322,6 +324,46 @@ public class PluginsCMDWorkerTest {
         System.out.println("setExcludeLabels");
         String string = "";
         instance.setExcludeLabels(string);
+    }
+
+    /**
+     * Test of setIncludeSamplesWithRegex method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetIncludeSamplesWithRegex() {
+        System.out.println("setIncludeSamplesWithRegex");
+        int logicValue = 0;
+        instance.setIncludeSamplesWithRegex(logicValue);
+    }
+
+    /**
+     * Test of setExcludeSamplesWithRegex method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetExcludeSamplesWithRegex() {
+        System.out.println("setExcludeSamplesWithRegex");
+        int logicValue = 0;
+        instance.setExcludeSamplesWithRegex(logicValue);
+    }
+
+    /**
+     * Test of setStartOffset method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetStartOffset() {
+        System.out.println("setStartOffset");
+        String string = "";
+        instance.setStartOffset(string);
+    }
+
+    /**
+     * Test of setEndOffset method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetEndOffset() {
+        System.out.println("setEndOffset");
+        String string = "";
+        instance.setEndOffset(string);
     }
 
     /**

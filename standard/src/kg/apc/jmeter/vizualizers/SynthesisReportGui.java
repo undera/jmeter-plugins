@@ -16,12 +16,14 @@
  *
  */
 
-package org.jmeterplugins.visualizers;
+package kg.apc.jmeter.vizualizers;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,9 +39,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellRenderer;
 
+import kg.apc.charting.GraphPanelChart;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 
 import org.apache.jmeter.gui.util.FileDialoger;
 import org.apache.jmeter.gui.util.HeaderAsPropertyRenderer;
@@ -47,6 +52,8 @@ import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.save.CSVSaveService;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.testelement.property.BooleanProperty;
+import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.SamplingStatCalculator;
 import org.apache.jorphan.gui.NumberRenderer;
@@ -57,7 +64,7 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.reflect.Functor;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
-import org.jmeterplugins.visualizers.gui.AbstractFilterableVisualizer;
+import org.jmeterplugins.visualizers.gui.FilterPanel;
 
 /**
  *
@@ -67,12 +74,14 @@ import org.jmeterplugins.visualizers.gui.AbstractFilterableVisualizer;
 
 /**
  * Synthesis Table-Based Reporting Visualizer for JMeter.
- *
+ * 
  */
-public class SynthesisReport extends AbstractFilterableVisualizer implements
+public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
         Clearable, ActionListener {
 
     private static final long serialVersionUID = 240L;
+
+    protected FilterPanel jPanelFilter;
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
@@ -121,7 +130,7 @@ public class SynthesisReport extends AbstractFilterableVisualizer implements
 
     private final Map<String, SamplingStatCalculator> tableRows = new ConcurrentHashMap<String, SamplingStatCalculator>();
 
-    public SynthesisReport() {
+    public SynthesisReportGui() {
         super();
         model = new ObjectTableModel(COLUMNS, SamplingStatCalculator.class,
                 new Functor[] {
@@ -164,7 +173,7 @@ public class SynthesisReport extends AbstractFilterableVisualizer implements
     /** @deprecated - only for use in testing */
     @Deprecated
     public static boolean testFunctors() {
-        SynthesisReport instance = new SynthesisReport();
+        SynthesisReportGui instance = new SynthesisReportGui();
         return instance.model.checkFunctors(null, instance.getClass());
     }
 
@@ -175,7 +184,8 @@ public class SynthesisReport extends AbstractFilterableVisualizer implements
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Synthesis Report (filtered)");
+        return JMeterPluginsUtils
+                .prefixLabel("Synthesis Report (filtered)");
     }
 
     @Override
@@ -260,11 +270,47 @@ public class SynthesisReport extends AbstractFilterableVisualizer implements
         this.add(opts, BorderLayout.SOUTH);
     }
 
+    /**
+     * Invoked when the target of the listener has changed its state. This
+     * implementation assumes that the target is the FilePanel, and will update
+     * the result collector for the new filename.
+     * 
+     * @param e
+     *            the event that has occurred
+     */
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        log.debug("getting new collector");
+        collector = (CorrectedResultCollector) createTestElement();
+        if (collector instanceof CorrectedResultCollector) {
+            setUpFiltering((CorrectedResultCollector) collector);
+        }
+        collector.loadExistingFile();
+    }
+
     @Override
     public void modifyTestElement(TestElement c) {
         super.modifyTestElement(c);
         c.setProperty(USE_GROUP_NAME, useGroupName.isSelected(), false);
         c.setProperty(SAVE_HEADERS, saveHeaders.isSelected(), true);
+        c.setProperty(new StringProperty(
+                CorrectedResultCollector.INCLUDE_SAMPLE_LABELS, jPanelFilter
+                        .getIncludeSampleLabels()));
+        c.setProperty(new StringProperty(
+                CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS, jPanelFilter
+                        .getExcludeSampleLabels()));
+
+        c.setProperty(new StringProperty(CorrectedResultCollector.START_OFFSET,
+                jPanelFilter.getStartOffset()));
+        c.setProperty(new StringProperty(CorrectedResultCollector.END_OFFSET,
+                jPanelFilter.getEndOffset()));
+
+        c.setProperty(new BooleanProperty(
+                CorrectedResultCollector.INCLUDE_REGEX_CHECKBOX_STATE,
+                jPanelFilter.isSelectedRegExpInc()));
+        c.setProperty(new BooleanProperty(
+                CorrectedResultCollector.EXCLUDE_REGEX_CHECKBOX_STATE,
+                jPanelFilter.isSelectedRegExpExc()));
     }
 
     @Override
@@ -273,6 +319,49 @@ public class SynthesisReport extends AbstractFilterableVisualizer implements
         useGroupName
                 .setSelected(el.getPropertyAsBoolean(USE_GROUP_NAME, false));
         saveHeaders.setSelected(el.getPropertyAsBoolean(SAVE_HEADERS, true));
+
+        jPanelFilter
+                .setIncludeSampleLabels(el
+                        .getPropertyAsString(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS));
+        jPanelFilter
+                .setExcludeSampleLabels(el
+                        .getPropertyAsString(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS));
+
+        if (!CorrectedResultCollector.EMPTY_FIELD.equals(el
+                .getPropertyAsString(CorrectedResultCollector.START_OFFSET))) {
+            jPanelFilter.setStartOffset((el
+                    .getPropertyAsLong(CorrectedResultCollector.START_OFFSET)));
+        }
+        if (!CorrectedResultCollector.EMPTY_FIELD.equals(el
+                .getPropertyAsString(CorrectedResultCollector.END_OFFSET))) {
+            jPanelFilter.setEndOffset((el
+                    .getPropertyAsLong(CorrectedResultCollector.END_OFFSET)));
+        }
+
+        jPanelFilter
+                .setSelectedRegExpInc(el
+                        .getPropertyAsBoolean(CorrectedResultCollector.INCLUDE_REGEX_CHECKBOX_STATE));
+        jPanelFilter
+                .setSelectedRegExpExc(el
+                        .getPropertyAsBoolean(CorrectedResultCollector.EXCLUDE_REGEX_CHECKBOX_STATE));
+
+        if (el instanceof CorrectedResultCollector) {
+            setUpFiltering((CorrectedResultCollector) el);
+        }
+    }
+
+    @Override
+    protected Container makeTitlePanel() {
+        jPanelFilter = new FilterPanel();
+        Container panel = super.makeTitlePanel();
+        panel.add(jPanelFilter);
+        return panel;
+    }
+
+    @Override
+    public void clearGui() {
+        super.clearGui();
+        jPanelFilter.clearGui();
     }
 
     @Override
@@ -296,6 +385,56 @@ public class SynthesisReport extends AbstractFilterableVisualizer implements
             } finally {
                 JOrphanUtils.closeQuietly(writer);
             }
+        }
+    }
+
+    @Override
+    public String getWikiPage() {
+        return WIKIPAGE;
+    }
+
+    @Override
+    public GraphPanelChart getGraphPanelChart() {
+        return new FakeGraphPanelChart();
+    }
+
+    @Override
+    protected JSettingsPanel createSettingsPanel() {
+        return new JSettingsPanel(this, 0);
+    }
+
+    private class FakeGraphPanelChart extends GraphPanelChart {
+
+        public FakeGraphPanelChart() {
+            super(false);
+        }
+
+        @Override
+        public void saveGraphToCSV(File file) throws IOException {
+            log.info("Saving CSV to " + file.getAbsolutePath());
+
+            FileWriter writer = null;
+            try {
+                writer = new FileWriter(file);
+                CSVSaveService.saveCSVStats(model, writer,
+                        saveHeaders.isSelected());
+            } catch (FileNotFoundException e) {
+                log.warn(e.getMessage());
+            } catch (IOException e) {
+                log.warn(e.getMessage());
+            } finally {
+                try {
+                    writer.close();
+                } catch (IOException ex) {
+                    log.warn("There was problem closing file stream", ex);
+                }
+            }
+        }
+
+        @Override
+        public void saveGraphToPNG(File file, int w, int h) throws IOException {
+            throw new UnsupportedOperationException(
+                    "This plugin type cannot be saved as image");
         }
     }
 }

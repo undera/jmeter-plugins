@@ -19,6 +19,7 @@
 package org.jmeterplugins.visualizers;
 
 import junit.framework.TestCase;
+import kg.apc.jmeter.vizualizers.SynthesisReportGui;
 
 /**
  *
@@ -30,8 +31,8 @@ public class TestJPFunctorUsers extends TestCase {
     public TestJPFunctorUsers() {
     }
 
-    public void testSynthesisReport() throws Exception {
-        assertTrue("SynthesisReport Functor", SynthesisReport.testFunctors());
+    public void testSynthesisReportGui() throws Exception {
+        assertTrue("SynthesisReportGui Functor", SynthesisReportGui.testFunctors());
     }
 
 }

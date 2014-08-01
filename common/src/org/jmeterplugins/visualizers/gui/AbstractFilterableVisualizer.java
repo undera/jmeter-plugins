@@ -53,9 +53,11 @@ public abstract class AbstractFilterableVisualizer extends AbstractVisualizer {
     private String excRegex;
     private boolean includeRegexChkboxState;
     private boolean excludeRegexChkboxState;
-    protected long firstSampleStartTime = 0;
-    private long minTime;
-    private long maxTime;
+    protected long startTimeRef = 0;
+    protected long startTimeInf;
+    protected long startTimeSup;
+    private long startOffset;
+    private long endOffset;
 
     public AbstractFilterableVisualizer() {
         super();
@@ -151,6 +153,12 @@ public abstract class AbstractFilterableVisualizer extends AbstractVisualizer {
             return true;
         }
 
+        if (startTimeRef == 0) {
+            startTimeRef = res.getStartTime();
+            startTimeInf = startTimeRef - startTimeRef % 1000;
+            startTimeSup = startTimeRef + (1000 - startTimeRef % 1000) % 1000;
+        }
+
         if (includeRegexChkboxState && !incRegex.isEmpty()
                 && !res.getSampleLabel().matches(incRegex)) {
             return false;
@@ -171,25 +179,43 @@ public abstract class AbstractFilterableVisualizer extends AbstractVisualizer {
             return false;
         }
 
-        if (firstSampleStartTime == 0) {
-            firstSampleStartTime = res.getStartTime();
-        }
-
-        if (minTime > (res.getStartTime() - firstSampleStartTime)) {
+        if (startOffset > res.getStartTime() - startTimeInf) {
             return false;
         }
 
-        if (maxTime < (res.getStartTime() - firstSampleStartTime)) {
+        if (endOffset < res.getStartTime() - startTimeSup) {
+            return false;
+        }
+        return true;
+    }
+
+    protected boolean isSampleIncluded(String sampleLabel) {
+        if (includeRegexChkboxState && !incRegex.isEmpty()
+                && !sampleLabel.matches(incRegex)) {
             return false;
         }
 
+        if (excludeRegexChkboxState && !excRegex.isEmpty()
+                && sampleLabel.matches(excRegex)) {
+            return false;
+        }
+
+        if (!includeRegexChkboxState && !includes.isEmpty()
+                && !includes.contains(sampleLabel)) {
+            return false;
+        }
+
+        if (!excludeRegexChkboxState && !excludes.isEmpty()
+                && excludes.contains(sampleLabel)) {
+            return false;
+        }
         return true;
     }
 
     public void setUpFiltering(CorrectedResultCollector rc) {
-        minTime = rc.getTimeDelimiter(CorrectedResultCollector.START_OFFSET,
-                Long.MIN_VALUE);
-        maxTime = rc.getTimeDelimiter(CorrectedResultCollector.END_OFFSET,
+        startOffset = rc.getTimeDelimiter(
+                CorrectedResultCollector.START_OFFSET, Long.MIN_VALUE);
+        endOffset = rc.getTimeDelimiter(CorrectedResultCollector.END_OFFSET,
                 Long.MAX_VALUE);
         includeRegexChkboxState = rc
                 .getRegexChkboxState(CorrectedResultCollector.INCLUDE_REGEX_CHECKBOX_STATE);

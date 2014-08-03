@@ -129,8 +129,7 @@ public class VariableThroughputTimer
     private int getDelay(long msecs) {
         //log.info("Calculating "+msecs + " " + cntSent * msecPerReq+" "+cntSent);
         if (msecs < (cntSent * msecPerReq)) {
-            int delay = 1 + (int) (1000.0 * (cntDelayed + 1) / (double) rps);
-            return delay;
+            return 1 + (int) (1000.0 * (cntDelayed + 1) / rps);
         }
         return 0;
     }
@@ -158,11 +157,8 @@ public class VariableThroughputTimer
             int duration = getIntValue(curProp, DURATION_FIELD_NO);
             double from = getDoubleValue(curProp, FROM_FIELD_NO);
             double to = getDoubleValue(curProp, TO_FIELD_NO);
-            //log.debug("sec "+sec+" Dur: "+duration+" from "+from+" to "+to);
             if (sec - duration <= 0) {
-            	double rpsCalculated = from + (int) (sec * ((to - from) / (double) duration));
-                //log.debug("RPS: "+rps);
-                return rpsCalculated;
+                return from + (int) (sec * ((to - from) / (double) duration));
             } else {
                 sec -= duration;
             }
@@ -189,11 +185,11 @@ public class VariableThroughputTimer
 
             String[] chunks = loadProp.split("\\)");
 
-            for (int c = 0; c < chunks.length; c++) {
+            for (String chunk : chunks) {
                 try {
-                    parseChunk(chunks[c], dataModel);
+                    parseChunk(chunk, dataModel);
                 } catch (RuntimeException e) {
-                    log.warn("Wrong load chunk ignored: " + chunks[c], e);
+                    log.warn("Wrong load chunk ignored: " + chunk, e);
                 }
             }
 

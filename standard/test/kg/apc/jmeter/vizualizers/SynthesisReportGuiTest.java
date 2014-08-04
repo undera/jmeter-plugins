@@ -4,9 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
 
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.emulators.TestJMeterUtils;
@@ -110,8 +115,21 @@ public class SynthesisReportGuiTest {
     @Test
     public void testConfigure() {
         System.out.println("configure");
-        TestElement c = new ResultCollector();
+        TestElement c = new CorrectedResultCollector();
         SynthesisReportGui instance = new SynthesisReportGui();
+        instance.configure(c);
+    }
+
+    /**
+     * Test of configure method, of class SynthesisReportGui.
+     */
+    @Test
+    public void testConfigure_NotEmptyFields() {
+        System.out.println("configure");
+        TestElement c = new CorrectedResultCollector();
+        SynthesisReportGui instance = new SynthesisReportGui();
+        c.setProperty(CorrectedResultCollector.START_OFFSET, "180");
+        c.setProperty(CorrectedResultCollector.END_OFFSET, "360");
         instance.configure(c);
     }
 
@@ -178,5 +196,12 @@ public class SynthesisReportGuiTest {
         String expResult = "jp@gc - Synthesis Report (filtered)";
         String result = instance.getStaticLabel();
         assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testClearGui() {
+        System.out.println("clearGui");
+        SynthesisReportGui instance = new SynthesisReportGui();
+        instance.clearGui();
     }
 }

@@ -170,13 +170,6 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
             new NumberRenderer("#.0"), // avg. pageSize
     };
 
-    /** @deprecated - only for use in testing */
-    @Deprecated
-    public static boolean testFunctors() {
-        SynthesisReportGui instance = new SynthesisReportGui();
-        return instance.model.checkFunctors(null, instance.getClass());
-    }
-
     @Override
     public String getLabelResource() {
         return this.getClass().getSimpleName(); //$NON-NLS-1$
@@ -184,8 +177,7 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils
-                .prefixLabel("Synthesis Report (filtered)");
+        return JMeterPluginsUtils.prefixLabel("Synthesis Report (filtered)");
     }
 
     @Override

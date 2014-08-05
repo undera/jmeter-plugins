@@ -68,8 +68,9 @@ padding: 2px 4px; vertical-align: middle; cursor: pointer;" onclick="window.loca
     :: JMeter-Plugins.org
 {/block}
 
-{block name="content" prepend}
+{block name="content" append}
     {include file="counter.tpl"}
+
 {/block}
 
 {block name="footer_center"}

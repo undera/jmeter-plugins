@@ -62,6 +62,7 @@ Make note that you need to install corresponding plugins set to have Extras plug
 Most of class names are self-explanatory:
 
   * AggregateReport = JMeter's native Aggregate Report, can be saved only as CSV
+  * SynthesisReport = mix between JMeter's native Summary Report and Aggregate Report, can be saved only as CSV
   * ThreadsStateOverTime = Active Threads Over Time
   * BytesThroughputOverTime
   * HitsPerSecond

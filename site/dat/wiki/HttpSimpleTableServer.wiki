@@ -83,9 +83,9 @@ http://hostname:port/sts/INITFILE?FILENAME=logins.csv
 HTML format:
 
 {{{
-<html><title>OK</title>
-<body>5</body> => number of lines read
-</html>
+\<html>\<title>OK\</title>
+\<body>5\</body>\<!-- number of lines read -->
+\</html>
 }}}
 
 Linked list after this command:
@@ -107,9 +107,9 @@ http://hostname:port/sts/READ?READ_MODE={FIRST, LAST, RANDOM}&KEEP={TRUE, FALSE}
 HTML format:
 
 {{{
-<html><title>OK</title>
-<body>login1;password1</body>
-</html>
+\<html>\<title>OK\</title>
+\<body>login1;password1\</body>
+\</html>
 }}}
 
 Available options:
@@ -195,9 +195,9 @@ FILENAME=dossier.csv, LINE=D0001123, ADD_MODE={FIRST, LAST}
 HTML format:
 
 {{{
-<html><title>OK</title>
-<body></body>
-</html>
+\<html>\<title>OK\</title>
+\<body>\</body>
+\</html>
 }}}
 
 Available options:
@@ -217,9 +217,9 @@ http://hostname:port/sts/LENGTH?FILENAME=logins.csv
 HTML format:
 
 {{{
-<html><title>OK</title>
-<body>5</body> => remaining lines
-</html>
+\<html>\<title>OK\</title>
+\<body>5\</body>\<!-- remaining lines -->
+\</html>
 }}}
 
 === STATUS - Display the list of loaded files and the number of remaining lines for each linked list ===
@@ -231,21 +231,21 @@ http://hostname:port/sts/STATUS
 HTML format:
 
 {{{
-<html><title>OK</title>
-<body>
-logins.csv = 5<br />
-dossier.csv = 1<br />
-</body></html>
+\<html>\<title>OK\</title>
+\<body>
+logins.csv = 5\<br />
+dossier.csv = 1\<br />
+\</body>\</html>
 }}}
 
-=== SAVE - Save the specified linked list in a file to the default location ===
+=== SAVE - Save the specified linked list in a file to the specified location ===
 
 {{{
 http://hostname:port/sts/SAVE?FILENAME=logins.csv
 }}}
 
 If jmeterPlugin.sts.addTimestamp is set to true then a timestamp will be add to the filename,
-the file is stored in JMETER_HOME/bin directory:
+the file is stored in the custom directory specified by editing the jmeterPlugin.sts.datasetDirectory property or in JMETER_HOME/bin directory by default:
 
 {{{
 20140520T16h33m27s.logins.csv
@@ -254,9 +254,9 @@ the file is stored in JMETER_HOME/bin directory:
 HTML format:
 
 {{{
-<html><title>OK</title>
-<body>5</body> => number of lines saved
-</html>
+\<html>\<title>OK\</title>
+\<body>5\</body>\<!-- number of lines saved -->
+\</html>
 }}}
 
 === RESET - Remove all of the elements from the specified list ===
@@ -268,9 +268,9 @@ http://hostname:port/sts/RESET?FILENAME=logins.csv
 HTML format:
 
 {{{
-<html><title>OK</title>
-<body></body>
-</html>
+\<html>\<title>OK\</title>
+\<body>\</body>
+\</html>
 }}}
 
 === STOP - Shutdown the Simple Table Server ===
@@ -309,7 +309,7 @@ At the end of your Test Plan you can save remaining/adding data with a HTTP Requ
 
 In a loop, read random values from a file containing a login and a password at each row:
 
-[/img/examples/demo_sts_add_save.jmx Download Example Test Plan 1]
+[/img/examples/demo_sts_read_random.jmx Download Example Test Plan 1]
 
 Read value from a file containing a login and a password at each row, each value is unique and cannot be read anymore:
 
@@ -317,7 +317,7 @@ Read value from a file containing a login and a password at each row, each value
 
 Add rows in a new linked list and save it in a file when the test is done:
 
-[/img/examples/demo_sts_read_random.jmx Download Example Test Plan 3]
+[/img/examples/demo_sts_add_save.jmx Download Example Test Plan 3]
 
 Read in a random mode a dataset located on the controller machine with severals slaves.
 The first injector loads the dataset in memory while the other injectors are waiting few seconds.

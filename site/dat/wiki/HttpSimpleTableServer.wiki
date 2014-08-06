@@ -82,11 +82,11 @@ http://hostname:port/sts/INITFILE?FILENAME=logins.csv
 
 HTML format:
 
-{{{
-\<html>\<title>OK\</title>
-\<body>5\</body>\<!-- number of lines read -->
-\</html>
-}}}
+```html
+<html><title>OK</title>
+<body>5</body><!-- number of lines read -->
+</html>
+```
 
 Linked list after this command:
 
@@ -106,11 +106,11 @@ http://hostname:port/sts/READ?READ_MODE={FIRST, LAST, RANDOM}&KEEP={TRUE, FALSE}
 
 HTML format:
 
-{{{
-\<html>\<title>OK\</title>
-\<body>login1;password1\</body>
-\</html>
-}}}
+```html
+<html><title>OK</title>
+<body>login1;password1</body>
+</html>
+```
 
 Available options:
   * READ_MODE=FIRST => login1;password1
@@ -194,11 +194,11 @@ FILENAME=dossier.csv, LINE=D0001123, ADD_MODE={FIRST, LAST}
 
 HTML format:
 
-{{{
-\<html>\<title>OK\</title>
-\<body>\</body>
-\</html>
-}}}
+```html
+<html><title>OK</title>
+<body></body>
+</html>
+```
 
 Available options:
   * ADD_MODE=FIRST => add to the top
@@ -216,11 +216,11 @@ http://hostname:port/sts/LENGTH?FILENAME=logins.csv
 
 HTML format:
 
-{{{
-\<html>\<title>OK\</title>
-\<body>5\</body>\<!-- remaining lines -->
-\</html>
-}}}
+```html
+<html><title>OK</title>
+<body>5</body><!-- remaining lines -->
+</html>
+```
 
 === STATUS - Display the list of loaded files and the number of remaining lines for each linked list ===
 
@@ -230,13 +230,13 @@ http://hostname:port/sts/STATUS
 
 HTML format:
 
-{{{
-\<html>\<title>OK\</title>
-\<body>
-logins.csv = 5\<br />
-dossier.csv = 1\<br />
-\</body>\</html>
-}}}
+```html
+<html><title>OK</title>
+<body>
+logins.csv = 5<br />
+dossier.csv = 1<br />
+</body></html>
+```
 
 === SAVE - Save the specified linked list in a file to the specified location ===
 
@@ -253,11 +253,11 @@ the file is stored in the custom directory specified by editing the jmeterPlugin
 
 HTML format:
 
-{{{
-\<html>\<title>OK\</title>
-\<body>5\</body>\<!-- number of lines saved -->
-\</html>
-}}}
+```html
+<html><title>OK</title>
+<body>5</body><!-- number of lines saved -->
+</html>
+```
 
 === RESET - Remove all of the elements from the specified list ===
 
@@ -267,11 +267,11 @@ http://hostname:port/sts/RESET?FILENAME=logins.csv
 
 HTML format:
 
-{{{
-\<html>\<title>OK\</title>
-\<body>\</body>
-\</html>
-}}}
+```html
+<html><title>OK</title>
+<body></body>
+</html>
+```
 
 === STOP - Shutdown the Simple Table Server ===
 

@@ -4,20 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.KeyStroke;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
@@ -29,7 +25,7 @@ import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowSumValues;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
+import kg.apc.jmeter.gui.ButtonPanelLoadClean;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 
 import org.apache.jmeter.control.LoopController;
@@ -51,10 +47,15 @@ import org.apache.log.Logger;
  * 
  * @author apc
  */
-public class UltimateThreadGroupGui extends AbstractThreadGroupGui implements
-		TableModelListener, CellEditorListener, ActionListener {
+public class AutomaticUltimateThreadGroupGui extends AbstractThreadGroupGui implements TableModelListener,
+		CellEditorListener {
 
-	public static final String WIKIPAGE = "UltimateThreadGroup";
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public static final String WIKIPAGE = "AutomaticUltimateThreadGroup";
 	private static final Logger log = LoggingManager.getLoggerForClass();
 	/**
      *
@@ -64,29 +65,33 @@ public class UltimateThreadGroupGui extends AbstractThreadGroupGui implements
 	/**
      *
      */
-	public static final String[] columnIdentifiers = new String[] {
-			"Start Threads Count", "Initial Delay, sec", "Startup Time, sec",
-			"Hold Load For, sec", "Shutdown Time" };
+	public static final String[] columnIdentifiers = new String[] { "Start Threads Count", "Initial Delay, sec",
+			"Startup Time, sec", "Hold Load For, sec", "Shutdown Time" };
 	/**
      *
      */
-	public static final Class[] columnClasses = new Class[] { String.class,
-			String.class, String.class, String.class, String.class };
-	public static final Integer[] defaultValues = new Integer[] { 100, 0, 30,
-			60, 10 };
+	@SuppressWarnings("rawtypes")
+	public static final Class[] columnClasses = new Class[] { String.class, String.class, String.class, String.class,
+			String.class };
+
 	private LoopControlPanel loopPanel;
 	protected PowerTableModel tableModel;
 	protected JTable grid;
-	protected ButtonPanelAddCopyRemove buttons;
+	protected ButtonPanelLoadClean buttonPanel;
 
-	private Clipboard system;
-	private String rowstring;
-	private String value;
+	private JTextField virtualUsersTF;
+	private JTextField shutdownTimeTF;
+	private JTextField rampUpTF;
+	private JTextField durationCycleTF;
+	private JTextField avgResponseTimeTF;
+	private JTextField avgThinkTimeTF;
+
+	private Object[][] values = new Object[100][5];
 
 	/**
      *
      */
-	public UltimateThreadGroupGui() {
+	public AutomaticUltimateThreadGroupGui() {
 		super();
 		init();
 	}
@@ -99,8 +104,7 @@ public class UltimateThreadGroupGui extends AbstractThreadGroupGui implements
 		JPanel containerPanel = new VerticalPanel();
 
 		containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
-		containerPanel.add(GuiBuilderHelper.getComponentWithMargin(
-				createChart(), 2, 2, 0, 2), BorderLayout.CENTER);
+		containerPanel.add(GuiBuilderHelper.getComponentWithMargin(createChart(), 2, 2, 0, 2), BorderLayout.CENTER);
 		add(containerPanel, BorderLayout.CENTER);
 
 		// this magic LoopPanel provides functionality for thread loops
@@ -110,35 +114,145 @@ public class UltimateThreadGroupGui extends AbstractThreadGroupGui implements
 	private JPanel createParamsPanel() {
 		JPanel panel = new JPanel(new BorderLayout(5, 5));
 		panel.setBorder(BorderFactory.createTitledBorder("Threads Schedule"));
-		panel.setPreferredSize(new Dimension(200, 200));
+		panel.setPreferredSize(new Dimension(200, 300));
+
+		panel.add(createFieldsPanel(), BorderLayout.NORTH);
 
 		JScrollPane scroll = new JScrollPane(createGrid());
 		scroll.setPreferredSize(scroll.getMinimumSize());
 		panel.add(scroll, BorderLayout.CENTER);
-		buttons = new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues);
-		panel.add(buttons, BorderLayout.SOUTH);
+
+		ActionListener actionListener = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Integer[] startThreadsCount;
+				Integer[] initialDelay;
+				Integer[] startupTime;
+				Integer[] holdLoad;
+				Integer[] shutdownTime;
+
+				String[] virtualUsers = virtualUsersTF.getText().split(";");
+
+				for (int c = virtualUsers.length; c < values.length; c++) {
+					values[c] = null;
+				}
+
+				startThreadsCount = new Integer[virtualUsers.length];
+				initialDelay = new Integer[virtualUsers.length];
+				startupTime = new Integer[virtualUsers.length];
+				holdLoad = new Integer[virtualUsers.length];
+				shutdownTime = new Integer[virtualUsers.length];
+
+				for (int c = 0; c < virtualUsers.length; c++) {
+					startThreadsCount[c] = c == 0 ? Integer.valueOf(virtualUsers[c]) : Integer.valueOf(virtualUsers[c])
+							- Integer.valueOf(virtualUsers[c - 1]);
+				}
+
+				int rampUp = Integer.valueOf(rampUpTF.getText());
+				int durationPerCycle = Integer.valueOf(durationCycleTF.getText()) * 60;
+				int avgResponseTime = Integer.valueOf(avgResponseTimeTF.getText());
+				int avgthinkTime = Integer.valueOf(avgThinkTimeTF.getText());
+
+				int throughputFactor = (avgResponseTime + avgthinkTime) / avgResponseTime;
+
+				Integer[] additionalRealUsersPerCycle = new Integer[virtualUsers.length];
+				
+				for (int c = 0; c < virtualUsers.length; c++) {
+					additionalRealUsersPerCycle[c] = c == 0 ? Integer.valueOf(virtualUsers[c]) * throughputFactor : (Integer.valueOf(virtualUsers[c])
+							- Integer.valueOf(virtualUsers[c - 1])) * throughputFactor;
+				}
+
+				for (int c = 0; c < additionalRealUsersPerCycle.length; c++) {
+					startupTime[c] = additionalRealUsersPerCycle[c] * rampUp;
+				}
+
+				for (int c = 0; c < startupTime.length; c++) {
+					initialDelay[c] = c == 0 ? 0 : startupTime[c - 1] + initialDelay[c - 1] + durationPerCycle;
+				}
+
+				int sumOfStartupTimes = 0;
+				for (int currentStartupTime : startupTime) {
+					sumOfStartupTimes += currentStartupTime;
+				}
+
+				int shutdownTimeMin = Integer.valueOf(shutdownTimeTF.getText()) * 60;
+				for (int c = 0; c < startupTime.length; c++) {
+					shutdownTime[c] = (shutdownTimeMin * startupTime[c]) / sumOfStartupTimes;
+				}
+
+				for (int c = 0; c < initialDelay.length; c++) {
+					holdLoad[c] = c == 0 ? initialDelay[initialDelay.length - 1] + startupTime[startupTime.length - 1]
+							+ durationPerCycle : initialDelay[c - 1] + startupTime[c - 1] + holdLoad[c - 1]
+							+ shutdownTime[c - 1] - initialDelay[c] - startupTime[c];
+				}
+
+				for (int c = 0; c < virtualUsers.length; c++) {
+					values[c] = new Integer[] { startThreadsCount[c], initialDelay[c], startupTime[c], holdLoad[c],
+							shutdownTime[c] };
+				}
+			}
+		};
+
+		buttonPanel = new ButtonPanelLoadClean(grid, tableModel, actionListener, values);
+
+		panel.add(buttonPanel, BorderLayout.SOUTH);
 
 		return panel;
 	}
 
 	private JTable createGrid() {
-		grid = new JTable();
+		grid = new JTable() {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			};
+		};
 		grid.getDefaultEditor(String.class).addCellEditorListener(this);
 		createTableModel();
 		grid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		grid.setMinimumSize(new Dimension(200, 100));
 
-		/**
-		 * Changed in order to enable the copy of cells from Excel.
-		 * 
-		 * @author renato ochando
-		 */
-		KeyStroke paste = KeyStroke.getKeyStroke(86, Toolkit
-				.getDefaultToolkit().getMenuShortcutKeyMask());
-		this.grid.registerKeyboardAction(this, "Paste", paste, 0);
-		this.system = Toolkit.getDefaultToolkit().getSystemClipboard();
-
 		return grid;
+	}
+
+	private JPanel createFieldsPanel() {
+		VerticalPanel parentPanel = new VerticalPanel();
+		JPanel panel0 = new JPanel();
+		JPanel panel1 = new JPanel();
+
+		JLabel virtualUsersL = new JLabel("Step Virtual User per Cycle [csv]");
+		JLabel rampUpL = new JLabel("Ramp-up per Real User [sec]");
+		JLabel shutdownTimeL = new JLabel("Shutdown Time [min]");
+		JLabel durationCycleL = new JLabel("Duration per Cycle [min]");
+		JLabel avgResponseTimeL = new JLabel("Avg Response Time [sec]");
+		JLabel avgThinkTimeL = new JLabel("Avg Think Time [sec]");
+
+		virtualUsersTF = new JTextField(36);
+		shutdownTimeTF = new JTextField(2);
+		rampUpTF = new JTextField(2);
+		durationCycleTF = new JTextField(2);
+		avgResponseTimeTF = new JTextField(2);
+		avgThinkTimeTF = new JTextField(2);
+
+		panel0.add(virtualUsersL);
+		panel0.add(virtualUsersTF);
+		panel0.add(rampUpL);
+		panel0.add(rampUpTF);
+		panel1.add(shutdownTimeL);
+		panel1.add(shutdownTimeTF);
+		panel1.add(durationCycleL);
+		panel1.add(durationCycleTF);
+		panel1.add(avgResponseTimeL);
+		panel1.add(avgResponseTimeTF);
+		panel1.add(avgThinkTimeL);
+		panel1.add(avgThinkTimeTF);
+
+		parentPanel.add(panel0, BorderLayout.NORTH);
+		parentPanel.add(panel1, BorderLayout.SOUTH);
+
+		return parentPanel;
 	}
 
 	@Override
@@ -148,7 +262,7 @@ public class UltimateThreadGroupGui extends AbstractThreadGroupGui implements
 
 	@Override
 	public String getStaticLabel() {
-		return JMeterPluginsUtils.prefixLabel("Ultimate Thread Group");
+		return JMeterPluginsUtils.prefixLabel("Automatic Ultimate Thread Group");
 	}
 
 	@Override
@@ -170,12 +284,10 @@ public class UltimateThreadGroupGui extends AbstractThreadGroupGui implements
 
 		if (tg instanceof UltimateThreadGroup) {
 			UltimateThreadGroup utg = (UltimateThreadGroup) tg;
-			CollectionProperty rows = JMeterPluginsUtils
-					.tableModelRowsToCollectionProperty(tableModel,
-							UltimateThreadGroup.DATA_PROPERTY);
+			CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(tableModel,
+					UltimateThreadGroup.DATA_PROPERTY);
 			utg.setData(rows);
-			utg.setSamplerController((LoopController) loopPanel
-					.createTestElement());
+			utg.setSamplerController((LoopController) loopPanel.createTestElement());
 		}
 		super.configureTestElement(tg);
 	}
@@ -191,20 +303,17 @@ public class UltimateThreadGroupGui extends AbstractThreadGroupGui implements
 			CollectionProperty columns = (CollectionProperty) threadValues;
 
 			tableModel.removeTableModelListener(this);
-			JMeterPluginsUtils.collectionPropertyToTableModelRows(columns,
-					tableModel);
+			JMeterPluginsUtils.collectionPropertyToTableModelRows(columns, tableModel);
 			tableModel.addTableModelListener(this);
 			updateUI();
 		} else {
 			log.warn("Received null property instead of collection");
 		}
 
-		TestElement te = (TestElement) tg.getProperty(
-				AbstractThreadGroup.MAIN_CONTROLLER).getObjectValue();
+		TestElement te = (TestElement) tg.getProperty(AbstractThreadGroup.MAIN_CONTROLLER).getObjectValue();
 		if (te != null) {
 			loopPanel.configure(te);
 		}
-		buttons.checkDeleteButtonStatus();
 	}
 
 	@Override
@@ -213,9 +322,8 @@ public class UltimateThreadGroupGui extends AbstractThreadGroupGui implements
 
 		if (tableModel != null) {
 			UltimateThreadGroup utgForPreview = new UltimateThreadGroup();
-			utgForPreview.setData(JMeterPluginsUtils
-					.tableModelRowsToCollectionPropertyEval(tableModel,
-							UltimateThreadGroup.DATA_PROPERTY));
+			utgForPreview.setData(JMeterPluginsUtils.tableModelRowsToCollectionPropertyEval(tableModel,
+					UltimateThreadGroup.DATA_PROPERTY));
 			updateChart(utgForPreview);
 		}
 	}
@@ -235,10 +343,12 @@ public class UltimateThreadGroupGui extends AbstractThreadGroupGui implements
 
 		long now = System.currentTimeMillis();
 
-		chart.setxAxisLabelRenderer(new DateTimeRenderer(
-				DateTimeRenderer.HHMMSS, now - 1)); // -1 because
-													// row.add(thread.getStartTime()
-													// - 1, 0)
+		chart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, now - 1)); // -1
+																								// because
+																								// row.add(thread.getStartTime()
+																								// -
+																								// 1,
+																								// 0)
 		chart.setForcedMinX(now);
 
 		row.add(now, 0);
@@ -285,8 +395,7 @@ public class UltimateThreadGroupGui extends AbstractThreadGroupGui implements
 		chart.getChartSettings().setDrawFinalZeroingLines(true);
 		chart.setxAxisLabel("Elapsed time");
 		chart.setYAxisLabel("Number of active threads");
-		chart.setBorder(javax.swing.BorderFactory
-				.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+		chart.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 		return chart;
 	}
 
@@ -308,56 +417,6 @@ public class UltimateThreadGroupGui extends AbstractThreadGroupGui implements
 
 	public void editingCanceled(ChangeEvent e) {
 		// no action needed
-	}
-
-	/**
-	 * Changed in order to enable the copy of cells from Excel.
-	 * 
-	 * @author renato ochando
-	 */
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().compareTo("Paste") == 0) {
-			int startRow = this.grid.getSelectedRows()[0];
-
-			int nrCols = this.grid.getColumnCount();
-			int nrRows = this.grid.getRowCount();
-			try {
-				String trstring = (String) this.system.getContents(this)
-						.getTransferData(DataFlavor.stringFlavor);
-				StringTokenizer st1 = new StringTokenizer(trstring, "\r\n");
-				int nrPasteRows = st1.countTokens();
-				if (nrPasteRows > nrRows - startRow) {
-					for (int i = 0; i < nrPasteRows - nrRows + startRow; i++) {
-						JButton button = (JButton) this.buttons.getComponent(0);
-						button.doClick();
-					}
-				}
-				for (int i = 0; st1.hasMoreTokens(); i++) {
-					this.rowstring = st1.nextToken();
-					StringTokenizer st2 = new StringTokenizer(this.rowstring,
-							"\t");
-					int nrPasteCols = st2.countTokens();
-					int startCol;
-					if (nrPasteCols == nrCols)
-						startCol = 0;
-					else
-						startCol = this.grid.getSelectedColumns()[0];
-					for (int j = 0; st2.hasMoreTokens(); j++) {
-						this.value = st2.nextToken();
-						if ((startRow + i < this.grid.getRowCount())
-								&& (startCol + j < this.grid.getColumnCount())) {
-							this.grid.setValueAt(this.value, startRow + i,
-									startCol + j);
-						}
-					}
-				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-
-		updateUI();
 	}
 
 	@Override

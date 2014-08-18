@@ -27,10 +27,6 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * @author Felix Henry
- * @author Vincent Daburon
- */
 public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWaiter {
     private static final Logger log = LoggingManager.getLoggerForClass();
 

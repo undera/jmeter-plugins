@@ -23,11 +23,6 @@ import static org.mockito.Mockito.times;
 import static org.powermock.api.mockito.PowerMockito.verifyNew;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
-/**
- *
- * @author cpl_rewinds
- * @author vincent daburon
- */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(HtmlUnitDriverConfig.class)
 public class HtmlUnitDriverConfigTest {

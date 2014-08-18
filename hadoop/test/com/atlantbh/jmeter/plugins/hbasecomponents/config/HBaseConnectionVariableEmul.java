@@ -20,10 +20,6 @@ import java.io.IOException;
 import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.HTablePool;
 
-/**
- *
- * @author undera
- */
 class HBaseConnectionVariableEmul extends HBaseConnectionVariable {
 
     public HBaseConnectionVariableEmul() {

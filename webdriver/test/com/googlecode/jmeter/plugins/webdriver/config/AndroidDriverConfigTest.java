@@ -26,10 +26,6 @@ import static org.mockito.Mockito.times;
 import static org.powermock.api.mockito.PowerMockito.verifyNew;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
-/**
- * @author Sergey Marakhov
- * @author Linh Pham
- */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(AndroidDriverConfig.class)
 public class AndroidDriverConfigTest {

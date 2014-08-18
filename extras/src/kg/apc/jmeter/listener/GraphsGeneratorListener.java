@@ -43,7 +43,6 @@ import org.apache.log.Logger;
 
 /**
  * Listener that generates graphs
- * @author <a href="p.mouawad at ubik-ingenierie.com">Philippe M.</a>
  * @since 1.1.3
  */
 public class GraphsGeneratorListener extends AbstractListenerElement

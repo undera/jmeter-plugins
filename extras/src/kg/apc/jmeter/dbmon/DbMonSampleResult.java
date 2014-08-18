@@ -2,10 +2,6 @@ package kg.apc.jmeter.dbmon;
 
 import org.apache.jmeter.samplers.SampleResult;
 
-/**
- *
- * @author APC
- */
 public class DbMonSampleResult
         extends SampleResult {
 

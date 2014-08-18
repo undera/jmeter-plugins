@@ -6,6 +6,8 @@ Primary repository is located here: [https://github.com/undera/jmeter-plugins]
 Every change must be noted in [Changelog]'s "Next Release" section immediately after commit
 to track progress and mention changes in [Changelog] on release. See also [BuildingFromSource]
 
+Code must not contain @author tags, use [Contributors] page to mark your contribution instead
+
 == Unit Tests ==
 Committed code must be covered with unit tests. This practice helps us to maintain some quality level and avoid stupid bugs like NPEs in GUI.
 The easiest way to see the unit tests coverage is to run {{{mvn cobertura:cobertura install}}} command, and look into _target/site/cobertura_ directories for HTML report.

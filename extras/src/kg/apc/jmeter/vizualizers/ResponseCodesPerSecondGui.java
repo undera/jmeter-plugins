@@ -6,10 +6,6 @@ import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.samplers.SampleResult;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class ResponseCodesPerSecondGui
         extends AbstractOverTimeVisualizer {
 

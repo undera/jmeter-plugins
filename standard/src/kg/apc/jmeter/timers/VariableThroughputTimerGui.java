@@ -31,7 +31,6 @@ import org.apache.log.Logger;
 
 /**
  *
- * @author apc
  * @see UltimateThreadGroupGui
  */
 public class VariableThroughputTimerGui

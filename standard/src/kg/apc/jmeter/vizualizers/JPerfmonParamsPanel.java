@@ -21,9 +21,6 @@ import javax.swing.border.Border;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.JAbsrtactDialogPanel;
 
-/**
- * @author Stephane Hoblingre
- */
 public class JPerfmonParamsPanel extends JAbsrtactDialogPanel {
 
     private final static int OPTION_PRIMARY_METRIC = 1;

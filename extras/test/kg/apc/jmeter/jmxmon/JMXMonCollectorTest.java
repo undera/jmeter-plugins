@@ -26,10 +26,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- *
- * @author Lars Holmberg
- */
 public class JMXMonCollectorTest {
 
     public JMXMonCollectorTest() {

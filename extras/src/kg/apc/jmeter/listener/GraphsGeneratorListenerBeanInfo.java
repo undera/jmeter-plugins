@@ -26,7 +26,6 @@ import org.apache.log.Logger;
 
 /**
  * BeanInfo for {@link GraphsGeneratorListener}
- * @author <a href="p.mouawad at ubik-ingenierie.com">Philippe M.</a>
  * @since 1.1.3
  */
 public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {

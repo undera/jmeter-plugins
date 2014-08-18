@@ -6,10 +6,6 @@ import kg.apc.charting.AbstractGraphPanelChartElement;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-/**
- *
- * @author apc
- */
 public class GraphRowOverallAverages
         extends AbstractGraphRow
         implements Iterator<Entry<Long, AbstractGraphPanelChartElement>>,

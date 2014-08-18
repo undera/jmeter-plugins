@@ -14,12 +14,7 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 
-/**
- *
- * @author apc
- * @see CSVDataSet
- * @deprecated 
- */
+@Deprecated
 public class VariablesFromCSVFile
       extends ConfigTestElement
       implements TestBean,

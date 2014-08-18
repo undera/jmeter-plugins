@@ -20,9 +20,6 @@ import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * @author Lars Holmberg
- */
 public class JMXMonCollector
         extends CorrectedResultCollector
         implements Runnable, JMXMonSampleGenerator {

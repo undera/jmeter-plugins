@@ -9,7 +9,6 @@ import org.apache.jmeter.samplers.SampleResult;
 
 /**
  * Class used to handle thread counts in local and distributed tests
- * @author Stephane Hoblingre
  */
 public abstract class AbstractVsThreadVisualizer extends AbstractGraphPanelVisualizer
 {

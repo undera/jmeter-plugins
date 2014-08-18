@@ -18,10 +18,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- *
- * @author mabo
- */
 public class DbmonTest implements TestConnection.TestConnectionDataProvider {
 
     public static final String TEST_CONNECTION = "testConnection";

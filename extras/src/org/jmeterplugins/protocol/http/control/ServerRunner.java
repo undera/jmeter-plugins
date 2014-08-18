@@ -23,10 +23,6 @@ import org.apache.log.Logger;
 
 import java.io.IOException;
 
-/**
- * @author Felix Henry
- * @author Vincent Daburon
- */
 public class ServerRunner {
     private static final Logger log = LoggingManager.getLoggerForClass();
 

@@ -7,11 +7,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- *
- * @author Felix Henry
- * @author Vincent Daburon
- */
 public class FilterPanelTest {
 
     public FilterPanelTest() {

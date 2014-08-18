@@ -13,9 +13,6 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * @author cyberw
- */
 public class JMXMonTest {
     public static final String URL = "service:jmx:rmi:///jndi/rmi://localhost:6969/jmxrmi";
     public static final String USERNAME = "username";

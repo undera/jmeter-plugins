@@ -5,10 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-/**
- *
- * @author APC
- */
 public class SocketEmulator
       extends Socket
 {

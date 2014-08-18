@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * @author undera
  * @see ResultCollector
  */
 public class FlexibleFileWriter

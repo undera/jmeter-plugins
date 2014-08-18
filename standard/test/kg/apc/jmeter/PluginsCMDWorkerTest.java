@@ -10,10 +10,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.*;
 
-/**
- *
- * @author undera
- */
 public class PluginsCMDWorkerTest {
 
     private PluginsCMDWorker instance;

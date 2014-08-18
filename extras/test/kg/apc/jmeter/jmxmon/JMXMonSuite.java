@@ -11,10 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-/**
- *
- * @author cyberw
- */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({JMXMonSampleGeneratorTest.class, JMXMonCollectorTest.class, JMXMonSamplerTest.class, JMXMonSampleResultTest.class, JMXMonTest.class})
 public class JMXMonSuite {

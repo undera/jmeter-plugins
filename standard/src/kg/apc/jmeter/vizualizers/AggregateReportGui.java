@@ -36,7 +36,6 @@ import org.apache.log.Logger;
  * visible to JMeterPluginsCMD. This class is just invisible in menu;
  *
  * @see StatVisualizer
- * @author undera
  */
 public class AggregateReportGui extends AbstractGraphPanelVisualizer {
 

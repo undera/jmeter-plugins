@@ -21,8 +21,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 
 /**
  * Java class representing GUI for the JSON Path Assertion component in JMeter
- *
- * @author Semir Sabic / AtlantBH
  */
 public class JSONPathAssertionGui extends AbstractAssertionGui {
 

@@ -8,10 +8,6 @@ import org.apache.jmeter.testelement.TestElement;
 
 import javax.swing.*;
 
-/**
- * @author Sergey Marakhov
- * @author Linh Pham
- */
 public class AndroidDriverConfigGui extends WebDriverConfigGui {
 
     private static final long serialVersionUID = 100L;

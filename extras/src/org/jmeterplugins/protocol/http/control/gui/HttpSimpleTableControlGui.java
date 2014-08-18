@@ -46,10 +46,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.jmeterplugins.protocol.http.control.HttpSimpleTableControl;
 
-/**
- * @author Felix Henry
- * @author Vincent Daburon
- */
 public class HttpSimpleTableControlGui extends LogicControllerGui implements
         JMeterGUIComponent, ActionListener, UnsharedComponent {
 

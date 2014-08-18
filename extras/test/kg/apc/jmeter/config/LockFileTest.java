@@ -11,9 +11,6 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-/**
- * @author direvius
- */
 public class LockFileTest {
 
     private LockFile testInstance;

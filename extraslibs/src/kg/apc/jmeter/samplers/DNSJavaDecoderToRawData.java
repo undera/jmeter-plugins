@@ -10,10 +10,6 @@ import org.apache.jorphan.util.JOrphanUtils;
 import org.xbill.DNS.Message;
 import org.xbill.DNS.Section;
 
-/**
- *
- * @author undera
- */
 @Deprecated
 public class DNSJavaDecoderToRawData extends DNSJavaDecoder {
 

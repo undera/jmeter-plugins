@@ -67,12 +67,6 @@ import org.apache.log.Logger;
 import org.jmeterplugins.visualizers.gui.FilterPanel;
 
 /**
- *
- * @author Felix Henry
- * @author Vincent Daburon
- */
-
-/**
  * Synthesis Table-Based Reporting Visualizer for JMeter.
  * 
  */

@@ -20,10 +20,6 @@ import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author Lars Holmberg / cyberw
- */
 public class JMXMonGui
         extends AbstractOverTimeVisualizer {
 

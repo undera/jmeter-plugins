@@ -6,10 +6,6 @@ import kg.apc.charting.ChartSettings;
 import kg.apc.charting.CubicSpline;
 import org.apache.jorphan.gui.NumberRenderer;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class CSplineRowPlotter extends AbstractRowPlotter {
 
    private long splineLinesCount = 200L;

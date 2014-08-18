@@ -6,10 +6,6 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class DialogFactory {
 
     public static JDialog getJDialogInstance(Frame owner, String title, boolean modal, JAbsrtactDialogPanel content, String imagePath) {

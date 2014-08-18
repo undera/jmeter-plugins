@@ -9,10 +9,6 @@ import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public class CorrectedResultCollector extends ResultCollector {
 
     private static final Logger log = LoggingManager.getLoggerForClass();

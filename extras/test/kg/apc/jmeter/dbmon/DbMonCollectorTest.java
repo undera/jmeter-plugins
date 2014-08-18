@@ -22,10 +22,6 @@ import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.junit.*;
 
-/**
- *
- * @author undera
- */
 public class DbMonCollectorTest {
 
     public DbMonCollectorTest() {

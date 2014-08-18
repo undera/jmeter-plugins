@@ -6,10 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class FilesTestTools {
 
     /**

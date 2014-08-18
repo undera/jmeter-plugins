@@ -1493,8 +1493,6 @@ public abstract class NanoHTTPD {
      * Provides rudimentary support for cookies. Doesn't support 'path',
      * 'secure' nor 'httpOnly'. Feel free to improve it and/or add unsupported
      * features.
-     *
-     * @author LordFokas
      */
     public class CookieHandler implements Iterable<String> {
         private HashMap<String, String> cookies = new HashMap<String, String>();

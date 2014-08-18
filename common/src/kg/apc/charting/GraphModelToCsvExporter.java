@@ -15,9 +15,6 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-/**
- * @author Stéphane Hoblingre
- */
 public class GraphModelToCsvExporter {
     private AbstractMap<String, AbstractGraphRow> model = null;
     private File destFile = null;

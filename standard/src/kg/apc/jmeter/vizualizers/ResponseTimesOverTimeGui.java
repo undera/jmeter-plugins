@@ -6,10 +6,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import org.apache.jmeter.samplers.SampleResult;
 
-/**
- *
- * @author apc
- */
 public class ResponseTimesOverTimeGui
         extends AbstractOverTimeVisualizer {
 

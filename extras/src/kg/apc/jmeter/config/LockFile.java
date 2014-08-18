@@ -10,10 +10,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.util.JMeterStopTestNowException;
 import org.apache.log.Logger;
 
-/**
- *
- * @author direvius
- */
 public class LockFile extends ConfigTestElement
         implements TestListener {
 

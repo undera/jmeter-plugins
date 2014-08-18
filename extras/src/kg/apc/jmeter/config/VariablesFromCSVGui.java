@@ -19,10 +19,6 @@ import kg.apc.jmeter.gui.IntegerInputVerifier;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.testelement.TestElement;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class VariablesFromCSVGui extends AbstractConfigGui {
 
     public static final String WIKIPAGE = "VariablesFromCSV";

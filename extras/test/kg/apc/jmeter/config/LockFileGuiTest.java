@@ -4,10 +4,6 @@ import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.*;
 
-/**
- *
- * @author direvius
- */
 public class LockFileGuiTest {
 
     public LockFileGuiTest() {

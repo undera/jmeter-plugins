@@ -13,10 +13,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 
-/**
- *
- * @author undera
- */
 public class FifoGetTest {
 
     public FifoGetTest() {

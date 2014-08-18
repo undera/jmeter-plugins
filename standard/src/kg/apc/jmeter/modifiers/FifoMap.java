@@ -7,9 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author undera
- */
 public class FifoMap extends ConcurrentHashMap<String, BlockingQueue<Object>> {
 
     public static final String TIMEOUT_PROP = "kg.apc.jmeter.functions.FifoTimeout";

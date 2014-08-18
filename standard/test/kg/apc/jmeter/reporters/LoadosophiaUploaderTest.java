@@ -19,9 +19,6 @@ import java.util.LinkedList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-/**
- * @author undera
- */
 public class LoadosophiaUploaderTest {
 
     private final String basedir;

@@ -33,10 +33,6 @@ import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- *
- * @author undera
- */
 class ConnectionEmul implements Connection {
 
     public ConnectionEmul() {

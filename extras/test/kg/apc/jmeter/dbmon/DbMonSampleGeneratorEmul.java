@@ -15,10 +15,6 @@
  */
 package kg.apc.jmeter.dbmon;
 
-/**
- *
- * @author undera
- */
 class DbMonSampleGeneratorEmul implements DbMonSampleGenerator {
 
     public DbMonSampleGeneratorEmul() {

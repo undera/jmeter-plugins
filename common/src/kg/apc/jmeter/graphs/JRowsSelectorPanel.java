@@ -13,9 +13,6 @@ import javax.swing.JPanel;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
 
-/**
- * @author Stephane Hoblingre
- */
 class JRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInterface {
 
     GraphPanel parent = null;

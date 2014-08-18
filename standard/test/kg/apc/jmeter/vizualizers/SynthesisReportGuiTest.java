@@ -26,11 +26,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
-*
-* @author Felix Henry
-* @author Vincent Daburon
-*/
 public class SynthesisReportGuiTest {
 
     public SynthesisReportGuiTest() {

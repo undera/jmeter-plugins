@@ -22,8 +22,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 /**
  * This is JSON to XML converter GUI class which contains necessary methods for
  * making GUI component suitable for execution in JMeter.
- *
- * @author bjusufbe
  */
 public class JSONToXMLConverterGui extends AbstractSamplerGui {
 

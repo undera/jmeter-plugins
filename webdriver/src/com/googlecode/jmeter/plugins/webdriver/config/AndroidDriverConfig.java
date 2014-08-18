@@ -9,10 +9,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * @author Sergey Marakhov
- * @author Linh Pham
- */
 public class AndroidDriverConfig extends WebDriverConfig<AndroidDriver> {
     private static final long serialVersionUID = 100L;
 

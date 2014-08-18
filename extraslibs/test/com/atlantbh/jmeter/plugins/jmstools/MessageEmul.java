@@ -21,10 +21,6 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 
-/**
- *
- * @author undera
- */
 class MessageEmul implements Message {
 
     public MessageEmul() {

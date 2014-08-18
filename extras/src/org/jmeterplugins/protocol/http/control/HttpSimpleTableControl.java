@@ -29,11 +29,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 /**
- * @author Felix Henry
- * @author Vincent Daburon
- */
-
-/**
  * Test element that implements the Workbench HTTP Simple Table function
  */
 public class HttpSimpleTableControl extends AbstractTestElement {

@@ -23,10 +23,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.w3c.dom.Document;
 
-/**
- *
- * @author undera
- */
 public class XmlUtilTest {
 
     public XmlUtilTest() {

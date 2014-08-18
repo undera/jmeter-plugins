@@ -23,10 +23,6 @@ import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 
-/**
- *
- * @author undera
- */
 public class FlexibleFileWriterGui extends AbstractListenerGui implements ClipboardOwner {
 
     public static final String WIKIPAGE = "FlexibleFileWriter";

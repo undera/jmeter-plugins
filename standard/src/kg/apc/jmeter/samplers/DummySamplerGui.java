@@ -15,10 +15,6 @@ import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 
-/**
- *
- * @author apc
- */
 public class DummySamplerGui
         extends AbstractSamplerGui {
 

@@ -4,10 +4,6 @@ import java.util.Iterator;
 import java.util.Map;
 import org.apache.jmeter.config.Arguments;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class VariablesFromCSV extends Arguments {
 
     public static final String VARIABLE_PREFIX = "variablesPrefix";

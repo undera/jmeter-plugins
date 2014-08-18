@@ -18,10 +18,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author apc
- */
 public class VariablesFromCSVFileTest
 {
    private VariablesFromCSVFile instance;

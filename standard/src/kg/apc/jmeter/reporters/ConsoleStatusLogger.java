@@ -16,10 +16,6 @@ import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public class ConsoleStatusLogger extends AbstractListenerElement
         implements SampleListener, Serializable,
         NoThreadClone, TestListener {

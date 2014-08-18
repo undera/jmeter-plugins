@@ -21,10 +21,6 @@ import org.apache.hadoop.mapred.JobID;
 import org.apache.hadoop.mapred.RunningJob;
 import org.apache.hadoop.mapred.TaskReport;
 
-/**
- *
- * @author undera
- */
 class JobClientEmul extends JobClient {
 
     public JobClientEmul() {

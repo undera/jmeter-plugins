@@ -8,10 +8,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractVsThreadVisualizer;
 import org.apache.jmeter.samplers.SampleResult;
 
-/**
- *
- * @author apc
- */
 public class TimesVsThreadsGui
         extends AbstractVsThreadVisualizer {
 

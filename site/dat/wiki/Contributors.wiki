@@ -1,5 +1,5 @@
 = Project Contributors List=
-Everyone who provided pull request or other contribution, deserves mentioning on this page.
+Everyone who provided pull request or other contribution, deserves mentioning on this page. See also: [https://github.com/undera/jmeter-plugins/graphs/contributors contributors list on GitHub]
 
 == Committers ==
   * Andrey Pohilko [http://about.me/undera] - project founder, wrote many plugins
@@ -9,6 +9,9 @@ Everyone who provided pull request or other contribution, deserves mentioning on
 == Contributors ==
   * Alexey Lavrenuke - [LockFile] author
   * Mårten Bohlin - [DbMon] author
+  * Lars Holmberg - [JMXMon] author
   * Matthew Fremont - improved [VariablesFromCSV] a lot
   * UbikLoadPack Team [http://ubikloadpack.com] - implemented [RedisDataSet] and [GraphsGeneratorListener]
   * Vincent Daburon and Felix Henry - [HttpSimpleTableServer] authors
+  * Sergey Marakhov and Linh Pham - Android Driver Config
+  * Bakir Jusufbegovic and Semir Sabic / AtlantBH - a lot of components

@@ -21,10 +21,6 @@ import org.junit.runners.MethodSorters;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- *
- * @author undera
- */
 @FixMethodOrder(MethodSorters.JVM)
 public class HBaseConnectionTest {
     

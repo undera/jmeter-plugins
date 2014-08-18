@@ -9,10 +9,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-/**
- *
- * @author undera
- */
 public class CorrectedResultCollectorTest {
 
     public CorrectedResultCollectorTest() {

@@ -46,9 +46,6 @@ import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- * @author apc
- */
 public abstract class AbstractGraphPanelVisualizer
         extends AbstractVisualizer
         implements Clearable,

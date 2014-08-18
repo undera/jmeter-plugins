@@ -7,10 +7,6 @@ import javax.swing.UIManager;
 import javax.swing.table.JTableHeader;
 import org.apache.jmeter.gui.util.HeaderAsPropertyRenderer;
 
-/**
- *
- * @author apc
- */
 class HeaderAsTextRenderer
      extends HeaderAsPropertyRenderer
 {

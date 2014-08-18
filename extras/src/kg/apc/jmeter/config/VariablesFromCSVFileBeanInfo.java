@@ -5,11 +5,7 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.testbeans.BeanInfoSupport;
 import org.apache.jmeter.util.JMeterUtils;
 
-/**
- *
- * @author apc
- * @deprecated 
- */
+@Deprecated
 public class VariablesFromCSVFileBeanInfo
      extends BeanInfoSupport
 {

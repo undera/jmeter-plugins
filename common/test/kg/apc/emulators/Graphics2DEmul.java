@@ -25,10 +25,6 @@ import java.awt.image.renderable.RenderableImage;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class Graphics2DEmul extends Graphics2D{
 
    private Graphics2D g2d = null;

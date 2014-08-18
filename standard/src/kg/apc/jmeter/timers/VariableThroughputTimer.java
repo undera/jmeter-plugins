@@ -23,7 +23,6 @@ import org.apache.log.Logger;
 
 /**
  *
- * @author undera
  * @see ConstantThroughputTimer
  */
 public class VariableThroughputTimer

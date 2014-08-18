@@ -25,10 +25,6 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Felix Henry
- * @author Vincent Daburon
- */
 public class HttpSimpleTableServerTest extends TestCase {
 
     private static final String DATA_DIR = System.getProperty("user.dir");

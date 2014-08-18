@@ -10,10 +10,6 @@ import kg.apc.charting.AbstractGraphRow;
 import org.apache.jorphan.gui.ObjectTableModel;
 import org.apache.jorphan.reflect.Functor;
 
-/**
- *
- * @author apc
- */
 class ChartRowsTable
      extends JTable
 {

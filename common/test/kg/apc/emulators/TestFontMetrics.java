@@ -3,10 +3,6 @@ package kg.apc.emulators;
 import java.awt.Font;
 import java.awt.FontMetrics;
 
-/**
- * 
- * @author apc
- */
 public class TestFontMetrics
      extends FontMetrics
 {

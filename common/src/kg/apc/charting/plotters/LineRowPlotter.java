@@ -4,10 +4,6 @@ import java.awt.Graphics2D;
 import kg.apc.charting.ChartSettings;
 import org.apache.jorphan.gui.NumberRenderer;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class LineRowPlotter extends AbstractRowPlotter {
 
    public LineRowPlotter(ChartSettings chartSettings, NumberRenderer labelRenderer) {

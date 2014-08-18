@@ -30,11 +30,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-/**
- *
- * @author Felix Henry
- * @author Vincent Daburon
- */
 public class FilterPanel extends JPanel {
     private static final long serialVersionUID = 240L;
 

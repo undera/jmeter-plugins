@@ -18,8 +18,6 @@ import org.apache.jmeter.samplers.SampleResult;
 /**
  * Test Element class, which connects GUI part and functionality that this
  * component exposes
- *
- * @author Bakir Jusufbegovic / AtlantBH
  */
 public class JobStatistics extends AbstractSampler {
 

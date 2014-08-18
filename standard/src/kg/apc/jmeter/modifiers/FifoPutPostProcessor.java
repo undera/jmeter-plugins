@@ -1,12 +1,11 @@
 package kg.apc.jmeter.modifiers;
 
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.processor.PostProcessor;
 import org.apache.jmeter.testelement.AbstractTestElement;
-import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.testelement.TestStateListener;
 
 public class FifoPutPostProcessor extends AbstractTestElement
-        implements PostProcessor, TestListener {
+        implements PostProcessor, TestStateListener {
 
     public static final String QUEUE = "FifoName";
     public static final String VALUE = "Value";
@@ -25,9 +24,6 @@ public class FifoPutPostProcessor extends AbstractTestElement
 
     public void testEnded(String host) {
         testEnded();
-    }
-
-    public void testIterationStart(LoopIterationEvent event) {
     }
 
     public void process() {

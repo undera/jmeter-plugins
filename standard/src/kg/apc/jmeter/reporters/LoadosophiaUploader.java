@@ -1,11 +1,10 @@
 package kg.apc.jmeter.reporters;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
-import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -19,7 +18,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class LoadosophiaUploader extends ResultCollector implements StatusNotifierCallback, Runnable, TestListener {
+public class LoadosophiaUploader extends ResultCollector implements StatusNotifierCallback, Runnable, TestStateListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String TITLE = "title";
@@ -158,10 +157,6 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
 
     public void setStoreDir(String prefix) {
         setProperty(STORE_DIR, prefix);
-    }
-
-    @Override
-    public void testIterationStart(LoopIterationEvent lie) {
     }
 
     public void setColorFlag(String color) {

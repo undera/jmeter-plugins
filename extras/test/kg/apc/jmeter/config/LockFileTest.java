@@ -115,17 +115,6 @@ public class LockFileTest {
     }
 
     /**
-     * Test of testIterationStart method, of class LockFile.
-     */
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoopIterationEvent lie = null;
-        LockFile instance = new LockFile();
-        instance.testIterationStart(lie);
-    }
-
-    /**
      * Test of filename property, of class LockFile.
      */
     @Test

@@ -180,17 +180,6 @@ public class VariableThroughputTimerTest {
     }
 
     /**
-     * Test of testIterationStart method, of class VariableThroughputTimer.
-     */
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoopIterationEvent lie = null;
-        VariableThroughputTimer instance = new VariableThroughputTimer();
-        instance.testIterationStart(lie);
-    }
-
-    /**
      * Test of stopTest method, of class VariableThroughputTimer.
      */
     @Test

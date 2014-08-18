@@ -1,17 +1,17 @@
 package kg.apc.jmeter.config;
 
-import java.io.File;
-import java.io.IOException;
 import kg.apc.io.FileSystem;
 import org.apache.jmeter.config.ConfigTestElement;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.util.JMeterStopTestNowException;
 import org.apache.log.Logger;
 
+import java.io.File;
+import java.io.IOException;
+
 public class LockFile extends ConfigTestElement
-        implements TestListener {
+        implements TestStateListener {
 
     public static Logger log = LoggingManager.getLoggerForClass();
     public static final String FILENAME = "filename";
@@ -75,9 +75,6 @@ public class LockFile extends ConfigTestElement
         }
     }
 
-    public void testIterationStart(LoopIterationEvent lie) {
-        // DO NOTHING
-    }
 
     /**
      * @return the filename
@@ -104,7 +101,7 @@ public class LockFile extends ConfigTestElement
     }
 
     /**
-     * @param filename the filename to set
+     * @param filemask the filename to set
      */
     public void setFilemask(String filemask) {
         log.debug("Set filemask to: " + filemask);

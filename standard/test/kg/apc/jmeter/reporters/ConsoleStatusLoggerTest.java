@@ -4,14 +4,9 @@
  */
 package kg.apc.jmeter.reporters;
 
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 public class ConsoleStatusLoggerTest {
 
@@ -119,14 +114,4 @@ public class ConsoleStatusLoggerTest {
         instance.testEnded(string);
     }
 
-    /**
-     * Test of testIterationStart method, of class ConsoleStatusLogger.
-     */
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoopIterationEvent lie = null;
-        ConsoleStatusLogger instance = new ConsoleStatusLogger();
-        instance.testIterationStart(lie);
-    }
 }

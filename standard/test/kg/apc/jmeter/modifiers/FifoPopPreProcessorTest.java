@@ -1,12 +1,9 @@
 package kg.apc.jmeter.modifiers;
 
-import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.BeforeClass;
+import org.junit.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FifoPopPreProcessorTest {
 
@@ -69,17 +66,6 @@ public class FifoPopPreProcessorTest {
         String host = "";
         FifoPopPreProcessor instance = new FifoPopPreProcessor();
         instance.testEnded(host);
-    }
-
-    /**
-     * Test of testIterationStart method, of class FifoPopPreProcessor.
-     */
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoopIterationEvent event = null;
-        FifoPopPreProcessor instance = new FifoPopPreProcessor();
-        instance.testIterationStart(event);
     }
 
     /**

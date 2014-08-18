@@ -177,13 +177,6 @@ public class LoadosophiaUploaderTest {
         instance.setStoreDir(prefix);
     }
 
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoadosophiaUploader instance = new LoadosophiaUploader();
-        instance.testIterationStart(null);
-    }
-
     private static class LoadosophiaUploaderEmul extends LoadosophiaUploader {
 
         private final LinkedList<String[]> response;
@@ -275,17 +268,15 @@ public class LoadosophiaUploaderTest {
     public void testIsUseOnline() {
         System.out.println("isUseOnline");
         LoadosophiaUploader instance = new LoadosophiaUploader();
-        boolean expResult = false;
         boolean result = instance.isUseOnline();
-        assertEquals(expResult, result);
+        assertEquals(false, result);
     }
 
     @Test
     public void testSetUseOnline() {
         System.out.println("setUseOnline");
-        boolean selected = false;
         LoadosophiaUploader instance = new LoadosophiaUploader();
-        instance.setUseOnline(selected);
+        instance.setUseOnline(false);
     }
 
     @Test

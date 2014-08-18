@@ -27,8 +27,8 @@ public class DNSJavaDecoderToRawData extends DNSJavaDecoder {
 
         Message msg = new Message();
         String recs[] = data.split(NL);
-        for (int n = 0; n < recs.length; n++) {
-            msg.addRecord(getRecord(recs[n]), Section.QUESTION);
+        for (String rec : recs) {
+            msg.addRecord(getRecord(rec), Section.QUESTION);
         }
 
         try {

@@ -1,8 +1,8 @@
 package kg.apc.jmeter.config;
 
-import java.util.Iterator;
-import java.util.Map;
 import org.apache.jmeter.config.Arguments;
+
+import java.util.Map;
 
 public class VariablesFromCSV extends Arguments {
 

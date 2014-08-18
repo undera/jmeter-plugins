@@ -9,7 +9,9 @@ import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.AbstractTestElement;
+import org.apache.jmeter.testelement.TestIterationListener;
 import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
@@ -27,7 +29,7 @@ import org.apache.log.Logger;
  */
 public class VariableThroughputTimer
         extends AbstractTestElement
-        implements Timer, NoThreadClone, TestListener {
+        implements Timer, NoThreadClone, TestStateListener {
 
     public static final String[] columnIdentifiers = new String[]{
         "Start RPS", "End RPS", "Duration, sec"
@@ -281,7 +283,5 @@ public class VariableThroughputTimer
         testEnded();
     }
 
-    @Override
-    public void testIterationStart(LoopIterationEvent lie) {
-    }
+
 }

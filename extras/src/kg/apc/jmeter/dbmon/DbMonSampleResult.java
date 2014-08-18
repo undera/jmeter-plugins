@@ -14,7 +14,7 @@ public class DbMonSampleResult
     // store as responseMessage, as db query can return any value (bigger than float precision)
     public void setValue(double value) {
         setStartTime(ts);
-        setResponseMessage(new Double(value).toString());
+        setResponseMessage(Double.toString(value));
     }
 
     @Override

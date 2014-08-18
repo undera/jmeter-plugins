@@ -1,15 +1,14 @@
 package kg.apc.jmeter.modifiers;
 
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.processor.PreProcessor;
 import org.apache.jmeter.testelement.AbstractTestElement;
-import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JMeterUtils;
 
 public class FifoPopPreProcessor extends AbstractTestElement
-        implements PreProcessor, TestListener {
+        implements PreProcessor, TestStateListener {
 
     public static final String queueName = "FifoName";
     public static final String variableName = "Variable";
@@ -35,15 +34,12 @@ public class FifoPopPreProcessor extends AbstractTestElement
         testEnded();
     }
 
-    public void testIterationStart(LoopIterationEvent event) {
-    }
-
     public void process() {
         String value = null;
         try {
             Object valueObj = FifoMap.getInstance().pop(getQueueName(), getTimeoutAsLong());
-            if (valueObj!=null) {
-                value=valueObj.toString();
+            if (valueObj != null) {
+                value = valueObj.toString();
             }
         } catch (InterruptedException ex) {
             value = "INTERRUPTED";

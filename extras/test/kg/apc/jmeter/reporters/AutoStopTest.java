@@ -141,17 +141,6 @@ public class AutoStopTest {
     }
 
     /**
-     * Test of testIterationStart method, of class AutoStop.
-     */
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoopIterationEvent lie = null;
-        AutoStop instance = new AutoStop();
-        instance.testIterationStart(lie);
-    }
-
-    /**
      * Test of setResponseTime method, of class AutoStop.
      */
     @Test

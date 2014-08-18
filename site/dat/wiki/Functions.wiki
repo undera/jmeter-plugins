@@ -81,6 +81,34 @@ Example, calculating MD5 for 'test':
 ${__MD5(test)}
 }}}
 
+== base64Encode<sup><font color=gray size="1">since 1.2.0</font></sup> ==
+
+This function used to encode a constant string or variable value using Base64 algorithm.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+  # Second argument - variable name to store the result
+
+Example, encoding 'test string':
+
+{{{
+${__base64Encode(test string)}
+}}}
+
+== base64Decode<sup><font color=gray size="1">since 1.2.0</font></sup> ==
+
+This function used to decode a constant string or variable value from Base64 into string.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+  # Second argument - variable name to store the result
+
+Example, decoding that returns 'test string':
+
+{{{
+${__base64Decode(dGVzdCBzdHJpbmc=)}
+}}}
+
 == strLen<sup><font color=gray size="1">since 0.4.2</font></sup> ==
 
 This function used to compute the length of constant string or variable value.

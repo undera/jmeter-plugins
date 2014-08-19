@@ -8,33 +8,25 @@
  */
 package com.atlantbh.jmeter.plugins.rest;
 
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethodBase;
+import org.apache.commons.httpclient.methods.*;
+import org.apache.commons.lang.NotImplementedException;
+import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
+import org.apache.jmeter.protocol.http.sampler.HTTPSampler2;
+import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.jorphan.util.JOrphanUtils;
+import org.apache.log.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethodBase;
-import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.HeadMethod;
-import org.apache.commons.httpclient.methods.OptionsMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.httpclient.methods.TraceMethod;
-import org.apache.commons.lang.NotImplementedException;
-import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
-import org.apache.jmeter.protocol.http.sampler.HTTPSampler2;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.jorphan.util.JOrphanUtils;
-import org.apache.log.Logger;
-
-import org.apache.jmeter.samplers.SampleResult;
-
+@Deprecated
 public class RestSampler extends HTTPSampler2 {
 
     private static final long serialVersionUID = -5877623539165274730L;
@@ -149,7 +141,7 @@ public class RestSampler extends HTTPSampler2 {
      * Method invoked by JMeter when a sample needs to happen. It's actually an
      * indirect call from the main sampler interface. it's resolved in the base
      * class.
-     *
+     * <p/>
      * This is a copy and paste from the HTTPSampler2 - quick and dirty hack as
      * that class is not very extensible. The reason to extend and slightly
      * modify is that I needed to get the body content from a text field in the
@@ -157,7 +149,7 @@ public class RestSampler extends HTTPSampler2 {
      */
     public SampleResult sample() {
         HttpMethodBase httpMethod = null;
-        HttpClient client = null;
+        HttpClient client;
         InputStream instream = null;
         SampleResult res = new SampleResult();
         try {
@@ -172,8 +164,8 @@ public class RestSampler extends HTTPSampler2 {
 
             String urlStr = getUrl().toString();
 
-            String request = getMethod().toString() + " " + urlStr + "\n";
-            request += getRequestBody().toString();
+            String request = getMethod() + " " + urlStr + "\n";
+            request += getRequestBody();
             res.setSamplerData(request);
 
             log.debug("Start : sample " + urlStr);
@@ -202,7 +194,7 @@ public class RestSampler extends HTTPSampler2 {
             overrideHeaders(httpMethod);
             res.setRequestHeaders(getConnectionHeaders(httpMethod));
 
-            int statusCode = -1;
+            int statusCode;
             try {
                 statusCode = client.executeMethod(httpMethod);
             } catch (RuntimeException e) {
@@ -242,7 +234,7 @@ public class RestSampler extends HTTPSampler2 {
 
             res.setResponseMessage(httpMethod.getStatusText());
 
-            String ct = null;
+            String ct;
             org.apache.commons.httpclient.Header h = httpMethod.getResponseHeader(HEADER_CONTENT_TYPE);
             if (h != null)// Can be missing, e.g. on redirect
             {

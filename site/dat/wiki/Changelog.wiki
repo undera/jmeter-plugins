@@ -16,6 +16,7 @@
   * GraphsGeneratorListener: add filter regular expression and period time (https://github.com/undera/jmeter-plugins/pull/57)
   * New Synthesis Report with filter panel
   * add base64Encode and base64Decode [Functions functions]
+  * [RESTSampler REST Sampler] is now deprecated in favor of HTTP Request or [RawRequest HTTP Raw Request]
 
 == 1.1.3 <i><font color=gray size="1">February 17, 2014</font></i>==
   * New Redis Data Set for distributed equivalent of CSV Data Set

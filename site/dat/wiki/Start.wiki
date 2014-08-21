@@ -25,6 +25,7 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [LoadosophiaUploader Loadosophia.org Uploader] 
   * [FlexibleFileWriter Flexible File Writer] 
   * [ConsoleStatusLogger Non-GUI Console Status Logger] 
+  * [SynthesisReport Synthesis Report]
 
 === Others ===
   * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
@@ -66,7 +67,7 @@ Additional plugins for extended and complex testing. Does not require additional
   * [RawDataSource Raw Data Source]
   * [XMLFormatPostProcessor XML Format PostProcessor]
   * [LockFile Lock Files]
-  * [HttpSimpleTableServer HTTP Simple Table Server]
+  * [HttpSimpleTableServer HTTP Simple Table Server] to manage the dataset
 </td>
 </tr><tr>
 <td class="plugins_set extraslibs_set">

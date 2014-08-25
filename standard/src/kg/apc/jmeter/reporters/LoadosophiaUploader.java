@@ -14,6 +14,8 @@ import org.loadosophia.jmeter.StatusNotifierCallback;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -67,6 +69,21 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     public void testEnded(String host) {
         super.testEnded(host);
         synchronized (LOCK) {
+            // FIXME: trying to handle safe upgrade, needs to be removed in the future
+            // @see https://issues.apache.org/bugzilla/show_bug.cgi?id=56807
+            try {
+                Class<ResultCollector> c = ResultCollector.class;
+                Method m = c.getDeclaredMethod("flushFile");
+                m.invoke(this);
+                log.info("Successfully flushed results file");
+            } catch (NoSuchMethodException ex) {
+                log.warn("Cannot flush results file since you are using old version of JMeter, consider upgrading to latest. Currently the results may be incomplete.");
+            } catch (InvocationTargetException e) {
+                log.error("Failed to flush file", e);
+            } catch (IllegalAccessException e) {
+                log.error("Failed to flush file", e);
+            }
+
             if (isOnlineInitiated) {
                 finishOnline();
             }

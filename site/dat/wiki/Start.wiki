@@ -68,6 +68,7 @@ Additional plugins for extended and complex testing. Does not require additional
   * [XMLFormatPostProcessor XML Format PostProcessor]
   * [LockFile Lock Files]
   * [HttpSimpleTableServer HTTP Simple Table Server] to manage the dataset
+  * [MergeResults Merge Results] to simplify the comparison of two or more load tests
 </td>
 </tr><tr>
 <td class="plugins_set extraslibs_set">

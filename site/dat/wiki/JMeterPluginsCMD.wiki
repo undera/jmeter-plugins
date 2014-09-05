@@ -30,6 +30,8 @@ Yoy may generate CSV and PNG in single tool run. {{{--help}}} will show you shor
 || {{{--input-jtl <file>}}} || load data from specified JTL file ||
 || {{{--plugin-type <class>}}} || which type of graph use for results generation ||
 
+*Use {{{--input-jtl merge-results.properties}}} with {{{--plugin-type MergeResults}}}*. The merge-results.properties file is in JMETER_HOME/bin dir.
+
 You may customize graph drawing and data processing
 like [SettingsPanel GUI settings] do with optional parameters:
 
@@ -76,6 +78,7 @@ Most of class names are self-explanatory:
   * TimesVsThreads = Response Times VS Threads
   * TransactionsPerSecond
   * PageDataExtractorOverTime
+  * MergeResults
 
 == Other Ways to Automate Reporting ==
 

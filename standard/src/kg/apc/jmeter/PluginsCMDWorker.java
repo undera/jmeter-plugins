@@ -3,6 +3,7 @@ package kg.apc.jmeter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ListIterator;
 import java.util.Properties;
 
@@ -11,14 +12,12 @@ import kg.apc.charting.GraphPanelChart;
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
+
 import org.apache.jmeter.JMeter;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- * @author undera
- */
 public class PluginsCMDWorker {
 
     private int graphWidth = 800;
@@ -228,14 +227,71 @@ public class PluginsCMDWorker {
             rc.setSuccessOnlyLogging(successFilter != 0);
         }
 
-        log.debug("Using JTL file: " + inputFile);
-        rc.setFilename(inputFile);
-        rc.setListener(pluginInstance);
-        pluginInstance.configure(rc);
+        if (pluginType.getStaticLabel().equals(
+                JMeterPluginsUtils.prefixLabel("Merge Results"))) {
+            log.debug("Using properties file with MergeResults plugin: "
+                    + inputFile);
+            Properties prop = new Properties();
+            InputStream input = null;
 
-        //rc.testStarted();
-        rc.loadExistingFile();
-        //rc.testEnded();
+            try {
+                input = new FileInputStream(inputFile);
+
+                // load a properties file
+                prop.load(input);
+
+                for (int i = 1; i < 5; i++) {
+                    rc.setFilename(null == prop.getProperty("inputJtl" + i) ? ""
+                            : prop.getProperty("inputJtl" + i));
+                    if (rc.getFilename().isEmpty()) {
+                        break;
+                    }
+                    rc.setPrefixLabel(null == prop.getProperty("prefixLabel"
+                            + i) ? "" : prop.getProperty("prefixLabel" + i));
+                    rc.setIncludeLabels(null == prop
+                            .getProperty("includeLabels" + i) ? "" : prop
+                            .getProperty("includeLabels" + i));
+                    rc.setExcludeLabels(null == prop
+                            .getProperty("excludeLabels" + i) ? "" : prop
+                            .getProperty("excludeLabels" + i));
+                    rc.setEnabledIncludeRegex(Boolean.valueOf(prop
+                            .getProperty("includeLabelRegex" + i)));
+                    rc.setEnabledExcludeRegex(Boolean.valueOf(prop
+                            .getProperty("excludeLabelRegex" + i)));
+                    rc.setStartOffset(null == prop.getProperty("startOffset"
+                            + i) ? "" : prop.getProperty("startOffset" + i));
+                    rc.setEndOffset(null == prop.getProperty("endOffset" + i) ? ""
+                            : prop.getProperty("endOffset" + i));
+                    rc.setListener(pluginInstance);
+                    pluginInstance.configure(rc);
+
+                    // rc.testStarted();
+                    rc.loadExistingFile();
+                    // rc.testEnded();
+                }
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (input != null) {
+                    try {
+                        input.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        } else {
+            log.debug("Using JTL file: " + inputFile);
+            rc.setFilename(inputFile);
+            rc.setListener(pluginInstance);
+            pluginInstance.configure(rc);
+
+            // rc.testStarted();
+            rc.loadExistingFile();
+            // rc.testEnded();
+        }
 
         // to handle issue 64 and since it must be cheap - set options again
         setOptions(pluginInstance);

@@ -16,7 +16,7 @@
  *
  */
 
-package org.jmeterplugins.tools;
+package kg.apc.jmeter.vizualizers;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -24,6 +24,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,6 +47,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellEditor;
 
+import kg.apc.charting.GraphPanelChart;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
@@ -216,6 +219,8 @@ public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
         }
         checkDeleteButtonStatus();
         checkMergeButtonStatus();
+
+        startTimeRef = 0;
     }
 
     @Override
@@ -532,5 +537,32 @@ public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
     @Override
     protected JSettingsPanel createSettingsPanel() {
         return new JSettingsPanel(this, 0);
+    }
+
+    @Override
+    public GraphPanelChart getGraphPanelChart() {
+        return new FakeGraphPanelChart();
+    }
+
+    private class FakeGraphPanelChart extends GraphPanelChart {
+
+        public FakeGraphPanelChart() {
+            super(false);
+        }
+
+        @Override
+        public void saveGraphToCSV(File file) throws IOException {
+            log.info("Saving CSV to " + file.getAbsolutePath());
+            mergeService = new MergeResultsService();
+            collector.setFilename(file.getName());
+            mergeService.mergeSamples((CorrectedResultCollector) collector,
+                    samples);
+        }
+
+        @Override
+        public void saveGraphToPNG(File file, int w, int h) throws IOException {
+            throw new UnsupportedOperationException(
+                    "This plugin type cannot be saved as image");
+        }
     }
 }

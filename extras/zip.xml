@@ -39,6 +39,10 @@
             <source>../examples/logins.csv</source>
             <outputDirectory>bin</outputDirectory>
         </file>
+        <file>
+            <source>merge-results.properties</source>
+            <outputDirectory>bin</outputDirectory>
+        </file>
     </files>
     
 </assembly>

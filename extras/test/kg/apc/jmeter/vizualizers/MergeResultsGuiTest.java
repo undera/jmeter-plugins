@@ -16,7 +16,7 @@
  *
  */
 
-package org.jmeterplugins.tools;
+package kg.apc.jmeter.vizualizers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

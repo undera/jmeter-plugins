@@ -116,7 +116,7 @@ public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
     public static final int REGEX_EXCLUDE = 7;
 
     private static final int MAX_FILE_HANDLES = 4;
-    private static final long REF_START_TIME = 946682000;
+    private static final long REF_START_TIME = 946681200000L; // 2000-01-01 00:00:00.000
 
     private static final String ACTION_ADD = "add"; // $NON-NLS-1$
     private static final String ACTION_COPY = "copy"; // $NON-NLS-1$

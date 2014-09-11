@@ -1,5 +1,5 @@
 <div style="float: right" class="plugins_set extras_set">Available in [ExtrasSet Extras Set]</div>
-= HTTP Simple Table Server <sup><font color=gray size="1">since 1.1.4</font></sup> =
+= HTTP Simple Table Server <sup><font color=gray size="1">since 1.2.0/font></sup> =
 
 Performance testing with JMeter can be done with several JMeter injectors (on a remote host) and one JMeter controller (with GUI, on your local host).
 Scripts are sent to JMeter injectors using RMI protocol.

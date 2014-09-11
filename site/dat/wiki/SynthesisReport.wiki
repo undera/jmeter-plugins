@@ -1,5 +1,5 @@
 <div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
-= Synthesis Report <sup><font color=gray size="1">since 1.1.4</font></sup>=
+= Synthesis Report <sup><font color=gray size="1">since 1.2.0</font></sup>=
 
 Synthesis Report is a mix between Summary Report and Aggregate Report:
 

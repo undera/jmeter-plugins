@@ -1,11 +1,11 @@
 <div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
-= Merge Results <sup><font color=gray size="1">since 1.1.4</font></sup>=
+= Merge Results <sup><font color=gray size="1">since 1.2.0</font></sup>=
 
 Merge Results is a tool to merge files of results (to simplify the comparison of two or more load tests)
 
 Each file can be filtered using the Include / exclude field (regular expression can be used by checking the appropriate box) or Start / End offset field.
 The results file is made from input files concatenated with a new reference date.
-Each label is prefixed by the one specified in the table (ie: *TEST1:*P1_SEARCH, *TEST2:*P1_SEARCH).
+Each label is prefixed by the one specified in the table (ie: *TEST1:*SEARCH, *TEST2:*SEARCH).
 
 The newly created file can be read by classical JMeter reports or graphs.
 

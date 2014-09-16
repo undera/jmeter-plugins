@@ -303,7 +303,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
     }
 
     /**
-     * @param FilePrefix the FilePrefix to set
+     * @param filePrefix the FilePrefix to set
      */
     public void setFilePrefix(String filePrefix) {
         this.filePrefix = filePrefix;
@@ -600,7 +600,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
     }
 
     /**
-     * @param startOffset
+     * @param endOffset
      *            the start offset to set
      */
     public void setEndOffset(String endOffset) {

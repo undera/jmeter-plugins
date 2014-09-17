@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import junit.framework.TestCase;
+import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 
 import org.apache.jmeter.samplers.SampleResult;
@@ -51,6 +52,7 @@ public class MergeResultsServiceTest extends TestCase {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @AfterClass

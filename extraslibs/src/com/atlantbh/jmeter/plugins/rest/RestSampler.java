@@ -81,13 +81,20 @@ public class RestSampler extends HTTPSampler2 {
     }
 
     public URL getUrl() throws MalformedURLException {
-        String validHost = toValidUrl(getHostBaseUrl());
         URL u = null;
-        if (validHost != null && getResource() != null) {
-            String fullUrl = validHost + ":" + getPortNumber() + "/" + getResource();
-            u = toURL(fullUrl);
+        try {
+            String validHost = toValidUrl(getHostBaseUrl());
+            if (validHost != null && getResource() != null) {
+                String fullUrl = validHost + ":" + getPortNumber() + "/" + getResource();
+                u = toURL(fullUrl);
+            }
+        } catch (MalformedURLException e)  {
+            if(isProtocolDefaultPort()) {
+                u = new URL(getProtocol(), getDomain(), getPath() + "/" + getResource());
+            } else {
+                u = new URL(getProtocol(), getDomain(), getPort(), getPath() + "/" + getResource());
+            }
         }
-
         return u;
     }
 

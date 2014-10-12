@@ -28,8 +28,6 @@
 
 <download:JMeterPlugins-Standard-1.1.2.zip;Standard Set>
 
-<download:ServerAgent-2.2.1.zip;PerfMon Agent to use with Standard Set>
-
 <download:JMeterPlugins-Extras-1.1.2.zip;Extras Set>
 
 <download:JMeterPlugins-ExtrasLibs-1.1.2.zip;Extras with Libs Set>

@@ -43,7 +43,7 @@ public class FlexibleFileWriter
             + "startTimeMillis endTimeMillis "
             + "responseTimeMicros latencyMicros "
             + "requestData responseData responseHeaders "
-            + "threadsCount ";
+            + "threadsCount requestHeaders";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String OVERWRITE = "overwrite";
     private static final String FILENAME = "filename";
@@ -361,11 +361,15 @@ public class FlexibleFileWriter
                 break;
 
             case 18:
-                buf.put(result.getRequestHeaders().getBytes());
+                buf.put(result.getResponseHeaders().getBytes());
                 break;
 
             case 19:
                 buf.put(String.valueOf(result.getAllThreads()).getBytes());
+                break;
+
+            case 20:
+                buf.put(String.valueOf(result.getRequestHeaders()).getBytes());
                 break;
 
             default:

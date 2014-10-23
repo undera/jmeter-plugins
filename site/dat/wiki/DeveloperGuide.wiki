@@ -40,14 +40,16 @@ Example test plans are committed into GitHub repository here: [https://github.co
   # edit wiki Start page: plugins list with NEW tags
   # do mvn clean package
   # upload plugins zip and libs zip to downloads
+  # commit and push release doc changes
+  # go to https://github.com/undera/jmeter-plugins/releases and create release
   # announce release:
-    #* project mailing list
-    #* twitter link to mailing list announce
-    #* linkedIn jmeter group
-    #* software-testing.ru forum (for Russian users)
-    #* jmeter mailing list (in case of important enough release)
+    # project mailing list
+    # twitter link to mailing list announce
+    # linkedIn jmeter group
+    # software-testing.ru forum (for Russian users)
+    # jmeter mailing list (in case of important enough release)
   # publish maven artifacts maybe after a while to prevent buggy artifacts
-    #* run maven-bundle.sh
-    #* upload at [https://oss.sonatype.org/index.html#staging-upload] - login 'undera'
-    #* stage at [https://oss.sonatype.org/index.html#stagingRepositories]
+    # run maven-bundle.sh
+    # upload at [https://oss.sonatype.org/index.html#staging-upload] - login 'undera'
+    # stage at [https://oss.sonatype.org/index.html#stagingRepositories]
     

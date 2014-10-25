@@ -138,6 +138,7 @@
                     <include>**/*.raw</include>
                     <include>**/*.properties</include>
                     <include>**/*.jtl</include>
+                    <include>**/*.jmx</include>
                     <include>**/*.csv</include>
                     <include>**/*.out</include>
                     <include>**/*.ammo</include>

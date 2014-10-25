@@ -120,13 +120,13 @@ public class JMXCheckerTool extends AbstractCMDTool {
     }
 
     private void dumpTree(HashTree testTree) {
-        log.info("Dumpting tree structure below:");
+        log.info("Dumping tree structure:");
         testTree.traverse(new TreeDumper());
 
     }
 
     private void showStats(HashTree testTree) {
-        log.info("Dumpting element stats below:");
+        log.info("Element stats goes below:");
         StatsCollector stats = new StatsCollector();
         testTree.traverse(stats);
         stats.logStats();

@@ -1,4 +1,0 @@
-Number of active threads;Average doReveal;doReveal
-5;;3617.0
-7;1955.304347826087;
-10;;397.0

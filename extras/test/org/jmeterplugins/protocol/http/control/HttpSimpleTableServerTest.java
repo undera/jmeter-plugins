@@ -18,6 +18,7 @@
 
 package org.jmeterplugins.protocol.http.control;
 
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
@@ -30,14 +31,17 @@ import static org.junit.Assert.assertTrue;
 
 public class HttpSimpleTableServerTest {
 
-    private static final String DATA_DIR = System.getProperty("user.dir");
+    private final String DATA_DIR;
     private static final String CRLF = HttpSimpleTableServer.lineSeparator;
 
+    public HttpSimpleTableServerTest() {
+        DATA_DIR = TestJMeterUtils.getTempDir();
+    }
 
     @Test
     public void testGetRequest() throws Exception {
         // create a file to test the STS
-        BufferedWriter out ;
+        BufferedWriter out;
         String filename = "test-login.csv";
         out = new BufferedWriter(new FileWriter(new File(DATA_DIR, filename)));
         out.write("login1;password1");

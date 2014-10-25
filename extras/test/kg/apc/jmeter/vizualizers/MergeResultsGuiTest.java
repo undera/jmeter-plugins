@@ -55,10 +55,12 @@ import org.junit.Test;
  */
 public class MergeResultsGuiTest {
 
-    private static final String DATA_DIR = System.getProperty("user.dir");
+    private final String DATA_DIR;
     private static final String CRLF = HttpSimpleTableServer.lineSeparator;
 
     public MergeResultsGuiTest() {
+        TestJMeterUtils.createJmeterEnv();
+        DATA_DIR = TestJMeterUtils.getTempDir();
     }
 
     /**
@@ -67,7 +69,7 @@ public class MergeResultsGuiTest {
      */
     @BeforeClass
     public static void setUpClass() throws Exception {
-        TestJMeterUtils.createJmeterEnv();
+
     }
 
     /**
@@ -246,17 +248,14 @@ public class MergeResultsGuiTest {
         out.write(CRLF);
         out.write("2014-04-28 16:49:28.068;288478;P1_RECHERCHE;200;G3_G1_G2 Paliers 1-7;true;290687;28;28;1559;ITEM-63339");
         out.write(CRLF);
-        if (null != out) {
-            out.close();
-        }
+        out.close();
+
         out = new BufferedWriter(new FileWriter(new File(DATA_DIR, f2)));
         out.write("timeStamp;elapsed;label;responseCode;threadName;success;bytes;grpThreads;allThreads;Latency;Hostname");
         out.write(CRLF);
         out.write("2014-04-29 17:43:18.161;257065;P1_RECHERCHE;200;G3_G1_G2 Paliers 1-12;true;279542;20;20;908;ITEM-63339");
         out.write(CRLF);
-        if (null != out) {
-            out.close();
-        }
+        out.close();
 
         instance.actionPerformed(actionAdd);
         instance.actionPerformed(actionAdd);

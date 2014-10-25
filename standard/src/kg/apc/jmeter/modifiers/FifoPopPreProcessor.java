@@ -6,9 +6,13 @@ import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 public class FifoPopPreProcessor extends AbstractTestElement
         implements PreProcessor, TestStateListener {
+
+    private static final Logger log = LoggingManager.getLoggerForClass();
 
     public static final String queueName = "FifoName";
     public static final String variableName = "Variable";
@@ -42,6 +46,7 @@ public class FifoPopPreProcessor extends AbstractTestElement
                 value = valueObj.toString();
             }
         } catch (InterruptedException ex) {
+            log.warn("Interrupted pop from queue " + getQueueName());
             value = "INTERRUPTED";
         }
         final JMeterVariables vars = JMeterContextService.getContext().getVariables();

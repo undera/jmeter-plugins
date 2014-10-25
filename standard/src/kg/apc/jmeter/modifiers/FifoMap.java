@@ -39,8 +39,7 @@ public class FifoMap extends ConcurrentHashMap<String, BlockingQueue<Object>> {
 
     public Object pop(String fifoName, long timeout) throws InterruptedException {
         BlockingQueue<Object> fifo = getFifo(fifoName);
-        final Object value = fifo.poll(timeout, TimeUnit.SECONDS);
-        return value;
+        return fifo.poll(timeout, TimeUnit.SECONDS);
     }
 
     public Object pop(String fifoName) throws InterruptedException {
@@ -49,8 +48,7 @@ public class FifoMap extends ConcurrentHashMap<String, BlockingQueue<Object>> {
 
     public int length(String fifoName) {
         BlockingQueue<Object> fifo = getFifo(fifoName);
-        final int size = fifo.size();
-        return size;
+        return fifo.size();
     }
 
     public void put(String fifoName, Object v) throws InterruptedException {

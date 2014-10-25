@@ -3,9 +3,12 @@ package kg.apc.jmeter.modifiers;
 import org.apache.jmeter.processor.PostProcessor;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.testelement.TestStateListener;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 public class FifoPutPostProcessor extends AbstractTestElement
         implements PostProcessor, TestStateListener {
+    private static final Logger log = LoggingManager.getLoggerForClass();
 
     public static final String QUEUE = "FifoName";
     public static final String VALUE = "Value";
@@ -30,7 +33,7 @@ public class FifoPutPostProcessor extends AbstractTestElement
         try {
             FifoMap.getInstance().put(getQueueName(), getValue());
         } catch (InterruptedException ex) {
-            // FIXME: bad idea to drop exception
+            log.warn("Interrupted put into queue " + getQueueName());
         }
     }
 

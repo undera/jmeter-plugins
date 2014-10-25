@@ -75,7 +75,6 @@ public class JMXCheckerToolTest extends TestCase {
         ListIterator args = al.listIterator();
         try {
             assertEquals(1, obj.processParams(args));
-            fail();
         } catch (JMXCheckerTool.TestPlanBrokenException ignored) {
         }
     }

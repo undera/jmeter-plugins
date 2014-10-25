@@ -1,22 +1,19 @@
 package kg.apc.jmeter;
 
+import kg.apc.charting.ChartSettings;
+import kg.apc.charting.GraphPanelChart;
+import kg.apc.cmd.UniversalRunner;
+import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
+import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ListIterator;
 import java.util.Properties;
-
-import kg.apc.charting.ChartSettings;
-import kg.apc.charting.GraphPanelChart;
-import kg.apc.cmd.UniversalRunner;
-import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
-import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
-
-import org.apache.jmeter.JMeter;
-import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 public class PluginsCMDWorker {
 
@@ -52,107 +49,9 @@ public class PluginsCMDWorker {
 
     public PluginsCMDWorker() {
         log.info("Using JMeterPluginsCMD v. " + JMeterPluginsUtils.getVersion());
-        prepareJMeterEnv();
+        JMeterPluginsUtils.prepareJMeterEnv(UniversalRunner.getJARLocation());
     }
 
-    private void prepareJMeterEnv() {
-        if (JMeterUtils.getJMeterHome() != null) {
-            log.warn("JMeter env exists. No one should see this normally.");
-            return;
-        }
-
-        String homeDir = UniversalRunner.getJARLocation();
-        log.debug("Orig jmeter home dir: " + homeDir);
-        File dir = new File(homeDir);
-        while (dir != null && dir.exists()
-                && dir.getName().equals("ext")
-                && dir.getParentFile().getName().equals("lib")) {
-            dir = dir.getParentFile();
-        }
-
-        if (dir == null || !dir.exists()) {
-            throw new IllegalArgumentException("CMDRunner.jar must be placed in <jmeter>/lib/ext directory");
-        }
-
-        homeDir = dir.getParent();
-
-        if (!isJMeterHome(homeDir)) {
-            homeDir = getJMeterHomeFromCP(System.getProperty("java.class.path"));
-        }
-
-        log.debug("Final jmeter home dir: " + homeDir);
-        JMeterUtils.setJMeterHome(homeDir);
-        initializeProperties();
-    }
-
-    /**
-     * Had to copy this method from JMeter class 'cause they provide no ways to
-     * re-use this code
-     *
-     * @see JMeter
-     */
-    private void initializeProperties() {
-        JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterHome()
-                + File.separator
-                + "bin" + File.separator
-                + "jmeter.properties");
-
-        //JMeterUtils.initLogging();
-        JMeterUtils.initLocale();
-
-        Properties jmeterProps = JMeterUtils.getJMeterProperties();
-
-        // Add local JMeter properties, if the file is found
-        String userProp = JMeterUtils.getPropDefault("user.properties", "");
-        if (userProp.length() > 0) {
-            FileInputStream fis = null;
-            try {
-                File file = JMeterUtils.findFile(userProp);
-                if (file.canRead()) {
-                    log.info("Loading user properties from: " + file.getCanonicalPath());
-                    fis = new FileInputStream(file);
-                    Properties tmp = new Properties();
-                    tmp.load(fis);
-                    jmeterProps.putAll(tmp);
-                    LoggingManager.setLoggingLevels(jmeterProps);//Do what would be done earlier
-                }
-            } catch (IOException e) {
-                log.warn("Error loading user property file: " + userProp, e);
-            } finally {
-                try {
-                    if (fis != null) {
-                        fis.close();
-                    }
-                } catch (IOException ex) {
-                    log.warn("There was problem closing file stream", ex);
-                }
-            }
-        }
-
-        // Add local system properties, if the file is found
-        String sysProp = JMeterUtils.getPropDefault("system.properties", "");
-        if (sysProp.length() > 0) {
-            FileInputStream fis = null;
-            try {
-                File file = JMeterUtils.findFile(sysProp);
-                if (file.canRead()) {
-                    log.info("Loading system properties from: " + file.getCanonicalPath());
-                    fis = new FileInputStream(file);
-                    System.getProperties().load(fis);
-                }
-            } catch (IOException e) {
-                log.warn("Error loading system property file: " + sysProp, e);
-            } finally {
-                try {
-                    if (fis != null) {
-                        fis.close();
-                    }
-                } catch (IOException ex) {
-                    log.warn("There was problem closing file stream", ex);
-                }
-            }
-        }
-    }
 
     public void addExportMode(int mode) {
         exportMode |= mode;
@@ -473,35 +372,6 @@ public class PluginsCMDWorker {
                 throw new RuntimeException("Failed to create directory for " + resultFile.getAbsolutePath());
             }
         }
-    }
-
-    private boolean isJMeterHome(String homeDir) {
-        File f = new File(homeDir + File.separator + "lib" + File.separator + "ext");
-        return f.exists() && f.isDirectory();
-    }
-
-    public static String getJMeterHomeFromCP(String classpathSTR) {
-        log.debug("Trying to get JMeter home from classpath");
-
-        //FIXME: This dirty way of doing it should be changed as it is OS sensitive
-
-        String splitter;
-
-        if (classpathSTR.indexOf(';') != -1) {
-            splitter = ";";
-        } else {
-            splitter = ":";
-        }
-
-        String[] paths = classpathSTR.split(splitter);
-        for (String string : paths) {
-            log.debug("Testing " + string);
-            if (string.endsWith("ApacheJMeter_core.jar")) {
-                File f = new File(string);
-                return f.getParentFile().getParentFile().getParentFile().getAbsolutePath();
-            }
-        }
-        throw new Error("Failed to find JMeter home dir from classpath");
     }
 
     public void processUnknownOption(String nextArg, ListIterator args) {

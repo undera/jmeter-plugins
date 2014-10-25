@@ -1,11 +1,13 @@
 package kg.apc.cmdtools;
 
+import kg.apc.cmd.UniversalRunner;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.jmeter.JMeter;
 import org.apache.jmeter.assertions.Assertion;
+import org.apache.jmeter.config.ConfigElement;
 import org.apache.jmeter.control.Controller;
 import org.apache.jmeter.engine.JMeterEngine;
-import org.apache.jmeter.engine.JMeterEngineException;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.processor.PostProcessor;
 import org.apache.jmeter.processor.PreProcessor;
@@ -14,20 +16,31 @@ import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.save.SaveService;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.TestPlan;
+import org.apache.jmeter.testelement.WorkBench;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.timers.Timer;
 import org.apache.jorphan.collections.HashTree;
 import org.apache.jorphan.collections.HashTreeTraverser;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.apache.log.Priority;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.ListIterator;
 
 public class JMXCheckerTool extends AbstractCMDTool {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private String jmx = null;
+
+    public JMXCheckerTool() {
+        super();
+        JMeterPluginsUtils.prepareJMeterEnv(UniversalRunner.getJARLocation());
+    }
+
     private boolean isStats = false;
     private boolean isDump = false;
 
@@ -42,6 +55,25 @@ public class JMXCheckerTool extends AbstractCMDTool {
 
     @Override
     protected int processParams(ListIterator args) throws UnsupportedOperationException, IllegalArgumentException {
+        // TODO: extract this duplicated code
+        LoggingManager.setPriority(Priority.INFO);
+        // first process params without worker created
+        while (args.hasNext()) {
+            String nextArg = (String) args.next();
+            if (nextArg.equals("--loglevel")) {
+                args.remove();
+                String loglevelStr = (String) args.next();
+                args.remove();
+                LoggingManager.setPriority(loglevelStr);
+            }
+        }
+
+        // rewind it
+        while (args.hasPrevious()) {
+            args.previous();
+        }
+
+
         while (args.hasNext()) {
             String nextArg = (String) args.next();
             log.debug("Arg: " + nextArg);
@@ -71,14 +103,11 @@ public class JMXCheckerTool extends AbstractCMDTool {
         HashTree testTree;
         try {
             testTree = loadJMX(new FileInputStream(new File(jmx)));
-        } catch (IOException e) {
-            log.error("Failed to load JMX", e);
-            return 1;
-        } catch (JMeterEngineException e) {
+            log.info("JMX is fine");
+        } catch (Exception e) {
             log.error("Failed to load JMX", e);
             return 1;
         }
-
 
         if (isStats) {
             showStats(testTree);
@@ -103,7 +132,7 @@ public class JMXCheckerTool extends AbstractCMDTool {
         stats.logStats();
     }
 
-    private HashTree loadJMX(InputStream reader) throws JMeterEngineException, IOException {
+    private HashTree loadJMX(InputStream reader) throws Exception {
         HashTree tree = SaveService.loadTree(reader);
 
         // unfortunately core JMeter code does not throw exception, we may only guess...
@@ -159,6 +188,7 @@ public class JMXCheckerTool extends AbstractCMDTool {
         private int postProc = 0;
         private int assertions = 0;
         private int timers = 0;
+        private int configs = 0;
 
         @Override
         public void addNode(Object node, HashTree subTree) {
@@ -178,7 +208,11 @@ public class JMXCheckerTool extends AbstractCMDTool {
                 assertions++;
             } else if (node instanceof Timer) {
                 timers++;
+            } else if (node instanceof ConfigElement) {
+                configs++;
             } else if (node instanceof TestPlan) {
+                log.debug("Ok, we got the root of test plan");
+            } else if (node instanceof WorkBench) {
                 log.debug("Ok, we got the root of test plan");
             } else {
                 log.warn("Strange object in tree: " + node);
@@ -199,6 +233,7 @@ public class JMXCheckerTool extends AbstractCMDTool {
         public void logStats() {
             log.info("Thread Groups:\t" + tGroups);
             log.info("Controllers:\t" + controllers);
+            log.info("Config Items:\t" + configs);
             log.info("Samplers:\t" + samplers);
             log.info("Listeners:\t" + listeners);
             log.info("Timers:\t" + timers);

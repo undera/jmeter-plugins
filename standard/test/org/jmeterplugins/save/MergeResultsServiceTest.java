@@ -17,29 +17,23 @@
  */
 package org.jmeterplugins.save;
 
+import kg.apc.emulators.TestJMeterUtils;
+import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
+import org.apache.jmeter.samplers.SampleResult;
+import org.junit.*;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.TestCase;
-import kg.apc.emulators.TestJMeterUtils;
-import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
-
-import org.apache.jmeter.samplers.SampleResult;
-import org.jmeterplugins.save.MergeResultsService;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
- *
  * @author Felix Henry
  * @author Vincent Daburon
  */
-public class MergeResultsServiceTest extends TestCase {
+public class MergeResultsServiceTest {
 
     // testMergeSample test samples
     public static final List<SampleResult> SAMPLES = Collections

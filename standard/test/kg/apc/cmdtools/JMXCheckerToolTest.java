@@ -1,18 +1,17 @@
 package kg.apc.cmdtools;
 
-import junit.framework.TestCase;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.util.JMeterUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.*;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-public class JMXCheckerToolTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+public class JMXCheckerToolTest {
 
     private final String basedir;
 
@@ -39,11 +38,13 @@ public class JMXCheckerToolTest extends TestCase {
     public void tearDown() {
     }
 
+    @Test
     public void testShowHelp() throws Exception {
         JMXCheckerTool obj = new JMXCheckerTool();
         obj.showHelp(System.out);
     }
 
+    @Test
     public void testProcessParamsWrong() throws Exception {
         JMXCheckerTool obj = new JMXCheckerTool();
         ArrayList<String> al = new ArrayList<String>();
@@ -56,6 +57,7 @@ public class JMXCheckerToolTest extends TestCase {
         }
     }
 
+    @Test
     public void testProcessParamsValid() throws Exception {
         JMXCheckerTool obj = new JMXCheckerTool();
         ArrayList<String> al = new ArrayList<String>();
@@ -67,6 +69,7 @@ public class JMXCheckerToolTest extends TestCase {
         assertEquals(0, obj.processParams(args));
     }
 
+    @Test
     public void testProcessParamsInvalid() throws Exception {
         JMXCheckerTool obj = new JMXCheckerTool();
         ArrayList<String> al = new ArrayList<String>();

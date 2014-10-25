@@ -1,9 +1,11 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
-public class SampleResultWithSubsTest extends TestCase {
+public class SampleResultWithSubsTest {
 
+    @Test
     public void testSubSampleStart() throws Exception {
         SampleResultWithSubs res = new SampleResultWithSubs();
         res.subSampleStart("test");
@@ -11,6 +13,7 @@ public class SampleResultWithSubsTest extends TestCase {
         res.subSampleStart("test"); // just to cover warning
     }
 
+    @Test
     public void testSubSampleEnd() throws Exception {
         SampleResultWithSubs res = new SampleResultWithSubs();
         res.subSampleEnd(true);// just to cover warning
@@ -19,6 +22,7 @@ public class SampleResultWithSubsTest extends TestCase {
         res.subSampleEnd(true);
     }
 
+    @Test
     public void testSampleEnd() throws Exception {
         SampleResultWithSubs res = new SampleResultWithSubs();
         res.subSampleStart("test");

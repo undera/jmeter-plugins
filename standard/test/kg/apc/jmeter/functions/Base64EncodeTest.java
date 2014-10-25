@@ -1,24 +1,28 @@
 package kg.apc.jmeter.functions;
 
-import junit.framework.TestCase;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Base64EncodeTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+public class Base64EncodeTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
         JMeterContextService.getContext().setVariables(new JMeterVariables());
     }
 
+    @Test
     public void testExecute() throws Exception {
         JMeterContext context = JMeterContextService.getContext();
         context.setVariables(new JMeterVariables());
@@ -34,6 +38,7 @@ public class Base64EncodeTest extends TestCase {
         assertNotNull(context.getVariables().get("b64enc_res"));
     }
 
+    @Test
     public void testGetReferenceKey() throws Exception {
         System.out.println("getReferenceKey");
         Base64Encode instance = new Base64Encode();
@@ -42,6 +47,7 @@ public class Base64EncodeTest extends TestCase {
         assertEquals(expResult, result);
     }
 
+    @Test
     public void testGetArgumentDesc() throws Exception {
         System.out.println("getArgumentDesc");
         Base64Encode instance = new Base64Encode();

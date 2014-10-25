@@ -18,22 +18,26 @@
 
 package org.jmeterplugins.protocol.http.control;
 
-import junit.framework.TestCase;
 import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HttpSimpleTableServerTest extends TestCase {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class HttpSimpleTableServerTest {
 
     private static final String DATA_DIR = System.getProperty("user.dir");
     private static final String CRLF = HttpSimpleTableServer.lineSeparator;
 
 
+    @Test
     public void testGetRequest() throws Exception {
         // create a file to test the STS
-        BufferedWriter out = null;
+        BufferedWriter out ;
         String filename = "test-login.csv";
         out = new BufferedWriter(new FileWriter(new File(DATA_DIR, filename)));
         out.write("login1;password1");
@@ -299,8 +303,7 @@ public class HttpSimpleTableServerTest extends TestCase {
         InputStream inputStream = resp.getData();
         StringWriter writer = new StringWriter();
         IOUtils.copy(inputStream, writer);
-        String resp_entity = writer.toString();
-        return resp_entity;
+        return writer.toString();
     }
 
     private class SessionEmulator implements NanoHTTPD.IHTTPSession {

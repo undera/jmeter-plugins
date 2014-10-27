@@ -25,6 +25,7 @@ Together with obvious options like hostname and port you should know that:
   * timeout works both for connection and data receiving, triggers when no packets received from server in timeout period
   * file contents sent without variables processing
   * response parsing, if enabled, is very simple for performance reasons, it treats first line as HTTP response line
+  * if both response parsing and measure latency to body is enabled, it will measure latency until the first byte of the http body (default is until first byte received)
   * "keep connection open" setting just keeps TCP connection open after request, each sampler has its own connection for now unlike original JMeter samplers
   * set JMeter property {{{kg.apc.jmeter.samplers.ResultDataLimit}}} to limit data stored in JMeter results. Response still read from network, but not fully stored in results.
 

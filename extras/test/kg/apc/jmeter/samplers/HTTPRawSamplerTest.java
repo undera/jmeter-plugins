@@ -340,4 +340,26 @@ public class HTTPRawSamplerTest {
         String text = "";
         instance.setFileToSend(text);
     }
+
+    /**
+     * Test of isLatencyBody method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testIsLatencyBody() {
+        System.out.println("isLatencyBody");
+        boolean expResult = false;
+        boolean result = instance.isParseResult();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of SetLatencyBody method, of class HTTPRawSampler.
+     */
+    @Test
+    public void testSetLatencyBody() {
+        System.out.println("SetLatencyBody");
+        boolean selected = false;
+        instance.setParseResult(selected);
+    }
+
 }

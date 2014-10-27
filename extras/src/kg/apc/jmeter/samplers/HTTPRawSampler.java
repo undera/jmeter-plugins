@@ -19,10 +19,15 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 // FIXME: actually keep-alive does not work!
+/**
+ *
+ * @author undera
+ */
 public class HTTPRawSampler extends AbstractIPSampler {
     
     private static final String FILE_NAME = "fileName";
     private static final String KEEPALIVE = "keepalive";
+    private static final String LATENCYBODY = "latencybody";
     private static final String PARSE = "parse";
     private static final String RNpattern = "\\r\\n";
     private static final String SPACE = " ";
@@ -51,8 +56,9 @@ public class HTTPRawSampler extends AbstractIPSampler {
         
         ByteBuffer recvBuf = getRecvBuf();
         recvBuf.clear();
-        
+
         boolean firstPack = true;
+        boolean foundBody = false;
         int cnt;
         int responseSize = 0;
         
@@ -64,14 +70,31 @@ public class HTTPRawSampler extends AbstractIPSampler {
             while ((cnt = channel.read(recvBuf)) != -1) {
                 responseSize += cnt;
                 if (firstPack) {
-                    res.latencyEnd();
-                    firstPack = false;
+                    if (!isLatencyBody()) {
+                        res.latencyEnd();
+                        firstPack = false;
+                    }
                 }
                 recvBuf.flip();
                 if (response.size() <= recvDataLimit) {
                     byte[] bytes = new byte[cnt];
                     recvBuf.get(bytes);
                     response.write(bytes);
+                    if (isParseResult() && isLatencyBody() && !foundBody) {
+                        Scanner scanner = new Scanner(response.toString());
+                        scanner.useDelimiter("\r\n\r\n");
+                        if (scanner.hasNext()) {
+                            String headers = scanner.next();
+                            if (scanner.hasNext()) {
+                                res.latencyEnd();
+                                foundBody = true;
+                                if (log.isDebugEnabled()) {
+                                    log.debug("Found a body here, setting latency");
+                                }
+                            }
+                            scanner.close();
+                        }
+                    }
                 }
                 
                 recvBuf.clear();
@@ -102,7 +125,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
     private void parseResponse(SampleResult res) {
         Scanner scanner = new Scanner(res.getResponseDataAsString());
         scanner.useDelimiter(RNpattern);
-        
+
         if (!scanner.hasNextLine()) {
             return;
         }
@@ -139,7 +162,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
             n++;
         }
         res.setResponseHeaders(headers.toString());
-        
+
         if (scanner.hasNext()) {
             res.setResponseData(scanner.next(anyContent).getBytes());
         } else {
@@ -182,7 +205,16 @@ public class HTTPRawSampler extends AbstractIPSampler {
         savedSock.connect(address);
         return savedSock;
     }
-    
+
+    public boolean isLatencyBody() {
+        return getPropertyAsBoolean(LATENCYBODY);
+    }
+
+    public void setLatencyBody(boolean selected) {
+        setProperty(LATENCYBODY, selected);
+    }
+
+
     public boolean isUseKeepAlive() {
         return getPropertyAsBoolean(KEEPALIVE);
     }

@@ -31,12 +31,12 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ListIterator;
 
-public class JMXCheckerTool extends AbstractCMDTool {
+public class TestPlanCheckTool extends AbstractCMDTool {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private String jmx = null;
 
-    public JMXCheckerTool() {
+    public TestPlanCheckTool() {
         super();
         JMeterPluginsUtils.prepareJMeterEnv(UniversalRunner.getJARLocation());
     }
@@ -46,7 +46,7 @@ public class JMXCheckerTool extends AbstractCMDTool {
 
     @Override
     protected void showHelp(PrintStream os) {
-        os.println("Options for tool 'JMXChecker': --jmx <filename>"
+        os.println("Options for tool 'TestPlanCheck': --jmx <filename>"
                 + " ["
                 + " --stats"
                 + " --tree-dump"

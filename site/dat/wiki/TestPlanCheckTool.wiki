@@ -8,7 +8,7 @@ Sometimes you need an automated way to check JMX file consistency without runnin
 Just checking JMX consistency:
 
 {{{
-jmeter/lib/ext/JMXChecker.sh --jmx MyTestPlan.jmx
+jmeter/lib/ext/TestPlanCheck.sh --jmx MyTestPlan.jmx
 }}}
 
 As a result, the exit code for the tool will be zero in case of successfully loaded JMX and non-zero in case of any error.
@@ -16,7 +16,7 @@ As a result, the exit code for the tool will be zero in case of successfully loa
 Dumping tree structure and printing stats:
 
 {{{
-jmeter/lib/ext/JMXChecker.sh --jmx MyTestPlan.jmx --stats --tree-dump
+jmeter/lib/ext/TestPlanCheck.sh --jmx MyTestPlan.jmx --stats --tree-dump
 }}}
 
 The sample output from the tool will look like this:

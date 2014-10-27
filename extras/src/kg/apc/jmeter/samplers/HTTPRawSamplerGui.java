@@ -28,6 +28,7 @@ public class HTTPRawSamplerGui
     private JTextField timeout;
     private JCheckBox keepAlive;
     private JCheckBox parseResult;
+    private JCheckBox latencyBody;
     private JTextArea requestData;
     private JTextField fileName;
     private JButton browseButton;
@@ -57,6 +58,7 @@ public class HTTPRawSamplerGui
             keepAlive.setSelected(rawSampler.isUseKeepAlive());
             requestData.setText(rawSampler.getRequestData());
             parseResult.setSelected(rawSampler.isParseResult());
+            latencyBody.setSelected(rawSampler.isLatencyBody());
             fileName.setText(rawSampler.getFileToSend());
         }
     }
@@ -88,6 +90,7 @@ public class HTTPRawSamplerGui
             rawSampler.setRequestData(transformCRLF(requestData.getText()));
             rawSampler.setFileToSend(fileName.getText());
             rawSampler.setParseResult(parseResult.isSelected());
+            rawSampler.setLatencyBody(latencyBody.isSelected());
         }
     }
 
@@ -146,15 +149,15 @@ public class HTTPRawSamplerGui
 
         editConstraints.fill = GridBagConstraints.BOTH;
         requestData = new JTextArea();
-        addToPanel(mainPanel, editConstraints, 1, 5, GuiBuilderHelper.getTextAreaScrollPaneContainer(requestData, 20));
+        addToPanel(mainPanel, editConstraints, 1, 6, GuiBuilderHelper.getTextAreaScrollPaneContainer(requestData, 20));
 
 
         editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
 
-        addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Data file path: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 6, fileName = new JTextField(20));
-        addToPanel(mainPanel, labelConstraints, 2, 6, browseButton = new JButton("Browse..."));
+        addToPanel(mainPanel, labelConstraints, 0, 7, new JLabel("Data file path: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 7, fileName = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 2, 7, browseButton = new JButton("Browse..."));
 
         GuiBuilderHelper.strechItemToComponent(fileName, browseButton);
 
@@ -163,8 +166,12 @@ public class HTTPRawSamplerGui
         editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
 
-        addToPanel(mainPanel, labelConstraints, 0, 7, new JLabel("Parse result as HTTP: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 7, parseResult = new JCheckBox());
+        addToPanel(mainPanel, labelConstraints, 0, 8, new JLabel("Parse result as HTTP: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 8, parseResult = new JCheckBox());
+
+        addToPanel(mainPanel, labelConstraints, 0, 9, new JLabel("Measure latency to body: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 9, latencyBody = new JCheckBox());
+
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
@@ -182,6 +189,7 @@ public class HTTPRawSamplerGui
         port.setText("80");
         timeout.setText("0");
         keepAlive.setSelected(false);
+        latencyBody.setSelected(false);
         requestData.setText("GET / HTTP/1.0\r\n"
                 + "Host: localhost\r\n"
                 + "Connection: close\r\n"

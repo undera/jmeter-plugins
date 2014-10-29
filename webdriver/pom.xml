@@ -40,7 +40,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.6</java-version>
         <selenium.version>2.44.0</selenium.version>
-        <selenium.android.version>2.38.0</selenium.android.version>
+        <selenium.android.version>2.37.0</selenium.android.version>
         <powermock.version>1.5</powermock.version>
         <cobertura-maven.version>2.5.2</cobertura-maven.version>
     </properties>

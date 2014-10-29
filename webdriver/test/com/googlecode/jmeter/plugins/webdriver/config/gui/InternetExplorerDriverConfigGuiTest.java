@@ -39,12 +39,12 @@ public class InternetExplorerDriverConfigGuiTest {
     }
 
     @Test
-    public void shouldReturnChromeDriverConfig() {
+    public void shouldReturnInternetExplorerDriverConfig() {
         assertThat(gui.createTestElement(), is(instanceOf(InternetExplorerDriverConfig.class)));
     }
 
     @Test
-    public void shouldSetChromeDriverPath() {
+    public void shouldSetInternetExplorerDriverPath() {
         gui.ieServicePath.setText("iedriver");
         final InternetExplorerDriverConfig testElement = (InternetExplorerDriverConfig) gui.createTestElement();
         assertThat(testElement.getInternetExplorerDriverPath(), is("iedriver"));
@@ -60,7 +60,7 @@ public class InternetExplorerDriverConfigGuiTest {
     }
 
     @Test
-    public void shouldSetChromeDriverPathOnConfigure() {
+    public void shouldSetInternetExplorerDriverPathOnConfigure() {
         InternetExplorerDriverConfig config = new InternetExplorerDriverConfig();
         config.setInternetExplorerDriverPath("iedriver.path");
         gui.configure(config);

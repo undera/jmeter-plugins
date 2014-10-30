@@ -15,3 +15,4 @@ Everyone who provided pull request or other contribution, deserves mentioning on
   * Vincent Daburon and Felix Henry - [HttpSimpleTableServer], [SynthesisReport], [MergeResults], temporal and regex filters
   * Sergey Marakhov and Linh Pham - Android Driver Config
   * Bakir Jusufbegovic and Semir Sabic / AtlantBH - a lot of components
+  * Luc Van Hoeylandt - vanhoeyl AT amplidata.com - Added latency to first body byte to HttpRawSampler

@@ -159,3 +159,9 @@ Example, getting 'str' from 'test string':
 ${__substring(test string, 5, 8)}
 }}}
 
+== iterationNum<sup><font color=gray size="1">since 1.2.1</font></sup> ==
+
+Function returns the number of current iteration in thread group.
+
+Function has no parameters.
+

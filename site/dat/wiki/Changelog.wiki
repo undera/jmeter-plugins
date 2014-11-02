@@ -4,6 +4,7 @@
   * add requestHeaders field to FFW (and fix the bug with responseHeaders that nobody noticed)
   * add [TestPlanCheckTool] to check JMX file consistency without running it
   * add webdriver.sampleresult_class property for [WebDriverSampler]
+  * add iterationNum function
 
 == 1.2.0 <i><font color=gray size="1">September 16, 2014</font></i>==
   * fix JMeter startup with Extras (https://groups.google.com/forum/#!topic/jmeter-plugins/YlnXE_WOXXo)

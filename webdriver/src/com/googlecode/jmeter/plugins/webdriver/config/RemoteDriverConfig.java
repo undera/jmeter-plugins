@@ -4,10 +4,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+
+import com.googlecode.jmeter.plugins.webdriver.config.RemoteCapability;
+import com.googlecode.jmeter.plugins.webdriver.config.RemoteDesiredCapabilitiesFactory;
+import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
 
 public class RemoteDriverConfig extends WebDriverConfig<RemoteWebDriver> {
 
@@ -15,11 +18,10 @@ public class RemoteDriverConfig extends WebDriverConfig<RemoteWebDriver> {
     private static final String GENERAL_USERAGENT_OVERRIDE = "RemoteDriverConfig.general.useragent.override";
     private static final String ENABLE_USERAGENT_OVERRIDE = "RemoteDriverConfig.general.useragent.override.enabled";
     private static final String REMOTE_SELENIUM_GRID_URL = "RemoteDriverConfig.general.selenium.grid.url";
+    private static final String REMOTE_CAPABILITY = "RemoteDriverConfig.general.selenium.capability";
 
     Capabilities createCapabilities() {
-    	ChromeOptions options = new ChromeOptions();
-    	DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-    	capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+    	DesiredCapabilities capabilities = RemoteDesiredCapabilitiesFactory.build(getCapability());
         capabilities.setCapability(CapabilityType.PROXY, createProxy());
         capabilities.setJavascriptEnabled(true);
         return capabilities;
@@ -30,9 +32,8 @@ public class RemoteDriverConfig extends WebDriverConfig<RemoteWebDriver> {
     	try {
 			return new RemoteWebDriver(new URL(getSeleniumGridUrl()), createCapabilities());
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-    	return null;
     }
 
     public void setUserAgentOverride(String userAgent) {
@@ -57,5 +58,13 @@ public class RemoteDriverConfig extends WebDriverConfig<RemoteWebDriver> {
 	
 	public String getSeleniumGridUrl() {
 		return getPropertyAsString(REMOTE_SELENIUM_GRID_URL);
+	}
+	
+	public RemoteCapability getCapability(){
+		return RemoteCapability.valueOf(getPropertyAsString(REMOTE_CAPABILITY));
+	}
+
+	public void setCapability(RemoteCapability selectedCapability) {
+		setProperty(REMOTE_CAPABILITY, selectedCapability.name());
 	}
 }

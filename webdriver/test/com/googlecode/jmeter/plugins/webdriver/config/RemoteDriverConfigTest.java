@@ -1,8 +1,11 @@
 package com.googlecode.jmeter.plugins.webdriver.config;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
 import static org.powermock.api.mockito.PowerMockito.verifyNew;
@@ -40,6 +43,7 @@ public class RemoteDriverConfigTest {
     public void createConfig() {
         config = new RemoteDriverConfig();
         variables = new JMeterVariables();
+        config.setCapability(RemoteCapability.CHROME);
         JMeterContextService.getContext().setVariables(variables);
     }
 
@@ -48,6 +52,15 @@ public class RemoteDriverConfigTest {
         config.clearThreadBrowsers();
         JMeterContextService.getContext().setVariables(null);
     }
+    
+    @Test
+	public void shouldSetTheCapability() throws Exception {
+		assertThat(config.getCapability(), is(RemoteCapability.CHROME));
+		config.setCapability(RemoteCapability.FIREFOX);
+		assertThat(config.getCapability(), is(RemoteCapability.FIREFOX));
+		config.setCapability(RemoteCapability.INTERNET_EXPLORER);
+		assertThat(config.getCapability(), is(RemoteCapability.INTERNET_EXPLORER));
+	}
 
     @Test
     public void shouldBeAbleToSerialiseAndDeserialise() throws IOException, ClassNotFoundException {
@@ -86,4 +99,21 @@ public class RemoteDriverConfigTest {
         assertThat(capabilities.getCapability(ChromeOptions.CAPABILITY), is(notNullValue()));
         assertThat(capabilities.isJavascriptEnabled(), is(true));
     }
+    
+    @Test
+	public void should() throws Exception {
+		
+	}
+    
+    @Test
+	public void shouldThrowAnExceptionWhenTheURLIsMalformed() throws Exception {
+    	try{
+    		config.setSeleniumGridUrl("BadURL");
+    		config.createBrowser();
+    		fail();
+    	} catch (Exception unit){
+    		assertThat(unit, instanceOf(RuntimeException.class));
+    		assertThat(unit.getMessage(), is("java.net.MalformedURLException: no protocol: BadURL"));
+    	}
+	}
 }

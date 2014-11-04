@@ -1,18 +1,32 @@
 package com.googlecode.jmeter.plugins.webdriver.config.gui;
 
-import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
-import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.text.NumberFormat;
+
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import kg.apc.jmeter.JMeterPluginsUtils;
+
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.text.NumberFormat;
+import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
+import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 
 public abstract class WebDriverConfigGui extends AbstractConfigGui implements ItemListener {
 

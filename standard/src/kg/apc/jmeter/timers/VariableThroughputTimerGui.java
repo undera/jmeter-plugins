@@ -46,9 +46,34 @@ public class VariableThroughputTimerGui
     protected ButtonPanelAddCopyRemove buttons;
     private JCheckBox override;
     private JTextField override_value;
+    private VariableThroughputTimer testElement;
+    private DocumentListener docListener;
 
     public VariableThroughputTimerGui() {
         super();
+        final VariableThroughputTimerGui par = this;
+        docListener = new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                change();
+            }
+
+            private void change() {
+                if (testElement != null) {
+                    log.debug("Change " + testElement + " to " + override_value.getText());
+                    //testElement.setOverrideValue(override_value.getText());
+                } else {
+                    log.debug("No test element");
+                }
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                change();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                change();
+            }
+        };
         init();
     }
 
@@ -85,7 +110,7 @@ public class VariableThroughputTimerGui
         slider.setPaintLabels(true);
         slider.addChangeListener(this);
         slider.firePropertyChange(null, 0, 0);
-        panel.add(slider);
+        // panel.add(slider);
 
         return panel;
     }
@@ -125,18 +150,17 @@ public class VariableThroughputTimerGui
 
     @Override
     public TestElement createTestElement() {
-        //log.info("Create test element");
+        log.debug("Create test element");
         VariableThroughputTimer tg = new VariableThroughputTimer();
         modifyTestElement(tg);
         tg.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
-        tg.setGUI(this);
         return tg;
     }
 
     @Override
     public void modifyTestElement(TestElement tg) {
-        //log.info("Modify test element");
-        super.configureTestElement(tg);
+        log.debug("Modify test element");
+        configureTestElement(tg);
 
         if (grid.isEditing()) {
             grid.getCellEditor().stopCellEditing();
@@ -153,7 +177,7 @@ public class VariableThroughputTimerGui
 
     @Override
     public void configure(TestElement tg) {
-        //log.info("Configure");
+        log.debug("Configure");
         super.configure(tg);
         VariableThroughputTimer utg = (VariableThroughputTimer) tg;
         JMeterProperty threadValues = utg.getData();
@@ -169,6 +193,7 @@ public class VariableThroughputTimerGui
         tableModel.addTableModelListener(this);
         buttons.checkDeleteButtonStatus();
         override.setSelected(utg.isOverrideRPS());
+        override_value.getDocument().addDocumentListener(docListener);
         override_value.setText(utg.getOverrideValue());
         updateUI();
     }
@@ -259,8 +284,11 @@ public class VariableThroughputTimerGui
     @Override
     public void clearGui() {
         super.clearGui();
+        override_value.getDocument().removeDocumentListener(docListener);
         tableModel.clearData();
         tableModel.fireTableDataChanged();
+        override.setSelected(false);
+        override_value.setText("");
     }
 
     @Override
@@ -275,12 +303,12 @@ public class VariableThroughputTimerGui
     public void stateChanged(ChangeEvent e) {
         JSlider slider = (JSlider) e.getSource();
 
-        if (override_value.getText().isEmpty() || StringUtils.isNumeric(override_value.getText())) {
-            override_value.setText(String.valueOf(slider.getValue()));
-        }
-
         if (slider.getValueIsAdjusting()) {
             return;
+        }
+
+        if (override_value.getText().isEmpty() || StringUtils.isNumeric(override_value.getText())) {
+            override_value.setText(String.valueOf(slider.getValue()));
         }
 
         int value = slider.getValue();
@@ -298,5 +326,10 @@ public class VariableThroughputTimerGui
         slider.setMajorTickSpacing((slider.getMaximum() + 1) / 10);
         slider.setMinorTickSpacing((slider.getMaximum() + 1) / 20);
         slider.setLabelTable(slider.createStandardLabels(slider.getMaximum() / 10));
+    }
+
+    public void setTestElement(VariableThroughputTimer testElement) {
+        log.debug("Set test element " + testElement);
+        this.testElement = testElement;
     }
 }

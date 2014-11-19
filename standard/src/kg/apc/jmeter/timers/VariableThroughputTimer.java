@@ -5,6 +5,8 @@ package kg.apc.jmeter.timers;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.engine.util.NoThreadClone;
+import org.apache.jmeter.gui.GuiPackage;
+import org.apache.jmeter.gui.JMeterGUIComponent;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.testelement.TestStateListener;
@@ -15,12 +17,10 @@ import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.timers.ConstantThroughputTimer;
 import org.apache.jmeter.timers.Timer;
-import org.apache.jmeter.timers.gui.AbstractTimerGui;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
@@ -55,7 +55,6 @@ public class VariableThroughputTimer
     private int stopTries;
     private double lastStopTry;
     private boolean stopping;
-    private transient WeakReference<AbstractTimerGui> gui;
 
     public VariableThroughputTimer() {
         super();
@@ -117,6 +116,7 @@ public class VariableThroughputTimer
         }
 
         if (log.isDebugEnabled()) {
+            log.debug("Object " + this);
             log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent " + cntSent + " RPS: " + rps);
         }
 
@@ -150,7 +150,11 @@ public class VariableThroughputTimer
 
     public double getRPSForSecond(double sec) {
         if (this.isOverrideRPS()) {
-            return Integer.parseInt(getOverrideValue());
+            try {
+                return Integer.parseInt(getOverrideValue());
+            } catch (NumberFormatException ex) {
+                log.warn("Invalid value for override: " + getOverrideValue());
+            }
         }
 
         JMeterProperty data = getData();
@@ -186,7 +190,6 @@ public class VariableThroughputTimer
 
     private void trySettingLoadFromProperty() {
         String loadProp = JMeterUtils.getProperty(DATA_PROPERTY);
-        log.debug("Load prop: " + loadProp);
         if (loadProp != null && loadProp.length() > 0) {
             log.info("GUI load profile will be ignored");
             PowerTableModel dataModel = new PowerTableModel(VariableThroughputTimer.columnIdentifiers, VariableThroughputTimer.columnClasses);
@@ -274,6 +277,18 @@ public class VariableThroughputTimer
     public void testStarted() {
         stopping = false;
         stopTries = 0;
+
+        /*
+        GuiPackage guiPackage = GuiPackage.getInstance();
+        if (guiPackage != null) {
+            guiPackage.updateCurrentNode();
+            JMeterGUIComponent guicomp = guiPackage.getGui(this);
+            VariableThroughputTimerGui gui = (VariableThroughputTimerGui) guicomp;
+            gui.setTestElement(this);
+        } else {
+            log.debug("Not added test element on start");
+        }
+        */
     }
 
     @Override
@@ -304,24 +319,7 @@ public class VariableThroughputTimer
     }
 
     public String getOverrideValue() {
-        return getPropertyAsString(OVERRIDE_VALUE);
-    }
-
-    /**
-     * Idea stolen from AbstractListenerElement,
-     * but I did not implement clone() since we implement NoThreadClone
-     *
-     * @see org.apache.jmeter.reporters.AbstractListenerElement
-     */
-    protected final AbstractTimerGui getGUI() {
-        if (gui == null) { // e.g. in non-GUI mode
-            return null;
-        }
-        return gui.get();
-    }
-
-    public void setGUI(AbstractTimerGui vis) {
-        gui = new WeakReference<AbstractTimerGui>(vis);
+        return getPropertyAsString(OVERRIDE_VALUE).trim();
     }
 
 }

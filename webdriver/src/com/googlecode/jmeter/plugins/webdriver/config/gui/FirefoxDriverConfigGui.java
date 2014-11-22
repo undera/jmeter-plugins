@@ -103,8 +103,7 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
         ntlmOverrideCheckbox.setSelected(false);
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent itemEvent) {
+    public void itemStateChangedUserAgent(ItemEvent itemEvent) {
         if (itemEvent.getSource() == userAgentOverrideCheckbox) {
             userAgentOverrideText.setEnabled(userAgentOverrideCheckbox.isSelected());
         }

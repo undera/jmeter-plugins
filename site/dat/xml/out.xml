@@ -21,6 +21,4 @@
 
     <url link="support" menu="1" menu_icon="/img/icons/icon-support.png" title="Support Forums" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="http://groups.google.com/forum/#!forum/jmeter-plugins" accept="1" />
     <url link="sources" title="Source Code" menu="1" menu_icon="/img/icons/github.png" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="https://github.com/undera/jmeter-plugins" />
-    
-    <url link="donations" title="Support the Project" menu="0" class="PWE\Modules\HTMLPage\HTMLPage" src="donate.html"/>
 </url>

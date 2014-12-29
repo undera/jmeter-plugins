@@ -9,12 +9,14 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.*;
 import java.util.Collections;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -147,5 +149,37 @@ public class ChromeDriverConfigTest {
     public void shouldHaveProxyInCapability() {
         final Capabilities capabilities = config.createCapabilities();
         assertThat(capabilities.getCapability(CapabilityType.PROXY), is(notNullValue()));
+    }
+
+    @Test
+    public void shouldNotHaveChromeOptionsWhenAndroidIsNotEnabled() {
+        config.setAndroidEnabled(false);
+        final Capabilities capabilities = config.createCapabilities();
+        assertThat(capabilities.getCapability(ChromeOptions.CAPABILITY), is(nullValue()));
+    }
+
+    @Test
+    public void shouldHaveAndroidConfigWhenAndroidIsEnabled() {
+        config.setAndroidEnabled(true);
+
+        final Capabilities capabilities = config.createCapabilities();
+        Map<String, Object> options = (Map<String, Object>) capabilities.getCapability(ChromeOptions.CAPABILITY);
+        assertThat("ChromeOption expected", options, is(notNullValue()));
+
+        final String androidConfig = (String) options.get("androidPackage");
+        assertThat(androidConfig, is("com.android.chrome"));
+    }
+
+    @Test
+    public void getSetChromeDriverPath() {
+        config.setChromeDriverPath("some path");
+        assertThat(config.getChromeDriverPath(), is("some path"));
+    }
+
+    @Test
+    public void getSetAndroidEnabled() {
+        assertThat(config.isAndroidEnabled(), is(false));
+        config.setAndroidEnabled(true);
+        assertThat(config.isAndroidEnabled(), is(true));
     }
 }

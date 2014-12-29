@@ -15,10 +15,6 @@ import java.nio.channels.spi.AbstractSelectableChannel;
 
 import static org.junit.Assert.*;
 
-/**
- *
- * @author undera
- */
 public class HTTPRawSamplerTest {
 
     private HTTPRawSamplerEmul instance;

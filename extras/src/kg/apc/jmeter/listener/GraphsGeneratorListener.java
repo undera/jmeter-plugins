@@ -43,7 +43,6 @@ import org.apache.log.Logger;
 
 /**
  * Listener that generates graphs
- * @author <a href="p.mouawad at ubik-ingenierie.com">Philippe M.</a>
  * @since 1.1.3
  */
 public class GraphsGeneratorListener extends AbstractListenerElement
@@ -112,6 +111,10 @@ public class GraphsGeneratorListener extends AbstractListenerElement
     private String successFilter;
     private String includeLabels;
     private String excludeLabels;
+    private boolean includeSamplesWithRegex;
+    private boolean excludeSamplesWithRegex;
+    private String startOffset;
+    private String endOffset;
 
     /* (non-Javadoc)
      * @see org.apache.jmeter.testelement.TestStateListener#testEnded()
@@ -126,79 +129,87 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     @Override
     public void testEnded(String host) {
-        for (int i = 0; i < pluginTypes.length; i++) {
+        for (String pluginType : pluginTypes) {
             PluginsCMDWorker worker = new PluginsCMDWorker();
             worker.setInputFile(resultsFileName);
             worker.setGraphWidth(graphWidth);
             worker.setGraphHeight(graphHeight);
-            if(!StringUtils.isEmpty(forceY)) {
+            if (!StringUtils.isEmpty(forceY)) {
                 worker.setForceY(Integer.parseInt(forceY));
             }
-            if(!StringUtils.isEmpty(limitRows)) {
+            if (!StringUtils.isEmpty(limitRows)) {
                 worker.setRowsLimit(Integer.parseInt(limitRows));
             }
-            worker.setAggregate(aggregateRows?1:0);
-            worker.setPreventOutliers(preventOutliers?1:0);
-            worker.setAggregate(aggregateRows?1:0);
-            if(!StringUtils.isEmpty(paintMarkers)) {
+            worker.setAggregate(aggregateRows ? 1 : 0);
+            worker.setPreventOutliers(preventOutliers ? 1 : 0);
+            worker.setAggregate(aggregateRows ? 1 : 0);
+            if (!StringUtils.isEmpty(paintMarkers)) {
                 worker.setMarkers("True". //$NON-NLS-1$
-                        equalsIgnoreCase(paintMarkers) ? 1 : 0);                
+                        equalsIgnoreCase(paintMarkers) ? 1 : 0);
             }
-            worker.setZeroing(paintZeroing?1:0);
-            if(isTimeBasedGraph(pluginTypes[i])) {
-                worker.setRelativeTimes(relativeTimes?1:0);                
+            worker.setZeroing(paintZeroing ? 1 : 0);
+            if (isTimeBasedGraph(pluginType)) {
+                worker.setRelativeTimes(relativeTimes ? 1 : 0);
             }
-            worker.setGradient(paintGradient?1:0);
-            worker.setAutoScaleRows(autoScaleRows?1:0);
-            if(!StringUtils.isEmpty(successFilter)) {
+            worker.setGradient(paintGradient ? 1 : 0);
+            worker.setAutoScaleRows(autoScaleRows ? 1 : 0);
+            if (!StringUtils.isEmpty(successFilter)) {
                 worker.setSuccessFilter(
                         "True". //$NON-NLS-1$
-                        equalsIgnoreCase(successFilter) ? 1 : 0);
+                                equalsIgnoreCase(successFilter) ? 1 : 0);
             }
-            if(!StringUtils.isEmpty(granulation)) {
+            if (!StringUtils.isEmpty(granulation)) {
                 worker.setGranulation(Integer.parseInt(granulation));
             }
-            if(!StringUtils.isEmpty(lineWeight)) {
+            if (!StringUtils.isEmpty(lineWeight)) {
                 worker.setLineWeight(Float.parseFloat(lineWeight));
             }
-            if(!StringUtils.isEmpty(lowCountLimit)) {
+            if (!StringUtils.isEmpty(lowCountLimit)) {
                 worker.setHideLowCounts(Integer.parseInt(lowCountLimit));
             }
-            if(!StringUtils.isEmpty(includeLabels)) {
+            if (!StringUtils.isEmpty(includeLabels)) {
                 worker.setIncludeLabels(includeLabels);
             }
-            if(!StringUtils.isEmpty(excludeLabels)) {
+            if (!StringUtils.isEmpty(excludeLabels)) {
                 worker.setExcludeLabels(excludeLabels);
             }
-            String fileName = null;
-            if(!StringUtils.isEmpty(outputBaseFolder)) {
-                fileName = outputBaseFolder+File.separatorChar+filePrefix+pluginTypes[i];
+            worker.setIncludeSamplesWithRegex(includeSamplesWithRegex ? 1 : 0);
+            worker.setExcludeSamplesWithRegex(excludeSamplesWithRegex ? 1 : 0);
+            if (!StringUtils.isEmpty(startOffset)) {
+                worker.setStartOffset(startOffset);
+            }
+            if (!StringUtils.isEmpty(endOffset)) {
+                worker.setEndOffset(endOffset);
+            }
+            String fileName;
+            if (!StringUtils.isEmpty(outputBaseFolder)) {
+                fileName = outputBaseFolder + File.separatorChar + filePrefix + pluginType;
             } else {
                 // Handle backward compatibility
-                fileName = filePrefix+pluginTypes[i];                
+                fileName = filePrefix + pluginType;
             }
-            if(exportMode==ExportMode.PNG) {
-                fileName +=  ".png"; //$NON-NLS-1$
+            if (exportMode == ExportMode.PNG) {
+                fileName += ".png"; //$NON-NLS-1$
                 worker.setOutputPNGFile(fileName); //$NON-NLS-1$
-                worker.addExportMode(PluginsCMDWorker.EXPORT_PNG); 
+                worker.addExportMode(PluginsCMDWorker.EXPORT_PNG);
             } else {
-                fileName +=  ".csv"; //$NON-NLS-1$
-                worker.setOutputCSVFile(fileName); //$NON-NLS-1$           
-                worker.addExportMode(PluginsCMDWorker.EXPORT_CSV); 
+                fileName += ".csv"; //$NON-NLS-1$
+                worker.setOutputCSVFile(fileName); //$NON-NLS-1$
+                worker.addExportMode(PluginsCMDWorker.EXPORT_CSV);
             }
-            worker.setPluginType(pluginTypes[i]);
+            worker.setPluginType(pluginType);
             int status = worker.doJob();
-            if(status == 0) {
-                log.info("Successful generation of file "+fileName+" by plugin:"+pluginTypes[i]);
+            if (status == 0) {
+                log.info("Successful generation of file " + fileName + " by plugin:" + pluginType);
             } else {
-                log.error("Error generating file "+fileName+" by plugin:"+pluginTypes[i]);                
+                log.error("Error generating file " + fileName + " by plugin:" + pluginType);
             }
         }
     }
 
     /**
      * 
-     * @param graphName
+     * @param graphName String
      * @return boolean
      */
     private static boolean isTimeBasedGraph(String graphName) {
@@ -292,7 +303,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
     }
 
     /**
-     * @param FilePrefix the FilePrefix to set
+     * @param filePrefix the FilePrefix to set
      */
     public void setFilePrefix(String filePrefix) {
         this.filePrefix = filePrefix;
@@ -534,6 +545,66 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     public void setExportMode(int exportMode) {
         this.exportMode = ExportMode.values()[exportMode];
+    }
+
+    /**
+     * @return the includeSamplesWithRegex
+     */
+    public boolean isIncludeSamplesWithRegex() {
+        return includeSamplesWithRegex;
+    }
+
+    /**
+     * @param includeSamplesWithRegex
+     *            the includeSamplesWithRegex to set
+     */
+    public void setIncludeSamplesWithRegex(boolean includeSamplesWithRegex) {
+        this.includeSamplesWithRegex = includeSamplesWithRegex;
+    }
+
+    /**
+     * @return the excludeSamplesWithRegex
+     */
+    public boolean isExcludeSamplesWithRegex() {
+        return excludeSamplesWithRegex;
+    }
+
+    /**
+     * @param excludeSamplesWithRegex
+     *            the excludeSamplesWithRegex to set
+     */
+    public void setExcludeSamplesWithRegex(boolean excludeSamplesWithRegex) {
+        this.excludeSamplesWithRegex = excludeSamplesWithRegex;
+    }
+
+    /**
+     * @return the start offset
+     */
+    public String getStartOffset() {
+        return startOffset;
+    }
+
+    /**
+     * @param startOffset
+     *            the start offset to set
+     */
+    public void setStartOffset(String startOffset) {
+        this.startOffset = startOffset;
+    }
+
+    /**
+     * @return the end offset
+     */
+    public String getEndOffset() {
+        return endOffset;
+    }
+
+    /**
+     * @param endOffset
+     *            the start offset to set
+     */
+    public void setEndOffset(String endOffset) {
+        this.endOffset = endOffset;
     }
 
     /**

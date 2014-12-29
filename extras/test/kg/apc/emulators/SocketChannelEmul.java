@@ -10,10 +10,6 @@ import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-/**
- *
- * @author undera
- */
 public class SocketChannelEmul extends SocketChannel {
 
     private int writtenBytesCount;

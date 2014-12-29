@@ -15,10 +15,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author undera
- */
 public class VariableThroughputTimerTest {
 
     private static class VariableThroughputTimerEmul extends VariableThroughputTimer {
@@ -181,17 +177,6 @@ public class VariableThroughputTimerTest {
         String string = "";
         VariableThroughputTimer instance = new VariableThroughputTimer();
         instance.testEnded(string);
-    }
-
-    /**
-     * Test of testIterationStart method, of class VariableThroughputTimer.
-     */
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoopIterationEvent lie = null;
-        VariableThroughputTimer instance = new VariableThroughputTimer();
-        instance.testIterationStart(lie);
     }
 
     /**

@@ -5,10 +5,6 @@ import java.io.InputStream;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author apc
- */
 public class SocketEmulatorInputStream
         extends InputStream {
 

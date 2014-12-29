@@ -13,10 +13,6 @@ import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author Direvius
- */
 public class LockFileGui extends AbstractConfigGui {
 
     public static final String WIKIPAGE = "LockFile";

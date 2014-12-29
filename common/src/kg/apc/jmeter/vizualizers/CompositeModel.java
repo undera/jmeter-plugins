@@ -6,10 +6,6 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.jmeter.graphs.CompositeNotifierInterface;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class CompositeModel implements Serializable {
 
     private ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>> models = null;

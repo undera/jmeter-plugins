@@ -1,15 +1,11 @@
 package kg.apc.charting;
 
-import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Stroke;
+import java.awt.*;
 import java.io.Serializable;
 import java.text.DecimalFormatSymbols;
 
 /**
  * GraphPanelChart configuration and settings holder
- *
- * @author Stephane Hoblingre
  */
 public class ChartSettings implements Serializable {
     // Default draw options - these are default values if no property is entered in user.properties
@@ -55,7 +51,7 @@ public class ChartSettings implements Serializable {
             BasicStroke.JOIN_MITER, // Join style
             10.0f, // Miter limit
             new float[]{
-                1.0f, 4.0f
+                    1.0f, 4.0f
             }, // Dash pattern
             0.0f); // Dash phase
     // The stroke to paint thick Graph rows

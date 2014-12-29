@@ -1,28 +1,36 @@
 package kg.apc.jmeter.graphs;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
 import java.util.concurrent.ConcurrentSkipListMap;
+
 import javax.swing.JPanel;
+
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
+
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.LongProperty;
 import org.apache.jmeter.visualizers.Sample;
-import static org.junit.Assert.*;
-import org.junit.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-/**
- *
- * @author apc
- */
 public class AbstractGraphPanelVisualizerTest {
 
     /**
@@ -430,6 +438,225 @@ public class AbstractGraphPanelVisualizerTest {
         SampleResult res3 = new SampleResult();
         res3.setSampleLabel("boom1");
         instance.sampleOccurred(new SampleEvent(res3, "tg"));
+        assertNull(vis.lastLabel);
+    }
+
+    @Test
+    public void testIncludeExcludeRegex_none() {
+        CorrectedResultCollector instance = new CorrectedResultCollector();
+        instance.setProperty(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS,
+                "P[0-9].*");
+        instance.testStarted();
+        DebugVisualizer vis = new DebugVisualizer();
+        instance.setListener(vis);
+        vis.configure(instance);
+
+        vis.lastLabel = null;
+        SampleResult res2 = new SampleResult();
+        res2.setSampleLabel("P1_TEST");
+        instance.sampleOccurred(new SampleEvent(res2, "tg"));
+        assertNull(vis.lastLabel);
+    }
+
+    @Test
+    public void testIncludeExcludeRegex_include_only() {
+        CorrectedResultCollector instance = new CorrectedResultCollector();
+        instance.setProperty(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS,
+                "P[0-9].*");
+        instance.setProperty(
+                CorrectedResultCollector.INCLUDE_REGEX_CHECKBOX_STATE, true);
+        instance.testStarted();
+        DebugVisualizer vis = new DebugVisualizer();
+        instance.setListener(vis);
+        vis.configure(instance);
+
+        vis.lastLabel = null;
+        SampleResult res = new SampleResult();
+        res.setSampleLabel("P1_TEST");
+        instance.sampleOccurred(new SampleEvent(res, "tg"));
+        assertEquals("P1_TEST", vis.lastLabel);
+
+        vis.lastLabel = null;
+        SampleResult res1 = new SampleResult();
+        res1.setSampleLabel("T1_TEST");
+        instance.sampleOccurred(new SampleEvent(res1, "tg"));
+        assertNull(vis.lastLabel);
+    }
+
+    @Test
+    public void testIncludeExcludeRegex_exclude_only() {
+        CorrectedResultCollector instance = new CorrectedResultCollector();
+        instance.setProperty(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS,
+                "P[0-9].*");
+        instance.setProperty(
+                CorrectedResultCollector.EXCLUDE_REGEX_CHECKBOX_STATE, true);
+        instance.testStarted();
+        DebugVisualizer vis = new DebugVisualizer();
+        instance.setListener(vis);
+        vis.configure(instance);
+
+        vis.lastLabel = null;
+        SampleResult res = new SampleResult();
+        res.setSampleLabel("P1_TEST");
+        instance.sampleOccurred(new SampleEvent(res, "tg"));
+        assertNull(vis.lastLabel);
+
+        vis.lastLabel = null;
+        SampleResult res1 = new SampleResult();
+        res1.setSampleLabel("T1_TEST");
+        instance.sampleOccurred(new SampleEvent(res1, "tg"));
+        assertEquals("T1_TEST", vis.lastLabel);
+    }
+
+    @Test
+    public void testIncludeExcludeRegex_exclude_include() {
+        CorrectedResultCollector instance = new CorrectedResultCollector();
+        instance.setExcludeLabels("[T-Z][0-9].*");
+        instance.setIncludeLabels("[P-T][0-9].*");
+        instance.setProperty(
+                CorrectedResultCollector.EXCLUDE_REGEX_CHECKBOX_STATE, true);
+        instance.setProperty(
+                CorrectedResultCollector.INCLUDE_REGEX_CHECKBOX_STATE, true);
+        instance.testStarted();
+        DebugVisualizer vis = new DebugVisualizer();
+        vis.configure(instance);
+        instance.setListener(vis);
+
+        vis.lastLabel = null;
+        SampleResult res = new SampleResult();
+        res.setSampleLabel("Z1_TEST");
+        instance.sampleOccurred(new SampleEvent(res, "tg"));
+        assertNull(vis.lastLabel);
+
+        vis.lastLabel = null;
+        SampleResult res2 = new SampleResult();
+        res2.setSampleLabel("P1_TEST");
+        instance.sampleOccurred(new SampleEvent(res2, "tg"));
+        assertEquals("P1_TEST", vis.lastLabel);
+
+        vis.lastLabel = null;
+        SampleResult res3 = new SampleResult();
+        res3.setSampleLabel("T1_TEST");
+        instance.sampleOccurred(new SampleEvent(res3, "tg"));
+        assertNull(vis.lastLabel);
+    }
+
+    @Test
+    public void testMinMax_none() {
+        CorrectedResultCollector instance = new CorrectedResultCollector();
+        instance.testStarted();
+        DebugVisualizer vis = new DebugVisualizer();
+        vis.configure(instance);
+        instance.setListener(vis);
+        SampleResult res = SampleResult.createTestSample(21000, 30000);
+        res.setSampleLabel("test");
+        instance.sampleOccurred(new SampleEvent(res, "tg"));
+        assertEquals("test", vis.lastLabel);
+    }
+
+    @Test
+    public void testMinMax_min_only() {
+        CorrectedResultCollector instance = new CorrectedResultCollector();
+        instance.setStartOffset("10");
+        instance.testStarted();
+        DebugVisualizer vis = new DebugVisualizer();
+        vis.configure(instance);
+        instance.setListener(vis);
+        vis.startTimeRef = 10300;
+        vis.startTimeInf = 10000;
+        vis.startTimeSup = 11000;
+
+        vis.lastLabel = null;
+        SampleResult res = SampleResult.createTestSample(19000, 20000);
+        res.setSampleLabel("test");
+        instance.sampleOccurred(new SampleEvent(res, "tg"));
+        assertNull(vis.lastLabel);
+
+        vis.lastLabel = null;
+        SampleResult res1 = SampleResult.createTestSample(21000, 22000);
+        res1.setSampleLabel("test1");
+        instance.sampleOccurred(new SampleEvent(res1, "tg"));
+        assertEquals("test1", vis.lastLabel);
+
+        instance.testEnded();
+        instance.setStartOffset("10a");
+        instance.testStarted();
+        vis.configure(instance);
+        instance.setListener(vis);
+
+        vis.lastLabel = null;
+        SampleResult res2 = SampleResult.createTestSample(19000, 20000);
+        res2.setSampleLabel("test2");
+        instance.sampleOccurred(new SampleEvent(res2, "tg"));
+        assertEquals("test2", vis.lastLabel);
+    }
+
+    @Test
+    public void testMinMax_max_only() {
+        CorrectedResultCollector instance = new CorrectedResultCollector();
+        instance.setEndOffset("20");
+        instance.testStarted();
+        DebugVisualizer vis = new DebugVisualizer();
+        vis.configure(instance);
+        instance.setListener(vis);
+        vis.startTimeRef = 10300;
+        vis.startTimeInf = 10000;
+        vis.startTimeSup = 11000;
+
+        vis.lastLabel = null;
+        SampleResult res = SampleResult.createTestSample(31500, 32000);
+        res.setSampleLabel("test");
+        instance.sampleOccurred(new SampleEvent(res, "tg"));
+        assertNull(vis.lastLabel);
+
+        vis.lastLabel = null;
+        SampleResult res1 = SampleResult.createTestSample(29000, 30000);
+        res1.setSampleLabel("test1");
+        instance.sampleOccurred(new SampleEvent(res1, "tg"));
+        assertEquals("test1", vis.lastLabel);
+
+        instance.testEnded();
+        instance.setEndOffset("20a");
+        instance.testStarted();
+        vis.configure(instance);
+        instance.setListener(vis);
+
+        vis.lastLabel = null;
+        SampleResult res2 = SampleResult.createTestSample(31000, 32000);
+        res2.setSampleLabel("test2");
+        instance.sampleOccurred(new SampleEvent(res2, "tg"));
+        assertEquals("test2", vis.lastLabel);
+    }
+
+    @Test
+    public void testMinMax_min_max() {
+        CorrectedResultCollector instance = new CorrectedResultCollector();
+        instance.setStartOffset("10");
+        instance.setEndOffset("20");
+        instance.testStarted();
+        DebugVisualizer vis = new DebugVisualizer();
+        vis.configure(instance);
+        instance.setListener(vis);
+        vis.startTimeRef = 10300;
+        vis.startTimeInf = 10000;
+        vis.startTimeSup = 11000;
+
+        vis.lastLabel = null;
+        SampleResult res = SampleResult.createTestSample(31500, 32000);
+        res.setSampleLabel("test");
+        instance.sampleOccurred(new SampleEvent(res, "tg"));
+        assertNull(vis.lastLabel);
+
+        vis.lastLabel = null;
+        SampleResult res1 = SampleResult.createTestSample(29000, 30000);
+        res1.setSampleLabel("test1");
+        instance.sampleOccurred(new SampleEvent(res1, "tg"));
+        assertEquals("test1", vis.lastLabel);
+
+        vis.lastLabel = null;
+        SampleResult res2 = SampleResult.createTestSample(19000, 20000);
+        res2.setSampleLabel("test2");
+        instance.sampleOccurred(new SampleEvent(res2, "tg"));
         assertNull(vis.lastLabel);
     }
 

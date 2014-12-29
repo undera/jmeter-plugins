@@ -2,9 +2,23 @@
 =Customizing Graphs Plugins=
 
 ==Filtering Samples==
+[/img/wiki/graphs_filter_panel.png]
 
 You may ignore results by sampler names, setting Include/Exclude criteria
 at Rows tab. Multiple labels may be specified using comma as separator.
+You can also use a regular expression by checking the appropriate check box.
+
+[/img/wiki/graphs_regex_filter_panel.png]
+
+|| *Standard display* || *Filtered display* ||
+|| [/img/wiki/graphs_unfiltered.png] || [/img/wiki/graphs_regex_filtered.png] ||
+
+You can set an interval to display results with Start / End offset (seconds) relative to the first timestamp in the logs (result jtl, csv) file.
+
+[/img/wiki/graphs_period_filter_panel.png]
+
+|| *Standard display* || *Filtered display* ||
+|| [/img/wiki/graphs_regex_filtered.png] || [/img/wiki/graphs_period_filtered.png] ||
 
 ==Saving the Outputs==
 [/img/wiki/chartPopup.png]

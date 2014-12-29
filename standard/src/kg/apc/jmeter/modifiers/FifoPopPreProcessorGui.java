@@ -8,10 +8,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.processor.gui.AbstractPreProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
-/**
- *
- * @author undera
- */
 public class FifoPopPreProcessorGui extends AbstractPreProcessorGui {
 
     public static final String WIKIPAGE = "InterThreadCommunication";

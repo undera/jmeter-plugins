@@ -7,10 +7,6 @@ import java.sql.Statement;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author Marten Bohlin
- */
 public class DbMonSampler {
 
     private static final Logger log = LoggingManager.getLoggerForClass();

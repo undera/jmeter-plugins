@@ -22,10 +22,6 @@ import org.apache.hadoop.mapred.RunningJob;
 import org.apache.hadoop.mapred.TaskAttemptID;
 import org.apache.hadoop.mapred.TaskCompletionEvent;
 
-/**
- *
- * @author undera
- */
 class RunningJobEmul implements RunningJob {
 
     public RunningJobEmul() {

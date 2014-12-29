@@ -15,10 +15,6 @@ import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.ChartSettings;
 import org.apache.jorphan.gui.NumberRenderer;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public abstract class AbstractRowPlotter implements Serializable {
 
     private final static int labelSpacing = 5;

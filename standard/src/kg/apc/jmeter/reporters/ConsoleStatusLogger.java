@@ -12,17 +12,14 @@ import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleListener;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public class ConsoleStatusLogger extends AbstractListenerElement
         implements SampleListener, Serializable,
-        NoThreadClone, TestListener {
+        NoThreadClone, TestStateListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private PrintStream out;
@@ -112,9 +109,5 @@ public class ConsoleStatusLogger extends AbstractListenerElement
 
     @Override
     public void testEnded(String string) {
-    }
-
-    @Override
-    public void testIterationStart(LoopIterationEvent lie) {
     }
 }

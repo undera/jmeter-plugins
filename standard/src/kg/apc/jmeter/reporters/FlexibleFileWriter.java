@@ -3,7 +3,6 @@
 package kg.apc.jmeter.reporters;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.reporters.AbstractListenerElement;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -11,7 +10,7 @@ import org.apache.jmeter.samplers.Remoteable;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleListener;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -27,13 +26,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * @author undera
  * @see ResultCollector
  */
 public class FlexibleFileWriter
         extends AbstractListenerElement
         implements SampleListener, Serializable,
-        TestListener, Remoteable, NoThreadClone {
+        TestStateListener, Remoteable, NoThreadClone {
 
     public static final String AVAILABLE_FIELDS = "isSuccsessful "
             + "startTime endTime "
@@ -45,7 +43,7 @@ public class FlexibleFileWriter
             + "startTimeMillis endTimeMillis "
             + "responseTimeMicros latencyMicros "
             + "requestData responseData responseHeaders "
-            + "threadsCount ";
+            + "threadsCount requestHeaders";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String OVERWRITE = "overwrite";
     private static final String FILENAME = "filename";
@@ -100,10 +98,6 @@ public class FlexibleFileWriter
     @Override
     public void testEnded(String host) {
         testEnded();
-    }
-
-    @Override
-    public void testIterationStart(LoopIterationEvent event) {
     }
 
     public void setFilename(String name) {
@@ -367,11 +361,15 @@ public class FlexibleFileWriter
                 break;
 
             case 18:
-                buf.put(result.getRequestHeaders().getBytes());
+                buf.put(result.getResponseHeaders().getBytes());
                 break;
 
             case 19:
                 buf.put(String.valueOf(result.getAllThreads()).getBytes());
+                break;
+
+            case 20:
+                buf.put(String.valueOf(result.getRequestHeaders()).getBytes());
                 break;
 
             default:

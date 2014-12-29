@@ -27,10 +27,6 @@ import java.util.Map;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author apc
- */
 public class TestGraphics
      extends Graphics2D
 {

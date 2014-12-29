@@ -6,13 +6,7 @@ import kg.apc.charting.AbstractGraphPanelChartElement;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
-//import org.apache.jorphan.logging.LoggingManager;
-//import org.apache.log.Logger;
 
-/**
- *
- * @author apc
- */
 public class GraphRowSumValues
         extends AbstractGraphRow
         implements Iterator<Entry<Long, AbstractGraphPanelChartElement>> {

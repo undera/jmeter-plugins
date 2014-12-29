@@ -15,10 +15,6 @@
  */
 package kg.apc.jmeter.gui;
 
-/**
- *
- * @author undera
- */
 class TableModelEmul {
 
     public static final String[] columnIdentifiers = new String[]{

@@ -54,10 +54,6 @@ import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author apc
- */
 public class GraphPanelChart
         extends JComponent
         implements ClipboardOwner {

@@ -19,8 +19,6 @@ import java.awt.*;
 /**
  * This is JSONPath extractor GUI class which contains necessary methods for
  * making GUI Post processor component suitable for execution in JMeter
- *
- * @author Bakir Jusufbegovic / AtlantBH
  */
 public class JSONPathExtractorGui extends AbstractPostProcessorGui {
 

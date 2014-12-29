@@ -16,10 +16,6 @@ import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author apc
- */
 public class GraphPanel
         extends JTabbedPane
 {

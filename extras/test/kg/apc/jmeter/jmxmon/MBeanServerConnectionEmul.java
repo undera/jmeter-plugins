@@ -38,10 +38,6 @@ import javax.management.ObjectName;
 import javax.management.QueryExp;
 import javax.management.ReflectionException;
 
-/**
- *
- * @author undera
- */
 class MBeanServerConnectionEmul implements MBeanServerConnection
  {
     private final Map<String, Double> queryResults;

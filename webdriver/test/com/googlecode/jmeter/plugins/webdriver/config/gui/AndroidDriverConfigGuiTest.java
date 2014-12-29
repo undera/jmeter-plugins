@@ -11,10 +11,6 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/**
- * @author Sergey Marakhov
- * @author Linh Pham
- */
 public class AndroidDriverConfigGuiTest {
 
     private AndroidDriverConfigGui gui;

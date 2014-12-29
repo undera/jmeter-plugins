@@ -185,13 +185,6 @@ public class FlexibleFileWriterTest {
     }
 
     @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        FlexibleFileWriter instance = new FlexibleFileWriter();
-        instance.testIterationStart(null);
-    }
-
-    @Test
     public void testSetFilename() {
         System.out.println("setFilename");
         String name = "";

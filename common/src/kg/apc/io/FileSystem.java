@@ -4,10 +4,6 @@ import java.io.*;
 import java.nio.channels.FileChannel;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
-/**
- *
- * @author direvius
- */
 public class FileSystem {
 
     public static boolean checkFileExistByPattern(String path, String pattern) {

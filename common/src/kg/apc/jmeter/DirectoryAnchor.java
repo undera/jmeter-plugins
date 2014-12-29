@@ -1,9 +1,5 @@
 package kg.apc.jmeter;
 
-/**
- *
- * @author undera
- */
 public class DirectoryAnchor {
 
     @Override

@@ -36,10 +36,6 @@ import javax.jms.TextMessage;
 import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
 
-/**
- *
- * @author undera
- */
 class SessionEmul implements Session {
 
     public SessionEmul() {

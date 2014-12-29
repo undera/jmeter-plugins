@@ -1,17 +1,9 @@
 package kg.apc.jmeter.modifiers;
 
-import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.BeforeClass;
+import org.junit.*;
 
-/**
- *
- * @author undera
- */
+import static org.junit.Assert.assertEquals;
+
 public class FifoPutPostProcessorTest {
 
     public FifoPutPostProcessorTest() {
@@ -73,17 +65,6 @@ public class FifoPutPostProcessorTest {
         String host = "";
         FifoPutPostProcessor instance = new FifoPutPostProcessor();
         instance.testEnded(host);
-    }
-
-    /**
-     * Test of testIterationStart method, of class FifoPutPostProcessor.
-     */
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoopIterationEvent event = null;
-        FifoPutPostProcessor instance = new FifoPutPostProcessor();
-        instance.testIterationStart(event);
     }
 
     /**

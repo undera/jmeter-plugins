@@ -12,10 +12,6 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author apc
- */
 public class ThreadsStateOverTimeGui
         extends AbstractOverTimeVisualizer {
 

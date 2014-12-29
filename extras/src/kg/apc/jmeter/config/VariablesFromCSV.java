@@ -1,13 +1,9 @@
 package kg.apc.jmeter.config;
 
-import java.util.Iterator;
-import java.util.Map;
 import org.apache.jmeter.config.Arguments;
 
-/**
- *
- * @author Stephane Hoblingre
- */
+import java.util.Map;
+
 public class VariablesFromCSV extends Arguments {
 
     public static final String VARIABLE_PREFIX = "variablesPrefix";

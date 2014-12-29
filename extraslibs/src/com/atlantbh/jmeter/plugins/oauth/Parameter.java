@@ -16,10 +16,6 @@ import java.util.Map;
 /**
  * This class provides a convenient way to store and manipulate named parameters.
  * It is used to manage the authorization header constructed by OAuthGenerator class.
- * 
- * @author hsandi
- * @version 1.0
- *
  */
 public class Parameter implements Comparable<Parameter>, Map.Entry<String, String> {
 	private final String key;

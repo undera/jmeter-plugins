@@ -7,10 +7,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 
-/**
- *
- * @author undera
- */
 public class ConsoleStatusLoggerGui extends AbstractListenerGui {
 
     public static final String WIKIPAGE = "ConsoleStatusLogger";

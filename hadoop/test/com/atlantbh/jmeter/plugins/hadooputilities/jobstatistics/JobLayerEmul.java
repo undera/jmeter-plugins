@@ -18,10 +18,6 @@ package com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics;
 import java.io.IOException;
 import org.apache.hadoop.mapred.JobClient;
 
-/**
- *
- * @author undera
- */
 class JobLayerEmul extends JobLayer {
 
     public JobLayerEmul() {

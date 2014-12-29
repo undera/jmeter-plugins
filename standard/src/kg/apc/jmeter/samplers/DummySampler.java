@@ -19,6 +19,7 @@ public class DummySampler
 
     @Override
     public SampleResult sample(Entry e) {
+
         SampleResult res;
         if (isSimulateWaiting()) {
             res = new SampleResult();

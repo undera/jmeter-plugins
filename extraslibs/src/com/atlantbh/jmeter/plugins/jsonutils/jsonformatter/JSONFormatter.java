@@ -18,8 +18,6 @@ import org.apache.jmeter.threads.JMeterContext;
 /**
  * This is main class for JSON formatter which contains formatJSON method that
  * takes sample result and do pretty print in JSON
- *
- * @author Bakir Jusufbegovic / AtlantBH
  */
 public class JSONFormatter extends AbstractTestElement implements PostProcessor {
 

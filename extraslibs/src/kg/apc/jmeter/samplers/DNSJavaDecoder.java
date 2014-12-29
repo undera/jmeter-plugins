@@ -5,10 +5,6 @@ import java.nio.ByteBuffer;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.xbill.DNS.*;
 
-/**
- *
- * @author undera
- */
 public class DNSJavaDecoder implements UDPTrafficDecoder {
 
     public static final String NL = "\n";

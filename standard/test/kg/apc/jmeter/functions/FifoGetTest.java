@@ -13,10 +13,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 
-/**
- *
- * @author undera
- */
 public class FifoGetTest {
 
     public FifoGetTest() {
@@ -48,8 +44,8 @@ public class FifoGetTest {
         Sampler currentSampler = null;
         FifoGet instance = new FifoGet();
         LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
-        list.add(new CompoundVariable("test"));
-        list.add(new CompoundVariable("test"));
+        list.add(new CompoundVariable("FifoGettest"));
+        list.add(new CompoundVariable("FifoGettest"));
         instance.setParameters(list);
         String expResult = "";
         String result = instance.execute(previousResult, currentSampler);
@@ -63,8 +59,8 @@ public class FifoGetTest {
     public void testSetParameters() throws Exception {
         System.out.println("setParameters");
         LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
-        list.add(new CompoundVariable("test"));
-        list.add(new CompoundVariable("test"));
+        list.add(new CompoundVariable("FifoGettest"));
+        list.add(new CompoundVariable("FifoGettest"));
         FifoGet instance = new FifoGet();
         instance.setParameters(list);
     }

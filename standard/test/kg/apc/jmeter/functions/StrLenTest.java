@@ -15,10 +15,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author undera
- */
 public class StrLenTest {
 
     public StrLenTest() {

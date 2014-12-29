@@ -36,10 +36,6 @@ import org.apache.jorphan.collections.HashTree;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author apc
- */
 public class UltimateThreadGroupGui
         extends AbstractThreadGroupGui
         implements TableModelListener,

@@ -7,10 +7,6 @@ import java.net.SocketException;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author APC
- */
 public class DatagramSocketEmulator
         extends DatagramSocket {
 

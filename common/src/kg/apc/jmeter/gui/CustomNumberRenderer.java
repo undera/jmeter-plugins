@@ -5,10 +5,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import org.apache.jorphan.gui.NumberRenderer;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class CustomNumberRenderer extends NumberRenderer {
     private NumberFormat customFormatter = null;
 

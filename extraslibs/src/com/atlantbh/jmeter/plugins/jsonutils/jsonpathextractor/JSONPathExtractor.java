@@ -21,8 +21,6 @@ import org.apache.log.Logger;
 /**
  * This is main class for JSONPath extractor which works on previous sample
  * result and extracts value from JSON output using JSONPath
- *
- * @author Bakir Jusufbegovic / AtlantBH
  */
 public class JSONPathExtractor extends AbstractTestElement implements PostProcessor {
     private static final Logger log = LoggingManager.getLoggerForClass();

@@ -6,10 +6,6 @@ import kg.apc.emulators.DatagramChannelEmul;
 import kg.apc.perfmon.client.Transport;
 import org.junit.*;
 
-/**
- *
- * @author undera
- */
 public class NewAgentConnectorTest {
 
     private static class TransportEmul implements Transport {

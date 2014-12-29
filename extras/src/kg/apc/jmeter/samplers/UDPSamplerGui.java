@@ -14,10 +14,6 @@ import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 
-/**
- *
- * @author undera
- */
 public class UDPSamplerGui extends AbstractSamplerGui {
 
     private static final String WIKIPAGE = "UDPRequest";

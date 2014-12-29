@@ -14,10 +14,6 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public abstract class AbstractIPSampler
         extends AbstractSampler
         implements Serializable, Cloneable, Interruptible {

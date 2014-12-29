@@ -7,10 +7,6 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-/**
- *
- * @author apc
- */
 public class GraphRowSimple
         extends AbstractGraphRow
 {

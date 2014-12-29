@@ -10,10 +10,6 @@ import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.processor.gui.AbstractPreProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
-/**
- *
- *   @author undera
- */
 public class RawRequestSourcePreProcessorGui extends AbstractPreProcessorGui {
 
     public static final String WIKIPAGE = "RawDataSource";

@@ -22,10 +22,6 @@ import java.util.TreeMap;
 import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.client.Result;
 
-/**
- *
- * @author undera
- */
 public class ResultEmul extends Result {
 
     public ResultEmul() {

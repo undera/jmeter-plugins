@@ -11,10 +11,6 @@ import org.apache.jmeter.threads.JMeterVariables;
 import static org.junit.Assert.*;
 import org.junit.*;
 
-/**
- *
- * @author undera
- */
 public class RawRequestSourcePreProcessorTest {
 
     private String basedir;

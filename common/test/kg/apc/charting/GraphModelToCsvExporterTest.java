@@ -12,10 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author z000205
- */
 public class GraphModelToCsvExporterTest {
 
     public GraphModelToCsvExporterTest() {

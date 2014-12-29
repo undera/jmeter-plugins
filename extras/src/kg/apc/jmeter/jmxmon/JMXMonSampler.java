@@ -17,10 +17,6 @@ import javax.management.remote.JMXConnector;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author Lars Holmberg (based on work by Marten Bohlin)
- */
 public class JMXMonSampler {
 
     private static final Logger log = LoggingManager.getLoggerForClass();

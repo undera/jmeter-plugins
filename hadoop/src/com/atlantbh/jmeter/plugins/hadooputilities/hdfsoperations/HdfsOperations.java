@@ -20,8 +20,6 @@ import org.apache.jmeter.samplers.SampleResult;
 /**
  * Java class that exposes functionality that this JMeter component offers.
  * Those functionalities are: 1. Copy file to HDFS from local machine
- *
- * @author Bakir Jusufbegovic / AtlantBH
  */
 public class HdfsOperations extends AbstractSampler {
 

@@ -5,7 +5,6 @@ Additional plugins that _do require_ additional libs to run.
   * [JSONToXMLConverter JSON To XML Converter] 
   * [JMSSampler JMS Sampler] classes for Java Request Sampler
   * [OAuthSampler OAuth Sampler]
-  * [RESTSampler REST Sampler]
 
 == Others ==
   * [JSONPathExtractor JSON Path Extractor]

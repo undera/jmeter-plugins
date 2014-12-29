@@ -34,10 +34,6 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * This class could be replaced by a mock framework
- * @author mabo
- */
 class TestConnection implements Connection {
 
     private final TestConnectionDataProvider dataProvider;

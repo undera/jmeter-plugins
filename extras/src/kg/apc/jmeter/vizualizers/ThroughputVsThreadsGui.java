@@ -9,10 +9,6 @@ import kg.apc.jmeter.graphs.AbstractVsThreadVisualizer;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.gui.RateRenderer;
 
-/**
- * 
- * @author apc
- */
 public class ThroughputVsThreadsGui
         extends AbstractVsThreadVisualizer
 {

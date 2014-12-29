@@ -8,10 +8,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import org.apache.jmeter.samplers.SampleResult;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class ResponseTimesPercentilesGui
         extends AbstractGraphPanelVisualizer {
 

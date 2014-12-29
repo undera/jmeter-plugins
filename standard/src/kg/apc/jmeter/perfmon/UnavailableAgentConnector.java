@@ -6,7 +6,6 @@ import org.apache.log.Logger;
 
 /**
  * Using "null object" pattern
- * @author undera
  */
 class UnavailableAgentConnector implements PerfMonAgentConnector {
 

@@ -10,10 +10,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class VariableFromCsvFileReader {
 
     private static final Logger log = LoggingManager.getLoggerForClass();

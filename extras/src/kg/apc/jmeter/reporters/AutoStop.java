@@ -1,32 +1,28 @@
 package kg.apc.jmeter.reporters;
 
-import java.io.Serializable;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
 import kg.apc.charting.elements.GraphPanelChartAverageElement;
 import org.apache.jmeter.JMeter;
 import org.apache.jmeter.engine.StandardJMeterEngine;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.reporters.AbstractListenerElement;
 import org.apache.jmeter.samplers.Remoteable;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleListener;
-import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
+import java.io.Serializable;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
 public class AutoStop
         extends AbstractListenerElement
         implements SampleListener, Serializable,
-        TestListener, Remoteable, NoThreadClone {
+        TestStateListener, Remoteable, NoThreadClone {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private final static String RESPONSE_TIME = "avg_response_time";
@@ -154,10 +150,6 @@ public class AutoStop
 
     @Override
     public void testEnded(String string) {
-    }
-
-    @Override
-    public void testIterationStart(LoopIterationEvent lie) {
     }
 
     void setResponseTime(String text) {

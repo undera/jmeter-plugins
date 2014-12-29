@@ -37,7 +37,7 @@ Example, returning 8.3 and also saving it to variable {{{sumVariable}}}:
 ${__doubleSum(3.5, 4.7, sumVariable)}
 }}}
 
-== env<sup><font color=gray size="1">since 1.1.4</font></sup> ==
+== env<sup><font color=gray size="1">since 1.2.0</font></sup> ==
 
 This function used to get a value of environment variable. 
 Returns value of environment variable if variable was defined, variable name instead (or default value) .
@@ -79,6 +79,34 @@ Example, calculating MD5 for 'test':
 
 {{{
 ${__MD5(test)}
+}}}
+
+== base64Encode<sup><font color=gray size="1">since 1.2.0</font></sup> ==
+
+This function used to encode a constant string or variable value using Base64 algorithm.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+  # Second argument - variable name to store the result
+
+Example, encoding 'test string':
+
+{{{
+${__base64Encode(test string)}
+}}}
+
+== base64Decode<sup><font color=gray size="1">since 1.2.0</font></sup> ==
+
+This function used to decode a constant string or variable value from Base64 into string.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+  # Second argument - variable name to store the result
+
+Example, decoding that returns 'test string':
+
+{{{
+${__base64Decode(dGVzdCBzdHJpbmc=)}
 }}}
 
 == strLen<sup><font color=gray size="1">since 0.4.2</font></sup> ==
@@ -130,4 +158,10 @@ Example, getting 'str' from 'test string':
 {{{
 ${__substring(test string, 5, 8)}
 }}}
+
+== iterationNum<sup><font color=gray size="1">since 1.2.1</font></sup> ==
+
+Function returns the number of current iteration in thread group.
+
+Function has no parameters.
 

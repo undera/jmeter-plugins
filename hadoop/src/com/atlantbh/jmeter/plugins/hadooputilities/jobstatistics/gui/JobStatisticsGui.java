@@ -27,8 +27,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 /**
  * Java class representing GUI for the Hadoop Job Tracker Sampler component in
  * JMeter
- *
- * @author Bakir Jusufbegovic / AtlantBH
  */
 public class JobStatisticsGui extends AbstractSamplerGui {
 

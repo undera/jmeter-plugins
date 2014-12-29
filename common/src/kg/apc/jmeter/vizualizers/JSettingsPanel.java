@@ -13,9 +13,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.GraphRendererInterface;
 import kg.apc.jmeter.graphs.SettingsInterface;
 
-/**
- * @author Stéphane Hoblingre
- */
 public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererInterface {
     public final static int TIMELINE_OPTION = 1;
     public final static int GRADIENT_OPTION = 1 << 1;

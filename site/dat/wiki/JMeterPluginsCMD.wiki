@@ -30,6 +30,8 @@ Yoy may generate CSV and PNG in single tool run. {{{--help}}} will show you shor
 || {{{--input-jtl <file>}}} || load data from specified JTL file ||
 || {{{--plugin-type <class>}}} || which type of graph use for results generation ||
 
+*Use {{{--input-jtl merge-results.properties}}} with {{{--plugin-type MergeResults}}}*. The merge-results.properties file is in JMETER_HOME/bin dir.
+
 You may customize graph drawing and data processing
 like [SettingsPanel GUI settings] do with optional parameters:
 
@@ -51,6 +53,10 @@ like [SettingsPanel GUI settings] do with optional parameters:
 || {{{--auto-scale <yes/no>}}} || enable/disable auto-scale multipliers for perfmon/composite graph ||
 || {{{--line-weight <num of pixels>}}} || line thickness for graph rows ||
 || {{{--extractor-regexps <regExps list>}}} || list of keyRegExp and valRegExp pairs separated with {;}, only used by PageDataExtractorOverTime ||
+|| {{{--include-label-regex <true/false>}}} || include samples using regular expression ||
+|| {{{--exclude-label-regex <true/false>}}} || exclude samples using regular expression ||
+|| {{{--start-offset <sec>}}} || include in report only samples with (timestamp - relativeStartTime) > startOffset ||
+|| {{{--end-offset <sec>}}} || include in report only samples with (timestamp - relativeStartTime) < endOffset ||
 
 == Plugin Type Classes ==
 Make note that you need to install corresponding plugins set to have Extras plugins available in CMD.
@@ -58,6 +64,7 @@ Make note that you need to install corresponding plugins set to have Extras plug
 Most of class names are self-explanatory:
 
   * AggregateReport = JMeter's native Aggregate Report, can be saved only as CSV
+  * SynthesisReport = mix between JMeter's native Summary Report and Aggregate Report, can be saved only as CSV
   * ThreadsStateOverTime = Active Threads Over Time
   * BytesThroughputOverTime
   * HitsPerSecond
@@ -71,6 +78,7 @@ Most of class names are self-explanatory:
   * TimesVsThreads = Response Times VS Threads
   * TransactionsPerSecond
   * PageDataExtractorOverTime
+  * MergeResults
 
 == Other Ways to Automate Reporting ==
 

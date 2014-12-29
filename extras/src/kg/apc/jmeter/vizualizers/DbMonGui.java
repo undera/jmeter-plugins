@@ -20,10 +20,6 @@ import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author Marten Bohlin
- */
 public class DbMonGui
         extends AbstractOverTimeVisualizer {
 

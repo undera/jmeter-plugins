@@ -13,15 +13,8 @@
  */
 package com.atlantbh.jmeter.plugins.rest.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-
-import javax.swing.BorderFactory;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
+import com.atlantbh.jmeter.plugins.rest.RestSampler;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
@@ -31,14 +24,21 @@ import org.apache.jorphan.gui.JLabeledChoice;
 import org.apache.jorphan.gui.JLabeledTextArea;
 import org.apache.jorphan.gui.JLabeledTextField;
 
-import com.atlantbh.jmeter.plugins.rest.RestSampler;
-import kg.apc.jmeter.JMeterPluginsUtils;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Frontend to the REST sampler.
- *
+ * <p/>
  * It only exposes GET/POST/PUT/DELETE.
+ *
+ * @deprecated in favor of HTTP Request
  */
+@Deprecated
 public class RestGui extends AbstractSamplerGui {
 
     private static final long serialVersionUID = -5576774730632101012L;
@@ -56,9 +56,15 @@ public class RestGui extends AbstractSamplerGui {
         init();
     }
 
+    //do not insert this vizualiser in any JMeter menu
+    @Override
+    public Collection<String> getMenuCategories() {
+        return new ArrayList<String>();
+    }
+
     @Override
     public String getLabelResource() {
-       return this.getClass().getSimpleName();
+        return this.getClass().getSimpleName();
     }
 
     @Override
@@ -93,8 +99,7 @@ public class RestGui extends AbstractSamplerGui {
     /**
      * Modifies a given TestElement to mirror the data in the gui components.
      *
-     * @see
-     * org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
+     * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
      */
     @Override
     public void modifyTestElement(TestElement s) {

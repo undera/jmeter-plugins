@@ -8,10 +8,6 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public class InfiniteGetTCPClientImpl extends TCPClientImpl {
 
     private static final Logger log = LoggingManager.getLoggerForClass();

@@ -10,10 +10,6 @@ import kg.apc.io.BinaryUtils;
 import org.apache.jmeter.protocol.tcp.sampler.TCPClient;
 import org.apache.jorphan.logging.LoggingManager;
 
-/**
- *
- * @author undera
- */
 public class DNSJavaTCPClientImpl extends DNSJavaDecoder implements TCPClient {
 
     private ByteArrayOutputStream bos = new ByteArrayOutputStream();

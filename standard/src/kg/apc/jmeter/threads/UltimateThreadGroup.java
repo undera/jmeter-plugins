@@ -1,7 +1,6 @@
 package kg.apc.jmeter.threads;
 
-import org.apache.jmeter.engine.event.LoopIterationEvent;
-import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class UltimateThreadGroup
         extends AbstractSimpleThreadGroup
-        implements Serializable, TestListener {
+        implements Serializable, TestStateListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String DATA_PROPERTY = "ultimatethreadgroupdata";
@@ -110,7 +109,5 @@ public class UltimateThreadGroup
         testEnded();
     }
 
-    @Override
-    public void testIterationStart(LoopIterationEvent event) {
-    }
+
 }

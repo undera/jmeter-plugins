@@ -7,10 +7,6 @@ import java.nio.channels.spi.AbstractSelectableChannel;
 import java.nio.channels.spi.AbstractSelector;
 import java.util.Set;
 
-/**
- *
- * @author undera
- */
 public class SelectorEmul extends AbstractSelector {
     private Set<SelectionKey> selectedKeys;
 

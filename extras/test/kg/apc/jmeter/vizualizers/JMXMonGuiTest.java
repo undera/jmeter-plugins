@@ -14,10 +14,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- *
- * @author cyberw
- */
 public class JMXMonGuiTest {
 
     private static class JMXMonGuiEmul

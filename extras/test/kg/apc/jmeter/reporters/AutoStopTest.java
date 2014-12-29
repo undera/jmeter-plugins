@@ -11,10 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author undera
- */
 public class AutoStopTest {
 
     public AutoStopTest() {
@@ -142,17 +138,6 @@ public class AutoStopTest {
         String string = "";
         AutoStop instance = new AutoStop();
         instance.testEnded(string);
-    }
-
-    /**
-     * Test of testIterationStart method, of class AutoStop.
-     */
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoopIterationEvent lie = null;
-        AutoStop instance = new AutoStop();
-        instance.testIterationStart(lie);
     }
 
     /**

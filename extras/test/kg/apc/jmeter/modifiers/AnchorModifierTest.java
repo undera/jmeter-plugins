@@ -10,10 +10,6 @@ import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.junit.*;
 
-/**
- *
- * @author undera
- */
 public class AnchorModifierTest {
 
     public AnchorModifierTest() {

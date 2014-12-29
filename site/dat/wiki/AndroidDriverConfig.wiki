@@ -1,5 +1,5 @@
 <div style="float: right" class="plugins_set webdriver_set">Available in [WebDriverSet WebDriver Set]</div>
-= Android Driver Config<sup><font color=gray size="1">under review</font></sup>=
+= Android Driver Config (Deprecated/Removed)<sup><font color=gray size="1">since 1.3.0</font></sup>=
 
 == Introduction ==
 Add this configuration to enable browser based performance testing using Android Web browser.  This document covers the various configuration options available on the Android Web browser.  For an overview of performing client sider performance testing, refer to the [WebDriverTutorial Web Driver Tutorial].  

@@ -13,10 +13,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 
-/**
- *
- * @author undera
- */
 public class FifoPopTest {
 
     public FifoPopTest() {
@@ -48,11 +44,11 @@ public class FifoPopTest {
         Sampler currentSampler = null;
         FifoPop instance = new FifoPop();
         LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
-        list.add(new CompoundVariable("test"));
-        list.add(new CompoundVariable("test"));
+        list.add(new CompoundVariable("FifoPoptest"));
+        list.add(new CompoundVariable("FifoPoptest"));
         instance.setParameters(list);
-        FifoMap.getInstance().put("test", "test");
-        String expResult = "test";
+        FifoMap.getInstance().put("FifoPoptest", "FifoPoptest");
+        String expResult = "FifoPoptest";
         String result = instance.execute(previousResult, currentSampler);
         assertEquals(expResult, result);
     }
@@ -64,8 +60,8 @@ public class FifoPopTest {
     public void testSetParameters() throws Exception {
         System.out.println("setParameters");
         LinkedList<CompoundVariable> list = new LinkedList<CompoundVariable>();
-        list.add(new CompoundVariable("test"));
-        list.add(new CompoundVariable("test"));
+        list.add(new CompoundVariable("FifoPoptest"));
+        list.add(new CompoundVariable("FifoPoptest"));
         FifoPop instance = new FifoPop();
         instance.setParameters(list);
     }

@@ -27,8 +27,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 
 /**
  * Java class representing GUI for the HBase CRUD Sampler component in JMeter
- *
- * @author Bakir Jusufbegovic / AtlantBH
  */
 public class HbaseCrudGui extends AbstractSamplerGui {
 

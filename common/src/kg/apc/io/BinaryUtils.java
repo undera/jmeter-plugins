@@ -2,10 +2,6 @@ package kg.apc.io;
 
 import org.apache.jorphan.util.JOrphanUtils;
 
-/**
- *
- * @author apc
- */
 public class BinaryUtils
 {
    // took here http://snippets.dzone.com/posts/show/93

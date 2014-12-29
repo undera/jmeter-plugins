@@ -29,8 +29,6 @@ import org.apache.hadoop.hbase.util.Bytes;
  * filter for excluded column families for timestamp evaluation) 2.
  * deleteDataFromHbase (by latest timestamp or with filter for excluded column
  * families for timestamp evaluation)
- *
- * @author Bakir Jusufbegovic / AtlantBH
  */
 public class HbaseCrudHelper {
 

@@ -5,10 +5,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import org.apache.jmeter.samplers.SampleResult;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class BytesThroughputOverTimeGui
         extends AbstractOverTimeVisualizer {
     //private static final Logger log = LoggingManager.getLoggerForClass();

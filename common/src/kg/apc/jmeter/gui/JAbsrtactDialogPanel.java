@@ -5,10 +5,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public abstract class JAbsrtactDialogPanel extends JPanel{
     private int minWidth = 0;
 

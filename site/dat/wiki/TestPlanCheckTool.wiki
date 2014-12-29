@@ -1,0 +1,48 @@
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
+= JMX Checker Tool <sup><font color=gray size="1">since 1.2.1</font></sup>=
+
+Sometimes you need an automated way to check JMX file consistency without running the test. For example, if you plan to spin up tens of AWS machines to generate the load, you don't want all them to fail because of missing JAR for third-party plugin. To avoid that, use JMX Checker Tool to verify that JMX is loadable. Additionally, the tool can dump the test tree or print simple elements count.
+
+== Usage and Parameters ==
+
+Just checking JMX consistency:
+
+{{{
+jmeter/lib/ext/TestPlanCheck.sh --jmx MyTestPlan.jmx
+}}}
+
+As a result, the exit code for the tool will be zero in case of successfully loaded JMX and non-zero in case of any error.
+
+Dumping tree structure and printing stats:
+
+{{{
+jmeter/lib/ext/TestPlanCheck.sh --jmx MyTestPlan.jmx --stats --tree-dump
+}}}
+
+The sample output from the tool will look like this:
+
+{{{
+... some JMeter logging stuff...
+INFO    2014-10-25 20:54:20.992 [jmeter.s] (): All converter versions present and correct
+INFO    2014-10-25 20:54:21.045 [kg.apc.c] (): JMX is fine
+INFO    2014-10-25 20:54:21.045 [kg.apc.c] (): Element stats goes below:
+INFO    2014-10-25 20:54:21.055 [kg.apc.c] (): Thread Groups:	1
+INFO    2014-10-25 20:54:21.055 [kg.apc.c] (): Controllers:	1
+INFO    2014-10-25 20:54:21.056 [kg.apc.c] (): Config Items:	0
+INFO    2014-10-25 20:54:21.056 [kg.apc.c] (): Samplers:	1
+INFO    2014-10-25 20:54:21.056 [kg.apc.c] (): Listeners:	1
+INFO    2014-10-25 20:54:21.056 [kg.apc.c] (): Timers:	1
+INFO    2014-10-25 20:54:21.056 [kg.apc.c] (): Assertions:	1
+INFO    2014-10-25 20:54:21.056 [kg.apc.c] (): Pre-Processors:	1
+INFO    2014-10-25 20:54:21.056 [kg.apc.c] (): Post-Processors:	1
+INFO    2014-10-25 20:54:21.057 [kg.apc.c] (): Dumping tree structure:
+INFO    2014-10-25 20:54:21.061 [kg.apc.c] (): [TestPlan] Test
+INFO    2014-10-25 20:54:21.061 [kg.apc.c] ():  [ThreadGroup] Thread Group
+INFO    2014-10-25 20:54:21.062 [kg.apc.c] ():   [GenericController] Simple Controller
+INFO    2014-10-25 20:54:21.062 [kg.apc.c] ():    [DummySampler] jp@gc - Dummy Sampler
+INFO    2014-10-25 20:54:21.062 [kg.apc.c] ():     [FifoPopPreProcessor] jp@gc - Inter-Thread Communication PreProcessor
+INFO    2014-10-25 20:54:21.062 [kg.apc.c] ():     [FifoPutPostProcessor] jp@gc - Inter-Thread Communication PostProcessor
+INFO    2014-10-25 20:54:21.063 [kg.apc.c] ():     [ResponseAssertion] Response Assertion
+INFO    2014-10-25 20:54:21.063 [kg.apc.c] ():     [FlexibleFileWriter] jp@gc - Flexible File Writer
+INFO    2014-10-25 20:54:21.063 [kg.apc.c] ():    [VariableThroughputTimer] jp@gc - Throughput Shaping Timer
+}}}

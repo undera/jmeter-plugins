@@ -21,10 +21,6 @@ import java.util.LinkedList;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- *
- * @author undera
- */
 public class LoadosophiaUploadingNotifierTest {
 
     public LoadosophiaUploadingNotifierTest() {

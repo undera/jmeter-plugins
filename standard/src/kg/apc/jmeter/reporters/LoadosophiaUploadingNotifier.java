@@ -5,10 +5,6 @@ import java.util.LinkedList;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public class LoadosophiaUploadingNotifier implements Serializable {
 
     private static final Logger log = LoggingManager.getLoggerForClass();

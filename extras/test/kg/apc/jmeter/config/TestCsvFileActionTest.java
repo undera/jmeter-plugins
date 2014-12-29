@@ -8,10 +8,6 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class TestCsvFileActionTest {
 
     private final String fileName;

@@ -26,8 +26,6 @@ import org.apache.hadoop.mapred.Counters.Counter;
  * This class exposes functionalities on Job layer. Those functionalities are:
  * 1. getJobCountersByJobId 2. getJobCountersByJobIdAndGroupName 3.
  * getJobStatisticsByJobId
- *
- * @author Bakir Jusufbegovic / AtlantBH
  */
 public class JobLayer {
 

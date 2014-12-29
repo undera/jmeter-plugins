@@ -2,10 +2,6 @@ package kg.apc.jmeter.graphs;
 
 import kg.apc.charting.GraphPanelChart;
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public interface SettingsInterface {
     public int getGranulation();
     public void setGranulation(int granulation);

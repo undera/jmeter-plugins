@@ -10,10 +10,6 @@ import java.nio.channels.FileLock;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 class FileLockEmul extends FileLock {
     private static final Logger log = LoggingManager.getLoggerForClass();
 

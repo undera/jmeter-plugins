@@ -8,10 +8,6 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import org.apache.jmeter.gui.util.PowerTableModel;
 
-/**
- *
- * @author undera
- */
 public class AddRowAction
         implements ActionListener {
 

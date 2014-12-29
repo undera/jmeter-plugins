@@ -15,10 +15,6 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public class LoadosophiaAggregator {
 
     private static final Logger log = LoggingManager.getLoggerForClass();

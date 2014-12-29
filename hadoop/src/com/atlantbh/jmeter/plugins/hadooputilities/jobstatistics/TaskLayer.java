@@ -22,8 +22,6 @@ import org.apache.hadoop.mapred.Counters.Group;
 /**
  * This class exposes functionalities on Task layer. Those functionalities are:
  * 1. getTaskLevelCountersByJobId 2. getTaskStatisticsByJobId
- *
- * @author Bakir Jusufbegovic / AtlantBH
  */
 public class TaskLayer extends JobLayer {
 

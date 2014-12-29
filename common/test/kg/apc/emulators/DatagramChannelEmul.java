@@ -10,10 +10,6 @@ import java.util.logging.Level;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public class DatagramChannelEmul extends DatagramChannel {
 
     private ByteBuffer writtenBytes;

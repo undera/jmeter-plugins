@@ -15,34 +15,29 @@
  */
 package com.atlantbh.jmeter.plugins.hbasecomponents.config;
 
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- *
- * @author undera
- */
 @FixMethodOrder(MethodSorters.JVM)
 public class HBaseConnectionTest {
-    
+
     public HBaseConnectionTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -54,11 +49,8 @@ public class HBaseConnectionTest {
     public void testGetConnection() {
         System.out.println("getConnection");
         String name = "";
-        HBaseConnectionVariable expResult = null;
         HBaseConnectionVariable result = HBaseConnection.getConnection(name);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
+        assertEquals(null, result);
     }
 
     /**
@@ -71,8 +63,6 @@ public class HBaseConnectionTest {
         String expResult = "";
         String result = instance.getZkHost();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -84,8 +74,6 @@ public class HBaseConnectionTest {
         String zkHost = "";
         HBaseConnection instance = new HBaseConnection();
         instance.setZkHost(zkHost);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -98,8 +86,6 @@ public class HBaseConnectionTest {
         String expResult = "";
         String result = instance.getZkName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -111,8 +97,6 @@ public class HBaseConnectionTest {
         String zkName = "";
         HBaseConnection instance = new HBaseConnection();
         instance.setZkName(zkName);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -124,8 +108,6 @@ public class HBaseConnectionTest {
         String s = "";
         HBaseConnection instance = new HBaseConnection();
         instance.testStarted(s);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -136,8 +118,6 @@ public class HBaseConnectionTest {
         System.out.println("testStarted");
         HBaseConnection instance = new HBaseConnection();
         instance.testStarted();
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -149,8 +129,6 @@ public class HBaseConnectionTest {
         String s = "";
         HBaseConnection instance = new HBaseConnection();
         instance.testEnded(s);
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
     /**
@@ -161,20 +139,6 @@ public class HBaseConnectionTest {
         System.out.println("testEnded");
         HBaseConnection instance = new HBaseConnection();
         instance.testEnded();
-        // TODO review the generated test code and remove the default call to fail.
-        
     }
 
-    /**
-     * Test of testIterationStart method, of class HBaseConnection.
-     */
-    @Test
-    public void testTestIterationStart() {
-        System.out.println("testIterationStart");
-        LoopIterationEvent event = null;
-        HBaseConnection instance = new HBaseConnection();
-        instance.testIterationStart(event);
-        // TODO review the generated test code and remove the default call to fail.
-        
-    }
 }

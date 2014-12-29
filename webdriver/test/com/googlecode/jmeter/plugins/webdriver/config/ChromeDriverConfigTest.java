@@ -28,10 +28,6 @@ import static org.mockito.Mockito.*;
 import static org.powermock.api.mockito.PowerMockito.verifyNew;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
-/**
- *
- * @author cpl_rewinds
- */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ChromeDriverConfig.class)
 public class ChromeDriverConfigTest {

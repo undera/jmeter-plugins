@@ -37,10 +37,6 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
 
-/**
- *
- * @author undera
- */
 class ResultSetEmul implements ResultSet {
 
     public ResultSetEmul() {

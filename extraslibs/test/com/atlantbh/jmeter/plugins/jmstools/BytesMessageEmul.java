@@ -21,10 +21,6 @@ import javax.jms.BytesMessage;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 
-/**
- *
- * @author undera
- */
 class BytesMessageEmul implements BytesMessage {
 
     public BytesMessageEmul() {

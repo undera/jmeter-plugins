@@ -1,18 +1,30 @@
 = Changelog =
 
-== 1.1.5 <i><font color=gray size="1">planning</font></i>==
-  * Firefox WebDriver allows its User Agent to be overridden.
-  * Extract property for FFW buffer size (https://groups.google.com/forum/#!topic/jmeter-plugins/Mldv8vs2L3g)
+== 1.2.1 <i><font color=gray size="1">planning</font></i>==
+  * add requestHeaders field to FFW (and fix the bug with responseHeaders that nobody noticed)
+  * add [TestPlanCheckTool] to check JMX file consistency without running it
+  * add webdriver.sampleresult_class property for [WebDriverSampler]
+  * add iterationNum function
+  * add real-time RPS changing to [VariableThroughputTimer Throughput Shaping Timer]
 
-== 1.1.4 <i><font color=gray size="1">planning</font></i>==
+== 1.2.0 <i><font color=gray size="1">September 16, 2014</font></i>==
   * fix JMeter startup with Extras (https://groups.google.com/forum/#!topic/jmeter-plugins/YlnXE_WOXXo)
   * Improved JsonAssertion (https://github.com/undera/jmeter-plugins/pull/40)
   * add __env function (https://github.com/undera/jmeter-plugins/pull/44)
   * allow multiline quoted values in VariablesFromCSV config (https://github.com/undera/jmeter-plugins/pull/49)
   * Graphs Generator : New field Output Folder for better control on output of CSV or PNG
   * Graphs Generator : Bug fix on Filter field, default Undefined selection of Combo on Graphs Generator addition lead to empty graphs if not reselected by user, now defaults to empty.
-	* Included Dev-Mode for WebDriver, which keeps the browser window open
-	between runs.
+  * Included Dev-Mode for WebDriver, which keeps the browser window open between runs.
+  * New HTTP Simple Table Server to manage the dataset (https://github.com/undera/jmeter-plugins/pull/54)
+  * Graphs plugin : Add filter regular expression and period time (https://github.com/undera/jmeter-plugins/pull/56)
+  * add subSampleStart() and subSampleEnd() to sampleResult of WebDriver Sampler
+  * Firefox WebDriver allows its User Agent to be overridden.
+  * Extract property for FFW buffer size (https://groups.google.com/forum/#!topic/jmeter-plugins/Mldv8vs2L3g)
+  * GraphsGeneratorListener: add filter regular expression and period time (https://github.com/undera/jmeter-plugins/pull/57)
+  * New Synthesis Report with filter panel
+  * add base64Encode and base64Decode [Functions functions]
+  * [RESTSampler REST Sampler] is now deprecated in favor of HTTP Request or [RawRequest HTTP Raw Request]
+  * New Merge Results tool to simplify the comparison of two or more load tests
 
 == 1.1.3 <i><font color=gray size="1">February 17, 2014</font></i>==
   * New Redis Data Set for distributed equivalent of CSV Data Set

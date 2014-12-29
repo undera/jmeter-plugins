@@ -18,10 +18,6 @@ import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author apc
- */
 public class HTTPRawSamplerGui
         extends AbstractSamplerGui {
 

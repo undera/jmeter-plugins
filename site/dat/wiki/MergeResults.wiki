@@ -1,0 +1,35 @@
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
+= Merge Results <sup><font color=gray size="1">since 1.2.0</font></sup>=
+
+Merge Results is a tool to merge files of results (to simplify the comparison of two or more load tests)
+
+Each file can be filtered using the Include / exclude field (regular expression can be used by checking the appropriate box) or Start / End offset field.
+The results file is made from input files concatenated with a new reference date.
+Each label is prefixed by the one specified in the table (ie: *TEST1:*SEARCH, *TEST2:*SEARCH).
+
+The newly created file can be read by classical JMeter reports or graphs.
+
+== Getting Started ==
+
+You can find the Merge Results tool in WorkBench Non-Test Elements
+
+[/img/wiki/merge_results_start.png]
+
+Add some results in the table and setup filtering
+
+[/img/wiki/merge_results_ui.png]
+
+Don't forget to indicate an output file before clicking the merge button.
+If the output file already exist it will be erased.
+If you have specified a directory that doesn't exist it will be created.
+
+Before merge :
+
+|| *TEST 1* || *TEST 2* ||
+|| [/img/wiki/merge_results_test1.png] || [/img/wiki/merge_results_test2.png] ||
+
+After merge :
+
+|| *TEST 1-2* ||
+|| [/img/wiki/merge_results_test1-2.png] ||
+

@@ -8,12 +8,15 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 public class FifoPop extends AbstractFunction {
+    private static final Logger log = LoggingManager.getLoggerForClass();
 
     private static final List<String> desc = new LinkedList<String>();
     private static final String KEY = "__fifoPop";
@@ -35,10 +38,14 @@ public class FifoPop extends AbstractFunction {
             throws InvalidVariableException {
         String fifoName = ((CompoundVariable) values[0]).execute();
 
-        String value;
+        String value = null;
         try {
-            value = FifoMap.getInstance().pop(fifoName, timeout);
+            Object valueObj = FifoMap.getInstance().pop(fifoName, timeout);
+            if (valueObj != null) {
+                value = valueObj.toString();
+            }
         } catch (InterruptedException ex) {
+            log.warn("Interrupted pop from queue " + fifoName);
             value = "INTERRUPTED";
         }
 

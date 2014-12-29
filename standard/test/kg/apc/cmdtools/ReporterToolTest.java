@@ -53,12 +53,12 @@ public class ReporterToolTest {
     @Test
     public void testProcessParams() {
         System.out.println("processParams");
-        ListIterator<String> args = PluginsCMD.argsArrayToListIterator("--help".split(" "));
+        ListIterator args = PluginsCMD.argsArrayToListIterator("--help".split(" "));
         ReporterTool instance = new ReporterTool();
         try {
             instance.processParams(args);
             fail();
-        } catch (UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException ignored) {
         }
     }
 
@@ -94,7 +94,7 @@ public class ReporterToolTest {
         try {
             int result = instance.processParams(PluginsCMD.argsArrayToListIterator(args));
             fail("HitsPerSec don't handle aggregates");
-        } catch (UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException ignored) {
         }
     }
 }

@@ -23,10 +23,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- *
- * @author cyberw
- */
 public class JMXMonSamplerTest {
 
     public JMXMonSamplerTest() {

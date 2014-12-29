@@ -19,8 +19,6 @@ import org.apache.jmeter.samplers.SampleResult;
  * This is main class for JSON to XML converter which contains method
  * ConvertToXML that takes json input as String type and convert it to xml
  * output as String type
- *
- * @author bjusufbe
  */
 public class JSONToXMLConverter extends AbstractSampler {
 

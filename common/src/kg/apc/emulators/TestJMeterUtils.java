@@ -18,10 +18,6 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author apc
- */
 public abstract class TestJMeterUtils {
 
     private static JMeterTreeListener jMeterTreeListener;

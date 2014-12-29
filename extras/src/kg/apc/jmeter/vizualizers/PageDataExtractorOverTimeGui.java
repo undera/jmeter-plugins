@@ -31,10 +31,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 
-/**
- *
- * @author Stephane Hoblingre
- */
 public class PageDataExtractorOverTimeGui extends AbstractOverTimeVisualizer implements CMDLineArgumentsProcessor {
 
     private static final String REGEXPS_PROPERTY = "regexps";

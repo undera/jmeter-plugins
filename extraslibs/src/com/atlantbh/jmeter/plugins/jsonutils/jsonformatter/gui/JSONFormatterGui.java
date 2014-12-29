@@ -20,8 +20,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 /**
  * Java class representing GUI for the JSON Format Post Processor component in
  * JMeter
- *
- * @author Bakir Jusufbegovic / AtlantBH
  */
 public class JSONFormatterGui extends AbstractPostProcessorGui {
 

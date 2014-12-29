@@ -8,10 +8,6 @@ import org.apache.jmeter.samplers.SampleResult;
 import static org.junit.Assert.*;
 import org.junit.*;
 
-/**
- *
- * @author undera
- */
 public class AbstractIPSamplerTest {
 
     public AbstractIPSamplerTest() {

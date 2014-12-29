@@ -1,17 +1,10 @@
 package kg.apc.jmeter.reporters;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
-
 import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
-import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -19,7 +12,15 @@ import org.loadosophia.jmeter.LoadosophiaAPIClient;
 import org.loadosophia.jmeter.LoadosophiaUploadResults;
 import org.loadosophia.jmeter.StatusNotifierCallback;
 
-public class LoadosophiaUploader extends ResultCollector implements StatusNotifierCallback, Runnable, TestListener {
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
+
+public class LoadosophiaUploader extends ResultCollector implements StatusNotifierCallback, Runnable, TestStateListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String TITLE = "title";
@@ -68,6 +69,21 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     public void testEnded(String host) {
         super.testEnded(host);
         synchronized (LOCK) {
+            // FIXME: trying to handle safe upgrade, needs to be removed in the future
+            // @see https://issues.apache.org/bugzilla/show_bug.cgi?id=56807
+            try {
+                Class<ResultCollector> c = ResultCollector.class;
+                Method m = c.getDeclaredMethod("flushFile");
+                m.invoke(this);
+                log.info("Successfully flushed results file");
+            } catch (NoSuchMethodException ex) {
+                log.warn("Cannot flush results file since you are using old version of JMeter, consider upgrading to latest. Currently the results may be incomplete.");
+            } catch (InvocationTargetException e) {
+                log.error("Failed to flush file", e);
+            } catch (IllegalAccessException e) {
+                log.error("Failed to flush file", e);
+            }
+
             if (isOnlineInitiated) {
                 finishOnline();
             }
@@ -160,10 +176,6 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
         setProperty(STORE_DIR, prefix);
     }
 
-    @Override
-    public void testIterationStart(LoopIterationEvent lie) {
-    }
-
     public void setColorFlag(String color) {
         setProperty(COLOR, color);
     }
@@ -193,7 +205,16 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     public void sampleOccurred(SampleEvent event) {
         super.sampleOccurred(event);
         if (isOnlineInitiated) {
-            processingQueue.add(event);
+            try {
+                if (!processingQueue.offer(event, 1, TimeUnit.SECONDS)) {
+                    log.warn("Failed first dequeue insert try, retrying");
+                    if (!processingQueue.offer(event, 1, TimeUnit.SECONDS)) {
+                        log.error("Failed second try to inser into deque, dropped sample");
+                    }
+                }
+            } catch (InterruptedException ex) {
+                log.info("Interrupted while putting sample event into deque", ex);
+            }
         }
     }
 
@@ -214,7 +235,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                     }
                 }
             } catch (InterruptedException ex) {
-                log.info("Interrupted while taking sample event from deque");
+                log.debug("Interrupted while taking sample event from deque", ex);
                 break;
             }
         }
@@ -242,8 +263,8 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     private void finishOnline() {
         isOnlineInitiated = false;
         processorThread.interrupt();
-        while (!processorThread.isInterrupted()) {
-            log.debug("Waiting for bg thread to stop...");
+        while (processorThread.isAlive() && !processorThread.isInterrupted()) {
+            log.info("Waiting for aggregator thread to stop...");
             try {
                 Thread.sleep(50);
                 processorThread.interrupt();

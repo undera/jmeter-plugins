@@ -8,10 +8,6 @@ import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public class AutoStopGui extends AbstractListenerGui {
 
     private static final Logger log = LoggingManager.getLoggerForClass();

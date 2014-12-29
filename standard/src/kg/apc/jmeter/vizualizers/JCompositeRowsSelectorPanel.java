@@ -15,9 +15,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.CompositeNotifierInterface;
 import kg.apc.jmeter.graphs.GraphRendererInterface;
 
-/**
- * @author Stephane Hoblingre
- */
 public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements GraphRendererInterface, CompositeNotifierInterface {
     private CompositeModel compositeModel;
 

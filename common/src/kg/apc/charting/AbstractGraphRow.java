@@ -10,10 +10,6 @@ import kg.apc.charting.rows.GraphRowPercentiles;
 import kg.apc.charting.rows.GraphRowSimple;
 import kg.apc.charting.rows.GraphRowSumValues;
 
-/**
- *
- * @author apc
- */
 public abstract class AbstractGraphRow {
 
     /**

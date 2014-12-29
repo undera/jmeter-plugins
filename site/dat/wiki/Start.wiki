@@ -25,11 +25,13 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [LoadosophiaUploader Loadosophia.org Uploader] 
   * [FlexibleFileWriter Flexible File Writer] 
   * [ConsoleStatusLogger Non-GUI Console Status Logger] 
+  * [SynthesisReport Synthesis Report] filterable
 
 === Others ===
   * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
   * [InterThreadCommunication Inter-Thread Communication]
   * [Functions Custom JMeter Functions] 
+  * [TestPlanCheckTool Tool to check Test Plan consistency] [/img/icons/new_wog.gif]
 
 === Samplers ===
   * [DummySampler Dummy Sampler] for debugging and programming tests
@@ -53,7 +55,7 @@ Additional plugins for extended and complex testing. Does not require additional
 
 === Listeners ===
   * [AutoStop] Trigger
-  * [GraphsGeneratorListener Graphs Generator][/img/icons/new_wog.gif]
+  * [GraphsGeneratorListener Graphs Generator]
   
 
 === Samplers ===
@@ -66,6 +68,8 @@ Additional plugins for extended and complex testing. Does not require additional
   * [RawDataSource Raw Data Source]
   * [XMLFormatPostProcessor XML Format PostProcessor]
   * [LockFile Lock Files]
+  * [HttpSimpleTableServer HTTP Simple Table Server] to manage the dataset
+  * [MergeResults Merge Results] to simplify the comparison of two or more load tests
 </td>
 </tr><tr>
 <td class="plugins_set extraslibs_set">
@@ -76,13 +80,12 @@ Additional plugins that _do require_ additional libs to run.
   * [JSONToXMLConverter JSON To XML Converter] 
   * [JMSSampler JMS Sampler] classes for Java Request Sampler
   * [OAuthSampler OAuth Sampler]
-  * [RESTSampler REST Sampler]
 
 === Others ===
   * [JSONPathExtractor JSON Path Extractor]
   * [JSONPathAssertion JSON Path Assertion]
   * [JSONFormatter JSON Formatter PostProcessor]
-  * [RedisDataSet Redis Data Set][/img/icons/new_wog.gif]
+  * [RedisDataSet Redis Data Set]
 
 </td>
 <td class="plugins_set webdriver_set">

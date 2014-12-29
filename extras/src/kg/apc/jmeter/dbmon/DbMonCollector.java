@@ -21,10 +21,6 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author Marten Bohlin
- */
 public class DbMonCollector
         extends CorrectedResultCollector
         implements Runnable, DbMonSampleGenerator {

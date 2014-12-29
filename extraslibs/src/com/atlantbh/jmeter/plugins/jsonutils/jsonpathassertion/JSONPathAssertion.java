@@ -18,8 +18,6 @@ import com.jayway.jsonpath.JsonPath;
 /**
  * This is main class for JSONPath Assertion which verifies assertion on
  * previous sample result using JSON path expression
- *
- * @author Semir Sabic / AtlantBH
  */
 public class JSONPathAssertion extends AbstractTestElement implements Serializable, Assertion {
 

@@ -19,10 +19,6 @@ import java.io.IOException;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
 
-/**
- *
- * @author undera
- */
 class OAuthSamplerEmul extends OAuthSampler {
 
     public OAuthSamplerEmul() {

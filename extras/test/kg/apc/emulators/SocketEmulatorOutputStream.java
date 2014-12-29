@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 
-/**
- *
- * @author apc
- */
 public class SocketEmulatorOutputStream
         extends OutputStream {
 

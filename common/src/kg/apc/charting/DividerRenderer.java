@@ -2,10 +2,6 @@ package kg.apc.charting;
 
 import org.apache.jorphan.gui.NumberRenderer;
 
-/**
- *
- * @author undera
- */
 public class DividerRenderer extends NumberRenderer{
     private final double factor;
 

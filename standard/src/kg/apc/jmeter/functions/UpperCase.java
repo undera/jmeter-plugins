@@ -1,14 +1,15 @@
 package kg.apc.jmeter.functions;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.functions.AbstractFunction;
 import org.apache.jmeter.functions.InvalidVariableException;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterVariables;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 public class UpperCase extends AbstractFunction {
 
@@ -19,6 +20,7 @@ public class UpperCase extends AbstractFunction {
         desc.add("String to convert to uppercase");
         desc.add("Name of variable in which to store the result (optional)");
     }
+
     private Object[] values;
 
     /**
@@ -27,7 +29,9 @@ public class UpperCase extends AbstractFunction {
     public UpperCase() {
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized String execute(SampleResult previousResult, Sampler currentSampler)
             throws InvalidVariableException {
@@ -43,20 +47,26 @@ public class UpperCase extends AbstractFunction {
 
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void setParameters(Collection<CompoundVariable> parameters) throws InvalidVariableException {
         checkMinParameterCount(parameters, 1);
         values = parameters.toArray();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getReferenceKey() {
         return KEY;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<String> getArgumentDesc() {
         return desc;

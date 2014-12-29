@@ -11,10 +11,6 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author undera
- */
 public class FileChannelEmul extends FileChannel {
 
     private ByteBuffer writtenBytes;

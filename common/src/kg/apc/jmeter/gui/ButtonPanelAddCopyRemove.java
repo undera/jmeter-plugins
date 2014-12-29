@@ -6,10 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import org.apache.jmeter.gui.util.PowerTableModel;
 
-/**
- *
- * @author undera
- */
 public class ButtonPanelAddCopyRemove extends JPanel{
     private final JButton addRowButton;
     private final JButton copyRowButton;

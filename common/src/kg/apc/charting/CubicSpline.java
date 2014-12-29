@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 
 /**
  * Cubic interpolation utility
- * @author Stephane Hoblingre
  */
 public class CubicSpline {
 

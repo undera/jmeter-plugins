@@ -36,10 +36,6 @@ import org.apache.hadoop.hbase.client.coprocessor.Batch.Call;
 import org.apache.hadoop.hbase.client.coprocessor.Batch.Callback;
 import org.apache.hadoop.hbase.ipc.CoprocessorProtocol;
 
-/**
- *
- * @author undera
- */
 public class HTableEmul implements HTableInterface {
 
     @Override

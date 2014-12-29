@@ -1,16 +1,16 @@
 package kg.apc.jmeter.functions;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.functions.AbstractFunction;
 import org.apache.jmeter.functions.InvalidVariableException;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterVariables;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 public class ChooseRandom extends AbstractFunction {
 
@@ -22,6 +22,7 @@ public class ChooseRandom extends AbstractFunction {
         desc.add("Any number of values to choose from");
         desc.add("Last value must be variable name where choice will be stored");
     }
+
     private Object[] values;
 
     /**

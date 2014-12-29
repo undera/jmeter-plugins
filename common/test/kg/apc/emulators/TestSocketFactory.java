@@ -6,10 +6,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import javax.net.SocketFactory;
 
-/**
- *
- * @author APC
- */
 public class TestSocketFactory
       extends SocketFactory
 {

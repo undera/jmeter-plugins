@@ -1,5 +1,15 @@
 package org.loadosophia.jmeter;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.multipart.*;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,20 +20,6 @@ import java.nio.channels.FileChannel;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.zip.GZIPOutputStream;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.multipart.FilePart;
-import org.apache.commons.httpclient.methods.multipart.FilePartSource;
-import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.Part;
-import org.apache.commons.httpclient.methods.multipart.StringPart;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 public class LoadosophiaAPIClient {
 
@@ -38,6 +34,7 @@ public class LoadosophiaAPIClient {
     private final String token;
     private final String colorFlag;
     private final String title;
+    private final static int TIMEOUT = 5;
 
     public LoadosophiaAPIClient(StatusNotifierCallback informer, String aAddress, String aToken, String projectName, String aColorFlag, String aTitle) {
         project = projectName;
@@ -46,6 +43,9 @@ public class LoadosophiaAPIClient {
         notifier = informer;
         colorFlag = aColorFlag;
         title = aTitle;
+
+        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(TIMEOUT * 1000);
+        httpClient.getHttpConnectionManager().getParams().setSoTimeout(TIMEOUT * 1000);
     }
 
     public LoadosophiaUploadResults sendFiles(File targetFile, LinkedList<String> perfMonFiles) throws IOException {

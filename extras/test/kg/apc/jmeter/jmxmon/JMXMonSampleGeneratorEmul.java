@@ -15,10 +15,6 @@
  */
 package kg.apc.jmeter.jmxmon;
 
-/**
- *
- * @author undera
- */
 class JMXMonSampleGeneratorEmul implements JMXMonSampleGenerator {
 
     public JMXMonSampleGeneratorEmul() {

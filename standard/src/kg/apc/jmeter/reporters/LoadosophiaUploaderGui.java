@@ -14,10 +14,6 @@ import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 import org.loadosophia.jmeter.LoadosophiaAPIClient;
 
-/**
- *
- * @author undera
- */
 public class LoadosophiaUploaderGui
         extends AbstractVisualizer {
 

@@ -5,10 +5,6 @@ import java.net.ServerSocket;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
-/**
- *
- * @author undera
- */
 class ServerSocketChannelEmul extends ServerSocketChannel {
 
     public ServerSocketChannelEmul() {

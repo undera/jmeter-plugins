@@ -2,14 +2,14 @@
 // TODO: create a thread which will wake up at least one sampler to provide rps
 package kg.apc.jmeter.timers;
 
-import java.util.ArrayList;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.StandardJMeterEngine;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.util.NoThreadClone;
+import org.apache.jmeter.gui.GuiPackage;
+import org.apache.jmeter.gui.JMeterGUIComponent;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.AbstractTestElement;
-import org.apache.jmeter.testelement.TestListener;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
@@ -21,20 +21,20 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import java.util.ArrayList;
+
 /**
- *
- * @author undera
  * @see ConstantThroughputTimer
  */
 public class VariableThroughputTimer
         extends AbstractTestElement
-        implements Timer, NoThreadClone, TestListener {
+        implements Timer, NoThreadClone, TestStateListener {
 
     public static final String[] columnIdentifiers = new String[]{
-        "Start RPS", "End RPS", "Duration, sec"
+            "Start RPS", "End RPS", "Duration, sec"
     };
     public static final Class[] columnClasses = new Class[]{
-        String.class, String.class, String.class
+            String.class, String.class, String.class
     };
     // TODO: eliminate magic property
     public static final String DATA_PROPERTY = "load_profile";
@@ -42,6 +42,8 @@ public class VariableThroughputTimer
     public static final int FROM_FIELD_NO = 0;
     public static final int TO_FIELD_NO = 1;
     private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final String USE_OVERRIDE = "use_override";
+    private static final String OVERRIDE_VALUE = "override_value";
     /* put this in fields because we don't want create variables in tight loops */
     private long cntDelayed;
     private double time = 0;
@@ -114,10 +116,11 @@ public class VariableThroughputTimer
         }
 
         if (log.isDebugEnabled()) {
+            log.debug("Object " + this);
             log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent " + cntSent + " RPS: " + rps);
         }
 
-        if (cntDelayed < 1) {
+        if (cntDelayed < 1 && cntSent < rps) {
             log.warn("No free threads left in worker pool, made  " + cntSent + '/' + rps + " samples");
         }
 
@@ -129,8 +132,7 @@ public class VariableThroughputTimer
     private int getDelay(long msecs) {
         //log.info("Calculating "+msecs + " " + cntSent * msecPerReq+" "+cntSent);
         if (msecs < (cntSent * msecPerReq)) {
-            int delay = 1 + (int) (1000.0 * (cntDelayed + 1) / (double) rps);
-            return delay;
+            return 1 + (int) (1000.0 * (cntDelayed + 1) / rps);
         }
         return 0;
     }
@@ -139,7 +141,7 @@ public class VariableThroughputTimer
         setProperty(rows);
     }
 
-    JMeterProperty getData() {
+    public JMeterProperty getData() {
         if (overrideProp != null) {
             return overrideProp;
         }
@@ -147,22 +149,28 @@ public class VariableThroughputTimer
     }
 
     public double getRPSForSecond(double sec) {
+        if (this.isOverrideRPS()) {
+            try {
+                return Integer.parseInt(getOverrideValue());
+            } catch (NumberFormatException ex) {
+                log.warn("Invalid value for override: " + getOverrideValue());
+            }
+        }
+
         JMeterProperty data = getData();
         if (data instanceof NullProperty) return -1;
         CollectionProperty rows = (CollectionProperty) data;
         PropertyIterator scheduleIT = rows.iterator();
 
         while (scheduleIT.hasNext()) {
-            ArrayList<Object> curProp = (ArrayList<Object>) scheduleIT.next().getObjectValue();
+            Object objectValue = scheduleIT.next().getObjectValue();
+            ArrayList<Object> curProp = (ArrayList<Object>) objectValue;
 
             int duration = getIntValue(curProp, DURATION_FIELD_NO);
             double from = getDoubleValue(curProp, FROM_FIELD_NO);
             double to = getDoubleValue(curProp, TO_FIELD_NO);
-            //log.debug("sec "+sec+" Dur: "+duration+" from "+from+" to "+to);
             if (sec - duration <= 0) {
-            	double rpsCalculated = from + (int) (sec * ((to - from) / (double) duration));
-                //log.debug("RPS: "+rps);
-                return rpsCalculated;
+                return from + (int) (sec * ((to - from) / (double) duration));
             } else {
                 sec -= duration;
             }
@@ -174,7 +182,7 @@ public class VariableThroughputTimer
         JMeterProperty val = (JMeterProperty) prop.get(colID);
         return val.getDoubleValue();
     }
-    
+
     private int getIntValue(ArrayList<Object> prop, int colID) throws NumberFormatException {
         JMeterProperty val = (JMeterProperty) prop.get(colID);
         return val.getIntValue();
@@ -182,18 +190,17 @@ public class VariableThroughputTimer
 
     private void trySettingLoadFromProperty() {
         String loadProp = JMeterUtils.getProperty(DATA_PROPERTY);
-        log.debug("Load prop: " + loadProp);
         if (loadProp != null && loadProp.length() > 0) {
             log.info("GUI load profile will be ignored");
             PowerTableModel dataModel = new PowerTableModel(VariableThroughputTimer.columnIdentifiers, VariableThroughputTimer.columnClasses);
 
             String[] chunks = loadProp.split("\\)");
 
-            for (int c = 0; c < chunks.length; c++) {
+            for (String chunk : chunks) {
                 try {
-                    parseChunk(chunks[c], dataModel);
+                    parseChunk(chunk, dataModel);
                 } catch (RuntimeException e) {
-                    log.warn("Wrong load chunk ignored: " + chunks[c], e);
+                    log.warn("Wrong load chunk ignored: " + chunk, e);
                 }
             }
 
@@ -270,6 +277,18 @@ public class VariableThroughputTimer
     public void testStarted() {
         stopping = false;
         stopTries = 0;
+
+        /*
+        GuiPackage guiPackage = GuiPackage.getInstance();
+        if (guiPackage != null) {
+            guiPackage.updateCurrentNode();
+            JMeterGUIComponent guicomp = guiPackage.getGui(this);
+            VariableThroughputTimerGui gui = (VariableThroughputTimerGui) guicomp;
+            gui.setTestElement(this);
+        } else {
+            log.debug("Not added test element on start");
+        }
+        */
     }
 
     @Override
@@ -286,7 +305,21 @@ public class VariableThroughputTimer
         testEnded();
     }
 
-    @Override
-    public void testIterationStart(LoopIterationEvent lie) {
+
+    public void setOverrideRPS(boolean overrideRPS) {
+        this.setProperty(USE_OVERRIDE, overrideRPS);
     }
+
+    public void setOverrideValue(String overrideValue) {
+        this.setProperty(OVERRIDE_VALUE, overrideValue);
+    }
+
+    public boolean isOverrideRPS() {
+        return getPropertyAsBoolean(USE_OVERRIDE);
+    }
+
+    public String getOverrideValue() {
+        return getPropertyAsString(OVERRIDE_VALUE).trim();
+    }
+
 }

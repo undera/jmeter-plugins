@@ -12,10 +12,6 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 
-/**
- *
- * @author undera
- */
 public class DatagramChannelWithTimeoutsTest {
 
     private DatagramChannelWithTimeoutsEmul instance;

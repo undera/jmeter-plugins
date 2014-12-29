@@ -19,10 +19,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 // FIXME: actually keep-alive does not work!
-/**
- *
- * @author undera
- */
 public class HTTPRawSampler extends AbstractIPSampler {
     
     private static final String FILE_NAME = "fileName";

@@ -18,10 +18,6 @@ package com.atlantbh.jmeter.plugins.hbasecrud;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- *
- * @author undera
- */
 class HbaseCrudHelperEmul extends HbaseCrudHelper {
 
     public HbaseCrudHelperEmul() {

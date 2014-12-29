@@ -2,10 +2,6 @@ package kg.apc.jmeter.jmxmon;
 
 import org.apache.jmeter.samplers.SampleResult;
 
-/**
- *
- * @author Lars Holmberg (based on work by APC)
- */
 public class JMXMonSampleResult
         extends SampleResult {
 

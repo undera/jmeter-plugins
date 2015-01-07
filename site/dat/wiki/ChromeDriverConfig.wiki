@@ -62,5 +62,7 @@ For Web Driver controls to work against Chrome, it is important to:
 
 [/img/wiki/web-driver/chrome-driver-tab.png]
 
+Since v1.3.0 of JMeter-Plugins ChromeDriver can now be used to control Chrome on Android. To enable this check the *Use Chrome on Android* checkbox.
+
 == Experimental ==
 As new features from the [Roadmap] are added, new and experimental features will generally get added to this section first.  This allows the early adopters to use these features and provide feedback on them.  However, it should be recognised that *all features added to this tab are subject to change/removal* so depend on them at your own peril!

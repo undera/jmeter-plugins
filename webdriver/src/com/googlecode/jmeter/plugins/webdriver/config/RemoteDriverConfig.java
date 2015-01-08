@@ -15,8 +15,6 @@ import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
 public class RemoteDriverConfig extends WebDriverConfig<RemoteWebDriver> {
 
     private static final long serialVersionUID = 100L;
-    private static final String GENERAL_USERAGENT_OVERRIDE = "RemoteDriverConfig.general.useragent.override";
-    private static final String ENABLE_USERAGENT_OVERRIDE = "RemoteDriverConfig.general.useragent.override.enabled";
     private static final String REMOTE_SELENIUM_GRID_URL = "RemoteDriverConfig.general.selenium.grid.url";
     private static final String REMOTE_CAPABILITY = "RemoteDriverConfig.general.selenium.capability";
 
@@ -34,22 +32,6 @@ public class RemoteDriverConfig extends WebDriverConfig<RemoteWebDriver> {
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
-    }
-
-    public void setUserAgentOverride(String userAgent) {
-        setProperty(GENERAL_USERAGENT_OVERRIDE, userAgent);
-    }
-
-    public String getUserAgentOverride() {
-        return getPropertyAsString(GENERAL_USERAGENT_OVERRIDE);
-    }
-
-    public boolean isUserAgentOverridden() {
-        return getPropertyAsBoolean(ENABLE_USERAGENT_OVERRIDE);
-    }
-
-    public void setUserAgentOverridden(boolean userAgentOverridden) {
-        setProperty(ENABLE_USERAGENT_OVERRIDE, userAgentOverridden);
     }
 
 	public void setSeleniumGridUrl(String seleniumUrl) {

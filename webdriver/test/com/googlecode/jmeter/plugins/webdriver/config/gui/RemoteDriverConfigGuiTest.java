@@ -24,6 +24,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.googlecode.jmeter.plugins.webdriver.config.RemoteCapability;
 import com.googlecode.jmeter.plugins.webdriver.config.RemoteDriverConfig;
 
 public class RemoteDriverConfigGuiTest {
@@ -59,14 +60,6 @@ public class RemoteDriverConfigGuiTest {
     public void shouldReturnRemoteDriverConfig() {
         assertThat(gui.createTestElement(), is(instanceOf(RemoteDriverConfig.class)));
     }
-
-    @Test
-    public void shouldOverrideUserAgent() {
-        gui.userAgentOverrideCheckbox.setSelected(true);
-        gui.userAgentOverrideText.setText("some user agent");
-        final RemoteDriverConfig testElement = (RemoteDriverConfig) gui.createTestElement();
-        assertThat(testElement.getUserAgentOverride(), is("some user agent"));
-    }
     
     @Test
 	public void shouldSetTheSeleniumNodeUrl() throws Exception {
@@ -76,36 +69,23 @@ public class RemoteDriverConfigGuiTest {
 	}
 
     @Test
-    public void shouldNotOverrideUserAgent() {
-        gui.userAgentOverrideCheckbox.setSelected(false);
-        gui.userAgentOverrideText.setText("some user agent");
-        
-        final RemoteDriverConfig testElement = (RemoteDriverConfig) gui.createTestElement();
-        assertThat(testElement.getUserAgentOverride(), is(not("some user agent")));
-    }
-
-    @Test
     public void shouldResetValuesOnClearGui() {
-        gui.userAgentOverrideText.setText("user agent");
-        gui.userAgentOverrideCheckbox.setSelected(true);
         gui.remoteSeleniumGridText.setText("http://my.awesomegrid.com");
         
         gui.clearGui();
 
         assertThat(gui.remoteSeleniumGridText.getText(), is(StringUtils.EMPTY));
-        assertThat(gui.userAgentOverrideText.getText(), is(RemoteDriverConfigGui.OVERRIDEN_USER_AGENT));
-        assertThat(gui.userAgentOverrideCheckbox.isSelected(), is(false));
     }
 
     @Test
     public void shouldSetRemoteDriverConfigOnConfigure() {
         RemoteDriverConfig config = new RemoteDriverConfig();
-        config.setUserAgentOverride("user-agent");
-        config.setUserAgentOverridden(true);
+        config.setSeleniumGridUrl("my.awesome.grid.com");
+        config.setCapability(RemoteCapability.FIREFOX);
         gui.configure(config);
 
-        assertThat(gui.userAgentOverrideText.getText(), is(config.getUserAgentOverride()));
-        assertThat(gui.userAgentOverrideCheckbox.isSelected(), is(config.isUserAgentOverridden()));
+        assertThat(gui.remoteSeleniumGridText.getText(), is(config.getSeleniumGridUrl()));
+        assertThat((RemoteCapability)gui.capabilitiesComboBox.getSelectedItem(), is(config.getCapability()));
     }
     
     @Test

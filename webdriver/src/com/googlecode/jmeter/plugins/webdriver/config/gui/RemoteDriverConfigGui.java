@@ -139,6 +139,6 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
 
 	@Override
 	protected boolean isExperimentalEnabled() {
-		return true;
+		return false;
 	}
 }

@@ -4,8 +4,11 @@
   * add requestHeaders field to FFW (and fix the bug with responseHeaders that nobody noticed)
   * add [TestPlanCheckTool] to check JMX file consistency without running it
   * add webdriver.sampleresult_class property for [WebDriverSampler]
+  * Added Remote driver to the WebDriver plugins
+  * Added better GUI to the Remote Driver
   * add iterationNum function
   * add real-time RPS changing to [VariableThroughputTimer Throughput Shaping Timer]
+
 
 == 1.2.0 <i><font color=gray size="1">September 16, 2014</font></i>==
   * fix JMeter startup with Extras (https://groups.google.com/forum/#!topic/jmeter-plugins/YlnXE_WOXXo)

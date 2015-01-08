@@ -126,4 +126,10 @@ public class RemoteDriverConfigGuiTest {
     	gui.focusLost(focusEvent);
     	Mockito.verify(gui.messageDialog, Mockito.never()).show(gui, "The selenium grid URL is malformed", "Error", JOptionPane.ERROR_MESSAGE);
 	}
+    
+    @Test
+	public void shouldDisableProxyAndExperimental() throws Exception {
+		assertThat(gui.isExperimentalEnabled(), is(false));
+		assertThat(gui.isProxyEnabled(), is(false));
+	}
 }

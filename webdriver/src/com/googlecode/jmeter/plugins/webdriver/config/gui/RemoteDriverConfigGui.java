@@ -27,7 +27,7 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
     JTextField remoteSeleniumGridText;
     JComboBox capabilitiesComboBox;
     MessageDialog messageDialog = new MessageDialog();
-
+    
     @Override
     public String getStaticLabel() {
         return JMeterPluginsUtils.prefixLabel("Remote Driver Config");
@@ -130,5 +130,15 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
 		} catch (MalformedURLException e) {
 			return false;
 		}
+	}
+
+	@Override
+	protected boolean isProxyEnabled() {
+		return false;
+	}
+
+	@Override
+	protected boolean isExperimentalEnabled() {
+		return true;
 	}
 }

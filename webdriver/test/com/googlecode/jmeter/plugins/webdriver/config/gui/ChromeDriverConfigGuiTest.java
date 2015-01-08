@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 
 public class ChromeDriverConfigGuiTest {
@@ -85,5 +86,11 @@ public class ChromeDriverConfigGuiTest {
 
         assertThat(gui.androidEnabled.isSelected(), is(config.isAndroidEnabled()));
     }
+    
+    @Test
+	public void shouldEnableProxyAndExperimental() throws Exception {
+		assertThat(gui.isExperimentalEnabled(), is(true));
+		assertThat(gui.isProxyEnabled(), is(true));
+	}
 
 }

@@ -42,4 +42,14 @@ public class HtmlUnitDriverConfigGui extends WebDriverConfigGui {
         modifyTestElement(element);
         return element;
     }
+
+	@Override
+	protected boolean isProxyEnabled() {
+		return true;
+	}
+
+	@Override
+	protected boolean isExperimentalEnabled() {
+		return true;
+	}
 }

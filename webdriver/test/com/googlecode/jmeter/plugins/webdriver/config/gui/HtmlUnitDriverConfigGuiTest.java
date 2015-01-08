@@ -42,4 +42,10 @@ public class HtmlUnitDriverConfigGuiTest {
     public void shouldReturnHtmlUnitDriverConfig() {
         assertThat(gui.createTestElement(), is(instanceOf(HtmlUnitDriverConfig.class)));
     }
+    
+    @Test
+	public void shouldEnableProxyAndExperimental() throws Exception {
+		assertThat(gui.isExperimentalEnabled(), is(true));
+		assertThat(gui.isProxyEnabled(), is(true));
+	}
 }

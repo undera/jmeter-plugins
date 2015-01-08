@@ -9,7 +9,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import static org.hamcrest.core.Is.*;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
-public class RemoteDesiredCapabilityFactoryTest {
+public class RemoteDesiredCapabilitiesFactoryTest {
 	
 	@Test
 	public void shouldReturnFirefoxDriverWhenFirefoxCapabilityIsPassed() throws Exception {

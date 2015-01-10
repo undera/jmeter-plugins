@@ -108,4 +108,14 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
             userAgentOverrideText.setEnabled(userAgentOverrideCheckbox.isSelected());
         }
     }
+
+	@Override
+	protected boolean isProxyEnabled() {
+		return true;
+	}
+
+	@Override
+	protected boolean isExperimentalEnabled() {
+		return true;
+	}
 }

@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 
 public class ChromeDriverConfigGuiTest {
@@ -51,12 +52,21 @@ public class ChromeDriverConfigGuiTest {
     }
 
     @Test
+    public void shouldSetAndroidEnabled() {
+        gui.androidEnabled.setSelected(true);
+        final ChromeDriverConfig testElement = (ChromeDriverConfig) gui.createTestElement();
+        assertThat(testElement.isAndroidEnabled(), is(true));
+    }
+
+    @Test
     public void shouldResetValuesOnClearGui() {
         gui.chromeServicePath.setText("path");
+        gui.androidEnabled.setSelected(true);
 
         gui.clearGui();
 
         assertThat(gui.chromeServicePath.getText(), is(""));
+        assertThat(gui.androidEnabled.isSelected(), is(false));
     }
 
     @Test
@@ -67,5 +77,20 @@ public class ChromeDriverConfigGuiTest {
 
         assertThat(gui.chromeServicePath.getText(), is(config.getChromeDriverPath()));
     }
+
+    @Test
+    public void shouldSetAndroidEnabledOnConfigure() {
+        ChromeDriverConfig config = new ChromeDriverConfig();
+        config.setAndroidEnabled(true);
+        gui.configure(config);
+
+        assertThat(gui.androidEnabled.isSelected(), is(config.isAndroidEnabled()));
+    }
+    
+    @Test
+	public void shouldEnableProxyAndExperimental() throws Exception {
+		assertThat(gui.isExperimentalEnabled(), is(true));
+		assertThat(gui.isProxyEnabled(), is(true));
+	}
 
 }

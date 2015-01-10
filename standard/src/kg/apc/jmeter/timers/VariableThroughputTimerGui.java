@@ -1,15 +1,5 @@
 package kg.apc.jmeter.timers;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.util.concurrent.ConcurrentHashMap;
-import javax.swing.*;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.GraphPanelChart;
@@ -18,7 +8,9 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import kg.apc.jmeter.threads.UltimateThreadGroupGui;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.engine.util.CompoundVariable;
+import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
@@ -29,52 +21,98 @@ import org.apache.jmeter.timers.gui.AbstractTimerGui;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
- *
  * @see UltimateThreadGroupGui
  */
 public class VariableThroughputTimerGui
         extends AbstractTimerGui
         implements TableModelListener,
-        CellEditorListener {
+        CellEditorListener, ChangeListener {
 
     public static final String WIKIPAGE = "ThroughputShapingTimer";
     private static final Logger log = LoggingManager.getLoggerForClass();
-    /**
-     *
-     */
     protected ConcurrentHashMap<String, AbstractGraphRow> model;
     protected GraphPanelChart chart;
-    /**
-     *
-     */
     private static Integer[] defaultValues = new Integer[]{
-        1, 1000, 60
+            1, 1000, 60
     };
     protected PowerTableModel tableModel;
     protected JTable grid;
     protected ButtonPanelAddCopyRemove buttons;
+    private JCheckBox override;
+    private JTextField override_value;
+    private VariableThroughputTimer testElement;
+    private DocumentListener docListener;
 
-    /**
-     *
-     */
     public VariableThroughputTimerGui() {
         super();
+        final VariableThroughputTimerGui par = this;
+        docListener = new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                change();
+            }
+
+            private void change() {
+                if (testElement != null) {
+                    log.debug("Change " + testElement + " to " + override_value.getText());
+                    //testElement.setOverrideValue(override_value.getText());
+                } else {
+                    log.debug("No test element");
+                }
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                change();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                change();
+            }
+        };
         init();
     }
 
-    /**
-     *
-     */
     protected final void init() {
         setBorder(makeBorder());
         setLayout(new BorderLayout());
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
-        JPanel containerPanel = new VerticalPanel();
 
-        containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
-        containerPanel.add(GuiBuilderHelper.getComponentWithMargin(createChart(), 2, 2, 0, 2), BorderLayout.CENTER);
-        add(containerPanel, BorderLayout.CENTER);
+        JPanel schedulePanel = new VerticalPanel();
+        schedulePanel.add(createParamsPanel(), BorderLayout.NORTH);
+        schedulePanel.add(GuiBuilderHelper.getComponentWithMargin(createChart(), 2, 2, 0, 2), BorderLayout.CENTER);
+
+        final JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.add("RPS Schedule", schedulePanel);
+        tabbedPane.add("Real-Time RPS Control", createRTControlPanel());
+
+        add(tabbedPane, BorderLayout.CENTER);
+    }
+
+    private Component createRTControlPanel() {
+        JPanel panel = new VerticalPanel();
+
+        HorizontalPanel hpanel = new HorizontalPanel();
+
+        override = new JCheckBox("override RPS on-the-fly to ");
+        hpanel.add(override);
+
+        override_value = new JTextField();
+        hpanel.add(override_value);
+        panel.add(hpanel);
+
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 99, 1);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        slider.addChangeListener(this);
+        slider.firePropertyChange(null, 0, 0);
+        // panel.add(slider);
+
+        return panel;
     }
 
     private JPanel createParamsPanel() {
@@ -112,7 +150,7 @@ public class VariableThroughputTimerGui
 
     @Override
     public TestElement createTestElement() {
-        //log.info("Create test element");
+        log.debug("Create test element");
         VariableThroughputTimer tg = new VariableThroughputTimer();
         modifyTestElement(tg);
         tg.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
@@ -121,8 +159,8 @@ public class VariableThroughputTimerGui
 
     @Override
     public void modifyTestElement(TestElement tg) {
-        //log.info("Modify test element");
-        super.configureTestElement(tg);
+        log.debug("Modify test element");
+        configureTestElement(tg);
 
         if (grid.isEditing()) {
             grid.getCellEditor().stopCellEditing();
@@ -132,12 +170,14 @@ public class VariableThroughputTimerGui
             VariableThroughputTimer utg = (VariableThroughputTimer) tg;
             CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(tableModel, VariableThroughputTimer.DATA_PROPERTY);
             utg.setData(rows);
+            utg.setOverrideRPS(override.isSelected());
+            utg.setOverrideValue(override_value.getText());
         }
     }
 
     @Override
     public void configure(TestElement tg) {
-        //log.info("Configure");
+        log.debug("Configure");
         super.configure(tg);
         VariableThroughputTimer utg = (VariableThroughputTimer) tg;
         JMeterProperty threadValues = utg.getData();
@@ -152,6 +192,9 @@ public class VariableThroughputTimerGui
         JMeterPluginsUtils.collectionPropertyToTableModelRows(columns, tableModel);
         tableModel.addTableModelListener(this);
         buttons.checkDeleteButtonStatus();
+        override.setSelected(utg.isOverrideRPS());
+        override_value.getDocument().addDocumentListener(docListener);
+        override_value.setText(utg.getOverrideValue());
         updateUI();
     }
 
@@ -241,12 +284,52 @@ public class VariableThroughputTimerGui
     @Override
     public void clearGui() {
         super.clearGui();
+        override_value.getDocument().removeDocumentListener(docListener);
         tableModel.clearData();
         tableModel.fireTableDataChanged();
+        override.setSelected(false);
+        override_value.setText("");
     }
 
     @Override
     public void tableChanged(TableModelEvent e) {
         updateUI();
+    }
+
+    /**
+     * Called when slider changes
+     */
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        JSlider slider = (JSlider) e.getSource();
+
+        if (slider.getValueIsAdjusting()) {
+            return;
+        }
+
+        if (override_value.getText().isEmpty() || StringUtils.isNumeric(override_value.getText())) {
+            override_value.setText(String.valueOf(slider.getValue()));
+        }
+
+        int value = slider.getValue();
+        log.debug("Current value: " + value);
+        if (value >= slider.getMaximum() * 0.9 + 1) {
+            if (slider.getMaximum() < 99999) {
+                slider.setMaximum(slider.getMaximum() * 10);
+            }
+        } else if (value <= slider.getMaximum() * 0.09 - 1) {
+            if (slider.getMaximum() > 99) {
+                slider.setMaximum(slider.getMaximum() / 10);
+            }
+        }
+
+        slider.setMajorTickSpacing((slider.getMaximum() + 1) / 10);
+        slider.setMinorTickSpacing((slider.getMaximum() + 1) / 20);
+        slider.setLabelTable(slider.createStandardLabels(slider.getMaximum() / 10));
+    }
+
+    public void setTestElement(VariableThroughputTimer testElement) {
+        log.debug("Set test element " + testElement);
+        this.testElement = testElement;
     }
 }

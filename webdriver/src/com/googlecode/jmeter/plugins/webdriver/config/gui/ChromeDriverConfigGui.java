@@ -12,6 +12,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
 
     private static final long serialVersionUID = 100L;
     JTextField chromeServicePath;
+    JCheckBox androidEnabled;
 
     @Override
     public String getStaticLabel() {
@@ -29,6 +30,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         if(element instanceof ChromeDriverConfig) {
             ChromeDriverConfig config = (ChromeDriverConfig)element;
             chromeServicePath.setText(config.getChromeDriverPath());
+            androidEnabled.setSelected(config.isAndroidEnabled());
         }
     }
 
@@ -45,6 +47,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         if(element instanceof ChromeDriverConfig) {
             ChromeDriverConfig config = (ChromeDriverConfig)element;
             config.setChromeDriverPath(chromeServicePath.getText());
+            config.setAndroidEnabled(androidEnabled.isSelected());
         }
     }
 
@@ -52,6 +55,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
     public void clearGui() {
         super.clearGui();
         chromeServicePath.setText("");
+        androidEnabled.setSelected(false);
     }
 
     @Override
@@ -78,7 +82,21 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         chromeServicePath = new JTextField();
         chromeServicePanel.add(chromeServicePath);
         browserPanel.add(chromeServicePanel);
+
+        androidEnabled = new JCheckBox("Use Chrome on Android");
+        browserPanel.add(androidEnabled);
+
         return browserPanel;
     }
+
+	@Override
+	protected boolean isProxyEnabled() {
+		return true;
+	}
+
+	@Override
+	protected boolean isExperimentalEnabled() {
+		return true;
+	}
 
 }

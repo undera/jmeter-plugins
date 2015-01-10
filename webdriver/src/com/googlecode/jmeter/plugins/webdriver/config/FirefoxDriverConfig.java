@@ -14,7 +14,6 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
     private static final String GENERAL_USERAGENT_OVERRIDE = "FirefoxDriverConfig.general.useragent.override";
     private static final String ENABLE_USERAGENT_OVERRIDE = "FirefoxDriverConfig.general.useragent.override.enabled";
     private static final String ENABLE_NTML = "FirefoxDriverConfig.network.negotiate-auth.allow-insecure-ntlm-v1";
-    private boolean userAgentOverridden;
 
     Capabilities createCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();

@@ -3,7 +3,7 @@
 
 Long time JMeter users had to try their tests on and on,
 finding exact number of threads and timer delays
-that produce desires number of requests per second (RPS) to server.
+that produce desired number of requests per second (RPS) to server.
 This is "closed workload" approach, and it has major drawbacks
 (see [http://www.google.com/search?q=open+closed+workload here] why).
 And if you changed load generator machine or server response time -

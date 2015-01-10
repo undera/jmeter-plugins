@@ -85,4 +85,14 @@ public class InternetExplorerDriverConfigGui extends WebDriverConfigGui {
         return browserPanel;
     }
 
+	@Override
+	protected boolean isProxyEnabled() {
+		return true;
+	}
+
+	@Override
+	protected boolean isExperimentalEnabled() {
+		return true;
+	}
+
 }

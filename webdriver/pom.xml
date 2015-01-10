@@ -96,16 +96,6 @@
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-android-driver</artifactId>
-            <version>${selenium.android.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-api</artifactId>
-            <version>${selenium.android.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-htmlunit-driver</artifactId>
             <version>${selenium.version}</version>
         </dependency>
@@ -278,7 +268,7 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>selenium-support,selenium-api,selenium-remote-driver,selenium-ie-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-android-driver,selenium-htmlunit-driver,
+                            <includeArtifactIds>selenium-support,selenium-api,selenium-remote-driver,selenium-ie-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-htmlunit-driver,
                             	guava,json,commons-exec,jsyntaxpane,htmlunit,htmlunit-core-js,nekohtml,cssparser,jetty-websocket,xercesImpl,xml-apis,sac,httpclient,httpmime,httpcore
                             </includeArtifactIds>
                         </configuration>

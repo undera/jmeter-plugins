@@ -15,7 +15,7 @@ On startup, the user is presented with the following:
 The main part of the InternetExplorer configuration UI lies in the tabs:
   # Proxy
   # InternetExplorer
-  # Experiemental
+  # Experimental
 
 
 == Proxy ==

@@ -91,6 +91,11 @@
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-ie-driver</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-htmlunit-driver</artifactId>
             <version>${selenium.version}</version>
         </dependency>
@@ -263,8 +268,8 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-htmlunit-driver,
-                            	guava,json,commons-exec,jsyntaxpane,htmlunit,htmlunit-core-js,nekohtml,cssparser,jetty-websocket,xercesImpl,xml-apis,sac,httpclient,httpmime,httpcore,gson
+                            <includeArtifactIds>selenium-support,selenium-api,selenium-remote-driver,selenium-ie-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-htmlunit-driver,gson,
+                            	guava,json,commons-exec,jsyntaxpane,htmlunit,htmlunit-core-js,nekohtml,cssparser,jetty-websocket,xercesImpl,xml-apis,sac,httpclient,httpmime,httpcore
                             </includeArtifactIds>
                         </configuration>
                     </execution>
@@ -273,7 +278,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.0</version>
+                <version>2.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

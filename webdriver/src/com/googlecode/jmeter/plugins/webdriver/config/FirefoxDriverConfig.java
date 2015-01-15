@@ -13,6 +13,7 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
     private static final long serialVersionUID = 100L;
     private static final String GENERAL_USERAGENT_OVERRIDE = "FirefoxDriverConfig.general.useragent.override";
     private static final String ENABLE_USERAGENT_OVERRIDE = "FirefoxDriverConfig.general.useragent.override.enabled";
+    private static final String ENABLE_NTML = "FirefoxDriverConfig.network.negotiate-auth.allow-insecure-ntlm-v1";
 
     Capabilities createCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -23,8 +24,12 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
     FirefoxProfile createProfile() {
         FirefoxProfile profile = new FirefoxProfile();
         String userAgentOverride = getUserAgentOverride();
+        String ntlmOverride = getNtlmSetting();
         if(StringUtils.isNotEmpty(userAgentOverride)) {
             profile.setPreference("general.useragent.override", userAgentOverride);
+        }
+        if(StringUtils.isNotEmpty(ntlmOverride)) {
+            profile.setPreference("network.negotiate-auth.allow-insecure-ntlm-v1", true);
         }
         return profile;
     }
@@ -48,5 +53,13 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
 
     public void setUserAgentOverridden(boolean userAgentOverridden) {
         setProperty(ENABLE_USERAGENT_OVERRIDE, userAgentOverridden);
+    }
+    
+    public void setNtlmSetting(boolean ntlm) {
+        setProperty(ENABLE_NTML, ntlm);
+    }
+
+    public String getNtlmSetting() {
+        return getPropertyAsString(ENABLE_NTML);
     }
 }

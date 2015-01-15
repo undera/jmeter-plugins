@@ -13,8 +13,10 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
 
     private static final long serialVersionUID = 100L;
     static final String OVERRIDEN_USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_2 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A4449d Safari/9537.53";
+    static final String OVERRIDEN_NTLM = "";
     JTextField userAgentOverrideText;
     JCheckBox userAgentOverrideCheckbox;
+    JCheckBox ntlmOverrideCheckbox;
 
     @Override
     public String getStaticLabel() {
@@ -64,6 +66,7 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
         if (element instanceof FirefoxDriverConfig) {
             FirefoxDriverConfig config = (FirefoxDriverConfig) element;
             config.setUserAgentOverridden(userAgentOverrideCheckbox.isSelected());
+            config.setNtlmSetting(ntlmOverrideCheckbox.isSelected());
             if(userAgentOverrideCheckbox.isSelected()) {
                 config.setUserAgentOverride(userAgentOverrideText.getText());
             }
@@ -78,6 +81,12 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
         userAgentOverrideCheckbox.setEnabled(true);
         userAgentOverrideCheckbox.addItemListener(this);
         firefoxPanel.add(userAgentOverrideCheckbox);
+        
+        ntlmOverrideCheckbox = new JCheckBox("Enable NTLM");
+        ntlmOverrideCheckbox.setSelected(false);
+        ntlmOverrideCheckbox.setEnabled(true);
+        ntlmOverrideCheckbox.addItemListener(this);
+        firefoxPanel.add(ntlmOverrideCheckbox);
 
         userAgentOverrideText = new JTextField(OVERRIDEN_USER_AGENT);
         userAgentOverrideText.setEnabled(false);
@@ -91,10 +100,10 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
         super.clearGui();
         userAgentOverrideCheckbox.setSelected(false);
         userAgentOverrideText.setText(OVERRIDEN_USER_AGENT);
+        ntlmOverrideCheckbox.setSelected(false);
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent itemEvent) {
+    public void itemStateChangedUserAgent(ItemEvent itemEvent) {
         if (itemEvent.getSource() == userAgentOverrideCheckbox) {
             userAgentOverrideText.setEnabled(userAgentOverrideCheckbox.isSelected());
         }

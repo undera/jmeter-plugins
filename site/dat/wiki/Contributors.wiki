@@ -15,3 +15,5 @@ Everyone who provided pull request or other contribution, deserves mentioning on
   * Vincent Daburon and Felix Henry - [HttpSimpleTableServer], [SynthesisReport], [MergeResults], temporal and regex filters
   * Sergey Marakhov and Linh Pham - Android Driver Config
   * Bakir Jusufbegovic and Semir Sabic / AtlantBH - a lot of components
+  * Jorge S. Cruz - added [RemoteDriverConfig] for connecting to a Selenium Grid
+  * Roy de Kleijn - added NTLM and Internet Explorer support

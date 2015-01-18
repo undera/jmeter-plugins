@@ -80,4 +80,10 @@ public class FirefoxDriverConfigGuiTest {
         assertThat(gui.userAgentOverrideText.getText(), is(config.getUserAgentOverride()));
         assertThat(gui.userAgentOverrideCheckbox.isSelected(), is(config.isUserAgentOverridden()));
     }
+    
+    @Test
+	public void shouldEnableProxyAndExperimental() throws Exception {
+		assertThat(gui.isExperimentalEnabled(), is(true));
+		assertThat(gui.isProxyEnabled(), is(true));
+	}
 }

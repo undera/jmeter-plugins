@@ -97,6 +97,7 @@ Selenium/WebDriver testing ability.
   * [ChromeDriverConfig]
   * [FirefoxDriverConfig]
   * [HtmlUnitDriverConfig]
+  * [RemoteDriverConfig]
 
 </td>
 </tr><tr>

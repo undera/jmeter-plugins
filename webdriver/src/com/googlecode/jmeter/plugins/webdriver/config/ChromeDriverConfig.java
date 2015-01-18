@@ -5,11 +5,13 @@ import org.apache.log.Logger;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,6 +20,7 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
     private static final long serialVersionUID = 100L;
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
     private static final String CHROME_SERVICE_PATH = "ChromeDriverConfig.chromedriver_path";
+    private static final String ANDROID_ENABLED = "ChromeDriverConfig.android_enabled";
     private static final Map<String, ChromeDriverService> services = new ConcurrentHashMap<String, ChromeDriverService>();
 
     public void setChromeDriverPath(String path) {
@@ -31,6 +34,13 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
     Capabilities createCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.PROXY, createProxy());
+
+        if(isAndroidEnabled()) {
+            Map<String, String> chromeOptions = new HashMap<String, String>();
+            chromeOptions.put("androidPackage", "com.android.chrome");
+            capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+        }
+
         return capabilities;
     }
 
@@ -67,5 +77,13 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
             service = null;
         }
         return service;
+    }
+
+    public boolean isAndroidEnabled() {
+        return getPropertyAsBoolean(ANDROID_ENABLED);
+    }
+
+    public void setAndroidEnabled(boolean enabled) {
+        setProperty(ANDROID_ENABLED, enabled);
     }
 }

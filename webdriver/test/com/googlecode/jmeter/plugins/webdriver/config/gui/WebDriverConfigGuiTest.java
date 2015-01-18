@@ -467,6 +467,16 @@ public class WebDriverConfigGuiTest {
             modifyTestElement(config);
             return config;
         }
+
+		@Override
+		protected boolean isProxyEnabled() {
+			return true;
+		}
+
+		@Override
+		protected boolean isExperimentalEnabled() {
+			return true;
+		}
     }
 
     private static class WebDriverConfigImpl extends WebDriverConfig {

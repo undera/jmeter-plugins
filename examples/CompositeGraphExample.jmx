@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.1">
+<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.12-SNAPSHOT.20141208">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments">This Test Plan demonstrates usage of Composite Graph</stringProp>
@@ -18,6 +18,7 @@
           <value class="SampleSaveConfiguration">
             <time>true</time>
             <latency>true</latency>
+            <connectTime>false</connectTime>
             <timestamp>true</timestamp>
             <success>true</success>
             <label>true</label>
@@ -38,6 +39,7 @@
             <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
             <assertionsResultsToSave>0</assertionsResultsToSave>
             <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
           </value>
         </objProp>
         <stringProp name="filename"></stringProp>
@@ -48,18 +50,22 @@
             <stringProp name="-623110969">jp@gc - ActiveThreadsOverTime</stringProp>
             <stringProp name="1267279877">jp@gc - Transactions per Second</stringProp>
             <stringProp name="-243013315">jp@gc - Response Times Over Time</stringProp>
-            <stringProp name="-1342058195">jp@gc - Servers Performance Monitoring CPU</stringProp>
           </collectionProp>
           <collectionProp name="">
             <stringProp name="2133254370">Overall Active Threads</stringProp>
             <stringProp name="117711132">Successful Transactions per Second</stringProp>
             <stringProp name="-1549391110">Overall Response Times</stringProp>
-            <stringProp name="1201752990">undera-laptop</stringProp>
           </collectionProp>
         </collectionProp>
         <stringProp name="TestPlan.comments">Run the test and see several different graphs composed to one
 If you set up Servers Perfromance Monitor and select it to display
 on &quot;Graphs&quot; tab, you&apos;ll see performance info, too</stringProp>
+        <stringProp name="include_sample_labels"></stringProp>
+        <stringProp name="exclude_sample_labels"></stringProp>
+        <stringProp name="start_offset"></stringProp>
+        <stringProp name="end_offset"></stringProp>
+        <boolProp name="include_checkbox_state">false</boolProp>
+        <boolProp name="exclude_checkbox_state">false</boolProp>
       </kg.apc.jmeter.vizualizers.CompositeResultCollector>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
@@ -86,6 +92,9 @@ on &quot;Graphs&quot; tab, you&apos;ll see performance info, too</stringProp>
 without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESPONSE_TIME">${__Random(1,1000)}</stringProp>
           <stringProp name="TestPlan.comments">As usual, we use Dummy Sampler for simulation</stringProp>
+          <boolProp name="WAITING">false</boolProp>
+          <stringProp name="REQUEST_DATA"></stringProp>
+          <stringProp name="LATENCY"></stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.ThreadsStateOverTimeGui" testclass="ResultCollector" testname="jp@gc - ActiveThreadsOverTime" enabled="true">
@@ -95,6 +104,7 @@ without actual network activity. This helps debugging tests.</stringProp>
             <value class="SampleSaveConfiguration">
               <time>true</time>
               <latency>true</latency>
+              <connectTime>false</connectTime>
               <timestamp>true</timestamp>
               <success>true</success>
               <label>true</label>
@@ -122,6 +132,12 @@ without actual network activity. This helps debugging tests.</stringProp>
           <longProp name="interval_grouping">500</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
           <stringProp name="TestPlan.comments">One of Graphs to use in Composite</stringProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
+          <stringProp name="start_offset"></stringProp>
+          <stringProp name="end_offset"></stringProp>
+          <boolProp name="include_checkbox_state">false</boolProp>
+          <boolProp name="exclude_checkbox_state">false</boolProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.TransactionsPerSecondGui" testclass="ResultCollector" testname="jp@gc - Transactions per Second" enabled="true">
@@ -131,6 +147,7 @@ without actual network activity. This helps debugging tests.</stringProp>
             <value class="SampleSaveConfiguration">
               <time>true</time>
               <latency>true</latency>
+              <connectTime>false</connectTime>
               <timestamp>true</timestamp>
               <success>true</success>
               <label>true</label>
@@ -158,6 +175,12 @@ without actual network activity. This helps debugging tests.</stringProp>
           <longProp name="interval_grouping">1000</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
           <stringProp name="TestPlan.comments">One of Graphs to use in Composite</stringProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
+          <stringProp name="start_offset"></stringProp>
+          <stringProp name="end_offset"></stringProp>
+          <boolProp name="include_checkbox_state">false</boolProp>
+          <boolProp name="exclude_checkbox_state">false</boolProp>
         </ResultCollector>
         <hashTree/>
         <ResultCollector guiclass="kg.apc.jmeter.vizualizers.ResponseTimesOverTimeGui" testclass="ResultCollector" testname="jp@gc - Response Times Over Time" enabled="true">
@@ -167,6 +190,7 @@ without actual network activity. This helps debugging tests.</stringProp>
             <value class="SampleSaveConfiguration">
               <time>true</time>
               <latency>true</latency>
+              <connectTime>false</connectTime>
               <timestamp>true</timestamp>
               <success>true</success>
               <label>true</label>
@@ -194,21 +218,13 @@ without actual network activity. This helps debugging tests.</stringProp>
           <longProp name="interval_grouping">500</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
           <stringProp name="TestPlan.comments">One of Graphs to use in Composite</stringProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
+          <stringProp name="start_offset"></stringProp>
+          <stringProp name="end_offset"></stringProp>
+          <boolProp name="include_checkbox_state">false</boolProp>
+          <boolProp name="exclude_checkbox_state">false</boolProp>
         </ResultCollector>
-        <hashTree/>
-        <kg.apc.jmeter.perfmon.PerformanceMonitoringTestElement guiclass="kg.apc.jmeter.perfmon.ServerPerfMonitoringGUI" testclass="kg.apc.jmeter.perfmon.PerformanceMonitoringTestElement" testname="jp@gc - Servers Performance Monitoring CPU" enabled="true">
-          <collectionProp name="perfomdata">
-            <collectionProp name="-1850417723">
-              <stringProp name="-1204607085">localhost</stringProp>
-            </collectionProp>
-            <collectionProp name="1494632332">
-              <stringProp name="1600768">4444</stringProp>
-            </collectionProp>
-          </collectionProp>
-          <intProp name="monitoringType">0</intProp>
-          <stringProp name="TestPlan.comments">Performance Graph to use in Composite
-NOTE: It requires serverAgent started at target host</stringProp>
-        </kg.apc.jmeter.perfmon.PerformanceMonitoringTestElement>
         <hashTree/>
       </hashTree>
     </hashTree>

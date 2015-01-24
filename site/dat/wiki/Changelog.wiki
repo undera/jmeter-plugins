@@ -7,9 +7,10 @@
   * Added Remote driver to the WebDriver plugins
   * Added better GUI to the Remote Driver
   * add iterationNum function
-  * add real-time RPS changing to [VariableThroughputTimer Throughput Shaping Timer]
-  * add NTLM support firefox
-  * add Internet Explorer driver
+  * add real-time RPS changing to [VariableThroughputTimer Throughput Shaping Timer]???
+  * add NTLM support for Firefox
+  * add Internet Explorer Driver
+  * rework internals of [JSONPathAssertion JSON Path Assertion], handle arrays and null values, dependency lib
 
 
 == 1.2.0 <i><font color=gray size="1">September 16, 2014</font></i>==

@@ -18,12 +18,7 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.gui;
 import com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
 
 public class JSONPathAssertionGuiTest {
 
@@ -47,86 +42,55 @@ public class JSONPathAssertionGuiTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of init method, of class JSONPathAssertionGui.
-     */
     @Test
     public void testInit() {
         System.out.println("init");
         JSONPathAssertionGui instance = new JSONPathAssertionGui();
         instance.init();
-        // TODO review the generated test code and remove the default call to fail.
-
+        instance.stateChanged(null);
     }
 
-    /**
-     * Test of clearGui method, of class JSONPathAssertionGui.
-     */
     @Test
     public void testClearGui() {
         System.out.println("clearGui");
         JSONPathAssertionGui instance = new JSONPathAssertionGui();
         instance.clearGui();
-        // TODO review the generated test code and remove the default call to fail.
-
     }
 
-    /**
-     * Test of createTestElement method, of class JSONPathAssertionGui.
-     */
     @Test
     public void testCreateTestElement() {
         System.out.println("createTestElement");
         JSONPathAssertionGui instance = new JSONPathAssertionGui();
-        TestElement expResult = null;
-        TestElement result = instance.createTestElement();
+        instance.createTestElement();
     }
 
-    /**
-     * Test of getLabelResource method, of class JSONPathAssertionGui.
-     */
     @Test
     public void testGetLabelResource() {
         System.out.println("getLabelResource");
         JSONPathAssertionGui instance = new JSONPathAssertionGui();
-        String expResult = "";
-        String result = instance.getLabelResource();
+        instance.getLabelResource();
     }
 
-    /**
-     * Test of getStaticLabel method, of class JSONPathAssertionGui.
-     */
     @Test
     public void testGetStaticLabel() {
         System.out.println("getStaticLabel");
         JSONPathAssertionGui instance = new JSONPathAssertionGui();
-        String expResult = "";
-        String result = instance.getStaticLabel();
+        instance.getStaticLabel();
     }
 
-    /**
-     * Test of modifyTestElement method, of class JSONPathAssertionGui.
-     */
     @Test
     public void testModifyTestElement() {
         System.out.println("modifyTestElement");
         TestElement element = new JSONPathAssertion();
         JSONPathAssertionGui instance = new JSONPathAssertionGui();
         instance.modifyTestElement(element);
-        // TODO review the generated test code and remove the default call to fail.
-
     }
 
-    /**
-     * Test of configure method, of class JSONPathAssertionGui.
-     */
     @Test
     public void testConfigure() {
         System.out.println("configure");
         TestElement element = new JSONPathAssertion();
         JSONPathAssertionGui instance = new JSONPathAssertionGui();
         instance.configure(element);
-        // TODO review the generated test code and remove the default call to fail.
-
     }
 }

@@ -17,12 +17,9 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion;
 
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class JSONPathAssertionTest {
 
@@ -45,9 +42,6 @@ public class JSONPathAssertionTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of getJsonPath method, of class JSONPathAssertion.
-     */
     @Test
     public void testGetJsonPath() {
         System.out.println("getJsonPath");
@@ -55,26 +49,16 @@ public class JSONPathAssertionTest {
         String expResult = "";
         String result = instance.getJsonPath();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-
     }
 
-    /**
-     * Test of setJsonPath method, of class JSONPathAssertion.
-     */
     @Test
     public void testSetJsonPath() {
         System.out.println("setJsonPath");
         String jsonPath = "";
         JSONPathAssertion instance = new JSONPathAssertion();
         instance.setJsonPath(jsonPath);
-        // TODO review the generated test code and remove the default call to fail.
-
     }
 
-    /**
-     * Test of getExpectedValue method, of class JSONPathAssertion.
-     */
     @Test
     public void testGetExpectedValue() {
         System.out.println("getExpectedValue");
@@ -82,62 +66,185 @@ public class JSONPathAssertionTest {
         String expResult = "";
         String result = instance.getExpectedValue();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-
     }
 
-    /**
-     * Test of setExpectedValue method, of class JSONPathAssertion.
-     */
     @Test
     public void testSetExpectedValue() {
         System.out.println("setExpectedValue");
         String expectedValue = "";
         JSONPathAssertion instance = new JSONPathAssertion();
         instance.setExpectedValue(expectedValue);
-        // TODO review the generated test code and remove the default call to fail.
-
     }
 
-    /**
-     * Test of setJsonValidationBool method, of class JSONPathAssertion.
-     */
     @Test
     public void testSetJsonValidationBool() {
         System.out.println("setJsonValidationBool");
-        boolean jsonValidation = false;
         JSONPathAssertion instance = new JSONPathAssertion();
-        instance.setJsonValidationBool(jsonValidation);
-        // TODO review the generated test code and remove the default call to fail.
-
+        instance.setJsonValidationBool(false);
     }
 
-    /**
-     * Test of isJsonValidationBool method, of class JSONPathAssertion.
-     */
     @Test
     public void testIsJsonValidationBool() {
         System.out.println("isJsonValidationBool");
         JSONPathAssertion instance = new JSONPathAssertion();
-        boolean expResult = false;
         boolean result = instance.isJsonValidationBool();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-
+        assertEquals(false, result);
     }
 
-    /**
-     * Test of getResult method, of class JSONPathAssertion.
-     */
     @Test
-    public void testGetResult() {
-        System.out.println("getResult");
+    public void testGetResult_positive() {
+        System.out.println("getResult simple");
         SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": 123}".getBytes());
+
         JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval");
+        instance.setJsonValidationBool(true);
+        instance.setExpectedValue("123");
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        // TODO review the generated test code and remove the default call to fail.
+        assertEquals(false, result.isFailure());
+    }
 
+    @Test
+    public void testGetResult_negative() {
+        System.out.println("getResult simple");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": 123}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval");
+        instance.setJsonValidationBool(true);
+        instance.setExpectedValue("1234");
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(true, result.isFailure());
+    }
+
+    @Test
+    public void testGetResult_null() {
+        System.out.println("getResult null");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": null}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval");
+        instance.setExpectNull(true);
+        instance.setJsonValidationBool(true);
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(false, result.isFailure());
+    }
+
+    @Test
+    public void testGetResult_null_not_found() {
+        System.out.println("getResult null");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": 123}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval");
+        instance.setExpectNull(true);
+        instance.setJsonValidationBool(true);
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(true, result.isFailure());
+    }
+
+    @Test
+    public void testGetResult_null_novalidate() {
+        System.out.println("getResult null novalidate");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": null}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval");
+        instance.setJsonValidationBool(false);
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(false, result.isFailure());
+    }
+
+    @Test
+    public void testGetResult_no_such_path() {
+        System.out.println("getResult notexist");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": null}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.notexist");
+        instance.setJsonValidationBool(false);
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(true, result.isFailure());
+    }
+
+    @Test
+    public void testGetResult_list_val() {
+        System.out.println("getResult list-val");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": [{\"test\":1},{\"test\":2},{\"test\":3}]}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval[*].test");
+        instance.setJsonValidationBool(true);
+        instance.setExpectedValue("2");
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(false, result.isFailure());
+    }
+
+    @Test
+    public void testGetResult_list_negative() {
+        System.out.println("getResult list-neg");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": [{\"test\":1},{\"test\":2},{\"test\":3}]}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval[*].test");
+        instance.setJsonValidationBool(true);
+        instance.setExpectedValue("5");
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(true, result.isFailure());
+    }
+
+    @Test
+    public void testGetResult_list_empty_novalidate() {
+        System.out.println("getResult list-empty");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": []}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval[*]");
+        instance.setJsonValidationBool(false);
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(false, result.isFailure());
+    }
+
+    @Test
+    public void testGetResult_dict() {
+        System.out.println("getResult notexist");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": {\"key\": \"val\"}}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval");
+        instance.setJsonValidationBool(true);
+        instance.setExpectedValue("{key=val}");
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(false, result.isFailure());
     }
 }

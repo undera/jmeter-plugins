@@ -92,7 +92,7 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
-            <version>0.9.0</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.qpid</groupId>
@@ -104,26 +104,26 @@
             <artifactId>dnsjava</artifactId>
             <version>2.0.6</version>
         </dependency>
-	<dependency>
-    		<groupId>redis.clients</groupId>
-    		<artifactId>jedis</artifactId>
-    		<version>2.2.1</version>
-    		<type>jar</type>
-    		<scope>compile</scope>
-	</dependency>
         <dependency>
-                <groupId>commons-pool</groupId>
-                <artifactId>commons-pool</artifactId>
-                <version>1.6</version>
-                <type>jar</type>
-                <scope>compile</scope>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.2.1</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
-	   <dependency>
-		    <groupId>com.io7m.xom</groupId>
-		    <artifactId>xom</artifactId>
-		    <version>1.2.10</version>
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>1.6</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
-        
+        <dependency>
+            <groupId>com.io7m.xom</groupId>
+            <artifactId>xom</artifactId>
+            <version>1.2.10</version>
+        </dependency>
+
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
@@ -308,6 +308,7 @@
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>${cobertura-maven.version}</version>
                 <configuration>
+                    <check/>
                     <formats>
                         <format>xml</format>
                         <format>html</format>

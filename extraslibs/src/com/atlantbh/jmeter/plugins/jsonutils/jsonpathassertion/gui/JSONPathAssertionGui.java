@@ -8,26 +8,31 @@
  */
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.gui;
 
-import java.awt.BorderLayout;
-import javax.swing.BorderFactory;
-import javax.swing.JCheckBox;
+import com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.assertions.gui.AbstractAssertionGui;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.gui.JLabeledTextField;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
-import com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion;
-import kg.apc.jmeter.JMeterPluginsUtils;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
 
 /**
  * Java class representing GUI for the JSON Path Assertion component in JMeter
  */
-public class JSONPathAssertionGui extends AbstractAssertionGui {
+public class JSONPathAssertionGui extends AbstractAssertionGui implements ChangeListener {
 
+    //private static final Logger log = LoggingManager.getLoggerForClass();
     private static final long serialVersionUID = 1L;
     private JLabeledTextField jsonPath = null;
     private JLabeledTextField jsonValue = null;
     private JCheckBox jsonValidation = null;
+    private JCheckBox expectNull = null;
     private static final String WIKIPAGE = "JSONPathAssertion";
 
     public JSONPathAssertionGui() {
@@ -40,15 +45,20 @@ public class JSONPathAssertionGui extends AbstractAssertionGui {
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
 
         VerticalPanel panel = new VerticalPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "JSON path assertion"));
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
-        jsonPath = new JLabeledTextField("JSON path: ");
-        jsonValue = new JLabeledTextField("Expected value: ");
+        jsonPath = new JLabeledTextField("JSON Path: ");
         jsonValidation = new JCheckBox("Validate against expected value");
+        jsonValue = new JLabeledTextField("Expected Value: ");
+        expectNull = new JCheckBox("Expect null");
+
+        jsonValidation.addChangeListener(this);
+        expectNull.addChangeListener(this);
 
         panel.add(jsonPath);
-        panel.add(jsonValue);
         panel.add(jsonValidation);
+        panel.add(jsonValue);
+        panel.add(expectNull);
 
         add(panel, BorderLayout.CENTER);
     }
@@ -59,6 +69,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui {
         jsonPath.setText("");
         jsonValue.setText("");
         jsonValidation.setSelected(false);
+        expectNull.setSelected(false);
     }
 
     @Override
@@ -87,6 +98,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui {
             jpAssertion.setJsonPath(jsonPath.getText());
             jpAssertion.setExpectedValue(jsonValue.getText());
             jpAssertion.setJsonValidationBool(jsonValidation.isSelected());
+            jpAssertion.setExpectNull(expectNull.isSelected());
         }
     }
 
@@ -97,5 +109,11 @@ public class JSONPathAssertionGui extends AbstractAssertionGui {
         jsonPath.setText(jpAssertion.getJsonPath());
         jsonValue.setText(jpAssertion.getExpectedValue());
         jsonValidation.setSelected(jpAssertion.isJsonValidationBool());
+        expectNull.setSelected(jpAssertion.isExpectNull());
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        jsonValue.setEnabled(jsonValidation.isSelected() && !expectNull.isSelected());
     }
 }

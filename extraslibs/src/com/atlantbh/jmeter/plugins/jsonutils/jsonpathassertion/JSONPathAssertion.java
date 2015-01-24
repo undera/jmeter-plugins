@@ -8,23 +8,28 @@
  */
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import org.apache.jmeter.assertions.*;
+import com.jayway.jsonpath.JsonPath;
+import net.minidev.json.JSONArray;
+import org.apache.jmeter.assertions.Assertion;
+import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
-import com.jayway.jsonpath.JsonPath;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+
+import java.io.Serializable;
 
 /**
  * This is main class for JSONPath Assertion which verifies assertion on
  * previous sample result using JSON path expression
  */
 public class JSONPathAssertion extends AbstractTestElement implements Serializable, Assertion {
-
+    private static final Logger log = LoggingManager.getLoggerForClass();
     private static final long serialVersionUID = 1L;
     private static final String JSONPATH = "JSON_PATH";
     private static final String EXPECTEDVALUE = "EXPECTED_VALUE";
     private static final String JSONVALIDATION = "JSONVALIDATION";
+    private static final String EXPECT_NULL = "EXPECT_NULL";
 
     public String getJsonPath() {
         return getPropertyAsString(JSONPATH);
@@ -46,33 +51,43 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         setProperty(JSONVALIDATION, jsonValidation);
     }
 
+    public void setExpectNull(boolean val) {
+        setProperty(EXPECT_NULL, val);
+    }
+
+    public boolean isExpectNull() {
+        return getPropertyAsBoolean(EXPECT_NULL);
+    }
+
     public boolean isJsonValidationBool() {
         return getPropertyAsBoolean(JSONVALIDATION);
     }
 
-    private boolean checkJSONPathWithoutValidation(String jsonString, String jsonPath) throws Exception {
-        String jsonPathResult = JsonPath.read(jsonString, jsonPath).toString();
+    private void doAssert(String jsonString) {
+        Object value = JsonPath.read(jsonString, getJsonPath());
 
-        if ("".equalsIgnoreCase(jsonPath)) {
-            throw new Exception("JSON path is is empty!");
-        } else if ("".equalsIgnoreCase(jsonPathResult)) {
-            throw new Exception("Incorrect JSON path " + jsonPath);
-        } else {
-            return true;
-        }
-    }
+        if (isJsonValidationBool()) {
+            if (value instanceof JSONArray) {
+                JSONArray arr = (JSONArray) value;
+                for (Object subj : arr.toArray()) {
+                    if (isExpectNull() && subj == null) {
+                        return;
+                    } else if (subj.toString().equals(getExpectedValue())) {
+                        return;
+                    }
+                }
+            } else {
+                if (isExpectNull() && value == null) {
+                    return;
+                } else if (value.toString().equals(getExpectedValue())) {
+                    return;
+                }
+            }
 
-    private boolean checkJSONPathWithValidation(String jsonString, String jsonPath, String expectedValue) throws Exception {
-        if ("".equalsIgnoreCase(jsonPath) || "".equalsIgnoreCase(expectedValue)) {
-            throw new Exception("JSON path or expected value is empty!");
-        }
-
-	String actualValue = JsonPath.read(jsonString, jsonPath).toString();
-        if (expectedValue.equalsIgnoreCase(actualValue)) {
-            return true;
-        } else {
-            throw new Exception(String.format("Path \"%s\" doesn't contain expected value. Expected \"%s\" but was \"%s\"!",
-                    jsonPath, expectedValue, actualValue));
+            if (isExpectNull())
+                throw new RuntimeException(String.format("Value expected to be null, but found '%s'", value));
+            else
+                throw new RuntimeException(String.format("Value expected to be '%s', but found '%s'", getExpectedValue(), value));
         }
     }
 
@@ -84,36 +99,17 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
             return result.setResultForNull();
         }
 
-        if (isJsonValidationBool()) {
-            try {
-                if (checkJSONPathWithValidation(new String(responseData), getJsonPath(), getExpectedValue())) {
-                    result.setFailure(false);
-                    result.setFailureMessage("");
-                }
-            } catch (ParseException e) {
-                result.setFailure(true);
-                result.setFailureMessage(e.getClass().toString() + " - " + e.getMessage());
-            } catch (Exception e) {
-                result.setFailure(true);
-                result.setFailureMessage(e.getMessage());
+        result.setFailure(false);
+        result.setFailureMessage("");
+        try {
+            doAssert(new String(responseData));
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug("Assertion failed", e);
             }
+            result.setFailure(true);
+            result.setFailureMessage(e.getMessage());
         }
-
-        if (!isJsonValidationBool()) {
-            try {
-                if (checkJSONPathWithoutValidation(new String(responseData), getJsonPath())) {
-                    result.setFailure(false);
-                    result.setFailureMessage("");
-                }
-            } catch (ParseException e) {
-                result.setFailure(true);
-                result.setFailureMessage(e.getClass().toString() + " - " + e.getMessage());
-            } catch (Exception e) {
-                result.setFailure(true);
-                result.setFailureMessage(e.getMessage());
-            }
-        }
-
         return result;
     }
 }

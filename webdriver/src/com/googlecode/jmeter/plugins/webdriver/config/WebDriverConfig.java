@@ -45,13 +45,13 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     private static final String SOCKS_PORT = "WebDriverConfig.socks_port";
     private static final String NO_PROXY = "WebDriverConfig.no_proxy";
     private static final String PROXY_TYPE = "WebDriverConfig.proxy_type";
-        
+
     /*
      * THE FOLLOWING CONFIGS ARE EXPERIMENTAL AND ARE SUBJECT TO CHANGE/REMOVAL.
      */
     private static final String RECREATE_ON_ITERATION_START = "WebDriverConfig.reset_per_iteration";
     private static final String DEV_MODE = "WebDriverConfig.dev_mode";
-    
+
     private final transient ProxyFactory proxyFactory;
 
     protected WebDriverConfig() {
@@ -165,7 +165,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
      * @return a {@link Proxy}
      */
     public Proxy createProxy() {
-        switch(getProxyType()) {
+        switch (getProxyType()) {
             case PROXY_PAC:
                 return proxyFactory.getConfigUrlProxy(getProxyPacUrl());
             case DIRECT:
@@ -173,7 +173,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
             case AUTO_DETECT:
                 return proxyFactory.getAutodetectProxy();
             case MANUAL:
-                if(isUseHttpSettingsForAllProtocols()) {
+                if (isUseHttpSettingsForAllProtocols()) {
                     ProxyHostPort proxy = new ProxyHostPort(getHttpHost(), getHttpPort());
                     return proxyFactory.getManualProxy(proxy, proxy, proxy, proxy, getNoProxyHost());
                 }
@@ -192,7 +192,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
         LOGGER.info("iterationStart()");
 
-        if(isRecreateBrowserOnIterationStart() && !isDevMode()) {
+        if (isRecreateBrowserOnIterationStart() && !isDevMode()) {
             final T browser = getThreadBrowser();
             quitBrowser(browser);
             setThreadBrowser(createBrowser());
@@ -203,8 +203,8 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     @Override
     public void threadStarted() {
         // don't create new browser if there is one there already
-        if(hasThreadBrowser()) {
-            LOGGER.warn("Thread: " + currentThreadName() + " already has a WebDriver("+ getThreadBrowser()+") associated with it. ThreadGroup can only contain a single WebDriverConfig.");
+        if (hasThreadBrowser()) {
+            LOGGER.warn("Thread: " + currentThreadName() + " already has a WebDriver(" + getThreadBrowser() + ") associated with it. ThreadGroup can only contain a single WebDriverConfig.");
             return;
         }
 
@@ -223,7 +223,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
     @Override
     public void threadFinished() {
-        if(!isDevMode()) {
+        if (!isDevMode()) {
             final T browser = removeThreadBrowser();
             quitBrowser(browser);
         }
@@ -245,11 +245,10 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     /**
      * Quits browser at the end of the tests. This will be envoked per thread/browser instance created.
      *
-     * @param browser
-     * is the browser instance to quit. Will not quit if argument is null.
+     * @param browser is the browser instance to quit. Will not quit if argument is null.
      */
     protected void quitBrowser(final T browser) {
-        if(browser != null) {
+        if (browser != null) {
             try {
                 browser.quit();
             } catch (SessionNotFoundException e) {
@@ -263,11 +262,21 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     }
 
     protected boolean hasThreadBrowser() {
-        return webdrivers.containsKey(currentThreadName());
+        if (webdrivers.containsKey(currentThreadName())) {
+            WebDriver browser = webdrivers.get(currentThreadName());
+            try {
+                browser.getCurrentUrl();
+                return true;
+            } catch (Exception ex) {
+                LOGGER.warn("Old browser object is inaccessible, will create new", ex);
+                webdrivers.remove(currentThreadName());
+            }
+        }
+        return false;
     }
 
     protected void setThreadBrowser(T browser) {
-        if(browser != null) {
+        if (browser != null) {
             webdrivers.put(currentThreadName(), browser);
         }
     }
@@ -291,7 +300,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     public void setRecreateBrowserOnIterationStart(boolean recreate) {
         setProperty(RECREATE_ON_ITERATION_START, recreate);
     }
-    
+
     public boolean isDevMode() {
         return getPropertyAsBoolean(DEV_MODE);
     }

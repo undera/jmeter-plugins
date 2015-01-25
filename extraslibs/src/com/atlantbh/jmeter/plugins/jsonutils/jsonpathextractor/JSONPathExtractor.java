@@ -10,6 +10,7 @@
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor;
 
 import com.jayway.jsonpath.JsonPath;
+import net.minidev.json.JSONArray;
 import org.apache.jmeter.processor.PostProcessor;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
@@ -59,30 +60,36 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
         return getPropertyAsString(DEFAULT);
     }
 
-    private String extractJSONPath(String jsonString, String jsonPath) throws Exception {
-        Object jsonPathResult = JsonPath.read(jsonString, jsonPath);
-        if (null == jsonPathResult) {
-            return getDefaultValue();
-        } else {
-            return jsonPathResult.toString();
-        }
-    }
-
     @Override
     public void process() {
+        // NOTE: using String.format impacts performance
+        // http://stackoverflow.com/questions/513600/should-i-use-javas-string-format-if-performance-is-important
         JMeterContext context = getThreadContext();
         JMeterVariables vars = context.getVariables();
         SampleResult previousResult = context.getPreviousResult();
         String responseData = previousResult.getResponseDataAsString();
 
-        String response;
         try {
-            response = this.extractJSONPath(responseData, this.getJsonPath());
+            Object jsonPathResult = JsonPath.read(responseData, getJsonPath());
+            if (jsonPathResult instanceof JSONArray) {
+                vars.put(this.getVar(), jsonPathResult.toString());
+                Object[] arr = ((JSONArray) jsonPathResult).toArray();
+
+                int k = 1;
+                while (vars.get(this.getVar() + "_" + k) != null) {
+                    vars.remove(this.getVar() + "_" + k);
+                    k++;
+                }
+
+                for (int n = 0; n < arr.length; n++) {
+                    vars.put(this.getVar() + "_" + (n + 1), String.format("%s", arr[n]));
+                }
+            } else {
+                vars.put(this.getVar(), String.format("%s", jsonPathResult));
+            }
         } catch (Exception e) {
             log.error("Extract failed", e);
-            response = getDefaultValue();
+            vars.put(this.getVar(), getDefaultValue());
         }
-
-        vars.put(this.getVar(), response);
     }
 }

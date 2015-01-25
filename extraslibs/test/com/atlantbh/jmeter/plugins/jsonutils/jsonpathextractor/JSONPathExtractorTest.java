@@ -129,4 +129,32 @@ public class JSONPathExtractorTest {
         JMeterVariables vars = context.getVariables();
         assertEquals("[\"Nigel Rees\",\"Evelyn Waugh\",\"Herman Melville\",\"J. R. R. Tolkien\"]", vars.get("test"));
     }
+
+    @Test
+    public void testProcess_list() {
+        System.out.println("process list");
+        JMeterContext context = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        res.setResponseData("{\"myval\": [{\"test\":1},{\"test\":2},{\"test\":null}]}".getBytes());
+        context.setPreviousResult(res);
+
+        JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setDefaultValue("DEFAULT");
+        instance.setVar("test");
+        instance.setJsonPath("$.myval[*].test");
+        instance.process();
+        JMeterVariables vars = context.getVariables();
+        assertEquals("[1,2,null]", vars.get("test"));
+        assertEquals("1", vars.get("test_1"));
+        assertEquals("2", vars.get("test_2"));
+        assertEquals("null", vars.get("test_3"));
+
+        // test for cleaning prev vars
+        res.setResponseData("{\"myval\": [{\"test\":1},{\"test\":2}]}".getBytes());
+        instance.process();
+        assertEquals("[1,2]", vars.get("test"));
+        assertEquals("1", vars.get("test_1"));
+        assertEquals("2", vars.get("test_2"));
+        assertEquals(null, vars.get("test_3"));
+    }
 }

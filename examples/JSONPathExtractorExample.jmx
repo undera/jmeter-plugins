@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.4" jmeter="2.9-SNAPSHOT.20130129">
+<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.12-SNAPSHOT.20150124">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments">This test plan demonstrates using JSON Path Extractor
@@ -29,7 +29,7 @@ See http://goessner.net/articles/JsonPath/index.html#e2 for syntax details.</str
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler" enabled="true">
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy JSON" enabled="true">
           <stringProp name="TestPlan.comments">This sampler used to simulate JSON response from some server.
 Look into Response Data field to see example json.</stringProp>
           <boolProp name="WAITING">true</boolProp>
@@ -82,11 +82,20 @@ Look into Response Data field to see example json.</stringProp>
           <stringProp name="LATENCY">${__Random(1,100)}</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree>
-          <com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor guiclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.gui.JSONPathExtractorGui" testclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor" testname="jp@gc - JSON Path Extractor" enabled="true">
+          <com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor guiclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.gui.JSONPathExtractorGui" testclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor" testname="jp@gc - JSON Path Extractor - Plain" enabled="true">
             <stringProp name="TestPlan.comments">This extractor sets variable &apos;Name&apos; value into value from JSON text. 
 Run the test and look into View Results Tree.</stringProp>
-            <stringProp name="VAR">MyValue</stringProp>
+            <stringProp name="VAR">ThumbData</stringProp>
             <stringProp name="JSONPATH">$.results[0].thumbnails[0].data</stringProp>
+            <stringProp name="DEFAULT">FAILED</stringProp>
+          </com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor>
+          <hashTree/>
+          <com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor guiclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.gui.JSONPathExtractorGui" testclass="com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor" testname="jp@gc - JSON Path Extractor - Array" enabled="true">
+            <stringProp name="TestPlan.comments">This extractor sets variable &apos;Name&apos; value into value from JSON text. 
+Run the test and look into View Results Tree.</stringProp>
+            <stringProp name="VAR">ThumbID</stringProp>
+            <stringProp name="JSONPATH">$.results[0].thumbnails[*]._id</stringProp>
+            <stringProp name="DEFAULT">FAILED</stringProp>
           </com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor>
           <hashTree/>
         </hashTree>
@@ -97,6 +106,24 @@ Run the test and look into View Results Tree.</stringProp>
           <boolProp name="displaySystemProperties">false</boolProp>
         </DebugSampler>
         <hashTree/>
+        <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach Controller" enabled="true">
+          <stringProp name="ForeachController.inputVal">ThumbID</stringProp>
+          <stringProp name="ForeachController.returnVal">ID</stringProp>
+          <boolProp name="ForeachController.useSeparator">true</boolProp>
+        </ForeachController>
+        <hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">true</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA"></stringProp>
+            <stringProp name="RESPONSE_DATA">${ID}</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(100,1000)}</stringProp>
+            <stringProp name="LATENCY">${__Random(1,100)}</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree/>
+        </hashTree>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
@@ -125,6 +152,7 @@ Run the test and look into View Results Tree.</stringProp>
             <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
             <assertionsResultsToSave>0</assertionsResultsToSave>
             <bytes>true</bytes>
+            <threadCounts>true</threadCounts>
           </value>
         </objProp>
         <stringProp name="TestPlan.comments">Run the test and look into Debug Sampler&apos;s response data. 

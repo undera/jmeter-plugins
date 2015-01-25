@@ -250,7 +250,7 @@
                                 json-lib,json-path,json-smart,json,asm,
                                 commons-beanutils,ezmorph,jackson-core,jackson-mapper-asl,qpid-client,qpid-common,spring-core,spring-jms,guava,commons-exec,jsyntaxpane,xom,commons-lang,commons-pool,jedis
                             </includeArtifactIds>
-                            <includeGroupIds>com.io7m.xom,com.jayway.jsonpath,net.minidev</includeGroupIds>
+                            <excludeGroupIds>asm</excludeGroupIds>
                         </configuration>
                     </execution>
                 </executions>

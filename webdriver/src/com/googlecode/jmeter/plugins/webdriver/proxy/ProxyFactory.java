@@ -8,7 +8,7 @@ import org.openqa.selenium.Proxy;
 public class ProxyFactory {
     private static final ProxyFactory INSTANCE = new ProxyFactory();
 
-    public static final ProxyFactory getInstance() {
+    public static ProxyFactory getInstance() {
         return INSTANCE;
     }
 
@@ -24,7 +24,7 @@ public class ProxyFactory {
      * @param socksProxy is the socks proxy host and port
      * @param noProxy is a comma separated list of hosts that will bypass the proxy
      *
-     * @returns a proxy object with the hosts manually specified.
+     * @return a proxy object with the hosts manually specified.
      */
     public Proxy getManualProxy(ProxyHostPort httpProxy, ProxyHostPort httpsProxy, ProxyHostPort ftpProxy, ProxyHostPort socksProxy, String noProxy) {
         return new Proxy()

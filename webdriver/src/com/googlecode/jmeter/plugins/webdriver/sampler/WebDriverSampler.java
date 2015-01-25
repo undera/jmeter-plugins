@@ -1,6 +1,7 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler;
 
 import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
@@ -79,7 +80,8 @@ public class WebDriverSampler extends AbstractSampler {
             }
         } catch (Exception ex) {
             LOGGER.error(ex.getMessage());
-            res.setResponseMessage(ex.toString());
+            res.setResponseMessage(ex.getMessage());
+            res.setResponseData((ex.toString() + "\r\n" + JMeterPluginsUtils.getStackTrace(ex)).getBytes());
             res.setResponseCode("500");
             res.setSuccessful(false);
         }

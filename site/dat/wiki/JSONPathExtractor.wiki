@@ -12,10 +12,10 @@ Allows extracting values from JSON responses using [http://goessner.net/articles
 It will try to find the JSON path provided and extract corresponding value. If the path is not found, it will use default value. For the {{{null}}} value the "null" string will be used.
 
 If result is array, it will additionally set loop variables. This is much like [http://jmeter.apache.org/usermanual/component_reference.html#Regular_Expression_Extractor RegExp Extractor] or [http://jmeter.apache.org/usermanual/component_reference.html#XPath_Extractor XPath Extractor] do to support [http://jmeter.apache.org/usermanual/component_reference.html#ForEach_Controller ForEach Controller] input:
- * varName_1
- * varName_2
- * varName_3
- * ...
+  * varName_1
+  * varName_2
+  * varName_3
+  * ...
 
 [/img/wiki/JSONPathExtractor.png]
 

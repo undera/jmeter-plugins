@@ -247,8 +247,10 @@
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <includeArtifactIds>
-                                cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,hbase-common,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper,selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-android-driver,guava,json,commons-exec,jsyntaxpane,xom,commons-lang,commons-pool,jedis
+                                json-lib,json-path,json-smart,json,asm,
+                                commons-beanutils,ezmorph,jackson-core,jackson-mapper-asl,qpid-client,qpid-common,spring-core,spring-jms,guava,commons-exec,jsyntaxpane,xom,commons-lang,commons-pool,jedis
                             </includeArtifactIds>
+                            <includeGroupIds>com.io7m.xom,com.jayway.jsonpath,net.minidev</includeGroupIds>
                         </configuration>
                     </execution>
                 </executions>

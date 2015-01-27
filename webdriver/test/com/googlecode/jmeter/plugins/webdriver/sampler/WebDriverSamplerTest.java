@@ -139,7 +139,7 @@ public class WebDriverSamplerTest {
         final SampleResult sampleResult = sampler.sample(null);
 
         assertThat(sampleResult.isResponseCodeOK(), is(false));
-        assertThat(sampleResult.getResponseMessage(), containsString("javax.script.ScriptException"));
+        assertThat(sampleResult.getResponseMessage(), containsString("ReferenceError"));
         assertThat(sampleResult.isSuccessful(), is(false));
 
         verify(browser, never()).getPageSource();
@@ -153,7 +153,7 @@ public class WebDriverSamplerTest {
         final SampleResult sampleResult = sampler.sample(null);
 
         assertThat(sampleResult.isResponseCodeOK(), is(false));
-        assertThat(sampleResult.getResponseMessage(), containsString("MalformedURLException"));
+        assertThat(sampleResult.getResponseMessage(), containsString("unknown"));
         assertThat(sampleResult.isSuccessful(), is(false));
 
         verify(browser, times(1)).getCurrentUrl();

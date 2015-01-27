@@ -25,14 +25,14 @@
         <connection>https://github.com/undera/jmeter-plugins.git</connection>
         <developerConnection>git@github.com:undera/jmeter-plugins.git</developerConnection>
     </scm>
-    <distributionManagement>        
+    <distributionManagement>
         <snapshotRepository>
             <id>sonatype-snapshot</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>            
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>sonatype</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>            
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -101,24 +101,24 @@
         </dependency>
         <!-- begin need this libraries for HtmlUnitDriver -->
         <dependency>
-	        <groupId>xml-apis</groupId>
-	        <artifactId>xml-apis</artifactId>
-	        <version>1.4.01</version>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
         </dependency>
         <dependency>
-	        <groupId>org.apache.httpcomponents</groupId>
-	        <artifactId>httpcore</artifactId>
-	        <version>4.3</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.3</version>
         </dependency>
         <dependency>
-	        <groupId>org.apache.httpcomponents</groupId>
-	        <artifactId>httpclient</artifactId>
-	        <version>4.3.1</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.1</version>
         </dependency>
         <dependency>
-	        <groupId>org.apache.httpcomponents</groupId>
-	        <artifactId>httpmime</artifactId>
-	        <version>4.3.1</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.3.1</version>
         </dependency>
         <!--
         <dependency>
@@ -165,11 +165,17 @@
         <resources>
             <resource>
                 <includes>
-                    <include>**/*.png</include>
                     <include>**/*.properties</include>
                 </includes>
                 <directory>src</directory>
                 <filtering>true</filtering>
+            </resource>
+            <resource>
+                <includes>
+                    <include>**/*.png</include>
+                </includes>
+                <directory>src</directory>
+                <filtering>false</filtering>
             </resource>
         </resources>
         <testResources>
@@ -186,7 +192,7 @@
                 <directory>test</directory>
             </testResource>
         </testResources>
-        
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -194,7 +200,7 @@
                 <version>2.9</version>
                 <executions>
                     <execution>
-                        <phase>install</phase>                        
+                        <phase>install</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -207,7 +213,7 @@
                 <version>2.2.1</version>
                 <executions>
                     <execution>
-                        <phase>install</phase>                        
+                        <phase>install</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -235,14 +241,14 @@
                 <version>2.7</version>
                 <executions>
                     <execution>
-                        <phase>deploy</phase>                        
+                        <phase>deploy</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-                        
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -268,8 +274,9 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>selenium-support,selenium-api,selenium-remote-driver,selenium-ie-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-htmlunit-driver,gson,
-                            	guava,json,commons-exec,jsyntaxpane,htmlunit,htmlunit-core-js,nekohtml,cssparser,jetty-websocket,xercesImpl,xml-apis,sac,httpclient,httpmime,httpcore
+                            <includeArtifactIds>
+                                selenium-support,selenium-api,selenium-remote-driver,selenium-ie-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-htmlunit-driver,gson,
+                                guava,json,commons-exec,jsyntaxpane,htmlunit,htmlunit-core-js,nekohtml,cssparser,jetty-websocket,xercesImpl,xml-apis,sac,httpclient,httpmime,httpcore
                             </includeArtifactIds>
                         </configuration>
                     </execution>
@@ -290,7 +297,7 @@
                                 <includes>
                                     <include>kg.apc:jmeter-plugins-common</include>
                                 </includes>
-                            </artifactSet>                            
+                            </artifactSet>
                         </configuration>
                     </execution>
                 </executions>

@@ -1,13 +1,32 @@
 package kg.apc.jmeter.vizualizers;
 // TODO: rows in settings should have color markers for better experience
-import java.awt.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
@@ -30,21 +49,20 @@ import org.apache.log.Logger;
 public class PerfMonGui
         extends AbstractOverTimeVisualizer {
 
-    public static final List<String> metrics = Arrays.asList(new String[]{"CPU", "Memory", "Swap", "Disks I/O", "Network I/O"});
+    public static final List<String> metrics = Arrays.asList("CPU", "Memory", "Swap", "Disks I/O", "Network I/O");
     private static final Logger log = LoggingManager.getLoggerForClass();
     private PowerTableModel tableModel;
     private JTable grid;
-    private JComboBox metricTypesBox;
     private JTextArea errorTextArea;
     private JScrollPane errorPane;
     public static final String[] columnIdentifiers = new String[]{
-        "Host / IP", "Port", "Metric to collect", "Metric parameter (see help)"
+            "Host / IP", "Port", "Metric to collect", "Metric parameter (see help)"
     };
     public static final Class[] columnClasses = new Class[]{
-        String.class, String.class, String.class, String.class
+            String.class, String.class, String.class, String.class
     };
     private static String[] defaultValues = new String[]{
-        "localhost", "4444", "CPU", ""
+            "localhost", "4444", "CPU", ""
     };
 
     public PerfMonGui() {
@@ -58,11 +76,11 @@ public class PerfMonGui
     protected JSettingsPanel createSettingsPanel() {
         return new JSettingsPanel(this,
                 JSettingsPanel.GRADIENT_OPTION
-                | JSettingsPanel.LIMIT_POINT_OPTION
-                | JSettingsPanel.MAXY_OPTION
-                | JSettingsPanel.RELATIVE_TIME_OPTION
-                | JSettingsPanel.AUTO_EXPAND_OPTION
-                | JSettingsPanel.MARKERS_OPTION_DISABLED);
+                        | JSettingsPanel.LIMIT_POINT_OPTION
+                        | JSettingsPanel.MAXY_OPTION
+                        | JSettingsPanel.RELATIVE_TIME_OPTION
+                        | JSettingsPanel.AUTO_EXPAND_OPTION
+                        | JSettingsPanel.MARKERS_OPTION_DISABLED);
     }
 
     @Override
@@ -155,7 +173,7 @@ public class PerfMonGui
         items.add("JMX");
         items.add("EXEC");
         items.add("TAIL");
-        metricTypesBox = new JComboBox(items.toArray());
+        JComboBox metricTypesBox = new JComboBox(items.toArray());
         grid.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(metricTypesBox));
 
         final JTextField wizEditor = new JTextField();

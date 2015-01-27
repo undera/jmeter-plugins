@@ -1,13 +1,18 @@
 package com.googlecode.jmeter.plugins.webdriver.config.gui;
 
 import com.googlecode.jmeter.plugins.webdriver.config.FirefoxDriverConfig;
-import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.jmeter.gui.util.VerticalPanel;
-import org.apache.jmeter.testelement.TestElement;
-
-import javax.swing.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.gui.Grid;
+import org.apache.jmeter.gui.util.VerticalPanel;
+import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.testelement.property.NullProperty;
 
 public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemListener {
 
@@ -17,6 +22,8 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
     JTextField userAgentOverrideText;
     JCheckBox userAgentOverrideCheckbox;
     JCheckBox ntlmOverrideCheckbox;
+    private Grid extensions;
+    private Grid preferences;
 
     @Override
     public String getStaticLabel() {
@@ -57,6 +64,16 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
             FirefoxDriverConfig config = (FirefoxDriverConfig) element;
             userAgentOverrideCheckbox.setSelected(config.isUserAgentOverridden());
             userAgentOverrideText.setText(config.getUserAgentOverride());
+
+            JMeterProperty ext = config.getExtensions();
+            if (!(ext instanceof NullProperty)) {
+                JMeterPluginsUtils.collectionPropertyToTableModelRows((CollectionProperty) ext, extensions.getModel());
+            }
+
+            JMeterProperty pref = config.getPreferences();
+            if (!(ext instanceof NullProperty)) {
+                JMeterPluginsUtils.collectionPropertyToTableModelRows((CollectionProperty) pref, preferences.getModel());
+            }
         }
     }
 
@@ -67,21 +84,22 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
             FirefoxDriverConfig config = (FirefoxDriverConfig) element;
             config.setUserAgentOverridden(userAgentOverrideCheckbox.isSelected());
             config.setNtlmSetting(ntlmOverrideCheckbox.isSelected());
-            if(userAgentOverrideCheckbox.isSelected()) {
+            if (userAgentOverrideCheckbox.isSelected()) {
                 config.setUserAgentOverride(userAgentOverrideText.getText());
             }
+            config.setExtensions(extensions.getModel());
+            config.setPreferences(preferences.getModel());
         }
     }
 
     private JPanel createProfilePanel() {
-        final JPanel browserPanel = new VerticalPanel();
         final JPanel firefoxPanel = new VerticalPanel();
         userAgentOverrideCheckbox = new JCheckBox("Override User Agent");
         userAgentOverrideCheckbox.setSelected(false);
         userAgentOverrideCheckbox.setEnabled(true);
         userAgentOverrideCheckbox.addItemListener(this);
         firefoxPanel.add(userAgentOverrideCheckbox);
-        
+
         ntlmOverrideCheckbox = new JCheckBox("Enable NTLM");
         ntlmOverrideCheckbox.setSelected(false);
         ntlmOverrideCheckbox.setEnabled(true);
@@ -91,6 +109,14 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
         userAgentOverrideText = new JTextField(OVERRIDEN_USER_AGENT);
         userAgentOverrideText.setEnabled(false);
         firefoxPanel.add(userAgentOverrideText);
+
+        extensions = new Grid("Load Extensions", new String[]{"Path to XPI File"}, new Class[]{String.class}, new String[]{""});
+        firefoxPanel.add(extensions);
+
+        preferences = new Grid("Set Preferences", new String[]{"Name", "Value"}, new Class[]{String.class, String.class}, new String[]{"", ""});
+        firefoxPanel.add(preferences);
+
+        final JPanel browserPanel = new VerticalPanel();
         browserPanel.add(firefoxPanel);
         return browserPanel;
     }
@@ -101,6 +127,8 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
         userAgentOverrideCheckbox.setSelected(false);
         userAgentOverrideText.setText(OVERRIDEN_USER_AGENT);
         ntlmOverrideCheckbox.setSelected(false);
+        extensions.getModel().clearData();
+        preferences.getModel().clearData();
     }
 
     public void itemStateChangedUserAgent(ItemEvent itemEvent) {
@@ -109,13 +137,14 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
         }
     }
 
-	@Override
-	protected boolean isProxyEnabled() {
-		return true;
-	}
+    @Override
+    protected boolean isProxyEnabled() {
+        return true;
+    }
 
-	@Override
-	protected boolean isExperimentalEnabled() {
-		return true;
-	}
+    @Override
+    protected boolean isExperimentalEnabled() {
+        return true;
+    }
+
 }

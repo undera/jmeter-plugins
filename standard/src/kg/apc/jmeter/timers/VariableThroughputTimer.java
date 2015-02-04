@@ -2,11 +2,15 @@
 // TODO: create a thread which will wake up at least one sampler to provide rps
 package kg.apc.jmeter.timers;
 
+import java.util.ArrayList;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.StandardJMeterEngine;
+import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.AbstractTestElement;
+import org.apache.jmeter.testelement.TestIterationListener;
+import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
@@ -15,15 +19,12 @@ import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.timers.ConstantThroughputTimer;
 import org.apache.jmeter.timers.Timer;
-import org.apache.jmeter.timers.gui.AbstractTimerGui;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-
 /**
+ *
  * @see ConstantThroughputTimer
  */
 public class VariableThroughputTimer
@@ -31,10 +32,10 @@ public class VariableThroughputTimer
         implements Timer, NoThreadClone, TestStateListener {
 
     public static final String[] columnIdentifiers = new String[]{
-            "Start RPS", "End RPS", "Duration, sec"
+        "Start RPS", "End RPS", "Duration, sec"
     };
     public static final Class[] columnClasses = new Class[]{
-            String.class, String.class, String.class
+        String.class, String.class, String.class
     };
     // TODO: eliminate magic property
     public static final String DATA_PROPERTY = "load_profile";
@@ -42,8 +43,6 @@ public class VariableThroughputTimer
     public static final int FROM_FIELD_NO = 0;
     public static final int TO_FIELD_NO = 1;
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private static final String USE_OVERRIDE = "use_override";
-    private static final String OVERRIDE_VALUE = "override_value";
     /* put this in fields because we don't want create variables in tight loops */
     private long cntDelayed;
     private double time = 0;
@@ -55,7 +54,6 @@ public class VariableThroughputTimer
     private int stopTries;
     private double lastStopTry;
     private boolean stopping;
-    private transient WeakReference<AbstractTimerGui> gui;
 
     public VariableThroughputTimer() {
         super();
@@ -120,7 +118,7 @@ public class VariableThroughputTimer
             log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent " + cntSent + " RPS: " + rps);
         }
 
-        if (cntDelayed < 1 && cntSent < rps) {
+        if (cntDelayed < 1) {
             log.warn("No free threads left in worker pool, made  " + cntSent + '/' + rps + " samples");
         }
 
@@ -141,7 +139,7 @@ public class VariableThroughputTimer
         setProperty(rows);
     }
 
-    public JMeterProperty getData() {
+    JMeterProperty getData() {
         if (overrideProp != null) {
             return overrideProp;
         }
@@ -149,18 +147,13 @@ public class VariableThroughputTimer
     }
 
     public double getRPSForSecond(double sec) {
-        if (this.isOverrideRPS()) {
-            return Integer.parseInt(getOverrideValue());
-        }
-
         JMeterProperty data = getData();
         if (data instanceof NullProperty) return -1;
         CollectionProperty rows = (CollectionProperty) data;
         PropertyIterator scheduleIT = rows.iterator();
 
         while (scheduleIT.hasNext()) {
-            Object objectValue = scheduleIT.next().getObjectValue();
-            ArrayList<Object> curProp = (ArrayList<Object>) objectValue;
+            ArrayList<Object> curProp = (ArrayList<Object>) scheduleIT.next().getObjectValue();
 
             int duration = getIntValue(curProp, DURATION_FIELD_NO);
             double from = getDoubleValue(curProp, FROM_FIELD_NO);
@@ -178,7 +171,7 @@ public class VariableThroughputTimer
         JMeterProperty val = (JMeterProperty) prop.get(colID);
         return val.getDoubleValue();
     }
-
+    
     private int getIntValue(ArrayList<Object> prop, int colID) throws NumberFormatException {
         JMeterProperty val = (JMeterProperty) prop.get(colID);
         return val.getIntValue();
@@ -290,38 +283,5 @@ public class VariableThroughputTimer
         testEnded();
     }
 
-
-    public void setOverrideRPS(boolean overrideRPS) {
-        this.setProperty(USE_OVERRIDE, overrideRPS);
-    }
-
-    public void setOverrideValue(String overrideValue) {
-        this.setProperty(OVERRIDE_VALUE, overrideValue);
-    }
-
-    public boolean isOverrideRPS() {
-        return getPropertyAsBoolean(USE_OVERRIDE);
-    }
-
-    public String getOverrideValue() {
-        return getPropertyAsString(OVERRIDE_VALUE);
-    }
-
-    /**
-     * Idea stolen from AbstractListenerElement,
-     * but I did not implement clone() since we implement NoThreadClone
-     *
-     * @see org.apache.jmeter.reporters.AbstractListenerElement
-     */
-    protected final AbstractTimerGui getGUI() {
-        if (gui == null) { // e.g. in non-GUI mode
-            return null;
-        }
-        return gui.get();
-    }
-
-    public void setGUI(AbstractTimerGui vis) {
-        gui = new WeakReference<AbstractTimerGui>(vis);
-    }
 
 }

@@ -9,10 +9,7 @@
   * add NTLM support for [FirefoxDriverConfig Firefox]
   * add ability to load extensions and set preferences for [FirefoxDriverConfig Firefox]
   * add [InternetExplorerConfig Internet Explorer Driver]
-  * rework internals of [JSONPathAssertion JSON Path Assertion], handle arrays and null values
-  * rework internals of [JSONPathExtractor JSON Path Extractor], handle arrays and null values
-
-  * ??? Maybe add real-time RPS changing to [VariableThroughputTimer Throughput Shaping Timer]???
+  * rework internals of [JSONPathAssertion JSON Path Assertion] and [JSONPathExtractor JSON Path Extractor], handle arrays and null values
 
 
 == 1.2.0 <i><font color=gray size="1">September 16, 2014</font></i>==

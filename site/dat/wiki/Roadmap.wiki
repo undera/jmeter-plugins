@@ -20,7 +20,6 @@
     * Support collection of [http://www.w3.org/TR/user-timing/ W3C User Timing] from supported browsers   (Issue 279)
     * Graph data collected from W3C Timings (Issue 281)
     * Write data collected from W3C Timings in the [http://www.softwareishard.com/blog/har-12-spec/ HAR file format]. (Issue 280)
-    * Provide support for sampling IE browser (Issue 276)
     * Provide support for sampling Opera browser (Issue 282)
 ==Other==    
     * implement functions iif

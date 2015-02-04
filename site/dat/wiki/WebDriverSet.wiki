@@ -1,8 +1,9 @@
 = WebDriver Set =
-Selenium/WebDriver testing ability.
+Selenium/WebDriver testing ability. It's good to start with [WebDriverTutorial 2-minute tutorial] to learn how to use it.
 
   * [WebDriverSampler WebDriver Sampler] for full browser tests
-  * [AndroidDriverConfig]
-  * [ChromeDriverConfig]
-  * [FirefoxDriverConfig]
-  * [HtmlUnitDriverConfig]
+  * [AndroidDriverConfig Android Config]
+  * [ChromeDriverConfig Chrome Config]
+  * [FirefoxDriverConfig Firefox Config]
+  * [HtmlUnitDriverConfig HTMLUnit Config]
+  * [RemoteDriverConfig Remote WebDriver Config]

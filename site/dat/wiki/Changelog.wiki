@@ -4,7 +4,7 @@
   * add [TestPlanCheckTool] to check JMX file consistency without running it
   * add requestHeaders field to FFW (and fix the bug with responseHeaders that nobody noticed)
   * add webdriver.sampleresult_class property for [WebDriverSampler]
-  * Added Remote driver to the WebDriver plugins
+  * Added [RemoteDriverConfig Remote Driver] to the WebDriver plugins
   * add iterationNum function
   * add NTLM support for [FirefoxDriverConfig Firefox]
   * add ability to load extensions and set preferences for [FirefoxDriverConfig Firefox]

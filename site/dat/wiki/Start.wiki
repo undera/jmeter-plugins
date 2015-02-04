@@ -90,14 +90,14 @@ Additional plugins that _do require_ additional libs to run.
 </td>
 <td class="plugins_set webdriver_set">
 == WebDriver Set ==
-Selenium/WebDriver testing ability.
+Selenium/WebDriver testing ability. It's good to start with [WebDriverTutorial 2-minute tutorial] to learn how to use it.
 
   * [WebDriverSampler WebDriver Sampler] for full browser tests
-  * [AndroidDriverConfig]
-  * [ChromeDriverConfig]
-  * [FirefoxDriverConfig]
-  * [HtmlUnitDriverConfig]
-  * [RemoteDriverConfig]
+  * [AndroidDriverConfig Android Config]
+  * [ChromeDriverConfig Chrome Config]
+  * [FirefoxDriverConfig Firefox Config]
+  * [HtmlUnitDriverConfig HTMLUnit Config]
+  * [RemoteDriverConfig Remote WebDriver Config]
 
 </td>
 </tr><tr>

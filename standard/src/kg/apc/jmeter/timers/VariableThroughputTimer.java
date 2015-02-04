@@ -5,12 +5,9 @@ package kg.apc.jmeter.timers;
 import java.util.ArrayList;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.StandardJMeterEngine;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.AbstractTestElement;
-import org.apache.jmeter.testelement.TestIterationListener;
-import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
@@ -24,7 +21,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 /**
- *
  * @see ConstantThroughputTimer
  */
 public class VariableThroughputTimer
@@ -32,10 +28,10 @@ public class VariableThroughputTimer
         implements Timer, NoThreadClone, TestStateListener {
 
     public static final String[] columnIdentifiers = new String[]{
-        "Start RPS", "End RPS", "Duration, sec"
+            "Start RPS", "End RPS", "Duration, sec"
     };
     public static final Class[] columnClasses = new Class[]{
-        String.class, String.class, String.class
+            String.class, String.class, String.class
     };
     // TODO: eliminate magic property
     public static final String DATA_PROPERTY = "load_profile";
@@ -171,7 +167,7 @@ public class VariableThroughputTimer
         JMeterProperty val = (JMeterProperty) prop.get(colID);
         return val.getDoubleValue();
     }
-    
+
     private int getIntValue(ArrayList<Object> prop, int colID) throws NumberFormatException {
         JMeterProperty val = (JMeterProperty) prop.get(colID);
         return val.getIntValue();

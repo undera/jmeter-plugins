@@ -5,7 +5,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
@@ -30,7 +34,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 /**
- *
  * @see UltimateThreadGroupGui
  */
 public class VariableThroughputTimerGui
@@ -49,7 +52,7 @@ public class VariableThroughputTimerGui
      *
      */
     private static Integer[] defaultValues = new Integer[]{
-        1, 1000, 60
+            1, 1000, 60
     };
     protected PowerTableModel tableModel;
     protected JTable grid;

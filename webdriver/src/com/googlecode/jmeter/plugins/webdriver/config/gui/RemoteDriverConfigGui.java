@@ -1,5 +1,6 @@
 package com.googlecode.jmeter.plugins.webdriver.config.gui;
 
+import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
@@ -8,7 +9,6 @@ import java.net.URL;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -26,7 +26,7 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
     private static final long serialVersionUID = 100L;
     JTextField remoteSeleniumGridText;
     JComboBox capabilitiesComboBox;
-    MessageDialog messageDialog = new MessageDialog();
+    JLabel errorMsg;
     
     @Override
     public String getStaticLabel() {
@@ -96,8 +96,11 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
         
         remotePanel.add(remoteUrlLabel);
         remotePanel.add(remoteSeleniumGridText);
+        remotePanel.add(errorMsg=new JLabel());
         remotePanel.add(capabilitiesLabel);
         remotePanel.add(capabilitiesComboBox);
+        
+        errorMsg.setForeground(Color.red);
         
         browserPanel.add(remotePanel);
         
@@ -119,8 +122,10 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
 	@Override
 	public void focusLost(FocusEvent e) {
 		if(remoteSeleniumGridText.equals(e.getComponent()) && !isValidUrl(remoteSeleniumGridText.getText())){
-			messageDialog.show(this, "The selenium grid URL is malformed", "Error", JOptionPane.ERROR_MESSAGE);
-		}
+			errorMsg.setText("The selenium grid URL is malformed");
+		} else {
+            errorMsg.setText("");
+        }
 	}
 
 	private boolean isValidUrl(String urlStr) {

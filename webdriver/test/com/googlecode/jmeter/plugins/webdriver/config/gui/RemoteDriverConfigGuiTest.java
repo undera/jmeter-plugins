@@ -4,10 +4,12 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import java.awt.event.FocusEvent;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import kg.apc.emulators.TestJMeterUtils;
@@ -92,9 +94,8 @@ public class RemoteDriverConfigGuiTest {
 	public void shouldFireAMessageWindowWhenTheFocusIsLost() throws Exception {
     	gui.remoteSeleniumGridText.setText("badURL");
     	FocusEvent focusEvent = new FocusEvent(gui.remoteSeleniumGridText, 1);
-    	gui.messageDialog = Mockito.mock(MessageDialog.class);
     	gui.focusLost(focusEvent);
-    	Mockito.verify(gui.messageDialog).show(gui, "The selenium grid URL is malformed", "Error", JOptionPane.ERROR_MESSAGE);
+        assertEquals("The selenium grid URL is malformed", gui.errorMsg.getText());
 	}
     
     @Test
@@ -102,29 +103,8 @@ public class RemoteDriverConfigGuiTest {
     	
     	gui.remoteSeleniumGridText.setText("http://my.awesomegrid.com");
     	FocusEvent focusEvent = new FocusEvent(gui.remoteSeleniumGridText, 1);
-    	gui.messageDialog = Mockito.mock(MessageDialog.class);
     	gui.focusLost(focusEvent);
-    	Mockito.verify(gui.messageDialog, Mockito.never()).show(gui, "The selenium grid URL is malformed", "Error", JOptionPane.ERROR_MESSAGE);
-	}
-    
-    @Test
-	public void shouldNotFireAMessageWindowWhenTheFocusLostIsNotFromSeleniumGridComponent() throws Exception {
-    	PowerMockito.mockStatic(JOptionPane.class);
-    	gui.remoteSeleniumGridText.setText("badURL");
-    	FocusEvent focusEvent = new FocusEvent(gui.capabilitiesComboBox, 1);
-    	gui.messageDialog = Mockito.mock(MessageDialog.class);
-    	gui.focusLost(focusEvent);
-    	Mockito.verify(gui.messageDialog, Mockito.never()).show(gui, "The selenium grid URL is malformed", "Error", JOptionPane.ERROR_MESSAGE);
-	}
-    
-    @Test
-	public void shouldNotFireAMessageWindowWhenTheFocusLostIsNotFromSeleniumGridComponentAndURLIsCorrect() throws Exception {
-    	PowerMockito.mockStatic(JOptionPane.class);
-    	gui.remoteSeleniumGridText.setText("http://my.awesomegrid.com");
-    	FocusEvent focusEvent = new FocusEvent(gui.capabilitiesComboBox, 1);
-    	gui.messageDialog = Mockito.mock(MessageDialog.class);
-    	gui.focusLost(focusEvent);
-    	Mockito.verify(gui.messageDialog, Mockito.never()).show(gui, "The selenium grid URL is malformed", "Error", JOptionPane.ERROR_MESSAGE);
+        assertEquals("", gui.errorMsg.getText());
 	}
     
     @Test

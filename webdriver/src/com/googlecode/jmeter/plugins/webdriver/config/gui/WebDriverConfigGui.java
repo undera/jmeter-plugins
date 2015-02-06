@@ -1,12 +1,13 @@
 package com.googlecode.jmeter.plugins.webdriver.config.gui;
 
+import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
+import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.NumberFormat;
-
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -17,16 +18,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import kg.apc.jmeter.JMeterPluginsUtils;
-
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
-
-import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
-import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
 
 public abstract class WebDriverConfigGui extends AbstractConfigGui implements ItemListener {
 
@@ -72,12 +68,14 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
 
     JTextArea noProxyList;
 
+    JCheckBox maximizeBrowser;
+
     /*
      * THE FOLLOWING ATTRIBUTES ARE EXPERIMENTAL - USE WITH CAUTION
      */
     JCheckBox recreateBrowserOnIterationStart;
     JCheckBox devMode;
-    
+
     public WebDriverConfigGui() {
         createGui();
     }
@@ -85,41 +83,42 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
     @Override
     public void configure(TestElement element) {
         super.configure(element);
-        if(element instanceof WebDriverConfig) {
-            WebDriverConfig webDriverConfig = (WebDriverConfig)element;
-            if(isProxyEnabled()){
-	            switch (webDriverConfig.getProxyType()) {
-	                case DIRECT:
-	                    directProxy.setSelected(true);
-	                    break;
-	                case AUTO_DETECT:
-	                    autoDetectProxy.setSelected(true);
-	                    break;
-	                case MANUAL:
-	                    manualProxy.setSelected(true);
-	                    break;
-	                case PROXY_PAC:
-	                    pacUrlProxy.setSelected(true);
-	                    break;
-	                default:
-	                    systemProxy.setSelected(true); // fallback to system proxy
-	            }
-	            pacUrl.setText(webDriverConfig.getProxyPacUrl());
-	            httpProxyHost.setText(webDriverConfig.getHttpHost());
-	            httpProxyPort.setText(String.valueOf(webDriverConfig.getHttpPort()));
-	            useHttpSettingsForAllProtocols.setSelected(webDriverConfig.isUseHttpSettingsForAllProtocols());
-	            httpsProxyHost.setText(webDriverConfig.getHttpsHost());
-	            httpsProxyPort.setText(String.valueOf(webDriverConfig.getHttpsPort()));
-	            ftpProxyHost.setText(webDriverConfig.getFtpHost());
-	            ftpProxyPort.setText(String.valueOf(webDriverConfig.getFtpPort()));
-	            socksProxyHost.setText(webDriverConfig.getSocksHost());
-	            socksProxyPort.setText(String.valueOf(webDriverConfig.getSocksPort()));
-	            noProxyList.setText(webDriverConfig.getNoProxyHost());
+        if (element instanceof WebDriverConfig) {
+            WebDriverConfig webDriverConfig = (WebDriverConfig) element;
+            if (isProxyEnabled()) {
+                switch (webDriverConfig.getProxyType()) {
+                    case DIRECT:
+                        directProxy.setSelected(true);
+                        break;
+                    case AUTO_DETECT:
+                        autoDetectProxy.setSelected(true);
+                        break;
+                    case MANUAL:
+                        manualProxy.setSelected(true);
+                        break;
+                    case PROXY_PAC:
+                        pacUrlProxy.setSelected(true);
+                        break;
+                    default:
+                        systemProxy.setSelected(true); // fallback to system proxy
+                }
+                pacUrl.setText(webDriverConfig.getProxyPacUrl());
+                httpProxyHost.setText(webDriverConfig.getHttpHost());
+                httpProxyPort.setText(String.valueOf(webDriverConfig.getHttpPort()));
+                useHttpSettingsForAllProtocols.setSelected(webDriverConfig.isUseHttpSettingsForAllProtocols());
+                httpsProxyHost.setText(webDriverConfig.getHttpsHost());
+                httpsProxyPort.setText(String.valueOf(webDriverConfig.getHttpsPort()));
+                ftpProxyHost.setText(webDriverConfig.getFtpHost());
+                ftpProxyPort.setText(String.valueOf(webDriverConfig.getFtpPort()));
+                socksProxyHost.setText(webDriverConfig.getSocksHost());
+                socksProxyPort.setText(String.valueOf(webDriverConfig.getSocksPort()));
+                noProxyList.setText(webDriverConfig.getNoProxyHost());
             }
-            if(isExperimentalEnabled()){
-	            // EXPERIMENTAL
-	            recreateBrowserOnIterationStart.setSelected(webDriverConfig.isRecreateBrowserOnIterationStart());
-	            devMode.setSelected(webDriverConfig.isDevMode());
+            if (isExperimentalEnabled()) {
+                // EXPERIMENTAL
+                maximizeBrowser.setSelected(webDriverConfig.isBrowserMaximized());
+                recreateBrowserOnIterationStart.setSelected(webDriverConfig.isRecreateBrowserOnIterationStart());
+                devMode.setSelected(webDriverConfig.isDevMode());
             }
         }
     }
@@ -127,56 +126,60 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
     @Override
     public void modifyTestElement(TestElement element) {
         configureTestElement(element);
-        if(element instanceof WebDriverConfig) {
-        	WebDriverConfig webDriverConfig = (WebDriverConfig)element;
-        	if(isProxyEnabled()){
-	            if(directProxy.isSelected()) {
-	                webDriverConfig.setProxyType(ProxyType.DIRECT);
-	            } else if(autoDetectProxy.isSelected()) {
-	                webDriverConfig.setProxyType(ProxyType.AUTO_DETECT);
-	            } else if(pacUrlProxy.isSelected()) {
-	                webDriverConfig.setProxyType(ProxyType.PROXY_PAC);
-	            } else if(manualProxy.isSelected()) {
-	                webDriverConfig.setProxyType(ProxyType.MANUAL);
-	            } else {
-	                webDriverConfig.setProxyType(ProxyType.SYSTEM); // fallback
-	            }
-	            webDriverConfig.setProxyPacUrl(pacUrl.getText());
-	            webDriverConfig.setHttpHost(httpProxyHost.getText());
-	            webDriverConfig.setHttpPort(Integer.parseInt(httpProxyPort.getText()));
-	            webDriverConfig.setUseHttpSettingsForAllProtocols(useHttpSettingsForAllProtocols.isSelected());
-	            webDriverConfig.setHttpsHost(httpsProxyHost.getText());
-	            webDriverConfig.setHttpsPort(Integer.parseInt(httpsProxyPort.getText()));
-	            webDriverConfig.setFtpHost(ftpProxyHost.getText());
-	            webDriverConfig.setFtpPort(Integer.parseInt(ftpProxyPort.getText()));
-	            webDriverConfig.setSocksHost(socksProxyHost.getText());
-	            webDriverConfig.setSocksPort(Integer.parseInt(socksProxyPort.getText()));
-	            webDriverConfig.setNoProxyHost(noProxyList.getText());
-        	}
-        	if(isExperimentalEnabled()){
-	            // EXPERIMENTAL
-	            webDriverConfig.setRecreateBrowserOnIterationStart(recreateBrowserOnIterationStart.isSelected());
-	            webDriverConfig.setDevMode(devMode.isSelected());
-        	}
+        if (element instanceof WebDriverConfig) {
+            WebDriverConfig webDriverConfig = (WebDriverConfig) element;
+            if (isProxyEnabled()) {
+                if (directProxy.isSelected()) {
+                    webDriverConfig.setProxyType(ProxyType.DIRECT);
+                } else if (autoDetectProxy.isSelected()) {
+                    webDriverConfig.setProxyType(ProxyType.AUTO_DETECT);
+                } else if (pacUrlProxy.isSelected()) {
+                    webDriverConfig.setProxyType(ProxyType.PROXY_PAC);
+                } else if (manualProxy.isSelected()) {
+                    webDriverConfig.setProxyType(ProxyType.MANUAL);
+                } else {
+                    webDriverConfig.setProxyType(ProxyType.SYSTEM); // fallback
+                }
+                webDriverConfig.setProxyPacUrl(pacUrl.getText());
+                webDriverConfig.setHttpHost(httpProxyHost.getText());
+                webDriverConfig.setHttpPort(Integer.parseInt(httpProxyPort.getText()));
+                webDriverConfig.setUseHttpSettingsForAllProtocols(useHttpSettingsForAllProtocols.isSelected());
+                webDriverConfig.setHttpsHost(httpsProxyHost.getText());
+                webDriverConfig.setHttpsPort(Integer.parseInt(httpsProxyPort.getText()));
+                webDriverConfig.setFtpHost(ftpProxyHost.getText());
+                webDriverConfig.setFtpPort(Integer.parseInt(ftpProxyPort.getText()));
+                webDriverConfig.setSocksHost(socksProxyHost.getText());
+                webDriverConfig.setSocksPort(Integer.parseInt(socksProxyPort.getText()));
+                webDriverConfig.setNoProxyHost(noProxyList.getText());
+            }
+            if (isExperimentalEnabled()) {
+                // EXPERIMENTAL
+                webDriverConfig.setBrowserMaximized(maximizeBrowser.isSelected());
+                webDriverConfig.setRecreateBrowserOnIterationStart(recreateBrowserOnIterationStart.isSelected());
+                webDriverConfig.setDevMode(devMode.isSelected());
+            }
         }
     }
 
     @Override
     public void clearGui() {
         super.clearGui();
-        if(isProxyEnabled()){
-	        systemProxy.setSelected(true);
-	        pacUrl.setText("");
-	        httpProxyHost.setText("");
-	        httpProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
-	        useHttpSettingsForAllProtocols.setSelected(true);
-	        httpsProxyHost.setText("");
-	        httpsProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
-	        ftpProxyHost.setText("");
-	        ftpProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
-	        socksProxyHost.setText("");
-	        socksProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
-	        noProxyList.setText(DEFAULT_NO_PROXY_LIST);
+        if (isProxyEnabled()) {
+            systemProxy.setSelected(true);
+            pacUrl.setText("");
+            httpProxyHost.setText("");
+            httpProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
+            useHttpSettingsForAllProtocols.setSelected(true);
+            httpsProxyHost.setText("");
+            httpsProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
+            ftpProxyHost.setText("");
+            ftpProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
+            socksProxyHost.setText("");
+            socksProxyPort.setText(String.valueOf(DEFAULT_PROXY_PORT));
+            noProxyList.setText(DEFAULT_NO_PROXY_LIST);
+        }
+        if (isExperimentalEnabled()) {
+            maximizeBrowser.setSelected(true);
         }
     }
 
@@ -187,12 +190,12 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), getWikiPage()), BorderLayout.NORTH);
 
         final JTabbedPane tabbedPane = new JTabbedPane();
-        if(isProxyEnabled()){
-        	tabbedPane.add("Proxy", createProxyPanel());
+        if (isProxyEnabled()) {
+            tabbedPane.add("Proxy", createProxyPanel());
         }
         tabbedPane.add(browserName(), createBrowserPanel());
-        if(isExperimentalEnabled()){
-        	tabbedPane.add("Experimental", createExperimentalPanel());
+        if (isExperimentalEnabled()) {
+            tabbedPane.add("Experimental", createExperimentalPanel());
         }
 
         add(tabbedPane, BorderLayout.CENTER);
@@ -206,11 +209,15 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
         experimentalLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
         panel.add(experimentalLabel);
 
+        maximizeBrowser = new JCheckBox("Maximize browser window");
+        maximizeBrowser.setSelected(true);
+        panel.add(maximizeBrowser);
+
         // EXPERIMENTAL PROPERTIES
         recreateBrowserOnIterationStart = new JCheckBox("Create a new Browser at the start of each iteration");
         recreateBrowserOnIterationStart.setSelected(false);
         panel.add(recreateBrowserOnIterationStart);
-        
+
         devMode = new JCheckBox("Development Mode (keep browser opened on error)");
         devMode.setSelected(false);
         panel.add(devMode);
@@ -278,7 +285,7 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
         JLabel noProxyListLabel = new JLabel("No Proxy for:");
         noProxyPanel.add(noProxyListLabel);
 
-        noProxyList = new JTextArea(3,10);
+        noProxyList = new JTextArea(3, 10);
         noProxyList.setText(DEFAULT_NO_PROXY_LIST);
         noProxyList.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         noProxyList.setEnabled(false);
@@ -340,22 +347,22 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
     protected abstract String browserName();
 
     protected abstract String getWikiPage();
-    
+
     protected abstract boolean isProxyEnabled();
-    
+
     protected abstract boolean isExperimentalEnabled();
 
     @Override
     public void itemStateChanged(ItemEvent itemEvent) {
-        if(itemEvent.getSource() == pacUrlProxy) {
+        if (itemEvent.getSource() == pacUrlProxy) {
             pacUrl.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
-        } else if(itemEvent.getSource() == manualProxy) {
+        } else if (itemEvent.getSource() == manualProxy) {
             httpProxyHost.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
             httpProxyPort.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
             useHttpSettingsForAllProtocols.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
             noProxyList.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
             enableOtherProtocolsOnlyIfManualProxySelectedAndUseHttpSettingsIsNotSelected();
-        } else if(itemEvent.getSource() == useHttpSettingsForAllProtocols) {
+        } else if (itemEvent.getSource() == useHttpSettingsForAllProtocols) {
             enableOtherProtocolsOnlyIfManualProxySelectedAndUseHttpSettingsIsNotSelected();
         }
     }

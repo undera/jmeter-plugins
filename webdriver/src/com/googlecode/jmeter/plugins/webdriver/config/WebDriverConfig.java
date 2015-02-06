@@ -3,6 +3,8 @@ package com.googlecode.jmeter.plugins.webdriver.config;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyFactory;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyHostPort;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
@@ -12,9 +14,6 @@ import org.apache.log.Logger;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.SessionNotFoundException;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestElement implements LoopIterationListener, ThreadListener {
 
@@ -45,6 +44,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
     private static final String SOCKS_PORT = "WebDriverConfig.socks_port";
     private static final String NO_PROXY = "WebDriverConfig.no_proxy";
     private static final String PROXY_TYPE = "WebDriverConfig.proxy_type";
+    private static final String MAXIMIZE_WINDOW = "WebDriverConfig.maximize_browser";
 
     /*
      * THE FOLLOWING CONFIGS ARE EXPERIMENTAL AND ARE SUBJECT TO CHANGE/REMOVAL.
@@ -158,6 +158,14 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
         return ProxyType.valueOf(getPropertyAsString(PROXY_TYPE, ProxyType.SYSTEM.name()));
     }
 
+    public boolean isBrowserMaximized() {
+        return getPropertyAsBoolean(MAXIMIZE_WINDOW, false);
+    }
+
+    public void setBrowserMaximized(boolean state) {
+        setProperty(MAXIMIZE_WINDOW, state);
+    }
+
     /**
      * Call this method to create a {@link Proxy} instance for use when creating a {@link org.openqa.selenium.WebDriver}
      * instance.  The values/settings of the proxy depends entirely on the values set on this config instance.
@@ -195,7 +203,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
         if (isRecreateBrowserOnIterationStart() && !isDevMode()) {
             final T browser = getThreadBrowser();
             quitBrowser(browser);
-            setThreadBrowser(createBrowser());
+            setThreadBrowser(getPreparedBrowser());
         }
         getThreadContext().getVariables().putObject(WebDriverConfig.BROWSER, getThreadBrowser());
     }
@@ -209,7 +217,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
         }
 
         // create new browser instance
-        final T browser = createBrowser();
+        final T browser = getPreparedBrowser();
         setThreadBrowser(browser);
 
         // ensures the browser will quit when JVM exits (especially important in devMode)
@@ -219,6 +227,14 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
                 quitBrowser(browser);
             }
         });
+    }
+
+    private T getPreparedBrowser() {
+        T browser = createBrowser();
+        if (isBrowserMaximized()) {
+            browser.manage().window().maximize();
+        }
+        return browser;
     }
 
     @Override

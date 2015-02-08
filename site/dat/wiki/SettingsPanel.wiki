@@ -130,3 +130,56 @@ This option is here to remove these non representative points.
 || [/img/wiki/settings/vsThreadNoLimit.png] ||
 || *With Hide non representative points option* ||
 || [/img/wiki/settings/vsThreadWithLimit.png] ||
+
+===Color===
+
+====Double-Click to Change Color====
+When you double click on the colored square in the legend, JMeterPlugins
+chooses a different color for you.  A [Color Choser](http://docs.oracle.com/javase/tutorial/uiswing/components/colorchooser.html) box is not currently available.
+|| *Double click on the colored square in the legend to change color of the line* ||
+|| [/img/wiki/settings/doubleClickToChangeColor.png] ||
+
+====Color Consistency====
+What color is the CPU line for this graph?  If the answer is the same color for every single graph, the audience
+of your performance graphs will be thankful that you haven't needlessly switched things around.
+
+For example, let's say you want to make the CPU line blue for all graphs.
+Just add this property in the JMETER_HOME/bin/user.properties file:
+```
+jmeterPlugin.labelToColorMapping=cpu=blue
+```
+To provide a color mapping for additional labels, just add a colon between the mappings, as shown below.
+
+|| Specify the color you want for labels with particular text. ||
+|| [/img/wiki/settings/labelToColorMapping.png] ||
+
+Notes:
+- Colors can be specified using either the case-insensitive html color name or the the 6-hex-digit RGB value preceded by the pound/hash sign (#).  For details, see [see here](http://www.w3schools.com/htmL/html_colornames.asp).  
+For example, the text "cpu=blue" in the above image is equivalent to both "cPu=Blue" and "CPu="#0000FF", which also shows that label matching is case insensitive.
+- JMeter must be restarted to pick up changes in the user.properties file.
+- Each label in the legend on a "jp@gc - Composite Graph" each has two parts, separated by " > ".  
+The jmeterPlugin.labelToColorMapping only governs the part on the right of the " > ", as shown with the three black underlines in the above image.
+- Using spaces in label names is allowed.  For instance, using "myhost CPU=blue:yourhost CPU=red" is required to avoid having multiple lines
+render (confusingly) the same color if using "cpu=blue".
+- The order (left-to-right) of the mappings in the property matters; the first match wins.
+- Label matching happens with case-insensitive java.lang.String#contains().  RegEx is not supported.
+
+====Other Color Tricks====
+If your labels include the text 01, 02, 03, etc, then these colors:
+[/img/wiki/settings/orangeSpectrum.png]
+...can be obtained using this property:
+```
+#Shades of Orange
+jmeterPlugin.labelToColorMapping=01=#FFF3E0:02=#FFE0B2:03=#FFCC80:04=#FFB74D:05=#FFA726:06=#FF9800:07=#FB8C00:08=#F57C00:09=#EF6C00:10=#E65100
+```
+Below are some additional palettes, all stolen from [here](http://www.google.com/design/spec/style/color.html#).
+```
+## Reds:
+#jmeterPlugin.labelToColorMapping=01=#FFEBEE:02=#FFCDD2:03=#EF9A9A:04=#E57373:05=#EF5350:06=#F44336:07=#E53935:08=#D32F2F:09=#C62828:10=#B71C1C
+## Blue
+#jmeterPlugin.labelToColorMapping=01=#E3F2FD:02=#BBDEFB:03=#90CAF9:04=#64B5F6:05=#42A5F5:06=#2196F3:07=#1E88E5:08=#1976D2:09=#1565C0:10=#0D47A1
+## Green
+#jmeterPlugin.labelToColorMapping=01=#E8F5E9:02=#C8E6C9:03=#A5D6A7:04=#81C784:05=#66BB6A:06=#4CAF50:07=#43A047:08=#388E3C:09=#2E7D32:10=#1B5E2
+## Brown
+#jmeterPlugin.labelToColorMapping=01=#EFEBE9:02=#D7CCC8:03=#BCAAA4:04=#A1887F:05=#8D6E63:06=#795548:07=#6D4C41:08=#5D4037:09=#4E342E:10=#3E2723
+```

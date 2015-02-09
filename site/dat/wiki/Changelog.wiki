@@ -11,6 +11,7 @@
   * add [InternetExplorerConfig Internet Explorer Driver]
   * rework internals of [JSONPathAssertion JSON Path Assertion], handle arrays and null values
   * rework internals of [JSONPathExtractor JSON Path Extractor], handle arrays and null values
+  * add two ways to change color of graph lines and legend.  See [SettingsPanel] for doc.
 
   * ??? Maybe add real-time RPS changing to [VariableThroughputTimer Throughput Shaping Timer]???
 

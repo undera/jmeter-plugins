@@ -17,3 +17,4 @@ Everyone who provided pull request or other contribution, deserves mentioning on
   * Bakir Jusufbegovic and Semir Sabic / AtlantBH - a lot of components
   * Jorge S. Cruz - added [RemoteDriverConfig] for connecting to a Selenium Grid
   * Roy de Kleijn - added NTLM and Internet Explorer support
+  * Erik Ostermueller - added support for changing line & legend colors.

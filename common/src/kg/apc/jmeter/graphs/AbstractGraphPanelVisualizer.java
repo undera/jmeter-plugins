@@ -438,6 +438,9 @@ public abstract class AbstractGraphPanelVisualizer
             Color color,
             boolean canCompose) {
         AbstractGraphRow row;
+        if (log.isDebugEnabled() ) {
+        	log.debug("This AbstractGraphPanelVisualizer is an instance of [" + this.getClass().getName() + "]");
+        }
         if (!model.containsKey(label)) {
             row = AbstractGraphRow.instantiateNewRow(rowType);
             row.setLabel(label);
@@ -448,19 +451,21 @@ public abstract class AbstractGraphPanelVisualizer
             row.setDrawThickLines(thickLines);
             row.setShowInLegend(showInLegend);
             
-            if (color == null) {
-                Color overrideColor = null;            	
-            	if (this.labelToColorMapping!=null)
-            		overrideColor = labelToColorMapping.getColorForLabel(row.getLabel());
-                row.setColor(overrideColor!=null ? overrideColor : colors.getNextColor());
-                if (log.isDebugEnabled() ) {
-                	log.debug("%#@ Found override color [" + overrideColor + "] for label [" + row.getLabel() + "] Actual color [" + row.getColor().toString() + "]");
-                }
-            } else {
-            	if (log.isDebugEnabled())
-            		log.debug("%#@ Using existing color [" + color.toString() + "]");
-                row.setColor(color);
-            }
+            Color overrideColor = null;            	
+        	if (this.labelToColorMapping!=null)
+        		overrideColor = labelToColorMapping.getColorForLabel(row.getLabel());
+            if (log.isDebugEnabled() )
+            	if (row!=null) {
+            		log.debug("%#@ Found override color [" + (overrideColor==null ? "null" : overrideColor.toString()) + "]");
+            		log.debug("%#@ for label [" + row.getLabel() + "] color in-parm [" + (color==null ? "null" : color.toString()) + "]");
+            		log.debug("%#@ prev row.getColor() [" + (row.getColor()==null ? "null" : row.getColor().toString() ) + "]");
+            	} else
+            		log.debug("%#@ Found null row displayLabel[" + displayLabel + "] and label [" + label + "]");
+            
+            row.setColor(overrideColor!=null ? overrideColor : colors.getNextColor());
+            if (log.isDebugEnabled() )
+            	log.debug("%#@ new row.getColor() [" + (row.getColor()==null ? "null" : row.getColor().toString()) + "]");
+
             model.put(label, row);
             graphPanel.addRow(row);
             if (canCompose) {

@@ -49,6 +49,7 @@ running the test you may load saved file into GUI and see the values timeline.
 
   * jmeterPlugin.perfmon.interval - metrics collection interval in milliseconds
   * jmeterPlugin.perfmon.useUDP - true/false, enabling UDP connection try after failed TCP connection attempt
+  * forcePerfmonFile - true/false, enabling it makes JMeter to write JTL file with perfmon metrics in the current directory
 
 == Seeing PerfMon Data Online ==
 

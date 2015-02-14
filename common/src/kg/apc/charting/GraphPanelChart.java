@@ -588,7 +588,8 @@ public class GraphPanelChart
 
         while (it.hasNext()) {
             row = it.next();
-            Color color = reSetColors ? colors.getNextColor() : row.getValue().getColor();
+            //Color color = reSetColors ? colors.getNextColor() : row.getValue().getColor();
+            Color color = row.getValue().getColor() !=null ? row.getValue().getColor() : colors.getNextColor();
 
             if (!row.getValue().isShowInLegend() || !row.getValue().isDrawOnChart()) {
                 continue;
@@ -622,7 +623,11 @@ public class GraphPanelChart
                 oldComposite = ((Graphics2D) g).getComposite();
                 ((Graphics2D) g).setComposite(chartSettings.getBarComposite());
             }
-            g.fillRect(currentX+legendAdjust+1, currentY+legendAdjust+1, rectW-2*legendAdjust, rectH-2*legendAdjust);
+            Rectangle r = new Rectangle(currentX+legendAdjust+1, currentY+legendAdjust+1, rectW-2*legendAdjust, rectH-2*legendAdjust);
+            ((Graphics2D) g).fill(r);
+            row.getValue().setLegendColorBox(r);
+            
+            //g.fillRect(currentX+legendAdjust+1, currentY+legendAdjust+1, rectW-2*legendAdjust, rectH-2*legendAdjust);
             if (isBarChart) {
                 ((Graphics2D) g).setComposite(oldComposite);
             }
@@ -801,7 +806,8 @@ public class GraphPanelChart
         while (it.hasNext()) {
             Entry<String, AbstractGraphRow> row = it.next();
             if (row.getValue().isDrawOnChart() && row.getValue().isDrawValueLabel() == rowsWithLabel) {
-                Color color = reSetColors ? dispatcher.getNextColor() : row.getValue().getColor();
+                //eto Color color = reSetColors ? dispatcher.getNextColor() : row.getValue().getColor();
+            	Color color = row.getValue().getColor() !=null ? row.getValue().getColor() : dispatcher.getNextColor();
                 paintRow(g, row.getValue(), row.getKey(), color);
             }
         }

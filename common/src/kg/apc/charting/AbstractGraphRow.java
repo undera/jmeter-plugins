@@ -1,14 +1,21 @@
 package kg.apc.charting;
 
 import java.awt.Color;
+import java.awt.Rectangle;
+import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+
 import kg.apc.charting.rows.GraphRowAverages;
 import kg.apc.charting.rows.GraphRowExactValues;
 import kg.apc.charting.rows.GraphRowOverallAverages;
 import kg.apc.charting.rows.GraphRowPercentiles;
 import kg.apc.charting.rows.GraphRowSimple;
 import kg.apc.charting.rows.GraphRowSumValues;
+
+import org.apache.jmeter.util.JMeterUtils;
 
 public abstract class AbstractGraphRow {
 
@@ -53,6 +60,11 @@ public abstract class AbstractGraphRow {
      *
      */
     protected Color color = Color.BLACK;
+    
+    /**
+    *  When user clicks on this, color of the box and metric line will change.
+    */
+    protected Rectangle legendColorBox = null;
     /**
      *
      */
@@ -366,5 +378,11 @@ public abstract class AbstractGraphRow {
      */
     public long getFirstTime() {
         return firstTime;
+    }
+    public void setLegendColorBox(Rectangle val) {
+    	this.legendColorBox = val;
+    }
+    public Rectangle getLegendColorBox() {
+    	return this.legendColorBox;
     }
 }

@@ -11,6 +11,7 @@
   * add [InternetExplorerConfig Internet Explorer Driver]
   * rework internals of [JSONPathAssertion JSON Path Assertion] and [JSONPathExtractor JSON Path Extractor], handle arrays and null values
   * maximize browser window by default in WebDriver
+  * add two ways to change color of graph lines and legend.  See [SettingsPanel] for doc.
 
 
 == 1.2.0 <i><font color=gray size="1">September 16, 2014</font></i>==

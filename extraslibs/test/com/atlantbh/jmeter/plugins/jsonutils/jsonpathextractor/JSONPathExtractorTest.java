@@ -22,8 +22,8 @@ import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class JSONPathExtractorTest {
     private static final String json = "{ \"store\": {\n" +
@@ -55,6 +55,34 @@ public class JSONPathExtractorTest {
             "      \"color\": \"red\",\n" +
             "      \"price\": 19.95\n" +
             "    }\n" +
+            "  }\n" +
+            "}";
+
+    private static final String json2 = "{\n" +
+            "  \"status\": \"success\",\n" +
+            "  \"data\": {\n" +
+            "    \"groups\": [\n" +
+            "      {\n" +
+            "        \"id\": \"e02991f4-a95d-43dd-8eb0-fbc44349e238\",\n" +
+            "        \"name\": \"Uber\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": \"71bc2d86-b023-44ca-b358-52531bd57ab3\",\n" +
+            "        \"name\": \"Hooey\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": \"378e9b20-99bb-4d1f-bf2c-6a4a6c69a8ed\",\n" +
+            "        \"name\": \"Zaz\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": \"296453c7-379b-4694-8cc2-5ca44afcb0a4\",\n" +
+            "        \"name\": \"Zompek\"\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"id\": \"46834f01-6b5f-4b35-bd34-e96aa9cbe315\",\n" +
+            "        \"name\": \"Asguard\"\n" +
+            "      }\n" +
+            "    ]\n" +
             "  }\n" +
             "}";
 
@@ -156,5 +184,41 @@ public class JSONPathExtractorTest {
         assertEquals("1", vars.get("test_1"));
         assertEquals("2", vars.get("test_2"));
         assertEquals(null, vars.get("test_3"));
+    }
+
+    @Test
+    public void testReported1() {
+        System.out.println("process reported");
+        JMeterContext context = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        res.setResponseData(json2.getBytes());
+        context.setPreviousResult(res);
+
+        JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setVar("GroupID");
+        instance.setJsonPath("$.data.groups[?(@.name==Zaz)].id");
+        instance.setDefaultValue("NOTFOUND");
+        instance.process();
+        JMeterVariables vars = context.getVariables();
+        assertNotEquals("NOTFOUND", vars.get("GroupID"));
+        assertEquals("378e9b20-99bb-4d1f-bf2c-6a4a6c69a8ed", vars.get("GroupID_1"));
+    }
+
+    @Test
+    public void testReported1_1() {
+        System.out.println("process reported");
+        JMeterContext context = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        res.setResponseData(json2.getBytes());
+        context.setPreviousResult(res);
+
+        JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setVar("GroupID");
+        instance.setJsonPath("$.data.groups[*].id");
+        instance.setDefaultValue("NOTFOUND");
+        instance.process();
+        JMeterVariables vars = context.getVariables();
+        assertNotEquals("NOTFOUND", vars.get("GroupID"));
+        assertEquals("e02991f4-a95d-43dd-8eb0-fbc44349e238", vars.get("GroupID_1"));
     }
 }

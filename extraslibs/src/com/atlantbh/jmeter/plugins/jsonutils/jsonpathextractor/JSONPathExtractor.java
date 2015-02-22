@@ -72,8 +72,8 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
         try {
             Object jsonPathResult = JsonPath.read(responseData, getJsonPath());
             if (jsonPathResult instanceof JSONArray) {
-                vars.put(this.getVar(), jsonPathResult.toString());
                 Object[] arr = ((JSONArray) jsonPathResult).toArray();
+                vars.put(this.getVar(), arr[0].toString());
 
                 int k = 1;
                 while (vars.get(this.getVar() + "_" + k) != null) {

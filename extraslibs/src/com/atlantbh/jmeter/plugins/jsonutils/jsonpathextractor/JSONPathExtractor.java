@@ -10,6 +10,7 @@
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor;
 
 import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 import net.minidev.json.JSONArray;
 import org.apache.jmeter.processor.PostProcessor;
 import org.apache.jmeter.samplers.SampleResult;
@@ -73,6 +74,11 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
             Object jsonPathResult = JsonPath.read(responseData, getJsonPath());
             if (jsonPathResult instanceof JSONArray) {
                 Object[] arr = ((JSONArray) jsonPathResult).toArray();
+
+                if (arr.length == 0) {
+                    throw new PathNotFoundException("Extracted array is empty");
+                }
+
                 vars.put(this.getVar(), arr[0].toString());
 
                 int k = 1;
@@ -88,7 +94,7 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
                 vars.put(this.getVar(), String.format("%s", jsonPathResult));
             }
         } catch (Exception e) {
-            log.error("Extract failed", e);
+            log.warn("Extract failed", e);
             vars.put(this.getVar(), getDefaultValue());
         }
     }

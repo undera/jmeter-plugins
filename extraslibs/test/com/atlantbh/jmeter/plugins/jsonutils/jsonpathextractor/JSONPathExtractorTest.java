@@ -221,4 +221,20 @@ public class JSONPathExtractorTest {
         assertNotEquals("NOTFOUND", vars.get("GroupID"));
         assertEquals("e02991f4-a95d-43dd-8eb0-fbc44349e238", vars.get("GroupID_1"));
     }
-}
+
+    @Test
+    public void testReported1_3() {
+        System.out.println("process reported");
+        JMeterContext context = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        res.setResponseData(json2.getBytes());
+        context.setPreviousResult(res);
+
+        JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setVar("GroupID");
+        instance.setJsonPath("$.data.groups[?(@.name==Avtovaz)].id");
+        instance.setDefaultValue("NOTFOUND");
+        instance.process();
+        JMeterVariables vars = context.getVariables();
+        assertEquals("NOTFOUND", vars.get("GroupID"));
+    }}

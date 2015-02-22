@@ -155,7 +155,7 @@ public class JSONPathExtractorTest {
         instance.setJsonPath("$.store.book[*].author");
         instance.process();
         JMeterVariables vars = context.getVariables();
-        assertEquals("[\"Nigel Rees\",\"Evelyn Waugh\",\"Herman Melville\",\"J. R. R. Tolkien\"]", vars.get("test"));
+        assertEquals("Nigel Rees", vars.get("test"));
     }
 
     @Test
@@ -172,7 +172,7 @@ public class JSONPathExtractorTest {
         instance.setJsonPath("$.myval[*].test");
         instance.process();
         JMeterVariables vars = context.getVariables();
-        assertEquals("[1,2,null]", vars.get("test"));
+        assertEquals("1", vars.get("test"));
         assertEquals("1", vars.get("test_1"));
         assertEquals("2", vars.get("test_2"));
         assertEquals("null", vars.get("test_3"));
@@ -180,7 +180,7 @@ public class JSONPathExtractorTest {
         // test for cleaning prev vars
         res.setResponseData("{\"myval\": [{\"test\":1},{\"test\":2}]}".getBytes());
         instance.process();
-        assertEquals("[1,2]", vars.get("test"));
+        assertEquals("1", vars.get("test"));
         assertEquals("1", vars.get("test_1"));
         assertEquals("2", vars.get("test_2"));
         assertEquals(null, vars.get("test_3"));

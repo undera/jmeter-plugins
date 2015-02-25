@@ -79,7 +79,7 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
                     throw new PathNotFoundException("Extracted array is empty");
                 }
 
-                vars.put(this.getVar(), arr[0].toString());
+                vars.put(this.getVar(), jsonPathResult.toString());
 
                 int k = 1;
                 while (vars.get(this.getVar() + "_" + k) != null) {

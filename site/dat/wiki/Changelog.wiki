@@ -10,6 +10,7 @@
   * add ability to load extensions and set preferences for [FirefoxDriverConfig Firefox]
   * add [InternetExplorerConfig Internet Explorer Driver]
   * rework internals of [JSONPathAssertion JSON Path Assertion] and [JSONPathExtractor JSON Path Extractor], handle arrays and null values
+  * add operation on variables into [JSONPathExtractor JSON Path Extractor]
   * maximize browser window by default in WebDriver
   * add two ways to change color of graph lines and legend.  See [SettingsPanel] for doc.
 

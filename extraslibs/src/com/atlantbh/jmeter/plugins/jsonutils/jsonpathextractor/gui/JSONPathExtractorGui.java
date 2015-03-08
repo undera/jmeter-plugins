@@ -9,12 +9,19 @@
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.gui;
 
 import com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.processor.gui.AbstractPostProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * This is JSONPath extractor GUI class which contains necessary methods for
@@ -27,6 +34,10 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
     private JTextField jsonPathTextField = null;
     private JTextField defaultValTextField = null;
     private static final String WIKIPAGE = "JSONPathExtractor";
+    private JRadioButton useBody;
+    private JRadioButton useVariable;
+    private ButtonGroup group;
+    private JTextField srcVariableName;
 
     public JSONPathExtractorGui() {
         super();
@@ -40,6 +51,15 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
 
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth = 2;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = 1;
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(makeSourcePanel(), c);
+
         GridBagConstraints labelConstraints = new GridBagConstraints();
         labelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
 
@@ -48,18 +68,43 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
         editConstraints.weightx = 1.0;
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-        addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Variable Name: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 0, variableNameTextField = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Destination Variable Name: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 1, variableNameTextField = new JTextField(20));
 
-        addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("JSON Path: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1,1, jsonPathTextField = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("JSONPath Expression: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 2, jsonPathTextField = new JTextField(20));
 
-        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("Default Value: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, defaultValTextField = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Default Value: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 3, defaultValTextField = new JTextField(20));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
         add(container, BorderLayout.CENTER);
+    }
+
+
+    private JPanel makeSourcePanel() {
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createTitledBorder("Apply to:"));
+
+        useBody = new JRadioButton("Response Text");
+        useVariable = new JRadioButton("JMeter Variable:");
+        srcVariableName = new JTextField(10);
+
+        group = new ButtonGroup();
+        group.add(useBody);
+        group.add(useVariable);
+
+        panel.add(useBody);
+        panel.add(useVariable);
+        panel.add(srcVariableName);
+
+        useBody.setSelected(true);
+
+        useBody.setActionCommand(JSONPathExtractor.SUBJECT_BODY);
+        useVariable.setActionCommand(JSONPathExtractor.SUBJECT_VARIABLE);
+
+        return panel;
     }
 
     private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {
@@ -74,11 +119,12 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
         variableNameTextField.setText("");
         jsonPathTextField.setText("");
         defaultValTextField.setText("");
+        srcVariableName.setText("");
+        useBody.setSelected(true);
     }
 
     @Override
     public TestElement createTestElement() {
-        // TODO Auto-generated method stub
         JSONPathExtractor extractor = new JSONPathExtractor();
         modifyTestElement(extractor);
         extractor.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
@@ -103,6 +149,8 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
             extractor.setVar(variableNameTextField.getText());
             extractor.setJsonPath(jsonPathTextField.getText());
             extractor.setDefaultValue(defaultValTextField.getText());
+            extractor.setSrcVariableName(srcVariableName.getText());
+            extractor.setSubject(group.getSelection().getActionCommand());
         }
     }
 
@@ -114,6 +162,12 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
             variableNameTextField.setText(extractor.getVar());
             jsonPathTextField.setText(extractor.getJsonPath());
             defaultValTextField.setText(extractor.getDefaultValue());
+            srcVariableName.setText(extractor.getSrcVariableName());
+            if (extractor.getSubject().equals(JSONPathExtractor.SUBJECT_VARIABLE)) {
+                useVariable.setSelected(true);
+            } else {
+                useBody.setSelected(true);
+            }
         }
     }
 }

@@ -29,9 +29,14 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
 
     private static final long serialVersionUID = 1L;
 
-    private static final String JSONPATH = "JSONPATH";
-    private static final String VAR = "VAR";
-    private static final String DEFAULT = "DEFAULT";
+    public static final String JSONPATH = "JSONPATH";
+    public static final String VAR = "VAR";
+    public static final String DEFAULT = "DEFAULT";
+    public static final String SUBJECT = "SUBJECT";
+    public static final String SRC_VARNAME = "VARIABLE";
+
+    public static final String SUBJECT_BODY = "BODY";
+    public static final String SUBJECT_VARIABLE = "VAR";
 
     public JSONPathExtractor() {
         super();
@@ -61,6 +66,22 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
         return getPropertyAsString(DEFAULT);
     }
 
+    public void setSrcVariableName(String defaultValue) {
+        setProperty(SRC_VARNAME, defaultValue);
+    }
+
+    public String getSrcVariableName() {
+        return getPropertyAsString(SRC_VARNAME);
+    }
+
+    public void setSubject(String defaultValue) {
+        setProperty(SUBJECT, defaultValue);
+    }
+
+    public String getSubject() {
+        return getPropertyAsString(SUBJECT);
+    }
+
     @Override
     public void process() {
         // NOTE: using String.format impacts performance
@@ -68,7 +89,12 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
         JMeterContext context = getThreadContext();
         JMeterVariables vars = context.getVariables();
         SampleResult previousResult = context.getPreviousResult();
-        String responseData = previousResult.getResponseDataAsString();
+        String responseData;
+        if (getSubject().equals(SUBJECT_VARIABLE)) {
+            responseData = vars.get(getSrcVariableName());
+        } else {
+            responseData = previousResult.getResponseDataAsString();
+        }
 
         try {
             Object jsonPathResult = JsonPath.read(responseData, getJsonPath());

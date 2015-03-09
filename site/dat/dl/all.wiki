@@ -1,5 +1,21 @@
 =Latest Stable Release=
 
+<download:JMeterPlugins-Standard-1.2.1.zip;Standard Set>
+
+<download:ServerAgent-2.2.1.zip;PerfMon Agent to use with Standard Set>
+
+<download:JMeterPlugins-Extras-1.2.1.zip;Extras Set>
+
+<download:JMeterPlugins-ExtrasLibs-1.2.1.zip;Extras with Libs Set>
+
+<download:JMeterPlugins-WebDriver-1.2.1.zip;WebDriver Set>
+
+<download:JMeterPlugins-Hadoop-1.2.1.zip;Hadoop Set>
+
+----
+
+=Previous Releases=
+
 <download:JMeterPlugins-Standard-1.2.0.zip;Standard Set>
 
 <download:ServerAgent-2.2.1.zip;PerfMon Agent to use with Standard Set>
@@ -11,10 +27,6 @@
 <download:JMeterPlugins-WebDriver-1.2.0.zip;WebDriver Set>
 
 <download:JMeterPlugins-Hadoop-1.2.0.zip;Hadoop Set>
-
-----
-
-=Previous Releases=
 
 <download:JMeterPlugins-Standard-1.1.3.zip;Standard Set>
 

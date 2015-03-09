@@ -1,6 +1,9 @@
 = Changelog =
 
-== 1.2.1 <i><font color=gray size="1">planning</font></i>==
+== 1.2.2 <i><font color=gray size="1">planning</font></i>==
+
+
+== 1.2.1 <i><font color=gray size="1">March 9, 2015</font></i>==
   * add [TestPlanCheckTool] to check JMX file consistency without running it
   * add requestHeaders field to FFW (and fix the bug with responseHeaders that nobody noticed)
   * add webdriver.sampleresult_class property for [WebDriverSampler]
@@ -13,7 +16,6 @@
   * add operation on variables into [JSONPathExtractor JSON Path Extractor]
   * maximize browser window by default in WebDriver
   * add two ways to change color of graph lines and legend.  See [SettingsPanel] for doc.
-
 
 == 1.2.0 <i><font color=gray size="1">September 16, 2014</font></i>==
   * fix JMeter startup with Extras (https://groups.google.com/forum/#!topic/jmeter-plugins/YlnXE_WOXXo)

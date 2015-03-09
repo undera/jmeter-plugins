@@ -89,7 +89,7 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
 
         useBody = new JRadioButton("Response Text");
         useVariable = new JRadioButton("JMeter Variable:");
-        srcVariableName = new JTextField(10);
+        srcVariableName = new JTextField(20);
 
         group = new ButtonGroup();
         group.add(useBody);

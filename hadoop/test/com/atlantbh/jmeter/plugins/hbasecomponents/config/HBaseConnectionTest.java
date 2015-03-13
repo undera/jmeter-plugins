@@ -48,7 +48,7 @@ public class HBaseConnectionTest {
     @Test
     public void testGetConnection() {
         System.out.println("getConnection");
-        String name = "";
+        String name = getClass().getCanonicalName();
         HBaseConnectionVariable result = HBaseConnection.getConnection(name);
         assertEquals(null, result);
     }

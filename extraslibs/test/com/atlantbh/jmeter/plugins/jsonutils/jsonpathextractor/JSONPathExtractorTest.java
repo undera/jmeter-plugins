@@ -86,6 +86,15 @@ public class JSONPathExtractorTest {
             "  }\n" +
             "}";
 
+    private static final String json3 = "{\n" +
+            " \"data\":[\n" +
+            "   {\"attr\":{\"value\":0}},\n" +
+            "   {\"attr\":{\"value\":1}},\n" +
+            "   {\"attr\":{\"value\":2}},\n" +
+            "   {\"attr\":{\"value\":0}},\n" +
+            " ]\n" +
+            "}";
+
     @Before
     public void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
@@ -167,7 +176,7 @@ public class JSONPathExtractorTest {
         SampleResult res = new SampleResult();
         res.setResponseData("".getBytes());
         context.setPreviousResult(res);
-        
+
         vars.put("SVAR", json);
 
         JSONPathExtractor instance = new JSONPathExtractor();
@@ -259,4 +268,22 @@ public class JSONPathExtractorTest {
         instance.process();
         JMeterVariables vars = context.getVariables();
         assertEquals("NOTFOUND", vars.get("GroupID"));
-    }}
+    }
+
+    @Test
+    public void testReported2() {
+        System.out.println("process reported");
+        JMeterContext context = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        res.setResponseData(json3.getBytes());
+        context.setPreviousResult(res);
+
+        JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setVar("var");
+        instance.setJsonPath("$.data[?(@.attr.value>0)][0].attr");
+        instance.setDefaultValue("NOTFOUND");
+        instance.process();
+        JMeterVariables vars = context.getVariables();
+        assertNotEquals("NOTFOUND", vars.get("var"));
+    }
+}

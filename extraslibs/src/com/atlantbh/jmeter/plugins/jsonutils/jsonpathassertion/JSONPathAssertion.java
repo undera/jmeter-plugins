@@ -8,7 +8,11 @@
  */
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion;
 
+import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.Option;
+import com.jayway.jsonpath.internal.JsonReader;
+import java.io.Serializable;
 import net.minidev.json.JSONArray;
 import org.apache.jmeter.assertions.Assertion;
 import org.apache.jmeter.assertions.AssertionResult;
@@ -16,8 +20,6 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-
-import java.io.Serializable;
 
 /**
  * This is main class for JSONPath Assertion which verifies assertion on
@@ -64,7 +66,9 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
     }
 
     private void doAssert(String jsonString) {
-        Object value = JsonPath.read(jsonString, getJsonPath());
+        JsonReader reader = new JsonReader(Configuration.defaultConfiguration().options(Option.THROW_ON_MISSING_PROPERTY));
+        reader.parse(jsonString);
+        Object value = reader.read(getJsonPath());
 
         if (isJsonValidationBool()) {
             if (value instanceof JSONArray) {

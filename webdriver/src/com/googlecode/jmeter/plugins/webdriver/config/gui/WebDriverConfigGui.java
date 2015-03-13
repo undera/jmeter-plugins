@@ -348,9 +348,13 @@ public abstract class WebDriverConfigGui extends AbstractConfigGui implements It
 
     protected abstract String getWikiPage();
 
-    protected abstract boolean isProxyEnabled();
+    protected boolean isProxyEnabled() {
+        return false;
+    }
 
-    protected abstract boolean isExperimentalEnabled();
+    protected boolean isExperimentalEnabled() {
+        return false;
+    }
 
     @Override
     public void itemStateChanged(ItemEvent itemEvent) {

@@ -112,6 +112,7 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
                 }
 
                 vars.put(this.getVar(), jsonPathResult.toString());
+                vars.put(this.getVar()+"_matchNr", String.valueOf(arr.length));
 
                 int k = 1;
                 while (vars.get(this.getVar() + "_" + k) != null) {

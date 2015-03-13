@@ -1,7 +1,7 @@
 = Changelog =
 
 == 1.2.2 <i><font color=gray size="1">planning</font></i>==
-  * fix reported issues with [JSONPathExtractor]
+  * fix reported issues with [JSONPathExtractor], see [https://groups.google.com/forum/#!topic/jmeter-plugins/fDqEpL3iqi0] and [https://groups.google.com/forum/#!topic/jmeter-plugins/UvKa5KiM2qo]
 
 == 1.2.1 <i><font color=gray size="1">March 9, 2015</font></i>==
   * add [TestPlanCheckTool] to check JMX file consistency without running it

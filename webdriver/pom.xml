@@ -40,7 +40,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.6</java-version>
         <jmeter.version>2.8</jmeter.version>
-        <selenium.version>2.44.0</selenium.version>
+        <selenium.version>2.45.0</selenium.version>
         <powermock.version>1.5</powermock.version>
         <cobertura-maven.version>2.5.2</cobertura-maven.version>
     </properties>

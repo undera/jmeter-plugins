@@ -16,6 +16,10 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
     private static final long serialVersionUID = 100L;
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
 
+    private static final String defaultScript = "WDS.sampleResult.sampleStart()\n" +
+            "WDS.browser.get('http://jmeter-plugins.org')\n" +
+            "WDS.sampleResult.sampleEnd()\n";
+
     static {
         if(!GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance()) {
             DefaultSyntaxKit.initKit();
@@ -69,7 +73,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         super.clearGui();
 
         parameters.setText(""); //$NON-NLS-1$
-        script.setText(""); //$NON-NLS-1$
+        script.setText(defaultScript); //$NON-NLS-1$
     }
 
 	private void createGui() {

@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThat;
 
 public class WebDriverSamplerGuiTest {
@@ -62,7 +63,7 @@ public class WebDriverSamplerGuiTest {
 
         gui.clearGui();
 
-        assertThat(gui.script.getText(), is(""));
+        assertNotEquals(gui.script.getText(), "");
         assertThat(gui.parameters.getText(), is(""));
     }
 

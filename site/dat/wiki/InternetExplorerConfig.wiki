@@ -56,7 +56,7 @@ For networks that have a proxy configuration server (PAC), and its name and the 
 
 == InternetExplorer ==
 For Web Driver controls to work against InternetExplorer, it is important to:
-  # [https://code.google.com/p/InternetExplorerdriver/downloads/list Download the InternetExplorer driver] for your Operating System.
+  # [http://selenium-release.storage.googleapis.com/index.html Download the InternetExplorer driver] for your Operating System.
   # Unzip the binary to a specific location
   # Specify the InternetExplorer binary in the input field in this tab.
 

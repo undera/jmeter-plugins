@@ -56,6 +56,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 	@Override
 	public TestElement createTestElement() {
         WebDriverSampler sampler = new WebDriverSampler();
+        sampler.setScript(defaultScript);
 		modifyTestElement(sampler);
 		return sampler;
 	}
@@ -73,7 +74,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         super.clearGui();
 
         parameters.setText(""); //$NON-NLS-1$
-        script.setText(defaultScript); //$NON-NLS-1$
+        script.setText(""); //$NON-NLS-1$
     }
 
 	private void createGui() {

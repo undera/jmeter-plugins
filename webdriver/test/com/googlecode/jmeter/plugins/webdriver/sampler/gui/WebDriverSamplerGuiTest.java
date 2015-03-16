@@ -63,7 +63,7 @@ public class WebDriverSamplerGuiTest {
 
         gui.clearGui();
 
-        assertNotEquals(gui.script.getText(), "");
+        assertThat(gui.script.getText(), is(""));
         assertThat(gui.parameters.getText(), is(""));
     }
 

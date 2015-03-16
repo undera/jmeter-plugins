@@ -29,6 +29,10 @@ public class WebDriverSampler extends AbstractSampler {
     private final transient ScriptEngineManager scriptEngineManager;
     private final Class<SampleResult> sampleResultClass;
 
+    private static final String defaultScript = "WDS.sampleResult.sampleStart()\n" +
+            "WDS.browser.get('http://jmeter-plugins.org')\n" +
+            "WDS.sampleResult.sampleEnd()\n";
+
     public WebDriverSampler() {
         Class<SampleResult> srClass;
         this.scriptEngineManager = new ScriptEngineManager();
@@ -90,10 +94,13 @@ public class WebDriverSampler extends AbstractSampler {
     }
 
     public String getScript() {
-        return getPropertyAsString(SCRIPT);
+        String propertyAsString = getPropertyAsString(SCRIPT, defaultScript);
+        log.error("Script get:"+propertyAsString);
+        return propertyAsString;
     }
 
     public void setScript(String script) {
+        log.error("Script set:" + script);
         setProperty(SCRIPT, script);
     }
 

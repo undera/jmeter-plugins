@@ -233,6 +233,22 @@ public class JSONPathAssertionTest {
     }
 
     @Test
+    public void testGetResult_list_empty_validate() {
+        System.out.println("getResult list-empty");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": []}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval");
+        instance.setJsonValidationBool(true);
+        instance.setExpectedValue("[]");
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(false, result.isFailure());
+    }
+
+    @Test
     public void testGetResult_dict() {
         System.out.println("getResult notexist");
         SampleResult samplerResult = new SampleResult();

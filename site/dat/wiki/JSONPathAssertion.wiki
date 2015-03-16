@@ -15,6 +15,6 @@ Second, it will search for specified path, using syntax from [https://github.com
 
 Third, if JSON path was found in the document, and validation against expected value was requested, it will perform validation. For the {{{null}}} value there is special checkbox in the GUI.
 
-Note that if the path will return array object, it will be iterated and if expected value is found, the assertion will succeed. Also, if patch will return dictionary object, it will be converted to string before comparison.
+Note that if the path will return array object, it will be iterated and if expected value is found, the assertion will succeed. To validate empty array use {{{[]}}} string. Also, if patch will return dictionary object, it will be converted to string before comparison.
 
 [/img/wiki/json_path_assertion.png]

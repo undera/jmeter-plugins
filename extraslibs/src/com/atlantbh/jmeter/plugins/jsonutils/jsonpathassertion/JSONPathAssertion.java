@@ -9,7 +9,6 @@
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion;
 
 import com.jayway.jsonpath.Configuration;
-import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
 import com.jayway.jsonpath.internal.JsonReader;
 import java.io.Serializable;
@@ -73,10 +72,13 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         if (isJsonValidationBool()) {
             if (value instanceof JSONArray) {
                 JSONArray arr = (JSONArray) value;
+
+                if (arr.isEmpty() && getExpectedValue().equals("[]")) {
+                    return;
+                }
+
                 for (Object subj : arr.toArray()) {
-                    if (isExpectNull() && subj == null) {
-                        return;
-                    } else if (subj.toString().equals(getExpectedValue())) {
+                    if (subj.toString().equals(getExpectedValue())) {
                         return;
                     }
                 }

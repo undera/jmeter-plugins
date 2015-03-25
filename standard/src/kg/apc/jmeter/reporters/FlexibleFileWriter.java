@@ -2,6 +2,15 @@
 // TODO: buffer file writes to bigger chunks?
 package kg.apc.jmeter.reporters;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.util.ArrayList;
+import java.util.Arrays;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.reporters.AbstractListenerElement;
@@ -14,16 +23,6 @@ import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @see ResultCollector
@@ -241,8 +240,11 @@ public class FlexibleFileWriter
 
     private synchronized void syncWrite(ByteBuffer buf) throws IOException {
         FileLock lock = fileChannel.lock();
-        fileChannel.write(buf);
-        lock.release();
+        try {
+            fileChannel.write(buf);
+        } finally {
+            lock.release();
+        }
     }
 
     /*

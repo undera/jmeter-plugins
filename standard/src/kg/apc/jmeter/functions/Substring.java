@@ -1,5 +1,6 @@
 package kg.apc.jmeter.functions;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +10,8 @@ import org.apache.jmeter.functions.InvalidVariableException;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 public class Substring extends AbstractFunction {
 
@@ -24,15 +27,9 @@ public class Substring extends AbstractFunction {
 
     private Object[] values;
 
-    /**
-     * No-arg constructor.
-     */
     public Substring() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public synchronized String execute(SampleResult previousResult, Sampler currentSampler)
             throws InvalidVariableException {
@@ -56,26 +53,17 @@ public class Substring extends AbstractFunction {
         return totalString;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public synchronized void setParameters(Collection<CompoundVariable> parameters) throws InvalidVariableException {
         checkMinParameterCount(parameters, 3);
         values = parameters.toArray();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getReferenceKey() {
         return KEY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<String> getArgumentDesc() {
         return desc;

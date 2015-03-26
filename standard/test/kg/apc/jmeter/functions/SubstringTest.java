@@ -1,18 +1,16 @@
 package kg.apc.jmeter.functions;
 
-import kg.apc.emulators.TestJMeterUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.engine.util.CompoundVariable;
-import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.samplers.Sampler;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class SubstringTest {
 
@@ -42,8 +40,6 @@ public class SubstringTest {
     @Test
     public void testExecute() throws Exception {
         System.out.println("execute 1");
-        SampleResult previousResult = null;
-        Sampler currentSampler = null;
         Collection<CompoundVariable> parameters = new ArrayList<CompoundVariable>();
         parameters.add(new CompoundVariable("test string"));
         parameters.add(new CompoundVariable("5"));
@@ -52,7 +48,7 @@ public class SubstringTest {
         Substring instance = new Substring();
         instance.setParameters(parameters);
         String expResult = "str";
-        String result = instance.execute(previousResult, currentSampler);
+        String result = instance.execute(null, null);
         assertEquals(expResult, result);
     }
 

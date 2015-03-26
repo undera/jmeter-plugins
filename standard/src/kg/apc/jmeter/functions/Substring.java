@@ -1,15 +1,14 @@
 package kg.apc.jmeter.functions;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.functions.AbstractFunction;
 import org.apache.jmeter.functions.InvalidVariableException;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterVariables;
-
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 
 public class Substring extends AbstractFunction {
 
@@ -38,19 +37,20 @@ public class Substring extends AbstractFunction {
     public synchronized String execute(SampleResult previousResult, Sampler currentSampler)
             throws InvalidVariableException {
 
-        Double sum = 0D;
         String str = getParameter(0);
 
-        int begin = Integer.parseInt(getParameter(1));
-        int len = Integer.parseInt(getParameter(2));
+        int begin = Integer.parseInt(getParameter(1).trim());
+        int len = Integer.parseInt(getParameter(2).trim());
 
         String totalString = str.substring(begin, len);
 
         JMeterVariables vars = getVariables();
 
-        String varName = getParameter(3);
-        if (vars != null && varName != null && varName.length() > 0) {// vars will be null on TestPlan
-            vars.put(varName, totalString);
+        if (values.length > 3) {
+            String varName = getParameter(3);
+            if (vars != null && varName != null && varName.length() > 0) {// vars will be null on TestPlan
+                vars.put(varName, totalString);
+            }
         }
 
         return totalString;

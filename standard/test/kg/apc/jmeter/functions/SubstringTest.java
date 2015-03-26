@@ -68,6 +68,7 @@ public class SubstringTest {
         parameters.add(new CompoundVariable("1"));
         Substring instance = new Substring();
         instance.setParameters(parameters);
+        instance.execute(null, null);
     }
 
     /**

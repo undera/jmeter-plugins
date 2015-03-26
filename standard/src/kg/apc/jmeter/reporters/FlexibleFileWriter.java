@@ -187,7 +187,7 @@ public class FlexibleFileWriter
 
         String header = JMeterPluginsUtils.replaceRNT(getFileHeader());
         if (!header.isEmpty()) {
-            fileChannel.write(ByteBuffer.wrap(header.getBytes()));
+            syncWrite(ByteBuffer.wrap(header.getBytes()));
         }
     }
 
@@ -196,7 +196,7 @@ public class FlexibleFileWriter
             try {
                 String footer = JMeterPluginsUtils.replaceRNT(getFileFooter());
                 if (!footer.isEmpty()) {
-                    fileChannel.write(ByteBuffer.wrap(footer.getBytes()));
+                    syncWrite(ByteBuffer.wrap(footer.getBytes()));
                 }
 
                 fileChannel.force(false);

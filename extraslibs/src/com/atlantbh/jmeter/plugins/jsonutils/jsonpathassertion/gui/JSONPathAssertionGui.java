@@ -31,6 +31,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
     private JLabeledTextField jsonValue = null;
     private JCheckBox jsonValidation = null;
     private JCheckBox expectNull = null;
+    private JCheckBox invert = null;
     private static final String WIKIPAGE = "JSONPathAssertion";
 
     public JSONPathAssertionGui() {
@@ -49,6 +50,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
         jsonValidation = new JCheckBox("Validate against expected value");
         jsonValue = new JLabeledTextField("Expected Value: ");
         expectNull = new JCheckBox("Expect null");
+        invert = new JCheckBox("Invert assertion (will fail if above conditions met)");
 
         jsonValidation.addChangeListener(this);
         expectNull.addChangeListener(this);
@@ -57,6 +59,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
         panel.add(jsonValidation);
         panel.add(jsonValue);
         panel.add(expectNull);
+        panel.add(invert);
 
         add(panel, BorderLayout.CENTER);
     }
@@ -64,10 +67,11 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
     @Override
     public void clearGui() {
         super.clearGui();
-        jsonPath.setText("");
+        jsonPath.setText("$.");
         jsonValue.setText("");
         jsonValidation.setSelected(false);
         expectNull.setSelected(false);
+        invert.setSelected(false);
     }
 
     @Override
@@ -97,6 +101,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
             jpAssertion.setExpectedValue(jsonValue.getText());
             jpAssertion.setJsonValidationBool(jsonValidation.isSelected());
             jpAssertion.setExpectNull(expectNull.isSelected());
+            jpAssertion.setInvert(invert.isSelected());
         }
     }
 
@@ -108,6 +113,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
         jsonValue.setText(jpAssertion.getExpectedValue());
         jsonValidation.setSelected(jpAssertion.isJsonValidationBool());
         expectNull.setSelected(jpAssertion.isExpectNull());
+        invert.setSelected(jpAssertion.isInvert());
     }
 
     @Override

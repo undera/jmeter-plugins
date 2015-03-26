@@ -27,10 +27,11 @@ import org.apache.log.Logger;
 public class JSONPathAssertion extends AbstractTestElement implements Serializable, Assertion {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final long serialVersionUID = 1L;
-    private static final String JSONPATH = "JSON_PATH";
-    private static final String EXPECTEDVALUE = "EXPECTED_VALUE";
-    private static final String JSONVALIDATION = "JSONVALIDATION";
-    private static final String EXPECT_NULL = "EXPECT_NULL";
+    public static final String JSONPATH = "JSON_PATH";
+    public static final String EXPECTEDVALUE = "EXPECTED_VALUE";
+    public static final String JSONVALIDATION = "JSONVALIDATION";
+    public static final String EXPECT_NULL = "EXPECT_NULL";
+    public static final String INVERT = "INVERT";
 
     public String getJsonPath() {
         return getPropertyAsString(JSONPATH);
@@ -62,6 +63,14 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
 
     public boolean isJsonValidationBool() {
         return getPropertyAsBoolean(JSONVALIDATION);
+    }
+
+    public void setInvert(boolean invert) {
+        setProperty(INVERT, invert);
+    }
+
+    public boolean isInvert() {
+        return getPropertyAsBoolean(INVERT);
     }
 
     private void doAssert(String jsonString) {
@@ -107,14 +116,32 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
 
         result.setFailure(false);
         result.setFailureMessage("");
-        try {
-            doAssert(new String(responseData));
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.debug("Assertion failed", e);
+
+        if (!isInvert()) {
+            try {
+                doAssert(new String(responseData));
+            } catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Assertion failed", e);
+                }
+                result.setFailure(true);
+                result.setFailureMessage(e.getMessage());
             }
-            result.setFailure(true);
-            result.setFailureMessage(e.getMessage());
+        } else {
+            try {
+                doAssert(new String(responseData));
+                result.setFailure(true);
+                if (isJsonValidationBool()) {
+                    result.setFailureMessage("Failed that JSONPath " + getJsonPath() + " not matches " + getExpectedValue());
+                } else {
+                    result.setFailureMessage("Failed that JSONPath not exists: " + getJsonPath());
+                }
+
+            } catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Assertion failed", e);
+                }
+            }
         }
         return result;
     }

@@ -108,6 +108,23 @@ public class JSONPathAssertionTest {
     }
 
     @Test
+    public void testGetResult_positive_invert() {
+        System.out.println("getResult simple");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": 123}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval");
+        instance.setJsonValidationBool(true);
+        instance.setExpectedValue("123");
+        instance.setInvert(true);
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(true, result.isFailure());
+        assertEquals(expResult.getName(), result.getName());
+    }
+
+    @Test
     public void testGetResult_negative() {
         System.out.println("getResult simple");
         SampleResult samplerResult = new SampleResult();
@@ -121,6 +138,23 @@ public class JSONPathAssertionTest {
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
         assertEquals(true, result.isFailure());
+    }
+
+    @Test
+    public void testGetResult_negative_invert() {
+        System.out.println("getResult simple");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": 123}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval");
+        instance.setJsonValidationBool(true);
+        instance.setExpectedValue("1234");
+        instance.setInvert(true);
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(false, result.isFailure());
+        assertEquals(expResult.getName(), result.getName());
     }
 
     @Test

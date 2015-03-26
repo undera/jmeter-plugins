@@ -246,7 +246,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>kg.apc:*</include>
+                                    <include>kg.apc:jmeter-plugins-common</include>
                                 </includes>
                             </artifactSet>
                             
@@ -292,6 +292,7 @@
                         <format>xml</format>
                         <format>html</format>
                     </formats>
+                    <check/>
                 </configuration>
             </plugin>
         </plugins>

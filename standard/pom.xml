@@ -254,7 +254,8 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>kg.apc:*</include>
+                                    <include>kg.apc:jmeter-plugins-common</include>
+                                    <include>kg.apc:perfmon</include>
                                     <include>net.sf.json-lib:json-lib</include>
                                     <include>net.sf.ezmorph:ezmorph</include>
                                     <include>commons-beanutils:commons-beanutils</include>
@@ -304,6 +305,7 @@
                         <format>xml</format>
                         <format>html</format>
                     </formats>
+                    <check/>
                 </configuration>
             </plugin>
         </plugins>

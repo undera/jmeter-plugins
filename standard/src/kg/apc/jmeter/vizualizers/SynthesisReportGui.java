@@ -20,6 +20,7 @@ package kg.apc.jmeter.vizualizers;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -41,13 +47,16 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 
 import org.apache.jmeter.gui.util.FileDialoger;
-import org.apache.jmeter.gui.util.HeaderAsPropertyRenderer;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.save.CSVSaveService;
@@ -75,6 +84,10 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
 
     private static final long serialVersionUID = 240L;
 
+    private static final String pct1Label = JMeterUtils.getPropDefault("aggregate_rpt_pct1", "90");
+
+    private static final Float pct1Value = new Float(Float.parseFloat(pct1Label)/100);
+
     protected FilterPanel jPanelFilter;
 
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -85,7 +98,7 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
 
     private static final String SAVE_HEADERS = "saveHeaders"; //$NON-NLS-1$
 
-    private static final String[] COLUMNS = { "sampler_label", //$NON-NLS-1$
+    private static final String[] COLUMNS_BEFORE_JM_2_13 = { "sampler_label", //$NON-NLS-1$
             "aggregate_report_count", //$NON-NLS-1$
             "average", //$NON-NLS-1$
             "aggregate_report_min", //$NON-NLS-1$
@@ -96,6 +109,33 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
             "aggregate_report_rate", //$NON-NLS-1$
             "aggregate_report_bandwidth", //$NON-NLS-1$
             "average_bytes" }; //$NON-NLS-1$
+
+    private static final String[] COLUMNS_AFTER_OR_EQUAL_JM_2_13 = { "sampler_label", //$NON-NLS-1$
+            "aggregate_report_count", //$NON-NLS-1$
+            "average", //$NON-NLS-1$
+            "aggregate_report_min", //$NON-NLS-1$
+            "aggregate_report_max", //$NON-NLS-1$
+            "aggregate_report_xx_pct1_line", //$NON-NLS-1$
+            "aggregate_report_stddev", //$NON-NLS-1$
+            "aggregate_report_error%", //$NON-NLS-1$
+            "aggregate_report_rate", //$NON-NLS-1$
+            "aggregate_report_bandwidth", //$NON-NLS-1$
+            "average_bytes" }; //$NON-NLS-1$
+
+	private static final boolean bOldVersion = Float.compare(Float.parseFloat(JMeterUtils.getJMeterVersion().substring(0, 4)), new Float(2.13)) < 0;
+	private static final String[] COLUMNS = bOldVersion ? COLUMNS_BEFORE_JM_2_13 : COLUMNS_AFTER_OR_EQUAL_JM_2_13;
+
+	static final Object[][] COLUMNS_MSG_PARAMETERS = { null, //$NON-NLS-1$
+            null,                             //$NON-NLS-1$
+            null,                             //$NON-NLS-1$
+            null,                             //$NON-NLS-1$
+            null,                             //$NON-NLS-1$
+            new Object[]{pct1Label},          //$NON-NLS-1$
+            null,                             //$NON-NLS-1$
+            null,                             //$NON-NLS-1$
+            null,                             //$NON-NLS-1$
+            null,                             //$NON-NLS-1$
+            null };                           //$NON-NLS-1$
 
     private final String TOTAL_ROW_LABEL = JMeterUtils
             .getResString("aggregate_report_total_label"); //$NON-NLS-1$
@@ -126,7 +166,17 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
 
     public SynthesisReportGui() {
         super();
-        model = new ObjectTableModel(COLUMNS, SamplingStatCalculator.class,
+		model = createObjectTableModel();
+        clearData();
+        init();
+    }
+
+    /**
+     * Creates that Table model
+     * @return ObjectTableModel
+     */
+    static ObjectTableModel createObjectTableModel() {
+        return new ObjectTableModel(COLUMNS, SamplingStatCalculator.class,
                 new Functor[] {
                         new Functor("getLabel"), //$NON-NLS-1$
                         new Functor("getCount"), //$NON-NLS-1$
@@ -134,7 +184,7 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
                         new Functor("getMin"), //$NON-NLS-1$
                         new Functor("getMax"), //$NON-NLS-1$
                         new Functor("getPercentPoint", //$NON-NLS-1$
-                                new Object[] { new Float(.900) }),
+                                new Object[] { pct1Value }),
                         new Functor("getStandardDeviation"), //$NON-NLS-1$
                         new Functor("getErrorPercentage"), //$NON-NLS-1$
                         new Functor("getRate"), //$NON-NLS-1$
@@ -145,8 +195,6 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
                         Long.class, Long.class, Long.class, Long.class,
                         Long.class, String.class, String.class, String.class,
                         String.class, String.class });
-        clearData();
-        init();
     }
 
     // Column renderers
@@ -157,12 +205,27 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
             null, // Min
             null, // Max
             null, // 90%
-            new NumberRenderer("#0.00"), // Std Dev.
+            new NumberRenderer("#0.00"), // Std Dev. //$NON-NLS-1$
             new NumberRenderer("#0.00%"), // Error %age //$NON-NLS-1$
             new RateRenderer("#.0"), // Throughput //$NON-NLS-1$
-            new NumberRenderer("#0.00"), // kB/sec
-            new NumberRenderer("#.0"), // avg. pageSize
+            new NumberRenderer("#0.00"), // kB/sec //$NON-NLS-1$
+            new NumberRenderer("#.0"), // avg. pageSize //$NON-NLS-1$
     };
+
+    // Column formats
+    static final Format[] FORMATS = new Format[]{
+            null, // Label
+            null, // count
+            null, // Mean
+            null, // Min
+            null, // Max
+			null, // 90%
+            new DecimalFormat("#0.00"), // Std Dev. //$NON-NLS-1$
+            new DecimalFormat("#0.00%"), // Error %age //$NON-NLS-1$
+            new DecimalFormat("#.0"),      // Throughput //$NON-NLS-1$
+            new DecimalFormat("#0.00"),  // kB/sec //$NON-NLS-1$
+            new DecimalFormat("#.0"),    // avg. pageSize //$NON-NLS-1$
+	};
 
     @Override
     public String getLabelResource() {
@@ -241,8 +304,7 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
         // SortFilterModel mySortedModel =
         // new SortFilterModel(myStatTableModel);
         myJTable = new JTable(model);
-        myJTable.getTableHeader().setDefaultRenderer(
-                new HeaderAsPropertyRenderer());
+        myJTable.getTableHeader().setDefaultRenderer(new JMeterHeaderAsPropertyRenderer(COLUMNS_MSG_PARAMETERS));
         myJTable.setPreferredScrollableViewportSize(new Dimension(500, 70));
         RendererUtils.applyRenderers(myJTable, RENDERERS);
         myScrollPane = new JScrollPane(myJTable);
@@ -350,6 +412,34 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
         jPanelFilter.clearGui();
     }
 
+    /**
+     * We use this method to get the data, since we are using
+     * ObjectTableModel, so the calling getDataVector doesn't
+     * work as expected.
+     * @param model {@link ObjectTableModel}
+     * @param formats Array of {@link Format} array can contain null formatters in this case value is added as is
+     * @return the data from the model
+     */
+    public static List<List<Object>> getAllTableData(ObjectTableModel model, Format[] formats) {
+        List<List<Object>> data = new ArrayList<List<Object>>();
+        if (model.getRowCount() > 0) {
+            for (int rw=0; rw < model.getRowCount(); rw++) {
+                int cols = model.getColumnCount();
+                List<Object> column = new ArrayList<Object>();
+                data.add(column);
+                for (int idx=0; idx < cols; idx++) {
+                    Object val = model.getValueAt(rw,idx);
+                    if(formats[idx] != null) {
+                        column.add(formats[idx].format(val));
+                    } else {
+                        column.add(val);
+                    }
+                }
+            }
+        }
+        return data;
+    }
+
     @Override
     public void actionPerformed(ActionEvent ev) {
         if (ev.getSource() == saveTable) {
@@ -362,8 +452,7 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
             try {
                 writer = new FileWriter(chooser.getSelectedFile()); // TODO
                                                                     // Charset ?
-                CSVSaveService.saveCSVStats(model, writer,
-                        saveHeaders.isSelected());
+                CSVSaveService.saveCSVStats(getAllTableData(model, FORMATS),writer,saveHeaders.isSelected() ? getLabels(COLUMNS) : null);
             } catch (FileNotFoundException e) {
                 log.warn(e.getMessage());
             } catch (IOException e) {
@@ -372,6 +461,19 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
                 JOrphanUtils.closeQuietly(writer);
             }
         }
+    }
+
+    /**
+     *
+     * @param keys I18N keys
+     * @return labels
+     */
+    static String[] getLabels(String[] keys) {
+        String[] labels = new String[keys.length];
+        for (int i = 0; i < labels.length; i++) {
+            labels[i]=MessageFormat.format(JMeterUtils.getResString(keys[i]), COLUMNS_MSG_PARAMETERS[i]);
+        }
+        return labels;
     }
 
     @Override
@@ -402,8 +504,7 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
             FileWriter writer = null;
             try {
                 writer = new FileWriter(file);
-                CSVSaveService.saveCSVStats(model, writer,
-                        saveHeaders.isSelected());
+                CSVSaveService.saveCSVStats(getAllTableData(model, FORMATS),writer,saveHeaders.isSelected() ? getLabels(COLUMNS) : null);
             } catch (FileNotFoundException e) {
                 log.warn(e.getMessage());
             } catch (IOException e) {
@@ -423,4 +524,64 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
                     "This plugin type cannot be saved as image");
         }
     }
+
+	/**
+	 * Renders items in a JTable by converting from resource names.
+	 */
+	private class JMeterHeaderAsPropertyRenderer extends DefaultTableCellRenderer {
+
+		private static final long serialVersionUID = 240L;
+		private Object[][] columnsMsgParameters;
+
+		/**
+		 *
+		 */
+		public JMeterHeaderAsPropertyRenderer() {
+			this(null);
+		}
+
+		/**
+		 * @param columnsMsgParameters Optional parameters of i18n keys
+		 */
+		public JMeterHeaderAsPropertyRenderer(Object[][] columnsMsgParameters) {
+			super();
+			this.columnsMsgParameters = columnsMsgParameters;
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value,
+				boolean isSelected, boolean hasFocus, int row, int column) {
+			if (table != null) {
+				JTableHeader header = table.getTableHeader();
+				if (header != null){
+					setForeground(header.getForeground());
+					setBackground(header.getBackground());
+					setFont(header.getFont());
+				}
+				setText(getText(value, row, column));
+				setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+				setHorizontalAlignment(SwingConstants.CENTER);
+			}
+			return this;
+		}
+
+		/**
+		 * Get the text for the value as the translation of the resource name.
+		 *
+		 * @param value value for which to get the translation
+		 * @param column index which column message parameters should be used
+		 * @param row not used
+		 * @return the text
+		 */
+		protected String getText(Object value, int row, int column) {
+			if (value == null){
+				return "";
+			}
+			if(columnsMsgParameters != null && columnsMsgParameters[column] != null) {
+				return MessageFormat.format(JMeterUtils.getResString(value.toString()), columnsMsgParameters[column]);
+			} else {
+				return JMeterUtils.getResString(value.toString());
+			}
+		}
+	}
 }

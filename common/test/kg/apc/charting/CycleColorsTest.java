@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
-import kg.apc.emulators.TestJMeterUtils;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,12 +14,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ColorsDispatcherTest {
+public class CycleColorsTest {
 
     /**
      *
      */
-    public ColorsDispatcherTest() {
+    public CycleColorsTest() {
     }
 
     /**
@@ -60,7 +60,7 @@ public class ColorsDispatcherTest {
     @Test
     public void testGetNextColor() {
         System.out.println("getNextColor");
-        ColorsDispatcher instance = new ColorsDispatcher();
+        ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
         for (int n = 0; n < 2000; n++) {
             Color c = instance.getNextColor();
             System.out.println(c);
@@ -74,7 +74,7 @@ public class ColorsDispatcherTest {
     @Test
     public void testReset() {
         System.out.println("reset");
-        ColorsDispatcher instance = new ColorsDispatcher();
+        ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
         Color first = instance.getNextColor();
         assertNotNull(first);
         instance.getNextColor();

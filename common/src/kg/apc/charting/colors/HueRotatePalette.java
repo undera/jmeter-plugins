@@ -23,8 +23,8 @@ import java.util.List;
 public class HueRotatePalette implements ColorsDispatcher {
     List<Color> customPalette = new ArrayList<Color>(16);
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private int startingGradient = 0x000;
-    private int maxGradient = 120;
+    private static final int startingGradient = 0x000;
+    private static final int maxGradient = 120;
     int i = 0;
 
     /**
@@ -45,20 +45,22 @@ public class HueRotatePalette implements ColorsDispatcher {
             int gradient_steps = Integer.parseInt(opts[2]);
             float[] hsbVals = new float[3];
             Color.RGBtoHSB(baseColor.getRed(), baseColor.getGreen(), baseColor.getBlue(), hsbVals);
-            log.debug("Base color: " + baseColor + " rotations " + rotations);
+            log.debug("Base color: " + baseColor + " rotations " + rotations + " hue: " + hsbVals[0]);
             for (int i = 0; i <= rotations; i++) {
-                Color c = new Color(Color.HSBtoRGB( hsbVals[0]*(1/rotations)*i, hsbVals[1], hsbVals[2]));
+                float hue = hsbVals[0]*(1f/rotations)*i;
+                Color c = new Color(Color.HSBtoRGB( hue, hsbVals[1], hsbVals[2]));
                 log.debug("Adding custom color (hue rotation): " + c);
                 customPalette.add(c);
             }
             log.debug("Black->Gray gradient steps: " + gradient_steps);
-            for (int i = startingGradient; i < maxGradient; i= i+(255/gradient_steps) ) {
+            for (int i = startingGradient; i < maxGradient; i= i+(maxGradient/gradient_steps+2) ) {
                 Color c = new Color(i, i, i);
                 log.debug("Adding gradient step: " + c);
                 customPalette.add(c);
             }
         } catch (Exception e) {
-            log.error("Error building custom palette, using static palette: ", e);
+            log.warn("Error building custom palette, using static palette: "
+                    + e.getClass().getName() + ": " + e.getMessage());
             useStaticPalette();
         }
     }
@@ -95,6 +97,7 @@ public class HueRotatePalette implements ColorsDispatcher {
         } else {
             Color c = customPalette.get(i);
             log.debug("Custom color c next: " + c);
+            i++;
             return c;
         }
     }

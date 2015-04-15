@@ -1,12 +1,11 @@
-package kg.apc.charting;
+package kg.apc.charting.colors;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.awt.Color;
-import java.io.File;
-import java.io.FileOutputStream;
 
+import kg.apc.charting.ColorsDispatcher;
+import kg.apc.charting.ColorsDispatcherFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -81,6 +80,20 @@ public class CycleColorsTest {
         instance.getNextColor();
         instance.reset();
         assertEquals(first, instance.getNextColor());
+    }
+
+    /**
+     * Test that the object is serializable
+     */
+    @Test
+    public void testSerialization() {
+        try {
+            ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
+            new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(instance);
+            assertTrue(true);
+        } catch (IOException e) {
+            fail(e.getClass().getName() + ": " + e.getMessage());
+        }
     }
 
     @Test

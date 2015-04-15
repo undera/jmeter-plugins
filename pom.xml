@@ -56,11 +56,11 @@
     </repositories>
 
     <modules>
-        <module>common</module>
+	    <module>common</module>
+	    <module>standard</module>
         <module>extras</module>
         <module>extraslibs</module>
         <module>hadoop</module>
-        <module>standard</module>
         <module>webdriver</module>
     </modules>
 

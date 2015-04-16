@@ -3,12 +3,15 @@ package kg.apc.charting.rows;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.elements.GraphPanelChartSimpleElement;
 import kg.apc.charting.AbstractGraphPanelChartElement;
+
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public class GraphRowSimple
         extends AbstractGraphRow
+        implements Serializable
 {
     private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> values;
 

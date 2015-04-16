@@ -35,13 +35,23 @@ public class CustomPalette implements ColorsDispatcher {
     private void buildCustomPalette(String palette) {
         try {
             String[] colors = palette.split(",");
+            if (palette.trim().length() == 0 || colors.length == 0) {
+                log.warn("Empty palette, using static palette");
+                useStaticPalette();
+                return;
+            }
             for (String color : colors) {
-                Color c = new Color( Integer.parseInt(color, 16) );
-                log.debug("Adding to custom palette color: " + c);
-                customPalette.add(c);
+                try {
+                    Color c = new Color(Integer.parseInt(color, 16));
+                    log.debug("Adding to custom palette color: " + c);
+                    customPalette.add(c);
+                } catch (Exception e) {
+                    log.warn("Exception " + e.getClass().getName() + " adding color: " + color + " ...skipping");
+                }
             }
         } catch (Exception e) {
-            log.error("Error building custom palette, using static palette: ", e);
+            log.error("Error building custom palette, using static palette: "
+                    + e.getClass().getName() + ": " + e.getMessage());
             useStaticPalette();
         }
     }
@@ -78,6 +88,7 @@ public class CustomPalette implements ColorsDispatcher {
         } else {
             Color c = customPalette.get(i);
             log.debug("Custom color c next: " + c);
+            i++;
             return c;
         }
     }

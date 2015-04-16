@@ -132,6 +132,9 @@ public class HueRotateTest {
     @Test
     public void testReset() {
         System.out.println("reset");
+        mockStatic(JMeterUtils.class);
+        when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher")).thenReturn("huerotate");
+        when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher.options")).thenReturn("9C27B0,8,4");
         ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
         Color first = instance.getNextColor();
         assertNotNull(first);
@@ -147,6 +150,9 @@ public class HueRotateTest {
     @Test
     public void testSerialization() {
         try {
+            mockStatic(JMeterUtils.class);
+            when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher")).thenReturn("huerotate");
+            when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher.options")).thenReturn("9C27B0,8,4");
             ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
             new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(instance);
             assertTrue(true);

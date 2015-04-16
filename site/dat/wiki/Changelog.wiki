@@ -8,6 +8,7 @@
   * improve thread safety of FFW
   * fix packaging, by mistake many sets were containing Standard Set classes inside
   * add *not* switch to JSONPath Assertion (thanks to Dima Lulko for suggesting)
+  * SynthesisReportGui: the 90 percentile is now customizable with JMeter 2.13
   * Make GraphRowSimple Serializable so that you can copy/paste graphs in
   JMeter
   * Update maven-dependency-plugin to 2.8 and maven-shade-plugin to 2.1 as per

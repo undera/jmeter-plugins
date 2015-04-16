@@ -8,6 +8,12 @@
   * improve thread safety of FFW
   * fix packaging, by mistake many sets were containing Standard Set classes inside
   * add *not* switch to JSONPath Assertion (thanks to Dima Lulko for suggesting)
+  * Make GraphRowSimple Serializable so that you can copy/paste graphs in
+  JMeter
+  * Update maven-dependency-plugin to 2.8 and maven-shade-plugin to 2.1 as per
+  [https://cwiki.apache.org/confluence/display/MAVEN/AetherClassNotFound]
+  * Add in multiple ColorsDispatcher classes (CycleColors, HueRotatePalette
+  and CustomPalette). CycleColors is original implementation from 1.2.1
 
 == 1.2.1 <i><font color=gray size="1">March 9, 2015</font></i>==
   * add [TestPlanCheckTool] to check JMX file consistency without running it

@@ -139,15 +139,42 @@ chooses a different color for you.  A [Color Choser](http://docs.oracle.com/java
 || *Double click on the colored square in the legend to change color of the line* ||
 || [/img/wiki/settings/doubleClickToChangeColor.png] ||
 
+=====ColorsDispatcher=====
+When you double-click, by default the CycleColors dispatcher is used
+There are 2 other dispatchers now available:
+ * HueRotatePalette
+ * CustomPalette
+
+To use either palette, please uncomment either set of properties in your {{{user.properties}}} file
+
+{{{
+# HueRotatePalette properties
+#  - options property has 3 fields
+#    - Starting color
+#    - Number of hue rotations 
+#    - Number of gradient shades from black->gray (can be 0)
+
+#jmeterPlugin.customColorsDispatcher=huerotate
+#jmeterPlugin.customColorsDispatcher.options=9C27B0,8,4
+
+# CustomPalette properties
+#  - options property is simply a comma seperated list of color values
+
+#jmeterPlugin.customColorsDispatcher=custompalette
+#jmeterPlugin.customColorsDispatcher.options = 000000,616161,9e9e9e,f44336,9c27b0,3f51b5,2196f3,00bcd4,009688,4caf50,8bc34a,ffc107,ff9800,ff5722,795548,e91e63,673ab7,03a9f4,827717,33691e,00acc1,00897b,9575cd
+}}}
+
+NB: You can use this in addition to the labelToColorMapping property below
+
 ====Color Consistency====
 What color is the CPU line for this graph?  If the answer is the same color for every single graph, the audience
 of your performance graphs will be thankful that you haven't needlessly switched things around.
 
 For example, let's say you want to make the CPU line blue for all graphs.
 Just add this property in the JMETER_HOME/bin/user.properties file:
-```
+{{{
 jmeterPlugin.labelToColorMapping=cpu=blue
-```
+}}}
 To provide a color mapping for additional labels, just add a colon between the mappings, as shown below.
 
 || Specify the color you want for labels with particular text. ||
@@ -168,12 +195,13 @@ render (confusingly) the same color if using "cpu=blue".
 If your labels include the text 01, 02, 03, etc, then these colors:
 [/img/wiki/settings/orangeSpectrum.png]
 ...can be obtained using this property:
-```
+{{{
 #Shades of Orange
 jmeterPlugin.labelToColorMapping=01=#FFF3E0:02=#FFE0B2:03=#FFCC80:04=#FFB74D:05=#FFA726:06=#FF9800:07=#FB8C00:08=#F57C00:09=#EF6C00:10=#E65100
-```
+}}}
+
 Below are some additional palettes, all stolen from [here](http://www.google.com/design/spec/style/color.html#).
-```
+{{{
 ## Reds:
 #jmeterPlugin.labelToColorMapping=01=#FFEBEE:02=#FFCDD2:03=#EF9A9A:04=#E57373:05=#EF5350:06=#F44336:07=#E53935:08=#D32F2F:09=#C62828:10=#B71C1C
 ## Blue
@@ -182,4 +210,5 @@ Below are some additional palettes, all stolen from [here](http://www.google.com
 #jmeterPlugin.labelToColorMapping=01=#E8F5E9:02=#C8E6C9:03=#A5D6A7:04=#81C784:05=#66BB6A:06=#4CAF50:07=#43A047:08=#388E3C:09=#2E7D32:10=#1B5E2
 ## Brown
 #jmeterPlugin.labelToColorMapping=01=#EFEBE9:02=#D7CCC8:03=#BCAAA4:04=#A1887F:05=#8D6E63:06=#795548:07=#6D4C41:08=#5D4037:09=#4E342E:10=#3E2723
-```
+}}}
+

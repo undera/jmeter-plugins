@@ -1,12 +1,11 @@
-package kg.apc.charting;
+package kg.apc.charting.colors;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.awt.Color;
-import java.io.File;
-import java.io.FileOutputStream;
-import kg.apc.emulators.TestJMeterUtils;
+
+import kg.apc.charting.ColorsDispatcher;
+import kg.apc.charting.ColorsDispatcherFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,12 +13,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class ColorsDispatcherTest {
+public class CycleColorsTest {
 
     /**
      *
      */
-    public ColorsDispatcherTest() {
+    public CycleColorsTest() {
     }
 
     /**
@@ -60,7 +59,7 @@ public class ColorsDispatcherTest {
     @Test
     public void testGetNextColor() {
         System.out.println("getNextColor");
-        ColorsDispatcher instance = new ColorsDispatcher();
+        ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
         for (int n = 0; n < 2000; n++) {
             Color c = instance.getNextColor();
             System.out.println(c);
@@ -74,13 +73,27 @@ public class ColorsDispatcherTest {
     @Test
     public void testReset() {
         System.out.println("reset");
-        ColorsDispatcher instance = new ColorsDispatcher();
+        ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
         Color first = instance.getNextColor();
         assertNotNull(first);
         instance.getNextColor();
         instance.getNextColor();
         instance.reset();
         assertEquals(first, instance.getNextColor());
+    }
+
+    /**
+     * Test that the object is serializable
+     */
+    @Test
+    public void testSerialization() {
+        try {
+            ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
+            new ObjectOutputStream(new ByteArrayOutputStream()).writeObject(instance);
+            assertTrue(true);
+        } catch (IOException e) {
+            fail(e.getClass().getName() + ": " + e.getMessage());
+        }
     }
 
     @Test

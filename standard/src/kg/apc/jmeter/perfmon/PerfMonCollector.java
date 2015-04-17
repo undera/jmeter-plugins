@@ -195,17 +195,23 @@ public class PerfMonCollector
     private void initiateConnector(String host, int port, int index, String metric, String params) {
         InetSocketAddress addr = new InetSocketAddress(host, port);
         String stringKey = addr.toString() + "#" + index;
+        String labelHostname = host;
+
+        String useHostnameProp = JMeterUtils.getProperty("jmeterPlugin.perfmon.label.useHostname");
+        if (useHostnameProp != null && Boolean.parseBoolean(useHostnameProp)) {
+            labelHostname = JMeterPluginsUtils.getShortHostname(host);
+        }
 
         // handle label parameter
         MetricParams paramsParsed = MetricParams.createFromString(params);
         String label;
         if (paramsParsed.getLabel().isEmpty()) {
-            label = host + " " + metric;
+            label = labelHostname + " " + metric;
             if (params != null && !params.isEmpty()) {
                 label = label + " " + params;
             }
         } else {
-            label = host + " " + metric + " " + paramsParsed.getLabel();
+            label = labelHostname + " " + metric + " " + paramsParsed.getLabel();
 
             String[] tokens = params.split("(?<!\\\\)" + PerfMonMetricGetter.DVOETOCHIE);
 

@@ -16,6 +16,7 @@ import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -262,6 +263,60 @@ public class JMeterPluginsUtilsTest {
             assertEquals(env.get(key), JMeterPluginsUtils.getEnvDefault(key, "testGetEnvDefault"));
             assertEquals("testGetEnvDefault", JMeterPluginsUtils.getEnvDefault(key + "testGetEnvDefault", "testGetEnvDefault"));
         }
+    }
+
+    /**
+     * Test getShortHostname using default pattern
+     */
+    @Test
+    public void testGetShortHostnameDefault() {
+        System.out.println("testShortHostnameDefault");
+        TestJMeterUtils.createJmeterEnv();
+        String host;
+        host = JMeterPluginsUtils.getShortHostname("host1.us-west-2.ec2.internal");
+        assertEquals("host1", host);
+        host = JMeterPluginsUtils.getShortHostname("host.us-west-2.ec2.internal");
+        assertEquals("host", host);
+        host = JMeterPluginsUtils.getShortHostname("1host.us-west-2.ec2.internal");
+        assertEquals("1host", host);
+        host = JMeterPluginsUtils.getShortHostname("search-head.us-west-2.ec2.internal");
+        assertEquals("search-head", host);
+        host = JMeterPluginsUtils.getShortHostname("search-index.us-west-2.ec2.internal");
+        assertEquals("search-index", host);
+    }
+
+    /**
+     * Test getShortHostname using a custom pattern
+     */
+    @Test
+    public void testGetShortHostnameCustomPattern1() {
+        System.out.println("testGetShortHostnameCustomPattern1");
+        TestJMeterUtils.createJmeterEnv();
+        JMeterUtils.setProperty("jmeterPlugin.perfmon.label.useHostname.pattern", "([\\w\\-]+\\.us-(east|west)-[0-9]).*");
+        String host;
+        host = JMeterPluginsUtils.getShortHostname("host1.us-west-2.ec2.internal");
+        assertEquals("host1.us-west-2", host);
+        host = JMeterPluginsUtils.getShortHostname("host.us-west-2.ec2.internal");
+        assertEquals("host.us-west-2", host);
+        host = JMeterPluginsUtils.getShortHostname("1host.us-east-1.ec2.internal");
+        assertEquals("1host.us-east-1", host);
+        host = JMeterPluginsUtils.getShortHostname("search-head.us-west-1.ec2.internal");
+        assertEquals("search-head.us-west-1", host);
+        host = JMeterPluginsUtils.getShortHostname("search-index.us-west-2.ec2.internal");
+        assertEquals("search-index.us-west-2", host);
+    }
+
+    /**
+     * Test getShortHostname using a custom pattern
+     */
+    @Test
+    public void testGetShortHostnameInvalidPattern() {
+        System.out.println("testGetShortHostnameInvalidPattern");
+        TestJMeterUtils.createJmeterEnv();
+        JMeterUtils.setProperty("jmeterPlugin.perfmon.label.useHostname.pattern", "([\\w\\-]+\\.region.*");
+        String host;
+        host = JMeterPluginsUtils.getShortHostname("aaa-bbb-1234.region.com");
+        assertEquals("aaa-bbb-1234.region.com", host);
     }
 
 

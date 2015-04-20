@@ -17,8 +17,11 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion;
 
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
-import org.junit.*;
-
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class JSONPathAssertionTest {
@@ -296,5 +299,22 @@ public class JSONPathAssertionTest {
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
         assertEquals(false, result.isFailure());
+    }
+
+    @Test
+    public void testGetResult_inverted_null() {
+        System.out.println("getResult notexist");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": [{\"key\": null}]}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval[*].key");
+        instance.setJsonValidationBool(true);
+        instance.setExpectNull(true);
+        instance.setInvert(true);
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(true, result.isFailure());
     }
 }

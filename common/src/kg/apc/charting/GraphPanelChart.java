@@ -583,7 +583,7 @@ public class GraphPanelChart
         ColorsDispatcher colors = null;
 
         if (reSetColors) {
-            colors = new ColorsDispatcher();
+            colors = ColorsDispatcherFactory.getColorsDispatcher();
         }
 
         while (it.hasNext()) {
@@ -779,7 +779,7 @@ public class GraphPanelChart
         ColorsDispatcher dispatcher = null;
 
         if (reSetColors) {
-            dispatcher = new ColorsDispatcher();
+            dispatcher = ColorsDispatcherFactory.getColorsDispatcher();
         }
 
         //first we get the aggregate point factor if maxpoint is > 0;

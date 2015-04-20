@@ -26,6 +26,8 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class JMeterPluginsUtils {
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -541,5 +543,29 @@ public abstract class JMeterPluginsUtils {
         throw new Error("Failed to find JMeter home dir from classpath");
     }
 
+    /**
+     * Get short hostname for a given host
+     * @param host
+     * @return
+     */
+    public static String getShortHostname(String host) {
+        log.debug("getShortHostname: " + host);
+        try {
+            String defaultRegex  = "([\\w\\-]+)\\..*";
+            String hostnameRegex = JMeterUtils.getPropDefault("jmeterPlugin.perfmon.label.useHostname.pattern", defaultRegex);
+            log.debug("hostnameRegex: " + hostnameRegex);
+            Pattern p = Pattern.compile(hostnameRegex, Pattern.CASE_INSENSITIVE);
+            Matcher m = p.matcher(host);
+            if (m.matches()) {
+                String shortName = m.group(1);
+                log.debug("shortName of " + host + " is: " + shortName);
+                host = shortName;
+            }
+        } catch (Exception e) {
+            log.warn("getShortHostname exception: " + e.getClass().getName() + " :: " + e.getMessage());
+            log.debug("getShortHostname exception: " , e);
+        }
+        return host;
+    }
 
 }

@@ -5,8 +5,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -22,7 +20,7 @@ public class LabelToColorMapping {
 	
 
 	public Color parseStandardHtmlColor(String someKindOfColorDescription) {
-		Color c =  this.standardHtmlColorNames.get( someKindOfColorDescription.toLowerCase() );
+		Color c = standardHtmlColorNames.get( someKindOfColorDescription.toLowerCase() );
 		if (c==null) {
 			if (someKindOfColorDescription.trim().startsWith("#") && someKindOfColorDescription.length() >= 2) {
 				String hexColor = someKindOfColorDescription.substring(1);
@@ -36,15 +34,15 @@ public class LabelToColorMapping {
 	}
 
 	public void addStandardHtmlColor(String colorName, Color c) {
-		this.standardHtmlColorNames.put(colorName.toLowerCase().trim(), c);
+        standardHtmlColorNames.put(colorName.toLowerCase().trim(), c);
 	}
 	public Color getColorForLabel(String label) {
 		Iterator<Map.Entry<String, Color>> it = labelToColorMapping.entrySet().iterator();
 		Color rc = null;
 		while (it.hasNext()) {
-			
+
 			  Map.Entry<String, Color> entry = it.next();
-	
+
 			  if (log.isDebugEnabled()) {
 				  log.debug("Label [" + label + "] entry.getKey["  + entry.getKey() + "]");
 			  }
@@ -52,8 +50,8 @@ public class LabelToColorMapping {
 				  rc = entry.getValue();
 				  break;
 			  }
-		}		
-		return rc; 
+		}
+		return rc;
 	}
 
 	public void addMapping(String label, Color c) {
@@ -74,7 +72,7 @@ public class LabelToColorMapping {
 				if (c == null)
 					throw new RuntimeException("Expecting the text [" + twoParts[1] + "] to be a name or RGB hex value of a color.  Entire config string: [" + colorConfigString + "]");
 				mapping.addMapping(twoParts[0], c);
-			}			
+			}
 		}
 		return mapping;
 	}
@@ -82,7 +80,7 @@ public class LabelToColorMapping {
 	 * Color Names taken from http://www.w3schools.com/htmL/html_colornames.asp
 	 */
 	private void loadStandardHtmlColors() {
-		
+
 		if (standardHtmlColorNames==null) {
 			standardHtmlColorNames = new Hashtable<String,Color>();
 			addStandardHtmlColor( "AliceBlue" 	, new Color(0xF0F8FF));

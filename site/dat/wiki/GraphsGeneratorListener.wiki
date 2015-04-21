@@ -15,10 +15,13 @@ Graphs Generator Listener generates the following graphs at end of test:
   * [RespTimesDistribution Response Times Distribution]
   * [RespTimePercentiles Response Times Percentiles]
     
+It also generates since version 1.2.2:
+  * a CSV file containing the Aggregate Report data
+  * a CSV file containing the Summary Report data
 Graphs Generator Listener requires JMeter 2.10 or superior.
 You can use this listener in 2 ways:
-  * to generate CSV / PNG for current test results
-  * to generate CSV / PNG for existing/previous test results
+  * to generate CSV or PNG or both formats  for current test results
+  * to generate CSV or PNG or both formats for existing/previous test results
 
 === Generate CSV / PNG for current test results ===
 
@@ -44,7 +47,7 @@ This is very simple:
   * Create one thread group with 1 thread and 1 iteration
   * Put a debug sampler as child of it
   * Run test
-  * PNGs or CSVs will be generated for the results file you have configured in Graphs Generator Listener
+  * PNGs or CSVs or Both files will be generated for the results file you have configured in Graphs Generator Listener
 
 [/img/wiki/listener/GraphsGeneratorListener.png]
 

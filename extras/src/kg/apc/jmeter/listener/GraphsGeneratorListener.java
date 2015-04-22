@@ -49,10 +49,14 @@ public class GraphsGeneratorListener extends AbstractListenerElement
     implements TestStateListener, TestBean, TestElement, Visualizer {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
+    
+    private static final String PNG_SUFFIX = ".png"; //$NON-NLS-1$
+    private static final String CSV_SUFFIX = ".csv"; //$NON-NLS-1$
 
     public enum ExportMode {
         PNG((byte)0),
-        CSV((byte)1);
+        CSV((byte)1),
+        BOTH((byte)2);
         
         private byte value;
         private ExportMode(byte value) {
@@ -69,6 +73,8 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     private static final long serialVersionUID = -136031193118302572L;
     private static final String[] pluginTypes = new String[] {
+        "SynthesisReportGui",                   //$NON-NLS-1$
+        "AggregateReportGui",                   //$NON-NLS-1$
         "ResponseTimesOverTime",                //$NON-NLS-1$
         "HitsPerSecond",                        //$NON-NLS-1$
         "BytesThroughputOverTime",              //$NON-NLS-1$
@@ -90,6 +96,13 @@ public class GraphsGeneratorListener extends AbstractListenerElement
         TIME_BASED_GRAPHS.add("ResponseCodesPerSecond");    //$NON-NLS-1$
         TIME_BASED_GRAPHS.add("TransactionsPerSecond");     //$NON-NLS-1$
     }
+    
+    private static final Set<String> CSV_ONLY = new HashSet<String>();
+    static {
+        CSV_ONLY.add("SynthesisReportGui");    //$NON-NLS-1$
+        CSV_ONLY.add("AggregateReportGui");     //$NON-NLS-1$
+    }
+    
     private String outputBaseFolder;
     private String resultsFileName;
     private ExportMode exportMode;
@@ -188,14 +201,22 @@ public class GraphsGeneratorListener extends AbstractListenerElement
                 // Handle backward compatibility
                 fileName = filePrefix + pluginType;
             }
-            if (exportMode == ExportMode.PNG) {
-                fileName += ".png"; //$NON-NLS-1$
-                worker.setOutputPNGFile(fileName); //$NON-NLS-1$
-                worker.addExportMode(PluginsCMDWorker.EXPORT_PNG);
+            if (!CSV_ONLY.contains(pluginType)) {
+                if (exportMode == ExportMode.PNG) {
+                    worker.setOutputPNGFile(fileName+PNG_SUFFIX); //$NON-NLS-1$
+                    worker.addExportMode(PluginsCMDWorker.EXPORT_PNG);
+                } else if (exportMode == ExportMode.CSV) {
+                    worker.setOutputCSVFile(fileName+CSV_SUFFIX); //$NON-NLS-1$
+                    worker.addExportMode(PluginsCMDWorker.EXPORT_CSV);
+                } else {
+                    worker.setOutputPNGFile(fileName+PNG_SUFFIX); //$NON-NLS-1$
+                    worker.addExportMode(PluginsCMDWorker.EXPORT_PNG);
+                    worker.setOutputCSVFile(fileName+CSV_SUFFIX); //$NON-NLS-1$
+                    worker.addExportMode(PluginsCMDWorker.EXPORT_CSV);
+                }
             } else {
-                fileName += ".csv"; //$NON-NLS-1$
-                worker.setOutputCSVFile(fileName); //$NON-NLS-1$
-                worker.addExportMode(PluginsCMDWorker.EXPORT_CSV);
+                worker.setOutputCSVFile(fileName+CSV_SUFFIX); //$NON-NLS-1$
+                worker.addExportMode(PluginsCMDWorker.EXPORT_CSV);                
             }
             worker.setPluginType(pluginType);
             int status = worker.doJob();

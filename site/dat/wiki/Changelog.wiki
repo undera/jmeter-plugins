@@ -1,6 +1,7 @@
 = Changelog =
 
 == 1.2.2 <i><font color=gray size="1">planning</font></i>==
+  * Add SynthesisReport and AggregateReport generation to GraphGeneratorListener and allow generation of both CSV and PNG in one shot
   * fix reported issues with [JSONPathExtractor], see [https://groups.google.com/forum/#!topic/jmeter-plugins/fDqEpL3iqi0] and [https://groups.google.com/forum/#!topic/jmeter-plugins/UvKa5KiM2qo]
   * WebDriver Sampler UI offers default script text -- FIX IT    
   * Selenium dependency version updated to 2.45.0

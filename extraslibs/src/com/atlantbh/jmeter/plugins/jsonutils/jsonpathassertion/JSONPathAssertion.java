@@ -134,7 +134,10 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
                 doAssert(new String(responseData));
                 result.setFailure(true);
                 if (isJsonValidationBool()) {
-                    result.setFailureMessage("Failed that JSONPath " + getJsonPath() + " not matches " + getExpectedValue());
+                    if (isExpectNull())
+                        result.setFailureMessage("Failed that JSONPath " + getJsonPath() + " not matches null");
+                    else
+                        result.setFailureMessage("Failed that JSONPath " + getJsonPath() + " not matches " + getExpectedValue());
                 } else {
                     result.setFailureMessage("Failed that JSONPath not exists: " + getJsonPath());
                 }

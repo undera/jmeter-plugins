@@ -19,7 +19,6 @@ import java.net.URL;
  * provides a scripting mechanism via. Javascript to control the browser instance.
  */
 public class WebDriverSampler extends AbstractSampler {
-    private static final Logger log = LoggingManager.getLoggerForClass();
 
     private static final long serialVersionUID = 100L;
     public static final String SCRIPT = "WebDriverSampler.script";
@@ -40,7 +39,7 @@ public class WebDriverSampler extends AbstractSampler {
         try {
             srClass = (Class<SampleResult>) Class.forName(className);
         } catch (ClassNotFoundException e) {
-            log.warn("Class " + className + " not found, defaulted to " + SampleResult.class.getCanonicalName(), e);
+            LOGGER.warn("Class " + className + " not found, defaulted to " + SampleResult.class.getCanonicalName(), e);
             srClass = SampleResult.class;
         }
         sampleResultClass = srClass;
@@ -56,10 +55,10 @@ public class WebDriverSampler extends AbstractSampler {
         try {
             res = sampleResultClass.newInstance();
         } catch (InstantiationException e1) {
-            log.warn("Class " + sampleResultClass + " failed to instantiate, defaulted to " + SampleResult.class.getCanonicalName(), e1);
+            LOGGER.warn("Class " + sampleResultClass + " failed to instantiate, defaulted to " + SampleResult.class.getCanonicalName(), e1);
             res = new SampleResult();
         } catch (IllegalAccessException e1) {
-            log.warn("Class " + sampleResultClass + " failed to instantiate, defaulted to " + SampleResult.class.getCanonicalName(), e1);
+            LOGGER.warn("Class " + sampleResultClass + " failed to instantiate, defaulted to " + SampleResult.class.getCanonicalName(), e1);
             res = new SampleResult();
         }
         res.setSampleLabel(getName());
@@ -95,12 +94,10 @@ public class WebDriverSampler extends AbstractSampler {
 
     public String getScript() {
         String propertyAsString = getPropertyAsString(SCRIPT, defaultScript);
-        log.error("Script get:"+propertyAsString);
         return propertyAsString;
     }
 
     public void setScript(String script) {
-        log.error("Script set:" + script);
         setProperty(SCRIPT, script);
     }
 

@@ -258,9 +258,8 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
             FileWriter writer = null;
             try {
                 writer = new FileWriter(file);
-                CSVSaveService.saveCSVStats(StatGraphVisualizer.getAllTableData(statModel, FORMATS),writer,
-                        saveHeaders.isSelected() ? StatGraphVisualizer.getLabels(COLUMNS) : null);
-                CSVSaveService.saveCSVStats(statModel, writer, saveHeaders.isSelected());
+                CSVSaveService.saveCSVStats(SynthesisReportGui.getAllTableData(statModel, FORMATS)
+                		, writer, saveHeaders.isSelected() ? COLUMNS : null);
             } catch (FileNotFoundException e) {
                 log.warn(e.getMessage());
             } catch (IOException e) {

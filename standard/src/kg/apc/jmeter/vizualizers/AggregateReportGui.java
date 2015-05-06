@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -22,6 +24,7 @@ import org.apache.jmeter.save.CSVSaveService;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.SamplingStatCalculator;
+import org.apache.jmeter.visualizers.StatGraphVisualizer;
 import org.apache.jmeter.visualizers.StatVisualizer;
 import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.gui.ObjectTableModel;
@@ -100,19 +103,35 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
     }
     // Column renderers
     private static final TableCellRenderer[] RENDERERS =
-            new TableCellRenderer[]{
-        null, // Label
-        null, // count
-        null, // Mean
-        null, // median
-        null, // 90%
-        null, // Min
-        null, // Max
-        new NumberRenderer("#0.00%"), // Error %age 
-        new RateRenderer("#.0"), // Throughput 
-        new NumberRenderer("#.0"), // pageSize   
-        new NumberRenderer("#0.00"), // Std Dev.
-    };
+        new TableCellRenderer[]{
+            null, // Label
+            null, // count
+            null, // Mean
+            null, // median
+            null, // 90%
+            null, // Min
+            null, // Max
+            new NumberRenderer("#0.00%"), // Error %age
+            new RateRenderer("#.0"), // Throughput
+            new NumberRenderer("#.0"), // pageSize
+            new NumberRenderer("#0.00"), // Std Dev.
+        };
+
+    // Column formats
+    static final Format[] FORMATS =
+        new Format[]{
+            null, // Label
+            null, // count
+            null, // Mean
+            null, // median
+            null, // 90%
+            null, // Min
+            null, // Max
+            new DecimalFormat("#0.00%"), // Error %age
+            new DecimalFormat("#.0"), // Throughput
+            new DecimalFormat("#.0"), // pageSize
+            new DecimalFormat("#0.00"), // Std Dev.
+        };
 
     @Override
     public String getLabelResource() {
@@ -239,7 +258,8 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
             FileWriter writer = null;
             try {
                 writer = new FileWriter(file);
-                CSVSaveService.saveCSVStats(statModel, writer, saveHeaders.isSelected());
+                CSVSaveService.saveCSVStats(SynthesisReportGui.getAllTableData(statModel, FORMATS)
+                		, writer, saveHeaders.isSelected() ? COLUMNS : null);
             } catch (FileNotFoundException e) {
                 log.warn(e.getMessage());
             } catch (IOException e) {

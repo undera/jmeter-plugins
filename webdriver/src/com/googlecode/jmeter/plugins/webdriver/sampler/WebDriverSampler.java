@@ -1,6 +1,12 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler;
 
 import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
+import java.net.URL;
+import javax.script.Bindings;
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.SimpleBindings;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
@@ -9,9 +15,6 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.WebDriver;
-
-import javax.script.*;
-import java.net.URL;
 
 
 /**
@@ -68,7 +71,7 @@ public class WebDriverSampler extends AbstractSampler {
         res.setDataEncoding("UTF-8");
         res.setSuccessful(true);
 
-        LOGGER.info("Current thread name: '" + getThreadName() + "', has browser: '" + getWebDriver() + "'");
+        LOGGER.debug("Current thread name: '" + getThreadName() + "', has browser: '" + getWebDriver() + "'");
 
         try {
             final ScriptEngine scriptEngine = createScriptEngineWith(res);
@@ -87,6 +90,13 @@ public class WebDriverSampler extends AbstractSampler {
             res.setResponseData((ex.toString() + "\r\n" + JMeterPluginsUtils.getStackTrace(ex)).getBytes());
             res.setResponseCode("500");
             res.setSuccessful(false);
+            if (res.getStartTime() == 0) {
+                res.sampleStart();
+            }
+
+            if (res.getEndTime() == 0) {
+                res.sampleEnd();
+            }
         }
 
         return res;

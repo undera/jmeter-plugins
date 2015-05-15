@@ -14,3 +14,22 @@ Let's configure Ultimate Thread Group as following:
 And then try to run test. Look how predictable our [ActiveThreadsOverTime active threads] graph is:
 
 [/img/wiki/ultimate_thread_group2.png]
+
+== Special Property Processing ==
+
+There is a way to configure thread group from special jmeter property _threads_schedule_.
+Property can be specified either in user.properties file (jmeter.properties also applicable), or
+from command line like _-J "threads_schedule=..."_. 
+
+Schedule is specified with a list of _spawn_ directives:
+  * _spawn(threadsCount, initalDelay, startupTime, holdLoadFor, shutdownTime)_ - spawns specified threads number and configures start time, ramp-up time, flight time and shutdown time
+  
+Duration values (initialDelay, startupTime, holdLoadFor, shutdownTime) may be specified with shorthand, case-insensitive modifiers:
+  * s - seconds
+  * m - minutes
+  * h - hours
+  * d - days
+
+Duration setting may be combined like _1d11h23m6s_.
+
+Example of load profile string: {{{threads_schedule=spawn(15,1s,1s,1s,1s) spawn(40,1s,3s,1s,2s)}}}

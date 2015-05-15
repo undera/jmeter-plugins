@@ -1,11 +1,14 @@
 package kg.apc.jmeter.threads;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.threads.JMeterThread;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -18,13 +21,22 @@ public class UltimateThreadGroup
         implements Serializable, TestStateListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    public static final String DATA_PROPERTY = "ultimatethreadgroupdata";
+    public static final String DATA_PROPERTY = "threads_schedule";
+
+    public static final int START_THREADS_CNT_FIELD_NO = 0;
+    public static final int INIT_DELAY_FIELD_NO = 1;
+    public static final int STARTUP_TIME_FIELD_NO = 2;
+    public static final int HOLD_LOAD_FOR_FIELD_NO = 3;
+    public static final int SHUTDOWN_TIME_FIELD_NO = 4;
+
     private PropertyIterator scheduleIT;
     private int threadsToSchedule;
     private CollectionProperty currentRecord;
+    private CollectionProperty overrideProp;
 
     public UltimateThreadGroup() {
         super();
+        trySettingLoadFromProperty();
     }
 
     @Override
@@ -39,11 +51,11 @@ public class UltimateThreadGroup
             threadsToSchedule = currentRecord.get(0).getIntValue();
         }
 
-        int numThreads = currentRecord.get(0).getIntValue();
-        int initialDelay = currentRecord.get(1).getIntValue();
-        int startRampUp = currentRecord.get(2).getIntValue();
-        int flightTime = currentRecord.get(3).getIntValue();
-        int endRampUp = currentRecord.get(4).getIntValue();
+        int numThreads = currentRecord.get(START_THREADS_CNT_FIELD_NO).getIntValue();
+        int initialDelay = currentRecord.get(INIT_DELAY_FIELD_NO).getIntValue();
+        int startRampUp = currentRecord.get(STARTUP_TIME_FIELD_NO).getIntValue();
+        int flightTime = currentRecord.get(HOLD_LOAD_FOR_FIELD_NO).getIntValue();
+        int endRampUp = currentRecord.get(SHUTDOWN_TIME_FIELD_NO).getIntValue();
 
         long ascentPoint = tgStartTime + 1000 * initialDelay;
         final int rampUpDelayForThread = (int) Math.floor(1000 * startRampUp * (double) threadsToSchedule / numThreads);
@@ -59,12 +71,57 @@ public class UltimateThreadGroup
 
     public JMeterProperty getData() {
         //log.info("getData: "+getProperty(DATA_PROPERTY));
+        if (overrideProp != null) {
+            return overrideProp;
+        }
+
         return getProperty(DATA_PROPERTY);
     }
 
     void setData(CollectionProperty rows) {
         //log.info("setData");
         setProperty(rows);
+    }
+
+
+    private void trySettingLoadFromProperty() {
+        String loadProp = JMeterUtils.getProperty(DATA_PROPERTY);
+        log.info("Profile prop: " + loadProp);
+        if (loadProp != null && loadProp.length() > 0) {
+            //expected format : threads_schedule="spawn(1,1s,1s,1s,1s) spawn(2,1s,3s,1s,2s)"
+            log.info("GUI threads profile will be ignored");
+            PowerTableModel dataModel = new PowerTableModel(UltimateThreadGroupGui.columnIdentifiers, UltimateThreadGroupGui.columnClasses);
+            String[] chunks = loadProp.split("\\)");
+
+            for (String chunk : chunks) {
+                try {
+                    parseChunk(chunk, dataModel);
+                } catch (RuntimeException e) {
+                    log.warn("Wrong  chunk ignored: " + chunk, e);
+                }
+            }
+
+            log.info("Setting threads profile from property " + DATA_PROPERTY + ": " + loadProp);
+            overrideProp = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
+        }
+    }
+
+    private static void parseChunk(String chunk, PowerTableModel model) {
+        log.debug("Parsing chunk: " + chunk);
+        String[] parts = chunk.split("[(,]");
+        String loadVar = parts[0].trim();
+
+        if (loadVar.equalsIgnoreCase("spawn")) {
+            Integer[] row = new Integer[5];
+            row[START_THREADS_CNT_FIELD_NO] = Integer.parseInt(parts[1].trim());
+            row[INIT_DELAY_FIELD_NO] = JMeterPluginsUtils.getSecondsForShortString(parts[2]);
+            row[STARTUP_TIME_FIELD_NO] = JMeterPluginsUtils.getSecondsForShortString(parts[3]);
+            row[HOLD_LOAD_FOR_FIELD_NO] = JMeterPluginsUtils.getSecondsForShortString(parts[4]);
+            row[SHUTDOWN_TIME_FIELD_NO] = JMeterPluginsUtils.getSecondsForShortString(parts[5]);
+            model.addRow(row);
+        } else {
+            throw new RuntimeException("Unknown load type: " + parts[0]);
+        }
     }
 
     @Override

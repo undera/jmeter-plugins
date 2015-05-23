@@ -38,7 +38,7 @@ public class WebDriverSampler extends AbstractSampler {
     public WebDriverSampler() {
         Class<SampleResult> srClass;
         this.scriptEngineManager = new ScriptEngineManager();
-        String className = JMeterUtils.getPropDefault("webdriver.sampleresult_class", SampleResultWithSubs.class.getCanonicalName());
+        String className = JMeterUtils.getPropDefault("webdriver.sampleresult_class", SampleResult.class.getCanonicalName());
         try {
             srClass = (Class<SampleResult>) Class.forName(className);
         } catch (ClassNotFoundException e) {

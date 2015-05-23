@@ -27,7 +27,7 @@ Within the *Script* section, the Sampler automatically injects a WebDriverScript
 == Reader's responsibility ==
 As mentioned previously, this sampler provides the scripter with a lot of control. This means that unlike most samplers, the scripter is responsible for performing several tasks within the *Script* panel:
 
-  # Capture the sample times by calling the `WDS.sampleResult.sampleStart()` and `WDS.sampleResult.sampleEnd()` methods. Use `WDS.sampleResult.subSampleStart(String label)` and `WDS.sampleResult.subSampleEnd(boolean successful)` to create intermediary measurements in the middle of the process (available only when not overridden by webdriver.sampleresult_class property).
+  # Capture the sample times by calling the `WDS.sampleResult.sampleStart()` and `WDS.sampleResult.sampleEnd()` methods.
   # Executing the sampler task on the `WDS.browser` instance.
   # Verifying if the task completed successfully. By default the *sampler assumes success*.
 
@@ -49,6 +49,14 @@ if(WDS.browser.getTitle() != 'Google') {
     WDS.sampleResult.setResponseMessage('Expected title to be Google')
 }
 }}}
+
+There is a way to create sub-samples within main sample. To enable that, you need to set JMeter property:
+{{{
+webdriver.sampleresult_class=com.googlecode.jmeter.plugins.webdriver.sampler.SampleResultWithSubs
+}}}
+
+Then use `WDS.sampleResult.subSampleStart(String label)` and `WDS.sampleResult.subSampleEnd(boolean successful)` to create intermediary measurements in the middle of the process (available only when not overridden by  property).
+
 
 == Script field ==
 As mentioned above, the *WDS* object is automatically available to the scripter to use.  However, since JMeter is running on a JVM, the scripter has access to any class loaded in the environment.  The following is an example of creating a java Date object:

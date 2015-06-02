@@ -32,6 +32,7 @@ import java.sql.Statement;
 import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Executor;
 
 class ConnectionEmul implements Connection {
 
@@ -271,6 +272,31 @@ class ConnectionEmul implements Connection {
     @Override
     public Struct createStruct(String string, Object[] os) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setSchema(String s) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getSchema() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void abort(Executor executor) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void setNetworkTimeout(Executor executor, int i) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int getNetworkTimeout() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

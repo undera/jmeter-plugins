@@ -2,10 +2,15 @@ package kg.apc.emulators;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.SocketAddress;
 import java.net.SocketException;
+import java.net.SocketOption;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.nio.channels.MembershipKey;
+import java.util.Set;
 import java.util.logging.Level;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -31,6 +36,31 @@ public class DatagramChannelEmul extends DatagramChannel {
     }
 
     @Override
+    public DatagramChannel bind(SocketAddress socketAddress) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public SocketAddress getLocalAddress() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public <T> DatagramChannel setOption(SocketOption<T> socketOption, T t) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public <T> T getOption(SocketOption<T> socketOption) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Set<SocketOption<?>> supportedOptions() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public DatagramSocket socket() {
         return socket;
     }
@@ -46,7 +76,7 @@ public class DatagramChannelEmul extends DatagramChannel {
             log.debug("No more data to read");
             return -1;
         }
-        int cnt = dst.capacity()<bytesToRead.capacity()?dst.capacity():bytesToRead.capacity();
+        int cnt = dst.capacity() < bytesToRead.capacity() ? dst.capacity() : bytesToRead.capacity();
         ByteBuffer chunk = bytesToRead.duplicate();
         if (cnt < chunk.capacity()) {
             log.debug("Setting limit to " + cnt);
@@ -86,7 +116,7 @@ public class DatagramChannelEmul extends DatagramChannel {
 
     @Override
     protected void implConfigureBlocking(boolean block) throws IOException {
-        log.debug("Configure blocking: "+block);
+        log.debug("Configure blocking: " + block);
     }
 
     /**
@@ -122,12 +152,27 @@ public class DatagramChannelEmul extends DatagramChannel {
     }
 
     @Override
+    public SocketAddress getRemoteAddress() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public SocketAddress receive(ByteBuffer dst) throws IOException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public int send(ByteBuffer src, SocketAddress target) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public MembershipKey join(InetAddress inetAddress, NetworkInterface networkInterface) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public MembershipKey join(InetAddress inetAddress, NetworkInterface networkInterface, InetAddress inetAddress1) throws IOException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

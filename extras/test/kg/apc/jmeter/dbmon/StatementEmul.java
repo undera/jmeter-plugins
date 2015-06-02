@@ -226,6 +226,16 @@ class StatementEmul implements Statement {
     }
 
     @Override
+    public void closeOnCompletion() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isCloseOnCompletion() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public <T> T unwrap(Class<T> type) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

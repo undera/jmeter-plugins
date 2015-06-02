@@ -33,6 +33,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Executor;
 
 class TestConnection implements Connection {
 
@@ -278,6 +279,31 @@ class TestConnection implements Connection {
     }
 
     @Override
+    public void setSchema(String s) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getSchema() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void abort(Executor executor) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void setNetworkTimeout(Executor executor, int i) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public int getNetworkTimeout() throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -287,7 +313,7 @@ class TestConnection implements Connection {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    
+
     static ResultSet resultSet(double d) {
         return new TestResultSet(d);
     }
@@ -295,7 +321,7 @@ class TestConnection implements Connection {
     public interface TestConnectionDataProvider {
         public ResultSet getQueryResult(String sql);
     }
-    
+
     private class TestStatement implements Statement {
         public TestStatement() {
         }
@@ -500,6 +526,16 @@ class TestConnection implements Connection {
         }
 
         @Override
+        public void closeOnCompletion() throws SQLException {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public boolean isCloseOnCompletion() throws SQLException {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
         public <T> T unwrap(Class<T> iface) throws SQLException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -509,7 +545,7 @@ class TestConnection implements Connection {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }
-    
+
     private static class TestResultSet implements ResultSet {
         private final double value;
         private int row = 0;
@@ -1453,6 +1489,16 @@ class TestConnection implements Connection {
         }
 
         @Override
+        public <T> T getObject(int i, Class<T> aClass) throws SQLException {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public <T> T getObject(String s, Class<T> aClass) throws SQLException {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
         public <T> T unwrap(Class<T> iface) throws SQLException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
@@ -1463,5 +1509,5 @@ class TestConnection implements Connection {
         }
     }
 
-    
+
 }

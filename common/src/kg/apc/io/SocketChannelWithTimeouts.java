@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketException;
+import java.net.SocketOption;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
-
+import java.util.Set;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -46,12 +47,47 @@ public class SocketChannelWithTimeouts extends SocketChannel {
     }
 
     @Override
+    public SocketChannel bind(SocketAddress socketAddress) throws IOException {
+        return socketChannel.bind(socketAddress);
+    }
+
+    @Override
+    public SocketAddress getLocalAddress() throws IOException {
+        return socketChannel.getLocalAddress();
+    }
+
+    @Override
+    public <T> SocketChannel setOption(SocketOption<T> socketOption, T t) throws IOException {
+        return socketChannel.setOption(socketOption, t);
+    }
+
+    @Override
+    public <T> T getOption(SocketOption<T> socketOption) throws IOException {
+        return socketChannel.getOption(socketOption);
+    }
+
+    @Override
+    public Set<SocketOption<?>> supportedOptions() {
+        return socketChannel.supportedOptions();
+    }
+
+    @Override
+    public SocketChannel shutdownInput() throws IOException {
+        return socketChannel.shutdownInput();
+    }
+
+    @Override
+    public SocketChannel shutdownOutput() throws IOException {
+        return socketChannel.shutdownOutput();
+    }
+
+    @Override
     public boolean connect(SocketAddress remote) throws IOException {
 
         long start = System.currentTimeMillis();
         //log.debug("trying to connect");
         socketChannel.connect(remote);
-        while (selector.select(connectTimeout) > 0) {
+        if (selector.select(connectTimeout) > 0) {
             selector.selectedKeys().remove(channelKey);
             //log.debug("selected connect");
             //log.debug("Spent " + (System.currentTimeMillis() - start));

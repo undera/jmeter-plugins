@@ -103,8 +103,7 @@ public class WebDriverSampler extends AbstractSampler {
     }
 
     public String getScript() {
-        String propertyAsString = getPropertyAsString(SCRIPT, defaultScript);
-        return propertyAsString;
+        return getPropertyAsString(SCRIPT, defaultScript);
     }
 
     public void setScript(String script) {

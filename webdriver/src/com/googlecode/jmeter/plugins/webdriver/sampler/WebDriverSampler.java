@@ -1,12 +1,6 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler;
 
 import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
-import java.net.URL;
-import javax.script.Bindings;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.SimpleBindings;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
@@ -15,6 +9,9 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.WebDriver;
+
+import javax.script.*;
+import java.net.URL;
 
 
 /**

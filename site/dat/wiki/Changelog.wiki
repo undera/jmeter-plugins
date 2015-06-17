@@ -6,7 +6,7 @@
   * Add SynthesisReport and AggregateReport generation to GraphGeneratorListener and allow generation of both CSV and PNG in one shot
   * fix reported issues with [JSONPathExtractor], see [https://groups.google.com/forum/#!topic/jmeter-plugins/fDqEpL3iqi0] and [https://groups.google.com/forum/#!topic/jmeter-plugins/UvKa5KiM2qo]
   * WebDriver Sampler UI offers default script text -- FIX IT    
-  * Selenium dependency version updated to 2.45.0
+  * Selenium dependency version updated to 2.46.0
   * fix {{{__string}}} function (thanks to Dima Lulko for reporting)
   * improve thread safety of FFW
   * fix packaging, by mistake many sets were containing Standard Set classes inside

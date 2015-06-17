@@ -112,7 +112,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         final JLabel label = new JLabel("Script Language:");
 
         String[][] languageNames = JSR223BeanInfoSupport.LANGUAGE_NAMES;
-        String[] langs = new String[languageNames.length];
+        String[] langs = new String[languageNames.length]; // TODO: make it display full name, but use short one 
         for (int n = 0; n < languageNames.length; n++) {
             langs[n] = languageNames[n][0];
         }

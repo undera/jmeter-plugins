@@ -5,6 +5,7 @@ import jsyntaxpane.DefaultSyntaxKit;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.util.JSR223BeanInfoSupport;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -27,6 +28,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
     JTextField parameters;
 
     JEditorPane script;
+    JComboBox<String> languages;
 
     public WebDriverSamplerGui() {
         createGui();
@@ -46,6 +48,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
     public void configure(TestElement element) {
         script.setText(element.getPropertyAsString(WebDriverSampler.SCRIPT));
         parameters.setText(element.getPropertyAsString(WebDriverSampler.PARAMETERS));
+        languages.setSelectedItem(element.getPropertyAsString(WebDriverSampler.SCRIPT_LANGUAGE));
         super.configure(element);
     }
 
@@ -62,6 +65,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         this.configureTestElement(element);
         element.setProperty(WebDriverSampler.SCRIPT, script.getText());
         element.setProperty(WebDriverSampler.PARAMETERS, parameters.getText());
+        element.setProperty(WebDriverSampler.SCRIPT_LANGUAGE, (String) languages.getSelectedItem());
     }
 
     @Override
@@ -70,6 +74,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 
         parameters.setText(""); //$NON-NLS-1$
         script.setText(""); //$NON-NLS-1$
+        languages.setSelectedIndex(0);
     }
 
     private void createGui() {
@@ -79,6 +84,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         Box box = Box.createVerticalBox();
         box.add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), "WebDriverSampler"));
         box.add(createParameterPanel());
+        box.add(createLangPanel());
         add(box, BorderLayout.NORTH);
 
         JPanel panel = createScriptPanel();
@@ -89,7 +95,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
     }
 
     private JPanel createParameterPanel() {
-        final JLabel label = new JLabel("Parameters");
+        final JLabel label = new JLabel("Parameters:");
 
         parameters = new JTextField(10);
         parameters.setName(WebDriverSampler.PARAMETERS);
@@ -99,9 +105,30 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         parameterPanel.add(label, BorderLayout.WEST);
         parameterPanel.add(parameters, BorderLayout.CENTER);
 
+        return parameterPanel;
+    }
+
+    private JPanel createLangPanel() {
+        final JLabel label = new JLabel("Script Language:");
+
+        String[][] languageNames = JSR223BeanInfoSupport.LANGUAGE_NAMES;
+        String[] langs = new String[languageNames.length];
+        for (int n = 0; n < languageNames.length; n++) {
+            langs[n] = languageNames[n][0];
+        }
+
+        languages = new JComboBox<String>(langs);
+        languages.setName(WebDriverSampler.PARAMETERS);
+        label.setLabelFor(languages);
+
+
+        final JPanel parameterPanel = new JPanel(new BorderLayout(5, 0));
+        parameterPanel.add(label, BorderLayout.WEST);
+        parameterPanel.add(languages, BorderLayout.CENTER);
 
         return parameterPanel;
     }
+
 
     private JPanel createScriptPanel() {
         script = new JEditorPane();

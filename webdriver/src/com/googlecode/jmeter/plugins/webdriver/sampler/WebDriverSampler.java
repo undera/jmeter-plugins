@@ -1,12 +1,6 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler;
 
 import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
-import java.net.URL;
-import javax.script.Bindings;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.SimpleBindings;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
@@ -15,6 +9,9 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.WebDriver;
+
+import javax.script.*;
+import java.net.URL;
 
 
 /**
@@ -28,6 +25,7 @@ public class WebDriverSampler extends AbstractSampler {
     public static final String PARAMETERS = "WebDriverSampler.parameters";
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
     private static final String DEFAULT_ENGINE = "JavaScript";
+    public static final String SCRIPT_LANGUAGE = "WebDriverSampler.language";
     private final transient ScriptEngineManager scriptEngineManager;
     private final Class<SampleResult> sampleResultClass;
 
@@ -103,8 +101,7 @@ public class WebDriverSampler extends AbstractSampler {
     }
 
     public String getScript() {
-        String propertyAsString = getPropertyAsString(SCRIPT, defaultScript);
-        return propertyAsString;
+        return getPropertyAsString(SCRIPT, defaultScript);
     }
 
     public void setScript(String script) {
@@ -119,12 +116,20 @@ public class WebDriverSampler extends AbstractSampler {
         setProperty(PARAMETERS, parameters);
     }
 
+    public String getScriptLanguage() {
+        return getPropertyAsString(SCRIPT_LANGUAGE, DEFAULT_ENGINE);
+    }
+
+    public void setScriptLanguage(String lang) {
+        setProperty(SCRIPT_LANGUAGE, lang);
+    }
+
     private WebDriver getWebDriver() {
         return (WebDriver) getThreadContext().getVariables().getObject(WebDriverConfig.BROWSER);
     }
 
     ScriptEngine createScriptEngineWith(SampleResult sampleResult) {
-        final ScriptEngine scriptEngine = scriptEngineManager.getEngineByName(DEFAULT_ENGINE);
+        final ScriptEngine scriptEngine = scriptEngineManager.getEngineByName(this.getScriptLanguage());
         Bindings engineBindings = new SimpleBindings();
         WebDriverScriptable scriptable = new WebDriverScriptable();
         scriptable.setName(getName());

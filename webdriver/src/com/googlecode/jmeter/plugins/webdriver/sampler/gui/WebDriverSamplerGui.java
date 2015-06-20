@@ -11,6 +11,8 @@ import org.apache.log.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class WebDriverSamplerGui extends AbstractSamplerGui {
 
@@ -36,7 +38,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Web Driver Sampler");
+        return JMeterPluginsUtils.prefixLabel("WebDriver Sampler");
     }
 
     @Override
@@ -74,7 +76,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 
         parameters.setText(""); //$NON-NLS-1$
         script.setText(""); //$NON-NLS-1$
-        languages.setSelectedIndex(0);
+        languages.setSelectedItem(WebDriverSampler.DEFAULT_ENGINE);
     }
 
     private void createGui() {
@@ -90,8 +92,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         JPanel panel = createScriptPanel();
         add(panel, BorderLayout.CENTER);
         // Don't let the input field shrink too much
-        add(Box.createVerticalStrut(panel.getPreferredSize().height),
-                BorderLayout.WEST);
+        add(Box.createVerticalStrut(panel.getPreferredSize().height), BorderLayout.WEST);
     }
 
     private JPanel createParameterPanel() {
@@ -112,7 +113,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         final JLabel label = new JLabel("Script Language:");
 
         String[][] languageNames = JSR223BeanInfoSupport.LANGUAGE_NAMES;
-        String[] langs = new String[languageNames.length]; // TODO: make it display full name, but use short one 
+        String[] langs = new String[languageNames.length];
         for (int n = 0; n < languageNames.length; n++) {
             langs[n] = languageNames[n][0];
         }
@@ -120,7 +121,16 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         languages = new JComboBox<String>(langs);
         languages.setName(WebDriverSampler.PARAMETERS);
         label.setLabelFor(languages);
-
+        languages.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JComboBox<String> source = (JComboBox<String>) actionEvent.getSource();
+                LOGGER.info("Language: " + source.getSelectedItem());
+                String text = script.getText();
+                script.setContentType("text/" + source.getSelectedItem());
+                script.setText(text);
+            }
+        });
 
         final JPanel parameterPanel = new JPanel(new BorderLayout(5, 0));
         parameterPanel.add(label, BorderLayout.WEST);
@@ -129,11 +139,10 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         return parameterPanel;
     }
 
-
     private JPanel createScriptPanel() {
         script = new JEditorPane();
         final JScrollPane scrollPane = new JScrollPane(script);
-        script.setContentType("text/javascript");
+        script.setContentType("text/plain");
         script.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
         final JLabel label = new JLabel("Script (see below for variables that are defined)");

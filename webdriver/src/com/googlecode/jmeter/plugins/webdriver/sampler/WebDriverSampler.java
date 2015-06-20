@@ -24,7 +24,7 @@ public class WebDriverSampler extends AbstractSampler {
     public static final String SCRIPT = "WebDriverSampler.script";
     public static final String PARAMETERS = "WebDriverSampler.parameters";
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
-    private static final String DEFAULT_ENGINE = "JavaScript";
+    public static final String DEFAULT_ENGINE = "javascript";
     public static final String SCRIPT_LANGUAGE = "WebDriverSampler.language";
     private final transient ScriptEngineManager scriptEngineManager;
     private final Class<SampleResult> sampleResultClass;

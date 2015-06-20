@@ -34,7 +34,7 @@ public class WebDriverSamplerGuiTest {
 
     @Test
     public void shouldReturnStaticLabel() {
-        assertThat(gui.getStaticLabel(), containsString("Web Driver Sampler"));
+        assertThat(gui.getStaticLabel(), containsString("WebDriver Sampler"));
     }
 
     @Test

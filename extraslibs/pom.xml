@@ -61,21 +61,36 @@
             <artifactId>jmeter-plugins-extras</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.jmeter</groupId>
-            <artifactId>ApacheJMeter_core</artifactId>
-            <version>${jmeter.version}</version>
-        </dependency>
+        
         <dependency>
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_java</artifactId>
             <version>${jmeter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>excalibur-fortress</groupId>
+                    <artifactId>excalibur-fortress-container-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>excalibur-fortress</groupId>
+                    <artifactId>excalibur-fortress-meta</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_http</artifactId>
             <version>${jmeter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>excalibur-fortress</groupId>
+                    <artifactId>excalibur-fortress-container-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>excalibur-fortress</groupId>
+                    <artifactId>excalibur-fortress-meta</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

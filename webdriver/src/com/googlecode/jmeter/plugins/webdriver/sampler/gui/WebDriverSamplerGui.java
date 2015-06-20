@@ -75,7 +75,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         super.clearGui();
 
         parameters.setText(""); //$NON-NLS-1$
-        script.setText(""); //$NON-NLS-1$
+        script.setText(WebDriverSampler.defaultScript); //$NON-NLS-1$
         languages.setSelectedItem(WebDriverSampler.DEFAULT_ENGINE);
     }
 
@@ -125,10 +125,8 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 JComboBox<String> source = (JComboBox<String>) actionEvent.getSource();
-                LOGGER.info("Language: " + source.getSelectedItem());
-                String text = script.getText();
-                script.setContentType("text/" + source.getSelectedItem());
-                script.setText(text);
+                String ctype = "text/" + source.getSelectedItem();
+                setScriptContentType(ctype);
             }
         });
 
@@ -139,10 +137,16 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         return parameterPanel;
     }
 
+    private void setScriptContentType(String ctype) {
+        String text = script.getText();
+        script.setContentType(ctype);
+        script.setText(text);
+    }
+
     private JPanel createScriptPanel() {
         script = new JEditorPane();
         final JScrollPane scrollPane = new JScrollPane(script);
-        script.setContentType("text/plain");
+        setScriptContentType("text/plain");
         script.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
         final JLabel label = new JLabel("Script (see below for variables that are defined)");

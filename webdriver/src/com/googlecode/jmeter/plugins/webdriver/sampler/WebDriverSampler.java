@@ -29,7 +29,7 @@ public class WebDriverSampler extends AbstractSampler {
     private final transient ScriptEngineManager scriptEngineManager;
     private final Class<SampleResult> sampleResultClass;
 
-    private static final String defaultScript = "WDS.sampleResult.sampleStart()\n" +
+    public static final String defaultScript = "WDS.sampleResult.sampleStart()\n" +
             "WDS.browser.get('http://jmeter-plugins.org')\n" +
             "WDS.sampleResult.sampleEnd()\n";
 

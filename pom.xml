@@ -23,20 +23,20 @@
         <developerConnection>git@github.com:undera/jmeter-plugins.git</developerConnection>
     </scm>
     <developers>
-    <developer>
-      <id>team</id>
-  <name>jmeter-plugins.org</name>
-      <email>jmeter-plugins@googlegroups.com</email>
-    </developer>
-  </developers>
-    <distributionManagement>        
+        <developer>
+            <id>team</id>
+            <name>jmeter-plugins.org</name>
+            <email>jmeter-plugins@googlegroups.com</email>
+        </developer>
+    </developers>
+    <distributionManagement>
         <snapshotRepository>
             <id>sonatype-snapshot</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>            
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>sonatype</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>            
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -56,8 +56,8 @@
     </repositories>
 
     <modules>
-	    <module>common</module>
-	    <module>standard</module>
+        <module>common</module>
+        <module>standard</module>
         <module>extras</module>
         <module>extraslibs</module>
         <module>hadoop</module>

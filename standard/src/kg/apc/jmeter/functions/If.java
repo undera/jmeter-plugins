@@ -5,6 +5,7 @@ import org.apache.jmeter.functions.AbstractFunction;
 import org.apache.jmeter.functions.InvalidVariableException;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
+import org.apache.jmeter.threads.JMeterVariables;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -22,6 +23,7 @@ public class If extends AbstractFunction {
         desc.add("Expected value");
         desc.add("Result if actual == expected");
         desc.add("Result if actual != expected");
+        desc.add("Name of variable in which to store the result (optional)");
     }
 
     private Object[] values;
@@ -36,12 +38,20 @@ public class If extends AbstractFunction {
         String actual = getParameter(0);
         String expected = getParameter(1);
 
+        String result = null;
         if (actual.equals(expected)) {
-            return getParameter(2).toString();
+            result = getParameter(2).toString();
         } else {
-            return getParameter(3).toString();
+            result = getParameter(3).toString();
         }
 
+        JMeterVariables vars = getVariables();
+        if (vars != null && values.length > 4) {
+            String varName = getParameter(4).trim();
+            vars.put(varName, result);
+        }
+
+        return result;
     }
 
     @Override

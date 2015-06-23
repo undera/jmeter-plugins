@@ -165,3 +165,19 @@ Function returns the number of current iteration in thread group.
 
 Function has no parameters.
 
+== if<sup><font color=gray size="1">since 1.3.0</font></sup> ==
+
+This function provides a == b ? a : b syntax.
+
+Parameters:
+  # Actual value
+  # Expected value
+  # if condition true value
+  # if condition false value
+  # Optional variable to store result
+
+Example, gettig different values for jmeter variable:
+
+{{{
+${__if(${size}, 5, ok, invalid)}
+}}}

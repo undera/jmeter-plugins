@@ -4,7 +4,6 @@
   * Java 7 or higher required
   * JMeter 2.12 or higher required
   * Add SynthesisReport and AggregateReport generation to GraphGeneratorListener and allow generation of both CSV and PNG in one shot
-  * fix reported issues with [JSONPathExtractor], see [https://groups.google.com/forum/#!topic/jmeter-plugins/fDqEpL3iqi0] and [https://groups.google.com/forum/#!topic/jmeter-plugins/UvKa5KiM2qo]
   * add script language selector to WebDriver Sampler
   * WebDriver Sampler UI offers default script text
   * Selenium dependency version updated to 2.46.0
@@ -12,6 +11,8 @@
   * improve thread safety of FFW
   * fix packaging, by mistake many sets were containing Standard Set classes inside
   * add *not* switch to JSONPath Assertion (thanks to Dima Lulko for suggesting)
+  * make JSONPath Assertion to compare value as regexp
+  * fix reported issues with [JSONPathExtractor], see [https://groups.google.com/forum/#!topic/jmeter-plugins/fDqEpL3iqi0] and [https://groups.google.com/forum/#!topic/jmeter-plugins/UvKa5KiM2qo]
   * SynthesisReportGui: the 90 percentile is now customizable with JMeter 2.13
   * Make GraphRowSimple Serializable so that you can copy/paste graphs in JMeter
   * Update maven-dependency-plugin to 2.8 and maven-shade-plugin to 2.1 as per

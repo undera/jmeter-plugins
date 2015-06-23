@@ -48,7 +48,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
 
         jsonPath = new JLabeledTextField("JSON Path: ");
         jsonValidation = new JCheckBox("Validate against expected value");
-        jsonValue = new JLabeledTextField("Expected Value: ");
+        jsonValue = new JLabeledTextField("Expected Value (regular expression): ");
         expectNull = new JCheckBox("Expect null");
         invert = new JCheckBox("Invert assertion (will fail if above conditions met)");
 

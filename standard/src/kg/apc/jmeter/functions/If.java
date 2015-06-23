@@ -11,9 +11,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by adizek on 22/06/2015.
- */
 public class If extends AbstractFunction {
     private static final List<String> desc = new LinkedList<String>();
     private static final String KEY = "__if";

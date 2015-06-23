@@ -22,6 +22,7 @@
   * Make sure WebDriver sample results have timestamp on errors 
   * UltimateThreadGroup: Added parametrization via _threads_schedule_ property
   * Add 'description' column to Parameterized Controller
+  * deprecated [RESTSampler REST Sampler] dropped from the codebase
 
 == 1.2.1 <i><font color=gray size="1">March 9, 2015</font></i>==
   * add [TestPlanCheckTool] to check JMX file consistency without running it

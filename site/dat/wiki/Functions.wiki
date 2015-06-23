@@ -179,5 +179,5 @@ Parameters:
 Example, gettig different values for jmeter variable:
 
 {{{
-${__substring(${size}, 5, ok, invalid)}
+${__if(${size}, 5, ok, invalid)}
 }}}

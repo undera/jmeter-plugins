@@ -10,9 +10,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by igreenfi on 6/23/2015.
- */
 public class IfTest {
 
     @BeforeClass

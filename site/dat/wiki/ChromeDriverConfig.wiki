@@ -67,18 +67,13 @@ Since v1.3.0 of JMeter-Plugins:
 * You can get output logging from Developer Tool, just use the following code:
 
   var logPkg = JavaImporter(org.openqa.selenium.logging)
-
   WDS.sampleResult.sampleStart()
-
   WDS.browser.get('http://yoursite.com')
-
   var logEntries = new logPkg.LogEntries(WDS.browser.manage().logs().get(logPkg.LogType.BROWSER));
-
   logEntries.forEach(function(entry)
   {
      WDS.log.info(entry.getTimestamp() + " " + entry.getLevel() + " " + entry.getMessage()); 
   })
-
   WDS.sampleResult.sampleEnd()
 
  

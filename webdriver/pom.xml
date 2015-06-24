@@ -276,7 +276,7 @@
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <includeArtifactIds>
                                 selenium-support,selenium-api,selenium-remote-driver,selenium-ie-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-htmlunit-driver,gson,
-                                guava,json,commons-exec,jsyntaxpane,htmlunit,htmlunit-core-js,nekohtml,cssparser,jetty-websocket,xercesImpl,sac,httpclient,httpmime,httpcore
+                                guava,json,commons-exec,jsyntaxpane,htmlunit,htmlunit-core-js,nekohtml,cssparser,jetty-websocket,sac,httpclient,httpmime,httpcore
                             </includeArtifactIds>
                         </configuration>
                     </execution>

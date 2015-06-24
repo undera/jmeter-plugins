@@ -66,16 +66,17 @@ Since v1.3.0 of JMeter-Plugins:
 * ChromeDriver can now be used to control Chrome on Android. To enable this check the *Use Chrome on Android* checkbox.
 * You can read output logging from Developer Tool, just use the following code:
 
-```java
-  var logPkg = JavaImporter(org.openqa.selenium.logging)
-  WDS.sampleResult.sampleStart()
-  WDS.browser.get('http://yoursite.com')
-  var logEntries = new logPkg.LogEntries(WDS.browser.manage().logs().get(logPkg.LogType.BROWSER));
-  logEntries.forEach(function(entry)
-  {
-     WDS.log.info(entry.getTimestamp() + " " + entry.getLevel() + " " + entry.getMessage()); 
-  })
-  WDS.sampleResult.sampleEnd()
+
+```js
+var logPkg = JavaImporter(org.openqa.selenium.logging)
+WDS.sampleResult.sampleStart()
+WDS.browser.get('http://yoursite.com')
+var logEntries = new logPkg.LogEntries(WDS.browser.manage().logs().get(logPkg.LogType.BROWSER));
+logEntries.forEach(function(entry)
+{
+   WDS.log.info(entry.getTimestamp() + " " + entry.getLevel() + " " + entry.getMessage()); 
+})
+WDS.sampleResult.sampleEnd()
 ``` 
  
 == Experimental ==

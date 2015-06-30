@@ -17,33 +17,11 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion;
 
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 
 public class JSONPathAssertionTest {
-
-    public JSONPathAssertionTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
 
     @Test
     public void testGetJsonPath() {
@@ -108,6 +86,26 @@ public class JSONPathAssertionTest {
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
         assertEquals(false, result.isFailure());
+    }
+
+    @Test
+    public void testGetResult_positive_regexp() {
+        System.out.println("getResult simple");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": 123}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval");
+        instance.setJsonValidationBool(true);
+        instance.setExpectedValue("(123|456)");
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(false, result.isFailure());
+
+        samplerResult.setResponseData("{\"myval\": 456}".getBytes());
+        AssertionResult result2 = instance.getResult(samplerResult);
+        assertEquals(false, result2.isFailure());
     }
 
     @Test

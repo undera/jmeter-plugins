@@ -5,7 +5,7 @@
     <parent>
         <groupId>kg.apc</groupId>
         <artifactId>jmeter-plugins</artifactId>
-        <version>1.2.2</version>
+        <version>1.3.0</version>
     </parent>
     <artifactId>jmeter-plugins-webdriver</artifactId>
     <packaging>jar</packaging>
@@ -40,7 +40,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.6</java-version>
         <jmeter.version>2.8</jmeter.version>
-        <selenium.version>2.45.0</selenium.version>
+        <selenium.version>2.46.0</selenium.version>
         <powermock.version>1.5</powermock.version>
         <cobertura-maven.version>2.5.2</cobertura-maven.version>
     </properties>
@@ -108,17 +108,17 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
-            <version>4.3</version>
+            <version>4.4.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.3.1</version>
+            <version>4.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
-            <version>4.3.1</version>
+            <version>4.5</version>
         </dependency>
         <!--
         <dependency>
@@ -276,7 +276,7 @@
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <includeArtifactIds>
                                 selenium-support,selenium-api,selenium-remote-driver,selenium-ie-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-htmlunit-driver,gson,
-                                guava,json,commons-exec,jsyntaxpane,htmlunit,htmlunit-core-js,nekohtml,cssparser,jetty-websocket,xercesImpl,sac,httpclient,httpmime,httpcore
+                                guava,json,commons-exec,jsyntaxpane,htmlunit,htmlunit-core-js,nekohtml,cssparser,jetty-websocket,sac,httpclient,httpmime,httpcore
                             </includeArtifactIds>
                         </configuration>
                     </execution>

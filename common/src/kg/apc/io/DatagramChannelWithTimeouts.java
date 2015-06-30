@@ -2,12 +2,17 @@ package kg.apc.io;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.SocketAddress;
+import java.net.SocketOption;
 import java.net.SocketTimeoutException;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
+import java.nio.channels.MembershipKey;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
+import java.util.Set;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -31,6 +36,31 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
 
     public static DatagramChannel open() throws IOException {
         return new DatagramChannelWithTimeouts();
+    }
+
+    @Override
+    public DatagramChannel bind(SocketAddress socketAddress) throws IOException {
+        return channel.bind(socketAddress);
+    }
+
+    @Override
+    public SocketAddress getLocalAddress() throws IOException {
+        return channel.getLocalAddress();
+    }
+
+    @Override
+    public <T> DatagramChannel setOption(SocketOption<T> socketOption, T t) throws IOException {
+        return channel.setOption(socketOption, t);
+    }
+
+    @Override
+    public <T> T getOption(SocketOption<T> socketOption) throws IOException {
+        return channel.getOption(socketOption);
+    }
+
+    @Override
+    public Set<SocketOption<?>> supportedOptions() {
+        return channel.supportedOptions();
     }
 
     public int read(ByteBuffer dst) throws IOException {
@@ -121,5 +151,15 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
 
     public SocketAddress getRemoteAddress() throws IOException {
         return null;
+    }
+
+    @Override
+    public MembershipKey join(InetAddress inetAddress, NetworkInterface networkInterface) throws IOException {
+        return channel.join(inetAddress, networkInterface);
+    }
+
+    @Override
+    public MembershipKey join(InetAddress inetAddress, NetworkInterface networkInterface, InetAddress inetAddress1) throws IOException {
+        return channel.join(inetAddress, networkInterface, inetAddress1);
     }
 }

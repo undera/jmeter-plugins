@@ -977,6 +977,16 @@ class ResultSetEmul implements ResultSet {
     }
 
     @Override
+    public <T> T getObject(int i, Class<T> aClass) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public <T> T getObject(String s, Class<T> aClass) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public <T> T unwrap(Class<T> type) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

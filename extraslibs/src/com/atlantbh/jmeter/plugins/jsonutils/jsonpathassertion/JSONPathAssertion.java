@@ -11,14 +11,17 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.Option;
 import com.jayway.jsonpath.internal.JsonReader;
-import java.io.Serializable;
 import net.minidev.json.JSONArray;
 import org.apache.jmeter.assertions.Assertion;
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.apache.oro.text.regex.Pattern;
+
+import java.io.Serializable;
 
 /**
  * This is main class for JSONPath Assertion which verifies assertion on
@@ -89,14 +92,14 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
                 for (Object subj : arr.toArray()) {
                     if (isExpectNull() && subj == null) {
                         return;
-                    } else if (subj.toString().equals(getExpectedValue())) {
+                    } else if (isEquals(subj.toString())) {
                         return;
                     }
                 }
             } else {
                 if (isExpectNull() && value == null) {
                     return;
-                } else if (value.toString().equals(getExpectedValue())) {
+                } else if (isEquals(value.toString())) {
                     return;
                 }
             }
@@ -106,6 +109,11 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
             else
                 throw new RuntimeException(String.format("Value expected to be '%s', but found '%s'", getExpectedValue(), value));
         }
+    }
+
+    private boolean isEquals(String subj) {
+        Pattern pattern = JMeterUtils.getPatternCache().getPattern(getExpectedValue());
+        return JMeterUtils.getMatcher().matches(subj, pattern);
     }
 
     @Override

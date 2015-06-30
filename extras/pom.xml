@@ -5,7 +5,7 @@
     <parent>
         <groupId>kg.apc</groupId>
         <artifactId>jmeter-plugins</artifactId>
-        <version>1.2.2</version>
+        <version>1.3.0</version>
     </parent>
     <artifactId>jmeter-plugins-extras</artifactId>
     <packaging>jar</packaging>
@@ -25,14 +25,14 @@
         <connection>https://github.com/undera/jmeter-plugins.git</connection>
         <developerConnection>git@github.com:undera/jmeter-plugins.git</developerConnection>
     </scm>
-    <distributionManagement>        
+    <distributionManagement>
         <snapshotRepository>
             <id>sonatype-snapshot</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>            
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>sonatype</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>            
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -63,7 +63,7 @@
             <artifactId>jmeter-plugins-standard</artifactId>
             <version>${project.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>perfmon</artifactId>
@@ -74,16 +74,21 @@
             <artifactId>cmdrunner</artifactId>
             <version>${cmdrunner-version}</version>
         </dependency>
-        
-        <dependency>
-            <groupId>org.apache.jmeter</groupId>
-            <artifactId>ApacheJMeter_core</artifactId>
-            <version>${jmeter.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_http</artifactId>
             <version>${jmeter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>excalibur-fortress</groupId>
+                    <artifactId>excalibur-fortress-container-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>excalibur-fortress</groupId>
+                    <artifactId>excalibur-fortress-meta</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.jmeter</groupId>
@@ -146,7 +151,7 @@
                 <filtering>true</filtering>
             </testResource>
         </testResources>
-        
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -167,7 +172,7 @@
                 <version>2.2.1</version>
                 <executions>
                     <execution>
-                        <phase>install</phase>                        
+                        <phase>install</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
@@ -195,14 +200,14 @@
                 <version>2.7</version>
                 <executions>
                     <execution>
-                        <phase>deploy</phase>                        
+                        <phase>deploy</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-                        
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -228,7 +233,9 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,hbase-common,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper,selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-android-driver,guava,json,commons-exec,jsyntaxpane</includeArtifactIds>
+                            <includeArtifactIds>
+                                cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,hbase-common,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper,selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-android-driver,guava,json,commons-exec,jsyntaxpane
+                            </includeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>
@@ -249,7 +256,7 @@
                                     <include>kg.apc:jmeter-plugins-common</include>
                                 </includes>
                             </artifactSet>
-                            
+
                         </configuration>
                     </execution>
                 </executions>

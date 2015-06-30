@@ -1,14 +1,15 @@
 package kg.apc.emulators;
 
-import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.net.SocketOption;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.Set;
+import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 public class SocketChannelEmul extends SocketChannel {
 
@@ -20,6 +21,41 @@ public class SocketChannelEmul extends SocketChannel {
 
     public SocketChannelEmul() {
         super(null);
+    }
+
+    @Override
+    public SocketChannel bind(SocketAddress socketAddress) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public SocketAddress getLocalAddress() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public <T> SocketChannel setOption(SocketOption<T> socketOption, T t) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public <T> T getOption(SocketOption<T> socketOption) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Set<SocketOption<?>> supportedOptions() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public SocketChannel shutdownInput() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public SocketChannel shutdownOutput() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -46,6 +82,11 @@ public class SocketChannelEmul extends SocketChannel {
     @Override
     public boolean finishConnect() throws IOException {
         return true;
+    }
+
+    @Override
+    public SocketAddress getRemoteAddress() throws IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

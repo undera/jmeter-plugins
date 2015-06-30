@@ -13,6 +13,7 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.assertions.gui.AbstractAssertionGui;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jorphan.gui.JLabeledTextArea;
 import org.apache.jorphan.gui.JLabeledTextField;
 
 import javax.swing.*;
@@ -28,7 +29,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
     //private static final Logger log = LoggingManager.getLoggerForClass();
     private static final long serialVersionUID = 1L;
     private JLabeledTextField jsonPath = null;
-    private JLabeledTextField jsonValue = null;
+    private JLabeledTextArea jsonValue = null;
     private JCheckBox jsonValidation = null;
     private JCheckBox expectNull = null;
     private JCheckBox invert = null;
@@ -48,7 +49,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
 
         jsonPath = new JLabeledTextField("JSON Path: ");
         jsonValidation = new JCheckBox("Validate against expected value");
-        jsonValue = new JLabeledTextField("Expected Value: ");
+        jsonValue = new JLabeledTextArea("Expected Value (regular expression): ");
         expectNull = new JCheckBox("Expect null");
         invert = new JCheckBox("Invert assertion (will fail if above conditions met)");
 

@@ -65,7 +65,7 @@ public class ParameterizedControllerGui
 
    private JPanel createVariablePanel()
    {
-      argsPanel = new ArgumentsPanel(JMeterUtils.getResString("user_defined_variables")); 
+      argsPanel = new ArgumentsPanel(JMeterUtils.getResString("user_defined_variables"), null, true, true); 
       return argsPanel;
    }
 

@@ -31,7 +31,7 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
   * [InterThreadCommunication Inter-Thread Communication]
   * [Functions Custom JMeter Functions] 
-  * [TestPlanCheckTool Tool to check Test Plan consistency] [/img/icons/new_wog.gif]
+  * [TestPlanCheckTool Tool to check Test Plan consistency]
 
 === Samplers ===
   * [DummySampler Dummy Sampler] for debugging and programming tests

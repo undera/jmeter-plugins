@@ -8,12 +8,15 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.logging.LogType;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 
 public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
 
@@ -34,6 +37,10 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
     Capabilities createCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.PROXY, createProxy());
+        LoggingPreferences logPrefs = new LoggingPreferences();
+		logPrefs.enable(LogType.BROWSER, Level.ALL);
+		capabilities.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+        
 
         if(isAndroidEnabled()) {
             Map<String, String> chromeOptions = new HashMap<String, String>();

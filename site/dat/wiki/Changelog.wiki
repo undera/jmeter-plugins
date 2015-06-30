@@ -18,8 +18,7 @@
   * fix reported issues with [JSONPathExtractor], see [https://groups.google.com/forum/#!topic/jmeter-plugins/fDqEpL3iqi0] and [https://groups.google.com/forum/#!topic/jmeter-plugins/UvKa5KiM2qo]
   * SynthesisReportGui: the 90 percentile is now customizable with JMeter 2.13
   * Make GraphRowSimple Serializable so that you can copy/paste graphs in JMeter
-  * Update maven-dependency-plugin to 2.8 and maven-shade-plugin to 2.1 as per
-  [https://cwiki.apache.org/confluence/display/MAVEN/AetherClassNotFound]
+  * Update maven-dependency-plugin to 2.8 and maven-shade-plugin to 2.1 as per [https://cwiki.apache.org/confluence/display/MAVEN/AetherClassNotFound]
   * Add in multiple ColorsDispatcher classes (CycleColors, HueRotatePalette and CustomPalette). CycleColors is original implementation from 1.2.1
   * Configurable hostname patterns for perfmon metrics (for cleaner charts)
   * AggregateReportGui: Apply format to save csv file

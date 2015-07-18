@@ -5,7 +5,7 @@
     <parent>
         <groupId>kg.apc</groupId>
         <artifactId>jmeter-plugins</artifactId>
-        <version>1.3.0</version>
+        <version>1.3.1</version>
     </parent>
     <artifactId>jmeter-plugins-webdriver</artifactId>
     <packaging>jar</packaging>
@@ -39,7 +39,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.6</java-version>
-        <jmeter.version>2.8</jmeter.version>
         <selenium.version>2.46.0</selenium.version>
         <powermock.version>1.5</powermock.version>
         <cobertura-maven.version>2.5.2</cobertura-maven.version>
@@ -132,12 +131,6 @@
             <groupId>de.sciss</groupId>
             <artifactId>jsyntaxpane</artifactId>
             <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -331,6 +324,7 @@
                         <format>xml</format>
                         <format>html</format>
                     </formats>
+                    <check/>
                 </configuration>
             </plugin>
         </plugins>

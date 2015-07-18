@@ -44,6 +44,7 @@ Additional plugins for extended and complex testing. Does not require additional
 === Graphs ===
   * [ResponseCodesPerSecond Response Codes per Second]
   * [LatenciesOverTime Response Latencies Over Time]
+  * [ConnectTimeOverTime Connect Times Over Time] [/img/icons/new_wog.gif]
   * [BytesThroughput Bytes Throughput Over Time]
   * [PageDataExtractor Extracted Data Over Time] 
   * [DbMon DbMon Sample Collector]

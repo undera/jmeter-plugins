@@ -53,7 +53,16 @@ padding: 2px 4px; vertical-align: middle; cursor: pointer;" onclick="window.loca
                     </a>
                     </div>
                 </td>
-            </tr>
+<td style="padding: 0 0.5em;">
+                    <div style="background-color: #EEE; border: 1px dashed gray; height: 56px; font-size: 80%;
+padding: 2px 4px; vertical-align: middle; cursor: pointer;" onclick="window.location.href='http://loadosophia.org/?utm_source=jpgc&amp;utm_medium=header&amp;utm_campaign=promo';">
+                <a href="http://gettaurus.org/?utm_source=jpgc&amp;utm_medium=header&amp;utm_campaign=sponsorship" style="text-decoration: none; color: black;">
+                        <span style="color: black">Check out new open source<br></span>
+                        <span style="font-size: 120%; font-weight: bold; color: #0000FF;">Project "Taurus"</span>
+
+<br>an automation wrapper<br>for JMeter and other testing tools</a>
+                    </div>
+                </td>            </tr>
         </table>
 {/block}
 

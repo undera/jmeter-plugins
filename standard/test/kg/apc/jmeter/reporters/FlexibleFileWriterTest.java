@@ -107,7 +107,7 @@ public class FlexibleFileWriterTest {
 
         FlexibleFileWriter instance = new FlexibleFileWriter();
         instance.setFilename(File.createTempFile("ffw_test_", ".txt").getAbsolutePath());
-        instance.setColumns("endTimeMillis|\\t\\t|responseTimeMicros|\\t|latencyMicros|\\t|sentBytes|\\t|receivedBytes|\\t|isSuccsessful|\\t|responseCode|\\r\\n");
+        instance.setColumns("endTimeMillis|\\t\\t|responseTimeMicros|\\t|latencyMicros|\\t|sentBytes|\\t|receivedBytes|\\t|isSuccsessful|\\t|responseCode|\\t|connectTime|\\r\\n");
         instance.testStarted();
         instance.sampleOccurred(e);
         //String written = JMeterPluginsUtils.byteBufferToString(instance.fileEmul.getWrittenBytes());

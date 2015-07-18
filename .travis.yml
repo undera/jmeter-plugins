@@ -9,3 +9,4 @@ install: "mvn clean --batch-mode"
 script: "mvn -Djava.awt.headless=true test --fail-at-end --batch-mode"
 #after_script:
 # - "sh -e /etc/init.d/xvfb stop"
+sudo: false  # to use new infrastructure

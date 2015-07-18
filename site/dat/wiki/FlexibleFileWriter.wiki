@@ -42,6 +42,7 @@ This property controls the size for the buffer used to compose record to write t
 || endTime || epoch time when reading response ended ||
 || responseTime || response time, time to full response loaded ||
 || latency || latency, time to first response byte received (if available) ||
+|| connectTime || time to establish connection (if available) ||
 || responseCode || response code (200, 404 etc.) ||
 || responseMessage || response message (OK, Not Found etc.) ||
 || responseHeaders || response headers (if present in sample) ||

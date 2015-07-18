@@ -1,0 +1,9 @@
+<div style="float: right" class="plugins_set extras_set">Available in [ExtrasSet Extras Set]</div>
+= Connect Times Over Time <sup><font color=gray size="1">since 1.3.1</font></sup>=
+
+This graph will display the average time to establish connection during the load test. Note that this metric became available since
+JMeter 2.13.
+
+== Sample result ==
+
+[/img/wiki/connect_times_over_time.png]

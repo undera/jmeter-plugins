@@ -1,7 +1,7 @@
 <div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Merge Results <sup><font color=gray size="1">since 1.2.0</font></sup>=
 
-Merge Results is a tool to merge files of results (to simplify the comparison of two or more load tests)
+Merge Results is a tool to merge files of results (to simplify the comparison of two or more load tests). It requires both Standard Set and Extras Set to be installed.
 
 Each file can be filtered using the Include / exclude field (regular expression can be used by checking the appropriate box) or Start / End offset field.
 The results file is made from input files concatenated with a new reference date.

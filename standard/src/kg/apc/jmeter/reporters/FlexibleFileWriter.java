@@ -9,8 +9,10 @@ import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.reporters.AbstractListenerElement;
@@ -59,6 +61,9 @@ public class FlexibleFileWriter
     private ArrayList<String> availableFieldNames = new ArrayList<String>(Arrays.asList(AVAILABLE_FIELDS.trim().split(" ")));
     private static final byte[] b1 = "1".getBytes();
     private static final byte[] b0 = "0".getBytes();
+
+    protected static final String ENCODING = JMeterUtils.getPropDefault("sampleresult.default.encoding", SampleResult.DEFAULT_HTTP_ENCODING);
+    private static final Charset CHARSET = Charset.forName(ENCODING);
 
     public FlexibleFileWriter() {
         super();
@@ -283,16 +288,16 @@ public class FlexibleFileWriter
                 break;
 
             case 1:
-                buf.put(String.valueOf(result.getStartTime()).getBytes());
+                buf.put(String.valueOf(result.getStartTime()).getBytes(CHARSET));
                 break;
 
             case 2:
-                buf.put(String.valueOf(result.getEndTime()).getBytes());
+                buf.put(String.valueOf(result.getEndTime()).getBytes(CHARSET));
                 break;
 
             case 3:
                 if (result.getSamplerData() != null) {
-                    buf.put(String.valueOf(result.getSamplerData().length()).getBytes());
+                    buf.put(String.valueOf(result.getSamplerData().length()).getBytes(CHARSET));
                 } else {
                     buf.put(b0);
                 }
@@ -300,26 +305,26 @@ public class FlexibleFileWriter
 
             case 4:
                 if (result.getResponseData() != null) {
-                    buf.put(String.valueOf(result.getResponseData().length).getBytes());
+                    buf.put(String.valueOf(result.getResponseData().length).getBytes(CHARSET));
                 } else {
                     buf.put(b0);
                 }
                 break;
 
             case 5:
-                buf.put(String.valueOf(result.getTime()).getBytes());
+                buf.put(String.valueOf(result.getTime()).getBytes(CHARSET));
                 break;
 
             case 6:
-                buf.put(String.valueOf(result.getLatency()).getBytes());
+                buf.put(String.valueOf(result.getLatency()).getBytes(CHARSET));
                 break;
 
             case 7:
-                buf.put(result.getResponseCode().getBytes());
+                buf.put(result.getResponseCode().getBytes(CHARSET));
                 break;
 
             case 8:
-                buf.put(result.getResponseMessage().getBytes());
+                buf.put(result.getResponseMessage().getBytes(CHARSET));
                 break;
 
             case 9:
@@ -327,32 +332,32 @@ public class FlexibleFileWriter
                 break;
 
             case 10:
-                buf.put(result.getThreadName().getBytes());
+                buf.put(result.getThreadName().getBytes(CHARSET));
                 break;
 
             case 11:
-                buf.put(result.getSampleLabel().getBytes());
+                buf.put(result.getSampleLabel().getBytes(CHARSET));
                 break;
 
             case 12:
-                buf.put(getShiftDecimal(result.getStartTime(), 3).getBytes());
+                buf.put(getShiftDecimal(result.getStartTime(), 3).getBytes(CHARSET));
                 break;
 
             case 13:
-                buf.put(getShiftDecimal(result.getEndTime(), 3).getBytes());
+                buf.put(getShiftDecimal(result.getEndTime(), 3).getBytes(CHARSET));
                 break;
 
             case 14:
-                buf.put(String.valueOf(result.getTime() * 1000).getBytes());
+                buf.put(String.valueOf(result.getTime() * 1000).getBytes(CHARSET));
                 break;
 
             case 15:
-                buf.put(String.valueOf(result.getLatency() * 1000).getBytes());
+                buf.put(String.valueOf(result.getLatency() * 1000).getBytes(CHARSET));
                 break;
 
             case 16:
                 if (result.getSamplerData() != null) {
-                    buf.put(result.getSamplerData().getBytes());
+                    buf.put(result.getSamplerData().getBytes(CHARSET));
                 } else {
                     buf.put(b0);
                 }
@@ -363,19 +368,19 @@ public class FlexibleFileWriter
                 break;
 
             case 18:
-                buf.put(result.getResponseHeaders().getBytes());
+                buf.put(result.getResponseHeaders().getBytes(CHARSET));
                 break;
 
             case 19:
-                buf.put(String.valueOf(result.getAllThreads()).getBytes());
+                buf.put(String.valueOf(result.getAllThreads()).getBytes(CHARSET));
                 break;
 
             case 20:
-                buf.put(String.valueOf(result.getRequestHeaders()).getBytes());
+                buf.put(String.valueOf(result.getRequestHeaders()).getBytes(CHARSET));
                 break;
 
             case 21:
-                buf.put(String.valueOf(result.getConnectTime()).getBytes());
+                buf.put(String.valueOf(result.getConnectTime()).getBytes(CHARSET));
                 break;
 
             default:

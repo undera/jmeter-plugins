@@ -98,6 +98,46 @@ public class LoadosophiaUploaderTest {
     }
 
     /**
+     * Test of testEnded method, of class LoadosophiaUploader with no storeDir speciefied.
+     * An temporary file in system's temp-folder should be created automatically.
+     */
+    @Test
+    public void testTestEndedWithNoStoreDir() throws IOException {
+        System.out.println("testEnded");
+        JMeterUtils.setProperty("loadosophia.address", "http://localhost/");
+        LinkedList<String[]> response = new LinkedList<String[]>();
+        String[] v1 = {"0", "4"};
+        response.push(v1);
+        String[] v2 = {"0", "4"};
+        response.push(v2);
+        String[] v3 = {"0", "4"};
+        response.push(v3);
+        String[] v4 = {"0", "4"};
+        response.push(v4);
+        LoadosophiaUploader instance = new LoadosophiaUploaderEmul(response);
+        instance.setStoreDir("");
+        instance.setTitle("UnitTest");
+        instance.setColorFlag("gray");
+        instance.setProject("DEFAULT");
+        instance.setUploadToken("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
+        instance.testStarted();
+
+        SampleResult res = new SampleResult();
+        res.sampleStart();
+        res.sampleEnd();
+        SampleEvent event = new SampleEvent(res, "test");
+        instance.sampleOccurred(event);
+
+        FileSystem.copyFile(instance.getFilename(), instance.getFilename() + ".perfmon1");
+        LoadosophiaUploadingNotifier.getInstance().addFile(instance.getFilename() + ".perfmon1");
+
+        FileSystem.copyFile(instance.getFilename(), instance.getFilename() + ".perfmon2");
+        LoadosophiaUploadingNotifier.getInstance().addFile(instance.getFilename() + ".perfmon2");
+
+        instance.testEnded();
+    }
+
+    /**
      * Test of setFilePrefix method, of class LoadosophiaUploader.
      */
     @Test

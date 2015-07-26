@@ -107,13 +107,13 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
 
     private void setupSaving() throws IOException {
         String dir = getStoreDir();
-        if (!dir.endsWith(File.separator)) {
-            dir += File.separator;
-        }
-
         File tmpFile;
         try {
-            tmpFile = File.createTempFile("Loadosophia_", ".jtl", new File(dir));
+            File storeDir = null;
+            if (dir != null && !dir.trim().isEmpty()) {
+                storeDir = new File(dir);
+            }
+            tmpFile = File.createTempFile("Loadosophia_", ".jtl", storeDir);
         } catch (IOException ex) {
             informUser("Unable to create temp file: " + ex.getMessage());
             informUser("Try to set another directory in the above field.");

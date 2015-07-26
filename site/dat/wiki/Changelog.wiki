@@ -4,6 +4,7 @@
   * add connectTime field into Flexible File Writer
   * add [ConnectTimeOverTime Connect Times Over Time] listener to Extras set
   * use JMeter's encoding for converting strings to bytes in FFW
+  * fix scheduling bug in TST for sub-rps load
 
 == 1.3.0 <i><font color=gray size="1">June 30, 2015</font></i>==
   * Java 7 or higher required

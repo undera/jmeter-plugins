@@ -3,6 +3,7 @@
 package kg.apc.jmeter.timers;
 
 import java.util.ArrayList;
+
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.engine.util.NoThreadClone;
@@ -111,7 +112,7 @@ public class VariableThroughputTimer
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + " sent " + cntSent + " RPS: " + rps);
+            log.debug("Second changed " + ((secs - startSec) / 1000) + ", sleeping: " + cntDelayed + ", sent " + cntSent + ", RPS: " + rps);
         }
 
         if (cntDelayed < 1) {
@@ -120,13 +121,12 @@ public class VariableThroughputTimer
 
         cntSent = 0;
         msecPerReq = 1000d / rps;
-
     }
 
     private int getDelay(long msecs) {
         //log.info("Calculating "+msecs + " " + cntSent * msecPerReq+" "+cntSent);
         if (msecs < (cntSent * msecPerReq)) {
-            return 1 + (int) (1000.0 * (cntDelayed + 1) / rps);
+            return (int) (1 + 1000.0 * (cntDelayed + 1) / rps);
         }
         return 0;
     }
@@ -155,7 +155,7 @@ public class VariableThroughputTimer
             double from = getDoubleValue(curProp, FROM_FIELD_NO);
             double to = getDoubleValue(curProp, TO_FIELD_NO);
             if (sec - duration <= 0) {
-                return from + (int) (sec * ((to - from) / (double) duration));
+                return from + sec * (to - from) / (double) duration;
             } else {
                 sec -= duration;
             }

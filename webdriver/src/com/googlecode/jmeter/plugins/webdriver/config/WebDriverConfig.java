@@ -3,8 +3,10 @@ package com.googlecode.jmeter.plugins.webdriver.config;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyFactory;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyHostPort;
 import com.googlecode.jmeter.plugins.webdriver.proxy.ProxyType;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
@@ -197,13 +199,11 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
-
-        LOGGER.info("iterationStart()");
-
         if (isRecreateBrowserOnIterationStart() && !isDevMode()) {
             final T browser = getThreadBrowser();
             quitBrowser(browser);
             setThreadBrowser(getPreparedBrowser());
+            LOGGER.info("Created browser object: " + browser);
         }
         getThreadContext().getVariables().putObject(WebDriverConfig.BROWSER, getThreadBrowser());
     }

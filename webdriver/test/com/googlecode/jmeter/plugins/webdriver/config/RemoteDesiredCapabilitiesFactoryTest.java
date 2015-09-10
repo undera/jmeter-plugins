@@ -26,13 +26,13 @@ public class RemoteDesiredCapabilitiesFactoryTest {
 	}
 
 	@Test
-	public void shouldReturnInternetExplorerDriverWhenChromeCapabilityIsPassed() throws Exception {
+	public void shouldReturnInternetExplorerDriverWhenInternetExplorerCapabilityIsPassed() throws Exception {
 		DesiredCapabilities capabilities = RemoteDesiredCapabilitiesFactory.build(RemoteCapability.INTERNET_EXPLORER);
 		assertThat(capabilities.getBrowserName(), is("internet explorer"));
 	}
 
 	@Test
-	public void shouldReturnPhantomJSDriverWhenChromeCapabilityIsPassed() throws Exception {
+	public void shouldReturnPhantomJSDriverWhenPhantomJSCapabilityIsPassed() throws Exception {
 		DesiredCapabilities capabilities = RemoteDesiredCapabilitiesFactory.build(RemoteCapability.PHANTOMJS);
 		assertThat(capabilities.getCapability(ChromeOptions.CAPABILITY), is(notNullValue()));
 		assertThat(capabilities.getBrowserName(), is("phantomjs"));

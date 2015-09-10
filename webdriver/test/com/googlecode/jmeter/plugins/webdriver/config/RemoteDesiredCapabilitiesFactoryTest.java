@@ -34,7 +34,6 @@ public class RemoteDesiredCapabilitiesFactoryTest {
 	@Test
 	public void shouldReturnPhantomJSDriverWhenPhantomJSCapabilityIsPassed() throws Exception {
 		DesiredCapabilities capabilities = RemoteDesiredCapabilitiesFactory.build(RemoteCapability.PHANTOMJS);
-		assertThat(capabilities.getCapability(ChromeOptions.CAPABILITY), is(notNullValue()));
 		assertThat(capabilities.getBrowserName(), is("phantomjs"));
 	}
 

@@ -122,9 +122,19 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
             "aggregate_report_bandwidth",
             "average_bytes"};
 
-    private static float jmeterVer = NumberUtils.isNumber(JMeterUtils.getJMeterVersion())
-            ? Float.parseFloat(JMeterUtils.getJMeterVersion().substring(0, 4)) : 0;
-    private static final boolean bOldVersion = Float.compare(jmeterVer, new Float(2.13)) < 0;
+    private static boolean bOldVersion = false;
+    
+    static {
+    	// jmeterVer could be for example : 2.12 r1636949, 2.13 r1665067, 2.14 r18888888 or r1701891 (no version like <major>.<minor> for nightly builds)
+    	String jmeterVer = JMeterUtils.getJMeterVersion();
+    	
+    	// older than de 2.13 version like 2.12
+    	if ("2.13".compareTo(jmeterVer) > 0) {
+    		bOldVersion = true;
+    	}
+    	//System.out.println("jmeterVer = " + jmeterVer + ", bOldVersion = " + bOldVersion);
+    }
+    
     private static final String[] COLUMNS = bOldVersion ? COLUMNS_BEFORE_JM_2_13 : COLUMNS_AFTER_OR_EQUAL_JM_2_13;
 
     static final Object[][] COLUMNS_MSG_PARAMETERS = {null,

@@ -22,6 +22,9 @@ public class RemoteDesiredCapabilitiesFactory {
 	  } else if (RemoteCapability.INTERNET_EXPLORER.equals(capability)){
 		  desiredCapabilities = DesiredCapabilities.internetExplorer();
 		  return desiredCapabilities;
+	  } else if (RemoteCapability.PHANTOMJS.equals(capability)){
+		  desiredCapabilities = DesiredCapabilities.phantomjs();
+		  return desiredCapabilities;
 	  }
 	  throw new IllegalArgumentException("No such capability");
   }

@@ -1,6 +1,6 @@
 = Installing Plugins =
 
-<font color='red'>*You need to run JMeter 2.8 or above with a JRE 1.6 or above to use the plugins.*</font>
+<font color='red'>*You need to run JMeter 2.12 or above with a Java 7 or above to use the plugins.*</font>
 
   # Go to [/downloads/#Latest-Stable-Release downloads page]
   # Choose the plugins set according to your tasks (or get all of them if you want to explore all existing plugins)

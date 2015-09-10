@@ -99,12 +99,12 @@ public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
             "", false };
 
     /** File Extensions */
-    private static final String[] EXTS = { ".jtl", ".csv" }; // $NON-NLS-1$
+    private static final String[] EXTS = { ".jtl", ".csv" }; 
                                                              // $NON-NLS-2$
 
     public static final String DEFAULT_FILENAME = "";
-    public static final String FILENAME = "MergeResultsControlGui.filename"; // $NON-NLS-1$
-    public static final String DATA_PROPERTY = "MergeResultsControlGui.data"; // $NON-NLS-1$
+    public static final String FILENAME = "MergeResultsControlGui.filename"; 
+    public static final String DATA_PROPERTY = "MergeResultsControlGui.data"; 
 
     public static final int INPUT_FILE_NAME = 0;
     public static final int PREFIX_LABEL = 1;
@@ -118,11 +118,11 @@ public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
     private static final int MAX_FILE_HANDLES = 4;
     private static final long REF_START_TIME = 946681200000L; // 2000-01-01 00:00:00.000
 
-    private static final String ACTION_ADD = "add"; // $NON-NLS-1$
-    private static final String ACTION_COPY = "copy"; // $NON-NLS-1$
-    private static final String ACTION_DELETE = "delete"; // $NON-NLS-1$
-    private static final String ACTION_MERGE = "merge"; // $NON-NLS-1$
-    private static final String ACTION_SAVE_CONFIG = "save_config"; // $NON-NLS-1$
+    private static final String ACTION_ADD = "add"; 
+    private static final String ACTION_COPY = "copy"; 
+    private static final String ACTION_DELETE = "delete"; 
+    private static final String ACTION_MERGE = "merge"; 
+    private static final String ACTION_SAVE_CONFIG = "save_config"; 
 
     protected PowerTableModel tableModel;
     protected JTable grid;
@@ -144,7 +144,7 @@ public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
 
     @Override
     public String getLabelResource() {
-        return this.getClass().getSimpleName(); //$NON-NLS-1$
+        return this.getClass().getSimpleName(); 
     }
 
     @Override
@@ -251,12 +251,12 @@ public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
         JPanel containerPanel = new VerticalPanel();
 
         JButton saveConfigButton = new JButton(
-                JMeterUtils.getResString("config_save_settings")); // $NON-NLS-1$
+                JMeterUtils.getResString("config_save_settings")); 
         saveConfigButton.addActionListener(this);
         saveConfigButton.setActionCommand(ACTION_SAVE_CONFIG);
 
         mergeAndWritePanel = new FilePanel(
-                "Merge and write results to output file", EXTS); // $NON-NLS-1$
+                "Merge and write results to output file", EXTS); 
         mergeAndWritePanel.addChangeListener(this);
         mergeAndWritePanel.add(saveConfigButton);
 
@@ -464,7 +464,7 @@ public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
             SavePropertyDialog d = new SavePropertyDialog(GuiPackage
                     .getInstance().getMainFrame(),
                     JMeterUtils
-                            .getResString("sample_result_save_configuration"), // $NON-NLS-1$
+                            .getResString("sample_result_save_configuration"), 
                     true, collector.getSaveConfig());
             d.pack();
             ComponentUtil.centerComponentInComponent(GuiPackage.getInstance()

@@ -50,11 +50,11 @@ public class HttpSimpleTableControl extends AbstractTestElement {
     public static final String DEFAULT_TIMESTAMP_S = Boolean
             .toString(DEFAULT_TIMESTAMP);
 
-    public static final String PORT = "HttpSimpleTableControlGui.port"; // $NON-NLS-1$
+    public static final String PORT = "HttpSimpleTableControlGui.port"; 
 
-    public static final String DATA_DIR = "HttpSimpleTableControlGui.dir"; // $NON-NLS-1$
+    public static final String DATA_DIR = "HttpSimpleTableControlGui.dir"; 
 
-    public static final String TIMESTAMP = "HttpSimpleTableControlGui.timestamp"; // $NON-NLS-1$
+    public static final String TIMESTAMP = "HttpSimpleTableControlGui.timestamp"; 
 
     public HttpSimpleTableControl() {
         setPort(JMeterUtils.getPropDefault("jmeterPlugin.sts.port",

@@ -54,10 +54,10 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
             sampler = (HTTPSamplerBase) sam;
             result = (HTTPSampleResult) res;
         }
-        String responseText; // $NON-NLS-1$
+        String responseText; 
         responseText = result.getResponseDataAsString();
         Document html;
-        int index = responseText.indexOf("<"); // $NON-NLS-1$
+        int index = responseText.indexOf("<"); 
         if (index == -1) {
             index = 0;
         }
@@ -153,20 +153,20 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
 
     private void addAnchorUrls(Document html, HTTPSampleResult result, HTTPSamplerBase config) {
         String base = "";
-        NodeList baseList = html.getElementsByTagName("base"); // $NON-NLS-1$
+        NodeList baseList = html.getElementsByTagName("base"); 
         if (baseList.getLength() > 0) {
-            base = baseList.item(0).getAttributes().getNamedItem("href").getNodeValue(); // $NON-NLS-1$
+            base = baseList.item(0).getAttributes().getNamedItem("href").getNodeValue(); 
         }
-        NodeList nodeList = html.getElementsByTagName("a"); // $NON-NLS-1$
+        NodeList nodeList = html.getElementsByTagName("a"); 
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node tempNode = nodeList.item(i);
             NamedNodeMap nnm = tempNode.getAttributes();
-            Node namedItem = nnm.getNamedItem("href"); // $NON-NLS-1$
+            Node namedItem = nnm.getNamedItem("href"); 
             if (namedItem == null) {
                 continue;
             }
             String hrefStr = namedItem.getNodeValue();
-            if (hrefStr.startsWith("javascript:")) { // $NON-NLS-1$
+            if (hrefStr.startsWith("javascript:")) { 
                 continue; // No point trying these
             }
             try {
@@ -190,16 +190,16 @@ public class AnchorModifier extends AbstractTestElement implements PreProcessor,
 
     private void addFramesetUrls(Document html, HTTPSampleResult result, HTTPSamplerBase config) {
         String base = "";
-        NodeList baseList = html.getElementsByTagName("base"); // $NON-NLS-1$
+        NodeList baseList = html.getElementsByTagName("base"); 
         if (baseList.getLength() > 0) {
-            base = baseList.item(0).getAttributes().getNamedItem("href") // $NON-NLS-1$
+            base = baseList.item(0).getAttributes().getNamedItem("href") 
                     .getNodeValue();
         }
-        NodeList nodeList = html.getElementsByTagName("frame"); // $NON-NLS-1$
+        NodeList nodeList = html.getElementsByTagName("frame"); 
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node tempNode = nodeList.item(i);
             NamedNodeMap nnm = tempNode.getAttributes();
-            Node namedItem = nnm.getNamedItem("src"); // $NON-NLS-1$
+            Node namedItem = nnm.getNamedItem("src"); 
             if (namedItem == null) {
                 continue;
             }

@@ -134,7 +134,7 @@ public class RedisDataSet extends ConfigTestElement
             }
             final String names = variableNames;
             if (vars == null) {
-                vars = JOrphanUtils.split(names, ","); // $NON-NLS-1$
+                vars = JOrphanUtils.split(names, ","); 
             }
             
             final JMeterContext context = getThreadContext();
@@ -151,7 +151,7 @@ public class RedisDataSet extends ConfigTestElement
 
     @Override
     public void testEnded() {
-        testEnded(""); //$NON-NLS-1$
+        testEnded(""); 
     }
 
     @Override
@@ -161,7 +161,7 @@ public class RedisDataSet extends ConfigTestElement
 
     @Override
     public void testStarted() {
-        testStarted(""); //$NON-NLS-1$
+        testStarted(""); 
     }
 
     @Override

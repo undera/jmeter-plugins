@@ -50,8 +50,8 @@ public class GraphsGeneratorListener extends AbstractListenerElement
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     
-    private static final String PNG_SUFFIX = ".png"; //$NON-NLS-1$
-    private static final String CSV_SUFFIX = ".csv"; //$NON-NLS-1$
+    private static final String PNG_SUFFIX = ".png"; 
+    private static final String CSV_SUFFIX = ".csv"; 
 
     public enum ExportMode {
         PNG((byte)0),
@@ -73,34 +73,34 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     private static final long serialVersionUID = -136031193118302572L;
     private static final String[] pluginTypes = new String[] {
-        "SynthesisReportGui",                   //$NON-NLS-1$
-        "AggregateReportGui",                   //$NON-NLS-1$
-        "ResponseTimesOverTime",                //$NON-NLS-1$
-        "HitsPerSecond",                        //$NON-NLS-1$
-        "BytesThroughputOverTime",              //$NON-NLS-1$
-        "LatenciesOverTime",                    //$NON-NLS-1$
-        "ResponseCodesPerSecond",               //$NON-NLS-1$
-        "TransactionsPerSecond",                //$NON-NLS-1$
-        "ResponseTimesDistribution",            //$NON-NLS-1$
-        "ResponseTimesPercentiles",             //$NON-NLS-1$
-        "ThreadsStateOverTime",                 //$NON-NLS-1$
-        "TimesVsThreads",                       //$NON-NLS-1$
-        "ThroughputVsThreads"                   //$NON-NLS-1$
+        "SynthesisReportGui",                   
+        "AggregateReportGui",                   
+        "ResponseTimesOverTime",                
+        "HitsPerSecond",                        
+        "BytesThroughputOverTime",              
+        "LatenciesOverTime",                    
+        "ResponseCodesPerSecond",               
+        "TransactionsPerSecond",                
+        "ResponseTimesDistribution",            
+        "ResponseTimesPercentiles",             
+        "ThreadsStateOverTime",                 
+        "TimesVsThreads",                       
+        "ThroughputVsThreads"                   
     };
     private static final Set<String> TIME_BASED_GRAPHS = new HashSet<String>();
     static {
-        TIME_BASED_GRAPHS.add("ResponseTimesOverTime");     //$NON-NLS-1$
-        TIME_BASED_GRAPHS.add("HitsPerSecond");             //$NON-NLS-1$
-        TIME_BASED_GRAPHS.add("BytesThroughputOverTime");   //$NON-NLS-1$
-        TIME_BASED_GRAPHS.add("LatenciesOverTime");         //$NON-NLS-1$
-        TIME_BASED_GRAPHS.add("ResponseCodesPerSecond");    //$NON-NLS-1$
-        TIME_BASED_GRAPHS.add("TransactionsPerSecond");     //$NON-NLS-1$
+        TIME_BASED_GRAPHS.add("ResponseTimesOverTime");     
+        TIME_BASED_GRAPHS.add("HitsPerSecond");             
+        TIME_BASED_GRAPHS.add("BytesThroughputOverTime");   
+        TIME_BASED_GRAPHS.add("LatenciesOverTime");         
+        TIME_BASED_GRAPHS.add("ResponseCodesPerSecond");    
+        TIME_BASED_GRAPHS.add("TransactionsPerSecond");     
     }
     
     private static final Set<String> CSV_ONLY = new HashSet<String>();
     static {
-        CSV_ONLY.add("SynthesisReportGui");    //$NON-NLS-1$
-        CSV_ONLY.add("AggregateReportGui");     //$NON-NLS-1$
+        CSV_ONLY.add("SynthesisReportGui");    
+        CSV_ONLY.add("AggregateReportGui");     
     }
     
     private String outputBaseFolder;
@@ -134,7 +134,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
      */
     @Override
     public void testEnded() {
-        testEnded("");  //$NON-NLS-1$
+        testEnded("");  
     }
 
     /* (non-Javadoc)
@@ -157,7 +157,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
             worker.setPreventOutliers(preventOutliers ? 1 : 0);
             worker.setAggregate(aggregateRows ? 1 : 0);
             if (!StringUtils.isEmpty(paintMarkers)) {
-                worker.setMarkers("True". //$NON-NLS-1$
+                worker.setMarkers("True". 
                         equalsIgnoreCase(paintMarkers) ? 1 : 0);
             }
             worker.setZeroing(paintZeroing ? 1 : 0);
@@ -168,7 +168,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
             worker.setAutoScaleRows(autoScaleRows ? 1 : 0);
             if (!StringUtils.isEmpty(successFilter)) {
                 worker.setSuccessFilter(
-                        "True". //$NON-NLS-1$
+                        "True". 
                                 equalsIgnoreCase(successFilter) ? 1 : 0);
             }
             if (!StringUtils.isEmpty(granulation)) {
@@ -203,19 +203,19 @@ public class GraphsGeneratorListener extends AbstractListenerElement
             }
             if (!CSV_ONLY.contains(pluginType)) {
                 if (exportMode == ExportMode.PNG) {
-                    worker.setOutputPNGFile(fileName+PNG_SUFFIX); //$NON-NLS-1$
+                    worker.setOutputPNGFile(fileName+PNG_SUFFIX); 
                     worker.addExportMode(PluginsCMDWorker.EXPORT_PNG);
                 } else if (exportMode == ExportMode.CSV) {
-                    worker.setOutputCSVFile(fileName+CSV_SUFFIX); //$NON-NLS-1$
+                    worker.setOutputCSVFile(fileName+CSV_SUFFIX); 
                     worker.addExportMode(PluginsCMDWorker.EXPORT_CSV);
                 } else {
-                    worker.setOutputPNGFile(fileName+PNG_SUFFIX); //$NON-NLS-1$
+                    worker.setOutputPNGFile(fileName+PNG_SUFFIX); 
                     worker.addExportMode(PluginsCMDWorker.EXPORT_PNG);
-                    worker.setOutputCSVFile(fileName+CSV_SUFFIX); //$NON-NLS-1$
+                    worker.setOutputCSVFile(fileName+CSV_SUFFIX); 
                     worker.addExportMode(PluginsCMDWorker.EXPORT_CSV);
                 }
             } else {
-                worker.setOutputCSVFile(fileName+CSV_SUFFIX); //$NON-NLS-1$
+                worker.setOutputCSVFile(fileName+CSV_SUFFIX); 
                 worker.addExportMode(PluginsCMDWorker.EXPORT_CSV);                
             }
             worker.setPluginType(pluginType);
@@ -272,7 +272,7 @@ public class GraphsGeneratorListener extends AbstractListenerElement
     public void setProperty(JMeterProperty property) {
         if (property instanceof StringProperty) {
             final String pn = property.getName();
-            if (pn.equals("exportMode")) { //$NON-NLS-1$
+            if (pn.equals("exportMode")) { 
                 final Object objectValue = property.getObjectValue();
                 try {
                     final BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());

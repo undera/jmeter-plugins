@@ -63,9 +63,9 @@ public class HttpSimpleTableControlGui extends LogicControllerGui implements
 
     private JButton stop, start;
 
-    private static final String ACTION_STOP = "stop"; // $NON-NLS-1$
+    private static final String ACTION_STOP = "stop"; 
 
-    private static final String ACTION_START = "start"; // $NON-NLS-1$
+    private static final String ACTION_START = "start"; 
 
     private HttpSimpleTableControl simpleTableController;
 
@@ -178,12 +178,12 @@ public class HttpSimpleTableControlGui extends LogicControllerGui implements
     }
 
     private JPanel createControls() {
-        start = new JButton(JMeterUtils.getResString("start")); // $NON-NLS-1$
+        start = new JButton(JMeterUtils.getResString("start")); 
         start.addActionListener(this);
         start.setActionCommand(ACTION_START);
         start.setEnabled(true);
 
-        stop = new JButton(JMeterUtils.getResString("stop")); // $NON-NLS-1$
+        stop = new JButton(JMeterUtils.getResString("stop")); 
         stop.addActionListener(this);
         stop.setActionCommand(ACTION_STOP);
         stop.setEnabled(false);
@@ -198,26 +198,26 @@ public class HttpSimpleTableControlGui extends LogicControllerGui implements
         portField = new JTextField(HttpSimpleTableControl.DEFAULT_PORT_S, 8);
         portField.setName(HttpSimpleTableControl.PORT);
 
-        JLabel label = new JLabel(JMeterUtils.getResString("port")); // $NON-NLS-1$
+        JLabel label = new JLabel(JMeterUtils.getResString("port")); 
         label.setLabelFor(portField);
 
         datasetDirectoryField = new JTextField(
                 HttpSimpleTableControl.DEFAULT_DATA_DIR, 8);
         datasetDirectoryField.setName(HttpSimpleTableControl.DATA_DIR);
 
-        JLabel ddLabel = new JLabel("Dataset directory:"); // $NON-NLS-1$
+        JLabel ddLabel = new JLabel("Dataset directory:"); 
         ddLabel.setLabelFor(datasetDirectoryField);
 
         timestampChkBox = new JCheckBox();
         timestampChkBox.setSelected(HttpSimpleTableControl.DEFAULT_TIMESTAMP);
         timestampChkBox.setName(HttpSimpleTableControl.TIMESTAMP);
 
-        JLabel tsLabel = new JLabel("Timestamp:"); // $NON-NLS-1$
+        JLabel tsLabel = new JLabel("Timestamp:"); 
         tsLabel.setLabelFor(timestampChkBox);
 
         HorizontalPanel panel = new HorizontalPanel();
         panel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Settings")); // $NON-NLS-1$
+                BorderFactory.createEtchedBorder(), "Settings")); 
 
         panel.add(label);
         panel.add(portField);

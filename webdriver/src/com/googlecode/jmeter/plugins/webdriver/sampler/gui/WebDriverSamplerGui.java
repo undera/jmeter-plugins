@@ -74,8 +74,8 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
     public void clearGui() {
         super.clearGui();
 
-        parameters.setText(""); //$NON-NLS-1$
-        script.setText(WebDriverSampler.defaultScript); //$NON-NLS-1$
+        parameters.setText(""); 
+        script.setText(WebDriverSampler.defaultScript); 
         languages.setSelectedItem(WebDriverSampler.DEFAULT_ENGINE);
     }
 

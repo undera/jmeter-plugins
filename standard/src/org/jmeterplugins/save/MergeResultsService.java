@@ -50,19 +50,19 @@ public class MergeResultsService {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
-    private static final String TESTRESULTS_START_V1_1_PREVER = "<testResults version=\""; // $NON-NLS-1$
+    private static final String TESTRESULTS_START_V1_1_PREVER = "<testResults version=\""; 
 
-    private static final String TESTRESULTS_START_V1_1_POSTVER = "\">"; // $NON-NLS-1$
+    private static final String TESTRESULTS_START_V1_1_POSTVER = "\">"; 
 
-    private static final String TESTRESULTS_END = "</testResults>"; // $NON-NLS-1$
+    private static final String TESTRESULTS_END = "</testResults>"; 
 
-    private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"; // $NON-NLS-1$
+    private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"; 
 
-    public static final String FILENAME = "filename"; // $NON-NLS-1$
+    public static final String FILENAME = "filename"; 
 
     /** AutoFlush on each line */
     private static final boolean SAVING_AUTOFLUSH = JMeterUtils.getPropDefault(
-            "jmeter.save.saveservice.autoflush", false); //$NON-NLS-1$
+            "jmeter.save.saveservice.autoflush", false); 
 
     private PrintWriter out;
     private static final Map<String, FileEntry> files = new HashMap<String, FileEntry>();
@@ -109,7 +109,7 @@ public class MergeResultsService {
             }
             writer = new PrintWriter(new OutputStreamWriter(
                     new BufferedOutputStream(new FileOutputStream(filename)),
-                    SaveService.getFileEncoding("UTF-8")), SAVING_AUTOFLUSH); // $NON-NLS-1$
+                    SaveService.getFileEncoding("UTF-8")), SAVING_AUTOFLUSH); 
             log.debug("Opened file: " + filename);
             files.put(filename, new FileEntry(writer, saveConfig));
         } else {
@@ -125,7 +125,7 @@ public class MergeResultsService {
             writer.print(XML_HEADER);
             // Write the EOL separately so we generate LF line ends on Unix and
             // Windows
-            writer.print("\n"); // $NON-NLS-1$
+            writer.print("\n"); 
             String pi = saveConfig.getXmlPi();
             if (pi.length() > 0) {
                 writer.println(pi);
@@ -135,7 +135,7 @@ public class MergeResultsService {
             writer.print(TESTRESULTS_START_V1_1_POSTVER);
             // Write the EOL separately so we generate LF line ends on Unix and
             // Windows
-            writer.print("\n"); // $NON-NLS-1$
+            writer.print("\n"); 
         } else if (saveConfig.saveFieldNames()) {
             writer.println(CSVSaveService
                     .printableFieldNamesToString(saveConfig));
@@ -174,9 +174,9 @@ public class MergeResultsService {
     private static void writeFileEnd(PrintWriter pw,
             SampleSaveConfiguration saveConfig) {
         if (saveConfig.saveAsXml()) {
-            pw.print("\n"); // $NON-NLS-1$
+            pw.print("\n"); 
             pw.print(TESTRESULTS_END);
-            pw.print("\n");// Added in version 1.1 // $NON-NLS-1$
+            pw.print("\n");// Added in version 1.1 
         }
     }
 

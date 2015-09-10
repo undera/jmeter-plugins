@@ -165,8 +165,8 @@ public class OAuthSamplerGui extends AbstractSamplerGui {
     }
 
     private JPanel getRequestPanel() {
-        body = new JLabeledTextArea("Body"); //$NON-NLS-1$
-        headers = new JLabeledTextArea("Headers"); //$NON-NLS-1$
+        body = new JLabeledTextArea("Body"); 
+        headers = new JLabeledTextArea("Headers"); 
         VerticalPanel panel = new VerticalPanel();
         panel.add(headers, BorderLayout.NORTH);
         panel.add(body, BorderLayout.CENTER);

@@ -18,3 +18,4 @@ Everyone who provided pull request or other contribution, deserves mentioning on
   * Jorge S. Cruz - added [RemoteDriverConfig] for connecting to a Selenium Grid
   * Roy de Kleijn - added NTLM and Internet Explorer support
   * Erik Ostermueller - added support for changing line & legend colors.
+  * Flávio Cysne - added PhantomJS option to [RemoteCapability] enabling connection to a PhantomJS node in a Selenium Grid

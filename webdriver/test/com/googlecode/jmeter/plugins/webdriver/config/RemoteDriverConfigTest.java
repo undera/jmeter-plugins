@@ -60,6 +60,8 @@ public class RemoteDriverConfigTest {
 		assertThat(config.getCapability(), is(RemoteCapability.FIREFOX));
 		config.setCapability(RemoteCapability.INTERNET_EXPLORER);
 		assertThat(config.getCapability(), is(RemoteCapability.INTERNET_EXPLORER));
+		config.setCapability(RemoteCapability.PHANTOMJS);
+		assertThat(config.getCapability(), is(RemoteCapability.PHANTOMJS));
 	}
 
     @Test

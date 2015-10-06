@@ -21,7 +21,9 @@ public class UltimateThreadGroup
         implements Serializable, TestStateListener {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    public static final String DATA_PROPERTY = "threads_schedule";
+
+    public static final String DATA_PROPERTY = "ultimatethreadgroupdata";
+    public static final String EXTERNAL_DATA_PROPERTY = "threads_schedule";
 
     public static final int START_THREADS_CNT_FIELD_NO = 0;
     public static final int INIT_DELAY_FIELD_NO = 1;
@@ -32,11 +34,9 @@ public class UltimateThreadGroup
     private PropertyIterator scheduleIT;
     private int threadsToSchedule;
     private CollectionProperty currentRecord;
-    private CollectionProperty overrideProp;
 
     public UltimateThreadGroup() {
         super();
-        trySettingLoadFromProperty();
     }
 
     @Override
@@ -71,6 +71,7 @@ public class UltimateThreadGroup
 
     public JMeterProperty getData() {
         //log.info("getData: "+getProperty(DATA_PROPERTY));
+        CollectionProperty overrideProp = getLoadFromExternalProperty();
         if (overrideProp != null) {
             return overrideProp;
         }
@@ -84,9 +85,9 @@ public class UltimateThreadGroup
     }
 
 
-    private void trySettingLoadFromProperty() {
-        String loadProp = JMeterUtils.getProperty(DATA_PROPERTY);
-        log.info("Profile prop: " + loadProp);
+    private CollectionProperty getLoadFromExternalProperty() {
+        String loadProp = JMeterUtils.getProperty(EXTERNAL_DATA_PROPERTY);
+        log.debug("Profile prop: " + loadProp);
         if (loadProp != null && loadProp.length() > 0) {
             //expected format : threads_schedule="spawn(1,1s,1s,1s,1s) spawn(2,1s,3s,1s,2s)"
             log.info("GUI threads profile will be ignored");
@@ -101,9 +102,10 @@ public class UltimateThreadGroup
                 }
             }
 
-            log.info("Setting threads profile from property " + DATA_PROPERTY + ": " + loadProp);
-            overrideProp = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
+            log.info("Setting threads profile from property " + EXTERNAL_DATA_PROPERTY + ": " + loadProp);
+            return JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.EXTERNAL_DATA_PROPERTY);
         }
+        return null;
     }
 
     private static void parseChunk(String chunk, PowerTableModel model) {

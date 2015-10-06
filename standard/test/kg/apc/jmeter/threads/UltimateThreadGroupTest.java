@@ -2,7 +2,6 @@ package kg.apc.jmeter.threads;
 
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.timers.VariableThroughputTimer;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.property.CollectionProperty;
@@ -19,46 +18,29 @@ public class UltimateThreadGroupTest {
     private UltimateThreadGroup instance;
     private PowerTableModel dataModel;
 
-    /**
-     *
-     */
+
     public UltimateThreadGroupTest() {
     }
 
-    /**
-     * @throws Exception
-     */
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    /**
-     * @throws Exception
-     */
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
 
-    /**
-     *
-     */
     @Before
     public void setUp() {
         instance = new UltimateThreadGroup();
         dataModel = getTestModel();
     }
 
-    /**
-     *
-     */
     @After
     public void tearDown() {
     }
 
-    /**
-     *
-     */
     @Test
     public void testScheduleThread() {
         System.out.println("scheduleThread");
@@ -76,9 +58,6 @@ public class UltimateThreadGroupTest {
         assertTrue(thread.getEndTime() > thread.getStartTime());
     }
 
-    /**
-     *
-     */
     @Test
     public void testScheduleThreadAll() {
         System.out.println("scheduleThreadAll");
@@ -100,16 +79,13 @@ public class UltimateThreadGroupTest {
     public void testSchedule_Prop() {
         System.out.println("schedule from property");
         String threadsSchedule = "spawn(1,1s,1s,1s,1m) spawn(2,1s,3s,1s,2h)";
-        JMeterUtils.setProperty(UltimateThreadGroup.DATA_PROPERTY, threadsSchedule);
+        JMeterUtils.setProperty(UltimateThreadGroup.EXTERNAL_DATA_PROPERTY, threadsSchedule);
         UltimateThreadGroup instance = new UltimateThreadGroup();
-        JMeterUtils.setProperty(UltimateThreadGroup.DATA_PROPERTY, ""); // clear!
         JMeterProperty result = instance.getData();
+        JMeterUtils.setProperty(UltimateThreadGroup.EXTERNAL_DATA_PROPERTY, ""); // clear!
         assertEquals("[[1, 1, 1, 1, 60], [2, 1, 3, 1, 7200]]", result.toString());
     }
 
-    /**
-     *
-     */
     @Test
     public void testSetData() {
         System.out.println("setSchedule");
@@ -117,9 +93,6 @@ public class UltimateThreadGroupTest {
         instance.setData(prop);
     }
 
-    /**
-     *
-     */
     @Test
     public void testGetData() {
         System.out.println("getSchedule");
@@ -130,9 +103,6 @@ public class UltimateThreadGroupTest {
         assertEquals(prop.getStringValue(), result.getStringValue());
     }
 
-    /**
-     *
-     */
     @Test
     public void testGetNumThreads() {
         System.out.println("getNumThreads");
@@ -145,18 +115,12 @@ public class UltimateThreadGroupTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of testStarted method, of class UltimateThreadGroup.
-     */
     @Test
     public void testTestStarted_0args() {
         System.out.println("testStarted");
         instance.testStarted();
     }
 
-    /**
-     * Test of testStarted method, of class UltimateThreadGroup.
-     */
     @Test
     public void testTestStarted_String() {
         System.out.println("testStarted");
@@ -164,18 +128,12 @@ public class UltimateThreadGroupTest {
         instance.testStarted(host);
     }
 
-    /**
-     * Test of testEnded method, of class UltimateThreadGroup.
-     */
     @Test
     public void testTestEnded_0args() {
         System.out.println("testEnded");
         instance.testEnded();
     }
 
-    /**
-     * Test of testEnded method, of class UltimateThreadGroup.
-     */
     @Test
     public void testTestEnded_String() {
         System.out.println("testEnded");

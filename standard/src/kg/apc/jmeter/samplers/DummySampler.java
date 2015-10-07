@@ -15,6 +15,7 @@ public class DummySampler
     public static final String REQUEST_DATA = "REQUEST_DATA";
     public static final String RESPONSE_TIME = "RESPONSE_TIME";
     public static final String LATENCY = "LATENCY";
+    public static final String CONNECT = "CONNECT";
     public static final String IS_WAITING = "WAITING";
 
     @Override
@@ -48,6 +49,7 @@ public class DummySampler
         res.setResponseData(getResponseData().getBytes());
 
         res.setLatency(getLatency());
+        res.setConnectTime(getConnectTime());
 
         return res;
     }
@@ -138,8 +140,21 @@ public class DummySampler
         setProperty(LATENCY, time);
     }
 
+    public void setConnectTime(String time) {
+        setProperty(CONNECT, time);
+    }
+
     public boolean interrupt() {
         Thread.currentThread().interrupt();
         return true;
+    }
+
+    public int getConnectTime() {
+        int time = 0;
+        try {
+            time = Integer.valueOf(getPropertyAsString(CONNECT));
+        } catch (NumberFormatException ignored) {
+        }
+        return time;
     }
 }

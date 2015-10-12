@@ -1,6 +1,6 @@
 = Changelog =
 
-== 1.3.1 <i><font color=gray size="1">planning</font></i>==
+== 1.3.1 <i><font color=gray size="1">October 12, 2015</font></i>==
   * add connectTime field into Flexible File Writer
   * add [ConnectTimeOverTime Connect Times Over Time] listener to Extras set
   * use JMeter's encoding for converting strings to bytes in FFW

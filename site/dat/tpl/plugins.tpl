@@ -40,7 +40,7 @@
             <tr>
                 <td style="padding: 0 0.5em;">
                     <a href="http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki"
-                       target="_blank"><img src="/img/site/bz_small.jpg" alt=""></a>
+                       target="_blank"><img src="/img/site/blazemeter-mini.png" alt=""></a>
                 </td>
                 
                 <td style="padding: 0 0.5em;">

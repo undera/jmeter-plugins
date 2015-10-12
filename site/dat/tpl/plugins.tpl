@@ -58,8 +58,8 @@ padding: 2px 4px; vertical-align: middle; cursor: pointer;" onclick="window.loca
 padding: 2px 4px; vertical-align: middle; cursor: pointer;" onclick="window.location.href='http://loadosophia.org/?utm_source=jpgc&amp;utm_medium=header&amp;utm_campaign=promo';">
                 <a href="http://gettaurus.org/?utm_source=jpgc&amp;utm_medium=header&amp;utm_campaign=sponsorship" style="text-decoration: none; color: black;">
                         <span style="color: black">Check out new open source<br></span>
-                        <span style="font-size: 120%; font-weight: bold; color: #0000FF;">Project "Taurus"</span>
-
+  <img src="http://gettaurus.org/img/favicon.png" style="vertical-align: bottom;" alt=""/>
+                        <span style="font-size: 140%; font-weight: bold; color: #0000FF;">Project "Taurus"</span>
 <br>an automation wrapper<br>for JMeter and other testing tools</a>
                     </div>
                 </td>            </tr>

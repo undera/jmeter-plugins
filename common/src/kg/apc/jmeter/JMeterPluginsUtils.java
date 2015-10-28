@@ -35,6 +35,7 @@ public abstract class JMeterPluginsUtils {
     private static String PLUGINS_PREFIX = "jp@gc - ";
     private static boolean prefixPlugins = true;
     public static final String WIKI_BASE = "http://jmeter-plugins.org/wiki/";
+    private static String version = null;
 
     // just prefix all the labels to be distinguished
     public static String prefixLabel(String label) {
@@ -356,13 +357,17 @@ public abstract class JMeterPluginsUtils {
     }
 
     public static String getVersion() {
-        Properties props = new Properties();
-        try {
-            props.load(JMeterPluginsUtils.class.getResourceAsStream("version.properties"));
-        } catch (IOException ex) {
-            props.setProperty("version", "N/A");
+        if (version == null) {
+            Properties props = new Properties();
+            try {
+                props.load(JMeterPluginsUtils.class.getResourceAsStream("version.properties"));
+            } catch (IOException ex) {
+                props.setProperty("version", "N/A");
+            }
+            version = props.getProperty("version");
+            log.info("JMeter-Plugins.org v." + version);
         }
-        return props.getProperty("version");
+        return version;
     }
 
     private static class URIOpener extends MouseAdapter {
@@ -545,13 +550,14 @@ public abstract class JMeterPluginsUtils {
 
     /**
      * Get short hostname for a given host
+     *
      * @param host
      * @return
      */
     public static String getShortHostname(String host) {
         log.debug("getShortHostname: " + host);
         try {
-            String defaultRegex  = "([\\w\\-]+)\\..*";
+            String defaultRegex = "([\\w\\-]+)\\..*";
             String hostnameRegex = JMeterUtils.getPropDefault("jmeterPlugin.perfmon.label.useHostname.pattern", defaultRegex);
             log.debug("hostnameRegex: " + hostnameRegex);
             Pattern p = Pattern.compile(hostnameRegex, Pattern.CASE_INSENSITIVE);
@@ -563,7 +569,7 @@ public abstract class JMeterPluginsUtils {
             }
         } catch (Exception e) {
             log.warn("getShortHostname exception: " + e.getClass().getName() + " :: " + e.getMessage());
-            log.debug("getShortHostname exception: " , e);
+            log.debug("getShortHostname exception: ", e);
         }
         return host;
     }

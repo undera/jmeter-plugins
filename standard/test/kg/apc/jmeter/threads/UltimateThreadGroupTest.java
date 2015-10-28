@@ -103,6 +103,32 @@ public class UltimateThreadGroupTest {
         assertEquals(prop.getStringValue(), result.getStringValue());
     }
 
+
+    @Test
+    public void testGetData_broken_rename() {
+        CollectionProperty prop = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.EXTERNAL_DATA_PROPERTY);
+        instance.setProperty(prop);
+        JMeterProperty result = instance.getData();
+        assertNotNull(instance.getProperty(UltimateThreadGroup.DATA_PROPERTY));
+        assertTrue(instance.getProperty(UltimateThreadGroup.EXTERNAL_DATA_PROPERTY) instanceof NullProperty);
+        assertFalse(result instanceof NullProperty);
+        assertEquals(prop.getStringValue(), result.getStringValue());
+    }
+
+    @Test
+    public void testGetData_broken_del() {
+        CollectionProperty prop = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.EXTERNAL_DATA_PROPERTY);
+        instance.setProperty(prop);
+        CollectionProperty prop2 = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
+        instance.setProperty(prop);
+
+        JMeterProperty result = instance.getData();
+        assertNotNull(instance.getProperty(UltimateThreadGroup.DATA_PROPERTY));
+        assertTrue(instance.getProperty(UltimateThreadGroup.EXTERNAL_DATA_PROPERTY) instanceof NullProperty);
+        assertFalse(result instanceof NullProperty);
+        assertEquals(prop.getStringValue(), result.getStringValue());
+    }
+
     @Test
     public void testGetNumThreads() {
         System.out.println("getNumThreads");

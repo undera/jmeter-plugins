@@ -70,6 +70,20 @@ public class UltimateThreadGroup
     }
 
     public JMeterProperty getData() {
+        JMeterProperty brokenProp = getProperty(EXTERNAL_DATA_PROPERTY);
+        JMeterProperty usualProp = getProperty(DATA_PROPERTY);
+
+        if (brokenProp instanceof CollectionProperty) {
+            if (usualProp == null || usualProp instanceof NullProperty) {
+                log.warn("Copying '" + EXTERNAL_DATA_PROPERTY + "' into '" + DATA_PROPERTY + "'");
+                JMeterProperty newProp = brokenProp.clone();
+                newProp.setName(DATA_PROPERTY);
+                setProperty(newProp);
+            }
+            log.warn("Removing property '" + EXTERNAL_DATA_PROPERTY + "' as invalid");
+            removeProperty(EXTERNAL_DATA_PROPERTY);
+        }
+
         //log.info("getData: "+getProperty(DATA_PROPERTY));
         CollectionProperty overrideProp = getLoadFromExternalProperty();
         if (overrideProp != null) {
@@ -79,7 +93,7 @@ public class UltimateThreadGroup
         return getProperty(DATA_PROPERTY);
     }
 
-    void setData(CollectionProperty rows) {
+    public void setData(CollectionProperty rows) {
         //log.info("setData");
         setProperty(rows);
     }

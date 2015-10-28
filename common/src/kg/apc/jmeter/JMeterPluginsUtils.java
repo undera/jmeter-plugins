@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 public abstract class JMeterPluginsUtils {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
-    private static String PLUGINS_PREFIX = "jp@gc - ";
+    private static final String PLUGINS_PREFIX = "jp@gc - ";
     private static boolean prefixPlugins = true;
     public static final String WIKI_BASE = "http://jmeter-plugins.org/wiki/";
     private static String version = null;
@@ -61,7 +61,7 @@ public abstract class JMeterPluginsUtils {
     }
 
     public static CollectionProperty tableModelRowsToCollectionProperty(PowerTableModel model, String propname) {
-        CollectionProperty rows = new CollectionProperty(propname, new ArrayList<Object>());
+        CollectionProperty rows = new CollectionProperty(propname, new ArrayList<>());
         for (int row = 0; row < model.getRowCount(); row++) {
             List<Object> item = getArrayListForArray(model.getRowData(row));
             rows.addItem(item);
@@ -70,7 +70,7 @@ public abstract class JMeterPluginsUtils {
     }
 
     public static CollectionProperty tableModelRowsToCollectionPropertyEval(PowerTableModel model, String propname) {
-        CollectionProperty rows = new CollectionProperty(propname, new ArrayList<Object>());
+        CollectionProperty rows = new CollectionProperty(propname, new ArrayList<>());
         for (int row = 0; row < model.getRowCount(); row++) {
             List<Object> item = getArrayListForArrayEval(model.getRowData(row));
             rows.addItem(item);
@@ -91,7 +91,7 @@ public abstract class JMeterPluginsUtils {
         model.clearData();
         for (int rowN = 0; rowN < prop.size(); rowN++) {
             ArrayList<StringProperty> rowStrings = (ArrayList<StringProperty>) prop.get(rowN).getObjectValue();
-            ArrayList<Object> rowObject = new ArrayList<Object>(rowStrings.size());
+            ArrayList<Object> rowObject = new ArrayList<>(rowStrings.size());
 
             for (int i = 0; i < columnClasses.length && i < rowStrings.size(); i++) {
                 rowObject.add(convertToClass(rowStrings.get(i), columnClasses[i]));
@@ -109,20 +109,19 @@ public abstract class JMeterPluginsUtils {
     }
 
     private static List<Object> getArrayListForArray(Object[] rowData) {
-        ArrayList<Object> res = new ArrayList<Object>();
-        for (int n = 0; n < rowData.length; n++) // note that we MUST use ArrayList
-        {
-            res.add(rowData[n]);
+        ArrayList<Object> res = new ArrayList<>();
+        //noinspection ManualArrayToCollectionCopy
+        for (Object aRowData : rowData) {
+            res.add(aRowData);
         }
 
         return res;
     }
 
     private static List<Object> getArrayListForArrayEval(Object[] rowData) {
-        ArrayList<Object> res = new ArrayList<Object>();
-        for (int n = 0; n < rowData.length; n++) // note that we must use ArrayList
-        {
-            res.add(new CompoundVariable(rowData[n].toString()).execute());
+        ArrayList<Object> res = new ArrayList<>();
+        for (Object aRowData : rowData) {
+            res.add(new CompoundVariable(aRowData.toString()).execute());
         }
         return res;
     }
@@ -289,9 +288,7 @@ public abstract class JMeterPluginsUtils {
         if (java.awt.Desktop.isDesktopSupported()) {
             try {
                 java.awt.Desktop.getDesktop().browse(new URI(string));
-            } catch (IOException ignored) {
-                log.debug("Failed to open in browser", ignored);
-            } catch (URISyntaxException ignored) {
+            } catch (IOException | URISyntaxException ignored) {
                 log.debug("Failed to open in browser", ignored);
             }
         }
@@ -429,13 +426,11 @@ public abstract class JMeterPluginsUtils {
 
         log.debug("Orig jmeter home dir: " + homeDir);
         File dir = new File(homeDir);
-        while (dir != null && dir.exists()
-                && dir.getName().equals("ext")
-                && dir.getParentFile().getName().equals("lib")) {
+        while (dir.exists() && dir.getName().equals("ext") && dir.getParentFile().getName().equals("lib")) {
             dir = dir.getParentFile();
         }
 
-        if (dir == null || !dir.exists()) {
+        if (!dir.exists()) {
             throw new IllegalArgumentException("CMDRunner.jar must be placed in <jmeter>/lib/ext directory");
         }
 
@@ -548,12 +543,6 @@ public abstract class JMeterPluginsUtils {
         throw new Error("Failed to find JMeter home dir from classpath");
     }
 
-    /**
-     * Get short hostname for a given host
-     *
-     * @param host
-     * @return
-     */
     public static String getShortHostname(String host) {
         log.debug("getShortHostname: " + host);
         try {

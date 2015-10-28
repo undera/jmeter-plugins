@@ -120,10 +120,10 @@ public class UltimateThreadGroupTest {
         CollectionProperty prop = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.EXTERNAL_DATA_PROPERTY);
         instance.setProperty(prop);
         CollectionProperty prop2 = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
-        instance.setProperty(prop);
+        instance.setProperty(prop2);
 
         JMeterProperty result = instance.getData();
-        assertNotNull(instance.getProperty(UltimateThreadGroup.DATA_PROPERTY));
+        assertEquals(prop2, instance.getProperty(UltimateThreadGroup.DATA_PROPERTY));
         assertTrue(instance.getProperty(UltimateThreadGroup.EXTERNAL_DATA_PROPERTY) instanceof NullProperty);
         assertFalse(result instanceof NullProperty);
         assertEquals(prop.getStringValue(), result.getStringValue());

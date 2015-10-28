@@ -103,7 +103,7 @@ public class UltimateThreadGroup
             }
 
             log.info("Setting threads profile from property " + EXTERNAL_DATA_PROPERTY + ": " + loadProp);
-            return JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.EXTERNAL_DATA_PROPERTY);
+            return JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, UltimateThreadGroup.DATA_PROPERTY);
         }
         return null;
     }

@@ -37,6 +37,10 @@ public abstract class JMeterPluginsUtils {
     public static final String WIKI_BASE = "http://jmeter-plugins.org/wiki/";
     private static String version = null;
 
+    static {
+        getVersion();
+    }
+
     // just prefix all the labels to be distinguished
     public static String prefixLabel(String label) {
         return prefixPlugins ? PLUGINS_PREFIX + label : label;

@@ -46,7 +46,7 @@ Additional plugins for extended and complex testing. Does not require additional
 === Graphs ===
   * [ResponseCodesPerSecond Response Codes per Second]
   * [LatenciesOverTime Response Latencies Over Time]
-  * [ConnectTimeOverTime Connect Times Over Time] [/img/icons/new_wog.gif]
+  * [ConnectTimeOverTime Connect Times Over Time]
   * [BytesThroughput Bytes Throughput Over Time]
   * [PageDataExtractor Extracted Data Over Time] 
   * [DbMon DbMon Sample Collector]
@@ -104,6 +104,7 @@ Selenium/WebDriver testing ability. It's good to start with [WebDriverTutorial 2
   * [FirefoxDriverConfig Firefox Config]
   * [HtmlUnitDriverConfig HTMLUnit Config]
   * [RemoteDriverConfig Remote WebDriver Config]
+  * [PhantomJSDriverConfig PhantomJS Config] [/img/icons/new_wog.gif]
 </div>
 </td>
 </tr><tr>

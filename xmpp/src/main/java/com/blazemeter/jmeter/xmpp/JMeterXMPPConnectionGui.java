@@ -1,5 +1,6 @@
 package com.blazemeter.jmeter.xmpp;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.logging.LoggingManager;
@@ -34,7 +35,7 @@ public class JMeterXMPPConnectionGui extends AbstractConfigGui {
         setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
 
-        add(makeTitlePanel(), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), getWikiPage()), BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
 
@@ -69,6 +70,10 @@ public class JMeterXMPPConnectionGui extends AbstractConfigGui {
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
         add(container, BorderLayout.CENTER);
+    }
+
+    private String getWikiPage() {
+        return "XMPPConnection";
     }
 
     private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {

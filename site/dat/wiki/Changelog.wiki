@@ -1,6 +1,8 @@
 = Changelog =
 
-== 1.3.2 <i><font color=gray size="1">preparing</font></i>==
+== 1.4.0 <i><font color=gray size="1">preparing</font></i>==
+  * BlazeMeter Inc. has contributed XMPP testing plugins
+  * BlazeMeter Inc. has contributed PhantomJS support for WebDriver
   * fix consequences of PR #80 further
 
 == 1.3.1 <i><font color=gray size="1">October 12, 2015</font></i>==

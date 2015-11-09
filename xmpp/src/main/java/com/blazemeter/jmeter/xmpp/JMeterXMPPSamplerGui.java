@@ -2,6 +2,7 @@ package com.blazemeter.jmeter.xmpp;
 
 import com.blazemeter.jmeter.xmpp.actions.AbstractXMPPAction;
 import com.blazemeter.ui.ComponentTitledBorder;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.logging.LoggingManager;
@@ -80,7 +81,7 @@ public class JMeterXMPPSamplerGui extends AbstractSamplerGui implements ActionLi
 
     @Override
     public String getStaticLabel() {
-        return "XMPP Sampler";
+        return JMeterPluginsUtils.prefixLabel("XMPP Sampler");
     }
 
     private void initFields() {
@@ -95,7 +96,7 @@ public class JMeterXMPPSamplerGui extends AbstractSamplerGui implements ActionLi
         setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
 
-        add(makeTitlePanel(), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), getWikiPage()), BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -190,5 +191,9 @@ public class JMeterXMPPSamplerGui extends AbstractSamplerGui implements ActionLi
         for (Component component : container.getComponents()) {
             component.setEnabled(b);
         }
+    }
+
+    private String getWikiPage() {
+        return "XMPPSampler";
     }
 }

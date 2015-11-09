@@ -88,7 +88,7 @@ footer .container {
     vertical-align: top;
 }
 
-.plugins_set h2 {
+.plugins_set h3, .plugins_set h2 {
     margin-top: 0;
 }
 
@@ -113,9 +113,15 @@ footer .container {
 }
 
 .hadoop_set {
+    background-color: #DDD;
+    border-color: #AAA;
+}
+
+.xmpp_set {
     background-color: #FFD;
     border-color: #DDA;
 }
+
 
 /* Downloads */
 .file_download {
@@ -225,6 +231,7 @@ table.wiki img {
     margin-bottom: 1em;
 }
 
-.sets-list div h3 {
-    margin-top: 0;
+.sets-list div img {
+    height: 64px;
+    margin-left: 2em;
 }

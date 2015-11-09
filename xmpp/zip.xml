@@ -9,7 +9,7 @@
 
     <files>
         <file>
-            <destName>blazemeter-xmpp.jar</destName>
+            <destName>BlazeMeter-XMPP.jar</destName>
             <source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
             <fileMode>0644</fileMode>
             <outputDirectory>lib/ext</outputDirectory>

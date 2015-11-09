@@ -2,13 +2,11 @@
 
 if ($_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
   $level = \PWE\Core\PWELogger::DEBUG;
-  $logfile = "/tmp/jpgc-pwe.log";
-  $tempdir = "/tmp";
 } else {
   $level = \PWE\Core\PWELogger::WARNING;
-  $logfile = "/home/ofhrhtgk/tmp/pwe.log";
-  $tempdir = "/home/ofhrhtgk/tmp";
 }
+$logfile = sys_get_temp_dir() . "/pwe.log";
+$tempdir = sys_get_temp_dir();
 
 \PWE\Core\PWELogger::setStdErr($logfile);
 \PWE\Core\PWELogger::setStdOut($logfile);

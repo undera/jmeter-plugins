@@ -54,8 +54,7 @@ nav.navbar-default .navbar-nav li a i {
 }
 
 nav.navbar-default .navbar-nav li a {
-    padding: 0.25em 0.5em;
-    padding-bottom: 0.5em;
+    padding: 0.25em 0.5em 0.5em;
     margin: 0 0.5em;
     background: none;
     font-weight: bold;
@@ -122,8 +121,7 @@ footer .container {
 }
 
 .file_download a {
-    background-image: url('/img/icons/download-icon.png');
-    background-repeat: no-repeat;
+    background: url('/img/icons/download-icon.png') no-repeat;
     padding-left: 2em;
 }
 
@@ -223,10 +221,3 @@ table.wiki .toc-list1 {
 }
 */
 
-*
-
-/
-
-*
-
-/

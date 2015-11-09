@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.8" jmeter="2.14-SNAPSHOT.20150515">
+<jmeterTestPlan version="1.2" properties="2.9" jmeter="2.14-SNAPSHOT.20151109">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -24,7 +24,7 @@
           </elementProp>
           <elementProp name="first_last_name" elementType="Argument">
             <stringProp name="Argument.name">first_last_name</stringProp>
-            <stringProp name="Argument.value">Refael Botbol</stringProp>
+            <stringProp name="Argument.value">Test User</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -36,7 +36,7 @@
         <stringProp name="TestPlan.comments">This plugin was developed by www.blazemeter.com</stringProp>
         <stringProp name="address">hipchat.com</stringProp>
         <stringProp name="port">5222</stringProp>
-        <stringProp name="service_name">blazemeter.com</stringProp>
+        <stringProp name="service_name">service</stringProp>
         <stringProp name="timeout">5000</stringProp>
         <stringProp name="class">TCP</stringProp>
       </com.blazemeter.jmeter.xmpp.JMeterXMPPConnection>
@@ -85,7 +85,7 @@
           <stringProp name="TestPlan.comments">This plugin was developed by www.blazemeter.com</stringProp>
           <stringProp name="action">com.blazemeter.jmeter.xmpp.actions.Login</stringProp>
           <stringProp name="login">${JID}</stringProp>
-          <stringProp name="password">1q2w3e4r</stringProp>
+          <stringProp name="password">pwd</stringProp>
           <stringProp name="msg_addressee">testroom</stringProp>
           <stringProp name="msg_body"></stringProp>
           <stringProp name="msg_w_resp_addressee"></stringProp>

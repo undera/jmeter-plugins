@@ -95,7 +95,7 @@ public class JMeterXMPPConnectionGui extends AbstractConfigGui {
 
     @Override
     public String getStaticLabel() {
-        return "XMPP Connection";
+        return JMeterPluginsUtils.prefixLabel("XMPP Connection");
     }
 
     @Override

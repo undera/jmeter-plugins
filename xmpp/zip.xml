@@ -9,16 +9,10 @@
 
     <files>
         <file>
-            <destName>JMeterXMPP.jar</destName>
+            <destName>blazemeter-xmpp.jar</destName>
             <source>${project.build.directory}/${project.artifactId}-${project.version}.jar</source>
             <fileMode>0644</fileMode>
             <outputDirectory>lib/ext</outputDirectory>
-        </file>
-        <file>
-            <source>README.md</source>
-        </file>
-        <file>
-            <source>XMPP.jmx</source>
         </file>
     </files>
 

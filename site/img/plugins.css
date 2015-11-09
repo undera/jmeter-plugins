@@ -62,6 +62,11 @@ nav.navbar-default .navbar-nav li a {
     color: #337ab7;
 }
 
+nav.navbar-default .navbar-nav li.active a:hover {
+    background: none;
+    color: #337ab7;
+}
+
 nav.navbar-default .navbar-nav li.active a {
     background: none;
     box-shadow: none;
@@ -215,34 +220,11 @@ table.wiki img {
     display: block;
 }
 
-/* old/new =============================================================================
-
-*/
-/*
-table.wiki pre, table.wiki tt {
-    background-color: #EEE;
-    font-size: 1.2em;
-    padding: 0px 0.25em;
+/* Home */
+.sets-list div {
+    margin-bottom: 1em;
 }
 
-table.wiki pre {
-    padding: 1em;
+.sets-list div h3 {
+    margin-top: 0;
 }
-
-
-table.wiki .sidebar sup, table.wiki .sidebar font {
-    display: none;
-}
-
-table.wiki .toc-list {
-    margin-bottom: 0.75em;
-    white-space: nowrap;
-    list-style-type: decimal;
-}
-
-table.wiki .toc-list1 {
-    padding-bottom: 1em;
-    border-bottom: 2px dotted #ccc;
-}
-*/
-

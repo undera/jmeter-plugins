@@ -1,8 +1,8 @@
 <div style='white-space: nowrap'>
-[/img/icons/twitter-logo.gif]
+<i class="fa fa-twitter-square"></i>
 [https://twitter.com/#!/jmeter_plugins Follow us on Twitter]
 
-[/img/icons/chart-bar-icon.png]
+<i class="fa fa-area-chart"></i>
 [http://loadosophia.org/?utm_source=jpgc&utm_medium=link&utm_campaign=sidebar Analyze your test results online]
 
 <br/>

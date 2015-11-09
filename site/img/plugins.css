@@ -48,6 +48,7 @@ nav.navbar-default .navbar-nav li.active {
     border-bottom: 1px solid white;
     background-color: white;
 }
+
 nav.navbar-default .navbar-nav li a i {
     margin-right: 0.25em;
     color: #666;
@@ -143,51 +144,80 @@ footer .container {
     float: right;
 }
 
+/* WIKI */
+table.wiki {
+    width: 100%;
+}
+
+table.wiki td {
+    vertical-align: top;
+}
+
+table.wiki tbody tr td:first-child {
+    padding-right: 3em;
+}
+
+table.wiki pre, table.wiki tt {
+    background-color: #DDD;
+    font-size: 1em;
+    padding: 0 0.25em;
+    border-radius: 0.25em;
+}
+
+table.wiki pre {
+    padding: 1em;
+    overflow: hidden;
+    font-size: 0.8em;
+}
+
+table.wiki ol, table.wiki ul {
+    line-height: 1.7;
+}
+
+table.wiki .sidebar {
+    border-radius: 0.3em;
+    white-space: nowrap;
+    padding-left: 1em;
+    border-left: 1px solid #eee;
+    vertical-align: top;
+}
+
+table.wiki .sidebar sup, table.wiki .sidebar font {
+    display: none;
+}
+
+table.wiki .toc-list {
+    margin-bottom: 0.75em;
+    white-space: nowrap;
+    list-style-type: decimal;
+}
+
+table.wiki .toc-list1 {
+    padding-bottom: 3em;
+}
+
+table.wiki a.anchorLink {
+    vertical-align: bottom;
+    padding-left: 0.5em;
+    font-size: 0.8em;
+    text-decoration: none;
+    color: gray;
+    top: -0.25em;
+}
+
+table.wiki img {
+    max-width: 100%;
+}
+
+.stick {
+    position: fixed;
+    top: 2em;
+    display: block;
+}
+
 /* old/new =============================================================================
 
-.menu1 td.hl {
-    background-color: white;
-    background-image: none;
-    border: 1px solid #6b90da;
-    border-bottom: none;
-}
-
-a.hl, .hl a, .hl {
-    color: black;
-    text-decoration: none;
-}
-
-#toppanel {
-    padding-top: 1.2em;
-}
-
-td.logo {
-    padding: 1em;
-}
-
-td.header_title {
-    white-space: nowrap;
-    font-weight: normal;
-    width: 100%;
-    font-size: 1.4em;
-    color: #666;
-}
-
-td.header_right {
-    vertical-align: middle;
-}
-
-.main td.root {
-    border: none;
-    background-color: transparent;
-    padding: 5px 10px;
-}
-
-h1, h2, h3, h4 {
-    color: black;
-}
 */
-/* WIKI */
 /*
 table.wiki pre, table.wiki tt {
     background-color: #EEE;
@@ -199,11 +229,6 @@ table.wiki pre {
     padding: 1em;
 }
 
-table.wiki .sidebar {
-    white-space: nowrap;
-    padding-left: 1em;
-    border-left: 2px solid #ccc;
-}
 
 table.wiki .sidebar sup, table.wiki .sidebar font {
     display: none;

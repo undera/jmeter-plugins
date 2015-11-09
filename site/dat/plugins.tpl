@@ -16,6 +16,7 @@
     {/if} :: JMeter-Plugins.org
   </title>
 
+  <link rel="icon" href="/img/site/logo.png"/>
   <!-- Bootstrap -->
 
   <!-- Latest compiled and minified CSS -->
@@ -41,12 +42,11 @@
   {else}
     <link rel="stylesheet" href="/img/plugins.css"/>
   {/if}
-  <link rel="stylesheet" href="/img/font-awesome-4.3.0/css/font-awesome.min.css"/>
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 
 <body>
-<div class="header clearfix">
+<header class="header clearfix">
   <div class="container">
     <div class="row topmost">
       <div class="col-md-12">
@@ -101,74 +101,48 @@
     </div>
 
     <div class="site-header">
-      <span class="logo"><a href="/"><img src="/img/site/logo.png" alt="JMeter-Plugins.org"/></a></span>
-      <span class="purpose">JMeter-Plugins.org</span>
+      <div class="logo"><a href="/"><img src="/img/site/logo.png" alt="JMeter-Plugins.org"/></a></div>
+      <div class="purpose">
+        <div>jmeter-plugins.org</div>
+        <div>Every load test needs some sexy features!</div>
+      </div>
+      <div class="sponsorship pull-right">
+        <a href="http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki"
+           target="_blank"><img src="/img/site/blazemeter-mini.png" alt=""></a>
+      </div>
     </div>
 
-    <table style="white-space: nowrap; vertical-align: middle;">
-      <tr>
-        <td style="padding: 0 0.5em;">
-          <a href="http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki"
-             target="_blank"><img src="/img/site/blazemeter-mini.png" alt=""></a>
-        </td>
-        <!--
-                <td style="padding: 0 0.5em;">
-                  <div style="background-color: #ffffd6; border: 1px solid #EE9900; height: 56px; font-size: 80%;
-        padding: 2px 4px; vertical-align: middle; cursor: pointer;"
-                       onclick="window.location.href='http://loadosophia.org/?utm_source=jpgc&utm_medium=header&utm_campaign=sponsorship';">
-                    <a href="http://loadosophia.org/?utm_source=jpgc&utm_medium=header&utm_campaign=sponsorship"
-                       style="text-decoration: none; color: black;">
-                      <span style="color: gray">Sponsored by:</span><br/>
-                      <span style="font-size: 120%; font-weight: bold; color: #cc6600;">Loadosophia.org &ndash;</span><br/>
-                      load test results<br/> analysis service
-                    </a>
-                  </div>
-                </td>
-                <td style="padding: 0 0.5em;">
-                  <div style="background-color: #EEE; border: 1px dashed gray; height: 56px; font-size: 80%;
-        padding: 2px 4px; vertical-align: middle; cursor: pointer;"
-                       onclick="window.location.href='http://loadosophia.org/?utm_source=jpgc&amp;utm_medium=header&amp;utm_campaign=promo';">
-                    <a href="http://gettaurus.org/?utm_source=jpgc&amp;utm_medium=header&amp;utm_campaign=sponsorship"
-                       style="text-decoration: none; color: black;">
-                      <span style="color: black">Check out new open source<br></span>
-                      <img src="http://gettaurus.org/img/favicon.png" style="vertical-align: bottom;" alt=""/>
-                      <span style="font-size: 140%; font-weight: bold; color: #0000FF;">Project "Taurus"</span>
-                      <br>an automation wrapper<br>for JMeter and other testing tools</a>
-                  </div>
-                </td>
-                -->
-      </tr>
-    </table>
+    {PWE->getStructLevel level=1 assign=level1}
+    {if $level1}
+      <nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+          {math assign=upper_repeats equation='x-1' x=$urlFullCount}
+          {foreach $level1 as $item1}
+            {if $item1.$a.menu}
+              {if $item1.selected}
+                <li role="presentation" class="active">
+                  <a href="{'../'|str_repeat:$upper_repeats}{$item1.$a.link}/"><i
+                            class="fa {$item1.$a.ico}"></i> {$item1.$a.title|default:$item1.$a.link}</a>
+                </li>
+              {else}
+                <li role="presentation">
+                  <a href="{'../'|str_repeat:$upper_repeats}{$item1.$a.link}/"><i
+                            class="fa {$item1.$a.ico}"></i> {$item1.$a.title|default:$item1.$a.link}</a>
+                </li>
+              {/if}
+            {/if}
+          {/foreach}
+        </ul>
+      </nav>
+    {/if}
   </div>
-</div>
+
+</header>
 <!-- /container -->
 
 <div class="container">
-  {PWE->getStructLevel level=1 assign=level1}
-  {if $level1}
-    <nav>
-      <ul class="nav nav-pills">
-        {math assign=upper_repeats equation='x-1' x=$urlFullCount}
-        {foreach $level1 as $item1}
-          {if $item1.$a.menu}
-            {if $item1.selected}
-              <li role="presentation" class="active">
-                <a href="{'../'|str_repeat:$upper_repeats}{$item1.$a.link}/">{$item1.$a.title|default:$item1.$a.link}</a>
-              </li>
-            {else}
-              <li role="presentation">
-                <a href="{'../'|str_repeat:$upper_repeats}{$item1.$a.link}/">{$item1.$a.title|default:$item1.$a.link}</a>
-              </li>
-            {/if}
-          {/if}
-        {/foreach}
-      </ul>
-    </nav>
-  {/if}
-
   {PWE->getContent}
 </div>
-
 
 <footer>
   <div class="container">

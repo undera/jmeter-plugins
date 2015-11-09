@@ -3,16 +3,16 @@
      description="A custom set of plugins for Apache JMeter, not affiliated with Apache Software Foundation, graphs, load shapers, new functions."
      class="PWE\Modules\HTMLPage\HTMLPage" src="index.html">
 
-    <url link="home" title="Home" menu="1" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/#"/>
+    <url link="home" title="Home" menu="1" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/#" ico="fa-home"/>
     <url link="downloads" title="Downloads" menu="1" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl"
-         start_page="all" files_base="files" download_link="../file" accept="1">
+         start_page="all" files_base="files" download_link="../file" accept="1" ico="fa-download">
         <url link="file" files_base="files" class="PWE\Modules\FileDownloads\FileDownloads" accept="2"/>
     </url>
-    <url link="wiki" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" start_page="Start"
+    <url link="wiki" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" start_page="Start" ico="fa-book"
          accept="1" menu="1" title="Documentation"/>
 
     <url link="support" menu="1" title="Support Forums" class="PWE\Modules\RedirectAccepted\RedirectAccepted"
-         base="http://groups.google.com/forum/#!forum/jmeter-plugins" accept="1"/>
-    <url link="sources" title="Source Code" menu="1" menu_icon="/img/icons/github.png"
+         base="http://groups.google.com/forum/#!forum/jmeter-plugins" accept="1" ico="fa-support"/>
+    <url link="sources" title="Source Code" menu="1" ico="fa-github-alt"
          class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="https://github.com/undera/jmeter-plugins"/>
 </url>

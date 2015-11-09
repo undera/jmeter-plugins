@@ -1,22 +1,151 @@
 body {
     background-color: white;
+    font-family: Tahoma, Arial, Verdana, sans-serif;
 }
 
 .position {
     border-bottom: 1px solid #c9d7f1;
+    font-size: smaller;
 }
 
-.menu1 {
-    border-top: 0.5em solid #ebeff9;
+.site-header {
+    padding-bottom: 0.5em;
 }
 
-.menu1 td {
-    font-size: 1em;
-    background: #ebeff9;
-    padding: 0.4em 1em;
+.site-header > * {
+    display: inline-block;
+    color: #666;
+    vertical-align: middle;
+    margin-left: 1em;
+}
+
+.site-header > div > div:first-child {
+    font-size: 2.5em;
+}
+
+.site-header .sponsorship {
+    margin-top: 0.5em;
+}
+
+nav.navbar-default {
+    padding: 0.5em 0 0 0.5em;
+    border: none;
+    background: #ebeff9 none;
+    vertical-align: bottom;
+    min-height: 0;
     border-bottom: 1px solid #6b90da;
+    box-shadow: none;
 }
 
+nav.navbar-default .navbar-nav li {
+    vertical-align: bottom;
+    white-space: nowrap;
+}
+
+nav.navbar-default .navbar-nav li.active {
+    margin-bottom: -1px;
+    border: 1px solid #6b90da;
+    border-bottom: 1px solid white;
+    background-color: white;
+}
+nav.navbar-default .navbar-nav li a i {
+    margin-right: 0.25em;
+    color: #666;
+}
+
+nav.navbar-default .navbar-nav li a {
+    padding: 0.25em 0.5em;
+    padding-bottom: 0.5em;
+    margin: 0 0.5em;
+    background: none;
+    font-weight: bold;
+    color: #337ab7;
+}
+
+nav.navbar-default .navbar-nav li.active a {
+    background: none;
+    box-shadow: none;
+}
+
+footer .container {
+    margin-top: 3em;
+    padding: 0.5em;
+    border-top: 2px solid #ccc;
+    font-size: smaller;
+    color: gray;
+}
+
+/* Plugin Sets */
+.plugins_set {
+    border-radius: 1em;
+    padding: 1em;
+    border: 1px solid;
+    vertical-align: top;
+}
+
+.plugins_set h2 {
+    margin-top: 0;
+}
+
+.standard_set {
+    background-color: #DDF;
+    border-color: #AAD;
+}
+
+.extras_set {
+    background-color: #DFD;
+    border-color: #ADA;
+}
+
+.extraslibs_set {
+    background-color: #FDD;
+    border-color: #DAA;
+}
+
+.webdriver_set {
+    background-color: #FDF;
+    border-color: #DAD;
+}
+
+.hadoop_set {
+    background-color: #FFD;
+    border-color: #DDA;
+}
+
+/* Downloads */
+.file_download {
+    display: block;
+    border: 1px dotted silver;
+    margin: 1em;
+    padding: 0.5em;
+    background-color: #EEE;
+}
+
+.file_download a {
+    background-image: url('/img/icons/download-icon.png');
+    background-repeat: no-repeat;
+    padding-left: 2em;
+}
+
+.file_download i {
+    padding-left: 2em;
+}
+
+.file_download b {
+    font-size: larger;
+}
+
+.file_download .filesize, .file_download .filedate {
+    color: gray;
+    font-weight: bold;
+}
+
+.file_download .count {
+    color: gray;
+    float: right;
+}
+
+/* old/new =============================================================================
 
 .menu1 td.hl {
     background-color: white;
@@ -30,15 +159,9 @@ a.hl, .hl a, .hl {
     text-decoration: none;
 }
 
-table.breadcrumbs {
-    position: fixed; 
-    z-index: 999;
-}
-
 #toppanel {
     padding-top: 1.2em;
 }
-
 
 td.logo {
     padding: 1em;
@@ -47,7 +170,7 @@ td.logo {
 td.header_title {
     white-space: nowrap;
     font-weight: normal;
-    width: 100%; 
+    width: 100%;
     font-size: 1.4em;
     color: #666;
 }
@@ -56,23 +179,18 @@ td.header_right {
     vertical-align: middle;
 }
 
-.main td.root
-{
+.main td.root {
     border: none;
     background-color: transparent;
     padding: 5px 10px;
 }
 
-h1, h2, h3, h4
-{
+h1, h2, h3, h4 {
     color: black;
 }
-
-td.footer {
-    border-top: 2px solid #ccc;
-}
-
+*/
 /* WIKI */
+/*
 table.wiki pre, table.wiki tt {
     background-color: #EEE;
     font-size: 1.2em;
@@ -103,74 +221,12 @@ table.wiki .toc-list1 {
     padding-bottom: 1em;
     border-bottom: 2px dotted #ccc;
 }
+*/
 
-/* Plugin Sets */
-.plugins_set {
-    border-radius: 1em; 
-    padding: 1em; 
-    border-style: solid;
-    border-width: 1px;
-    vertical-align: top;
-}
+*
 
-.plugins_set h2 {
-    margin-top: 0px;
-}
+/
 
-.standard_set {
-    background-color: #DDF; 
-    border-color: #AAD; 
-}
+*
 
-.extras_set {
-    background-color: #DFD; 
-    border-color: #ADA; 
-}
-
-.extraslibs_set {
-    background-color: #FDD; 
-    border-color: #DAA; 
-}
-
-.webdriver_set {
-    background-color: #FDF; 
-    border-color: #DAD; 
-}
-
-.hadoop_set {
-    background-color: #FFD; 
-    border-color: #DDA; 
-}
-
-/* Downloads */
-.file_download {
-    display: block;
-    border: 1px dotted silver;
-    margin: 1em;
-    padding: 0.5em;
-    background-color: #EEE;
-}
-
-.file_download a {
-    background-image: url('/img/icons/download-icon.png'); 
-    background-repeat: no-repeat;
-    padding-left: 2em;
-}
-
-.file_download i {
-    padding-left: 2em;
-}
-
-.file_download b {
-    font-size: larger;
-}
-
-.file_download .filesize, .file_download .filedate {
-    color: gray;
-    font-weight: bold;
-}
-
-.file_download .count {
-    color: gray;
-  float:right;
-}
+/

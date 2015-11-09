@@ -1,3 +1,5 @@
+/site/composer.lock
+/site/vendor
 /jmeter.log
 /bundle/
 /target/

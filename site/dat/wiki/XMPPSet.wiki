@@ -1,0 +1,6 @@
+= BlazeMeter's XMPP Set =
+
+XMPP/Jabber testing capabilities
+  * [XMPPConnection XMPP Connection Config]
+  * [XMPPSampler XMPP Sampler]
+ 

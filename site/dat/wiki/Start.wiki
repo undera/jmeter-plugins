@@ -109,6 +109,14 @@ Selenium/WebDriver testing ability. It's good to start with [WebDriverTutorial 2
 </td>
 </tr><tr>
 <td >
+<div class="plugins_set xmpp_set">
+== BlazeMeter's XMPP Set ==
+XMPP/Jabber testing capabilities
+  * [XMPPConnection XMPP Connection Config] [/img/icons/new_wog.gif]
+  * [XMPPSampler XMPP Sampler] [/img/icons/new_wog.gif]
+</div>
+</td>
+<td >
 <div class="plugins_set hadoop_set">
 == Hadoop Set ==
 Hadoop/HBase testing plugins.

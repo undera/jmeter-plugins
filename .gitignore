@@ -2,6 +2,7 @@
 /site/vendor
 /jmeter.log
 /bundle/
+/files/
 /target/
 /*/target/
 nbactions.xml

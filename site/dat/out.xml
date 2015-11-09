@@ -1,8 +1,6 @@
-<url title="JMeter Plugins" template="plugins.tpl"
-     custom_logo="/img/site/logo.png"
+<url title="JMeter Plugins" template="dat/plugins.tpl"
      keywords="jmeter, plugins, load, performance, analysis, graphs, hadoop, webdriver, selenium"
      description="A custom set of plugins for Apache JMeter, not affiliated with Apache Software Foundation, graphs, load shapers, new functions."
-
      class="PWE\Modules\HTMLPage\HTMLPage" src="index.html">
 
     <url link="home" title="Home" menu="1" menu_icon="/img/icons/home.gif"

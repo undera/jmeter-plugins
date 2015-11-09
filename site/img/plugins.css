@@ -2,6 +2,10 @@ body {
     background-color: white;
 }
 
+.position {
+    border-bottom: 1px solid #c9d7f1;
+}
+
 .menu1 {
     border-top: 0.5em solid #ebeff9;
 }
@@ -24,10 +28,6 @@ body {
 a.hl, .hl a, .hl {
     color: black;
     text-decoration: none;
-}
-
-table.breadcrumbs td {
-    border-bottom: 1px solid #c9d7f1;
 }
 
 table.breadcrumbs {

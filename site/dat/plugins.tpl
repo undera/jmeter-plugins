@@ -33,7 +33,6 @@
 
   <meta name="keywords" content="{$node.$i.keywords|default:$node.$i.keywords}"/>
   <meta name="description" content="{$node.$i.description|default:$node.$i.description}"/>
-  <link rel="icon" type="image/png" href="/img/favicon.png">
   <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   {if $smarty.server.SERVER_ADDR==$smarty.server.REMOTE_ADDR}
     <style type='text/css'>
@@ -50,7 +49,7 @@
 <div class="header clearfix">
   <div class="container">
     <div class="row topmost">
-      <div class="col-md-6 pull-left">
+      <div class="col-md-12">
         {URL->getParamsCount assign=paramsCount}
         {URL->getMatchedCount assign=matchCount}
         {assign var=root value=$node}
@@ -103,7 +102,7 @@
 
     <div class="site-header">
       <span class="logo"><a href="/"><img src="/img/site/logo.png" alt="JMeter-Plugins.org"/></a></span>
-      <span class="purpose">Automation-friendly framework for Continuous Testing</span>
+      <span class="purpose">JMeter-Plugins.org</span>
     </div>
 
     <table style="white-space: nowrap; vertical-align: middle;">
@@ -112,31 +111,32 @@
           <a href="http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki"
              target="_blank"><img src="/img/site/blazemeter-mini.png" alt=""></a>
         </td>
-
-        <td style="padding: 0 0.5em;">
-          <div style="background-color: #ffffd6; border: 1px solid #EE9900; height: 56px; font-size: 80%;
-padding: 2px 4px; vertical-align: middle; cursor: pointer;"
-               onclick="window.location.href='http://loadosophia.org/?utm_source=jpgc&utm_medium=header&utm_campaign=sponsorship';">
-            <a href="http://loadosophia.org/?utm_source=jpgc&utm_medium=header&utm_campaign=sponsorship"
-               style="text-decoration: none; color: black;">
-              <span style="color: gray">Sponsored by:</span><br/>
-              <span style="font-size: 120%; font-weight: bold; color: #cc6600;">Loadosophia.org &ndash;</span><br/>
-              load test results<br/> analysis service
-            </a>
-          </div>
-        </td>
-        <td style="padding: 0 0.5em;">
-          <div style="background-color: #EEE; border: 1px dashed gray; height: 56px; font-size: 80%;
-padding: 2px 4px; vertical-align: middle; cursor: pointer;"
-               onclick="window.location.href='http://loadosophia.org/?utm_source=jpgc&amp;utm_medium=header&amp;utm_campaign=promo';">
-            <a href="http://gettaurus.org/?utm_source=jpgc&amp;utm_medium=header&amp;utm_campaign=sponsorship"
-               style="text-decoration: none; color: black;">
-              <span style="color: black">Check out new open source<br></span>
-              <img src="http://gettaurus.org/img/favicon.png" style="vertical-align: bottom;" alt=""/>
-              <span style="font-size: 140%; font-weight: bold; color: #0000FF;">Project "Taurus"</span>
-              <br>an automation wrapper<br>for JMeter and other testing tools</a>
-          </div>
-        </td>
+        <!--
+                <td style="padding: 0 0.5em;">
+                  <div style="background-color: #ffffd6; border: 1px solid #EE9900; height: 56px; font-size: 80%;
+        padding: 2px 4px; vertical-align: middle; cursor: pointer;"
+                       onclick="window.location.href='http://loadosophia.org/?utm_source=jpgc&utm_medium=header&utm_campaign=sponsorship';">
+                    <a href="http://loadosophia.org/?utm_source=jpgc&utm_medium=header&utm_campaign=sponsorship"
+                       style="text-decoration: none; color: black;">
+                      <span style="color: gray">Sponsored by:</span><br/>
+                      <span style="font-size: 120%; font-weight: bold; color: #cc6600;">Loadosophia.org &ndash;</span><br/>
+                      load test results<br/> analysis service
+                    </a>
+                  </div>
+                </td>
+                <td style="padding: 0 0.5em;">
+                  <div style="background-color: #EEE; border: 1px dashed gray; height: 56px; font-size: 80%;
+        padding: 2px 4px; vertical-align: middle; cursor: pointer;"
+                       onclick="window.location.href='http://loadosophia.org/?utm_source=jpgc&amp;utm_medium=header&amp;utm_campaign=promo';">
+                    <a href="http://gettaurus.org/?utm_source=jpgc&amp;utm_medium=header&amp;utm_campaign=sponsorship"
+                       style="text-decoration: none; color: black;">
+                      <span style="color: black">Check out new open source<br></span>
+                      <img src="http://gettaurus.org/img/favicon.png" style="vertical-align: bottom;" alt=""/>
+                      <span style="font-size: 140%; font-weight: bold; color: #0000FF;">Project "Taurus"</span>
+                      <br>an automation wrapper<br>for JMeter and other testing tools</a>
+                  </div>
+                </td>
+                -->
       </tr>
     </table>
   </div>

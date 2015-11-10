@@ -32,7 +32,6 @@
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-common</artifactId>
             <version>${project.parent.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>

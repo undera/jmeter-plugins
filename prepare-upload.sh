@@ -43,4 +43,12 @@ rename $PAT upload/files/nightly/*
 # examples
 cp -r examples upload/img/
 
-tar -czf upload.tgz upload *.sh
+curl -sS https://getcomposer.org/installer | php
+cd upload
+../composer.phar update
+cp vendor/undera/pwe/.htaccess ./
+cd ..
+
+cd site
+zip -r site.zip * .htaccess
+cd ..

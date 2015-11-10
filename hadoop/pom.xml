@@ -36,14 +36,6 @@
         </repository>
     </distributionManagement>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java-version>1.7</java-version>
-        <cmdrunner-version>1.0.1</cmdrunner-version>
-        <powermock.version>1.5</powermock.version>
-        <cobertura-maven.version>2.5.2</cobertura-maven.version>
-    </properties>
-
     <repositories>
         <repository>
             <id>cloudera repository</id>

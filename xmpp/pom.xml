@@ -11,11 +11,6 @@
     <groupId>com.blazemeter.jmeter</groupId>
     <artifactId>blazemeter-xmpp</artifactId>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java-version>1.7</java-version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.jmeter</groupId>
@@ -108,7 +103,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.6</version>
+                <version>${cobertura-maven.version}</version>
                 <configuration>
                     <check/>
                     <formats>

@@ -44,8 +44,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-version>1.7</java-version>
         <jmeter.version>2.13</jmeter.version>
-        <powermock.version>1.5</powermock.version>
-        <cobertura-maven.version>2.5.2</cobertura-maven.version>
+        <powermock.version>1.6.2</powermock.version>
+        <cobertura-maven.version>2.7</cobertura-maven.version>
+        <cmdrunner-version>1.0.2</cmdrunner-version>
     </properties>
 
     <repositories>

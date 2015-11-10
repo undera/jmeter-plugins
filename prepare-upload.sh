@@ -49,6 +49,4 @@ cd upload
 cp vendor/undera/pwe/.htaccess ./
 cd ..
 
-cd site
-zip -r site.zip * .htaccess
-cd ..
+zip -r site.zip upload/* upload/.htaccess

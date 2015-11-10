@@ -58,7 +58,7 @@
       <hashTree>
         <com.blazemeter.jmeter.xmpp.JMeterXMPPSampler guiclass="com.blazemeter.jmeter.xmpp.JMeterXMPPSamplerGui" testclass="com.blazemeter.jmeter.xmpp.JMeterXMPPSampler" testname="Connect" enabled="true">
           <stringProp name="TestPlan.comments">This plugin is developed by www.blazemeter.com</stringProp>
-          <stringProp name="action">com.blazemeter.jmeter.xmpp.actions.Connect</stringProp>
+          <stringProp name="action">com.blazemeter.jmeter.xmpp.actions.SendMessage</stringProp>
           <stringProp name="login"></stringProp>
           <stringProp name="password"></stringProp>
           <stringProp name="xml"></stringProp>

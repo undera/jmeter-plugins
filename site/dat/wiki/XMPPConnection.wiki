@@ -12,9 +12,9 @@ there's a lot of value to load testing people.
 
 == Description ==
 
-XMPP Connection Config item is required for any XMPP testing script. XMPP Samplers take connection context from this element.
+XMPP Connection Config item is required for any XMPP testing script. [XMPPSampler XMPP Samplers] take connection context from this element.
 
-TCP tansport is fully function and tested with common XMPP servers, like {{{ejabberd}}} and {{{openfire}}}.
+TCP tansport is fully functional and tested with common XMPP servers, like {{{ejabberd}}}, {{{openfire}}} and {{{hipchat}}}.
 
 BOSH protocol is experimental and may be not fully functional.
 

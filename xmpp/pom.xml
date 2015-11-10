@@ -31,7 +31,7 @@
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-common</artifactId>
-            <version>1.1.3</version>
+            <version>${parent.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -49,11 +49,6 @@
             <groupId>org.igniterealtime.smack</groupId>
             <artifactId>smack-extensions</artifactId>
             <version>4.0.7</version>
-        </dependency>
-        <dependency>
-            <groupId>kg.apc</groupId>
-            <artifactId>jmeter-plugins-common</artifactId>
-            <version>1.4.0</version>
         </dependency>
     </dependencies>
 

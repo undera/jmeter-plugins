@@ -56,7 +56,6 @@ import kg.apc.charting.GraphPanelChart;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 
-import org.apache.commons.lang.math.NumberUtils;
 import org.apache.jmeter.gui.util.FileDialoger;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.samplers.SampleResult;

@@ -1,5 +1,9 @@
+/site/.htaccess
+/site/composer.lock
+/site/vendor
 /jmeter.log
 /bundle/
+/site/files/
 /target/
 /*/target/
 nbactions.xml

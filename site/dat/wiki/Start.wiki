@@ -3,8 +3,9 @@
   * [Changelog] to see latest changes
   * [Roadmap] to see upcoming improvements and fresh ideas
 
-<table style="border-spacing:1em;"><tr>
-<td class="plugins_set standard_set" style="width: 50%">
+<table class="table"><tr>
+<td style="width: 50%">
+<div class="plugins_set standard_set" >
 == Standard Set ==
 Basic plugins for everyday needs. Does not require additional libs to run.
 
@@ -35,16 +36,17 @@ Basic plugins for everyday needs. Does not require additional libs to run.
 
 === Samplers ===
   * [DummySampler Dummy Sampler] for debugging and programming tests
-
+</div>
 </td>
-<td class="plugins_set extras_set" style="width: 50%">
+<td style="width: 50%">
+<div class="plugins_set extras_set" >
 == Extras Set ==
 Additional plugins for extended and complex testing. Does not require additional libs to run.
 
 === Graphs ===
   * [ResponseCodesPerSecond Response Codes per Second]
   * [LatenciesOverTime Response Latencies Over Time]
-  * [ConnectTimeOverTime Connect Times Over Time] [/img/icons/new_wog.gif]
+  * [ConnectTimeOverTime Connect Times Over Time]
   * [BytesThroughput Bytes Throughput Over Time]
   * [PageDataExtractor Extracted Data Over Time] 
   * [DbMon DbMon Sample Collector]
@@ -71,9 +73,11 @@ Additional plugins for extended and complex testing. Does not require additional
   * [LockFile Lock Files]
   * [HttpSimpleTableServer HTTP Simple Table Server] to manage the dataset
   * [MergeResults Merge Results] to simplify the comparison of two or more load tests
+</div>
 </td>
 </tr><tr>
-<td class="plugins_set extraslibs_set">
+<td>
+<div class="plugins_set extraslibs_set">
 == Extras with Libs Set ==
 Additional plugins that _do require_ additional libs to run.
 
@@ -89,7 +93,8 @@ Additional plugins that _do require_ additional libs to run.
   * [RedisDataSet Redis Data Set]
 
 </td>
-<td class="plugins_set webdriver_set">
+<td >
+<div class="plugins_set webdriver_set">
 == WebDriver Set ==
 Selenium/WebDriver testing ability. It's good to start with [WebDriverTutorial 2-minute tutorial] to learn how to use it.
 
@@ -99,10 +104,20 @@ Selenium/WebDriver testing ability. It's good to start with [WebDriverTutorial 2
   * [FirefoxDriverConfig Firefox Config]
   * [HtmlUnitDriverConfig HTMLUnit Config]
   * [RemoteDriverConfig Remote WebDriver Config]
-
+  * [PhantomJSDriverConfig PhantomJS Config] [/img/icons/new_wog.gif]
+</div>
 </td>
 </tr><tr>
-<td class="plugins_set hadoop_set">
+<td >
+<div class="plugins_set xmpp_set">
+== BlazeMeter's XMPP Set ==
+XMPP/Jabber testing capabilities
+  * [XMPPConnection XMPP Connection Config] [/img/icons/new_wog.gif]
+  * [XMPPSampler XMPP Sampler] [/img/icons/new_wog.gif]
+</div>
+</td>
+<td >
+<div class="plugins_set hadoop_set">
 == Hadoop Set ==
 Hadoop/HBase testing plugins.
   * [HBaseConnection HBase Connection Config]
@@ -111,7 +126,8 @@ Hadoop/HBase testing plugins.
   * [HBaseCRUDSampler HBase CRUD Sampler]
   * [HBaseScanSampler HBase Scan Sampler]
   * [HBaseRowkeySampler HBase Rowkey Sampler]
-
+</div>
+</td>
 </tr></table>
 
 

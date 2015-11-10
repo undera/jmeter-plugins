@@ -1,146 +1,127 @@
 body {
     background-color: white;
+    font-family: Tahoma, Arial, Verdana, sans-serif;
 }
 
-.menu1 {
-    border-top: 0.5em solid #ebeff9;
-}
-
-.menu1 td {
-    font-size: 1em;
-    background: #ebeff9;
-    padding: 0.4em 1em;
-    border-bottom: 1px solid #6b90da;
-}
-
-
-.menu1 td.hl {
-    background-color: white;
-    background-image: none;
-    border: 1px solid #6b90da;
-    border-bottom: none;
-}
-
-a.hl, .hl a, .hl {
-    color: black;
-    text-decoration: none;
-}
-
-table.breadcrumbs td {
+.position {
     border-bottom: 1px solid #c9d7f1;
+    font-size: smaller;
 }
 
-table.breadcrumbs {
-    position: fixed; 
-    z-index: 999;
+.site-header {
+    padding-bottom: 0.5em;
 }
 
-#toppanel {
-    padding-top: 1.2em;
+.site-header > * {
+    display: inline-block;
+    color: #666;
+    vertical-align: middle;
+    margin-left: 1em;
 }
 
-
-td.logo {
-    padding: 1em;
+.site-header > div > div:first-child {
+    font-size: 2.5em;
 }
 
-td.header_title {
+.site-header .sponsorship {
+    margin-top: 0.5em;
+}
+
+nav.navbar-default {
+    padding: 0.5em 0 0 0.5em;
+    border: none;
+    background: #ebeff9 none;
+    vertical-align: bottom;
+    min-height: 0;
+    border-bottom: 1px solid #6b90da;
+    box-shadow: none;
+}
+
+nav.navbar-default .navbar-nav li {
+    vertical-align: bottom;
     white-space: nowrap;
-    font-weight: normal;
-    width: 100%; 
-    font-size: 1.4em;
+}
+
+nav.navbar-default .navbar-nav li.active {
+    margin-bottom: -1px;
+    border: 1px solid #6b90da;
+    border-bottom: 1px solid white;
+    background-color: white;
+}
+
+nav.navbar-default .navbar-nav li a i {
+    margin-right: 0.25em;
     color: #666;
 }
 
-td.header_right {
-    vertical-align: middle;
+nav.navbar-default .navbar-nav li a {
+    padding: 0.25em 0.5em 0.5em;
+    margin: 0 0.5em;
+    background: none;
+    font-weight: bold;
+    color: #337ab7;
 }
 
-.main td.root
-{
-    border: none;
-    background-color: transparent;
-    padding: 5px 10px;
+nav.navbar-default .navbar-nav li.active a:hover {
+    background: none;
+    color: #337ab7;
 }
 
-h1, h2, h3, h4
-{
-    color: black;
+nav.navbar-default .navbar-nav li.active a {
+    background: none;
+    box-shadow: none;
 }
 
-td.footer {
+footer .container {
+    margin-top: 3em;
+    padding: 0.5em;
     border-top: 2px solid #ccc;
-}
-
-/* WIKI */
-table.wiki pre, table.wiki tt {
-    background-color: #EEE;
-    font-size: 1.2em;
-    padding: 0px 0.25em;
-}
-
-table.wiki pre {
-    padding: 1em;
-}
-
-table.wiki .sidebar {
-    white-space: nowrap;
-    padding-left: 1em;
-    border-left: 2px solid #ccc;
-}
-
-table.wiki .sidebar sup, table.wiki .sidebar font {
-    display: none;
-}
-
-table.wiki .toc-list {
-    margin-bottom: 0.75em;
-    white-space: nowrap;
-    list-style-type: decimal;
-}
-
-table.wiki .toc-list1 {
-    padding-bottom: 1em;
-    border-bottom: 2px dotted #ccc;
+    font-size: smaller;
+    color: gray;
 }
 
 /* Plugin Sets */
 .plugins_set {
-    border-radius: 1em; 
-    padding: 1em; 
-    border-style: solid;
-    border-width: 1px;
+    border-radius: 1em;
+    padding: 1em;
+    border: 1px solid;
     vertical-align: top;
 }
 
-.plugins_set h2 {
-    margin-top: 0px;
+.plugins_set h3, .plugins_set h2 {
+    margin-top: 0;
 }
 
 .standard_set {
-    background-color: #DDF; 
-    border-color: #AAD; 
+    background-color: #DDF;
+    border-color: #AAD;
 }
 
 .extras_set {
-    background-color: #DFD; 
-    border-color: #ADA; 
+    background-color: #DFD;
+    border-color: #ADA;
 }
 
 .extraslibs_set {
-    background-color: #FDD; 
-    border-color: #DAA; 
+    background-color: #FDD;
+    border-color: #DAA;
 }
 
 .webdriver_set {
-    background-color: #FDF; 
-    border-color: #DAD; 
+    background-color: #FDF;
+    border-color: #DAD;
 }
 
 .hadoop_set {
-    background-color: #FFD; 
-    border-color: #DDA; 
+    background-color: #DDD;
+    border-color: #AAA;
 }
+
+.xmpp_set {
+    background-color: #FFD;
+    border-color: #DDA;
+}
+
 
 /* Downloads */
 .file_download {
@@ -152,8 +133,7 @@ table.wiki .toc-list1 {
 }
 
 .file_download a {
-    background-image: url('/img/icons/download-icon.png'); 
-    background-repeat: no-repeat;
+    background: url('/img/icons/download-icon.png') no-repeat;
     padding-left: 2em;
 }
 
@@ -172,5 +152,86 @@ table.wiki .toc-list1 {
 
 .file_download .count {
     color: gray;
-  float:right;
+    float: right;
+}
+
+/* WIKI */
+table.wiki {
+    width: 100%;
+}
+
+table.wiki td {
+    vertical-align: top;
+}
+
+table.wiki tbody tr td:first-child {
+    padding-right: 3em;
+}
+
+table.wiki pre, table.wiki tt {
+    background-color: #DDD;
+    font-size: 1em;
+    padding: 0 0.25em;
+    border-radius: 0.25em;
+}
+
+table.wiki pre {
+    padding: 1em;
+    overflow: hidden;
+    font-size: 0.8em;
+}
+
+table.wiki ol, table.wiki ul {
+    line-height: 1.7;
+}
+
+table.wiki .sidebar {
+    border-radius: 0.3em;
+    white-space: nowrap;
+    padding-left: 1em;
+    border-left: 1px solid #eee;
+    vertical-align: top;
+}
+
+table.wiki .sidebar sup, table.wiki .sidebar font {
+    display: none;
+}
+
+table.wiki .toc-list {
+    margin-bottom: 0.75em;
+    white-space: nowrap;
+    list-style-type: decimal;
+}
+
+table.wiki .toc-list1 {
+    padding-bottom: 3em;
+}
+
+table.wiki a.anchorLink {
+    vertical-align: bottom;
+    padding-left: 0.5em;
+    font-size: 0.8em;
+    text-decoration: none;
+    color: gray;
+    top: -0.25em;
+}
+
+table.wiki img {
+    max-width: 100%;
+}
+
+.stick {
+    position: fixed;
+    top: 2em;
+    display: block;
+}
+
+/* Home */
+.sets-list div {
+    margin-bottom: 1em;
+}
+
+.sets-list div img {
+    height: 64px;
+    margin-left: 2em;
 }

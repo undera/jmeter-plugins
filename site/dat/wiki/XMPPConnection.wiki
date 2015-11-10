@@ -1,0 +1,21 @@
+<div style="float: right" class="plugins_set xmpp_set">Available in [XMPPSet XMPP Set]</div>
+= XMPP Connection Config <sup><font color=gray size="1">since 1.4.0</font></sup>=
+
+== Authorship ==
+<span class="pull-right" style="margin-left: 1em">
+[http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki https://d3qmoqvtroy6p7.cloudfront.net/logo.png]
+</span>
+
+This plugin was originally developed by _[http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki BlazeMeter Inc.]_ and then generously donated to community as Open Source. 
+Check out their [http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki load testing service], 
+there's a lot of value to load testing people.
+
+== Description ==
+
+XMPP Connection Config item is required for any XMPP testing script. [XMPPSampler XMPP Samplers] take connection context from this element.
+
+TCP tansport is fully functional and tested with common XMPP servers, like {{{ejabberd}}}, {{{openfire}}} and {{{hipchat}}}.
+
+BOSH protocol is experimental and may be not fully functional.
+
+[/img/wiki/xmpp-connection.png]

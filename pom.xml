@@ -4,7 +4,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins</artifactId>
-    <version>1.3.2</version>
+    <version>1.4.0</version>
     <packaging>pom</packaging>
 
     <name>JMeter Plugins - Parent</name>
@@ -42,10 +42,11 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java-version>1.6</java-version>
+        <java-version>1.7</java-version>
         <jmeter.version>2.13</jmeter.version>
-        <powermock.version>1.5</powermock.version>
-        <cobertura-maven.version>2.5.2</cobertura-maven.version>
+        <powermock.version>1.6.2</powermock.version>
+        <cobertura-maven.version>2.7</cobertura-maven.version>
+        <cmdrunner-version>1.0.2</cmdrunner-version>
     </properties>
 
     <repositories>
@@ -62,6 +63,7 @@
         <module>extraslibs</module>
         <module>hadoop</module>
         <module>webdriver</module>
+        <module>xmpp</module>
     </modules>
 
 </project>

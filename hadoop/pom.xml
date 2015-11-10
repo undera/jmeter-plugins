@@ -5,7 +5,7 @@
     <parent>
         <groupId>kg.apc</groupId>
         <artifactId>jmeter-plugins</artifactId>
-        <version>1.3.2</version>
+        <version>1.4.0</version>
     </parent>
     <artifactId>jmeter-plugins-hadoop</artifactId>
     <packaging>jar</packaging>
@@ -35,14 +35,6 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java-version>1.6</java-version>
-        <cmdrunner-version>1.0.1</cmdrunner-version>
-        <powermock.version>1.5</powermock.version>
-        <cobertura-maven.version>2.5.2</cobertura-maven.version>
-    </properties>
 
     <repositories>
         <repository>

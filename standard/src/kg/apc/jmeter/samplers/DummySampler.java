@@ -49,7 +49,15 @@ public class DummySampler
         res.setResponseData(getResponseData().getBytes());
 
         res.setLatency(getLatency());
-        res.setConnectTime(getConnectTime());
+
+
+        try {
+            if (SampleResult.class.getMethod("setConnectTime", long.class) != null) {
+                res.setConnectTime(getConnectTime());
+            }
+        } catch (NoSuchMethodException e1) {
+            // not setting connect time, seems we have JMeter 2.12 or earlier
+        }
 
         return res;
     }

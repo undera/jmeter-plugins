@@ -163,7 +163,12 @@ table.wiki {
 table.wiki td {
     vertical-align: top;
 }
-
+                  
+table.wiki h1 font, table.wiki h2 font, table.wiki h3 font {
+    font-size: 0.6em;
+    margin-left: 0.25em;
+}
+                  
 table.wiki tbody tr td:first-child {
     padding-right: 3em;
 }
@@ -178,7 +183,7 @@ table.wiki pre, table.wiki tt {
 table.wiki pre {
     padding: 1em;
     overflow: hidden;
-    font-size: 0.8em;
+    color: black;
 }
 
 table.wiki ol, table.wiki ul {

@@ -129,20 +129,6 @@ Example, returning length of variable {{{varName}}}:
 ${__strLen(${varName})}
 }}}
 
-== uppercase and lowercase<sup><font color=gray size="1">since 0.4.2</font></sup> ==
-
-This functions used to transform the case of constant string or variable value.
-
-Parameters:
-  # First value is string constant, variable, or function call - required
-  # Second argument - variable name to store the result
-
-Example, transforming 'test' into 'TEST' and also saving it to variable {{{someVariable}}}:
-
-{{{
-${__uppercase(test, someVariable)}
-}}}
-
 == substring<sup><font color=gray size="1">since 0.4.2</font></sup> ==
 
 This function is wrapper for Java [http://download.oracle.com/javase/6/docs/api/java/lang/String.html?is-external=true#substring String.substring] method.
@@ -157,6 +143,52 @@ Example, getting 'str' from 'test string':
 
 {{{
 ${__substring(test string, 5, 8)}
+}}}
+
+== strReplace<sup><font color=gray size="1">since 1.4.0</font></sup> ==
+
+This function is wrapper for Java [http://docs.oracle.com/javase/7/docs/api/java/lang/String.html#replace(java.lang.CharSequence,%20java.lang.CharSequence) String.replace] method.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+  # Search substring
+  # Replacement
+  # Optional variable to store result
+
+Example, getting 'banana dog orange' from 'banana apple orange':
+
+{{{
+${__strReplace(banana apple orange,apple,dog)}
+}}}
+
+== strReplaceRegex<sup><font color=gray size="1">since 1.4.0</font></sup> ==
+
+This function is wrapper for Java [http://docs.oracle.com/javase/7/docs/api/java/lang/String.html#replaceAll(java.lang.String,%20java.lang.String) String.replace] method.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+  # Search regular expression
+  # Replacement (can contain references to matched string parts, see [http://docs.oracle.com/javase/7/docs/api/java/util/regex/Matcher.html#replaceAll(java.lang.String) Matcher.replaceAll])
+  # Optional variable to store result
+
+Example, getting {{{banana-apple-orange}}} from {{{banana apple orange}}}:
+
+{{{
+${__strReplaceRegex(banana apple orange,' ',-)}
+}}}
+
+== uppercase and lowercase<sup><font color=gray size="1">since 0.4.2</font></sup> ==
+
+This functions used to transform the case of constant string or variable value.
+
+Parameters:
+  # First value is string constant, variable, or function call - required
+  # Second argument - variable name to store the result
+
+Example, transforming 'test' into 'TEST' and also saving it to variable {{{someVariable}}}:
+
+{{{
+${__uppercase(test, someVariable)}
 }}}
 
 == iterationNum<sup><font color=gray size="1">since 1.2.1</font></sup> ==
@@ -181,3 +213,5 @@ Example, gettig different values for jmeter variable:
 {{{
 ${__if(${size}, 5, ok, invalid)}
 }}}
+
+

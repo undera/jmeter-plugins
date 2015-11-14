@@ -30,6 +30,7 @@ import java.util.*;
 public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWaiter {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
+    public static final String STS_VERSION = "1.1";
     public static final String ROOT = "/sts/";
     public static final String ROOT2 = "/sts";
     public static final String URI_INITFILE = "INITFILE";
@@ -59,8 +60,11 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
             + "http://hostname:port/sts/READ?READ_MODE=[<i>FIRST</i>,<i>LAST</i>,<i>RANDOM</i>]&KEEP=[<i>TRUE</i>,<i>FALSE</i>]&FILENAME=file.txt</p>"
             + "<p>Return the number of remaining lines of a linked list:<br />"
             + "http://hostname:port/sts/LENGTH?FILENAME=file.txt</p>"
-            + "<p>Add a line into a file: (POST HTTP protocol)<br />"
-            + "FILENAME=file.txt,LINE=D0001123,ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]</p>"
+            + "<p>Add a line into a file: (GET OR POST HTTP protocol)<br />"
+            + "GET  : http://hostname:port/sts/ADD?FILENAME=file.txt&LINE=D0001123&ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]<br />"
+            + "GET Parameters : FILENAME=file.txt&LINE=D0001123&ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]<br />"
+            + "POST : http://hostname:port/sts/ADD<br />"
+            + "POST Parameters : FILENAME=file.txt,LINE=D0001123,ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]</p>"
             + "<p>Save the specified linked list in a file to the default location:<br />"
             + "http://hostname:port/sts/SAVE?FILENAME=file.txt</p>"
             + "<p>Display the list of loaded files and the number of remaining lines for each linked list:<br />"
@@ -127,7 +131,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
             msg = read(parms.get(PARM_READ_MODE), parms.get(PARM_KEEP),
                     parms.get(PARM_FILENAME));
         }
-        if (uri.equals(ROOT + URI_ADD) && Method.POST.equals(method)) {
+        if (uri.equals(ROOT + URI_ADD) && (Method.POST.equals(method) || (Method.GET.equals(method)))) {
             msg = add(parms.get(PARM_ADD_MODE), parms.get(PARM_LINE),
                     parms.get(PARM_FILENAME));
         }
@@ -417,6 +421,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         log.info("DATASET_DIR : " + dataset);
         log.info("TIMESTAMP : " + timestamp);
         log.info("------------------------------");
+        log.info("STS_VERSION : " + STS_VERSION);
         ServerRunner.executeInstance(serv);
     }
 

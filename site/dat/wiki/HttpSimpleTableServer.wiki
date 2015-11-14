@@ -194,9 +194,20 @@ login5;password5
 
 === ADD ===
 
-*Add a line into a file: (POST HTTP protocol)*
+*Add a line into a file: (GET OR POST HTTP protocol)*
 
-FILENAME=dossier.csv, LINE=D0001123, ADD_MODE={FIRST, LAST}
+GET Protocol
+{{{
+http://hostname:port/sts/ADD?FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST, LAST}
+}}}
+GET Parameters : FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST, LAST}
+
+
+POST Protocol
+{{{
+http://hostname:port/sts/ADD
+}}}
+POST Parameters : FILENAME=dossier.csv, LINE=D0001123, ADD_MODE={FIRST, LAST}
 
 HTML format:
 
@@ -212,6 +223,7 @@ Available options:
   * FILENAME=dossier.csv => if doesn't already exist it creates a LinkList in memory
   * LINE=1234;98763 => the line to add
 
+POST Protocol with parameters
 [/img/wiki/http_sts_add_request.png]
 
 === LENGTH  ===

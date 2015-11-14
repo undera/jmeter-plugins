@@ -102,6 +102,7 @@ public class HttpSimpleTableControl extends AbstractTestElement {
         log.info("Port=" + getPort());
         log.info("Dataset directory=" + getDataDir());
         log.info("Timestamp=" + getTimestamp());
+        log.info("STS Version=" + HttpSimpleTableServer.STS_VERSION);
         server = new HttpSimpleTableServer(getPort(), getTimestamp(),
                 getDataDir());
         server.start();

@@ -163,7 +163,7 @@ ${__strReplace(banana apple orange,apple,dog)}
 
 == strReplaceRegex<sup><font color=gray size="1">since 1.4.0</font></sup> ==
 
-This function is wrapper for Java [http://docs.oracle.com/javase/7/docs/api/java/lang/String.html#replaceAll(java.lang.String,%20java.lang.String) String.replace] method.
+This function is wrapper for Java [http://docs.oracle.com/javase/7/docs/api/java/lang/String.html#replaceAll(java.lang.String,%20java.lang.String) String.replaceAll] method.
 
 Parameters:
   # First value is string constant, variable, or function call - required

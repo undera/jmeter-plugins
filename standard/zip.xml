@@ -37,6 +37,7 @@
             <includes>
                 <include>JMeterPluginsCMD.*</include>
                 <include>TestPlanCheck.*</include>
+                <include>FilterResults.*</include>
             </includes>
             <fileMode>0755</fileMode>
             <outputDirectory>lib/ext</outputDirectory>

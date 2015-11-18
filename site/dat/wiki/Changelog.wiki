@@ -7,6 +7,8 @@
   * fix consequences of PR #80 further
   * make Dummy Sampler compatible with JMeter 2.12 and earlier
   * add custom functions strReplace and strReplaceRegex (thanks to Dima Lulko for suggesting)
+  * add FilterResultsTool command line tool, filter results by label (regex), offset, success, output file XML or CSV format
+  * change HttpSimpleTableServer command ADD a new line for a file with GET (new) or POST protocols
 
 == 1.3.1 <i><font color=gray size="1">October 12, 2015</font></i>==
   * add connectTime field into Flexible File Writer

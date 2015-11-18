@@ -12,7 +12,7 @@ Everyone who provided pull request or other contribution, deserves mentioning on
   * Lars Holmberg - [JMXMon] author
   * Matthew Fremont - improved [VariablesFromCSV] a lot
   * UbikLoadPack Team [http://ubikloadpack.com] - implemented [RedisDataSet] and [GraphsGeneratorListener]
-  * Vincent Daburon and Felix Henry - [HttpSimpleTableServer], [SynthesisReport], [MergeResults], temporal and regex filters
+  * Vincent Daburon and Felix Henry - authors for [HttpSimpleTableServer], [SynthesisReport], [MergeResults], [FilterResultsTool], temporal and regex filters for all graphs
   * Sergey Marakhov and Linh Pham - Android Driver Config
   * Bakir Jusufbegovic and Semir Sabic / AtlantBH - a lot of components
   * Jorge S. Cruz - added [RemoteDriverConfig] for connecting to a Selenium Grid

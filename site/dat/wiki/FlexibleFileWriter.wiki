@@ -38,98 +38,32 @@ This property controls the size for the buffer used to compose record to write t
 
 == Available Fields ==
 
-{|
-| startTime
-| epoch time when request was started 
-|-
-| endTime
-| epoch time when reading response ended 
-|-
-| responseTime
-| response time, time to full response loaded 
-|-
-| latency
-| latency, time to first response byte received (if available) 
-|-
-| connectTime
-| time to establish connection (if available) 
-|-
-| responseCode
-| response code (200, 404 etc.) 
-|-
-| responseMessage
-| response message (OK, Not Found etc.) 
-|-
-| responseFileName
-| Response File Name
-|-
-| responseHeaderSize
-| Size of response headers
-|-
-| responseSize
-| Size of response body
-|-
-| responseHeaders
-| response headers (if present in sample) 
-|-
-| responseData
-| response data 
-|-
-| requestData
-| request data from sample 
-|-
-| sentBytes
-| number of request bytes sent, if available 
-|-
-| receivedBytes
-| number of request bytes sent (if available) 
-|-
-| threadName
-| name of thread in Thread Group that processed request 
-|-
-| threadsCount
-| overall active threads count (since version 1.1.0) 
-|-
-| sampleLabel
-| name of the sampler that made request 
-|-
-| isSuccsessful
-| is response was marked as successful 
-|-
-| isFailed
-| is response was marked as failed (surrogate field) 
-|-
-| startTimeMillis
-| same as startTime, but divided by 1000 (surrogate field, example: 1311121131.362)
-|-
-| endTimeMillis
-| same as endTime, but divided by 1000 (surrogate field)
-|-
-| responseTimeMicros
-| same as responseTime, but multiplied by 1000 (surrogate field)
-|-
-| latencyMicros
-| same as latency, but multiplied by 1000 (surrogate field)
-|-
-| allThreads
-| total number of active threads in all groups
-|-
-| grpThreads
-| number of active threads in this thread group
-|-
-| sampleCount
-| number of samples (1, unless multiple samples are aggregated)
-|-
-| errorCount
-| number of errors (0 or 1, unless multiple samples are aggregated)
-|-
-| URL
-| The sample URL
-|-
-| {variable#<N>}
-|  Sample variable with index N, see below for details 
-|-
-|}
+|| startTime || epoch time when request was started ||
+|| endTime || epoch time when reading response ended ||
+|| responseTime || response time, time to full response loaded ||
+|| latency || latency, time to first response byte received (if available) ||
+|| connectTime || time to establish connection (if available) ||
+|| responseCode || response code (200, 404 etc.) ||
+|| responseMessage || response message (OK, Not Found etc.) ||
+|| responseHeaders || response headers (if present in sample) ||
+|| responseData || response data ||
+|| requestData || request data from sample ||
+|| sentBytes || number of request bytes sent, if available ||
+|| receivedBytes || number of request bytes sent (if available) ||
+|| threadName || name of thread in Thread Group that processed request ||
+|| threadsCount || overall active threads count (since version 1.1.0) ||
+|| sampleLabel || name of the sampler that made request ||
+|| isSuccsessful || is response was marked as successful ||
+|| isFailed || is response was marked as failed (surrogate field) ||
+|| startTimeMillis || same as startTime, but divided by 1000 (surrogate field, example: 1311121131.362)||
+|| endTimeMillis || same as endTime, but divided by 1000 (surrogate field)||
+|| responseTimeMicros || same as responseTime, but multiplied by 1000 (surrogate field)||
+|| latencyMicros ||  same as latency, but multiplied by 1000 (surrogate field)||
+|| grpThreads || number of active threads in this thread group ||
+|| sampleCount || number of samples (1, unless multiple samples are aggregated) ||
+|| errorCount || number of errors (0 or 1, unless multiple samples are aggregated) ||
+|| URL || The sample URL ||
+|| {{{variable#<N>}}} ||  Sample variable with index N, see below for details ||
 
 == Saving JMeter Variables with Flexible File Writer ==
 

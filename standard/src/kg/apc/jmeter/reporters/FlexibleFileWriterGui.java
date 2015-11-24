@@ -58,8 +58,8 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
             "threadName", "Name of thread in Thread Group that processed the request",
             "allThreads", "total number of active threads in all groups",
             "grpThreads", "number of active threads in this thread group",
-            "SampleCount", "number of samples (1, unless multiple samples are aggregated)",
-            "ErrorCount", "number of errors (0 or 1, unless multiple samples are aggregated)",
+            "sampleCount", "number of samples (1, unless multiple samples are aggregated)",
+            "errorCount", "number of errors (0 or 1, unless multiple samples are aggregated)",
             "URL", "The sample URL",
             "variable#<N>", "Sample variable with index N (eg. variable#2), see help for details"
     };

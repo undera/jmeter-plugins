@@ -56,7 +56,7 @@ public class FlexibleFileWriterGui extends AbstractListenerGui implements Clipbo
             "startTime", "Epoch time when the request was started",
             "startTimeMillis", "Same as startTime, but divided by 1000 (surrogate field, eg. 1311121131.062)",
             "threadName", "Name of thread in Thread Group that processed the request",
-            "allThreads", "total number of active threads in all groups",
+            "threadsCount", "total number of active threads in all groups",
             "grpThreads", "number of active threads in this thread group",
             "sampleCount", "number of samples (1, unless multiple samples are aggregated)",
             "errorCount", "number of errors (0 or 1, unless multiple samples are aggregated)",

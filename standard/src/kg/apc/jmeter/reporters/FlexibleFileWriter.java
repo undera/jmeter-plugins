@@ -45,7 +45,7 @@ public class FlexibleFileWriter
             + "responseTimeMicros latencyMicros "
             + "requestData responseData responseHeaders "
             + "threadsCount requestHeaders connectTime "
-            + "grpThreads SampleCount ErrorCount "
+            + "grpThreads sampleCount errorCount "
             + "responseHeaderSize responseSize URL";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String OVERWRITE = "overwrite";

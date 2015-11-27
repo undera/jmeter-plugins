@@ -43,7 +43,9 @@ public class FlexibleFileWriter
             + "startTimeMillis endTimeMillis "
             + "responseTimeMicros latencyMicros "
             + "requestData responseData responseHeaders "
-            + "threadsCount requestHeaders connectTime";
+            + "threadsCount requestHeaders connectTime "
+            + "grpThreads sampleCount errorCount "
+            + "responseHeaderSize responseSize URL";
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String OVERWRITE = "overwrite";
     private static final String FILENAME = "filename";
@@ -379,7 +381,31 @@ public class FlexibleFileWriter
             case 21:
                 buf.put(String.valueOf(result.getConnectTime()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
-
+                
+            case 22:
+                buf.put(String.valueOf(result.getGroupThreads()).getBytes(CHARSET));
+                break;
+                
+            case 23:
+                buf.put(String.valueOf(result.getSampleCount()).getBytes(CHARSET));
+                break;
+                
+            case 24:
+                buf.put(String.valueOf(result.getErrorCount()).getBytes(CHARSET));
+                break;
+                
+            case 25:
+                buf.put(String.valueOf(result.getHeadersSize()).getBytes(CHARSET));
+                break;
+                
+            case 26:
+                buf.put(String.valueOf(result.getBodySize()).getBytes(CHARSET));
+                break;
+                
+            case 27:
+                buf.put(result.getUrlAsString().getBytes(CHARSET));
+                break;
+                
             default:
                 return false;
         }

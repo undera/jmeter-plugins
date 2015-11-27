@@ -59,6 +59,10 @@ This property controls the size for the buffer used to compose record to write t
 || endTimeMillis || same as endTime, but divided by 1000 (surrogate field)||
 || responseTimeMicros || same as responseTime, but multiplied by 1000 (surrogate field)||
 || latencyMicros ||  same as latency, but multiplied by 1000 (surrogate field)||
+|| grpThreads || number of active threads in this thread group ||
+|| sampleCount || number of samples (1, unless multiple samples are aggregated) ||
+|| errorCount || number of errors (0 or 1, unless multiple samples are aggregated) ||
+|| URL || The sample URL ||
 || {{{variable#<N>}}} ||  Sample variable with index N, see below for details ||
 
 == Saving JMeter Variables with Flexible File Writer ==

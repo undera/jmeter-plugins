@@ -1,6 +1,7 @@
 = Changelog =
 
 == 1.4.0 <i><font color=gray size="1">preparing</font></i>==
+  * Add additional fields (grpThreads, sampleCount, errorCount, responseHeaderSize, responseSize, URL) to FFW.
   * BlazeMeter Inc. has contributed XMPP testing plugins
   * BlazeMeter Inc. has contributed PhantomJS support for WebDriver
   * Modernize project website, change its look a bit

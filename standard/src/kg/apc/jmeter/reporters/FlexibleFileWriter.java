@@ -381,31 +381,31 @@ public class FlexibleFileWriter
             case 21:
                 buf.put(String.valueOf(result.getConnectTime()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
-                
+
             case 22:
-                buf.put(String.valueOf(result.getGroupThreads()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getGroupThreads()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
-                
+
             case 23:
-                buf.put(String.valueOf(result.getSampleCount()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getSampleCount()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
-                
+
             case 24:
-                buf.put(String.valueOf(result.getErrorCount()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getErrorCount()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
-                
+
             case 25:
-                buf.put(String.valueOf(result.getHeadersSize()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getHeadersSize()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
-                
+
             case 26:
-                buf.put(String.valueOf(result.getBodySize()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getBodySize()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
-                
+
             case 27:
-                buf.put(result.getUrlAsString().getBytes(CHARSET));
+                buf.put(result.getUrlAsString().getBytes(JMeterPluginsUtils.CHARSET));
                 break;
-                
+
             default:
                 return false;
         }

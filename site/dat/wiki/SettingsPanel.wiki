@@ -192,8 +192,8 @@ render (confusingly) the same color if using "cpu=blue".
 - Label matching happens with case-insensitive java.lang.String#contains().  RegEx is not supported.
 
 ====Other Color Tricks====
-If your labels include the text 01, 02, 03, etc, then these colors:
-[/img/wiki/settings/orangeSpectrum.png]
+|| If your labels include the text 01, 02, 03, etc, then these colors: ||
+|| [/img/wiki/settings/orangeSpectrum.png] ||
 ...can be obtained using this property:
 {{{
 #Shades of Orange

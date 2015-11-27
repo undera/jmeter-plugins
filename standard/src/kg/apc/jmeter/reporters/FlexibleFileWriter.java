@@ -2,17 +2,6 @@
 // TODO: buffer file writes to bigger chunks?
 package kg.apc.jmeter.reporters;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.reporters.AbstractListenerElement;
@@ -25,6 +14,16 @@ import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @see ResultCollector
@@ -58,12 +57,9 @@ public class FlexibleFileWriter
     private int[] compiledVars;
     private int[] compiledFields;
     private ByteBuffer[] compiledConsts;
-    private ArrayList<String> availableFieldNames = new ArrayList<String>(Arrays.asList(AVAILABLE_FIELDS.trim().split(" ")));
+    private ArrayList<String> availableFieldNames = new ArrayList<>(Arrays.asList(AVAILABLE_FIELDS.trim().split(" ")));
     private static final byte[] b1 = "1".getBytes();
     private static final byte[] b0 = "0".getBytes();
-
-    protected static final String ENCODING = JMeterUtils.getPropDefault("sampleresult.default.encoding", SampleResult.DEFAULT_HTTP_ENCODING);
-    private static final Charset CHARSET = Charset.forName(ENCODING);
 
     public FlexibleFileWriter() {
         super();
@@ -224,6 +220,7 @@ public class FlexibleFileWriter
         ByteBuffer buf = ByteBuffer.allocateDirect(writeBufferSize);
         for (int n = 0; n < compiledConsts.length; n++) {
             if (compiledConsts[n] != null) {
+                //noinspection SynchronizeOnNonFinalField
                 synchronized (compiledConsts) {
                     buf.put(compiledConsts[n].duplicate());
                 }
@@ -288,16 +285,16 @@ public class FlexibleFileWriter
                 break;
 
             case 1:
-                buf.put(String.valueOf(result.getStartTime()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getStartTime()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 2:
-                buf.put(String.valueOf(result.getEndTime()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getEndTime()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 3:
                 if (result.getSamplerData() != null) {
-                    buf.put(String.valueOf(result.getSamplerData().length()).getBytes(CHARSET));
+                    buf.put(String.valueOf(result.getSamplerData().length()).getBytes(JMeterPluginsUtils.CHARSET));
                 } else {
                     buf.put(b0);
                 }
@@ -305,26 +302,26 @@ public class FlexibleFileWriter
 
             case 4:
                 if (result.getResponseData() != null) {
-                    buf.put(String.valueOf(result.getResponseData().length).getBytes(CHARSET));
+                    buf.put(String.valueOf(result.getResponseData().length).getBytes(JMeterPluginsUtils.CHARSET));
                 } else {
                     buf.put(b0);
                 }
                 break;
 
             case 5:
-                buf.put(String.valueOf(result.getTime()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getTime()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 6:
-                buf.put(String.valueOf(result.getLatency()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getLatency()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 7:
-                buf.put(result.getResponseCode().getBytes(CHARSET));
+                buf.put(result.getResponseCode().getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 8:
-                buf.put(result.getResponseMessage().getBytes(CHARSET));
+                buf.put(result.getResponseMessage().getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 9:
@@ -332,32 +329,32 @@ public class FlexibleFileWriter
                 break;
 
             case 10:
-                buf.put(result.getThreadName().getBytes(CHARSET));
+                buf.put(result.getThreadName().getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 11:
-                buf.put(result.getSampleLabel().getBytes(CHARSET));
+                buf.put(result.getSampleLabel().getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 12:
-                buf.put(getShiftDecimal(result.getStartTime(), 3).getBytes(CHARSET));
+                buf.put(getShiftDecimal(result.getStartTime(), 3).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 13:
-                buf.put(getShiftDecimal(result.getEndTime(), 3).getBytes(CHARSET));
+                buf.put(getShiftDecimal(result.getEndTime(), 3).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 14:
-                buf.put(String.valueOf(result.getTime() * 1000).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getTime() * 1000).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 15:
-                buf.put(String.valueOf(result.getLatency() * 1000).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getLatency() * 1000).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 16:
                 if (result.getSamplerData() != null) {
-                    buf.put(result.getSamplerData().getBytes(CHARSET));
+                    buf.put(result.getSamplerData().getBytes(JMeterPluginsUtils.CHARSET));
                 } else {
                     buf.put(b0);
                 }
@@ -368,19 +365,19 @@ public class FlexibleFileWriter
                 break;
 
             case 18:
-                buf.put(result.getResponseHeaders().getBytes(CHARSET));
+                buf.put(result.getResponseHeaders().getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 19:
-                buf.put(String.valueOf(result.getAllThreads()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getAllThreads()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 20:
-                buf.put(String.valueOf(result.getRequestHeaders()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getRequestHeaders()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             case 21:
-                buf.put(String.valueOf(result.getConnectTime()).getBytes(CHARSET));
+                buf.put(String.valueOf(result.getConnectTime()).getBytes(JMeterPluginsUtils.CHARSET));
                 break;
 
             default:

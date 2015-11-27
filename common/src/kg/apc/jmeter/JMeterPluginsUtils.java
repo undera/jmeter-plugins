@@ -3,6 +3,7 @@ package kg.apc.jmeter;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.gui.AbstractJMeterGuiComponent;
 import org.apache.jmeter.gui.util.PowerTableModel;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.StringProperty;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -36,6 +38,10 @@ public abstract class JMeterPluginsUtils {
     private static boolean prefixPlugins = true;
     public static final String WIKI_BASE = "http://jmeter-plugins.org/wiki/";
     private static String version = null;
+
+    public static final String ENCODING = JMeterUtils.getPropDefault("sampleresult.default.encoding", SampleResult.DEFAULT_HTTP_ENCODING);
+    public static final Charset CHARSET = Charset.forName(ENCODING);
+
 
     static {
         getVersion();

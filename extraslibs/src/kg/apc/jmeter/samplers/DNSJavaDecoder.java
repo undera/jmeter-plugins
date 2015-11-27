@@ -18,10 +18,10 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
     protected byte[] getMessageBytes(String data) {
         Message msg = new Message();
         String recs[] = data.split(NL);
-        for (int n = 0; n < recs.length; n++) {
-            if (recs[n].length() <= 3) {
+        for (String rec : recs) {
+            if (rec.length() <= 3) {
                 Header head = msg.getHeader();
-                int val = Integer.parseInt(recs[n].trim());
+                int val = Integer.parseInt(rec.trim());
                 if (val < 0) {
                     head.unsetFlag(-val);
                 } else {
@@ -29,7 +29,7 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
                 }
                 msg.setHeader(head);
             } else {
-                msg.addRecord(getRecord(recs[n].trim()), Section.QUESTION);
+                msg.addRecord(getRecord(rec.trim()), Section.QUESTION);
             }
         }
         return msg.toWire();

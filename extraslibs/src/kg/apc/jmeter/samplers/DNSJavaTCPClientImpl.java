@@ -1,14 +1,15 @@
 // todo: document it in wiki
 package kg.apc.jmeter.samplers;
 
+import kg.apc.io.BinaryUtils;
+import org.apache.jmeter.protocol.tcp.sampler.TCPClient;
+import org.apache.jorphan.logging.LoggingManager;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import kg.apc.io.BinaryUtils;
-import org.apache.jmeter.protocol.tcp.sampler.TCPClient;
-import org.apache.jorphan.logging.LoggingManager;
 
 public class DNSJavaTCPClientImpl extends DNSJavaDecoder implements TCPClient {
 
@@ -43,8 +44,7 @@ public class DNSJavaTCPClientImpl extends DNSJavaDecoder implements TCPClient {
             throw new IllegalArgumentException("Length is too big for DNS");
         }
 
-        byte[] res = BinaryUtils.shortToByteArray(Short.reverseBytes((short) length));
-        return res;
+        return BinaryUtils.shortToByteArray(Short.reverseBytes((short) length));
     }
 
     public String read(InputStream in) {

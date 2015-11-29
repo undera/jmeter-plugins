@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.blazemeter.jmeter</groupId>
-    <artifactId>plugins</artifactId>
+    <artifactId>blazemeter-plugins</artifactId>
     <name>JMeter Plugins - BlazeMeter Set</name>
 
     <dependencies>

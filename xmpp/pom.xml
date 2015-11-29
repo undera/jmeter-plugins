@@ -10,6 +10,7 @@
     </parent>
     <groupId>com.blazemeter.jmeter</groupId>
     <artifactId>blazemeter-xmpp</artifactId>
+    <name>JMeter Plugins - XMPP Set</name>
 
     <dependencies>
         <dependency>

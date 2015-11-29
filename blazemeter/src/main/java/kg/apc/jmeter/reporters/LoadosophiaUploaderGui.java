@@ -1,11 +1,5 @@
 package kg.apc.jmeter.reporters;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.util.Arrays;
-import javax.swing.*;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
@@ -13,6 +7,10 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 import org.loadosophia.jmeter.LoadosophiaAPIClient;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
 
 public class LoadosophiaUploaderGui
         extends AbstractVisualizer {
@@ -23,7 +21,6 @@ public class LoadosophiaUploaderGui
     private JTextField projectKey;
     private JTextArea infoArea;
     private JTextField storeDir;
-    private JButton browseButton;
     private JComboBox colorFlag;
     private JCheckBox useOnline;
 
@@ -112,6 +109,7 @@ public class LoadosophiaUploaderGui
         row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Directory to store data for upload: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, row, storeDir = new JTextField(20));
+        JButton browseButton;
         addToPanel(mainPanel, labelConstraints, 2, row, browseButton = new JButton("Browse..."));
 
         GuiBuilderHelper.strechItemToComponent(storeDir, browseButton);

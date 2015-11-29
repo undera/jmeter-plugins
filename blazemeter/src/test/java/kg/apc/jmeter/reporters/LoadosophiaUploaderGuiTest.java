@@ -2,6 +2,10 @@ package kg.apc.jmeter.reporters;
 
 import java.awt.Component;
 import kg.apc.emulators.TestJMeterUtils;
+import kg.apc.jmeter.gui.LoadosophiaUploader;
+import kg.apc.jmeter.gui.LoadosophiaUploaderGui;
+import kg.apc.jmeter.reporters.LoadosophiaUploader;
+import kg.apc.jmeter.reporters.LoadosophiaUploaderGui;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
@@ -9,7 +13,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class LoadosophiaUploaderGuiTest {
 
@@ -41,7 +44,7 @@ public class LoadosophiaUploaderGuiTest {
         System.out.println("getStaticLabel");
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
         String result = instance.getStaticLabel();
-        assertTrue(result.length() > 0);
+        Assert.assertTrue(result.length() > 0);
     }
 
     /**
@@ -52,7 +55,7 @@ public class LoadosophiaUploaderGuiTest {
         System.out.println("getLabelResource");
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
         String result = instance.getLabelResource();
-        assertTrue(result.length() > 0);
+        Assert.assertTrue(result.length() > 0);
     }
 
     /**
@@ -63,7 +66,7 @@ public class LoadosophiaUploaderGuiTest {
         System.out.println("createTestElement");
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
         TestElement result = instance.createTestElement();
-        assertTrue(result instanceof LoadosophiaUploader);
+        Assert.assertTrue(result instanceof LoadosophiaUploader);
     }
 
     /**
@@ -139,7 +142,7 @@ public class LoadosophiaUploaderGuiTest {
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
         boolean expResult = false;
         boolean result = instance.isStats();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -150,6 +153,6 @@ public class LoadosophiaUploaderGuiTest {
         System.out.println("getFilePanel");
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
         Component result = instance.getFilePanel();
-        assertNotNull(result);
+        Assert.assertNotNull(result);
     }
 }

@@ -2,6 +2,8 @@ package kg.apc.jmeter.reporters;
 
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.io.FileSystem;
+import kg.apc.jmeter.gui.LoadosophiaUploader;
+import kg.apc.jmeter.gui.LoadosophiaUploadingNotifier;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
@@ -179,7 +181,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getProject();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -188,7 +190,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getUploadToken();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -197,7 +199,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getTitle();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -206,7 +208,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getStoreDir();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -268,7 +270,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getTitle();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -285,7 +287,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getColorFlag();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -293,7 +295,7 @@ public class LoadosophiaUploaderTest {
         System.out.println("getAPIClient");
         LoadosophiaUploader instance = new LoadosophiaUploader();
         LoadosophiaAPIClient result = instance.getAPIClient();
-        assertNotNull(result);
+        Assert.assertNotNull(result);
     }
 
     @Test
@@ -309,7 +311,7 @@ public class LoadosophiaUploaderTest {
         System.out.println("isUseOnline");
         LoadosophiaUploader instance = new LoadosophiaUploader();
         boolean result = instance.isUseOnline();
-        assertEquals(false, result);
+        Assert.assertEquals(false, result);
     }
 
     @Test

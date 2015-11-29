@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.LinkedList;
+
+import kg.apc.jmeter.reporters.LoadosophiaAPIClient;
+import org.loadosophia.jmeter.LoadosophiaUploadResults;
+import org.loadosophia.jmeter.StatusNotifierCallback;
 import net.sf.json.JSONArray;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.junit.After;
@@ -55,7 +59,7 @@ public class LoadosophiaAPIClientTest {
         LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         String expResult = "http://localhost:9999/gui/active/test/";
         String result = instance.startOnline();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -74,7 +78,7 @@ public class LoadosophiaAPIClientTest {
         LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         String[] expResult = {"4", "4"};
         String[] result = instance.getUploadStatus(queueID);
-        assertArrayEquals(expResult, result);
+        Assert.assertArrayEquals(expResult, result);
     }
 
     @Test
@@ -87,7 +91,7 @@ public class LoadosophiaAPIClientTest {
         LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         String[] expResult = {"0", ""};
         String[] result = instance.multipartPost(parts, URL, expectedSC);
-        assertArrayEquals(expResult, result);
+        Assert.assertArrayEquals(expResult, result);
     }
 
     private static class LoadosophiaAPIClientEmul extends LoadosophiaAPIClient {

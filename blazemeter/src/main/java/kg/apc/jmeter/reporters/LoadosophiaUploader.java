@@ -127,7 +127,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
         // OMG, I spent 2 days finding that setting properties in testStarted
         // marks them temporary, though they cleared in some places.
         // So we do dirty(?) hack here...
-        clearTemporary(getProperty(FILENAME));
+        clearTemporary(getProperty(ResultCollector.FILENAME));
 
         SampleSaveConfiguration conf = getSaveConfig();
         JMeterPluginsUtils.doBestCSVSetup(conf);

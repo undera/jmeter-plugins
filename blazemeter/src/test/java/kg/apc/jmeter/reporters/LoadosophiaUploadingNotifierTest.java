@@ -15,6 +15,8 @@
  */
 package kg.apc.jmeter.reporters;
 
+import kg.apc.jmeter.gui.LoadosophiaUploadingNotifier;
+import kg.apc.jmeter.reporters.LoadosophiaUploadingNotifier;
 import org.junit.*;
 
 import java.util.LinkedList;
@@ -90,7 +92,7 @@ public class LoadosophiaUploadingNotifierTest {
         LoadosophiaUploadingNotifier instance = LoadosophiaUploadingNotifier.getInstance();
         LinkedList expResult = new LinkedList();
         LinkedList result = instance.getFiles();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
 
     }

@@ -9,10 +9,8 @@
 
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor;
 
-import com.jayway.jsonpath.Configuration;
-import com.jayway.jsonpath.Option;
+import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
-import com.jayway.jsonpath.internal.JsonReader;
 import net.minidev.json.JSONArray;
 import org.apache.jmeter.processor.PostProcessor;
 import org.apache.jmeter.samplers.SampleResult;
@@ -96,11 +94,9 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
             responseData = previousResult.getResponseDataAsString();
         }
 
-        JsonReader reader = new JsonReader(Configuration.defaultConfiguration());
 
         try {
-            reader.parse(responseData);
-            Object jsonPathResult = reader.read(getJsonPath());
+            Object jsonPathResult = JsonPath.read(responseData, getJsonPath());
             if (jsonPathResult instanceof JSONArray) {
                 Object[] arr = ((JSONArray) jsonPathResult).toArray();
 

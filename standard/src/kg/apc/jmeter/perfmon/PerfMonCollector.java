@@ -1,7 +1,6 @@
 package kg.apc.jmeter.perfmon;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.reporters.LoadosophiaUploadingNotifier;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import kg.apc.perfmon.PerfMonMetricGetter;
 import kg.apc.perfmon.client.Transport;
@@ -37,7 +36,7 @@ public class PerfMonCollector
     private HashMap<String, Long> oldValues = new HashMap<>();
     private static String autoFileBaseName = null;
     private static int counter = 0;
-    private LoadosophiaUploadingNotifier perfMonNotifier = LoadosophiaUploadingNotifier.getInstance();
+    private static final LinkedList<String> filesList = new LinkedList<>();
     private static String workerHost = null;
 
     static {
@@ -103,7 +102,6 @@ public class PerfMonCollector
 
     @Override
     public void testStarted(String host) {
-
         if (!isWorkingHost(host)) {
             return;
         }
@@ -125,7 +123,7 @@ public class PerfMonCollector
 
         log.debug("PerfMon metrics will be stored in " + getPropertyAsString(FILENAME));
         if (!getSaveConfig().saveAsXml() && getSaveConfig().saveFieldNames()) {
-            perfMonNotifier.addFile(getPropertyAsString(FILENAME));
+            filesList.add(getPropertyAsString(FILENAME));
         } else {
             log.warn("Perfmon file saving setting is not CSV with header line, cannot upload it to Loadosophia.org: " + getPropertyAsString(FILENAME));
         }
@@ -333,5 +331,13 @@ public class PerfMonCollector
         }
         oldValues.put(label1, values[0]);
         oldValues.put(label2, values[1]);
+    }
+
+    public static LinkedList<String> getFiles() {
+        return filesList;
+    }
+
+    public static void clearFiles() {
+        filesList.clear();
     }
 }

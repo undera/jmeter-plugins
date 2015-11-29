@@ -1,7 +1,6 @@
 package kg.apc.jmeter.perfmon;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.reporters.LoadosophiaUploadingNotifier;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import kg.apc.perfmon.PerfMonMetricGetter;
 import kg.apc.perfmon.client.Transport;
@@ -28,17 +27,16 @@ public class PerfMonCollector
         implements Runnable, PerfMonSampleGenerator {
 
     private static boolean autoGenerateFiles = false;
-    public static final long MEGABYTE = 1024L * 1024L;
     private static final String PERFMON = "PerfMon";
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String DATA_PROPERTY = "metricConnections";
     private int interval;
     private Thread workerThread = null;
-    private Map<Object, PerfMonAgentConnector> connectors = new ConcurrentHashMap<Object, PerfMonAgentConnector>();
-    private HashMap<String, Long> oldValues = new HashMap<String, Long>();
+    private Map<Object, PerfMonAgentConnector> connectors = new ConcurrentHashMap<>();
+    private HashMap<String, Long> oldValues = new HashMap<>();
     private static String autoFileBaseName = null;
     private static int counter = 0;
-    private LoadosophiaUploadingNotifier perfMonNotifier = LoadosophiaUploadingNotifier.getInstance();
+    private static final LinkedList<String> filesList = new LinkedList<>();
     private static String workerHost = null;
 
     static {
@@ -104,7 +102,6 @@ public class PerfMonCollector
 
     @Override
     public void testStarted(String host) {
-
         if (!isWorkingHost(host)) {
             return;
         }
@@ -126,7 +123,7 @@ public class PerfMonCollector
 
         log.debug("PerfMon metrics will be stored in " + getPropertyAsString(FILENAME));
         if (!getSaveConfig().saveAsXml() && getSaveConfig().saveFieldNames()) {
-            perfMonNotifier.addFile(getPropertyAsString(FILENAME));
+            filesList.add(getPropertyAsString(FILENAME));
         } else {
             log.warn("Perfmon file saving setting is not CSV with header line, cannot upload it to Loadosophia.org: " + getPropertyAsString(FILENAME));
         }
@@ -180,9 +177,7 @@ public class PerfMonCollector
             initiateConnector(host, port, i, metric, params);
         }
 
-        Iterator<Object> it = connectors.keySet().iterator();
-        while (it.hasNext()) {
-            Object key = it.next();
+        for (Object key : connectors.keySet()) {
             try {
                 connectors.get(key).connect();
             } catch (IOException ex) {
@@ -207,7 +202,7 @@ public class PerfMonCollector
         String label;
         if (paramsParsed.getLabel().isEmpty()) {
             label = labelHostname + " " + metric;
-            if (params != null && !params.isEmpty()) {
+            if (!params.isEmpty()) {
                 label = label + " " + params;
             }
         } else {
@@ -217,12 +212,12 @@ public class PerfMonCollector
 
             params = "";
 
-            for (int i = 0; i < tokens.length; i++) {
-                if (!tokens[i].startsWith("label=")) {
+            for (String token : tokens) {
+                if (!token.startsWith("label=")) {
                     if (params.length() != 0) {
                         params = params + PerfMonMetricGetter.DVOETOCHIE;
                     }
-                    params = params + tokens[i];
+                    params = params + token;
                 }
             }
         }
@@ -244,7 +239,7 @@ public class PerfMonCollector
     protected PerfMonAgentConnector getConnector(String host, int port) throws IOException {
         log.debug("Trying new connector");
         SocketAddress addr = new InetSocketAddress(host, port);
-        Transport transport = null;
+        Transport transport;
         try {
             transport = TransportFactory.TCPInstance(addr);
             if (!transport.test()) {
@@ -288,9 +283,7 @@ public class PerfMonCollector
     }
 
     private void processConnectors() {
-        Iterator<Object> it = connectors.keySet().iterator();
-        while (it.hasNext()) {
-            Object key = it.next();
+        for (Object key : connectors.keySet()) {
             PerfMonAgentConnector connector = connectors.get(key);
             try {
                 connector.generateSamples(this);
@@ -333,10 +326,18 @@ public class PerfMonCollector
     @Override
     public void generate2Samples(long[] values, String label1, String label2, double dividingFactor) {
         if (oldValues.containsKey(label1) && oldValues.containsKey(label2)) {
-            generateSample(((double) (values[0] - oldValues.get(label1).longValue())) / dividingFactor, label1);
-            generateSample(((double) (values[1] - oldValues.get(label2).longValue())) / dividingFactor, label2);
+            generateSample(((double) (values[0] - oldValues.get(label1))) / dividingFactor, label1);
+            generateSample(((double) (values[1] - oldValues.get(label2))) / dividingFactor, label2);
         }
-        oldValues.put(label1, new Long(values[0]));
-        oldValues.put(label2, new Long(values[1]));
+        oldValues.put(label1, values[0]);
+        oldValues.put(label2, values[1]);
+    }
+
+    public static LinkedList<String> getFiles() {
+        return filesList;
+    }
+
+    public static void clearFiles() {
+        filesList.clear();
     }
 }

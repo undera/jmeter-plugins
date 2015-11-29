@@ -15,30 +15,25 @@
  */
 package org.loadosophia.jmeter;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
 
 public class LoadosophiaUploadResultsTest {
-    
+
     public LoadosophiaUploadResultsTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -52,9 +47,9 @@ public class LoadosophiaUploadResultsTest {
         LoadosophiaUploadResults instance = new LoadosophiaUploadResults();
         String expResult = "";
         String result = instance.getRedirectLink();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -67,7 +62,7 @@ public class LoadosophiaUploadResultsTest {
         LoadosophiaUploadResults instance = new LoadosophiaUploadResults();
         instance.setRedirectLink(string);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -80,7 +75,7 @@ public class LoadosophiaUploadResultsTest {
         LoadosophiaUploadResults instance = new LoadosophiaUploadResults();
         instance.setQueueID(aQueueID);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -93,7 +88,7 @@ public class LoadosophiaUploadResultsTest {
         LoadosophiaUploadResults instance = new LoadosophiaUploadResults();
         instance.setTestID(aTestID);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -105,9 +100,9 @@ public class LoadosophiaUploadResultsTest {
         LoadosophiaUploadResults instance = new LoadosophiaUploadResults();
         int expResult = 0;
         int result = instance.getTestID();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 
     /**
@@ -119,8 +114,8 @@ public class LoadosophiaUploadResultsTest {
         LoadosophiaUploadResults instance = new LoadosophiaUploadResults();
         int expResult = 0;
         int result = instance.getQueueID();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+
     }
 }

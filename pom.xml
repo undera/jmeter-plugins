@@ -64,6 +64,7 @@
         <module>hadoop</module>
         <module>webdriver</module>
         <module>xmpp</module>
+        <module>blazemeter</module>
     </modules>
 
 </project>

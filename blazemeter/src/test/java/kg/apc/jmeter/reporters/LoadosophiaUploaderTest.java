@@ -16,9 +16,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 public class LoadosophiaUploaderTest {
 
     private final String basedir;
@@ -65,7 +62,7 @@ public class LoadosophiaUploaderTest {
     public void testTestEnded() throws IOException {
         System.out.println("testEnded");
         JMeterUtils.setProperty("loadosophia.address", "http://localhost/");
-        LinkedList<String[]> response = new LinkedList<String[]>();
+        LinkedList<String[]> response = new LinkedList<>();
         String[] v1 = {"0", "4"};
         response.push(v1);
         String[] v2 = {"0", "4"};
@@ -105,7 +102,7 @@ public class LoadosophiaUploaderTest {
     public void testTestEndedWithNoStoreDir() throws IOException {
         System.out.println("testEnded");
         JMeterUtils.setProperty("loadosophia.address", "http://localhost/");
-        LinkedList<String[]> response = new LinkedList<String[]>();
+        LinkedList<String[]> response = new LinkedList<>();
         String[] v1 = {"0", "4"};
         response.push(v1);
         String[] v2 = {"0", "4"};
@@ -179,7 +176,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getProject();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -188,7 +185,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getUploadToken();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -197,7 +194,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getTitle();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -206,7 +203,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getStoreDir();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -268,7 +265,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getTitle();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -285,7 +282,7 @@ public class LoadosophiaUploaderTest {
         LoadosophiaUploader instance = new LoadosophiaUploader();
         String expResult = "";
         String result = instance.getColorFlag();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -293,7 +290,7 @@ public class LoadosophiaUploaderTest {
         System.out.println("getAPIClient");
         LoadosophiaUploader instance = new LoadosophiaUploader();
         LoadosophiaAPIClient result = instance.getAPIClient();
-        assertNotNull(result);
+        Assert.assertNotNull(result);
     }
 
     @Test
@@ -309,7 +306,7 @@ public class LoadosophiaUploaderTest {
         System.out.println("isUseOnline");
         LoadosophiaUploader instance = new LoadosophiaUploader();
         boolean result = instance.isUseOnline();
-        assertEquals(false, result);
+        Assert.assertEquals(false, result);
     }
 
     @Test
@@ -338,7 +335,7 @@ public class LoadosophiaUploaderTest {
     @Test
     public void testOnlineProcessor() throws InterruptedException {
         System.out.println("onlineProcessor");
-        LinkedList<String[]> response = new LinkedList<String[]>();
+        LinkedList<String[]> response = new LinkedList<>();
         String[] v1 = {"0", "4"};
         response.push(v1);
         response.push(v1);

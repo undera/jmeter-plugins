@@ -1,6 +1,7 @@
 package kg.apc.jmeter.reporters;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.perfmon.PerfMonCollector;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.LinkedList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -32,7 +34,6 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     private String fileName;
     private static final Object LOCK = new Object();
     private boolean isSaving;
-    private LoadosophiaUploadingNotifier perfMonNotifier = LoadosophiaUploadingNotifier.getInstance();
     private String address;
     private boolean isOnlineInitiated = false;
     private LoadosophiaAPIClient apiClient;
@@ -62,12 +63,19 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
             initiateOnline();
         }
         super.testStarted(host);
-        perfMonNotifier.startCollecting();
     }
 
     @Override
     public void testEnded(String host) {
         super.testEnded(host);
+
+        boolean hasStandardSet = true;
+        try {
+            Class.forName("kg.apc.jmeter.perfmon.PerfMonCollector");
+        } catch (ClassNotFoundException e) {
+            hasStandardSet = false;
+        }
+
         synchronized (LOCK) {
             // FIXME: trying to handle safe upgrade, needs to be removed in the future
             // @see https://issues.apache.org/bugzilla/show_bug.cgi?id=56807
@@ -78,9 +86,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                 log.info("Successfully flushed results file");
             } catch (NoSuchMethodException ex) {
                 log.warn("Cannot flush results file since you are using old version of JMeter, consider upgrading to latest. Currently the results may be incomplete.");
-            } catch (InvocationTargetException e) {
-                log.error("Failed to flush file", e);
-            } catch (IllegalAccessException e) {
+            } catch (InvocationTargetException | IllegalAccessException e) {
                 log.error("Failed to flush file", e);
             }
 
@@ -94,7 +100,13 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                 }
 
                 isSaving = false;
-                LoadosophiaUploadResults uploadResult = this.apiClient.sendFiles(new File(fileName), perfMonNotifier.getFiles());
+                LinkedList<String> monFiles;
+                if (hasStandardSet) {
+                    monFiles = PerfMonCollector.getFiles();
+                } else {
+                    monFiles = new LinkedList<>();
+                }
+                LoadosophiaUploadResults uploadResult = this.apiClient.sendFiles(new File(fileName), monFiles);
                 informUser("Uploaded successfully, go to results: " + uploadResult.getRedirectLink());
             } catch (IOException ex) {
                 informUser("Failed to upload results to Loadosophia.org, see log for detais");
@@ -102,7 +114,9 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
             }
         }
         clearData();
-        perfMonNotifier.endCollecting();
+        if (hasStandardSet) {
+            PerfMonCollector.clearFiles();
+        }
     }
 
     private void setupSaving() throws IOException {
@@ -127,7 +141,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
         // OMG, I spent 2 days finding that setting properties in testStarted
         // marks them temporary, though they cleared in some places.
         // So we do dirty(?) hack here...
-        clearTemporary(getProperty(FILENAME));
+        clearTemporary(getProperty(ResultCollector.FILENAME));
 
         SampleSaveConfiguration conf = getSaveConfig();
         JMeterPluginsUtils.doBestCSVSetup(conf);
@@ -247,7 +261,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                 log.info("Starting Loadosophia online test");
                 informUser("Started active test: " + apiClient.startOnline());
                 aggregator = new LoadosophiaAggregator();
-                processingQueue = new LinkedBlockingQueue<SampleEvent>();
+                processingQueue = new LinkedBlockingQueue<>();
                 processorThread = new Thread(this);
                 processorThread.setDaemon(true);
                 isOnlineInitiated = true;

@@ -1,69 +1,40 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
-        <groupId>kg.apc</groupId>
         <artifactId>jmeter-plugins</artifactId>
+        <groupId>kg.apc</groupId>
         <version>1.4.0</version>
     </parent>
-    <artifactId>jmeter-plugins-standard</artifactId>
-    <packaging>jar</packaging>
+    <modelVersion>4.0.0</modelVersion>
 
-    <name>JMeter Plugins - Standard Set</name>
-    <description>Custom plugins set for Apache JMeter</description>
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <url>http://jmeter-plugins.org/</url>
-    <scm>
-        <url>https://github.com/undera/jmeter-plugins</url>
-        <connection>https://github.com/undera/jmeter-plugins.git</connection>
-        <developerConnection>git@github.com:undera/jmeter-plugins.git</developerConnection>
-    </scm>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype-snapshot</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
-    <repositories>
-        <repository>
-            <id>cloudera repository</id>
-            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-        </repository>
-    </repositories>
+    <groupId>com.blazemeter.jmeter</groupId>
+    <artifactId>blazemeter-plugins</artifactId>
+    <name>JMeter Plugins - BlazeMeter Set</name>
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>kg.apc</groupId>
-            <artifactId>perfmon</artifactId>
-            <version>2.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>kg.apc</groupId>
-            <artifactId>cmdrunner</artifactId>
-            <version>${cmdrunner-version}</version>
+            <artifactId>jmeter-plugins-standard</artifactId>
+            <version>1.4.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+        <!--
         <dependency>
             <groupId>org.apache.jmeter</groupId>
-            <artifactId>ApacheJMeter_components</artifactId>
+            <artifactId>ApacheJMeter_core</artifactId>
             <version>${jmeter.version}</version>
             <exclusions>
                 <exclusion>
@@ -76,38 +47,39 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.apache.jmeter</groupId>
-            <artifactId>ApacheJMeter_http</artifactId>
-            <version>${jmeter.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-math3</groupId>
-                    <artifactId>commons-math3</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-pool2</groupId>
-                    <artifactId>commons-pool2</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+
+        -->
+
+        <!--
+
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+        -->
     </dependencies>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
-        <testSourceDirectory>test</testSourceDirectory>
         <resources>
             <resource>
                 <includes>
                     <include>**/*.png</include>
                     <include>**/*.properties</include>
                 </includes>
-                <directory>src</directory>
+                <directory>src/main/java</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
@@ -123,17 +95,18 @@
                     <include>**/*.out</include>
                     <include>**/*.ammo</include>
                 </includes>
-                <directory>test</directory>
+                <directory>src/test/java</directory>
             </testResource>
             <testResource>
                 <includes>
                     <include>**/*.png</include>
                     <include>**/*.properties</include>
                 </includes>
-                <directory>src</directory>
+                <directory>src/main/java</directory>
                 <filtering>true</filtering>
             </testResource>
         </testResources>
+
 
         <plugins>
             <plugin>
@@ -169,7 +142,7 @@
                 <!--
                 <executions>
                     <execution>
-                        <phase>verify</phase>                        
+                        <phase>verify</phase>
                         <goals>
                             <goal>sign</goal>
                         </goals>
@@ -217,7 +190,7 @@
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
                             <includeArtifactIds>
-                                cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,hbase-common,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper,selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-android-driver,guava,json,commons-exec,jsyntaxpane,commons-lang
+                                ${project.artifactId}
                             </includeArtifactIds>
                         </configuration>
                     </execution>
@@ -237,10 +210,8 @@
                             <artifactSet>
                                 <includes>
                                     <include>kg.apc:jmeter-plugins-common</include>
-                                    <include>kg.apc:perfmon</include>
                                 </includes>
                             </artifactSet>
-
                         </configuration>
                     </execution>
                 </executions>
@@ -248,7 +219,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>JMeterPlugins-Standard</finalName>
+                    <finalName>JMeterPlugins-BlazeMeter</finalName>
                     <appendAssemblyId>true</appendAssemblyId>
                     <descriptors>
                         <descriptor>zip.xml</descriptor>

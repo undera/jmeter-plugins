@@ -1,17 +1,15 @@
 package org.loadosophia.jmeter;
 
+import net.sf.json.JSONArray;
+import org.apache.commons.httpclient.methods.multipart.Part;
+import org.junit.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.LinkedList;
-import net.sf.json.JSONArray;
-import org.apache.commons.httpclient.methods.multipart.Part;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class LoadosophiaAPIClientTest {
 
@@ -41,7 +39,7 @@ public class LoadosophiaAPIClientTest {
         PrintStream ps = new PrintStream(targetFile);
         ps.print("test");
         ps.close();
-        LinkedList<String> perfMonFiles = new LinkedList<String>();
+        LinkedList<String> perfMonFiles = new LinkedList<>();
         String[] fake = {"4", "4"};
         LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         LoadosophiaUploadResults result = instance.sendFiles(targetFile, perfMonFiles);
@@ -55,7 +53,7 @@ public class LoadosophiaAPIClientTest {
         LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         String expResult = "http://localhost:9999/gui/active/test/";
         String result = instance.startOnline();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -74,20 +72,19 @@ public class LoadosophiaAPIClientTest {
         LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         String[] expResult = {"4", "4"};
         String[] result = instance.getUploadStatus(queueID);
-        assertArrayEquals(expResult, result);
+        Assert.assertArrayEquals(expResult, result);
     }
 
     @Test
     public void testMultipartPost() throws Exception {
         System.out.println("multipartPost");
-        LinkedList<Part> parts = null;
         String URL = "";
         int expectedSC = 0;
         String[] fake = {"0", ""};
         LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
         String[] expResult = {"0", ""};
-        String[] result = instance.multipartPost(parts, URL, expectedSC);
-        assertArrayEquals(expResult, result);
+        String[] result = instance.multipartPost(null, URL, expectedSC);
+        Assert.assertArrayEquals(expResult, result);
     }
 
     private static class LoadosophiaAPIClientEmul extends LoadosophiaAPIClient {

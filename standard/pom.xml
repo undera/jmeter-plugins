@@ -92,11 +92,10 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.blazemeter.jmeter</groupId>
-            <artifactId>plugins</artifactId>
-            <version>1.4.0</version>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
         </dependency>
-
     </dependencies>
 
     <build>

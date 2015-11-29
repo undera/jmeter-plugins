@@ -4,6 +4,7 @@
 /jmeter.log
 /bundle/
 /site/files/
+/site/img/design/
 /target/
 /*/target/
 nbactions.xml

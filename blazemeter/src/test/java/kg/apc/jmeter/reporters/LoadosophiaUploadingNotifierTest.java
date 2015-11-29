@@ -15,13 +15,9 @@
  */
 package kg.apc.jmeter.reporters;
 
-import kg.apc.jmeter.gui.LoadosophiaUploadingNotifier;
-import kg.apc.jmeter.reporters.LoadosophiaUploadingNotifier;
 import org.junit.*;
 
 import java.util.LinkedList;
-
-import static org.junit.Assert.assertEquals;
 
 public class LoadosophiaUploadingNotifierTest {
 

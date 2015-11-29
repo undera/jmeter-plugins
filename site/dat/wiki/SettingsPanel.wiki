@@ -172,13 +172,16 @@ of your performance graphs will be thankful that you haven't needlessly switched
 
 For example, let's say you want to make the CPU line blue for all graphs.
 Just add this property in the JMETER_HOME/bin/user.properties file:
+
 {{{
 jmeterPlugin.labelToColorMapping=cpu=blue
 }}}
+
 To provide a color mapping for additional labels, just add a colon between the mappings, as shown below.
 
-|| Specify the color you want for labels with particular text. ||
-|| [/img/wiki/settings/labelToColorMapping.png] ||
+Specify the color you want for labels with particular text.
+
+[/img/wiki/settings/labelToColorMapping.png]
 
 Notes:
 - Colors can be specified using either the case-insensitive html color name or the the 6-hex-digit RGB value preceded by the pound/hash sign (#).  For details, see [see here](http://www.w3schools.com/htmL/html_colornames.asp).  
@@ -192,15 +195,18 @@ render (confusingly) the same color if using "cpu=blue".
 - Label matching happens with case-insensitive java.lang.String#contains().  RegEx is not supported.
 
 ====Other Color Tricks====
-|| If your labels include the text 01, 02, 03, etc, then these colors: ||
-|| [/img/wiki/settings/orangeSpectrum.png] ||
+If your labels include the text 01, 02, 03, etc, then these colors:
+
+[/img/wiki/settings/orangeSpectrum.png]
 ...can be obtained using this property:
+
 {{{
 #Shades of Orange
 jmeterPlugin.labelToColorMapping=01=#FFF3E0:02=#FFE0B2:03=#FFCC80:04=#FFB74D:05=#FFA726:06=#FF9800:07=#FB8C00:08=#F57C00:09=#EF6C00:10=#E65100
 }}}
 
 Below are some additional palettes, all stolen from [here](http://www.google.com/design/spec/style/color.html#).
+
 {{{
 ## Reds:
 #jmeterPlugin.labelToColorMapping=01=#FFEBEE:02=#FFCDD2:03=#EF9A9A:04=#E57373:05=#EF5350:06=#F44336:07=#E53935:08=#D32F2F:09=#C62828:10=#B71C1C

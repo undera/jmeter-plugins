@@ -221,7 +221,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>JMeterPlugins-Standard</finalName>
+                    <finalName>JMeterPlugins-BlazeMeter</finalName>
                     <appendAssemblyId>true</appendAssemblyId>
                     <descriptors>
                         <descriptor>zip.xml</descriptor>

@@ -104,7 +104,6 @@
         </testResources>
 
 
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -186,7 +185,7 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>
+                            <includeArtifactIds><!-- TODO: clean this up -->
                                 cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,hbase-common,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper,selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-android-driver,guava,json,commons-exec,jsyntaxpane,commons-lang
                             </includeArtifactIds>
                         </configuration>

@@ -20,9 +20,6 @@ import java.util.logging.Logger;
 
 public abstract class TestJMeterUtils {
 
-    private static JMeterTreeListener jMeterTreeListener;
-    private static JMeterTreeModel jMeterTreeModel;
-
     /**
      *
      */
@@ -37,12 +34,13 @@ public abstract class TestJMeterUtils {
 
         //propsFile=new File("/home/undera/NetBeansProjects/jmeter/trunk/bin/jmeter.properties");
 
+        assert propsFile != null;
         JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
         JMeterUtils.setJMeterHome(new DirectoryAnchor().toString());
         JMeterUtils.setLocale(new Locale("ignoreResources"));
 
-        jMeterTreeModel = new JMeterTreeModel();
-        jMeterTreeListener = new JMeterTreeListener();
+        JMeterTreeModel jMeterTreeModel = new JMeterTreeModel();
+        JMeterTreeListener jMeterTreeListener = new JMeterTreeListener();
         jMeterTreeListener.setModel(jMeterTreeModel);
         GuiPackage.getInstance(jMeterTreeListener, jMeterTreeModel);
         JMeterContextService.getContext().setVariables(new JMeterVariables());
@@ -67,6 +65,7 @@ public abstract class TestJMeterUtils {
         } catch (IOException ex) {
             Logger.getLogger(TestJMeterUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
+        assert f != null;
         return f.getParent();
     }
 
@@ -86,7 +85,7 @@ public abstract class TestJMeterUtils {
     public static String fixWinPath(String path) {
         String ret = path;
         //test if win os
-        boolean isWinOs = System.getProperty("os.name").toLowerCase().indexOf("win") >= 0;
+        boolean isWinOs = System.getProperty("os.name").toLowerCase().contains("win");
 
         //fix only files in "document and settings", for computer with no admin / C: drive access...
         if (isWinOs) {

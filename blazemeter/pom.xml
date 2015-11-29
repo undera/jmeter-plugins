@@ -19,6 +19,11 @@
             <artifactId>jmeter-plugins-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-standard</artifactId>
+            <version>1.4.0</version>
+        </dependency>
 
         <dependency>
             <groupId>net.sf.json-lib</groupId>
@@ -26,12 +31,6 @@
             <version>2.4</version>
             <classifier>jdk15</classifier>
         </dependency>
-        <dependency>
-            <groupId>kg.apc</groupId>
-            <artifactId>jmeter-plugins-standard</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-
         <!--
         <dependency>
             <groupId>org.apache.jmeter</groupId>

@@ -68,6 +68,14 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     @Override
     public void testEnded(String host) {
         super.testEnded(host);
+
+        boolean hasStandardSet = true;
+        try {
+            Class.forName("kg.apc.jmeter.perfmon.PerfMonCollector");
+        } catch (ClassNotFoundException e) {
+            hasStandardSet = false;
+        }
+
         synchronized (LOCK) {
             // FIXME: trying to handle safe upgrade, needs to be removed in the future
             // @see https://issues.apache.org/bugzilla/show_bug.cgi?id=56807
@@ -92,7 +100,12 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                 }
 
                 isSaving = false;
-                LinkedList<String> monFiles= PerfMonCollector.getFiles();
+                LinkedList<String> monFiles;
+                if (hasStandardSet) {
+                    monFiles = PerfMonCollector.getFiles();
+                } else {
+                    monFiles = new LinkedList<>();
+                }
                 LoadosophiaUploadResults uploadResult = this.apiClient.sendFiles(new File(fileName), monFiles);
                 informUser("Uploaded successfully, go to results: " + uploadResult.getRedirectLink());
             } catch (IOException ex) {
@@ -101,7 +114,9 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
             }
         }
         clearData();
-        PerfMonCollector.clearFiles();
+        if (hasStandardSet) {
+            PerfMonCollector.clearFiles();
+        }
     }
 
     private void setupSaving() throws IOException {

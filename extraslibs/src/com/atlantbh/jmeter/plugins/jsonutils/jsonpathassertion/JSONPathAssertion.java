@@ -9,7 +9,6 @@
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion;
 
 import com.jayway.jsonpath.Configuration;
-import com.jayway.jsonpath.Option;
 import com.jayway.jsonpath.internal.JsonReader;
 import net.minidev.json.JSONArray;
 import org.apache.jmeter.assertions.Assertion;
@@ -77,7 +76,7 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
     }
 
     private void doAssert(String jsonString) {
-        JsonReader reader = new JsonReader(Configuration.defaultConfiguration().options(Option.THROW_ON_MISSING_PROPERTY));
+        JsonReader reader = new JsonReader(Configuration.defaultConfiguration());
         reader.parse(jsonString);
         Object value = reader.read(getJsonPath());
 

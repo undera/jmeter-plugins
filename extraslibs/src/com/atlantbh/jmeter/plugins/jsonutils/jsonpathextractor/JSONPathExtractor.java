@@ -86,8 +86,6 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
 
     @Override
     public void process() {
-        // NOTE: using String.format impacts performance
-        // http://stackoverflow.com/questions/513600/should-i-use-javas-string-format-if-performance-is-important
         JMeterContext context = getThreadContext();
         JMeterVariables vars = context.getVariables();
         SampleResult previousResult = context.getPreviousResult();
@@ -98,7 +96,7 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
             responseData = previousResult.getResponseDataAsString();
         }
 
-        JsonReader reader = new JsonReader(Configuration.defaultConfiguration().options(Option.THROW_ON_MISSING_PROPERTY));
+        JsonReader reader = new JsonReader(Configuration.defaultConfiguration());
 
         try {
             reader.parse(responseData);
@@ -120,10 +118,10 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
                 }
 
                 for (int n = 0; n < arr.length; n++) {
-                    vars.put(this.getVar() + "_" + (n + 1), String.format("%s", arr[n]));
+                    vars.put(this.getVar() + "_" + (n + 1), String.valueOf(arr[n]));
                 }
             } else {
-                vars.put(this.getVar(), String.format("%s", jsonPathResult));
+                vars.put(this.getVar(), String.valueOf(jsonPathResult));
             }
         } catch (Exception e) {
             log.warn("Extract failed", e);

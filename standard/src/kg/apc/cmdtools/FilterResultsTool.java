@@ -33,7 +33,7 @@ public class FilterResultsTool extends AbstractCMDTool {
                + "--success-filter <true/false> "
                + "--include-labels <labels list> "
                + "--exclude-labels <labels list> "
-               + "--include-labels-regex <true/false> " 
+               + "--include-label-regex <true/false> " 
                + "--exclude-label-regex <true/false> "
                + "--start-offset <sec> "
                + "--end-offset <sec> "

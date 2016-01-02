@@ -1,43 +1,28 @@
 package com.blazemeter.jmeter.xmpp;
 
 
-import com.blazemeter.jmeter.xmpp.actions.AbstractXMPPAction;
-import com.blazemeter.jmeter.xmpp.actions.Connect;
-import com.blazemeter.jmeter.xmpp.actions.Disconnect;
-import com.blazemeter.jmeter.xmpp.actions.Login;
-import com.blazemeter.jmeter.xmpp.actions.NoOp;
-import com.blazemeter.jmeter.xmpp.actions.RawXML;
-import com.blazemeter.jmeter.xmpp.actions.RosterAction;
-import com.blazemeter.jmeter.xmpp.actions.SendMessage;
-import com.blazemeter.jmeter.xmpp.actions.SendPresence;
-import java.io.IOException;
-import java.io.Serializable;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import com.blazemeter.jmeter.xmpp.actions.*;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.jivesoftware.smack.ConnectionConfiguration;
-import org.jivesoftware.smack.ConnectionListener;
-import org.jivesoftware.smack.PacketListener;
-import org.jivesoftware.smack.SmackException;
-import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.bosh.BOSHConfiguration;
 import org.jivesoftware.smack.bosh.XMPPBOSHConnection;
 import org.jivesoftware.smack.filter.AndFilter;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 public class JMeterXMPPConnection extends JMeterXMPPConnectionBase {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private static final BlockingQueue<XMPPConnection> connectionRegistry = new LinkedBlockingQueue<>(JMeterUtils.getPropDefault("blazemeter.xmpp.ceiling", 5));
+    private static final BlockingQueue<XMPPConnection> connectionRegistry = new LinkedBlockingQueue<>();
     private XMPPConnection conn;
     private Map<String, AbstractXMPPAction> actions = getAvailableActions();
 

@@ -1,11 +1,5 @@
 package com.blazemeter.jmeter.webdriver.phantomjs;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.After;
@@ -16,6 +10,9 @@ import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import java.io.*;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -29,7 +26,7 @@ public class PhantomJSDriverConfigTest {
     @Before
     public void createConfig() throws IOException {
         config = new PhantomJSDriverConfig();
-        File tmp = File.createTempFile("driver", ".tmp");
+        File tmp = File.createTempFile("driver", ".cmd");
         tmp.setExecutable(true);
         tmp.deleteOnExit();
         config.setPhantomJsExecutablePath(tmp.getAbsolutePath());

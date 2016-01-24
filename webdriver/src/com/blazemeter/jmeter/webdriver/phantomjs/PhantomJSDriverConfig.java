@@ -7,6 +7,8 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jmeter.threads.JMeterContextService;
 
 public class PhantomJSDriverConfig extends WebDriverConfig<PhantomJSDriver> implements ThreadListener {
     private static final long serialVersionUID = 100L;
@@ -34,6 +36,13 @@ public class PhantomJSDriverConfig extends WebDriverConfig<PhantomJSDriver> impl
         capabilities.setCapability(CapabilityType.PROXY, createProxy());
         capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
                 getPhantomJsExecutablePath());
+        String cliArgs = JMeterContextService.getContext().getVariables().get("phantomjs.cli.args");
+        
+        if(cliArgs!=null && cliArgs.trim().length()>0) {
+            String args[] = cliArgs.split(",");
+            capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, args);
+        }
+        
         return capabilities;
     }
 

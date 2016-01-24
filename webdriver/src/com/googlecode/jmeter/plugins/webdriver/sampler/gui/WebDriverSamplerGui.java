@@ -1,35 +1,30 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler.gui;
 
 import com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler;
-import jsyntaxpane.DefaultSyntaxKit;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JSR223BeanInfoSupport;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rtextarea.RTextScrollPane;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import org.apache.jmeter.gui.util.JSyntaxTextArea;
+import org.apache.jmeter.gui.util.JTextScrollPane;
 
 public class WebDriverSamplerGui extends AbstractSamplerGui {
 
     private static final long serialVersionUID = 100L;
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
 
-    static {
-        if (!GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance()) {
-            DefaultSyntaxKit.initKit();
-        } else {
-            LOGGER.info("Headless environment detected. Disabling JSyntaxPane highlighting.");
-        }
-    }
-
     JTextField parameters;
 
-    JEditorPane script;
+    JSyntaxTextArea script;
+
     JComboBox<String> languages;
 
     public WebDriverSamplerGui() {
@@ -139,15 +134,20 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 
     private void setScriptContentType(String ctype) {
         String text = script.getText();
-        script.setContentType(ctype);
+        script.setSyntaxEditingStyle(ctype);
         script.setText(text);
     }
 
     private JPanel createScriptPanel() {
-        script = new JEditorPane();
-        final JScrollPane scrollPane = new JScrollPane(script);
-        setScriptContentType("text/plain");
-        script.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+    	script = new JSyntaxTextArea(20, 20, false);
+    	script.getFoldManager().setCodeFoldingEnabled(true);
+    	script.setFont(new Font("Hack", Font.PLAIN, 14));
+        script.setMarkOccurrences(true);
+
+        JTextScrollPane scrollPane = new JTextScrollPane(script);
+        scrollPane.getGutter().setLineNumberFont(new Font("Hack", Font.PLAIN, 14));
+        scrollPane.setLineNumbersEnabled(true);
+        scrollPane.setFoldIndicatorEnabled(true);
 
         final JLabel label = new JLabel("Script (see below for variables that are defined)");
         label.setLabelFor(script);

@@ -36,16 +36,17 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
 
     FirefoxProfile createProfile() {
         FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("app.update.enabled", false);
+        
         String userAgentOverride = getUserAgentOverride();
-        String ntlmOverride = getNtlmSetting();
         if (StringUtils.isNotEmpty(userAgentOverride)) {
             profile.setPreference("general.useragent.override", userAgentOverride);
         }
+        
+        String ntlmOverride = getNtlmSetting();
         if (StringUtils.isNotEmpty(ntlmOverride)) {
             profile.setPreference("network.negotiate-auth.allow-insecure-ntlm-v1", true);
         }
-
-        profile.setPreference("app.update.enabled", false);
 
         addExtensions(profile);
         setPreferences(profile);
@@ -80,12 +81,16 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
             ArrayList row = (ArrayList) rows.get(i).getObjectValue();
             String name = ((JMeterProperty) row.get(0)).getStringValue();
             String value = ((JMeterProperty) row.get(1)).getStringValue();
-            if (value.equals("true")) {
-                profile.setPreference(name, true);
-            } else if (value.equals("false")) {
-                profile.setPreference(name, false);
-            } else {
-                profile.setPreference(name, value);
+            switch (value) {
+                case "true":
+                    profile.setPreference(name, true);
+                    break;
+                case "false":
+                    profile.setPreference(name, false);
+                    break;
+                default:
+                    profile.setPreference(name, value);
+                    break;
             }
         }
     }

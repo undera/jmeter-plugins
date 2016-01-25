@@ -1,11 +1,6 @@
 package com.googlecode.jmeter.plugins.webdriver.config.gui;
 
 import com.googlecode.jmeter.plugins.webdriver.config.FirefoxDriverConfig;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.Grid;
 import org.apache.jmeter.gui.util.VerticalPanel;
@@ -14,11 +9,13 @@ import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
 
+import javax.swing.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemListener {
 
     private static final long serialVersionUID = 100L;
-    static final String OVERRIDEN_USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_2 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A4449d Safari/9537.53";
-    static final String OVERRIDEN_NTLM = "";
     JTextField userAgentOverrideText;
     JCheckBox userAgentOverrideCheckbox;
     JCheckBox ntlmOverrideCheckbox;
@@ -64,6 +61,7 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
             FirefoxDriverConfig config = (FirefoxDriverConfig) element;
             userAgentOverrideCheckbox.setSelected(config.isUserAgentOverridden());
             userAgentOverrideText.setText(config.getUserAgentOverride());
+            userAgentOverrideText.setEnabled(config.isUserAgentOverridden());
 
             JMeterProperty ext = config.getExtensions();
             if (!(ext instanceof NullProperty)) {
@@ -100,15 +98,15 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
         userAgentOverrideCheckbox.addItemListener(this);
         firefoxPanel.add(userAgentOverrideCheckbox);
 
+        userAgentOverrideText = new JTextField();
+        userAgentOverrideText.setEnabled(false);
+        firefoxPanel.add(userAgentOverrideText);
+
         ntlmOverrideCheckbox = new JCheckBox("Enable NTLM");
         ntlmOverrideCheckbox.setSelected(false);
         ntlmOverrideCheckbox.setEnabled(true);
         ntlmOverrideCheckbox.addItemListener(this);
         firefoxPanel.add(ntlmOverrideCheckbox);
-
-        userAgentOverrideText = new JTextField(OVERRIDEN_USER_AGENT);
-        userAgentOverrideText.setEnabled(false);
-        firefoxPanel.add(userAgentOverrideText);
 
         extensions = new Grid("Load Extensions", new String[]{"Path to XPI File"}, new Class[]{String.class}, new String[]{""});
         firefoxPanel.add(extensions);
@@ -125,13 +123,13 @@ public class FirefoxDriverConfigGui extends WebDriverConfigGui implements ItemLi
     public void clearGui() {
         super.clearGui();
         userAgentOverrideCheckbox.setSelected(false);
-        userAgentOverrideText.setText(OVERRIDEN_USER_AGENT);
+        userAgentOverrideText.setText("");
         ntlmOverrideCheckbox.setSelected(false);
         extensions.getModel().clearData();
         preferences.getModel().clearData();
     }
 
-    public void itemStateChangedUserAgent(ItemEvent itemEvent) {
+    public void itemStateChanged(ItemEvent itemEvent) {
         if (itemEvent.getSource() == userAgentOverrideCheckbox) {
             userAgentOverrideText.setEnabled(userAgentOverrideCheckbox.isSelected());
         }

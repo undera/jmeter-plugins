@@ -66,7 +66,7 @@ public class FirefoxDriverConfigGuiTest {
 
         gui.clearGui();
 
-        assertThat(gui.userAgentOverrideText.getText(), is(FirefoxDriverConfigGui.OVERRIDEN_USER_AGENT));
+        assertThat(gui.userAgentOverrideText.getText(), is(""));
         assertThat(gui.userAgentOverrideCheckbox.isSelected(), is(false));
     }
 

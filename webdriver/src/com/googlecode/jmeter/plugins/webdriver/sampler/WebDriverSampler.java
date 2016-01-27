@@ -6,6 +6,8 @@ import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.WebDriver;
@@ -138,6 +140,11 @@ public class WebDriverSampler extends AbstractSampler {
         scriptable.setSampleResult(sampleResult);
         scriptable.setBrowser(getWebDriver());
         engineBindings.put("WDS", scriptable);
+        
+        engineBindings.put("ctx", JMeterContextService.getContext());
+        engineBindings.put("vars", JMeterContextService.getContext().getVariables());
+        engineBindings.put("props", JMeterUtils.getJMeterProperties());
+
         scriptEngine.setBindings(engineBindings, ScriptContext.ENGINE_SCOPE);
         return scriptEngine;
     }

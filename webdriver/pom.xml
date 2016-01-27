@@ -37,7 +37,7 @@
     </distributionManagement>
 
     <properties>
-        <selenium.version>2.47.0</selenium.version>
+        <selenium.version>2.49.1</selenium.version>
     </properties>
 
     <repositories>
@@ -150,6 +150,11 @@
             <groupId>de.sciss</groupId>
             <artifactId>jsyntaxpane</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fifesoft</groupId>
+            <artifactId>rsyntaxtextarea</artifactId>
+            <version>2.5.8</version>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -289,7 +294,7 @@
                             <includeArtifactIds>
                                 selenium-support,selenium-api,selenium-remote-driver,selenium-ie-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-htmlunit-driver,gson,
                                 guava,json,commons-exec,jsyntaxpane,htmlunit,htmlunit-core-js,nekohtml,cssparser,jetty-websocket,sac,httpclient,httpmime,httpcore,
-                                cglib-nodep,phantomjsdriver
+                                cglib-nodep,phantomjsdriver,rsyntaxtextarea
                             </includeArtifactIds>
                         </configuration>
                     </execution>

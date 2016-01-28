@@ -3,6 +3,7 @@
 == 1.4.0 <i><font color=gray size="1">preparing</font></i>==
   * BlazeMeter Inc. has contributed XMPP testing plugins
   * BlazeMeter Inc. has contributed PhantomJS support for WebDriver
+  * add 2 text fields in PhantomJS WebDriver GUI for phantomjs.cli.args and phantomjs.ghostdriver.args parameters
   * Modernize project website, change its look a bit
   * fix consequences of PR #80 further
   * make Dummy Sampler compatible with JMeter 2.12 and earlier
@@ -272,9 +273,9 @@
   * *[UltimateThreadGroup Ultimate Thread Group], the real killer*
   * *the most wanted [ResponseTimesOverTime Response Times Over Time] Graph*
   * [ThroughputOverTime Transaction Throughput Over Time] Graph
-  * Auto-update GUI for [SteppingThreadGroup Stepping Thread Group] (thanks to St√©phane Hoblingre for the patch)
-  * Copy to Clipboard on all graphs (thanks to St√©phane Hoblingre for the patch)
-  * Anti-aliasing on all graphs (thanks to St√©phane Hoblingre for the patch)
+  * Auto-update GUI for [SteppingThreadGroup Stepping Thread Group] (thanks to St ©phane Hoblingre for the patch)
+  * Copy to Clipboard on all graphs (thanks to St ©phane Hoblingre for the patch)
+  * Anti-aliasing on all graphs (thanks to St ©phane Hoblingre for the patch)
 
 == [/downloads/file/JMeterPlugins-0.2.0.zip 0.2.0] <i><font color=gray size="1">Apr 9, 2010</font></i>==
   * displayable rows selection in [http://code.google.com/p/jmeter-plugins/w/list?q=label:Graph graph listeners]

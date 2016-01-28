@@ -13,6 +13,8 @@ public class PhantomJSDriverConfigGui extends WebDriverConfigGui {
 
     private static final long serialVersionUID = 100L;
     JTextField phantomJsExecutablePath;
+    JTextField phantomJsCliArgs;
+    JTextField phantomJsGhostdriverCliArgs;
 
     @Override
     public String getStaticLabel() {
@@ -30,6 +32,8 @@ public class PhantomJSDriverConfigGui extends WebDriverConfigGui {
         if (element instanceof PhantomJSDriverConfig) {
             PhantomJSDriverConfig config = (PhantomJSDriverConfig) element;
             phantomJsExecutablePath.setText(config.getPhantomJsExecutablePath());
+            phantomJsCliArgs.setText(config.getPhantomJsCliArgs());
+            phantomJsGhostdriverCliArgs.setText(config.getPhantomJsGhostdriverCliArgs());
         }
     }
 
@@ -46,6 +50,8 @@ public class PhantomJSDriverConfigGui extends WebDriverConfigGui {
         if (element instanceof PhantomJSDriverConfig) {
             PhantomJSDriverConfig config = (PhantomJSDriverConfig) element;
             config.setPhantomJsExecutablePath(phantomJsExecutablePath.getText());
+            config.setPhantomJsCliArgs(phantomJsCliArgs.getText());
+            config.setPhantomJsGhostdriverCliArgs(phantomJsGhostdriverCliArgs.getText());
         }
     }
 
@@ -53,6 +59,8 @@ public class PhantomJSDriverConfigGui extends WebDriverConfigGui {
     public void clearGui() {
         super.clearGui();
         phantomJsExecutablePath.setText("");
+        phantomJsCliArgs.setText("");
+        phantomJsGhostdriverCliArgs.setText("");
     }
 
     @Override
@@ -82,13 +90,30 @@ public class PhantomJSDriverConfigGui extends WebDriverConfigGui {
 
     private JPanel buildGui() {
         final JPanel browserPanel = new VerticalPanel();
+        
         final JPanel phantomJsExecutablePanel = new HorizontalPanel();
         final JLabel phantomJsExecutableLabel = new JLabel("Path to PhantomJS executable");
         phantomJsExecutablePanel.add(phantomJsExecutableLabel);
-
         phantomJsExecutablePath = new JTextField();
         phantomJsExecutablePanel.add(phantomJsExecutablePath);
         browserPanel.add(phantomJsExecutablePanel);
+        
+        final JPanel phantomJsCliArgsPanel = new VerticalPanel();
+        final JLabel phantomJsCliArgsLabel = new JLabel("value for phantomjs.cli.args (comma separator) likes --web-security=false, --ignore-ssl-errors=true");
+        phantomJsCliArgsPanel.add(phantomJsCliArgsLabel);
+        
+        phantomJsCliArgs = new JTextField();
+        phantomJsCliArgsPanel.add(phantomJsCliArgs);
+        browserPanel.add(phantomJsCliArgsPanel);
+        
+        
+        final JPanel phantomJsGhostdriverCliArgsPanel = new VerticalPanel();
+        final JLabel phantomJsGhostdriverCliArgsLabel = new JLabel("value for phantomjs.ghostdriver.cli.args (comma separator)");
+        phantomJsGhostdriverCliArgsPanel.add(phantomJsGhostdriverCliArgsLabel);
+        
+        phantomJsGhostdriverCliArgs = new JTextField();
+        phantomJsGhostdriverCliArgsPanel.add(phantomJsGhostdriverCliArgs);
+        browserPanel.add(phantomJsGhostdriverCliArgsPanel);
         return browserPanel;
     }
 

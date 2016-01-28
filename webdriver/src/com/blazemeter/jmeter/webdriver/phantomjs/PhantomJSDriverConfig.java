@@ -12,6 +12,8 @@ public class PhantomJSDriverConfig extends WebDriverConfig<PhantomJSDriver> impl
     private static final long serialVersionUID = 100L;
 
     private static final String PHANTOMJS_EXECUTABLE_PATH_PROPERTY_KEY = "PhantomJSDriverConfig.phantomjs_path";
+    private static final String PHANTOMJS_CLI_ARG_PROPERTY_KEY = "PhantomJSDriverConfig.phantomjs_cli_args";
+    private static final String PHANTOMJS_GHOSTDRIVER_CLI_ARG_PROPERTY_KEY = "PhantomJSDriverConfig.phantomjs_ghostdriver_cli_args";
 
     public String getPhantomJsExecutablePath() {
         return getPropertyAsString(PHANTOMJS_EXECUTABLE_PATH_PROPERTY_KEY);
@@ -19,6 +21,22 @@ public class PhantomJSDriverConfig extends WebDriverConfig<PhantomJSDriver> impl
 
     public void setPhantomJsExecutablePath(String value) {
         setProperty(PHANTOMJS_EXECUTABLE_PATH_PROPERTY_KEY, value);
+    }
+    
+    public String getPhantomJsCliArgs() {
+        return getPropertyAsString(PHANTOMJS_CLI_ARG_PROPERTY_KEY);
+    }
+
+    public void setPhantomJsCliArgs(String value) {
+        setProperty(PHANTOMJS_CLI_ARG_PROPERTY_KEY, value);
+    }
+    
+    public String getPhantomJsGhostdriverCliArgs() {
+        return getPropertyAsString(PHANTOMJS_GHOSTDRIVER_CLI_ARG_PROPERTY_KEY);
+    }
+
+    public void setPhantomJsGhostdriverCliArgs(String value) {
+        setProperty(PHANTOMJS_GHOSTDRIVER_CLI_ARG_PROPERTY_KEY, value);
     }
 
     @Override
@@ -34,6 +52,15 @@ public class PhantomJSDriverConfig extends WebDriverConfig<PhantomJSDriver> impl
         capabilities.setCapability(CapabilityType.PROXY, createProxy());
         capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
                 getPhantomJsExecutablePath());
+        
+        if (getPhantomJsCliArgs() != null && getPhantomJsCliArgs().trim().length() > 0) {
+        	capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_CLI_ARGS, cliParamsToStringArray(getPhantomJsCliArgs()));
+        }
+
+        if (getPhantomJsGhostdriverCliArgs() != null && getPhantomJsGhostdriverCliArgs().trim().length() > 0) {
+        	capabilities.setCapability(PhantomJSDriverService.PHANTOMJS_GHOSTDRIVER_CLI_ARGS, cliParamsToStringArray(getPhantomJsGhostdriverCliArgs()));
+        }
+        
         return capabilities;
     }
 
@@ -48,5 +75,24 @@ public class PhantomJSDriverConfig extends WebDriverConfig<PhantomJSDriver> impl
     @Override
     protected PhantomJSDriver createBrowser() {
         return new PhantomJSDriver(createCapabilities());
+    }
+    
+    /*
+     * Convert a string with params (comma separator) to an array of String
+     * Example : "--web-security=false, --ignore-ssl-errors=true" converts to  ["--web-security=false","--ignore-ssl-errors=true"] (trim String)
+     */
+    private String [] cliParamsToStringArray(String params) {
+    	String[] sSplit = {""};
+    	
+    	if (params != null && params.trim().length() > 0) {
+    		sSplit = params.split(",");
+	        for(int i = 0; i < sSplit.length;i++) {
+	        	String s = sSplit[i];
+	        	s = s.trim();
+	        	sSplit[i] = s;
+	        }
+    	}
+        return sSplit;
+    	
     }
 }

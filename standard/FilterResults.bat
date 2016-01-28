@@ -6,7 +6,7 @@ rem [
 rem --success-filter <true/false>   (true : Only success samplers, false : all results by default)
 rem --include-labels <labels list>
 rem --exclude-labels <labels list>
-rem --include-labels-regex <true/false>
+rem --include-label-regex <true/false>
 rem --exclude-label-regex <true/false>
 rem --start-offset <sec>
 rem --end-offset <sec>

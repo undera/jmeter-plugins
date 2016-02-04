@@ -1,16 +1,7 @@
-<div class="alert alert-warning">
-<div class="pull-right">
-[http://www.meetup.com/JMeter/events/228377456/ <i class="fa fa-graduation-cap fa-4x"></i>]
-</div>
-Come listen to live lecture by Andrey Pokhilko ([https://www.blazemeter.com/about ?]):<br/>
-[http://www.meetup.com/JMeter/events/228377456/ Automatic Analysis of Your Load Test Results]<br/> February 3rd, Mountain View, CA
-</div>
-
 <div style='white-space: nowrap'>
-<i class="fa fa-twitter-square"></i>
-[https://twitter.com/#!/jmeter_plugins Follow us on Twitter]
-
-<i class="fa fa-area-chart"></i>
-[http://loadosophia.org/?utm_source=jpgc&utm_medium=link&utm_campaign=sidebar Analyze your test results online]
-
+    <i class="fa fa-twitter-square"></i>
+    [https://twitter.com/#!/jmeter_plugins Follow us on Twitter]
+    
+    <i class="fa fa-area-chart"></i>
+    [http://loadosophia.org/?utm_source=jpgc&utm_medium=link&utm_campaign=sidebar Analyze your test results online]
 </div>

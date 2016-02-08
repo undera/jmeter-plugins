@@ -1,19 +1,20 @@
 package kg.apc.jmeter.perfmon;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import kg.apc.perfmon.PerfMonMetricGetter;
 import kg.apc.perfmon.client.Transport;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class NewAgentConnector implements PerfMonAgentConnector {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected Transport transport;
-    private Map<String, String> metrics = new HashMap<String, String>();
+    private Map<String, String> metrics = new HashMap<>();
     private String[] metricLabels;
 
     public void setTransport(Transport atransport) {
@@ -23,11 +24,11 @@ public class NewAgentConnector implements PerfMonAgentConnector {
     public void connect() throws IOException {
         log.debug(metrics.toString());
 
-        ArrayList<String> labels = new ArrayList<String>(metrics.keySet());
-        metricLabels = labels.toArray(new String[0]);
+        ArrayList<String> labels = new ArrayList<>(metrics.keySet());
+        metricLabels = labels.toArray(new String[labels.size()]);
 
-        ArrayList<String> arr = new ArrayList<String>(metrics.values());
-        String[] m = arr.toArray(new String[0]);
+        ArrayList<String> arr = new ArrayList<>(metrics.values());
+        String[] m = arr.toArray(new String[arr.size()]);
         transport.startWithMetrics(m);
     }
 
@@ -41,9 +42,7 @@ public class NewAgentConnector implements PerfMonAgentConnector {
             if (!data[n].isEmpty()) {
                 try {
                     collector.generateSample(Double.parseDouble(data[n]), metricLabels[n]);
-                } catch (NumberFormatException e) {
-                    collector.generateErrorSample(metricLabels[n], e.toString());
-                } catch (ArrayIndexOutOfBoundsException e) {
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                     collector.generateErrorSample(metricLabels[n], e.toString());
                 }
             }

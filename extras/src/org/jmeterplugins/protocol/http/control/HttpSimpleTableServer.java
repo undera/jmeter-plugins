@@ -30,7 +30,7 @@ import java.util.*;
 public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWaiter {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
-    public static final String STS_VERSION = "1.1";
+    public static final String STS_VERSION = "1.2";
     public static final String ROOT = "/sts/";
     public static final String ROOT2 = "/sts";
     public static final String URI_INITFILE = "INITFILE";
@@ -116,7 +116,14 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         } else {
             msg = doAction(uri, method, parms);
         }
-        return new NanoHTTPD.Response(msg);
+		
+		Response response = new NanoHTTPD.Response(msg);
+		
+		// no cache for the response
+		response.addHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.addHeader("Pragma", "no-cache");
+		response.addHeader("Expires", "0");		
+        return response;
     }
 
     protected synchronized String doAction(String uri, Method method,

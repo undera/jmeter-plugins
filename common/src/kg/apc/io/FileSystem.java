@@ -13,7 +13,7 @@ public class FileSystem {
         File dir = new File(path);
         FileFilter ff = new WildcardFileFilter(pattern);
         File[] found = dir.listFiles(ff);
-        return found != null ? found.length > 0 : false;
+        return found != null && found.length > 0;
     }
 
     public static void copyFile(String source, String destination) throws IOException {

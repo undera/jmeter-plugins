@@ -59,7 +59,6 @@ public class JSettingsPanelTest {
 
       public void add(SampleResult sample)
       {
-         return;
       }
 
         @Override

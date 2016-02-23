@@ -28,4 +28,5 @@ Additional plugins for extended and complex testing. Does not require additional
   * [RawDataSource Raw Data Source]
   * [XMLFormatPostProcessor XML Format PostProcessor]
   * [LockFile Lock Files]
-  * [HttpSimpleTableServer HTTP Simple Table Server]
+  * [HttpSimpleTableServer HTTP Simple Table Server] to manage the dataset
+  * [MergeResults Merge Results files] to simplify the comparison of two or more load tests

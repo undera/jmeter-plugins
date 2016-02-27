@@ -140,10 +140,13 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractBaseDynamicThreadGro
         PropertyIterator it = data.iterator();
         while (it.hasNext()) {
             CollectionProperty record = (CollectionProperty) it.next();
-            row.add(offset, record.get(0).getIntValue());
-            offset += record.get(2).getIntValue();
-            row.add(offset, record.get(1).getIntValue());
-            // TODO: increment total arrivals
+            int from = record.get(0).getIntValue();
+            int to = record.get(1).getIntValue();
+            int during = record.get(2).getIntValue();
+            row.add(offset, from);
+            offset += during;
+            row.add(offset, to);
+            totalArrivals += during * from + during * (to - from) / 2;
         }
 
         previewChart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, 0));

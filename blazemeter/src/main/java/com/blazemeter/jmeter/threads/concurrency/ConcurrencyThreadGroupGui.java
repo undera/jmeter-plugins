@@ -2,6 +2,7 @@ package com.blazemeter.jmeter.threads.concurrency;
 
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroupGui;
+import kg.apc.jmeter.JMeterPluginsUtils;
 
 import java.awt.*;
 
@@ -13,7 +14,7 @@ public class ConcurrencyThreadGroupGui extends AbstractDynamicThreadGroupGui {
 
     @Override
     public String getStaticLabel() {
-        return "Concurrency Thread Group";
+        return JMeterPluginsUtils.prefixLabel("Concurrency Thread Group");
     }
 
     public ConcurrencyThreadGroupGui() {
@@ -21,6 +22,7 @@ public class ConcurrencyThreadGroupGui extends AbstractDynamicThreadGroupGui {
         targetRateLabel.setText("Target Concurrency: ");
         rampUpLabel.setText("Ramp Up Time (sec): ");
         holdLabel.setText("Hold Target Rate Time (sec): ");
+        JMeterPluginsUtils.addHelpLinkToPanel(this, getClass().getSimpleName());
     }
 
     protected AbstractDynamicThreadGroup createThreadGroupObject() {

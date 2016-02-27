@@ -2,6 +2,7 @@ package com.blazemeter.jmeter.threads.arrivals;
 
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroupGui;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.logging.LoggingManager;
@@ -21,6 +22,7 @@ public class ArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGui {
     public ArrivalsThreadGroupGui() {
         super();
         initFields();
+        JMeterPluginsUtils.addHelpLinkToPanel(this, getClass().getSimpleName());
     }
 
     @Override
@@ -30,7 +32,7 @@ public class ArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGui {
 
     @Override
     public String getStaticLabel() {
-        return "Arrivals Thread Group";
+        return JMeterPluginsUtils.prefixLabel("Arrivals Thread Group");
     }
 
 

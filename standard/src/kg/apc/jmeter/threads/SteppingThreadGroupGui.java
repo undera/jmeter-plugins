@@ -1,23 +1,11 @@
 package kg.apc.jmeter.threads;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.util.concurrent.ConcurrentHashMap;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import kg.apc.jmeter.JMeterPluginsUtils;
-
 import kg.apc.charting.AbstractGraphRow;
+import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowSumValues;
-import kg.apc.charting.DateTimeRenderer;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
-
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.gui.LoopControlPanel;
 import org.apache.jmeter.engine.util.CompoundVariable;
@@ -26,8 +14,12 @@ import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
 import org.apache.jorphan.collections.HashTree;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SteppingThreadGroupGui
         extends AbstractThreadGroupGui {
@@ -65,11 +57,9 @@ public class SteppingThreadGroupGui
             }
         }
     }
+
     public static final String WIKIPAGE = "SteppingThreadGroup";
-    /**
-     *
-     */
-    private static final Logger log = LoggingManager.getLoggerForClass();
+
     protected ConcurrentHashMap<String, AbstractGraphRow> model;
     private GraphPanelChart chart;
     private JTextField initialDelay;
@@ -83,9 +73,6 @@ public class SteppingThreadGroupGui
     private LoopControlPanel loopPanel;
     private JTextField rampUp;
 
-    /**
-     *
-     */
     public SteppingThreadGroupGui() {
         super();
         init();
@@ -99,7 +86,7 @@ public class SteppingThreadGroupGui
         containerPanel.add(createParamsPanel(), BorderLayout.NORTH);
 
         chart = new GraphPanelChart(false, true);
-        model = new ConcurrentHashMap<String, AbstractGraphRow>();
+        model = new ConcurrentHashMap<>();
         chart.setRows(model);
         chart.getChartSettings().setDrawFinalZeroingLines(true);
 
@@ -258,7 +245,7 @@ public class SteppingThreadGroupGui
             tg.setOutUserPeriod(decUserPeriod.getText());
             tg.setFlightTime(flightTime.getText());
             tg.setRampUp(rampUp.getText());
-            ((AbstractThreadGroup) tg).setSamplerController((LoopController) loopPanel.createTestElement());
+            tg.setSamplerController((LoopController) loopPanel.createTestElement());
 
             refreshPreview();
         }

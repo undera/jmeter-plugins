@@ -22,7 +22,6 @@ import java.awt.*;
 
 public class FreeFormArrivalsThreadGroupGui extends AbstractBaseDynamicThreadGroupGui implements TableModelListener {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private static final String WIKIPAGE = "FreeFormArrivalsThreadGroup";
     private Grid grid;
     private String[] columnIdentifiers = new String[]{"Start Value", "End Value", "Duration"};
     private Class[] columnClasses = new Class[]{String.class, String.class, String.class};
@@ -31,6 +30,7 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractBaseDynamicThreadGro
     public FreeFormArrivalsThreadGroupGui() {
         super();
         init();
+        JMeterPluginsUtils.addHelpLinkToPanel(this, getClass().getSimpleName());
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractBaseDynamicThreadGro
 
     @Override
     public String getStaticLabel() {
-        return "Free-Form Arrivals Thread Group";
+        return JMeterPluginsUtils.prefixLabel("Free-Form Arrivals Thread Group");
     }
 
     @Override
@@ -86,7 +86,6 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractBaseDynamicThreadGro
     }
 
     protected void init() {
-        JMeterPluginsUtils.addHelpLinkToPanel(this, WIKIPAGE);
         JPanel containerPanel = new VerticalPanel();
 
         grid = new Grid("Threads Schedule", columnIdentifiers, columnClasses, defaultValues);

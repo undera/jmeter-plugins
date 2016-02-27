@@ -120,14 +120,16 @@ public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGr
     }
 
     protected void joinThreadFrom(Set<DynamicThread> threadSet) {
-        DynamicThread item = threadSet.toArray(new DynamicThread[threadSet.size()])[0];
-        if (item.getOSThread() != null) {
+        DynamicThread thread = threadSet.toArray(new DynamicThread[threadSet.size()])[0];
+        log.debug("Joining thread " + thread.getThreadName());
+        if (thread.getOSThread() != null) {
             try {
-                item.getOSThread().join(WAIT_TO_DIE);
+                thread.getOSThread().join(WAIT_TO_DIE);
             } catch (InterruptedException e) {
                 log.warn("Interrupted", e);
             }
         }
+        log.debug("Done joining thread " + thread.getThreadName());
     }
 
     public boolean isRunning() {

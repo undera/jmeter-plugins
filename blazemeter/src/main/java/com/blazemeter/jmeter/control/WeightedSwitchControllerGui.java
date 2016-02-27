@@ -19,7 +19,6 @@ import java.util.LinkedList;
 
 public class WeightedSwitchControllerGui extends AbstractControllerGui {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private static final String WIKIPAGE = "WeightedSwitch";
     public static final String WEIGHTS = "Weight";
     private Grid grid;
 
@@ -33,7 +32,7 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
         setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
 
-        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
+        add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), getClass().getSimpleName()), BorderLayout.NORTH);
 
         grid = new Grid("Child Item Weights",
                 new String[]{"Name", WEIGHTS},
@@ -51,7 +50,7 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
 
     @Override
     public String getStaticLabel() {
-        return "Weighted Switch Controller";
+        return JMeterPluginsUtils.prefixLabel("Weighted Switch Controller");
     }
 
     @Override

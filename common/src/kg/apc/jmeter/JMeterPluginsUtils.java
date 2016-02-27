@@ -195,6 +195,10 @@ public abstract class JMeterPluginsUtils {
             return panel;
         }
 
+        if (helpPage.endsWith("Gui")) {
+            helpPage = helpPage.substring(0, helpPage.length() - 3);
+        }
+
         JLabel icon = new JLabel();
         icon.setIcon(new javax.swing.ImageIcon(JMeterPluginsUtils.class.getResource("/kg/apc/jmeter/vizualizers/information.png")));
 

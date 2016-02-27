@@ -166,7 +166,7 @@ public abstract class NanoHTTPD {
         setAsyncRunner(new DefaultAsyncRunner());
     }
 
-    private static final void safeClose(Closeable closeable) {
+    private static void safeClose(Closeable closeable) {
         if (closeable != null) {
             try {
                 closeable.close();
@@ -175,7 +175,7 @@ public abstract class NanoHTTPD {
         }
     }
 
-    private static final void safeClose(Socket closeable) {
+    private static void safeClose(Socket closeable) {
         if (closeable != null) {
             try {
                 closeable.close();
@@ -184,7 +184,7 @@ public abstract class NanoHTTPD {
         }
     }
 
-    private static final void safeClose(ServerSocket closeable) {
+    private static void safeClose(ServerSocket closeable) {
         if (closeable != null) {
             try {
                 closeable.close();

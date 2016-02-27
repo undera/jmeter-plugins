@@ -1,12 +1,12 @@
 package kg.apc.emulators;
 
-import kg.apc.jmeter.DirectoryAnchor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeListener;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
+import org.apache.jmeter.save.SaveService;
 import org.apache.jmeter.threads.*;
 import org.apache.jmeter.threads.ThreadGroup;
 import org.apache.jmeter.util.JMeterUtils;
@@ -20,9 +20,6 @@ import java.util.logging.Logger;
 
 public abstract class TestJMeterUtils {
 
-    /**
-     *
-     */
     public static void createJmeterEnv() {
         File propsFile = null;
         try {
@@ -32,17 +29,14 @@ public abstract class TestJMeterUtils {
             ex.printStackTrace(System.err);
         }
 
-        //propsFile=new File("/home/undera/NetBeansProjects/jmeter/trunk/bin/jmeter.properties");
-
         assert propsFile != null;
         JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
-        JMeterUtils.setJMeterHome(new DirectoryAnchor().toString());
+        JMeterUtils.setJMeterHome(getTempDir());
         JMeterUtils.setLocale(new Locale("ignoreResources"));
 
         JMeterTreeModel jMeterTreeModel = new JMeterTreeModel();
         JMeterTreeListener jMeterTreeListener = new JMeterTreeListener();
         jMeterTreeListener.setModel(jMeterTreeModel);
-        GuiPackage.getInstance(jMeterTreeListener, jMeterTreeModel);
         JMeterContextService.getContext().setVariables(new JMeterVariables());
         StandardJMeterEngine engine = new EmulatorJmeterEngine();
         JMeterThreadMonitor monitor = new EmulatorThreadMonitor();
@@ -55,7 +49,17 @@ public abstract class TestJMeterUtils {
         ThreadGroup threadGroup = new org.apache.jmeter.threads.ThreadGroup();
         threadGroup.setName("test thread group");
         JMeterContextService.getContext().setThreadGroup(threadGroup);
-        JMeterUtils.setProperty("sample_variables", "TEST1,TEST2,TEST3"); // for Flexible File Writer Test        
+        JMeterUtils.setProperty("sample_variables", "TEST1,TEST2,TEST3"); // for Flexible File Writer Test
+        JMeterUtils.setProperty("saveservice_properties", "/ss.props");
+        File f = new File(JMeterUtils.getJMeterHome() + "/ss.props");
+        f.getParentFile().mkdirs();
+
+        try {
+            f.createNewFile();
+            SaveService.loadProperties();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static String getTempDir() {
@@ -73,11 +77,8 @@ public abstract class TestJMeterUtils {
         return RandomStringUtils.randomAlphanumeric(i);
     }
 
-    /**
-     *
-     */
     @Test
-    public void testEnv() {
+    public void testEnv() throws IOException {
         TestJMeterUtils.createJmeterEnv();
         GuiPackage.getInstance().updateCurrentNode();
     }

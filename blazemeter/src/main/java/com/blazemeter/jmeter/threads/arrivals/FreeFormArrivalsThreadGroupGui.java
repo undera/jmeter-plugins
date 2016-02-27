@@ -143,9 +143,9 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractBaseDynamicThreadGro
             int from = record.get(0).getIntValue();
             int to = record.get(1).getIntValue();
             int during = record.get(2).getIntValue();
-            row.add(offset, from);
+            row.add(offset * 1000, from);
             offset += during;
-            row.add(offset, to);
+            row.add(offset * 1000, to);
             totalArrivals += during * from + during * (to - from) / 2;
         }
 

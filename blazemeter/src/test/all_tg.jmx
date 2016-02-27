@@ -66,11 +66,6 @@ without actual network activity. This helps debugging tests.</stringProp>
             <stringProp name="52">4</stringProp>
             <stringProp name="53">5</stringProp>
           </collectionProp>
-          <collectionProp name="1873291719">
-            <stringProp name="49">1</stringProp>
-            <stringProp name="1567">10</stringProp>
-            <stringProp name="1598">20</stringProp>
-          </collectionProp>
         </collectionProp>
       </com.blazemeter.jmeter.threads.arrivals.FreeFormArrivalsThreadGroup>
       <hashTree>

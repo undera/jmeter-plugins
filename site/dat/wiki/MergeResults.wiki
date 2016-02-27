@@ -33,3 +33,58 @@ After merge :
 || *TEST 1-2* ||
 || [/img/wiki/merge_results_test1-2.png] ||
 
+Merge tool could be call in Command Line Interface.
+cat merge-results.properties
+
+{{{
+
+# When you are running MergeResults tool with JMeterPluginsCMD use the following parameters
+# --input-jtl merge-results.properties
+# --plugin-type MergeResults
+#
+# example :
+# java -Xms256m -Xmx512m -jar CMDRunner.jar --tool Reporter --generate-csv test1-test2.csv --input-jtl merge-results.properties --plugin-type MergeResults
+# or
+# <JMETER_HOME>\lib\ext\JMeterPluginsCMD.bat --generate-csv test1-test2.csv --input-jtl merge-results.properties --plugin-type MergeResults
+
+# === FILE 1 ===
+inputJtl1=test1.csv
+prefixLabel1=TEST1:
+includeLabels1=P[0-9].*
+excludeLabelsl=
+includeLabelRegex1=true
+excludeLabelRegex1=
+startOffset1=
+endOffset1=1500
+
+# === FILE 2 ===
+inputJtl2=test2.csv
+prefixLabel2=TEST2:
+includeLabels2=P[0-9].*
+excludeLabels2=
+includeLabelRegex2=true
+excludeLabelRegex2=
+startOffset2=
+endOffset2=1500
+
+# === FILE 3 ===
+#inputJtl3=
+#prefixLabel3=
+#includeLabels3=
+#excludeLabels3=
+#includeLabelRegex3=
+#excludeLabelRegex3=
+#startOffset3=
+#endOffset3=
+
+# === FILE 4 ===
+#inputJtl4=
+#prefixLabel4=
+#includeLabels4=
+#excludeLabels4=
+#includeLabelRegex4=
+#excludeLabelRegex4=
+#startOffset4=
+#endOffset4=
+
+}}}

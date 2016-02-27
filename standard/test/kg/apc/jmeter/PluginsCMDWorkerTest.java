@@ -1,4 +1,3 @@
-// TODO: cover all parameters
 package kg.apc.jmeter;
 
 import kg.apc.emulators.TestJMeterUtils;
@@ -25,55 +24,32 @@ public class PluginsCMDWorkerTest {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
     @Before
     public void setUp() {
         instance = new PluginsCMDWorker();
     }
 
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of addExportMode method, of class CMDWorker.
-     */
     @Test
     public void testAddExportMode() {
         System.out.println("addExportMode");
         int mode = 0;
-//        PluginsCMDWorker instance = new PluginsCMDWorkerEmul();
         instance.addExportMode(mode);
     }
 
-    /**
-     * Test of setInputFile method, of class CMDWorker.
-     */
     @Test
     public void testSetInputFile() {
         System.out.println("setInputFile");
         String string = "";
-        //      PluginsCMDWorker instance = new PluginsCMDWorkerEmul();
         instance.setInputFile(string);
     }
 
-    /**
-     * Test of setOutputCSVFile method, of class CMDWorker.
-     */
     @Test
     public void testSetOutputCSVFile() {
         System.out.println("setOutputCSVFile");
         String string = "";
-        //    PluginsCMDWorker instance = new PluginsCMDWorkerEmul();
         instance.setOutputCSVFile(string);
     }
 
-    /**
-     * Test of setOutputPNGFile method, of class CMDWorker.
-     */
     @Test
     public void testSetOutputPNGFile() {
         System.out.println("setOutputPNGFile");
@@ -81,24 +57,16 @@ public class PluginsCMDWorkerTest {
         instance.setOutputPNGFile(string);
     }
 
-    /**
-     * Test of setPluginType method, of class CMDWorker.
-     */
     @Test
     public void testSetPluginType() {
         System.out.println("setPluginType");
         String string = "ResponseTimesOverTime";
-        //  PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setPluginType(string);
     }
 
-    /**
-     * Test of doJob method, of class CMDWorker.
-     */
-    @Test
+   @Test
     public void testDoJob() throws IOException {
         System.out.println("doJob 1");
-        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir + "/short.jtl");
         File pngfile = File.createTempFile("test", ".png");
         instance.setOutputPNGFile(pngfile.getAbsolutePath());
@@ -116,13 +84,9 @@ public class PluginsCMDWorkerTest {
         assertTrue(16000 < pngfile.length()); // win/linux different
     }
 
-    /**
-     * Test of doJob method, of class CMDWorker.
-     */
     @Test
     public void testDoJob_png() throws IOException {
         System.out.println("doJob 2");
-        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir + "/short.jtl");
         instance.setOutputPNGFile(File.createTempFile("test", ".png").getAbsolutePath());
         instance.setPluginType("ResponseTimesOverTime");
@@ -132,13 +96,9 @@ public class PluginsCMDWorkerTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of doJob method, of class CMDWorker.
-     */
     @Test
     public void testDoJob_csv() throws IOException {
         System.out.println("doJob 3");
-        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir + "/short.jtl");
         instance.setOutputCSVFile(File.createTempFile("test", ".csv").getAbsolutePath());
         instance.setPluginType("ResponseTimesOverTime");
@@ -151,7 +111,6 @@ public class PluginsCMDWorkerTest {
     @Test
     public void testDoJob_csv_createdir() throws IOException {
         System.out.println("doJob 4");
-        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setInputFile(basedir + "/short.jtl");
         File rfile = File.createTempFile("testDir", "");
         rfile.delete();
@@ -176,7 +135,6 @@ public class PluginsCMDWorkerTest {
         int result = instance.doJob();
         int expResult = 0;
         assertEquals(expResult, result);
-        System.err.println(csvfile.length());
         //windows = 22, linux = 13
         assertTrue(csvfile.length() == 13 || csvfile.length() == 14);
     }
@@ -199,13 +157,9 @@ public class PluginsCMDWorkerTest {
     public void testSetGraphHeight() {
         System.out.println("setGraphHeight");
         int i = 0;
-        //PluginsCMDWorker instance = new PluginsCMDWorker();
         instance.setGraphHeight(i);
     }
 
-    /**
-     * Test of setAggregate method, of class PluginsCMDWorker.
-     */
     @Test
     public void testSetAggregate() {
         System.out.println("setAggregate");

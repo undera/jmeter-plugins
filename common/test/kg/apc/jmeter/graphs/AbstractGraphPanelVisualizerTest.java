@@ -1,35 +1,23 @@
 package kg.apc.jmeter.graphs;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Image;
-import java.util.concurrent.ConcurrentSkipListMap;
-
-import javax.swing.JPanel;
-
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
-
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.LongProperty;
 import org.apache.jmeter.visualizers.Sample;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.concurrent.ConcurrentSkipListMap;
+
+import static org.junit.Assert.*;
 
 public class AbstractGraphPanelVisualizerTest {
 
@@ -170,6 +158,7 @@ public class AbstractGraphPanelVisualizerTest {
             instance.setGranulation(0);
             fail("Exception expected");
         } catch (IllegalArgumentException e) {
+            //
         }
     }
 
@@ -230,7 +219,7 @@ public class AbstractGraphPanelVisualizerTest {
         System.out.println("switchModel");
         boolean aggregate = true;
         AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-        instance.switchModel(aggregate);
+        instance.switchModel(true);
     }
 
     /**
@@ -239,7 +228,7 @@ public class AbstractGraphPanelVisualizerTest {
     @Test
     public void testGetNewRow_10args() {
         System.out.println("getNewRow");
-        ConcurrentSkipListMap<String, AbstractGraphRow> model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
+        ConcurrentSkipListMap<String, AbstractGraphRow> model = new ConcurrentSkipListMap<>();
         int rowType = 0;
         String label = "";
         int markerSize = 0;
@@ -250,7 +239,7 @@ public class AbstractGraphPanelVisualizerTest {
         Color color = null;
         boolean canCompose = false;
         AbstractGraphPanelVisualizer instance = new AbstractGraphPanelVisualizerImpl();
-        AbstractGraphRow result = instance.getNewRow(model, rowType, label, markerSize, isBarRow, displayLabel, thickLines, showInLegend, color, canCompose);
+        AbstractGraphRow result = instance.getNewRow(model, rowType, label, markerSize, false, false, thickLines, showInLegend, color, canCompose);
         assertNotNull(result);
     }
 

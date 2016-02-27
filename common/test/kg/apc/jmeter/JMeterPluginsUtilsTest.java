@@ -1,65 +1,31 @@
 package kg.apc.jmeter;
 
-import javax.swing.BorderFactory;
-
-import org.apache.jmeter.gui.util.VerticalPanel;
-
-import java.awt.Component;
-import java.nio.ByteBuffer;
-import java.util.Map;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import kg.apc.emulators.TestJMeterUtils;
-
 import org.apache.jmeter.gui.util.PowerTableModel;
+import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.util.JMeterUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
 public class JMeterPluginsUtilsTest {
 
-    public JMeterPluginsUtilsTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of prefixLabel method, of class JMeterPluginsUtils.
-     */
     @Test
     public void testPrefixLabel() {
         System.out.println("prefixLabel");
         String string = "TEST";
         String result = JMeterPluginsUtils.prefixLabel(string);
-        assertTrue(result.indexOf(string) != -1);
+        assertTrue(result.contains(string));
     }
 
-    /**
-     * Test of getStackTrace method, of class JMeterPluginsUtils.
-     */
     @Test
     public void testGetStackTrace() {
         System.out.println("getStackTrace");
@@ -68,9 +34,6 @@ public class JMeterPluginsUtilsTest {
         assertTrue(result.length() > 0);
     }
 
-    /**
-     * Test of byteBufferToString method, of class JMeterPluginsUtils.
-     */
     @Test
     public void testByteBufferToString() {
         System.out.println("byteBufferToString");
@@ -91,9 +54,7 @@ public class JMeterPluginsUtilsTest {
         String result = JMeterPluginsUtils.byteBufferToString(buf);
         assertEquals(expResult, result);
     }
-    /**
-     * Test of replaceRNT method, of class JMeterPluginsUtils.
-     */
+
     @Test
     public void testReplaceRNT() {
         System.out.println("replaceRNT");
@@ -106,9 +67,6 @@ public class JMeterPluginsUtilsTest {
         assertEquals("\t\n\n\r", JMeterPluginsUtils.replaceRNT("\\t\\n\\n\\r"));
     }
 
-    /**
-     * Test of getWikiLinkText method, of class JMeterPluginsUtils.
-     */
     @Test
     public void testGetWikiLinkText() {
         System.out.println("getWikiLinkText");
@@ -117,9 +75,6 @@ public class JMeterPluginsUtilsTest {
         assertTrue(result.endsWith(wikiPage) || java.awt.Desktop.isDesktopSupported());
     }
 
-    /**
-     * Test of openInBrowser method, of class JMeterPluginsUtils.
-     */
     @Test
     public void testOpenInBrowser() {
         System.out.println("openInBrowser");
@@ -127,9 +82,6 @@ public class JMeterPluginsUtilsTest {
         // JMeterPluginsUtils.openInBrowser("http://jmeter-plugins.org/");
     }
 
-    /**
-     * Test of addHelpLinkToPanel method, of class JMeterPluginsUtils.
-     */
     @Test
     public void testAddHelpLinkToPanel() {
         System.out.println("addHelpLinkToPanel");
@@ -146,9 +98,6 @@ public class JMeterPluginsUtilsTest {
         assertNotNull(result);
     }
 
-    /**
-     * Test of getSecondsForShort method, of class JMeterPluginsUtils.
-     */
     @Test
     public void testGetSecondsForShortString() {
         System.out.println("getSecondsForShort");
@@ -159,9 +108,6 @@ public class JMeterPluginsUtilsTest {
         assertEquals(104025, JMeterPluginsUtils.getSecondsForShortString("27h103m645s"));
     }
 
-    /**
-     * Test of byteBufferToByteArray method, of class JMeterPluginsUtils.
-     */
     @Test
     public void testByteBufferToByteArray() {
         System.out.println("byteBufferToByteArray");
@@ -181,9 +127,6 @@ public class JMeterPluginsUtilsTest {
         return model;
     }
 
-    /**
-     * Test of tableModelRowsToCollectionProperty method, of class JMeterPluginsUtils.
-     */
     @Test
     public void testTableModelRowsToCollectionProperty() {
         System.out.println("tableModelRowsToCollectionProperty");
@@ -194,9 +137,6 @@ public class JMeterPluginsUtilsTest {
         assertEquals("[[1, 2], [3, 4]]", result.toString());
     }
 
-    /**
-     * Test of collectionPropertyToTableModelRows method, of class JMeterPluginsUtils.
-     */
     @Test
     public void testCollectionPropertyToTableModelRows() {
         System.out.println("collectionPropertyToTableModelRows");
@@ -210,9 +150,6 @@ public class JMeterPluginsUtilsTest {
         assertEquals(propExp.toString(), propRes.toString());
     }
 
-    /**
-     * Test of tableModelRowsToCollectionPropertyEval method, of class JMeterPluginsUtils.
-     */
     @Test
     public void testTableModelRowsToCollectionPropertyEval() {
         System.out.println("tableModelRowsToCollectionPropertyEval");
@@ -224,37 +161,26 @@ public class JMeterPluginsUtilsTest {
     }
 
 
-   /**
-    * Test of getFloatFromString method, of class JMeterPluginsUtils.
-    */
-   @Test
-   public void testGetFloatFromString() {
-      System.out.println("getFloatFromString");
-      String stringValue = "5.3";
-      float defaultValue = 1.0F;
-      float expResult = 5.3F;
-      float result = JMeterPluginsUtils.getFloatFromString(stringValue, defaultValue);
-      assertEquals(expResult, result, 0.0);
-   }
-
-
-    /**
-     * Test of doBestCSVSetup method, of class JMeterPluginsUtils.
-     */
     @Test
-    public void testDoBestCSVSetup() {
+    public void testGetFloatFromString() {
+        System.out.println("getFloatFromString");
+        String stringValue = "5.3";
+        float defaultValue = 1.0F;
+        float expResult = 5.3F;
+        float result = JMeterPluginsUtils.getFloatFromString(stringValue, defaultValue);
+        assertEquals(expResult, result, 0.0);
+    }
+
+    @Test
+    public void testDoBestCSVSetup() throws IOException {
         System.out.println("doBestCSVSetup");
         TestJMeterUtils.createJmeterEnv();
         SampleSaveConfiguration conf = new SampleSaveConfiguration();
         JMeterPluginsUtils.doBestCSVSetup(conf);
     }
 
-
-    /**
-     * Test of getEnvDefault method, of class JMeterPluginsUtils.
-     */
     @Test
-    public void testGetEnvDefault() {
+    public void testGetEnvDefault() throws IOException {
         System.out.println("getEnvDefault");
         TestJMeterUtils.createJmeterEnv();
         Map<String, String> env = System.getenv();
@@ -265,11 +191,8 @@ public class JMeterPluginsUtilsTest {
         }
     }
 
-    /**
-     * Test getShortHostname using default pattern
-     */
     @Test
-    public void testGetShortHostnameDefault() {
+    public void testGetShortHostnameDefault() throws IOException {
         System.out.println("testShortHostnameDefault");
         TestJMeterUtils.createJmeterEnv();
         String host;
@@ -285,11 +208,8 @@ public class JMeterPluginsUtilsTest {
         assertEquals("search-index", host);
     }
 
-    /**
-     * Test getShortHostname using a custom pattern
-     */
     @Test
-    public void testGetShortHostnameCustomPattern1() {
+    public void testGetShortHostnameCustomPattern1() throws IOException {
         System.out.println("testGetShortHostnameCustomPattern1");
         TestJMeterUtils.createJmeterEnv();
         JMeterUtils.setProperty("jmeterPlugin.perfmon.label.useHostname.pattern", "([\\w\\-]+\\.us-(east|west)-[0-9]).*");
@@ -306,11 +226,8 @@ public class JMeterPluginsUtilsTest {
         assertEquals("search-index.us-west-2", host);
     }
 
-    /**
-     * Test getShortHostname using a custom pattern
-     */
     @Test
-    public void testGetShortHostnameInvalidPattern() {
+    public void testGetShortHostnameInvalidPattern() throws IOException {
         System.out.println("testGetShortHostnameInvalidPattern");
         TestJMeterUtils.createJmeterEnv();
         JMeterUtils.setProperty("jmeterPlugin.perfmon.label.useHostname.pattern", "([\\w\\-]+\\.region.*");
@@ -318,6 +235,4 @@ public class JMeterPluginsUtilsTest {
         host = JMeterPluginsUtils.getShortHostname("aaa-bbb-1234.region.com");
         assertEquals("aaa-bbb-1234.region.com", host);
     }
-
-
 }

@@ -1,17 +1,15 @@
 package kg.apc.emulators;
 
+import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
+
 import java.io.IOException;
 import java.io.OutputStream;
-import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 
 public class SocketEmulatorOutputStream
         extends OutputStream {
 
     private StringBuilder buffer;
 
-    /**
-     *
-     */
     public SocketEmulatorOutputStream() {
         buffer = new StringBuilder();
     }
@@ -31,10 +29,6 @@ public class SocketEmulatorOutputStream
         buffer.append(hex);
     }
 
-    /**
-     *
-     * @return
-     */
     public String getWrittenBytesAsHexString() {
         final String toString = buffer.toString();
         buffer.setLength(0);

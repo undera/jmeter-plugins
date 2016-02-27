@@ -1,7 +1,7 @@
 package com.blazemeter.jmeter.threads.concurrency;
 
-import com.blazemeter.jmeter.control.VirtualUserController;
 import com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroupTest;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.sampler.DebugSampler;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,6 +15,7 @@ public class ConcurrencyThreadGroupTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         ArrivalsThreadGroupTest.setUpClass();
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @Test
@@ -22,7 +23,6 @@ public class ConcurrencyThreadGroupTest {
         File f = File.createTempFile("arrivalsLog-", ".jtl");
         f.deleteOnExit();
         ConcurrencyThreadGroup ctg = new ConcurrencyThreadGroup();
-        VirtualUserController vuc = new VirtualUserController();
         ctg.addTestElement(new DebugSampler());
         ctg.setName("TEST");
         ctg.setLogFilename(f.getAbsolutePath());

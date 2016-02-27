@@ -126,61 +126,8 @@ public class PluginsCMDWorker {
             rc.setSuccessOnlyLogging(successFilter != 0);
         }
 
-        if (pluginType.getStaticLabel().equals(
-                JMeterPluginsUtils.prefixLabel("Merge Results"))) {
-            log.debug("Using properties file with MergeResults plugin: "
-                    + inputFile);
-            Properties prop = new Properties();
-            InputStream input = null;
-
-            try {
-                input = new FileInputStream(inputFile);
-
-                // load a properties file
-                prop.load(input);
-
-                for (int i = 1; i < 5; i++) {
-                    rc.setFilename(null == prop.getProperty("inputJtl" + i) ? ""
-                            : prop.getProperty("inputJtl" + i));
-                    if (rc.getFilename().isEmpty()) {
-                        break;
-                    }
-                    rc.setPrefixLabel(null == prop.getProperty("prefixLabel"
-                            + i) ? "" : prop.getProperty("prefixLabel" + i));
-                    rc.setIncludeLabels(null == prop
-                            .getProperty("includeLabels" + i) ? "" : prop
-                            .getProperty("includeLabels" + i));
-                    rc.setExcludeLabels(null == prop
-                            .getProperty("excludeLabels" + i) ? "" : prop
-                            .getProperty("excludeLabels" + i));
-                    rc.setEnabledIncludeRegex(Boolean.valueOf(prop
-                            .getProperty("includeLabelRegex" + i)));
-                    rc.setEnabledExcludeRegex(Boolean.valueOf(prop
-                            .getProperty("excludeLabelRegex" + i)));
-                    rc.setStartOffset(null == prop.getProperty("startOffset"
-                            + i) ? "" : prop.getProperty("startOffset" + i));
-                    rc.setEndOffset(null == prop.getProperty("endOffset" + i) ? ""
-                            : prop.getProperty("endOffset" + i));
-                    rc.setListener(pluginInstance);
-                    pluginInstance.configure(rc);
-
-                    // rc.testStarted();
-                    rc.loadExistingFile();
-                    // rc.testEnded();
-                }
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } finally {
-                if (input != null) {
-                    try {
-                        input.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
+        if (pluginType.getStaticLabel().equals(JMeterPluginsUtils.prefixLabel("Merge Results"))) {
+            mergeResults(pluginInstance, rc);
         } else {
             log.debug("Using JTL file: " + inputFile);
             rc.setFilename(inputFile);
@@ -220,6 +167,60 @@ public class PluginsCMDWorker {
         return 0;
     }
 
+    private void mergeResults(AbstractGraphPanelVisualizer pluginInstance, CorrectedResultCollector rc) {
+        log.debug("Using properties file with MergeResults plugin: " + inputFile);
+        Properties prop = new Properties();
+        InputStream input = null;
+
+        try {
+            input = new FileInputStream(inputFile);
+
+            // load a properties file
+            prop.load(input);
+
+            for (int i = 1; i < 5; i++) {
+                rc.setFilename(null == prop.getProperty("inputJtl" + i) ? ""
+                        : prop.getProperty("inputJtl" + i));
+                if (rc.getFilename().isEmpty()) {
+                    break;
+                }
+                rc.setPrefixLabel(null == prop.getProperty("prefixLabel"
+                        + i) ? "" : prop.getProperty("prefixLabel" + i));
+                rc.setIncludeLabels(null == prop
+                        .getProperty("includeLabels" + i) ? "" : prop
+                        .getProperty("includeLabels" + i));
+                rc.setExcludeLabels(null == prop
+                        .getProperty("excludeLabels" + i) ? "" : prop
+                        .getProperty("excludeLabels" + i));
+                rc.setEnabledIncludeRegex(Boolean.valueOf(prop
+                        .getProperty("includeLabelRegex" + i)));
+                rc.setEnabledExcludeRegex(Boolean.valueOf(prop
+                        .getProperty("excludeLabelRegex" + i)));
+                rc.setStartOffset(null == prop.getProperty("startOffset"
+                        + i) ? "" : prop.getProperty("startOffset" + i));
+                rc.setEndOffset(null == prop.getProperty("endOffset" + i) ? ""
+                        : prop.getProperty("endOffset" + i));
+                rc.setListener(pluginInstance);
+                pluginInstance.configure(rc);
+
+                // rc.testStarted();
+                rc.loadExistingFile();
+                // rc.testEnded();
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     private AbstractGraphPanelVisualizer getGUIObject(String pluginType) {
         Class a;
         try {
@@ -238,9 +239,7 @@ public class PluginsCMDWorker {
 
         try {
             return (AbstractGraphPanelVisualizer) a.newInstance();
-        } catch (InstantiationException ex) {
-            throw new RuntimeException(ex);
-        } catch (IllegalAccessException ex) {
+        } catch (InstantiationException | IllegalAccessException ex) {
             throw new RuntimeException(ex);
         }
     }

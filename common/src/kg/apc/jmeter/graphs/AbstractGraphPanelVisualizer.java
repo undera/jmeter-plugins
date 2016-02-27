@@ -2,35 +2,11 @@
 // TODO: https://groups.google.com/forum/#!topic/jmeter-plugins/qflK3oCjv4c
 package kg.apc.jmeter.graphs;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentSkipListMap;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-
 import kg.apc.charting.*;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.vizualizers.CompositeResultCollector;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
-
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
 import org.apache.jmeter.gui.tree.JMeterTreeNode;
@@ -47,6 +23,18 @@ import org.apache.jmeter.visualizers.Sample;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public abstract class AbstractGraphPanelVisualizer
         extends AbstractVisualizer
@@ -83,8 +71,8 @@ public abstract class AbstractGraphPanelVisualizer
     public static final String GRAPH_AGGREGATED = "graph_aggregated";
     private JSettingsPanel settingsPanel = null;
     //
-    private List<String> includes = new ArrayList<String>(0);
-    private List<String> excludes = new ArrayList<String>(0);
+    private List<String> includes = new ArrayList<>(0);
+    private List<String> excludes = new ArrayList<>(0);
     private String incRegex;
     private String excRegex;
     private boolean includeRegexChkboxState;
@@ -101,21 +89,21 @@ public abstract class AbstractGraphPanelVisualizer
     private JButton maximizeButton;
     private boolean ignoreCurrentTestStartTime;
 
-	private  LabelToColorMapping labelToColorMapping = null;
-	
-	private void reloadLabelToColorMapping() {
-		
-		String labelToColorMappingString = JMeterUtils.getProperty("jmeterPlugin.labelToColorMapping");
-		labelToColorMapping = LabelToColorMapping.load(labelToColorMappingString);
-	}
-    
+    private LabelToColorMapping labelToColorMapping = null;
+
+    private void reloadLabelToColorMapping() {
+
+        String labelToColorMappingString = JMeterUtils.getProperty("jmeterPlugin.labelToColorMapping");
+        labelToColorMapping = LabelToColorMapping.load(labelToColorMappingString);
+    }
+
     /**
      *
      */
     public AbstractGraphPanelVisualizer() {
         super();
-        model = new ConcurrentSkipListMap<String, AbstractGraphRow>();
-        modelAggregate = new ConcurrentSkipListMap<String, AbstractGraphRow>();
+        model = new ConcurrentSkipListMap<>();
+        modelAggregate = new ConcurrentSkipListMap<>();
         colors = ColorsDispatcherFactory.getColorsDispatcher();
         //RowsProviderResultCollector resCollector = new RowsProviderResultCollector();
         //setModel(resCollector);
@@ -137,7 +125,6 @@ public abstract class AbstractGraphPanelVisualizer
         reloadLabelToColorMapping();
         addMouseClickColorChangeListener();
     }
-    
 
 
     @Override
@@ -244,7 +231,7 @@ public abstract class AbstractGraphPanelVisualizer
 
     @Override
     public void clearData() {
-    	
+
         startTimeRef = 0;
         clearRowsFromCompositeModels(getModel().getName());
         model.clear();
@@ -280,8 +267,7 @@ public abstract class AbstractGraphPanelVisualizer
      * implementation assumes that the target is the FilePanel, and will update
      * the result collector for the new filename.
      *
-     * @param e
-     *            the event that has occurred
+     * @param e the event that has occurred
      */
     @Override
     public void stateChanged(ChangeEvent e) {
@@ -411,6 +397,10 @@ public abstract class AbstractGraphPanelVisualizer
 
     private void clearRowsFromCompositeModels(String vizualizerName) {
         GuiPackage gui = GuiPackage.getInstance();
+        if (gui == null) {
+            log.debug("No GUI Package present, ignored removing from composite");
+            return;
+        }
         JMeterTreeModel testTree = gui.getTreeModel();
 
         for (JMeterTreeNode obj : testTree.getNodesOfType(CompositeResultCollector.class)) {
@@ -432,8 +422,8 @@ public abstract class AbstractGraphPanelVisualizer
             Color color,
             boolean canCompose) {
         AbstractGraphRow row;
-        if (log.isDebugEnabled() ) {
-        	log.debug("This AbstractGraphPanelVisualizer is an instance of [" + this.getClass().getName() + "]");
+        if (log.isDebugEnabled()) {
+            log.debug("This AbstractGraphPanelVisualizer is an instance of [" + this.getClass().getName() + "]");
         }
         if (!model.containsKey(label)) {
             row = AbstractGraphRow.instantiateNewRow(rowType);
@@ -444,21 +434,21 @@ public abstract class AbstractGraphPanelVisualizer
             row.setDrawValueLabel(displayLabel);
             row.setDrawThickLines(thickLines);
             row.setShowInLegend(showInLegend);
-            
-            Color overrideColor = null;            	
-        	if (this.labelToColorMapping!=null)
-        		overrideColor = labelToColorMapping.getColorForLabel(row.getLabel());
-            if (log.isDebugEnabled() )
-            	if (row!=null) {
-            		log.debug("%#@ Found override color [" + (overrideColor==null ? "null" : overrideColor.toString()) + "]");
-            		log.debug("%#@ for label [" + row.getLabel() + "] color in-parm [" + (color==null ? "null" : color.toString()) + "]");
-            		log.debug("%#@ prev row.getColor() [" + (row.getColor()==null ? "null" : row.getColor().toString() ) + "]");
-            	} else
-            		log.debug("%#@ Found null row displayLabel[" + displayLabel + "] and label [" + label + "]");
-            
-            row.setColor(overrideColor!=null ? overrideColor : colors.getNextColor());
-            if (log.isDebugEnabled() )
-            	log.debug("%#@ new row.getColor() [" + (row.getColor()==null ? "null" : row.getColor().toString()) + "]");
+
+            Color overrideColor = null;
+            if (this.labelToColorMapping != null)
+                overrideColor = labelToColorMapping.getColorForLabel(row.getLabel());
+            if (log.isDebugEnabled())
+                if (row != null) {
+                    log.debug("%#@ Found override color [" + (overrideColor == null ? "null" : overrideColor.toString()) + "]");
+                    log.debug("%#@ for label [" + row.getLabel() + "] color in-parm [" + (color == null ? "null" : color.toString()) + "]");
+                    log.debug("%#@ prev row.getColor() [" + (row.getColor() == null ? "null" : row.getColor().toString()) + "]");
+                } else
+                    log.debug("%#@ Found null row displayLabel[" + displayLabel + "] and label [" + label + "]");
+
+            row.setColor(overrideColor != null ? overrideColor : colors.getNextColor());
+            if (log.isDebugEnabled())
+                log.debug("%#@ new row.getColor() [" + (row.getColor() == null ? "null" : row.getColor().toString()) + "]");
 
             model.put(label, row);
             graphPanel.addRow(row);
@@ -644,7 +634,7 @@ public abstract class AbstractGraphPanelVisualizer
     /**
      * Ignore current test start time(ie take it from reload test data)
      * this is needed for visualizer that don't use current tests data
-     * but reload from file 
+     * but reload from file
      */
     public void setIgnoreCurrentTestStartTime() {
         this.ignoreCurrentTestStartTime = true;
@@ -653,7 +643,8 @@ public abstract class AbstractGraphPanelVisualizer
     /**
      * Ignore current test start time(ie take it from reload test data)
      * this is needed for visualizer that don't use current tests data
-     * but reload from file 
+     * but reload from file
+     *
      * @return the ignoreTestStartTime
      */
     public boolean isIgnoreCurrentTestStartTime() {
@@ -665,37 +656,37 @@ public abstract class AbstractGraphPanelVisualizer
         super.clearGui();
         graphPanel.getRowSelectorPanel().clearGui();
     }
+
     private void addMouseClickColorChangeListener() {
-    	this.graphPanel.getGraphObject().addMouseListener(new MouseClickColorChangeListener());
+        this.graphPanel.getGraphObject().addMouseListener(new MouseClickColorChangeListener());
     }
+
     class MouseClickColorChangeListener extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-        	log.debug("mouse click [" + e.getX() + "," + e.getY() + "] ClickCount[" + e.getClickCount() + "]");
-        	if (e.getClickCount()==2) {
-            	Iterator<Entry<String, AbstractGraphRow>> it = model.entrySet().iterator();
-                while (it.hasNext()) {
-                    Entry<String, AbstractGraphRow> row = it.next();
+            log.debug("mouse click [" + e.getX() + "," + e.getY() + "] ClickCount[" + e.getClickCount() + "]");
+            if (e.getClickCount() == 2) {
+                for (Entry<String, AbstractGraphRow> row : model.entrySet()) {
                     AbstractGraphRow agr = row.getValue();
-                    if (agr!=null) {
-                    	Rectangle r = agr.getLegendColorBox();
-                    	if (r!=null) {
-                    		Rectangle slightlyLargerTarget = r.getBounds();
-                    		slightlyLargerTarget.height += 4;
-                    		slightlyLargerTarget.width += 2;
-                    		boolean hit = slightlyLargerTarget.contains(e.getPoint()); 
-                    		log.debug("hit [" + hit + "] rectangle [" + slightlyLargerTarget.toString() + "] point [" + e.getPoint() + "]");
-                    		if (hit) {
-                    			row.getValue().setColor( colors.getNextColor() );
-                    		}
-                    	}
+                    if (agr != null) {
+                        Rectangle r = agr.getLegendColorBox();
+                        if (r != null) {
+                            Rectangle slightlyLargerTarget = r.getBounds();
+                            slightlyLargerTarget.height += 4;
+                            slightlyLargerTarget.width += 2;
+                            boolean hit = slightlyLargerTarget.contains(e.getPoint());
+                            log.debug("hit [" + hit + "] rectangle [" + slightlyLargerTarget.toString() + "] point [" + e.getPoint() + "]");
+                            if (hit) {
+                                row.getValue().setColor(colors.getNextColor());
+                            }
+                        }
                     }
-                }            	
+                }
                 updateGui(null);
-        		
-        	}
+
+            }
             //repaint();
         }
     }
-    
+
 }

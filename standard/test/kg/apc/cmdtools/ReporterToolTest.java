@@ -1,13 +1,15 @@
 package kg.apc.cmdtools;
 
+import kg.apc.emulators.TestJMeterUtils;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ListIterator;
-import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.util.JMeterUtils;
+
 import static org.junit.Assert.*;
-import org.junit.*;
 
 public class ReporterToolTest {
 
@@ -23,22 +25,6 @@ public class ReporterToolTest {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-        JMeterUtils.setJMeterHome(basedir);
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of showHelp method, of class CMDReporterTool.
-     */
     @Test
     public void testShowHelp() {
         System.out.println("showHelp");
@@ -47,9 +33,6 @@ public class ReporterToolTest {
         instance.showHelp(os);
     }
 
-    /**
-     * Test of processParams method, of class CMDReporterTool.
-     */
     @Test
     public void testProcessParams() {
         System.out.println("processParams");
@@ -63,7 +46,6 @@ public class ReporterToolTest {
     }
 
     @Test
-    // issue 39
     public void testProcessParams_aggreg() throws IOException {
         System.out.println("processParams aggregate");
         File f = File.createTempFile("test", ".csv");
@@ -80,7 +62,6 @@ public class ReporterToolTest {
     }
 
     @Test
-    // issue 64
     public void testProcessParams_issue64() throws IOException {
         System.out.println("processParams outliers");
         File f = File.createTempFile("test", ".png");

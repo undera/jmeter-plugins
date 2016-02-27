@@ -1,22 +1,21 @@
 package kg.apc.emulators;
 
+import kg.apc.jmeter.DirectoryAnchor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.engine.StandardJMeterEngine;
-import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.tree.JMeterTreeListener;
 import org.apache.jmeter.gui.tree.JMeterTreeModel;
-import org.apache.jmeter.save.SaveService;
 import org.apache.jmeter.threads.*;
 import org.apache.jmeter.threads.ThreadGroup;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.HashTree;
-import org.junit.Test;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class TestJMeterUtils {
 
@@ -51,37 +50,32 @@ public abstract class TestJMeterUtils {
         JMeterContextService.getContext().setThreadGroup(threadGroup);
         JMeterUtils.setProperty("sample_variables", "TEST1,TEST2,TEST3"); // for Flexible File Writer Test
         JMeterUtils.setProperty("saveservice_properties", "/ss.props");
-        File f = new File(JMeterUtils.getJMeterHome() + "/ss.props");
-        f.getParentFile().mkdirs();
+        JMeterUtils.setProperty("upgrade_properties", "/ss.props");
 
+        File dst = new File(JMeterUtils.getJMeterHome() + "/ss.props");
+        InputStream src = DirectoryAnchor.class.getResourceAsStream("/kg/apc/jmeter/bin/saveservice.properties");
         try {
-            f.createNewFile();
-            SaveService.loadProperties();
+            Files.copy(src, dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to copy file " + src + " to " + dst, e);
         }
     }
 
     public static String getTempDir() {
-        File f = null;
+        Path f = null;
         try {
-            f = File.createTempFile("jmeterplugins", ".tmp");
-        } catch (IOException ex) {
-            Logger.getLogger(TestJMeterUtils.class.getName()).log(Level.SEVERE, null, ex);
+            f = Files.createTempDirectory("jpgc/");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         assert f != null;
-        return f.getParent();
+        return f.toString();
     }
 
     public static String getTestData(int i) {
         return RandomStringUtils.randomAlphanumeric(i);
     }
 
-    @Test
-    public void testEnv() throws IOException {
-        TestJMeterUtils.createJmeterEnv();
-        GuiPackage.getInstance().updateCurrentNode();
-    }
 
     public static String fixWinPath(String path) {
         String ret = path;

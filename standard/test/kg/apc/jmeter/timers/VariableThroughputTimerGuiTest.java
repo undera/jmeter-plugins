@@ -1,18 +1,17 @@
 package kg.apc.jmeter.timers;
 
-import javax.swing.event.TableModelEvent;
-import org.apache.jmeter.gui.util.PowerTableModel;
-import org.apache.jmeter.testelement.property.CollectionProperty;
-import javax.swing.event.ChangeEvent;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.emulators.TestJMeterUtils;
+import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.TestElement;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.apache.jmeter.testelement.property.CollectionProperty;
+import org.junit.*;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.TableModelEvent;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class VariableThroughputTimerGuiTest {
 
@@ -117,7 +116,6 @@ public class VariableThroughputTimerGuiTest {
         System.out.println("configure");
         VariableThroughputTimer tg = new VariableThroughputTimer();
         CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
-        System.err.println(rows);
         tg.setData(rows);
         VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
         //tg.setProperty(new ObjectProperty(AbstractThreadGroup.MAIN_CONTROLLER, tg));

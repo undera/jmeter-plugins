@@ -1,30 +1,20 @@
 package com.blazemeter.jmeter.threads.arrivals;
 
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.threads.JMeterVariables;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Locale;
 
 public class ArrivalsThreadGroupGuiTest {
     @BeforeClass
     public static void setUpClass() throws IOException {
-        JMeterContextService.getContext().setVariables(new JMeterVariables());
-        File propsFile = File.createTempFile("jmeter-plugins", ".properties");
-        propsFile.deleteOnExit();
-
-        JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
-        JMeterUtils.setJMeterHome(propsFile.getParent());
-        JMeterUtils.setLocale(new Locale("ignoreResources"));
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @Test

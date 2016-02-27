@@ -1,8 +1,8 @@
 package kg.apc.cmdtools;
 
 import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.util.JMeterUtils;
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,19 +25,6 @@ public class TestPlanCheckToolTest {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-        JMeterUtils.setJMeterHome(basedir);
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void testShowHelp() throws Exception {
         TestPlanCheckTool obj = new TestPlanCheckTool();
@@ -47,7 +34,7 @@ public class TestPlanCheckToolTest {
     @Test
     public void testProcessParamsWrong() throws Exception {
         TestPlanCheckTool obj = new TestPlanCheckTool();
-        ArrayList<String> al = new ArrayList<String>();
+        ArrayList<String> al = new ArrayList<>();
         al.add("--wrong");
         ListIterator args = al.listIterator();
         try {
@@ -60,7 +47,7 @@ public class TestPlanCheckToolTest {
     @Test
     public void testProcessParamsValid() throws Exception {
         TestPlanCheckTool obj = new TestPlanCheckTool();
-        ArrayList<String> al = new ArrayList<String>();
+        ArrayList<String> al = new ArrayList<>();
         al.add("--jmx");
         al.add(basedir + "/Valid.jmx");
         al.add("--tree-dump");
@@ -72,7 +59,7 @@ public class TestPlanCheckToolTest {
     @Test
     public void testProcessParamsInvalid() throws Exception {
         TestPlanCheckTool obj = new TestPlanCheckTool();
-        ArrayList<String> al = new ArrayList<String>();
+        ArrayList<String> al = new ArrayList<>();
         al.add("--jmx");
         al.add(basedir + "/Invalid.jmx");
         ListIterator args = al.listIterator();

@@ -1,7 +1,9 @@
 package kg.apc.jmeter;
 
 import kg.apc.emulators.TestJMeterUtils;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,7 +66,7 @@ public class PluginsCMDWorkerTest {
         instance.setPluginType(string);
     }
 
-   @Test
+    @Test
     public void testDoJob() throws IOException {
         System.out.println("doJob 1");
         instance.setInputFile(basedir + "/short.jtl");
@@ -112,9 +114,7 @@ public class PluginsCMDWorkerTest {
     public void testDoJob_csv_createdir() throws IOException {
         System.out.println("doJob 4");
         instance.setInputFile(basedir + "/short.jtl");
-        File rfile = File.createTempFile("testDir", "");
-        rfile.delete();
-        instance.setOutputCSVFile(rfile.getAbsolutePath().concat(File.separator).concat("testFile.csv"));
+        instance.setOutputCSVFile(TestJMeterUtils.getTempDir().concat(File.separator).concat("testFile.csv"));
         instance.setPluginType("ResponseTimesOverTime");
         instance.addExportMode(PluginsCMDWorker.EXPORT_CSV);
         int result = instance.doJob();

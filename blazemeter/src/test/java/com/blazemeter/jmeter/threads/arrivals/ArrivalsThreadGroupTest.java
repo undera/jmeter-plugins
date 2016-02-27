@@ -1,17 +1,14 @@
 package com.blazemeter.jmeter.threads.arrivals;
 
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.sampler.TestAction;
-import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.threads.JMeterVariables;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -19,15 +16,7 @@ import static org.junit.Assert.assertTrue;
 public class ArrivalsThreadGroupTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
-        JMeterContextService.getContext().setVariables(new JMeterVariables());
-        File propsFile = File.createTempFile("jmeter-plugins", ".properties");
-        propsFile.deleteOnExit();
-
-        JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
-        JMeterUtils.setJMeterHome(propsFile.getParent());
-        JMeterUtils.setLocale(new Locale("ignoreResources"));
-
-        JMeterUtils.setProperty("saveservice_properties", "/" + propsFile.getName());
+        TestJMeterUtils.createJmeterEnv();
     }
 
     public static ListedHashTree getListedHashTree(AbstractDynamicThreadGroup atg, boolean stopThread) {

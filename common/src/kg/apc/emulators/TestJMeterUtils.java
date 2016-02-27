@@ -22,7 +22,6 @@ public abstract class TestJMeterUtils {
     public static void createJmeterEnv() {
         JMeterUtils.setJMeterHome(getTempDir());
 
-
         File dst = new File(JMeterUtils.getJMeterHome() + "/ss.props");
         InputStream src = DirectoryAnchor.class.getResourceAsStream("/kg/apc/jmeter/bin/saveservice.properties");
         try {

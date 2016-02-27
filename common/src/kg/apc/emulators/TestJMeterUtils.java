@@ -20,17 +20,18 @@ import java.util.Locale;
 public abstract class TestJMeterUtils {
 
     public static void createJmeterEnv() {
-        File propsFile = null;
+        JMeterUtils.setJMeterHome(getTempDir());
+
+
+        File dst = new File(JMeterUtils.getJMeterHome() + "/ss.props");
+        InputStream src = DirectoryAnchor.class.getResourceAsStream("/kg/apc/jmeter/bin/saveservice.properties");
         try {
-            propsFile = File.createTempFile("jmeter-plugins", ".properties");
-            propsFile.deleteOnExit();
-        } catch (IOException ex) {
-            ex.printStackTrace(System.err);
+            Files.copy(src, dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to copy file " + src + " to " + dst, e);
         }
 
-        assert propsFile != null;
-        JMeterUtils.loadJMeterProperties(propsFile.getAbsolutePath());
-        JMeterUtils.setJMeterHome(getTempDir());
+        JMeterUtils.loadJMeterProperties(dst.getAbsolutePath());
         JMeterUtils.setLocale(new Locale("ignoreResources"));
 
         JMeterTreeModel jMeterTreeModel = new JMeterTreeModel();
@@ -52,21 +53,16 @@ public abstract class TestJMeterUtils {
         JMeterUtils.setProperty("saveservice_properties", "/ss.props");
         JMeterUtils.setProperty("upgrade_properties", "/ss.props");
 
-        File dst = new File(JMeterUtils.getJMeterHome() + "/ss.props");
-        InputStream src = DirectoryAnchor.class.getResourceAsStream("/kg/apc/jmeter/bin/saveservice.properties");
-        try {
-            Files.copy(src, dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to copy file " + src + " to " + dst, e);
-        }
     }
 
     public static String getTempDir() {
         Path f = null;
         try {
-            f = Files.createTempDirectory("jpgc/");
+            File path = new File(System.getProperty("java.io.tmpdir") + "/jpgc");
+            path.mkdirs();
+            f = Files.createTempDirectory(path.toPath(), "ut");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to get new temp dir", e);
         }
         assert f != null;
         return f.toString();

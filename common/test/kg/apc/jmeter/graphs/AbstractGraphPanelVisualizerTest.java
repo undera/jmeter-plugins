@@ -136,7 +136,6 @@ public class AbstractGraphPanelVisualizerTest {
         }
 
         public void add(SampleResult sample) {
-            return;
         }
 
         @Override

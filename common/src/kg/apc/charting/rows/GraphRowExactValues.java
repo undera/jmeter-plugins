@@ -51,7 +51,7 @@ public class GraphRowExactValues
 
    public boolean hasNext()
    {
-      return iterator==null?false:iterator.hasNext();
+      return iterator != null && iterator.hasNext();
    }
 
    public Entry<Long, AbstractGraphPanelChartElement> next()

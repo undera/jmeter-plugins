@@ -8,7 +8,9 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.loadosophia.jmeter.LoadosophiaAPIClient;
 import org.loadosophia.jmeter.StatusNotifierCallback;
 
@@ -18,34 +20,11 @@ import java.util.LinkedList;
 
 public class LoadosophiaUploaderTest {
 
-    private final String basedir;
-
-    public LoadosophiaUploaderTest() {
-        String file = this.getClass().getResource("anchor.txt").getPath();
-        basedir = file.substring(0, file.lastIndexOf("/"));
-    }
-
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-        JMeterUtils.setJMeterHome(basedir);
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of testStarted method, of class LoadosophiaUploader.
-     */
     @Test
     public void testTestStarted() {
         System.out.println("testStarted");
@@ -55,9 +34,6 @@ public class LoadosophiaUploaderTest {
         instance.testStarted();
     }
 
-    /**
-     * Test of testEnded method, of class LoadosophiaUploader.
-     */
     @Test
     public void testTestEnded() throws IOException {
         System.out.println("testEnded");
@@ -94,10 +70,6 @@ public class LoadosophiaUploaderTest {
         instance.testEnded();
     }
 
-    /**
-     * Test of testEnded method, of class LoadosophiaUploader with no storeDir speciefied.
-     * An temporary file in system's temp-folder should be created automatically.
-     */
     @Test
     public void testTestEndedWithNoStoreDir() throws IOException {
         System.out.println("testEnded");
@@ -134,9 +106,6 @@ public class LoadosophiaUploaderTest {
         instance.testEnded();
     }
 
-    /**
-     * Test of setFilePrefix method, of class LoadosophiaUploader.
-     */
     @Test
     public void testSetFilePrefix() {
         System.out.println("setFilePrefix");
@@ -145,9 +114,6 @@ public class LoadosophiaUploaderTest {
         instance.setTitle(prefix);
     }
 
-    /**
-     * Test of setProject method, of class LoadosophiaUploader.
-     */
     @Test
     public void testSetProject() {
         System.out.println("setProject");
@@ -156,9 +122,6 @@ public class LoadosophiaUploaderTest {
         instance.setProject(proj);
     }
 
-    /**
-     * Test of setUploadToken method, of class LoadosophiaUploader.
-     */
     @Test
     public void testSetUploadToken() {
         System.out.println("setUploadToken");
@@ -167,9 +130,6 @@ public class LoadosophiaUploaderTest {
         instance.setUploadToken(token);
     }
 
-    /**
-     * Test of getProject method, of class LoadosophiaUploader.
-     */
     @Test
     public void testGetProject() {
         System.out.println("getProject");

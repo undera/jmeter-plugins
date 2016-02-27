@@ -24,7 +24,7 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [InterThreadCommunication Inter-Thread Communication]
   * [Functions Custom JMeter Functions] 
   * [TestPlanCheckTool Command-Line Test Plan Consistency Checking Tool]
-  * [FilterResultsTool Command-Line] filtered results by label (regex), offset, success
+  * [FilterResultsTool Command-Line filtered results] by label (regex), offset, success
 
 == Samplers ==
   * [DummySampler Dummy Sampler] for debugging and programming tests

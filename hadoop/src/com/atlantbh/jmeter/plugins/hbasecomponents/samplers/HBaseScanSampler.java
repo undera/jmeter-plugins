@@ -181,11 +181,11 @@ public class HBaseScanSampler extends AbstractSampler implements Sampler {
 	}
 
 	private FilterList parseFilterString(String filters, StringBuilder request, SampleResult result, Boolean passAll) {
-		FilterList booleanFilter = new FilterList(passAll == true ? Operator.MUST_PASS_ALL : Operator.MUST_PASS_ONE);
+		FilterList booleanFilter = new FilterList(passAll ? Operator.MUST_PASS_ALL : Operator.MUST_PASS_ONE);
 
-		if (getFilter().trim().equals("") == false) {
+		if (!getFilter().trim().equals("")) {
 			String[] subFilters = getFilter().trim().split("\\s");
-			request.append("\nfilters:[" + (passAll == true ? "MUST_PASS_ALL" : "MUST_PASS_ONE") + "]\n\n");
+			request.append("\nfilters:[" + (passAll ? "MUST_PASS_ALL" : "MUST_PASS_ONE") + "]\n\n");
 			for (String subFilter : subFilters) {
 				String[] qualiValue = subFilter.split("=");
 				if (qualiValue.length != 2) {

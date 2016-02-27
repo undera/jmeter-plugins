@@ -132,17 +132,12 @@ public class JmsUtil implements JavaSamplerClient{
 					}
 				}catch(Exception e){
 					e.printStackTrace();
-					result.setSuccessful(!true);
+					result.setSuccessful(false);
 					result.setResponseMessage("Exception");
 					result.setResponseData(e.getMessage().getBytes());
 				}
-
-
 			}
-			
 		}
-		
-		
 		
 		return result;
 	}

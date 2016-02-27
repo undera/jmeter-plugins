@@ -453,7 +453,7 @@ public class WebDriverConfigGuiTest {
 
         @Override
         protected String getWikiPage() {
-            return null;
+            return "dummy";
         }
 
         @Override

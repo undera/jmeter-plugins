@@ -37,7 +37,7 @@ public class ConcurrencyThreadGroupGuiTest {
 
         JFrame frame = new JFrame("FrameDemo");
         frame.setSize(new Dimension(800, 600));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().add(obj, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);

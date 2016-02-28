@@ -24,7 +24,6 @@ public class FreeFormArrivalsThreadGroupGuiTest {
         obj.modifyTestElement(te);
     }
 
-    @Test
     public void displayGUI() throws InterruptedException {
         FreeFormArrivalsThreadGroupGui obj = new FreeFormArrivalsThreadGroupGui();
         ArrivalsThreadGroup te = (ArrivalsThreadGroup) obj.createTestElement();

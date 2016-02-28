@@ -1,105 +1,150 @@
 package com.blazemeter.jmeter.threads;
 
-import com.blazemeter.jmeter.gui.ArrangedLabelFieldPanel;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.DateTimeRenderer;
+import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowExactValues;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class AbstractDynamicThreadGroupGui extends AbstractBaseDynamicThreadGroupGui {
+public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupGui
+        implements DocumentListener, Runnable, ActionListener {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private JTextField logFile = new JTextField();
-    private JTextField targetRate = new JTextField();
-    private JTextField rampUpTime = new JTextField();
-    private JTextField steps = new JTextField();
-    private JTextField holdFor = new JTextField();
-    private JTextField iterations = new JTextField();
-    protected JLabel targetRateLabel = new JLabel();
-    protected JLabel rampUpLabel = new JLabel();
-    protected JLabel holdLabel = new JLabel();
-    private ArrangedLabelFieldPanel fieldsPanel = null;
-
-    public AbstractDynamicThreadGroupGui() {
-        super();
-        init();
-    }
+    protected GraphPanelChart previewChart;
+    protected ConcurrentHashMap<String, AbstractGraphRow> chartModel;
+    protected boolean uiCreated = false;
+    private ParamsPanel loadFields = null;
+    private AdditionalFieldsPanel additionalFields = null;
 
     @Override
-    public void configure(TestElement element) {
+    public final void configure(TestElement element) { // FIXME: remove final
         super.configure(element);
+        if (!uiCreated) {
+            initUI();
+        }
         if (element instanceof AbstractDynamicThreadGroup) {
             AbstractDynamicThreadGroup tg = (AbstractDynamicThreadGroup) element;
-            logFile.setText(tg.getLogFilename());
-            targetRate.setText(tg.getTargetLevel());
-            rampUpTime.setText(tg.getRampUp());
-            steps.setText(tg.getSteps());
-            holdFor.setText(tg.getHold());
-            iterations.setText(tg.getIterationsLimit());
-
+            loadFields.modelToUI(tg);
+            additionalFields.modelToUI(tg);
             updateUI();
         }
     }
 
     @Override
-    public void modifyTestElement(TestElement element) {
+    public final void modifyTestElement(TestElement element) { // FIXME: remove final
         super.configureTestElement(element);
+        if (!uiCreated) {
+            initUI();
+        }
+
         if (element instanceof AbstractDynamicThreadGroup) {
             AbstractDynamicThreadGroup tg = (AbstractDynamicThreadGroup) element;
-            tg.setLogFilename(logFile.getText());
-            tg.setTargetLevel(targetRate.getText());
-            tg.setRampUp(rampUpTime.getText());
-            tg.setSteps(steps.getText());
-            tg.setHold(holdFor.getText());
-            tg.setIterationsLimit(iterations.getText());
+            loadFields.UItoModel(tg);
+            additionalFields.UItoModel(tg);
         }
     }
 
-    @Override
-    public void clearGui() {
-        super.clearGui();
-        logFile.setText("");
-        targetRate.setText("12");
-        rampUpTime.setText("60");
-        steps.setText("3");
-        holdFor.setText("180");
-        iterations.setText("");
-    }
-
-    private void init() {
+    protected void initUI() {
         JPanel container = new VerticalPanel();
-        container.add(getFieldsPanel(), BorderLayout.NORTH);
+        container.add(createLoadPanel(), BorderLayout.NORTH);
         container.add(GuiBuilderHelper.getComponentWithMargin(getPreviewChart(), 2, 2, 0, 2), BorderLayout.CENTER);
+        container.add(getAdditionalFieldsPanel(), BorderLayout.SOUTH);
         add(container, BorderLayout.CENTER);
         uiCreated = true;
     }
 
-    protected JPanel getFieldsPanel() {
-        if (fieldsPanel == null) {
-            fieldsPanel = new ArrangedLabelFieldPanel();
-            fieldsPanel.add(targetRateLabel, targetRate);
-            fieldsPanel.add(rampUpLabel, rampUpTime);
-            fieldsPanel.add("Ramp-Up Steps Count: ", steps);
-            fieldsPanel.add(holdLabel, holdFor);
-            fieldsPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
-            fieldsPanel.add("Thread Iterations Limit: ", iterations);
-            fieldsPanel.add("Log Arrivals/Completions into File: ", logFile);
+    protected abstract Component getAdditionalFieldsPanel();
 
-            targetRate.getDocument().addDocumentListener(this);
-            rampUpTime.getDocument().addDocumentListener(this);
-            steps.getDocument().addDocumentListener(this);
-            holdFor.getDocument().addDocumentListener(this);
-        }
-        return fieldsPanel;
+    @Override
+    public void clearGui() {
+        super.clearGui();
+        loadFields.clearUI();
+        additionalFields.clearUI();
     }
 
-    private void updateChart(double targetRate, long rampUp, long holdFor, long stepsCount, double unitFactor) {
+    protected abstract Component createLoadPanel();
+
+
+    protected abstract AbstractDynamicThreadGroup createThreadGroupObject();
+
+    protected abstract void setChartPropertiesFromTG(AbstractDynamicThreadGroup atg);
+
+    protected abstract String getRowLabel(double totalArrivals);
+
+    protected abstract Color getRowColor();
+
+    @Override
+    public void insertUpdate(DocumentEvent documentEvent) {
+        SwingUtilities.invokeLater(this);
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent documentEvent) {
+        SwingUtilities.invokeLater(this);
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent documentEvent) {
+        SwingUtilities.invokeLater(this);
+    }
+
+    @Override
+    public void run() {
+        updateUI();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        SwingUtilities.invokeLater(this);
+    }
+
+    @Override
+    public TestElement createTestElement() {
+        AbstractDynamicThreadGroup te = createThreadGroupObject();
+        modifyTestElement(te);
+        return te;
+    }
+
+    public void updateUI() {
+        super.updateUI();
+        if (!uiCreated) {
+            log.debug("Won't update UI");
+            return;
+        }
+        log.debug("Updating UI");
+
+        AbstractDynamicThreadGroup atg = createThreadGroupObject();
+        modifyTestElement(atg);
+        try {
+            updateChart(atg);
+        } catch (NumberFormatException e) {
+            previewChart.setErrorMessage("The values entered cannot be rendered in preview...");
+        } finally {
+            setChartPropertiesFromTG(atg);
+            previewChart.invalidateCache();
+            previewChart.repaint();
+        }
+    }
+
+    protected void updateChart(AbstractDynamicThreadGroup atg) {
+        double targetRate = atg.getTargetLevelAsDouble();
+        long rampUp = atg.getRampUpSeconds();
+        long holdFor = atg.getHoldSeconds();
+        long stepsCount = atg.getStepsAsLong();
+        double unitFactor = atg.getUnitFactor();
+
         chartModel.clear();
         previewChart.clearErrorMessage();
         AbstractGraphRow row = new GraphRowExactValues();
@@ -134,26 +179,12 @@ public abstract class AbstractDynamicThreadGroupGui extends AbstractBaseDynamicT
         chartModel.put(getRowLabel(totalArrivals), row);
     }
 
-    public void updateUI() {
-        super.updateUI();
-        if (!uiCreated) {
-            log.debug("Won't update UI");
-            return;
-        }
-        log.debug("Updating UI");
-
-        AbstractDynamicThreadGroup atg = createThreadGroupObject();
-        modifyTestElement(atg);
-        try {
-            updateChart(atg.getTargetLevelAsDouble(), atg.getRampUpSeconds(), atg.getHoldSeconds(), atg.getStepsAsLong(), atg.getUnitFactor());
-        } catch (NumberFormatException e) {
-            previewChart.setErrorMessage("The values entered cannot be rendered in preview...");
-        } finally {
-            setChartPropertiesFromTG(atg);
-            previewChart.invalidateCache();
-            previewChart.repaint();
-        }
+    public Component getPreviewChart() {
+        previewChart = new GraphPanelChart(false, true);
+        chartModel = new ConcurrentHashMap<>();
+        previewChart.setRows(chartModel);
+        previewChart.setxAxisLabel("Elapsed Time"); // TODO: update it with units
+        previewChart.setBorder(BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        return previewChart;
     }
-
-
 }

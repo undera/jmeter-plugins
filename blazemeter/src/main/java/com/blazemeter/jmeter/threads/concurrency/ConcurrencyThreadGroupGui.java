@@ -2,6 +2,8 @@ package com.blazemeter.jmeter.threads.concurrency;
 
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroupGui;
+import com.blazemeter.jmeter.threads.AdditionalFieldsPanel;
+import com.blazemeter.jmeter.threads.LoadParamsFieldsPanel;
 import kg.apc.jmeter.JMeterPluginsUtils;
 
 import java.awt.*;
@@ -19,11 +21,19 @@ public class ConcurrencyThreadGroupGui extends AbstractDynamicThreadGroupGui {
 
     public ConcurrencyThreadGroupGui() {
         super();
-        targetRateLabel.setText("Target Concurrency: ");
-        rampUpLabel.setText("Ramp Up Time (sec): ");
-        holdLabel.setText("Hold Target Rate Time (sec): ");
         JMeterPluginsUtils.addHelpLinkToPanel(this, getClass().getSimpleName());
     }
+
+    @Override
+    protected Component createLoadPanel() {
+        return new LoadParamsFieldsPanel("Target Concurrency: ", "Ramp Up Time (sec): ", "Hold Target Rate Time (sec): ");
+    }
+
+    @Override
+    protected Component getAdditionalFieldsPanel() {
+        return new AdditionalFieldsPanel(false);
+    }
+
 
     protected AbstractDynamicThreadGroup createThreadGroupObject() {
         return new ConcurrencyThreadGroup();

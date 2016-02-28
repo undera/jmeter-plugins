@@ -14,6 +14,9 @@ import java.util.Set;
 // adding some basic methods to our Model
 public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGroupModel {
     private static final Logger log = LoggingManager.getLoggerForClass();
+    public static final String UNIT = "Unit";
+    public static final String UNIT_MINUTES = "M";
+    public static final String UNIT_SECONDS = "S";
     protected transient Thread threadStarter;
 
     public AbstractDynamicThreadGroup() {
@@ -135,4 +138,35 @@ public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGr
     public boolean isRunning() {
         return running;
     }
+
+    public static String getUnitStr(String unit) {
+        if (unit.equals(UNIT_MINUTES)) {
+            return "min";
+        } else {
+            return "sec";
+        }
+    }
+
+    public void setUnit(String value) {
+        setProperty(UNIT, value);
+    }
+
+    public String getUnit() {
+        return getPropertyAsString(UNIT);
+    }
+
+    public double getUnitFactor() {
+        if (getUnit().equals(UNIT_MINUTES)) {
+            return 60.0;
+        } else {
+            return 1;
+        }
+
+    }
+
+    public String getUnitStr() {
+        String unit = getUnit();
+        return getUnitStr(unit);
+    }
+
 }

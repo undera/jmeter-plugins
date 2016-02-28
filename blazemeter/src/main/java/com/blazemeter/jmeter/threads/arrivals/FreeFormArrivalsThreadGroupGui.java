@@ -1,14 +1,13 @@
 package com.blazemeter.jmeter.threads.arrivals;
 
-import com.blazemeter.jmeter.threads.AbstractBaseDynamicThreadGroupGui;
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
+import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroupGui;
+import com.blazemeter.jmeter.threads.AdditionalFieldsPanel;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.DateTimeRenderer;
+import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowExactValues;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.gui.Grid;
-import kg.apc.jmeter.gui.GuiBuilderHelper;
-import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
@@ -16,20 +15,20 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class FreeFormArrivalsThreadGroupGui extends AbstractBaseDynamicThreadGroupGui implements TableModelListener {
+public class FreeFormArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGui implements TableModelListener, DocumentListener, Runnable, ActionListener {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private Grid grid;
-    private String[] columnIdentifiers = new String[]{"Start Value", "End Value", "Duration"};
-    private Class[] columnClasses = new Class[]{String.class, String.class, String.class};
-    private String[] defaultValues = new String[]{"1", "1", "1"};
 
     public FreeFormArrivalsThreadGroupGui() {
         super();
-        init();
         JMeterPluginsUtils.addHelpLinkToPanel(this, getClass().getSimpleName());
     }
 
@@ -43,7 +42,20 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractBaseDynamicThreadGro
         return JMeterPluginsUtils.prefixLabel("Free-Form Arrivals Thread Group");
     }
 
+    protected AbstractDynamicThreadGroup createThreadGroupObject() {
+        return new FreeFormArrivalsThreadGroup();
+    }
+
     @Override
+    protected Component createLoadPanel() {
+        return new FreeFormLoadPanel();
+    }
+
+    @Override
+    protected Component getAdditionalFieldsPanel() {
+        return new AdditionalFieldsPanel(true);
+    }
+
     protected void setChartPropertiesFromTG(AbstractDynamicThreadGroup tg) {
         if (tg instanceof ArrivalsThreadGroup) {
             ArrivalsThreadGroup atg = (ArrivalsThreadGroup) tg;
@@ -51,52 +63,15 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractBaseDynamicThreadGro
         }
     }
 
-    @Override
     protected Color getRowColor() {
         return Color.MAGENTA;
     }
 
-    @Override
     protected String getRowLabel(double totalArrivals) {
         log.debug("Total arr: " + totalArrivals);
         return "Arrival Rate (~" + Math.round(totalArrivals) + " total arrivals)";
     }
 
-    @Override
-    protected AbstractDynamicThreadGroup createThreadGroupObject() {
-        return new FreeFormArrivalsThreadGroup();
-    }
-
-    @Override
-    public void modifyTestElement(TestElement element) {
-        super.configureTestElement(element);
-        if (element instanceof FreeFormArrivalsThreadGroup) {
-            FreeFormArrivalsThreadGroup wsc = (FreeFormArrivalsThreadGroup) element;
-            wsc.setData(grid.getModel());
-        }
-    }
-
-    @Override
-    public void configure(TestElement tg) {
-        super.configure(tg);
-        if (tg instanceof FreeFormArrivalsThreadGroup) {
-            FreeFormArrivalsThreadGroup wsc = (FreeFormArrivalsThreadGroup) tg;
-            JMeterPluginsUtils.collectionPropertyToTableModelRows(wsc.getData(), grid.getModel());
-        }
-    }
-
-    protected void init() {
-        JPanel containerPanel = new VerticalPanel();
-
-        grid = new Grid("Threads Schedule", columnIdentifiers, columnClasses, defaultValues);
-        grid.getModel().addTableModelListener(this);
-        containerPanel.add(grid, BorderLayout.NORTH);
-        containerPanel.add(GuiBuilderHelper.getComponentWithMargin(getPreviewChart(), 2, 2, 0, 2), BorderLayout.CENTER);
-        add(containerPanel, BorderLayout.CENTER);
-        uiCreated = true;
-        // TODO: concurrency limit field
-        // TODO: arrivals log field
-    }
 
     @Override
     public void tableChanged(TableModelEvent e) {
@@ -104,27 +79,9 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractBaseDynamicThreadGro
         SwingUtilities.invokeLater(this);
     }
 
-    @Override
-    public void updateUI() {
-        super.updateUI();
-        if (!uiCreated) {
-            return;
-        }
-
-        FreeFormArrivalsThreadGroup atg = (FreeFormArrivalsThreadGroup) createThreadGroupObject();
-        modifyTestElement(atg);
-        try {
-            updateChart(atg.getData());
-        } catch (NumberFormatException e) {
-            previewChart.setErrorMessage("The values entered cannot be rendered in preview...");
-        } finally {
-            setChartPropertiesFromTG(atg);
-            previewChart.invalidateCache();
-            previewChart.repaint();
-        }
-    }
-
-    private void updateChart(CollectionProperty data) {
+    protected void updateChart(AbstractDynamicThreadGroup tg) {
+        FreeFormArrivalsThreadGroup atg = (FreeFormArrivalsThreadGroup) tg;
+        CollectionProperty data = atg.getData();
         chartModel.clear();
         previewChart.clearErrorMessage();
         AbstractGraphRow row = new GraphRowExactValues();
@@ -151,5 +108,81 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractBaseDynamicThreadGro
 
         previewChart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, 0));
         chartModel.put(getRowLabel(totalArrivals), row);
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent documentEvent) {
+        SwingUtilities.invokeLater(this);
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent documentEvent) {
+        SwingUtilities.invokeLater(this);
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent documentEvent) {
+        SwingUtilities.invokeLater(this);
+    }
+
+    @Override
+    public void run() {
+        updateUI();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        SwingUtilities.invokeLater(this);
+    }
+
+    @Override
+    public TestElement createTestElement() {
+        AbstractDynamicThreadGroup te = createThreadGroupObject();
+        modifyTestElement(te);
+        return te;
+    }
+
+    private void updateChart(double targetRate, long rampUp, long holdFor, long stepsCount, double unitFactor) {
+        chartModel.clear();
+        previewChart.clearErrorMessage();
+        AbstractGraphRow row = new GraphRowExactValues();
+        row.setColor(getRowColor());
+        row.setDrawLine(true);
+        row.setMarkerSize(AbstractGraphRow.MARKER_SIZE_NONE);
+        row.setDrawThickLines(true);
+
+        row.add(0, 0); // initial value to force min Y
+
+        double totalArrivals = 0;
+
+        if (stepsCount > 0) {
+            double stepSize = targetRate / (double) stepsCount;
+            double stepLen = rampUp / (double) stepsCount;
+
+            for (int n = 1; n <= stepsCount; n++) {
+                double stepRate = stepSize * n;
+                row.add(Math.round((n - 1) * stepLen * 1000), stepRate);
+                row.add(Math.round(n * stepLen * 1000), stepRate);
+                totalArrivals += stepLen * stepRate;
+            }
+        } else {
+            row.add(rampUp * 1000, targetRate);
+            totalArrivals += rampUp * targetRate / 2.0;
+        }
+        row.add((rampUp + holdFor) * 1000, targetRate);
+        totalArrivals += holdFor * targetRate;
+        totalArrivals /= unitFactor;
+
+        previewChart.setxAxisLabelRenderer(new DateTimeRenderer(DateTimeRenderer.HHMMSS, 0));
+        chartModel.put(getRowLabel(totalArrivals), row);
+    }
+
+    public Component getPreviewChart() {
+        previewChart = new GraphPanelChart(false, true);
+        chartModel = new ConcurrentHashMap<>();
+        previewChart.setRows(chartModel);
+        previewChart.setxAxisLabel("Elapsed Time");
+        previewChart.setBorder(BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        return previewChart;
     }
 }

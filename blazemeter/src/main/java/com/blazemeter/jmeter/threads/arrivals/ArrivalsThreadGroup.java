@@ -20,9 +20,6 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ArrivalsThreadGroup extends AbstractDynamicThreadGroup {
     public static final String CONCURRENCY_LIMIT = "ConcurrencyLimit";
     public static final String ARRIVALS_LIMIT = "ArrivalsLimit";
-    public static final String UNIT = "Unit";
-    public static final String UNIT_MINUTES = "M";
-    public static final String UNIT_SECONDS = "S";
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected final AtomicLong arrivalsCount = new AtomicLong();
     protected final AtomicLong completionsCount = new AtomicLong();
@@ -184,22 +181,6 @@ public class ArrivalsThreadGroup extends AbstractDynamicThreadGroup {
         return getPropertyAsString(ARRIVALS_LIMIT, "0");
     }
 
-    public void setUnit(String value) {
-        setProperty(UNIT, value);
-    }
-
-    public String getUnit() {
-        return getPropertyAsString(UNIT);
-    }
-
-    public double getUnitFactor() {
-        if (getUnit().equals(UNIT_MINUTES)) {
-            return 60.0;
-        } else {
-            return 1;
-        }
-
-    }
 
     @Override
     public void testEnded(String s) {
@@ -207,15 +188,6 @@ public class ArrivalsThreadGroup extends AbstractDynamicThreadGroup {
         super.testEnded(s);
         log.info("Done " + arrivalsCount.longValue() + " arrivals, " + completionsCount.longValue() + " completions, " + abandonsCount.longValue() + " abandonments");
         log.debug("Pool size: " + poolThreads.size());
-    }
-
-    public String getUnitStr() {
-        String unit = getUnit();
-        if (unit.equals(ArrivalsThreadGroup.UNIT_MINUTES)) {
-            return "min";
-        } else {
-            return "sec";
-        }
     }
 
     public void releaseAllPoolThreads() {

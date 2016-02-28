@@ -51,7 +51,6 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel {
                 btn.setSelected(true);
             }
         }
-
     }
 
     public void UItoModel(AbstractDynamicThreadGroup tg) {
@@ -70,6 +69,8 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel {
     public void clearUI() {
         logFile.setText("");
         iterations.setText("");
+        concurrLimit.setText("1000");
+        unitMinutes.setSelected(true);
     }
 
     public void addActionListener(ActionListener listener) {

@@ -23,7 +23,9 @@ public class ConcurrencyThreadGroupGui extends AbstractDynamicThreadGroupGui {
 
     @Override
     protected ParamsPanel createLoadPanel() {
-        return new LoadParamsFieldsPanel("Target Concurrency: ", "Ramp Up Time (sec): ", "Hold Target Rate Time (sec): ");
+        LoadParamsFieldsPanel loadParamsFieldsPanel = new LoadParamsFieldsPanel("Target Concurrency: ", "Ramp Up Time (sec): ", "Hold Target Rate Time (sec): ");
+        loadParamsFieldsPanel.addUpdateListener(this);
+        return loadParamsFieldsPanel;
     }
 
     @Override

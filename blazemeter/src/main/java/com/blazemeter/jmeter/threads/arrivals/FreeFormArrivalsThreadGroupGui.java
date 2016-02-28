@@ -94,11 +94,11 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGu
         PropertyIterator it = data.iterator();
         while (it.hasNext()) {
             CollectionProperty record = (CollectionProperty) it.next();
-            int from = record.get(0).getIntValue();
-            int to = record.get(1).getIntValue();
-            int during = record.get(2).getIntValue();
+            double from = record.get(0).getDoubleValue();
+            double to = record.get(1).getDoubleValue();
+            double during = record.get(2).getDoubleValue();
             row.add(offset * 1000, from);
-            offset += during;
+            offset += during * tg.getUnitFactor();
             row.add(offset * 1000, to);
             totalArrivals += during * from + during * (to - from) / 2;
         }

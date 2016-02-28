@@ -1,7 +1,6 @@
 package com.blazemeter.jmeter.threads.arrivals;
 
 import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.testelement.TestElement;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -18,7 +17,8 @@ public class FreeFormArrivalsThreadGroupGuiTest {
     @Test
     public void testFlow() {
         FreeFormArrivalsThreadGroupGui obj = new FreeFormArrivalsThreadGroupGui();
-        TestElement te = obj.createTestElement();
+        FreeFormArrivalsThreadGroup te = (FreeFormArrivalsThreadGroup) obj.createTestElement();
+        // TODO: add couple of rows into schedule
         obj.configure(te);
         obj.clearGui();
         obj.modifyTestElement(te);

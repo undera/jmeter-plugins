@@ -25,18 +25,15 @@ public class FreeFormArrivalsThreadStarter extends ArrivalsThreadStarter {
         int offset = 0;
         while (it.hasNext()) {
             CollectionProperty record = (CollectionProperty) it.next();
-            double chunkLen = record.get(2).getDoubleValue();
+            double chunkLen = record.get(2).getDoubleValue() * arrivalsTG.getUnitFactor();
             double timeProgress = this.rollingTime / 1000.0 - startTime;
             double chunkProgress = (timeProgress - offset) / chunkLen;
             offset += chunkLen;
-            //log.info("RT/O: " + timeProgress + " " + offset);
             if (timeProgress <= offset) {
-                double chunkStart = record.get(0).getDoubleValue();
-                double chunkEnd = record.get(1).getDoubleValue();
+                double chunkStart = record.get(0).getDoubleValue() / arrivalsTG.getUnitFactor();
+                double chunkEnd = record.get(1).getDoubleValue() / arrivalsTG.getUnitFactor();
                 double chunkHeight = chunkEnd - chunkStart;
-                double v = chunkStart + chunkProgress * chunkHeight;
-                //log.info("Rate: " + v);
-                return v;
+                return chunkStart + chunkProgress * chunkHeight;
             }
         }
         log.info("Got no further schedule, can stop now");

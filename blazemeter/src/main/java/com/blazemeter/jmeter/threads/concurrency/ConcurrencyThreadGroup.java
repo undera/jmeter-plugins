@@ -33,9 +33,7 @@ public class ConcurrencyThreadGroup extends AbstractDynamicThreadGroup {
 
     @Override
     public boolean isLimitReached() {
-        boolean result = !running || !threadStarter.isAlive();
-        log.debug("running: " + running + ", threadStarter alive: " + threadStarter.isAlive());
-        return result;
+        return !running || !threadStarter.isAlive();
     }
 
     public void threadStarted(JMeterThread thread) {

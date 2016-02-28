@@ -11,7 +11,7 @@ import javax.swing.event.TableModelListener;
 public class FreeFormLoadPanel extends Grid implements ParamsPanel {
     private static final String[] columnIdentifiers = new String[]{"Start Value", "End Value", "Duration"};
     private static final Class[] columnClasses = new Class[]{String.class, String.class, String.class};
-    private static final String[] defaultValues = new String[]{"1", "1", "1"};
+    private static final String[] defaultValues = new String[]{"1", "10", "60"};
 
     public FreeFormLoadPanel() {
         super("Threads Schedule", columnIdentifiers, columnClasses, defaultValues);

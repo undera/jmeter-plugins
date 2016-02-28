@@ -1,9 +1,6 @@
 package com.blazemeter.jmeter.threads.arrivals;
 
-import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
-import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroupGui;
-import com.blazemeter.jmeter.threads.AdditionalFieldsPanel;
-import com.blazemeter.jmeter.threads.LoadParamsFieldsPanel;
+import com.blazemeter.jmeter.threads.*;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -34,7 +31,7 @@ public class ArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGui {
     }
 
     @Override
-    protected Component getAdditionalFieldsPanel() {
+    protected AdditionalFieldsPanel getAdditionalFieldsPanel() {
         return new AdditionalFieldsPanel(true);
     }
 
@@ -59,7 +56,7 @@ public class ArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGui {
     }
 
     @Override
-    protected Component createLoadPanel() {
+    protected ParamsPanel createLoadPanel() {
         LoadParamsFieldsPanel loadFields = new LoadParamsFieldsPanel("Target Rate (arrivals/sec): ", "Ramp Up Time (sec): ", "Hold Target Rate Time (sec): ");
         loadFields.addUpdateListener(this);
         return loadFields;

@@ -3,6 +3,7 @@ package com.blazemeter.jmeter.threads.arrivals;
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroupGui;
 import com.blazemeter.jmeter.threads.AdditionalFieldsPanel;
+import com.blazemeter.jmeter.threads.ParamsPanel;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.GraphPanelChart;
@@ -47,12 +48,12 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGu
     }
 
     @Override
-    protected Component createLoadPanel() {
+    protected ParamsPanel createLoadPanel() {
         return new FreeFormLoadPanel();
     }
 
     @Override
-    protected Component getAdditionalFieldsPanel() {
+    protected AdditionalFieldsPanel getAdditionalFieldsPanel() {
         return new AdditionalFieldsPanel(true);
     }
 

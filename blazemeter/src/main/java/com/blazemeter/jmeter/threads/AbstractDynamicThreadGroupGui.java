@@ -58,14 +58,16 @@ public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupG
 
     protected void initUI() {
         JPanel container = new VerticalPanel();
-        container.add(createLoadPanel(), BorderLayout.NORTH);
+        loadFields = createLoadPanel();
+        container.add((Component) loadFields, BorderLayout.NORTH);
         container.add(GuiBuilderHelper.getComponentWithMargin(getPreviewChart(), 2, 2, 0, 2), BorderLayout.CENTER);
-        container.add(getAdditionalFieldsPanel(), BorderLayout.SOUTH);
+        additionalFields = getAdditionalFieldsPanel();
+        container.add(additionalFields, BorderLayout.SOUTH);
         add(container, BorderLayout.CENTER);
         uiCreated = true;
     }
 
-    protected abstract Component getAdditionalFieldsPanel();
+    protected abstract AdditionalFieldsPanel getAdditionalFieldsPanel();
 
     @Override
     public void clearGui() {
@@ -74,7 +76,7 @@ public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupG
         additionalFields.clearUI();
     }
 
-    protected abstract Component createLoadPanel();
+    protected abstract ParamsPanel createLoadPanel();
 
 
     protected abstract AbstractDynamicThreadGroup createThreadGroupObject();

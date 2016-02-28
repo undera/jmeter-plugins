@@ -11,4 +11,7 @@ Check out their [http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc
 there's a lot of value to load testing people.
 
 == Description ==
+
+Free-Form Arrivals TG has the same idea of "arriving users" as [ArrivalsThreadGroup Arrivals Thread Group]. It just offers free-form schedule capabilities.
+
 [/img/wiki/FreeFormArrivalsThreadGroup.png]

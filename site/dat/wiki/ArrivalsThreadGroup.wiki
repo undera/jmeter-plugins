@@ -11,4 +11,9 @@ Check out their [http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc
 there's a lot of value to load testing people.
 
 == Description ==
+
+This thread group operates with "arrivals" schedule as a way to express the load. "Arrival" means thread iteration start. It will create new threads if all existing threads are busy in the middle of iterations.
+
+Note that constant arrival rate means increasing concurrency, so be careful with the values you enter. Use "Concurrency Limit" field as safety valve to prevent running out of memory.
+
 [/img/wiki/ArrivalsThreadGroup.png]

@@ -11,4 +11,7 @@ Check out their [http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc
 there's a lot of value to load testing people.
 
 == Description ==
+
+This controller takes the information about child elements and offers managing relative weights for them. Relative weight means how frequently the child element will be executed during thread iterations. Please note that each thread has independent counter of iterations.
+
 [/img/wiki/WeightedSwitchController.png]

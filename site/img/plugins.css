@@ -122,6 +122,10 @@ footer .container {
     border-color: #DDA;
 }
 
+.blazemeter_set {
+    background-color: #e4f1ff;
+    border-color: #ABB5BF;
+}
 
 /* Downloads */
 .file_download {
@@ -163,12 +167,12 @@ table.wiki {
 table.wiki td {
     vertical-align: top;
 }
-                  
+
 table.wiki h1 font, table.wiki h2 font, table.wiki h3 font {
     font-size: 0.6em;
     margin-left: 0.25em;
 }
-                  
+
 table.wiki tbody tr td:first-child {
     padding-right: 3em;
 }

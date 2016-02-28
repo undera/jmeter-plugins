@@ -1,0 +1,14 @@
+<div style="float: right" class="plugins_set blazemeter_set">Available in [BlazeMeterSet BlazeMeter Set]</div>
+= Free-Form Arrivals Thread Group <sup><font color=gray size="1">since 1.4.0</font></sup>=
+
+== Authorship ==
+<span class="pull-right" style="margin-left: 1em">
+[http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki https://d3qmoqvtroy6p7.cloudfront.net/logo.png]
+</span>
+
+This plugin was originally developed by _[http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki BlazeMeter Inc.]_ and then generously donated to community as Open Source.
+Check out their [http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki load testing service],
+there's a lot of value to load testing people.
+
+== Description ==
+[/img/wiki/FreeFormArrivalsThreadGroup.png]

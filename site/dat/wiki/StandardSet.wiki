@@ -15,8 +15,7 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [ThroughputShapingTimer Throughput Shaping Timer] 
 
 == Listeners ==
-  * [LoadosophiaUploader Loadosophia.org Uploader] 
-  * [FlexibleFileWriter Flexible File Writer] 
+  * [FlexibleFileWriter Flexible File Writer]
   * [ConsoleStatusLogger Non-GUI Console Status Logger] 
 
 == Others ==

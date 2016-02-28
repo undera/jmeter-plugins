@@ -1,4 +1,4 @@
-<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
+<div style="float: right" class="plugins_set standard_set">Available in [BlazeMeterSet BlazeMeter Set]</div>
 = Loadosophia.org Uploader <sup><font color=gray size="1">since 0.4.2</font></sup>=
 
 This is special plugin in for uploading results to 

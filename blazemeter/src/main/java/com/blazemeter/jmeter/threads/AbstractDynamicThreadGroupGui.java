@@ -139,6 +139,11 @@ public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupG
             previewChart.invalidateCache();
             previewChart.repaint();
         }
+
+        if (loadFields instanceof LoadParamsFieldsPanel) {
+            LoadParamsFieldsPanel panel = (LoadParamsFieldsPanel) loadFields;
+            panel.changeUnitInLabels(atg.getUnit());
+        }
     }
 
     protected void updateChart(AbstractDynamicThreadGroup atg) {

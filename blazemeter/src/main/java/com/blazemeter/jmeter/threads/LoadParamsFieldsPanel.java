@@ -1,11 +1,15 @@
 package com.blazemeter.jmeter.threads;
 
 import com.blazemeter.jmeter.gui.ArrangedLabelFieldPanel;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
 
 public class LoadParamsFieldsPanel extends ArrangedLabelFieldPanel implements ParamsPanel {
+    private static final Logger log = LoggingManager.getLoggerForClass();
+
     protected JTextField targetRate = new JTextField();
     protected JTextField rampUpTime = new JTextField();
     protected JTextField steps = new JTextField();
@@ -57,14 +61,13 @@ public class LoadParamsFieldsPanel extends ArrangedLabelFieldPanel implements Pa
         holdFor.getDocument().addDocumentListener(listener);
     }
 
-    /*
-    private void changeUnitInLabels() {
-        if (unitGroup.getSelection() != null) {
-            String unitStr = ArrivalsThreadGroup.getUnitStr(unitGroup.getSelection().getActionCommand());
-            targetRateLabel.setText("Target Rate (arrivals/" + unitStr + "): ");
-            rampUpLabel.setText("Ramp Up Time (" + unitStr + "): ");
-            holdLabel.setText("Hold Target Rate Time (" + unitStr + "): ");
-        }
+    public void changeUnitInLabels(String unit) {
+        String oldUnit = unit.equals(AbstractDynamicThreadGroup.UNIT_MINUTES) ? AbstractDynamicThreadGroup.UNIT_SECONDS : AbstractDynamicThreadGroup.UNIT_MINUTES;
+        String oldUnitStr = AbstractDynamicThreadGroup.getUnitStr(oldUnit);
+        String unitStr = AbstractDynamicThreadGroup.getUnitStr(unit);
+        log.debug(oldUnit + " " + oldUnitStr + "=>" + unitStr);
+        targetRateLabel.setText(targetRateLabel.getText().replace("/" + oldUnitStr + ")", "/" + unitStr + ")"));
+        rampUpLabel.setText(rampUpLabel.getText().replace("(" + oldUnitStr + ")", "(" + unitStr + ")"));
+        holdLabel.setText(holdLabel.getText().replace("(" + oldUnitStr + ")", "(" + unitStr + ")"));
     }
-    */
 }

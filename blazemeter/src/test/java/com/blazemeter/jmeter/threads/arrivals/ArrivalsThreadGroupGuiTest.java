@@ -36,7 +36,7 @@ public class ArrivalsThreadGroupGuiTest {
         obj.modifyTestElement(te);
 
         JFrame frame = new JFrame("FrameDemo");
-        frame.setSize(new Dimension(800, 600));
+        frame.setPreferredSize(new Dimension(800, 600));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().add(obj, BorderLayout.CENTER);
         frame.pack();

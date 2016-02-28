@@ -35,7 +35,8 @@ public class FreeFormArrivalsThreadGroupGuiTest {
         obj.modifyTestElement(te);
 
         JFrame frame = new JFrame("FrameDemo");
-        frame.setSize(new Dimension(800, 600));
+        frame.setPreferredSize(new Dimension(1024, 768));
+        frame.setMinimumSize(new Dimension(640, 480));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().add(obj, BorderLayout.CENTER);
         frame.pack();

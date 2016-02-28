@@ -6,6 +6,8 @@ import com.blazemeter.jmeter.threads.ParamsPanel;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.Grid;
 
+import javax.swing.event.TableModelListener;
+
 public class FreeFormLoadPanel extends Grid implements ParamsPanel {
     private static final String[] columnIdentifiers = new String[]{"Start Value", "End Value", "Duration"};
     private static final Class[] columnClasses = new Class[]{String.class, String.class, String.class};
@@ -13,7 +15,6 @@ public class FreeFormLoadPanel extends Grid implements ParamsPanel {
 
     public FreeFormLoadPanel() {
         super("Threads Schedule", columnIdentifiers, columnClasses, defaultValues);
-// TODO        grid.getModel().addTableModelListener(this);
     }
 
     @Override
@@ -35,5 +36,9 @@ public class FreeFormLoadPanel extends Grid implements ParamsPanel {
     @Override
     public void clearUI() {
         getModel().clearData();
+    }
+
+    public void addTableModelListener(TableModelListener listener) {
+        getModel().addTableModelListener(listener);
     }
 }

@@ -27,7 +27,7 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel {
         add("Time Unit: ", groupPanel);
 
         add("Thread Iterations Limit: ", iterations);
-        add("Log Arrivals/Completions into File: ", logFile);
+        add("Log Threads Status into File: ", logFile);
 
         if (showConcurrencyLimit) {
             add("Concurrency Limit: ", concurrLimit);

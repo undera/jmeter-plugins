@@ -29,7 +29,7 @@ public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupG
     private AdditionalFieldsPanel additionalFields = null;
 
     @Override
-    public final void configure(TestElement element) { // FIXME: remove final
+    public void configure(TestElement element) {
         super.configure(element);
         if (!uiCreated) {
             initUI();
@@ -43,7 +43,7 @@ public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupG
     }
 
     @Override
-    public final void modifyTestElement(TestElement element) { // FIXME: remove final
+    public void modifyTestElement(TestElement element) {
         super.configureTestElement(element);
         if (!uiCreated) {
             initUI();
@@ -62,6 +62,7 @@ public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupG
         container.add((Component) loadFields, BorderLayout.NORTH);
         container.add(GuiBuilderHelper.getComponentWithMargin(getPreviewChart(), 2, 2, 0, 2), BorderLayout.CENTER);
         additionalFields = getAdditionalFieldsPanel();
+        additionalFields.addActionListener(this);
         container.add(additionalFields, BorderLayout.SOUTH);
         add(container, BorderLayout.CENTER);
         uiCreated = true;
@@ -185,7 +186,7 @@ public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupG
         previewChart = new GraphPanelChart(false, true);
         chartModel = new ConcurrentHashMap<>();
         previewChart.setRows(chartModel);
-        previewChart.setxAxisLabel("Elapsed Time"); // TODO: update it with units
+        previewChart.setxAxisLabel("Elapsed Time");
         previewChart.setBorder(BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         return previewChart;
     }

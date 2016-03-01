@@ -1,8 +1,6 @@
 package com.blazemeter.jmeter.control;
 
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
-import com.blazemeter.jmeter.threads.DynamicThread;
-import com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroup;
 import com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup;
 import org.apache.jmeter.control.GenericController;
 import org.apache.jmeter.control.NextIsNullException;
@@ -33,22 +31,9 @@ public class VirtualUserController extends GenericController {
             }
             hasArrived = true;
             iterationNo++;
-            if (owner instanceof ArrivalsThreadGroup) {
-                getOwnerAsArrivals().arrivalFact(JMeterContextService.getContext().getThread(), iterationNo);
-            }
-        }
+                    }
 
         return super.next();
-    }
-
-    private boolean moveToPool(JMeterThread thread) {
-        if (thread instanceof DynamicThread) {
-            if (!owner.isLimitReached() && getOwnerAsArrivals().movedToPool((DynamicThread) thread)) {
-                reInitialize();
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
@@ -60,9 +45,6 @@ public class VirtualUserController extends GenericController {
     @Override
     protected Sampler nextIsNull() throws NextIsNullException {
         JMeterThread thread = JMeterContextService.getContext().getThread();
-        if (owner instanceof ArrivalsThreadGroup) {
-            getOwnerAsArrivals().completionFact(thread, iterationNo);
-        }
 
         long iLimit = owner.getIterationsLimitAsLong();
 
@@ -78,9 +60,6 @@ public class VirtualUserController extends GenericController {
             log.info("Need to decrease concurrency, thread is done: " + thread.getThreadName());
             setDone(true);
             return null;
-        } else if (owner instanceof ArrivalsThreadGroup) {
-            moveToPool(thread);
-            return super.nextIsNull();
         } else {
             reInitialize();
             return next();
@@ -93,15 +72,6 @@ public class VirtualUserController extends GenericController {
 
     public void startNextLoop() {
         JMeterThread thread = JMeterContextService.getContext().getThread();
-        if (owner instanceof ArrivalsThreadGroup) {
-            getOwnerAsArrivals().abandonFact(thread, iterationNo);
-        }
-        if (!moveToPool(thread)) {
-            setDone(true);
-        }
     }
 
-    private ArrivalsThreadGroup getOwnerAsArrivals() {
-        return (ArrivalsThreadGroup) owner;
-    }
 }

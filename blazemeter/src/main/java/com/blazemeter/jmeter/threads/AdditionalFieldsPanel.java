@@ -1,7 +1,6 @@
 package com.blazemeter.jmeter.threads;
 
 import com.blazemeter.jmeter.gui.ArrangedLabelFieldPanel;
-import com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroup;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 
 import javax.swing.*;
@@ -18,8 +17,6 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel {
 
     public AdditionalFieldsPanel(boolean showConcurrencyLimit) {
         JPanel groupPanel = new HorizontalPanel();
-        unitMinutes.setActionCommand(ArrivalsThreadGroup.UNIT_MINUTES);
-        unitSeconds.setActionCommand(ArrivalsThreadGroup.UNIT_SECONDS);
         unitGroup.add(unitMinutes);
         unitGroup.add(unitSeconds);
         groupPanel.add(unitMinutes);
@@ -39,10 +36,6 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel {
         iterations.setText(tg.getIterationsLimit());
         concurrLimit.setText("1000");
         unitMinutes.setSelected(true);
-        if (tg instanceof ArrivalsThreadGroup) {
-            ArrivalsThreadGroup atg = (ArrivalsThreadGroup) tg;
-            concurrLimit.setText(atg.getConcurrencyLimit());
-        }
 
         Enumeration<AbstractButton> it = unitGroup.getElements();
         while (it.hasMoreElements()) {
@@ -60,10 +53,6 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel {
             tg.setUnit(unitGroup.getSelection().getActionCommand());
         }
 
-        if (tg instanceof ArrivalsThreadGroup) {
-            ArrivalsThreadGroup atg = (ArrivalsThreadGroup) tg;
-            atg.setConcurrencyLimit(concurrLimit.getText());
-        }
     }
 
     public void clearUI() {

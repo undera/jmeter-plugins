@@ -9,13 +9,6 @@ there's a lot of value to load testing people.
 
 ==Thread Groups==
   * [ConcurrencyThreadGroup Concurrency Thread Group]
-  * [ArrivalsThreadGroup Arrivals Thread Group]
-  * [FreeFormArrivalsThreadGroup Free-Form Arrivals Thread Group]
-
-
-==Controllers==
-  * [WeightedSwitchController Weighted Switch Controler]
-
 
 ==Reporters==
   * [LoadosophiaUploader Loadosophia.org Uploader]

@@ -3,7 +3,7 @@
 == 1.4.0 <i><font color=gray size="1">preparing</font></i>==
   * BlazeMeter Inc. has contributed XMPP testing plugins
   * BlazeMeter Inc. has contributed PhantomJS support for WebDriver
-  * BlazeMeter Inc. has contributed Thread Groups and Controllers
+  * BlazeMeter Set added to extract Loadosophia Uploader from Standard Set
   * add 2 text fields in PhantomJS WebDriver GUI for phantomjs.cli.args and phantomjs.ghostdriver.args parameters, see [http://jmeter-plugins.org/wiki/PhantomJSDriverConfig/]
   * Modernize project website, change its look a bit
   * fix consequences of PR #80 further

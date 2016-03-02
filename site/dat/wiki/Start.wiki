@@ -111,7 +111,6 @@ Selenium/WebDriver testing ability. It's good to start with [WebDriverTutorial 2
 <td >
 <div class="plugins_set blazemeter_set">
 == BlazeMeter Plugins Set ==
-  * [ConcurrencyThreadGroup Concurrency Thread Group] [/img/icons/new_wog.gif]
   * [LoadosophiaUploader Loadosophia.org Uploader]
 
 == BlazeMeter's XMPP Set ==

@@ -7,8 +7,5 @@ These plugins was originally developed by _[http://blazemeter.com/?utm_source=jm
 Check out their [http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki load testing service], 
 there's a lot of value to load testing people.
 
-==Thread Groups==
-  * [ConcurrencyThreadGroup Concurrency Thread Group]
-
 ==Reporters==
   * [LoadosophiaUploader Loadosophia.org Uploader]

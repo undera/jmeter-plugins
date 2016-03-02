@@ -296,6 +296,7 @@ public abstract class JMeterPluginsUtils {
         conf.setCode(true);
         conf.setDataType(false);
         conf.setSampleCount(false);
+        conf.setHostname(true);
     }
 
     public static void openInBrowser(String string) {

@@ -119,7 +119,7 @@ public class DummySamplerGui
         editConstraints.weightx = 1.0;
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-        addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Successfull sample: ", JLabel.RIGHT));
+        addToPanel(mainPanel, labelConstraints, 0, 0, new JLabel("Successful sample: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 0, isSuccessful = new JCheckBox());
         addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Response Code (eg 200): ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 1, responseCode = new JTextField(20));

@@ -43,7 +43,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
 
     public LoadosophiaUploader() {
         super();
-        address = JMeterUtils.getPropDefault("loadosophia.address", "https://loadosophia.org/");
+        address = JMeterUtils.getPropDefault("loadosophia.address", "https://sense.blazemeter.com/");
     }
 
     @Override
@@ -109,8 +109,8 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                 LoadosophiaUploadResults uploadResult = this.apiClient.sendFiles(new File(fileName), monFiles);
                 informUser("Uploaded successfully, go to results: " + uploadResult.getRedirectLink());
             } catch (IOException ex) {
-                informUser("Failed to upload results to Loadosophia.org, see log for detais");
-                log.error("Failed to upload results to loadosophia", ex);
+                informUser("Failed to upload results to BM.Sense, see log for detais");
+                log.error("Failed to upload results to BM.Sense", ex);
             }
         }
         clearData();
@@ -127,7 +127,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
             if (dir != null && !dir.trim().isEmpty()) {
                 storeDir = new File(dir);
             }
-            tmpFile = File.createTempFile("Loadosophia_", ".jtl", storeDir);
+            tmpFile = File.createTempFile("Sense_", ".jtl", storeDir);
         } catch (IOException ex) {
             informUser("Unable to create temp file: " + ex.getMessage());
             informUser("Try to set another directory in the above field.");
@@ -136,7 +136,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
 
         fileName = tmpFile.getAbsolutePath();
         tmpFile.delete(); // IMPORTANT! this is required to have CSV headers
-        informUser("Storing results for upload to Loadosophia.org: " + fileName);
+        informUser("Storing results for upload to Sense: " + fileName);
         setFilename(fileName);
         // OMG, I spent 2 days finding that setting properties in testStarted
         // marks them temporary, though they cleared in some places.
@@ -258,7 +258,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     private void initiateOnline() {
         if (isUseOnline()) {
             try {
-                log.info("Starting Loadosophia online test");
+                log.info("Starting BM.Sense online test");
                 informUser("Started active test: " + apiClient.startOnline());
                 aggregator = new LoadosophiaAggregator();
                 processingQueue = new LinkedBlockingQueue<>();
@@ -286,7 +286,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
                 log.warn("Interrupted sleep", ex);
             }
         }
-        log.info("Ending Loadosophia online test");
+        log.info("Ending BM.Sense online test");
         try {
             apiClient.endOnline();
         } catch (IOException ex) {

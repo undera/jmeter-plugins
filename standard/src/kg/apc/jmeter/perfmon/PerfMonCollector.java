@@ -125,7 +125,7 @@ public class PerfMonCollector
         if (!getSaveConfig().saveAsXml() && getSaveConfig().saveFieldNames()) {
             filesList.add(getPropertyAsString(FILENAME));
         } else {
-            log.warn("Perfmon file saving setting is not CSV with header line, cannot upload it to Loadosophia.org: " + getPropertyAsString(FILENAME));
+            log.warn("Perfmon file saving setting is not CSV with header line, cannot upload it to BM.Sense: " + getPropertyAsString(FILENAME));
         }
         initiateConnectors();
 

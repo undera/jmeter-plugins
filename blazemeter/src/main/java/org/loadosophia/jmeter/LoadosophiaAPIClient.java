@@ -51,7 +51,7 @@ public class LoadosophiaAPIClient {
     public LoadosophiaUploadResults sendFiles(File targetFile, LinkedList<String> perfMonFiles) throws IOException {
         LoadosophiaUploadResults results = new LoadosophiaUploadResults();
         if (targetFile.length() == 0) {
-            throw new IOException("Cannot send empty file to Loadosophia.org");
+            throw new IOException("Cannot send empty file to BM.Sense");
         }
 
         log.info("Preparing files to send");
@@ -72,7 +72,7 @@ public class LoadosophiaAPIClient {
             index++;
         }
 
-        notifier.notifyAbout("Starting upload to Loadosophia.org");
+        notifier.notifyAbout("Starting upload to BM.Sense");
         String[] fields = multipartPost(partsList, getUploaderURI(), HttpStatus.SC_OK);
         int queueID = Integer.parseInt(fields[0]);
         results.setQueueID(queueID);
@@ -159,7 +159,7 @@ public class LoadosophiaAPIClient {
 
             String[] status = getUploadStatus(queueID);
             if (status.length > 2 && !status[2].isEmpty()) {
-                throw new RuntimeException("Loadosophia processing error: " + status[2]);
+                throw new RuntimeException("BM.Sense processing error: " + status[2]);
             }
 
             if (status[1].equals(STATUS_DONE)) {

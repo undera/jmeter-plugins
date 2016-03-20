@@ -82,5 +82,5 @@ Most of class names are self-explanatory:
 
 == Other Ways to Automate Reporting ==
 
-You can use [https://loadosophia.org/?utm_source=jpgc&utm_medium=wiki&utm_campaign=TPS Loadosophia.org] service
-to automate test results storage and reporting. See also: [LoadosophiaUploader Loadosophia Uploader] plugin.
+You can use [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=wiki&utm_campaign=TPS BM.Sense] service
+to automate test results storage and reporting. See also: [LoadosophiaUploader BM.Sense Uploader] plugin.

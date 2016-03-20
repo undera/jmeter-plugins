@@ -37,7 +37,7 @@ public class LoadosophiaUploaderGui
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Loadosophia.org Uploader");
+        return JMeterPluginsUtils.prefixLabel("BM.Sense Uploader");
     }
 
     @Override
@@ -153,7 +153,7 @@ public class LoadosophiaUploaderGui
     private void initFields() {
         testTitle.setText("");
         projectKey.setText("DEFAULT");
-        uploadToken.setText("Replace this text with upload token received at Loadosophia.org\nRemember that anyone who has this token can upload files to your account.\nPlease, treat your token as confidential data.\nSee plugin help for details.");
+        uploadToken.setText("Replace this text with upload token received at sense.blazemeter.com\nRemember that anyone who has this token can upload files to your account.\nPlease, treat your token as confidential data.\nSee plugin help for details.");
         storeDir.setText(System.getProperty("java.io.tmpdir"));
         colorFlag.setSelectedIndex(0);
         useOnline.setSelected(true);

@@ -1,6 +1,6 @@
 <div style='white-space: nowrap'>
     <i class="fa fa-area-chart"></i>
-    [http://loadosophia.org/?utm_source=jpgc&utm_medium=link&utm_campaign=sidebar Analyze JMeter results online]
+    [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=link&utm_campaign=sidebar Analyze JMeter results online]
     <br/>
     <br/>
     <i class="fa fa-twitter-square"></i>

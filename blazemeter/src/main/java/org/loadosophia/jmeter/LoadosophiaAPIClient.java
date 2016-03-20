@@ -133,7 +133,7 @@ public class LoadosophiaAPIClient {
         FileInputStream in = new FileInputStream(src);
 
         // Transfer bytes from the input file to the GZIP output stream
-        byte[] buf = new byte[1024];
+        byte[] buf = new byte[10240];
         int len;
         while ((len = in.read(buf)) > 0) {
             out.write(buf, 0, len);
@@ -152,7 +152,7 @@ public class LoadosophiaAPIClient {
     private int getTestByUpload(int queueID) throws IOException {
         while (true) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000); // TODO: parameterize it
             } catch (InterruptedException ex) {
                 throw new RuntimeException("Failed to get test ID");
             }

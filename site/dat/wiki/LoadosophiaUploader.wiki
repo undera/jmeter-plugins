@@ -35,4 +35,3 @@ Make note that BlazeMeter Sense has limits for uploaded file size, which differs
 
 If you get "Cannot send empty" log messages or uploaded files seems to be incomplete, consider setting {{{jmeter.save.saveservice.autoflush}}} to {{{true}}} in jmeter.properties file.
 
-If you want to disable the feature of stopping JMeter test by pressing "Stop & Drop" button in Sense Web UI, set {{{loadosophia.stoppable}}} to {{{false}}} in jmeter.properties file.

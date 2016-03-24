@@ -199,7 +199,7 @@ public class LoadosophiaConsolidator extends ResultCollector
             try {
                 SampleEvent event = processingQueue.poll(1, TimeUnit.SECONDS);
                 if (event != null) {
-                    aggregator.addSample(event.getResult());
+                    aggregator.addSample(event);
                 }
 
                 if (aggregator.haveDataToSend()) {

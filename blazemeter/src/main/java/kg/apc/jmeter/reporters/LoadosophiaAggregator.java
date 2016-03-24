@@ -2,6 +2,7 @@ package kg.apc.jmeter.reporters;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -12,13 +13,13 @@ import java.util.*;
 public class LoadosophiaAggregator {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private SortedMap<Long, List<SampleResult>> buffer = new TreeMap<>();
+    private SortedMap<Long, List<SampleEvent>> buffer = new TreeMap<>();
     private static final long SEND_SECONDS = 5;
     private long lastTime = 0;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
-    public void addSample(SampleResult res) {
-        Long time = res.getEndTime() / 1000;
+    public void addSample(SampleEvent res) {
+        Long time = res.getResult().getEndTime() / 1000;
         if (!buffer.containsKey(time)) {
             // we need to create new sec list
             if (time < lastTime) {
@@ -27,7 +28,7 @@ public class LoadosophiaAggregator {
                     time = aLong;
                 }
             }
-            buffer.put(time, new LinkedList<SampleResult>());
+            buffer.put(time, new LinkedList<SampleEvent>());
         }
         lastTime = time;
         buffer.get(time).add(res);
@@ -43,7 +44,7 @@ public class LoadosophiaAggregator {
         int cnt = 0;
         while (cnt < SEND_SECONDS && it.hasNext()) {
             Long sec = it.next();
-            List<SampleResult> raw = buffer.get(sec);
+            List<SampleEvent> raw = buffer.get(sec);
             data.add(getAggregateSecond(raw));
             it.remove();
             cnt++;
@@ -51,23 +52,30 @@ public class LoadosophiaAggregator {
         return data;
     }
 
-    private JSONObject getAggregateSecond(List<SampleResult> raw) {
+    private JSONObject getAggregateSecond(List<SampleEvent> raw) {
         /*
          "rc": item.http_codes,
          "net": item.net_codes
          */
         JSONObject result = new JSONObject();
-        Date ts = new Date(raw.iterator().next().getEndTime());
+        Date ts = new Date(raw.iterator().next().getResult().getEndTime());
+        log.debug("Aggregating " + ts);
         result.put("ts", format.format(ts));
 
-        int threads = 0;
+        Map<String, Integer> threads = new HashMap<>();
         int avg_rt = 0;
         Long[] rtimes = new Long[raw.size()];
         String[] rcodes = new String[raw.size()];
         int cnt = 0;
         int failedCount = 0;
-        for (SampleResult res : raw) {
-            threads += res.getAllThreads();
+        for (SampleEvent evt : raw) {
+            SampleResult res = evt.getResult();
+
+            if (!threads.containsKey(evt.getHostname())) {
+                threads.put(evt.getHostname(), 0);
+            }
+            threads.put(evt.getHostname(), res.getAllThreads());
+
             avg_rt += res.getTime();
             rtimes[cnt] = res.getTime();
             rcodes[cnt] = res.getResponseCode();
@@ -76,8 +84,13 @@ public class LoadosophiaAggregator {
             }
             cnt++;
         }
+
+        long tsum = 0;
+        for (Integer tcount : threads.values()) {
+            tsum += tcount;
+        }
         result.put("rps", cnt);
-        result.put("threads", threads / cnt);
+        result.put("threads", tsum);
         result.put("avg_rt", avg_rt / cnt);
         result.put("quantiles", getQuantilesJSON(rtimes));
         result.put("net", getNetJSON(failedCount, cnt - failedCount));

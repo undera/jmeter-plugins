@@ -8,8 +8,6 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.*;
 import org.apache.commons.io.IOUtils;
-import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -116,18 +114,7 @@ public class LoadosophiaAPIClient {
         String dataStr = data.toString();
         log.debug("Sending active test data: " + dataStr);
         partsList.add(new StringPart("data", dataStr));
-        try {
-            multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
-        } catch (HttpException e) {
-            if (e.getReasonCode() == 205) {
-                if (JMeterUtils.getPropDefault("loadosophia.stoppable", "true").equals("true")) {
-                    notifier.notifyAbout("Got stop command from Sense");
-                    JMeterContextService.getContext().getEngine().askThreadsToStop(); // provide control over it
-                }
-            } else {
-                throw e;
-            }
-        }
+        multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
     }
 
     public void endOnline() throws IOException {
@@ -216,9 +203,7 @@ public class LoadosophiaAPIClient {
             FileChannel resultFile = fos.getChannel();
             resultFile.write(ByteBuffer.wrap(IOUtils.toByteArray(postRequest.getResponseBodyAsStream())));
             resultFile.close();
-            HttpException httpException = new HttpException("Request returned not " + expectedSC + " status code: " + result);
-            httpException.setReasonCode(result);
-            throw httpException;
+            throw new HttpException("Request returned not " + expectedSC + " status code: " + result);
         }
         byte[] bytes = IOUtils.toByteArray(postRequest.getResponseBodyAsStream());
         if (bytes == null) {

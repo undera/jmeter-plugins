@@ -18,10 +18,6 @@ public class LoadosophiaAggregator {
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
     public void addSample(SampleResult res) {
-        if (log.isDebugEnabled()) {
-            log.debug("Got sample to process: " + res);
-        }
-
         Long time = res.getEndTime() / 1000;
         if (!buffer.containsKey(time)) {
             // we need to create new sec list

@@ -178,10 +178,6 @@ public class LoadosophiaConsolidator extends ResultCollector
 
     @Override
     public void sampleOccurred(SampleEvent event) {
-        if (log.isDebugEnabled()) {
-            log.debug("Got sample to record: " + event.getResult());
-        }
-
         super.sampleOccurred(event);
         if (isOnlineInitiated) {
             try {

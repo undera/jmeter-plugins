@@ -7,6 +7,7 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
@@ -213,13 +214,13 @@ public class LoadosophiaAPIClient {
             notifier.notifyAbout("Saving server error response to: " + fname);
             FileOutputStream fos = new FileOutputStream(fname);
             FileChannel resultFile = fos.getChannel();
-            resultFile.write(ByteBuffer.wrap(postRequest.getResponseBody()));
+            resultFile.write(ByteBuffer.wrap(IOUtils.toByteArray(postRequest.getResponseBodyAsStream())));
             resultFile.close();
             HttpException httpException = new HttpException("Request returned not " + expectedSC + " status code: " + result);
             httpException.setReasonCode(result);
             throw httpException;
         }
-        byte[] bytes = postRequest.getResponseBody();
+        byte[] bytes = IOUtils.toByteArray(postRequest.getResponseBodyAsStream());
         if (bytes == null) {
             bytes = new byte[0];
         }

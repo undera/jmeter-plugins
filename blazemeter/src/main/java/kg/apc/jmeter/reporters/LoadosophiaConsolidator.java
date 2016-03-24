@@ -63,7 +63,7 @@ public class LoadosophiaConsolidator extends ResultCollector
     }
 
     public void remove(LoadosophiaUploader source) {
-        log.debug("Add remove from consolidator: " + source);
+        log.debug("Remove from consolidator: " + source);
         sources.remove(source);
 
         if (sources.size() == 0) {

@@ -55,7 +55,7 @@ public class LoadosophiaAPIClient {
         }
 
         log.info("Preparing files to send");
-        LinkedList<Part> partsList = new LinkedList<Part>();
+        LinkedList<Part> partsList = new LinkedList<>();
         partsList.add(new StringPart("projectKey", project));
         partsList.add(new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile))));
 
@@ -98,7 +98,7 @@ public class LoadosophiaAPIClient {
 
     public String startOnline() throws IOException {
         String uri = address + "api/active/receiver/start/";
-        LinkedList<Part> partsList = new LinkedList<Part>();
+        LinkedList<Part> partsList = new LinkedList<>();
         partsList.add(new StringPart("token", token));
         partsList.add(new StringPart("projectKey", project));
         partsList.add(new StringPart("title", title));
@@ -109,7 +109,7 @@ public class LoadosophiaAPIClient {
 
     public void sendOnlineData(JSONArray data) throws IOException {
         String uri = address + "api/active/receiver/data/";
-        LinkedList<Part> partsList = new LinkedList<Part>();
+        LinkedList<Part> partsList = new LinkedList<>();
         String dataStr = data.toString();
         log.debug("Sending active test data: " + dataStr);
         partsList.add(new StringPart("data", dataStr));
@@ -118,7 +118,7 @@ public class LoadosophiaAPIClient {
 
     public void endOnline() throws IOException {
         String uri = address + "api/active/receiver/stop/";
-        LinkedList<Part> partsList = new LinkedList<Part>();
+        LinkedList<Part> partsList = new LinkedList<>();
         multipartPost(partsList, uri, HttpStatus.SC_RESET_CONTENT);
     }
 

@@ -27,10 +27,12 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     @Override
     public void testStarted() {
         testStarted(MainFrame.LOCAL);
+        consolidator.testStarted();
     }
 
     @Override
     public void testEnded() {
+        consolidator.testEnded();
         testEnded(MainFrame.LOCAL);
     }
 

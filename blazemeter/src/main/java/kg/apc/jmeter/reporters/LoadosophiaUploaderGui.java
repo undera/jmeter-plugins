@@ -3,18 +3,16 @@ package kg.apc.jmeter.reporters;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
-import org.apache.jmeter.gui.UnsharedComponent;
-import org.apache.jmeter.samplers.Clearable;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
+import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 import org.loadosophia.jmeter.LoadosophiaAPIClient;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 
-public class LoadosophiaUploaderGui
-        extends AbstractListenerGui implements Clearable, UnsharedComponent {
+public class LoadosophiaUploaderGui extends AbstractVisualizer {
 
     public static final String WIKIPAGE = "LoadosophiaUploader";
     private JTextField testTitle;
@@ -29,6 +27,11 @@ public class LoadosophiaUploaderGui
         super();
         init();
         initFields();
+    }
+
+    @Override
+    protected Component getFilePanel() {
+        return new JPanel();
     }
 
     @Override
@@ -51,7 +54,7 @@ public class LoadosophiaUploaderGui
 
     @Override
     public void modifyTestElement(TestElement te) {
-        super.configureTestElement(te);
+        super.modifyTestElement(te);
         if (te instanceof LoadosophiaUploader) {
             LoadosophiaUploader fw = (LoadosophiaUploader) te;
             fw.setProject(projectKey.getText());
@@ -186,5 +189,10 @@ public class LoadosophiaUploaderGui
 
     private int colorToIndex(String colorFlag) {
         return Arrays.asList(LoadosophiaAPIClient.colors).indexOf(colorFlag);
+    }
+
+    @Override
+    public void add(SampleResult sample) {
+
     }
 }

@@ -124,7 +124,7 @@ public class LoadosophiaConsolidator extends ResultCollector
                 LoadosophiaUploadResults uploadResult = this.apiClient.sendFiles(new File(fileName), monFiles);
                 source.informUser("Uploaded successfully, go to results: " + uploadResult.getRedirectLink());
             } catch (IOException ex) {
-                source.informUser("Failed to upload results to BM.Sense, see log for detais");
+                source.informUser("Failed to upload results to BM.Sense, see log for detais: " + ex.getMessage());
                 log.error("Failed to upload results to BM.Sense", ex);
             }
         }
@@ -178,6 +178,10 @@ public class LoadosophiaConsolidator extends ResultCollector
 
     @Override
     public void sampleOccurred(SampleEvent event) {
+        if (log.isDebugEnabled()) {
+            log.debug("Got sample to record: " + event.getResult());
+        }
+
         super.sampleOccurred(event);
         if (isOnlineInitiated) {
             try {

@@ -1,20 +1,14 @@
 package kg.apc.jmeter.reporters;
 
-import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.gui.MainFrame;
-import org.apache.jmeter.reporters.AbstractListenerElement;
-import org.apache.jmeter.samplers.Remoteable;
+import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
-import org.apache.jmeter.samplers.SampleListener;
-import org.apache.jmeter.testelement.TestStateListener;
+import org.apache.jmeter.visualizers.Visualizer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.loadosophia.jmeter.StatusNotifierCallback;
 
-import java.io.Serializable;
-
-public class LoadosophiaUploader extends AbstractListenerElement
-        implements StatusNotifierCallback, TestStateListener, SampleListener, Serializable, NoThreadClone, Remoteable {
+public class LoadosophiaUploader extends ResultCollector implements StatusNotifierCallback {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String TITLE = "title";
@@ -75,10 +69,12 @@ public class LoadosophiaUploader extends AbstractListenerElement
     }
 
     public void informUser(String string) {
-        if (getVisualizer() != null && getVisualizer() instanceof LoadosophiaUploaderGui) {
+        Visualizer vis = getVisualizer();
+        if (vis != null && vis instanceof LoadosophiaUploaderGui) {
             log.info(string);
-            ((LoadosophiaUploaderGui) getVisualizer()).inform(string);
+            ((LoadosophiaUploaderGui) vis).inform(string);
         } else {
+            log.debug("Visualizer: " + vis);
             log.info(string);
         }
     }

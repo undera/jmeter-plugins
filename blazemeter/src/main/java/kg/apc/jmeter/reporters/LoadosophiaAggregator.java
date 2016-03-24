@@ -1,24 +1,18 @@
 package kg.apc.jmeter.reporters;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.Stack;
-import java.util.TreeMap;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 public class LoadosophiaAggregator {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private SortedMap<Long, List<SampleResult>> buffer = new TreeMap<Long, List<SampleResult>>();
+    private SortedMap<Long, List<SampleResult>> buffer = new TreeMap<>();
     private static final long SEND_SECONDS = 5;
     private long lastTime = 0;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
@@ -33,9 +27,8 @@ public class LoadosophiaAggregator {
             // we need to create new sec list
             if (time < lastTime) {
                 // a problem with times sequence - taking last available
-                Iterator<Long> it = buffer.keySet().iterator();
-                while (it.hasNext()) {
-                    time = it.next();
+                for (Long aLong : buffer.keySet()) {
+                    time = aLong;
                 }
             }
             buffer.put(time, new LinkedList<SampleResult>());
@@ -77,11 +70,10 @@ public class LoadosophiaAggregator {
         String[] rcodes = new String[raw.size()];
         int cnt = 0;
         int failedCount = 0;
-        for (Iterator<SampleResult> it = raw.iterator(); it.hasNext();) {
-            SampleResult res = it.next();
+        for (SampleResult res : raw) {
             threads += res.getAllThreads();
             avg_rt += res.getTime();
-            rtimes[cnt] = Long.valueOf(res.getTime());
+            rtimes[cnt] = res.getTime();
             rcodes[cnt] = res.getResponseCode();
             if (!res.isSuccessful()) {
                 failedCount++;
@@ -104,10 +96,10 @@ public class LoadosophiaAggregator {
 
         double[] quantiles = {0.25, 0.50, 0.75, 0.80, 0.90, 0.95, 0.98, 0.99, 1.00};
 
-        Stack<Long> timings = new Stack();
+        Stack<Long> timings = new Stack<>();
         timings.addAll(Arrays.asList(rtimes));
         double level = 1.0;
-        long timing = 0;
+        Object timing = 0;
         for (int qn = quantiles.length - 1; qn >= 0; qn--) {
             double quan = quantiles[qn];
             while (level >= quan && !timings.empty()) {
@@ -129,12 +121,12 @@ public class LoadosophiaAggregator {
 
     private JSONObject getRCJSON(String[] rcodes) {
         JSONObject result = new JSONObject();
-        for (int i = 0; i < rcodes.length; i++) {
+        for (String rcode : rcodes) {
             int oldval = 0;
-            if (result.containsKey(rcodes[i]))  {
-                oldval = (Integer) result.get(rcodes[i]);
+            if (result.containsKey(rcode)) {
+                oldval = (Integer) result.get(rcode);
             }
-            result.put(rcodes[i], oldval + 1);
+            result.put(rcode, oldval + 1);
 
         }
         return result;

@@ -1,16 +1,16 @@
 = Changelog =
 
 == 1.4.0 <i><font color=gray size="1">preparing</font></i>==
-  * BlazeMeter Inc. has contributed XMPP testing plugins
-  * BlazeMeter Inc. has contributed PhantomJS support for WebDriver
-  * BlazeMeter Inc. has contributed Thread Groups and Controllers
-  * Loadosophia Uploader has been renamed to BM.Sense uploader and moved to BlazeMeter Set
-  * finally teach Loadosophia Uploader to work well with distributed tests
+  * BlazeMeter Inc. has contributed [XMPPSet XMPP testing plugins]
+  * BlazeMeter Inc. has contributed [PhantomJSDriverConfig PhantomJS support] for WebDriver
+  * BlazeMeter Inc. has contributed few Thread Groups and Controllers into [StandardSet Standard Set]
+  * [LoadosophiaUploader Loadosophia Uploader] has been renamed to BM.Sense uploader
+  * finally [LoadosophiaUploader Loadosophia Uploader] works well with distributed tests
   * add 2 text fields in PhantomJS WebDriver GUI for phantomjs.cli.args and phantomjs.ghostdriver.args parameters, see [http://jmeter-plugins.org/wiki/PhantomJSDriverConfig/]
   * Modernize project website, change its look a bit
   * fix consequences of PR #80 further
-  * make Dummy Sampler compatible with JMeter 2.12 and earlier
-  * add custom functions strReplace and strReplaceRegex (thanks to Dima Lulko for suggesting)
+  * make [DummySampler Dummy Sampler] compatible with JMeter 2.12 and earlier
+  * add [Functions custom functions] strReplace and strReplaceRegex (thanks to Dima Lulko for suggesting)
   * add FilterResultsTool command line tool, filter results by label (regex), offset, success, output file XML or CSV format, see [http://jmeter-plugins.org/wiki/FilterResultsTool/]
   * change HttpSimpleTableServer command ADD a new line for a file with GET (new) or POST protocols, see [http://jmeter-plugins.org/wiki/HttpSimpleTableServer/]
   * change HttpSimpleTableServer no cache for Response, add headers cache control, pragma and expires

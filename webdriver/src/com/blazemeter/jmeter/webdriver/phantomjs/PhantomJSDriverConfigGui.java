@@ -1,13 +1,11 @@
 package com.blazemeter.jmeter.webdriver.phantomjs;
 
 import com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGui;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
+
+import javax.swing.*;
 
 public class PhantomJSDriverConfigGui extends WebDriverConfigGui {
 
@@ -18,7 +16,7 @@ public class PhantomJSDriverConfigGui extends WebDriverConfigGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("PhantomJS Driver Config");
+        return "bzm - PhantomJS Driver Config";
     }
 
     @Override

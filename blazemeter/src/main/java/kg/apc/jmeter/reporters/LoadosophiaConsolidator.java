@@ -40,7 +40,7 @@ public class LoadosophiaConsolidator extends ResultCollector
     private Thread processorThread;
     private LoadosophiaAggregator aggregator;
 
-    private LoadosophiaConsolidator() {
+    protected LoadosophiaConsolidator() {
         super();
         address = JMeterUtils.getPropDefault("loadosophia.address", "https://sense.blazemeter.com/");
     }
@@ -73,7 +73,7 @@ public class LoadosophiaConsolidator extends ResultCollector
     }
 
 
-    private void start(LoadosophiaUploader source) {
+    protected void start(LoadosophiaUploader source) {
         synchronized (LOCK) {
             this.apiClient = getAPIClient(source);
 
@@ -90,7 +90,7 @@ public class LoadosophiaConsolidator extends ResultCollector
         }
     }
 
-    private void stop(LoadosophiaUploader source) {
+    protected void stop(LoadosophiaUploader source) {
         synchronized (LOCK) {
             // FIXME: trying to handle safe upgrade, needs to be removed in the future
             // @see https://issues.apache.org/bugzilla/show_bug.cgi?id=56807

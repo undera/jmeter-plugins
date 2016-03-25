@@ -16,7 +16,7 @@ class FakeAPIClient extends LoadosophiaAPIClient {
 
     private LinkedList<String[]> response;
 
-    private FakeAPIClient(StatusNotifierCallback aThis, LinkedList<String[]> aresponse) {
+    public FakeAPIClient(StatusNotifierCallback aThis, LinkedList<String[]> aresponse) {
         super(aThis, "TEST", "TEST", COLOR_NONE, "TEST", "TEST");
         response = aresponse;
     }

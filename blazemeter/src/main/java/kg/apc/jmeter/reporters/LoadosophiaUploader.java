@@ -17,7 +17,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     public static final String PROJECT = "project";
     public static final String STORE_DIR = "storeDir";
     public static final String USE_ONLINE = "useOnline";
-    private final LoadosophiaConsolidator consolidator;
+    protected LoadosophiaConsolidator consolidator;
 
     public LoadosophiaUploader() {
         super();

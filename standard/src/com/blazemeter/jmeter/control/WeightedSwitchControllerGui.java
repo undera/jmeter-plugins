@@ -50,7 +50,7 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Weighted Switch Controller");
+        return "bzm - Weighted Switch Controller";
     }
 
     @Override

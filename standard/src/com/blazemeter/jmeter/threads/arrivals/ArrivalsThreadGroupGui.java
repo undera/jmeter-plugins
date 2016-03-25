@@ -22,7 +22,7 @@ public class ArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Arrivals Thread Group");
+        return "bzm - Arrivals Thread Group";
     }
 
 

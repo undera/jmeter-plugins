@@ -35,7 +35,7 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGu
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Free-Form Arrivals Thread Group");
+        return "bzm - Free-Form Arrivals Thread Group";
     }
 
     protected AbstractDynamicThreadGroup createThreadGroupObject() {

@@ -13,7 +13,7 @@ public class ConcurrencyThreadGroupGui extends AbstractDynamicThreadGroupGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Concurrency Thread Group");
+        return "bzm - Concurrency Thread Group";
     }
 
     public ConcurrencyThreadGroupGui() {

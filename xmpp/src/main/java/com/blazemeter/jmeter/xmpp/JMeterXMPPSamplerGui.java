@@ -81,7 +81,7 @@ public class JMeterXMPPSamplerGui extends AbstractSamplerGui implements ActionLi
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("XMPP Sampler");
+        return "bzm - XMPP Sampler";
     }
 
     private void initFields() {

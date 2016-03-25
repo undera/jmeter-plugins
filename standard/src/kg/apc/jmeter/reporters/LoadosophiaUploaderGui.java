@@ -36,7 +36,7 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("BM.Sense Uploader");
+        return "bzm - BlazeMeter Sense Uploader";
     }
 
     @Override

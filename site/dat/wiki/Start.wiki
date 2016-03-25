@@ -21,11 +21,15 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [SteppingThreadGroup Stepping Thread Group]
   * [UltimateThreadGroup Ultimate Thread Group]
   * [ThroughputShapingTimer Throughput Shaping Timer] 
+  * [ConcurrencyThreadGroup Concurrency Thread Group] [/img/icons/new_wog.gif]
+  * [ArrivalsThreadGroup Arrivals Thread Group] [/img/icons/new_wog.gif]
+  * [FreeFormArrivalsThreadGroup Free-Form Arrivals Thread Group] [/img/icons/new_wog.gif]
 
 === Listeners ===
   * [FlexibleFileWriter Flexible File Writer]
   * [ConsoleStatusLogger Non-GUI Console Status Logger] 
   * [SynthesisReport Synthesis Report] filterable
+  * [LoadosophiaUploader BM.Sense Uploader] (aka Loadosophia Uploader)
 
 === Others ===
   * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
@@ -33,6 +37,7 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [Functions Custom JMeter Functions] 
   * [TestPlanCheckTool Tool to check Test Plan consistency]
   * [FilterResultsTool Command-Line filtered results] by label (regex), offset, success
+  * [WeightedSwitchController Weighted Switch Controller] [/img/icons/new_wog.gif]
 
 === Samplers ===
   * [DummySampler Dummy Sampler] for debugging and programming tests
@@ -109,16 +114,8 @@ Selenium/WebDriver testing ability. It's good to start with [WebDriverTutorial 2
 </td>
 </tr><tr>
 <td >
-<div class="plugins_set blazemeter_set">
-== BlazeMeter Plugins Set ==
-
-  * [ConcurrencyThreadGroup Concurrency Thread Group] [/img/icons/new_wog.gif]
-  * [ArrivalsThreadGroup Arrivals Thread Group] [/img/icons/new_wog.gif]
-  * [FreeFormArrivalsThreadGroup Free-Form Arrivals Thread Group] [/img/icons/new_wog.gif]
-  * [WeightedSwitchController Weighted Switch Controller] [/img/icons/new_wog.gif]
-  * [LoadosophiaUploader BM.Sense Uploader] (aka Loadosophia Uploader)
-
-== BlazeMeter's XMPP Set ==
+<div class="plugins_set xmpp_set">
+== XMPP Set ==
 XMPP/Jabber testing capabilities
   * [XMPPConnection XMPP Connection Config] [/img/icons/new_wog.gif]
   * [XMPPSampler XMPP Sampler] [/img/icons/new_wog.gif]

@@ -106,23 +106,12 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer {
         labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
 
         row++;
-        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Directory to store data for upload: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, row, storeDir = new JTextField(20));
-        JButton browseButton;
-        addToPanel(mainPanel, labelConstraints, 2, row, browseButton = new JButton("Browse..."));
-
-        GuiBuilderHelper.strechItemToComponent(storeDir, browseButton);
-        browseButton.addActionListener(new BrowseAction(storeDir, true));
-
-        row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Test Title: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, row, testTitle = new JTextField(20));
 
         row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Color Flag: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, row, colorFlag = new JComboBox(LoadosophiaAPIClient.colors));
-
-        GuiBuilderHelper.strechItemToComponent(storeDir, colorFlag);
 
         editConstraints.fill = GridBagConstraints.BOTH;
 
@@ -137,10 +126,22 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer {
         addToPanel(mainPanel, editConstraints, 1, row, GuiBuilderHelper.getTextAreaScrollPaneContainer(uploadToken, 6));
 
         row++;
+        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Temp directory: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, row, storeDir = new JTextField(20));
+        JButton browseButton;
+        addToPanel(mainPanel, labelConstraints, 2, row, browseButton = new JButton("Browse..."));
+
+        GuiBuilderHelper.strechItemToComponent(storeDir, browseButton);
+        browseButton.addActionListener(new BrowseAction(storeDir, true));
+
+        row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Info Area: ", JLabel.RIGHT));
         infoArea = new JTextArea();
         infoArea.setEditable(false);
         infoArea.setOpaque(false);
+
+        GuiBuilderHelper.strechItemToComponent(storeDir, infoArea);
+
 
         addToPanel(mainPanel, editConstraints, 1, row, GuiBuilderHelper.getTextAreaScrollPaneContainer(infoArea, 10));
 

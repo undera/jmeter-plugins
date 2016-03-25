@@ -33,7 +33,8 @@ public class LoadosophiaAggregatorTest {
     public void testAddSample() {
         System.out.println("addSample");
         LoadosophiaAggregator instance = new LoadosophiaAggregator();
-        instance.addSample(new SampleEvent(new SampleResult(), ""));
+        instance.setNumSources(1);
+        instance.addSample(new SampleEvent(new SampleResult(System.currentTimeMillis(), 1), ""));
         assertEquals(false, instance.haveDataToSend());
         instance.addSample(new SampleEvent(new SampleResult(System.currentTimeMillis() + 1000, 1), ""));
         instance.addSample(new SampleEvent(new SampleResult(System.currentTimeMillis() + 2000, 1), ""));

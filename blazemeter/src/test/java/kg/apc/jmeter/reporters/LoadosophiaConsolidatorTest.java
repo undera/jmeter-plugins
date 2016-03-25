@@ -18,8 +18,21 @@ public class LoadosophiaConsolidatorTest {
     @Test
     public void testFlow() throws Exception {
         LinkedList<String[]> response = new LinkedList<>();
-        response.push(new String[]{"{}", "4"});
-        response.push(new String[]{"{}", "4"});
+        response.add(new String[]{"{}", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
         LoadosophiaConsolidator obj = new ConsolidatorEmul(response);
 
         LoadosophiaUploader source = new LoadosophiaUploader();

@@ -76,8 +76,8 @@ public class LoadosophiaConsolidator extends ResultCollector
 
         if (sources.size() == 0) {
             log.debug("Last source departed, let's finish the process");
-            stop(source);
             testEnded();
+            stop(source);
         }
     }
 

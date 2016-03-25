@@ -9,7 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.LinkedList;
 
 public class LoadosophiaUploaderTest {
 
@@ -139,7 +138,18 @@ public class LoadosophiaUploaderTest {
     private static class LoadosophiaUploaderEmul extends LoadosophiaUploader {
         public LoadosophiaUploaderEmul() {
             super();
-            consolidator = new ConsolidatorEmul(new LinkedList<String[]>());
+            consolidator = new ConsolidatorEmul1();
+        }
+
+        private class ConsolidatorEmul1 extends LoadosophiaConsolidator {
+            @Override
+            protected void start(LoadosophiaUploader source) {
+            }
+
+            @Override
+            protected void stop(LoadosophiaUploader source) {
+
+            }
         }
     }
 

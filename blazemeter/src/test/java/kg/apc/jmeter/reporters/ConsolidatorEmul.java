@@ -23,15 +23,5 @@ public class ConsolidatorEmul extends LoadosophiaConsolidator implements StatusN
     public void notifyAbout(String info) {
 
     }
-
-    @Override
-    protected void start(LoadosophiaUploader source) {
-
-    }
-
-    @Override
-    protected void stop(LoadosophiaUploader source) {
-
-    }
 }
 

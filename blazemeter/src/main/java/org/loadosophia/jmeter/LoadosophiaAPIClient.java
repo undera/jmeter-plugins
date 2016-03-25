@@ -116,9 +116,10 @@ public class LoadosophiaAPIClient {
         multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
     }
 
-    public void endOnline() throws IOException {
+    public void endOnline(String redirectLink) throws IOException {
         String uri = address + "api/active/receiver/stop/";
         LinkedList<Part> partsList = new LinkedList<>();
+        partsList.add(new StringPart("redirect", redirectLink));
         multipartPost(partsList, uri, HttpStatus.SC_RESET_CONTENT);
     }
 

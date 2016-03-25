@@ -59,6 +59,7 @@ public class LoadosophiaConsolidator extends ResultCollector
         if (sources.size() == 1) {
             log.debug("First source arrived, let's start the process");
             start(source);
+            testStarted();
         }
 
         if (isOnlineInitiated) {
@@ -70,12 +71,13 @@ public class LoadosophiaConsolidator extends ResultCollector
         log.debug("Remove from consolidator: " + source);
         sources.remove(source);
         if (isOnlineInitiated) {
-            aggregator.setNumSources(sources.size());
+            aggregator.setNumSources(getNumSources());
         }
 
         if (sources.size() == 0) {
             log.debug("Last source departed, let's finish the process");
             stop(source);
+            testEnded();
         }
     }
 
@@ -98,12 +100,9 @@ public class LoadosophiaConsolidator extends ResultCollector
     }
 
     protected void stop(LoadosophiaUploader source) {
+        String redirectLink = "";
         synchronized (LOCK) {
             flush();
-
-            if (isOnlineInitiated) {
-                finishOnline();
-            }
 
             try {
                 if (fileName == null) {
@@ -118,16 +117,23 @@ public class LoadosophiaConsolidator extends ResultCollector
                     monFiles = new LinkedList<>();
                 }
                 LoadosophiaUploadResults uploadResult = this.apiClient.sendFiles(new File(fileName), monFiles);
-                source.informUser("Uploaded successfully, go to results: " + uploadResult.getRedirectLink());
+                redirectLink = uploadResult.getRedirectLink();
+                source.informUser("Uploaded successfully, go to results: " + redirectLink);
             } catch (IOException ex) {
                 source.informUser("Failed to upload results to BM.Sense, see log for detais: " + ex.getMessage());
                 log.error("Failed to upload results to BM.Sense", ex);
             }
         }
+
+        if (isOnlineInitiated) {
+            finishOnline(redirectLink);
+        }
+
         clearData();
         if (hasStandardSet()) {
             PerfMonCollector.clearFiles();
         }
+
     }
 
     private void flush() {
@@ -161,11 +167,13 @@ public class LoadosophiaConsolidator extends ResultCollector
         String dir = source.getStoreDir();
         File tmpFile;
         try {
-            File storeDir = null;
-            if (dir != null && !dir.trim().isEmpty()) {
-                storeDir = new File(dir);
+            if (dir == null || dir.trim().isEmpty()) {
+                tmpFile = File.createTempFile("Sense_", ".jtl");
+            } else {
+                File storeDir = new File(dir);
+                storeDir.mkdirs();
+                tmpFile = File.createTempFile("Sense_", ".jtl", storeDir);
             }
-            tmpFile = File.createTempFile("Sense_", ".jtl", storeDir);
         } catch (IOException ex) {
             source.informUser("Unable to create temp file: " + ex.getMessage());
             source.informUser("Try to set another directory in the above field.");
@@ -246,8 +254,7 @@ public class LoadosophiaConsolidator extends ResultCollector
         }
     }
 
-    private void finishOnline() {
-        isOnlineInitiated = false;
+    private void finishOnline(String redirectLink) {
         processorThread.interrupt();
         while (processorThread.isAlive() && !processorThread.isInterrupted()) {
             log.info("Waiting for aggregator thread to stop...");
@@ -260,10 +267,11 @@ public class LoadosophiaConsolidator extends ResultCollector
         }
         log.info("Ending BM.Sense online test");
         try {
-            apiClient.endOnline();
+            apiClient.endOnline(redirectLink);
         } catch (IOException ex) {
             log.warn("Failed to finalize active test", ex);
         }
+        isOnlineInitiated = false;
     }
 
     protected LoadosophiaAPIClient getAPIClient(LoadosophiaUploader source) {
@@ -271,4 +279,11 @@ public class LoadosophiaConsolidator extends ResultCollector
     }
 
 
+    public int getNumSources() {
+        return sources.size();
+    }
+
+    public static void destroy() {
+        instance = null;
+    }
 }

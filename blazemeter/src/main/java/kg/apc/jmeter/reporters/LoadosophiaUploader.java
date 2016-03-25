@@ -21,7 +21,6 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
 
     public LoadosophiaUploader() {
         super();
-        consolidator = LoadosophiaConsolidator.getInstance();
     }
 
     @Override
@@ -36,14 +35,20 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
 
     @Override
     public void testStarted(String host) {
+        if (consolidator == null) {
+            consolidator = getConsolidator();
+            log.debug("Consolidator: " + consolidator);
+        }
         consolidator.add(this);
-        consolidator.testStarted();
     }
 
     @Override
     public void testEnded(String host) {
-        consolidator.testEnded();
         consolidator.remove(this);
+        if (consolidator.getNumSources() < 1) {
+            consolidator = null;
+            LoadosophiaConsolidator.destroy();
+        }
     }
 
     public void setProject(String proj) {
@@ -76,7 +81,6 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
             log.info(string);
             ((LoadosophiaUploaderGui) vis).inform(string);
         } else {
-            log.debug("Visualizer: " + vis);
             log.info(string);
         }
     }
@@ -124,4 +128,9 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     public void sampleStopped(SampleEvent e) {
         consolidator.sampleStopped(e);
     }
+
+    protected LoadosophiaConsolidator getConsolidator() {
+        return LoadosophiaConsolidator.getInstance();
+    }
+
 }

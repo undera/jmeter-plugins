@@ -153,7 +153,7 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer {
         testTitle.setText("");
         projectKey.setText("DEFAULT");
         uploadToken.setText("Replace this text with upload token received at sense.blazemeter.com\nRemember that anyone who has this token can upload files to your account.\nPlease, treat your token as confidential data.\nSee plugin help for details.");
-        storeDir.setText(System.getProperty("java.io.tmpdir"));
+        storeDir.setText("");
         colorFlag.setSelectedIndex(0);
         useOnline.setSelected(true);
     }

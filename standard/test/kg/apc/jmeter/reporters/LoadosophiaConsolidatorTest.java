@@ -33,6 +33,17 @@ public class LoadosophiaConsolidatorTest {
         response.add(new String[]{"4", "4"});
         response.add(new String[]{"4", "4"});
         response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
+        response.add(new String[]{"4", "4"});
         LoadosophiaConsolidator obj = new ConsolidatorEmul(response);
 
         LoadosophiaUploader source = new LoadosophiaUploader();

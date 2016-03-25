@@ -2,6 +2,7 @@ package kg.apc.jmeter.reporters;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.*;
 
@@ -32,16 +33,16 @@ public class LoadosophiaAggregatorTest {
     public void testAddSample() {
         System.out.println("addSample");
         LoadosophiaAggregator instance = new LoadosophiaAggregator();
-        instance.addSample(new SampleResult());
+        instance.addSample(new SampleEvent(new SampleResult(), ""));
         assertEquals(false, instance.haveDataToSend());
-        instance.addSample(new SampleResult(System.currentTimeMillis() + 1000, 1));
-        instance.addSample(new SampleResult(System.currentTimeMillis() + 2000, 1));
-        instance.addSample(new SampleResult(System.currentTimeMillis() + 3000, 1));
-        instance.addSample(new SampleResult(System.currentTimeMillis() + 3000, 3));
-        instance.addSample(new SampleResult(System.currentTimeMillis() + 3000, 2));
-        instance.addSample(new SampleResult(System.currentTimeMillis() + 4000, 1));
-        instance.addSample(new SampleResult(System.currentTimeMillis() + 5000, 1));
-        instance.addSample(new SampleResult(System.currentTimeMillis() + 6000, 1));
+        instance.addSample(new SampleEvent(new SampleResult(System.currentTimeMillis() + 1000, 1), ""));
+        instance.addSample(new SampleEvent(new SampleResult(System.currentTimeMillis() + 2000, 1), ""));
+        instance.addSample(new SampleEvent(new SampleResult(System.currentTimeMillis() + 3000, 1), ""));
+        instance.addSample(new SampleEvent(new SampleResult(System.currentTimeMillis() + 3000, 3), ""));
+        instance.addSample(new SampleEvent(new SampleResult(System.currentTimeMillis() + 3000, 2), ""));
+        instance.addSample(new SampleEvent(new SampleResult(System.currentTimeMillis() + 4000, 1), ""));
+        instance.addSample(new SampleEvent(new SampleResult(System.currentTimeMillis() + 5000, 1), ""));
+        instance.addSample(new SampleEvent(new SampleResult(System.currentTimeMillis() + 6000, 1), ""));
         assertEquals(true, instance.haveDataToSend());
         String str = instance.getDataToSend().toString();
         System.out.println("JSON: " + str);

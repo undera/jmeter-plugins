@@ -60,11 +60,18 @@ public class LoadosophiaConsolidator extends ResultCollector
             log.debug("First source arrived, let's start the process");
             start(source);
         }
+
+        if (isOnlineInitiated) {
+            aggregator.setNumSources(sources.size());
+        }
     }
 
     public void remove(LoadosophiaUploader source) {
         log.debug("Remove from consolidator: " + source);
         sources.remove(source);
+        if (isOnlineInitiated) {
+            aggregator.setNumSources(sources.size());
+        }
 
         if (sources.size() == 0) {
             log.debug("Last source departed, let's finish the process");
@@ -92,18 +99,7 @@ public class LoadosophiaConsolidator extends ResultCollector
 
     protected void stop(LoadosophiaUploader source) {
         synchronized (LOCK) {
-            // FIXME: trying to handle safe upgrade, needs to be removed in the future
-            // @see https://issues.apache.org/bugzilla/show_bug.cgi?id=56807
-            try {
-                Class<ResultCollector> c = ResultCollector.class;
-                Method m = c.getDeclaredMethod("flushFile");
-                m.invoke(this);
-                log.info("Successfully flushed results file");
-            } catch (NoSuchMethodException ex) {
-                log.warn("Cannot flush results file since you are using old version of JMeter, consider upgrading to latest. Currently the results may be incomplete.");
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                log.error("Failed to flush file", e);
-            }
+            flush();
 
             if (isOnlineInitiated) {
                 finishOnline();
@@ -131,6 +127,21 @@ public class LoadosophiaConsolidator extends ResultCollector
         clearData();
         if (hasStandardSet()) {
             PerfMonCollector.clearFiles();
+        }
+    }
+
+    private void flush() {
+        // FIXME: trying to handle safe upgrade, needs to be removed in the future
+        // @see https://issues.apache.org/bugzilla/show_bug.cgi?id=56807
+        try {
+            Class<ResultCollector> c = ResultCollector.class;
+            Method m = c.getDeclaredMethod("flushFile");
+            m.invoke(this);
+            log.info("Successfully flushed results file");
+        } catch (NoSuchMethodException ex) {
+            log.warn("Cannot flush results file since you are using old version of JMeter, consider upgrading to latest. Currently the results may be incomplete.");
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            log.error("Failed to flush file", e);
         }
     }
 

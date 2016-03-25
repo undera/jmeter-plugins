@@ -69,7 +69,6 @@ public class LoadosophiaAPIClient {
                 continue;
             }
             partsList.add(new FilePart("perfmon_" + index, new FilePartSource(gzipFile(perfmonFile))));
-            perfmonFile.delete();
             index++;
         }
 

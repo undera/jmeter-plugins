@@ -15,51 +15,57 @@ public class LoadosophiaAggregator {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private SortedMap<Long, List<SampleEvent>> buffer = new TreeMap<>();
     private static final long SEND_SECONDS = 5;
-    private long lastTime = 0;
+    private long lastAggregatedTime = 0;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+    private int numSources = 0;
 
     public void addSample(SampleEvent res) {
         Long time = res.getResult().getEndTime() / 1000;
         if (!buffer.containsKey(time)) {
             // we need to create new sec list
-            if (time < lastTime) {
+            if (time <= lastAggregatedTime) {
                 // a problem with times sequence - taking last available
+                log.debug("Got time " + time + " <= " + lastAggregatedTime);
                 for (Long aLong : buffer.keySet()) {
                     time = aLong;
                 }
             }
             buffer.put(time, new LinkedList<SampleEvent>());
         }
-        lastTime = time;
         buffer.get(time).add(res);
     }
 
     public boolean haveDataToSend() {
-        return buffer.size() > SEND_SECONDS + 1;
+        return buffer.size() > getBufLen() + 1;
+    }
+
+    private long getBufLen() {
+        return SEND_SECONDS * numSources;
     }
 
     public JSONArray getDataToSend() {
         JSONArray data = new JSONArray();
         Iterator<Long> it = buffer.keySet().iterator();
         int cnt = 0;
-        while (cnt < SEND_SECONDS && it.hasNext()) {
+        while (cnt < getBufLen() && it.hasNext()) {
             Long sec = it.next();
             List<SampleEvent> raw = buffer.get(sec);
-            data.add(getAggregateSecond(raw));
+            data.add(getAggregateSecond(sec, raw));
             it.remove();
             cnt++;
         }
         return data;
     }
 
-    private JSONObject getAggregateSecond(List<SampleEvent> raw) {
+    private JSONObject getAggregateSecond(Long sec, List<SampleEvent> raw) {
         /*
          "rc": item.http_codes,
          "net": item.net_codes
          */
         JSONObject result = new JSONObject();
-        Date ts = new Date(raw.iterator().next().getResult().getEndTime());
-        log.debug("Aggregating " + ts);
+        this.lastAggregatedTime = sec;
+        Date ts = new Date(sec * 1000);
+        log.debug("Aggregating " + sec);
         result.put("ts", format.format(ts));
 
         Map<String, Integer> threads = new HashMap<>();
@@ -139,5 +145,9 @@ public class LoadosophiaAggregator {
 
         }
         return result;
+    }
+
+    public void setNumSources(int numSources) {
+        this.numSources = numSources;
     }
 }

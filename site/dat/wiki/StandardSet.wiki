@@ -13,10 +13,14 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [SteppingThreadGroup Stepping Thread Group]
   * [UltimateThreadGroup Ultimate Thread Group]
   * [ThroughputShapingTimer Throughput Shaping Timer] 
+  * [ConcurrencyThreadGroup Concurrency Thread Group]
+  * [ArrivalsThreadGroup Arrivals Thread Group]
+  * [FreeFormArrivalsThreadGroup Free-Form Arrivals Thread Group]
 
 == Listeners ==
   * [FlexibleFileWriter Flexible File Writer]
   * [ConsoleStatusLogger Non-GUI Console Status Logger] 
+  * [LoadosophiaUploader BM.Sense Uploader] (aka Loadosophia Uploader)
 
 == Others ==
   * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
@@ -24,6 +28,7 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [Functions Custom JMeter Functions] 
   * [TestPlanCheckTool Command-Line Test Plan Consistency Checking Tool]
   * [FilterResultsTool Command-Line filtered results] by label (regex), offset, success
+  * [WeightedSwitchController Weighted Switch Controler]
 
 == Samplers ==
   * [DummySampler Dummy Sampler] for debugging and programming tests

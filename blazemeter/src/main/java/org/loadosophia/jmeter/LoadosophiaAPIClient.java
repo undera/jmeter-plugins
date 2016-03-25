@@ -7,6 +7,7 @@ import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -55,7 +56,7 @@ public class LoadosophiaAPIClient {
         }
 
         log.info("Preparing files to send");
-        LinkedList<Part> partsList = new LinkedList<Part>();
+        LinkedList<Part> partsList = new LinkedList<>();
         partsList.add(new StringPart("projectKey", project));
         partsList.add(new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile))));
 
@@ -68,7 +69,6 @@ public class LoadosophiaAPIClient {
                 continue;
             }
             partsList.add(new FilePart("perfmon_" + index, new FilePartSource(gzipFile(perfmonFile))));
-            perfmonFile.delete();
             index++;
         }
 
@@ -98,7 +98,7 @@ public class LoadosophiaAPIClient {
 
     public String startOnline() throws IOException {
         String uri = address + "api/active/receiver/start/";
-        LinkedList<Part> partsList = new LinkedList<Part>();
+        LinkedList<Part> partsList = new LinkedList<>();
         partsList.add(new StringPart("token", token));
         partsList.add(new StringPart("projectKey", project));
         partsList.add(new StringPart("title", title));
@@ -109,16 +109,17 @@ public class LoadosophiaAPIClient {
 
     public void sendOnlineData(JSONArray data) throws IOException {
         String uri = address + "api/active/receiver/data/";
-        LinkedList<Part> partsList = new LinkedList<Part>();
+        LinkedList<Part> partsList = new LinkedList<>();
         String dataStr = data.toString();
         log.debug("Sending active test data: " + dataStr);
         partsList.add(new StringPart("data", dataStr));
         multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
     }
 
-    public void endOnline() throws IOException {
+    public void endOnline(String redirectLink) throws IOException {
         String uri = address + "api/active/receiver/stop/";
-        LinkedList<Part> partsList = new LinkedList<Part>();
+        LinkedList<Part> partsList = new LinkedList<>();
+        partsList.add(new StringPart("redirect", redirectLink));
         multipartPost(partsList, uri, HttpStatus.SC_RESET_CONTENT);
     }
 
@@ -133,7 +134,7 @@ public class LoadosophiaAPIClient {
         FileInputStream in = new FileInputStream(src);
 
         // Transfer bytes from the input file to the GZIP output stream
-        byte[] buf = new byte[1024];
+        byte[] buf = new byte[10240];
         int len;
         while ((len = in.read(buf)) > 0) {
             out.write(buf, 0, len);
@@ -152,7 +153,7 @@ public class LoadosophiaAPIClient {
     private int getTestByUpload(int queueID) throws IOException {
         while (true) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000); // TODO: parameterize it
             } catch (InterruptedException ex) {
                 throw new RuntimeException("Failed to get test ID");
             }
@@ -200,11 +201,11 @@ public class LoadosophiaAPIClient {
             notifier.notifyAbout("Saving server error response to: " + fname);
             FileOutputStream fos = new FileOutputStream(fname);
             FileChannel resultFile = fos.getChannel();
-            resultFile.write(ByteBuffer.wrap(postRequest.getResponseBody()));
+            resultFile.write(ByteBuffer.wrap(IOUtils.toByteArray(postRequest.getResponseBodyAsStream())));
             resultFile.close();
             throw new HttpException("Request returned not " + expectedSC + " status code: " + result);
         }
-        byte[] bytes = postRequest.getResponseBody();
+        byte[] bytes = IOUtils.toByteArray(postRequest.getResponseBodyAsStream());
         if (bytes == null) {
             bytes = new byte[0];
         }

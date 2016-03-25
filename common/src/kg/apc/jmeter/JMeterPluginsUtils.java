@@ -287,7 +287,7 @@ public abstract class JMeterPluginsUtils {
 
         conf.setThreadName(true);
         conf.setBytes(true);
-        conf.setHostname(false);
+        conf.setHostname(true);
         conf.setAssertionResultsFailureMessage(false);
         conf.setResponseHeaders(false);
         conf.setUrl(false);
@@ -296,7 +296,6 @@ public abstract class JMeterPluginsUtils {
         conf.setCode(true);
         conf.setDataType(false);
         conf.setSampleCount(false);
-        conf.setHostname(true);
     }
 
     public static void openInBrowser(String string) {

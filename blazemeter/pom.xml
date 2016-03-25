@@ -209,7 +209,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>kg.apc:jmeter-plugins-common</include>
+                                    <include>kg.apc:jmeter-plugins-common,kg:apc:perfmon</include>
                                 </includes>
                             </artifactSet>
                         </configuration>

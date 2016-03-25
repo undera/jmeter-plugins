@@ -1,95 +1,102 @@
 package kg.apc.jmeter.reporters;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.Stack;
-import java.util.TreeMap;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 public class LoadosophiaAggregator {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private SortedMap<Long, List<SampleResult>> buffer = new TreeMap<Long, List<SampleResult>>();
+    private SortedMap<Long, List<SampleEvent>> buffer = new TreeMap<>();
     private static final long SEND_SECONDS = 5;
-    private long lastTime = 0;
+    private long lastAggregatedTime = 0;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+    private int numSources = 0;
 
-    public void addSample(SampleResult res) {
-        if (log.isDebugEnabled()) {
-            log.debug("Got sample to process: " + res);
-        }
-
-        Long time = res.getEndTime() / 1000;
+    public void addSample(SampleEvent res) {
+        Long time = res.getResult().getEndTime() / 1000;
         if (!buffer.containsKey(time)) {
             // we need to create new sec list
-            if (time < lastTime) {
+            if (time <= lastAggregatedTime) {
                 // a problem with times sequence - taking last available
-                Iterator<Long> it = buffer.keySet().iterator();
-                while (it.hasNext()) {
-                    time = it.next();
+                log.debug("Got time " + time + " <= " + lastAggregatedTime);
+                for (Long aLong : buffer.keySet()) {
+                    time = aLong;
                 }
             }
-            buffer.put(time, new LinkedList<SampleResult>());
+            buffer.put(time, new LinkedList<SampleEvent>());
         }
-        lastTime = time;
         buffer.get(time).add(res);
     }
 
     public boolean haveDataToSend() {
-        return buffer.size() > SEND_SECONDS + 1;
+        return buffer.size() > getBufLen() + 1;
+    }
+
+    private long getBufLen() {
+        return SEND_SECONDS * numSources;
     }
 
     public JSONArray getDataToSend() {
         JSONArray data = new JSONArray();
         Iterator<Long> it = buffer.keySet().iterator();
         int cnt = 0;
-        while (cnt < SEND_SECONDS && it.hasNext()) {
+        while (cnt < getBufLen() && it.hasNext()) {
             Long sec = it.next();
-            List<SampleResult> raw = buffer.get(sec);
-            data.add(getAggregateSecond(raw));
+            List<SampleEvent> raw = buffer.get(sec);
+            data.add(getAggregateSecond(sec, raw));
             it.remove();
             cnt++;
         }
         return data;
     }
 
-    private JSONObject getAggregateSecond(List<SampleResult> raw) {
+    private JSONObject getAggregateSecond(Long sec, List<SampleEvent> raw) {
         /*
          "rc": item.http_codes,
          "net": item.net_codes
          */
         JSONObject result = new JSONObject();
-        Date ts = new Date(raw.iterator().next().getEndTime());
+        this.lastAggregatedTime = sec;
+        Date ts = new Date(sec * 1000);
+        log.debug("Aggregating " + sec);
         result.put("ts", format.format(ts));
 
-        int threads = 0;
+        Map<String, Integer> threads = new HashMap<>();
         int avg_rt = 0;
         Long[] rtimes = new Long[raw.size()];
         String[] rcodes = new String[raw.size()];
         int cnt = 0;
         int failedCount = 0;
-        for (Iterator<SampleResult> it = raw.iterator(); it.hasNext();) {
-            SampleResult res = it.next();
-            threads += res.getAllThreads();
+        for (SampleEvent evt : raw) {
+            SampleResult res = evt.getResult();
+
+            if (!threads.containsKey(evt.getHostname())) {
+                threads.put(evt.getHostname(), 0);
+            }
+            threads.put(evt.getHostname(), res.getAllThreads());
+
             avg_rt += res.getTime();
-            rtimes[cnt] = Long.valueOf(res.getTime());
+            rtimes[cnt] = res.getTime();
             rcodes[cnt] = res.getResponseCode();
             if (!res.isSuccessful()) {
                 failedCount++;
             }
             cnt++;
         }
+
+        long tsum = 0;
+        for (Integer tcount : threads.values()) {
+            tsum += tcount;
+        }
         result.put("rps", cnt);
-        result.put("threads", threads / cnt);
+        result.put("threads", tsum);
         result.put("avg_rt", avg_rt / cnt);
         result.put("quantiles", getQuantilesJSON(rtimes));
         result.put("net", getNetJSON(failedCount, cnt - failedCount));
@@ -104,10 +111,10 @@ public class LoadosophiaAggregator {
 
         double[] quantiles = {0.25, 0.50, 0.75, 0.80, 0.90, 0.95, 0.98, 0.99, 1.00};
 
-        Stack<Long> timings = new Stack();
+        Stack<Long> timings = new Stack<>();
         timings.addAll(Arrays.asList(rtimes));
         double level = 1.0;
-        long timing = 0;
+        Object timing = 0;
         for (int qn = quantiles.length - 1; qn >= 0; qn--) {
             double quan = quantiles[qn];
             while (level >= quan && !timings.empty()) {
@@ -129,14 +136,18 @@ public class LoadosophiaAggregator {
 
     private JSONObject getRCJSON(String[] rcodes) {
         JSONObject result = new JSONObject();
-        for (int i = 0; i < rcodes.length; i++) {
+        for (String rcode : rcodes) {
             int oldval = 0;
-            if (result.containsKey(rcodes[i]))  {
-                oldval = (Integer) result.get(rcodes[i]);
+            if (result.containsKey(rcode)) {
+                oldval = (Integer) result.get(rcode);
             }
-            result.put(rcodes[i], oldval + 1);
+            result.put(rcode, oldval + 1);
 
         }
         return result;
+    }
+
+    public void setNumSources(int numSources) {
+        this.numSources = numSources;
     }
 }

@@ -61,7 +61,7 @@ public class LoadosophiaAPIClientTest {
         System.out.println("endOnline");
         String[] fake = {"4", "4"};
         LoadosophiaAPIClient instance = new LoadosophiaAPIClientEmul(fake);
-        instance.endOnline();
+        instance.endOnline("");
     }
 
     @Test

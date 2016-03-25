@@ -33,4 +33,5 @@ Please copy the token carefully, don't miss any chars or add extra.
 
 Make note that BlazeMeter Sense has limits for uploaded file size, which differs according to your plan.
 
-If you get "Cannot send empty" log messages or uploaded files seems to be incomplete, consider setting {{{jmeter.save.saveservice.autoflush}}} to {{{true}}} in jmeter.properties file
+If you get "Cannot send empty" log messages or uploaded files seems to be incomplete, consider setting {{{jmeter.save.saveservice.autoflush}}} to {{{true}}} in jmeter.properties file.
+

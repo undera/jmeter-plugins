@@ -12,8 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 
-public class LoadosophiaUploaderGui
-        extends AbstractVisualizer {
+public class LoadosophiaUploaderGui extends AbstractVisualizer {
 
     public static final String WIKIPAGE = "LoadosophiaUploader";
     private JTextField testTitle;
@@ -107,23 +106,12 @@ public class LoadosophiaUploaderGui
         labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
 
         row++;
-        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Directory to store data for upload: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, row, storeDir = new JTextField(20));
-        JButton browseButton;
-        addToPanel(mainPanel, labelConstraints, 2, row, browseButton = new JButton("Browse..."));
-
-        GuiBuilderHelper.strechItemToComponent(storeDir, browseButton);
-        browseButton.addActionListener(new BrowseAction(storeDir, true));
-
-        row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Test Title: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, row, testTitle = new JTextField(20));
 
         row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Color Flag: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, row, colorFlag = new JComboBox(LoadosophiaAPIClient.colors));
-
-        GuiBuilderHelper.strechItemToComponent(storeDir, colorFlag);
 
         editConstraints.fill = GridBagConstraints.BOTH;
 
@@ -138,10 +126,22 @@ public class LoadosophiaUploaderGui
         addToPanel(mainPanel, editConstraints, 1, row, GuiBuilderHelper.getTextAreaScrollPaneContainer(uploadToken, 6));
 
         row++;
+        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Temp directory: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, row, storeDir = new JTextField(20));
+        JButton browseButton;
+        addToPanel(mainPanel, labelConstraints, 2, row, browseButton = new JButton("Browse..."));
+
+        GuiBuilderHelper.strechItemToComponent(storeDir, browseButton);
+        browseButton.addActionListener(new BrowseAction(storeDir, true));
+
+        row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Info Area: ", JLabel.RIGHT));
         infoArea = new JTextArea();
         infoArea.setEditable(false);
         infoArea.setOpaque(false);
+
+        GuiBuilderHelper.strechItemToComponent(storeDir, infoArea);
+
 
         addToPanel(mainPanel, editConstraints, 1, row, GuiBuilderHelper.getTextAreaScrollPaneContainer(infoArea, 10));
 
@@ -154,7 +154,7 @@ public class LoadosophiaUploaderGui
         testTitle.setText("");
         projectKey.setText("DEFAULT");
         uploadToken.setText("Replace this text with upload token received at sense.blazemeter.com\nRemember that anyone who has this token can upload files to your account.\nPlease, treat your token as confidential data.\nSee plugin help for details.");
-        storeDir.setText(System.getProperty("java.io.tmpdir"));
+        storeDir.setText("");
         colorFlag.setSelectedIndex(0);
         useOnline.setSelected(true);
     }
@@ -172,21 +172,12 @@ public class LoadosophiaUploaderGui
     }
 
     @Override
-    public void add(SampleResult sr) {
-    }
-
-    @Override
     public void clearData() {
         infoArea.setText("");
     }
 
     public void inform(String string) {
         infoArea.append(string + "\n");
-    }
-
-    @Override
-    public boolean isStats() {
-        return false;
     }
 
     private String indexToColor(int selectedIndex) {
@@ -199,5 +190,10 @@ public class LoadosophiaUploaderGui
 
     private int colorToIndex(String colorFlag) {
         return Arrays.asList(LoadosophiaAPIClient.colors).indexOf(colorFlag);
+    }
+
+    @Override
+    public void add(SampleResult sample) {
+
     }
 }

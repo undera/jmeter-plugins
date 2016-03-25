@@ -3,12 +3,10 @@
 
 == Authorship ==
 <span class="pull-right" style="margin-left: 1em">
-[http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki https://d3qmoqvtroy6p7.cloudfront.net/logo.png]
+[http://www.dynatrace.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki https://d3qmoqvtroy6p7.cloudfront.net/dynatrace.png]
 </span>
 
-This plugin was originally developed by _[http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki BlazeMeter Inc.]_ and then generously donated to community as Open Source.
-Check out their [http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki load testing service],
-there's a lot of value to load testing people.
+This plugin was inspired by _[http://www.dynatrace.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki Dynatrace LLC]_, implemented by _[http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki BlazeMeter Inc.]_, and then contributed to community as Open Source.
 
 == Description ==
 

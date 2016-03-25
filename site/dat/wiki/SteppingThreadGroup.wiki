@@ -5,6 +5,8 @@ JMeter have only one out-of-the-box option for threads (users) scheduling: simpl
 
 In JMeter version 2.4 new plugin type was introduced: custom Thread Groups. Stepping Thread Group is the first custom thread group in the world.
 
+However, time goes by and probably better alternative has been offered: [ConcurrencyThreadGroup Concurrency Thread Group]
+
 == Features ==
   * preview graph showing estimated load (see example screen below)
   * initial thread group delay to combine several thread group activities
@@ -26,4 +28,5 @@ Actual test run shows following activity graph:
 
 == See Also ==
 
+  # [ConcurrencyThreadGroup Concurrency Thread Group] for possible replacement
   # [UltimateThreadGroup Ultimate Thread Group] for freeform load profiles

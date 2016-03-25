@@ -19,3 +19,5 @@ Everyone who provided pull request or other contribution, deserves mentioning on
   * Roy de Kleijn - added NTLM and Internet Explorer support
   * Erik Ostermueller - added support for changing line & legend colors.
   * Flávio Cysne - added PhantomJS option to [RemoteCapability] enabling connection to a PhantomJS node in a Selenium Grid
+  * BlazeMeter Inc. - Concurrency thread group
+  * BlazeMeter feat. Dynatrace - Arrivals Thread Groups and Weighted Switch Controller

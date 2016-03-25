@@ -6,13 +6,11 @@
 [http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki https://d3qmoqvtroy6p7.cloudfront.net/logo.png]
 </span>
 
-This plugin was originally developed by _[http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki BlazeMeter Inc.]_ and then generously donated to community as Open Source.
-Check out their [http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki load testing service],
-there's a lot of value to load testing people.
+This plugin was implemented by _[http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki BlazeMeter Inc.]_ and then contributed to community as Open Source.
 
 == Description ==
 
-This thread group offers simplified approach for configuring threads schedule. It is intended to maintain the level of concurrency, which means starting additional during the runtime threads if there's not enough of them running in parallel. Unlike standard Thread Group, it won't create all the threads upfront, so extra memory won't be used.
+This thread group offers simplified approach for configuring threads schedule. It is intended to maintain the level of concurrency, which means starting additional during the runtime threads if there's not enough of them running in parallel. Unlike standard Thread Group, it won't create all the threads upfront, so extra memory won't be used. It's a good repacement for [SteppingThreadGroup Stepping Thread Group], since it allows threads to finish their job gracefully.
 
 The preview graph reacts immediately to changes in the fields, showing you the planned concurrency schedule.
 

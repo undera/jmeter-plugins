@@ -1,10 +1,5 @@
 package com.googlecode.jmeter.plugins.webdriver.config;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.Capabilities;
@@ -12,6 +7,11 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerDriverService;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class InternetExplorerDriverConfig extends WebDriverConfig<InternetExplorerDriver> {
 
@@ -31,6 +31,7 @@ public class InternetExplorerDriverConfig extends WebDriverConfig<InternetExplor
     Capabilities createCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.PROXY, createProxy());
+        capabilities.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION, true);
         return capabilities;
     }
 

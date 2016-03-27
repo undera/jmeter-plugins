@@ -2,13 +2,14 @@ package com.blazemeter.jmeter.threads;
 
 import com.blazemeter.jmeter.gui.ArrangedLabelFieldPanel;
 import com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroup;
+import kg.apc.jmeter.JMeterVariableEvaluator;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
-public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel {
+public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements ParamsPanel {
     protected JTextField logFile = new JTextField();
     protected JTextField iterations = new JTextField();
     protected JTextField concurrLimit = new JTextField();
@@ -53,16 +54,16 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel {
         }
     }
 
-    public void UItoModel(AbstractDynamicThreadGroup tg) {
-        tg.setLogFilename(logFile.getText());
-        tg.setIterationsLimit(iterations.getText());
+    public void UItoModel(AbstractDynamicThreadGroup tg, JMeterVariableEvaluator evaluator) {
+        tg.setLogFilename(evaluator.evaluate(logFile.getText()));
+        tg.setIterationsLimit(evaluator.evaluate(iterations.getText()));
         if (unitGroup.getSelection() != null) {
             tg.setUnit(unitGroup.getSelection().getActionCommand());
         }
 
         if (tg instanceof ArrivalsThreadGroup) {
             ArrivalsThreadGroup atg = (ArrivalsThreadGroup) tg;
-            atg.setConcurrencyLimit(concurrLimit.getText());
+            atg.setConcurrencyLimit(evaluator.evaluate(concurrLimit.getText()));
         }
     }
 

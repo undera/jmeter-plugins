@@ -4,6 +4,7 @@ package com.blazemeter.jmeter.threads.arrivals;
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
 import com.blazemeter.jmeter.threads.ParamsPanel;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.JMeterVariableEvaluator;
 import kg.apc.jmeter.gui.Grid;
 
 import javax.swing.event.TableModelListener;
@@ -26,7 +27,7 @@ public class FreeFormLoadPanel extends Grid implements ParamsPanel {
     }
 
     @Override
-    public void UItoModel(AbstractDynamicThreadGroup tg) {
+    public void UItoModel(AbstractDynamicThreadGroup tg, JMeterVariableEvaluator evaluator) {
         if (tg instanceof FreeFormArrivalsThreadGroup) {
             FreeFormArrivalsThreadGroup ffatg = (FreeFormArrivalsThreadGroup) tg;
             ffatg.setData(getModel());

@@ -8,6 +8,7 @@ import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.rows.GraphRowExactValues;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.JMeterVariableEvaluator;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jorphan.logging.LoggingManager;
@@ -72,7 +73,7 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGu
 
     @Override
     public void tableChanged(TableModelEvent e) {
-        log.info("Table changed");
+        log.debug("Table changed");
         SwingUtilities.invokeLater(this);
     }
 
@@ -89,14 +90,15 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGu
 
         row.add(0, 0); // initial value to force min Y
 
+        JMeterVariableEvaluator evaluator = new JMeterVariableEvaluator();
         int offset = 0;
         double totalArrivals = 0;
         PropertyIterator it = data.iterator();
         while (it.hasNext()) {
             CollectionProperty record = (CollectionProperty) it.next();
-            double from = record.get(0).getDoubleValue();
-            double to = record.get(1).getDoubleValue();
-            double during = record.get(2).getDoubleValue();
+            double from = evaluator.getDouble(record.get(0));
+            double to = evaluator.getDouble(record.get(1));
+            double during = evaluator.getDouble(record.get(2));
             row.add(offset * 1000, from);
             offset += during * tg.getUnitFactor();
             row.add(offset * 1000, to);

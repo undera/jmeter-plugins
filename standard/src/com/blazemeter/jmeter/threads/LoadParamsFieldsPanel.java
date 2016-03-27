@@ -1,6 +1,7 @@
 package com.blazemeter.jmeter.threads;
 
 import com.blazemeter.jmeter.gui.ArrangedLabelFieldPanel;
+import kg.apc.jmeter.JMeterVariableEvaluator;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -39,11 +40,11 @@ public class LoadParamsFieldsPanel extends ArrangedLabelFieldPanel implements Pa
     }
 
     @Override
-    public void UItoModel(AbstractDynamicThreadGroup tg) {
-        tg.setTargetLevel(targetRate.getText());
-        tg.setRampUp(rampUpTime.getText());
-        tg.setSteps(steps.getText());
-        tg.setHold(holdFor.getText());
+    public void UItoModel(AbstractDynamicThreadGroup tg, JMeterVariableEvaluator evaluator) {
+        tg.setTargetLevel(evaluator.evaluate(targetRate.getText()));
+        tg.setRampUp(evaluator.evaluate(rampUpTime.getText()));
+        tg.setSteps(evaluator.evaluate(steps.getText()));
+        tg.setHold(evaluator.evaluate(holdFor.getText()));
     }
 
     @Override

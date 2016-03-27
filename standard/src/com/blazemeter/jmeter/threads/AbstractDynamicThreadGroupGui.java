@@ -4,6 +4,8 @@ import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowExactValues;
+import kg.apc.jmeter.DummyEvaluator;
+import kg.apc.jmeter.JMeterVariableEvaluator;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
@@ -27,6 +29,7 @@ public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupG
     protected boolean uiCreated = false;
     private ParamsPanel loadFields = null;
     private AdditionalFieldsPanel additionalFields = null;
+    private JMeterVariableEvaluator evaluator = new DummyEvaluator();
 
     @Override
     public void configure(TestElement element) {
@@ -51,8 +54,8 @@ public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupG
 
         if (element instanceof AbstractDynamicThreadGroup) {
             AbstractDynamicThreadGroup tg = (AbstractDynamicThreadGroup) element;
-            loadFields.UItoModel(tg);
-            additionalFields.UItoModel(tg);
+            loadFields.UItoModel(tg, evaluator);
+            additionalFields.UItoModel(tg, evaluator);
         }
     }
 
@@ -131,7 +134,11 @@ public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupG
         log.debug("Updating UI");
 
         AbstractDynamicThreadGroup atg = createThreadGroupObject();
-        modifyTestElement(atg);
+
+        JMeterVariableEvaluator evaluator = new JMeterVariableEvaluator();
+        loadFields.UItoModel(atg, evaluator);
+        additionalFields.UItoModel(atg, evaluator);
+
         try {
             updateChart(atg);
         } catch (NumberFormatException e) {

@@ -1,24 +1,10 @@
 package kg.apc.jmeter.threads;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.util.concurrent.ConcurrentHashMap;
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.DateTimeRenderer;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.charting.rows.GraphRowSumValues;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.control.LoopController;
@@ -35,6 +21,14 @@ import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
 import org.apache.jorphan.collections.HashTree;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+
+import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import java.awt.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class UltimateThreadGroupGui
         extends AbstractThreadGroupGui
@@ -244,7 +238,7 @@ public class UltimateThreadGroupGui
 
     private Component createChart() {
         chart = new GraphPanelChart(false, true);
-        model = new ConcurrentHashMap<String, AbstractGraphRow>();
+        model = new ConcurrentHashMap<>();
         chart.setRows(model);
         chart.getChartSettings().setDrawFinalZeroingLines(true);
         chart.setxAxisLabel("Elapsed time");

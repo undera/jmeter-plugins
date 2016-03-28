@@ -2,9 +2,13 @@
 = Free-Form Arrivals Thread Group <sup><font color=gray size="1">since 1.4.0</font></sup>=
 
 == Authorship ==
-<span class="pull-right" style="margin-left: 1em">
+<div class="pull-right text-center" style="margin-left: 1em; line-height: 200%;">
+[http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki https://d3qmoqvtroy6p7.cloudfront.net/logo.png]
+
+feat.
+
 [http://www.dynatrace.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki https://d3qmoqvtroy6p7.cloudfront.net/dynatrace.png]
-</span>
+</div>
 
 This plugin was inspired by _[http://www.dynatrace.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki Dynatrace LLC]_, implemented by _[http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki BlazeMeter Inc.]_, and then contributed to community as Open Source.
 

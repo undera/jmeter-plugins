@@ -21,3 +21,4 @@ Everyone who provided pull request or other contribution, deserves mentioning on
   * Flávio Cysne - added PhantomJS option to [RemoteCapability] enabling connection to a PhantomJS node in a Selenium Grid
   * BlazeMeter Inc. - Concurrency thread group
   * BlazeMeter feat. Dynatrace - Arrivals Thread Groups and Weighted Switch Controller
+  * Pascal Treilhes - added connection resilience to [JMXMon]

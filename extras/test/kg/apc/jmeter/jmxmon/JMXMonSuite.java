@@ -12,23 +12,24 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({JMXMonSampleGeneratorTest.class, JMXMonCollectorTest.class, JMXMonSamplerTest.class, JMXMonSampleResultTest.class, JMXMonTest.class})
+@Suite.SuiteClasses({ JMXMonSampleGeneratorTest.class, JMXMonCollectorTest.class, JMXMonSamplerTest.class,
+		JMXMonSampleResultTest.class, JMXMonTest.class, JMXMonConnectionPoolTest.class })
 public class JMXMonSuite {
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+	}
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+	}
 
-    @Before
-    public void setUp() throws Exception {
-    }
+	@Before
+	public void setUp() throws Exception {
+	}
 
-    @After
-    public void tearDown() throws Exception {
-    }
-    
+	@After
+	public void tearDown() throws Exception {
+	}
+
 }

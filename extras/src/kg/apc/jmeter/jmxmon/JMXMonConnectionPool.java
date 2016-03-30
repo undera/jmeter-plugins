@@ -143,7 +143,6 @@ public class JMXMonConnectionPool {
 				public void run() {
 					try {
 						JMXServiceURL u = new JMXServiceURL(jmxUrl);
-						
 						log.debug("Create new connection url = " + jmxUrl);
 			            connector = JMXConnectorFactory.connect(u, attributes);
 			            connection = connector.getMBeanServerConnection();
@@ -188,7 +187,7 @@ public class JMXMonConnectionPool {
 			if (!connectionAttemptFlag)
 				tryConnect(attributes, wait);
 			
-			return null;
+			return connection;
 		}
         
 		/**
@@ -211,7 +210,10 @@ public class JMXMonConnectionPool {
 	 */
 	public void notifyConnectionDirty(String url) {
 		JMXMonConnection connection = (JMXMonConnection)pool.get(url);
-		connection.setNewActiveConnection(null, null);
+		
+		if (connection != null){
+			connection.setNewActiveConnection(null, null);
+		}
 	}
 
 }

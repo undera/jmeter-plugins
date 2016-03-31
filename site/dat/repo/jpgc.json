@@ -5,7 +5,7 @@
     "description": "Adds menu item into Options menu to access UI for installing/removing additional plugins",
     "screenshotUrl": "",
     "helpUrl": "",
-    "markerClass": "org.jmeterplugins.repository.PluginManagerMenuCreator",
+    "markerClass": "org.jmeterplugins.repository.PluginManager",
     "destFolder": "lib/ext",
     "mavenGroupId": "",
     "mavenArtifactId": "",

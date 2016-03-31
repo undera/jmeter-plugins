@@ -10,7 +10,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,10 +18,25 @@ public class PluginManager {
     protected HttpClient httpClient = new HttpClient();
     private static int TIMEOUT = 5;
     private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://localhost:8003");
+    private Set<Plugin> plugins = new HashSet<>();
 
 
     public void load() throws IOException {
-        // load repos
+        loadRepo();
+
+        // find installed classes
+        for (Plugin plugin: plugins) {
+            plugin.detectInstalled();
+        }
+
+        // query updates for installed
+    }
+
+    private void loadRepo() throws IOException {
+        if (plugins.size() > 0) {
+            return;
+        }
+
         httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(TIMEOUT * 1000);
         httpClient.getHttpConnectionManager().getParams().setSoTimeout(TIMEOUT * 1000);
 
@@ -31,10 +45,7 @@ public class PluginManager {
             throw new RuntimeException("Result is not array");
         }
 
-        JSONArray arr = (JSONArray) json;
-
-        Set<Plugin> plugins = new HashSet<>();
-        for (Object elm : arr) {
+        for (Object elm : (JSONArray) json) {
             if (elm instanceof JSONObject) {
                 plugins.add(Plugin.fromJSON((JSONObject) elm));
             } else {
@@ -42,10 +53,7 @@ public class PluginManager {
             }
         }
 
-        log.info("Plugins: " + plugins);
-
-        // find installed classes
-        // query updates for installed
+        log.debug("Plugins: " + plugins);
     }
 
     private JSON getJSON(String path) throws IOException {
@@ -63,13 +71,9 @@ public class PluginManager {
         } else {
             log.debug("Response with code " + result + ": " + response);
         }
-        JsonConfig config=new JsonConfig();
+        JsonConfig config = new JsonConfig();
         return JSONSerializer.toJSON(response, config);
 
     }
 
-    private URL getJARPath(String className) throws ClassNotFoundException {
-        Class c = Thread.currentThread().getContextClassLoader().loadClass(className);
-        return c.getProtectionDomain().getCodeSource().getLocation();
-    }
 }

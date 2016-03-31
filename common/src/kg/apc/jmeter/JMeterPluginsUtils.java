@@ -10,6 +10,7 @@ import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.jmeterplugins.repository.PluginManagerMenuCreator;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -379,6 +380,10 @@ public abstract class JMeterPluginsUtils {
             log.info("JMeter-Plugins.org v." + version);
         }
         return version;
+    }
+
+    public static ImageIcon getIcon() {
+        return new ImageIcon(PluginManagerMenuCreator.class.getResource("/org/jmeterplugins/logo.png"));
     }
 
     private static class URIOpener extends MouseAdapter {

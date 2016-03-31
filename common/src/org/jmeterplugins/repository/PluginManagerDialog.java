@@ -1,26 +1,17 @@
 package org.jmeterplugins.repository;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.jorphan.gui.ComponentUtil;
+
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 
-public class PluginManagerDialog extends JDialog implements ChangeListener, ActionListener, HyperlinkListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
+public class PluginManagerDialog extends JDialog {
+    public PluginManagerDialog() {
+        super((JFrame) null, "Plugins Manager", true);
+        this.setSize(new Dimension(640, 480));
+        this.setIconImage(JMeterPluginsUtils.getIcon().getImage());
+        ComponentUtil.centerComponentInWindow(this, 50);
     }
 
-    @Override
-    public void stateChanged(ChangeEvent e) {
-
-    }
-
-    @Override
-    public void hyperlinkUpdate(HyperlinkEvent e) {
-
-    }
 }

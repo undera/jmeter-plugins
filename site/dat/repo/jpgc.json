@@ -1,0 +1,19 @@
+[
+  {
+    "id": "plugins-manager",
+    "name": "Plugins Manager",
+    "markerClass": "org.jmeterplugins.repository.PluginManagerMenuCreator",
+
+    "destFolder": "lib/ext",
+    "mavenGroupId": "",
+    "mavenArtifactId": "",
+    "downloadUrl": "",
+    "version": "",
+    "helpLink": "",
+    "description": "",
+    "screenshot": "",
+    "depends": [],
+    "conflicts": [],
+    "suggests": []
+  }
+]

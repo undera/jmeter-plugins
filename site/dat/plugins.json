@@ -1,0 +1,14 @@
+[
+  {
+    "id": "jmeter-core",
+    "markerClass": "org.apache.jmeter.JMeter",
+    "mavenGroupId": "org.apache.jmeter",
+    "mavenArtifactId": "ApacheJMeter_core",
+
+    "description": "",
+    "screenshot": "",
+    "depends": [],
+    "conflicts": [],
+    "suggests": []
+  }
+]

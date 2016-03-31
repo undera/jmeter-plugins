@@ -28,7 +28,7 @@ class TestJMXMonCollector extends JMXMonCollector {
     }
 
     @Override
-    protected void initiateConnector(JMXServiceURL u, Hashtable attributes, String jmxUrl, String name, boolean delta, String objectName, String attribute, String key) throws IOException {
+    protected void initiateConnector(Hashtable attributes, String jmxUrl, String name, boolean delta, String objectName, String attribute, String key, boolean canRetry) throws IOException {
         MBeanServerConnection conn = new MBeanServerConnectionEmul(jmxMonTest.getQueryResults());
         jmxMonSamplers.add(new JMXMonSampler(conn, null, jmxUrl, name, objectName, attribute, key, delta));
     }

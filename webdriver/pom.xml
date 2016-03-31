@@ -37,7 +37,7 @@
     </distributionManagement>
 
     <properties>
-        <selenium.version>2.47.0</selenium.version>
+        <selenium.version>2.52.0</selenium.version>
     </properties>
 
     <repositories>

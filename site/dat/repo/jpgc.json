@@ -6,17 +6,12 @@
     "screenshotUrl": "",
     "helpUrl": "",
     "markerClass": "org.jmeterplugins.repository.PluginManager",
-    "destFolder": "lib/ext",
-    "mavenGroupId": "",
-    "mavenArtifactId": "",
-    "downloadUrl": "",
     "versions": {
       "2.0": {
+        "downloadUrl": "",
         "depends": [
           "jmeter>=2.13"
-        ],
-        "conflicts": [],
-        "suggests": []
+        ]
       }
     }
   }

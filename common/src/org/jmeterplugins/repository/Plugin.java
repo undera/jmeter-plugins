@@ -5,6 +5,9 @@ import net.sf.json.JSONObject;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,5 +67,29 @@ public class Plugin {
         }
 
         return file;
+    }
+
+    public String getID() {
+        return id;
+    }
+
+    public void deleteJAR() {
+        if (installedPath == null) {
+            log.warn("Cannot delete not installed plugin " + this);
+            return;
+        }
+
+        log.info("Deleting " + installedPath);
+        File f = new File(installedPath);
+        try {
+            if (!f.delete()) {
+                log.warn("Failed to delete " + installedPath);
+                FileChannel outChan = new FileOutputStream(f, true).getChannel();
+                outChan.truncate(0);
+                outChan.close();
+            }
+        } catch (Exception e) {
+            log.error("failed to delete " + this, e);
+        }
     }
 }

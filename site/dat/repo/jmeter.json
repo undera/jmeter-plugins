@@ -6,35 +6,24 @@
     "screenshotUrl": "",
     "helpUrl": "",
     "markerClass": "org.apache.jmeter.protocol.ldap.sampler.LDAPSampler",
-    "destFolder": "lib/ext",
-    "mavenGroupId": "",
-    "mavenArtifactId": "",
-    "downloadUrl": "",
     "versions": {
-      "2.0": {
-        "depends": [
-          "jmeter>=2.13"
-        ],
+      "": {
+        "depends": [],
         "conflicts": [],
         "suggests": []
       }
     }
-  }, {
+  },
+  {
     "id": "jmeter-tcp",
     "name": "TCP Protocol Support",
     "description": "",
     "screenshotUrl": "",
     "helpUrl": "",
     "markerClass": "org.apache.jmeter.protocol.tcp.sampler.TCPSampler",
-    "destFolder": "lib/ext",
-    "mavenGroupId": "",
-    "mavenArtifactId": "",
-    "downloadUrl": "",
     "versions": {
-      "2.0": {
-        "depends": [
-          "jmeter>=2.13"
-        ],
+      "": {
+        "depends": [],
         "conflicts": [],
         "suggests": []
       }

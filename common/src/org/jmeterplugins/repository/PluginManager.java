@@ -24,12 +24,23 @@ public class PluginManager {
     public void load() throws IOException {
         loadRepo();
 
-        // find installed classes
-        for (Plugin plugin: plugins) {
-            plugin.detectInstalled();
-        }
+        deletePlugin(getPluginByID("jmeter-tcp"));
 
         // query updates for installed
+    }
+
+    private Plugin getPluginByID(String id) {
+        for (Plugin plugin : plugins) {
+            if (plugin.getID().equals(id)) {
+                return plugin;
+            }
+        }
+        throw new RuntimeException("Plugin not found by ID: " + id);
+    }
+
+    private void deletePlugin(Plugin plugin) {
+        log.info("Delete plugin: " + plugin);
+        plugin.deleteJAR();
     }
 
     private void loadRepo() throws IOException {
@@ -54,6 +65,9 @@ public class PluginManager {
         }
 
         log.debug("Plugins: " + plugins);
+        for (Plugin plugin : plugins) {
+            plugin.detectInstalled();
+        }
     }
 
     private JSON getJSON(String path) throws IOException {

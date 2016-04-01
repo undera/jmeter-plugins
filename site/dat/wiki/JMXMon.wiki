@@ -23,6 +23,8 @@ Attribute: HeapMemoryUsage
 
 Key (for composite JMX values): used
 
+Retry : When checked, new connections are attempted during the test and lost connections can be recovered
+
 To change how often the a sample should be taken set the parameter "jmeterPlugin.jmxmon.interval" to the interval in milliseconds, default is every second.
 
 ==Find attributs informations with JConsole==

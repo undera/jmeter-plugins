@@ -49,8 +49,8 @@ public class JMXMonTest {
     public void setUp() {
         TestJMeterUtils.createJmeterEnv();
         dataModel = new PowerTableModel(JMXMonGui.columnIdentifiers, JMXMonGui.columnClasses);
-        dataModel.addRow(new Object[]{PROBE1, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE1, "", false});
-        dataModel.addRow(new Object[]{PROBE2, URL, USERNAME, PASSWORD, OBJ_NAME2, ATTRIBUTE2, "", true});
+        dataModel.addRow(new Object[]{PROBE1, URL, USERNAME, PASSWORD, OBJ_NAME1, ATTRIBUTE1, "", false, false});
+        dataModel.addRow(new Object[]{PROBE2, URL, USERNAME, PASSWORD, OBJ_NAME2, ATTRIBUTE2, "", true, false});
     }
 
     @Test

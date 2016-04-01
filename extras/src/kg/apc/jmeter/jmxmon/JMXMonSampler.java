@@ -2,6 +2,8 @@ package kg.apc.jmeter.jmxmon;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.rmi.ConnectException;
+import java.util.Hashtable;
 import java.util.logging.Level;
 
 import javax.management.AttributeNotFoundException;
@@ -13,6 +15,7 @@ import javax.management.ObjectName;
 import javax.management.ReflectionException;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.remote.JMXConnector;
+import javax.management.remote.JMXServiceURL;
 
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -25,46 +28,100 @@ public class JMXMonSampler {
     private String attribute;
     private String key; // for use with complex types
     private String url; // use to open one connection for the same url
-    private final MBeanServerConnection remote;
-    private final JMXConnector jmxConnector;
+    
+    private final JMXMonConnectionPool pool;
+    private final Hashtable connectionAttributes;
+    private MBeanServerConnection remote;
+    
     private boolean sampleDeltaValue = true;
     private double oldValue = Double.NaN;
-
+    private boolean canRetry = true;
+    private boolean hasFailed = false;
+	
+    
     public JMXMonSampler(MBeanServerConnection remote, JMXConnector jmxConnector, String url, String name, String objectName, String attribute, String key, boolean sampleDeltaValue) {
+    	this.pool = null;
+    	this.connectionAttributes = null;
+    	this.remote = remote;
         this.metricName = name;
-        this.remote = remote;
-        this.jmxConnector = jmxConnector;
         this.url = url;
         this.objectName = objectName;
         this.attribute = attribute;
         this.sampleDeltaValue = sampleDeltaValue;
         this.key = key;
+        this.canRetry = false;
+    }
+    
+    /**
+     * Constructor
+     * @param pool the connection pool
+     * @param attributes connection attributes
+     * @param url jmx url
+     * @param name sampler name
+     * @param objectName jmx object name
+     * @param attribute jmx object attribute name
+     * @param key jmx object attribute key name if needed
+     * @param sampleDeltaValue if true the sample value is the delta between previous value
+     * @param canRetry if true the sampler will try to connect to the jmx server until connection/reconnection
+     */
+    public JMXMonSampler(JMXMonConnectionPool pool, Hashtable attributes, String url, String name, String objectName, String attribute, String key, boolean sampleDeltaValue, boolean canRetry) {
+        this.pool = pool;
+        this.connectionAttributes = attributes;
+    	this.metricName = name;
+        this.url = url;
+        this.objectName = objectName;
+        this.attribute = attribute;
+        this.sampleDeltaValue = sampleDeltaValue;
+        this.key = key;
+        this.canRetry = canRetry;
     }
 
-    public void generateSamples(JMXMonSampleGenerator collector) {
+	public void generateSamples(JMXMonSampleGenerator collector) {
         try {
 
+        	if (hasFailed && !canRetry){
+        		return;
+        	}
+        	
             // Construct the fully qualified name of the bean.
             ObjectName beanName = new ObjectName(objectName);
 
-            Object o = remote.getAttribute(beanName, attribute);
-            
+            MBeanServerConnection activeRemote = null;
+            if (remote == null) {
+            	activeRemote = pool.getConnection(url, connectionAttributes);
+            	
+            	if (activeRemote == null){
+            		hasFailed = true;
+            	}
+            }
+            else
+            {
+            	activeRemote = remote;
+            }
             
             final double val;
-            if (o instanceof CompositeDataSupport) {
-                if (key == null || "".equals(key)) {
-                    log.error("Got composite object from JMX, but no key specified ");
-                    return;
-                }                    
-                CompositeDataSupport cds = (CompositeDataSupport)o;
-                // log.info("CDS: " + cds.toString());
-                val = Double.parseDouble(cds.get(key).toString());
+            if (activeRemote != null) {
+            	Object o = activeRemote.getAttribute(beanName, attribute);
+                
+                
+                if (o instanceof CompositeDataSupport) {
+                    if (key == null || "".equals(key)) {
+                        log.error("Got composite object from JMX, but no key specified ");
+                        return;
+                    }                    
+                    CompositeDataSupport cds = (CompositeDataSupport)o;
+                    // log.info("CDS: " + cds.toString());
+                    val = Double.parseDouble(cds.get(key).toString());
+                } else {
+                    if (key != null && !key.equals("")) {
+                        log.error("key specified, but didnt get composite object from JMX. Will continue anyway.");
+                    }                    
+                    val = Double.parseDouble(o.toString());
+                }
             } else {
-                if (key != null && !key.equals("")) {
-                    log.error("key specified, but didnt get composite object from JMX. Will continue anyway.");
-                }                    
-                val = Double.parseDouble(o.toString());
+            	val = 0;
             }
+            
             if (sampleDeltaValue) {
                 if (!Double.isNaN(oldValue)) {
                     collector.generateSample(val - oldValue, metricName);
@@ -75,6 +132,18 @@ public class JMXMonSampler {
             }
         } catch (MalformedURLException ex) {          
             log.error(ex.getMessage());
+        } catch (ConnectException ex) {          
+            log.warn("Connection lost", ex);
+            pool.notifyConnectionDirty(url);
+            
+            if (sampleDeltaValue) {
+                if (!Double.isNaN(oldValue)) {
+                    collector.generateSample(0 - oldValue, metricName);
+                }
+                oldValue = 0;
+            } else {
+                collector.generateSample(0, metricName);
+            }
         } catch (IOException ex) {
             log.error(ex.getMessage());
         } catch (ReflectionException ex) {
@@ -148,11 +217,4 @@ public class JMXMonSampler {
 		this.oldValue = oldValue;
 	}
 
-	public MBeanServerConnection getRemote() {
-		return remote;
-	}
-
-	public JMXConnector getJmxConnector() {
-		return jmxConnector;
-	}
 }

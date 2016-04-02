@@ -107,6 +107,11 @@
             <version>2.4</version>
             <classifier>jdk15</classifier>
         </dependency>
+        <dependency>
+            <groupId>kg.apc</groupId>
+            <artifactId>cmdrunner</artifactId>
+            <version>${cmdrunner-version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -235,6 +240,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>kg.apc:jmeter-plugins-common</include>
+                                    <include>kg.apc:cmdrunner</include>
                                     <include>net.sf.json-lib:json-lib</include>
                                     <include>commons-lang:commons-lang</include>
                                     <include>net.sf.ezmorph:ezmorph</include>

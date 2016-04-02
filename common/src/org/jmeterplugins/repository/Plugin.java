@@ -5,15 +5,12 @@ import net.sf.json.JSONObject;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Plugin {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private static final String VER_STOCK = "N/A";
+    private static final String VER_STOCK = "0.0.0-STOCK";
     private String id;
     private String markerClass;
     private String installedPath;
@@ -52,7 +49,7 @@ public class Plugin {
     }
 
     private String getJARPath(String className) {
-        Class c = null;
+        Class c;
         try {
             c = Thread.currentThread().getContextClassLoader().loadClass(className);
         } catch (ClassNotFoundException e1) {
@@ -73,23 +70,7 @@ public class Plugin {
         return id;
     }
 
-    public void deleteJAR() {
-        if (installedPath == null) {
-            log.warn("Cannot delete not installed plugin " + this);
-            return;
-        }
-
-        log.info("Deleting " + installedPath);
-        File f = new File(installedPath);
-        try {
-            if (!f.delete()) {
-                log.warn("Failed to delete " + installedPath);
-                FileChannel outChan = new FileOutputStream(f, true).getChannel();
-                outChan.truncate(0);
-                outChan.close();
-            }
-        } catch (Exception e) {
-            log.error("failed to delete " + this, e);
-        }
+    public String getInstalledPath() {
+        return installedPath;
     }
 }

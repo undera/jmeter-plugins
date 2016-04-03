@@ -2,17 +2,22 @@ package org.jmeterplugins.repository;
 
 
 import net.sf.json.JSONObject;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
+import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.SystemDefaultHttpClient;
-import org.apache.jmeter.util.JMeterUtils;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.ExecutionContext;
+import org.apache.http.protocol.HttpContext;
+import org.apache.jmeter.engine.JMeterEngine;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 import java.io.*;
+import java.net.URI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,6 +30,7 @@ public class Plugin {
     private String installedPath;
     private String installedVersion;
     private String tempName;
+    private String destName;
 
     public Plugin(String aId) {
         id = aId;
@@ -86,7 +92,7 @@ public class Plugin {
     }
 
     public String getDestName() {
-        return "/tmp/test.jar";
+        return destName;
     }
 
     public String getTempName() {
@@ -97,19 +103,18 @@ public class Plugin {
         return installedPath != null;
     }
 
-    public void download() throws IOException {
-        String url = versions.getJSONObject("").getString("downloadUrl"); // TODO ver choice
-        url = String.format(url, "2.13");
-        url = String.format(url, JMeterUtils.getJMeterVersion());
+    public void download(String version) throws IOException {
+        URI url = URI.create(versions.getJSONObject(version).getString("downloadUrl"));
         log.info("Downloading: " + url);
         HttpClient httpClient = new SystemDefaultHttpClient();
         HttpGet httpget = new HttpGet(url);
-        HttpResponse response = httpClient.execute(httpget);
-        if (response.getStatusLine().getStatusCode() != 200) {
-            throw new IOException("Failed to download, status code " + response.getStatusLine().getStatusCode());
-        }
+
+        HttpContext context = new BasicHttpContext();
+        HttpResponse response = httpClient.execute(httpget, context);
+        if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK)
+            throw new IOException(response.getStatusLine().toString());
+
         HttpEntity entity = response.getEntity();
-        long len = entity.getContentLength();
 
         File tempFile = File.createTempFile(id, ".jar");
 
@@ -119,5 +124,18 @@ public class Plugin {
         outputStream.close();
 
         tempName = tempFile.getPath();
+
+        Header cd = response.getLastHeader("Content-Disposition");
+        File f = new File(JMeterEngine.class.getProtectionDomain().getCodeSource().getLocation().getFile());
+        String filename;
+        if (cd != null) {
+            filename = cd.getValue().split(";")[1].split("=")[1];
+        } else {
+            HttpUriRequest currentReq = (HttpUriRequest) context.getAttribute(ExecutionContext.HTTP_REQUEST);
+            HttpHost currentHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+            String currentUrl = (currentReq.getURI().isAbsolute()) ? currentReq.getURI().toString() : (currentHost.toURI() + currentReq.getURI());
+            filename = FilenameUtils.getName(currentUrl);
+        }
+        destName = f.getParent() + File.separator + filename;
     }
 }

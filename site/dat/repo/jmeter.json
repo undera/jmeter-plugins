@@ -7,8 +7,8 @@
     "helpUrl": "",
     "markerClass": "org.apache.jmeter.protocol.tcp.sampler.TCPSampler",
     "versions": {
-      "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_tcp/%1$s/ApacheJMeter_tcp-%1$s.jar",
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_tcp/2.13/ApacheJMeter_tcp-2.13.jar",
         "depends": [],
         "conflicts": [],
         "suggests": []

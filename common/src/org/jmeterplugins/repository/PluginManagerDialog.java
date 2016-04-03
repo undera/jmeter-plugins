@@ -40,7 +40,7 @@ public class PluginManagerDialog extends JDialog {
         modifs.setEditable(false);
         panel.add(modifs, BorderLayout.CENTER);
 
-        JButton apply = new JButton("Apply");
+        JButton apply = new JButton("Apply Changes and Restart JMeter");
         panel.add(apply, BorderLayout.SOUTH);
 
         apply.addActionListener(new ApplyAction());
@@ -61,7 +61,7 @@ public class PluginManagerDialog extends JDialog {
             final Set<Plugin> additions = new HashSet<>();
             if (!test.isInstalled()) {
                 try {
-                    test.download();
+                    test.download("2.13");
                     additions.add(test);
                 } catch (Exception ex) {
                     log.error("Failed to download " + test, ex);

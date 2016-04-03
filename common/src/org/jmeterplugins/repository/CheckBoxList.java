@@ -23,7 +23,9 @@ public class CheckBoxList<T extends JCheckBox> extends JList<T> {
                                      JCheckBox checkbox = getModel().getElementAt(index);
                                      Icon i = UIManager.getIcon("CheckBox.icon");
                                      if (e.getX() <= i.getIconWidth() + xOffset) {
-                                         checkbox.setSelected(!checkbox.isSelected());
+                                         if (checkbox.isEnabled()) {
+                                             checkbox.setSelected(!checkbox.isSelected());
+                                         }
                                      }
                                      repaint();
                                  }
@@ -39,7 +41,7 @@ public class CheckBoxList<T extends JCheckBox> extends JList<T> {
         public Component getListCellRendererComponent(JList<? extends JCheckBox> list, JCheckBox value, int index, boolean isSelected, boolean cellHasFocus) {
             value.setBackground(isSelected ? getSelectionBackground() : getBackground());
             value.setForeground(isSelected ? getSelectionForeground() : getForeground());
-            value.setEnabled(isEnabled());
+            //value.setEnabled(isEnabled());
             value.setFont(getFont());
             value.setFocusPainted(false);
             value.setBorderPainted(true);

@@ -41,7 +41,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting() && list.getSelectedIndex() >= 0) {
-            PluginCheckbox item = (PluginCheckbox) list.getSelectedValue(); // FIXME: not very nice to cast it
+            PluginCheckbox item = list.getSelectedValue();
             Plugin plugin = item.getPlugin();
             String txt = "<h1>" + plugin.getName() + "</h1>";
             if (!plugin.getVendor().isEmpty()) {
@@ -86,6 +86,9 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
 
         public void setPlugin(Plugin plugin) {
             this.plugin = plugin;
+            if (plugin.getID().equals("jpgc-common")) {
+                setEnabled(false);
+            }
         }
 
         public Plugin getPlugin() {

@@ -19,7 +19,7 @@ class PluginsRepository extends \PWE\Modules\PWEModule implements \PWE\Modules\O
                 continue;
             }
             $set = json_decode(file_get_contents($configsDir . '/' . $fname), true);
-            $plugins += $set;
+            $plugins = array_merge($plugins, $set);
         }
 
         $this->PWE->sendHTTPHeader("Content-Type: application/json");

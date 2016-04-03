@@ -3,6 +3,7 @@
     "id": "jmeter-tcp",
     "name": "TCP Protocol Support",
     "description": "The TCP Sampler opens a TCP/IP connection to the specified server. It then sends the text, and waits for a response.",
+    "vendor": "JMeter core team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/tcpsampler.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#TCP_Sampler",
     "markerClass": "org.apache.jmeter.protocol.tcp.sampler.TCPSampler",

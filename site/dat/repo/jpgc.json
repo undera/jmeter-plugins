@@ -5,6 +5,7 @@
     "description": "Adds menu item into Options menu to access UI for installing/removing additional plugins",
     "screenshotUrl": "",
     "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
     "markerClass": "org.jmeterplugins.repository.PluginManager",
     "canUninstall": false,
     "versions": {

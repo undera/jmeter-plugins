@@ -45,9 +45,16 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
             PluginCheckbox item = (PluginCheckbox) list.getSelectedValue(); // FIXME: not very nice to cast it
             Plugin plugin = item.getPlugin();
             String txt = "<h1>" + plugin.getName() + "</h1>";
+            if (!plugin.getVendor().isEmpty()) {
+                txt += "<p>Vendor: <i>" + plugin.getVendor() + "</i></p>";
+            }
             txt += "<p>" + plugin.getDescription() + "</p>";
-            txt += "<p style='float: right'><a href='" + plugin.getHelpLink() + "'>More info...</a></p>";
-            txt += "<p><img src='" + plugin.getScreenshot() + "'/></p>";
+            if (!plugin.getHelpLink().isEmpty()) {
+                txt += "<p><a href='" + plugin.getHelpLink() + "'>More info...</a></p>";
+            }
+            if (!plugin.getScreenshot().isEmpty()) {
+                txt += "<p><img src='" + plugin.getScreenshot() + "'/></p>";
+            }
             description.setText(txt);
         }
     }

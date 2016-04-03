@@ -35,6 +35,7 @@ public class Plugin {
     private String description;
     private String screenshot;
     private String helpLink;
+    private String vendor;
 
     public Plugin(String aId) {
         id = aId;
@@ -48,6 +49,7 @@ public class Plugin {
         inst.description = elm.getString("description");
         inst.screenshot = elm.getString("screenshotUrl");
         inst.helpLink = elm.getString("helpUrl");
+        inst.vendor = elm.getString("vendor");
         return inst;
     }
 
@@ -161,5 +163,9 @@ public class Plugin {
 
     public String getHelpLink() {
         return helpLink;
+    }
+
+    public String getVendor() {
+        return vendor;
     }
 }

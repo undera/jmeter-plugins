@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.ListIterator;
 
@@ -32,14 +34,30 @@ public class SafeDeleter {
                 File fCopy = new File(copyList);
                 copyFiles(fCopy);
                 fCopy.deleteOnExit();
-            }else{
+            } else {
                 throw new IllegalArgumentException("Unknown option: " + nextArg);
             }
         }
     }
 
-    private static void copyFiles(File fCopy) {
+    private static void copyFiles(File file) throws IOException, InterruptedException {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split("\t");
+            if (parts.length != 2) {
+                System.err.println("Invalid line: " + line);
+                continue;
+            }
 
+            System.out.println("Moving " + parts[0] + " to " + parts[1]);
+            try {
+                Files.move(new File(parts[0]).toPath(), new File(parts[1]).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (Exception e) {
+                e.printStackTrace(System.err);
+            }
+        }
+        System.out.println("Done moving files");
     }
 
     private static void deleteFiles(File file) throws IOException, InterruptedException {
@@ -49,7 +67,7 @@ public class SafeDeleter {
             File f = new File(line);
 
             if (!f.exists()) {
-                System.out.println("File not exists, won't try to delete: " + f.getAbsolutePath());
+                System.err.println("File not exists, won't try to delete: " + f.getAbsolutePath());
                 continue;
             }
 
@@ -57,11 +75,10 @@ public class SafeDeleter {
             System.out.println("Trying to delete " + f.getAbsolutePath());
             int cnt = 1;
             while (!f.delete() && cnt++ < 60) {
-                System.out.println("Did not delete #" + cnt + " " + f.getAbsolutePath());
+                System.err.println("Did not delete #" + cnt + " " + f.getAbsolutePath());
                 Thread.sleep(1000);
             }
         }
         System.out.println("Done deleting attempts");
-        Thread.sleep(180000);
     }
 }

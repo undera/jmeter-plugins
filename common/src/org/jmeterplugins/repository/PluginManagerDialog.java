@@ -4,6 +4,8 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.gui.action.ActionNames;
 import org.apache.jmeter.gui.action.ActionRouter;
 import org.apache.jorphan.gui.ComponentUtil;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PluginManagerDialog extends JDialog {
+    private static final Logger log = LoggingManager.getLoggerForClass();
     private final PluginManager manager;
 
     public PluginManagerDialog(PluginManager aManager) {
@@ -46,7 +49,7 @@ public class PluginManagerDialog extends JDialog {
 
     private class ApplyAction implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent evt) {
             // FIXME: what to do when user presses "cancel" on save test plan dialog?
             Plugin test = manager.getPluginByID("jmeter-tcp");
 
@@ -57,7 +60,12 @@ public class PluginManagerDialog extends JDialog {
 
             final Set<Plugin> additions = new HashSet<>();
             if (!test.isInstalled()) {
-                additions.add(test);
+                try {
+                    test.download();
+                    additions.add(test);
+                } catch (Exception ex) {
+                    log.error("Failed to download " + test, ex);
+                }
             }
 
             manager.modifierHook(deletions, additions);

@@ -154,4 +154,8 @@ public class PluginManager {
         out.close();
         return file;
     }
+
+    public Set<Plugin> getPlugins() {
+        return plugins;
+    }
 }

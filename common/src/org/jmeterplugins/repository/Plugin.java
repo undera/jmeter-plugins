@@ -31,6 +31,7 @@ public class Plugin {
     private String installedVersion;
     private String tempName;
     private String destName;
+    private String name;
 
     public Plugin(String aId) {
         id = aId;
@@ -40,6 +41,7 @@ public class Plugin {
         Plugin inst = new Plugin(elm.getString("id"));
         inst.markerClass = elm.getString("markerClass");
         inst.versions = elm.getJSONObject("versions");
+        inst.name = elm.getString("name");
         return inst;
     }
 
@@ -137,5 +139,9 @@ public class Plugin {
             filename = FilenameUtils.getName(currentUrl);
         }
         destName = f.getParent() + File.separator + filename;
+    }
+
+    public String getName() {
+        return name;
     }
 }

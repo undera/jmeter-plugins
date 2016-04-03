@@ -20,8 +20,8 @@ public class PluginManagerDialog extends JDialog {
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final Border SPACING = BorderFactory.createEmptyBorder(5, 5, 5, 5);
     private final PluginManager manager;
-    private final JTextArea modifs;
-    private final JButton apply;
+    private final JTextArea modifs = new JTextArea();
+    private final JButton apply = new JButton("Apply Changes and Restart JMeter");
 
     public PluginManagerDialog(PluginManager aManager) {
         super((JFrame) null, "Plugins Manager", true);
@@ -31,28 +31,44 @@ public class PluginManagerDialog extends JDialog {
         this.setIconImage(JMeterPluginsUtils.getIcon().getImage());
         ComponentUtil.centerComponentInWindow(this, 50);
 
-        modifs = new JTextArea();
-        apply = new JButton("Apply Changes and Restart JMeter");
-
-        add(getTabsPanel(), BorderLayout.CENTER);
-        add(getBottomPanel(), BorderLayout.SOUTH);
-
         try {
             this.manager.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        add(getTabsPanel(), BorderLayout.CENTER);
+        add(getBottomPanel(), BorderLayout.SOUTH);
     }
+
 
     private Component getTabsPanel() {
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        JComponent panel1 = new JPanel();
-        tabbedPane.addTab("Installed Plugins", panel1);
+        tabbedPane.addTab("Installed Plugins", getInstalledPane());
 
-        JComponent panel2 = new JPanel();
-        tabbedPane.addTab("Available Plugins", panel2);
+        tabbedPane.addTab("Available Plugins", getAvailablePane());
         return tabbedPane;
+    }
+
+    private Component getAvailablePane() {
+        PluginsList panel = new PluginsList();
+        for (Plugin plugin : manager.getPlugins()) {
+            if (!plugin.isInstalled()) {
+                panel.add(plugin);
+            }
+        }
+        return panel;
+    }
+
+    private Component getInstalledPane() {
+        PluginsList panel = new PluginsList();
+        for (Plugin plugin : manager.getPlugins()) {
+            if (plugin.isInstalled()) {
+                panel.add(plugin);
+            }
+        }
+        return panel;
     }
 
     private JPanel getBottomPanel() {
@@ -64,7 +80,6 @@ public class PluginManagerDialog extends JDialog {
         modifsPanel.setBorder(BorderFactory.createTitledBorder("Review Changes"));
 
         modifs.setEditable(false);
-        modifs.setText("No changes...\nNo changes...");
         modifsPanel.add(modifs, BorderLayout.CENTER);
 
         panel.add(modifsPanel, BorderLayout.CENTER);

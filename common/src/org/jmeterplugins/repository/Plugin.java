@@ -32,6 +32,9 @@ public class Plugin {
     private String tempName;
     private String destName;
     private String name;
+    private String description;
+    private String screenshot;
+    private String helpLink;
 
     public Plugin(String aId) {
         id = aId;
@@ -42,6 +45,9 @@ public class Plugin {
         inst.markerClass = elm.getString("markerClass");
         inst.versions = elm.getJSONObject("versions");
         inst.name = elm.getString("name");
+        inst.description = elm.getString("description");
+        inst.screenshot = elm.getString("screenshotUrl");
+        inst.helpLink = elm.getString("helpUrl");
         return inst;
     }
 
@@ -143,5 +149,17 @@ public class Plugin {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getScreenshot() {
+        return screenshot;
+    }
+
+    public String getHelpLink() {
+        return helpLink;
     }
 }

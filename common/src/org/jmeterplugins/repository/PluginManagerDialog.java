@@ -9,19 +9,27 @@ import org.apache.log.Logger;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-public class PluginManagerDialog extends JDialog {
+public class PluginManagerDialog extends JDialog implements ChangeListener {
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final Border SPACING = BorderFactory.createEmptyBorder(5, 5, 5, 5);
     private final PluginManager manager;
     private final JTextArea modifs = new JTextArea();
     private final JButton apply = new JButton("Apply Changes and Restart JMeter");
+    private final PluginsList installed = new PluginsList(this);
+    private final PluginsList available = new PluginsList(this);
+    private Set<Plugin> deletions = new HashSet<>();
+    private Set<Plugin> additions = new HashSet<>();
+
 
     public PluginManagerDialog(PluginManager aManager) {
         super((JFrame) null, "Plugins Manager", true);
@@ -44,31 +52,27 @@ public class PluginManagerDialog extends JDialog {
 
     private Component getTabsPanel() {
         JTabbedPane tabbedPane = new JTabbedPane();
-
         tabbedPane.addTab("Installed Plugins", getInstalledPane());
-
         tabbedPane.addTab("Available Plugins", getAvailablePane());
         return tabbedPane;
     }
 
     private Component getAvailablePane() {
-        PluginsList panel = new PluginsList();
         for (Plugin plugin : manager.getPlugins()) {
             if (!plugin.isInstalled()) {
-                panel.add(plugin);
+                available.add(plugin);
             }
         }
-        return panel;
+        return available;
     }
 
     private Component getInstalledPane() {
-        PluginsList panel = new PluginsList();
         for (Plugin plugin : manager.getPlugins()) {
             if (plugin.isInstalled()) {
-                panel.add(plugin);
+                installed.add(plugin);
             }
         }
-        return panel;
+        return installed;
     }
 
     private JPanel getBottomPanel() {
@@ -94,24 +98,39 @@ public class PluginManagerDialog extends JDialog {
         return panel;
     }
 
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        modifs.setText("");
+        deletions.clear();
+        Map<Plugin, Boolean> pInstalled = installed.getPlugins();
+        for (Plugin plugin : pInstalled.keySet()) {
+            if (!pInstalled.get(plugin)) {
+                deletions.add(plugin);
+                modifs.append("Delete '" + plugin.getName() + "'\n");
+            }
+        }
+
+        additions.clear();
+        Map<Plugin, Boolean> pAvail = available.getPlugins();
+        for (Plugin plugin : pAvail.keySet()) {
+            if (pAvail.get(plugin)) {
+                additions.add(plugin);
+                modifs.append("Install '" + plugin.getName() + "'\n");
+            }
+        }
+    }
+
     private class ApplyAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
             // FIXME: what to do when user presses "cancel" on save test plan dialog?
-            Plugin test = manager.getPluginByID("jmeter-tcp");
 
-            final Set<Plugin> deletions = new HashSet<>();
-            if (test.isInstalled()) {
-                deletions.add(test);
-            }
-
-            final Set<Plugin> additions = new HashSet<>();
-            if (!test.isInstalled()) {
+            for (Plugin plugin : additions) {
                 try {
-                    test.download("2.13");
-                    additions.add(test);
-                } catch (Exception ex) {
-                    log.error("Failed to download " + test, ex);
+                    plugin.download("2.13");
+                } catch (IOException e) {
+                    log.error("Failed to download " + plugin, e);
+                    additions.remove(plugin);
                 }
             }
 

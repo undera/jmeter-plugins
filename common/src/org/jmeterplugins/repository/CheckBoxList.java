@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CheckBoxList extends JList<JCheckBox> {
+public class CheckBoxList<T extends JCheckBox> extends JList<T> {
     protected static Border noFocusBorder = new EmptyBorder(1, 1, 1, 1);
 
     public CheckBoxList(final int xOffset) {

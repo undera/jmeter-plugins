@@ -1,25 +1,23 @@
 package org.jmeterplugins.repository;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 import javax.swing.*;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PluginsList extends JPanel implements ListSelectionListener, HyperlinkListener {
-    private static final Logger log = LoggingManager.getLoggerForClass();
     private final JTextPane description = new JTextPane();
-    private JList<JCheckBox> list = new CheckBoxList(5);
-    private DefaultListModel<JCheckBox> listModel = new DefaultListModel<>();
+    private JList<PluginCheckbox> list = new CheckBoxList<>(5);
+    private DefaultListModel<PluginCheckbox> listModel = new DefaultListModel<>();
+    private ChangeListener changeNotifier;
 
-    public PluginsList() {
+    public PluginsList(ChangeListener notifier) {
         super(new BorderLayout(5, 0));
 
+        changeNotifier = notifier;
         description.setContentType("text/html");
         description.setEditable(false);
         description.addHyperlinkListener(this);
@@ -36,6 +34,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         PluginCheckbox element = new PluginCheckbox(plugin.getName());
         element.setSelected(plugin.isInstalled());
         element.setPlugin(plugin);
+        element.addChangeListener(changeNotifier);
         listModel.addElement(element);
     }
 
@@ -48,7 +47,9 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
             if (!plugin.getVendor().isEmpty()) {
                 txt += "<p>Vendor: <i>" + plugin.getVendor() + "</i></p>";
             }
-            txt += "<p>" + plugin.getDescription() + "</p>";
+            if (!plugin.getDescription().isEmpty()) {
+                txt += "<p>" + plugin.getDescription() + "</p>";
+            }
             if (!plugin.getHelpLink().isEmpty()) {
                 txt += "<p><a href='" + plugin.getHelpLink() + "'>More info...</a></p>";
             }
@@ -65,6 +66,15 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
             JMeterPluginsUtils.openInBrowser(e.getURL().toString());
         }
     }
+
+    public Map<Plugin, Boolean> getPlugins() {
+        Map<Plugin, Boolean> map = new HashMap<>();
+        for (int n = 0; n < listModel.getSize(); n++) {
+            map.put(listModel.get(n).getPlugin(), listModel.get(n).isSelected());
+        }
+        return map;
+    }
+
 
     private class PluginCheckbox extends JCheckBox {
 

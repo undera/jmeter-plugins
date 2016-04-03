@@ -24,7 +24,7 @@ public class SafeDeleter {
                 String deleteList = args.next();
                 File dDel = new File(deleteList);
                 deleteFiles(dDel);
-                dDel.deleteOnExit();
+                // TODO dDel.deleteOnExit();
             } else if (nextArg.equalsIgnoreCase("--copy-list")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing delete list file name");
@@ -33,7 +33,7 @@ public class SafeDeleter {
                 String copyList = args.next();
                 File fCopy = new File(copyList);
                 copyFiles(fCopy);
-                fCopy.deleteOnExit();
+                // TODO fCopy.deleteOnExit();
             } else {
                 throw new IllegalArgumentException("Unknown option: " + nextArg);
             }

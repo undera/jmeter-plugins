@@ -13,15 +13,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected HttpClient httpClient = new HttpClient();
     private static int TIMEOUT = 5;
     private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://undera-desktop:8003");
-    private Set<Plugin> plugins = new HashSet<>();
+    private Set<Plugin> plugins = new TreeSet<>(new PluginComparator());
 
 
     public void load() throws IOException {
@@ -139,7 +139,7 @@ public class PluginManager {
         final File file = File.createTempFile("jpgc-delete", ".list");
         PrintWriter out = new PrintWriter(file);
         for (Plugin plugin : plugins) {
-            out.print(plugin.getInstalledPath());
+            out.print(plugin.getInstalledPath() + "\n");
         }
         out.close();
         return file;
@@ -149,7 +149,7 @@ public class PluginManager {
         final File file = File.createTempFile("jpgc-install", ".list");
         PrintWriter out = new PrintWriter(file);
         for (Plugin plugin : plugins) {
-            out.print(plugin.getTempName() + "\t" + plugin.getDestName());
+            out.print(plugin.getTempName() + "\t" + plugin.getDestName() + "\n");
         }
         out.close();
         return file;
@@ -157,5 +157,12 @@ public class PluginManager {
 
     public Set<Plugin> getPlugins() {
         return plugins;
+    }
+
+    private class PluginComparator implements java.util.Comparator<Plugin> {
+        @Override
+        public int compare(Plugin o1, Plugin o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
     }
 }

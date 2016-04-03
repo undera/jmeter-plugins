@@ -3,7 +3,7 @@
     "id": "jmeter-tcp",
     "name": "TCP Protocol Support",
     "description": "The TCP Sampler opens a TCP/IP connection to the specified server. It then sends the text, and waits for a response.",
-    "vendor": "JMeter core team",
+    "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/tcpsampler.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#TCP_Sampler",
     "markerClass": "org.apache.jmeter.protocol.tcp.sampler.TCPSampler",
@@ -15,5 +15,191 @@
         "suggests": []
       }
     }
-  }
-]
+  },
+  {
+    "id": "jmeter-ldap",
+    "name": "LDAP Protocol Support",
+    "description": "This Sampler lets you send a different Ldap request(Add, Modify, Delete and Search) to an LDAP server.",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/ldap_request.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#LDAP_Request",
+    "markerClass": "org.apache.jmeter.protocol.ldap.sampler.LDAPSampler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_ldap/2.13/ApacheJMeter_ldap-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  },
+  {
+    "id": "jmeter-native",
+    "name": "OS Process Support",
+    "description": "",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "markerClass": "org.apache.jmeter.protocol.system.SystemSampler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_native/2.13/ApacheJMeter_native-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  },
+  {
+    "id": "jmeter-mongodb",
+    "name": "MongoDB Support",
+    "description": "",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "markerClass": "org.apache.jmeter.protocol.mongodb.sampler.MongoScriptSampler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_mongodb/2.13/ApacheJMeter_mongodb-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  },
+  {
+    "id": "jmeter-mail",
+    "name": "Mail/SMTP Support",
+    "description": "",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "markerClass": "org.apache.jmeter.protocol.smtp.sampler.SmtpSampler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_mail/2.13/ApacheJMeter_mail-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  },
+  {
+    "id": "jmeter-junit",
+    "name": "JUnit Support",
+    "description": "",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "markerClass": "org.apache.jmeter.protocol.java.sampler.JUnitSampler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_junit/2.13/ApacheJMeter_junit-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  },
+  {
+    "id": "jmeter-jms",
+    "name": "JMS Support",
+    "description": "",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "markerClass": "org.apache.jmeter.protocol.jms.sampler.JMSSampler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_jms/2.13/ApacheJMeter_jms-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  },
+  {
+    "id": "jmeter-jdbc",
+    "name": "JDBC Support",
+    "description": "",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "markerClass": "org.apache.jmeter.protocol.jdbc.sampler.JDBCSampler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_jdbc/2.13/ApacheJMeter_jdbc-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  },
+  {
+    "id": "jmeter-java",
+    "name": "Java Components",
+    "description": "",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "markerClass": "org.apache.jmeter.protocol.java.sampler.JavaSampler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_java/2.13/ApacheJMeter_java-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  },
+  {
+    "id": "jmeter-ftp",
+    "name": "FTP Protocol Support",
+    "description": "",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "markerClass": "org.apache.jmeter.protocol.ftp.sampler.FTPSampler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_ftp/2.13/ApacheJMeter_ftp-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  },
+  {
+    "id": "jmeter-http",
+    "name": "HTTP Protocol Support",
+    "description": "",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "markerClass": "org.apache.jmeter.protocol.http.sampler.HTTPSampler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_http/2.13/ApacheJMeter_http-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  },
+  {
+    "id": "jmeter-components",
+    "name": "Various Core Components",
+    "description": "",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "markerClass": "org.apache.jmeter.sampler.DebugSampler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_components/2.13/ApacheJMeter_components-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  }]

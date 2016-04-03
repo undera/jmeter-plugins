@@ -12,7 +12,10 @@ import org.apache.log.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -118,6 +121,8 @@ public class PluginManager {
             throw new IllegalArgumentException("Invalid JAR path detected: " + jarPath);
         final File currentJar = new File(jarPath);
 
+        File restartFile = getRestartFile(jvm_location);
+
         final ArrayList<String> command = new ArrayList<>();
         command.add(jvm_location);
         command.add("-classpath");
@@ -127,12 +132,35 @@ public class PluginManager {
         command.add(delFile.getAbsolutePath());
         command.add("--copy-list");
         command.add(addFile.getAbsolutePath());
+        command.add("--restart-command");
+        command.add(restartFile.getAbsolutePath());
+
         log.debug("Command to execute: " + command);
         final ProcessBuilder builder = new ProcessBuilder(command);
         File cleanerLog = File.createTempFile("jpgc-cleaner", ".log");
         builder.redirectError(cleanerLog);
         builder.redirectOutput(cleanerLog);
         return builder;
+    }
+
+    private File getRestartFile(String jvm_location) throws IOException {
+        File file = File.createTempFile("jpgc-restart", ".list");
+        PrintWriter out = new PrintWriter(file);
+        out.print(jvm_location + "\n");
+        out.print("-server\n");
+
+        RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+        List<String> jvmArgs = runtimeMXBean.getInputArguments();
+        for (String arg : jvmArgs) {
+            out.print(arg + "\n");
+        }
+
+        out.print("-jar\n");
+
+        out.print(JMeterUtils.getJMeterBinDir() + File.separator + "ApacheJMeter.jar\n");
+
+        out.close();
+        return file;
     }
 
     private File makeDeletionsFile(Set<Plugin> plugins) throws IOException {

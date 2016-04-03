@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ListIterator;
 
@@ -21,23 +22,42 @@ public class SafeDeleter {
                     throw new IllegalArgumentException("Missing delete list file name");
                 }
 
-                String deleteList = args.next();
-                File dDel = new File(deleteList);
+                File dDel = new File(args.next());
+                dDel.deleteOnExit();
                 deleteFiles(dDel);
-                // TODO dDel.deleteOnExit();
             } else if (nextArg.equalsIgnoreCase("--copy-list")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing delete list file name");
                 }
 
-                String copyList = args.next();
-                File fCopy = new File(copyList);
+                File fCopy = new File(args.next());
+                fCopy.deleteOnExit();
                 copyFiles(fCopy);
-                // TODO fCopy.deleteOnExit();
+            } else if (nextArg.equalsIgnoreCase("--restart-command")) {
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing restart command file");
+                }
+
+                File file = new File(args.next());
+                file.deleteOnExit();
+                restartFromFile(file);
             } else {
                 throw new IllegalArgumentException("Unknown option: " + nextArg);
             }
         }
+    }
+
+    private static void restartFromFile(File file) throws IOException {
+        final ArrayList<String> command = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line;
+        while ((line = br.readLine()) != null) {
+            command.add(line);
+        }
+
+        final ProcessBuilder builder = new ProcessBuilder(command);
+        System.out.print("Starting: " + command);
+        builder.start();
     }
 
     private static void copyFiles(File file) throws IOException, InterruptedException {

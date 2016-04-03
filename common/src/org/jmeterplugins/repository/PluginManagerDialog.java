@@ -8,6 +8,7 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,31 +18,62 @@ import java.util.Set;
 
 public class PluginManagerDialog extends JDialog {
     private static final Logger log = LoggingManager.getLoggerForClass();
+    public static final Border SPACING = BorderFactory.createEmptyBorder(5, 5, 5, 5);
     private final PluginManager manager;
+    private final JTextArea modifs;
+    private final JButton apply;
 
     public PluginManagerDialog(PluginManager aManager) {
         super((JFrame) null, "Plugins Manager", true);
+        setLayout(new BorderLayout());
         this.manager = aManager;
         this.setSize(new Dimension(640, 480));
         this.setIconImage(JMeterPluginsUtils.getIcon().getImage());
         ComponentUtil.centerComponentInWindow(this, 50);
+
+        modifs = new JTextArea();
+        apply = new JButton("Apply Changes and Restart JMeter");
+
+        add(getTabsPanel(), BorderLayout.CENTER);
+        add(getBottomPanel(), BorderLayout.SOUTH);
+
         try {
             this.manager.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        add(getBottomPanel());
+    private Component getTabsPanel() {
+        JTabbedPane tabbedPane = new JTabbedPane();
+
+        JComponent panel1 = new JPanel();
+        tabbedPane.addTab("Installed Plugins", panel1);
+
+        JComponent panel2 = new JPanel();
+        tabbedPane.addTab("Available Plugins", panel2);
+        return tabbedPane;
     }
 
     private JPanel getBottomPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        JTextArea modifs = new JTextArea();
-        modifs.setEditable(false);
-        panel.add(modifs, BorderLayout.CENTER);
 
-        JButton apply = new JButton("Apply Changes and Restart JMeter");
-        panel.add(apply, BorderLayout.SOUTH);
+        JPanel modifsPanel = new JPanel(new BorderLayout());
+        modifsPanel.setMinimumSize(new Dimension(200, 200));
+        modifsPanel.setBorder(SPACING);
+        modifsPanel.setBorder(BorderFactory.createTitledBorder("Review Changes"));
+
+        modifs.setEditable(false);
+        modifs.setText("No changes...\nNo changes...");
+        modifsPanel.add(modifs, BorderLayout.CENTER);
+
+        panel.add(modifsPanel, BorderLayout.CENTER);
+
+        JPanel btnPanel = new JPanel(new BorderLayout());
+        btnPanel.setBorder(SPACING);
+        btnPanel.add(apply, BorderLayout.EAST);
+        btnPanel.add(new JPanel(), BorderLayout.CENTER);
+        panel.add(btnPanel, BorderLayout.SOUTH);
 
         apply.addActionListener(new ApplyAction());
         return panel;

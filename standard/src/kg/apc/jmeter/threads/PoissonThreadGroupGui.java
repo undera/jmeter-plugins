@@ -94,7 +94,7 @@ public class PoissonThreadGroupGui extends AbstractThreadGroupGui  {
     }
     
     void init() {
-    	log.info("Inside the init Function");
+    	//log.info("Inside the init Function");
         JMeterPluginsUtils.addHelpLinkToPanel(this, WIKIPAGE);
     	
         // THREAD PROPERTIES
@@ -125,7 +125,7 @@ public class PoissonThreadGroupGui extends AbstractThreadGroupGui  {
         
         //Lambda value
         JPanel lambdaPanel = new JPanel(new BorderLayout(5, 0));
-        JLabel lambdaLabel = new JLabel("Lambda (Seconds)");
+        JLabel lambdaLabel = new JLabel("Lambda");
         lambdaPanel.add(lambdaLabel, BorderLayout.WEST);
         lambdaInput = new JTextField(5);
         lambdaInput.setName(LAMBDA_NAME);

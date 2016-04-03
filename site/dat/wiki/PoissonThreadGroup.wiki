@@ -1,0 +1,14 @@
+<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
+= Poisson Thread Group <sup><font color=gray size="1">since 1.4.0</font></sup>=
+
+== Description ==
+Theard arrivals in this group are based on a poisson process _[https://en.wikipedia.org/wiki/Poisson_point_process]. 
+
+The threads will arrive at an average rate of "lambda" threads per second. Keeping similar random seed value across experiments will ensure similar arrival pattern of the threads. This should allow for validation b 
+
+
+This thread group operates with "arrivals" schedule as a way to express the load. "Arrival" means thread iteration start. It will create new threads if all existing threads are busy in the middle of iterations.
+
+Note that constant arrival rate means increasing concurrency, so be careful with the values you enter. Use "Concurrency Limit" field as safety valve to prevent running out of memory.
+
+[/img/wiki/PoissonThreadGroup.png]

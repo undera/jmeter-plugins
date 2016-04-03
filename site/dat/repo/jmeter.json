@@ -1,20 +1,5 @@
 [
   {
-    "id": "jmeter-ldap",
-    "name": "LDAP Protocol Support",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "markerClass": "org.apache.jmeter.protocol.ldap.sampler.LDAPSampler",
-    "versions": {
-      "": {
-        "depends": [],
-        "conflicts": [],
-        "suggests": []
-      }
-    }
-  },
-  {
     "id": "jmeter-tcp",
     "name": "TCP Protocol Support",
     "description": "",
@@ -23,6 +8,7 @@
     "markerClass": "org.apache.jmeter.protocol.tcp.sampler.TCPSampler",
     "versions": {
       "": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_tcp/%1$s/ApacheJMeter_tcp-%1$s.jar",
         "depends": [],
         "conflicts": [],
         "suggests": []

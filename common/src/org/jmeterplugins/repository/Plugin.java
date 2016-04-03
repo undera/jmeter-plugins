@@ -73,4 +73,16 @@ public class Plugin {
     public String getInstalledPath() {
         return installedPath;
     }
+
+    public String getDestName() {
+        return null;
+    }
+
+    public String getTempName() {
+        return null;
+    }
+
+    public boolean isInstalled() {
+        return installedPath != null;
+    }
 }

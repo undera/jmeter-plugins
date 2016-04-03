@@ -26,28 +26,22 @@ public class PluginManager {
 
     public void load() throws IOException {
         loadRepo();
+    }
 
-        Plugin plugin = getPluginByID("jmeter-tcp");
-
-        final File delFile = File.createTempFile("jpgc-delete", ".list");
-        PrintWriter out = new PrintWriter(delFile);
-        out.print(plugin.getInstalledPath());
-        out.close();
-
+    public void modifierHook(final Set<Plugin> deletions, final Set<Plugin> additions) {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
                 try {
-                    startCleaner(delFile);
+                    startModifications(deletions, additions);
                 } catch (Exception e) {
                     log.warn("Failed to run plugin cleaner job");
                 }
             }
         });
-        // query updates for installed
     }
 
-    private Plugin getPluginByID(String id) {
+    public Plugin getPluginByID(String id) {
         for (Plugin plugin : plugins) {
             if (plugin.getID().equals(id)) {
                 return plugin;
@@ -103,7 +97,15 @@ public class PluginManager {
 
     }
 
-    public void startCleaner(File delFile) throws IOException {
+    public void startModifications(Set<Plugin> delPlugins, Set<Plugin> installPlugins) throws IOException {
+        final File delFile = makeDeletionsFile(delPlugins);
+        final File addFile = makeAdditionsFile(installPlugins);
+        final ProcessBuilder builder = getProcessBuilder(delFile, addFile);
+        log.info("JAR Modifications log will be saved into: " + builder.redirectOutput().file().getPath());
+        builder.start();
+    }
+
+    private ProcessBuilder getProcessBuilder(File delFile, File addFile) throws IOException {
         String jvm_location;
         if (System.getProperty("os.name").startsWith("Win")) {
             jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java.exe";
@@ -123,11 +125,33 @@ public class PluginManager {
         command.add(SafeDeleter.class.getCanonicalName());
         command.add("--delete-list");
         command.add(delFile.getAbsolutePath());
-
-        log.debug("Starting cleaner: " + command);
+        command.add("--copy-list");
+        command.add(addFile.getAbsolutePath());
+        log.debug("Command to execute: " + command);
         final ProcessBuilder builder = new ProcessBuilder(command);
-        builder.redirectError(File.createTempFile("jpgc-cleaner", ".err"));
-        builder.redirectOutput(File.createTempFile("jpgc-cleaner", ".out"));
-        builder.start();
+        File cleanerLog = File.createTempFile("jpgc-cleaner", ".log");
+        builder.redirectError(cleanerLog);
+        builder.redirectOutput(cleanerLog);
+        return builder;
+    }
+
+    private File makeDeletionsFile(Set<Plugin> plugins) throws IOException {
+        final File file = File.createTempFile("jpgc-delete", ".list");
+        PrintWriter out = new PrintWriter(file);
+        for (Plugin plugin : plugins) {
+            out.print(plugin.getInstalledPath());
+        }
+        out.close();
+        return file;
+    }
+
+    private File makeAdditionsFile(Set<Plugin> plugins) throws IOException {
+        final File file = File.createTempFile("jpgc-install", ".list");
+        PrintWriter out = new PrintWriter(file);
+        for (Plugin plugin : plugins) {
+            out.print(plugin.getTempName() + "\t" + plugin.getDestName());
+        }
+        out.close();
+        return file;
     }
 }

@@ -1,6 +1,9 @@
 package org.jmeterplugins.repository;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.ListIterator;
 
@@ -10,18 +13,33 @@ public class SafeDeleter {
         ListIterator<String> args = Arrays.asList(argsRaw).listIterator();
 
         while (args.hasNext()) {
-            String nextArg = (String) args.next();
+            String nextArg = args.next();
             if (nextArg.equalsIgnoreCase("--delete-list")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing delete list file name");
                 }
 
-                String deleteList = (String) args.next();
-                deleteFiles(new File(deleteList));
-            } else {
+                String deleteList = args.next();
+                File dDel = new File(deleteList);
+                deleteFiles(dDel);
+                dDel.deleteOnExit();
+            } else if (nextArg.equalsIgnoreCase("--copy-list")) {
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing delete list file name");
+                }
+
+                String copyList = args.next();
+                File fCopy = new File(copyList);
+                copyFiles(fCopy);
+                fCopy.deleteOnExit();
+            }else{
                 throw new IllegalArgumentException("Unknown option: " + nextArg);
             }
         }
+    }
+
+    private static void copyFiles(File fCopy) {
+
     }
 
     private static void deleteFiles(File file) throws IOException, InterruptedException {

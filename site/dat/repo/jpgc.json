@@ -6,6 +6,7 @@
     "screenshotUrl": "",
     "helpUrl": "",
     "markerClass": "org.jmeterplugins.repository.PluginManager",
+    "canUninstall": false,
     "versions": {
       "2.0": {
         "downloadUrl": "",

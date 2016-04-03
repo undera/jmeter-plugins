@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PluginManagerMenuItem extends JMenuItem implements MenuCreator, ActionListener {
-    private static final PluginManagerDialog dialog = new PluginManagerDialog(new PluginManager());
+    private static PluginManagerDialog dialog;
 
     public PluginManagerMenuItem() {
         super("Plugins Manager", JMeterPluginsUtils.getIcon());
@@ -18,6 +18,10 @@ public class PluginManagerMenuItem extends JMenuItem implements MenuCreator, Act
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (dialog == null) {
+            dialog = new PluginManagerDialog(new PluginManager());
+        }
+
         dialog.setVisible(true);
     }
 

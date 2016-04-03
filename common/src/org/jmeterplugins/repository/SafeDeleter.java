@@ -1,17 +1,14 @@
 package org.jmeterplugins.repository;
 
-import kg.apc.cmdtools.AbstractCMDTool;
-
 import java.io.*;
+import java.util.Arrays;
 import java.util.ListIterator;
 
-public class SafeDeleter extends AbstractCMDTool {
+public class SafeDeleter {
 
-    public SafeDeleter() {
-    }
+    public static void main(String[] argsRaw) throws Throwable {
+        ListIterator<String> args = Arrays.asList(argsRaw).listIterator();
 
-    @Override
-    protected int processParams(ListIterator args) throws UnsupportedOperationException, IllegalArgumentException {
         while (args.hasNext()) {
             String nextArg = (String) args.next();
             if (nextArg.equalsIgnoreCase("--delete-list")) {
@@ -20,21 +17,14 @@ public class SafeDeleter extends AbstractCMDTool {
                 }
 
                 String deleteList = (String) args.next();
-                try {
-                    deleteFiles(new File(deleteList));
-                } catch (Exception e) {
-                    e.printStackTrace(System.err);
-                    return 1;
-                }
+                deleteFiles(new File(deleteList));
             } else {
                 throw new IllegalArgumentException("Unknown option: " + nextArg);
             }
         }
-
-        return 0;
     }
 
-    private void deleteFiles(File file) throws IOException, InterruptedException {
+    private static void deleteFiles(File file) throws IOException, InterruptedException {
         BufferedReader br = new BufferedReader(new FileReader(file));
         String line;
         while ((line = br.readLine()) != null) {
@@ -42,19 +32,18 @@ public class SafeDeleter extends AbstractCMDTool {
 
             if (!f.exists()) {
                 System.out.println("File not exists, won't try to delete: " + f.getAbsolutePath());
+                continue;
             }
 
             // TODO: make sure it's jar?
             System.out.println("Trying to delete " + f.getAbsolutePath());
-            while (!f.delete()) {
-                System.out.println("Did not delete " + f.getAbsolutePath());
+            int cnt = 1;
+            while (!f.delete() && cnt++ < 60) {
+                System.out.println("Did not delete #" + cnt + " " + f.getAbsolutePath());
                 Thread.sleep(1000);
             }
         }
-    }
-
-    @Override
-    protected void showHelp(PrintStream printStream) {
-        // TODO
+        System.out.println("Done deleting attempts");
+        Thread.sleep(180000);
     }
 }

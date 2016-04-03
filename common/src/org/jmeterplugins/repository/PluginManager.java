@@ -1,7 +1,6 @@
 package org.jmeterplugins.repository;
 
 
-import kg.apc.cmd.UniversalRunner;
 import net.sf.json.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -121,16 +120,14 @@ public class PluginManager {
         command.add(jvm_location);
         command.add("-classpath");
         command.add(currentJar.getPath());
-        command.add(UniversalRunner.class.getCanonicalName());
-        command.add("--tool");
         command.add(SafeDeleter.class.getCanonicalName());
         command.add("--delete-list");
         command.add(delFile.getAbsolutePath());
 
+        log.debug("Starting cleaner: " + command);
         final ProcessBuilder builder = new ProcessBuilder(command);
         builder.redirectError(File.createTempFile("jpgc-cleaner", ".err"));
         builder.redirectOutput(File.createTempFile("jpgc-cleaner", ".out"));
-        log.info("Startung cleaner: " + command);
         builder.start();
     }
 }

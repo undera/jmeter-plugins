@@ -147,7 +147,6 @@ public class PluginManager {
         File file = File.createTempFile("jpgc-restart", ".list");
         PrintWriter out = new PrintWriter(file);
         out.print(jvm_location + "\n");
-        out.print("-server\n");
 
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
         List<String> jvmArgs = runtimeMXBean.getInputArguments();

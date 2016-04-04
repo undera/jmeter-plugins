@@ -27,7 +27,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         list.addListSelectionListener(this);
 
         add(new JScrollPane(description), BorderLayout.CENTER);
-        add(list, BorderLayout.WEST);
+        add(new JScrollPane(list), BorderLayout.WEST);
     }
 
     public void add(Plugin plugin) {

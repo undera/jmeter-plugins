@@ -57,6 +57,9 @@ public class SafeDeleter {
 
         final ProcessBuilder builder = new ProcessBuilder(command);
         System.out.print("Starting: " + command);
+        File cleanerLog = File.createTempFile("jpgc-restarter", ".log");
+        builder.redirectError(cleanerLog);
+        builder.redirectOutput(cleanerLog);
         builder.start();
     }
 

@@ -202,4 +202,22 @@
         "suggests": []
       }
     }
-  }]
+  },
+  {
+    "id": "jmeter-monitors",
+    "name": "JMeter 'Monitors' (Deprecated)",
+    "description": "A deprecated library, mostly not used",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "markerClass": "org.apache.jmeter.monitor.parser.MonitorHandler",
+    "versions": {
+      "2.13": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_monitors/2.13/ApacheJMeter_monitors-2.13.jar",
+        "depends": [],
+        "conflicts": [],
+        "suggests": []
+      }
+    }
+  }
+]

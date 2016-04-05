@@ -1,7 +1,10 @@
 package kg.apc.jmeter.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 
 public class DialogFactory {
 
@@ -18,7 +21,9 @@ public class DialogFactory {
             ret.validate();
             if(imagePath != null) {
                 ImageIcon imageIcon = new ImageIcon(DialogFactory.class.getResource(imagePath));
-                ret.setIconImage(imageIcon.getImage());
+                if(imageIcon != null) {
+                    ret.setIconImage(imageIcon.getImage());
+                }
             }
             return ret;
         } else {

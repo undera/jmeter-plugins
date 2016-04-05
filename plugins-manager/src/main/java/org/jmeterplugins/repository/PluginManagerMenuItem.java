@@ -1,6 +1,5 @@
 package org.jmeterplugins.repository;
 
-import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.gui.plugin.MenuCreator;
 
 import javax.swing.*;
@@ -11,10 +10,9 @@ public class PluginManagerMenuItem extends JMenuItem implements MenuCreator, Act
     private static PluginManagerDialog dialog;
 
     public PluginManagerMenuItem() {
-        super("Plugins Manager", JMeterPluginsUtils.getIcon());
+        super("Plugins Manager", getPluginsIcon());
         addActionListener(this);
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -51,4 +49,7 @@ public class PluginManagerMenuItem extends JMenuItem implements MenuCreator, Act
     public void localeChanged() {
     }
 
+    public static ImageIcon getPluginsIcon() {
+        return new ImageIcon(PluginManagerMenuItem.class.getResource("/org/jmeterplugins/logo.png"));
+    }
 }

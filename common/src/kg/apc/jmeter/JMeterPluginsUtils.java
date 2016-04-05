@@ -381,10 +381,6 @@ public abstract class JMeterPluginsUtils {
         return version;
     }
 
-    public static ImageIcon getIcon() {
-        return new ImageIcon(JMeterPluginsUtils.class.getResource("/org/jmeterplugins/logo.png"));
-    }
-
     private static class URIOpener extends MouseAdapter {
 
         private final String uri;

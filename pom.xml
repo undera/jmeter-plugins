@@ -47,6 +47,7 @@
         <powermock.version>1.6.2</powermock.version>
         <cobertura-maven.version>2.6</cobertura-maven.version>
         <cmdrunner-version>1.0.2</cmdrunner-version>
+        <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
 
     <repositories>

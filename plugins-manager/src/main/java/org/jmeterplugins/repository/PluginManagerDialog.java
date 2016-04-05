@@ -1,6 +1,5 @@
 package org.jmeterplugins.repository;
 
-import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.gui.action.ActionNames;
 import org.apache.jmeter.gui.action.ActionRouter;
 import org.apache.jorphan.gui.ComponentUtil;
@@ -36,7 +35,7 @@ public class PluginManagerDialog extends JDialog implements ChangeListener {
         setLayout(new BorderLayout());
         this.manager = aManager;
         this.setSize(new Dimension(640, 480));
-        this.setIconImage(JMeterPluginsUtils.getIcon().getImage());
+        this.setIconImage(PluginManagerMenuItem.getPluginsIcon().getImage());
         ComponentUtil.centerComponentInWindow(this, 50);
 
         try {

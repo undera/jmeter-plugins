@@ -1,14 +1,20 @@
 package org.jmeterplugins.repository;
 
-import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PluginsList extends JPanel implements ListSelectionListener, HyperlinkListener {
+    private static final Logger log = LoggingManager.getLoggerForClass();
+
     private final JTextPane description = new JTextPane();
     private JList<PluginCheckbox> list = new CheckBoxList<>(5);
     private DefaultListModel<PluginCheckbox> listModel = new DefaultListModel<>();
@@ -63,7 +69,17 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     @Override
     public void hyperlinkUpdate(HyperlinkEvent e) {
         if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-            JMeterPluginsUtils.openInBrowser(e.getURL().toString());
+            openInBrowser(e.getURL().toString());
+        }
+    }
+
+    public static void openInBrowser(String string) {
+        if (java.awt.Desktop.isDesktopSupported()) {
+            try {
+                java.awt.Desktop.getDesktop().browse(new URI(string));
+            } catch (IOException | URISyntaxException ignored) {
+                log.debug("Failed to open in browser", ignored);
+            }
         }
     }
 

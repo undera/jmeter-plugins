@@ -7,6 +7,19 @@
     <groupId>org.jmeter-plugins</groupId>
     <artifactId>jmeter-plugins-manager</artifactId>
     <version>1.0.0</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.jmeter</groupId>
+            <artifactId>ApacheJMeter_core</artifactId>
+            <version>2.11</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -17,13 +30,29 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>net.sf.json-lib:json-lib</include>
+                                    <include>commons-lang:commons-lang</include>
+                                    <include>net.sf.ezmorph:ezmorph</include>
+                                    <include>commons-beanutils:commons-beanutils</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.jmeter</groupId>
-            <artifactId>ApacheJMeter_core</artifactId>
-            <version>2.13</version>
-        </dependency>
-    </dependencies>
 </project>

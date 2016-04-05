@@ -1,6 +1,6 @@
 = Changelog =
 
-== 1.4.0 <i><font color=gray size="1">preparing</font></i>==
+== 1.4.0 <i><font color=gray size="1">April 5, 2016</font></i>==
   * BlazeMeter Inc. has contributed [XMPPSet XMPP testing plugins]
   * BlazeMeter Inc. has contributed [PhantomJSDriverConfig PhantomJS support] for WebDriver
   * BlazeMeter Inc. has contributed few Thread Groups and Controllers into [StandardSet Standard Set]

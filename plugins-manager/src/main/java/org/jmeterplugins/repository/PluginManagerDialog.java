@@ -40,26 +40,34 @@ public class PluginManagerDialog extends JDialog {
         }
 
         apply.setEnabled(false);
-        ChangeListener notifier = new ChangeListener() {
+
+        final ChangeListener statusRefresh = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                String changeText = manager.getChangesAsText();
+                modifs.setText(changeText);
+                apply.setEnabled(!changeText.isEmpty());
+            }
+        };
+
+        ChangeListener cbNotifier = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 if (e.getSource() instanceof PluginCheckbox) {
                     PluginCheckbox checbox = (PluginCheckbox) e.getSource();
                     Plugin plugin = checbox.getPlugin();
                     manager.toggleInstalled(plugin);
-                    String changeText = manager.getChangesAsText();
-                    modifs.setText(changeText);
-                    apply.setEnabled(!changeText.isEmpty());
+                    statusRefresh.stateChanged(new ChangeEvent(this));
                 }
             }
         };
-        installed = new PluginsList(manager.getInstalledPlugins(), notifier);
-        available = new PluginsList(manager.getAvailablePlugins(), notifier);
+
+        installed = new PluginsList(manager.getInstalledPlugins(), cbNotifier, statusRefresh);
+        available = new PluginsList(manager.getAvailablePlugins(), cbNotifier, statusRefresh);
 
         add(getTabsPanel(), BorderLayout.CENTER);
         add(getBottomPanel(), BorderLayout.SOUTH);
     }
-
 
     private Component getTabsPanel() {
         JTabbedPane tabbedPane = new JTabbedPane();

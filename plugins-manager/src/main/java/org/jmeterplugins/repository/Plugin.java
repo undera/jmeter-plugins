@@ -210,6 +210,10 @@ public class Plugin {
         return installedVersion;
     }
 
+    public void setCandidateVersion(String candidateVersion) {
+        this.candidateVersion = candidateVersion;
+    }
+
     private class VersionComparator implements java.util.Comparator<String> {
         @Override
         public int compare(String a, String b) {

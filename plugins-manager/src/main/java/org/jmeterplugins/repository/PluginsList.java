@@ -6,6 +6,8 @@ import org.apache.log.Logger;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -20,9 +22,12 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     private JList<PluginCheckbox> list = new CheckBoxList<>(5);
     private DefaultListModel<PluginCheckbox> listModel = new DefaultListModel<>();
     private final JComboBox<String> version = new JComboBox<>();
+    private ItemListener itemListener = new VerChoiceChanged();
+    private ChangeListener dialogRefresh;
 
-    public PluginsList(Set<Plugin> plugins, ChangeListener checkboxNotifier) {
+    public PluginsList(Set<Plugin> plugins, ChangeListener checkboxNotifier, ChangeListener dialogRefresh) {
         super(new BorderLayout(5, 0));
+        this.dialogRefresh = dialogRefresh;
 
         description.setContentType("text/html");
         description.setEditable(false);
@@ -64,8 +69,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting() && list.getSelectedIndex() >= 0) {
-            PluginCheckbox item = list.getSelectedValue();
-            Plugin plugin = item.getPlugin();
+            Plugin plugin = list.getSelectedValue().getPlugin();
             description.setText(getDescriptionHTML(plugin));
 
             setUpVersionsList(plugin);
@@ -76,6 +80,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     }
 
     private void setUpVersionsList(Plugin plugin) {
+        version.removeItemListener(itemListener);
         version.removeAllItems();
         for (String ver : plugin.getVersions()) {
             version.addItem(ver);
@@ -89,6 +94,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         version.setSelectedItem(selVersion);
 
         version.setEnabled(version.getItemCount() > 1);
+        version.addItemListener(itemListener);
     }
 
     private String getDescriptionHTML(Plugin plugin) {
@@ -137,4 +143,18 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     }
 
 
+    private class VerChoiceChanged implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                if (event.getItem() instanceof String) {
+                    String item = (String) event.getItem();
+                    Plugin plugin = list.getSelectedValue().getPlugin();
+                    plugin.setCandidateVersion(item);
+                    dialogRefresh.stateChanged(new ChangeEvent(this));
+                }
+            }
+        }
+    }
 }
+

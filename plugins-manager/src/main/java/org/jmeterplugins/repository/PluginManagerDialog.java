@@ -14,35 +14,44 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
-public class PluginManagerDialog extends JDialog implements ChangeListener {
+public class PluginManagerDialog extends JDialog {
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final Border SPACING = BorderFactory.createEmptyBorder(5, 5, 5, 5);
     private final PluginManager manager;
     private final JTextArea modifs = new JTextArea();
     private final JButton apply = new JButton("Apply Changes and Restart JMeter");
-    private final PluginsList installed = new PluginsList(this);
-    private final PluginsList available = new PluginsList(this);
-    private Set<Plugin> deletions = new HashSet<>();
-    private Set<Plugin> additions = new HashSet<>();
+    private final PluginsList installed;
+    private final PluginsList available;
 
 
     public PluginManagerDialog(PluginManager aManager) {
         super((JFrame) null, "Plugins Manager", true);
         setLayout(new BorderLayout());
-        this.manager = aManager;
-        this.setSize(new Dimension(640, 480));
-        this.setIconImage(PluginManagerMenuItem.getPluginsIcon().getImage());
-        ComponentUtil.centerComponentInWindow(this, 50);
+        manager = aManager;
+        setSize(new Dimension(640, 480));
+        setIconImage(PluginManagerMenuItem.getPluginsIcon().getImage());
+        ComponentUtil.centerComponentInWindow(this, 30);
 
         try {
-            this.manager.load();
+            manager.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        ChangeListener notifier = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (e.getSource() instanceof PluginCheckbox) {
+                    PluginCheckbox checbox = (PluginCheckbox) e.getSource();
+                    Plugin plugin = checbox.getPlugin();
+                    manager.toggleInstalled(plugin);
+                    modifs.setText(manager.getChangesAsText());
+                }
+            }
+        };
+        installed = new PluginsList(manager.getInstalledPlugins(), notifier);
+        available = new PluginsList(manager.getAvailablePlugins(), notifier);
 
         add(getTabsPanel(), BorderLayout.CENTER);
         add(getBottomPanel(), BorderLayout.SOUTH);
@@ -51,27 +60,9 @@ public class PluginManagerDialog extends JDialog implements ChangeListener {
 
     private Component getTabsPanel() {
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Installed Plugins", getInstalledPane());
-        tabbedPane.addTab("Available Plugins", getAvailablePane());
+        tabbedPane.addTab("Installed Plugins", installed);
+        tabbedPane.addTab("Available Plugins", available);
         return tabbedPane;
-    }
-
-    private Component getAvailablePane() {
-        for (Plugin plugin : manager.getPlugins()) {
-            if (!plugin.isInstalled()) {
-                available.add(plugin);
-            }
-        }
-        return available;
-    }
-
-    private Component getInstalledPane() {
-        for (Plugin plugin : manager.getPlugins()) {
-            if (plugin.isInstalled()) {
-                installed.add(plugin);
-            }
-        }
-        return installed;
     }
 
     private JPanel getBottomPanel() {
@@ -93,49 +84,14 @@ public class PluginManagerDialog extends JDialog implements ChangeListener {
         btnPanel.add(new JPanel(), BorderLayout.CENTER);
         panel.add(btnPanel, BorderLayout.SOUTH);
 
-        apply.addActionListener(new ApplyAction());
+        apply.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // FIXME: what to do when user presses "cancel" on save test plan dialog?
+                manager.applyChanges();
+                ActionRouter.getInstance().actionPerformed(new ActionEvent(this, 0, ActionNames.EXIT));
+            }
+        });
         return panel;
-    }
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        modifs.setText("");
-        deletions.clear();
-        Map<Plugin, Boolean> pInstalled = installed.getPlugins();
-        for (Plugin plugin : pInstalled.keySet()) {
-            if (!pInstalled.get(plugin)) {
-                deletions.add(plugin);
-                modifs.append("Delete '" + plugin.getName() + "'\n");
-            }
-        }
-
-        additions.clear();
-        Map<Plugin, Boolean> pAvail = available.getPlugins();
-        for (Plugin plugin : pAvail.keySet()) {
-            if (pAvail.get(plugin)) {
-                additions.add(plugin);
-                modifs.append("Install '" + plugin.getName() + "'\n");
-            }
-        }
-    }
-
-    private class ApplyAction implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent evt) {
-            // FIXME: what to do when user presses "cancel" on save test plan dialog?
-
-            for (Plugin plugin : additions) {
-                try {
-                    plugin.download("2.13");
-                } catch (IOException e) {
-                    log.error("Failed to download " + plugin, e);
-                    additions.remove(plugin);
-                }
-            }
-
-            manager.modifierHook(deletions, additions);
-            // query updates for installed
-            ActionRouter.getInstance().actionPerformed(new ActionEvent(this, 0, ActionNames.EXIT));
-        }
     }
 }

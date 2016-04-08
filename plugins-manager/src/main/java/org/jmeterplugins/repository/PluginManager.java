@@ -14,24 +14,22 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected HttpClient httpClient = new HttpClient();
     private static int TIMEOUT = 5;
-    private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://undera-desktop:8003");
-    private Set<Plugin> plugins = new TreeSet<>(new PluginComparator());
-
+    private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://undera-desktop:8003"); // FIXME: that's temporary address
+    private Set<Plugin> allPlugins = new TreeSet<>(new PluginComparator());
+    private Set<Plugin> deletions = new HashSet<>();
+    private Set<Plugin> additions = new HashSet<>();
 
     public void load() throws IOException {
         loadRepo();
     }
 
-    public void modifierHook(final Set<Plugin> deletions, final Set<Plugin> additions) {
+    private void modifierHook(final Set<Plugin> deletions, final Set<Plugin> additions) {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
@@ -44,8 +42,9 @@ public class PluginManager {
         });
     }
 
+    @SuppressWarnings("unused") // FIXME: do we need it?
     public Plugin getPluginByID(String id) {
-        for (Plugin plugin : plugins) {
+        for (Plugin plugin : allPlugins) {
             if (plugin.getID().equals(id)) {
                 return plugin;
             }
@@ -54,7 +53,7 @@ public class PluginManager {
     }
 
     private void loadRepo() throws IOException {
-        if (plugins.size() > 0) {
+        if (allPlugins.size() > 0) {
             return;
         }
 
@@ -68,14 +67,14 @@ public class PluginManager {
 
         for (Object elm : (JSONArray) json) {
             if (elm instanceof JSONObject) {
-                plugins.add(Plugin.fromJSON((JSONObject) elm));
+                allPlugins.add(Plugin.fromJSON((JSONObject) elm));
             } else {
                 log.warn("Invalid array element: " + elm);
             }
         }
 
-        log.debug("Plugins: " + plugins);
-        for (Plugin plugin : plugins) {
+        log.debug("Plugins: " + allPlugins);
+        for (Plugin plugin : allPlugins) {
             plugin.detectInstalled();
         }
     }
@@ -182,8 +181,63 @@ public class PluginManager {
         return file;
     }
 
-    public Set<Plugin> getPlugins() {
-        return plugins;
+    public void applyChanges() {
+        for (Plugin plugin : additions) {
+            try {
+                plugin.download("2.13");
+            } catch (IOException e) {
+                log.error("Failed to download " + plugin, e);
+                additions.remove(plugin);
+            }
+        }
+
+        modifierHook(deletions, additions);
+    }
+
+    public String getChangesAsText() {
+        String text = "";
+
+        for (Plugin pl : deletions) {
+            text += "Uninstall " + pl + "\n";
+        }
+
+        for (Plugin pl : additions) {
+            text += "Install " + pl + "\n";
+        }
+
+        return text;
+    }
+
+    public Set<Plugin> getInstalledPlugins() {
+        Set<Plugin> result = new TreeSet<>(new PluginComparator());
+        for (Plugin plugin : allPlugins) {
+            if (plugin.isInstalled()) {
+                result.add(plugin);
+            }
+        }
+        return result;
+    }
+
+    public Set<Plugin> getAvailablePlugins() {
+        Set<Plugin> result = new TreeSet<>(new PluginComparator());
+        for (Plugin plugin : allPlugins) {
+            if (!plugin.isInstalled()) {
+                result.add(plugin);
+            }
+        }
+        return result;
+    }
+
+    public void toggleInstalled(Plugin plugin) {
+        if (deletions.contains(plugin)) {
+            deletions.remove(plugin);
+        } else if (additions.contains(plugin)) {
+            additions.remove(plugin);
+        } else if (plugin.isInstalled()) {
+            deletions.add(plugin);
+        } else {
+            additions.add(plugin);
+        }
     }
 
     private class PluginComparator implements java.util.Comparator<Plugin> {

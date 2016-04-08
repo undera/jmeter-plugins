@@ -11,6 +11,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class PluginsList extends JPanel implements ListSelectionListener, HyperlinkListener {
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -20,7 +21,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     private DefaultListModel<PluginCheckbox> listModel = new DefaultListModel<>();
     private ChangeListener changeNotifier;
 
-    public PluginsList(ChangeListener notifier) {
+    public PluginsList(Set<Plugin> plugins, ChangeListener notifier) {
         super(new BorderLayout(5, 0));
 
         changeNotifier = notifier;
@@ -34,9 +35,13 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
 
         add(new JScrollPane(description), BorderLayout.CENTER);
         add(new JScrollPane(list), BorderLayout.WEST);
+
+        for (Plugin plugin : plugins) {
+            add(plugin);
+        }
     }
 
-    public void add(Plugin plugin) {
+    private void add(Plugin plugin) {
         PluginCheckbox element = new PluginCheckbox(plugin.getName());
         element.setSelected(plugin.isInstalled());
         element.setPlugin(plugin);
@@ -83,7 +88,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         }
     }
 
-    public Map<Plugin, Boolean> getPlugins() {
+    private Map<Plugin, Boolean> getPlugins() {
         Map<Plugin, Boolean> map = new HashMap<>();
         for (int n = 0; n < listModel.getSize(); n++) {
             map.put(listModel.get(n).getPlugin(), listModel.get(n).isSelected());
@@ -92,23 +97,4 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     }
 
 
-    private class PluginCheckbox extends JCheckBox {
-
-        private Plugin plugin;
-
-        public PluginCheckbox(String name) {
-            super(name);
-        }
-
-        public void setPlugin(Plugin plugin) {
-            this.plugin = plugin;
-            if (plugin.getID().equals("jpgc-common")) {
-                setEnabled(false);
-            }
-        }
-
-        public Plugin getPlugin() {
-            return plugin;
-        }
-    }
 }

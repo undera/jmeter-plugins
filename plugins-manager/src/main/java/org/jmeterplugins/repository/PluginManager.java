@@ -24,6 +24,7 @@ public class PluginManager {
     private Set<Plugin> allPlugins = new TreeSet<>(new PluginComparator());
     private Set<Plugin> deletions = new HashSet<>();
     private Set<Plugin> additions = new HashSet<>();
+    private Set<Plugin> dependencyAdditions = new HashSet<>();
 
     public void load() throws IOException {
         loadRepo();
@@ -181,16 +182,20 @@ public class PluginManager {
     }
 
     public void applyChanges() {
-        for (Plugin plugin : additions) {
+        Set<Plugin> installs = new HashSet<>();
+        installs.addAll(this.additions);
+        installs.addAll(this.dependencyAdditions);
+
+        for (Plugin plugin : installs) {
             try {
                 plugin.download();
             } catch (IOException e) {
                 log.error("Failed to download " + plugin, e);
-                additions.remove(plugin);
+                installs.remove(plugin);
             }
         }
 
-        modifierHook(deletions, additions);
+        modifierHook(deletions, installs);
     }
 
     public String getChangesAsText() {
@@ -204,6 +209,9 @@ public class PluginManager {
             text += "Install " + pl + " " + pl.getCandidateVersion() + "\n";
         }
 
+        for (Plugin pl : dependencyAdditions) {
+            text += "Install dependency " + pl + " " + pl.getCandidateVersion() + "\n";
+        }
         return text;
     }
 
@@ -265,6 +273,7 @@ public class PluginManager {
 
         // resolve dependencies
         boolean hasModifications = true;
+        dependencyAdditions.clear();
         while (hasModifications) {
             hasModifications = false;
             for (Plugin plugin : additions) {
@@ -275,8 +284,11 @@ public class PluginManager {
                     }
 
                     Plugin depend = getPluginByID(pluginID);
-                    if (!depend.isInstalled() && !additions.contains(depend)) {
-                        additions.add(depend);
+
+                    boolean notInAdditions = !additions.contains(depend) && !dependencyAdditions.contains(depend);
+                    boolean notInstalled = !depend.isInstalled() || deletions.contains(depend);
+                    if (notInstalled && notInAdditions) {
+                        dependencyAdditions.add(depend);
                         hasModifications = true;
                     }
                 }

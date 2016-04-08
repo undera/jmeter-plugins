@@ -11,6 +11,7 @@ import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Set;
 
 public class PluginsList extends JPanel implements ListSelectionListener, HyperlinkListener {
@@ -111,6 +112,11 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         if (plugin.getInstalledPath() != null) {
             txt += "<pre>Location: " + plugin.getInstalledPath() + "</pre>";
         }
+
+        Set<String> deps = plugin.getDepends();
+        if (!deps.isEmpty()) {
+            txt += "<pre>Dependencies: " + Arrays.toString(deps.toArray(new String[0])) + "</pre>";
+        }
         return txt + "<br/>";
     }
 
@@ -140,6 +146,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
                     Plugin plugin = list.getSelectedValue().getPlugin();
                     plugin.setCandidateVersion(item);
                     dialogRefresh.stateChanged(new ChangeEvent(this));
+                    // TODO: file description text refresh, because of depends list there
                 }
             }
         }

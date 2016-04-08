@@ -39,6 +39,7 @@ public class PluginManagerDialog extends JDialog {
             e.printStackTrace();
         }
 
+        apply.setEnabled(false);
         ChangeListener notifier = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -46,7 +47,9 @@ public class PluginManagerDialog extends JDialog {
                     PluginCheckbox checbox = (PluginCheckbox) e.getSource();
                     Plugin plugin = checbox.getPlugin();
                     manager.toggleInstalled(plugin);
-                    modifs.setText(manager.getChangesAsText());
+                    String changeText = manager.getChangesAsText();
+                    modifs.setText(changeText);
+                    apply.setEnabled(!changeText.isEmpty());
                 }
             }
         };

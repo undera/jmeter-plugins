@@ -1,6 +1,6 @@
 [
   {
-    "id": "jpgc-common",
+    "id": "jpgc-plugins-manager",
     "name": "Plugins Manager",
     "description": "Adds menu item into Options menu to access UI for installing/removing additional plugins",
     "screenshotUrl": "",
@@ -13,6 +13,47 @@
         "downloadUrl": "",
         "depends": [
           "jmeter>=2.13"
+        ]
+      }
+    }
+  },
+  {
+    "id": "jpgc-standard",
+    "name": "Standard Set by JMeter-Plugins.org",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.jmeter.samplers.DummySampler",
+    "canUninstall": true,
+    "versions": {
+      "1.4.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-standard/1.4.0/jmeter-plugins-standard-1.4.0.jar",
+        "depends": [
+          "jmeter>=2.13",
+          "jmeter-components",
+          "jmeter-http"
+        ]
+      }
+    }
+  },
+  {
+    "id": "jpgc-extras",
+    "name": "Extras Set by JMeter-Plugins.org",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.jmeter.config.VariablesFromCSV",
+    "canUninstall": true,
+    "versions": {
+      "1.4.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-extras/1.4.0/jmeter-plugins-extras-1.4.0.jar",
+        "depends": [
+          "jmeter>=2.13",
+          "jpgc-standard",
+          "jmeter-http",
+          "jmeter-jdbc"
         ]
       }
     }

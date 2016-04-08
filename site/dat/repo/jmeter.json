@@ -7,7 +7,6 @@
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/tcpsampler.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#TCP_Sampler",
     "markerClass": "org.apache.jmeter.protocol.tcp.sampler.TCPSampler",
-    "canUninstall": true,
     "versions": {
       "2.13": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_tcp/2.13/ApacheJMeter_tcp-2.13.jar",

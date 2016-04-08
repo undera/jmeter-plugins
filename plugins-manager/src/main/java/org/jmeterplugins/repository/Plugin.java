@@ -56,7 +56,9 @@ public class Plugin {
         inst.screenshot = elm.getString("screenshotUrl");
         inst.helpLink = elm.getString("helpUrl");
         inst.vendor = elm.getString("vendor");
-        inst.canUninstall = elm.getBoolean("canUninstall");
+        if (elm.containsKey("canUninstall")) {
+            inst.canUninstall = elm.getBoolean("canUninstall");
+        }
         return inst;
     }
 

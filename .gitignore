@@ -1,7 +1,7 @@
 /site/.htaccess
 /site/composer.lock
 /site/vendor
-/jmeter.log
+jmeter.log
 /bundle/
 /site/files/
 /site/img/design/

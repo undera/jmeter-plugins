@@ -256,8 +256,10 @@ public class PluginManager {
                     additions.add(plugin);
                 }
             } else {
-                //deletions.remove(plugin);
-                //additions.remove(plugin);
+                if (deletions.contains(plugin) && additions.contains(plugin)) {
+                    deletions.remove(plugin);
+                    additions.remove(plugin);
+                }
             }
         }
     }

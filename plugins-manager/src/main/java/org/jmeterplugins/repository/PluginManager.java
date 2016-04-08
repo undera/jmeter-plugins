@@ -184,7 +184,7 @@ public class PluginManager {
     public void applyChanges() {
         for (Plugin plugin : additions) {
             try {
-                plugin.download("2.13");
+                plugin.download(plugin.getCandidateVersion());
             } catch (IOException e) {
                 log.error("Failed to download " + plugin, e);
                 additions.remove(plugin);

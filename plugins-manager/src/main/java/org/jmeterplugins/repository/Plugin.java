@@ -18,15 +18,17 @@ import org.apache.log.Logger;
 
 import java.io.*;
 import java.net.URI;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Plugin {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String VER_STOCK = "0.0.0-STOCK";
-    private JSONObject versions = new JSONObject();
+    protected JSONObject versions = new JSONObject();
     private String id;
-    private String markerClass;
+    protected String markerClass;
     private String installedPath;
     private String installedVersion;
     private String tempName;
@@ -36,6 +38,7 @@ public class Plugin {
     private String screenshot;
     private String helpLink;
     private String vendor;
+    private String candidateVersion;
 
     public Plugin(String aId) {
         id = aId;
@@ -59,10 +62,23 @@ public class Plugin {
     }
 
     public void detectInstalled() {
+        Set<String> versions = new TreeSet<>(new VersionComparator());
+        for (Object o : this.versions.keySet()) {
+            if (o instanceof String) {
+                versions.add((String) o);
+            }
+        }
+
         installedPath = getJARPath(markerClass);
         if (installedPath != null) {
             installedVersion = getVersionFromPath(installedPath);
+            versions.add(installedVersion);
             log.debug("Found plugin " + this + " version " + installedVersion + " at path " + installedPath);
+        }
+
+        if (versions.size() > 0) {
+            String[] vers = versions.toArray(new String[0]);
+            candidateVersion = vers[vers.length - 1];
         }
     }
 
@@ -114,6 +130,10 @@ public class Plugin {
     }
 
     public void download(String version) throws IOException {
+        if (!versions.containsKey(version)) {
+            throw new IllegalArgumentException("Version " + version + " not found for plugin " + this);
+        }
+
         URI url = URI.create(versions.getJSONObject(version).getString("downloadUrl"));
         log.info("Downloading: " + url);
         HttpClient httpClient = new SystemDefaultHttpClient();
@@ -167,5 +187,55 @@ public class Plugin {
 
     public String getVendor() {
         return vendor;
+    }
+
+    public String getCandidateVersion() {
+        return candidateVersion;
+    }
+
+    private class VersionComparator implements java.util.Comparator<String> {
+        @Override
+        public int compare(String a, String b) {
+            String[] aParts = a.split("\\W+");
+            String[] bParts = b.split("\\W+");
+
+            for (int aN = 0; aN < aParts.length; aN++) {
+                if (aN < bParts.length) {
+                    int res = compare2(aParts[aN], bParts[aN]);
+                    if (res != 0) return res;
+                }
+            }
+
+            return a.compareTo(b);
+        }
+
+        private int compare2(String a, String b) {
+            if (a.equals(b)) {
+                return 0;
+            }
+
+            Object ai, bi;
+            try {
+                ai = Integer.parseInt(a);
+            } catch (NumberFormatException e) {
+                ai = a;
+            }
+
+            try {
+                bi = Integer.parseInt(b);
+            } catch (NumberFormatException e) {
+                bi = b;
+            }
+
+            if (ai instanceof Integer && bi instanceof Integer) {
+                return Integer.compare((Integer) ai, (Integer) bi);
+            } else if (ai instanceof String && bi instanceof String) {
+                return ((String) ai).compareTo((String) bi);
+            } else if (ai instanceof String) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
     }
 }

@@ -27,6 +27,14 @@
     "markerClass": "kg.apc.jmeter.samplers.DummySampler",
     "canUninstall": true,
     "versions": {
+      "1.3.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-standard/1.3.1/jmeter-plugins-standard-1.3.1.jar",
+        "depends": [
+          "jmeter>=2.13",
+          "jmeter-components",
+          "jmeter-http"
+        ]
+      },
       "1.4.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-standard/1.4.0/jmeter-plugins-standard-1.4.0.jar",
         "depends": [

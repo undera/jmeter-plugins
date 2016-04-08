@@ -112,9 +112,9 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
             txt += "<p><img src='" + plugin.getScreenshot() + "'/></p>";
         }
         if (plugin.getInstalledPath() != null) {
-            txt += "<p>Location: " + plugin.getInstalledPath() + "</p>";
+            txt += "<pre>Location: " + plugin.getInstalledPath() + "</pre>";
         }
-        return txt;
+        return txt+"<br/>";
     }
 
     @Override
@@ -141,7 +141,6 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         }
         return map;
     }
-
 
     private class VerChoiceChanged implements ItemListener {
         @Override

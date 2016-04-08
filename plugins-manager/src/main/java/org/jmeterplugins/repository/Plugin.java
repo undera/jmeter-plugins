@@ -71,7 +71,9 @@ public class Plugin {
         }
 
         Set<String> versions = getVersions();
-        if (versions.size() > 0) {
+        if (isInstalled()) {
+            candidateVersion = installedVersion;
+        } else if (versions.size() > 0) {
             String[] vers = versions.toArray(new String[0]);
             candidateVersion = vers[vers.length - 1];
         }

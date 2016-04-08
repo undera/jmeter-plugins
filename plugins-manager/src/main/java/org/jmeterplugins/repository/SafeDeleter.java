@@ -17,22 +17,14 @@ public class SafeDeleter {
 
         while (args.hasNext()) {
             String nextArg = args.next();
-            if (nextArg.equalsIgnoreCase("--delete-list")) {
-                if (!args.hasNext()) {
-                    throw new IllegalArgumentException("Missing delete list file name");
-                }
-
-                File dDel = new File(args.next());
-                dDel.deleteOnExit();
-                deleteFiles(dDel);
-            } else if (nextArg.equalsIgnoreCase("--copy-list")) {
+            if (nextArg.equalsIgnoreCase("--move-list")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing delete list file name");
                 }
 
                 File fCopy = new File(args.next());
                 fCopy.deleteOnExit();
-                copyFiles(fCopy);
+                moveFiles(fCopy);
             } else if (nextArg.equalsIgnoreCase("--restart-command")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing restart command file");
@@ -57,13 +49,13 @@ public class SafeDeleter {
 
         final ProcessBuilder builder = new ProcessBuilder(command);
         System.out.print("Starting: " + command);
-        File cleanerLog = File.createTempFile("jpgc-restarter", ".log");
+        File cleanerLog = File.createTempFile("jpgc-restarter-", ".log");
         builder.redirectError(cleanerLog);
         builder.redirectOutput(cleanerLog);
         builder.start();
     }
 
-    private static void copyFiles(File file) throws IOException, InterruptedException {
+    private static void moveFiles(File file) throws IOException, InterruptedException {
         BufferedReader br = new BufferedReader(new FileReader(file));
         String line;
         while ((line = br.readLine()) != null) {
@@ -81,27 +73,5 @@ public class SafeDeleter {
             }
         }
         System.out.println("Done moving files");
-    }
-
-    private static void deleteFiles(File file) throws IOException, InterruptedException {
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        String line;
-        while ((line = br.readLine()) != null) {
-            File f = new File(line);
-
-            if (!f.exists()) {
-                System.err.println("File not exists, won't try to delete: " + f.getAbsolutePath());
-                continue;
-            }
-
-            // TODO: make sure it's jar?
-            System.out.println("Trying to delete " + f.getAbsolutePath());
-            int cnt = 1;
-            while (!f.delete() && cnt++ < 60) {
-                System.err.println("Did not delete #" + cnt + " " + f.getAbsolutePath());
-                Thread.sleep(1000);
-            }
-        }
-        System.out.println("Done deleting attempts");
     }
 }

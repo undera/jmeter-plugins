@@ -101,14 +101,13 @@ public class PluginManager {
     }
 
     public void startModifications(Set<Plugin> delPlugins, Set<Plugin> installPlugins) throws IOException {
-        final File delFile = makeDeletionsFile(delPlugins);
-        final File addFile = makeAdditionsFile(installPlugins);
-        final ProcessBuilder builder = getProcessBuilder(delFile, addFile);
+        final File moveFile = makeMovementsFile(delPlugins, installPlugins);
+        final ProcessBuilder builder = getProcessBuilder(moveFile);
         log.info("JAR Modifications log will be saved into: " + builder.redirectOutput().file().getPath());
         builder.start();
     }
 
-    private ProcessBuilder getProcessBuilder(File delFile, File addFile) throws IOException {
+    private ProcessBuilder getProcessBuilder(File moveFile) throws IOException {
         String jvm_location;
         if (System.getProperty("os.name").startsWith("Win")) {
             jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java.exe";
@@ -128,23 +127,21 @@ public class PluginManager {
         command.add("-classpath");
         command.add(currentJar.getPath());
         command.add(SafeDeleter.class.getCanonicalName());
-        command.add("--delete-list");
-        command.add(delFile.getAbsolutePath());
-        command.add("--copy-list");
-        command.add(addFile.getAbsolutePath());
+        command.add("--move-list");
+        command.add(moveFile.getAbsolutePath());
         command.add("--restart-command");
         command.add(restartFile.getAbsolutePath());
 
         log.debug("Command to execute: " + command);
         final ProcessBuilder builder = new ProcessBuilder(command);
-        File cleanerLog = File.createTempFile("jpgc-cleaner", ".log");
+        File cleanerLog = File.createTempFile("jpgc-cleaner-", ".log");
         builder.redirectError(cleanerLog);
         builder.redirectOutput(cleanerLog);
         return builder;
     }
 
     private File getRestartFile(String jvm_location) throws IOException {
-        File file = File.createTempFile("jpgc-restart", ".list");
+        File file = File.createTempFile("jpgc-restart-", ".list");
         PrintWriter out = new PrintWriter(file);
         out.print(jvm_location + "\n");
 
@@ -162,20 +159,23 @@ public class PluginManager {
         return file;
     }
 
-    private File makeDeletionsFile(Set<Plugin> plugins) throws IOException {
-        final File file = File.createTempFile("jpgc-delete", ".list");
+    private File makeMovementsFile(Set<Plugin> deletes, Set<Plugin> installs) throws IOException {
+        final File file = File.createTempFile("jpgc-jar-changes", ".list");
         PrintWriter out = new PrintWriter(file);
-        for (Plugin plugin : plugins) {
-            out.print(plugin.getInstalledPath() + "\n");
-        }
-        out.close();
-        return file;
-    }
 
-    private File makeAdditionsFile(Set<Plugin> plugins) throws IOException {
-        final File file = File.createTempFile("jpgc-install", ".list");
-        PrintWriter out = new PrintWriter(file);
-        for (Plugin plugin : plugins) {
+        if (!deletes.isEmpty()) {
+            File delDir = File.createTempFile("jpgc-deleted-jars-", "");
+            delDir.delete();
+            delDir.mkdir();
+            log.info("Will move deleted JARs to directory " + delDir);
+            for (Plugin plugin : deletes) {
+                File installed = new File(plugin.getInstalledPath());
+                String delTo = delDir + File.separator + installed.getName();
+                out.print(plugin.getInstalledPath() + "\t" + delTo + "\n");
+            }
+        }
+
+        for (Plugin plugin : installs) {
             out.print(plugin.getTempName() + "\t" + plugin.getDestName() + "\n");
         }
         out.close();

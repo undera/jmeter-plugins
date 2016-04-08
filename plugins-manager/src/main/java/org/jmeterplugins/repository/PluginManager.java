@@ -42,7 +42,6 @@ public class PluginManager {
         });
     }
 
-    @SuppressWarnings("unused") // FIXME: do we need it?
     public Plugin getPluginByID(String id) {
         for (Plugin plugin : allPlugins) {
             if (plugin.getID().equals(id)) {
@@ -184,7 +183,7 @@ public class PluginManager {
     public void applyChanges() {
         for (Plugin plugin : additions) {
             try {
-                plugin.download(plugin.getCandidateVersion());
+                plugin.download();
             } catch (IOException e) {
                 log.error("Failed to download " + plugin, e);
                 additions.remove(plugin);
@@ -247,6 +246,7 @@ public class PluginManager {
     }
 
     public void resolve() {
+        // detect upgrades
         for (Plugin plugin : getInstalledPlugins()) {
             if (!plugin.getInstalledVersion().equals(plugin.getCandidateVersion()) && !deletions.contains(plugin)) {
                 if (!deletions.contains(plugin)) {
@@ -259,6 +259,26 @@ public class PluginManager {
                 if (deletions.contains(plugin) && additions.contains(plugin)) {
                     deletions.remove(plugin);
                     additions.remove(plugin);
+                }
+            }
+        }
+
+        // resolve dependencies
+        boolean hasModifications = true;
+        while (hasModifications) {
+            hasModifications = false;
+            for (Plugin plugin : additions) {
+                for (String pluginID : plugin.getDepends()) {
+                    if (pluginID.equals("jmeter")) {
+                        // TODO: special check for jmeter ver
+                        continue;
+                    }
+
+                    Plugin depend = getPluginByID(pluginID);
+                    if (!depend.isInstalled() && !additions.contains(depend)) {
+                        additions.add(depend);
+                        hasModifications = true;
+                    }
                 }
             }
         }

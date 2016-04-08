@@ -1,6 +1,7 @@
 package org.jmeterplugins.repository;
 
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -18,6 +19,7 @@ import org.apache.log.Logger;
 
 import java.io.*;
 import java.net.URI;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -147,7 +149,8 @@ public class Plugin {
         return installedPath != null;
     }
 
-    public void download(String version) throws IOException {
+    public void download() throws IOException {
+        String version = getCandidateVersion();
         if (!versions.containsKey(version)) {
             throw new IllegalArgumentException("Version " + version + " not found for plugin " + this);
         }
@@ -230,6 +233,26 @@ public class Plugin {
 
         VersionComparator comparator = new VersionComparator();
         return comparator.compare(getInstalledVersion(), getMaxVersion()) < 0;
+    }
+
+    public Set<String> getDepends() {
+        Set<String> depends = new HashSet<>();
+        JSONObject version = versions.getJSONObject(getCandidateVersion());
+        if (version.containsKey("depends")) {
+            JSONArray list = version.getJSONArray("depends");
+            for (Object o : list) {
+                if (o instanceof String) {
+                    String dep = (String) o;
+                    Pattern p = Pattern.compile("([^=<>]+)([=<>]+[0-9.]+)?");
+                    Matcher m = p.matcher(dep);
+                    if (!m.find()) {
+                        throw new IllegalArgumentException("Cannot parse depend str: " + dep);
+                    }
+                    depends.add(m.group(1));
+                }
+            }
+        }
+        return depends;
     }
 
     private class VersionComparator implements java.util.Comparator<String> {

@@ -13,7 +13,7 @@ class PluginCheckbox extends JCheckBox {
 
     public void setPlugin(Plugin plugin) {
         this.plugin = plugin;
-        if (plugin.getID().equals("jpgc-common")) {
+        if (!plugin.canUninstall()) {
             setEnabled(false);
         }
     }

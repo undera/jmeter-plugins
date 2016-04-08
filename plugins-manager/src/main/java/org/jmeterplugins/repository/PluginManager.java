@@ -228,15 +228,37 @@ public class PluginManager {
         return result;
     }
 
-    public void toggleInstalled(Plugin plugin) {
-        if (deletions.contains(plugin)) {
-            deletions.remove(plugin);
-        } else if (additions.contains(plugin)) {
-            additions.remove(plugin);
-        } else if (plugin.isInstalled()) {
-            deletions.add(plugin);
+    public void toggleInstalled(Plugin plugin, boolean cbState) {
+        if (cbState) {
+            if (deletions.contains(plugin)) {
+                deletions.remove(plugin);
+            }
+            if (!plugin.isInstalled()) {
+                additions.add(plugin);
+            }
         } else {
-            additions.add(plugin);
+            if (additions.contains(plugin)) {
+                additions.remove(plugin);
+            }
+            if (plugin.isInstalled()) {
+                deletions.add(plugin);
+            }
+        }
+    }
+
+    public void resolve() {
+        for (Plugin plugin : getInstalledPlugins()) {
+            if (!plugin.getInstalledVersion().equals(plugin.getCandidateVersion()) && !deletions.contains(plugin)) {
+                if (!deletions.contains(plugin)) {
+                    deletions.add(plugin);
+                }
+                if (!additions.contains(plugin)) {
+                    additions.add(plugin);
+                }
+            } else {
+                //deletions.remove(plugin);
+                //additions.remove(plugin);
+            }
         }
     }
 

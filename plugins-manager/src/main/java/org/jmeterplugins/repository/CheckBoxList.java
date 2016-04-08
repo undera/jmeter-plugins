@@ -43,6 +43,13 @@ public class CheckBoxList<T extends JCheckBox> extends JList<T> {
             value.setForeground(isSelected ? getSelectionForeground() : getForeground());
             //value.setEnabled(isEnabled());
             value.setFont(getFont());
+            if (value instanceof PluginCheckbox) {
+                Plugin p = ((PluginCheckbox) value).getPlugin();
+                if (p.isUpgradable()) {
+                    value.setFont(getFont().deriveFont(Font.ITALIC | Font.BOLD));
+                }
+            }
+
             value.setFocusPainted(false);
             value.setBorderPainted(true);
             value.setBorder(isSelected ? UIManager.getBorder("List.focusCellHighlightBorder") : noFocusBorder);

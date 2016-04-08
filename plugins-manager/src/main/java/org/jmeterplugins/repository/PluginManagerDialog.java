@@ -44,6 +44,7 @@ public class PluginManagerDialog extends JDialog {
         final ChangeListener statusRefresh = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
+                manager.resolve();
                 String changeText = manager.getChangesAsText();
                 modifs.setText(changeText);
                 apply.setEnabled(!changeText.isEmpty());
@@ -54,9 +55,9 @@ public class PluginManagerDialog extends JDialog {
             @Override
             public void stateChanged(ChangeEvent e) {
                 if (e.getSource() instanceof PluginCheckbox) {
-                    PluginCheckbox checbox = (PluginCheckbox) e.getSource();
-                    Plugin plugin = checbox.getPlugin();
-                    manager.toggleInstalled(plugin);
+                    PluginCheckbox checkbox = (PluginCheckbox) e.getSource();
+                    Plugin plugin = checkbox.getPlugin();
+                    manager.toggleInstalled(plugin, checkbox.isSelected());
                     statusRefresh.stateChanged(new ChangeEvent(this));
                 }
             }

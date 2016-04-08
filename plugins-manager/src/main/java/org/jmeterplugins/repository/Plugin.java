@@ -70,13 +70,20 @@ public class Plugin {
             log.debug("Found plugin " + this + " version " + installedVersion + " at path " + installedPath);
         }
 
-        Set<String> versions = getVersions();
         if (isInstalled()) {
             candidateVersion = installedVersion;
-        } else if (versions.size() > 0) {
-            String[] vers = versions.toArray(new String[0]);
-            candidateVersion = vers[vers.length - 1];
+        } else {
+            candidateVersion = getMaxVersion();
         }
+    }
+
+    public String getMaxVersion() {
+        Set<String> versions = getVersions();
+        if (versions.size() > 0) {
+            String[] vers = versions.toArray(new String[0]);
+            return vers[vers.length - 1];
+        }
+        return null;
     }
 
     public Set<String> getVersions() {
@@ -214,6 +221,15 @@ public class Plugin {
 
     public void setCandidateVersion(String candidateVersion) {
         this.candidateVersion = candidateVersion;
+    }
+
+    public boolean isUpgradable() {
+        if (!isInstalled()) {
+            return false;
+        }
+
+        VersionComparator comparator = new VersionComparator();
+        return comparator.compare(getInstalledVersion(), getMaxVersion()) < 0;
     }
 
     private class VersionComparator implements java.util.Comparator<String> {

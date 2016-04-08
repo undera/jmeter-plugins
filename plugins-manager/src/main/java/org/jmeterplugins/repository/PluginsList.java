@@ -11,8 +11,6 @@ import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 public class PluginsList extends JPanel implements ListSelectionListener, HyperlinkListener {
@@ -71,11 +69,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         if (!e.getValueIsAdjusting() && list.getSelectedIndex() >= 0) {
             Plugin plugin = list.getSelectedValue().getPlugin();
             description.setText(getDescriptionHTML(plugin));
-
             setUpVersionsList(plugin);
-
-            // TODO: preselect newer version for upgrade
-            // TODO: mark upgradable plugins in the list
         }
     }
 
@@ -99,6 +93,9 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
 
     private String getDescriptionHTML(Plugin plugin) {
         String txt = "<h1>" + plugin.getName() + "</h1>";
+        if (plugin.isUpgradable()) {
+            txt += "<p><font color='orange'>This plugin can be upgraded to version " + plugin.getMaxVersion() + "</font></p>";
+        }
         if (!plugin.getVendor().isEmpty()) {
             txt += "<p>Vendor: <i>" + plugin.getVendor() + "</i></p>";
         }
@@ -114,7 +111,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         if (plugin.getInstalledPath() != null) {
             txt += "<pre>Location: " + plugin.getInstalledPath() + "</pre>";
         }
-        return txt+"<br/>";
+        return txt + "<br/>";
     }
 
     @Override
@@ -132,14 +129,6 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
                 log.debug("Failed to open in browser", ignored);
             }
         }
-    }
-
-    private Map<Plugin, Boolean> getPlugins() {
-        Map<Plugin, Boolean> map = new HashMap<>();
-        for (int n = 0; n < listModel.getSize(); n++) {
-            map.put(listModel.get(n).getPlugin(), listModel.get(n).isSelected());
-        }
-        return map;
     }
 
     private class VerChoiceChanged implements ItemListener {

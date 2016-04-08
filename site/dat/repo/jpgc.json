@@ -9,7 +9,7 @@
     "markerClass": "org.jmeterplugins.repository.PluginManager",
     "canUninstall": false,
     "versions": {
-      "2.0": {
+      "1.0.0": {
         "downloadUrl": "",
         "depends": [
           "jmeter>=2.13"

@@ -39,7 +39,7 @@ public class Plugin {
     private String helpLink;
     private String vendor;
     private String candidateVersion;
-    private boolean canUninstall=true;
+    private boolean canUninstall = true;
 
     public Plugin(String aId) {
         id = aId;
@@ -64,6 +64,20 @@ public class Plugin {
     }
 
     public void detectInstalled() {
+        installedPath = getJARPath(markerClass);
+        if (installedPath != null) {
+            installedVersion = getVersionFromPath(installedPath);
+            log.debug("Found plugin " + this + " version " + installedVersion + " at path " + installedPath);
+        }
+
+        Set<String> versions = getVersions();
+        if (versions.size() > 0) {
+            String[] vers = versions.toArray(new String[0]);
+            candidateVersion = vers[vers.length - 1];
+        }
+    }
+
+    public Set<String> getVersions() {
         Set<String> versions = new TreeSet<>(new VersionComparator());
         for (Object o : this.versions.keySet()) {
             if (o instanceof String) {
@@ -71,17 +85,10 @@ public class Plugin {
             }
         }
 
-        installedPath = getJARPath(markerClass);
-        if (installedPath != null) {
-            installedVersion = getVersionFromPath(installedPath);
+        if (isInstalled()) {
             versions.add(installedVersion);
-            log.debug("Found plugin " + this + " version " + installedVersion + " at path " + installedPath);
         }
-
-        if (versions.size() > 0) {
-            String[] vers = versions.toArray(new String[0]);
-            candidateVersion = vers[vers.length - 1];
-        }
+        return versions;
     }
 
     private String getVersionFromPath(String installedPath) {

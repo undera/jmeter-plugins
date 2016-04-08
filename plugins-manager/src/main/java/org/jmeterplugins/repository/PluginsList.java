@@ -19,12 +19,11 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     private final JTextPane description = new JTextPane();
     private JList<PluginCheckbox> list = new CheckBoxList<>(5);
     private DefaultListModel<PluginCheckbox> listModel = new DefaultListModel<>();
-    private ChangeListener changeNotifier;
+    private final JComboBox<String> version = new JComboBox<>();
 
-    public PluginsList(Set<Plugin> plugins, ChangeListener notifier) {
+    public PluginsList(Set<Plugin> plugins, ChangeListener checkboxNotifier) {
         super(new BorderLayout(5, 0));
 
-        changeNotifier = notifier;
         description.setContentType("text/html");
         description.setEditable(false);
         description.addHyperlinkListener(this);
@@ -33,15 +32,28 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         list.setBorder(PluginManagerDialog.SPACING);
         list.addListSelectionListener(this);
 
-        add(new JScrollPane(description), BorderLayout.CENTER);
         add(new JScrollPane(list), BorderLayout.WEST);
+        add(getDetailsPanel(), BorderLayout.CENTER);
 
         for (Plugin plugin : plugins) {
-            add(plugin);
+            add(plugin, checkboxNotifier);
         }
     }
 
-    private void add(Plugin plugin) {
+    private JPanel getDetailsPanel() {
+        JPanel detailsPanel = new JPanel(new BorderLayout());
+        detailsPanel.add(new JScrollPane(description), BorderLayout.CENTER);
+
+        version.setEnabled(false);
+
+        JPanel verPanel = new JPanel(new BorderLayout());
+        verPanel.add(new JLabel("Version: "), BorderLayout.WEST);
+        verPanel.add(version, BorderLayout.CENTER);
+        detailsPanel.add(verPanel, BorderLayout.SOUTH);
+        return detailsPanel;
+    }
+
+    private void add(Plugin plugin, ChangeListener changeNotifier) {
         PluginCheckbox element = new PluginCheckbox(plugin.getName());
         element.setSelected(plugin.isInstalled());
         element.setPlugin(plugin);
@@ -54,21 +66,49 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         if (!e.getValueIsAdjusting() && list.getSelectedIndex() >= 0) {
             PluginCheckbox item = list.getSelectedValue();
             Plugin plugin = item.getPlugin();
-            String txt = "<h1>" + plugin.getName() + "</h1>";
-            if (!plugin.getVendor().isEmpty()) {
-                txt += "<p>Vendor: <i>" + plugin.getVendor() + "</i></p>";
-            }
-            if (!plugin.getDescription().isEmpty()) {
-                txt += "<p>" + plugin.getDescription() + "</p>";
-            }
-            if (!plugin.getHelpLink().isEmpty()) {
-                txt += "<p><a href='" + plugin.getHelpLink() + "'>More info...</a></p>";
-            }
-            if (!plugin.getScreenshot().isEmpty()) {
-                txt += "<p><img src='" + plugin.getScreenshot() + "'/></p>";
-            }
-            description.setText(txt);
+            description.setText(getDescriptionHTML(plugin));
+
+            setUpVersionsList(plugin);
+
+            // TODO: preselect newer version for upgrade
+            // TODO: mark upgradable plugins in the list
         }
+    }
+
+    private void setUpVersionsList(Plugin plugin) {
+        version.removeAllItems();
+        for (String ver : plugin.getVersions()) {
+            version.addItem(ver);
+        }
+        String selVersion;
+        if (plugin.isInstalled()) {
+            selVersion = plugin.getInstalledVersion();
+        } else {
+            selVersion = plugin.getCandidateVersion();
+        }
+        version.setSelectedItem(selVersion);
+
+        version.setEnabled(version.getItemCount() > 1);
+    }
+
+    private String getDescriptionHTML(Plugin plugin) {
+        String txt = "<h1>" + plugin.getName() + "</h1>";
+        if (!plugin.getVendor().isEmpty()) {
+            txt += "<p>Vendor: <i>" + plugin.getVendor() + "</i></p>";
+        }
+        if (!plugin.getDescription().isEmpty()) {
+            txt += "<p>" + plugin.getDescription() + "</p>";
+        }
+        if (!plugin.getHelpLink().isEmpty()) {
+            txt += "<p><a href='" + plugin.getHelpLink() + "'>More info...</a></p>";
+        }
+        if (!plugin.getScreenshot().isEmpty()) {
+            txt += "<p><img src='" + plugin.getScreenshot() + "'/></p>";
+        }
+        if (plugin.getInstalledPath() != null) {
+            txt += "<p>Location: " + plugin.getInstalledPath() + "</p>";
+        }
+        return txt;
     }
 
     @Override

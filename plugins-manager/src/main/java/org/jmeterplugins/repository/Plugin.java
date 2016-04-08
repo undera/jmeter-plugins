@@ -199,6 +199,10 @@ public class Plugin {
         return canUninstall;
     }
 
+    public String getInstalledVersion() {
+        return installedVersion;
+    }
+
     private class VersionComparator implements java.util.Comparator<String> {
         @Override
         public int compare(String a, String b) {

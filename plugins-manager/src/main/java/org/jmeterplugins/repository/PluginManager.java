@@ -198,11 +198,11 @@ public class PluginManager {
         String text = "";
 
         for (Plugin pl : deletions) {
-            text += "Uninstall " + pl + "\n";
+            text += "Uninstall " + pl + " " + pl.getInstalledVersion() + "\n";
         }
 
         for (Plugin pl : additions) {
-            text += "Install " + pl + "\n";
+            text += "Install " + pl + " " + pl.getCandidateVersion() + "\n";
         }
 
         return text;

@@ -3,8 +3,6 @@ package org.jmeterplugins.repository;
 import org.apache.jmeter.gui.action.ActionNames;
 import org.apache.jmeter.gui.action.ActionRouter;
 import org.apache.jorphan.gui.ComponentUtil;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -16,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class PluginManagerDialog extends JDialog {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    // private static final Logger log = LoggingManager.getLoggerForClass();
     public static final Border SPACING = BorderFactory.createEmptyBorder(5, 5, 5, 5);
     private final PluginManager manager;
     private final JTextArea modifs = new JTextArea();
@@ -44,7 +42,6 @@ public class PluginManagerDialog extends JDialog {
         final ChangeListener statusRefresh = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                manager.resolve();
                 String changeText = manager.getChangesAsText();
                 modifs.setText(changeText);
                 apply.setEnabled(!changeText.isEmpty());

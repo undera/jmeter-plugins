@@ -21,10 +21,7 @@ public class PluginManager {
     protected HttpClient httpClient = new HttpClient();
     private static int TIMEOUT = 5;
     private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://undera-desktop:8003"); // FIXME: that's temporary address
-    private Set<Plugin> allPlugins = new TreeSet<>(new PluginComparator());
-    private Set<Plugin> deletions = new HashSet<>();
-    private Set<Plugin> additions = new HashSet<>();
-    private Set<Plugin> dependencyAdditions = new HashSet<>();
+    protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
 
     public void load() throws IOException {
         loadRepo();
@@ -43,22 +40,10 @@ public class PluginManager {
         });
     }
 
-    public Plugin getPluginByID(String id) {
-        for (Plugin plugin : allPlugins) {
-            if (plugin.getID().equals(id)) {
-                return plugin;
-            }
-        }
-        throw new RuntimeException("Plugin not found by ID: " + id);
-    }
-
     private void loadRepo() throws IOException {
         if (allPlugins.size() > 0) {
             return;
         }
-
-        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(TIMEOUT * 1000);
-        httpClient.getHttpConnectionManager().getParams().setSoTimeout(TIMEOUT * 1000);
 
         JSON json = getJSON("/repo/");
         if (!(json instanceof JSONArray)) {
@@ -67,19 +52,21 @@ public class PluginManager {
 
         for (Object elm : (JSONArray) json) {
             if (elm instanceof JSONObject) {
-                allPlugins.add(Plugin.fromJSON((JSONObject) elm));
+                Plugin plugin = Plugin.fromJSON((JSONObject) elm);
+                plugin.detectInstalled();
+                allPlugins.put(plugin, plugin.isInstalled());
             } else {
                 log.warn("Invalid array element: " + elm);
             }
         }
 
-        log.debug("Plugins: " + allPlugins);
-        for (Plugin plugin : allPlugins) {
-            plugin.detectInstalled();
-        }
+        log.debug("Plugins: " + allPlugins.keySet());
     }
 
-    private JSON getJSON(String path) throws IOException {
+    protected JSON getJSON(String path) throws IOException {
+        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(TIMEOUT * 1000);
+        httpClient.getHttpConnectionManager().getParams().setSoTimeout(TIMEOUT * 1000);
+
         String uri = address + path;
         log.debug("Requesting " + uri);
         GetMethod get = new GetMethod(uri);
@@ -182,42 +169,40 @@ public class PluginManager {
     }
 
     public void applyChanges() {
-        Set<Plugin> installs = new HashSet<>();
-        installs.addAll(this.additions);
-        installs.addAll(this.dependencyAdditions);
+        DependencyResolver resolver = new DependencyResolver(allPlugins);
+        Set<Plugin> additions = resolver.getAdditions();
 
-        for (Plugin plugin : installs) {
+        for (Plugin plugin : additions) {
             try {
                 plugin.download();
             } catch (IOException e) {
                 log.error("Failed to download " + plugin, e);
-                installs.remove(plugin);
+                additions.remove(plugin);
             }
         }
 
-        modifierHook(deletions, installs);
+        modifierHook(resolver.getDeletions(), additions);
     }
 
     public String getChangesAsText() {
+        DependencyResolver resolver = new DependencyResolver(allPlugins);
+
         String text = "";
 
-        for (Plugin pl : deletions) {
+        for (Plugin pl : resolver.getDeletions()) {
             text += "Uninstall " + pl + " " + pl.getInstalledVersion() + "\n";
         }
 
-        for (Plugin pl : additions) {
+        for (Plugin pl : resolver.getAdditions()) {
             text += "Install " + pl + " " + pl.getCandidateVersion() + "\n";
         }
 
-        for (Plugin pl : dependencyAdditions) {
-            text += "Install dependency " + pl + " " + pl.getCandidateVersion() + "\n";
-        }
         return text;
     }
 
     public Set<Plugin> getInstalledPlugins() {
         Set<Plugin> result = new TreeSet<>(new PluginComparator());
-        for (Plugin plugin : allPlugins) {
+        for (Plugin plugin : allPlugins.keySet()) {
             if (plugin.isInstalled()) {
                 result.add(plugin);
             }
@@ -227,7 +212,7 @@ public class PluginManager {
 
     public Set<Plugin> getAvailablePlugins() {
         Set<Plugin> result = new TreeSet<>(new PluginComparator());
-        for (Plugin plugin : allPlugins) {
+        for (Plugin plugin : allPlugins.keySet()) {
             if (!plugin.isInstalled()) {
                 result.add(plugin);
             }
@@ -236,64 +221,7 @@ public class PluginManager {
     }
 
     public void toggleInstalled(Plugin plugin, boolean cbState) {
-        if (cbState) {
-            if (deletions.contains(plugin)) {
-                deletions.remove(plugin);
-            }
-            if (!plugin.isInstalled()) {
-                additions.add(plugin);
-            }
-        } else {
-            if (additions.contains(plugin)) {
-                additions.remove(plugin);
-            }
-            if (plugin.isInstalled()) {
-                deletions.add(plugin);
-            }
-        }
-    }
-
-    public void resolve() {
-        // detect upgrades
-        for (Plugin plugin : getInstalledPlugins()) {
-            if (!plugin.getInstalledVersion().equals(plugin.getCandidateVersion()) && !deletions.contains(plugin)) {
-                if (!deletions.contains(plugin)) {
-                    deletions.add(plugin);
-                }
-                if (!additions.contains(plugin)) {
-                    additions.add(plugin);
-                }
-            } else {
-                if (deletions.contains(plugin) && additions.contains(plugin)) {
-                    deletions.remove(plugin);
-                    additions.remove(plugin);
-                }
-            }
-        }
-
-        // resolve dependencies
-        boolean hasModifications = true;
-        dependencyAdditions.clear();
-        while (hasModifications) {
-            hasModifications = false;
-            for (Plugin plugin : additions) {
-                for (String pluginID : plugin.getDepends()) {
-                    if (pluginID.equals("jmeter")) {
-                        // TODO: special check for jmeter ver
-                        continue;
-                    }
-
-                    Plugin depend = getPluginByID(pluginID);
-
-                    boolean notInAdditions = !additions.contains(depend) && !dependencyAdditions.contains(depend);
-                    boolean notInstalled = !depend.isInstalled() || deletions.contains(depend);
-                    if (notInstalled && notInAdditions) {
-                        dependencyAdditions.add(depend);
-                        hasModifications = true;
-                    }
-                }
-            }
-        }
+        allPlugins.put(plugin, cbState);
     }
 
     private class PluginComparator implements java.util.Comparator<Plugin> {

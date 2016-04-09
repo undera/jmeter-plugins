@@ -5,7 +5,7 @@ if ($_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
 } else {
   $level = \PWE\Core\PWELogger::WARNING;
 }
-$logfile = sys_get_temp_dir() . "/pwe.log";
+$logfile = sys_get_temp_dir() . "/pwe.".date('Ym');
 $tempdir = sys_get_temp_dir();
 
 \PWE\Core\PWELogger::setStdErr($logfile);

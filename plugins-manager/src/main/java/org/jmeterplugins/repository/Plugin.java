@@ -27,21 +27,21 @@ import java.util.regex.Pattern;
 
 public class Plugin {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private static final String VER_STOCK = "0.0.0-STOCK";
+    public static final String VER_STOCK = "0.0.0-STOCK";
     protected JSONObject versions = new JSONObject();
-    private String id;
+    protected String id;
     protected String markerClass;
-    private String installedPath;
-    private String installedVersion;
-    private String tempName;
-    private String destName;
-    private String name;
-    private String description;
-    private String screenshot;
-    private String helpLink;
-    private String vendor;
-    private String candidateVersion;
-    private boolean canUninstall = true;
+    protected String installedPath;
+    protected String installedVersion;
+    protected String tempName;
+    protected String destName;
+    protected String name;
+    protected String description;
+    protected String screenshot;
+    protected String helpLink;
+    protected String vendor;
+    protected String candidateVersion;
+    protected boolean canUninstall = true;
 
     public Plugin(String aId) {
         id = aId;

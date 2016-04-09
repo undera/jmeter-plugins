@@ -8,8 +8,7 @@
         <artifactId>jmeter-plugins</artifactId>
         <version>1.4.0</version>
     </parent>
-    <groupId>com.blazemeter.jmeter</groupId>
-    <artifactId>blazemeter-xmpp</artifactId>
+    <artifactId>jmeter-plugins-xmpp</artifactId>
     <name>JMeter Plugins - XMPP Set</name>
 
     <dependencies>

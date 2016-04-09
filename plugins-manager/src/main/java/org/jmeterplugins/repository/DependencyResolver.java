@@ -1,10 +1,15 @@
 package org.jmeterplugins.repository;
 
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class DependencyResolver {
+    private static final Logger log = LoggingManager.getLoggerForClass();
+    public static final String JMETER = "jmeter";
     protected Set<Plugin> deletions = new HashSet<>();
     protected Set<Plugin> additions = new HashSet<>();
     protected final Map<Plugin, Boolean> allPlugins;
@@ -66,12 +71,8 @@ public class DependencyResolver {
         for (Map.Entry<Plugin, Boolean> entry : allPlugins.entrySet()) {
             Plugin plugin = entry.getKey();
             if (entry.getValue() && plugin.isInstalled() && !plugin.getInstalledVersion().equals(plugin.getCandidateVersion())) {
-                if (!deletions.contains(plugin)) {
-                    deletions.add(plugin);
-                }
-                if (!additions.contains(plugin)) {
-                    additions.add(plugin);
-                }
+                deletions.add(plugin);
+                additions.add(plugin);
             }
         }
     }
@@ -80,6 +81,7 @@ public class DependencyResolver {
         // delete by depend
         boolean hasModifications = true;
         while (hasModifications) {
+            log.debug("Check uninstall dependencies");
             hasModifications = false;
             for (Plugin plugin : deletions) {
                 if (!additions.contains(plugin)) {
@@ -102,22 +104,26 @@ public class DependencyResolver {
         // resolve dependencies
         boolean hasModifications = true;
         while (hasModifications) {
+            log.debug("Check install dependencies: " + additions);
             hasModifications = false;
             for (Plugin plugin : additions) {
                 for (String pluginID : plugin.getDepends()) {
-                    if (pluginID.equals("jmeter")) {
+                    if (pluginID.equals(JMETER)) {
                         // TODO: special check for jmeter ver
+                        log.debug("Special case for JMeter core");
                         continue;
                     }
 
                     Plugin depend = getPluginByID(pluginID);
-
-                    boolean notInAdditions = !additions.contains(depend);
-                    boolean notInstalled = !depend.isInstalled() || deletions.contains(depend);
-                    if (notInstalled && notInAdditions) {
+                    if (!additions.contains(depend)) {
+                        log.debug("Add to install: " + depend);
                         additions.add(depend);
                         hasModifications = true;
                     }
+                }
+
+                if (hasModifications) {
+                    break; // prevent ConcurrentModificationException
                 }
             }
         }

@@ -32,24 +32,58 @@ public class DependencyResolverTest {
     }
 
     @Test
-    public void testDepInstall() throws Exception {
+    public void testUpgrade() throws Exception {
         Map<Plugin, Boolean> plugs = new HashMap<>();
-        PluginMock a = new PluginMock("dep-to-install", null, new HashSet<String>());
-        plugs.put(a, false);
-        HashSet<String> deps = new HashSet<>();
-        deps.add(a.getID());
-        PluginMock b = new PluginMock("dep-trigger", null, deps);
-        plugs.put(b, true);
-
+        PluginMock upgrade = new PluginMock("install", "1.0", new HashSet<String>());
+        upgrade.setCandidateVersion("0.1");
+        plugs.put(upgrade, true);
 
         DependencyResolver obj = new DependencyResolver(plugs);
         Set<Plugin> adds = obj.getAdditions();
         Set<Plugin> dels = obj.getDeletions();
 
-        assertEquals(2, adds.size());
+        assertEquals(1, adds.size());
+        assertEquals(1, dels.size());
+        assertTrue(adds.contains(upgrade));
+        assertTrue(dels.contains(upgrade));
+    }
+
+    @Test
+    public void testDepInstall() throws Exception {
+        Map<Plugin, Boolean> plugs = new HashMap<>();
+        PluginMock jdbc = new PluginMock("jdbc", null, new HashSet<String>());
+        plugs.put(jdbc, false);
+        PluginMock http = new PluginMock("http", null, new HashSet<String>());
+        plugs.put(http, false);
+        PluginMock components = new PluginMock("components", null, new HashSet<String>());
+        plugs.put(components, false);
+
+        HashSet<String> depsStandard = new HashSet<>();
+        depsStandard.add(http.getID());
+        depsStandard.add(components.getID());
+        depsStandard.add(DependencyResolver.JMETER);
+        PluginMock standard = new PluginMock("standard", null, depsStandard);
+        plugs.put(standard, false);
+
+        HashSet<String> depsExtras = new HashSet<>();
+        depsExtras.add(standard.getID());
+        depsExtras.add(jdbc.getID());
+        depsExtras.add(http.getID());
+        depsExtras.add(DependencyResolver.JMETER);
+        PluginMock extras = new PluginMock("extras", null, depsExtras);
+        plugs.put(extras, true);
+
+        DependencyResolver obj = new DependencyResolver(plugs);
+        Set<Plugin> adds = obj.getAdditions();
+        Set<Plugin> dels = obj.getDeletions();
+
+        assertEquals(5, adds.size());
         assertEquals(0, dels.size());
-        assertTrue(adds.contains(a));
-        assertTrue(adds.contains(b));
+        assertTrue(adds.contains(jdbc));
+        assertTrue(adds.contains(components));
+        assertTrue(adds.contains(standard));
+        assertTrue(adds.contains(extras));
+        assertTrue(adds.contains(http));
     }
 
     @Test

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "jpgc-plugins-manager",
+    "name": "Plugins Manager",
+    "description": "Adds menu item into Options menu to access UI for installing/removing additional plugins",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "org.jmeterplugins.repository.PluginManager",
+    "canUninstall": false,
+    "versions": {
+      "1.0.0": {
+        "downloadUrl": "",
+        "depends": [
+          "jmeter>=2.13"
+        ]
+      },
+      "1.0.1": {
+        "downloadUrl": "",
+        "depends": [
+          "jmeter>=2.13"
+        ]
+      }
+    }
+  }
+]

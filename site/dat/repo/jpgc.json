@@ -1,29 +1,5 @@
 [
   {
-    "id": "jpgc-plugins-manager",
-    "name": "Plugins Manager",
-    "description": "Adds menu item into Options menu to access UI for installing/removing additional plugins",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "vendor": "JMeter-Plugins.org",
-    "markerClass": "org.jmeterplugins.repository.PluginManager",
-    "canUninstall": false,
-    "versions": {
-      "1.0.0": {
-        "downloadUrl": "",
-        "depends": [
-          "jmeter>=2.13"
-        ]
-      },
-      "1.0.1": {
-        "downloadUrl": "",
-        "depends": [
-          "jmeter>=2.13"
-        ]
-      }
-    }
-  },
-  {
     "id": "jpgc-standard",
     "name": "Standard Set by JMeter-Plugins.org",
     "description": "",
@@ -80,7 +56,6 @@
     "helpUrl": "",
     "vendor": "BlazeMeter.com",
     "markerClass": "com.blazemeter.jmeter.xmpp.JMeterXMPPSampler",
-    "canUninstall": true,
     "versions": {
       "1.4.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-xmpp/1.4.0/jmeter-plugins-xmpp-1.4.0.jar",
@@ -93,6 +68,44 @@
           "smack-bosh": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-bosh/4.0.7/smack-bosh-4.0.7.jar",
           "smack-extensions": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-extensions/4.0.7/smack-extensions-4.0.7.jar",
           "jbosh": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/jbosh/jbosh/0.8.0/jbosh-0.8.0.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "jpgc-webdriver",
+    "name": "WebDriver Support",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler",
+    "canUninstall": true,
+    "versions": {
+      "1.4.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/1.4.0/jmeter-plugins-webdriver-1.4.0.jar",
+        "depends": [
+          "jmeter>=2.13"
+        ],
+        "libs": {
+          "selenium-support": "",
+          "selenium-api": "",
+          "selenium-firefox-driver": "",
+          "selenium-remote-driver": "",
+          "selenium-ie-driver": "",
+          "selenium-chrome-driver": "",
+          "phantomjsdriver": "",
+          "selenium-htmlunit-driver": "",
+          "nekohtml": "",
+          "jsyntaxpane": "",
+          "htmlunit": "",
+          "commons-exec": "",
+          "gson": "",
+          "htmlunit-core-js": "",
+          "cglib-nodep": "",
+          "cssparser": "",
+          "guava": "",
+          "sac": ""
         }
       }
     }

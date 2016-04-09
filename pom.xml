@@ -65,7 +65,6 @@
         <module>hadoop</module>
         <module>webdriver</module>
         <module>xmpp</module>
-        <module>plugins-manager</module>
     </modules>
 
 </project>

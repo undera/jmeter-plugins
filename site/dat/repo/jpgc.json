@@ -49,6 +49,68 @@
     }
   },
   {
+    "id": "jpgc-extras-libs",
+    "name": "Extras With Libs Set by JMeter-Plugins.org",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "com.atlantbh.jmeter.plugins.oauth.OAuthSampler",
+    "canUninstall": true,
+    "versions": {
+      "1.4.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-extras-libs/1.4.0/jmeter-plugins-extras-libs-1.4.0.jar",
+        "depends": [
+          "jmeter>=2.13",
+          "jpgc-extras",
+          "jmeter-java",
+          "jmeter-http"
+        ],
+        "libs": {
+          "qpid-common": "http://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-common/0.20/qpid-common-0.20.jar",
+          "asm": "http://search.maven.org/remotecontent?filepath=org/ow2/asm/asm/5.0.3/asm-5.0.3.jar",
+          "jedis": "http://search.maven.org/remotecontent?filepath=redis/clients/jedis/2.2.1/jedis-2.2.1.jar",
+          "xom": "http://search.maven.org/remotecontent?filepath=com/io7m/xom/xom/1.2.10/xom-1.2.10.jar",
+          "qpid-client": "http://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-client/0.20/qpid-client-0.20.jar",
+          "commons-lang": "http://search.maven.org/remotecontent?filepath=commons-lang/commons-lang/2.6/commons-lang-2.6.jar",
+          "spring-core": "http://search.maven.org/remotecontent?filepath=org/springframework/spring-core/2.5.6/spring-core-2.5.6.jar",
+          "commons-beanutils": "http://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
+          "spring-jms": "http://search.maven.org/remotecontent?filepath=org/springframework/spring-jms/2.5.6/spring-jms-2.5.6.jar",
+          "ezmorph": "http://search.maven.org/remotecontent?filepath=net/sf/ezmorph/ezmorph/1.0.6/ezmorph-1.0.6.jar",
+          "commons-pool": "http://search.maven.org/remotecontent?filepath=commons-pool/commons-pool/1.6/commons-pool-1.6.jar",
+          "json-lib": "http://search.maven.org/remotecontent?filepath=net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
+          "json-smart": "http://search.maven.org/remotecontent?filepath=net/minidev/json-smart/2.2/json-smart-2.2.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "jpgc-hadoop",
+    "name": "Hadoop Set by JMeter-Plugins.org",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.jmeter.config.VariablesFromCSV",
+    "canUninstall": true,
+    "versions": {
+      "1.4.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-extras/1.4.0/jmeter-plugins-extras-1.4.0.jar",
+        "depends": [
+          "jmeter>=2.13"
+        ],
+        "libs": {
+          "hbase": "http://search.maven.org/remotecontent?filepath=org/apache/hbase/hbase/0.94.5/hbase-0.94.5.jar",
+          "zookeeper": "http://search.maven.org/remotecontent?filepath=org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar",
+          "commons-beanutils": "http://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
+          "guava": "http://search.maven.org/remotecontent?filepath=com/google/guava/guava/11.0.2/guava-11.0.2.jar",
+          "hadoop-core": "http://search.maven.org/remotecontent?filepath=org/apache/hadoop/hadoop-core/1.1.2/hadoop-core-1.1.2.jar",
+          "jackson-mapper-asl": "http://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-mapper-asl/1.8.8/jackson-mapper-asl-1.8.8.jar"
+        }
+      }
+    }
+  },
+  {
     "id": "jpgc-xmpp",
     "name": "XMPP Protocol Support",
     "description": "",

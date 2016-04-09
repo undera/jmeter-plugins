@@ -18,6 +18,7 @@ public class DependencyResolver {
     protected final Set<Plugin> deletions = new HashSet<>();
     protected final Set<Plugin> additions = new HashSet<>();
     protected final Map<String, String> libAdditions = new HashMap<>();
+    protected final Set<String> libDeletions = new HashSet<>();
     protected final Map<Plugin, Boolean> allPlugins;
 
     public DependencyResolver(Map<Plugin, Boolean> allPlugins) {
@@ -27,10 +28,11 @@ public class DependencyResolver {
         resolveUpgrades();
         resolveDeleteByDependency();
         resolveInstallByDependency();
-        //resolveDeleteLibs();
+        resolveDeleteLibs();
         resolveInstallLibs();
     }
 
+    // TODO: return iterators to make values read-only
     public Set<Plugin> getDeletions() {
         return deletions;
     }
@@ -41,6 +43,10 @@ public class DependencyResolver {
 
     public Map<String, String> getLibAdditions() {
         return libAdditions;
+    }
+
+    public Set<String> getLibDeletions() {
+        return libDeletions;
     }
 
     private Plugin getPluginByID(String id) {
@@ -147,24 +153,47 @@ public class DependencyResolver {
         for (Plugin plugin : additions) {
             Map<String, String> libs = plugin.getLibs(plugin.getCandidateVersion());
             for (String lib : libs.keySet()) {
-                if (!isLibInstalled(lib)) {
+                if (getLibInstallPath(lib) == null) {
                     libAdditions.put(lib, libs.get(lib));
                 }
             }
         }
     }
 
-    private boolean isLibInstalled(String lib) {
+    public static String getLibInstallPath(String lib) {
         String[] cp = System.getProperty(JAVA_CLASS_PATH).split(File.pathSeparator);
         for (String path : cp) {
-            Pattern p = Pattern.compile(lib + "-([\\.0-9]+(-SNAPSHOT)?).jar");
+            Pattern p = Pattern.compile("\\W" + lib + "-([\\.0-9]+(-SNAPSHOT)?).jar");
             Matcher m = p.matcher(path);
             if (m.find()) {
                 log.debug("Found library " + lib + " at " + path);
-                return true;
+                return path;
             }
         }
-        return false;
+        return null;
     }
 
+    private void resolveDeleteLibs() {
+        for (Plugin plugin : deletions) {
+            if (additions.contains(plugin)) { // skip upgrades
+                continue;
+            }
+
+            Map<String, String> libs = plugin.getLibs(plugin.getInstalledVersion());
+            for (String lib : libs.keySet()) {
+                if (getLibInstallPath(lib) != null) {
+                    libDeletions.add(lib);
+                }
+            }
+        }
+
+        for (Plugin plugin : allPlugins.keySet()) {
+            if (additions.contains(plugin) || (plugin.isInstalled() && !deletions.contains(plugin))) {
+                Map<String, String> libs = plugin.getLibs(plugin.getInstalledVersion());
+                for (String lib : libs.keySet()) {
+                    libDeletions.remove(lib);
+                }
+            }
+        }
+    }
 }

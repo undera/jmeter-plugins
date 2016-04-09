@@ -48,12 +48,12 @@ public class PluginManager {
         log.debug("Plugins: " + allPlugins.keySet());
     }
 
-    private void modifierHook(final Set<Plugin> deletions, final Set<Plugin> additions, final Map<String, String> libInstalls) {
+    private void modifierHook(final Set<Plugin> deletions, final Set<Plugin> additions, final Map<String, String> libInstalls, final Set<String> libDeletions) {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
                 try {
-                    startModifications(deletions, additions, libInstalls);
+                    startModifications(deletions, additions, libInstalls, libDeletions);
                 } catch (Exception e) {
                     log.warn("Failed to run plugin cleaner job");
                 }
@@ -83,8 +83,8 @@ public class PluginManager {
 
     }
 
-    public void startModifications(Set<Plugin> delPlugins, Set<Plugin> installPlugins, Map<String, String> installLibs) throws IOException {
-        final File moveFile = makeMovementsFile(delPlugins, installPlugins, installLibs);
+    public void startModifications(Set<Plugin> delPlugins, Set<Plugin> installPlugins, Map<String, String> installLibs, Set<String> libDeletions) throws IOException {
+        final File moveFile = makeMovementsFile(delPlugins, installPlugins, installLibs, libDeletions);
         final ProcessBuilder builder = getProcessBuilder(moveFile);
         log.info("JAR Modifications log will be saved into: " + builder.redirectOutput().file().getPath());
         builder.start();
@@ -142,16 +142,11 @@ public class PluginManager {
         return file;
     }
 
-    private File makeMovementsFile(Set<Plugin> deletes, Set<Plugin> installs, Map<String, String> installLibs) throws IOException {
+    private File makeMovementsFile(Set<Plugin> deletes, Set<Plugin> installs, Map<String, String> installLibs, Set<String> libDeletions) throws IOException {
         final File file = File.createTempFile("jpgc-jar-changes", ".list");
         PrintWriter out = new PrintWriter(file);
 
-        String libPath = new File(JOrphanUtils.class.getProtectionDomain().getCodeSource().getLocation().getFile()).getParent();
-        for (Map.Entry<String, String> lib : installLibs.entrySet()) {
-            out.print(lib.getKey() + "\t" + libPath + File.separator + lib.getValue() + "\n");
-        }
-
-        if (!deletes.isEmpty()) {
+        if (!deletes.isEmpty() || !libDeletions.isEmpty()) {
             File delDir = File.createTempFile("jpgc-deleted-jars-", "");
             delDir.delete();
             delDir.mkdir();
@@ -161,6 +156,17 @@ public class PluginManager {
                 String delTo = delDir + File.separator + installed.getName();
                 out.print(plugin.getInstalledPath() + "\t" + delTo + "\n");
             }
+
+            for (String lib : libDeletions) {
+                File installed = new File(lib);
+                String delTo = delDir + File.separator + installed.getName();
+                out.print(lib + "\t" + delTo + "\n");
+            }
+        }
+
+        String libPath = new File(JOrphanUtils.class.getProtectionDomain().getCodeSource().getLocation().getFile()).getParent();
+        for (Map.Entry<String, String> lib : installLibs.entrySet()) {
+            out.print(lib.getKey() + "\t" + libPath + File.separator + lib.getValue() + "\n");
         }
 
         for (Plugin plugin : installs) {
@@ -195,7 +201,12 @@ public class PluginManager {
             }
         }
 
-        modifierHook(resolver.getDeletions(), additions, libInstalls);
+        Set<String> libDeletions = new HashSet<>();
+        for (String lib : resolver.getLibDeletions()) {
+            libDeletions.add(DependencyResolver.getLibInstallPath(lib));
+        }
+
+        modifierHook(resolver.getDeletions(), additions, libInstalls, libDeletions);
     }
 
     public String getChangesAsText() {
@@ -207,13 +218,18 @@ public class PluginManager {
             text += "Uninstall " + pl + " " + pl.getInstalledVersion() + "\n";
         }
 
-        for (Plugin pl : resolver.getAdditions()) {
-            text += "Install " + pl + " " + pl.getCandidateVersion() + "\n";
+        for (String pl : resolver.getLibDeletions()) {
+            text += "Lib-uninstall " + pl + "\n";
         }
 
         for (String pl : resolver.getLibAdditions().keySet()) {
             text += "Lib-install " + pl + "\n";
         }
+
+        for (Plugin pl : resolver.getAdditions()) {
+            text += "Install " + pl + " " + pl.getCandidateVersion() + "\n";
+        }
+
 
         return text;
     }

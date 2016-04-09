@@ -37,7 +37,6 @@ public class DependencyResolver {
         throw new RuntimeException("Plugin not found by ID: " + id);
     }
 
-
     private Set<Plugin> getDependants(Plugin plugin) {
         Set<Plugin> res = new HashSet<>();
         for (Plugin pAll : allPlugins.keySet()) {
@@ -66,7 +65,7 @@ public class DependencyResolver {
         // detect upgrades
         for (Map.Entry<Plugin, Boolean> entry : allPlugins.entrySet()) {
             Plugin plugin = entry.getKey();
-            if (entry.getValue() && !plugin.getInstalledVersion().equals(plugin.getCandidateVersion())) {
+            if (entry.getValue() && plugin.isInstalled() && !plugin.getInstalledVersion().equals(plugin.getCandidateVersion())) {
                 if (!deletions.contains(plugin)) {
                     deletions.add(plugin);
                 }

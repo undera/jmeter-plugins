@@ -81,8 +81,7 @@ public class PluginManager {
         } else {
             log.debug("Response with code " + result + ": " + response);
         }
-        JsonConfig config = new JsonConfig();
-        return JSONSerializer.toJSON(response, config);
+        return JSONSerializer.toJSON(response, new JsonConfig());
 
     }
 

@@ -148,7 +148,6 @@ public class Plugin {
         }
 
         URI url = URI.create(versions.getJSONObject(version).getString("downloadUrl"));
-        log.info("Downloading: " + url);
         Downloader dwn = new Downloader();
         tempName = dwn.download(id, url);
         File f = new File(JMeterEngine.class.getProtectionDomain().getCodeSource().getLocation().getFile());

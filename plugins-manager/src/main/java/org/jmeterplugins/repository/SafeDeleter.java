@@ -23,16 +23,16 @@ public class SafeDeleter {
                 }
 
                 File fCopy = new File(args.next());
-                fCopy.deleteOnExit();
                 moveFiles(fCopy);
+                fCopy.delete();
             } else if (nextArg.equalsIgnoreCase("--restart-command")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException("Missing restart command file");
                 }
 
                 File file = new File(args.next());
-                file.deleteOnExit();
                 restartFromFile(file);
+                file.delete();
             } else {
                 throw new IllegalArgumentException("Unknown option: " + nextArg);
             }
@@ -65,9 +65,15 @@ public class SafeDeleter {
                 continue;
             }
 
-            System.out.println("Moving " + parts[0] + " to " + parts[1]);
+            File src = new File(parts[0]);
+            File dst = new File(parts[1]);
+            if (!src.exists()) {
+                System.err.println("Cannot move, file not exists: " + src);
+            }
+
+            System.out.println("Moving " + src + " to " + dst);
             try {
-                Files.move(new File(parts[0]).toPath(), new File(parts[1]).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                Files.move(src.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
             } catch (Exception e) {
                 e.printStackTrace(System.err);
             }

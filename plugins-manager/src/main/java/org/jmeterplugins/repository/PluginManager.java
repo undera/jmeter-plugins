@@ -7,6 +7,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.IOUtils;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
+import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 
 import java.io.File;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import java.net.URI;
 import java.util.*;
 
 public class PluginManager {
@@ -46,12 +48,12 @@ public class PluginManager {
         log.debug("Plugins: " + allPlugins.keySet());
     }
 
-    private void modifierHook(final Set<Plugin> deletions, final Set<Plugin> additions) {
+    private void modifierHook(final Set<Plugin> deletions, final Set<Plugin> additions, final Map<String, String> libInstalls) {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
                 try {
-                    startModifications(deletions, additions);
+                    startModifications(deletions, additions, libInstalls);
                 } catch (Exception e) {
                     log.warn("Failed to run plugin cleaner job");
                 }
@@ -81,8 +83,8 @@ public class PluginManager {
 
     }
 
-    public void startModifications(Set<Plugin> delPlugins, Set<Plugin> installPlugins) throws IOException {
-        final File moveFile = makeMovementsFile(delPlugins, installPlugins);
+    public void startModifications(Set<Plugin> delPlugins, Set<Plugin> installPlugins, Map<String, String> installLibs) throws IOException {
+        final File moveFile = makeMovementsFile(delPlugins, installPlugins, installLibs);
         final ProcessBuilder builder = getProcessBuilder(moveFile);
         log.info("JAR Modifications log will be saved into: " + builder.redirectOutput().file().getPath());
         builder.start();
@@ -140,9 +142,14 @@ public class PluginManager {
         return file;
     }
 
-    private File makeMovementsFile(Set<Plugin> deletes, Set<Plugin> installs) throws IOException {
+    private File makeMovementsFile(Set<Plugin> deletes, Set<Plugin> installs, Map<String, String> installLibs) throws IOException {
         final File file = File.createTempFile("jpgc-jar-changes", ".list");
         PrintWriter out = new PrintWriter(file);
+
+        String libPath = new File(JOrphanUtils.class.getProtectionDomain().getCodeSource().getLocation().getFile()).getParent();
+        for (Map.Entry<String, String> lib : installLibs.entrySet()) {
+            out.print(lib.getKey() + "\t" + libPath + File.separator + lib.getValue() + "\n");
+        }
 
         if (!deletes.isEmpty()) {
             File delDir = File.createTempFile("jpgc-deleted-jars-", "");
@@ -166,6 +173,18 @@ public class PluginManager {
     public void applyChanges() {
         DependencyResolver resolver = new DependencyResolver(allPlugins);
         Set<Plugin> additions = resolver.getAdditions();
+        Map<String, String> libInstalls = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : resolver.getLibAdditions().entrySet()) {
+            Downloader dwn = new Downloader();
+            try {
+                String tmpFile = dwn.download(entry.getKey(), new URI(entry.getValue()));
+                libInstalls.put(tmpFile, dwn.getFilename());
+            } catch (Exception e) {
+                log.error("Failed to download " + entry.getKey(), e);
+                throw new RuntimeException("Failed to download library " + entry.getKey(), e);
+            }
+        }
 
         for (Plugin plugin : additions) {
             try {
@@ -176,7 +195,7 @@ public class PluginManager {
             }
         }
 
-        modifierHook(resolver.getDeletions(), additions);
+        modifierHook(resolver.getDeletions(), additions, libInstalls);
     }
 
     public String getChangesAsText() {
@@ -193,7 +212,7 @@ public class PluginManager {
         }
 
         for (String pl : resolver.getLibAdditions().keySet()) {
-            text += "Install library " + pl + "\n";
+            text += "Lib-install " + pl + "\n";
         }
 
         return text;

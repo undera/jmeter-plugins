@@ -10,14 +10,18 @@ import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HttpContext;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 import java.io.*;
 import java.net.URI;
 
 public class Downloader {
+    private static final Logger log = LoggingManager.getLoggerForClass();
     private String filename;
 
     public String download(String id, URI url) throws IOException {
+        log.info("Downloading: " + url);
         HttpClient httpClient = new SystemDefaultHttpClient();
         HttpGet httpget = new HttpGet(url);
 

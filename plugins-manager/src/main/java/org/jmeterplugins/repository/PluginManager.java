@@ -24,23 +24,6 @@ public class PluginManager {
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
 
     public void load() throws IOException {
-        loadRepo();
-    }
-
-    private void modifierHook(final Set<Plugin> deletions, final Set<Plugin> additions) {
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                try {
-                    startModifications(deletions, additions);
-                } catch (Exception e) {
-                    log.warn("Failed to run plugin cleaner job");
-                }
-            }
-        });
-    }
-
-    private void loadRepo() throws IOException {
         if (allPlugins.size() > 0) {
             return;
         }
@@ -61,6 +44,19 @@ public class PluginManager {
         }
 
         log.debug("Plugins: " + allPlugins.keySet());
+    }
+
+    private void modifierHook(final Set<Plugin> deletions, final Set<Plugin> additions) {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                try {
+                    startModifications(deletions, additions);
+                } catch (Exception e) {
+                    log.warn("Failed to run plugin cleaner job");
+                }
+            }
+        });
     }
 
     protected JSON getJSON(String path) throws IOException {
@@ -194,6 +190,10 @@ public class PluginManager {
 
         for (Plugin pl : resolver.getAdditions()) {
             text += "Install " + pl + " " + pl.getCandidateVersion() + "\n";
+        }
+
+        for (String pl : resolver.getLibAdditions().keySet()) {
+            text += "Install library " + pl + "\n";
         }
 
         return text;

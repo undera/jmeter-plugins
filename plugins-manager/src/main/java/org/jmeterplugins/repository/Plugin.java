@@ -3,30 +3,20 @@ package org.jmeterplugins.repository;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.*;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.SystemDefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.ExecutionContext;
-import org.apache.http.protocol.HttpContext;
 import org.apache.jmeter.engine.JMeterEngine;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Plugin {
     private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Pattern dependsParser = Pattern.compile("([^=<>]+)([=<>]+[0-9.]+)?");
     public static final String VER_STOCK = "0.0.0-STOCK";
     protected JSONObject versions = new JSONObject();
     protected String id;
@@ -159,37 +149,11 @@ public class Plugin {
 
         URI url = URI.create(versions.getJSONObject(version).getString("downloadUrl"));
         log.info("Downloading: " + url);
-        HttpClient httpClient = new SystemDefaultHttpClient();
-        HttpGet httpget = new HttpGet(url);
-
-        HttpContext context = new BasicHttpContext();
-        HttpResponse response = httpClient.execute(httpget, context);
-        if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK)
-            throw new IOException(response.getStatusLine().toString());
-
-        HttpEntity entity = response.getEntity();
-
-        File tempFile = File.createTempFile(id, ".jar");
-
-        InputStream inputStream = entity.getContent();
-        OutputStream outputStream = new FileOutputStream(tempFile);
-        IOUtils.copy(inputStream, outputStream);
-        outputStream.close();
-
-        tempName = tempFile.getPath();
-
-        Header cd = response.getLastHeader("Content-Disposition");
+        Downloader dwn = new Downloader();
+        tempName = dwn.download(id, url);
         File f = new File(JMeterEngine.class.getProtectionDomain().getCodeSource().getLocation().getFile());
-        String filename;
-        if (cd != null) {
-            filename = cd.getValue().split(";")[1].split("=")[1];
-        } else {
-            HttpUriRequest currentReq = (HttpUriRequest) context.getAttribute(ExecutionContext.HTTP_REQUEST);
-            HttpHost currentHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
-            String currentUrl = (currentReq.getURI().isAbsolute()) ? currentReq.getURI().toString() : (currentHost.toURI() + currentReq.getURI());
-            filename = FilenameUtils.getName(currentUrl);
-        }
-        destName = f.getParent() + File.separator + filename;
+        destName = f.getParent() + File.separator + dwn.getFilename();
+
     }
 
     public String getName() {
@@ -245,12 +209,30 @@ public class Plugin {
             for (Object o : list) {
                 if (o instanceof String) {
                     String dep = (String) o;
-                    Pattern p = Pattern.compile("([^=<>]+)([=<>]+[0-9.]+)?");
-                    Matcher m = p.matcher(dep);
+                    Matcher m = dependsParser.matcher(dep);
                     if (!m.find()) {
                         throw new IllegalArgumentException("Cannot parse depend str: " + dep);
                     }
                     depends.add(m.group(1));
+                }
+            }
+        }
+        return depends;
+    }
+
+    public Map<String, String> getLibs(String verStr) {
+        Map<String, String> depends = new HashMap<>();
+        JSONObject version = versions.getJSONObject(verStr);
+        if (version.containsKey("libs")) {
+            JSONObject list = version.getJSONObject("libs");
+            for (Object o : list.keySet()) {
+                if (o instanceof String) {
+                    String dep = (String) o;
+                    Matcher m = dependsParser.matcher(dep);
+                    if (!m.find()) {
+                        throw new IllegalArgumentException("Cannot parse depend str: " + dep);
+                    }
+                    depends.put(m.group(1), list.getString(dep));
                 }
             }
         }

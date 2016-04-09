@@ -3,15 +3,21 @@ package org.jmeterplugins.repository;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DependencyResolver {
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String JMETER = "jmeter";
-    protected Set<Plugin> deletions = new HashSet<>();
-    protected Set<Plugin> additions = new HashSet<>();
+    public static final String JAVA_CLASS_PATH = "java.class.path";
+    protected final Set<Plugin> deletions = new HashSet<>();
+    protected final Set<Plugin> additions = new HashSet<>();
+    protected final Map<String, String> libAdditions = new HashMap<>();
     protected final Map<Plugin, Boolean> allPlugins;
 
     public DependencyResolver(Map<Plugin, Boolean> allPlugins) {
@@ -21,8 +27,8 @@ public class DependencyResolver {
         resolveUpgrades();
         resolveDeleteByDependency();
         resolveInstallByDependency();
-        // TODO resolveDeleteLibs();
-        // TODO resolveInstallLibs();
+        //resolveDeleteLibs();
+        resolveInstallLibs();
     }
 
     public Set<Plugin> getDeletions() {
@@ -31,6 +37,10 @@ public class DependencyResolver {
 
     public Set<Plugin> getAdditions() {
         return additions;
+    }
+
+    public Map<String, String> getLibAdditions() {
+        return libAdditions;
     }
 
     private Plugin getPluginByID(String id) {
@@ -96,6 +106,10 @@ public class DependencyResolver {
                         }
                     }
                 }
+
+                if (hasModifications) {
+                    break; // prevent ConcurrentModificationException
+                }
             }
         }
     }
@@ -109,7 +123,7 @@ public class DependencyResolver {
             for (Plugin plugin : additions) {
                 for (String pluginID : plugin.getDepends()) {
                     if (pluginID.equals(JMETER)) {
-                        // TODO: special check for jmeter ver
+                        // TODO: special check for jmeter ver requirement
                         log.debug("Special case for JMeter core");
                         continue;
                     }
@@ -129,5 +143,28 @@ public class DependencyResolver {
         }
     }
 
+    private void resolveInstallLibs() {
+        for (Plugin plugin : additions) {
+            Map<String, String> libs = plugin.getLibs(plugin.getCandidateVersion());
+            for (String lib : libs.keySet()) {
+                if (!isLibInstalled(lib)) {
+                    libAdditions.put(lib, libs.get(lib));
+                }
+            }
+        }
+    }
+
+    private boolean isLibInstalled(String lib) {
+        String[] cp = System.getProperty(JAVA_CLASS_PATH).split(File.pathSeparator);
+        for (String path : cp) {
+            Pattern p = Pattern.compile(lib + "-([\\.0-9]+(-SNAPSHOT)?).jar");
+            Matcher m = p.matcher(path);
+            if (m.find()) {
+                log.debug("Found library " + lib + " at " + path);
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

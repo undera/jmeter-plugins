@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
 
 public class PluginsList extends JPanel implements ListSelectionListener, HyperlinkListener {
@@ -117,6 +118,12 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         if (!deps.isEmpty()) {
             txt += "<pre>Dependencies: " + Arrays.toString(deps.toArray(new String[0])) + "</pre>";
         }
+
+        Map<String, String> libs = plugin.getLibs(plugin.getCandidateVersion());
+        if (!libs.isEmpty()) {
+            txt += "<pre>Libraries: " + Arrays.toString(libs.keySet().toArray(new String[0])) + "</pre>";
+        }
+
         return txt + "<br/>";
     }
 

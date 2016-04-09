@@ -16,17 +16,23 @@ public class DependencyResolverTest {
     @Test
     public void testSimpleInstall() throws Exception {
         Map<Plugin, Boolean> plugs = new HashMap<>();
-        PluginMock install = new PluginMock("install", null, new HashSet<String>());
+        PluginMock install = new PluginMock("install", null);
+        Map<String, String> libs = new HashMap<>();
+        libs.put("test", "test");
+        libs.put("jorphan", "test");
+        install.setLibs(libs);
         plugs.put(install, true);
-        PluginMock uninstall = new PluginMock("uninstall", "1.0", new HashSet<String>());
+        PluginMock uninstall = new PluginMock("uninstall", "1.0");
         plugs.put(uninstall, false);
 
         DependencyResolver obj = new DependencyResolver(plugs);
         Set<Plugin> adds = obj.getAdditions();
         Set<Plugin> dels = obj.getDeletions();
+        Map<String, String> libAdds = obj.getLibAdditions();
 
         assertEquals(1, adds.size());
         assertEquals(1, dels.size());
+        assertEquals(1, libAdds.size());
         assertTrue(adds.contains(install));
         assertTrue(dels.contains(uninstall));
     }
@@ -34,7 +40,7 @@ public class DependencyResolverTest {
     @Test
     public void testUpgrade() throws Exception {
         Map<Plugin, Boolean> plugs = new HashMap<>();
-        PluginMock upgrade = new PluginMock("install", "1.0", new HashSet<String>());
+        PluginMock upgrade = new PluginMock("install", "1.0");
         upgrade.setCandidateVersion("0.1");
         plugs.put(upgrade, true);
 
@@ -51,26 +57,28 @@ public class DependencyResolverTest {
     @Test
     public void testDepInstall() throws Exception {
         Map<Plugin, Boolean> plugs = new HashMap<>();
-        PluginMock jdbc = new PluginMock("jdbc", null, new HashSet<String>());
+        PluginMock jdbc = new PluginMock("jdbc", null);
         plugs.put(jdbc, false);
-        PluginMock http = new PluginMock("http", null, new HashSet<String>());
+        PluginMock http = new PluginMock("http", null);
         plugs.put(http, false);
-        PluginMock components = new PluginMock("components", null, new HashSet<String>());
+        PluginMock components = new PluginMock("components", null);
         plugs.put(components, false);
 
+        PluginMock standard = new PluginMock("standard", null);
         HashSet<String> depsStandard = new HashSet<>();
         depsStandard.add(http.getID());
         depsStandard.add(components.getID());
         depsStandard.add(DependencyResolver.JMETER);
-        PluginMock standard = new PluginMock("standard", null, depsStandard);
+        standard.setDepends(depsStandard);
         plugs.put(standard, false);
 
+        PluginMock extras = new PluginMock("extras", null);
         HashSet<String> depsExtras = new HashSet<>();
         depsExtras.add(standard.getID());
         depsExtras.add(jdbc.getID());
         depsExtras.add(http.getID());
         depsExtras.add(DependencyResolver.JMETER);
-        PluginMock extras = new PluginMock("extras", null, depsExtras);
+        extras.setDepends(depsExtras);
         plugs.put(extras, true);
 
         DependencyResolver obj = new DependencyResolver(plugs);
@@ -89,11 +97,13 @@ public class DependencyResolverTest {
     @Test
     public void testDepUninstall() throws Exception {
         Map<Plugin, Boolean> plugs = new HashMap<>();
-        PluginMock a = new PluginMock("root", "1.0", new HashSet<String>());
+        PluginMock a = new PluginMock("root", "1.0");
         plugs.put(a, false);
+
+        PluginMock b = new PluginMock("cause", "1.0");
         HashSet<String> deps = new HashSet<>();
         deps.add(a.getID());
-        PluginMock b = new PluginMock("cause", "1.0", deps);
+        b.setDepends(deps);
         plugs.put(b, true);
 
         DependencyResolver obj = new DependencyResolver(plugs);
@@ -107,11 +117,11 @@ public class DependencyResolverTest {
     }
 
     private class PluginMock extends Plugin {
-        private Set<String> depends;
+        private Set<String> depends = new HashSet<>();
+        private Map<String, String> libs = new HashMap<>();
 
-        public PluginMock(String id, String iVer, Set<String> depends) {
+        public PluginMock(String id, String iVer) {
             super(id);
-            this.depends = depends;
             installedVersion = iVer;
             installedPath = iVer;
             versions = JSONObject.fromObject("{\"1.0\":null,\"0.1\":null,\"0.1.5\":null}", new JsonConfig());
@@ -121,6 +131,19 @@ public class DependencyResolverTest {
         @Override
         public Set<String> getDepends() {
             return depends;
+        }
+
+        public void setDepends(Set<String> depends) {
+            this.depends = depends;
+        }
+
+        @Override
+        public Map<String, String> getLibs(String verStr) {
+            return libs;
+        }
+
+        public void setLibs(Map<String, String> libs) {
+            this.libs = libs;
         }
     }
 }

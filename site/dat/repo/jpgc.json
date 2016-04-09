@@ -71,5 +71,30 @@
         ]
       }
     }
+  },
+  {
+    "id": "jpgc-xmpp",
+    "name": "XMPP Protocol Support",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "BlazeMeter.com",
+    "markerClass": "com.blazemeter.jmeter.xmpp.JMeterXMPPSampler",
+    "canUninstall": true,
+    "versions": {
+      "1.4.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-xmpp/1.4.0/jmeter-plugins-xmpp-1.4.0.jar",
+        "depends": [
+          "jmeter>=2.13"
+        ],
+        "libs": {
+          "smack-core": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-core/4.0.7/smack-core-4.0.7.jar",
+          "smack-tcp": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-tcp/4.0.7/smack-tcp-4.0.7.jar",
+          "smack-bosh": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-bosh/4.0.7/smack-bosh-4.0.7.jar",
+          "smack-extensions": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-extensions/4.0.7/smack-extensions-4.0.7.jar",
+          "jbosh": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/jbosh/jbosh/0.8.0/jbosh-0.8.0.jar"
+        }
+      }
+    }
   }
 ]

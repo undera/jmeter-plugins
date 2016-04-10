@@ -4,10 +4,10 @@ package org.jmeterplugins.repository;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.engine.JMeterEngine;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import javax.swing.event.ChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -62,6 +62,10 @@ public class Plugin {
         installedPath = getJARPath(markerClass);
         if (installedPath != null) {
             installedVersion = getVersionFromPath(installedPath);
+            if (installedVersion.equals(VER_STOCK) && isVersionFrozenToJMeter()) {
+                installedVersion = getJMeterVersion();
+            }
+
             log.debug("Found plugin " + this + " version " + installedVersion + " at path " + installedPath);
         }
 
@@ -70,6 +74,10 @@ public class Plugin {
         } else {
             candidateVersion = getMaxVersion();
         }
+    }
+
+    private boolean isVersionFrozenToJMeter() {
+        return versions.containsKey("");
     }
 
     public String getMaxVersion() {
@@ -85,7 +93,12 @@ public class Plugin {
         Set<String> versions = new TreeSet<>(new VersionComparator());
         for (Object o : this.versions.keySet()) {
             if (o instanceof String) {
-                versions.add((String) o);
+                String ver = (String) o;
+                if (ver.isEmpty()) {
+                    versions.add(getJMeterVersion());
+                } else {
+                    versions.add(ver);
+                }
             }
         }
 
@@ -93,6 +106,16 @@ public class Plugin {
             versions.add(installedVersion);
         }
         return versions;
+    }
+
+    private String getJMeterVersion() {
+        String ver = JMeterUtils.getJMeterVersion();
+        String[] parts = ver.split(" ");
+        if (parts.length > 1) {
+            return parts[0];
+        }
+
+        return ver;
     }
 
     private String getVersionFromPath(String installedPath) {
@@ -144,16 +167,22 @@ public class Plugin {
 
     public void download(GenericCallback<String> notify) throws IOException {
         String version = getCandidateVersion();
-        if (!versions.containsKey(version)) {
-            throw new IllegalArgumentException("Version " + version + " not found for plugin " + this);
+
+        URI url;
+        if (isVersionFrozenToJMeter()) {
+            String downloadUrl = versions.getJSONObject("").getString("downloadUrl");
+            url = URI.create(String.format(downloadUrl, getJMeterVersion()));
+        } else {
+            if (!versions.containsKey(version)) {
+                throw new IllegalArgumentException("Version " + version + " not found for plugin " + this);
+            }
+            url = URI.create(versions.getJSONObject(version).getString("downloadUrl"));
         }
 
-        URI url = URI.create(versions.getJSONObject(version).getString("downloadUrl"));
         Downloader dwn = new Downloader(notify);
         tempName = dwn.download(id, url);
         File f = new File(JMeterEngine.class.getProtectionDomain().getCodeSource().getLocation().getFile());
         destName = f.getParent() + File.separator + dwn.getFilename();
-
     }
 
     public String getName() {

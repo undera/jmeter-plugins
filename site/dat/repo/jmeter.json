@@ -9,7 +9,7 @@
     "markerClass": "org.apache.jmeter.protocol.tcp.sampler.TCPSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_tcp/2.13/ApacheJMeter_tcp-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_tcp/%1$s/ApacheJMeter_tcp-%1$s.jar"
       }
     }
   },
@@ -23,7 +23,7 @@
     "markerClass": "org.apache.jmeter.protocol.ldap.sampler.LDAPSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_ldap/2.13/ApacheJMeter_ldap-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_ldap/%1$s/ApacheJMeter_ldap-%1$s.jar"
       }
     }
   },
@@ -37,7 +37,7 @@
     "markerClass": "org.apache.jmeter.protocol.system.SystemSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_native/2.13/ApacheJMeter_native-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_native/%1$s/ApacheJMeter_native-%1$s.jar"
       }
     }
   },
@@ -51,7 +51,7 @@
     "markerClass": "org.apache.jmeter.protocol.mongodb.sampler.MongoScriptSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_mongodb/2.13/ApacheJMeter_mongodb-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_mongodb/%1$s/ApacheJMeter_mongodb-%1$s.jar"
       }
     }
   },
@@ -65,7 +65,7 @@
     "markerClass": "org.apache.jmeter.protocol.smtp.sampler.SmtpSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_mail/2.13/ApacheJMeter_mail-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_mail/%1$s/ApacheJMeter_mail-%1$s.jar"
       }
     }
   },
@@ -79,7 +79,7 @@
     "markerClass": "org.apache.jmeter.protocol.java.sampler.JUnitSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_junit/2.13/ApacheJMeter_junit-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_junit/%1$s/ApacheJMeter_junit-%1$s.jar"
       }
     }
   },
@@ -93,7 +93,7 @@
     "markerClass": "org.apache.jmeter.protocol.jms.sampler.JMSSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_jms/2.13/ApacheJMeter_jms-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_jms/%1$s/ApacheJMeter_jms-%1$s.jar"
       }
     }
   },
@@ -107,7 +107,7 @@
     "markerClass": "org.apache.jmeter.protocol.jdbc.sampler.JDBCSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_jdbc/2.13/ApacheJMeter_jdbc-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_jdbc/%1$s/ApacheJMeter_jdbc-%1$s.jar"
       }
     }
   },
@@ -121,7 +121,7 @@
     "markerClass": "org.apache.jmeter.protocol.java.sampler.JavaSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_java/2.13/ApacheJMeter_java-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_java/%1$s/ApacheJMeter_java-%1$s.jar"
       }
     }
   },
@@ -135,7 +135,7 @@
     "markerClass": "org.apache.jmeter.protocol.ftp.sampler.FTPSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_ftp/2.13/ApacheJMeter_ftp-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_ftp/%1$s/ApacheJMeter_ftp-%1$s.jar"
       }
     }
   },
@@ -149,7 +149,7 @@
     "markerClass": "org.apache.jmeter.protocol.http.sampler.HTTPSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_http/2.13/ApacheJMeter_http-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_http/%1$s/ApacheJMeter_http-%1$s.jar"
       }
     }
   },
@@ -163,7 +163,7 @@
     "markerClass": "org.apache.jmeter.sampler.DebugSampler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_components/2.13/ApacheJMeter_components-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_components/%1$s/ApacheJMeter_components-%1$s.jar"
       }
     }
   },
@@ -177,7 +177,7 @@
     "markerClass": "org.apache.jmeter.monitor.parser.MonitorHandler",
     "versions": {
       "": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_monitors/2.13/ApacheJMeter_monitors-2.13.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_monitors/%1$s/ApacheJMeter_monitors-%1$s.jar"
       }
     }
   }

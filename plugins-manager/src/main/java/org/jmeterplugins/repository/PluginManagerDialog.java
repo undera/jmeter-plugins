@@ -111,6 +111,8 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
             @Override
             public void run() {
                 apply.setEnabled(false);
+                installed.setEnabled(false);
+                available.setEnabled(false);
                 // FIXME: what to do when user presses "cancel" on save test plan dialog?
                 GenericCallback<String> statusChanged = new GenericCallback<String>() {
                     @Override

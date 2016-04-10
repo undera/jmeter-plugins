@@ -41,7 +41,7 @@ public class CheckBoxList<T extends JCheckBox> extends JList<T> {
         public Component getListCellRendererComponent(JList<? extends JCheckBox> list, JCheckBox value, int index, boolean isSelected, boolean cellHasFocus) {
             value.setBackground(isSelected ? getSelectionBackground() : getBackground());
             value.setForeground(isSelected ? getSelectionForeground() : getForeground());
-            //value.setEnabled(isEnabled());
+            value.setEnabled(isEnabled() && value.isEnabled());
             value.setFont(getFont());
             if (value instanceof PluginCheckbox) {
                 Plugin p = ((PluginCheckbox) value).getPlugin();

@@ -144,6 +144,13 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         }
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        list.setEnabled(enabled);
+        version.setEnabled(enabled);
+    }
+
     private class VerChoiceChanged implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {

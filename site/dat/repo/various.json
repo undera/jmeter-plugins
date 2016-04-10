@@ -1,0 +1,22 @@
+[
+  {
+    "id": "ssh-sampler",
+    "name": "SSH Protocol Support",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/yciabaud/jmeter-ssh-sampler",
+    "vendor": "Yoann Ciabaud",
+    "markerClass": "org.apache.jmeter.protocol.ssh.sampler.AbstractSSHSampler",
+    "versions": {
+      "1.1.1-SNAPSHOT": {
+        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/ApacheJMeter_ssh-1.1.1-SNAPSHOT.jar",
+        "depends": [
+          "jmeter>=2.13"
+        ],
+        "libs": {
+          "jsch": "http://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.50/jsch-0.1.50.jar"
+        }
+      }
+    }
+  }
+]

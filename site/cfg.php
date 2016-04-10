@@ -1,12 +1,14 @@
 <?php
 
 if ($_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
-  $level = \PWE\Core\PWELogger::DEBUG;
+    $level = \PWE\Core\PWELogger::DEBUG;
+    $logfile = sys_get_temp_dir() . "/jpgc-pwe.log";
+    $tempdir = sys_get_temp_dir();
 } else {
-  $level = \PWE\Core\PWELogger::WARNING;
+    $level = \PWE\Core\PWELogger::WARNING;
+    $logfile = __DIR__."/../logs/pwe." . date('Ym');
+    $tempdir = __DIR__."/../tmp";
 }
-$logfile = sys_get_temp_dir() . "/pwe.log";
-$tempdir = sys_get_temp_dir();
 
 \PWE\Core\PWELogger::setStdErr($logfile);
 \PWE\Core\PWELogger::setStdOut($logfile);

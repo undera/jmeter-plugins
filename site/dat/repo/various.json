@@ -18,5 +18,30 @@
         }
       }
     }
+  },
+  {
+    "id": "websocket-sampler",
+    "name": "WebSocket Protocol Support",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/maciejzaleski/JMeter-WebSocketSampler/wiki",
+    "vendor": "Maciej Zaleski",
+    "markerClass": "JMeter.plugins.functional.samplers.websocket.WebSocketSampler",
+    "versions": {
+      "1.0.2-SNAPSHOT": {
+        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/JMeterWebSocketSampler-1.0.2-SNAPSHOT.jar",
+        "depends": [
+          "jmeter>=2.13"
+        ],
+        "libs": {
+          "jetty-http": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.1.1.v20140108/jetty-http-9.1.1.v20140108.jar",
+          "jetty-io": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.1.1.v20140108/jetty-io-9.1.1.v20140108.jar",
+          "jetty-util": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.1.1.v20140108/jetty-util-9.1.1.v20140108.jar",
+          "websocket-api": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-api/9.1.1.v20140108/websocket-api-9.1.1.v20140108.jar",
+          "websocket-client": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-client/9.1.1.v20140108/websocket-client-9.1.1.v20140108.jar",
+          "websocket-common": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-common/9.1.1.v20140108/websocket-common-9.1.1.v20140108.jar"
+        }
+      }
+    }
   }
 ]

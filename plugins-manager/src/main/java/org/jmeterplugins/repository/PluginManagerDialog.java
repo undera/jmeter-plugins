@@ -3,6 +3,8 @@ package org.jmeterplugins.repository;
 import org.apache.jmeter.gui.action.ActionNames;
 import org.apache.jmeter.gui.action.ActionRouter;
 import org.apache.jorphan.gui.ComponentUtil;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -13,11 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class PluginManagerDialog extends JDialog {
-    // private static final Logger log = LoggingManager.getLoggerForClass();
+public class PluginManagerDialog extends JDialog implements ActionListener {
+    private static final Logger log = LoggingManager.getLoggerForClass();
     public static final Border SPACING = BorderFactory.createEmptyBorder(5, 5, 5, 5);
     private final PluginManager manager;
-    private final JTextArea modifs = new JTextArea();
+    private final JTextPane modifs = new JTextPane();
     private final JButton apply = new JButton("Apply Changes and Restart JMeter");
     private final PluginsList installed;
     private final PluginsList available;
@@ -35,7 +37,7 @@ public class PluginManagerDialog extends JDialog {
         try {
             manager.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Failed to load plugins manager", e);
         }
 
         final GenericCallback<Object> statusRefresh = new GenericCallback<Object>() {
@@ -43,6 +45,8 @@ public class PluginManagerDialog extends JDialog {
             public void notify(Object ignored) {
                 String changeText = manager.getChangesAsText();
                 modifs.setText(changeText);
+                //modifs.setMaximumSize(new Dimension(getWidth(), getHeight() / 3));
+                //modifs.setPreferredSize(new Dimension(getWidth(), getHeight() / 3));
                 apply.setEnabled(!changeText.isEmpty());
             }
         };
@@ -81,12 +85,13 @@ public class PluginManagerDialog extends JDialog {
         JPanel panel = new JPanel(new BorderLayout());
 
         JPanel modifsPanel = new JPanel(new BorderLayout());
-        modifsPanel.setMinimumSize(new Dimension(200, 200));
+        modifsPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, getHeight() / 3));
+        modifsPanel.setPreferredSize(new Dimension(getWidth(), getHeight() / 3));
         modifsPanel.setBorder(SPACING);
         modifsPanel.setBorder(BorderFactory.createTitledBorder("Review Changes"));
 
         modifs.setEditable(false);
-        modifsPanel.add(modifs, BorderLayout.CENTER);
+        modifsPanel.add(new JScrollPane(modifs), BorderLayout.CENTER);
 
         panel.add(modifsPanel, BorderLayout.CENTER);
 
@@ -96,33 +101,32 @@ public class PluginManagerDialog extends JDialog {
         btnPanel.add(statusLabel, BorderLayout.CENTER);
         panel.add(btnPanel, BorderLayout.SOUTH);
 
-        apply.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                new Thread() {
-                    @Override
-                    public void run() {
-                        apply.setEnabled(false);
-                        // FIXME: what to do when user presses "cancel" on save test plan dialog?
-                        GenericCallback<String> statusChanged = new GenericCallback<String>() {
-                            @Override
-                            public void notify(String s) {
-                                statusLabel.setText(s);
-                                repaint();
-                            }
-                        };
-                        try {
-                            manager.applyChanges(statusChanged);
-                        } catch (Exception ex) {
-                            statusChanged.notify("Failed to apply changes: " + ex.getMessage());
-                            throw ex;
-                        }
-                        ActionRouter.getInstance().actionPerformed(new ActionEvent(this, 0, ActionNames.EXIT));
-                    }
-                }.start();
-            }
-        });
+        apply.addActionListener(this);
         return panel;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        new Thread() {
+            @Override
+            public void run() {
+                apply.setEnabled(false);
+                // FIXME: what to do when user presses "cancel" on save test plan dialog?
+                GenericCallback<String> statusChanged = new GenericCallback<String>() {
+                    @Override
+                    public void notify(String s) {
+                        statusLabel.setText(s);
+                        repaint();
+                    }
+                };
+                try {
+                    manager.applyChanges(statusChanged);
+                    ActionRouter.getInstance().actionPerformed(new ActionEvent(this, 0, ActionNames.EXIT));
+                } catch (Exception ex) {
+                    statusChanged.notify("Failed to apply changes: " + ex.getMessage());
+                    throw ex;
+                }
+            }
+        }.start();
     }
 }

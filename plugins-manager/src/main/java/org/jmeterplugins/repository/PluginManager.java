@@ -186,6 +186,7 @@ public class PluginManager {
     }
 
     public void applyChanges(GenericCallback<String> statusChanged) {
+        // TODO: report changes status as anonymous stats
         DependencyResolver resolver = new DependencyResolver(allPlugins);
         Set<Plugin> additions = resolver.getAdditions();
         Map<String, String> libInstalls = new HashMap<>();
@@ -230,19 +231,19 @@ public class PluginManager {
         String text = "";
 
         for (Plugin pl : resolver.getDeletions()) {
-            text += "Uninstall " + pl + " " + pl.getInstalledVersion() + "\n";
+            text += "Uninstall plugin: " + pl + " " + pl.getInstalledVersion() + "\n";
         }
 
         for (String pl : resolver.getLibDeletions()) {
-            text += "Lib-uninstall " + pl + "\n";
+            text += "Uninstall library: " + pl + "\n";
         }
 
         for (String pl : resolver.getLibAdditions().keySet()) {
-            text += "Lib-install " + pl + "\n";
+            text += "Install library: " + pl + "\n";
         }
 
         for (Plugin pl : resolver.getAdditions()) {
-            text += "Install " + pl + " " + pl.getCandidateVersion() + "\n";
+            text += "Install plugin: " + pl + " " + pl.getCandidateVersion() + "\n";
         }
 
 

@@ -24,7 +24,7 @@ public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
     protected HttpClient httpClient = new HttpClient();
     private static int TIMEOUT = 5;
-    private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://undera-desktop:8003"); // FIXME: that's temporary address
+    private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://jmeter-plugins.org"); // FIXME: that's temporary address
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
 
     public void load() throws IOException {

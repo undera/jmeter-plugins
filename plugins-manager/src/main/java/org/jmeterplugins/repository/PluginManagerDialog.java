@@ -47,7 +47,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
                 modifs.setText(changeText);
                 //modifs.setMaximumSize(new Dimension(getWidth(), getHeight() / 3));
                 //modifs.setPreferredSize(new Dimension(getWidth(), getHeight() / 3));
-                apply.setEnabled(!changeText.isEmpty());
+                apply.setEnabled(!changeText.isEmpty() && installed.isEnabled());
             }
         };
 
@@ -110,9 +110,9 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
         new Thread() {
             @Override
             public void run() {
-                apply.setEnabled(false);
                 installed.setEnabled(false);
                 available.setEnabled(false);
+                apply.setEnabled(false);
                 // FIXME: what to do when user presses "cancel" on save test plan dialog?
                 GenericCallback<String> statusChanged = new GenericCallback<String>() {
                     @Override

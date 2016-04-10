@@ -55,7 +55,7 @@ public class PluginManager {
                 try {
                     startModifications(deletions, additions, libInstalls, libDeletions);
                 } catch (Exception e) {
-                    log.warn("Failed to run plugin cleaner job");
+                    log.warn("Failed to run plugin cleaner job", e);
                 }
             }
         });
@@ -159,7 +159,7 @@ public class PluginManager {
 
             for (String lib : libDeletions) {
                 for (Plugin plugin : allPlugins.keySet()) {
-                    if (plugin.getInstalledPath().equals(lib)) {
+                    if (plugin.isInstalled() && plugin.getInstalledPath().equals(lib)) {
                         log.warn("Cannot delete " + lib + " since it is part of plugin " + plugin);
                         libDeletions.remove(lib);
                     }
@@ -185,27 +185,31 @@ public class PluginManager {
         return file;
     }
 
-    public void applyChanges() {
+    public void applyChanges(GenericCallback<String> statusChanged) {
         DependencyResolver resolver = new DependencyResolver(allPlugins);
         Set<Plugin> additions = resolver.getAdditions();
         Map<String, String> libInstalls = new HashMap<>();
 
         for (Map.Entry<String, String> entry : resolver.getLibAdditions().entrySet()) {
-            Downloader dwn = new Downloader();
+            Downloader dwn = new Downloader(statusChanged);
             try {
                 String tmpFile = dwn.download(entry.getKey(), new URI(entry.getValue()));
                 libInstalls.put(tmpFile, dwn.getFilename());
             } catch (Exception e) {
-                log.error("Failed to download " + entry.getKey(), e);
+                String msg = "Failed to download " + entry.getKey();
+                log.error(msg, e);
+                statusChanged.notify(msg);
                 throw new RuntimeException("Failed to download library " + entry.getKey(), e);
             }
         }
 
         for (Plugin plugin : additions) {
             try {
-                plugin.download();
+                plugin.download(statusChanged);
             } catch (IOException e) {
-                log.error("Failed to download " + plugin, e);
+                String msg = "Failed to download " + plugin;
+                log.error(msg, e);
+                statusChanged.notify(msg);
                 additions.remove(plugin);
             }
         }
@@ -215,6 +219,7 @@ public class PluginManager {
             libDeletions.add(DependencyResolver.getLibInstallPath(lib));
         }
 
+        statusChanged.notify("Setting restart hook...");
         modifierHook(resolver.getDeletions(), additions, libInstalls, libDeletions);
     }
 

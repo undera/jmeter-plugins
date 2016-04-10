@@ -1,7 +1,6 @@
 package org.jmeterplugins.repository;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -19,9 +18,15 @@ import java.net.URI;
 public class Downloader {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private String filename;
+    private GenericCallback<String> callback;
 
-    public String download(String id, URI url) throws IOException {
+    public Downloader(GenericCallback<String> statusChanged) {
+        callback = statusChanged;
+    }
+
+    public String download(final String id, URI url) throws IOException {
         log.info("Downloading: " + url);
+        callback.notify("Downloading " + id + "...");
         HttpClient httpClient = new SystemDefaultHttpClient();
         HttpGet httpget = new HttpGet(url);
 
@@ -35,10 +40,18 @@ public class Downloader {
 
         File tempFile = File.createTempFile(id, ".jar");
 
+        final long size = entity.getContentLength();
+
         InputStream inputStream = entity.getContent();
         OutputStream outputStream = new FileOutputStream(tempFile);
-        IOUtils.copy(inputStream, outputStream);
+        copyLarge(inputStream, outputStream, new GenericCallback<Long>() {
+            @Override
+            public void notify(Long progress) {
+                callback.notify(String.format("Downloading %s: %d%%", id, 100 * progress / size));
+            }
+        });
         outputStream.close();
+        callback.notify("Downloaded " + id + "...");
 
         Header cd = response.getLastHeader("Content-Disposition");
         if (cd != null) {
@@ -55,6 +68,19 @@ public class Downloader {
 
     public String getFilename() {
         return filename;
+    }
+
+    private long copyLarge(InputStream input, OutputStream output, GenericCallback<Long> progressCallback) throws IOException {
+        byte[] buffer = new byte[4096];
+        long count = 0L;
+
+        int n;
+        for (; -1 != (n = input.read(buffer)); count += (long) n) {
+            output.write(buffer, 0, n);
+            progressCallback.notify(count);
+        }
+
+        return count;
     }
 
 }

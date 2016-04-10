@@ -23,9 +23,9 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     private DefaultListModel<PluginCheckbox> listModel = new DefaultListModel<>();
     private final JComboBox<String> version = new JComboBox<>();
     private ItemListener itemListener = new VerChoiceChanged();
-    private ChangeListener dialogRefresh;
+    private GenericCallback<Object> dialogRefresh;
 
-    public PluginsList(Set<Plugin> plugins, ChangeListener checkboxNotifier, ChangeListener dialogRefresh) {
+    public PluginsList(Set<Plugin> plugins, ChangeListener checkboxNotifier, GenericCallback<Object> dialogRefresh) {
         super(new BorderLayout(5, 0));
         this.dialogRefresh = dialogRefresh;
 
@@ -152,7 +152,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
                     String item = (String) event.getItem();
                     Plugin plugin = list.getSelectedValue().getPlugin();
                     plugin.setCandidateVersion(item);
-                    dialogRefresh.stateChanged(new ChangeEvent(this));
+                    dialogRefresh.notify(this);
                     // TODO: file description text refresh, because of depends list there
                 }
             }

@@ -7,6 +7,7 @@ import org.apache.jmeter.engine.JMeterEngine;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import javax.swing.event.ChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -141,14 +142,14 @@ public class Plugin {
         return installedPath != null;
     }
 
-    public void download() throws IOException {
+    public void download(GenericCallback<String> notify) throws IOException {
         String version = getCandidateVersion();
         if (!versions.containsKey(version)) {
             throw new IllegalArgumentException("Version " + version + " not found for plugin " + this);
         }
 
         URI url = URI.create(versions.getJSONObject(version).getString("downloadUrl"));
-        Downloader dwn = new Downloader();
+        Downloader dwn = new Downloader(notify);
         tempName = dwn.download(id, url);
         File f = new File(JMeterEngine.class.getProtectionDomain().getCodeSource().getLocation().getFile());
         destName = f.getParent() + File.separator + dwn.getFilename();

@@ -21,6 +21,7 @@ public class PluginManagerDialog extends JDialog {
     private final JButton apply = new JButton("Apply Changes and Restart JMeter");
     private final PluginsList installed;
     private final PluginsList available;
+    private JLabel statusLabel = new JLabel("Idle");
 
 
     public PluginManagerDialog(PluginManager aManager) {
@@ -37,11 +38,9 @@ public class PluginManagerDialog extends JDialog {
             e.printStackTrace();
         }
 
-        apply.setEnabled(false);
-
-        final ChangeListener statusRefresh = new ChangeListener() {
+        final GenericCallback<Object> statusRefresh = new GenericCallback<Object>() {
             @Override
-            public void stateChanged(ChangeEvent e) {
+            public void notify(Object ignored) {
                 String changeText = manager.getChangesAsText();
                 modifs.setText(changeText);
                 apply.setEnabled(!changeText.isEmpty());
@@ -55,7 +54,7 @@ public class PluginManagerDialog extends JDialog {
                     PluginCheckbox checkbox = (PluginCheckbox) e.getSource();
                     Plugin plugin = checkbox.getPlugin();
                     manager.toggleInstalled(plugin, checkbox.isSelected());
-                    statusRefresh.stateChanged(new ChangeEvent(this));
+                    statusRefresh.notify(this);
                 }
             }
         };
@@ -75,6 +74,10 @@ public class PluginManagerDialog extends JDialog {
     }
 
     private JPanel getBottomPanel() {
+        apply.setEnabled(false);
+        modifs.setEditable(false);
+        statusLabel.setFont(statusLabel.getFont().deriveFont(Font.ITALIC));
+
         JPanel panel = new JPanel(new BorderLayout());
 
         JPanel modifsPanel = new JPanel(new BorderLayout());
@@ -90,15 +93,34 @@ public class PluginManagerDialog extends JDialog {
         JPanel btnPanel = new JPanel(new BorderLayout());
         btnPanel.setBorder(SPACING);
         btnPanel.add(apply, BorderLayout.EAST);
-        btnPanel.add(new JPanel(), BorderLayout.CENTER);
+        btnPanel.add(statusLabel, BorderLayout.CENTER);
         panel.add(btnPanel, BorderLayout.SOUTH);
 
         apply.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // FIXME: what to do when user presses "cancel" on save test plan dialog?
-                manager.applyChanges();
-                ActionRouter.getInstance().actionPerformed(new ActionEvent(this, 0, ActionNames.EXIT));
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        apply.setEnabled(false);
+                        // FIXME: what to do when user presses "cancel" on save test plan dialog?
+                        GenericCallback<String> statusChanged = new GenericCallback<String>() {
+                            @Override
+                            public void notify(String s) {
+                                statusLabel.setText(s);
+                                repaint();
+                            }
+                        };
+                        try {
+                            manager.applyChanges(statusChanged);
+                        } catch (Exception ex) {
+                            statusChanged.notify("Failed to apply changes: " + ex.getMessage());
+                            throw ex;
+                        }
+                        ActionRouter.getInstance().actionPerformed(new ActionEvent(this, 0, ActionNames.EXIT));
+                    }
+                }.start();
             }
         });
         return panel;

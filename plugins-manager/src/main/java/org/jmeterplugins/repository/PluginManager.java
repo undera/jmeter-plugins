@@ -158,6 +158,15 @@ public class PluginManager {
             }
 
             for (String lib : libDeletions) {
+                for (Plugin plugin : allPlugins.keySet()) {
+                    if (plugin.getInstalledPath().equals(lib)) {
+                        log.warn("Cannot delete " + lib + " since it is part of plugin " + plugin);
+                        libDeletions.remove(lib);
+                    }
+                }
+            }
+
+            for (String lib : libDeletions) {
                 File installed = new File(lib);
                 String delTo = delDir + File.separator + installed.getName();
                 out.print(lib + "\t" + delTo + "\n");

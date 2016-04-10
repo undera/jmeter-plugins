@@ -2,8 +2,10 @@ package org.jmeterplugins.repository;
 
 
 import net.sf.json.*;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.IOUtils;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
@@ -15,7 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
-import java.net.URI;
+import java.net.*;
 import java.util.*;
 
 public class PluginManager {
@@ -80,7 +82,6 @@ public class PluginManager {
             log.debug("Response with code " + result + ": " + response);
         }
         return JSONSerializer.toJSON(response, new JsonConfig());
-
     }
 
     public void startModifications(Set<Plugin> delPlugins, Set<Plugin> installPlugins, Map<String, String> installLibs, Set<String> libDeletions) throws IOException {
@@ -186,7 +187,6 @@ public class PluginManager {
     }
 
     public void applyChanges(GenericCallback<String> statusChanged) {
-        // TODO: report changes status as anonymous stats
         DependencyResolver resolver = new DependencyResolver(allPlugins);
         Set<Plugin> additions = resolver.getAdditions();
         Map<String, String> libInstalls = new HashMap<>();
@@ -215,6 +215,14 @@ public class PluginManager {
             }
         }
 
+        if (JMeterUtils.getPropDefault("jpgc.repo.sendstats", "true").equals("true")) {
+            try {
+                reportStats(resolver);
+            } catch (Exception e) {
+                log.debug("Failed to report usage stats", e);
+            }
+        }
+
         statusChanged.notify("Restarting JMeter...");
 
         Set<String> libDeletions = new HashSet<>();
@@ -223,6 +231,44 @@ public class PluginManager {
         }
 
         modifierHook(resolver.getDeletions(), additions, libInstalls, libDeletions);
+    }
+
+    private void reportStats(DependencyResolver resolver) throws IOException {
+        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(1000);
+        httpClient.getHttpConnectionManager().getParams().setSoTimeout(3000);
+
+        String uri = address + "/repo/";
+        PostMethod post = new PostMethod(uri);
+        post.addParameter("stats", getUsageStats(resolver).toString());
+
+        log.debug("Requesting " + uri);
+        httpClient.executeMethod(post);
+    }
+
+    protected JSONObject getUsageStats(DependencyResolver resolver) {
+        JSONObject data = new JSONObject();
+        data.put("installID", getInstallID());
+        data.put("jmeter", JMeterUtils.getJMeterVersion());
+
+        JSONObject installs = new JSONObject();
+        for (Plugin p : getInstalledPlugins()) {
+            installs.put(p.getID(), p.getInstalledVersion());
+        }
+        data.put("installed", installs);
+
+        JSONObject deletes = new JSONObject();
+        for (Plugin p : resolver.getDeletions()) {
+            deletes.put(p.getID(), p.getInstalledVersion());
+        }
+        data.put("deletions", deletes);
+
+        JSONObject adds = new JSONObject();
+        for (Plugin p : resolver.getAdditions()) {
+            adds.put(p.getID(), p.getInstalledVersion());
+        }
+        data.put("additions", adds);
+        log.debug("Usage stats: " + data);
+        return data;
     }
 
     public String getChangesAsText() {
@@ -245,7 +291,6 @@ public class PluginManager {
         for (Plugin pl : resolver.getAdditions()) {
             text += "Install plugin: " + pl + " " + pl.getCandidateVersion() + "\n";
         }
-
 
         return text;
     }
@@ -279,5 +324,31 @@ public class PluginManager {
         public int compare(Plugin o1, Plugin o2) {
             return o1.getName().compareTo(o2.getName());
         }
+    }
+
+    /**
+     * This function makes sure anonymous identifier sent
+     *
+     * @return unique ID for installation
+     */
+    public String getInstallID() {
+        String str = "";
+        str += getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
+        try {
+            str += "\t" + InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            log.warn("Cannot get local host name", e);
+        }
+
+        try {
+            Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
+            for (NetworkInterface netint : Collections.list(ifs)) {
+                str += "\t" + Arrays.toString(netint.getHardwareAddress());
+            }
+        } catch (SocketException e) {
+            log.warn("Failed to get network addresses", e);
+        }
+
+        return DigestUtils.md5Hex(str);
     }
 }

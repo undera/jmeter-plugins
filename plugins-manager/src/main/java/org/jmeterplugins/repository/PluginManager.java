@@ -32,7 +32,7 @@ public class PluginManager {
             return;
         }
 
-        JSON json = getJSON("/repo/");
+        JSON json = getJSON("/repo/?installID=" + getInstallID());
         if (!(json instanceof JSONArray)) {
             throw new RuntimeException("Result is not array");
         }

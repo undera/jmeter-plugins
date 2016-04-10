@@ -14,12 +14,6 @@
         "depends": [
           "jmeter>=2.13"
         ]
-      },
-      "1.0.1": {
-        "downloadUrl": "",
-        "depends": [
-          "jmeter>=2.13"
-        ]
       }
     }
   }

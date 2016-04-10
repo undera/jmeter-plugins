@@ -87,5 +87,28 @@
         }
       }
     }
+  },
+  {
+    "id": "kafkameter",
+    "name": "Kafka Support",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/BrightTag/kafkameter",
+    "vendor": "www.signal.co",
+    "markerClass": "co.signal.kafkameter.KafkaProducerSampler",
+    "versions": {
+      "0.2.0": {
+        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/kafkameter-0.2.0.jar",
+        "depends": [
+          "jmeter>=2.13",
+          "jmeter-java"
+        ],
+        "libs": {
+          "guava": "http://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
+          "kafka_2.8.2": "http://search.maven.org/remotecontent?filepath=org/apache/kafka/kafka_2.8.2/0.8.0/kafka_2.8.2-0.8.0.jar",
+          "gson": "http://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.2.4/gson-2.2.4.jar"
+        }
+      }
+    }
   }
 ]

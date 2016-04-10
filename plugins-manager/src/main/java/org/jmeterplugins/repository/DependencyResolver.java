@@ -163,7 +163,10 @@ public class DependencyResolver {
     public static String getLibInstallPath(String lib) {
         String[] cp = System.getProperty(JAVA_CLASS_PATH).split(File.pathSeparator);
         for (String path : cp) {
-            Pattern p = Pattern.compile("\\W" + lib + "-([\\.0-9]+(-SNAPSHOT)?).jar");
+            Pattern p = Pattern.compile("\\W" + lib + "-([\\.-_0-9]+(-SNAPSHOT)?).jar");
+            // FIXME: hector-core-1.1-2 not recognized
+            // FIXME: kafka_2.8.2-0.8.0.jar websocket-api-9.1.1.v20140108.jar
+            // FIXME cglib-nodep-2.1_3.jar
             Matcher m = p.matcher(path);
             if (m.find()) {
                 log.debug("Found library " + lib + " at " + path);
@@ -183,15 +186,22 @@ public class DependencyResolver {
             for (String lib : libs.keySet()) {
                 if (getLibInstallPath(lib) != null) {
                     libDeletions.add(lib);
+                } else {
+                    log.warn("Did not find library to uninstall it: " + lib);
                 }
             }
         }
 
         for (Plugin plugin : allPlugins.keySet()) {
             if (additions.contains(plugin) || (plugin.isInstalled() && !deletions.contains(plugin))) {
-                Map<String, String> libs = plugin.getLibs(plugin.getInstalledVersion());
+                String ver = additions.contains(plugin) ? plugin.getCandidateVersion() : plugin.getInstalledVersion();
+                //log.debug("Affects " + plugin + " v" + ver);
+                Map<String, String> libs = plugin.getLibs(ver);
                 for (String lib : libs.keySet()) {
-                    libDeletions.remove(lib);
+                    if (libDeletions.contains(lib)) {
+                        log.debug("Won't delete lib " + lib + " since it is used by " + plugin);
+                        libDeletions.remove(lib);
+                    }
                 }
             }
         }

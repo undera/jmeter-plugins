@@ -116,6 +116,38 @@ public class DependencyResolverTest {
         assertTrue(dels.contains(b));
     }
 
+    @Test
+    public void testDepLibUninstall() throws Exception {
+        Map<Plugin, Boolean> plugs = new HashMap<>();
+
+        PluginMock a = new PluginMock("a", "1.0");
+        Map<String, String> aLibs = new HashMap<>();
+        aLibs.put("aaa", "");
+        aLibs.put("guava", "");
+        aLibs.put("bbb", "");
+        a.setLibs(aLibs);
+        plugs.put(a, false);
+
+        PluginMock b = new PluginMock("b", null);
+        Map<String, String> bLibs = new HashMap<>();
+        bLibs.put("aa", "");
+        bLibs.put("guava", "");
+        bLibs.put("bb", "");
+        b.setLibs(bLibs);
+        plugs.put(b, true);
+
+        DependencyResolver obj = new DependencyResolver(plugs);
+        Set<Plugin> adds = obj.getAdditions();
+        Set<Plugin> dels = obj.getDeletions();
+
+        assertTrue(!obj.getLibDeletions().contains("guava"));
+        assertEquals(1, adds.size());
+        assertEquals(1, dels.size());
+        assertTrue(dels.contains(a));
+        assertTrue(adds.contains(b));
+    }
+
+
     private class PluginMock extends Plugin {
         private Set<String> depends = new HashSet<>();
         private Map<String, String> libs = new HashMap<>();

@@ -63,5 +63,29 @@
         }
       }
     }
+  },
+  {
+    "id": "netflix-cassandra",
+    "name": "Cassandra Support",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/Netflix/CassJMeter/wiki",
+    "vendor": "Netflix",
+    "markerClass": "com.netflix.jmeter.sampler.AbstractSampler",
+    "versions": {
+      "0.2-SNAPSHOT": {
+        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/CassJMeter-0.2-SNAPSHOT.jar",
+        "depends": [
+          "jmeter>=2.13"
+        ],
+        "libs": {
+          "servo-core": "http://search.maven.org/remotecontent?filepath=com/netflix/servo/servo-core/0.4.32/servo-core-0.4.32.jar",
+          "hector-core": "http://search.maven.org/remotecontent?filepath=org/hectorclient/hector-core/1.1-2/hector-core-1.1-2.jar",
+          "astyanax": "http://search.maven.org/remotecontent?filepath=com/netflix/astyanax/astyanax/1.56.25/astyanax-1.56.25.jar",
+          "guava": "http://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
+          "cassandra-driver-core": "http://search.maven.org/remotecontent?filepath=com/datastax/cassandra/cassandra-driver-core/1.0.0/cassandra-driver-core-1.0.0.jar"
+        }
+      }
+    }
   }
 ]

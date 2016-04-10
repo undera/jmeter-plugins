@@ -10,6 +10,7 @@ class PluginsRepository extends \PWE\Modules\PWEModule implements \PWE\Modules\O
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             \PWE\Core\PWELogger::warn("Stats: %s", $_POST['stats']);
         } else {
+            \PWE\Core\PWELogger::warn("Repo: %s", $_GET['installID']);
             $node = $this->PWE->getNode();
             $configsDir = $node['!a']['configs'];
             if (!$configsDir || !is_dir($configsDir)) {

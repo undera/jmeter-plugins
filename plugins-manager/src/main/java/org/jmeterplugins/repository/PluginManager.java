@@ -214,12 +214,13 @@ public class PluginManager {
             }
         }
 
+        statusChanged.notify("Restarting JMeter...");
+
         Set<String> libDeletions = new HashSet<>();
         for (String lib : resolver.getLibDeletions()) {
             libDeletions.add(DependencyResolver.getLibInstallPath(lib));
         }
 
-        statusChanged.notify("Setting restart hook...");
         modifierHook(resolver.getDeletions(), additions, libInstalls, libDeletions);
     }
 

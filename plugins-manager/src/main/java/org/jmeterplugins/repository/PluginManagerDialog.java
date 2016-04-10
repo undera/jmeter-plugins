@@ -21,7 +21,7 @@ public class PluginManagerDialog extends JDialog {
     private final JButton apply = new JButton("Apply Changes and Restart JMeter");
     private final PluginsList installed;
     private final PluginsList available;
-    private JLabel statusLabel = new JLabel("Idle");
+    private JLabel statusLabel = new JLabel("");
 
 
     public PluginManagerDialog(PluginManager aManager) {

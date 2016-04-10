@@ -43,5 +43,25 @@
         }
       }
     }
+  },
+  {
+    "id": "mqtt-sampler",
+    "name": "MQTT Protocol Support",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/hemikak/mqtt-jmeter",
+    "vendor": "Hemika Kodikara",
+    "markerClass": "org.apache.jmeter.protocol.mqtt.sampler.SubscriberSampler",
+    "versions": {
+      "0.0.1-SNAPSHOT": {
+        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/mqtt-jmeter-0.0.1-SNAPSHOT.jar",
+        "depends": [
+          "jmeter>=2.13"
+        ],
+        "libs": {
+          "org.eclipse.paho.client.mqttv3": "http://search.maven.org/remotecontent?filepath=org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.0.2/org.eclipse.paho.client.mqttv3-1.0.2.jar"
+        }
+      }
+    }
   }
 ]

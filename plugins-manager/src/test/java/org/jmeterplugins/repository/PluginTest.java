@@ -13,7 +13,7 @@ public class PluginTest {
     public void testVersionComparator() throws Exception {
         Plugin obj = new PluginExposed();
         obj.detectInstalled();
-        assertEquals("3.0", obj.getCandidateVersion());
+        assertEquals("2.11", obj.getCandidateVersion());
     }
 
     private class PluginExposed extends Plugin {

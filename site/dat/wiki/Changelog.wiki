@@ -15,7 +15,7 @@
   * change HttpSimpleTableServer command ADD a new line for a file with GET (new) or POST protocols, see [http://jmeter-plugins.org/wiki/HttpSimpleTableServer/]
   * change HttpSimpleTableServer no cache for Response, add headers cache control, pragma and expires
   * Add fields to FFW: grpThreads, sampleCount, errorCount, responseHeaderSize, responseSize, URL
-  * upgrade JSONPath lib to 2.0.0 to not conflict with core JMeter 2.14, this breaks some cases because of the lib regression
+  * upgrade JSONPath lib to 2.0.0 to not conflict with core JMeter 3.0, this breaks some cases because of the lib regression
   * fix user agent override for Firefox not enabling the field in UI
   * request clean session from IE webdriver
   * upgrade selenium libraries to 2.52.0

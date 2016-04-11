@@ -1,0 +1,5 @@
+=Developer Snapshots=
+
+Developer builds are uploaded from master branch, in case of stable build. Use at your own risk.
+
+<downloads-dir:nightly>

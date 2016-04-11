@@ -6,7 +6,7 @@
 
     <groupId>org.jmeter-plugins</groupId>
     <artifactId>jmeter-plugins-manager</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-BETA</version>
     <dependencies>
         <dependency>
             <groupId>org.apache.jmeter</groupId>

@@ -1,18 +1,50 @@
 = JMeter Plugins Manager =
 
-== Managing Core JMeter Plugins ==
+<div class="alert alert-danger">
+This feature in in BETA state. [http://atkritka.com/upload/iblock/978/atkritka_1378399932_735.jpg? Better than nothing], but it can ruin your JMeter installation.
+Consider using it with non-production installations only.
+Report any issues on our [/support/ support forums].<br/><br/>Get the beta build [/downloads/file/nightly/jmeter-plugins-manager-1.0.0-BETA.jar from here].
+</div>
 
-== managing jpgc plugins ==
+The idea of JMeter Plugins Manager is simple: instead of installing various plugins manually, it will do it for you through nice UI.
+No need to mess with JARs anymore. Install Plugins Manager once and it will do it all for you: installing, upgrading, uninstalling.
 
-managing various plugins - bring your own
+The plugins it manages include usual plugins from JMeter-Plugins.org, various third-party plugins and even core JMeter plugins.
+This is important, because removing rarely used features like JDBC and LDAP will tidy up huge popup menus from unused items. As a bonus you will get the increased JMeter startup time.
 
-in the future we'll split
+As the first experiment, try to uninstall all the plugins and see how bare JMeter looks like. Then install something. Then install something more. Have fun!
 
-usage stats notice
+== Installation and Usage ==
+
+Download the Plugins Manager JAR file and put it into JMeter's {{{lib/ext}}} directory. Then start JMeter and go to "Options" menu to access the Plugins Manager.
+
+[/img/wiki/pmgr/pmgr_menu_item.png]
+
+The label on the menu item will say "has upgrades" in case any of your installed plugins have upgrades for it.
+
+Clicking on menu item will bring up the plugins manager dialog:
+
+[/img/wiki/pmgr/pmgr_dialog.png]
+
+The dialog has two tabs, "Review Changes" area and "Apply" button. Removing ticks from plugins on "Installed" tab will uninstall them. Setting ticks on "Available" tab will install the plugin.
+
+The plugins that have upgrades will show in the list with _italic font_. Choose the new version you want to install for them from "Version" drop-down.
+
+The "Review Changes" pane is important, it lists all the changes that supposed to be done after you click "Apply" button.
+Sometimes plugins have dependencies from each other, so there might be additional plugins uninstalled. There is no hurry for important business, so review the changes prior to applying it.
 
 
-== Properties ==
+== Add Your Favorite Plugin ==
 
-address
-timeout
-send stats
+Now there is an opportunity for anyone who creates the JMeter plugins to quickly make them available for wide audience of JMeter-Plugins.org.
+You don't need to contribute your source code into our repository, you can just create your project and maintain it, just using JPGC as distribution infrastructure.
+If you are interested, please raise the topic on our [/support/ community forum] to get more detailed instructions.
+
+As a related note: there is a intention to split existing plugin sets from JPGC into smaller pieces that would fit users better.
+Main goal is not to ship undesired plugins into popup menus to not distract JMeter users from their main job.
+
+== Usage Statistics Collected ==
+
+By default, Plugins Manager sends some anonymous information to JMeter-Plugins.org, including: full version of JMeter used, list of installed plugins with their versions, unique ID for the installation.
+We would love to analyze that information to learn more about which plugins deserve more development according to their popularity. Also, we plan to publish some interesting stats from that information in the future.
+The information is completely anonymous, you can validate that through our source code. You are free to disable these reporting by setting {{{jpgc.repo.sendstats=false}}} in JMeter properties.

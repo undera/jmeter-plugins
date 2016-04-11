@@ -10,9 +10,6 @@
     "versions": {
       "1.1.1-SNAPSHOT": {
         "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/ApacheJMeter_ssh-1.1.1-SNAPSHOT.jar",
-        "depends": [
-          "jmeter>=2.13"
-        ],
         "libs": {
           "jsch": "http://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.50/jsch-0.1.50.jar"
         }
@@ -30,9 +27,6 @@
     "versions": {
       "1.0.2-SNAPSHOT": {
         "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/JMeterWebSocketSampler-1.0.2-SNAPSHOT.jar",
-        "depends": [
-          "jmeter>=2.13"
-        ],
         "libs": {
           "jetty-http": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.1.1.v20140108/jetty-http-9.1.1.v20140108.jar",
           "jetty-io": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.1.1.v20140108/jetty-io-9.1.1.v20140108.jar",
@@ -55,9 +49,6 @@
     "versions": {
       "0.0.1-SNAPSHOT": {
         "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/mqtt-jmeter-0.0.1-SNAPSHOT.jar",
-        "depends": [
-          "jmeter>=2.13"
-        ],
         "libs": {
           "org.eclipse.paho.client.mqttv3": "http://search.maven.org/remotecontent?filepath=org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.0.2/org.eclipse.paho.client.mqttv3-1.0.2.jar"
         }
@@ -75,9 +66,6 @@
     "versions": {
       "0.2-SNAPSHOT": {
         "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/CassJMeter-0.2-SNAPSHOT.jar",
-        "depends": [
-          "jmeter>=2.13"
-        ],
         "libs": {
           "servo-core": "http://search.maven.org/remotecontent?filepath=com/netflix/servo/servo-core/0.4.32/servo-core-0.4.32.jar",
           "hector-core": "http://search.maven.org/remotecontent?filepath=org/hectorclient/hector-core/1.1-2/hector-core-1.1-2.jar",
@@ -100,7 +88,6 @@
       "0.2.0": {
         "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/kafkameter-0.2.0.jar",
         "depends": [
-          "jmeter>=2.13",
           "jmeter-java"
         ],
         "libs": {

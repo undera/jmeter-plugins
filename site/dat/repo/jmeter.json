@@ -9,7 +9,9 @@
     "markerClass": "org.apache.jmeter.engine.JMeterEngine",
     "canUninstall": false,
     "versions": {
-      "": {}
+      "": {
+        "downloadUrl": null
+      }
     }
   },
   {

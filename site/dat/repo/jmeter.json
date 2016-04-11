@@ -1,5 +1,18 @@
 [
   {
+    "id": "jmeter-core",
+    "name": "JMeter Core",
+    "description": "Core functionality for JMeter, including GUI and engine.",
+    "vendor": "JMeter Core Team",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/http-config/http-config-example.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/index.html",
+    "markerClass": "org.apache.jmeter.engine.JMeterEngine",
+    "canUninstall": false,
+    "versions": {
+      "": {}
+    }
+  },
+  {
     "id": "jmeter-tcp",
     "name": "TCP Protocol Support",
     "description": "The TCP Sampler opens a TCP/IP connection to the specified server. It then sends the text, and waits for a response.",

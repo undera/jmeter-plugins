@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 public class DependencyResolver {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    public static final String JMETER = "jmeter";
     public static final String JAVA_CLASS_PATH = "java.class.path";
     protected final Set<Plugin> deletions = new HashSet<>();
     protected final Set<Plugin> additions = new HashSet<>();
@@ -128,12 +127,6 @@ public class DependencyResolver {
             hasModifications = false;
             for (Plugin plugin : additions) {
                 for (String pluginID : plugin.getDepends()) {
-                    if (pluginID.equals(JMETER)) {
-                        // TODO: special check for jmeter ver requirement
-                        log.debug("Special case for JMeter core");
-                        continue;
-                    }
-
                     Plugin depend = getPluginByID(pluginID);
                     if (!additions.contains(depend)) {
                         log.debug("Add to install: " + depend);

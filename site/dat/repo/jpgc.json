@@ -1,7 +1,7 @@
 [
   {
     "id": "jpgc-standard",
-    "name": "Standard Set by JMeter-Plugins.org",
+    "name": "jpgc - Standard Set",
     "description": "",
     "screenshotUrl": "",
     "helpUrl": "",
@@ -9,18 +9,9 @@
     "markerClass": "kg.apc.jmeter.samplers.DummySampler",
     "canUninstall": true,
     "versions": {
-      "1.3.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-standard/1.3.1/jmeter-plugins-standard-1.3.1.jar",
-        "depends": [
-          "jmeter>=2.13",
-          "jmeter-components",
-          "jmeter-http"
-        ]
-      },
       "1.4.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-standard/1.4.0/jmeter-plugins-standard-1.4.0.jar",
         "depends": [
-          "jmeter>=2.13",
           "jmeter-components",
           "jmeter-http"
         ]
@@ -29,7 +20,7 @@
   },
   {
     "id": "jpgc-extras",
-    "name": "Extras Set by JMeter-Plugins.org",
+    "name": "jpgc - Extras Set",
     "description": "",
     "screenshotUrl": "",
     "helpUrl": "",
@@ -40,7 +31,6 @@
       "1.4.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-extras/1.4.0/jmeter-plugins-extras-1.4.0.jar",
         "depends": [
-          "jmeter>=2.13",
           "jpgc-standard",
           "jmeter-http",
           "jmeter-jdbc"
@@ -50,7 +40,7 @@
   },
   {
     "id": "jpgc-extras-libs",
-    "name": "Extras With Libs Set by JMeter-Plugins.org",
+    "name": "jpgc - Extras With Libs Set",
     "description": "",
     "screenshotUrl": "",
     "helpUrl": "",
@@ -61,7 +51,6 @@
       "1.4.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-extras-libs/1.4.0/jmeter-plugins-extras-libs-1.4.0.jar",
         "depends": [
-          "jmeter>=2.13",
           "jpgc-extras",
           "jmeter-java",
           "jmeter-http"
@@ -86,19 +75,16 @@
   },
   {
     "id": "jpgc-hadoop",
-    "name": "Hadoop Set by JMeter-Plugins.org",
+    "name": "Hadoop/HBase Testing",
     "description": "",
     "screenshotUrl": "",
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": "kg.apc.jmeter.config.VariablesFromCSV",
+    "markerClass": "com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations",
     "canUninstall": true,
     "versions": {
       "1.4.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-extras/1.4.0/jmeter-plugins-extras-1.4.0.jar",
-        "depends": [
-          "jmeter>=2.13"
-        ],
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-hadoop/1.4.0/jmeter-plugins-hadoop-1.4.0.jar",
         "libs": {
           "hbase": "http://search.maven.org/remotecontent?filepath=org/apache/hbase/hbase/0.94.5/hbase-0.94.5.jar",
           "zookeeper": "http://search.maven.org/remotecontent?filepath=org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar",
@@ -121,9 +107,6 @@
     "versions": {
       "1.4.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-xmpp/1.4.0/jmeter-plugins-xmpp-1.4.0.jar",
-        "depends": [
-          "jmeter>=2.13"
-        ],
         "libs": {
           "smack-core": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-core/4.0.7/smack-core-4.0.7.jar",
           "smack-tcp": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-tcp/4.0.7/smack-tcp-4.0.7.jar",
@@ -136,7 +119,7 @@
   },
   {
     "id": "jpgc-webdriver",
-    "name": "WebDriver Support",
+    "name": "Selenium/WebDriver Support",
     "description": "",
     "screenshotUrl": "",
     "helpUrl": "",
@@ -146,9 +129,6 @@
     "versions": {
       "1.4.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/1.4.0/jmeter-plugins-webdriver-1.4.0.jar",
-        "depends": [
-          "jmeter>=2.13"
-        ],
         "libs": {
           "selenium-support": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-support/2.53.0/selenium-support-2.53.0.jar",
           "selenium-api": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-api/2.53.0/selenium-api-2.53.0.jar",

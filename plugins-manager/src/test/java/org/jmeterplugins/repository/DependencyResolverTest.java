@@ -68,7 +68,6 @@ public class DependencyResolverTest {
         HashSet<String> depsStandard = new HashSet<>();
         depsStandard.add(http.getID());
         depsStandard.add(components.getID());
-        depsStandard.add(DependencyResolver.JMETER);
         standard.setDepends(depsStandard);
         plugs.put(standard, false);
 
@@ -77,7 +76,6 @@ public class DependencyResolverTest {
         depsExtras.add(standard.getID());
         depsExtras.add(jdbc.getID());
         depsExtras.add(http.getID());
-        depsExtras.add(DependencyResolver.JMETER);
         extras.setDepends(depsExtras);
         plugs.put(extras, true);
 

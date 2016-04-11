@@ -22,3 +22,4 @@ Everyone who provided pull request or other contribution, deserves mentioning on
   * BlazeMeter Inc. - Concurrency thread group
   * BlazeMeter feat. Dynatrace - Arrivals Thread Groups and Weighted Switch Controller
   * Pascal Treilhes - added connection resilience to [JMXMon]
+  * Vatche Ishakian - Poisson Thread Group

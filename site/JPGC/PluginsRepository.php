@@ -7,10 +7,9 @@ class PluginsRepository extends \PWE\Modules\PWEModule implements \PWE\Modules\O
 {
     public function process()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            \PWE\Core\PWELogger::warn("Stats: %s", $_POST['stats']);
-        } else {
-            \PWE\Core\PWELogger::warn("Repo: %s", $_GET['installID']);
+            if ($_POST['stats']!='null') {
+                \PWE\Core\PWELogger::warn("Status: %s", $_POST['stats']);
+            }
             $node = $this->PWE->getNode();
             $configsDir = $node['!a']['configs'];
             if (!$configsDir || !is_dir($configsDir)) {
@@ -28,6 +27,5 @@ class PluginsRepository extends \PWE\Modules\PWEModule implements \PWE\Modules\O
 
             $this->PWE->sendHTTPHeader("Content-Type: application/json");
             throw new \PWE\Exceptions\HTTP2xxException(json_encode($plugins));
-        }
     }
 }

@@ -1,0 +1,18 @@
+= JMeter Plugins Manager =
+
+== Managing Core JMeter Plugins ==
+
+== managing jpgc plugins ==
+
+managing various plugins - bring your own
+
+in the future we'll split
+
+usage stats notice
+
+
+== Properties ==
+
+address
+timeout
+send stats

@@ -27,7 +27,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
 
 
     public PluginManagerDialog(PluginManager aManager) {
-        super((JFrame) null, "Plugins Manager", true);
+        super((JFrame) null, "JMeter Plugins Manager", true);
         setLayout(new BorderLayout());
         manager = aManager;
         setSize(new Dimension(640, 480));

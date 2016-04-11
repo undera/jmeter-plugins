@@ -1,52 +1,44 @@
 package org.jmeterplugins.repository;
 
-import org.apache.jmeter.gui.plugin.MenuCreator;
+import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
-public class PluginManagerMenuItem extends JMenuItem implements MenuCreator, ActionListener {
+public class PluginManagerMenuItem extends JMenuItem implements ActionListener {
+    private static final Logger log = LoggingManager.getLoggerForClass();
     private static PluginManagerDialog dialog;
+    private final PluginManager mgr;
 
     public PluginManagerMenuItem() {
         super("Plugins Manager", getPluginsIcon());
         addActionListener(this);
+
+        mgr = new PluginManager(); // don't delay startup for longer that 1 second
+        try {
+            mgr.load();
+        } catch (IOException e) {
+            log.warn("Failed to load plugin updates info", e);
+        }
+
+        if (mgr.hasAnyUpdates()) {
+            setText("Plugins Manager (has upgrades)");
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (dialog == null) {
-            dialog = new PluginManagerDialog(new PluginManager());
+            int timeout = Integer.parseInt(JMeterUtils.getPropDefault("jpgc.repo.timeout", "5000"));
+            mgr.setTimeout(timeout);
+            dialog = new PluginManagerDialog(mgr);
         }
 
         dialog.setVisible(true);
-    }
-
-    @Override
-    public JMenuItem[] getMenuItemsAtLocation(MENU_LOCATION location) {
-        if (location == MENU_LOCATION.OPTIONS) {
-            JMenuItem item = new PluginManagerMenuItem();
-            JMenuItem[] arr = new JMenuItem[1];
-            arr[0] = item;
-            return arr;
-        } else {
-            return new JMenuItem[0];
-        }
-    }
-
-    @Override
-    public javax.swing.JMenu[] getTopLevelMenus() {
-        return new javax.swing.JMenu[0];
-    }
-
-    @Override
-    public boolean localeChanged(javax.swing.MenuElement menu) {
-        return false;
-    }
-
-    @Override
-    public void localeChanged() {
     }
 
     public static ImageIcon getPluginsIcon() {

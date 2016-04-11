@@ -4,6 +4,7 @@ package org.jmeterplugins.repository;
 import net.sf.json.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.IOUtils;
@@ -22,10 +23,13 @@ import java.util.*;
 
 public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
+    private int timeout = 1000;
     protected HttpClient httpClient = new HttpClient();
-    private static int TIMEOUT = 5;
-    private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://jmeter-plugins.org"); // FIXME: that's temporary address
+    private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://jmeter-plugins.org");
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
+
+    public PluginManager() {
+    }
 
     public void load() throws IOException {
         if (allPlugins.size() > 0) {
@@ -48,6 +52,14 @@ public class PluginManager {
         }
 
         log.debug("Plugins: " + allPlugins.keySet());
+
+        if (JMeterUtils.getPropDefault("jpgc.repo.sendstats", "true").equals("true")) {
+            try {
+                reportStats();
+            } catch (Exception e) {
+                log.debug("Failed to report usage stats", e);
+            }
+        }
     }
 
     private void modifierHook(final Set<Plugin> deletions, final Set<Plugin> additions, final Map<String, String> libInstalls, final Set<String> libDeletions) {
@@ -64,8 +76,8 @@ public class PluginManager {
     }
 
     protected JSON getJSON(String path) throws IOException {
-        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(TIMEOUT * 1000);
-        httpClient.getHttpConnectionManager().getParams().setSoTimeout(TIMEOUT * 1000);
+        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(timeout);
+        httpClient.getHttpConnectionManager().getParams().setSoTimeout(timeout);
 
         String uri = address + path;
         log.debug("Requesting " + uri);
@@ -215,14 +227,6 @@ public class PluginManager {
             }
         }
 
-        if (JMeterUtils.getPropDefault("jpgc.repo.sendstats", "true").equals("true")) {
-            try {
-                reportStats(resolver);
-            } catch (Exception e) {
-                log.debug("Failed to report usage stats", e);
-            }
-        }
-
         statusChanged.notify("Restarting JMeter...");
 
         Set<String> libDeletions = new HashSet<>();
@@ -233,19 +237,19 @@ public class PluginManager {
         modifierHook(resolver.getDeletions(), additions, libInstalls, libDeletions);
     }
 
-    private void reportStats(DependencyResolver resolver) throws IOException {
+    private void reportStats() throws IOException {
         httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(1000);
         httpClient.getHttpConnectionManager().getParams().setSoTimeout(3000);
 
         String uri = address + "/repo/";
         PostMethod post = new PostMethod(uri);
-        post.addParameter("stats", getUsageStats(resolver).toString());
+        post.addParameter("stats", getUsageStats().toString());
 
         log.debug("Requesting " + uri);
         httpClient.executeMethod(post);
     }
 
-    protected JSONObject getUsageStats(DependencyResolver resolver) {
+    protected JSONObject getUsageStats() {
         JSONObject data = new JSONObject();
         data.put("installID", getInstallID());
         data.put("jmeter", JMeterUtils.getJMeterVersion());
@@ -256,17 +260,6 @@ public class PluginManager {
         }
         data.put("installed", installs);
 
-        JSONObject deletes = new JSONObject();
-        for (Plugin p : resolver.getDeletions()) {
-            deletes.put(p.getID(), p.getInstalledVersion());
-        }
-        data.put("deletions", deletes);
-
-        JSONObject adds = new JSONObject();
-        for (Plugin p : resolver.getAdditions()) {
-            adds.put(p.getID(), p.getInstalledVersion());
-        }
-        data.put("additions", adds);
         log.debug("Usage stats: " + data);
         return data;
     }
@@ -319,6 +312,15 @@ public class PluginManager {
         allPlugins.put(plugin, cbState);
     }
 
+    public boolean hasAnyUpdates() {
+        for (Plugin p : allPlugins.keySet()) {
+            if (p.isUpgradable()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private class PluginComparator implements java.util.Comparator<Plugin> {
         @Override
         public int compare(Plugin o1, Plugin o2) {
@@ -351,4 +353,9 @@ public class PluginManager {
 
         return DigestUtils.md5Hex(str);
     }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
+
 }

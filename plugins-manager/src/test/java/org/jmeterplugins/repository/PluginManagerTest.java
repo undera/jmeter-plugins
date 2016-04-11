@@ -15,7 +15,7 @@ public class PluginManagerTest {
         PluginManager obj = new PluginManager();
         assertEquals(32, obj.getInstallID().length());
         HashMap<Plugin, Boolean> allPlugins = new HashMap<>();
-        JSONObject res = obj.getUsageStats(new DependencyResolver(allPlugins));
+        JSONObject res = obj.getUsageStats();
         assertNotNull(res);
     }
 
@@ -34,8 +34,8 @@ public class PluginManagerTest {
         }
 
         @Override
-        public JSONObject getUsageStats(DependencyResolver resolver) {
-            return super.getUsageStats(resolver);
+        public JSONObject getUsageStats() {
+            return super.getUsageStats();
         }
     }
 }

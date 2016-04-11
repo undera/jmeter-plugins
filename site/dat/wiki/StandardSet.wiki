@@ -21,6 +21,7 @@ Basic plugins for everyday needs. Does not require additional libs to run.
   * [FlexibleFileWriter Flexible File Writer]
   * [ConsoleStatusLogger Non-GUI Console Status Logger] 
   * [LoadosophiaUploader BM.Sense Uploader] (aka Loadosophia Uploader)
+  * [SynthesisReport Synthesis Report] filterable by label (regex), offset
 
 == Others ==
   * [JMeterPluginsCMD Command-Line Graph Plotting Tool]

@@ -4,7 +4,6 @@ package org.jmeterplugins.repository;
 import net.sf.json.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.IOUtils;
@@ -23,7 +22,7 @@ import java.util.*;
 
 public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private int timeout = 1000;
+    private int timeout = 1000; // don't delay JMeter startup for more than 1 second
     protected HttpClient httpClient = new HttpClient();
     private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://jmeter-plugins.org");
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();

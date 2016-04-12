@@ -16,7 +16,7 @@
 
 ----
 
-<p class="alert alert-success">Join [PluginsManager Plugins Manager] beta testing</p>
+<p class="alert alert-success">Join [/wiki/PluginsManager/ Plugins Manager] beta testing</p>
 
 ----
 

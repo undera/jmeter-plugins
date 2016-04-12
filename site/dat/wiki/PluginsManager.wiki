@@ -1,6 +1,6 @@
 = JMeter Plugins Manager =
 
-<div class="alert alert-danger">
+<div class="alert alert-warning">
 This feature in in BETA state. [http://atkritka.com/upload/iblock/978/atkritka_1378399932_735.jpg? Better than nothing], but it can ruin your JMeter installation.
 Consider using it with non-production installations only.
 Report any issues on our [/support/ support forums].<br/><br/>Get the beta build [/downloads/file/nightly/jmeter-plugins-manager-1.0.0-BETA.jar from here].

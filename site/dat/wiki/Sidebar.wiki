@@ -6,3 +6,4 @@
     <i class="fa fa-twitter-square"></i>
     [https://twitter.com/#!/jmeter_plugins Follow us on Twitter]
 </div>
+<p class="alert alert-success">Join [PluginsManager Plugins Manager] beta testing</p>

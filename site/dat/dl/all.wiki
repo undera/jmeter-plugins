@@ -16,6 +16,10 @@
 
 ----
 
+<p class="alert alert-success">Join [PluginsManager Plugins Manager] beta testing</p>
+
+----
+
 See also:
 
   * [old Previous Releases]

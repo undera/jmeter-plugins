@@ -5,9 +5,6 @@
 
 <table class="table">
 <tr>
-<td colspan="2" class="alert alert-warning">Join [PluginsManager Plugins Manager] beta testing</td>
-</tr>
-<tr>
 <td style="width: 50%">
 <div class="plugins_set standard_set" >
 == Standard Set ==

@@ -11,10 +11,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -196,20 +193,30 @@ public class LoadosophiaAPIClient {
         MultipartRequestEntity multipartRequest = new MultipartRequestEntity(parts.toArray(new Part[parts.size()]), postRequest.getParams());
         postRequest.setRequestEntity(multipartRequest);
         int result = httpClient.executeMethod(postRequest);
+        InputStream respBody = postRequest.getResponseBodyAsStream();
         if (result != expectedSC) {
-            String fname = File.createTempFile("error_", ".html").getAbsolutePath();
-            notifier.notifyAbout("Saving server error response to: " + fname);
-            FileOutputStream fos = new FileOutputStream(fname);
-            FileChannel resultFile = fos.getChannel();
-            resultFile.write(ByteBuffer.wrap(IOUtils.toByteArray(postRequest.getResponseBodyAsStream())));
-            resultFile.close();
+            if (respBody != null) {
+                saveErrorResponse(respBody);
+            }
             throw new HttpException("Request returned not " + expectedSC + " status code: " + result);
         }
-        byte[] bytes = IOUtils.toByteArray(postRequest.getResponseBodyAsStream());
-        if (bytes == null) {
+
+        byte[] bytes;
+        if (respBody != null) {
+            bytes = IOUtils.toByteArray(respBody);
+        } else {
             bytes = new byte[0];
         }
         String response = new String(bytes);
         return response.trim().split(";");
+    }
+
+    private void saveErrorResponse(InputStream respBody) throws IOException {
+        String fname = File.createTempFile("error_", ".html").getAbsolutePath();
+        notifier.notifyAbout("Saving server error response to: " + fname);
+        FileOutputStream fos = new FileOutputStream(fname);
+        FileChannel resultFile = fos.getChannel();
+        resultFile.write(ByteBuffer.wrap(IOUtils.toByteArray(respBody)));
+        resultFile.close();
     }
 }

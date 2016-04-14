@@ -72,6 +72,7 @@
         <module>charts</module>
         <module>sense-uploader</module>
         <module>perfmon</module>
+        <module>json</module>
     </modules>
 
 </project>

@@ -10,6 +10,7 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.gui;
 
 import java.awt.BorderLayout;
 import javax.swing.BorderFactory;
+
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.processor.gui.AbstractPostProcessorGui;
 import org.apache.jmeter.testelement.TestElement;

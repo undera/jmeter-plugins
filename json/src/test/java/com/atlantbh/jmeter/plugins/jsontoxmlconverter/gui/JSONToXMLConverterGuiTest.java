@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.gui;
+package com.atlantbh.jmeter.plugins.jsontoxmlconverter.gui;
 
-import com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.JSONFormatter;
+import com.atlantbh.jmeter.plugins.jsontoxmlconverter.JSONToXMLConverter;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
@@ -23,11 +23,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-public class JSONFormatterGuiTest {
+public class JSONToXMLConverterGuiTest {
 
-    public JSONFormatterGuiTest() {
+    public JSONToXMLConverterGuiTest() {
     }
 
     @BeforeClass
@@ -48,72 +47,71 @@ public class JSONFormatterGuiTest {
     }
 
     /**
-     * Test of init method, of class JSONFormatterGui.
-     */
-    @Test
-    public void testInit() {
-        System.out.println("init");
-        JSONFormatterGui instance = new JSONFormatterGui();
-        instance.init();
-        // TODO review the generated test code and remove the default call to fail.
-
-    }
-
-    /**
-     * Test of clearGui method, of class JSONFormatterGui.
+     * Test of clearGui method, of class JSONToXMLConverterGui.
      */
     @Test
     public void testClearGui() {
         System.out.println("clearGui");
-        JSONFormatterGui instance = new JSONFormatterGui();
+        JSONToXMLConverterGui instance = new JSONToXMLConverterGui();
         instance.clearGui();
         // TODO review the generated test code and remove the default call to fail.
 
     }
 
     /**
-     * Test of createTestElement method, of class JSONFormatterGui.
+     * Test of createTestElement method, of class JSONToXMLConverterGui.
      */
     @Test
     public void testCreateTestElement() {
         System.out.println("createTestElement");
-        JSONFormatterGui instance = new JSONFormatterGui();
+        JSONToXMLConverterGui instance = new JSONToXMLConverterGui();
         TestElement expResult = null;
         TestElement result = instance.createTestElement();
     }
 
     /**
-     * Test of getLabelResource method, of class JSONFormatterGui.
+     * Test of modifyTestElement method, of class JSONToXMLConverterGui.
+     */
+    @Test
+    public void testModifyTestElement() {
+        System.out.println("modifyTestElement");
+        TestElement element = new JSONToXMLConverter();
+        JSONToXMLConverterGui instance = new JSONToXMLConverterGui();
+        instance.modifyTestElement(element);
+    }
+
+    /**
+     * Test of configure method, of class JSONToXMLConverterGui.
+     */
+    @Test
+    public void testConfigure() {
+        System.out.println("configure");
+        TestElement element = new JSONToXMLConverter();
+        JSONToXMLConverterGui instance = new JSONToXMLConverterGui();
+        instance.configure(element);
+        // TODO review the generated test code and remove the default call to fail.
+
+    }
+
+    /**
+     * Test of getLabelResource method, of class JSONToXMLConverterGui.
      */
     @Test
     public void testGetLabelResource() {
         System.out.println("getLabelResource");
-        JSONFormatterGui instance = new JSONFormatterGui();
+        JSONToXMLConverterGui instance = new JSONToXMLConverterGui();
         String expResult = "";
         String result = instance.getLabelResource();
     }
 
     /**
-     * Test of getStaticLabel method, of class JSONFormatterGui.
+     * Test of getStaticLabel method, of class JSONToXMLConverterGui.
      */
     @Test
     public void testGetStaticLabel() {
         System.out.println("getStaticLabel");
-        JSONFormatterGui instance = new JSONFormatterGui();
+        JSONToXMLConverterGui instance = new JSONToXMLConverterGui();
         String expResult = "";
         String result = instance.getStaticLabel();
-    }
-
-    /**
-     * Test of modifyTestElement method, of class JSONFormatterGui.
-     */
-    @Test
-    public void testModifyTestElement() {
-        System.out.println("modifyTestElement");
-        TestElement element = new JSONFormatter();
-        JSONFormatterGui instance = new JSONFormatterGui();
-        instance.modifyTestElement(element);
-        // TODO review the generated test code and remove the default call to fail.
-
     }
 }

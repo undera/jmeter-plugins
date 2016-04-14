@@ -39,8 +39,7 @@ public class JSONToXMLConverter extends AbstractSampler {
         JSON json = JSONSerializer.toJSON(jsonData);
         serializer.setRootName("xmlOutput");
         serializer.setTypeHintsEnabled(false);
-        String xml = serializer.write(json);
-        return xml;
+        return serializer.write(json);
     }
 
     private void convertToXML() {

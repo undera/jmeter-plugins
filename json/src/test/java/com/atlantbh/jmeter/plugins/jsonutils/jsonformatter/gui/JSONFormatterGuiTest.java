@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.gui;
+package com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.gui;
 
-import com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor;
+import com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.JSONFormatter;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.After;
@@ -23,11 +23,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-public class JSONPathExtractorGuiTest {
+public class JSONFormatterGuiTest {
 
-    public JSONPathExtractorGuiTest() {
+    public JSONFormatterGuiTest() {
     }
 
     @BeforeClass
@@ -48,72 +47,71 @@ public class JSONPathExtractorGuiTest {
     }
 
     /**
-     * Test of clearGui method, of class JSONPathExtractorGui.
+     * Test of init method, of class JSONFormatterGui.
+     */
+    @Test
+    public void testInit() {
+        System.out.println("init");
+        JSONFormatterGui instance = new JSONFormatterGui();
+        instance.init();
+        // TODO review the generated test code and remove the default call to fail.
+
+    }
+
+    /**
+     * Test of clearGui method, of class JSONFormatterGui.
      */
     @Test
     public void testClearGui() {
         System.out.println("clearGui");
-        JSONPathExtractorGui instance = new JSONPathExtractorGui();
+        JSONFormatterGui instance = new JSONFormatterGui();
         instance.clearGui();
         // TODO review the generated test code and remove the default call to fail.
 
     }
 
     /**
-     * Test of createTestElement method, of class JSONPathExtractorGui.
+     * Test of createTestElement method, of class JSONFormatterGui.
      */
     @Test
     public void testCreateTestElement() {
         System.out.println("createTestElement");
-        JSONPathExtractorGui instance = new JSONPathExtractorGui();
+        JSONFormatterGui instance = new JSONFormatterGui();
         TestElement expResult = null;
         TestElement result = instance.createTestElement();
     }
 
     /**
-     * Test of getLabelResource method, of class JSONPathExtractorGui.
+     * Test of getLabelResource method, of class JSONFormatterGui.
      */
     @Test
     public void testGetLabelResource() {
         System.out.println("getLabelResource");
-        JSONPathExtractorGui instance = new JSONPathExtractorGui();
+        JSONFormatterGui instance = new JSONFormatterGui();
         String expResult = "";
         String result = instance.getLabelResource();
     }
 
     /**
-     * Test of getStaticLabel method, of class JSONPathExtractorGui.
+     * Test of getStaticLabel method, of class JSONFormatterGui.
      */
     @Test
     public void testGetStaticLabel() {
         System.out.println("getStaticLabel");
-        JSONPathExtractorGui instance = new JSONPathExtractorGui();
+        JSONFormatterGui instance = new JSONFormatterGui();
         String expResult = "";
         String result = instance.getStaticLabel();
     }
 
     /**
-     * Test of modifyTestElement method, of class JSONPathExtractorGui.
+     * Test of modifyTestElement method, of class JSONFormatterGui.
      */
     @Test
     public void testModifyTestElement() {
         System.out.println("modifyTestElement");
-        TestElement element = new JSONPathExtractor();
-        JSONPathExtractorGui instance = new JSONPathExtractorGui();
+        TestElement element = new JSONFormatter();
+        JSONFormatterGui instance = new JSONFormatterGui();
         instance.modifyTestElement(element);
-        // TODO review the generated test code and remove the default call to fail.
-
-    }
-
-    /**
-     * Test of configure method, of class JSONPathExtractorGui.
-     */
-    @Test
-    public void testConfigure() {
-        System.out.println("configure");
-        TestElement element = new JSONPathExtractor();
-        JSONPathExtractorGui instance = new JSONPathExtractorGui();
-        instance.configure(element);
         // TODO review the generated test code and remove the default call to fail.
 
     }

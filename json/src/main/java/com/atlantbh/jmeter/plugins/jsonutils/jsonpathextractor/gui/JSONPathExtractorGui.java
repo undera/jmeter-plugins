@@ -9,19 +9,12 @@
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.gui;
 
 import com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor;
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.processor.gui.AbstractPostProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * This is JSONPath extractor GUI class which contains necessary methods for

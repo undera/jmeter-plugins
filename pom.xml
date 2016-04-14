@@ -71,6 +71,7 @@
         <module>emulators</module>
         <module>charts</module>
         <module>sense-uploader</module>
+        <module>perfmon</module>
     </modules>
 
 </project>

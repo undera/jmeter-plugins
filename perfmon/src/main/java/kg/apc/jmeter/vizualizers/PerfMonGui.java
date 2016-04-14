@@ -167,7 +167,7 @@ public class PerfMonGui
         panel.add(scroll, BorderLayout.CENTER);
         panel.add(new ButtonPanelAddCopyRemove(grid, tableModel, defaultValues), BorderLayout.SOUTH);
 
-        List<String> items = new LinkedList<String>(metrics);
+        List<String> items = new LinkedList<>(metrics);
         // add metrics from new agent
         items.add("TCP");
         items.add("JMX");

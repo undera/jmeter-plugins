@@ -66,6 +66,11 @@
         <module>webdriver</module>
         <module>xmpp</module>
         <module>plugins-manager</module>
+        <module>udp</module>
+        <module>io</module>
+        <module>emulators</module>
+        <module>charts</module>
+        <module>sense-uploader</module>
     </modules>
 
 </project>

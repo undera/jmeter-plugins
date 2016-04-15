@@ -5,6 +5,7 @@
   * sense uploader is extracted as separate plugin for pmgr
   * perfmon is extracted as separate plugin for pmgr
   * json components are extracted as separate module for pmgr
+  * hadoop set won't be distributed as zip anymore
 
 == 1.4.0 <i><font color=gray size="1">April 5, 2016</font></i>==
   * BlazeMeter Inc. has contributed [XMPPSet XMPP testing plugins]

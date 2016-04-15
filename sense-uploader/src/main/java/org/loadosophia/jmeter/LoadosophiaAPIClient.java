@@ -65,6 +65,12 @@ public class LoadosophiaAPIClient {
                 log.warn("File not exists, skipped: " + perfmonFile.getAbsolutePath());
                 continue;
             }
+
+            if (perfmonFile.length() == 0) {
+                log.warn("Empty file skipped: " + perfmonFile.getAbsolutePath());
+                continue;
+            }
+
             partsList.add(new FilePart("perfmon_" + index, new FilePartSource(gzipFile(perfmonFile))));
             index++;
         }

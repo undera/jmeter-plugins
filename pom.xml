@@ -76,6 +76,8 @@
         <module>jms</module>
         <module>wsc</module>
         <module>casutg</module>
+        <module>functions</module>
+        <module>fifo</module>
     </modules>
 
 </project>

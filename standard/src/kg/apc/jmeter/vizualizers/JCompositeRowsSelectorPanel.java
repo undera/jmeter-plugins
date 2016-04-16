@@ -138,7 +138,7 @@ public class JCompositeRowsSelectorPanel extends javax.swing.JPanel implements G
         //rows will not disapear, only chart if cleared...
         boolean chartsUpdated = false;
 
-        //first, check if we need to remove some visualizers
+        //first, check if we need to remove some vizualizers
         for (int i = 0; i < root1.getChildCount(); i++) {
             TreeNode node = root1.getChildAt(i);
             if (!compositeModel.containsVisualizer(node.toString())) {

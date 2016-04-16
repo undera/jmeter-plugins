@@ -8,32 +8,23 @@
  */
 package com.atlantbh.jmeter.plugins.oauth;
 
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethodBase;
+import org.apache.commons.httpclient.methods.*;
+import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
+import org.apache.jmeter.protocol.http.sampler.HTTPSampler2;
+import org.apache.jmeter.protocol.http.util.HTTPConstantsInterface;
+import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.jorphan.util.JOrphanUtils;
+import org.apache.log.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.zip.GZIPInputStream;
-
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethodBase;
-import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.HeadMethod;
-import org.apache.commons.httpclient.methods.OptionsMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.httpclient.methods.TraceMethod;
-import org.apache.commons.lang.NotImplementedException;
-
-import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
-import org.apache.jmeter.protocol.http.sampler.HTTPSampler2;
-import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.jorphan.util.JOrphanUtils;
-import org.apache.log.Logger;
 
 public class OAuthSampler extends HTTPSampler2 {
 
@@ -139,7 +130,7 @@ public class OAuthSampler extends HTTPSampler2 {
     }
 
     private void overrideHeaders(HttpMethodBase httpMethod, String url,
-            String method) {
+                                 String method) {
         String headers = getRequestHeaders();
         String[] header = headers.split(System.getProperty("line.separator"));
         for (String kvp : header) {
@@ -168,7 +159,7 @@ public class OAuthSampler extends HTTPSampler2 {
     }
 
     protected HTTPSampleResult sample(URL url, String method,
-            boolean areFollowingRedirect, int frameDepth) {
+                                      boolean areFollowingRedirect, int frameDepth) {
         throw new UnsupportedOperationException("Should never be called");
     }
 
@@ -199,7 +190,7 @@ public class OAuthSampler extends HTTPSampler2 {
             if (httpMethod instanceof EntityEnclosingMethod) {
                 ((EntityEnclosingMethod) httpMethod)
                         .setRequestEntity(new StringRequestEntity(
-                        getRequestBody(), "text/xml", "UTF-8"));
+                                getRequestBody(), "text/xml", "UTF-8"));
             }
             overrideHeaders(httpMethod, urlStr, getMethod());
             res.setRequestHeaders(getConnectionHeaders(httpMethod));
@@ -293,7 +284,7 @@ public class OAuthSampler extends HTTPSampler2 {
             httpMethod = new DeleteMethod(urlStr);
         } else if (method.equals(HTTPConstantsInterface.GET)) {
             httpMethod = new GetMethod(urlStr);
-        }  else if (method.equals(HTTPConstantsInterface.PATCH)) {
+        } else if (method.equals(HTTPConstantsInterface.PATCH)) {
             httpMethod = new PutMethod(urlStr) {
                 @Override
                 public String getName() {

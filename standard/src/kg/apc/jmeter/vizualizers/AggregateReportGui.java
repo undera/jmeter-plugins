@@ -24,7 +24,6 @@ import org.apache.jmeter.save.CSVSaveService;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.SamplingStatCalculator;
-import org.apache.jmeter.visualizers.StatGraphVisualizer;
 import org.apache.jmeter.visualizers.StatVisualizer;
 import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.gui.ObjectTableModel;

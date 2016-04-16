@@ -2,7 +2,6 @@ package kg.apc.jmeter.reporters;
 
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.junit.After;
 import org.junit.AfterClass;

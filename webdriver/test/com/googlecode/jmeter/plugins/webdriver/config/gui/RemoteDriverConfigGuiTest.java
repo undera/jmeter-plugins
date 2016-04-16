@@ -9,22 +9,12 @@ import static org.junit.Assert.assertThat;
 
 import java.awt.event.FocusEvent;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import kg.apc.emulators.TestJMeterUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.mockito.exceptions.verification.NeverWantedButInvoked;
-import org.mockito.internal.matchers.Any;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.googlecode.jmeter.plugins.webdriver.config.RemoteCapability;
 import com.googlecode.jmeter.plugins.webdriver.config.RemoteDriverConfig;

@@ -3,7 +3,6 @@ package org.jmeterplugins.visualizers.gui;
 import static org.junit.Assert.assertEquals;
 
 import kg.apc.emulators.TestJMeterUtils;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

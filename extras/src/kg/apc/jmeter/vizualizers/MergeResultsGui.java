@@ -50,8 +50,6 @@ import javax.swing.table.TableCellEditor;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
-import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
-import kg.apc.jmeter.vizualizers.JSettingsPanel;
 
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.SavePropertyDialog;

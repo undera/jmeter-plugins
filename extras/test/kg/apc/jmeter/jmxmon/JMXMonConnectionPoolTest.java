@@ -2,7 +2,6 @@ package kg.apc.jmeter.jmxmon;
 
 import java.util.Hashtable;
 
-import javax.annotation.Generated;
 import javax.management.MBeanServerConnection;
 import javax.management.remote.JMXConnectorFactory;
 

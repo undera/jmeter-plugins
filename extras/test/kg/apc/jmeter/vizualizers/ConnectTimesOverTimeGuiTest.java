@@ -5,8 +5,6 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class ConnectTimesOverTimeGuiTest {
     @BeforeClass
     public static void setUpClass() throws Exception {

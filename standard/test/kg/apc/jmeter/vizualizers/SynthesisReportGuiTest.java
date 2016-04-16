@@ -4,14 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
 
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.emulators.TestJMeterUtils;

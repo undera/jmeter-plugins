@@ -16,16 +16,13 @@
 package com.atlantbh.jmeter.plugins.hbasecrud.gui;
 
 import com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrud;
-import javax.swing.JCheckBox;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jorphan.gui.JLabeledTextField;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class HbaseCrudGuiTest {
 

@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.atlantbh.jmeter.plugins.jmstools;
+package jmstools;
 
 import java.util.Map;
 import javax.jms.Message;
 import javax.jms.Session;
-import org.apache.qpid.client.AMQSession;
-import org.apache.qpid.client.XASessionImpl;
-import org.apache.qpid.client.message.AMQMessageDelegateFactory;
-import org.apache.qpid.client.message.JMSTextMessage;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

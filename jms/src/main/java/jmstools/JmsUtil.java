@@ -7,7 +7,7 @@
  * Licensed under the under the Apache License, Version 2.0.
  */
 
-package com.atlantbh.jmeter.plugins.jmstools;
+package jmstools;
 
 import java.util.HashMap;
 import java.util.Map;

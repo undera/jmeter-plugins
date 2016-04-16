@@ -75,6 +75,7 @@
         <module>json</module>
         <module>redis</module>
         <module>oauth</module>
+        <module>jms</module>
     </modules>
 
 </project>

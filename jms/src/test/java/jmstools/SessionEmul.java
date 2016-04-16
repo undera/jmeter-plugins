@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.atlantbh.jmeter.plugins.jmstools;
+package jmstools;
 
 import java.io.Serializable;
-import java.util.Enumeration;
 import javax.jms.BytesMessage;
 import javax.jms.Destination;
 import javax.jms.JMSException;

@@ -5,11 +5,10 @@ import org.apache.jmeter.sampler.DebugSampler;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
-
-import static org.junit.Assert.*;
 
 public class WeightedSwitchControllerTest {
 
@@ -32,9 +31,9 @@ public class WeightedSwitchControllerTest {
         for (int n = 0; n < 800; n++) {
             Sampler s = obj.next();
             log.info("Sampler: " + s.getName());
-            assertNotNull(s);
-            assertNull(obj.next());
-            assertNotEquals(s.getName(), "0");
+            Assert.assertNotNull(s);
+            Assert.assertNull(obj.next());
+            Assert.assertNotEquals(s.getName(), "0");
         }
     }
 

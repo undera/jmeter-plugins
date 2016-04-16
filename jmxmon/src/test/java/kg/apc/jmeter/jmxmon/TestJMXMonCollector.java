@@ -3,7 +3,6 @@ package kg.apc.jmeter.jmxmon;
 import org.apache.jmeter.samplers.SampleEvent;
 
 import javax.management.MBeanServerConnection;
-import javax.management.remote.JMXServiceURL;
 import java.io.IOException;
 import java.util.Hashtable;
 

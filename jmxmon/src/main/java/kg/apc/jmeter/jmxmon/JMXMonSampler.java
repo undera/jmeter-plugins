@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.ConnectException;
 import java.util.Hashtable;
-import java.util.logging.Level;
 
 import javax.management.AttributeNotFoundException;
 import javax.management.InstanceNotFoundException;
@@ -15,7 +14,6 @@ import javax.management.ObjectName;
 import javax.management.ReflectionException;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.remote.JMXConnector;
-import javax.management.remote.JMXServiceURL;
 
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;

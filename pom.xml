@@ -80,6 +80,7 @@
         <module>fifo</module>
         <module>prmctl</module>
         <module>dbmon</module>
+        <module>jmxmon</module>
     </modules>
 
 </project>

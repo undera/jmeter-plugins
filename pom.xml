@@ -73,6 +73,7 @@
         <module>sense-uploader</module>
         <module>perfmon</module>
         <module>json</module>
+        <module>redis</module>
     </modules>
 
 </project>

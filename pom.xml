@@ -61,13 +61,11 @@
         <module>common</module>
         <module>standard</module>
         <module>extras</module>
-        <module>extraslibs</module>
         <module>hadoop</module>
         <module>webdriver</module>
         <module>xmpp</module>
         <module>plugins-manager</module>
         <module>udp</module>
-        <module>io</module>
         <module>emulators</module>
         <module>charts</module>
         <module>sense-uploader</module>
@@ -76,6 +74,8 @@
         <module>redis</module>
         <module>oauth</module>
         <module>jms</module>
+        <module>wsc</module>
+        <module>casutg</module>
     </modules>
 
 </project>

@@ -74,6 +74,7 @@
         <module>perfmon</module>
         <module>json</module>
         <module>redis</module>
+        <module>oauth</module>
     </modules>
 
 </project>

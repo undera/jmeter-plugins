@@ -28,7 +28,6 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.methods.TraceMethod;
 import org.apache.commons.lang.NotImplementedException;
 
-import org.apache.http.client.methods.HttpPatch;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampler2;
 import org.apache.jmeter.samplers.SampleResult;
@@ -217,9 +216,9 @@ public class OAuthSampler extends HTTPSampler2 {
             if (instream != null) {
 
                 Header responseHeader = httpMethod
-                        .getResponseHeader(HEADER_CONTENT_ENCODING);
+                        .getResponseHeader(HTTPConstantsInterface.HEADER_CONTENT_ENCODING);
                 if (responseHeader != null
-                        && ENCODING_GZIP.equals(responseHeader.getValue())) {
+                        && HTTPConstantsInterface.ENCODING_GZIP.equals(responseHeader.getValue())) {
                     instream = new GZIPInputStream(instream);
                 }
                 res.setResponseData(readResponse(res, instream,
@@ -235,7 +234,7 @@ public class OAuthSampler extends HTTPSampler2 {
 
             String ct = null;
             org.apache.commons.httpclient.Header h = httpMethod
-                    .getResponseHeader(HEADER_CONTENT_TYPE);
+                    .getResponseHeader(HTTPConstantsInterface.HEADER_CONTENT_TYPE);
             if (h != null) {
                 ct = h.getValue();
                 res.setContentType(ct);
@@ -280,21 +279,21 @@ public class OAuthSampler extends HTTPSampler2 {
     private HttpMethodBase createHttpMethod(String method, String urlStr) {
         HttpMethodBase httpMethod;
         // May generate IllegalArgumentException
-        if (method.equals(POST)) {
+        if (method.equals(HTTPConstantsInterface.POST)) {
             httpMethod = new PostMethod(urlStr);
-        } else if (method.equals(PUT)) {
+        } else if (method.equals(HTTPConstantsInterface.PUT)) {
             httpMethod = new PutMethod(urlStr);
-        } else if (method.equals(HEAD)) {
+        } else if (method.equals(HTTPConstantsInterface.HEAD)) {
             httpMethod = new HeadMethod(urlStr);
-        } else if (method.equals(TRACE)) {
+        } else if (method.equals(HTTPConstantsInterface.TRACE)) {
             httpMethod = new TraceMethod(urlStr);
-        } else if (method.equals(OPTIONS)) {
+        } else if (method.equals(HTTPConstantsInterface.OPTIONS)) {
             httpMethod = new OptionsMethod(urlStr);
-        } else if (method.equals(DELETE)) {
+        } else if (method.equals(HTTPConstantsInterface.DELETE)) {
             httpMethod = new DeleteMethod(urlStr);
-        } else if (method.equals(GET)) {
+        } else if (method.equals(HTTPConstantsInterface.GET)) {
             httpMethod = new GetMethod(urlStr);
-        }  else if (method.equals(PATCH)) {
+        }  else if (method.equals(HTTPConstantsInterface.PATCH)) {
             httpMethod = new PutMethod(urlStr) {
                 @Override
                 public String getName() {

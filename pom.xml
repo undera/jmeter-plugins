@@ -79,6 +79,7 @@
         <module>functions</module>
         <module>fifo</module>
         <module>prmctl</module>
+        <module>dbmon</module>
     </modules>
 
 </project>

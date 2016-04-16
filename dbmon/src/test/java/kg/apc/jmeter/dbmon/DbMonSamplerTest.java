@@ -20,46 +20,37 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-public class DbMonSampleGeneratorTest {
-    
-    public DbMonSampleGeneratorTest() {
+public class DbMonSamplerTest {
+
+    public DbMonSamplerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of generateSample method, of class DbMonSampleGenerator.
+     * Test of generateSamples method, of class DbMonSampler.
      */
     @Test
-    public void testGenerateSample() {
-        System.out.println("generateSample");
-        double d = 0.0;
-        String string = "";
-        DbMonSampleGenerator instance = new DbMonSampleGeneratorImpl();
-        instance.generateSample(d, string);
+    public void testGenerateSamples() {
+        DbMonSampleGenerator collector = new DbMonSampleGeneratorEmul();
+        DbMonSampler instance = new DbMonSampler(new ConnectionEmul(), "poolName", null, true, null);
+        instance.generateSamples(collector);
         // TODO review the generated test code and remove the default call to fail.
-        
-    }
 
-    public class DbMonSampleGeneratorImpl implements DbMonSampleGenerator {
-
-        public void generateSample(double d, String string) {
-        }
     }
 }

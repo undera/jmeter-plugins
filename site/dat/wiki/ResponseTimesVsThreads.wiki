@@ -11,4 +11,4 @@ Example graph:
 
 == Online Version for This Graph ==
 
-There is online version for this graph on [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=wiki&utm_campaign=RTVT BM.Sense] service, see example [https://sense.blazemeter.com/examples/80731/?utm_source=jpgc&utm_medium=wiki&utm_campaign=RTVT#tab=3&zoom=0 here].
+There is online version for this graph on [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=wiki&utm_campaign=RTVT BM.Sense] service, see example [https://sense.blazemeter.com/examples/17/?utm_source=jpgc&utm_medium=wiki&utm_campaign=RTVT#tab=3&zoom=0 here].

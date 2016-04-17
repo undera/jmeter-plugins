@@ -1,6 +1,6 @@
 #! /bin/sh -xe
 
-mvn -Dmaven.test.skip=true clean package javadoc:jar source:jar gpg:sign
+mvn -Dmaven.test.skip=false clean package javadoc:jar source:jar gpg:sign
 
 mkdir -p bundle
 # 

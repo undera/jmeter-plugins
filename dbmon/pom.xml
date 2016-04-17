@@ -35,6 +35,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-emulators</artifactId>
+            <version>0.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

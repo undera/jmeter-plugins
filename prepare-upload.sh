@@ -47,7 +47,7 @@ cp -r examples upload/img/
 
 curl -sS https://getcomposer.org/installer | php
 cd upload
-../composer.phar update
+../composer.phar update --no-dev
 cp vendor/undera/pwe/.htaccess ./
 cd ..
 

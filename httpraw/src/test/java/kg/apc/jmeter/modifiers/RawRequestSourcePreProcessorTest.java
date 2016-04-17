@@ -1,15 +1,17 @@
 package kg.apc.jmeter.modifiers;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.RuntimeEOFException;
 import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
-import static org.junit.Assert.*;
 import org.junit.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
+import static org.junit.Assert.*;
 
 public class RawRequestSourcePreProcessorTest {
 
@@ -86,7 +88,7 @@ public class RawRequestSourcePreProcessorTest {
         try {
             for (; n < 20; n++) {
                 instance.process();
-                String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
+                JMeterContextService.getContext().getVariables().get(instance.getVarName());
                 //System.out.println(n);
             }
             fail("EOF expected");
@@ -108,7 +110,7 @@ public class RawRequestSourcePreProcessorTest {
         try {
             for (; n < 20; n++) {
                 instance.process();
-                String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
+                JMeterContextService.getContext().getVariables().get(instance.getVarName());
             }
             fail("EOF expected");
         } catch (RuntimeEOFException ex) {
@@ -125,12 +127,11 @@ public class RawRequestSourcePreProcessorTest {
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
         instance.testStarted();
         instance.setFileName(basedir + "/rawdata_broken.txt");
-        boolean ok = false;
         int n = 1;
         try {
             for (; n < 20; n++) {
                 instance.process();
-                String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
+                JMeterContextService.getContext().getVariables().get(instance.getVarName());
             }
         } catch (RuntimeException ex) {
             assertEquals(3, n);
@@ -199,9 +200,8 @@ public class RawRequestSourcePreProcessorTest {
     @Test
     public void testSetRewindOnEOF() {
         System.out.println("setRewindOnEOF");
-        boolean isRew = false;
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
-        instance.setRewindOnEOF(isRew);
+        instance.setRewindOnEOF(false);
     }
 
     /**
@@ -211,24 +211,8 @@ public class RawRequestSourcePreProcessorTest {
     public void testGetRewindOnEOF() {
         System.out.println("getRewindOnEOF");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
-        boolean expResult = false;
         boolean result = instance.getRewindOnEOF();
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    public void testProcess_bug1() {
-        System.out.println("bug with chunk sizes");
-        RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
-        instance.testStarted();
-        instance.setFileName(basedir + "/DNSJavaDecoderToRawData.out");
-        instance.setRewindOnEOF(false);
-        for (int n = 1; n < 1000; n++) {
-            instance.process();
-            String result = JMeterContextService.getContext().getVariables().get(instance.getVarName());
-            //System.out.println(n+" "+result);
-            assertTrue(result.length() > 0);
-        }
+        assertEquals(false, result);
     }
 
     @Test
@@ -263,9 +247,8 @@ public class RawRequestSourcePreProcessorTest {
     public void testIsHexEncode() {
         System.out.println("isHexEncode");
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
-        boolean expResult = false;
         boolean result = instance.isHexEncode();
-        assertEquals(expResult, result);
+        assertEquals(result, false);
     }
 
     /**
@@ -274,9 +257,8 @@ public class RawRequestSourcePreProcessorTest {
     @Test
     public void testSetEncodeHex() {
         System.out.println("setEncodeHex");
-        boolean b = false;
         RawRequestSourcePreProcessor instance = new RawRequestSourcePreProcessor();
-        instance.setEncodeHex(b);
+        instance.setEncodeHex(false);
     }
 
     /**

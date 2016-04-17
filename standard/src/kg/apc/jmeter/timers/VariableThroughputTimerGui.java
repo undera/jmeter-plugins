@@ -21,7 +21,6 @@ import kg.apc.charting.rows.GraphRowExactValues;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.ButtonPanelAddCopyRemove;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
-import kg.apc.jmeter.threads.UltimateThreadGroupGui;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.gui.util.VerticalPanel;
@@ -33,9 +32,6 @@ import org.apache.jmeter.timers.gui.AbstractTimerGui;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- * @see UltimateThreadGroupGui
- */
 public class VariableThroughputTimerGui
         extends AbstractTimerGui
         implements TableModelListener,

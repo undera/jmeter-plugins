@@ -82,6 +82,7 @@
         <module>dbmon</module>
         <module>jmxmon</module>
         <module>autostop</module>
+        <module>csvars</module>
     </modules>
 
 </project>

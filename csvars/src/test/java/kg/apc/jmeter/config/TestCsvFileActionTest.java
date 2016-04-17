@@ -1,12 +1,12 @@
 package kg.apc.jmeter.config;
 
-import javax.swing.JTextArea;
+import org.junit.*;
+import org.mockito.Mockito;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-import static org.mockito.Mockito.*;
-import org.junit.*;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class TestCsvFileActionTest {
 
@@ -45,20 +45,20 @@ public class TestCsvFileActionTest {
 
         JTextArea infoArea = new JTextArea();
 
-        VariablesFromCSVGui ui = mock(VariablesFromCSVGui.class);
-        when(ui.createTestElement()).thenReturn(csvVarsTestElem);
-        when(ui.getCheckInfoTextArea()).thenReturn(infoArea);
+        VariablesFromCSVGui ui = Mockito.mock(VariablesFromCSVGui.class);
+        Mockito.when(ui.createTestElement()).thenReturn(csvVarsTestElem);
+        Mockito.when(ui.getCheckInfoTextArea()).thenReturn(infoArea);
 
         TestCsvFileAction instance = new TestCsvFileAction(ui);
         ActionEvent e = null;
-        instance.actionPerformed(e);
+        instance.actionPerformed(null);
 
         assertTrue(infoArea.getText().startsWith("File successfuly parsed, 2"));
     }
 
     /**
      * Verify that exceptions are reported when test action is performed.
-     *
+     * <p>
      * see https://groups.google.com/forum/#!topic/jmeter-plugins/gWn7MTgvTfE
      */
     @Test
@@ -72,13 +72,13 @@ public class TestCsvFileActionTest {
 
         JTextArea infoArea = new JTextArea();
 
-        VariablesFromCSVGui ui = mock(VariablesFromCSVGui.class);
-        when(ui.createTestElement()).thenReturn(csvVarsTestElem);
-        when(ui.getCheckInfoTextArea()).thenReturn(infoArea);
+        VariablesFromCSVGui ui = Mockito.mock(VariablesFromCSVGui.class);
+        Mockito.when(ui.createTestElement()).thenReturn(csvVarsTestElem);
+        Mockito.when(ui.getCheckInfoTextArea()).thenReturn(infoArea);
 
         TestCsvFileAction instance = new TestCsvFileAction(ui);
         ActionEvent e = null;
-        instance.actionPerformed(e);
+        instance.actionPerformed(null);
 
         assertTrue(infoArea.getText().startsWith("Problem detected:"));
     }

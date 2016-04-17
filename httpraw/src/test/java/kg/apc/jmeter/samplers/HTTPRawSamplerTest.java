@@ -300,7 +300,7 @@ public class HTTPRawSamplerTest {
         SampleResult res = new SampleResult();
         res.sampleStart();
         instance.setPort("0");
-        String file = this.getClass().getResource("testSendFile.raw").getPath();
+        String file = this.getClass().getResource("/testSendFile.raw").getPath();
         instance.setFileToSend(file);
         instance.processIO(res);
         assertEquals(new File(file).length(), instance.sockEmul.getWrittenBytesCount());
@@ -312,7 +312,7 @@ public class HTTPRawSamplerTest {
         SampleResult res = new SampleResult();
         res.sampleStart();
         instance.setPort("0");
-        String file = this.getClass().getResource("testSendFile.raw").getPath();
+        String file = this.getClass().getResource("/testSendFile.raw").getPath();
         String prefix = "GET / HTTP/1.0\r\n";
         instance.setRequestData(prefix);
         instance.setFileToSend(file);

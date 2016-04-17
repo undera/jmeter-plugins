@@ -17,7 +17,7 @@ public class CheckConsistencyActionTest {
     private final String basedir;
 
     public CheckConsistencyActionTest() {
-        String file = RawRequestSourcePreProcessorTest.class.getResource("rawdata_broken.txt").getPath();
+        String file = RawRequestSourcePreProcessorTest.class.getResource("/rawdata_broken.txt").getPath();
         basedir = file.substring(0, file.lastIndexOf("/"));
     }
 

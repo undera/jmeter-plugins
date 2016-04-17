@@ -2,11 +2,8 @@ package kg.apc.jmeter.samplers;
 
 import java.nio.ByteBuffer;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+
 import static org.junit.Assert.*;
 
 public class HexStringUDPDecoderTest {
@@ -39,7 +36,7 @@ public class HexStringUDPDecoderTest {
         String data = "74657374";
         HexStringUDPDecoder instance = new HexStringUDPDecoder();
         ByteBuffer result = instance.encode(data);
-        assertEquals("test", JMeterPluginsUtils.byteBufferToString(result));
+        Assert.assertEquals("test", JMeterPluginsUtils.byteBufferToString(result));
     }
 
     /**

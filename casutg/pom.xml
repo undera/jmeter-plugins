@@ -16,8 +16,8 @@
     <dependencies>
         <dependency>
             <groupId>kg.apc</groupId>
-            <artifactId>jmeter-plugins-common</artifactId>
-            <version>1.4.0</version>
+            <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
+            <version>0.1</version>
         </dependency>
     </dependencies>
 </project>

@@ -85,6 +85,8 @@
         <module>csvars</module>
         <module>lockfile</module>
         <module>dummy</module>
+        <module>common-io</module>
+        <module>httpraw</module>
     </modules>
 
 </project>

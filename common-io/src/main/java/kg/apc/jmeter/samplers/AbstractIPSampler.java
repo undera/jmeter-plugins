@@ -1,11 +1,6 @@
 package kg.apc.jmeter.samplers;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.net.SocketTimeoutException;
-import java.nio.ByteBuffer;
-import java.nio.channels.spi.AbstractSelectableChannel;
-import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.Interruptible;
@@ -13,6 +8,12 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.net.SocketTimeoutException;
+import java.nio.ByteBuffer;
+import java.nio.channels.spi.AbstractSelectableChannel;
 
 public abstract class AbstractIPSampler
         extends AbstractSampler
@@ -42,10 +43,10 @@ public abstract class AbstractIPSampler
     }
 
     public ByteBuffer getRecvBuf() {
-       if(recvBuf == null) {
-          recvBuf = ByteBuffer.allocateDirect(recvBufSize);
-       }
-       return recvBuf;
+        if (recvBuf == null) {
+            recvBuf = ByteBuffer.allocateDirect(recvBufSize);
+        }
+        return recvBuf;
     }
 
     public final String getHostName() {
@@ -106,7 +107,7 @@ public abstract class AbstractIPSampler
         res.sampleStart();
         res.setDataType(SampleResult.TEXT);
         res.setSuccessful(true);
-        res.setResponseCode(HTTPRawSampler.RC200);
+        res.setResponseCode(RC200);
         try {
             res.setResponseData(processIO(res));
         } catch (Exception ex) {
@@ -115,9 +116,9 @@ public abstract class AbstractIPSampler
             }
             res.sampleEnd();
             res.setSuccessful(false);
-            res.setResponseCode(HTTPRawSampler.RC500);
+            res.setResponseCode(RC500);
             res.setResponseMessage(ex.toString());
-            res.setResponseData((ex.toString() + HTTPRawSampler.CRLF + JMeterPluginsUtils.getStackTrace(ex)).getBytes());
+            res.setResponseData((ex.toString() + CRLF + ExceptionUtils.getStackTrace(ex)).getBytes());
         }
 
         return res;

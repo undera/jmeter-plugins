@@ -5,9 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>kg.apc</groupId>
-    <artifactId>jmeter-plugins-jms</artifactId>
-    <version>0.1-SNAPSHOT</version>
-
+    <artifactId>jmeter-plugins-common-io</artifactId>
+    <version>0.1</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -16,13 +15,13 @@
     <dependencies>
         <dependency>
             <groupId>kg.apc</groupId>
-            <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
+            <artifactId>jmeter-plugins-emulators</artifactId>
             <version>0.1</version>
+            <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.jmeter</groupId>
-            <artifactId>ApacheJMeter_java</artifactId>
+            <artifactId>ApacheJMeter_core</artifactId>
             <version>2.13</version>
             <exclusions>
                 <exclusion>
@@ -35,17 +34,5 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jms</artifactId>
-            <version>2.5.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.qpid</groupId>
-            <artifactId>qpid-client</artifactId>
-            <version>0.20</version>
-        </dependency>
-
     </dependencies>
 </project>

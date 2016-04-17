@@ -1,13 +1,9 @@
 package kg.apc.io;
 
+import org.junit.*;
+
 import java.io.File;
 import java.io.IOException;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class FileSystemTest {
 
@@ -42,7 +38,7 @@ public class FileSystemTest {
         try {
             file.createNewFile();
         } catch (IOException ex) {
-            fail("Could not create file for test");
+            Assert.fail("Could not create file for test");
         }
         boolean result = FileSystem.checkFileExistByPattern(dir, pattern);
         assert result;
@@ -62,7 +58,7 @@ public class FileSystemTest {
         try {
             file.createNewFile();
         } catch (IOException ex) {
-            fail("Could not create file for test");
+            Assert.fail("Could not create file for test");
         }
         boolean result = FileSystem.checkFileExistByPattern(dir, pattern);
         assert !result;

@@ -1,23 +1,21 @@
 package kg.apc.io;
 
 import kg.apc.emulators.SelectionKeyEmul;
-import java.util.Set;
-import java.io.IOException;
 import kg.apc.emulators.SelectorEmul;
 import kg.apc.emulators.SocketChannelEmul;
+import org.junit.*;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
-import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.HashSet;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
 
 public class SocketChannelWithTimeoutsTest {
 
@@ -30,7 +28,7 @@ public class SocketChannelWithTimeoutsTest {
             ce.configureBlocking(false);
             ce.setBytesToRead(ByteBuffer.wrap("test".getBytes()));
             socketChannel = ce;
-            channelKey=new SelectionKeyEmul();
+            channelKey = new SelectionKeyEmul();
         }
 
         @Override
@@ -69,7 +67,6 @@ public class SocketChannelWithTimeoutsTest {
     public void testOpen() throws Exception {
         System.out.println("open");
         SocketChannel result = new SocketChannelWithTimeoutsEmul();
-        assertTrue(result instanceof SocketChannel);
     }
 
     /**
@@ -83,7 +80,7 @@ public class SocketChannelWithTimeoutsTest {
         instance.setSelectedKeys(new HashSet<SelectionKey>());
         boolean expResult = true;
         boolean result = instance.connect(remote);
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -111,7 +108,7 @@ public class SocketChannelWithTimeoutsTest {
         SocketChannel instance = new SocketChannelWithTimeoutsEmul();
         try {
             long result = instance.read(dsts, offset, length);
-            fail("Unimplemented expected");
+            Assert.fail("Unimplemented expected");
         } catch (UnsupportedOperationException e) {
         }
     }
@@ -126,7 +123,7 @@ public class SocketChannelWithTimeoutsTest {
         SocketChannel instance = new SocketChannelWithTimeoutsEmul();
         int expResult = 4;
         int result = instance.write(src);
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     @Test
@@ -135,9 +132,9 @@ public class SocketChannelWithTimeoutsTest {
         SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         SocketChannelEmul sc = (SocketChannelEmul) instance.socketChannel;
         assertEquals(4, instance.write(ByteBuffer.wrap("test".getBytes())));
-        assertEquals(4, sc.getWrittenBytesCount());
+        Assert.assertEquals(4, sc.getWrittenBytesCount());
         assertEquals(0, instance.write(ByteBuffer.wrap("".getBytes())));
-        assertEquals(0, sc.getWrittenBytesCount());
+        Assert.assertEquals(0, sc.getWrittenBytesCount());
     }
 
     /**
@@ -152,7 +149,7 @@ public class SocketChannelWithTimeoutsTest {
         SocketChannel instance = new SocketChannelWithTimeoutsEmul();
         try {
             long result = instance.write(srcs, offset, length);
-            fail("This function is unimplemented yet");
+            Assert.fail("This function is unimplemented yet");
         } catch (UnsupportedOperationException e) {
         }
     }
@@ -177,7 +174,7 @@ public class SocketChannelWithTimeoutsTest {
         SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         try {
             instance.implConfigureBlocking(block);
-            fail("Exception expected");
+            Assert.fail("Exception expected");
         } catch (UnsupportedOperationException e) {
         }
     }
@@ -190,7 +187,7 @@ public class SocketChannelWithTimeoutsTest {
         System.out.println("socket");
         SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         Socket result = instance.socket();
-        assertNotNull(result);
+        Assert.assertNotNull(result);
     }
 
     /**
@@ -202,7 +199,7 @@ public class SocketChannelWithTimeoutsTest {
         SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         boolean expResult = true;
         boolean result = instance.isConnected();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -214,7 +211,7 @@ public class SocketChannelWithTimeoutsTest {
         SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         boolean expResult = false;
         boolean result = instance.isConnectionPending();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -226,7 +223,7 @@ public class SocketChannelWithTimeoutsTest {
         SocketChannelWithTimeoutsEmul instance = new SocketChannelWithTimeoutsEmul();
         boolean expResult = true;
         boolean result = instance.finishConnect();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -260,6 +257,6 @@ public class SocketChannelWithTimeoutsTest {
         SocketChannelWithTimeouts instance = new SocketChannelWithTimeouts();
         SocketAddress expResult = null;
         SocketAddress result = instance.getRemoteAddress();
-        assertEquals(expResult, result);
-     }
+        Assert.assertEquals(expResult, result);
+    }
 }

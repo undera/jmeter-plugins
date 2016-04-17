@@ -58,7 +58,7 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         instance.setResponseData(data);
         SampleResult result = instance.sample(e);
-        assertEquals(data, result.getResponseDataAsString());
+        Assert.assertEquals(data, result.getResponseDataAsString());
     }
 
     /**
@@ -114,7 +114,7 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         boolean expResult = false;
         boolean result = instance.isSuccessfull();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -126,7 +126,7 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         String expResult = "";
         String result = instance.getResponseCode();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -138,7 +138,7 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         String expResult = "";
         String result = instance.getResponseMessage();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -150,7 +150,7 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         String expResult = "";
         String result = instance.getResponseData();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -162,7 +162,7 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         int expResult = 0;
         int result = instance.getResponseTime();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -195,7 +195,7 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         String expResult = "";
         String result = instance.getRequestData();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -207,7 +207,7 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         int expResult = 0;
         int result = instance.getLatency();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -230,7 +230,7 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         boolean expResult = false;
         boolean result = instance.isSimulateWaiting();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 
     /**
@@ -253,6 +253,6 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         boolean expResult = true;
         boolean result = instance.interrupt();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 }

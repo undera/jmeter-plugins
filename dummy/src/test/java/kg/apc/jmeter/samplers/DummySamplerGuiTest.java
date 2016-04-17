@@ -2,10 +2,9 @@ package kg.apc.jmeter.samplers;
 
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class DummySamplerGuiTest {
     public DummySamplerGuiTest() {
@@ -21,7 +20,7 @@ public class DummySamplerGuiTest {
         System.out.println("getStaticLabel");
         DummySamplerGui instance = new DummySamplerGui();
         String result = instance.getStaticLabel();
-        assertTrue(result.length() > 0);
+        Assert.assertTrue(result.length() > 0);
     }
 
     @Test
@@ -37,7 +36,7 @@ public class DummySamplerGuiTest {
         System.out.println("createTestElement");
         DummySamplerGui instance = new DummySamplerGui();
         TestElement result = instance.createTestElement();
-        assertNotNull(result);
+        Assert.assertNotNull(result);
     }
 
     @Test
@@ -61,6 +60,6 @@ public class DummySamplerGuiTest {
         DummySamplerGui instance = new DummySamplerGui();
         String expResult = "DummySamplerGui";
         String result = instance.getLabelResource();
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
 }

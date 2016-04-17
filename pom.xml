@@ -83,6 +83,7 @@
         <module>jmxmon</module>
         <module>autostop</module>
         <module>csvars</module>
+        <module>lockfile</module>
     </modules>
 
 </project>

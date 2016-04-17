@@ -1,6 +1,5 @@
 package kg.apc.jmeter.config;
 
-import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jorphan.util.JMeterStopTestNowException;
 import org.junit.Before;
 import org.junit.Test;

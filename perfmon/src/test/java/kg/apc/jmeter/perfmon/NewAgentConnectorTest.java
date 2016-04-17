@@ -1,10 +1,11 @@
 package kg.apc.jmeter.perfmon;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import kg.apc.jmeter.DatagramChannelEmul;
+import kg.apc.emulators.DatagramChannelEmul;
 import kg.apc.perfmon.client.Transport;
 import org.junit.*;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
 public class NewAgentConnectorTest {
 
@@ -50,6 +51,7 @@ public class NewAgentConnectorTest {
         public void setAddressLabel(String label) {
         }
     }
+
     private DatagramChannelEmul channel;
     private Transport transport;
 
@@ -70,6 +72,7 @@ public class NewAgentConnectorTest {
         public void generateErrorSample(String label, String errorMsg) {
         }
     }
+
     private kg.apc.jmeter.perfmon.NewAgentConnector instance;
 
     public NewAgentConnectorTest() {
@@ -132,6 +135,7 @@ public class NewAgentConnectorTest {
         instance.generateSamples(collector);
     }
 
+    @Test
     public void testGenerateSamples_many() throws Exception {
         System.out.println("generateSamples");
         PerfMonSampleGenerator collector = new Gen();
@@ -145,8 +149,7 @@ public class NewAgentConnectorTest {
     @Test
     public void testSetTransport() {
         System.out.println("setTransport");
-        Transport atransport = null;
-        instance.setTransport(atransport);
+        instance.setTransport(null);
     }
 
     /**

@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import kg.apc.emulators.DatagramChannelEmul;
+import kg.apc.emulators.FileChannelEmul;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.*;
@@ -203,7 +204,7 @@ public class UDPSamplerTest {
         System.out.println("encode");
         String data = "test";
         ByteBuffer result = instance.encode(data);
-        Assert.assertEquals(data, JMeterPluginsUtils.byteBufferToString(result));
+        Assert.assertEquals(data, FileChannelEmul.byteBufferToString(result));
     }
 
     /**

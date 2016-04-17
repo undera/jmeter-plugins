@@ -24,7 +24,11 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-// just copied it from JMeter, but added single global map
+
+/**
+ * // just copied it from JMeter, but added single global map
+ * @deprecated
+ */
 public class AnchorModifier extends AbstractTestElement implements PreProcessor, Serializable {
 
     private static final Logger log = LoggingManager.getLoggerForClass();

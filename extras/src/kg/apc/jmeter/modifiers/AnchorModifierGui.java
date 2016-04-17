@@ -1,14 +1,17 @@
 package kg.apc.jmeter.modifiers;
 
-import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.Collection;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.processor.gui.AbstractPreProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+
+/**
+ * @deprecated
+ */
 public class AnchorModifierGui extends AbstractPreProcessorGui {
 
     private static final String WIKIPAGE = "Spider";
@@ -17,7 +20,7 @@ public class AnchorModifierGui extends AbstractPreProcessorGui {
         super();
         init();
     }
-    
+
     //do not insert this vizualiser in any JMeter menu
     private Collection<String> emptyCollection = new ArrayList<String>();
 
@@ -46,8 +49,7 @@ public class AnchorModifierGui extends AbstractPreProcessorGui {
     /**
      * Modifies a given TestElement to mirror the data in the gui components.
      *
-     * @see
-     * org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
+     * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
      */
     @Override
     public void modifyTestElement(TestElement modifier) {

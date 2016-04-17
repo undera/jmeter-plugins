@@ -97,5 +97,25 @@
         }
       }
     }
+  },
+  {
+    "id": "custom-soap",
+    "name": "Custom SOAP Sampler",
+    "description": "",
+    "screenshotUrl": "https://camo.githubusercontent.com/439a3066e3d0053d6e9764f8ca82af3a3af9c572/68747470733a2f2f312e62702e626c6f6773706f742e636f6d2f2d536170454572374e3239302f56724e7161495254566d492f41414141414141414864452f5337345753615a37354c452f73313630302f6d61696e566965772e706e67",
+    "helpUrl": "https://github.com/spinning10/JMeterSoapSampler/wiki",
+    "vendor": "Lukasz W",
+    "markerClass": "com.jmeter.protocol.soap.sampler.CustomSOAPSampler",
+    "versions": {
+      "1.3": {
+        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/CustomSoapSampler-1.3.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "jpgc-common": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common/1.4.0/jmeter-plugins-common-1.4.0.jar"
+        }
+      }
+    }
   }
 ]

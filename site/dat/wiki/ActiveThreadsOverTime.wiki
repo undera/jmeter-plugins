@@ -21,4 +21,4 @@ Legend items represents Thread Groups in your test plan.
 == Online Graph for Active Threads ==
 
 On [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=wiki&utm_campaign=ATOT BM.Sense] service you can see the online version of "Active Threads" graph on "Delivered Load" composite graph.
- See example [https://sense.blazemeter.com/examples/80342/?utm_source=jpgc&utm_medium=wiki&utm_campaign=ATOT#tab=2&zoom=0 here].
+ See example [https://sense.blazemeter.com/examples/80342/?utm_source=jpgc&utm_medium=wiki&utm_campaign=ATOT#tab=tabTimelines&zoom=0 here].

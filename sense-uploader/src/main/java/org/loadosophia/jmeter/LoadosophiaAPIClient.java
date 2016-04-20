@@ -198,7 +198,11 @@ public class LoadosophiaAPIClient {
         PostMethod postRequest = new PostMethod(URL);
         MultipartRequestEntity multipartRequest = new MultipartRequestEntity(parts.toArray(new Part[parts.size()]), postRequest.getParams());
         postRequest.setRequestEntity(multipartRequest);
-        int result = httpClient.executeMethod(postRequest);
+
+        int result;
+        synchronized (httpClient) {
+            result = httpClient.executeMethod(postRequest);
+        }
         InputStream respBody = postRequest.getResponseBodyAsStream();
         if (result != expectedSC) {
             if (respBody != null) {

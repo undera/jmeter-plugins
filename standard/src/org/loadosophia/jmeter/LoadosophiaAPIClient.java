@@ -192,23 +192,25 @@ public class LoadosophiaAPIClient {
         PostMethod postRequest = new PostMethod(URL);
         MultipartRequestEntity multipartRequest = new MultipartRequestEntity(parts.toArray(new Part[parts.size()]), postRequest.getParams());
         postRequest.setRequestEntity(multipartRequest);
-        int result = httpClient.executeMethod(postRequest);
-        InputStream respBody = postRequest.getResponseBodyAsStream();
-        if (result != expectedSC) {
-            if (respBody != null) {
-                saveErrorResponse(respBody);
+        synchronized (httpClient) {
+            int result = httpClient.executeMethod(postRequest);
+            InputStream respBody = postRequest.getResponseBodyAsStream();
+            if (result != expectedSC) {
+                if (respBody != null) {
+                    saveErrorResponse(respBody);
+                }
+                throw new HttpException("Request returned not " + expectedSC + " status code: " + result);
             }
-            throw new HttpException("Request returned not " + expectedSC + " status code: " + result);
-        }
 
-        byte[] bytes;
-        if (respBody != null) {
-            bytes = IOUtils.toByteArray(respBody);
-        } else {
-            bytes = new byte[0];
+            byte[] bytes;
+            if (respBody != null) {
+                bytes = IOUtils.toByteArray(respBody);
+            } else {
+                bytes = new byte[0];
+            }
+            String response = new String(bytes);
+            return response.trim().split(";");
         }
-        String response = new String(bytes);
-        return response.trim().split(";");
     }
 
     private void saveErrorResponse(InputStream respBody) throws IOException {

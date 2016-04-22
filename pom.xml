@@ -89,6 +89,7 @@
         <module>dummy</module>
         <module>common-io</module>
         <module>httpraw</module>
+        <module>graphs-vs</module>
     </modules>
 
 </project>

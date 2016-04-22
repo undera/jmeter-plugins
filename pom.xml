@@ -93,6 +93,7 @@
         <module>graphs-dist</module>
         <module>graphs-composite</module>
         <module>tst</module>
+        <module>ffw</module>
     </modules>
 
 </project>

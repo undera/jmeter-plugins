@@ -2,7 +2,7 @@ package kg.apc.cmdtools;
 
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.JMeter;
 import org.apache.jmeter.assertions.Assertion;
 import org.apache.jmeter.config.ConfigElement;

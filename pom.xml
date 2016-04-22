@@ -7,57 +7,12 @@
     <version>2.0</version>
     <packaging>pom</packaging>
 
-    <name>JMeter Plugins - Parent</name>
-    <description>Custom plugins set for Apache JMeter</description>
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <url>http://jmeter-plugins.org/</url>
-    <scm>
-        <url>https://github.com/undera/jmeter-plugins</url>
-        <connection>https://github.com/undera/jmeter-plugins.git</connection>
-        <developerConnection>git@github.com:undera/jmeter-plugins.git</developerConnection>
-    </scm>
-    <developers>
-        <developer>
-            <id>team</id>
-            <name>jmeter-plugins.org</name>
-            <email>jmeter-plugins@googlegroups.com</email>
-        </developer>
-    </developers>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype-snapshot</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <additionalparam>-Xdoclint:none</additionalparam>
-
-        <jmeter.version>2.13</jmeter.version>
-        <powermock.version>1.6.2</powermock.version>
-        <cobertura-maven.version>2.6</cobertura-maven.version>
-        <cmdrunner-version>1.0.2</cmdrunner-version>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>cloudera repository</id>
-            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-        </repository>
-    </repositories>
 
     <modules>
         <module>common</module>

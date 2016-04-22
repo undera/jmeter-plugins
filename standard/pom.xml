@@ -2,65 +2,52 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>kg.apc</groupId>
-        <artifactId>jmeter-plugins</artifactId>
-        <version>1.4.0</version>
-    </parent>
+    <groupId>kg.apc</groupId>
+    <version>2.0</version>
     <artifactId>jmeter-plugins-standard</artifactId>
     <packaging>jar</packaging>
-
-    <name>JMeter Plugins - Standard Set</name>
-    <description>Custom plugins set for Apache JMeter</description>
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <url>http://jmeter-plugins.org/</url>
-    <scm>
-        <url>https://github.com/undera/jmeter-plugins</url>
-        <connection>https://github.com/undera/jmeter-plugins.git</connection>
-        <developerConnection>git@github.com:undera/jmeter-plugins.git</developerConnection>
-    </scm>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype-snapshot</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
-    <repositories>
-        <repository>
-            <id>cloudera repository</id>
-            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
-        </repository>
-    </repositories>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jmeter-plugins-common</artifactId>
-            <version>${project.version}</version>
+            <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-emulators</artifactId>
+            <version>0.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-graphs-basic</artifactId>
+            <version>2.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-graphs-additional</artifactId>
+            <version>2.0</version>
+            <scope>test</scope>
         </dependency>
 
 
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>cmdrunner</artifactId>
-            <version>${cmdrunner-version}</version>
+            <version>1.0.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_components</artifactId>
-            <version>${jmeter.version}</version>
+            <version>2.13</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-math3</groupId>
@@ -75,7 +62,7 @@
         <dependency>
             <groupId>org.apache.jmeter</groupId>
             <artifactId>ApacheJMeter_http</artifactId>
-            <version>${jmeter.version}</version>
+            <version>2.13</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-math3</groupId>
@@ -86,11 +73,6 @@
                     <artifactId>commons-pool2</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
         </dependency>
     </dependencies>
 
@@ -133,114 +115,6 @@
 
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9</version>
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.4</version>
-                <!--
-                <executions>
-                    <execution>
-                        <phase>verify</phase>                        
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                -->
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.7</version>
-                <executions>
-                    <execution>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>${java-version}</source>
-                    <target>${java-version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.8</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>
-                                cmdrunner,perfmon,commons-beanutils,dnsjava,ezmorph,hadoop-core,hbase,hbase-common,jackson-core,jackson-mapper-asl,json-lib,json-path,json-smart,qpid-client,qpid-common,spring-core,spring-jms,zookeeper,selenium-java,selenium-support,selenium-api,selenium-remote-driver,selenium-firefox-driver,selenium-chrome-driver,selenium-android-driver,guava,json,commons-exec,jsyntaxpane,commons-lang
-                            </includeArtifactIds>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>kg.apc:jmeter-plugins-common</include>
-                                </includes>
-                            </artifactSet>
-
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <finalName>JMeterPlugins-Standard</finalName>
@@ -258,28 +132,6 @@
                         </goals>
                     </execution>
                 </executions>
-
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.14.1</version>
-                <configuration>
-                    <!-- several of the unit tests require a large heap -->
-                    <argLine>-Xmx1024m</argLine>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>${cobertura-maven.version}</version>
-                <configuration>
-                    <formats>
-                        <format>xml</format>
-                        <format>html</format>
-                    </formats>
-                    <check/>
-                </configuration>
             </plugin>
         </plugins>
     </build>

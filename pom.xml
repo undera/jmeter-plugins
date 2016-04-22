@@ -91,6 +91,8 @@
         <module>httpraw</module>
         <module>graphs-vs</module>
         <module>graphs-dist</module>
+        <module>graphs-composite</module>
+        <module>tst</module>
     </modules>
 
 </project>

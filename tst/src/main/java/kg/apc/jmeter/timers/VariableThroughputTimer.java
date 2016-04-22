@@ -2,8 +2,6 @@
 // TODO: create a thread which will wake up at least one sampler to provide rps
 package kg.apc.jmeter.timers;
 
-import java.util.ArrayList;
-
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.engine.util.NoThreadClone;
@@ -15,15 +13,13 @@ import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.timers.ConstantThroughputTimer;
 import org.apache.jmeter.timers.Timer;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- * @see ConstantThroughputTimer
- */
+import java.util.ArrayList;
+
 public class VariableThroughputTimer
         extends AbstractTestElement
         implements Timer, NoThreadClone, TestStateListener {

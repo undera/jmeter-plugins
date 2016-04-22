@@ -105,7 +105,7 @@ public class VariableThroughputTimerGuiTest {
         //instance.addRowButton.doClick();
         instance.modifyTestElement(tg);
         CollectionProperty data = (CollectionProperty) tg.getData();
-        assertEquals(instance.grid.getModel().getRowCount(), data.size());
+        Assert.assertEquals(instance.grid.getModel().getRowCount(), data.size());
     }
 
     /**
@@ -120,8 +120,8 @@ public class VariableThroughputTimerGuiTest {
         VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
         //tg.setProperty(new ObjectProperty(AbstractThreadGroup.MAIN_CONTROLLER, tg));
         instance.configure(tg);
-        assertEquals(4, instance.tableModel.getRowCount());
-        assertEquals(4, instance.grid.getRowCount());
+        Assert.assertEquals(4, instance.tableModel.getRowCount());
+        Assert.assertEquals(4, instance.grid.getRowCount());
     }
 
     /**

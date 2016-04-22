@@ -94,6 +94,7 @@
         <module>graphs-composite</module>
         <module>tst</module>
         <module>ffw</module>
+        <module>graphs-basic</module>
     </modules>
 
 </project>

@@ -2,23 +2,17 @@ package kg.apc.jmeter.vizualizers;
 
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+
 import static org.junit.Assert.*;
-import org.junit.Before;
 
 public class ResponseTimesOverTimeGuiTest {
 
-    /**
-     * 
-     */
+
     public ResponseTimesOverTimeGuiTest() {
     }
 
     /**
-     *
      * @throws Exception
      */
     @BeforeClass

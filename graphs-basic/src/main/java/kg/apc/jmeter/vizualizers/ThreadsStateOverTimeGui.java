@@ -33,10 +33,7 @@ public class ThreadsStateOverTimeGui
 
     private double getAllThreadCount(long time) {
         double ret = 0;
-        Iterator<AbstractGraphRow> rowsIter = model.values().iterator();
-        while (rowsIter.hasNext()) {
-            AbstractGraphRow row = rowsIter.next();
-
+        for (AbstractGraphRow row : model.values()) {
             //if the tg finished, last value = 0, else we take last known value
             if (time <= (row.getMaxX() + row.getGranulationValue())) {
                 AbstractGraphPanelChartElement element = row.getElement(time);

@@ -3,7 +3,6 @@ package kg.apc.jmeter.vizualizers;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
-import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.samplers.SampleResult;
 
 public class ResponseCodesPerSecondGui
@@ -53,13 +52,8 @@ public class ResponseCodesPerSecondGui
         //double ref to be thread safe on clearData call
         String ret = prefix;
         if (ret == null) {
-            if (res instanceof HTTPSampleResult) {
-                prefix = "HTTP_";
-                ret = "HTTP_";
-            } else {
-                prefix = "";
-                ret = "";
-            }
+            prefix = "";
+            ret = "";
         }
         return ret + res.getResponseCode();
     }
@@ -70,8 +64,8 @@ public class ResponseCodesPerSecondGui
             addResponse(getRespCodeLabel(res), normalizeTime(res.getEndTime()));
         }
 
-        for (int i = 0; i < subResults.length; i++) {
-            addCodes(subResults[i]);
+        for (SampleResult subResult : subResults) {
+            addCodes(subResult);
         }
     }
 
@@ -89,12 +83,12 @@ public class ResponseCodesPerSecondGui
     protected JSettingsPanel createSettingsPanel() {
         return new JSettingsPanel(this,
                 JSettingsPanel.TIMELINE_OPTION
-                | JSettingsPanel.GRADIENT_OPTION
-                | JSettingsPanel.FINAL_ZEROING_OPTION
-                | JSettingsPanel.LIMIT_POINT_OPTION
-                | JSettingsPanel.MAXY_OPTION
-                | JSettingsPanel.RELATIVE_TIME_OPTION
-                | JSettingsPanel.MARKERS_OPTION);
+                        | JSettingsPanel.GRADIENT_OPTION
+                        | JSettingsPanel.FINAL_ZEROING_OPTION
+                        | JSettingsPanel.LIMIT_POINT_OPTION
+                        | JSettingsPanel.MAXY_OPTION
+                        | JSettingsPanel.RELATIVE_TIME_OPTION
+                        | JSettingsPanel.MARKERS_OPTION);
     }
 
     @Override

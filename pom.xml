@@ -95,6 +95,7 @@
         <module>tst</module>
         <module>ffw</module>
         <module>graphs-basic</module>
+        <module>graphs-additional</module>
     </modules>
 
 </project>

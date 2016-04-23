@@ -14,6 +14,7 @@
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-infra</artifactId>
             <version>0.0</version>
+            <type>pom</type>
         </dependency>
     </dependencies>
 

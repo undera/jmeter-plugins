@@ -6,7 +6,9 @@
     <artifactId>jmeter-plugins</artifactId>
     <version>2.0</version>
     <packaging>pom</packaging>
-
+    <properties>
+        <additionalparam>-Xdoclint:none</additionalparam>
+    </properties>
     <modules>
         <module>infra</module>
         <module>plugins</module>

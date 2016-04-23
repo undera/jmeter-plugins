@@ -7,6 +7,36 @@
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-emulators</artifactId>
     <version>0.2</version>
+
+    <name>Emulators library</name>
+    <description>Classes for plugins unit tests</description>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <url>http://jmeter-plugins.org/</url>
+    <scm>
+        <url>https://github.com/undera/jmeter-plugins</url>
+        <connection>https://github.com/undera/jmeter-plugins.git</connection>
+        <developerConnection>git@github.com:undera/jmeter-plugins.git</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <id>team</id>
+            <name>jmeter-plugins.org</name>
+            <email>jmeter-plugins@googlegroups.com</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <additionalparam>-Xdoclint:none</additionalparam>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.jmeter</groupId>
@@ -30,17 +60,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

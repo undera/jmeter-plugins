@@ -2,17 +2,17 @@
 
 mvn -Dmaven.test.skip=false clean package javadoc:jar source:jar gpg:sign
 
-mkdir -p bundle
-# 
-for C in . common standard extras extraslibs webdriver hadoop xmpp blazemeter; do
+for C in `ls`; do
     tmpdir=`mktemp -d`
     if ls $C/target/*.jar 1> /dev/null 2>&1; then
         cp $C/target/*.jar $tmpdir
-    fi
-    cp $C/target/*.pom $tmpdir
-    cp $C/target/*.asc $tmpdir
-    rm -f $tmpdir/original*
-    rm -f $tmpdir/*.zip.asc
+        cp $C/target/*.pom $tmpdir
+        cp $C/target/*.asc $tmpdir
 
-    jar cvf bundle/jmeter-plugins-$C-bundle.jar -C $tmpdir .
+        rm -f $tmpdir/original-*.jar
+
+        rm -f target/bundle-$C.jar # sonatype does not accept one big bundle
+        jar cvf target/bundle-$C.jar -C $tmpdir .
+    fi
 done
+

@@ -54,6 +54,7 @@
         <module>mergeresults</module>
         <module>graphs-ggl</module>
         <module>filterresults</module>
+        <module>table-server</module>
     </modules>
 
 </project>

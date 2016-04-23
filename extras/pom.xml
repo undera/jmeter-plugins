@@ -19,11 +19,6 @@
             <artifactId>jmeter-plugins-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jmeter-plugins-standard</artifactId> <!-- merge results from standard -->
-            <version>${project.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -63,26 +58,6 @@
             </testResource>
         </testResources>
 
-        <plugins>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <finalName>JMeterPlugins-Extras</finalName>
-                    <appendAssemblyId>true</appendAssemblyId>
-                    <descriptors>
-                        <descriptor>zip.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+
     </build>
 </project>

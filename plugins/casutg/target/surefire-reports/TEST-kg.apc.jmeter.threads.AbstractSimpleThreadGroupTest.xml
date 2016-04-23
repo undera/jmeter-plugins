@@ -58,14 +58,14 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testStopThread" time="0.001"/>
-  <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testNumberOfActiveThreads" time="0"/>
-  <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testStart" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testStopThread" time="0"/>
+  <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testNumberOfActiveThreads" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testStart" time="0"/>
   <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testStop" time="0"/>
   <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testScheduleThread_JMeterThread" time="0"/>
-  <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testVerifyThreadsStopped" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testVerifyThreadsStopped" time="0"/>
   <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testScheduleThread_JMeterThread_long" time="0"/>
   <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testWaitThreadsStopped" time="0"/>
   <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testTellThreadsToStop" time="0"/>
-  <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testThreadFinished" time="0"/>
+  <testcase classname="kg.apc.jmeter.threads.AbstractSimpleThreadGroupTest" name="testThreadFinished" time="0.001"/>
 </testsuite>

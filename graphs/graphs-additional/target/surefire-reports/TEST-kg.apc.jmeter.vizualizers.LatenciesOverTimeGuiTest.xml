@@ -58,10 +58,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.vizualizers.LatenciesOverTimeGuiTest" name="testAdd" time="0.017"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.LatenciesOverTimeGuiTest" name="testGetStaticLabel" time="0.011"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.LatenciesOverTimeGuiTest" name="testCreateSettingsPanel" time="0.019"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.LatenciesOverTimeGuiTest" name="testGetLabelResource" time="0.014"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.LatenciesOverTimeGuiTest" name="testGetWikiPage" time="0.013"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.LatenciesOverTimeGuiTest" name="testAdd" time="0.016"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.LatenciesOverTimeGuiTest" name="testGetStaticLabel" time="0.014"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.LatenciesOverTimeGuiTest" name="testCreateSettingsPanel" time="0.021"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.LatenciesOverTimeGuiTest" name="testGetLabelResource" time="0.012"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.LatenciesOverTimeGuiTest" name="testGetWikiPage" time="0.012"/>
   <testcase classname="kg.apc.jmeter.vizualizers.LatenciesOverTimeGuiTest" name="testGetSettingsPanel" time="0.024"/>
 </testsuite>

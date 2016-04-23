@@ -59,9 +59,9 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase classname="kg.apc.jmeter.modifiers.FifoPutPostProcessorGuiTest" name="testGetStaticLabel" time="0.011"/>
-  <testcase classname="kg.apc.jmeter.modifiers.FifoPutPostProcessorGuiTest" name="testGetLabelResource" time="0.006"/>
-  <testcase classname="kg.apc.jmeter.modifiers.FifoPutPostProcessorGuiTest" name="testModifyTestElement" time="0.005"/>
+  <testcase classname="kg.apc.jmeter.modifiers.FifoPutPostProcessorGuiTest" name="testGetLabelResource" time="0.007"/>
+  <testcase classname="kg.apc.jmeter.modifiers.FifoPutPostProcessorGuiTest" name="testModifyTestElement" time="0.007"/>
   <testcase classname="kg.apc.jmeter.modifiers.FifoPutPostProcessorGuiTest" name="testConfigure" time="0.005"/>
-  <testcase classname="kg.apc.jmeter.modifiers.FifoPutPostProcessorGuiTest" name="testCreateTestElement" time="0.005"/>
+  <testcase classname="kg.apc.jmeter.modifiers.FifoPutPostProcessorGuiTest" name="testCreateTestElement" time="0.004"/>
   <testcase classname="kg.apc.jmeter.modifiers.FifoPutPostProcessorGuiTest" name="testClearGui" time="0.004"/>
 </testsuite>

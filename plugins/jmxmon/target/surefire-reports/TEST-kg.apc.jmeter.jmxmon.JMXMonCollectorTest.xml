@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="9" failures="0" name="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" time="0.01" errors="0" skipped="0">
+<testsuite tests="9" failures="0" name="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" time="0.014" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -59,12 +59,12 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testRun" time="0"/>
-  <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testSampleOccurred" time="0"/>
+  <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testSampleOccurred" time="0.001"/>
   <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testTestEnded" time="0"/>
-  <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testGetSamplerSettings" time="0"/>
+  <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testGetSamplerSettings" time="0.001"/>
   <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testGenerateSample" time="0"/>
   <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testProcessConnectors" time="0"/>
   <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testTestStarted" time="0.001"/>
   <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testSetData" time="0"/>
-  <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testJMXMonSampleOccurred" time="0"/>
+  <testcase classname="kg.apc.jmeter.jmxmon.JMXMonCollectorTest" name="testJMXMonSampleOccurred" time="0.001"/>
 </testsuite>

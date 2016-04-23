@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.googlecode.jmeter.plugins.webdriver.config.gui.HtmlUnitDriverConfigGuiTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.046 sec
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.041 sec

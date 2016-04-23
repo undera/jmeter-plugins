@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: org.jmeterplugins.visualizers.gui.FilterPanelTest
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.397 sec
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.452 sec

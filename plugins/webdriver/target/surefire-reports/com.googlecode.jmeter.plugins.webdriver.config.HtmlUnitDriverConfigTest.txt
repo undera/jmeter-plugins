@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.googlecode.jmeter.plugins.webdriver.config.HtmlUnitDriverConfigTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.601 sec
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.501 sec

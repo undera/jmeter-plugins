@@ -58,8 +58,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.functions.FifoSizeTest" name="testExecute" time="0.001"/>
-  <testcase classname="kg.apc.jmeter.functions.FifoSizeTest" name="testSetParameters" time="0"/>
-  <testcase classname="kg.apc.jmeter.functions.FifoSizeTest" name="testGetReferenceKey" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.functions.FifoSizeTest" name="testExecute" time="0"/>
+  <testcase classname="kg.apc.jmeter.functions.FifoSizeTest" name="testSetParameters" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.functions.FifoSizeTest" name="testGetReferenceKey" time="0"/>
   <testcase classname="kg.apc.jmeter.functions.FifoSizeTest" name="testGetArgumentDesc" time="0"/>
 </testsuite>

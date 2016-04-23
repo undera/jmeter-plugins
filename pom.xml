@@ -7,58 +7,11 @@
     <version>2.0</version>
     <packaging>pom</packaging>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <additionalparam>-Xdoclint:none</additionalparam>
-    </properties>
-
     <modules>
-        <module>common</module>
-        <module>hadoop</module>
-        <module>webdriver</module>
-        <module>xmpp</module>
-        <module>plugins-manager</module>
-        <module>udp</module>
-        <module>emulators</module>
-        <module>charts</module>
-        <module>sense-uploader</module>
-        <module>perfmon</module>
-        <module>json</module>
-        <module>redis</module>
-        <module>oauth</module>
-        <module>jms</module>
-        <module>wsc</module>
-        <module>casutg</module>
-        <module>functions</module>
-        <module>fifo</module>
-        <module>prmctl</module>
-        <module>dbmon</module>
-        <module>jmxmon</module>
-        <module>autostop</module>
-        <module>csvars</module>
-        <module>lockfile</module>
-        <module>dummy</module>
-        <module>common-io</module>
-        <module>httpraw</module>
-        <module>graphs-vs</module>
-        <module>graphs-dist</module>
-        <module>graphs-composite</module>
-        <module>tst</module>
-        <module>ffw</module>
-        <module>graphs-basic</module>
-        <module>graphs-additional</module>
-        <module>mergeresults</module>
-        <module>graphs-ggl</module>
-        <module>filterresults</module>
-        <module>table-server</module>
-        <module>cmd</module>
-        <module>plancheck</module>
-        <module>deprecated</module>
-        <module>pde</module>
-        <module>csl</module>
-        <module>synthesis</module>
+        <module>infra</module>
+        <module>plugins</module>
+        <module>tools</module>
+        <module>graphs</module>
     </modules>
 
 </project>

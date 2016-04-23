@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="31" failures="0" name="kg.apc.jmeter.PluginsCMDWorkerTest" time="0.47" errors="0" skipped="0">
+<testsuite tests="31" failures="0" name="kg.apc.jmeter.PluginsCMDWorkerTest" time="0.445" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,35 +58,35 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetLineWeight" time="0"/>
-  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetRelativeTimes" time="0"/>
+  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetLineWeight" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetRelativeTimes" time="0.001"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetGranulation" time="0"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetIncludeLabels" time="0.001"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetOutputCSVFile" time="0"/>
-  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testDoJob_csv_createdir" time="0.029"/>
+  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testDoJob_csv_createdir" time="0.037"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetAggregate" time="0"/>
-  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetStartOffset" time="0.001"/>
-  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testDoJob" time="0.178"/>
+  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetStartOffset" time="0"/>
+  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testDoJob" time="0.168"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetHideLowCounts" time="0"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testGetJMeterHomeFromCP" time="0.001"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testDoJob_csv_filtered" time="0.025"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetEndOffset" time="0"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetIncludeSamplesWithRegex" time="0.001"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetInputFile" time="0"/>
-  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetRowsLimit" time="0"/>
-  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetExcludeSamplesWithRegex" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetRowsLimit" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetExcludeSamplesWithRegex" time="0"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetGraphWidth" time="0"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetExcludeLabels" time="0.001"/>
-  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testDoJob_csv" time="0.022"/>
-  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testDoJob_png" time="0.162"/>
+  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testDoJob_csv" time="0.032"/>
+  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testDoJob_png" time="0.128"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetPreventOutliers" time="0.001"/>
-  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetSuccessFilter" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetSuccessFilter" time="0"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetForceY" time="0"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetOutputPNGFile" time="0"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetGradient" time="0"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetAutoScaleRows" time="0"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetZeroing" time="0"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetGraphHeight" time="0"/>
-  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetPluginType" time="0.022"/>
+  <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testSetPluginType" time="0.018"/>
   <testcase classname="kg.apc.jmeter.PluginsCMDWorkerTest" name="testAddExportMode" time="0"/>
 </testsuite>

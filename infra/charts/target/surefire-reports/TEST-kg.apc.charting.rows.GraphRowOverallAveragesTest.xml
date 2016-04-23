@@ -59,9 +59,9 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase classname="kg.apc.charting.rows.GraphRowOverallAveragesTest" name="testGetValue" time="0"/>
-  <testcase classname="kg.apc.charting.rows.GraphRowOverallAveragesTest" name="testAdd" time="0"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowOverallAveragesTest" name="testAdd" time="0.001"/>
   <testcase classname="kg.apc.charting.rows.GraphRowOverallAveragesTest" name="testGetElement" time="0"/>
-  <testcase classname="kg.apc.charting.rows.GraphRowOverallAveragesTest" name="testNext" time="0.001"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowOverallAveragesTest" name="testNext" time="0"/>
   <testcase classname="kg.apc.charting.rows.GraphRowOverallAveragesTest" name="testSize" time="0"/>
   <testcase classname="kg.apc.charting.rows.GraphRowOverallAveragesTest" name="testHasNext" time="0"/>
   <testcase classname="kg.apc.charting.rows.GraphRowOverallAveragesTest" name="testGetKey" time="0"/>

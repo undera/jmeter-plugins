@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="21" failures="0" name="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" time="0.078" errors="0" skipped="0">
+<testsuite tests="21" failures="0" name="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" time="0.076" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,25 +58,25 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_inverted_null" time="0.047"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_inverted_null" time="0.05"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetExpectedValue" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testSetJsonPath" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testSetJsonPath" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetJsonPath" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_null_not_found" time="0.011"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_positive" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_list_empty_validate" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_positive" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_list_empty_validate" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_negative" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_list_val" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_null_novalidate" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_positive_invert" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testIsJsonValidationBool" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_negative_invert" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_negative_invert" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testSetExpectedValue" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_positive_regexp" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_list_empty_novalidate" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_no_such_path" time="0.002"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_list_negative" time="0.002"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_list_empty_novalidate" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_no_such_path" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_list_negative" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_dict" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_null" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testGetResult_null" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertionTest" name="testSetJsonValidationBool" time="0"/>
 </testsuite>

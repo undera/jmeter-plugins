@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="21" failures="0" name="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" time="0.288" errors="0" skipped="0">
+<testsuite tests="21" failures="0" name="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" time="0.287" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,10 +58,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetAddOrUpdateDataOnRecordBool" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetAddOrUpdateDataOnRecordBool" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetLatestTimestampOperationWithFilterBool" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetFilterColumnFamiliesForTimestamp" time="0.001"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetHbaseZookeeperQuorum" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetFilterColumnFamiliesForTimestamp" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetHbaseZookeeperQuorum" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testGetFilterColumnFamiliesForTimestamp" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testGetFullColumnNamesList" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetDeleteDataFromRecordBool" time="0"/>
@@ -69,14 +69,14 @@
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testIsDeleteDataFromRecordBool" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetColumnFamilyColumnNameList" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testGetColumnFamilyColumnNameList" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testIsAddOrUpdateDataOnRecordBool" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testIsAddOrUpdateDataOnRecordBool" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetRowKey" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testIsLatestTimestampOperationWithFilterBool" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testGetRowKey" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetFullColumnNamesList" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSample" time="0.277"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetFullColumnNamesList" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSample" time="0.275"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testGetHbaseSourceTable" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetLatestTimestampOperationBool" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testSetLatestTimestampOperationBool" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testIsLatestTimestampOperationBool" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrudTest" name="testGetHbaseZookeeperQuorum" time="0"/>
 </testsuite>

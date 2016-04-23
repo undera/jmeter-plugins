@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="org.loadosophia.jmeter.LoadosophiaAPIClientTest" time="5.147" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="org.loadosophia.jmeter.LoadosophiaAPIClientTest" time="5.129" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,10 +58,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="org.loadosophia.jmeter.LoadosophiaAPIClientTest" name="testEndOnline" time="0.063"/>
-  <testcase classname="org.loadosophia.jmeter.LoadosophiaAPIClientTest" name="testGetUploadStatus" time="0.002"/>
+  <testcase classname="org.loadosophia.jmeter.LoadosophiaAPIClientTest" name="testEndOnline" time="0.052"/>
+  <testcase classname="org.loadosophia.jmeter.LoadosophiaAPIClientTest" name="testGetUploadStatus" time="0.001"/>
   <testcase classname="org.loadosophia.jmeter.LoadosophiaAPIClientTest" name="testMultipartPost" time="0"/>
-  <testcase classname="org.loadosophia.jmeter.LoadosophiaAPIClientTest" name="testSendOnlineData" time="0.027"/>
-  <testcase classname="org.loadosophia.jmeter.LoadosophiaAPIClientTest" name="testSendFiles" time="5.013"/>
-  <testcase classname="org.loadosophia.jmeter.LoadosophiaAPIClientTest" name="testStartOnline" time="0.038"/>
+  <testcase classname="org.loadosophia.jmeter.LoadosophiaAPIClientTest" name="testSendOnlineData" time="0.022"/>
+  <testcase classname="org.loadosophia.jmeter.LoadosophiaAPIClientTest" name="testSendFiles" time="5.011"/>
+  <testcase classname="org.loadosophia.jmeter.LoadosophiaAPIClientTest" name="testStartOnline" time="0.039"/>
 </testsuite>

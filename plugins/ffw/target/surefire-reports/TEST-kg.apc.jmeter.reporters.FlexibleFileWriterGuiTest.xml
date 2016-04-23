@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="7" failures="0" name="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" time="0.699" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" time="0.566" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,11 +58,11 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testGetStaticLabel" time="0.078"/>
-  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testGetLabelResource" time="0.028"/>
-  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testModifyTestElement" time="0.03"/>
-  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testConfigure" time="0.032"/>
-  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testCreateTestElement" time="0.02"/>
-  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testClearGui" time="0.019"/>
-  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testLostOwnership" time="0.017"/>
+  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testGetStaticLabel" time="0.066"/>
+  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testGetLabelResource" time="0.024"/>
+  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testModifyTestElement" time="0.026"/>
+  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testConfigure" time="0.028"/>
+  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testCreateTestElement" time="0.018"/>
+  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testClearGui" time="0.016"/>
+  <testcase classname="kg.apc.jmeter.reporters.FlexibleFileWriterGuiTest" name="testLostOwnership" time="0.016"/>
 </testsuite>

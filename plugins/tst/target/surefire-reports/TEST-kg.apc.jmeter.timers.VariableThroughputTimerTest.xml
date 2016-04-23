@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="11" failures="0" name="kg.apc.jmeter.timers.VariableThroughputTimerTest" time="10.826" errors="0" skipped="0">
+<testsuite tests="11" failures="0" name="kg.apc.jmeter.timers.VariableThroughputTimerTest" time="10.143" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -60,11 +60,11 @@
   </properties>
   <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testStopTest" time="0"/>
   <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testTestEnded_String" time="0"/>
-  <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testDelay" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testDelay" time="0"/>
   <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testTestEnded_0args" time="0"/>
   <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testGetData" time="0"/>
-  <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testTestStarted_String" time="0.001"/>
-  <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testDelay1000" time="10.808"/>
+  <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testTestStarted_String" time="0"/>
+  <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testDelay1000" time="10.128"/>
   <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testGetRPSForSecond" time="0"/>
   <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testTestStarted_0args" time="0"/>
   <testcase classname="kg.apc.jmeter.timers.VariableThroughputTimerTest" name="testSetData" time="0"/>

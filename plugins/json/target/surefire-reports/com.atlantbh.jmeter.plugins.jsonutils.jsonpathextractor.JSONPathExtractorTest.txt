@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractorTest
 -------------------------------------------------------------------------------
-Tests run: 12, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.122 sec
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.101 sec

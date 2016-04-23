@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.blazemeter.jmeter.threads.arrivals.FreeFormArrivalsThreadGroupGuiTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.047 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.036 sec

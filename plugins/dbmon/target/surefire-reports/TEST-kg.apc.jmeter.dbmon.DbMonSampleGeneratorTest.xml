@@ -58,5 +58,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.dbmon.DbMonSampleGeneratorTest" name="testGenerateSample" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.dbmon.DbMonSampleGeneratorTest" name="testGenerateSample" time="0"/>
 </testsuite>

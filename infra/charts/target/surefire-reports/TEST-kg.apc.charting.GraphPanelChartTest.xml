@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="26" failures="0" name="kg.apc.charting.GraphPanelChartTest" time="0.24" errors="0" skipped="0">
+<testsuite tests="26" failures="0" name="kg.apc.charting.GraphPanelChartTest" time="0.613" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,30 +58,30 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetForcedMinX" time="0.022"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetForcedMinX" time="0.024"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testGetChartSettings" time="0.001"/>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSerialization" time="0.062"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSerialization" time="0.161"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testInvalidateCache" time="0.001"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetTestStartTime" time="0.001"/>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSaveGraphToCSV" time="0.016"/>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSaveGraphToPNG" time="0.085"/>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetErrorMessage" time="0.001"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSaveGraphToCSV" time="0.041"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSaveGraphToPNG" time="0.255"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetErrorMessage" time="0.005"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetYAxisLabel" time="0.001"/>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testPaintComponent" time="0.031"/>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetPrecisionLabel" time="0"/>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetDisplayPrecision" time="0"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testPaintComponent" time="0.076"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetPrecisionLabel" time="0.003"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetDisplayPrecision" time="0.001"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetChartType" time="0.001"/>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testPaintComponent_empty" time="0.006"/>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetyAxisLabelRenderer" time="0"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testPaintComponent_empty" time="0.025"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetyAxisLabelRenderer" time="0.001"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testIsModelContainsRow" time="0.001"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetReSetColors" time="0.001"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetUseRelativeTime" time="0.001"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetRows" time="0.001"/>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetyAxisLabel" time="0"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetyAxisLabel" time="0.001"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetIsPreview" time="0"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testClearErrorMessage" time="0.001"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetxAxisLabel" time="0.001"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetCurrentX" time="0.001"/>
   <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testLostOwnership" time="0"/>
-  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetxAxisLabelRenderer" time="0"/>
+  <testcase classname="kg.apc.charting.GraphPanelChartTest" name="testSetxAxisLabelRenderer" time="0.001"/>
 </testsuite>

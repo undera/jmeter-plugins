@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="9" failures="0" name="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" time="0.089" errors="0" skipped="0">
+<testsuite tests="9" failures="0" name="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" time="0.062" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,13 +58,13 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldNotOverrideUserAgent" time="0.019"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldReturnStaticLabel" time="0.008"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldReturnFirefoxDriverConfig" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldSetFirefoxDriverConfigOnConfigure" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldReturnCanonicalClassNameAsLabelResource" time="0.008"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldResetValuesOnClearGui" time="0.007"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldReturnWikiPage" time="0.005"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldOverrideUserAgent" time="0.006"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldEnableProxyAndExperimental" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldNotOverrideUserAgent" time="0.013"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldReturnStaticLabel" time="0.005"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldReturnFirefoxDriverConfig" time="0.005"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldSetFirefoxDriverConfigOnConfigure" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldReturnCanonicalClassNameAsLabelResource" time="0.005"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldResetValuesOnClearGui" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldReturnWikiPage" time="0.004"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldOverrideUserAgent" time="0.005"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGuiTest" name="shouldEnableProxyAndExperimental" time="0.004"/>
 </testsuite>

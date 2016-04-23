@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="7" failures="0" name="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" time="0.419" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" time="0.423" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,11 +58,11 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldImplementJMeterGUIComponent" time="0.283"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldReturnStaticLabel" time="0.018"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldSetParameters" time="0.022"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldSetScript" time="0.018"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldReturnCanonicalClassNameAsLabelResource" time="0.014"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldResetValuesOnClearGui" time="0.04"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldSetValuesOnConfigure" time="0.015"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldImplementJMeterGUIComponent" time="0.254"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldReturnStaticLabel" time="0.022"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldSetParameters" time="0.027"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldSetScript" time="0.023"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldReturnCanonicalClassNameAsLabelResource" time="0.018"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldResetValuesOnClearGui" time="0.05"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGuiTest" name="shouldSetValuesOnConfigure" time="0.018"/>
 </testsuite>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="12" failures="0" name="kg.apc.jmeter.threads.UltimateThreadGroupTest" time="0.024" errors="0" skipped="0">
+<testsuite tests="12" failures="0" name="kg.apc.jmeter.threads.UltimateThreadGroupTest" time="0.02" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -59,15 +59,15 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testScheduleThreadAll" time="0.005"/>
-  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testTestEnded_String" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testTestEnded_String" time="0"/>
   <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testTestEnded_0args" time="0"/>
-  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testScheduleThread" time="0"/>
+  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testScheduleThread" time="0.001"/>
   <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testGetData_broken_del" time="0"/>
-  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testSchedule_Prop" time="0.001"/>
-  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testGetData" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testSchedule_Prop" time="0.002"/>
+  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testGetData" time="0"/>
   <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testTestStarted_String" time="0"/>
-  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testTestStarted_0args" time="0"/>
-  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testSetData" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testTestStarted_0args" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testSetData" time="0"/>
   <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testGetNumThreads" time="0"/>
   <testcase classname="kg.apc.jmeter.threads.UltimateThreadGroupTest" name="testGetData_broken_rename" time="0.001"/>
 </testsuite>

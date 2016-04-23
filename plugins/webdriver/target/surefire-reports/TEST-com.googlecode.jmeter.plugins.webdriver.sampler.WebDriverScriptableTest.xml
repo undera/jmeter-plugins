@@ -58,12 +58,12 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldTrimSpacesBetweenParameters" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldTrimSpacesBetweenParameters" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldAssignName" time="0"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldAssignParameters" time="0"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldAssignLog" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldAssignSampleResult" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldAssignLog" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldAssignSampleResult" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldAssignBrowser" time="0"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldReturnArgsBySplittingParametersBySpace" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldReturnEmptyArgsWhenParametersIsNull" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldReturnArgsBySplittingParametersBySpace" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverScriptableTest" name="shouldReturnEmptyArgsWhenParametersIsNull" time="0.001"/>
 </testsuite>

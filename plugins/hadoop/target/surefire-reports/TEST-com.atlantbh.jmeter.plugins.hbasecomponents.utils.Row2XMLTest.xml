@@ -58,6 +58,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.utils.Row2XMLTest" name="testRow2xmlstring" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.utils.Row2XMLTest" name="testRow2xmlstring" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.utils.Row2XMLTest" name="testRow2xmlStringLatest" time="0"/>
 </testsuite>

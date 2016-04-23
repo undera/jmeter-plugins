@@ -58,22 +58,22 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetHostBaseUrl" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetHostBaseUrl" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testGetRequestBody" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetRequestHeaders" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetConsumerKey" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testGetHostBaseUrl" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetConsumerSecret" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetConsumerSecret" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testGetRequestHeaders" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetResource" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testGetResource" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testGetConsumerSecret" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testGetConsumerSecret" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testGetPortNumber" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testGetUrl" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSample_0args" time="0.005"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testGetUrl" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSample_0args" time="0.004"/>
   <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSample_4args" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testGetConsumerKey" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetRequestBody" time="0.001"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetupConnection" time="0.003"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetPortNumber" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetupConnection" time="0.005"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.oauth.OAuthSamplerTest" name="testSetPortNumber" time="0"/>
 </testsuite>

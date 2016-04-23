@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: kg.apc.jmeter.perfmon.PerfMonCollectorTest
 -------------------------------------------------------------------------------
-Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.508 sec
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.393 sec

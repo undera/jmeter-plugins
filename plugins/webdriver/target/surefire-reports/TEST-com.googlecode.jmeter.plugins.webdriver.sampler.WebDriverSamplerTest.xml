@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="10" failures="0" name="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" time="0.554" errors="0" skipped="0">
+<testsuite tests="10" failures="0" name="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" time="0.583" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,14 +58,14 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldReturnFailureSampleResultWhenEvalScriptIsInvalid" time="0.384"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldReturnFailureSampleResultWhenScriptSetsSampleResultToFailure" time="0.096"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldReturnFailureSampleResultWhenEvalScriptIsInvalid" time="0.417"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldReturnFailureSampleResultWhenScriptSetsSampleResultToFailure" time="0.091"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldBeAbleToSetParameters" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldReturnSuccessfulSampleResultWhenEvalScriptCompletes" time="0.026"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldBeAbleToSerialiseAndDeserialise" time="0.007"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldReturnSuccessfulSampleResultWhenEvalScriptCompletes" time="0.024"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldBeAbleToSerialiseAndDeserialise" time="0.006"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldBeAbleToSetScript" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldReturnFailureSampleResultWhenBrowserURLIsInvalid" time="0.016"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldThrowExceptionWhenBrowserNotConfigured" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldHaveExpectedInstanceVariablesOnScriptContext" time="0.005"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldReturnSuccessfulSampleResultWhenScriptSetsSampleResultToSuccess" time="0.015"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldReturnFailureSampleResultWhenBrowserURLIsInvalid" time="0.017"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldThrowExceptionWhenBrowserNotConfigured" time="0.002"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldHaveExpectedInstanceVariablesOnScriptContext" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSamplerTest" name="shouldReturnSuccessfulSampleResultWhenScriptSetsSampleResultToSuccess" time="0.017"/>
 </testsuite>

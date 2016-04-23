@@ -60,6 +60,6 @@
   </properties>
   <testcase classname="kg.apc.jmeter.jmxmon.JMXMonSampleResultTest" name="testSetResponseMessage" time="0"/>
   <testcase classname="kg.apc.jmeter.jmxmon.JMXMonSampleResultTest" name="testGetValue_SampleResult" time="0"/>
-  <testcase classname="kg.apc.jmeter.jmxmon.JMXMonSampleResultTest" name="testGetValue_0args" time="0"/>
-  <testcase classname="kg.apc.jmeter.jmxmon.JMXMonSampleResultTest" name="testSetValue" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.jmxmon.JMXMonSampleResultTest" name="testGetValue_0args" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.jmxmon.JMXMonSampleResultTest" name="testSetValue" time="0"/>
 </testsuite>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="10" failures="0" name="kg.apc.charting.rows.GraphRowPercentilesTest" time="0.03" errors="0" skipped="0">
+<testsuite tests="10" failures="0" name="kg.apc.charting.rows.GraphRowPercentilesTest" time="0.083" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,14 +58,14 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testAdd" time="0.002"/>
-  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testGetElement" time="0.008"/>
-  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testSize" time="0.002"/>
-  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testAddResponseTime" time="0.002"/>
-  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testGetMaxX" time="0.001"/>
-  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testGetMinX" time="0.001"/>
-  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testIterator_req1" time="0.002"/>
-  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testIterator_req2" time="0.002"/>
-  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testIterator_req3" time="0.003"/>
-  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testIterator" time="0.001"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testAdd" time="0.008"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testGetElement" time="0.024"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testSize" time="0.006"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testAddResponseTime" time="0.005"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testGetMaxX" time="0.003"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testGetMinX" time="0.002"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testIterator_req1" time="0.008"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testIterator_req2" time="0.003"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testIterator_req3" time="0.008"/>
+  <testcase classname="kg.apc.charting.rows.GraphRowPercentilesTest" name="testIterator" time="0.002"/>
 </testsuite>

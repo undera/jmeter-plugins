@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" time="0.137" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" time="0.133" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,10 +58,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" name="testAdd" time="0.02"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" name="testGetStaticLabel" time="0.018"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" name="testCreateSettingsPanel" time="0.031"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" name="testAdd" time="0.023"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" name="testGetStaticLabel" time="0.014"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" name="testCreateSettingsPanel" time="0.028"/>
   <testcase classname="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" name="testGetLabelResource" time="0.016"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" name="testGetWikiPage" time="0.015"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" name="testGetSettingsPanel" time="0.027"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" name="testGetWikiPage" time="0.016"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.ResponseTimesDistributionGuiTest" name="testGetSettingsPanel" time="0.026"/>
 </testsuite>

@@ -58,5 +58,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="org.jmeterplugins.repository.PluginTest" name="testVersionComparator" time="0"/>
+  <testcase classname="org.jmeterplugins.repository.PluginTest" name="testVersionComparator" time="0.001"/>
 </testsuite>

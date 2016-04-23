@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: kg.apc.jmeter.config.LockFileTest
 -------------------------------------------------------------------------------
-Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.116 sec
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.119 sec

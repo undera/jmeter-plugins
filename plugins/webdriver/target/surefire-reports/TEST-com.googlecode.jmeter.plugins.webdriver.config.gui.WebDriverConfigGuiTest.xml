@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="43" failures="0" name="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" time="0.396" errors="0" skipped="0">
+<testsuite tests="43" failures="0" name="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" time="0.284" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,47 +58,47 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldDisableManualProxiesWhenSwitchingToNonManualProxy" time="0.01"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpHost" time="0.01"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpPort" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldCreateSystemProxyByDefault" time="0.008"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldDisableManualProxiesWhenManualProxyNotSelectedAndUseHttpForAllProtocolsSelected" time="0.009"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldDisableManualProxiesWhenSwitchingToNonManualProxy" time="0.009"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpHost" time="0.008"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpPort" time="0.008"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldCreateSystemProxyByDefault" time="0.007"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldDisableManualProxiesWhenManualProxyNotSelectedAndUseHttpForAllProtocolsSelected" time="0.007"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldCreateSystemProxy" time="0.008"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldBeAbleToDisableHttpSettingsForAllProtocols" time="0.008"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetSocksHost" time="0.008"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetSocksPort" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldCreateNoProxy" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldUseHttpSettingsForAllProtocolsByDefault" time="0.01"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetDevMode" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetRecreateBrowser" time="0.008"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldImplementJMeterGUIComponent" time="0.008"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldBeAbleToDisableHttpSettingsForAllProtocols" time="0.007"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetSocksHost" time="0.007"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetSocksPort" time="0.007"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldCreateNoProxy" time="0.007"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldUseHttpSettingsForAllProtocolsByDefault" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetDevMode" time="0.007"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetRecreateBrowser" time="0.007"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldImplementJMeterGUIComponent" time="0.006"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetPacUrlProxyOnConfigure" time="0.008"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpPortTo8080ByDefault" time="0.008"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpPortTo8080ByDefault" time="0.007"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetManualProxyOnConfigure" time="0.007"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldDisableManualProxiesWhenManualProxyNotSelectedAndUseHttpForAllProtocolsNotSelected" time="0.01"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldEnablePacUrlWhenPacUrlProxySelected" time="0.011"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpsHost" time="0.011"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpsPort" time="0.01"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldCreateManualProxy" time="0.008"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldDisableManualProxiesWhenManualProxyNotSelectedAndUseHttpForAllProtocolsNotSelected" time="0.007"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldEnablePacUrlWhenPacUrlProxySelected" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpsHost" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpsPort" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldCreateManualProxy" time="0.006"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetPacUrl" time="0.006"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldCreateAutoDectetProxy" time="0.011"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldImplementItemListener" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldCreateProxyPacProxy" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetAutoDetectProxyOnConfigure" time="0.007"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldDisablePacUrlByDefault" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpsPortTo8080ByDefault" time="0.007"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldResetValuesOnClearGui" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldEnableHttpAndNoProxyListWhenManualProxySelectedAndUseHttpForAllProtocolsSelected" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetValuesOnConfigure" time="0.01"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetExperimentalValuesOnConfigure" time="0.008"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldDisablePacUrlWhenPacUrlProxyNotSelected" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetFtpHost" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetFtpPort" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetSystemProxyOnConfigure" time="0.009"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetSocksPortTo8080ByDefault" time="0.013"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldCreateAutoDectetProxy" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldImplementItemListener" time="0.005"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldCreateProxyPacProxy" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetAutoDetectProxyOnConfigure" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldDisablePacUrlByDefault" time="0.005"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetHttpsPortTo8080ByDefault" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldResetValuesOnClearGui" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldEnableHttpAndNoProxyListWhenManualProxySelectedAndUseHttpForAllProtocolsSelected" time="0.005"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetValuesOnConfigure" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetExperimentalValuesOnConfigure" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldDisablePacUrlWhenPacUrlProxyNotSelected" time="0.004"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetFtpHost" time="0.006"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetFtpPort" time="0.005"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetSystemProxyOnConfigure" time="0.005"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetSocksPortTo8080ByDefault" time="0.006"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetLocalhostInNoProxyListByDefault" time="0.006"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetFtpPortTo8080ByDefault" time="0.006"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetNoProxyList" time="0.008"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetNoProxyOnConfigure" time="0.008"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldEnableAllManualProxiesWhenManualProxySelectedAndUseHttpForAllProtocolsNotSelected" time="0.009"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetFtpPortTo8080ByDefault" time="0.004"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetNoProxyList" time="0.004"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldSetNoProxyOnConfigure" time="0.005"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.gui.WebDriverConfigGuiTest" name="shouldEnableAllManualProxiesWhenManualProxySelectedAndUseHttpForAllProtocolsNotSelected" time="0.005"/>
 </testsuite>

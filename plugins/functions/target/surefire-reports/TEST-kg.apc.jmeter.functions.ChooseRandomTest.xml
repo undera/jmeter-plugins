@@ -58,7 +58,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.functions.ChooseRandomTest" name="testExecute" time="0.005"/>
+  <testcase classname="kg.apc.jmeter.functions.ChooseRandomTest" name="testExecute" time="0.006"/>
   <testcase classname="kg.apc.jmeter.functions.ChooseRandomTest" name="testSetParameters" time="0"/>
   <testcase classname="kg.apc.jmeter.functions.ChooseRandomTest" name="testGetReferenceKey" time="0"/>
   <testcase classname="kg.apc.jmeter.functions.ChooseRandomTest" name="testGetArgumentDesc" time="0"/>

@@ -58,18 +58,18 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testGetJobCountersByJobId" time="0.013"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testGetJobCountersByJobId" time="0.012"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testGetCountersAsXml" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testGetJobId" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testGetJobTracker" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testGetGroupName" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testSetJobTracker" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testSetJobState" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testSetJobState" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testGetJobState" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testConvertToJobId" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testPrepareJobClient" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testGetJobStatisticsByJobId" time="0.001"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testSetGroupName" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testGetJobStatisticsByJobId" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testSetGroupName" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testGetJobCountersByJobIdAndGroupName" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobLayerTest" name="testSetJobId" time="0"/>
 </testsuite>

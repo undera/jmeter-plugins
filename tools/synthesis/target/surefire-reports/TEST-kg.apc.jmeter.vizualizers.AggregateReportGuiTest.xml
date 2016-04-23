@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="11" failures="0" name="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" time="0.238" errors="0" skipped="0">
+<testsuite tests="11" failures="0" name="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" time="0.204" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,15 +58,15 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testAdd" time="0.019"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetStaticLabel" time="0.021"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetMenuCategories" time="0.021"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testCreateSettingsPanel" time="0.033"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testClearData" time="0.019"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetLabelResource" time="0.018"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testModifyTestElement" time="0.019"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testConfigure" time="0.017"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetWikiPage" time="0.017"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetGraphPanelChart" time="0.017"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetSettingsPanel" time="0.029"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testAdd" time="0.023"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetStaticLabel" time="0.02"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetMenuCategories" time="0.019"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testCreateSettingsPanel" time="0.026"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testClearData" time="0.014"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetLabelResource" time="0.013"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testModifyTestElement" time="0.013"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testConfigure" time="0.018"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetWikiPage" time="0.014"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetGraphPanelChart" time="0.014"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.AggregateReportGuiTest" name="testGetSettingsPanel" time="0.019"/>
 </testsuite>

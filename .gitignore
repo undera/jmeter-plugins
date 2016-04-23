@@ -7,6 +7,7 @@ jmeter.log
 /site/img/design/
 /target/
 /*/target/
+/*/*/target/
 nbactions.xml
 dependency-reduced-pom.xml
 .idea/

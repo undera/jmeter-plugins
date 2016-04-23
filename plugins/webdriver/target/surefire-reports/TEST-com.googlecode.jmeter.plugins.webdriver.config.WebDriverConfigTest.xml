@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="46" failures="0" name="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" time="0.079" errors="0" skipped="0">
+<testsuite tests="46" failures="0" name="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" time="0.094" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,31 +58,31 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAddBrowserToJMeterVariablesWhenIterationStarts" time="0.037"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldNotQuitBrowserWhenArgumentIsNull" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldRecreateBrowserOnEachIterationStart" time="0.002"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignNoProxyHost" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignDevMode" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAddBrowserToJMeterVariablesWhenIterationStarts" time="0.046"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldNotQuitBrowserWhenArgumentIsNull" time="0.002"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldRecreateBrowserOnEachIterationStart" time="0.003"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignNoProxyHost" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignDevMode" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldDelegateToProxyFactoryWhenCreatingDirectProxy" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldDelegateToProxyFactoryWhenCreatingManualProxyWithAllValuesSpecified" time="0.002"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldNotSetNullBrowserForCurrentThread" time="0.003"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldNotSetNullBrowserForCurrentThread" time="0.004"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldDelegateToProxyFactoryWhenCreatingSystemProxy" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldBeAbleToCallThreadFinishedMultipleTimes" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldBeAbleToCallThreadFinishedMultipleTimes" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="byDefaultShouldReturnSystemProxyType" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="byDefaultDevModeShouldNotBeSet" time="0"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignSocksHost" time="0.003"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignSocksPort" time="0"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldOnlyHaveOneBrowserForCurrentThread" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignSocksHost" time="0.001"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignSocksPort" time="0.001"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldOnlyHaveOneBrowserForCurrentThread" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldBeAbleToDisableUseHttpSettingsForAllProtocols" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldImplementLoopIterationListener" time="0"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignProxyType" time="0.001"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldImplementLoopIterationListener" time="0.001"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignProxyType" time="0"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="byDefaultShouldNotRecreateBrowserOnIterationStart" time="0"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldSetBrowserForCurrentThread" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldQuitBrowser" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignProxyPacUrl" time="0"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldRemoveBrowserFromCurrentThread" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldBeAbleToAddMultipleBrowsersForEachThread" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldOnlyCreateSingleWebDriverEvenWhenThreadStartedIsCalledMultipleTimes" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldRemoveBrowserFromCurrentThread" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldBeAbleToAddMultipleBrowsersForEachThread" time="0.002"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldOnlyCreateSingleWebDriverEvenWhenThreadStartedIsCalledMultipleTimes" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldDelegateToProxyFactoryWhenCreatingProxyPacProxy" time="0.002"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldHaveBrowserForCurrentThread" time="0"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignHttpsHost" time="0.001"/>
@@ -92,16 +92,16 @@
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignHttpHost" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignHttpPort" time="0"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldNotHaveBrowserForCurrentThread" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldDelegateToProxyFactoryWhenCreatingAutoDetectProxy" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldDelegateToProxyFactoryWhenCreatingAutoDetectProxy" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="byDefaultShouldReturnTrueForUseHttpSettingsForAllProtocols" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignFtpHost" time="0"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignFtpPort" time="0.001"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldQuitWebDriverWhenThreadFinishedIsInvoked" time="0"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldAssignRecreateBrowserOnIterationStart" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldCreateWebDriverWhenThreadStartedIsInvoked" time="0"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldImplementThreadListener" time="0.001"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldCreateWebDriverWhenThreadStartedIsInvoked" time="0.001"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldImplementThreadListener" time="0"/>
   <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldHandleScenarioWhenBrowserHasAlreadyQuit" time="0.002"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldNotRecreateBrowserOnEachIterationStartWhenDevModeIsEnabled" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldBeAbleToEnableUseHttpSettingsForAllProtocols" time="0.001"/>
-  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldDelegateToProxyFactoryWhenCreatingManualProxyWithHttpAsDefault" time="0.001"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldNotRecreateBrowserOnEachIterationStartWhenDevModeIsEnabled" time="0.002"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldBeAbleToEnableUseHttpSettingsForAllProtocols" time="0"/>
+  <testcase classname="com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfigTest" name="shouldDelegateToProxyFactoryWhenCreatingManualProxyWithHttpAsDefault" time="0"/>
 </testsuite>

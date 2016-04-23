@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="11" failures="0" name="kg.apc.jmeter.vizualizers.JMXMonGuiTest" time="0.775" errors="0" skipped="0">
+<testsuite tests="11" failures="0" name="kg.apc.jmeter.vizualizers.JMXMonGuiTest" time="0.722" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,15 +58,15 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testAdd" time="0.147"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testGetStaticLabel" time="0.031"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testGetGraphPanelContainer" time="0.029"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testCreateSettingsPanel" time="0.036"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testClearData" time="0.023"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testGetLabelResource" time="0.022"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testModifyTestElement" time="0.024"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testAdd" time="0.142"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testGetStaticLabel" time="0.029"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testGetGraphPanelContainer" time="0.027"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testCreateSettingsPanel" time="0.033"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testClearData" time="0.02"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testGetLabelResource" time="0.023"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testModifyTestElement" time="0.022"/>
   <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testConfigure" time="0.02"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testGetWikiPage" time="0.019"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testCreateTestElement" time="0.021"/>
-  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testClearErrorMessage" time="0.018"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testGetWikiPage" time="0.025"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testCreateTestElement" time="0.025"/>
+  <testcase classname="kg.apc.jmeter.vizualizers.JMXMonGuiTest" name="testClearErrorMessage" time="0.024"/>
 </testsuite>

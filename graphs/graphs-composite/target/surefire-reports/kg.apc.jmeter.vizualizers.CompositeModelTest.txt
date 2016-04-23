@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: kg.apc.jmeter.vizualizers.CompositeModelTest
 -------------------------------------------------------------------------------
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.759 sec
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.73 sec

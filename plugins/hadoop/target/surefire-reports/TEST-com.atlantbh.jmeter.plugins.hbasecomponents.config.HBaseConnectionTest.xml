@@ -60,11 +60,11 @@
   </properties>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnectionTest" name="testSetZkHost" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnectionTest" name="testGetZkHost" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnectionTest" name="testGetConnection" time="0.001"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnectionTest" name="testGetConnection" time="0"/>
+  <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnectionTest" name="testSetZkName" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnectionTest" name="testTestStarted_String" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnectionTest" name="testTestStarted_0args" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnectionTest" name="testTestEnded_String" time="0"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnectionTest" name="testTestEnded_0args" time="0.001"/>
   <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnectionTest" name="testGetZkName" time="0"/>
-  <testcase classname="com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnectionTest" name="testSetZkName" time="0"/>
 </testsuite>

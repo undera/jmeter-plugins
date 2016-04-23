@@ -58,11 +58,11 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest" name="testGenerateSamples" time="0"/>
+  <testcase classname="kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest" name="testGenerateSamples" time="0.001"/>
   <testcase classname="kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest" name="testGetLabel" time="0"/>
-  <testcase classname="kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest" name="testDisconnect" time="0"/>
+  <testcase classname="kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest" name="testDisconnect" time="0.001"/>
   <testcase classname="kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest" name="testAddMetric" time="0"/>
   <testcase classname="kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest" name="testConnect" time="0"/>
-  <testcase classname="kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest" name="testSetParams" time="0.001"/>
-  <testcase classname="kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest" name="testSetMetricType" time="0"/>
+  <testcase classname="kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest" name="testSetParams" time="0"/>
+  <testcase classname="kg.apc.jmeter.perfmon.UnavailableAgentConnectorTest" name="testSetMetricType" time="0.001"/>
 </testsuite>

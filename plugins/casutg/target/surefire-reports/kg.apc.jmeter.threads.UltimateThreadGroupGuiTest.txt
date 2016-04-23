@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: kg.apc.jmeter.threads.UltimateThreadGroupGuiTest
 -------------------------------------------------------------------------------
-Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.46 sec
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.372 sec

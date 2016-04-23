@@ -71,11 +71,11 @@
   <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testIsUseOnline" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testGetProject" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testSetColorFlag" time="0"/>
-  <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testTestStarted" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testTestStarted" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testOnlineProcessor" time="0.011"/>
   <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testSetUploadToken" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testNotifyAbout" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testSetUseOnline" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testSetProject" time="0"/>
-  <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testSetTitle" time="0"/>
+  <testcase classname="kg.apc.jmeter.reporters.LoadosophiaUploaderTest" name="testSetTitle" time="0.001"/>
 </testsuite>

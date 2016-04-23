@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.blazemeter.jmeter.control.WeightedSwitchControllerTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.167 sec
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.166 sec

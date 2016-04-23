@@ -61,5 +61,5 @@
   <testcase classname="kg.apc.jmeter.perfmon.PerfMonAgentConnectorTest" name="testGenerateSamples" time="0"/>
   <testcase classname="kg.apc.jmeter.perfmon.PerfMonAgentConnectorTest" name="testDisconnect" time="0"/>
   <testcase classname="kg.apc.jmeter.perfmon.PerfMonAgentConnectorTest" name="testAddMetric" time="0"/>
-  <testcase classname="kg.apc.jmeter.perfmon.PerfMonAgentConnectorTest" name="testConnect" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.perfmon.PerfMonAgentConnectorTest" name="testConnect" time="0"/>
 </testsuite>

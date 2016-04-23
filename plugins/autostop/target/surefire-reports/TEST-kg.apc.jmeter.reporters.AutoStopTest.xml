@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="20" failures="0" name="kg.apc.jmeter.reporters.AutoStopTest" time="10.041" errors="0" skipped="0">
+<testsuite tests="20" failures="0" name="kg.apc.jmeter.reporters.AutoStopTest" time="10.034" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -61,21 +61,21 @@
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testGetResponseLatency" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testGetResponseTime" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSetErrorRate" time="0"/>
-  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSetResponseTimeSecs" time="0.001"/>
-  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSampleOccurred" time="5.008"/>
+  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSetResponseTimeSecs" time="0"/>
+  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSampleOccurred" time="5.006"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testTestEnded_String" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testTestEnded_0args" time="0"/>
-  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSetResponseLatency" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSetResponseLatency" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSetResponseTime" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testGetResponseLatencySecs" time="0"/>
-  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSetErrorRateSecs" time="0.001"/>
-  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testTestStarted_String" time="0.005"/>
+  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSetErrorRateSecs" time="0"/>
+  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testTestStarted_String" time="0.004"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testGetResponseTimeSecs" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testTestStarted_0args" time="0.005"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSetResponseLatencySecs" time="0"/>
-  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSampleStarted" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSampleStarted" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSampleStopped" time="0"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testSampleOccurred_error" time="5.001"/>
   <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testGetErrorRate" time="0"/>
-  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testGetErrorRateSecs" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.reporters.AutoStopTest" name="testGetErrorRateSecs" time="0"/>
 </testsuite>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="13" failures="0" name="kg.apc.jmeter.config.VariablesFromCSVTest" time="0.007" errors="0" skipped="0">
+<testsuite tests="13" failures="0" name="kg.apc.jmeter.config.VariablesFromCSVTest" time="0.008" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -59,10 +59,10 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="testGetSeparator" time="0"/>
-  <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="testSetVariablePrefix" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="testSetVariablePrefix" time="0"/>
   <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="testSetStoreAsSystemProperty" time="0"/>
   <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="testGetVariablePrefix" time="0"/>
-  <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="skipLinesRoundTrip" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="skipLinesRoundTrip" time="0"/>
   <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="testSetSeparator" time="0"/>
   <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="skipLinesEmptyString" time="0"/>
   <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="skipLinesDefault" time="0.001"/>
@@ -70,5 +70,5 @@
   <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="testGetFileName" time="0"/>
   <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="testGetArgumentsAsMap" time="0.001"/>
   <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="skipLinesNonInteger" time="0"/>
-  <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="testIsStoreAsSystemProperty" time="0"/>
+  <testcase classname="kg.apc.jmeter.config.VariablesFromCSVTest" name="testIsStoreAsSystemProperty" time="0.001"/>
 </testsuite>

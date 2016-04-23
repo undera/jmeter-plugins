@@ -58,10 +58,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.perfmon.NewAgentConnectorTest" name="testGenerateSamples" time="0.003"/>
+  <testcase classname="kg.apc.jmeter.perfmon.NewAgentConnectorTest" name="testGenerateSamples" time="0.004"/>
   <testcase classname="kg.apc.jmeter.perfmon.NewAgentConnectorTest" name="testSetTransport" time="0"/>
   <testcase classname="kg.apc.jmeter.perfmon.NewAgentConnectorTest" name="testDisconnect" time="0"/>
-  <testcase classname="kg.apc.jmeter.perfmon.NewAgentConnectorTest" name="testAddMetric" time="0"/>
+  <testcase classname="kg.apc.jmeter.perfmon.NewAgentConnectorTest" name="testAddMetric" time="0.001"/>
   <testcase classname="kg.apc.jmeter.perfmon.NewAgentConnectorTest" name="testConnect" time="0"/>
   <testcase classname="kg.apc.jmeter.perfmon.NewAgentConnectorTest" name="testGenerateSamples_many" time="0"/>
   <testcase classname="kg.apc.jmeter.perfmon.NewAgentConnectorTest" name="testGenerateSamples_none" time="0.001"/>

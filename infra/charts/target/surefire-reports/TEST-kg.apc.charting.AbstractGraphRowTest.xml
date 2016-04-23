@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="34" failures="0" name="kg.apc.charting.AbstractGraphRowTest" time="0.017" errors="0" skipped="0">
+<testsuite tests="34" failures="0" name="kg.apc.charting.AbstractGraphRowTest" time="0.046" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -60,10 +60,10 @@
   </properties>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetDrawSpline" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testIsDrawOnChart" time="0"/>
-  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetColor" time="0"/>
+  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetColor" time="0.026"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetLabel" time="0"/>
-  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetDrawOnChart" time="0"/>
-  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetMarkerSize" time="0.001"/>
+  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetDrawOnChart" time="0.001"/>
+  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetMarkerSize" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testAdd" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetElement" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetDrawValueLabel" time="0"/>
@@ -74,22 +74,22 @@
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetMaxX" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetMinX" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testIsDrawValueLabel" time="0.002"/>
-  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetDrawThickLines" time="0"/>
+  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetDrawThickLines" time="0.001"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetDrawBar" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetHigherKey" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetGranulationValue" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetDrawLine" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testIsDrawThickLines" time="0.001"/>
-  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testInstantiateNewRow" time="0.002"/>
+  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testInstantiateNewRow" time="0.001"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testIsShowInLegend" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetShowInLegend" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetFirstTime" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetMinMaxY" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testIterator" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetLowerElement" time="0"/>
-  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testIsDrawLine" time="0.001"/>
-  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testIsDrawBar" time="0"/>
-  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetGranulationValue" time="0.001"/>
+  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testIsDrawLine" time="0"/>
+  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testIsDrawBar" time="0.001"/>
+  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testGetGranulationValue" time="0"/>
   <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetColor" time="0"/>
-  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetLabel" time="0"/>
+  <testcase classname="kg.apc.charting.AbstractGraphRowTest" name="testSetLabel" time="0.001"/>
 </testsuite>

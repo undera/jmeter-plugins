@@ -58,7 +58,7 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.jmeter.perfmon.PerfMonSampleResultTest" name="testGetValue_SampleResult" time="0.001"/>
+  <testcase classname="kg.apc.jmeter.perfmon.PerfMonSampleResultTest" name="testGetValue_SampleResult" time="0"/>
   <testcase classname="kg.apc.jmeter.perfmon.PerfMonSampleResultTest" name="testGetValue_0args" time="0"/>
   <testcase classname="kg.apc.jmeter.perfmon.PerfMonSampleResultTest" name="testSetValue" time="0"/>
   <testcase classname="kg.apc.jmeter.perfmon.PerfMonSampleResultTest" name="testSomeMethod" time="0"/>

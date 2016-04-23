@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="5" failures="0" name="kg.apc.charting.plotters.AbstractRowPlotterTest" time="0.006" errors="0" skipped="0">
+<testsuite tests="5" failures="0" name="kg.apc.charting.plotters.AbstractRowPlotterTest" time="0.002" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -58,9 +58,9 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="kg.apc.charting.plotters.AbstractRowPlotterTest" name="testProcessPoint" time="0.001"/>
+  <testcase classname="kg.apc.charting.plotters.AbstractRowPlotterTest" name="testProcessPoint" time="0"/>
   <testcase classname="kg.apc.charting.plotters.AbstractRowPlotterTest" name="testIsChartPointValid" time="0"/>
-  <testcase classname="kg.apc.charting.plotters.AbstractRowPlotterTest" name="testPostPaintRow" time="0.001"/>
+  <testcase classname="kg.apc.charting.plotters.AbstractRowPlotterTest" name="testPostPaintRow" time="0"/>
   <testcase classname="kg.apc.charting.plotters.AbstractRowPlotterTest" name="testSetBoundsValues" time="0.001"/>
   <testcase classname="kg.apc.charting.plotters.AbstractRowPlotterTest" name="testPaintRow" time="0.001"/>
 </testsuite>

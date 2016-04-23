@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="6" failures="0" name="org.loadosophia.jmeter.LoadosophiaUploadResultsTest" time="0.047" errors="0" skipped="0">
+<testsuite tests="6" failures="0" name="org.loadosophia.jmeter.LoadosophiaUploadResultsTest" time="0.04" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -61,7 +61,7 @@
   <testcase classname="org.loadosophia.jmeter.LoadosophiaUploadResultsTest" name="testGetRedirectLink" time="0.002"/>
   <testcase classname="org.loadosophia.jmeter.LoadosophiaUploadResultsTest" name="testSetQueueID" time="0"/>
   <testcase classname="org.loadosophia.jmeter.LoadosophiaUploadResultsTest" name="testSetRedirectLink" time="0"/>
-  <testcase classname="org.loadosophia.jmeter.LoadosophiaUploadResultsTest" name="testGetQueueID" time="0.001"/>
+  <testcase classname="org.loadosophia.jmeter.LoadosophiaUploadResultsTest" name="testGetQueueID" time="0"/>
   <testcase classname="org.loadosophia.jmeter.LoadosophiaUploadResultsTest" name="testSetTestID" time="0"/>
-  <testcase classname="org.loadosophia.jmeter.LoadosophiaUploadResultsTest" name="testGetTestID" time="0"/>
+  <testcase classname="org.loadosophia.jmeter.LoadosophiaUploadResultsTest" name="testGetTestID" time="0.001"/>
 </testsuite>

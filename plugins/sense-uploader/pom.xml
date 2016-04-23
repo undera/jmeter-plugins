@@ -34,7 +34,7 @@
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-emulators</artifactId>
-            <version>0.1</version>
+            <version>0.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

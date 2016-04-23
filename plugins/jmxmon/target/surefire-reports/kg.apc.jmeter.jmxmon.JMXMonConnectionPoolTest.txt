@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: kg.apc.jmeter.jmxmon.JMXMonConnectionPoolTest
--------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 sec

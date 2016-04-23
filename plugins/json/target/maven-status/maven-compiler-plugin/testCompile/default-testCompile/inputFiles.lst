@@ -1,8 +1,0 @@
-/home/undera/Sources/JMeter/jmeter-plugins/plugins/json/src/test/java/com/atlantbh/jmeter/plugins/jsonutils/jsonpathassertion/gui/JSONPathAssertionGuiTest.java
-/home/undera/Sources/JMeter/jmeter-plugins/plugins/json/src/test/java/com/atlantbh/jmeter/plugins/jsontoxmlconverter/gui/JSONToXMLConverterGuiTest.java
-/home/undera/Sources/JMeter/jmeter-plugins/plugins/json/src/test/java/com/atlantbh/jmeter/plugins/jsonutils/jsonpathextractor/gui/JSONPathExtractorGuiTest.java
-/home/undera/Sources/JMeter/jmeter-plugins/plugins/json/src/test/java/com/atlantbh/jmeter/plugins/jsonutils/jsonpathassertion/JSONPathAssertionTest.java
-/home/undera/Sources/JMeter/jmeter-plugins/plugins/json/src/test/java/com/atlantbh/jmeter/plugins/jsonutils/jsonformatter/gui/JSONFormatterGuiTest.java
-/home/undera/Sources/JMeter/jmeter-plugins/plugins/json/src/test/java/com/atlantbh/jmeter/plugins/jsontoxmlconverter/JSONToXMLConverterTest.java
-/home/undera/Sources/JMeter/jmeter-plugins/plugins/json/src/test/java/com/atlantbh/jmeter/plugins/jsonutils/jsonpathextractor/JSONPathExtractorTest.java
-/home/undera/Sources/JMeter/jmeter-plugins/plugins/json/src/test/java/com/atlantbh/jmeter/plugins/jsonutils/jsonformatter/JSONFormatterTest.java

@@ -1,5 +1,0 @@
-GET / HTTP/1.1
-Host: files.namba.kz
-Connection: close
-Referer: http://files.namba.kz/upload.php
-

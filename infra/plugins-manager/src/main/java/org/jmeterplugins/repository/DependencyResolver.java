@@ -3,13 +3,10 @@ package org.jmeterplugins.repository;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DependencyResolver {
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -146,27 +143,11 @@ public class DependencyResolver {
         for (Plugin plugin : additions) {
             Map<String, String> libs = plugin.getLibs(plugin.getCandidateVersion());
             for (String lib : libs.keySet()) {
-                if (getLibInstallPath(lib) == null) {
+                if (Plugin.getLibInstallPath(lib) == null) {
                     libAdditions.put(lib, libs.get(lib));
                 }
             }
         }
-    }
-
-    public static String getLibInstallPath(String lib) {
-        String[] cp = System.getProperty(JAVA_CLASS_PATH).split(File.pathSeparator);
-        for (String path : cp) {
-            Pattern p = Pattern.compile("\\W" + lib + "-([\\.-_0-9]+(-SNAPSHOT)?).jar");
-            // FIXME: hector-core-1.1-2 not recognized
-            // FIXME: kafka_2.8.2-0.8.0.jar websocket-api-9.1.1.v20140108.jar
-            // FIXME cglib-nodep-2.1_3.jar
-            Matcher m = p.matcher(path);
-            if (m.find()) {
-                log.debug("Found library " + lib + " at " + path);
-                return path;
-            }
-        }
-        return null;
     }
 
     private void resolveDeleteLibs() {
@@ -177,7 +158,7 @@ public class DependencyResolver {
 
             Map<String, String> libs = plugin.getLibs(plugin.getInstalledVersion());
             for (String lib : libs.keySet()) {
-                if (getLibInstallPath(lib) != null) {
+                if (Plugin.getLibInstallPath(lib) != null) {
                     libDeletions.add(lib);
                 } else {
                     log.warn("Did not find library to uninstall it: " + lib);

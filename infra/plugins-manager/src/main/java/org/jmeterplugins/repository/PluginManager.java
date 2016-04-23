@@ -230,7 +230,7 @@ public class PluginManager {
 
         Set<String> libDeletions = new HashSet<>();
         for (String lib : resolver.getLibDeletions()) {
-            libDeletions.add(DependencyResolver.getLibInstallPath(lib));
+            libDeletions.add(Plugin.getLibInstallPath(lib));
         }
 
         modifierHook(resolver.getDeletions(), additions, libInstalls, libDeletions);

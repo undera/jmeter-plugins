@@ -118,8 +118,8 @@ public class Plugin {
         return ver;
     }
 
-    private String getVersionFromPath(String installedPath) {
-        Pattern p = Pattern.compile("-([\\.0-9]+(-SNAPSHOT)?).jar");
+    public static String getVersionFromPath(String installedPath) {
+        Pattern p = Pattern.compile("-([\\.0-9]+(-[\\w]+)?).jar");
         Matcher m = p.matcher(installedPath);
         if (m.find()) {
             return m.group(1);
@@ -143,6 +143,25 @@ public class Plugin {
         }
 
         return file;
+    }
+
+    public static String getLibInstallPath(String lib) {
+        String[] cp = System.getProperty(DependencyResolver.JAVA_CLASS_PATH).split(File.pathSeparator);
+        String path = getLibPath(lib, cp);
+        if (path != null) return path;
+        return null;
+    }
+
+    public static String getLibPath(String lib, String[] paths) {
+        for (String path : paths) {
+            Pattern p = Pattern.compile("\\W" + lib + "-([0-9]+\\..+).jar");
+            Matcher m = p.matcher(path);
+            if (m.find()) {
+                log.debug("Found library " + lib + " at " + path);
+                return path;
+            }
+        }
+        return null;
     }
 
     public String getID() {

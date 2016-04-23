@@ -16,7 +16,6 @@
 
     <modules>
         <module>common</module>
-        <module>standard</module>
         <module>hadoop</module>
         <module>webdriver</module>
         <module>xmpp</module>
@@ -58,6 +57,8 @@
         <module>plancheck</module>
         <module>deprecated</module>
         <module>pde</module>
+        <module>csl</module>
+        <module>synthesis</module>
     </modules>
 
 </project>

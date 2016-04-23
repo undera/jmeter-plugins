@@ -24,7 +24,6 @@ import org.apache.jmeter.save.CSVSaveService;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.SamplingStatCalculator;
-import org.apache.jmeter.visualizers.StatVisualizer;
 import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.gui.ObjectTableModel;
 import org.apache.jorphan.gui.RateRenderer;
@@ -37,11 +36,10 @@ import org.apache.log.Logger;
  * OMG, I had to copy full contents of StatVisualizer just to make its data
  * visible to JMeterPluginsCMD. This class is just invisible in menu;
  *
- * @see StatVisualizer
  */
 public class AggregateReportGui extends AbstractGraphPanelVisualizer {
 
-    private Collection<String> emptyCollection = new ArrayList<String>();
+    private Collection<String> emptyCollection = new ArrayList<>();
     private static final long serialVersionUID = 241L;
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final String USE_GROUP_NAME = "useGroupName";
@@ -69,7 +67,7 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
             new JCheckBox(JMeterUtils.getResString("aggregate_graph_use_group_name"));
     private transient ObjectTableModel statModel;
     private final Map<String, SamplingStatCalculator> tableRows =
-            new ConcurrentHashMap<String, SamplingStatCalculator>();
+            new ConcurrentHashMap<>();
 
     public AggregateReportGui() {
         super();

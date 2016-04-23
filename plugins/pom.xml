@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>kg.apc</groupId>
+    <artifactId>jmeter-plugins-plugins</artifactId>
+    <version>0.0</version>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-tools</artifactId>
+            <version>2.0</version>
+        </dependency>
+    </dependencies>
+
+    <modules>
+        <module>autostop</module>
+        <module>casutg</module>
+        <module>csl</module>
+        <module>csvars</module>
+        <module>dbmon</module>
+        <module>deprecated</module>
+        <module>dummy</module>
+        <module>ffw</module>
+        <module>fifo</module>
+        <module>functions</module>
+        <module>hadoop</module>
+        <module>httpraw</module>
+        <module>jms</module>
+        <module>jmxmon</module>
+        <module>json</module>
+        <module>lockfile</module>
+        <module>oauth</module>
+        <module>pde</module>
+        <module>perfmon</module>
+        <module>prmctl</module>
+        <module>redis</module>
+        <module>sense-uploader</module>
+        <module>tst</module>
+        <module>udp</module>
+        <module>webdriver</module>
+        <module>wsc</module>
+        <module>xmpp</module>
+    </modules>
+</project>

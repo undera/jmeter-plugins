@@ -1,0 +1,37 @@
+print("Startup beanshell script running");
+
+import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.util.JMeterException;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.jorphan.reflect.ClassTools;
+import org.apache.log.Logger;
+
+private static final Logger log = LoggingManager.getLoggerForClass();
+
+int simpleTablePort = JMeterUtils.getPropDefault(
+        "jmeterPlugin.sts.port", 0);
+boolean loadAndRunOnStartup = JMeterUtils.getPropDefault(
+        "jmeterPlugin.sts.loadAndRunOnStartup", false);
+
+if (simpleTablePort > 0 && loadAndRunOnStartup) {
+    log.info("Starting Simple Table server (" + simpleTablePort + ")");
+    try {
+        Object instance = ClassTools
+                .construct("org.jmeterplugins.protocol.http.control.HttpSimpleTableControl"
+                );
+        ClassTools.invoke(instance, "startHttpSimpleTable");
+        msg = "Simple Table Server is running on port : " + simpleTablePort;
+        log.info(msg);
+        print(msg);
+    } catch (JMeterException e) {
+        log.warn("Could not start Simple Table server", e);
+    }
+}
+else {
+    msg = "jmeterPlugin.sts.port == 0 OR jmeterPlugin.sts.loadAndRunOnStartup != true => Simple Table Server is NOT running";
+    log.info(msg);
+    print(msg);
+}
+
+
+print("Startup beanshell script completed");

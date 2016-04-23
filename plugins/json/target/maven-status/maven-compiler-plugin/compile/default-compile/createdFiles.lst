@@ -1,0 +1,8 @@
+com/atlantbh/jmeter/plugins/jsontoxmlconverter/JSONToXMLConverter.class
+com/atlantbh/jmeter/plugins/jsonutils/jsonformatter/gui/JSONFormatterGui.class
+com/atlantbh/jmeter/plugins/jsontoxmlconverter/gui/JSONToXMLConverterGui.class
+com/atlantbh/jmeter/plugins/jsonutils/jsonpathassertion/gui/JSONPathAssertionGui.class
+com/atlantbh/jmeter/plugins/jsonutils/jsonformatter/JSONFormatter.class
+com/atlantbh/jmeter/plugins/jsonutils/jsonpathextractor/JSONPathExtractor.class
+com/atlantbh/jmeter/plugins/jsonutils/jsonpathassertion/JSONPathAssertion.class
+com/atlantbh/jmeter/plugins/jsonutils/jsonpathextractor/gui/JSONPathExtractorGui.class

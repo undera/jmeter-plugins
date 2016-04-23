@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.googlecode.jmeter.plugins.webdriver.config.gui.InternetExplorerDriverConfigGuiTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.457 sec

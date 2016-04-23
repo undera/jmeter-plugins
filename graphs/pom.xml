@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>kg.apc</groupId>
+    <artifactId>jmeter-plugins-graphs</artifactId>
+    <version>0.1</version>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-infra</artifactId>
+            <version>0.0</version>
+        </dependency>
+    </dependencies>
+
+    <modules>
+        <module>graphs-basic</module>
+        <module>graphs-additional</module>
+        <module>graphs-composite</module>
+        <module>graphs-dist</module>
+        <module>graphs-vs</module>
+    </modules>
+</project>

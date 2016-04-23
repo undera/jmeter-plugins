@@ -12,6 +12,11 @@
     <dependencies>
         <dependency>
             <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-infra</artifactId>
+            <version>0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-graphs</artifactId>
             <version>0.1</version>
         </dependency>

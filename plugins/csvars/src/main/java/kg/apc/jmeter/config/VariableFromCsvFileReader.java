@@ -68,7 +68,7 @@ public class VariableFromCsvFileReader {
 	    throw new IllegalArgumentException("CSV separator cannot be empty");
 	}
 
-	Map<String, String> variables = new HashMap<String, String>();
+	Map<String, String> variables = new HashMap<>();
 	if (input != null) {
 	    try {
 		String line;

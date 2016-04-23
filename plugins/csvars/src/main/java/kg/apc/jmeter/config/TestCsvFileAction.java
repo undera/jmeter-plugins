@@ -1,11 +1,10 @@
 package kg.apc.jmeter.config;
 
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 import java.util.Map;
-import javax.swing.JTextArea;
 
 public class TestCsvFileAction implements ActionListener {
 
@@ -21,7 +20,7 @@ public class TestCsvFileAction implements ActionListener {
         infoArea.setText("");
         infoArea.setForeground(Color.black);
 
-        VariablesFromCSV testElem = (VariablesFromCSV)variablesCsvUi.createTestElement();
+        VariablesFromCSV testElem = (VariablesFromCSV) variablesCsvUi.createTestElement();
 
         boolean noValues = true;
         StringBuilder msgVars = new StringBuilder();
@@ -36,8 +35,8 @@ public class TestCsvFileAction implements ActionListener {
                     noValues = false;
                 }
                 msgVars.append("${").append(var).append("} = ")
-                    .append(value).append("\n");
-                count++;                
+                        .append(value).append("\n");
+                count++;
             }
 
             if (count == 0) {
@@ -50,7 +49,7 @@ public class TestCsvFileAction implements ActionListener {
                 reportOk(msgVars.toString());
             }
         } catch (Exception ex) {
-                reportError("Error processing file: " + ex.toString());
+            reportError("Error processing file: " + ex.toString());
         }
     }
 

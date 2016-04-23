@@ -52,6 +52,7 @@
         <module>graphs-basic</module>
         <module>graphs-additional</module>
         <module>mergeresults</module>
+        <module>graphs-ggl</module>
     </modules>
 
 </project>

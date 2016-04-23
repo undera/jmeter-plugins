@@ -41,11 +41,6 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-/**
- *
- * @author Felix Henry
- * @author Vincent Daburon
- */
 public class MergeResultsService {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -65,7 +60,7 @@ public class MergeResultsService {
             "jmeter.save.saveservice.autoflush", false); 
 
     private PrintWriter out;
-    private static final Map<String, FileEntry> files = new HashMap<String, FileEntry>();
+    private static final Map<String, FileEntry> files = new HashMap<>();
 
     private void initializeFileOutput(String filename,
             SampleSaveConfiguration saveConfig) throws IOException {
@@ -87,7 +82,7 @@ public class MergeResultsService {
         }
         filename = FileServer.resolveBaseRelativeName(filename);
         FileEntry fe = files.get(filename);
-        PrintWriter writer = null;
+        PrintWriter writer;
 
         if (fe == null) {
             // Find the name of the directory containing the file

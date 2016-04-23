@@ -35,7 +35,6 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jorphan.util.JMeterError;
-import org.jmeterplugins.protocol.http.control.HttpSimpleTableServer;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -52,7 +51,7 @@ import static org.junit.Assert.assertTrue;
 public class MergeResultsGuiTest {
 
     private final String DATA_DIR;
-    private static final String CRLF = HttpSimpleTableServer.lineSeparator;
+    private static final String CRLF = System.getProperty("line.separator");
 
     public MergeResultsGuiTest() {
         TestJMeterUtils.createJmeterEnv();
@@ -197,8 +196,7 @@ public class MergeResultsGuiTest {
         ActionEvent actionAdd = new ActionEvent(new JButton(), 1, "add");
         ActionEvent actionCopy = new ActionEvent(new JButton(), 2, "copy");
         ActionEvent actionDelete = new ActionEvent(new JButton(), 3, "delete");
-        ActionEvent actionSaveConfig = new ActionEvent(new JButton(), 4,
-                "save_config");
+        ActionEvent actionSaveConfig = new ActionEvent(new JButton(), 4, "save_config");
 
         instance.actionPerformed(actionAdd);
         grid.editCellAt(0, 0);
@@ -233,7 +231,7 @@ public class MergeResultsGuiTest {
         ActionEvent actionAdd = new ActionEvent(new JButton(), 1, "add");
 
         // create a file to test the merge action
-        BufferedWriter out = null;
+        BufferedWriter out;
         String f1 = "test-merge-1.csv";
         String f2 = "test-merge-2.csv";
         String fRes = "test-merge-1-2.csv";

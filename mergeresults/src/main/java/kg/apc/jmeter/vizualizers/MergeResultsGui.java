@@ -70,11 +70,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.jmeterplugins.save.MergeResultsService;
 
-/**
- *
- * @author Felix Henry
- * @author Vincent Daburon
- */
 public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
         TableModelListener, CellEditorListener, ChangeListener, ActionListener {
 
@@ -132,7 +127,7 @@ public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
 
     private String prefixLabel = "";
 
-    private List<SampleResult> samples = new ArrayList<SampleResult>(0);
+    private List<SampleResult> samples = new ArrayList<>(0);
     private MergeResultsService mergeService;
 
     public MergeResultsGui() {
@@ -368,106 +363,114 @@ public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
             cellEditor.stopCellEditing();
         }
 
-        if (command.equals(ACTION_ADD)) {
-            tableModel.addRow(defaultValues);
-            tableModel.fireTableDataChanged();
-
-            if (tableModel.getRowCount() >= MAX_FILE_HANDLES) {
-                addRowButton.setEnabled(false);
-                copyRowButton.setEnabled(false);
-            }
-            // Enable DELETE and MERGE
-            deleteRowButton.setEnabled(true);
-            mergeButton.setEnabled(true);
-
-            // Highlight (select) the appropriate row.
-            int rowToSelect = tableModel.getRowCount() - 1;
-            if (rowToSelect < grid.getRowCount()) {
-                grid.setRowSelectionInterval(rowToSelect, rowToSelect);
-            }
-            updateUI();
-
-        } else if (command.equals(ACTION_COPY)) {
-            final int selectedRow = grid.getSelectedRow();
-
-            if (tableModel.getRowCount() == 0 || selectedRow < 0) {
-                return;
-            }
-
-            tableModel.addRow(tableModel.getRowData(selectedRow));
-            tableModel.fireTableDataChanged();
-
-            if (tableModel.getRowCount() >= MAX_FILE_HANDLES) {
-                addRowButton.setEnabled(false);
-                copyRowButton.setEnabled(false);
-            }
-            // Enable DELETE and MERGE
-            deleteRowButton.setEnabled(true);
-            mergeButton.setEnabled(true);
-
-            // Highlight (select) the appropriate row.
-            int rowToSelect = selectedRow + 1;
-            grid.setRowSelectionInterval(rowToSelect, rowToSelect);
-            updateUI();
-
-        } else if (command.equals(ACTION_DELETE)) {
-            final int rowSelected = grid.getSelectedRow();
-            if (rowSelected >= 0) {
-                tableModel.removeRow(rowSelected);
+        switch (command) {
+            case ACTION_ADD: {
+                tableModel.addRow(defaultValues);
                 tableModel.fireTableDataChanged();
 
-                if (tableModel.getRowCount() < MAX_FILE_HANDLES) {
-                    addRowButton.setEnabled(true);
-                    copyRowButton.setEnabled(true);
+                if (tableModel.getRowCount() >= MAX_FILE_HANDLES) {
+                    addRowButton.setEnabled(false);
+                    copyRowButton.setEnabled(false);
                 }
-                // Disable DELETE and MERGE if there are no rows in the
-                // table to delete.
-                if (tableModel.getRowCount() == 0) {
-                    deleteRowButton.setEnabled(false);
-                    mergeButton.setEnabled(false);
-                }
-                // Table still contains one or more rows, so highlight
-                // (select) the appropriate one.
-                else {
-                    int rowToSelect = rowSelected;
+                // Enable DELETE and MERGE
+                deleteRowButton.setEnabled(true);
+                mergeButton.setEnabled(true);
 
-                    if (rowSelected >= tableModel.getRowCount()) {
-                        rowToSelect = rowSelected - 1;
-                    }
-
+                // Highlight (select) the appropriate row.
+                int rowToSelect = tableModel.getRowCount() - 1;
+                if (rowToSelect < grid.getRowCount()) {
                     grid.setRowSelectionInterval(rowToSelect, rowToSelect);
                 }
                 updateUI();
-            }
 
-        } else if (command.equals(ACTION_MERGE)) {
-            String output = getFile();
-            if (output.isEmpty()) {
-                GuiPackage.showErrorMessage(
-                        "Error merging results files - empty output filename",
-                        "Output file error");
-                return;
+                break;
             }
-            boolean isSuccess = loadFilesFromTable((CorrectedResultCollector) collector);
+            case ACTION_COPY: {
+                final int selectedRow = grid.getSelectedRow();
 
-            if (isSuccess) {
-                mergeService = new MergeResultsService();
-                collector.setFilename(output);
-                mergeService.mergeSamples((CorrectedResultCollector) collector,
-                        samples);
+                if (tableModel.getRowCount() == 0 || selectedRow < 0) {
+                    return;
+                }
+
+                tableModel.addRow(tableModel.getRowData(selectedRow));
+                tableModel.fireTableDataChanged();
+
+                if (tableModel.getRowCount() >= MAX_FILE_HANDLES) {
+                    addRowButton.setEnabled(false);
+                    copyRowButton.setEnabled(false);
+                }
+                // Enable DELETE and MERGE
+                deleteRowButton.setEnabled(true);
+                mergeButton.setEnabled(true);
+
+                // Highlight (select) the appropriate row.
+                int rowToSelect = selectedRow + 1;
+                grid.setRowSelectionInterval(rowToSelect, rowToSelect);
+                updateUI();
+
+                break;
             }
-            samples.clear();
+            case ACTION_DELETE:
+                final int rowSelected = grid.getSelectedRow();
+                if (rowSelected >= 0) {
+                    tableModel.removeRow(rowSelected);
+                    tableModel.fireTableDataChanged();
 
-        } else if (command.equals(ACTION_SAVE_CONFIG)) {
-            SavePropertyDialog d = new SavePropertyDialog(GuiPackage
-                    .getInstance().getMainFrame(),
-                    JMeterUtils
-                            .getResString("sample_result_save_configuration"), 
-                    true, collector.getSaveConfig());
-            d.pack();
-            ComponentUtil.centerComponentInComponent(GuiPackage.getInstance()
-                    .getMainFrame(), d);
-            d.setVisible(true);
+                    if (tableModel.getRowCount() < MAX_FILE_HANDLES) {
+                        addRowButton.setEnabled(true);
+                        copyRowButton.setEnabled(true);
+                    }
+                    // Disable DELETE and MERGE if there are no rows in the
+                    // table to delete.
+                    if (tableModel.getRowCount() == 0) {
+                        deleteRowButton.setEnabled(false);
+                        mergeButton.setEnabled(false);
+                    }
+                    // Table still contains one or more rows, so highlight
+                    // (select) the appropriate one.
+                    else {
+                        int rowToSelect = rowSelected;
+
+                        if (rowSelected >= tableModel.getRowCount()) {
+                            rowToSelect = rowSelected - 1;
+                        }
+
+                        grid.setRowSelectionInterval(rowToSelect, rowToSelect);
+                    }
+                    updateUI();
+                }
+
+                break;
+            case ACTION_MERGE:
+                String output = getFile();
+                if (output.isEmpty()) {
+                    GuiPackage.showErrorMessage(
+                            "Error merging results files - empty output filename",
+                            "Output file error");
+                    return;
+                }
+                boolean isSuccess = loadFilesFromTable((CorrectedResultCollector) collector);
+
+                if (isSuccess) {
+                    mergeService = new MergeResultsService();
+                    collector.setFilename(output);
+                    mergeService.mergeSamples((CorrectedResultCollector) collector,
+                            samples);
+                }
+                samples.clear();
+
+                break;
+            case ACTION_SAVE_CONFIG:
+                SavePropertyDialog d = new SavePropertyDialog(GuiPackage
+                        .getInstance().getMainFrame(),
+                        JMeterUtils
+                                .getResString("sample_result_save_configuration"),
+                        true, collector.getSaveConfig());
+                d.pack();
+                ComponentUtil.centerComponentInComponent(GuiPackage.getInstance()
+                        .getMainFrame(), d);
+                d.setVisible(true);
+                break;
         }
     }
 

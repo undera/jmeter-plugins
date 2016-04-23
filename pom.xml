@@ -51,6 +51,7 @@
         <module>ffw</module>
         <module>graphs-basic</module>
         <module>graphs-additional</module>
+        <module>mergeresults</module>
     </modules>
 
 </project>

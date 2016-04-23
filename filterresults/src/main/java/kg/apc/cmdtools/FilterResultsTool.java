@@ -1,53 +1,52 @@
 package kg.apc.cmdtools;
 
-import java.io.PrintStream;
-import java.util.ListIterator;
-
+import kg.apc.cmd.UniversalRunner;
+import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.apache.log.Priority;
 import org.jmeterplugins.tools.FilterResults;
 
-import kg.apc.cmd.UniversalRunner;
-import kg.apc.jmeter.JMeterPluginsUtils;
-import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
+import java.io.PrintStream;
+import java.util.ListIterator;
 
 public class FilterResultsTool extends AbstractCMDTool {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
-    
+
     private FilterResults filterResults = null;
 
     public FilterResultsTool() {
         super();
         JMeterPluginsUtils.prepareJMeterEnv(UniversalRunner.getJARLocation());
-       filterResults = new  FilterResults();
+        filterResults = new FilterResults();
 
     }
 
-   @Override
-   protected void showHelp(PrintStream os) {
-       os.println("Options for tool 'FilterResults': --input-file <filenameIn> --output-file <filenameFilteredOut> "
-               + " [ "
-               + "--success-filter <true/false> "
-               + "--include-labels <labels list> "
-               + "--exclude-labels <labels list> "
-               + "--include-label-regex <true/false> " 
-               + "--exclude-label-regex <true/false> "
-               + "--start-offset <sec> "
-               + "--end-offset <sec> "
-               + "--save-as-xml <true/false> (false : CSV format by default) "
-               + " ]");
-   }
+    @Override
+    protected void showHelp(PrintStream os) {
+        os.println("Options for tool 'FilterResults': --input-file <filenameIn> --output-file <filenameFilteredOut> "
+                + " [ "
+                + "--success-filter <true/false> "
+                + "--include-labels <labels list> "
+                + "--exclude-labels <labels list> "
+                + "--include-label-regex <true/false> "
+                + "--exclude-label-regex <true/false> "
+                + "--start-offset <sec> "
+                + "--end-offset <sec> "
+                + "--save-as-xml <true/false> (false : CSV format by default) "
+                + " ]");
+    }
 
     @Override
     protected int processParams(ListIterator args)
             throws UnsupportedOperationException, IllegalArgumentException {
-    	
-    	
+
+
         String outputFile = "out.res";
-        
+
         LoggingManager.setPriority(Priority.INFO);
         // first process params without worker created
         while (args.hasNext()) {
@@ -65,11 +64,10 @@ public class FilterResultsTool extends AbstractCMDTool {
             args.previous();
         }
 
-        
-        
+
         CorrectedResultCollector collector = filterResults.getCollector();
         SampleSaveConfiguration saveConfig = collector.getSaveConfig();
-        
+
         while (args.hasNext()) {
             String nextArg = (String) args.next();
             log.debug("Arg: " + nextArg);
@@ -95,11 +93,11 @@ public class FilterResultsTool extends AbstractCMDTool {
                             "Missing include labels list");
                 }
 
-                ((CorrectedResultCollector) collector)
+                collector
                         .setIncludeLabels((String) args.next());
                 log.info("--include-labels "
-                        + ((CorrectedResultCollector) collector)
-                                .getList(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS));
+                        + collector
+                        .getList(CorrectedResultCollector.INCLUDE_SAMPLE_LABELS));
             } else if (nextArg.equalsIgnoreCase("--exclude-labels")) {
 
                 if (!args.hasNext()) {
@@ -107,11 +105,11 @@ public class FilterResultsTool extends AbstractCMDTool {
                             "Missing exclude labels list");
                 }
 
-                ((CorrectedResultCollector) collector)
+                collector
                         .setExcludeLabels((String) args.next());
                 log.info("--exclude-labels "
-                        + ((CorrectedResultCollector) collector)
-                                .getList(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS));
+                        + collector
+                        .getList(CorrectedResultCollector.EXCLUDE_SAMPLE_LABELS));
             } else if (nextArg.equalsIgnoreCase("--success-filter")) {
 
                 if (!args.hasNext()) {
@@ -129,12 +127,12 @@ public class FilterResultsTool extends AbstractCMDTool {
                             "Missing include label regex flag (true/false)");
                 }
 
-                ((CorrectedResultCollector) collector)
+                collector
                         .setEnabledIncludeRegex(Boolean.valueOf((String) args
                                 .next()));
                 log.info("--include-label-regex "
-                        + ((CorrectedResultCollector) collector)
-                                .getRegexChkboxState(CorrectedResultCollector.INCLUDE_REGEX_CHECKBOX_STATE));
+                        + collector
+                        .getRegexChkboxState(CorrectedResultCollector.INCLUDE_REGEX_CHECKBOX_STATE));
             } else if (nextArg.equalsIgnoreCase("--exclude-label-regex")) {
 
                 if (!args.hasNext()) {
@@ -142,12 +140,12 @@ public class FilterResultsTool extends AbstractCMDTool {
                             "Missing exclude label regex flag (true/false)");
                 }
 
-                ((CorrectedResultCollector) collector)
+                collector
                         .setEnabledExcludeRegex(Boolean.valueOf((String) args
                                 .next()));
                 log.info("--exclude-label-regex "
-                        + ((CorrectedResultCollector) collector)
-                                .getRegexChkboxState(CorrectedResultCollector.EXCLUDE_REGEX_CHECKBOX_STATE));
+                        + collector
+                        .getRegexChkboxState(CorrectedResultCollector.EXCLUDE_REGEX_CHECKBOX_STATE));
             } else if (nextArg.equalsIgnoreCase("--start-offset")) {
 
                 if (!args.hasNext()) {
@@ -155,11 +153,11 @@ public class FilterResultsTool extends AbstractCMDTool {
                             "Missing start offset flag (sec)");
                 }
 
-                ((CorrectedResultCollector) collector)
+                collector
                         .setStartOffset((String) args.next());
                 log.info("--start-offset "
-                        + ((CorrectedResultCollector) collector)
-                                .getPropertyAsString(CorrectedResultCollector.START_OFFSET));
+                        + collector
+                        .getPropertyAsString(CorrectedResultCollector.START_OFFSET));
             } else if (nextArg.equalsIgnoreCase("--end-offset")) {
 
                 if (!args.hasNext()) {
@@ -167,11 +165,11 @@ public class FilterResultsTool extends AbstractCMDTool {
                             "Missing end offset flag (sec)");
                 }
 
-                ((CorrectedResultCollector) collector)
+                collector
                         .setEndOffset((String) args.next());
                 log.info("--end-offset "
-                        + ((CorrectedResultCollector) collector)
-                                .getPropertyAsString(CorrectedResultCollector.END_OFFSET));
+                        + collector
+                        .getPropertyAsString(CorrectedResultCollector.END_OFFSET));
             } else if (nextArg.equalsIgnoreCase("--save-as-xml")) {
                 if (!args.hasNext()) {
                     throw new IllegalArgumentException(
@@ -190,9 +188,9 @@ public class FilterResultsTool extends AbstractCMDTool {
     }
 
     private int doJob(CorrectedResultCollector collector, String outputFile) {
-    	
-    	return filterResults.doJob(collector, outputFile);
-        
-        }
+
+        return filterResults.doJob(collector, outputFile);
+
     }
+}
 

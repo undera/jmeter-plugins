@@ -53,6 +53,7 @@
         <module>graphs-additional</module>
         <module>mergeresults</module>
         <module>graphs-ggl</module>
+        <module>filterresults</module>
     </modules>
 
 </project>

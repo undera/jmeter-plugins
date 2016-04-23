@@ -55,6 +55,7 @@
         <module>graphs-ggl</module>
         <module>filterresults</module>
         <module>table-server</module>
+        <module>cmd</module>
     </modules>
 
 </project>

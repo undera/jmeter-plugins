@@ -26,20 +26,6 @@
         </dependency>
         <dependency>
             <groupId>kg.apc</groupId>
-            <artifactId>jmeter-plugins-graphs-basic</artifactId>
-            <version>2.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>kg.apc</groupId>
-            <artifactId>jmeter-plugins-graphs-additional</artifactId>
-            <version>2.0</version>
-            <scope>test</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>kg.apc</groupId>
             <artifactId>cmdrunner</artifactId>
             <version>1.0.2</version>
         </dependency>
@@ -76,14 +62,10 @@
         </dependency>
         <dependency>
             <groupId>kg.apc</groupId>
-            <artifactId>jmeter-plugins-mergeresults</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-filterresults</artifactId>
             <version>2.0</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -123,26 +105,5 @@
             </testResource>
         </testResources>
 
-        <plugins>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <finalName>JMeterPlugins-Standard</finalName>
-                    <appendAssemblyId>true</appendAssemblyId>
-                    <descriptors>
-                        <descriptor>zip.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 </project>

@@ -18,44 +18,9 @@
 
 package kg.apc.jmeter.vizualizers;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.Format;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
-
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
-
 import org.apache.jmeter.gui.util.FileDialoger;
 import org.apache.jmeter.samplers.Clearable;
 import org.apache.jmeter.samplers.SampleResult;
@@ -74,6 +39,27 @@ import org.apache.jorphan.reflect.Functor;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.apache.log.Logger;
 import org.jmeterplugins.visualizers.gui.FilterPanel;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Synthesis Table-Based Reporting Visualizer for JMeter.
@@ -122,18 +108,18 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
             "average_bytes"};
 
     private static boolean bOldVersion = false;
-    
+
     static {
-    	// jmeterVer could be for example : 2.12 r1636949, 2.13 r1665067, 2.14 r18888888 or r1701891 (no version like <major>.<minor> for nightly builds)
-    	String jmeterVer = JMeterUtils.getJMeterVersion();
-    	
-    	// older than de 2.13 version like 2.12
-    	if ("2.13".compareTo(jmeterVer) > 0) {
-    		bOldVersion = true;
-    	}
-    	//System.out.println("jmeterVer = " + jmeterVer + ", bOldVersion = " + bOldVersion);
+        // jmeterVer could be for example : 2.12 r1636949, 2.13 r1665067, 2.14 r18888888 or r1701891 (no version like <major>.<minor> for nightly builds)
+        String jmeterVer = JMeterUtils.getJMeterVersion();
+
+        // older than de 2.13 version like 2.12
+        if ("2.13".compareTo(jmeterVer) > 0) {
+            bOldVersion = true;
+        }
+        //System.out.println("jmeterVer = " + jmeterVer + ", bOldVersion = " + bOldVersion);
     }
-    
+
     private static final String[] COLUMNS = bOldVersion ? COLUMNS_BEFORE_JM_2_13 : COLUMNS_AFTER_OR_EQUAL_JM_2_13;
 
     static final Object[][] COLUMNS_MSG_PARAMETERS = {null,
@@ -169,7 +155,7 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
      */
     private final transient Object lock = new Object();
 
-    private final Map<String, SamplingStatCalculator> tableRows = new ConcurrentHashMap<String, SamplingStatCalculator>();
+    private final Map<String, SamplingStatCalculator> tableRows = new ConcurrentHashMap<>();
 
     public SynthesisReportGui() {
         super();
@@ -251,7 +237,7 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
             @Override
             public void run() {
                 if (isSampleIncluded(res)) {
-                    SamplingStatCalculator row = null;
+                    SamplingStatCalculator row;
                     final String sampleLabel = res.getSampleLabel(useGroupName.isSelected());
                     synchronized (lock) {
                         row = tableRows.get(sampleLabel);
@@ -428,11 +414,11 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
      * @return the data from the model
      */
     public static List<List<Object>> getAllTableData(ObjectTableModel model, Format[] formats) {
-        List<List<Object>> data = new ArrayList<List<Object>>();
+        List<List<Object>> data = new ArrayList<>();
         if (model.getRowCount() > 0) {
             for (int rw = 0; rw < model.getRowCount(); rw++) {
                 int cols = model.getColumnCount();
-                List<Object> column = new ArrayList<Object>();
+                List<Object> column = new ArrayList<>();
                 data.add(column);
                 for (int idx = 0; idx < cols; idx++) {
                     Object val = model.getValueAt(rw, idx);
@@ -460,8 +446,6 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
                 writer = new FileWriter(chooser.getSelectedFile()); // TODO
                 // Charset ?
                 CSVSaveService.saveCSVStats(getAllTableData(model, FORMATS), writer, saveHeaders.isSelected() ? getLabels(COLUMNS) : null);
-            } catch (FileNotFoundException e) {
-                log.warn(e.getMessage());
             } catch (IOException e) {
                 log.warn(e.getMessage());
             } finally {
@@ -511,13 +495,13 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
             try {
                 writer = new FileWriter(file);
                 CSVSaveService.saveCSVStats(getAllTableData(model, FORMATS), writer, saveHeaders.isSelected() ? getLabels(COLUMNS) : null);
-            } catch (FileNotFoundException e) {
-                log.warn(e.getMessage());
             } catch (IOException e) {
                 log.warn(e.getMessage());
             } finally {
                 try {
-                    writer.close();
+                    if (writer != null) {
+                        writer.close();
+                    }
                 } catch (IOException ex) {
                     log.warn("There was problem closing file stream", ex);
                 }

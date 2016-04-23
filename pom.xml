@@ -56,6 +56,9 @@
         <module>filterresults</module>
         <module>table-server</module>
         <module>cmd</module>
+        <module>plancheck</module>
+        <module>deprecated</module>
+        <module>pde</module>
     </modules>
 
 </project>

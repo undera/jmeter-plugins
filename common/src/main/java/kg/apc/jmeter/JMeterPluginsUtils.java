@@ -361,7 +361,7 @@ public abstract class JMeterPluginsUtils {
                 props.setProperty("version", "N/A");
             }
             version = props.getProperty("version");
-            log.info("JMeter-Plugins.org v." + version);
+            //log.info("JMeter-Plugins.org v." + version);
         }
         return version;
     }

@@ -13,7 +13,7 @@ public class CompositeModel implements Serializable {
     private CompositeNotifierInterface notifier = null;
 
     public CompositeModel() {
-        models = new ConcurrentSkipListMap<String, ConcurrentSkipListMap<String, AbstractGraphRow>>();
+        models = new ConcurrentSkipListMap<>();
     }
 
     //needed to refresh tree if row model changed
@@ -28,7 +28,7 @@ public class CompositeModel implements Serializable {
     private synchronized ConcurrentSkipListMap<String, AbstractGraphRow> getRowsMap(String vizualizerName) {
         ConcurrentSkipListMap<String, AbstractGraphRow> rows = models.get(vizualizerName);
         if (rows == null) {
-            rows = new ConcurrentSkipListMap<String, AbstractGraphRow>();
+            rows = new ConcurrentSkipListMap<>();
             models.put(vizualizerName, rows);
         }
         return rows;

@@ -1,6 +1,6 @@
 package kg.apc.jmeter.config;
 
-import kg.apc.io.FileSystem;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jorphan.logging.LoggingManager;
@@ -8,6 +8,7 @@ import org.apache.jorphan.util.JMeterStopTestNowException;
 import org.apache.log.Logger;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 
 public class LockFile extends ConfigTestElement
@@ -42,7 +43,7 @@ public class LockFile extends ConfigTestElement
                 log.error("Lock file found: " + getFilename());
                 throw new JMeterStopTestNowException("Lock file found: " + getFilename());
             } else if (getFilemask() != null && getFilemask().length() > 0
-                    && FileSystem.checkFileExistByPattern(path, getFilemask())) {
+                    && checkFileExistByPattern(path, getFilemask())) {
                 log.error("Lock file found by pattern " + getFilemask());
                 throw new JMeterStopTestNowException("Lock file found by pattern " + getFilemask());
             } else {
@@ -106,5 +107,15 @@ public class LockFile extends ConfigTestElement
     public void setFilemask(String filemask) {
         log.debug("Set filemask to: " + filemask);
         setProperty(FILEMASK, filemask);
+    }
+
+    public static boolean checkFileExistByPattern(String path, String pattern) {
+        if (path == null) {
+            path = ".";
+        }
+        File dir = new File(path);
+        FileFilter ff = new WildcardFileFilter(pattern);
+        File[] found = dir.listFiles(ff);
+        return found != null && found.length > 0;
     }
 }

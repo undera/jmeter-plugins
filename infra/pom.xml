@@ -13,7 +13,6 @@
         <module>emulators</module>
         <module>common</module>
         <module>common-io</module>
-        <module>charts</module>
         <module>plugins-manager</module>
     </modules>
 

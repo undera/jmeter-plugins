@@ -6,7 +6,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-common-io</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 
     <name>IO library</name>
     <description>Common classes for I/O needs</description>

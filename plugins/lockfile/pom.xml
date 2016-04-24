@@ -6,7 +6,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-lockfile</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 
     <name>Lock file</name>
     <description>Lock file</description>
@@ -47,11 +47,6 @@
             <artifactId>jmeter-plugins-emulators</artifactId>
             <version>0.2</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>kg.apc</groupId>
-            <artifactId>jmeter-plugins-common-io</artifactId>
-            <version>0.1</version>
         </dependency>
     </dependencies>
 </project>

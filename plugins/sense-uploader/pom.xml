@@ -6,7 +6,31 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-senseuploader</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>2.0</version>
+
+    <name>BlazeMeter Sense Uploader</name>
+    <description>BlazeMeter Sense Uploader</description>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <url>http://jmeter-plugins.org/</url>
+    <scm>
+        <url>https://github.com/undera/jmeter-plugins</url>
+        <connection>https://github.com/undera/jmeter-plugins.git</connection>
+        <developerConnection>git@github.com:undera/jmeter-plugins.git</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <id>team</id>
+            <name>jmeter-plugins.org</name>
+            <email>jmeter-plugins@googlegroups.com</email>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>

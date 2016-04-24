@@ -9,6 +9,7 @@
     <version>0.0</version>
     <packaging>pom</packaging>
 
+    <!--
     <dependencies>
         <dependency>
             <groupId>kg.apc</groupId>
@@ -17,6 +18,7 @@
             <type>pom</type>
         </dependency>
     </dependencies>
+    -->
 
     <modules>
         <module>autostop</module>

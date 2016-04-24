@@ -36,7 +36,6 @@
         <module>json</module>
         <module>lockfile</module>
         <module>oauth</module>
-        <module>pde</module>
         <module>perfmon</module>
         <module>prmctl</module>
         <module>redis</module>
@@ -46,6 +45,5 @@
         <module>webdriver</module>
         <module>wsc</module>
         <module>xmpp</module>
-        <module>synthesis</module>
     </modules>
 </project>

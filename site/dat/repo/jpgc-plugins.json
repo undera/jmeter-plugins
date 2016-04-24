@@ -29,23 +29,31 @@
   },
   {
     "id": "jpgc-csl",
-    "name": "",
-    "description": "",
+    "name": "Console Status Logger",
+    "description": "Small listener that prints each second a line with runtime stats into console",
     "screenshotUrl": "",
-    "helpUrl": "",
+    "helpUrl": "http://jmeter-plugins.org/wiki/ConsoleStatusLogger/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
+    "markerClass": "kg.apc.jmeter.reporters.ConsoleStatusLogger",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csl/0.1/jmeter-plugins-csl-0.1.jar"
+      }
+    }
   },
   {
     "id": "jpgc-csvars",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "Variables from CSV File",
+    "description": "Config item to load one-line CSV file into JMeter variables on startup. Helps to have external configuration file for test plan.",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/varsfromcsv1.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/VariablesFromCSV/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
+    "markerClass": "kg.apc.jmeter.config.VariablesFromCSV",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csvars/0.1/jmeter-plugins-csvars-0.1.jar"
+      }
+    }
   },
   {
     "id": "jpgc-dbmon",

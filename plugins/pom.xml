@@ -46,5 +46,6 @@
         <module>webdriver</module>
         <module>wsc</module>
         <module>xmpp</module>
+        <module>synthesis</module>
     </modules>
 </project>

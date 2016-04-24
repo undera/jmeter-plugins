@@ -1,6 +1,6 @@
 #! /bin/sh -xe
 
-mvn -Dmaven.test.skip=false clean package javadoc:jar source:jar gpg:sign
+mvn -Dmaven.test.skip=false -Dadditionalparam=-Xdoclint:none clean package javadoc:jar source:jar gpg:sign
 
 for C in `ls`; do
     tmpdir=`mktemp -d`

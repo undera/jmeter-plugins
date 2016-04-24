@@ -9,6 +9,7 @@
     <version>0.1</version>
     <packaging>pom</packaging>
 
+    <!--
     <dependencies>
         <dependency>
             <groupId>kg.apc</groupId>
@@ -23,13 +24,13 @@
             <type>pom</type>
         </dependency>
     </dependencies>
+    -->
 
     <modules>
         <module>cmd</module>
         <module>filterresults</module>
         <module>mergeresults</module>
         <module>plancheck</module>
-        <module>synthesis</module>
         <module>table-server</module>
         <module>graphs-ggl</module>
     </modules>

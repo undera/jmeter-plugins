@@ -9,8 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class DependencyResolverTest {
     @Test
@@ -90,6 +89,30 @@ public class DependencyResolverTest {
         assertTrue(adds.contains(standard));
         assertTrue(adds.contains(extras));
         assertTrue(adds.contains(http));
+    }
+
+    @Test
+    public void testDepInstallJMeterHTTP() throws Exception {
+        Map<Plugin, Boolean> plugs = new HashMap<>();
+
+        PluginMock cause = new PluginMock("cause", Plugin.getJMeterVersion());
+        cause.setVersions(JSONObject.fromObject("{\"\":null}", new JsonConfig()));
+        plugs.put(cause, true);
+
+        PluginMock effect = new PluginMock("effect", null);
+        HashSet<String> deps = new HashSet<>();
+        deps.add(cause.getID());
+        effect.setDepends(deps);
+        plugs.put(effect, true);
+
+        DependencyResolver obj = new DependencyResolver(plugs);
+        Set<Plugin> adds = obj.getAdditions();
+        Set<Plugin> dels = obj.getDeletions();
+
+        assertTrue(adds.contains(effect));
+        assertFalse(adds.contains(cause));
+        assertEquals(1, adds.size());
+        assertEquals(0, dels.size());
     }
 
     @Test
@@ -174,6 +197,10 @@ public class DependencyResolverTest {
 
         public void setLibs(Map<String, String> libs) {
             this.libs = libs;
+        }
+
+        public void setVersions(JSONObject a) {
+            versions = a;
         }
     }
 }

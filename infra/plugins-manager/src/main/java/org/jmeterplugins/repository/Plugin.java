@@ -110,7 +110,7 @@ public class Plugin {
         return versions;
     }
 
-    private String getJMeterVersion() {
+    public static String getJMeterVersion() {
         String ver = JMeterUtils.getJMeterVersion();
         String[] parts = ver.split(" ");
         if (parts.length > 1) {

@@ -83,6 +83,7 @@ public class DependencyResolver {
         for (Map.Entry<Plugin, Boolean> entry : allPlugins.entrySet()) {
             Plugin plugin = entry.getKey();
             if (entry.getValue() && plugin.isInstalled() && !plugin.getInstalledVersion().equals(plugin.getCandidateVersion())) {
+                log.debug("Upgrade: " + plugin);
                 deletions.add(plugin);
                 additions.add(plugin);
             }
@@ -99,10 +100,12 @@ public class DependencyResolver {
                 if (!additions.contains(plugin)) {
                     for (Plugin dep : getDependants(plugin)) {
                         if (!deletions.contains(dep) && dep.isInstalled()) {
+                            log.debug("Add to deletions: " + dep);
                             deletions.add(dep);
                             hasModifications = true;
                         }
                         if (additions.contains(dep)) {
+                            log.debug("Remove from additions: " + dep);
                             additions.remove(dep);
                             hasModifications = true;
                         }
@@ -125,10 +128,13 @@ public class DependencyResolver {
             for (Plugin plugin : additions) {
                 for (String pluginID : plugin.getDepends()) {
                     Plugin depend = getPluginByID(pluginID);
-                    if (!additions.contains(depend)) {
-                        log.debug("Add to install: " + depend);
-                        additions.add(depend);
-                        hasModifications = true;
+
+                    if (!depend.isInstalled() || deletions.contains(depend)) {
+                        if (!additions.contains(depend)) {
+                            log.debug("Add to install: " + depend);
+                            additions.add(depend);
+                            hasModifications = true;
+                        }
                     }
                 }
 

@@ -41,7 +41,9 @@ public class Plugin {
     public static Plugin fromJSON(JSONObject elm) {
         Plugin inst = new Plugin(elm.getString("id"));
         inst.markerClass = elm.getString("markerClass");
-        inst.versions = elm.getJSONObject("versions");
+        if (elm.get("versions") instanceof JSONObject) {
+            inst.versions = elm.getJSONObject("versions");
+        }
         inst.name = elm.getString("name");
         inst.description = elm.getString("description");
         inst.screenshot = elm.getString("screenshotUrl");

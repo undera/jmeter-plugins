@@ -30,7 +30,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
         super((JFrame) null, "JMeter Plugins Manager", true);
         setLayout(new BorderLayout());
         manager = aManager;
-        setSize(new Dimension(640, 480));
+        setSize(new Dimension(800, 600));
         setIconImage(PluginManagerMenuItem.getPluginsIcon().getImage());
         ComponentUtil.centerComponentInWindow(this, 30);
 

@@ -1,0 +1,300 @@
+[
+  {
+    "id": "jpgc-autostop",
+    "name": "Auto-Stop Listener",
+    "description": "Ability to stop test based on runtime KPIs",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/AutoStop1.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/AutoStop/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.jmeter.reporters.AutoStop",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-autostop/0.1/jmeter-plugins-autostop-0.1.jar"
+      }
+    }
+  },
+  {
+    "id": "jpgc-casutg",
+    "name": "Custom Thread Groups",
+    "description": "Adds new Thread Groups: <ul><li>Stepping Thread Group</li><li>Ultimate Thread Group</li><li>Concurrency Thread Group</li><li>Arrivals Thread Group</li><li>Free-Form Arrivals Thread Group</li></ul>",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/ConcurrencyThreadGroup.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/ConcurrencyThreadGroup/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.0/jmeter-plugins-casutg-2.0.jar"
+      }
+    }
+  },
+  {
+    "id": "jpgc-csl",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-csvars",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-dbmon",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-deprecated",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-dummy",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-ffw",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-fifo",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-functions",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-hadoop",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-httpraw",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-jms",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-jmxmon",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-json",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-lockfile",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-oauth",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-perfmon",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-plugins.iml",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-pom.xml",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-prmctl",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-redis",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-sense-uploader",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-target",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-tst",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-udp",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-webdriver",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-wsc",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-xmpp",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  }
+]

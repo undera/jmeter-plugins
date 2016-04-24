@@ -6,70 +6,22 @@
     "screenshotUrl": "",
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": "kg.apc.jmeter.samplers.DummySampler",
-    "canUninstall": true,
+    "markerClass": null,
     "versions": {
-      "1.4.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-standard/1.4.0/jmeter-plugins-standard-1.4.0.jar",
+      "2.0": {
+        "downloadUrl": null,
         "depends": [
-          "jmeter-components",
-          "jmeter-http"
+          "jpgc-dummy",
+          "jpgc-casutg",
+          "jpgc-tst",
+          "jpgc-graphs-basic",
+          "jpgc-ffw",
+          "jpgc-fifo",
+          "jpgc-perfmon",
+          "jpgc-sense",
+          "jpgc-wsc",
+          "jpgc-functions"
         ]
-      }
-    }
-  },
-  {
-    "id": "jpgc-extras",
-    "name": "jpgc - Extras Set",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "vendor": "JMeter-Plugins.org",
-    "markerClass": "kg.apc.jmeter.config.VariablesFromCSV",
-    "canUninstall": true,
-    "versions": {
-      "1.4.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-extras/1.4.0/jmeter-plugins-extras-1.4.0.jar",
-        "depends": [
-          "jpgc-standard",
-          "jmeter-http",
-          "jmeter-jdbc"
-        ]
-      }
-    }
-  },
-  {
-    "id": "jpgc-extras-libs",
-    "name": "jpgc - Extras With Libs Set",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "vendor": "JMeter-Plugins.org",
-    "markerClass": "com.atlantbh.jmeter.plugins.oauth.OAuthSampler",
-    "canUninstall": true,
-    "versions": {
-      "1.4.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-extras-libs/1.4.0/jmeter-plugins-extras-libs-1.4.0.jar",
-        "depends": [
-          "jpgc-extras",
-          "jmeter-java",
-          "jmeter-http"
-        ],
-        "libs": {
-          "qpid-common": "http://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-common/0.20/qpid-common-0.20.jar",
-          "asm": "http://search.maven.org/remotecontent?filepath=org/ow2/asm/asm/5.0.3/asm-5.0.3.jar",
-          "jedis": "http://search.maven.org/remotecontent?filepath=redis/clients/jedis/2.2.1/jedis-2.2.1.jar",
-          "xom": "http://search.maven.org/remotecontent?filepath=com/io7m/xom/xom/1.2.10/xom-1.2.10.jar",
-          "qpid-client": "http://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-client/0.20/qpid-client-0.20.jar",
-          "commons-lang": "http://search.maven.org/remotecontent?filepath=commons-lang/commons-lang/2.6/commons-lang-2.6.jar",
-          "spring-core": "http://search.maven.org/remotecontent?filepath=org/springframework/spring-core/2.5.6/spring-core-2.5.6.jar",
-          "commons-beanutils": "http://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
-          "spring-jms": "http://search.maven.org/remotecontent?filepath=org/springframework/spring-jms/2.5.6/spring-jms-2.5.6.jar",
-          "ezmorph": "http://search.maven.org/remotecontent?filepath=net/sf/ezmorph/ezmorph/1.0.6/ezmorph-1.0.6.jar",
-          "commons-pool": "http://search.maven.org/remotecontent?filepath=commons-pool/commons-pool/1.6/commons-pool-1.6.jar",
-          "json-lib": "http://search.maven.org/remotecontent?filepath=net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
-          "json-smart": "http://search.maven.org/remotecontent?filepath=net/minidev/json-smart/2.2/json-smart-2.2.jar"
-        }
       }
     }
   },
@@ -81,7 +33,6 @@
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations",
-    "canUninstall": true,
     "versions": {
       "1.4.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-hadoop/1.4.0/jmeter-plugins-hadoop-1.4.0.jar",
@@ -125,7 +76,6 @@
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler",
-    "canUninstall": true,
     "versions": {
       "1.4.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/1.4.0/jmeter-plugins-webdriver-1.4.0.jar",

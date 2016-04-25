@@ -6,7 +6,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-manager</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
 
     <name>JMeter Plugins Manager</name>
     <description>UI-based plugins management</description>

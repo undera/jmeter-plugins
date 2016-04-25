@@ -9,7 +9,10 @@
     "markerClass": "kg.apc.jmeter.reporters.AutoStop",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-autostop/0.1/jmeter-plugins-autostop-0.1.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-autostop/0.1/jmeter-plugins-autostop-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
       }
     }
   },
@@ -23,7 +26,10 @@
     "markerClass": "com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup",
     "versions": {
       "2.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.0/jmeter-plugins-casutg-2.0.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.0/jmeter-plugins-casutg-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
       }
     }
   },
@@ -37,7 +43,10 @@
     "markerClass": "kg.apc.jmeter.reporters.ConsoleStatusLogger",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csl/0.1/jmeter-plugins-csl-0.1.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csl/0.1/jmeter-plugins-csl-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
       }
     }
   },
@@ -51,33 +60,36 @@
     "markerClass": "kg.apc.jmeter.config.VariablesFromCSV",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csvars/0.1/jmeter-plugins-csvars-0.1.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csvars/0.1/jmeter-plugins-csvars-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
       }
     }
   },
   {
     "id": "jpgc-dbmon",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "DBMon Sample Collector",
+    "description": "DbMon lets you plot performance counters accessible via SQL when the test is running.",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/dbmon_samples_collector.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/DbMon/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
-  },
-  {
-    "id": "jpgc-deprecated",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
+    "markerClass": "kg.apc.jmeter.dbmon.DbMonCollector",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dbmon/0.1/jmeter-plugins-dbmon-0.1.jar",
+        "depends": [
+          "jmeter-jdbc"
+        ],
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-dummy",
-    "name": "",
+    "name": "Dummy Sampler",
     "description": "",
     "screenshotUrl": "",
     "helpUrl": "",
@@ -297,6 +309,16 @@
   },
   {
     "id": "jpgc-xmpp",
+    "name": "",
+    "description": "",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": ".",
+    "versions": {}
+  },
+  {
+    "id": "jpgc-deprecated",
     "name": "",
     "description": "",
     "screenshotUrl": "",

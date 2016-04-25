@@ -194,7 +194,7 @@ public abstract class JMeterPluginsUtils {
         Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.blue);
         link.setBorder(border);
 
-        JLabel version = new JLabel("v" + getVersion());
+        JLabel version = new JLabel(""); // FIXME: what to do?
         version.setFont(version.getFont().deriveFont(Font.PLAIN).deriveFont(11F));
         version.setForeground(Color.GRAY);
 

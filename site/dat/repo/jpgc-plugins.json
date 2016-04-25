@@ -209,29 +209,49 @@
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jms/0.2/jmeter-plugins-jms-0.2.jar",
         "depends": [
           "jmeter-java"
-        ]
+        ],
+        "libs": {
+          "qpid-common": "http://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-common/0.20/qpid-common-0.20.jar",
+          "qpid-client": "http://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-client/0.20/qpid-client-0.20.jar",
+          "spring-core": "http://search.maven.org/remotecontent?filepath=org/springframework/spring-core/2.5.6/spring-core-2.5.6.jar",
+          "spring-jms": "http://search.maven.org/remotecontent?filepath=org/springframework/spring-jms/2.5.6/spring-jms-2.5.6.jar"
+        }
       }
     }
   },
   {
     "id": "jpgc-jmxmon",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "JMXMon Sample Collector",
+    "description": "JMXMon lets you plot JMX performance metrics over time when the test is running.",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/jmxmon_samples_collector.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/JMXMon/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
+    "markerClass": "kg.apc.jmeter.jmxmon.JMXMonCollector",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jmxmon/0.1/jmeter-plugins-jmxmon-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-json",
-    "name": "",
+    "name": "JSON Plugins",
     "description": "",
     "screenshotUrl": "",
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
+    "markerClass": "",
+    "canUninstall": true,
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.0/jmeter-plugins-json-2.0.jar",
+        "libs": {
+        }
+      }
+    }
   },
   {
     "id": "jpgc-lockfile",
@@ -250,7 +270,7 @@
     "screenshotUrl": "",
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
+    "markerClass": "com.atlantbh.jmeter.plugins.oauth.OAuthSampler",
     "versions": {}
   },
   {

@@ -1,6 +1,5 @@
 package org.jmeterplugins.repository;
 
-import net.sf.json.JSONObject;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -15,7 +14,7 @@ public class PluginManagerTest {
         PluginManager obj = new PluginManager();
         assertEquals(32, obj.getInstallID().length());
         HashMap<Plugin, Boolean> allPlugins = new HashMap<>();
-        JSONObject res = obj.getUsageStats();
+        String res = obj.getUsageStats();
         assertNotNull(res);
     }
 
@@ -34,7 +33,7 @@ public class PluginManagerTest {
         }
 
         @Override
-        public JSONObject getUsageStats() {
+        public String getUsageStats() {
             return super.getUsageStats();
         }
     }

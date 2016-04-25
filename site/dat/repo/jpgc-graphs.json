@@ -1,3 +1,87 @@
 [
-
+  {
+    "id": "jpgc-graphs-basic",
+    "name": "3 Basic Graphs",
+    "description": "<ul><li>Average Response Time</li><li>Active Threads</li><li>Successful/Failed Transactions</li></ul>",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/response_times_over_time.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/ResponseTimesOverTime/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.jmeter.vizualizers.ResponseTimesOverTimeGui",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-basic/2.0/jmeter-plugins-graphs-basic-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "jpgc-graphs-additional",
+    "name": "5 Additional Graphs",
+    "description": "<ul><li>Response Codes</li><li>Bytes Throughput</li><li>Connect Times</li><li>Latency</li><li>Hits/s</li></ul>",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/response_codes_per_second.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/ResponseCodesPerSecond/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.jmeter.vizualizers.LatenciesOverTimeGui",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-additional/2.0/jmeter-plugins-graphs-additional-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "jpgc-graphs-composite",
+    "name": "Composite Timeline Graph",
+    "description": "Graph that is able to show several other graphs data in single place",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/composite_chart.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/CompositeGraph/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.jmeter.vizualizers.CompositeGraphGui",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-composite/2.0/jmeter-plugins-graphs-composite-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "jpgc-graphs-dist",
+    "name": "Distribution/Percentile Graphs",
+    "description": "<ul><li>Response Times Distribution</li><li>Response Times Percentiles</li></ul>",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/response_times_distribution.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/RespTimesDistribution/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.jmeter.vizualizers.ResponseTimesDistributionGui",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-dist/2.0/jmeter-plugins-graphs-dist-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "jpgc-graphs-vs",
+    "name": "KPI vs KPI Graphs",
+    "description": "<ul><li>Hits/s vs Active Threads</li><li>Avg Response Time vs Active Threads</li></ul>",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/timevsthreads.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/ResponseTimesVsThreads/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.jmeter.vizualizers.ThroughputVsThreadsGui",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-vs/2.0/jmeter-plugins-graphs-vs-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
+      }
+    }
+  }
 ]

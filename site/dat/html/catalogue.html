@@ -1,14 +1,16 @@
 <div id="catalogue">
-    <p>
-    <h1>JMeter Plugins Catalogue</h1>
-    This catalogue lists plugins available for use with <a href="/wiki/PluginsManager/">Plugins Manager</a>
-    </p>
-
     <div>
-        <input placeholder="Filter..."/>
-        <i class="count pull-right">
-            Items found: <span></span>
-        </i>
+        <h1>JMeter Plugins Catalogue</h1>
+        This catalogue lists plugins available for use with Plugins Manager. If you're first time here, consider installing <a href="/wiki/PluginsManager/">Plugins Manager</a> into your JMeter.
+    </div>
+<hr/>
+    <div>
+        <p>
+            <i class="count pull-right">
+                Items found: <span></span>
+            </i>
+            <input placeholder="Filter..."/>
+        </p>
     </div>
     <div class="clearfix"></div>
     <div class="list"></div>
@@ -72,6 +74,8 @@
             refreshCatalogue();
         });
     });
+
+
 </script>
 
 <style>
@@ -83,4 +87,6 @@
         font-size: 1.5em;
         width: 100%;
     }
+
+
 </style>

@@ -242,25 +242,22 @@ public class PluginManager {
 
         String uri = address + "/repo/";
         PostMethod post = new PostMethod(uri);
-        post.addParameter("stats", getUsageStats().toString());
+        post.addParameter("stats", getUsageStats());
 
         log.debug("Requesting " + uri);
         httpClient.executeMethod(post);
     }
 
-    protected JSONObject getUsageStats() {
-        JSONObject data = new JSONObject();
-        data.put("installID", getInstallID());
-        data.put("jmeter", JMeterUtils.getJMeterVersion());
+    protected String getUsageStats() {
+        ArrayList<String> data = new ArrayList<>();
+        data.add(getInstallID());
+        data.add(JMeterUtils.getJMeterVersion());
 
-        JSONObject installs = new JSONObject();
         for (Plugin p : getInstalledPlugins()) {
-            installs.put(p.getID(), p.getInstalledVersion());
+            data.add(p.getID() + "=" + p.getInstalledVersion());
         }
-        data.put("installed", installs);
-
         log.debug("Usage stats: " + data);
-        return data;
+        return Arrays.toString(data.toArray(new String[0]));
     }
 
     public String getChangesAsText() {

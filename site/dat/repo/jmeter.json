@@ -10,7 +10,7 @@
     "canUninstall": false,
     "versions": {
       "": {
-        "downloadUrl": null
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_core/%1$s/ApacheJMeter_core-%1$s.jar"
       }
     }
   },

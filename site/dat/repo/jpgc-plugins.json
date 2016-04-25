@@ -239,16 +239,16 @@
   {
     "id": "jpgc-json",
     "name": "JSON Plugins",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "description": "Allows extracting values from JSON responses using JSONPath syntax. Also ships JSONPath Assertion.",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/JSONPathExtractor.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/JSONPathExtractor/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": "",
-    "canUninstall": true,
+    "markerClass": "com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor",
     "versions": {
       "2.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.0/jmeter-plugins-json-2.0.jar",
         "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
         }
       }
     }

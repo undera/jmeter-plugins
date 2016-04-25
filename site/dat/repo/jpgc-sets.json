@@ -2,7 +2,7 @@
   {
     "id": "jpgc-standard",
     "name": "jpgc - Standard Set",
-    "description": "",
+    "description": "Virtual package, select to install its dependencies",
     "screenshotUrl": "",
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
@@ -22,83 +22,6 @@
           "jpgc-wsc",
           "jpgc-functions"
         ]
-      }
-    }
-  },
-  {
-    "id": "jpgc-hadoop",
-    "name": "Hadoop/HBase Testing",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "vendor": "JMeter-Plugins.org",
-    "markerClass": "com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations",
-    "versions": {
-      "1.4.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-hadoop/1.4.0/jmeter-plugins-hadoop-1.4.0.jar",
-        "libs": {
-          "hbase": "http://search.maven.org/remotecontent?filepath=org/apache/hbase/hbase/0.94.5/hbase-0.94.5.jar",
-          "zookeeper": "http://search.maven.org/remotecontent?filepath=org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar",
-          "commons-beanutils": "http://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
-          "guava": "http://search.maven.org/remotecontent?filepath=com/google/guava/guava/11.0.2/guava-11.0.2.jar",
-          "hadoop-core": "http://search.maven.org/remotecontent?filepath=org/apache/hadoop/hadoop-core/1.1.2/hadoop-core-1.1.2.jar",
-          "jackson-mapper-asl": "http://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-mapper-asl/1.8.8/jackson-mapper-asl-1.8.8.jar"
-        }
-      }
-    }
-  },
-  {
-    "id": "jpgc-xmpp",
-    "name": "XMPP Protocol Support",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "vendor": "BlazeMeter.com",
-    "markerClass": "com.blazemeter.jmeter.xmpp.JMeterXMPPSampler",
-    "versions": {
-      "1.4.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-xmpp/1.4.0/jmeter-plugins-xmpp-1.4.0.jar",
-        "libs": {
-          "smack-core": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-core/4.0.7/smack-core-4.0.7.jar",
-          "smack-tcp": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-tcp/4.0.7/smack-tcp-4.0.7.jar",
-          "smack-bosh": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-bosh/4.0.7/smack-bosh-4.0.7.jar",
-          "smack-extensions": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-extensions/4.0.7/smack-extensions-4.0.7.jar",
-          "jbosh": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/jbosh/jbosh/0.8.0/jbosh-0.8.0.jar"
-        }
-      }
-    }
-  },
-  {
-    "id": "jpgc-webdriver",
-    "name": "Selenium/WebDriver Support",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "vendor": "JMeter-Plugins.org",
-    "markerClass": "com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler",
-    "versions": {
-      "1.4.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/1.4.0/jmeter-plugins-webdriver-1.4.0.jar",
-        "libs": {
-          "selenium-support": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-support/2.53.0/selenium-support-2.53.0.jar",
-          "selenium-api": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-api/2.53.0/selenium-api-2.53.0.jar",
-          "selenium-firefox-driver": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-firefox-driver/2.53.0/selenium-firefox-driver-2.53.0.jar",
-          "selenium-remote-driver": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-remote-driver/2.53.0/selenium-remote-driver-2.53.0.jar",
-          "selenium-ie-driver": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-ie-driver/2.53.0/selenium-ie-driver-2.53.0.jar",
-          "selenium-chrome-driver": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-chrome-driver/2.53.0/selenium-chrome-driver-2.53.0.jar",
-          "selenium-htmlunit-driver": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-htmlunit-driver/2.52.0/selenium-htmlunit-driver-2.52.0.jar",
-          "phantomjsdriver": "http://search.maven.org/remotecontent?filepath=com/codeborne/phantomjsdriver/1.2.1/phantomjsdriver-1.2.1.jar",
-          "nekohtml": "http://search.maven.org/remotecontent?filepath=net/sourceforge/nekohtml/nekohtml/1.9.22/nekohtml-1.9.22.jar",
-          "jsyntaxpane": "http://search.maven.org/remotecontent?filepath=de/sciss/jsyntaxpane/1.0.0/jsyntaxpane-1.0.0.jar",
-          "htmlunit": "http://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit/2.18/htmlunit-2.18.jar",
-          "htmlunit-core-js": "http://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit-core-js/2.17/htmlunit-core-js-2.17.jar",
-          "commons-exec": "http://search.maven.org/remotecontent?filepath=org/apache/commons/commons-exec/1.3/commons-exec-1.3.jar",
-          "gson": "http://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.3.1/gson-2.3.1.jar",
-          "cglib-nodep": "http://search.maven.org/remotecontent?filepath=cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar",
-          "cssparser": "http://search.maven.org/remotecontent?filepath=net/sourceforge/cssparser/cssparser/0.9.16/cssparser-0.9.16.jar",
-          "guava": "http://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
-          "sac": "http://search.maven.org/remotecontent?filepath=org/w3c/css/sac/1.3/sac-1.3.jar"
-        }
       }
     }
   }

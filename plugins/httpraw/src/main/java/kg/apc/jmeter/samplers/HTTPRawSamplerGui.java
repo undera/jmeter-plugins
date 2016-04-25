@@ -1,28 +1,18 @@
 package kg.apc.jmeter.samplers;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class HTTPRawSamplerGui
         extends AbstractSamplerGui {
 
     public static final String WIKIPAGE = "RawRequest";
-    private static final Logger log = LoggingManager.getLoggerForClass();
     private JTextField hostName;
     private JTextField port;
     private JTextField timeout;
@@ -72,7 +62,6 @@ public class HTTPRawSamplerGui
     /**
      * Modifies a given TestElement to mirror the data in the gui components.
      *
-     * @param sampler
      * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
      */
     @Override

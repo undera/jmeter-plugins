@@ -130,13 +130,11 @@ public class HTTPRawSampler extends AbstractIPSampler {
         if (!scanner.hasNextLine()) {
             return;
         }
-        
-        int n = 1;
+
         StringBuilder headers = new StringBuilder();
         String line;
         while (scanner.hasNextLine() && !(line = scanner.nextLine()).isEmpty()) {
             headers.append(line).append(CRLF);
-            n++;
         }
         res.setResponseHeaders(headers.toString());
         
@@ -150,7 +148,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
     
     @Override
     protected byte[] processIO(SampleResult res) throws Exception {
-        SocketChannel sock = (SocketChannel) getSocketChannel();
+        SocketChannel sock = getSocketChannel();
         
         if (!getRequestData().isEmpty()) {
             ByteBuffer sendBuf = ByteBuffer.wrap(getRequestData().getBytes()); // cannot cache it because of variable processing

@@ -43,6 +43,10 @@ public class PluginManager {
         for (Object elm : (JSONArray) json) {
             if (elm instanceof JSONObject) {
                 Plugin plugin = Plugin.fromJSON((JSONObject) elm);
+                if (plugin.getName().isEmpty()) {
+                    log.debug("Skip empty name: " + plugin);
+                    continue;
+                }
                 plugin.detectInstalled();
                 allPlugins.put(plugin, plugin.isInstalled());
             } else {

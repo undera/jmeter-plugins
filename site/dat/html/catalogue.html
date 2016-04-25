@@ -1,0 +1,90 @@
+<div id="catalogue">
+    <p>
+    <h1>JMeter Plugins Catalogue</h1>
+    This catalogue lists plugins available for use with <a href="/wiki/PluginsManager/">Plugins Manager</a>
+    </p>
+
+    <div>
+        <input placeholder="Filter..."/>
+        <i class="count pull-right">
+            Items found: <span></span>
+        </i>
+    </div>
+    <div class="clearfix"></div>
+    <div class="list"></div>
+</div>
+
+<script>
+    $(function () {
+        var plugins = [];
+        var cat = $("#catalogue");
+
+        function getPluginCard(plugin) {
+            var card = $("<div></div>");
+            card.addClass("alert");
+            card.append("<small class='pull-right'>ID: " + plugin.id + "</small>");
+            card.append("<h4><a href='" + plugin.helpUrl + "'>" + plugin.name + "</a></h4>");
+            card.append("<p>" + plugin.description + "</p>");
+            card.append("<p><small>Versions: " + Object.keys(plugin.versions) + "</small></p>");
+            return card;
+        }
+
+        function refreshCatalogue() {
+            var cnt = 0;
+            var list = cat.find(".list");
+            list.empty();
+            var filter = cat.find("input").val().toLowerCase();
+            console.log("Refresh", filter);
+            for (var n = 0; n < plugins.length; n++) {
+                var plugin = plugins[n];
+                if (!plugin.name) {
+                    continue;
+                }
+
+                if (plugin.id.indexOf("jmeter-") == 0) {
+                    continue;
+                }
+
+                if (filter) {
+                    var data = plugin.id + plugin.name + plugin.description;
+                    if (data.toLowerCase().indexOf(filter) < 0) {
+                        continue;
+                    }
+                }
+
+                list.append(getPluginCard(plugin));
+                cnt++;
+            }
+            cat.find(".count span").text(cnt);
+        }
+
+        $.get("/repo/").success(function (data) {
+
+            var typingTimer;
+            var doneTypingInterval = 200;
+
+            cat.find("input").on('keyup', function () {
+                console.log("up")
+                clearTimeout(typingTimer);
+                typingTimer = setTimeout(refreshCatalogue, doneTypingInterval);
+            }).on('keydown', function () {
+                console.log("down")
+                clearTimeout(typingTimer);
+            }).change(refreshCatalogue);
+
+            plugins.push.apply(plugins, data);
+            refreshCatalogue();
+        });
+    });
+</script>
+
+<style>
+    #catalogue .list .alert {
+        background-color: #EFEFEF;
+    }
+
+    #catalogue input {
+        font-size: 1.5em;
+        width: 100%;
+    }
+</style>

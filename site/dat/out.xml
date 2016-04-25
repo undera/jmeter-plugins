@@ -3,7 +3,9 @@
      description="A custom set of plugins for Apache JMeter, not affiliated with Apache Software Foundation, graphs, load shapers, new functions."
      class="PWE\Modules\HTMLPage\HTMLPage" src="index.html">
 
-    <url link="home" title="Home" menu="1" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/#"
+    <url link="catalogue" title="Catalogue" menu="1" class="PWE\Modules\HTMLPage\HTMLPage" src="catalogue.html"
+         ico="fa-list-alt"/>
+    <url link="home" title="Home" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/#"
          ico="fa-home"/>
     <url link="downloads" title="Downloads" menu="1" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl"
          start_page="all" files_base="files" download_link="../file" accept="1" ico="fa-download">
@@ -17,5 +19,5 @@
     <url link="sources" title="Source Code" menu="1" ico="fa-github-alt"
          class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="https://github.com/undera/jmeter-plugins"/>
 
-    <url link="repo" class="JPGC\PluginsRepository" configs="dat/repo" template="empty.tpl" />
+    <url link="repo" class="JPGC\PluginsRepository" configs="dat/repo" template="empty.tpl"/>
 </url>

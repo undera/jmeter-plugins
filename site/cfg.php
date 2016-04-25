@@ -1,13 +1,17 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
 
-if ($_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
-    $level = \PWE\Core\PWELogger::DEBUG;
-    $logfile = sys_get_temp_dir() . "/jpgc-pwe.log";
-    $tempdir = sys_get_temp_dir();
-} else {
+$isDebug = $_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR'];
+if (!$isDebug) {
+    // our real website settings
     $level = \PWE\Core\PWELogger::WARNING;
-    $logfile = __DIR__."/../logs/pwe." . date('Ym');
-    $tempdir = __DIR__."/../tmp";
+    $logfile = __DIR__ . "/../logs/pwe." . date('Ym');
+    $tempdir = __DIR__ . "/../tmp";
+} else {
+    // local debugging settings
+    $level = \PWE\Core\PWELogger::DEBUG;
+    $tempdir = sys_get_temp_dir();
+    $logfile = "/tmp/jpgc-pwe.log";
 }
 
 \PWE\Core\PWELogger::setStdErr($logfile);
@@ -18,3 +22,12 @@ if ($_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
 $PWECore->setRootDirectory(__DIR__);
 $PWECore->setXMLDirectory($PWECore->getDataDirectory());
 $PWECore->setTempDirectory($tempdir);
+
+if ($isDebug) {
+    $fname = $tempdir . '/jpgc.xml';
+    if (!is_file($fname)) {
+        file_put_contents($fname, "<registry/>");
+    }
+
+    $PWECore->getModulesManager()->setRegistryFile($fname);
+}

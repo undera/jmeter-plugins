@@ -130,15 +130,20 @@ public class Plugin {
     }
 
     private String getJARPath(String className) {
-        Class c;
+        Class cls;
         try {
-            c = Thread.currentThread().getContextClassLoader().loadClass(className);
-        } catch (ClassNotFoundException e1) {
-            log.debug("Plugin not found by class: " + className);
+            log.debug("Trying: " + className);
+            cls = Thread.currentThread().getContextClassLoader().loadClass(className);
+        } catch (Throwable e) {
+            if (e instanceof ClassNotFoundException) {
+                log.debug("Plugin not found by class: " + className);
+            } else {
+                log.warn("Unable to load class: " + className, e);
+            }
             return null;
         }
 
-        String file = c.getProtectionDomain().getCodeSource().getLocation().getFile();
+        String file = cls.getProtectionDomain().getCodeSource().getLocation().getFile();
         if (!file.toLowerCase().endsWith(".jar")) {
             log.warn("Path is not JAR: " + file);
             return null;

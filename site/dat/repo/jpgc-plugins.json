@@ -90,22 +90,36 @@
   {
     "id": "jpgc-dummy",
     "name": "Dummy Sampler",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "description": "Debugging sampler that just generates result as you specified. Very convenient to debug your complex scripts",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/dummy_sampler.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/DummySampler/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
+    "markerClass": "kg.apc.jmeter.samplers.DummySampler",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.1/jmeter-plugins-dummy-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-ffw",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "Flexible File Writer",
+    "description": "Flexible File Writer plugin allows writing test results in flexible format, specified via GUI.",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/FlexibleFileWriter.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/FlexibleFileWriter/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
+    "markerClass": "kg.apc.jmeter.reporters.FlexibleFileWriter",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-ffw/2.0/jmeter-plugins-ffw-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-fifo",

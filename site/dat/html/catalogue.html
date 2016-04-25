@@ -41,10 +41,6 @@
                     continue;
                 }
 
-                if (plugin.id.indexOf("jmeter-") == 0) {
-                    continue;
-                }
-
                 if (filter) {
                     var data = plugin.id + plugin.name + plugin.description;
                     if (data.toLowerCase().indexOf(filter) < 0) {

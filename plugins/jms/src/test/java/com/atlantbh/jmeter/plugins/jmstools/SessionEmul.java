@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jmstools;
+package com.atlantbh.jmeter.plugins.jmstools;
 
 import java.io.Serializable;
 import javax.jms.BytesMessage;

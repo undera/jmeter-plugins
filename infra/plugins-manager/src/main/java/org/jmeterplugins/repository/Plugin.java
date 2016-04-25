@@ -61,20 +61,24 @@ public class Plugin {
     }
 
     public void detectInstalled() {
-        installedPath = getJARPath(markerClass);
-        if (installedPath != null) {
-            installedVersion = getVersionFromPath(installedPath);
-            if (installedVersion.equals(VER_STOCK) && isVersionFrozenToJMeter()) {
-                installedVersion = getJMeterVersion();
+        if (isVirtual()) {
+            // TODO detect install by all dependencies installed
+        } else {
+            installedPath = getJARPath(markerClass);
+            if (installedPath != null) {
+                installedVersion = getVersionFromPath(installedPath);
+                if (installedVersion.equals(VER_STOCK) && isVersionFrozenToJMeter()) {
+                    installedVersion = getJMeterVersion();
+                }
+
+                log.debug("Found plugin " + this + " version " + installedVersion + " at path " + installedPath);
             }
 
-            log.debug("Found plugin " + this + " version " + installedVersion + " at path " + installedPath);
-        }
-
-        if (isInstalled()) {
-            candidateVersion = installedVersion;
-        } else {
-            candidateVersion = getMaxVersion();
+            if (isInstalled()) {
+                candidateVersion = installedVersion;
+            } else {
+                candidateVersion = getMaxVersion();
+            }
         }
     }
 
@@ -338,5 +342,9 @@ public class Plugin {
                 return -1;
             }
         }
+    }
+
+    public boolean isVirtual() {
+        return markerClass == null;
     }
 }

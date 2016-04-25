@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jmstools;
+package com.atlantbh.jmeter.plugins.jmstools;
 
 import java.util.Map;
 import javax.jms.Message;
 import javax.jms.Session;
 
+import com.atlantbh.jmeter.plugins.jmstools.BinaryMessageConverter;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

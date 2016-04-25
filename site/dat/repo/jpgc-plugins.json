@@ -198,13 +198,20 @@
   },
   {
     "id": "jpgc-jms",
-    "name": "",
-    "description": "",
+    "name": "JMS Send and Receive Sampler",
+    "description": "If you are using JMS (Java Message Service) to send and receive messages between two or more clients, we have created a sampler which enables you to send and receive messages.",
     "screenshotUrl": "",
-    "helpUrl": "",
+    "helpUrl": "http://jmeter-plugins.org/wiki/JMSSampler/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
+    "markerClass": "com.atlantbh.jmeter.plugins.jmstools.BinaryMessagepostProcessor",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jms/0.2/jmeter-plugins-jms-0.2.jar",
+        "depends": [
+          "jmeter-java"
+        ]
+      }
+    }
   },
   {
     "id": "jpgc-jmxmon",
@@ -254,27 +261,8 @@
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
     "markerClass": ".",
-    "versions": {}
-  },
-  {
-    "id": "jpgc-plugins.iml",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
-  },
-  {
-    "id": "jpgc-pom.xml",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
+    "versions": {
+    }
   },
   {
     "id": "jpgc-prmctl",
@@ -298,16 +286,6 @@
   },
   {
     "id": "jpgc-sense-uploader",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
-  },
-  {
-    "id": "jpgc-target",
     "name": "",
     "description": "",
     "screenshotUrl": "",

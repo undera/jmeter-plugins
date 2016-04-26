@@ -255,13 +255,20 @@
   },
   {
     "id": "jpgc-lockfile",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "Lock File Config",
+    "description": "Lock file allows you to set locks to prevent multiple JMeters from running on the same machine",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/lock_file.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/LockFile/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {}
+    "markerClass": "kg.apc.jmeter.config.LockFile",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-oauth",

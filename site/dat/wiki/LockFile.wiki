@@ -8,4 +8,4 @@ Test will not be started if existing lock files found.
 
 To use, add Config -> *jp@gc - Lock File Config*, then specify a lock file and a pattern.
 
-TODO: add a screenshot
+[/img/wiki/lock_file.png]

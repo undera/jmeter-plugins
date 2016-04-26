@@ -37,9 +37,9 @@ for D in `ls` ; do
     fi
 done
 
-cp infra/plugins-manager/target/jmeter-plugins-manager-*.jar upload/files/nightly/
+cp manager/target/jmeter-plugins-manager-*.jar upload/files/nightly/
 
-PAT="s/.zip/_$REV.zip/"
+PAT="s/.jar/_$REV.jar/"
 rename $PAT upload/files/nightly/*
 
 # examples

@@ -7,6 +7,7 @@
     <version>2.0</version>
     <packaging>pom</packaging>
     <modules>
+        <module>manager</module>
         <module>infra</module>
         <module>plugins</module>
         <module>tools</module>

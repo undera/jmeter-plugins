@@ -11,7 +11,7 @@
       "0.1": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-autostop/0.1/jmeter-plugins-autostop-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -28,7 +28,7 @@
       "2.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.0/jmeter-plugins-casutg-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -45,7 +45,7 @@
       "0.1": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csl/0.1/jmeter-plugins-csl-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -62,7 +62,7 @@
       "0.1": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csvars/0.1/jmeter-plugins-csvars-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -82,7 +82,7 @@
           "jmeter-jdbc"
         ],
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -99,7 +99,7 @@
       "0.1": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.1/jmeter-plugins-dummy-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -116,7 +116,7 @@
       "2.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-ffw/2.0/jmeter-plugins-ffw-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -133,7 +133,7 @@
       "0.2": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-fifo/0.2/jmeter-plugins-fifo-0.2.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -150,7 +150,7 @@
       "2.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-functions/2.0/jmeter-plugins-functions-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -167,7 +167,7 @@
       "2.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-hadoop/2.0/jmeter-plugins-hadoop-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar",
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
           "hbase": "http://search.maven.org/remotecontent?filepath=org/apache/hbase/hbase/0.94.5/hbase-0.94.5.jar",
           "zookeeper": "http://search.maven.org/remotecontent?filepath=org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar",
           "commons-beanutils": "http://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
@@ -190,7 +190,7 @@
       "0.1": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-httpraw/0.1/jmeter-plugins-httpraw-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar",
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
           "jmeter-plugins-common-io": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
         }
       }
@@ -231,7 +231,7 @@
       "0.1": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jmxmon/0.1/jmeter-plugins-jmxmon-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -248,7 +248,7 @@
       "2.0": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.0/jmeter-plugins-json-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.2/jmeter-plugins-cmn-jmeter-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }

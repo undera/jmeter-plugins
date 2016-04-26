@@ -40,7 +40,7 @@
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
-            <version>0.1</version>
+            <version>0.3</version>
         </dependency>
         <dependency>
             <groupId>kg.apc</groupId>

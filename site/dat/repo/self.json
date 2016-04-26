@@ -10,7 +10,7 @@
     "canUninstall": false,
     "versions": {
       "0.3": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.2/jmeter-plugins-manager-0.3.jar"
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.3/jmeter-plugins-manager-0.3.jar"
       }
     }
   }

@@ -272,23 +272,41 @@
   },
   {
     "id": "jpgc-oauth",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "OAuth Sampler",
+    "description": "OAuth sampler is an extended REST sampler which in addition includes the properties needed for this authorization",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/OAuth-Sampler.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/OAuthSampler/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.atlantbh.jmeter.plugins.oauth.OAuthSampler",
-    "versions": {}
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-oauth/0.1/jmeter-plugins-oauth-0.1.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "commons-lang": "http://search.maven.org/remotecontent?filepath=commons-lang/commons-lang/2.6/commons-lang-2.6.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-perfmon",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "PerfMon (Servers Performance Monitoring)",
+    "description": "Allows collecting target server resource metrics. You need to start ServerAgent on a target machine.",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/servers_performance_monitoring.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/PerfMon/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
+    "markerClass": "kg.apc.jmeter.perfmon.PerfMonCollector",
     "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-perfmon/2.0/jmeter-plugins-perfmon-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "perfmon": "http://search.maven.org/remotecontent?filepath=kg/apc/perfmon/2.2.2/perfmon-2.2.2.jar"
+        }
+      }
     }
   },
   {
@@ -299,7 +317,14 @@
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
     "markerClass": ".",
-    "versions": {}
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-redis",
@@ -309,7 +334,14 @@
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
     "markerClass": ".",
-    "versions": {}
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-sense-uploader",
@@ -319,7 +351,14 @@
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
     "markerClass": ".",
-    "versions": {}
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-tst",
@@ -329,7 +368,14 @@
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
     "markerClass": ".",
-    "versions": {}
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-udp",
@@ -339,7 +385,14 @@
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
     "markerClass": ".",
-    "versions": {}
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-webdriver",
@@ -383,7 +436,14 @@
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
     "markerClass": ".",
-    "versions": {}
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
   },
   {
     "id": "jpgc-xmpp",
@@ -414,6 +474,13 @@
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
     "markerClass": ".",
-    "versions": {}
+    "versions": {
+      "0.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
   }
 ]

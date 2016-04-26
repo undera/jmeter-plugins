@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class PluginManagerDialogTest {
 
-    @Test
+    //@Test
     public void displayGUI() throws InterruptedException {
         if (!GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance()) {
             TestJMeterUtils.createJmeterEnv();

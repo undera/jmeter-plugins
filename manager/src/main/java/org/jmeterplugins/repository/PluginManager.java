@@ -47,10 +47,20 @@ public class PluginManager {
                     log.debug("Skip empty name: " + plugin);
                     continue;
                 }
-                plugin.detectInstalled();
+
+                if (!plugin.isVirtual()) {
+                    plugin.detectInstalled(getInstalledPlugins());
+                }
                 allPlugins.put(plugin, plugin.isInstalled());
             } else {
                 log.warn("Invalid array element: " + elm);
+            }
+        }
+
+        // after all usual plugins detected, detect virtual sets
+        for (Plugin plugin : allPlugins.keySet()) {
+            if (plugin.isVirtual()) {
+                plugin.detectInstalled(getInstalledPlugins());
             }
         }
 

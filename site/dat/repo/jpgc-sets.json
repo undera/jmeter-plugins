@@ -19,7 +19,6 @@
           "jpgc-fifo",
           "jpgc-perfmon",
           "jpgc-sense",
-          "jpgc-wsc",
           "jpgc-functions"
         ]
       }

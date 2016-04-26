@@ -344,16 +344,16 @@
     }
   },
   {
-    "id": "jpgc-sense-uploader",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "id": "jpgc-sense",
+    "name": "BM.Sense Uploader",
+    "description": "This is special plugin in for uploading results to BlazeMeter Sense immediately after test end",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/loadosophia_uploader.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/LoadosophiaUploader/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
+    "markerClass": "kg.apc.jmeter.reporters.LoadosophiaUploader",
     "versions": {
-      "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-senseuploader/2.0/jmeter-plugins-senseuploader-2.0.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
@@ -362,15 +362,15 @@
   },
   {
     "id": "jpgc-tst",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "Throughput Shaping Timer",
+    "description": "A plugin to set desired hits/s (RPS) schedule",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/throughput_shaping_timer1.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/ThroughputShapingTimer/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
+    "markerClass": "kg.apc.jmeter.timers.VariableThroughputTimer",
     "versions": {
-      "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-tst/2.0/jmeter-plugins-tst-2.0.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }

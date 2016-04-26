@@ -1,7 +1,7 @@
 <div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = BM.Sense Uploader <sup><font color=gray size="1">since 0.4.2</font></sup>=
 
-This is special plugin in for uploading results to 
+This is special plugin for uploading results to
 [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=link&utm_campaign=wiki BlazeMeter Sense]
 immediately after test end. It was previously known as "Loadosophia Uploader" and has changed the name following service.
 

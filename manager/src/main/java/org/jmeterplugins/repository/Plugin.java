@@ -2,6 +2,7 @@ package org.jmeterplugins.repository;
 
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONNull;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.engine.JMeterEngine;
 import org.apache.jmeter.util.JMeterUtils;
@@ -40,7 +41,9 @@ public class Plugin {
 
     public static Plugin fromJSON(JSONObject elm) {
         Plugin inst = new Plugin(elm.getString("id"));
-        inst.markerClass = elm.getString("markerClass");
+        if (!(elm.get("markerClass") instanceof JSONNull)) {
+            inst.markerClass = elm.getString("markerClass");
+        }
         if (elm.get("versions") instanceof JSONObject) {
             inst.versions = elm.getJSONObject("versions");
         }
@@ -57,28 +60,52 @@ public class Plugin {
 
     @Override
     public String toString() {
-        return this.id;
+        return id;
     }
 
-    public void detectInstalled() {
+    public void detectInstalled(Set<Plugin> others) {
         if (isVirtual()) {
-            // TODO detect install by all dependencies installed
+            detectInstalledVirtual(others);
         } else {
-            installedPath = getJARPath(markerClass);
-            if (installedPath != null) {
-                installedVersion = getVersionFromPath(installedPath);
-                if (installedVersion.equals(VER_STOCK) && isVersionFrozenToJMeter()) {
-                    installedVersion = getJMeterVersion();
+            detectInstalledPlugin();
+        }
+
+        if (isInstalled()) {
+            candidateVersion = installedVersion;
+        } else {
+            candidateVersion = getMaxVersion();
+        }
+    }
+
+    private void detectInstalledPlugin() {
+        installedPath = getJARPath(markerClass);
+        if (installedPath != null) {
+            installedVersion = getVersionFromPath(installedPath);
+            if (installedVersion.equals(VER_STOCK) && isVersionFrozenToJMeter()) {
+                installedVersion = getJMeterVersion();
+            }
+
+            log.debug("Found plugin " + this + " version " + installedVersion + " at path " + installedPath);
+        }
+    }
+
+    private void detectInstalledVirtual(Set<Plugin> others) {
+        candidateVersion = getMaxVersion();
+        log.debug("Detecting virtual " + this + " by depends: " + getDepends());
+        for (String depID : getDepends()) {
+            installedPath = null;
+            for (Plugin plugin : others) {
+                if (plugin.getID().equals(depID) && plugin.isInstalled()) {
+                    installedPath = "";
                 }
-
-                log.debug("Found plugin " + this + " version " + installedVersion + " at path " + installedPath);
             }
-
-            if (isInstalled()) {
-                candidateVersion = installedVersion;
-            } else {
-                candidateVersion = getMaxVersion();
+            if (installedPath == null) {
+                break;
             }
+        }
+
+        if (isInstalled()) {
+            installedVersion = candidateVersion;
         }
     }
 
@@ -196,6 +223,11 @@ public class Plugin {
     }
 
     public void download(GenericCallback<String> notify) throws IOException {
+        if (isVirtual()) {
+            log.debug("Virtual set, won't download: " + this);
+            return;
+        }
+
         String version = getCandidateVersion();
 
         URI url;

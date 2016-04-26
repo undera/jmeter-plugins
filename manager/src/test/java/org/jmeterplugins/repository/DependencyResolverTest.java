@@ -167,40 +167,4 @@ public class DependencyResolverTest {
         assertTrue(dels.contains(a));
         assertTrue(adds.contains(b));
     }
-
-
-    private class PluginMock extends Plugin {
-        private Set<String> depends = new HashSet<>();
-        private Map<String, String> libs = new HashMap<>();
-
-        public PluginMock(String id, String iVer) {
-            super(id);
-            installedVersion = iVer;
-            installedPath = iVer;
-            versions = JSONObject.fromObject("{\"1.0\":null,\"0.1\":null,\"0.1.5\":null}", new JsonConfig());
-            candidateVersion = getMaxVersion();
-        }
-
-        @Override
-        public Set<String> getDepends() {
-            return depends;
-        }
-
-        public void setDepends(Set<String> depends) {
-            this.depends = depends;
-        }
-
-        @Override
-        public Map<String, String> getLibs(String verStr) {
-            return libs;
-        }
-
-        public void setLibs(Map<String, String> libs) {
-            this.libs = libs;
-        }
-
-        public void setVersions(JSONObject a) {
-            versions = a;
-        }
-    }
 }

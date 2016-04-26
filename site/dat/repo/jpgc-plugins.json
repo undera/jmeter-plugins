@@ -311,15 +311,15 @@
   },
   {
     "id": "jpgc-prmctl",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "Parameterized Controller",
+    "description": "A controller to help reuse modules with variables in the scope",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/parameterizedcontroller.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/ParameterizedController/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
+    "markerClass": "kg.apc.jmeter.control.ParameterizedController",
     "versions": {
-      "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+      "0.2": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-prmctl/0.2/jmeter-plugins-prmctl-0.2.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
@@ -328,17 +328,21 @@
   },
   {
     "id": "jpgc-redis",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "Redis Data Set",
+    "description": "Allows reading test data from Redis storage",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/redis/RedisDataSet.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/RedisDataSet/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
+    "markerClass": "kg.apc.jmeter.config.redis.RedisDataSet",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-redis/0.1/jmeter-plugins-redis-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "jedis": "http://search.maven.org/remotecontent?filepath=redis/clients/jedis/2.2.1/jedis-2.2.1.jar",
+          "commons-beanutils": "http://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
+          "qpid-common": "http://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-common/0.20/qpid-common-0.20.jar",
+          "xom": "http://search.maven.org/remotecontent?filepath=com/io7m/xom/xom/1.2.10/xom-1.2.10.jar"
         }
       }
     }
@@ -379,17 +383,18 @@
   },
   {
     "id": "jpgc-udp",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "UDP Protocol Support",
+    "description": "This plugin adds UDP protocol support to JMeter. With this plugin you can load test DNS, NTP, TFTP, Boot servers and many-many other systems.",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/UDPRequest.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/UDPRequest/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
+    "markerClass": "kg.apc.jmeter.samplers.UDPSampler",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-udp/0.1/jmeter-plugins-udp-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "jmeter-plugins-common-io": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
         }
       }
     }
@@ -430,15 +435,15 @@
   },
   {
     "id": "jpgc-wsc",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "name": "Weighted Switch Controller",
+    "description": "This controller takes the information about child elements and offers managing relative weights for them.",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/WeightedSwitchController.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/WeightedSwitchController/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
+    "markerClass": "com.blazemeter.jmeter.control.WeightedSwitchController",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-wsc/0.1/jmeter-plugins-wsc-0.1.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
@@ -462,23 +467,6 @@
           "smack-bosh": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-bosh/4.0.7/smack-bosh-4.0.7.jar",
           "smack-extensions": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-extensions/4.0.7/smack-extensions-4.0.7.jar",
           "jbosh": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/jbosh/jbosh/0.8.0/jbosh-0.8.0.jar"
-        }
-      }
-    }
-  },
-  {
-    "id": "jpgc-deprecated",
-    "name": "",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
-    "vendor": "JMeter-Plugins.org",
-    "markerClass": ".",
-    "versions": {
-      "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }

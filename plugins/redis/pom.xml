@@ -40,15 +40,11 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>2.2.1</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>commons-pool</groupId>
             <artifactId>commons-pool</artifactId>
             <version>1.6</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.io7m.xom</groupId>

@@ -1,6 +1,7 @@
 = Changelog =
 
-== 1.4.1 <i><font color=gray size="1">planning</font></i>==
+== 2.0 <i><font color=gray size="1">planning</font></i>==
+  * all plugin sets are broken up into tens of smaller plugins to be used with Plugins Manager
   * prevent NPEs from sense uploader
   * sense uploader is extracted as separate plugin for pmgr
   * perfmon is extracted as separate plugin for pmgr

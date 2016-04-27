@@ -11,6 +11,9 @@
     "versions": {
       "0.3": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.3/jmeter-plugins-manager-0.3.jar"
+      },
+      "0.4": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.4/jmeter-plugins-manager-0.4.jar"
       }
     }
   }

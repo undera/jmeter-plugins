@@ -68,7 +68,7 @@ public class SafeDeleter {
             command.add(cls);
 
             final ProcessBuilder builder = new ProcessBuilder(command);
-            System.out.print("Starting: " + command);
+            System.out.print("Starting: " + command + "\n");
             builder.redirectError(log);
             builder.redirectOutput(log);
             Process p = builder.start();
@@ -90,7 +90,7 @@ public class SafeDeleter {
         }
 
         final ProcessBuilder builder = new ProcessBuilder(command);
-        System.out.print("Starting: " + command);
+        System.out.print("Starting: " + command + "\n");
         File cleanerLog = File.createTempFile("jpgc-restarter-", ".log");
         builder.redirectError(cleanerLog);
         builder.redirectOutput(cleanerLog);

@@ -94,9 +94,10 @@ public class PluginManager {
 
     public void startModifications(Set<Plugin> delPlugins, Set<Plugin> installPlugins, Map<String, String> installLibs, Set<String> libDeletions) throws IOException {
         ChangesMaker maker = new ChangesMaker(allPlugins);
-        final File moveFile = maker.makeMovementsFile(delPlugins, installPlugins, installLibs, libDeletions);
+        File moveFile = maker.getMovementsFile(delPlugins, installPlugins, installLibs, libDeletions);
         File installFile = maker.getInstallFile(installPlugins);
-        final ProcessBuilder builder = maker.getProcessBuilder(moveFile, installFile);
+        File restartFile = maker.getRestartFile();
+        final ProcessBuilder builder = maker.getProcessBuilder(moveFile, installFile, restartFile);
         log.info("JAR Modifications log will be saved into: " + builder.redirectOutput().file().getPath());
         builder.start();
     }

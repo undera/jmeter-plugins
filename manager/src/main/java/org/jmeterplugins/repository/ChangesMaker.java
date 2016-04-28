@@ -24,13 +24,11 @@ public class ChangesMaker {
     }
 
 
-    public ProcessBuilder getProcessBuilder(File moveFile, File installFile) throws IOException {
+    public ProcessBuilder getProcessBuilder(File moveFile, File installFile, File restartFile) throws IOException {
         String jarPath = PluginManager.class.getProtectionDomain().getCodeSource().getLocation().getFile();
         if (!jarPath.endsWith(".jar"))
             throw new IllegalArgumentException("Invalid JAR path detected: " + jarPath);
         final File currentJar = new File(jarPath);
-
-        File restartFile = getRestartFile();
 
         final ArrayList<String> command = new ArrayList<>();
         command.add(SafeDeleter.getJVM());
@@ -53,7 +51,7 @@ public class ChangesMaker {
     }
 
 
-    private File getRestartFile() throws IOException {
+    public File getRestartFile() throws IOException {
         File file = File.createTempFile("jpgc-restart-", ".list");
         PrintWriter out = new PrintWriter(file);
         out.print(SafeDeleter.getJVM() + "\n");
@@ -87,7 +85,7 @@ public class ChangesMaker {
     }
 
 
-    public File makeMovementsFile(Set<Plugin> deletes, Set<Plugin> installs, Map<String, String> installLibs, Set<String> libDeletions) throws IOException {
+    public File getMovementsFile(Set<Plugin> deletes, Set<Plugin> installs, Map<String, String> installLibs, Set<String> libDeletions) throws IOException {
         final File file = File.createTempFile("jpgc-jar-changes", ".list");
         PrintWriter out = new PrintWriter(file);
 

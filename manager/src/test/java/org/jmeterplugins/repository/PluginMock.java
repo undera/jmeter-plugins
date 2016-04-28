@@ -54,4 +54,8 @@ public class PluginMock extends Plugin {
     public void setMarkerClass(String markerClass) {
         this.markerClass = markerClass;
     }
+
+    public void setInstallerClass(String installerClass) {
+        this.installerClass = installerClass;
+    }
 }

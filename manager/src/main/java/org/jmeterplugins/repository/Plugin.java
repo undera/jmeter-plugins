@@ -33,6 +33,7 @@ public class Plugin {
     protected String helpLink;
     protected String vendor;
     protected String candidateVersion;
+    protected String installerClass = null;
     protected boolean canUninstall = true;
 
     public Plugin(String aId) {
@@ -54,6 +55,9 @@ public class Plugin {
         inst.vendor = elm.getString("vendor");
         if (elm.containsKey("canUninstall")) {
             inst.canUninstall = elm.getBoolean("canUninstall");
+        }
+        if (elm.containsKey("installerClass")) {
+            inst.installerClass = elm.getString("installerClass");
         }
         return inst;
     }
@@ -328,6 +332,10 @@ public class Plugin {
             }
         }
         return depends;
+    }
+
+    public String getInstallerClass() {
+        return installerClass;
     }
 
     private class VersionComparator implements java.util.Comparator<String> {

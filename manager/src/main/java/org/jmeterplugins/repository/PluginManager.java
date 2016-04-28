@@ -111,33 +111,29 @@ public class PluginManager {
 
     public void startModifications(Set<Plugin> delPlugins, Set<Plugin> installPlugins, Map<String, String> installLibs, Set<String> libDeletions) throws IOException {
         final File moveFile = makeMovementsFile(delPlugins, installPlugins, installLibs, libDeletions);
-        final ProcessBuilder builder = getProcessBuilder(moveFile);
+        File installFile = getInstallFile(installPlugins);
+        final ProcessBuilder builder = getProcessBuilder(moveFile, installFile);
         log.info("JAR Modifications log will be saved into: " + builder.redirectOutput().file().getPath());
         builder.start();
     }
 
-    private ProcessBuilder getProcessBuilder(File moveFile) throws IOException {
-        String jvm_location;
-        if (System.getProperty("os.name").startsWith("Win")) {
-            jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java.exe";
-        } else {
-            jvm_location = System.getProperties().getProperty("java.home") + File.separator + "bin" + File.separator + "java";
-        }
-
+    private ProcessBuilder getProcessBuilder(File moveFile, File installFile) throws IOException {
         String jarPath = PluginManager.class.getProtectionDomain().getCodeSource().getLocation().getFile();
         if (!jarPath.endsWith(".jar"))
             throw new IllegalArgumentException("Invalid JAR path detected: " + jarPath);
         final File currentJar = new File(jarPath);
 
-        File restartFile = getRestartFile(jvm_location);
+        File restartFile = getRestartFile();
 
         final ArrayList<String> command = new ArrayList<>();
-        command.add(jvm_location);
+        command.add(SafeDeleter.getJVM());
         command.add("-classpath");
         command.add(currentJar.getPath());
         command.add(SafeDeleter.class.getCanonicalName());
         command.add("--move-list");
         command.add(moveFile.getAbsolutePath());
+        command.add("--install-list");
+        command.add(installFile.getAbsolutePath());
         command.add("--restart-command");
         command.add(restartFile.getAbsolutePath());
 
@@ -149,10 +145,10 @@ public class PluginManager {
         return builder;
     }
 
-    private File getRestartFile(String jvm_location) throws IOException {
+    private File getRestartFile() throws IOException {
         File file = File.createTempFile("jpgc-restart-", ".list");
         PrintWriter out = new PrintWriter(file);
-        out.print(jvm_location + "\n");
+        out.print(SafeDeleter.getJVM() + "\n");
 
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
         List<String> jvmArgs = runtimeMXBean.getInputArguments();
@@ -167,6 +163,18 @@ public class PluginManager {
         out.close();
         return file;
     }
+
+    private File getInstallFile(Set<Plugin> plugins) throws IOException {
+        File file = File.createTempFile("jpgc-restart-", ".list");
+        PrintWriter out = new PrintWriter(file);
+        for (Plugin plugin : plugins) {
+            if (plugin.getInstallerClass() != null) {
+                out.print(plugin.getDestName() + "\t" + plugin.getInstallerClass() + "\n");
+            }
+        }
+        return file;
+    }
+
 
     private File makeMovementsFile(Set<Plugin> deletes, Set<Plugin> installs, Map<String, String> installLibs, Set<String> libDeletions) throws IOException {
         final File file = File.createTempFile("jpgc-jar-changes", ".list");

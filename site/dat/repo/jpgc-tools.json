@@ -1,3 +1,21 @@
 [
-
+  {
+    "id": "jpgc-cmd",
+    "name": "Command-Line Graph Plotting Tool",
+    "description": "There is small command-line utility for generating graphs out of JTL files. It behave just like right-click context menu on all graphs. The tool can generate PNG, CSV or both. Note you can use GraphsGeneratorListener if you want to bulk generate graphs after a test or for existing results.",
+    "screenshotUrl": "",
+    "helpUrl": "http://jmeter-plugins.org/wiki/JMeterPluginsCMD/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.cmdtools.ReporterTool",
+    "installerClass": "kg.apc.cmdtools.CMDInstaller",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmd/2.0/jmeter-plugins-cmd-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "cmdrunner": "http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/1.0.2/cmdrunner-1.0.2.jar"
+        }
+      }
+    }
+  }
 ]

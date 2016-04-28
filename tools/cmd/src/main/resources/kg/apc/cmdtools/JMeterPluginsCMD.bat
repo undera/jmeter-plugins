@@ -1,3 +1,3 @@
 @echo off
 
-java -jar %0\..\CMDRunner.jar --tool Reporter %*
+java -jar %0\..\lib\cmdrunner-2.0.jar  --tool Reporter %*

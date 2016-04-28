@@ -50,7 +50,9 @@ public class Plugin {
         }
         inst.name = elm.getString("name");
         inst.description = elm.getString("description");
-        inst.screenshot = elm.getString("screenshotUrl");
+        if (elm.containsKey("screenshotUrl")) {
+            inst.screenshot = elm.getString("screenshotUrl");
+        }
         inst.helpLink = elm.getString("helpUrl");
         inst.vendor = elm.getString("vendor");
         if (elm.containsKey("canUninstall")) {

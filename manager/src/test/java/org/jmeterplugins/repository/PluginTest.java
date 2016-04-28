@@ -57,4 +57,11 @@ public class PluginTest {
             }
         });
     }
+
+    @Test
+    public void testInstallerClass() {
+        String str = "{\"id\": 0, \"markerClass\": 0, \"name\": 0, \"description\": 0, \"helpUrl\": 0, \"vendor\": 0, \"installerClass\": \"test\"}";
+        Plugin p = Plugin.fromJSON(JSONObject.fromObject(str, new JsonConfig()));
+        assertEquals("test", p.getInstallerClass());
+    }
 }

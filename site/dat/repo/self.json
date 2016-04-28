@@ -14,6 +14,9 @@
       },
       "0.4": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.4/jmeter-plugins-manager-0.4.jar"
+      },
+      "0.5": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.5/jmeter-plugins-manager-0.5.jar"
       }
     }
   }

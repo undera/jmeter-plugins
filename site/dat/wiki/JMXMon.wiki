@@ -17,6 +17,9 @@ URI: service:jmx:rmi:///jndi/rmi://YOURHOST:6969/jmxrmi
 or
 service:jmx:rmi://YOURHOST:JMX_PORT/jndi/rmi://YOURHOST:JMX_PORT/jmxrmi
 
+This field can contains jmeter variables that will be expanded for each call over time if canRetry is checked
+Why? if a server spawn external process, it can return ip and port for jmx connection. It's up to you to extract those values into variable(s) and use then in URI field
+
 Object name: java.lang:type=Memory
 
 Attribute: HeapMemoryUsage

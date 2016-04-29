@@ -15,6 +15,8 @@ import javax.management.ReflectionException;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.remote.JMXConnector;
 
+import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -25,7 +27,7 @@ public class JMXMonSampler {
     private String objectName;
     private String attribute;
     private String key; // for use with complex types
-    private String url; // use to open one connection for the same url
+    private JMeterProperty url; // use to open one connection for the same url
     
     private final JMXMonConnectionPool pool;
     private final Hashtable connectionAttributes;
@@ -35,9 +37,10 @@ public class JMXMonSampler {
     private double oldValue = Double.NaN;
     private boolean canRetry = true;
     private boolean hasFailed = false;
+	private JMXMonCollector collector;
 	
     
-    public JMXMonSampler(MBeanServerConnection remote, JMXConnector jmxConnector, String url, String name, String objectName, String attribute, String key, boolean sampleDeltaValue) {
+    public JMXMonSampler(MBeanServerConnection remote, JMXConnector jmxConnector, JMeterProperty url, String name, String objectName, String attribute, String key, boolean sampleDeltaValue) {
     	this.pool = null;
     	this.connectionAttributes = null;
     	this.remote = remote;
@@ -52,6 +55,7 @@ public class JMXMonSampler {
     
     /**
      * Constructor
+     * @param jmxMonCollector 
      * @param pool the connection pool
      * @param attributes connection attributes
      * @param url jmx url
@@ -62,7 +66,8 @@ public class JMXMonSampler {
      * @param sampleDeltaValue if true the sample value is the delta between previous value
      * @param canRetry if true the sampler will try to connect to the jmx server until connection/reconnection
      */
-    public JMXMonSampler(JMXMonConnectionPool pool, Hashtable attributes, String url, String name, String objectName, String attribute, String key, boolean sampleDeltaValue, boolean canRetry) {
+    public JMXMonSampler(JMXMonCollector jmxMonCollector, JMXMonConnectionPool pool, Hashtable attributes, JMeterProperty url, String name, String objectName, String attribute, String key, boolean sampleDeltaValue, boolean canRetry) {
+    	this.collector = jmxMonCollector;
         this.pool = pool;
         this.connectionAttributes = attributes;
     	this.metricName = name;
@@ -86,7 +91,7 @@ public class JMXMonSampler {
 
             MBeanServerConnection activeRemote = null;
             if (remote == null) {
-            	activeRemote = pool.getConnection(url, connectionAttributes);
+            	activeRemote = pool.getConnection(url.getStringValue(), connectionAttributes);
             	
             	if (activeRemote == null){
             		hasFailed = true;
@@ -132,7 +137,7 @@ public class JMXMonSampler {
             log.error(ex.getMessage());
         } catch (ConnectException ex) {          
             log.warn("Connection lost", ex);
-            pool.notifyConnectionDirty(url);
+            pool.notifyConnectionDirty(url.getStringValue());
             
             if (sampleDeltaValue) {
                 if (!Double.isNaN(oldValue)) {
@@ -191,11 +196,11 @@ public class JMXMonSampler {
 		this.key = key;
 	}
 
-	public String getUrl() {
+	public JMeterProperty getUrl() {
 		return url;
 	}
 
-	public void setUrl(String url) {
+	public void setUrl(JMeterProperty url) {
 		this.url = url;
 	}
 

@@ -1,6 +1,7 @@
 package kg.apc.jmeter.jmxmon;
 
 import org.apache.jmeter.samplers.SampleEvent;
+import org.apache.jmeter.testelement.property.JMeterProperty;
 
 import javax.management.MBeanServerConnection;
 import java.io.IOException;
@@ -25,9 +26,9 @@ class TestJMXMonCollector extends JMXMonCollector {
             }
         }
     }
-
+    
     @Override
-    protected void initiateConnector(Hashtable attributes, String jmxUrl, String name, boolean delta, String objectName, String attribute, String key, boolean canRetry) throws IOException {
+    protected void initiateConnector(Hashtable attributes, JMeterProperty jmxUrl, String name, boolean delta, String objectName, String attribute, String key, boolean canRetry) throws IOException {
         MBeanServerConnection conn = new MBeanServerConnectionEmul(jmxMonTest.getQueryResults());
         jmxMonSamplers.add(new JMXMonSampler(conn, null, jmxUrl, name, objectName, attribute, key, delta));
     }

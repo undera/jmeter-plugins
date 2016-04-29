@@ -12,7 +12,7 @@ No need to mess with JARs anymore. Install Plugins Manager once and it will do i
 The plugins it manages include usual plugins from JMeter-Plugins.org, various third-party plugins and even core JMeter plugins.
 This is important, because removing rarely used features like JDBC and LDAP will tidy up huge popup menus from unused items. As a bonus you will get the increased JMeter startup time.
 
-As the first experiment, try to uninstall all the plugins and see how bare JMeter looks like. Then install something. Then install something more. Have fun!
+You can observe the catalogue of plugins [/catalogue/ here]. As the first experiment, try to uninstall all the plugins and see how bare JMeter looks like. Then install something. Then install something more. Have fun!
 
 == Installation and Usage ==
 

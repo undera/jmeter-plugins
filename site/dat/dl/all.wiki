@@ -1,4 +1,11 @@
-=Latest Stable Release=
+= Plugins Manager Download =
+
+The easiest way to get the plugins is to install [/wiki/PluginsManager/ Plugins Manager]. Then you'll be able to install any other plugins just by clicking chekbox. Plugins Manager is available from "Options" menu of JMeter.
+
+Just download this jar and put it into {{{lib/ext}}} directory, then restart JMeter:
+[http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.5/jmeter-plugins-manager-0.5.jar jmeter-plugins-manager-0.5.jar]
+
+== Old Packaging Stable Release ==
 
 <download:JMeterPlugins-Standard-1.4.0.zip;Standard Set>
 
@@ -16,12 +23,8 @@
 
 ----
 
-<p class="alert alert-success">Join [/wiki/PluginsManager/ Plugins Manager] beta testing</p>
-
-----
-
 See also:
 
-  * [old Previous Releases]
+  * [old Previous ZIP Releases]
   * [snapshots Latest Development Snapshots]
 

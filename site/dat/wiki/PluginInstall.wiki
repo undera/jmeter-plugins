@@ -1,3 +1,7 @@
+<div class="alert alert-success">
+Hey, what you see here is the old way to install plugins. The new way is to use [/wiki/PluginsManager/ Plugins Manager]
+</div>
+
 = Installing Plugins =
 
 <font color='red'>*You need to run JMeter 2.12 or above with a Java 7 or above to use the plugins.*</font>

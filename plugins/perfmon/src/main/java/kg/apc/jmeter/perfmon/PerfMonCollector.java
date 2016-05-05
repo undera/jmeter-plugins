@@ -22,10 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class PerfMonCollector
-        extends CorrectedResultCollector
-        implements Runnable, PerfMonSampleGenerator {
-
+public class PerfMonCollector extends CorrectedResultCollector implements Runnable, PerfMonSampleGenerator {
     private static boolean autoGenerateFiles = false;
     private static final String PERFMON = "PerfMon";
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -61,7 +58,6 @@ public class PerfMonCollector
     }
 
     public PerfMonCollector() {
-        // TODO: document it
         interval = JMeterUtils.getPropDefault("jmeterPlugin.perfmon.interval", 1000);
     }
 
@@ -169,12 +165,15 @@ public class PerfMonCollector
         CollectionProperty rows = (CollectionProperty) prop;
 
         for (int i = 0; i < rows.size(); i++) {
-            ArrayList<Object> row = (ArrayList<Object>) rows.get(i).getObjectValue();
-            String host = ((JMeterProperty) row.get(0)).getStringValue();
-            int port = ((JMeterProperty) row.get(1)).getIntValue();
-            String metric = ((JMeterProperty) row.get(2)).getStringValue();
-            String params = ((JMeterProperty) row.get(3)).getStringValue();
-            initiateConnector(host, port, i, metric, params);
+            Object val = rows.get(i).getObjectValue();
+            if (val instanceof ArrayList) {
+                ArrayList<JMeterProperty> row = (ArrayList<JMeterProperty>) val;
+                String host = row.get(0).getStringValue();
+                int port = row.get(1).getIntValue();
+                String metric = row.get(2).getStringValue();
+                String params = row.get(3).getStringValue();
+                initiateConnector(host, port, i, metric, params);
+            }
         }
 
         for (Object key : connectors.keySet()) {
@@ -265,6 +264,7 @@ public class PerfMonCollector
         }
         NewAgentConnector conn = new NewAgentConnector();
         conn.setTransport(transport);
+        transport.setInterval(interval);
         return conn;
     }
 

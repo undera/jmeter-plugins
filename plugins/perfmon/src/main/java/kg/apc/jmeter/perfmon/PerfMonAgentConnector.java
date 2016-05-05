@@ -4,11 +4,11 @@ import java.io.IOException;
 
 public interface PerfMonAgentConnector {
 
-    public void connect() throws IOException;
+    void connect() throws IOException;
 
-    public void disconnect();
+    void disconnect();
 
-    public void generateSamples(PerfMonSampleGenerator collector) throws IOException;
+    void generateSamples(PerfMonSampleGenerator collector) throws IOException;
 
-    public void addMetric(String metric, String params, String label);
+    void addMetric(String metric, String params, String label);
 }

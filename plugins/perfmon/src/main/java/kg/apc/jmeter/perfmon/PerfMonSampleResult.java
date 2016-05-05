@@ -2,8 +2,7 @@ package kg.apc.jmeter.perfmon;
 
 import org.apache.jmeter.samplers.SampleResult;
 
-public class PerfMonSampleResult
-        extends SampleResult {
+public class PerfMonSampleResult extends SampleResult {
 
     private final long ts;
 

@@ -1,8 +1,6 @@
 = Building Project from Sources =
 
-To build any part of JMeter Plugins you'll need [http://git-scm.com/ Git] client, [http://maven.apache.org/ Maven] tool and Java 1.6 JDK.
-
-NetBeans IDE supports POM projects, you can just open pom.xml and operate the code.
+To build any part of JMeter Plugins you'll need [http://git-scm.com/ Git] client, [http://maven.apache.org/ Maven] tool and Java 1.7+ JDK.
 
 == Building JMeter-Plugins ==
 

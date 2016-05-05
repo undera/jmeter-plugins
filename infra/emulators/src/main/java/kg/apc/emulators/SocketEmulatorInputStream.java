@@ -1,39 +1,27 @@
 package kg.apc.emulators;
 
-import java.io.IOException;
-import java.io.InputStream;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-public class SocketEmulatorInputStream
-        extends InputStream {
+import java.io.IOException;
+import java.io.InputStream;
 
+public class SocketEmulatorInputStream extends InputStream {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private byte[] bytes;
     private int pos = 0;
 
-    /**
-     *
-     * @param hexStringToByteArray
-     */
     public SocketEmulatorInputStream(byte[] hexStringToByteArray) {
         this();
         setBytesToRead(hexStringToByteArray);
     }
 
-    /**
-     *
-     */
     public SocketEmulatorInputStream() {
         bytes = null;
         pos = 0;
         log.info("Created input stream emulator");
     }
 
-    /**
-     *
-     * @param hexStringToByteArray
-     */
     public final void setBytesToRead(byte[] hexStringToByteArray) {
         log.debug("Set bytes to read: " + Integer.toString(hexStringToByteArray.length));
         bytes = hexStringToByteArray;

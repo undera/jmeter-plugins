@@ -159,7 +159,7 @@ public class DatagramChannelEmul extends DatagramChannel {
 
     @Override
     public int send(ByteBuffer src, SocketAddress target) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return write(src);
     }
 
     @Override

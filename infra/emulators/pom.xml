@@ -6,7 +6,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-emulators</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
 
     <name>Emulators library</name>
     <description>Classes for plugins unit tests</description>

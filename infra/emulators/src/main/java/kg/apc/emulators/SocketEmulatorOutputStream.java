@@ -5,6 +5,7 @@ import org.apache.jmeter.protocol.tcp.sampler.BinaryTCPClientImpl;
 import java.io.IOException;
 import java.io.OutputStream;
 
+
 public class SocketEmulatorOutputStream
         extends OutputStream {
 
@@ -15,8 +16,7 @@ public class SocketEmulatorOutputStream
     }
 
     @Override
-    public void write(int b)
-            throws IOException {
+    public void write(int b) throws IOException {
         appendByte(b);
     }
 
@@ -37,6 +37,6 @@ public class SocketEmulatorOutputStream
 
     public String getWrittenBytesAsString() {
         byte[] res = BinaryTCPClientImpl.hexStringToByteArray(getWrittenBytesAsHexString());
-        return res.toString();
+        return new String(res);
     }
 }

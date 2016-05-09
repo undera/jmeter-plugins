@@ -27,7 +27,7 @@ setlocal
 
 cd /D %~dp0
 
-set CP=..\lib\ext\ApacheJMeter_core.jar;..\lib\jorphan.jar;..\lib\ext\JMeterPlugins-Extras.jar
+set CP=..\lib\ext\ApacheJMeter_core.jar;..\lib\jorphan.jar;..\lib\ext\jmeter-plugins-table-server-2.0.jar
 set CP=%CP%;..\lib\logkit-2.0.jar;..\lib\avalon-framework-4.1.4.jar
 
 java -cp %CP% org.jmeterplugins.protocol.http.control.HttpSimpleTableServer

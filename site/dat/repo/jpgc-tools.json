@@ -133,5 +133,23 @@
         ]
       }
     }
+  },
+  {
+    "id": "jpgc-sts",
+    "name": "HTTP Simple Table Server",
+    "description": "The main idea is to use a tiny http server in JMeter Plugins to manage the dataset files with simple commands to get / add rows of data in files.",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/http_simple_table_server.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/HttpSimpleTableServer/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "org.jmeterplugins.protocol.http.control.HttpSimpleTableServer",
+    "installerClass": "org.jmeterplugins.protocol.http.control.STSInstaller",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/2.0/jmeter-plugins-table-server-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
   }
 ]

@@ -84,7 +84,7 @@
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.vizualizers.PageDataExtractorOverTimeGui",
     "versions": {
-      "2.0": {
+      "0.1": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-pde/0.1/jmeter-plugins-pde-0.1.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
@@ -111,6 +111,26 @@
           "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
           "cmdrunner": "http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
         }
+      }
+    }
+  },
+  {
+    "id": "jpgc-synthesis",
+    "name": "Synthesis Report",
+    "description": "Synthesis Report is a mix between Summary Report and Aggregate Report",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/synthesis_report.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/SynthesisReport/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.jmeter.vizualizers.SynthesisReportGui",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-plancheck/2.0/jmeter-plugins-plancheck-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        },
+        "depends": [
+          "jpgc-filterresults"
+        ]
       }
     }
   }

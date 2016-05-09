@@ -45,10 +45,10 @@
   {
     "id": "jmeter-native",
     "name": "OS Process Support",
-    "description": "",
+    "description": "The OS Process Sampler is a sampler that can be used to execute commands on the local machine.",
     "vendor": "JMeter Core Team",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/os_process_sampler.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#OS_Process_Sampler",
     "markerClass": "org.apache.jmeter.protocol.system.SystemSampler",
     "versions": {
       "": {
@@ -59,10 +59,10 @@
   {
     "id": "jmeter-mongodb",
     "name": "MongoDB Support",
-    "description": "",
+    "description": "Supports testing MongoDB performance",
     "vendor": "JMeter Core Team",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "screenshotUrl": "hhttp://jmeter.apache.org/images/screenshots/mongodb-source-config.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#MongoDB_Script",
     "markerClass": "org.apache.jmeter.protocol.mongodb.sampler.MongoScriptSampler",
     "versions": {
       "": {
@@ -73,10 +73,10 @@
   {
     "id": "jmeter-mail",
     "name": "Mail/SMTP Support",
-    "description": "",
+    "description": "The SMTP Sampler can send mail messages using SMTP/SMTPS protocol.",
     "vendor": "JMeter Core Team",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/smtp_sampler.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#SMTP_Sampler",
     "markerClass": "org.apache.jmeter.protocol.smtp.sampler.SmtpSampler",
     "versions": {
       "": {
@@ -87,10 +87,10 @@
   {
     "id": "jmeter-junit",
     "name": "JUnit Support",
-    "description": "",
+    "description": "Executes JUnit tests compiled into JARs",
     "vendor": "JMeter Core Team",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/junit_sampler.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#JUnit_Request",
     "markerClass": "org.apache.jmeter.protocol.java.sampler.JUnitSampler",
     "versions": {
       "": {
@@ -101,10 +101,10 @@
   {
     "id": "jmeter-jms",
     "name": "JMS Support",
-    "description": "",
+    "description": "Offers JMS Subscriber, Publisher and JMS P2P",
     "vendor": "JMeter Core Team",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/jmssubscriber.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#JMS_Subscriber",
     "markerClass": "org.apache.jmeter.protocol.jms.sampler.JMSSampler",
     "versions": {
       "": {
@@ -115,10 +115,10 @@
   {
     "id": "jmeter-jdbc",
     "name": "JDBC Support",
-    "description": "",
+    "description": "This sampler lets you send an JDBC Request (an SQL query) to a database.",
     "vendor": "JMeter Core Team",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/jdbctest/jdbc-request.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#JDBC_Request",
     "markerClass": "org.apache.jmeter.protocol.jdbc.sampler.JDBCSampler",
     "versions": {
       "": {
@@ -143,10 +143,10 @@
   {
     "id": "jmeter-ftp",
     "name": "FTP Protocol Support",
-    "description": "",
+    "description": "This controller lets you send an FTP 'retrieve file' or 'upload file' request to an FTP server.",
     "vendor": "JMeter Core Team",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/ftptest/ftp-request.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#FTP_Request",
     "markerClass": "org.apache.jmeter.protocol.ftp.sampler.FTPSampler",
     "versions": {
       "": {
@@ -157,10 +157,10 @@
   {
     "id": "jmeter-http",
     "name": "HTTP Protocol Support",
-    "description": "",
+    "description": "This sampler lets you send an HTTP/HTTPS request to a web server.",
     "vendor": "JMeter Core Team",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/http-request.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#HTTP_Request",
     "markerClass": "org.apache.jmeter.protocol.http.sampler.HTTPSampler",
     "versions": {
       "": {
@@ -171,10 +171,10 @@
   {
     "id": "jmeter-components",
     "name": "Various Core Components",
-    "description": "",
+    "description": "Ships a lot of various components for JMeter, including Debug Sampler",
     "vendor": "JMeter Core Team",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/debug_sampler.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html",
     "markerClass": "org.apache.jmeter.sampler.DebugSampler",
     "versions": {
       "": {
@@ -187,8 +187,8 @@
     "name": "JMeter 'Monitors' (Deprecated)",
     "description": "A deprecated library, mostly not used",
     "vendor": "JMeter Core Team",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/monitor_screencap.png",
+    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#Monitor_Results",
     "markerClass": "org.apache.jmeter.monitor.parser.MonitorHandler",
     "versions": {
       "": {

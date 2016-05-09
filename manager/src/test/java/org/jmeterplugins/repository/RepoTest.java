@@ -22,6 +22,7 @@ public class RepoTest {
         String repos = path + up + up + up + File.separator + "site" + File.separator + "dat" + File.separator + "repo";
         File dir = new File(repos);
 
+        System.out.println("Working with " + dir.getCanonicalPath());
         File[] files = dir.listFiles();
         assert files != null;
         for (File f : files) {

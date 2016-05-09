@@ -205,7 +205,7 @@
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.atlantbh.jmeter.plugins.jmstools.BinaryMessagepostProcessor",
     "versions": {
-      "0.1": {
+      "0.2": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jms/0.2/jmeter-plugins-jms-0.2.jar",
         "depends": [
           "jmeter-java"

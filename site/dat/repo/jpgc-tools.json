@@ -56,5 +56,23 @@
         ]
       }
     }
+  },
+  {
+    "id": "jpgc-mergeresults",
+    "name": "Merge Results",
+    "description": "Merge Results is a tool to merge files of results (to simplify the comparison of two or more load tests).",
+    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/merge_results_ui.png",
+    "helpUrl": "http://jmeter-plugins.org/wiki/MergeResults/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "org.jmeterplugins.save.MergeResultsService",
+    "installerClass": "org.jmeterplugins.save.MergeResultsInstaller",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-mergeresults/2.0/jmeter-plugins-mergeresults-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
   }
 ]

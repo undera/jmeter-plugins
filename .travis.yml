@@ -1,9 +1,9 @@
 sudo: false  # to use new infrastructure
 language: java
-jdk:
-  - openjdk7
-  - oraclejdk8
-install: "mvn clean --batch-mode"
-script: "mvn -Djava.awt.headless=true test --fail-at-end --batch-mode"
+#jdk:
+#  - openjdk7
+#  - oraclejdk8
+#install: "mvn clean --batch-mode"
+#script: "mvn -Djava.awt.headless=true test --fail-at-end --batch-mode"
 after_success:
   - bash <(curl -s https://codecov.io/bash)

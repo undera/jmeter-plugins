@@ -17,5 +17,44 @@
         }
       }
     }
+  },
+  {
+    "id": "jpgc-filterresults",
+    "name": "Filter Results Tool",
+    "description": "Often it's necessary to filter the results of a test to obtain a global vision with pages without all the urls that are declared in the html page.",
+    "screenshotUrl": "",
+    "helpUrl": "http://jmeter-plugins.org/wiki/FilterResultsTool/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.cmdtools.FilterResultsTool",
+    "installerClass": "kg.apc.cmdtools.FilterResultsInstaller",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-filterresults/2.0/jmeter-plugins-filterresults-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "cmdrunner": "http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "jpgc-ggl",
+    "name": "Graphs Generator Listener",
+    "description": "Graphs Generator Listener generates several graphs at end of test",
+    "screenshotUrl": "",
+    "helpUrl": "http://jmeter-plugins.org/wiki/GraphsGeneratorListener/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.jmeter.listener.GraphsGeneratorListener",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-ggl/2.0/jmeter-plugins-graphs-ggl-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        },
+        "depends": [
+          "jpgc-cmd"
+        ]
+      }
+    }
   }
 ]

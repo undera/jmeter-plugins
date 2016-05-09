@@ -20,4 +20,4 @@
 # jmeter/lib/ext/FilterResults.sh --output-file filteredout.xml --input-file inputfile.csv --include-label-regex true --include-labels "P[1-3].*" --start-offset 2 --end-offset 180 --success-filter true --save-as-xml true
 #
 # May be you need to declare the path to the java binary
-java -Djava.awt.headless=true -jar $(dirname $0)/CMDRunner.jar --tool FilterResults "$@"
+java -Djava.awt.headless=true -jar $(dirname $0)/../lib/cmdrunner-2.0.jar --tool FilterResults "$@"

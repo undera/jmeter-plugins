@@ -94,5 +94,24 @@
         ]
       }
     }
+  },
+  {
+    "id": "jpgc-plancheck",
+    "name": "Test Plan Check Tool",
+    "description": "Small command line tool to check test plan consistency. Helps in automation of JMeter executions.",
+    "screenshotUrl": "",
+    "helpUrl": "http://jmeter-plugins.org/wiki/TestPlanCheckTool/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "kg.apc.cmdtools.TestPlanCheckTool",
+    "installerClass": "kg.apc.cmdtools.TestPlanCheckInstaller",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-plancheck/2.0/jmeter-plugins-plancheck-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "cmdrunner": "http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+        }
+      }
+    }
   }
 ]

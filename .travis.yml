@@ -3,7 +3,7 @@ language: java
 #jdk:
 #  - openjdk7
 #  - oraclejdk8
-#install: "mvn clean --batch-mode"
-#script: "mvn -Djava.awt.headless=true test --fail-at-end --batch-mode"
+install: "mvn clean install --batch-mode"
+script: "mvn -Djava.awt.headless=true cobertura:cobertura -Dcobertura.report.format=xml test --fail-at-end --batch-mode"
 after_success:
   - bash <(curl -s https://codecov.io/bash)

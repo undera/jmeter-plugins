@@ -22,9 +22,6 @@ import org.apache.jmeter.samplers.SampleResult;
  */
 public class JSONToXMLConverter extends AbstractSampler {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     private static final String JSONINPUT = "JSONINPUT";
     private static final String XMLOUTPUT = "XMLOUTPUT";

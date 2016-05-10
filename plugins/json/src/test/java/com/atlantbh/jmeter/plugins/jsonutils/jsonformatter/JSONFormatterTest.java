@@ -18,46 +18,75 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonformatter;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class JSONFormatterTest {
 
-    public JSONFormatterTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of process method, of class JSONFormatter.
-     */
     @Test
-    public void testProcess() {
+    public void testProcess_dict() {
+        System.out.println("process dict");
+        JSONFormatter instance = new JSONFormatter();
+        JMeterContext threadContext = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        res.setResponseData("{\"a\":1,\"b\":2}", "UTF8");
+        threadContext.setPreviousResult(res);
+        instance.process();
+        Assert.assertEquals("{\n    \"a\": 1,\n    \"b\": 2\n}", res.getResponseDataAsString());
+    }
+
+    @Test
+    public void testProcess_array() {
+        System.out.println("process array");
+        JSONFormatter instance = new JSONFormatter();
+        JMeterContext threadContext = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        res.setResponseData("[]", "UTF8");
+        threadContext.setPreviousResult(res);
+        instance.process();
+    }
+
+    @Test
+    public void testProcess_string() {
+        System.out.println("process str");
+        JSONFormatter instance = new JSONFormatter();
+        JMeterContext threadContext = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        res.setResponseData("\"str\"", "UTF8");
+        threadContext.setPreviousResult(res);
+        instance.process();
+    }
+
+    @Test
+    public void testProcess_float() {
+        System.out.println("process float");
+        JSONFormatter instance = new JSONFormatter();
+        JMeterContext threadContext = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        res.setResponseData("3.14", "UTF8");
+        threadContext.setPreviousResult(res);
+        instance.process();
+    }
+
+    @Test
+    public void testProcess_null() {
+        System.out.println("process null");
+        JSONFormatter instance = new JSONFormatter();
+        JMeterContext threadContext = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        res.setResponseData("null", "UTF8");
+        threadContext.setPreviousResult(res);
+        instance.process();
+    }
+
+    @Test
+    public void testProcess_Failure() {
         System.out.println("process");
         JSONFormatter instance = new JSONFormatter();
         JMeterContext threadContext = JMeterContextService.getContext();
         SampleResult res = new SampleResult();
-        res.setResponseData("{}", "UTF8");
+        res.setResponseData("<html>", "UTF8");
         threadContext.setPreviousResult(res);
         instance.process();
-        // TODO review the generated test code and remove the default call to fail.
-
     }
 }

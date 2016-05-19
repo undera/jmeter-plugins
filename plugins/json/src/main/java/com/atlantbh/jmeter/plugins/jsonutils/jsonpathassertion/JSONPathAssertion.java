@@ -10,6 +10,7 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion;
 
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import org.apache.jmeter.assertions.Assertion;
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
@@ -20,6 +21,7 @@ import org.apache.log.Logger;
 import org.apache.oro.text.regex.Pattern;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * This is main class for JSONPath Assertion which verifies assertion on
@@ -88,14 +90,14 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
                 for (Object subj : arr.toArray()) {
                     if (isExpectNull() && subj == null) {
                         return;
-                    } else if (isEquals(subj.toString())) {
+                    } else if (isEquals(subj)) {
                         return;
                     }
                 }
             } else {
                 if (isExpectNull() && value == null) {
                     return;
-                } else if (isEquals(value.toString())) {
+                } else if (isEquals(value)) {
                     return;
                 }
             }
@@ -107,9 +109,16 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         }
     }
 
-    private boolean isEquals(String subj) {
+    private boolean isEquals(Object subj) {
+        String str;
+        if (subj instanceof Map) {
+            //noinspection unchecked
+            str = new JSONObject((Map<String, ?>) subj).toJSONString();
+        } else {
+            str = subj.toString();
+        }
         Pattern pattern = JMeterUtils.getPatternCache().getPattern(getExpectedValue());
-        return JMeterUtils.getMatcher().matches(subj, pattern);
+        return JMeterUtils.getMatcher().matches(str, pattern);
     }
 
     @Override

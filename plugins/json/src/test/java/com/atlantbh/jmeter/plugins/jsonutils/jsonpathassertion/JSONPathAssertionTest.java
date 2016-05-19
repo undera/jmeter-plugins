@@ -292,7 +292,7 @@ public class JSONPathAssertionTest {
         JSONPathAssertion instance = new JSONPathAssertion();
         instance.setJsonPath("$.myval");
         instance.setJsonValidationBool(true);
-        instance.setExpectedValue("{key=val}");
+        instance.setExpectedValue("{\"key\":\"val\"}");
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());

@@ -315,4 +315,24 @@ public class JSONPathAssertionTest {
         assertEquals(expResult.getName(), result.getName());
         assertEquals(true, result.isFailure());
     }
+
+    @Test
+    public void testGetResult_match_msg_problem() {
+        System.out.println("getResult notexist");
+        SampleResult samplerResult = new SampleResult();
+        String str = "{\"execution\":[{\"scenario\":{\"requests\":[{\"headers\":{\"headerkey\":\"header value\"}}]}}]}";
+        samplerResult.setResponseData(str.getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.execution[0].scenario.requests[0].headers");
+        instance.setJsonValidationBool(true);
+        instance.setExpectNull(false);
+        instance.setExpectedValue("{headerkey=header value}");
+        instance.setInvert(false);
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(true, result.isFailure());
+        assertEquals("Value expected to be '{headerkey=header value}', but found '{\"headerkey\":\"header value\"}'", result.getFailureMessage());
+    }
 }

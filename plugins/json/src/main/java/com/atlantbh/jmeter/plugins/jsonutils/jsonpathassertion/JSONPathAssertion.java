@@ -102,14 +102,22 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
                 }
             }
 
-            if (isExpectNull())
+            if (isExpectNull()) {
                 throw new RuntimeException(String.format("Value expected to be null, but found '%s'", value));
-            else
-                throw new RuntimeException(String.format("Value expected to be '%s', but found '%s'", getExpectedValue(), value));
+            }
+            else {
+                throw new RuntimeException(String.format("Value expected to be '%s', but found '%s'", getExpectedValue(), objectToString(value)));
+            }
         }
     }
 
     private boolean isEquals(Object subj) {
+        String str = objectToString(subj);
+        Pattern pattern = JMeterUtils.getPatternCache().getPattern(getExpectedValue());
+        return JMeterUtils.getMatcher().matches(str, pattern);
+    }
+
+    private String objectToString(Object subj) {
         String str;
         if (subj instanceof Map) {
             //noinspection unchecked
@@ -117,8 +125,7 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         } else {
             str = subj.toString();
         }
-        Pattern pattern = JMeterUtils.getPatternCache().getPattern(getExpectedValue());
-        return JMeterUtils.getMatcher().matches(str, pattern);
+        return str;
     }
 
     @Override
@@ -154,7 +161,6 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
                 } else {
                     result.setFailureMessage("Failed that JSONPath not exists: " + getJsonPath());
                 }
-
             } catch (Exception e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Assertion failed", e);

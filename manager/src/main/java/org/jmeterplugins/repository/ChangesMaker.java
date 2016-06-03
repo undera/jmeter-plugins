@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class ChangesMaker {
         final ArrayList<String> command = new ArrayList<>();
         command.add(SafeDeleter.getJVM());
         command.add("-classpath");
-        command.add(currentJar.getPath());
+        command.add(URLDecoder.decode(currentJar.getPath(), "UTF-8"));
         command.add(SafeDeleter.class.getCanonicalName());
         command.add("--move-list");
         command.add(moveFile.getAbsolutePath());

@@ -12,6 +12,7 @@ import org.apache.log.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLDecoder;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -250,7 +251,7 @@ public class Plugin {
         Downloader dwn = new Downloader(notify);
         tempName = dwn.download(id, url);
         File f = new File(JMeterEngine.class.getProtectionDomain().getCodeSource().getLocation().getFile());
-        destName = f.getParent() + File.separator + dwn.getFilename();
+        destName = URLDecoder.decode(f.getParent(), "UTF-8") + File.separator + dwn.getFilename();
     }
 
     public String getName() {

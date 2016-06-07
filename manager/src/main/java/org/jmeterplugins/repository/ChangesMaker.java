@@ -119,7 +119,7 @@ public class ChangesMaker {
 
         String libPath = new File(JOrphanUtils.class.getProtectionDomain().getCodeSource().getLocation().getFile()).getParent();
         for (Map.Entry<String, String> lib : installLibs.entrySet()) {
-            out.print(lib.getKey() + "\t" + libPath + File.separator + lib.getValue() + "\n");
+            out.print(lib.getKey() + "\t" + URLDecoder.decode(libPath, "UTF-8") + File.separator + lib.getValue() + "\n");
         }
 
         for (Plugin plugin : installs) {

@@ -131,8 +131,7 @@
         "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/jmeter-debugger-0.1.jar",
         "depends": [
           "jmeter-core"
-        ],
-        "libs": {}
+        ]
       }
     }
   }

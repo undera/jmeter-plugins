@@ -3,7 +3,7 @@
 <div class="alert alert-warning">
 This feature in in BETA state. [http://atkritka.com/upload/iblock/978/atkritka_1378399932_735.jpg? Better than nothing], but it can ruin your JMeter installation.
 Consider using it with non-production installations only.
-Report any issues on our [/support/ support forums].<br/><br/>Get the beta build [http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.5/jmeter-plugins-manager-0.5.jar jmeter-plugins-manager-0.5.jar from here].
+Report any issues on our [/support/ support forums].<br/><br/>Get the beta build [http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.6/jmeter-plugins-manager-0.6.jar jmeter-plugins-manager-0.6.jar from here].
 </div>
 
 The idea of JMeter Plugins Manager is simple: instead of installing various plugins manually, it will do it for you through nice UI.

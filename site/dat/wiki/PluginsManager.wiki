@@ -48,3 +48,28 @@ Main goal is not to ship undesired plugins into popup menus to not distract JMet
 By default, Plugins Manager sends some anonymous information to JMeter-Plugins.org, including: full version of JMeter used, list of installed plugins with their versions, unique ID for the installation.
 We would love to analyze that information to learn more about which plugins deserve more development according to their popularity. Also, we plan to publish some interesting stats from that information in the future.
 The information is completely anonymous, you can validate that through our source code. You are free to disable these reporting by setting {{{jpgc.repo.sendstats=false}}} in JMeter properties.
+
+
+== Using from BeanShell or JSR223 ==
+
+If you need to access the plugins versions information from scriptable components like BeanShell sampler, please use these two methods:
+
+=== Single Plugin Info ===
+
+Request for single plugin version, returns version string if plugin is installed, or null if plugin is not installed:
+ 
+{{{
+org.jmeterplugins.repository.PluginManager.getPluginStatus("jpgc-graphs-basic")
+}}}
+
+Example result of this function call is string like {{{1.3.0}}}.
+
+=== All Plugins Info ===
+
+Returns a string containing plugin IDs with corresponding versions. Only the installed plugins are listed.
+
+{{{
+org.jmeterplugins.repository.PluginManager.getAllPluginsStatus()
+}}}
+
+Example result of this function call is string like {{{[jpgc-graphs-basic=1.3.1, jpgc-sense=1.3.1, jpgc-cmd=1.3.1, jpgc-graphs-composite=1.3.1, jpgc-csl=1.3.1, jpgc-functions=1.3.1, jpgc-dummy=1.3.1, jpgc-ffw=1.3.1, jmeter-http=2.13, jpgc-fifo=1.3.1, jmeter-core=2.13, jpgc-mergeresults=1.3.1, jpgc-perfmon=1.3.1, jpgc-synthesis=1.3.1, jpgc-plancheck=1.3.1, jpgc-tst=1.3.1, jmeter-components=2.13]}}}.

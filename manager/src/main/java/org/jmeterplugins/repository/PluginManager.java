@@ -22,6 +22,7 @@ public class PluginManager {
     protected HttpClient httpClient = new HttpClient();
     private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://jmeter-plugins.org");
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
+    private static PluginManager staticManager = new PluginManager();
 
     public PluginManager() {
     }
@@ -272,4 +273,43 @@ public class PluginManager {
         this.timeout = timeout;
     }
 
+    /**
+     * @return Static instance of manager, used to spare resources on repo loading
+     */
+    public static PluginManager getStaticManager() {
+        try {
+            staticManager.load();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to get plugin repositories");
+        }
+        return staticManager;
+    }
+
+    /**
+     * @param id ID of the plugin to check
+     * @return Version name for the plugin if it is installed, null otherwise
+     */
+    public static String getPluginStatus(String id) {
+        PluginManager manager = getStaticManager();
+
+        for (Plugin plugin : manager.allPlugins.keySet()) {
+            if (plugin.id.equals(id)) {
+                return plugin.getInstalledVersion();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @return Version name for the plugin if it is installed, null otherwise
+     */
+    public static String getAllPluginsStatus() {
+        PluginManager manager = getStaticManager();
+
+        ArrayList<String> res = new ArrayList<>();
+        for (Plugin plugin : manager.getInstalledPlugins()) {
+            res.add(plugin.getID() + "=" + plugin.getInstalledVersion());
+        }
+        return Arrays.toString(res.toArray());
+    }
 }

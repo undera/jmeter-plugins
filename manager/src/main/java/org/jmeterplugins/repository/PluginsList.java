@@ -21,7 +21,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     private final JTextPane description = new JTextPane();
     private JList<PluginCheckbox> list = new CheckBoxList<>(5);
     private DefaultListModel<PluginCheckbox> listModel = new DefaultListModel<>();
-    private final JComboBox<String> version = new JComboBox<>();
+    protected final JComboBox<String> version = new JComboBox<>();
     private ItemListener itemListener = new VerChoiceChanged();
     private GenericCallback<Object> dialogRefresh;
 
@@ -41,8 +41,9 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         add(getDetailsPanel(), BorderLayout.CENTER);
 
         for (Plugin plugin : plugins) {
-            add(plugin, checkboxNotifier);
+            listModel.addElement(getCheckboxItem(plugin, checkboxNotifier));
         }
+        // TODO: popup menu to toggle all checkboxes
     }
 
     private JPanel getDetailsPanel() {
@@ -58,12 +59,12 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         return detailsPanel;
     }
 
-    private void add(Plugin plugin, ChangeListener changeNotifier) {
+    protected PluginCheckbox getCheckboxItem(Plugin plugin, ChangeListener changeNotifier) {
         PluginCheckbox element = new PluginCheckbox(plugin.getName());
         element.setSelected(plugin.isInstalled());
         element.setPlugin(plugin);
         element.addChangeListener(changeNotifier);
-        listModel.addElement(element);
+        return element;
     }
 
     @Override
@@ -71,26 +72,29 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         if (!e.getValueIsAdjusting() && list.getSelectedIndex() >= 0) {
             Plugin plugin = list.getSelectedValue().getPlugin();
             description.setText(getDescriptionHTML(plugin));
-            setUpVersionsList(plugin);
+            setUpVersionsList(list.getSelectedValue());
         }
     }
 
-    private void setUpVersionsList(Plugin plugin) {
+    protected void setUpVersionsList(PluginCheckbox cb) {
         version.removeItemListener(itemListener);
         version.removeAllItems();
-        for (String ver : plugin.getVersions()) {
+        for (String ver : cb.getPlugin().getVersions()) {
             version.addItem(ver);
         }
-        String selVersion;
-        if (plugin.isInstalled()) {
-            selVersion = plugin.getInstalledVersion();
-        } else {
-            selVersion = plugin.getCandidateVersion();
-        }
-        version.setSelectedItem(selVersion);
+        version.setSelectedItem(getCbVersion(cb));
 
         version.setEnabled(version.getItemCount() > 1);
         version.addItemListener(itemListener);
+    }
+
+    protected String getCbVersion(PluginCheckbox cb) {
+        Plugin plugin = cb.getPlugin();
+        if (plugin.isInstalled()) {
+            return plugin.getInstalledVersion();
+        } else {
+            return plugin.getCandidateVersion();
+        }
     }
 
     private String getDescriptionHTML(Plugin plugin) {

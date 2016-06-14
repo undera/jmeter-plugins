@@ -38,6 +38,7 @@ public class PluginManagerMenuItem extends JMenuItem implements ActionListener {
             dialog = new PluginManagerDialog(mgr);
         }
 
+        dialog.pack();
         dialog.setVisible(true);
     }
 

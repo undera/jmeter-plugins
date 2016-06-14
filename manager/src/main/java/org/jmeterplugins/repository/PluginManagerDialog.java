@@ -23,6 +23,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
     private final JButton apply = new JButton("Apply Changes and Restart JMeter");
     private final PluginsList installed;
     private final PluginsList available;
+    private final PluginUpgradesList upgrades;
     private JLabel statusLabel = new JLabel("");
 
 
@@ -30,7 +31,9 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
         super((JFrame) null, "JMeter Plugins Manager", true);
         setLayout(new BorderLayout());
         manager = aManager;
-        setSize(new Dimension(800, 600));
+        Dimension size = new Dimension(1024, 768);
+        setSize(size);
+        setPreferredSize(size);
         setIconImage(PluginManagerMenuItem.getPluginsIcon().getImage());
         ComponentUtil.centerComponentInWindow(this, 30);
 
@@ -63,17 +66,42 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
             }
         };
 
+        ChangeListener cbUpgradeNotifier = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (e.getSource() instanceof PluginCheckbox) {
+                    PluginCheckbox checkbox = (PluginCheckbox) e.getSource();
+                    Plugin plugin = checkbox.getPlugin();
+                    if (checkbox.isSelected()) {
+                        plugin.setCandidateVersion(checkbox.getPlugin().getMaxVersion());
+                    } else {
+                        plugin.setCandidateVersion(checkbox.getPlugin().getInstalledVersion());
+                    }
+                    manager.toggleInstalled(plugin, true);
+                    statusRefresh.notify(this);
+                }
+            }
+        };
+
+
         installed = new PluginsList(manager.getInstalledPlugins(), cbNotifier, statusRefresh);
         available = new PluginsList(manager.getAvailablePlugins(), cbNotifier, statusRefresh);
+        upgrades = new PluginUpgradesList(manager.getUpgradablePlugins(), cbUpgradeNotifier, statusRefresh);
 
-        add(getTabsPanel(), BorderLayout.CENTER);
-        add(getBottomPanel(), BorderLayout.SOUTH);
+        JSplitPane topAndDown = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        topAndDown.setResizeWeight(.75);
+        topAndDown.setDividerSize(5);
+        topAndDown.setTopComponent(getTabsPanel());
+        topAndDown.setBottomComponent(getBottomPanel());
+        add(topAndDown, BorderLayout.CENTER);
+        statusRefresh.notify(this); // to reflect upgrades
     }
 
     private Component getTabsPanel() {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Installed Plugins", installed);
         tabbedPane.addTab("Available Plugins", available);
+        tabbedPane.addTab("Upgrades", upgrades);
         return tabbedPane;
     }
 
@@ -112,6 +140,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
             public void run() {
                 installed.setEnabled(false);
                 available.setEnabled(false);
+                upgrades.setEnabled(false);
                 apply.setEnabled(false);
                 // FIXME: what to do when user presses "cancel" on save test plan dialog?
                 GenericCallback<String> statusChanged = new GenericCallback<String>() {

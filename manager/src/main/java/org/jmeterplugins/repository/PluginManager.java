@@ -223,6 +223,17 @@ public class PluginManager {
         return result;
     }
 
+    public Set<Plugin> getUpgradablePlugins() {
+        Set<Plugin> result = new TreeSet<>(new PluginComparator());
+        for (Plugin plugin : allPlugins.keySet()) {
+            if (plugin.isUpgradable()) {
+                result.add(plugin);
+            }
+        }
+        return result;
+    }
+
+
     public void toggleInstalled(Plugin plugin, boolean cbState) {
         allPlugins.put(plugin, cbState);
     }

@@ -35,7 +35,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
         setSize(size);
         setPreferredSize(size);
         setIconImage(PluginManagerMenuItem.getPluginsIcon().getImage());
-        ComponentUtil.centerComponentInWindow(this, 30);
+        ComponentUtil.centerComponentInWindow(this);
 
         try {
             manager.load();

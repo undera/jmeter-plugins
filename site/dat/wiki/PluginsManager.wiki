@@ -26,13 +26,14 @@ Clicking on menu item will bring up the plugins manager dialog:
 
 [/img/wiki/pmgr/pmgr_dialog.png]
 
-The dialog has two tabs, "Review Changes" area and "Apply" button. Removing ticks from plugins on "Installed" tab will uninstall them. Setting ticks on "Available" tab will install the plugin.
+The dialog has three tabs, "Review Changes" area and "Apply" button. Removing ticks from plugins on "Installed" tab will uninstall them. Setting ticks on "Available" tab will install the plugin. 
 
-The plugins that have upgrades will show in the list with _italic font_. Choose the new version you want to install for them from "Version" drop-down.
+The plugins that have upgrades will show in the list with _italic font_. Choose the new version you want to install for them from "Version" drop-down. By default, all upgradable plugins are selected for upgrade and listed on "Upgrades" tab.
 
 The "Review Changes" pane is important, it lists all the changes that supposed to be done after you click "Apply" button.
 Sometimes plugins have dependencies from each other, so there might be additional plugins uninstalled. There is no hurry for important business, so review the changes prior to applying it.
 
+Right mouse click over checkbox lists opens "Toggle All" option, which takes some time to toggle all items in the list.
 
 == Add Your Favorite Plugin ==
 

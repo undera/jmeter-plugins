@@ -6,6 +6,8 @@ import org.apache.log.Logger;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
@@ -43,7 +45,8 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         for (Plugin plugin : plugins) {
             listModel.addElement(getCheckboxItem(plugin, checkboxNotifier));
         }
-        // TODO: popup menu to toggle all checkboxes
+
+        list.setComponentPopupMenu(new ToggleAllPopupMenu());
     }
 
     private JPanel getDetailsPanel() {
@@ -167,6 +170,26 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
                     // TODO: file description text refresh, because of depends list there
                 }
             }
+        }
+    }
+
+    private class ToggleAllPopupMenu extends JPopupMenu implements ActionListener {
+        public ToggleAllPopupMenu() {
+            super("Toggle All");
+            JMenuItem menuItem = new JMenuItem("Toggle All");
+            menuItem.addActionListener(this);
+            add(menuItem);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent actionEvent) {
+            for (Object a : listModel.toArray()) {
+                if (a instanceof PluginCheckbox) {
+                    PluginCheckbox cb = (PluginCheckbox) a;
+                    cb.doClick();
+                }
+            }
+            list.repaint();
         }
     }
 }

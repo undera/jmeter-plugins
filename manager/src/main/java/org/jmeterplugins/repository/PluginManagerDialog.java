@@ -48,8 +48,6 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
             public void notify(Object ignored) {
                 String changeText = manager.getChangesAsText();
                 modifs.setText(changeText);
-                //modifs.setMaximumSize(new Dimension(getWidth(), getHeight() / 3));
-                //modifs.setPreferredSize(new Dimension(getWidth(), getHeight() / 3));
                 apply.setEnabled(!changeText.isEmpty() && installed.isEnabled());
             }
         };
@@ -77,7 +75,6 @@ public class PluginManagerDialog extends JDialog implements ActionListener {
                     } else {
                         plugin.setCandidateVersion(checkbox.getPlugin().getInstalledVersion());
                     }
-                    manager.toggleInstalled(plugin, true);
                     statusRefresh.notify(this);
                 }
             }

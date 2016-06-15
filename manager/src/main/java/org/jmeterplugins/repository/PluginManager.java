@@ -241,6 +241,10 @@ public class PluginManager {
 
 
     public void toggleInstalled(Plugin plugin, boolean cbState) {
+        if (!cbState && !plugin.canUninstall()) {
+            log.warn("Cannot uninstall plugin: " + plugin);
+            cbState = true;
+        }
         allPlugins.put(plugin, cbState);
     }
 

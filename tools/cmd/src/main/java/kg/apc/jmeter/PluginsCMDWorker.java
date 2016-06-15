@@ -3,7 +3,6 @@ package kg.apc.jmeter;
 import kg.apc.charting.ChartSettings;
 import kg.apc.charting.GraphPanelChart;
 import kg.apc.cmd.UniversalRunner;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import org.apache.jorphan.logging.LoggingManager;

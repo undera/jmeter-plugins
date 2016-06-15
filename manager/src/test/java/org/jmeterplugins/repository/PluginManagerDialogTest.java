@@ -1,17 +1,21 @@
 package org.jmeterplugins.repository;
 
 import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.util.JMeterUtils;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class PluginManagerDialogTest {
+    @BeforeClass
+    public static void setup() {
+        TestJMeterUtils.createJmeterEnv();
+    }
+
     @Test
     public void displayGUI() throws InterruptedException {
         if (!GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance()) {
-            TestJMeterUtils.createJmeterEnv();
             //JMeterUtils.setProperty("jpgc.repo.address", "http://localhost:8003");
             PluginManagerDialog frame = new PluginManagerDialog(new PluginManager());
 

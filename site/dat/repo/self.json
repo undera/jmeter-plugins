@@ -23,6 +23,12 @@
       },
       "0.7": {
         "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.7/jmeter-plugins-manager-0.7.jar"
+      },
+      "0.8": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.7/jmeter-plugins-manager-0.7.jar",
+        "libs": {
+          "cmdrunner": "http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+        }
       }
     }
   }

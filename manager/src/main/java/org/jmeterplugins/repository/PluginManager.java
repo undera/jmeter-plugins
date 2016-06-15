@@ -247,6 +247,15 @@ public class PluginManager {
         return false;
     }
 
+    public Plugin getPluginByID(String key) {
+        for (Plugin p : allPlugins.keySet()) {
+            if (p.getID().equals(key)) {
+                return p;
+            }
+        }
+        throw new IllegalArgumentException("Plugin not found in repo: " + key);
+    }
+
     private class PluginComparator implements java.util.Comparator<Plugin> {
         @Override
         public int compare(Plugin o1, Plugin o2) {

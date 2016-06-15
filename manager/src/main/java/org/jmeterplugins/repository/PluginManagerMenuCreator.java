@@ -13,6 +13,12 @@ public class PluginManagerMenuCreator implements MenuCreator {
     public JMenuItem[] getMenuItemsAtLocation(MENU_LOCATION location) {
         if (location == MENU_LOCATION.OPTIONS) {
             try {
+                PluginManagerCMDInstaller.main(new String[0]);
+            } catch (Throwable e) {
+                log.warn("Was unable to install pmgr cmdline tool");
+            }
+
+            try {
                 return new JMenuItem[]{new PluginManagerMenuItem()};
             } catch (Throwable e) {
                 log.error("Failed to load Plugins Manager", e);

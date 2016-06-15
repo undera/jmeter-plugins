@@ -2,25 +2,14 @@
 
 The easiest way to get the plugins is to install [/wiki/PluginsManager/ Plugins Manager]. Then you'll be able to install any other plugins just by clicking chekbox. Plugins Manager is available from "Options" menu of JMeter.
 
-Just download this jar and put it into {{{lib/ext}}} directory, then restart JMeter:
-[http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.6/jmeter-plugins-manager-0.6.jar jmeter-plugins-manager-0.6.jar]
+<p class="alert alert-success">
+Download *[/get/ plugins-manager.jar]* and put it into {{{lib/ext}}} directory, then restart JMeter.
+</p>
 
-== Old Packaging Stable Release ==
+* Supplementary: PerfMon Server Agent *
 
-<download:JMeterPlugins-Standard-1.4.0.zip;Standard Set>
+Used with [/wiki/PerfMon/ PerfMon Results Collector]
 
-
-<download:JMeterPlugins-Extras-1.4.0.zip;Extras Set>
-
-<download:JMeterPlugins-ExtrasLibs-1.4.0.zip;Extras with Libs Set>
-
-<download:JMeterPlugins-WebDriver-1.4.0.zip;WebDriver Set>
-
-<download:JMeterPlugins-XMPP-1.4.0.zip;XMPP Set>
-
-<download:JMeterPlugins-Hadoop-1.4.0.zip;Hadoop Set>
-
-== PerfMon Server Agent ==
 <download:ServerAgent-2.2.1.zip;PerfMon Agent to install on target servers>
 
 ----
@@ -29,4 +18,3 @@ See also:
 
   * [old Previous ZIP Releases]
   * [snapshots Latest Development Snapshots]
-

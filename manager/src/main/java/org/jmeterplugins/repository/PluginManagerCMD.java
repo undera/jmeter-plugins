@@ -20,16 +20,17 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
         }
 
         String command = listIterator.next().toString();
+        log.info("Command is: " + command);
         try {
             switch (command) {
                 case "status":
                     System.out.println(PluginManager.getAllPluginsStatus());
                     break;
                 case "install":
-                    install(listIterator);
+                    process(listIterator, true);
                     break;
                 case "uninstall":
-                    uninstall(listIterator);
+                    process(listIterator, false);
                     break;
                 default:
                     throw new UnsupportedOperationException("Wrong command: " + command);
@@ -38,10 +39,11 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
             throw new RuntimeException("Failed to perform cmdline operation: " + e.getMessage(), e);
         }
 
+        log.info("Done");
         return 0;
     }
 
-    protected void install(ListIterator listIterator) throws IOException {
+    protected void process(ListIterator listIterator, boolean install) throws IOException {
         if (!listIterator.hasNext()) {
             throw new IllegalArgumentException("Plugins list parameter is missing");
         }
@@ -49,37 +51,20 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
         Map<String, String> params = parseParams(listIterator.next().toString());
         PluginManager mgr = new PluginManager();
         mgr.load();
+        mgr.setDoRestart(false);
 
         for (Map.Entry<String, String> pluginSpec : params.entrySet()) {
             Plugin plugin = mgr.getPluginByID(pluginSpec.getKey());
             if (pluginSpec.getValue() != null) {
                 plugin.setCandidateVersion(pluginSpec.getValue());
             }
-            mgr.toggleInstalled(plugin, true);
-        }
-        mgr.applyChanges(this);
-    }
-
-    protected void uninstall(ListIterator listIterator) throws IOException {
-        if (!listIterator.hasNext()) {
-            throw new IllegalArgumentException("Plugins list parameter is missing");
-        }
-
-        Map<String, String> params = parseParams(listIterator.next().toString());
-        PluginManager mgr = new PluginManager();
-        mgr.load();
-
-        for (Map.Entry<String, String> pluginSpec : params.entrySet()) {
-            Plugin plugin = mgr.getPluginByID(pluginSpec.getKey());
-            if (pluginSpec.getValue() != null) {
-                plugin.setCandidateVersion(pluginSpec.getValue());
-            }
-            mgr.toggleInstalled(plugin, false);
+            mgr.toggleInstalled(plugin, install);
         }
         mgr.applyChanges(this);
     }
 
     private Map<String, String> parseParams(String paramStr) {
+        log.info("Params line is: " + paramStr);
         HashMap<String, String> res = new HashMap<>();
         for (String part : paramStr.split(",")) {
             if (part.contains("=")) {

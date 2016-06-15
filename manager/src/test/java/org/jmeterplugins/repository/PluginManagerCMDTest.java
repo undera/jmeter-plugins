@@ -25,8 +25,21 @@ public class PluginManagerCMDTest {
             fail();
         } catch (IllegalArgumentException ignored) {
         }
-        params.add("jpgc-json=2.0,jpgc-cmd");
+        params.add("jpgc-json,jpgc-cmd=2.0");
         cmd.processParams(params.listIterator());
+    }
+
+    @Test
+    public void processParams_install_invalid() throws Exception {
+        PluginManagerCMD cmd = new PluginManagerCMD();
+        LinkedList<String> params = new LinkedList<>();
+        params.add("install");
+        params.add("jpgc-invalid");
+        try {
+            cmd.processParams(params.listIterator());
+            fail();
+        } catch (RuntimeException ignored) {
+        }
     }
 
     @Test

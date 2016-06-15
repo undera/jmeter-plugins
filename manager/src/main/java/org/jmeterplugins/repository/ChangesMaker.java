@@ -27,8 +27,9 @@ public class ChangesMaker {
 
     public ProcessBuilder getProcessBuilder(File moveFile, File installFile, File restartFile) throws IOException {
         String jarPath = PluginManager.class.getProtectionDomain().getCodeSource().getLocation().getFile();
-        if (!jarPath.endsWith(".jar"))
-            throw new IllegalArgumentException("Invalid JAR path detected: " + jarPath);
+        if (!jarPath.endsWith(".jar")) {
+            log.warn("Suspicious JAR path detected: " + jarPath);
+        }
         final File currentJar = new File(jarPath);
 
         final ArrayList<String> command = new ArrayList<>();
@@ -40,8 +41,11 @@ public class ChangesMaker {
         command.add(moveFile.getAbsolutePath());
         command.add("--install-list");
         command.add(installFile.getAbsolutePath());
-        command.add("--restart-command");
-        command.add(restartFile.getAbsolutePath());
+
+        if (restartFile != null) {
+            command.add("--restart-command");
+            command.add(restartFile.getAbsolutePath());
+        }
 
         log.debug("Command to execute: " + command);
         final ProcessBuilder builder = new ProcessBuilder(command);

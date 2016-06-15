@@ -23,6 +23,7 @@ public class PluginManager {
     private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://jmeter-plugins.org");
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
     private static PluginManager staticManager = new PluginManager();
+    private boolean doRestart = true;
 
     public PluginManager() {
     }
@@ -97,7 +98,12 @@ public class PluginManager {
         ChangesMaker maker = new ChangesMaker(allPlugins);
         File moveFile = maker.getMovementsFile(delPlugins, installPlugins, installLibs, libDeletions);
         File installFile = maker.getInstallFile(installPlugins);
-        File restartFile = maker.getRestartFile();
+        File restartFile;
+        if (doRestart) {
+            restartFile = maker.getRestartFile();
+        } else {
+            restartFile = null;
+        }
         final ProcessBuilder builder = maker.getProcessBuilder(moveFile, installFile, restartFile);
         log.info("JAR Modifications log will be saved into: " + builder.redirectOutput().file().getPath());
         builder.start();
@@ -254,6 +260,10 @@ public class PluginManager {
             }
         }
         throw new IllegalArgumentException("Plugin not found in repo: " + key);
+    }
+
+    public void setDoRestart(boolean doRestart) {
+        this.doRestart = doRestart;
     }
 
     private class PluginComparator implements java.util.Comparator<Plugin> {

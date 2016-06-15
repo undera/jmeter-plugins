@@ -3,6 +3,7 @@ package org.jmeterplugins.repository;
 import kg.apc.cmdtools.AbstractCMDTool;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.apache.log.Priority;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -15,6 +16,7 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
 
     @Override
     protected int processParams(ListIterator listIterator) throws UnsupportedOperationException, IllegalArgumentException {
+        LoggingManager.setPriority(Priority.INFO);
         if (!listIterator.hasNext()) {
             throw new IllegalArgumentException("Command parameter is missing");
         }
@@ -39,7 +41,6 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
             throw new RuntimeException("Failed to perform cmdline operation: " + e.getMessage(), e);
         }
 
-        log.info("Done");
         return 0;
     }
 
@@ -80,7 +81,7 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
     @Override
     protected void showHelp(PrintStream printStream) {
         printStream.println("Options for tool 'PluginManagerCMD': <command> <paramstr> "
-                + " where <command> is one of: status, install, uninstall, upgrade-all");
+                + " where <command> is one of: status, install, uninstall");
     }
 
     @Override

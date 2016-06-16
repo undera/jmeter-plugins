@@ -3,10 +3,19 @@ package org.jmeterplugins.repository;
 
 import net.sf.json.*;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.params.HttpParams;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -19,13 +28,20 @@ import java.util.*;
 public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int timeout = 1000; // don't delay JMeter startup for more than 1 second
-    protected HttpClient httpClient = new HttpClient();
+    protected HttpClient httpClient = new DefaultHttpClient();
     private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://jmeter-plugins.org");
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
     private static PluginManager staticManager = new PluginManager();
     private boolean doRestart = true;
 
     public PluginManager() {
+        String proxyHost = System.getProperty("http.proxyHost", "");
+        if (!proxyHost.isEmpty()) {
+            int proxyPort = Integer.parseInt(System.getProperty("http.proxyPort", "-1"));
+            HttpParams params = httpClient.getParams();
+            HttpHost proxy = new HttpHost(proxyHost, proxyPort);
+            params.setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+        }
     }
 
     public void load() throws IOException {
@@ -74,20 +90,26 @@ public class PluginManager {
     }
 
     protected JSON getJSON(String path) throws IOException {
-        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(timeout);
-        httpClient.getHttpConnectionManager().getParams().setSoTimeout(timeout);
-
         String uri = address + path;
         log.debug("Requesting " + uri);
-        GetMethod get = new GetMethod(uri);
-        int result = httpClient.executeMethod(get);
-        byte[] bytes = IOUtils.toByteArray(get.getResponseBodyAsStream());
+
+        HttpRequestBase get = new HttpGet(uri);
+        HttpParams requestParams = get.getParams();
+        requestParams.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, timeout);
+        requestParams.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, timeout);
+
+        HttpResponse result = httpClient.execute(get);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        result.getEntity().writeTo(bos);
+        byte[] bytes = bos.toByteArray();
         if (bytes == null) {
             bytes = "null".getBytes();
         }
         String response = new String(bytes);
-        if (result >= 300) {
+        int statusCode = result.getStatusLine().getStatusCode();
+        if (statusCode >= 300) {
             log.warn("Response with code " + result + ": " + response);
+            throw new IOException("Repository responded with wrong status code: " + statusCode);
         } else {
             log.debug("Response with code " + result + ": " + response);
         }
@@ -162,15 +184,16 @@ public class PluginManager {
     }
 
     private void reportStats() throws IOException {
-        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(1000);
-        httpClient.getHttpConnectionManager().getParams().setSoTimeout(3000);
-
         String uri = address + "/repo/";
-        PostMethod post = new PostMethod(uri);
-        post.addParameter("stats", getUsageStats());
+        HttpPost post = new HttpPost(uri);
+        HttpEntity body = new StringEntity("stats=" + URLEncoder.encode(getUsageStats(), "UTF-8"));
+        post.setEntity(body);
+        HttpParams requestParams = post.getParams();
+        requestParams.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 3000);
+        requestParams.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1000);
 
         log.debug("Requesting " + uri);
-        httpClient.executeMethod(post);
+        httpClient.execute(post);
     }
 
     protected String getUsageStats() {

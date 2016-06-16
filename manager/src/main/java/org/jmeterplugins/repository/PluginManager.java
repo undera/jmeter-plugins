@@ -29,7 +29,7 @@ public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int timeout = 1000; // don't delay JMeter startup for more than 1 second
     protected HttpClient httpClient = new DefaultHttpClient();
-    private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", "http://jmeter-plugins.org");
+    private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", System.getProperty("jpgc.repo.address", "http://jmeter-plugins.org"));
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
     private static PluginManager staticManager = new PluginManager();
     private boolean doRestart = true;

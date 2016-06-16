@@ -20,4 +20,4 @@ rem example 2 :
 rem jmeter\lib\ext\FilterResults.bat --output-file filteredout.xml --input-file inputfile.csv --include-label-regex true --include-labels "P[1-3].*" --start-offset 2 --end-offset 180 --success-filter true --save-as-xml true
 
 rem May be you need to declare the path to the java binary
-java -jar %0\..\lib\cmdrunner-2.0.jar --tool FilterResults %*
+java -jar %~dp0\..\lib\cmdrunner-2.0.jar --tool FilterResults %*

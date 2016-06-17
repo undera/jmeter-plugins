@@ -8,14 +8,14 @@ import java.nio.file.StandardCopyOption;
 
 public class STSInstaller {
     public static void main(String[] argv) throws IOException {
-        writeOut("NanoHttpd-2.1.0_License", false);
         writeOut("simple-table-server.bsh", false);
         writeOut("simple-table-server.cmd", false);
         writeOut("simple-table-server.sh", true);
+        writeOut("NanoHttpd-2.1.0_License.txt", false);
     }
 
     private static void writeOut(String resName, boolean executable) throws IOException {
-        resName = "/org/jmeterplugins/protocol/http/control" + resName;
+        resName = "/org/jmeterplugins/protocol/http/control/" + resName;
         File self = new File(STSInstaller.class.getProtectionDomain().getCodeSource().getLocation().getFile());
         File src = new File(resName);
         String home = self.getParentFile().getParentFile().getParent();

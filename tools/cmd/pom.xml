@@ -6,7 +6,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-cmd</artifactId>
-    <version>2.0</version>
+    <version>2.1</version>
 
     <name>Command-Line Plugins Tool</name>
     <description>cmdtool</description>

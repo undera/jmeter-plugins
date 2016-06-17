@@ -3,7 +3,9 @@
      description="A custom set of plugins for Apache JMeter, not affiliated with Apache Software Foundation, graphs, load shapers, new functions."
      class="PWE\Modules\HTMLPage\HTMLPage" src="index.html">
 
-    <url link="get" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.7/jmeter-plugins-manager-0.7.jar" no_final_slash="1" />
+    <url link="get" class="PWE\Modules\RedirectAccepted\RedirectAccepted"
+         base="http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.8/jmeter-plugins-manager-0.8.jar"
+         no_final_slash="1"/>
     <url link="catalogue" title="Catalogue" menu="1" class="PWE\Modules\HTMLPage\HTMLPage" src="catalogue.html"
          ico="fa-list-alt"/>
     <url link="home" title="Home" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/#"

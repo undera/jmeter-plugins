@@ -34,6 +34,8 @@ Sometimes plugins have dependencies from each other, so there might be additiona
 
 Right mouse click over checkbox lists opens "Toggle All" option, which takes some time to toggle all items in the list.
 
+Plugins Manager respects JMeter's [http://jmeter.apache.org/usermanual/get-started.html#proxy_server proxy settings].
+
 == Add Your Favorite Plugin ==
 
 Now there is an opportunity for anyone who creates the JMeter plugins to quickly make them available for wide audience of JMeter-Plugins.org.
@@ -89,3 +91,8 @@ PluginsManagerCMD <command> [<params>]
 
 Where {{{command}}} is one of "status", "install", "uninstall".
 {{{params}}} is a string with plugin IDs, comma-separated, like this: {{{jpgc-cmd,jpgc-json,jpgc-casutg}}}. No spaces allowed currently. If you want to specify exact versions for plugins, do it like this: {{{jpgc-json=2.2,jpgc-casutg=2.0}}} 
+
+To use proxy with command line, please use {{{JVM_ARGS}}} environment variable to set proxy properties, like this:
+{{{
+JVM_ARGS="-Dhttp.proxyHost=myproxy.com -Dhttp.proxyPort=8080" PluginsManagerCMD status
+}}}

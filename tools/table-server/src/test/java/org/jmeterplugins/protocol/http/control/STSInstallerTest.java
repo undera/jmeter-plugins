@@ -1,5 +1,6 @@
 package org.jmeterplugins.protocol.http.control;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import java.io.File;
@@ -13,5 +14,7 @@ public class STSInstallerTest {
         dest.mkdirs();
 
         STSInstaller.main(new String[0]);
+
+        FileUtils.deleteDirectory(dest);
     }
 }

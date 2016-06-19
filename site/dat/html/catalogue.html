@@ -1,19 +1,28 @@
 <div id="catalogue">
+    <a href="http://jmeter.apache.org/" target="_blank" class="pull-right"><img
+            src="http://jmeter.apache.org/images/logo.svg" alt="Apache JMeter"/></a>
+    <h1>Custom Plugins for Apache JMeter&trade;</h1>
+    <p>
+        This project is an independent set of plugins for <a href="http://jakarta.apache.org/jmeter/">Apache JMeter</a>,
+        the
+        popular Open-Source load and performance testing tool.
+    </p>
+    <hr/>
     <div>
-        <h1>JMeter Plugins Catalogue</h1>
-        This catalogue lists plugins available for use with Plugins Manager. If you're first time here, consider installing <a href="/wiki/PluginsManager/">Plugins Manager</a> into your JMeter.
+        This catalogue lists plugins available for use with Plugins Manager. If you're first time here, consider
+        installing <a href="/wiki/PluginsManager/">Plugins Manager</a> into your JMeter.
     </div>
-<hr/>
     <div>
         <p>
             <i class="count pull-right">
                 Items found: <span></span>
             </i>
+            <i class="fa fa-spin fa-spinner text-muted" style="position: relative; top: 2em; right: 1.2em"></i>
             <input placeholder="Filter..."/>
         </p>
     </div>
     <div class="clearfix"></div>
-    <div class="list"></div>
+    <div class="list"><i class="fa fa-spin fa-spinner fa-4x"></i></div>
 </div>
 
 <script>
@@ -54,19 +63,18 @@
                 cnt++;
             }
             cat.find(".count span").text(cnt);
+            cat.find(".fa-spin").hide();
         }
 
         $.get("/repo/").success(function (data) {
-
             var typingTimer;
             var doneTypingInterval = 200;
 
             cat.find("input").on('keyup', function () {
-                console.log("up")
+                cat.find(".fa-spin").show();
                 clearTimeout(typingTimer);
                 typingTimer = setTimeout(refreshCatalogue, doneTypingInterval);
             }).on('keydown', function () {
-                console.log("down")
                 clearTimeout(typingTimer);
             }).change(refreshCatalogue);
 
@@ -74,19 +82,4 @@
             refreshCatalogue();
         });
     });
-
-
 </script>
-
-<style>
-    #catalogue .list .alert {
-        background-color: #EFEFEF;
-    }
-
-    #catalogue input {
-        font-size: 1.5em;
-        width: 100%;
-    }
-
-
-</style>

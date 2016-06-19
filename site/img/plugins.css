@@ -181,8 +181,11 @@ table.wiki pre, table.wiki tt {
 
 table.wiki pre {
     padding: 1em;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: auto;
+    word-wrap: break-word;
     color: black;
+    white-space: pre-wrap;
 }
 
 table.wiki ol, table.wiki ul {
@@ -199,6 +202,18 @@ table.wiki .sidebar {
 
 table.wiki .sidebar sup, table.wiki .sidebar font {
     display: none;
+}
+
+@media (min-width: 0px) {
+    table.wiki .sidebar {
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) {
+    table.wiki .sidebar {
+        display: table-cell;
+    }
 }
 
 table.wiki .toc-list {
@@ -239,3 +254,14 @@ table.wiki img {
     height: 64px;
     margin-left: 2em;
 }
+
+
+/* Catalogue */
+    #catalogue .list .alert {
+        background-color: #EFEFEF;
+    }
+
+    #catalogue input {
+        font-size: 1.5em;
+        width: 100%;
+    }

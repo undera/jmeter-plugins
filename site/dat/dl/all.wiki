@@ -6,12 +6,6 @@ The easiest way to get the plugins is to install [/wiki/PluginsManager/ Plugins 
 Download *[/get/ plugins-manager.jar]* and put it into {{{lib/ext}}} directory, then restart JMeter.
 </p>
 
-* Supplementary: PerfMon Server Agent *
-
-Used with [/wiki/PerfMon/ PerfMon Results Collector]
-
-<download:ServerAgent-2.2.1.zip;PerfMon Agent to install on target servers>
-
 ----
 
 See also:

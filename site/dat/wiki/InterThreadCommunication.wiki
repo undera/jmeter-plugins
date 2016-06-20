@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Inter-Thread Communication <sup><font color=gray size="1">since 0.5.2</font></sup>=
 
 JP@GC offers global string queues for inter-thread communication. These queues

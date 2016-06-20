@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set extraslibs_set">Available in [ExtrasWithLibsSet Extras With Libs Set]</div>
 = JSON Formatter PostProcessor <sup><font color=gray size="1">since 1.0.0</font></sup>=
 
 <i>This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 

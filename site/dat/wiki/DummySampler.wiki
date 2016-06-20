@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Dummy Sampler <sup><font color=gray size="1">since 0.2.0</font></sup>=
 
 Dummy Sampler is the most obedient of the JMeter samplers:

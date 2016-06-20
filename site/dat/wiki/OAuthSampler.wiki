@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set extraslibs_set">Available in [ExtrasWithLibsSet Extras With Libs Set]</div>
 
 = OAuth Sampler <sup><font color=gray size="1">since 1.0.0</font></sup>=
 

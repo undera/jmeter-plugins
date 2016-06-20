@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Flexible File Writer <sup><font color=gray size="1">since 0.4.1</font></sup>=
 
 JMeter has very simpe test results writing capabilities 

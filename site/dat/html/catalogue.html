@@ -17,7 +17,7 @@
                 Items found: <span></span>
             </i>
             <i class="fa fa-spin fa-spinner text-muted" style="position: relative; top: 2em; right: 1.2em"></i>
-            <input placeholder="Filter..."/>
+            <input placeholder="Search..."/>
         </p>
     </div>
     <div class="clearfix"></div>
@@ -87,6 +87,13 @@
             }).on('keydown', function () {
                 clearTimeout(typingTimer);
             }).change(refreshCatalogue);
+
+            data.sort(function(a,b){
+                if (a.id.includes("jmeter-") && !b.id.includes("jmeter-")) {
+                    return 1;
+                }
+                return a.id > b.id ? 1 : -1;
+            });
 
             plugins.push.apply(plugins, data);
             refreshCatalogue();

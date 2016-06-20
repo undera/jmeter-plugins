@@ -6,9 +6,11 @@
     <url link="get" class="PWE\Modules\RedirectAccepted\RedirectAccepted"
          base="http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.8/jmeter-plugins-manager-0.8.jar"
          no_final_slash="1"/>
-    <url link="home" title="Home" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/#"
-         ico="fa-home"/>
-    <url link="downloads" title="Download" menu="1" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl"
+
+    <url link="install" title="Install" menu="1" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/wiki/PluginInstall/"
+         ico="fa-download"/>
+
+    <url link="downloads" title="Download" menu="0" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl"
          start_page="all" files_base="files" download_link="../file" accept="1" ico="fa-download">
         <url link="file" files_base="files" class="PWE\Modules\FileDownloads\FileDownloads" accept="2"/>
     </url>

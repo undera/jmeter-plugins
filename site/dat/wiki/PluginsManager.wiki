@@ -1,21 +1,16 @@
 = JMeter Plugins Manager =
 
-<div class="alert alert-success">
-Download *[/get/ plugins-manager.jar]* and put it into {{{lib/ext}}} directory, then restart JMeter.<br/><br/>
-Report any issues on our [/support/ support forums].
-</div>
-
 The idea of JMeter Plugins Manager is simple: instead of installing various plugins manually, it will do it for you through nice UI.
 No need to mess with JARs anymore. Install Plugins Manager once and it will do it all for you: installing, upgrading, uninstalling.
 
 The plugins it manages include usual plugins from JMeter-Plugins.org, various third-party plugins and even core JMeter plugins.
 This is important, because removing rarely used features like JDBC and LDAP will tidy up huge popup menus from unused items. As a bonus you will get the increased JMeter startup time.
 
-You can observe the catalogue of plugins [/catalogue/ here]. As the first experiment, try to uninstall all the plugins and see how bare JMeter looks like. Then install something. Then install something more. Have fun!
+You can observe the catalogue of plugins [/ here]. As the first experiment, try to uninstall all the plugins and see how bare JMeter looks like. Then install something. Then install something more. Have fun!
 
 == Installation and Usage ==
 
-Download the Plugins Manager JAR file and put it into JMeter's {{{lib/ext}}} directory. Then start JMeter and go to "Options" menu to access the Plugins Manager.
+Download the Plugins Manager [/get/ JAR file] and put it into JMeter's {{{lib/ext}}} directory. Then start JMeter and go to "Options" menu to access the Plugins Manager.
 
 [/img/wiki/pmgr/pmgr_menu_item.png]
 
@@ -52,30 +47,6 @@ We would love to analyze that information to learn more about which plugins dese
 The information is completely anonymous, you can validate that through our source code. You are free to disable these reporting by setting {{{jpgc.repo.sendstats=false}}} in JMeter properties.
 
 
-== Using from BeanShell or JSR223 ==
-
-If you need to access the plugins versions information from scriptable components like BeanShell sampler, please use these two methods:
-
-=== Single Plugin Info ===
-
-Request for single plugin version, returns version string if plugin is installed, or null if plugin is not installed:
- 
-{{{
-org.jmeterplugins.repository.PluginManager.getPluginStatus("jpgc-graphs-basic")
-}}}
-
-Example result of this function call is string like {{{1.3.0}}}.
-
-=== All Plugins Info ===
-
-Returns a string containing plugin IDs with corresponding versions. Only the installed plugins are listed.
-
-{{{
-org.jmeterplugins.repository.PluginManager.getAllPluginsStatus()
-}}}
-
-Example result of this function call is string like {{{[jpgc-graphs-basic=1.3.1, jpgc-sense=1.3.1, jpgc-cmd=1.3.1, jpgc-graphs-composite=1.3.1, jmeter-core=2.13, jmeter-components=2.13]}}}.
-
 == Plugins Manager from Command-Line ==
 
 If you want to use the Plugins Manager in an automated fashion, you will need to make some preparations first:
@@ -106,3 +77,28 @@ To use proxy with command line, please use {{{JVM_ARGS}}} environment variable t
 {{{
 JVM_ARGS="-Dhttp.proxyHost=myproxy.com -Dhttp.proxyPort=8080" PluginsManagerCMD status
 }}}
+
+== Using from BeanShell or JSR223 ==
+
+If you need to access the plugins versions information from scriptable components like BeanShell sampler, please use these two methods:
+
+=== Single Plugin Info ===
+
+Request for single plugin version, returns version string if plugin is installed, or null if plugin is not installed:
+
+{{{
+org.jmeterplugins.repository.PluginManager.getPluginStatus("jpgc-graphs-basic")
+}}}
+
+Example result of this function call is string like {{{1.3.0}}}.
+
+=== All Plugins Info ===
+
+Returns a string containing plugin IDs with corresponding versions. Only the installed plugins are listed.
+
+{{{
+org.jmeterplugins.repository.PluginManager.getAllPluginsStatus()
+}}}
+
+Example result of this function call is string like {{{[jpgc-graphs-basic=1.3.1, jpgc-sense=1.3.1, jpgc-cmd=1.3.1, jpgc-graphs-composite=1.3.1, jmeter-core=2.13, jmeter-components=2.13]}}}.
+

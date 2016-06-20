@@ -74,6 +74,10 @@ meterPlugin.drawLineMarker=false
 
 This is not mandatory, only if you want to change the default behaviors. The options drawGradient, neverDrawFinalZeroingLines, neverDrawCurrentX  and useRelativeTime can also be dynamically changed with the [SettingsPanel#Tuning_the_Graphs_Plugins Settings Panel].
 
+= Old-Style Plugin Sets =
+
+If you look for old-style plugin sets up to version 1.4.0, find them [/downloads/old/ here].
+
 = Installing Versions Before 1.1.1 =
 JMeter-Plugins versionы  before 1.1.1 were shipped via three distribution ZIPs:
   # JMeterPlugins-x.x.x.zip - contains plugins, must be unpacked into _lib/ext_ directory inside JMeter

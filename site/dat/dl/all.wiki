@@ -11,4 +11,3 @@ Download *[/get/ plugins-manager.jar]* and put it into {{{lib/ext}}} directory, 
 See also:
 
   * [old Previous ZIP Releases]
-  * [snapshots Latest Development Snapshots]

@@ -102,3 +102,4 @@
   * [Roadmap] and [Changelog]
   * [Changelog] to see latest changes
   * [Roadmap] to see upcoming improvements and fresh ideas
+  * [/downloads/snapshots Download Development Snapshots]

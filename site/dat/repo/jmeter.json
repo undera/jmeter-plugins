@@ -129,7 +129,7 @@
   {
     "id": "jmeter-java",
     "name": "Java Components",
-    "description": "",
+    "description": "Java Sampler and other components",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "",
     "helpUrl": "",

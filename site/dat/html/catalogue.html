@@ -36,7 +36,10 @@
             card.append("<small class='pull-right'>ID: " + plugin.id + "</small>");
             card.append("<h4><a href='" + plugin.helpUrl + "'>" + plugin.name + "</a></h4>");
             card.append("<p>" + plugin.description + "</p>");
-            card.append("<p><small>Versions: " + Object.keys(plugin.versions) + "</small></p>");
+            var vers=Object.keys(plugin.versions);
+            if (vers[0]!="") {
+                card.append("<p><small>Versions: " + vers + "</small></p>");
+            }
             return card;
         }
 
@@ -47,6 +50,7 @@
             var filter = cat.find("input").val().toLowerCase();
             console.log("Refresh", filter);
             for (var n = 0; n < plugins.length; n++) {
+
                 var plugin = plugins[n];
                 if (!plugin.name) {
                     continue;
@@ -59,11 +63,18 @@
                     }
                 }
 
-                list.append(getPluginCard(plugin));
                 cnt++;
+                if (!filter && n>=5) {
+                    continue;
+                }
+                list.append(getPluginCard(plugin));
             }
             cat.find(".count span").text(cnt);
             cat.find(".fa-spin").hide();
+
+            if (!filter && cnt>5) {
+                list.append("<div class='text-muted'>"+(cnt-5)+" more plugins&hellip;</div>");
+            }
         }
 
         $.get("/repo/").success(function (data) {
@@ -82,4 +93,6 @@
             refreshCatalogue();
         });
     });
+
+
 </script>

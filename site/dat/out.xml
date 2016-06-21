@@ -1,18 +1,22 @@
 <url title="JMeter Plugins" template="dat/plugins.tpl"
      keywords="jmeter, plugins, load, performance, analysis, graphs, hadoop, webdriver, selenium"
      description="A custom set of plugins for Apache JMeter, not affiliated with Apache Software Foundation, graphs, load shapers, new functions."
-     class="PWE\Modules\HTMLPage\HTMLPage" src="index.html">
+     class="PWE\Modules\HTMLPage\HTMLPage" src="catalogue.html">
 
-    <url link="get" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.7/jmeter-plugins-manager-0.7.jar" no_final_slash="1" />
-    <url link="catalogue" title="Catalogue" menu="1" class="PWE\Modules\HTMLPage\HTMLPage" src="catalogue.html"
-         ico="fa-list-alt"/>
-    <url link="home" title="Home" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/#"
-         ico="fa-home"/>
-    <url link="downloads" title="Downloads" menu="1" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl"
+    <url link="get" class="PWE\Modules\RedirectAccepted\RedirectAccepted"
+         base="http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.8/jmeter-plugins-manager-0.8.jar"
+         no_final_slash="1"/>
+
+    <url link="install" title="Install" menu="1" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/wiki/PluginInstall/"
+         ico="fa-download"/>
+
+    <url link="downloads" title="Download" menu="0" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl"
          start_page="all" files_base="files" download_link="../file" accept="1" ico="fa-download">
         <url link="file" files_base="files" class="PWE\Modules\FileDownloads\FileDownloads" accept="2"/>
     </url>
+
     <url link="wiki" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" start_page="Start" ico="fa-book"
+         files_base="files" download_link="../../downloads/file"
          accept="1" menu="1" title="Documentation"/>
 
     <url link="support" menu="1" title="Support Forums" class="PWE\Modules\RedirectAccepted\RedirectAccepted"

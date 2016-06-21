@@ -1,17 +1,10 @@
+= Installing Plugins Manager =
+
+The easiest way to get the plugins is to install [/wiki/PluginsManager/ Plugins Manager]. Then you'll be able to install any other plugins just by clicking chekbox.
+
 <div class="alert alert-success">
-Hey, what you see here is the old way to install plugins. The new way is to use [/wiki/PluginsManager/ Plugins Manager]
+Download *[/get/ plugins-manager.jar]* and put it into {{{lib/ext}}} directory, then restart JMeter.
 </div>
-
-= Installing Plugins =
-
-<font color='red'>*You need to run JMeter 2.12 or above with a Java 7 or above to use the plugins.*</font>
-
-  # Go to [/downloads/#Latest-Stable-Release downloads page]
-  # Choose the plugins set according to your tasks (or get all of them if you want to explore all existing plugins)
-  # Extract archive contents to JMeter installation directory
-  # Restart JMeter to load new plugins
-
-You can find JMeter installation directory as the upper directory of {{{bin}}}, where jmeter start scripts are located. Make sure it contains {{{lib}}} and {{{lib/ext}}} directories.
 
 If you experience any issues with plugins installation, don't hesitate to ask at [/support/ Support Forums].
 
@@ -80,6 +73,10 @@ meterPlugin.drawLineMarker=false
 }}}
 
 This is not mandatory, only if you want to change the default behaviors. The options drawGradient, neverDrawFinalZeroingLines, neverDrawCurrentX  and useRelativeTime can also be dynamically changed with the [SettingsPanel#Tuning_the_Graphs_Plugins Settings Panel].
+
+= Old-Style Plugin Sets =
+
+If you look for old-style plugin sets up to version 1.4.0, find them [/downloads/old/ here].
 
 = Installing Versions Before 1.1.1 =
 JMeter-Plugins versionы  before 1.1.1 were shipped via three distribution ZIPs:

@@ -2,6 +2,10 @@
 
 = PerfMon Server Agent=
 
+== Download ==
+
+<download:ServerAgent-2.2.1.zip;PerfMon Agent to install on target servers>
+
 ==Installation==
 
 *You do not need any root/admin privilege*. You can just unzip the the ServerAgent-X.X.X.zip somewhere on the server. Then launch the agent using {{{startAgent.sh}}} script on Unix, or {{{startAgent.bat}}} script on Windows.

@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Stepping Thread Group <sup><font color=gray size="1">since 0.2.0</font></sup>=
 
 JMeter have only one out-of-the-box option for threads (users) scheduling: simple ramp-up. But many users, especially with [http://en.wikipedia.org/wiki/HP_LoadRunner HP LoadRunner] experience miss more flexible thread scheduling algorythm. Stepping Thread Group adds to JMeter thread scheduling similar to [http://en.wikipedia.org/wiki/HP_LoadRunner LoadRunner]'s.

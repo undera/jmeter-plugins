@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set xmpp_set">Available in [XMPPSet XMPP Set]</div>
 = XMPP Connection Config <sup><font color=gray size="1">since 1.4.0</font></sup>=
 
 == Authorship ==

@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set extras_set">Available in [ExtrasSet Extras Set]</div>
 = UDP Request <sup><font color=gray size="1">since 0.4.1</font></sup>=
 
 This plugin adds [http://en.wikipedia.org/wiki/User_Datagram_Protocol UDP] protocol support to JMeter.

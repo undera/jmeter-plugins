@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Response Times Over Time <sup><font color=gray size="1">since 0.2.1</font></sup>=
 
 From all the tutorials floating around in the net on how to get response times graphs from JMeter log files it is clear that this feature is missing to a lot of JMeter users.

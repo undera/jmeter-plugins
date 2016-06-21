@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = BM.Sense Uploader <sup><font color=gray size="1">since 0.4.2</font></sup>=
 
 This is special plugin for uploading results to

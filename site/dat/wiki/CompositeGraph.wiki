@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Composite Graph <sup><font color=gray size="1">since 0.4.0</font></sup>=
 
 This graph will allow you to pick any row from any other graph of your test plan

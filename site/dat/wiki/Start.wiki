@@ -1,60 +1,18 @@
 = Project Documentation Wiki =
   * [PluginInstall Installation Procedure] to have correct setup
-  * [Changelog] to see latest changes
-  * [Roadmap] to see upcoming improvements and fresh ideas
 
-<table class="table">
-<tr>
-<td style="width: 50%">
-<div class="plugins_set standard_set" >
-== Standard Set ==
-Basic plugins for everyday needs. Does not require additional libs to run.
-
-=== Graphs ===
+== Graphs ==
   * [PerfMon PerfMon Metrics Collector] and [PerfMonAgent Server Agent]
   * [ActiveThreadsOverTime Active Threads Over Time]
   * [ResponseTimesOverTime Response Times Over Time]
   * [TransactionsPerSecond Transactions per Second]
   * [HitsPerSecond Server Hits per Seconds]
   * [CompositeGraph Composite Timeline Graph]
-  
-=== Thread Groups & Timers ===
-  * [SteppingThreadGroup Stepping Thread Group]
-  * [UltimateThreadGroup Ultimate Thread Group]
-  * [ThroughputShapingTimer Throughput Shaping Timer] 
-  * [ConcurrencyThreadGroup Concurrency Thread Group] [/img/icons/new_wog.gif]
-  * [ArrivalsThreadGroup Arrivals Thread Group] [/img/icons/new_wog.gif]
-  * [FreeFormArrivalsThreadGroup Free-Form Arrivals Thread Group] [/img/icons/new_wog.gif]
-
-=== Listeners ===
-  * [FlexibleFileWriter Flexible File Writer]
-  * [ConsoleStatusLogger Non-GUI Console Status Logger] 
-  * [SynthesisReport Synthesis Report] filterable
-  * [LoadosophiaUploader BM.Sense Uploader] (aka Loadosophia Uploader)
-
-=== Others ===
-  * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
-  * [InterThreadCommunication Inter-Thread Communication]
-  * [Functions Custom JMeter Functions] 
-  * [TestPlanCheckTool Tool to check Test Plan consistency]
-  * [FilterResultsTool Command-Line filtered results] by label (regex), offset, success
-  * [WeightedSwitchController Weighted Switch Controller] [/img/icons/new_wog.gif]
-
-=== Samplers ===
-  * [DummySampler Dummy Sampler] for debugging and programming tests
-</div>
-</td>
-<td style="width: 50%">
-<div class="plugins_set extras_set" >
-== Extras Set ==
-Additional plugins for extended and complex testing. Does not require additional libs to run.
-
-=== Graphs ===
   * [ResponseCodesPerSecond Response Codes per Second]
   * [LatenciesOverTime Response Latencies Over Time]
   * [ConnectTimeOverTime Connect Times Over Time]
   * [BytesThroughput Bytes Throughput Over Time]
-  * [PageDataExtractor Extracted Data Over Time] 
+  * [PageDataExtractor Extracted Data Over Time]
   * [DbMon DbMon Sample Collector]
   * [JMXMon JMX Monitoring Collector]
   * [ResponseTimesVsThreads Response Times vs Threads]
@@ -62,84 +20,86 @@ Additional plugins for extended and complex testing. Does not require additional
   * [RespTimesDistribution Response Times Distribution]
   * [RespTimePercentiles Response Times Percentiles]
 
-=== Listeners ===
+== Thread Groups ==
+  * [SteppingThreadGroup Stepping Thread Group]
+  * [UltimateThreadGroup Ultimate Thread Group]
+  * [ConcurrencyThreadGroup Concurrency Thread Group] 
+  * [ArrivalsThreadGroup Arrivals Thread Group] 
+  * [FreeFormArrivalsThreadGroup Free-Form Arrivals Thread Group] 
+
+== Timers ==
+  * [ThroughputShapingTimer Throughput Shaping Timer]
+
+== Listeners ==
+  * [FlexibleFileWriter Flexible File Writer]
+  * [ConsoleStatusLogger Non-GUI Console Status Logger] 
+  * [SynthesisReport Synthesis Report] filterable
+  * [LoadosophiaUploader BM.Sense Uploader] (aka Loadosophia Uploader)
   * [AutoStop] Trigger
   * [GraphsGeneratorListener Graphs Generator]
-  
 
-=== Samplers ===
-  * [UDPRequest UDP Sampler]
-  * [RawRequest HTTP Raw Request]
-
-=== Others ===
-  * [VariablesFromCSV Variables from CSV] configuration item
-  * [ParameterizedController Parameterized Controller] to re-use test plan modules
-  * [RawDataSource Raw Data Source]
-  * [XMLFormatPostProcessor XML Format PostProcessor]
-  * [LockFile Lock Files]
+== Tools ==
+  * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
+  * [InterThreadCommunication Inter-Thread Communication]
+  * [TestPlanCheckTool Tool to check Test Plan consistency]
+  * [FilterResultsTool Command-Line filtered results] by label (regex), offset, success
   * [HttpSimpleTableServer HTTP Simple Table Server] to manage the dataset
   * [MergeResults Merge Results] to simplify the comparison of two or more load tests
-</div>
-</td>
-</tr><tr>
-<td>
-<div class="plugins_set extraslibs_set">
-== Extras with Libs Set ==
-Additional plugins that _do require_ additional libs to run.
-
-=== Samplers ===
-  * [JSONToXMLConverter JSON To XML Converter] 
   * [JMSSampler JMS Sampler] classes for Java Request Sampler
+
+== Functions ==
+  * [Functions Custom JMeter Functions]
+
+== Logic Controllers ==
+  * [WeightedSwitchController Weighted Switch Controller] 
+  * [ParameterizedController Parameterized Controller] to re-use test plan modules
+
+== Samplers ==
+  * [DummySampler Dummy Sampler] for debugging and programming tests
+  * [UDPRequest UDP Sampler]
+  * [RawRequest HTTP Raw Request]
   * [OAuthSampler OAuth Sampler]
-
-=== Others ===
-  * [JSONPathExtractor JSON Path Extractor]
-  * [JSONPathAssertion JSON Path Assertion]
-  * [JSONFormatter JSON Formatter PostProcessor]
-  * [RedisDataSet Redis Data Set]
-
-</td>
-<td >
-<div class="plugins_set webdriver_set">
-== WebDriver Set ==
-Selenium/WebDriver testing ability. It's good to start with [WebDriverTutorial 2-minute tutorial] to learn how to use it.
-
-  * [WebDriverSampler WebDriver Sampler] for full browser tests
-  * [AndroidDriverConfig Android Config]
-  * [ChromeDriverConfig Chrome Config]
-  * [FirefoxDriverConfig Firefox Config]
-  * [HtmlUnitDriverConfig HTMLUnit Config]
-  * [RemoteDriverConfig Remote WebDriver Config]
-  * [PhantomJSDriverConfig PhantomJS Config] [/img/icons/new_wog.gif]
-</div>
-</td>
-</tr><tr>
-<td >
-<div class="plugins_set xmpp_set">
-== XMPP Set ==
-XMPP/Jabber testing capabilities
-  * [XMPPConnection XMPP Connection Config] [/img/icons/new_wog.gif]
-  * [XMPPSampler XMPP Sampler] [/img/icons/new_wog.gif]
-</div>
-</td>
-<td >
-<div class="plugins_set hadoop_set">
-== Hadoop Set ==
-Hadoop/HBase testing plugins.
-  * [HBaseConnection HBase Connection Config]
   * [HDFSOperations HDFS Operations]
   * [HadoopJobTracker Hadoop Job Tracker Sampler]
   * [HBaseCRUDSampler HBase CRUD Sampler]
   * [HBaseScanSampler HBase Scan Sampler]
   * [HBaseRowkeySampler HBase Rowkey Sampler]
-</div>
-</td>
-</tr></table>
+  * [WebDriverSampler WebDriver Sampler] for full browser tests
+  * [XMPPSampler XMPP Sampler]
 
+== Config Items ==
+  * [HBaseConnection HBase Connection Config]
+  * [VariablesFromCSV Variables from CSV] configuration item
+  * [LockFile Lock Files]
+  * [RedisDataSet Redis Data Set]
+  * [AndroidDriverConfig Android Config]
+  * [ChromeDriverConfig Chrome Config]
+  * [FirefoxDriverConfig Firefox Config]
+  * [HtmlUnitDriverConfig HTMLUnit Config]
+  * [RemoteDriverConfig Remote WebDriver Config]
+  * [PhantomJSDriverConfig PhantomJS Config]
+  * [XMPPConnection XMPP Connection Config]
+
+== Pre-Processors ==
+  * [RawDataSource Raw Data Source]
+
+== Post-Processors ==
+  * [XMLFormatPostProcessor XML Format PostProcessor]
+  * [JSONToXMLConverter JSON To XML Converter]
+  * [JSONPathExtractor JSON Path Extractor]
+  * [JSONFormatter JSON Formatter PostProcessor]
+
+== Assertions ==
+  * [JSONPathAssertion JSON Path Assertion]
+
+----
 
 = Developing Plugins =
+  * [Contributors Contibutors List] - write down yourself, if you took your part
   * [DeveloperGuide]
   * [BuildingFromSource]
   * [PluginsGuiGuidelines]
   * [Roadmap] and [Changelog]
-  * [Contributors Contibutors List] - write down yourself, if you took your part
+  * [Changelog] to see latest changes
+  * [Roadmap] to see upcoming improvements and fresh ideas
+  * [/downloads/snapshots Download Development Snapshots]

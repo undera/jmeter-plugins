@@ -1,4 +1,3 @@
-<div style="float: right" class="plugins_set standard_set">Available in [StandardSet Standard Set]</div>
 = Transactions per Second <sup><font color=gray size="1">since 0.3.0</font></sup>=
 
 This graph shows the number of transactions per second for each sampler. It counts for each seconds the number of finished transactions. Compared to the previous version (0.3.0), it will now also display the failed transactions.

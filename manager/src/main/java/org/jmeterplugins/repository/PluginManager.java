@@ -78,7 +78,7 @@ public class PluginManager {
             }
         }
 
-        log.debug("Plugins: " + allPlugins.keySet());
+        log.info("Plugins Status: " + getAllPluginsStatusString());
 
         if (JMeterUtils.getPropDefault("jpgc.repo.sendstats", "true").equals("true")) {
             try {
@@ -358,13 +358,16 @@ public class PluginManager {
     }
 
     /**
-     * @return Version name for the plugin if it is installed, null otherwise
+     * @return Status for all plugins
      */
     public static String getAllPluginsStatus() {
         PluginManager manager = getStaticManager();
+        return manager.getAllPluginsStatusString();
+    }
 
+    private String getAllPluginsStatusString() {
         ArrayList<String> res = new ArrayList<>();
-        for (Plugin plugin : manager.getInstalledPlugins()) {
+        for (Plugin plugin : getInstalledPlugins()) {
             res.add(plugin.getID() + "=" + plugin.getInstalledVersion());
         }
         return Arrays.toString(res.toArray());

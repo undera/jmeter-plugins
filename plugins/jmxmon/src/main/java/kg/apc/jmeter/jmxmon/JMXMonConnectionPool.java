@@ -86,7 +86,13 @@ public class JMXMonConnectionPool {
             } else {
                 log.debug("jmxConnector == null, don't try to close connection");
             }
+            
+            jmxcon.connector = null;
+            jmxcon = null;
+            
         }
+		/* erase pool informations for this run but will be recreate for the next run */
+		pool.clear();
 	}
 
 	/**

@@ -138,6 +138,12 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "0.3": {
+        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/jmeter-debugger-0.3.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   }

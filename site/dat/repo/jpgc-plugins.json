@@ -324,6 +324,13 @@
           "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
           "perfmon": "http://search.maven.org/remotecontent?filepath=kg/apc/perfmon/2.2.2/perfmon-2.2.2.jar"
         }
+      },
+      "2.1": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-perfmon/2.1/jmeter-plugins-perfmon-2.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "perfmon": "http://search.maven.org/remotecontent?filepath=kg/apc/perfmon/2.2.2/perfmon-2.2.2.jar"
+        }
       }
     }
   },

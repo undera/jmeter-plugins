@@ -58,7 +58,7 @@ public class PerfMonCollector extends CorrectedResultCollector implements Runnab
     }
 
     public PerfMonCollector() {
-        interval = JMeterUtils.getPropDefault("jmeterPlugin.perfmon.interval", 1000);
+        interval = JMeterUtils.getPropDefault("jmeterPlugin.perfmon.interval", 1000) / 1000;
     }
 
     public void setData(CollectionProperty rows) {
@@ -78,7 +78,7 @@ public class PerfMonCollector extends CorrectedResultCollector implements Runnab
         while (true) {
             processConnectors();
             try {
-                this.wait(interval);
+                this.wait(interval * 1000);
             } catch (InterruptedException ex) {
                 log.debug("Monitoring thread was interrupted", ex);
                 break;

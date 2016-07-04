@@ -22,14 +22,13 @@ rem   jmeterPlugin.sts.port=9191
 rem   jmeterPlugin.sts.addTimestamp=true
 rem   jmeterPlugin.sts.datasetDirectory=<JMETER_HOME/bin> (leave it empty)
 rem   jmeterPlugin.sts.loadAndRunOnStartup=true
+rem   You can set this property likes : java -cp %CP% -DjmeterPlugin.sts.port=9191 org.jmeterplugins.protocol.http.control.HttpSimpleTableServer
 
 setlocal
 
 cd /D %~dp0
 
-set CP=..\lib\ext\ApacheJMeter_core.jar;..\lib\jorphan.jar;..\lib\ext\jmeter-plugins-table-server-2.0.jar
+set CP=..\lib\ext\ApacheJMeter_core.jar;..\lib\jorphan.jar;..\lib\ext\jmeter-plugins-table-server-${version}.jar
 set CP=%CP%;..\lib\logkit-2.0.jar;..\lib\avalon-framework-4.1.4.jar
 
 java -cp %CP% org.jmeterplugins.protocol.http.control.HttpSimpleTableServer
-
-pause

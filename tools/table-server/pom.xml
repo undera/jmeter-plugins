@@ -6,7 +6,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-table-server</artifactId>
-    <version>2.1</version>
+    <version>2.2</version>
 
     <name>Table server</name>
     <description>Table server</description>
@@ -50,4 +50,15 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    
+ 	<build>
+        <resources>
+       		<resource>
+       			<directory>src/main/resources</directory>
+       			<!-- add version for the generated library in the simple-table server script shell -->
+       			<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+	
 </project>

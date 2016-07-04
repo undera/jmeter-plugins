@@ -6,7 +6,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-jmxmon</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 
     <name>JMXMon</name>
     <description>JMXMon</description>

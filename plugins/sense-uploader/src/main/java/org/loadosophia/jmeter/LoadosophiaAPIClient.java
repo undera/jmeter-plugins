@@ -131,7 +131,7 @@ public class LoadosophiaAPIClient {
         // Create the GZIP output stream
         String outFilename = src.getAbsolutePath() + ".gz";
         notifier.notifyAbout("Gzipping " + src.getAbsolutePath());
-        GZIPOutputStream out = new GZIPOutputStream(new FileOutputStream(outFilename));
+        GZIPOutputStream out = new GZIPOutputStream(new FileOutputStream(outFilename), 1024 * 8, true);
 
         // Open the input file
         FileInputStream in = new FileInputStream(src);

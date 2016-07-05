@@ -189,7 +189,27 @@ public class JSONPathExtractorTest {
         instance.process();
         assertEquals("[\"Nigel Rees\",\"Evelyn Waugh\",\"Herman Melville\",\"J. R. R. Tolkien\"]", vars.get("test"));
     }
+    @Test
+    public void testProcess_from_var_2() {
+        System.out.println("process fromvar");
+        JMeterContext context = JMeterContextService.getContext();
+        JMeterVariables vars = context.getVariables();
 
+        SampleResult res = new SampleResult();
+        res.setResponseData("".getBytes());
+        context.setPreviousResult(res);
+
+        vars.put("SVAR", json);
+
+        JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setDefaultValue("DEFAULT");
+        instance.setVar("test");
+        instance.setJsonPath("$.store.bicycle");
+        instance.setSubject(JSONPathExtractor.SUBJECT_VARIABLE);
+        instance.setSrcVariableName("SVAR");
+        instance.process();
+        assertEquals("{\"color\":\"red\", \"price\":19.95}", vars.get("test"));
+    }
     @Test
     public void testProcess_list() {
         System.out.println("process list");

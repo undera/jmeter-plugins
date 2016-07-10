@@ -7,8 +7,8 @@
          base="http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.8/jmeter-plugins-manager-0.8.jar"
          no_final_slash="1"/>
 
-    <url link="install" title="Install" menu="1" class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/wiki/PluginInstall/"
-         ico="fa-download"/>
+    <url link="install" title="Install" menu="1" ico="fa-download"
+         class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/wiki/PluginInstall/"/>
 
     <url link="downloads" title="Download" menu="0" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl"
          start_page="all" files_base="files" download_link="../file" accept="1" ico="fa-download">
@@ -18,6 +18,9 @@
     <url link="wiki" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" start_page="Start" ico="fa-book"
          files_base="files" download_link="../../downloads/file"
          accept="1" menu="1" title="Documentation"/>
+
+    <url link="stats" title="Usage Statistics" menu="1" ico="fa-bar-chart"
+         class="PWE\Modules\HTMLPage\HTMLPage" src="stats.html"/>
 
     <url link="support" menu="1" title="Support Forums" class="PWE\Modules\RedirectAccepted\RedirectAccepted"
          base="http://groups.google.com/forum/#!forum/jmeter-plugins" accept="1" ico="fa-support"/>

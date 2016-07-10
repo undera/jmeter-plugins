@@ -1,0 +1,52 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+
+<div id="jmetervers" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script>
+    $(function () {
+        $.get('/dat/stats/jmeter_versions_history.csv', function (csv) {
+            $('#jmetervers').highcharts({
+                data: {
+                    csv: csv
+                },
+                title: {
+                    text: 'JMeter Versions'
+                },
+                subtitle: {
+                    text: 'Source: jmeter-plugins.org'
+                },
+                xAxis: {
+                    type: "datetime"
+                },
+                yAxis: {
+                    title: {
+                        text: '% of known installations'
+                    },
+                    labels: {
+                        formatter: function () {
+                            return this.value + ' %';
+                        }
+                    },
+                    endOnTick: false,
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: '%'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                }
+            });
+        })
+    });
+
+</script>

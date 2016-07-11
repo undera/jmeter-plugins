@@ -25,20 +25,52 @@
 </div>
 
 <script>
+    function values(dict) {
+        var values = [];
+        var keys = Object.keys(dict).sort();
+        for (var k = 0; k < keys.length; k++) {
+            values.push(dict[keys[k]]);
+        }
+        return values;
+    }
+
     $(function () {
         var plugins = [];
+        var stats = {};
         var cat = $("#catalogue");
 
+        function getSparkline(plugin) {
+            var pluginSpark = $("<div></div>").addClass("sparkline-container");
+            var vals = values(stats[plugin.id]);
+            var span = $("<span></span>").addClass("sparkline").text(vals);
+            pluginSpark.append(span);
+            pluginSpark.append("<br/>");
+            pluginSpark.append("<small>Users: " + vals[vals.length - 1] + "</small>");
+            return pluginSpark;
+        }
+
         function getPluginCard(plugin) {
-            var card = $("<div></div>");
-            card.addClass("alert");
-            card.append("<small class='pull-right'>ID: " + plugin.id + "</small>");
-            card.append("<h4><a href='" + plugin.helpUrl + "'>" + plugin.name + "</a></h4>");
-            card.append("<p>" + plugin.description + "</p>");
-            var vers=Object.keys(plugin.versions);
-            if (vers[0]!="") {
-                card.append("<p><small>Versions: " + vers + "</small></p>");
+            var right = $("<div></div>").addClass("pull-right col-md-6 text-right");
+            right.append("<small>ID: " + plugin.id + "</small>");
+            if (stats[plugin.id]) {
+                right.append(getSparkline(plugin));
+            } else {
+                console.log("Skip", stats[plugin.id]);
             }
+
+            var left = $("<div></div>").addClass("pull-left col-md-6");
+            left.append("<h4><a href='" + plugin.helpUrl + "'>" + plugin.name + "</a></h4>");
+            left.append("<p>" + plugin.description + "</p>");
+            var vers = Object.keys(plugin.versions);
+            if (vers[0] != "") {
+                left.append("<p><small>Versions: " + vers + "</small></p>");
+            }
+
+            var card = $("<div></div>").addClass("row");
+            card.addClass("alert");
+            card.append(left);
+            card.append(right);
+            card.append("<div class='clearfix'></div>");
             return card;
         }
 
@@ -63,7 +95,7 @@
                 }
 
                 cnt++;
-                if (!filter && n>=5) {
+                if (!filter && n >= 5) {
                     continue;
                 }
                 list.append(getPluginCard(plugin));
@@ -71,8 +103,11 @@
             cat.find(".count span").text(cnt);
             cat.find(".fa-spin").hide();
 
-            if (!filter && cnt>5) {
-                list.append("<div class='text-muted'>"+(cnt-5)+" more plugins&hellip;</div>");
+            cat.find(".sparkline").sparkline("html", {type: "bar", width: "100%", height: "2em"});
+
+
+            if (!filter && cnt > 5) {
+                list.append("<a href='/wiki/' class='text-muted'>" + (cnt - 5) + " more plugins&hellip;</a>");
             }
         }
 
@@ -88,19 +123,21 @@
                 clearTimeout(typingTimer);
             }).change(refreshCatalogue);
 
-            data.sort(function(a,b){
-                if (a.id.includes("jmeter-") && !b.id.includes("jmeter-")) {
-                    return 1;
-                }
-                return a.id > b.id ? 1 : -1;
+            data.sort(function (a, b) {
+                return Math.random() > 0.5 ? 1 : -1;
             });
 
             plugins.push.apply(plugins, data);
-            refreshCatalogue();
+
+            $.get('/dat/stats/plugins_usage_history.json').success(function (json) {
+                stats = json;
+            }).complete(function () {
+                refreshCatalogue();
+            });
         });
     });
 
 
-
-
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>

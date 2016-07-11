@@ -255,13 +255,17 @@ table.wiki img {
     margin-left: 2em;
 }
 
-
 /* Catalogue */
-    #catalogue .list .alert {
-        background-color: #EFEFEF;
-    }
+#catalogue .list .alert {
+    background-color: #EFEFEF;
+}
 
-    #catalogue input {
-        font-size: 1.5em;
-        width: 100%;
-    }
+#catalogue input {
+    font-size: 1.5em;
+    width: 100%;
+}
+
+/* Stats */
+.sparkline-container {
+    margin-top: 1em;
+}

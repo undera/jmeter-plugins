@@ -5,7 +5,7 @@
 <div id="jmetervers" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <hr/>
 <h3>Plugins Popularity</h3>
-By the number of known users.
+By the number of known users:
 <div id="plugins">
     <ol></ol>
 </div>
@@ -66,9 +66,10 @@ By the number of known users.
         $.get('/dat/stats/plugins_usage_history.json').success(function (json) {
             var list = [];
             for (var k in json) {
+                if (k.startsWith('jmeter-')) continue;
+
                 var values2 = values(json[k]);
                 list.push({plugin: k, data: values2[values2.length - 1]});
-                console.log(values2);
             }
 
             list.sort(function (a, b) {
@@ -80,7 +81,11 @@ By the number of known users.
             });
 
             for (var n = 0; n < list.length; n++) {
-                $("#plugins").find("ol").append("<li>" + list[n].plugin + ': ' + list[n].data + "</li>");
+                var li = $("<li></li>");
+                li.append("<a href='/?search=" + list[n].plugin + "'>" + list[n].plugin + "</a>");
+                li.append("<span>: " + list[n].data + "</span>");
+                $("#plugins").find("ol").append(li);
+
             }
         });
     });

@@ -257,7 +257,12 @@ table.wiki img {
 
 /* Catalogue */
 #catalogue .list .alert {
-    background-color: #EFEFEF;
+    background-color: #ebeff9;
+    border-color: #c9d7f1;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 0;
+    padding-left: 0;
 }
 
 #catalogue input {
@@ -265,7 +270,7 @@ table.wiki img {
     width: 100%;
 }
 
-#catalogue img {
+#catalogue .alert img {
     max-width: 10em;
     max-height: 10em;
     width: 100%;

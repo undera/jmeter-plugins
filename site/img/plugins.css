@@ -265,6 +265,13 @@ table.wiki img {
     width: 100%;
 }
 
+#catalogue img {
+    max-width: 10em;
+    max-height: 10em;
+    width: 100%;
+    border: 1px solid silver;
+}
+
 /* Stats */
 .sparkline-container {
     margin-top: 1em;

@@ -50,15 +50,7 @@
         }
 
         function getPluginCard(plugin) {
-            var right = $("<div></div>").addClass("pull-right col-md-6 text-right");
-            right.append("<small>ID: " + plugin.id + "</small>");
-            if (stats[plugin.id]) {
-                right.append(getSparkline(plugin));
-            } else {
-                console.log("Skip", stats[plugin.id]);
-            }
-
-            var left = $("<div></div>").addClass("pull-left col-md-6");
+            var left = $("<div></div>").addClass("col-md-6");
             left.append("<h4><a href='" + plugin.helpUrl + "'>" + plugin.name + "</a></h4>");
             left.append("<p>" + plugin.description + "</p>");
             var vers = Object.keys(plugin.versions);
@@ -66,9 +58,26 @@
                 left.append("<p><small>Versions: " + vers + "</small></p>");
             }
 
+            var mid = $("<div></div>").addClass("pull-left col-md-3 text-center");
+            if (plugin.screenshotUrl) {
+                var a=$("<a href='" + plugin.helpUrl + "'></a>");
+                a.append("<img src='" + plugin.screenshotUrl + "'/>");
+                mid.append(a);
+            }
+
+            var right = $("<div></div>").addClass("col-md-3 text-right");
+            right.append("<small>ID: " + plugin.id + "</small>");
+            if (stats[plugin.id]) {
+                right.append(getSparkline(plugin));
+            } else {
+                console.log("Skip", stats[plugin.id]);
+            }
+
+
             var card = $("<div></div>").addClass("row");
             card.addClass("alert");
             card.append(left);
+            card.append(mid);
             card.append(right);
             card.append("<div class='clearfix'></div>");
             return card;

@@ -309,8 +309,9 @@ public class JSONPathExtractorTest {
         instance.setSubject(JSONPathExtractor.SUBJECT_VARIABLE);
         instance.setSrcVariableName("SVAR");
         instance.process();
-        boolean thiis = "{\"color\":\"red\",\"price\":19.95}".equals(vars.get("test"));
-        boolean thaat = "{\"price\":19.95\",color\":\"red\"}".equals(vars.get("test"));
+        String test = vars.get("test");
+        boolean thiis = "{\"color\":\"red\",\"price\":19.95}".equals(test);
+        boolean thaat = "{\"price\":19.95,\"color\":\"red\"}".equals(test);
         assertTrue(thiis || thaat);
     }
 }

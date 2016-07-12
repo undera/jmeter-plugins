@@ -22,7 +22,7 @@ _Color Flag_ sets test to have color mark in BlazeMeter Sense interface.
 
 ==Usage==
 
-  # Go to sense.blazemeter.com and [https://sense.blazemeter.com/gui/upload/token/?utm_source=jpgc&utm_medium=link&utm_campaign=wikitoken issue an upload token]
+  # Go to sense.blazemeter.com and [https://sense.blazemeter.com/gui/settings/?utm_source=jpgc&utm_medium=link&utm_campaign=wikitoken issue an upload token]
   # Copy & paste it into _Upload Token_ field of BM.Sense Uploader
   # Run your test, verify in _Info Area_ that results uploaded successfully
   # Wait for uploaded file to be processed at [https://sense.blazemeter.com/gui/upload/?utm_source=jpgc&utm_medium=link&utm_campaign=wikiupload uploads page]

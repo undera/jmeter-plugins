@@ -24,8 +24,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 public class JSONPathExtractorTest {
     private static final String json = "{ \"store\": {\n" +
@@ -310,6 +309,8 @@ public class JSONPathExtractorTest {
         instance.setSubject(JSONPathExtractor.SUBJECT_VARIABLE);
         instance.setSrcVariableName("SVAR");
         instance.process();
-        assertEquals("{\"color\":\"red\",\"price\":19.95}", vars.get("test"));
+        boolean thiis = "{\"color\":\"red\",\"price\":19.95}".equals(vars.get("test"));
+        boolean thaat = "{\"price\":19.95\",color\":\"red\"}".equals(vars.get("test"));
+        assertTrue(thiis || thaat);
     }
 }

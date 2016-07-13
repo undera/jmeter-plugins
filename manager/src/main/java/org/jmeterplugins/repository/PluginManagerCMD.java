@@ -51,6 +51,7 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
 
         Map<String, String> params = parseParams(listIterator.next().toString());
         PluginManager mgr = new PluginManager();
+        mgr.setTimeout(30000); // TODO: add property?
         mgr.load();
         mgr.setDoRestart(false);
 

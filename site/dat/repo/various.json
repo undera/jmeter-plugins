@@ -9,7 +9,7 @@
     "markerClass": "org.apache.jmeter.protocol.ssh.sampler.AbstractSSHSampler",
     "versions": {
       "1.1.1-SNAPSHOT": {
-        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/ApacheJMeter_ssh-1.1.1-SNAPSHOT.jar",
+        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/ApacheJMeter_ssh-1.1.1-SNAPSHOT.jar",
         "libs": {
           "jsch": "http://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.50/jsch-0.1.50.jar"
         }
@@ -26,7 +26,7 @@
     "markerClass": "JMeter.plugins.functional.samplers.websocket.WebSocketSampler",
     "versions": {
       "1.0.2-SNAPSHOT": {
-        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/JMeterWebSocketSampler-1.0.2-SNAPSHOT.jar",
+        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/JMeterWebSocketSampler-1.0.2-SNAPSHOT.jar",
         "libs": {
           "jetty-http": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.1.1.v20140108/jetty-http-9.1.1.v20140108.jar",
           "jetty-io": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.1.1.v20140108/jetty-io-9.1.1.v20140108.jar",
@@ -48,7 +48,7 @@
     "markerClass": "org.apache.jmeter.protocol.mqtt.sampler.SubscriberSampler",
     "versions": {
       "0.0.1-SNAPSHOT": {
-        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/mqtt-jmeter-0.0.1-SNAPSHOT.jar",
+        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/mqtt-jmeter-0.0.1-SNAPSHOT.jar",
         "libs": {
           "org.eclipse.paho.client.mqttv3": "http://search.maven.org/remotecontent?filepath=org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.0.2/org.eclipse.paho.client.mqttv3-1.0.2.jar"
         }
@@ -65,7 +65,7 @@
     "markerClass": "com.netflix.jmeter.sampler.AbstractSampler",
     "versions": {
       "0.2-SNAPSHOT": {
-        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/CassJMeter-0.2-SNAPSHOT.jar",
+        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/CassJMeter-0.2-SNAPSHOT.jar",
         "libs": {
           "servo-core": "http://search.maven.org/remotecontent?filepath=com/netflix/servo/servo-core/0.4.32/servo-core-0.4.32.jar",
           "hector-core": "http://search.maven.org/remotecontent?filepath=org/hectorclient/hector-core/1.1-2/hector-core-1.1-2.jar",
@@ -86,7 +86,7 @@
     "markerClass": "co.signal.kafkameter.KafkaProducerSampler",
     "versions": {
       "0.2.0": {
-        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/kafkameter-0.2.0.jar",
+        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/kafkameter-0.2.0.jar",
         "depends": [
           "jmeter-java"
         ],
@@ -108,7 +108,7 @@
     "markerClass": "com.jmeter.protocol.soap.sampler.CustomSOAPSampler",
     "versions": {
       "1.3": {
-        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/CustomSoapSampler-1.3.jar",
+        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/CustomSoapSampler-1.3.jar",
         "depends": [
           "jmeter-http"
         ],
@@ -128,19 +128,19 @@
     "markerClass": "com.blazemeter.jmeter.debugger.engine.Debugger",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/jmeter-debugger-0.1.jar",
+        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/jmeter-debugger-0.1.jar",
         "depends": [
           "jmeter-core"
         ]
       },
       "0.2": {
-        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/jmeter-debugger-0.2.jar",
+        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/jmeter-debugger-0.2.jar",
         "depends": [
           "jmeter-core"
         ]
       },
       "0.3": {
-        "downloadUrl": "http://jmeter-plugins.org/files/thirdparty/jmeter-debugger-0.3.jar",
+        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/jmeter-debugger-0.3.jar",
         "depends": [
           "jmeter-core"
         ]

@@ -29,9 +29,15 @@ Sometimes plugins have dependencies from each other, so there might be additiona
 
 Right mouse click over checkbox lists opens "Toggle All" option, which takes some time to toggle all items in the list.
 
-Plugins Manager respects JMeter's [http://jmeter.apache.org/usermanual/get-started.html#proxy_server proxy settings].
+== Using Behind the Proxy ==
 
-== Add Your Favorite Plugin ==
+Plugins Manager respects JMeter's [http://jmeter.apache.org/usermanual/get-started.html#proxy_server proxy settings]. However, to avoid editing the properties files, we recommend to launch JMeter with additional parameters to pass it the proxy settings:
+
+{{{
+JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080" jmeter\bin\jmeter.bat
+}}}
+
+== Add Your Plugin ==
 
 Now there is an opportunity for anyone who creates the JMeter plugins to quickly make them available for wide audience of JMeter-Plugins.org.
 You don't need to contribute your source code into our repository, you can just create your project and maintain it, just using JPGC as distribution infrastructure.
@@ -75,7 +81,7 @@ PluginsManagerCMD uninstall jmeter-tcp,jmeter-ftp,jmeter-jdbc
 To use proxy with command line, please use {{{JVM_ARGS}}} environment variable to set proxy properties, like this:
 
 {{{
-JVM_ARGS="-Dhttp.proxyHost=myproxy.com -Dhttp.proxyPort=8080" PluginsManagerCMD status
+JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080" PluginsManagerCMD status
 }}}
 
 == Using from BeanShell or JSR223 ==
@@ -106,5 +112,5 @@ Example result of this function call is string like {{{[jpgc-graphs-basic=1.3.1,
 
 To use proxy with command line, please use {{{JVM_ARGS}}} environment variable to set proxy properties, like this:
 {{{
-JVM_ARGS="-Dhttp.proxyHost=myproxy.com -Dhttp.proxyPort=8080" PluginsManagerCMD status
+JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080" PluginsManagerCMD status
 }}}

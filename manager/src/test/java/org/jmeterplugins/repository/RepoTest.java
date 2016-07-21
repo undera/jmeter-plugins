@@ -16,7 +16,7 @@ public class RepoTest {
 
     @Test
     public void testAll() throws IOException {
-        System.out.println("Env: " + System.getenv());
+        System.err.println("Env: " + System.getenv());
         String travis = System.getenv("TRAVIS");
         if (travis != null) {
             System.out.println("Not running test inside Travis CI");
@@ -43,7 +43,7 @@ public class RepoTest {
         }
 
         if (problems.size() > 0) {
-            throw new AssertionFailedError(problems.toString());
+            throw new AssertionFailedError(problems.toString() + "\n" + System.getenv());
         }
     }
 

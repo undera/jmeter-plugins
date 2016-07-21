@@ -152,7 +152,7 @@ if (window.location.hostname == 'jmeter-plugins.org' && window.location.protocol
 
 <footer>
   <div class="container">
-    <span>&copy; 2009-{"Y"|date} Andrey Pokhilko and <a href="/wiki/Contributors/">project contributors</a></span><br/>
+    <span>&copy; 2009-{"Y"|date} <a href="https://www.linkedin.com/in/andreypohilko">Andrey Pokhilko</a> and <a href="/wiki/Contributors/">project contributors</a></span><br/>
     <span>Licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a></span>
   </div>
 

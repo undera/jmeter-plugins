@@ -10,24 +10,24 @@
     "canUninstall": false,
     "versions": {
       "0.3": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.3/jmeter-plugins-manager-0.3.jar"
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.3/jmeter-plugins-manager-0.3.jar"
       },
       "0.4": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.4/jmeter-plugins-manager-0.4.jar"
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.4/jmeter-plugins-manager-0.4.jar"
       },
       "0.5": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.5/jmeter-plugins-manager-0.5.jar"
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.5/jmeter-plugins-manager-0.5.jar"
       },
       "0.6": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.6/jmeter-plugins-manager-0.6.jar"
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.6/jmeter-plugins-manager-0.6.jar"
       },
       "0.7": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.7/jmeter-plugins-manager-0.7.jar"
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.7/jmeter-plugins-manager-0.7.jar"
       },
       "0.8": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.8/jmeter-plugins-manager-0.8.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.8/jmeter-plugins-manager-0.8.jar",
         "libs": {
-          "cmdrunner": "http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
         }
       }
     }

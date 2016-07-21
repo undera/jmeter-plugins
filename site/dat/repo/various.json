@@ -11,7 +11,7 @@
       "1.1.1-SNAPSHOT": {
         "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/ApacheJMeter_ssh-1.1.1-SNAPSHOT.jar",
         "libs": {
-          "jsch": "http://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.50/jsch-0.1.50.jar"
+          "jsch": "https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.50/jsch-0.1.50.jar"
         }
       }
     }
@@ -28,12 +28,12 @@
       "1.0.2-SNAPSHOT": {
         "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/JMeterWebSocketSampler-1.0.2-SNAPSHOT.jar",
         "libs": {
-          "jetty-http": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.1.1.v20140108/jetty-http-9.1.1.v20140108.jar",
-          "jetty-io": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.1.1.v20140108/jetty-io-9.1.1.v20140108.jar",
-          "jetty-util": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.1.1.v20140108/jetty-util-9.1.1.v20140108.jar",
-          "websocket-api": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-api/9.1.1.v20140108/websocket-api-9.1.1.v20140108.jar",
-          "websocket-client": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-client/9.1.1.v20140108/websocket-client-9.1.1.v20140108.jar",
-          "websocket-common": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-common/9.1.1.v20140108/websocket-common-9.1.1.v20140108.jar"
+          "jetty-http": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.1.1.v20140108/jetty-http-9.1.1.v20140108.jar",
+          "jetty-io": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.1.1.v20140108/jetty-io-9.1.1.v20140108.jar",
+          "jetty-util": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.1.1.v20140108/jetty-util-9.1.1.v20140108.jar",
+          "websocket-api": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-api/9.1.1.v20140108/websocket-api-9.1.1.v20140108.jar",
+          "websocket-client": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-client/9.1.1.v20140108/websocket-client-9.1.1.v20140108.jar",
+          "websocket-common": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-common/9.1.1.v20140108/websocket-common-9.1.1.v20140108.jar"
         }
       }
     }
@@ -50,7 +50,7 @@
       "0.0.1-SNAPSHOT": {
         "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/mqtt-jmeter-0.0.1-SNAPSHOT.jar",
         "libs": {
-          "org.eclipse.paho.client.mqttv3": "http://search.maven.org/remotecontent?filepath=org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.0.2/org.eclipse.paho.client.mqttv3-1.0.2.jar"
+          "org.eclipse.paho.client.mqttv3": "https://search.maven.org/remotecontent?filepath=org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.0.2/org.eclipse.paho.client.mqttv3-1.0.2.jar"
         }
       }
     }
@@ -67,11 +67,11 @@
       "0.2-SNAPSHOT": {
         "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/CassJMeter-0.2-SNAPSHOT.jar",
         "libs": {
-          "servo-core": "http://search.maven.org/remotecontent?filepath=com/netflix/servo/servo-core/0.4.32/servo-core-0.4.32.jar",
-          "hector-core": "http://search.maven.org/remotecontent?filepath=org/hectorclient/hector-core/1.1-2/hector-core-1.1-2.jar",
-          "astyanax": "http://search.maven.org/remotecontent?filepath=com/netflix/astyanax/astyanax/1.56.25/astyanax-1.56.25.jar",
-          "guava": "http://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
-          "cassandra-driver-core": "http://search.maven.org/remotecontent?filepath=com/datastax/cassandra/cassandra-driver-core/1.0.0/cassandra-driver-core-1.0.0.jar"
+          "servo-core": "https://search.maven.org/remotecontent?filepath=com/netflix/servo/servo-core/0.4.32/servo-core-0.4.32.jar",
+          "hector-core": "https://search.maven.org/remotecontent?filepath=org/hectorclient/hector-core/1.1-2/hector-core-1.1-2.jar",
+          "astyanax": "https://search.maven.org/remotecontent?filepath=com/netflix/astyanax/astyanax/1.56.25/astyanax-1.56.25.jar",
+          "guava": "https://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
+          "cassandra-driver-core": "https://search.maven.org/remotecontent?filepath=com/datastax/cassandra/cassandra-driver-core/1.0.0/cassandra-driver-core-1.0.0.jar"
         }
       }
     }
@@ -91,9 +91,9 @@
           "jmeter-java"
         ],
         "libs": {
-          "guava": "http://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
-          "kafka_2.8.2": "http://search.maven.org/remotecontent?filepath=org/apache/kafka/kafka_2.8.2/0.8.0/kafka_2.8.2-0.8.0.jar",
-          "gson": "http://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.2.4/gson-2.2.4.jar"
+          "guava": "https://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
+          "kafka_2.8.2": "https://search.maven.org/remotecontent?filepath=org/apache/kafka/kafka_2.8.2/0.8.0/kafka_2.8.2-0.8.0.jar",
+          "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.2.4/gson-2.2.4.jar"
         }
       }
     }
@@ -113,7 +113,7 @@
           "jmeter-http"
         ],
         "libs": {
-          "jpgc-common": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common/1.4.0/jmeter-plugins-common-1.4.0.jar"
+          "jpgc-common": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common/1.4.0/jmeter-plugins-common-1.4.0.jar"
         }
       }
     }

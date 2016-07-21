@@ -43,7 +43,7 @@ public class RepoTest {
         }
 
         if (problems.size() > 0) {
-            throw new AssertionFailedError(problems.toString() + "\n" + System.getenv());
+            throw new AssertionFailedError(problems.toString() + "\n" + travis);
         }
     }
 

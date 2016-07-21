@@ -16,12 +16,11 @@ public class RepoTest {
 
     @Test
     public void testAll() throws IOException {
-        System.err.println("Env: " + System.getenv());
-        String travis = System.getenv("TRAVIS");
-        if (travis != null) {
+        Map<String, String> env = System.getenv();
+        if (env.containsKey("TRAVIS")) {
             System.out.println("Not running test inside Travis CI");
-        }
-
+        } 
+        
         List<String> problems = new ArrayList<>();
         String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
         String up = File.separator + "..";
@@ -43,7 +42,7 @@ public class RepoTest {
         }
 
         if (problems.size() > 0) {
-            throw new AssertionFailedError(problems.toString() + "\n" + travis);
+            throw new AssertionFailedError(problems.toString());
         }
     }
 

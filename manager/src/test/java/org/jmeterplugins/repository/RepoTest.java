@@ -16,6 +16,10 @@ public class RepoTest {
 
     @Test
     public void testAll() throws IOException {
+        if (System.getenv("TRAVIS").equals("true")) {
+            System.out.println("Not running test inside Travis CI");
+        }
+
         List<String> problems = new ArrayList<>();
         String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
         String up = File.separator + "..";

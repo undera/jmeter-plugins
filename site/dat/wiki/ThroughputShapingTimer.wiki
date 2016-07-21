@@ -39,9 +39,9 @@ Actual RPS provided:
 
 == Special Property Processing ==
 
-There is a way to specify load pattern from special jmeter property _load_profile_.
+There is a way to specify load pattern from special jmeter property {{{load_profile}}}.
 Property can be specified either in user.properties file (jmeter.properties also applicable), or
-from command line like _-J "load_profile=..."_. Make note that this property is temporary,
+from command line like {{{-J "load\_profile=..."}}}. Make note that this property is temporary,
 and will be replaced by some GUI setting in future versions.
 
 Load pattern specified with set of function-like declarations.

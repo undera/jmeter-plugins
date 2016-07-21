@@ -268,6 +268,12 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
+      },
+      "2.3": {
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.3/jmeter-plugins-json-2.3.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
       }
     }
   },
@@ -442,12 +448,12 @@
       "1.4.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/1.4.0/jmeter-plugins-webdriver-1.4.0.jar",
         "libs": {
-          "selenium-support": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-support/2.53.0/selenium-support-2.53.0.jar",
-          "selenium-api": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-api/2.53.0/selenium-api-2.53.0.jar",
-          "selenium-firefox-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-firefox-driver/2.53.0/selenium-firefox-driver-2.53.0.jar",
-          "selenium-remote-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-remote-driver/2.53.0/selenium-remote-driver-2.53.0.jar",
-          "selenium-ie-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-ie-driver/2.53.0/selenium-ie-driver-2.53.0.jar",
-          "selenium-chrome-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-chrome-driver/2.53.0/selenium-chrome-driver-2.53.0.jar",
+          "selenium-support": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-support/2.52.0/selenium-support-2.52.0.jar",
+          "selenium-api": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-api/2.52.0/selenium-api-2.52.0.jar",
+          "selenium-firefox-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-firefox-driver/2.52.0/selenium-firefox-driver-2.52.0.jar",
+          "selenium-remote-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-remote-driver/2.52.0/selenium-remote-driver-2.52.0.jar",
+          "selenium-ie-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-ie-driver/2.52.0/selenium-ie-driver-2.52.0.jar",
+          "selenium-chrome-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-chrome-driver/2.52.0/selenium-chrome-driver-2.52.0.jar",
           "selenium-htmlunit-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-htmlunit-driver/2.52.0/selenium-htmlunit-driver-2.52.0.jar",
           "phantomjsdriver": "https://search.maven.org/remotecontent?filepath=com/codeborne/phantomjsdriver/1.2.1/phantomjsdriver-1.2.1.jar",
           "nekohtml": "https://search.maven.org/remotecontent?filepath=net/sourceforge/nekohtml/nekohtml/1.9.22/nekohtml-1.9.22.jar",

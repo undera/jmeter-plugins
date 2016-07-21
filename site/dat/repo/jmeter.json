@@ -61,7 +61,7 @@
     "name": "MongoDB Support",
     "description": "Supports testing MongoDB performance",
     "vendor": "JMeter Core Team",
-    "screenshotUrl": "hhttp://jmeter.apache.org/images/screenshots/mongodb-source-config.png",
+    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/mongodb-source-config.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#MongoDB_Script",
     "markerClass": "org.apache.jmeter.protocol.mongodb.sampler.MongoScriptSampler",
     "versions": {

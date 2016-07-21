@@ -8,9 +8,9 @@
  */
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion;
 
+import com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor;
 import com.jayway.jsonpath.JsonPath;
 import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
 import org.apache.jmeter.assertions.Assertion;
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
@@ -21,7 +21,6 @@ import org.apache.log.Logger;
 import org.apache.oro.text.regex.Pattern;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * This is main class for JSONPath Assertion which verifies assertion on
@@ -104,28 +103,16 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
 
             if (isExpectNull()) {
                 throw new RuntimeException(String.format("Value expected to be null, but found '%s'", value));
-            }
-            else {
-                throw new RuntimeException(String.format("Value expected to be '%s', but found '%s'", getExpectedValue(), objectToString(value)));
+            } else {
+                throw new RuntimeException(String.format("Value expected to be '%s', but found '%s'", getExpectedValue(), JSONPathExtractor.objectToString(value)));
             }
         }
     }
 
     private boolean isEquals(Object subj) {
-        String str = objectToString(subj);
+        String str = JSONPathExtractor.objectToString(subj);
         Pattern pattern = JMeterUtils.getPatternCache().getPattern(getExpectedValue());
         return JMeterUtils.getMatcher().matches(str, pattern);
-    }
-
-    private String objectToString(Object subj) {
-        String str;
-        if (subj instanceof Map) {
-            //noinspection unchecked
-            str = new JSONObject((Map<String, ?>) subj).toJSONString();
-        } else {
-            str = subj.toString();
-        }
-        return str;
     }
 
     @Override

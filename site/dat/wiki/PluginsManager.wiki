@@ -48,8 +48,9 @@ Main goal is not to ship undesired plugins into popup menus to not distract JMet
 
 == Usage Statistics Collected ==
 
-By default, Plugins Manager sends some anonymous information to JMeter-Plugins.org, including: full version of JMeter used, list of installed plugins with their versions, unique ID for the installation.
-We would love to analyze that information to learn more about which plugins deserve more development according to their popularity. Also, we plan to publish some interesting stats from that information in the future.
+By default, Plugins Manager sends some anonymous information to JMeter-Plugins.org, including: full version of JMeter used,
+list of installed plugins with their versions, unique ID for the installation.
+We analyze that information to learn more about which plugins deserve more development according to their popularity. Also, we share the statistics derived from usage reports on [/stats/ statistics page].
 The information is completely anonymous, you can validate that through our source code. You are free to disable these reporting by setting {{{jpgc.repo.sendstats=false}}} in JMeter properties.
 
 

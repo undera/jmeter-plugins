@@ -5,15 +5,14 @@ jmeter.log
 /bundle/
 /site/files/
 /site/img/design/
+/site/dat/stats/
 /target/
 /**/target/
-/*/*/target/
 nbactions.xml
 dependency-reduced-pom.xml
 .idea/
 *.iml
 .directory
-eg_globals.xml
 *~
 .classpath
 .project

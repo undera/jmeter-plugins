@@ -16,7 +16,7 @@ public class RepoTest {
 
     @Test
     public void testAll() throws IOException {
-        if (System.getenv("TRAVIS").equals("true")) {
+        if (System.getenv("TRAVIS") != null) {
             System.out.println("Not running test inside Travis CI");
         }
 

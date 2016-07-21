@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>kg.apc</groupId>
+    <artifactId>jmeter-plugins-xml</artifactId>
+    <version>0.1</version>
+
+    <name>XML plugins</name>
+    <description>XML plugins</description>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <url>http://jmeter-plugins.org/</url>
+    <scm>
+        <url>https://github.com/undera/jmeter-plugins</url>
+        <connection>https://github.com/undera/jmeter-plugins.git</connection>
+        <developerConnection>git@github.com:undera/jmeter-plugins.git</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <id>team</id>
+            <name>jmeter-plugins.org</name>
+            <email>jmeter-plugins@googlegroups.com</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
+            <version>0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-emulators</artifactId>
+            <version>0.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

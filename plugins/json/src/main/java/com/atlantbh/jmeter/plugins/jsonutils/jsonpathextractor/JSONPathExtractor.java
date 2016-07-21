@@ -12,6 +12,7 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import org.apache.jmeter.processor.PostProcessor;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
@@ -19,6 +20,8 @@ import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+
+import java.util.Map;
 
 /**
  * This is main class for JSONPath extractor which works on previous sample
@@ -104,8 +107,8 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
                     throw new PathNotFoundException("Extracted array is empty");
                 }
 
-                vars.put(this.getVar(), jsonPathResult.toString());
-                vars.put(this.getVar() + "_matchNr", String.valueOf(arr.length));
+                vars.put(this.getVar(), objectToString(jsonPathResult));
+                vars.put(this.getVar() + "_matchNr", objectToString(arr.length));
 
                 int k = 1;
                 while (vars.get(this.getVar() + "_" + k) != null) {
@@ -114,14 +117,27 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
                 }
 
                 for (int n = 0; n < arr.length; n++) {
-                    vars.put(this.getVar() + "_" + (n + 1), String.valueOf(arr[n]));
+                    vars.put(this.getVar() + "_" + (n + 1), objectToString(arr[n]));
                 }
             } else {
-                vars.put(this.getVar(), String.valueOf(jsonPathResult));
+                vars.put(this.getVar(), objectToString(jsonPathResult));
             }
         } catch (Exception e) {
             log.warn("Extract failed", e);
             vars.put(this.getVar(), getDefaultValue());
         }
+    }
+
+    public static String objectToString(Object subj) {
+        String str;
+        if (subj == null) {
+            str = "null";
+        } else if (subj instanceof Map) {
+            //noinspection unchecked
+            str = new JSONObject((Map<String, ?>) subj).toJSONString();
+        } else {
+            str = subj.toString();
+        }
+        return str;
     }
 }

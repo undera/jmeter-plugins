@@ -23,8 +23,8 @@ import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+
+import static org.junit.Assert.*;
 
 public class JSONPathExtractorTest {
     private static final String json = "{ \"store\": {\n" +
@@ -195,7 +195,7 @@ public class JSONPathExtractorTest {
         System.out.println("process list");
         JMeterContext context = JMeterContextService.getContext();
         SampleResult res = new SampleResult();
-        res.setResponseData("{\"myval\": [{\"test\":1},{\"test\":2},{\"test\":null}]}".getBytes());
+        res.setResponseData("{\"myval\": [{\"test\":1},{\"test\":{\"dict\":1}},{\"test\":null}]}".getBytes());
         context.setPreviousResult(res);
 
         JSONPathExtractor instance = new JSONPathExtractor();
@@ -204,9 +204,9 @@ public class JSONPathExtractorTest {
         instance.setJsonPath("$.myval[*].test");
         instance.process();
         JMeterVariables vars = context.getVariables();
-        assertEquals("[1,2,null]", vars.get("test"));
+        assertEquals("[1,{\"dict\":1},null]", vars.get("test"));
         assertEquals("1", vars.get("test_1"));
-        assertEquals("2", vars.get("test_2"));
+        assertEquals("{\"dict\":1}", vars.get("test_2"));
         assertEquals("null", vars.get("test_3"));
 
         // test for cleaning prev vars
@@ -271,7 +271,8 @@ public class JSONPathExtractorTest {
         assertEquals("NOTFOUND", vars.get("GroupID"));
     }
 
-    @Ignore @Test // FIXME: we need to solve this one day
+    @Ignore
+    @Test // FIXME: we need to solve this one day
     public void testReported2() {
         System.out.println("process reported");
         JMeterContext context = JMeterContextService.getContext();
@@ -287,5 +288,30 @@ public class JSONPathExtractorTest {
         JMeterVariables vars = context.getVariables();
         assertNotEquals("NOTFOUND", vars.get("var"));
         assertEquals("{value=1}", vars.get("var"));
+    }
+
+    @Test
+    public void testProcess_from_var_2() {
+        System.out.println("process fromvar");
+        JMeterContext context = JMeterContextService.getContext();
+        JMeterVariables vars = context.getVariables();
+
+        SampleResult res = new SampleResult();
+        res.setResponseData("".getBytes());
+        context.setPreviousResult(res);
+
+        vars.put("SVAR", json);
+
+        JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setDefaultValue("DEFAULT");
+        instance.setVar("test");
+        instance.setJsonPath("$.store.bicycle");
+        instance.setSubject(JSONPathExtractor.SUBJECT_VARIABLE);
+        instance.setSrcVariableName("SVAR");
+        instance.process();
+        String test = vars.get("test");
+        boolean thiis = "{\"color\":\"red\",\"price\":19.95}".equals(test);
+        boolean thaat = "{\"price\":19.95,\"color\":\"red\"}".equals(test);
+        assertTrue(thiis || thaat);
     }
 }

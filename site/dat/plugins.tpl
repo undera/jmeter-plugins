@@ -16,6 +16,12 @@
     {/if} :: JMeter-Plugins.org
   </title>
 
+<script>
+if (window.location.hostname == 'jmeter-plugins.org' && window.location.protocol != "https:") {
+    window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+}
+</script>
+
   <link rel="icon" href="/img/site/logo.png"/>
   <!-- Bootstrap -->
 

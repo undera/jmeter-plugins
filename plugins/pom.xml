@@ -46,6 +46,7 @@
         <module>udp</module>
         <module>webdriver</module>
         <module>wsc</module>
+        <module>xml</module>
         <module>xmpp</module>
     </modules>
 </project>

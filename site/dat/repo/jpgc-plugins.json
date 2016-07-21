@@ -3,15 +3,15 @@
     "id": "jpgc-autostop",
     "name": "Auto-Stop Listener",
     "description": "Ability to stop test based on runtime KPIs",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/AutoStop1.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/AutoStop/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/AutoStop1.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/AutoStop/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.reporters.AutoStop",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-autostop/0.1/jmeter-plugins-autostop-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-autostop/0.1/jmeter-plugins-autostop-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -20,15 +20,15 @@
     "id": "jpgc-casutg",
     "name": "Custom Thread Groups",
     "description": "Adds new Thread Groups: <ul><li>Stepping Thread Group</li><li>Ultimate Thread Group</li><li>Concurrency Thread Group</li><li>Arrivals Thread Group</li><li>Free-Form Arrivals Thread Group</li></ul>",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/ConcurrencyThreadGroup.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/ConcurrencyThreadGroup/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/ConcurrencyThreadGroup.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/ConcurrencyThreadGroup/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup",
     "versions": {
       "2.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.0/jmeter-plugins-casutg-2.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.0/jmeter-plugins-casutg-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -38,14 +38,14 @@
     "name": "Console Status Logger",
     "description": "Small listener that prints each second a line with runtime stats into console",
     "screenshotUrl": "",
-    "helpUrl": "http://jmeter-plugins.org/wiki/ConsoleStatusLogger/",
+    "helpUrl": "https://jmeter-plugins.org/wiki/ConsoleStatusLogger/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.reporters.ConsoleStatusLogger",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csl/0.1/jmeter-plugins-csl-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csl/0.1/jmeter-plugins-csl-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -54,15 +54,15 @@
     "id": "jpgc-csvars",
     "name": "Variables from CSV File",
     "description": "Config item to load one-line CSV file into JMeter variables on startup. Helps to have external configuration file for test plan.",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/varsfromcsv1.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/VariablesFromCSV/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/varsfromcsv1.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/VariablesFromCSV/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.config.VariablesFromCSV",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csvars/0.1/jmeter-plugins-csvars-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csvars/0.1/jmeter-plugins-csvars-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -71,18 +71,18 @@
     "id": "jpgc-dbmon",
     "name": "DBMon Sample Collector",
     "description": "DbMon lets you plot performance counters accessible via SQL when the test is running.",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/dbmon_samples_collector.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/DbMon/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/dbmon_samples_collector.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/DbMon/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.dbmon.DbMonCollector",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dbmon/0.1/jmeter-plugins-dbmon-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dbmon/0.1/jmeter-plugins-dbmon-0.1.jar",
         "depends": [
           "jmeter-jdbc"
         ],
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -91,15 +91,15 @@
     "id": "jpgc-dummy",
     "name": "Dummy Sampler",
     "description": "Debugging sampler that just generates result as you specified. Very convenient to debug your complex scripts",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/dummy_sampler.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/DummySampler/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/dummy_sampler.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/DummySampler/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.samplers.DummySampler",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.1/jmeter-plugins-dummy-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.1/jmeter-plugins-dummy-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -108,15 +108,15 @@
     "id": "jpgc-ffw",
     "name": "Flexible File Writer",
     "description": "Flexible File Writer plugin allows writing test results in flexible format, specified via GUI.",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/FlexibleFileWriter.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/FlexibleFileWriter/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/FlexibleFileWriter.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/FlexibleFileWriter/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.reporters.FlexibleFileWriter",
     "versions": {
       "2.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-ffw/2.0/jmeter-plugins-ffw-2.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-ffw/2.0/jmeter-plugins-ffw-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -125,15 +125,15 @@
     "id": "jpgc-fifo",
     "name": "Inter-Thread Communication",
     "description": "Global string queues for inter-thread communication",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/synchronization.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/InterThreadCommunication/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/synchronization.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/InterThreadCommunication/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.modifiers.FifoPopPreProcessorGui",
     "versions": {
       "0.2": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-fifo/0.2/jmeter-plugins-fifo-0.2.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-fifo/0.2/jmeter-plugins-fifo-0.2.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -143,14 +143,14 @@
     "name": "Custom JMeter Functions",
     "description": "A number of additional JMeter functions that cover more of typical needs.",
     "screenshotUrl": "",
-    "helpUrl": "http://jmeter-plugins.org/wiki/Functions/",
+    "helpUrl": "https://jmeter-plugins.org/wiki/Functions/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.functions.Base64Decode",
     "versions": {
       "2.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-functions/2.0/jmeter-plugins-functions-2.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-functions/2.0/jmeter-plugins-functions-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -159,21 +159,21 @@
     "id": "jpgc-hadoop",
     "name": "Hadoop/HBase Testing",
     "description": "<ul><li>HBase Connection Config</li><li>HDFS Operations</li><li>Hadoop Job Tracker Sampler</li><li>HBase CRUD Sampler</li><li>HBase Scan Sampler</li><li>HBase Rowkey Sampler</li></ul>",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/HBaseConnection1.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/HadoopSet/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/HBaseConnection1.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/HadoopSet/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations",
     "versions": {
       "2.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-hadoop/2.0/jmeter-plugins-hadoop-2.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-hadoop/2.0/jmeter-plugins-hadoop-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
-          "hbase": "http://search.maven.org/remotecontent?filepath=org/apache/hbase/hbase/0.94.5/hbase-0.94.5.jar",
-          "zookeeper": "http://search.maven.org/remotecontent?filepath=org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar",
-          "commons-beanutils": "http://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
-          "guava": "http://search.maven.org/remotecontent?filepath=com/google/guava/guava/11.0.2/guava-11.0.2.jar",
-          "hadoop-core": "http://search.maven.org/remotecontent?filepath=org/apache/hadoop/hadoop-core/1.1.2/hadoop-core-1.1.2.jar",
-          "jackson-mapper-asl": "http://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-mapper-asl/1.8.8/jackson-mapper-asl-1.8.8.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "hbase": "https://search.maven.org/remotecontent?filepath=org/apache/hbase/hbase/0.94.5/hbase-0.94.5.jar",
+          "zookeeper": "https://search.maven.org/remotecontent?filepath=org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar",
+          "commons-beanutils": "https://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
+          "guava": "https://search.maven.org/remotecontent?filepath=com/google/guava/guava/11.0.2/guava-11.0.2.jar",
+          "hadoop-core": "https://search.maven.org/remotecontent?filepath=org/apache/hadoop/hadoop-core/1.1.2/hadoop-core-1.1.2.jar",
+          "jackson-mapper-asl": "https://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-mapper-asl/1.8.8/jackson-mapper-asl-1.8.8.jar"
         }
       }
     }
@@ -182,16 +182,16 @@
     "id": "jpgc-httpraw",
     "name": "HTTP Raw Request",
     "description": "Low-level HTTP request, solves memory problem for huge file upload/download case. Also ships Raw Data Source preprocessor.",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/rawrequest.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/RawRequest/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/rawrequest.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/RawRequest/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.samplers.HTTPRawSampler",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-httpraw/0.1/jmeter-plugins-httpraw-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-httpraw/0.1/jmeter-plugins-httpraw-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
-          "jmeter-plugins-common-io": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "jmeter-plugins-common-io": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
         }
       }
     }
@@ -201,20 +201,20 @@
     "name": "JMS Send and Receive Sampler",
     "description": "If you are using JMS (Java Message Service) to send and receive messages between two or more clients, we have created a sampler which enables you to send and receive messages.",
     "screenshotUrl": "",
-    "helpUrl": "http://jmeter-plugins.org/wiki/JMSSampler/",
+    "helpUrl": "https://jmeter-plugins.org/wiki/JMSSampler/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.atlantbh.jmeter.plugins.jmstools.BinaryMessagepostProcessor",
     "versions": {
       "0.2": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jms/0.2/jmeter-plugins-jms-0.2.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jms/0.2/jmeter-plugins-jms-0.2.jar",
         "depends": [
           "jmeter-java"
         ],
         "libs": {
-          "qpid-common": "http://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-common/0.20/qpid-common-0.20.jar",
-          "qpid-client": "http://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-client/0.20/qpid-client-0.20.jar",
-          "spring-core": "http://search.maven.org/remotecontent?filepath=org/springframework/spring-core/2.5.6/spring-core-2.5.6.jar",
-          "spring-jms": "http://search.maven.org/remotecontent?filepath=org/springframework/spring-jms/2.5.6/spring-jms-2.5.6.jar"
+          "qpid-common": "https://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-common/0.20/qpid-common-0.20.jar",
+          "qpid-client": "https://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-client/0.20/qpid-client-0.20.jar",
+          "spring-core": "https://search.maven.org/remotecontent?filepath=org/springframework/spring-core/2.5.6/spring-core-2.5.6.jar",
+          "spring-jms": "https://search.maven.org/remotecontent?filepath=org/springframework/spring-jms/2.5.6/spring-jms-2.5.6.jar"
         }
       }
     }
@@ -223,21 +223,21 @@
     "id": "jpgc-jmxmon",
     "name": "JMXMon Sample Collector",
     "description": "JMXMon lets you plot JMX performance metrics over time when the test is running.",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/jmxmon_samples_collector.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/JMXMon/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/jmxmon_samples_collector.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/JMXMon/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.jmxmon.JMXMonCollector",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jmxmon/0.1/jmeter-plugins-jmxmon-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jmxmon/0.1/jmeter-plugins-jmxmon-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       },
       "0.2": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jmxmon/0.2/jmeter-plugins-jmxmon-0.2.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jmxmon/0.2/jmeter-plugins-jmxmon-0.2.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -246,27 +246,27 @@
     "id": "jpgc-json",
     "name": "JSON Plugins",
     "description": "Allows extracting values from JSON responses using JSONPath syntax. Also ships JSONPath Assertion.",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/JSONPathExtractor.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/JSONPathExtractor/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/JSONPathExtractor.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/JSONPathExtractor/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor",
     "versions": {
       "2.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.0/jmeter-plugins-json-2.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.0/jmeter-plugins-json-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       },
       "2.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.1/jmeter-plugins-json-2.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.1/jmeter-plugins-json-2.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       },
       "2.2": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.2/jmeter-plugins-json-2.2.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.2/jmeter-plugins-json-2.2.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       },
       "2.3": {
@@ -281,15 +281,15 @@
     "id": "jpgc-lockfile",
     "name": "Lock File Config",
     "description": "Lock file allows you to set locks to prevent multiple JMeters from running on the same machine",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/lock_file.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/LockFile/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/lock_file.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/LockFile/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.config.LockFile",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -298,19 +298,19 @@
     "id": "jpgc-oauth",
     "name": "OAuth Sampler",
     "description": "OAuth sampler is an extended REST sampler which in addition includes the properties needed for this authorization",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/OAuth-Sampler.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/OAuthSampler/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/OAuth-Sampler.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/OAuthSampler/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.atlantbh.jmeter.plugins.oauth.OAuthSampler",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-oauth/0.1/jmeter-plugins-oauth-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-oauth/0.1/jmeter-plugins-oauth-0.1.jar",
         "depends": [
           "jmeter-http"
         ],
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
-          "commons-lang": "http://search.maven.org/remotecontent?filepath=commons-lang/commons-lang/2.6/commons-lang-2.6.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "commons-lang": "https://search.maven.org/remotecontent?filepath=commons-lang/commons-lang/2.6/commons-lang-2.6.jar"
         }
       }
     }
@@ -319,23 +319,23 @@
     "id": "jpgc-perfmon",
     "name": "PerfMon (Servers Performance Monitoring)",
     "description": "Allows collecting target server resource metrics. You need to start ServerAgent on a target machine.",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/servers_performance_monitoring.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/PerfMon/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/servers_performance_monitoring.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/PerfMon/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.perfmon.PerfMonCollector",
     "versions": {
       "2.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-perfmon/2.0/jmeter-plugins-perfmon-2.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-perfmon/2.0/jmeter-plugins-perfmon-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
-          "perfmon": "http://search.maven.org/remotecontent?filepath=kg/apc/perfmon/2.2.2/perfmon-2.2.2.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "perfmon": "https://search.maven.org/remotecontent?filepath=kg/apc/perfmon/2.2.2/perfmon-2.2.2.jar"
         }
       },
       "2.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-perfmon/2.1/jmeter-plugins-perfmon-2.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-perfmon/2.1/jmeter-plugins-perfmon-2.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
-          "perfmon": "http://search.maven.org/remotecontent?filepath=kg/apc/perfmon/2.2.2/perfmon-2.2.2.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "perfmon": "https://search.maven.org/remotecontent?filepath=kg/apc/perfmon/2.2.2/perfmon-2.2.2.jar"
         }
       }
     }
@@ -344,15 +344,15 @@
     "id": "jpgc-prmctl",
     "name": "Parameterized Controller",
     "description": "A controller to help reuse modules with variables in the scope",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/parameterizedcontroller.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/ParameterizedController/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/parameterizedcontroller.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/ParameterizedController/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.control.ParameterizedController",
     "versions": {
       "0.2": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-prmctl/0.2/jmeter-plugins-prmctl-0.2.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-prmctl/0.2/jmeter-plugins-prmctl-0.2.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -361,19 +361,19 @@
     "id": "jpgc-redis",
     "name": "Redis Data Set",
     "description": "Allows reading test data from Redis storage",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/redis/RedisDataSet.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/RedisDataSet/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/redis/RedisDataSet.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/RedisDataSet/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.config.redis.RedisDataSet",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-redis/0.1/jmeter-plugins-redis-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-redis/0.1/jmeter-plugins-redis-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
-          "jedis": "http://search.maven.org/remotecontent?filepath=redis/clients/jedis/2.2.1/jedis-2.2.1.jar",
-          "commons-beanutils": "http://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
-          "qpid-common": "http://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-common/0.20/qpid-common-0.20.jar",
-          "xom": "http://search.maven.org/remotecontent?filepath=com/io7m/xom/xom/1.2.10/xom-1.2.10.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "jedis": "https://search.maven.org/remotecontent?filepath=redis/clients/jedis/2.2.1/jedis-2.2.1.jar",
+          "commons-beanutils": "https://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
+          "qpid-common": "https://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-common/0.20/qpid-common-0.20.jar",
+          "xom": "https://search.maven.org/remotecontent?filepath=com/io7m/xom/xom/1.2.10/xom-1.2.10.jar"
         }
       }
     }
@@ -382,21 +382,21 @@
     "id": "jpgc-sense",
     "name": "BM.Sense Uploader",
     "description": "This is special plugin in for uploading results to BlazeMeter Sense immediately after test end",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/loadosophia_uploader.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/LoadosophiaUploader/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/loadosophia_uploader.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/LoadosophiaUploader/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.reporters.LoadosophiaUploader",
     "versions": {
       "2.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-senseuploader/2.0/jmeter-plugins-senseuploader-2.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-senseuploader/2.0/jmeter-plugins-senseuploader-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       },
       "2.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-senseuploader/2.1/jmeter-plugins-senseuploader-2.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-senseuploader/2.1/jmeter-plugins-senseuploader-2.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -405,15 +405,15 @@
     "id": "jpgc-tst",
     "name": "Throughput Shaping Timer",
     "description": "A plugin to set desired hits/s (RPS) schedule",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/throughput_shaping_timer1.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/ThroughputShapingTimer/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/throughput_shaping_timer1.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/ThroughputShapingTimer/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.timers.VariableThroughputTimer",
     "versions": {
       "2.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-tst/2.0/jmeter-plugins-tst-2.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-tst/2.0/jmeter-plugins-tst-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -422,16 +422,16 @@
     "id": "jpgc-udp",
     "name": "UDP Protocol Support",
     "description": "This plugin adds UDP protocol support to JMeter. With this plugin you can load test DNS, NTP, TFTP, Boot servers and many-many other systems.",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/UDPRequest.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/UDPRequest/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/UDPRequest.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/UDPRequest/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.samplers.UDPSampler",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-udp/0.1/jmeter-plugins-udp-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-udp/0.1/jmeter-plugins-udp-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
-          "jmeter-plugins-common-io": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "jmeter-plugins-common-io": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
         }
       }
     }
@@ -446,26 +446,26 @@
     "markerClass": "com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler",
     "versions": {
       "1.4.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/1.4.0/jmeter-plugins-webdriver-1.4.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/1.4.0/jmeter-plugins-webdriver-1.4.0.jar",
         "libs": {
-          "selenium-support": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-support/2.52.0/selenium-support-2.52.0.jar",
-          "selenium-api": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-api/2.52.0/selenium-api-2.52.0.jar",
-          "selenium-firefox-driver": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-firefox-driver/2.52.0/selenium-firefox-driver-2.52.0.jar",
-          "selenium-remote-driver": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-remote-driver/2.52.0/selenium-remote-driver-2.52.0.jar",
-          "selenium-ie-driver": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-ie-driver/2.52.0/selenium-ie-driver-2.52.0.jar",
-          "selenium-chrome-driver": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-chrome-driver/2.52.0/selenium-chrome-driver-2.52.0.jar",
-          "selenium-htmlunit-driver": "http://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-htmlunit-driver/2.52.0/selenium-htmlunit-driver-2.52.0.jar",
-          "phantomjsdriver": "http://search.maven.org/remotecontent?filepath=com/codeborne/phantomjsdriver/1.2.1/phantomjsdriver-1.2.1.jar",
-          "nekohtml": "http://search.maven.org/remotecontent?filepath=net/sourceforge/nekohtml/nekohtml/1.9.22/nekohtml-1.9.22.jar",
-          "jsyntaxpane": "http://search.maven.org/remotecontent?filepath=de/sciss/jsyntaxpane/1.0.0/jsyntaxpane-1.0.0.jar",
-          "htmlunit": "http://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit/2.18/htmlunit-2.18.jar",
-          "htmlunit-core-js": "http://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit-core-js/2.17/htmlunit-core-js-2.17.jar",
-          "commons-exec": "http://search.maven.org/remotecontent?filepath=org/apache/commons/commons-exec/1.3/commons-exec-1.3.jar",
-          "gson": "http://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.3.1/gson-2.3.1.jar",
-          "cglib-nodep": "http://search.maven.org/remotecontent?filepath=cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar",
-          "cssparser": "http://search.maven.org/remotecontent?filepath=net/sourceforge/cssparser/cssparser/0.9.16/cssparser-0.9.16.jar",
-          "guava": "http://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
-          "sac": "http://search.maven.org/remotecontent?filepath=org/w3c/css/sac/1.3/sac-1.3.jar"
+          "selenium-support": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-support/2.52.0/selenium-support-2.52.0.jar",
+          "selenium-api": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-api/2.52.0/selenium-api-2.52.0.jar",
+          "selenium-firefox-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-firefox-driver/2.52.0/selenium-firefox-driver-2.52.0.jar",
+          "selenium-remote-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-remote-driver/2.52.0/selenium-remote-driver-2.52.0.jar",
+          "selenium-ie-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-ie-driver/2.52.0/selenium-ie-driver-2.52.0.jar",
+          "selenium-chrome-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-chrome-driver/2.52.0/selenium-chrome-driver-2.52.0.jar",
+          "selenium-htmlunit-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-htmlunit-driver/2.52.0/selenium-htmlunit-driver-2.52.0.jar",
+          "phantomjsdriver": "https://search.maven.org/remotecontent?filepath=com/codeborne/phantomjsdriver/1.2.1/phantomjsdriver-1.2.1.jar",
+          "nekohtml": "https://search.maven.org/remotecontent?filepath=net/sourceforge/nekohtml/nekohtml/1.9.22/nekohtml-1.9.22.jar",
+          "jsyntaxpane": "https://search.maven.org/remotecontent?filepath=de/sciss/jsyntaxpane/1.0.0/jsyntaxpane-1.0.0.jar",
+          "htmlunit": "https://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit/2.18/htmlunit-2.18.jar",
+          "htmlunit-core-js": "https://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit-core-js/2.17/htmlunit-core-js-2.17.jar",
+          "commons-exec": "https://search.maven.org/remotecontent?filepath=org/apache/commons/commons-exec/1.3/commons-exec-1.3.jar",
+          "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.3.1/gson-2.3.1.jar",
+          "cglib-nodep": "https://search.maven.org/remotecontent?filepath=cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar",
+          "cssparser": "https://search.maven.org/remotecontent?filepath=net/sourceforge/cssparser/cssparser/0.9.16/cssparser-0.9.16.jar",
+          "guava": "https://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
+          "sac": "https://search.maven.org/remotecontent?filepath=org/w3c/css/sac/1.3/sac-1.3.jar"
         }
       }
     }
@@ -474,15 +474,15 @@
     "id": "jpgc-wsc",
     "name": "Weighted Switch Controller",
     "description": "This controller takes the information about child elements and offers managing relative weights for them.",
-    "screenshotUrl": "http://jmeter-plugins.org/img/wiki/WeightedSwitchController.png",
-    "helpUrl": "http://jmeter-plugins.org/wiki/WeightedSwitchController/",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/WeightedSwitchController.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/WeightedSwitchController/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.blazemeter.jmeter.control.WeightedSwitchController",
     "versions": {
       "0.1": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-wsc/0.1/jmeter-plugins-wsc-0.1.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-wsc/0.1/jmeter-plugins-wsc-0.1.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }
@@ -497,13 +497,31 @@
     "markerClass": "com.blazemeter.jmeter.xmpp.JMeterXMPPSampler",
     "versions": {
       "1.4.0": {
-        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-xmpp/1.4.0/jmeter-plugins-xmpp-1.4.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-xmpp/1.4.0/jmeter-plugins-xmpp-1.4.0.jar",
         "libs": {
-          "smack-core": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-core/4.0.7/smack-core-4.0.7.jar",
-          "smack-tcp": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-tcp/4.0.7/smack-tcp-4.0.7.jar",
-          "smack-bosh": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-bosh/4.0.7/smack-bosh-4.0.7.jar",
-          "smack-extensions": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-extensions/4.0.7/smack-extensions-4.0.7.jar",
-          "jbosh": "http://search.maven.org/remotecontent?filepath=org/igniterealtime/jbosh/jbosh/0.8.0/jbosh-0.8.0.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "smack-core": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-core/4.0.7/smack-core-4.0.7.jar",
+          "smack-tcp": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-tcp/4.0.7/smack-tcp-4.0.7.jar",
+          "smack-bosh": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-bosh/4.0.7/smack-bosh-4.0.7.jar",
+          "smack-extensions": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-extensions/4.0.7/smack-extensions-4.0.7.jar",
+          "jbosh": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/jbosh/jbosh/0.8.0/jbosh-0.8.0.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "jpgc-xml",
+    "name": "XML Plugins",
+    "description": "Currently ships XMLFormatPostProcessor",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/Formatted-xml1.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/XMLFormatPostProcessor/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "com.atlantbh.jmeter.plugins.xmlformatter.XMLFormatPostProcessor",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-xml/0.1/jmeter-plugins-xml-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
       }
     }

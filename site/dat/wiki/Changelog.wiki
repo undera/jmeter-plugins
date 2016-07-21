@@ -1,5 +1,7 @@
 = Changelog =
 
+!! The changelog in its current form has stopped from being updated in favor of smaller plugins, with Plugins Manager !! 
+
 == 2.0 <i><font color=gray size="1">planning</font></i>==
   * all plugin sets are broken up into tens of smaller plugins to be used with Plugins Manager
   * prevent NPEs from sense uploader

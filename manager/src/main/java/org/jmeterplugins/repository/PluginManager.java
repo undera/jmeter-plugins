@@ -29,15 +29,15 @@ public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int timeout = 1000; // don't delay JMeter startup for more than 1 second
     protected HttpClient httpClient = new DefaultHttpClient();
-    private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", System.getProperty("jpgc.repo.address", "http://jmeter-plugins.org"));
+    private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", System.getProperty("jpgc.repo.address", "https://jmeter-plugins.org"));
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
     private static PluginManager staticManager = new PluginManager();
     private boolean doRestart = true;
 
     public PluginManager() {
-        String proxyHost = System.getProperty("http.proxyHost", "");
+        String proxyHost = System.getProperty("https.proxyHost", "");
         if (!proxyHost.isEmpty()) {
-            int proxyPort = Integer.parseInt(System.getProperty("http.proxyPort", "-1"));
+            int proxyPort = Integer.parseInt(System.getProperty("https.proxyPort", "-1"));
             HttpParams params = httpClient.getParams();
             HttpHost proxy = new HttpHost(proxyHost, proxyPort);
             params.setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);

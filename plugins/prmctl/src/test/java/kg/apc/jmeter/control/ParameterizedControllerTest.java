@@ -1,127 +1,75 @@
 package kg.apc.jmeter.control;
 
 import org.apache.jmeter.config.Arguments;
-import org.apache.jmeter.engine.event.LoopIterationEvent;
+import org.apache.jmeter.engine.util.ValueReplacer;
+import org.apache.jmeter.functions.InvalidVariableException;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-public class ParameterizedControllerTest
-{
-   private ParameterizedController instance;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-   /**
-    *
-    */
-   public ParameterizedControllerTest()
-   {
-   }
+public class ParameterizedControllerTest {
+    private ParameterizedController instance;
 
-   /**
-    *
-    * @throws Exception
-    */
-   @BeforeClass
-   public static void setUpClass()
-        throws Exception
-   {
-   }
+    @Before
+    public void setUp() {
+        JMeterVariables vars = new JMeterVariables();
+        vars.put("var1", "val1");
+        JMeterContextService.getContext().setVariables(vars);
+        JMeterContextService.getContext().setSamplingStarted(true);
 
-   /**
-    *
-    * @throws Exception
-    */
-   @AfterClass
-   public static void tearDownClass()
-        throws Exception
-   {
-   }
+        instance = new ParameterizedController();
+        instance.setRunningVersion(true);
+    }
 
-   /**
-    *
-    */
-   @Before
-   public void setUp()
-   {
-      JMeterVariables vars = new JMeterVariables();
-      vars.put("var1", "val1");
-      JMeterContextService.getContext().setVariables(vars);
-      JMeterContextService.getContext().setSamplingStarted(true);
+    @After
+    public void tearDown() {
+        JMeterContextService.getContext().setSamplingStarted(false);
+    }
 
-      instance = new ParameterizedController();
-      instance.setRunningVersion(true);
-   }
+    @Test
+    public void testNext() throws InvalidVariableException {
 
-   /**
-    *
-    */
-   @After
-   public void tearDown()
-   {
-      JMeterContextService.getContext().setSamplingStarted(false);
-   }
+        System.out.println("next");
+        Arguments args = new Arguments();
+        args.addArgument("var2", "${var1}");
+        args.addArgument("var3", "${var2}");
 
-   /**
-    * Test of iterationStart method, of class ParameterizedController.
-    */
-   @Test
-   public void testNext()
-   {
-      System.out.println("next");
-      Arguments args = new Arguments();
-      args.addArgument("var2", "${var1}");
-      args.addArgument("var3", "val3");
-      args.setRunningVersion(true);
-      
-      instance.setUserDefinedVariables(args);
-      instance.next();
 
-      JMeterVariables vars = JMeterContextService.getContext().getVariables();
-      assertEquals("val3", vars.get("var3"));
-      
-      if (!vars.get("var2").equals("val1"))
-         System.err.println("Failed to set var...");
-   }
+        instance.setUserDefinedVariables(args);
 
-   /**
-    * Test of setUserDefinedVariables method, of class ParameterizedController.
-    */
-   @Test
-   public void testSetUserDefinedVariables()
-   {
-      System.out.println("setUserDefinedVariables");
-      Arguments vars = new Arguments();
-      instance.setUserDefinedVariables(vars);
-   }
+        ValueReplacer replacer = new ValueReplacer();
+        replacer.replaceValues(instance);
+        args.setRunningVersion(true);
 
-   /**
-    * Test of getUserDefinedVariablesAsProperty method, of class ParameterizedController.
-    */
-   @Test
-   public void testGetUserDefinedVariablesAsProperty()
-   {
-      System.out.println("getUserDefinedVariablesAsProperty");
-      Arguments vars = new Arguments();
-      vars.addArgument("key", "value");
-      instance.setUserDefinedVariables(vars);
-      JMeterProperty result = instance.getUserDefinedVariablesAsProperty();
-      assertNotNull(result);
-   }
+        instance.next();
 
-   /**
-    * Test of iterationStart method, of class ParameterizedController.
-    */
-   @Test
-   public void testIterationStart()
-   {
-      System.out.println("iterationStart");
-      LoopIterationEvent lie = null;
-      instance.iterationStart(lie);
-   }
+        JMeterVariables vars = JMeterContextService.getContext().getVariables();
+        assertEquals("${var2}", vars.get("var3"));
+        assertEquals("val1", vars.get("var2"));
+        instance.next();
+        assertEquals("val1", vars.get("var3"));
+    }
+
+    @Test
+    public void testSetUserDefinedVariables() {
+        System.out.println("setUserDefinedVariables");
+        Arguments vars = new Arguments();
+        instance.setUserDefinedVariables(vars);
+    }
+
+    @Test
+    public void testGetUserDefinedVariablesAsProperty() {
+        System.out.println("getUserDefinedVariablesAsProperty");
+        Arguments vars = new Arguments();
+        vars.addArgument("key", "value");
+        instance.setUserDefinedVariables(vars);
+        JMeterProperty result = instance.getUserDefinedVariablesAsProperty();
+        assertNotNull(result);
+    }
 }

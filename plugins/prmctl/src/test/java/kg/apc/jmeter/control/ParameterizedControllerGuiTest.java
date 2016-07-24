@@ -5,137 +5,73 @@
 package kg.apc.jmeter.control;
 
 import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.testelement.TestElement;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-public class ParameterizedControllerGuiTest
-{
-   private ParameterizedControllerGui instance;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-   /**
-    *
-    */
-   public ParameterizedControllerGuiTest()
-   {
-   }
+public class ParameterizedControllerGuiTest {
+    private ParameterizedControllerGui instance;
 
-   /**
-    * 
-    * @throws Exception
-    */
-   @BeforeClass
-   public static void setUpClass()
-        throws Exception
-   {
-      TestJMeterUtils.createJmeterEnv();
-   }
+    @BeforeClass
+    public static void setUpClass()
+            throws Exception {
+        TestJMeterUtils.createJmeterEnv();
+    }
 
-   /**
-    *
-    * @throws Exception
-    */
-   @AfterClass
-   public static void tearDownClass()
-        throws Exception
-   {
-   }
+    @Before
+    public void setUp() {
+        instance = new ParameterizedControllerGui();
+    }
 
-   /**
-    *
-    */
-   @Before
-   public void setUp()
-   {
-      instance = new ParameterizedControllerGui();
-   }
+    @Test
+    public void testCreateTestElement() {
+        System.out.println("createTestElement");
+        TestElement expResult = new ParameterizedController();
+        TestElement result = instance.createTestElement();
+        assertEquals(expResult.getClass(), result.getClass());
+    }
 
-   /**
-    *
-    */
-   @After
-   public void tearDown()
-   {
-   }
+    @Test
+    public void testModifyTestElement() {
+        System.out.println("modifyTestElement");
+        TestElement te = new ParameterizedController();
+        instance.modifyTestElement(te);
+    }
 
-   /**
-    * Test of createTestElement method, of class ParameterizedControllerGui.
-    */
-   @Test
-   public void testCreateTestElement()
-   {
-      System.out.println("createTestElement");
-      TestElement expResult = new ParameterizedController();
-      TestElement result = instance.createTestElement();
-      assertEquals(expResult.getClass(), result.getClass());
-   }
+    @Test
+    public void testGetLabelResource() {
+        System.out.println("getLabelResource");
+        String expResult = instance.getClass().getName();
+        String result = instance.getLabelResource();
+        assertEquals(expResult, result);
+    }
 
-   /**
-    * Test of modifyTestElement method, of class ParameterizedControllerGui.
-    */
-   @Test
-   public void testModifyTestElement()
-   {
-      System.out.println("modifyTestElement");
-      TestElement te = new ParameterizedController();
-      instance.modifyTestElement(te);
-   }
+    @Test
+    public void testGetStaticLabel() {
+        System.out.println("getStaticLabel");
+        String result = instance.getStaticLabel();
+        assertTrue(result.length() > 0);
+    }
 
-   /**
-    * Test of getLabelResource method, of class ParameterizedControllerGui.
-    */
-   @Test
-   public void testGetLabelResource()
-   {
-      System.out.println("getLabelResource");
-      String expResult = instance.getClass().getName();
-      String result = instance.getLabelResource();
-      assertEquals(expResult, result);
-   }
+    @Test
+    public void testClearGui() {
+        System.out.println("clearGui");
+        instance.clearGui();
+    }
 
-   /**
-    * Test of getStaticLabel method, of class ParameterizedControllerGui.
-    */
-   @Test
-   public void testGetStaticLabel()
-   {
-      System.out.println("getStaticLabel");
-      String result = instance.getStaticLabel();
-        assertTrue(result.length()>0);
-   }
+    @Test
+    public void testConfigure() {
+        System.out.println("configure");
+        ParameterizedController te = new ParameterizedController();
+        te.setUserDefinedVariables(new Arguments());
+        te.setName("test");
+        te.setComment("test");
 
-   /**
-    * Test of clearGui method, of class ParameterizedControllerGui.
-    */
-   @Test
-   public void testClearGui()
-   {
-      System.out.println("clearGui");
-      instance.clearGui();
-   }
-
-   /**
-    * Test of configure method, of class ParameterizedControllerGui.
-    */
-   @Test
-   public void testConfigure()
-   {
-      System.out.println("configure");
-      TestElement te = new ParameterizedController();
-      te.setName("test");
-      te.setComment("test");
-
-      try
-      {
-         instance.configure(te);
-      }
-      catch (NullPointerException e)
-      {
-         System.err.println("I dunno what it requires for correct test");
-      }
-   }
+        instance.configure(te);
+    }
 }

@@ -8,7 +8,8 @@
          no_final_slash="1"/>
 
     <url link="install" title="Install" menu="1" ico="fa-download"
-         class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="/wiki/PluginInstall/"/>
+         class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" single_page="Install" accept="1"
+    />
 
     <url link="downloads" title="Download" menu="0" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl"
          start_page="all" files_base="files" download_link="../file" accept="1" ico="fa-download">

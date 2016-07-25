@@ -139,6 +139,10 @@ if (window.location.hostname == 'jmeter-plugins.org' && window.location.protocol
             {/if}
           {/foreach}
         </ul>
+<div class="pull-right" style="vertical-align: middle; padding-right: 0.75em; padding-top: 0.15em">
+<!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/undera/jmeter-plugins" data-count-href="/undera/jmeter-plugins/stargazers" data-count-api="/repos/undera/jmeter-plugins#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star undera/jmeter-plugins on GitHub">Star</a>
+</div>
       </nav>
     {/if}
   </div>
@@ -159,6 +163,8 @@ if (window.location.hostname == 'jmeter-plugins.org' && window.location.protocol
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
   {include file="dat/counter.tpl"}
 
 </footer>

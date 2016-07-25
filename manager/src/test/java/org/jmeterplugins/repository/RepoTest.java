@@ -19,7 +19,8 @@ public class RepoTest {
         Map<String, String> env = System.getenv();
         if (env.containsKey("TRAVIS")) {
             System.out.println("Not running test inside Travis CI");
-        } 
+            return;
+        }
         
         List<String> problems = new ArrayList<>();
         String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();

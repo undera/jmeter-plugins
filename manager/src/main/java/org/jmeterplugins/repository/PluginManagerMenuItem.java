@@ -38,6 +38,12 @@ public class PluginManagerMenuItem extends JMenuItem implements ActionListener {
             dialog = new PluginManagerDialog(mgr);
         }
 
+        try {
+            mgr.load();
+        } catch (IOException exc) {
+            log.warn("Failed to load plugin updates info", exc);
+        }
+
         dialog.pack();
         dialog.setVisible(true);
     }

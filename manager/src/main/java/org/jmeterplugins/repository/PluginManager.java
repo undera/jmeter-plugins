@@ -41,12 +41,14 @@ public class PluginManager {
         String proxyHost = System.getProperty("https.proxyHost", "");
         if (!proxyHost.isEmpty()) {
             int proxyPort = Integer.parseInt(System.getProperty("https.proxyPort", "-1"));
+            log.info("Using proxy " + proxyHost + ":" + proxyPort);
             HttpParams params = httpClient.getParams();
             HttpHost proxy = new HttpHost(proxyHost, proxyPort);
             params.setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
 
             String proxyUser = System.getProperty(JMeter.HTTP_PROXY_USER, JMeterUtils.getProperty(JMeter.HTTP_PROXY_USER));
             if (proxyUser != null) {
+                log.info("Using authenticated proxy with username: " + proxyUser);
                 String proxyPass = System.getProperty(JMeter.HTTP_PROXY_PASS, JMeterUtils.getProperty(JMeter.HTTP_PROXY_PASS));
                 String localHost = getLocalHost();
                 AuthScope authscope = new AuthScope(proxyHost, proxyPort);
@@ -359,7 +361,7 @@ public class PluginManager {
         try {
             staticManager.load();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to get plugin repositories");
+            throw new RuntimeException("Failed to get plugin repositories", e);
         }
         return staticManager;
     }

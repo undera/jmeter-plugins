@@ -75,15 +75,6 @@ public class PluginManager {
             return;
         }
 
-        String jarPath = Plugin.getJARPath(JMeterEngine.class.getCanonicalName());
-        if (jarPath != null) {
-            File libext = new File(jarPath).getParentFile();
-            if (!libext.canWrite()) {
-                String msg = "Have no write access for JMeter directories, not possible to use Plugins Manager: ";
-                throw new AccessDeniedException(msg + libext);
-            }
-        }
-
         JSON json = getJSON("/repo/?installID=" + getInstallID());
         if (!(json instanceof JSONArray)) {
             throw new RuntimeException("Result is not array");
@@ -120,6 +111,16 @@ public class PluginManager {
                 reportStats();
             } catch (Exception e) {
                 log.debug("Failed to report usage stats", e);
+            }
+        }
+
+        String jarPath = Plugin.getJARPath(JMeterEngine.class.getCanonicalName());
+        if (jarPath != null) {
+            File libext = new File(jarPath).getParentFile();
+            if (!libext.canWrite()) {
+                allPlugins.clear();
+                String msg = "Have no write access for JMeter directories, not possible to use Plugins Manager: ";
+                throw new AccessDeniedException(msg + libext);
             }
         }
     }

@@ -7,15 +7,18 @@ import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.NTCredentials;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
+import org.apache.jmeter.JMeter;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -28,7 +31,7 @@ import java.util.*;
 public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int timeout = 1000; // don't delay JMeter startup for more than 1 second
-    protected HttpClient httpClient = new DefaultHttpClient();
+    protected AbstractHttpClient httpClient = new DefaultHttpClient();
     private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", System.getProperty("jpgc.repo.address", "https://jmeter-plugins.org"));
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
     private static PluginManager staticManager = new PluginManager();
@@ -41,6 +44,25 @@ public class PluginManager {
             HttpParams params = httpClient.getParams();
             HttpHost proxy = new HttpHost(proxyHost, proxyPort);
             params.setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+
+            String proxyUser = System.getProperty(JMeter.HTTP_PROXY_USER, JMeterUtils.getProperty(JMeter.HTTP_PROXY_USER));
+            if (proxyUser != null) {
+                String proxyPass = System.getProperty(JMeter.HTTP_PROXY_PASS, JMeterUtils.getProperty(JMeter.HTTP_PROXY_PASS));
+                String localHost = getLocalHost();
+                AuthScope authscope = new AuthScope(proxyHost, proxyPort);
+                String proxyDomain = JMeterUtils.getPropDefault("http.proxyDomain", "");
+                NTCredentials credentials = new NTCredentials(proxyUser, proxyPass, localHost, proxyDomain);
+                httpClient.getCredentialsProvider().setCredentials(authscope, credentials);
+            }
+        }
+    }
+
+    private String getLocalHost() {
+        try {
+            return InetAddress.getLocalHost().getCanonicalHostName();
+        } catch (Throwable e) {
+            log.error("Failed to get local host name, defaulting to 'localhost'", e);
+            return "localhost";
         }
     }
 

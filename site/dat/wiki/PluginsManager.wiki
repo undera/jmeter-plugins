@@ -37,6 +37,13 @@ Plugins Manager respects JMeter's [http://jmeter.apache.org/usermanual/get-start
 JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080" jmeter\bin\jmeter.bat
 }}}
 
+If you need proxy username/password, specify them with two additional properties {{{https.proxyUsername}}} and {{{https.proxyPassword}}} like this:
+
+{{{
+JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080 -Dhttp.proxyUser=john -Dhttp.proxyPass=***" jmeter\bin\jmeter.bat
+}}}
+
+
 == Add Your Plugin ==
 
 Now there is an opportunity for anyone who creates the JMeter plugins to quickly make them available for wide audience of JMeter-Plugins.org.
@@ -85,6 +92,11 @@ To use proxy with command line, please use {{{JVM_ARGS}}} environment variable t
 JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080" PluginsManagerCMD status
 }}}
 
+If you need username/proxy for proxy, pass them like this:
+{{{
+JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080 -Dhttp.proxyUser=john -Dhttp.proxyPass=***" PluginsManagerCMD status
+}}}
+
 == Using from BeanShell or JSR223 ==
 
 If you need to access the plugins versions information from scriptable components like BeanShell sampler, please use these two methods:
@@ -108,10 +120,3 @@ org.jmeterplugins.repository.PluginManager.getAllPluginsStatus()
 }}}
 
 Example result of this function call is string like {{{[jpgc-graphs-basic=1.3.1, jpgc-sense=1.3.1, jpgc-cmd=1.3.1, jpgc-graphs-composite=1.3.1, jmeter-core=2.13, jmeter-components=2.13]}}}.
-
-
-
-To use proxy with command line, please use {{{JVM_ARGS}}} environment variable to set proxy properties, like this:
-{{{
-JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080" PluginsManagerCMD status
-}}}

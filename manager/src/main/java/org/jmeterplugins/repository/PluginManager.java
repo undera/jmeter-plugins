@@ -19,6 +19,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
 import org.apache.jmeter.JMeter;
+import org.apache.jmeter.engine.JMeterEngine;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -26,6 +27,7 @@ import org.apache.log.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.net.*;
+import java.nio.file.AccessDeniedException;
 import java.util.*;
 
 public class PluginManager {
@@ -68,9 +70,18 @@ public class PluginManager {
         }
     }
 
-    public void load() throws IOException {
+    public void load() throws Throwable {
         if (allPlugins.size() > 0) {
             return;
+        }
+
+        String jarPath = Plugin.getJARPath(JMeterEngine.class.getCanonicalName());
+        if (jarPath != null) {
+            File libext = new File(jarPath).getParentFile();
+            if (!libext.canWrite()) {
+                String msg = "Have no write access for JMeter directories, not possible to use Plugins Manager: ";
+                throw new AccessDeniedException(msg + libext);
+            }
         }
 
         JSON json = getJSON("/repo/?installID=" + getInstallID());
@@ -360,7 +371,7 @@ public class PluginManager {
     public static PluginManager getStaticManager() {
         try {
             staticManager.load();
-        } catch (IOException e) {
+        } catch (Throwable e) {
             throw new RuntimeException("Failed to get plugin repositories", e);
         }
         return staticManager;

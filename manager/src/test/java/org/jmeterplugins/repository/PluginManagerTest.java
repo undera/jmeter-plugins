@@ -1,12 +1,12 @@
 package org.jmeterplugins.repository;
 
+import org.apache.jmeter.engine.JMeterEngine;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class PluginManagerTest {
     @Test
@@ -27,7 +27,7 @@ public class PluginManagerTest {
     @Test
     public void testStatus() throws IOException {
         String res = PluginManager.getAllPluginsStatus();
-        String expected = "[jpgc-graphs-basic=1.3.1, jpgc-sense=1.3.1, jpgc-cmd=1.3.1, jpgc-graphs-composite=1.3.1, jpgc-csl=1.3.1, jpgc-functions=1.3.1, jpgc-dummy=1.3.1, jpgc-ffw=1.3.1, jmeter-http=2.13, jpgc-fifo=1.3.1, jmeter-core=2.13, jpgc-mergeresults=1.3.1, jpgc-perfmon=1.3.1, jpgc-synthesis=1.3.1, jpgc-plancheck=1.3.1, jpgc-tst=1.3.1, jmeter-components=2.13]";
+        String expected = "[jmeter-http=2.13, jmeter-core=2.13, jpgc-plugins-manager=0.0.0-STOCK, jmeter-tcp=2.13, jmeter-components=2.13]";
         assertEquals(expected, res);
     }
 
@@ -35,6 +35,24 @@ public class PluginManagerTest {
     public void testStatusSingle() throws IOException {
         assertEquals("2.13", PluginManager.getPluginStatus("jmeter-core"));
         assertEquals(null, PluginManager.getPluginStatus("jmeter-nonexistent"));
+    }
+
+    @Test
+    public void testReadOnly() throws IOException {
+        PluginManager mgr = new PluginManager();
+        String jarPath = Plugin.getJARPath(JMeterEngine.class.getCanonicalName());
+        assert jarPath != null;
+        File ifile = new File(jarPath).getParentFile();
+        ifile.setWritable(false);
+        try {
+            mgr.load();
+            fail();
+        } catch (Throwable e) {
+            String prefix = "Have no write access for JMeter directories, not possible to use Plugins Manager:";
+            assertTrue(e.getMessage().startsWith(prefix));
+        } finally {
+            ifile.setWritable(true);
+        }
     }
 
     private class PluginManagerEmul extends PluginManager {

@@ -44,14 +44,6 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
         setIconImage(PluginManagerMenuItem.getPluginsIcon().getImage());
         ComponentUtil.centerComponentInWindow(this);
 
-        try {
-            manager.load();
-        } catch (IOException e) {
-            log.error("Failed to load plugins manager", e);
-            ByteArrayOutputStream text = new ByteArrayOutputStream(4096);
-            e.printStackTrace(new PrintStream(text));
-            failureLabel.setText(text.toString());
-        }
         failureLabel.setForeground(Color.RED);
         failureLabel.setEditable(false);
         add(failureLabel, BorderLayout.NORTH);
@@ -181,7 +173,16 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
     }
 
     @Override
-    public void componentShown(ComponentEvent e) {
+    public void componentShown(ComponentEvent evt) {
+        try {
+            manager.load();
+        } catch (Throwable e) {
+            log.error("Failed to load plugins manager", e);
+            ByteArrayOutputStream text = new ByteArrayOutputStream(4096);
+            e.printStackTrace(new PrintStream(text));
+            failureLabel.setText(text.toString());
+        }
+
         topAndDown.setVisible(!manager.allPlugins.isEmpty());
         failureLabel.setVisible(manager.allPlugins.isEmpty());
         pack();

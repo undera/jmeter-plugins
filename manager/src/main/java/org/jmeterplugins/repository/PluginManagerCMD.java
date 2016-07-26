@@ -5,7 +5,6 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.apache.log.Priority;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.ListIterator;
@@ -37,14 +36,16 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
                 default:
                     throw new UnsupportedOperationException("Wrong command: " + command);
             }
-        } catch (IOException e) {
+        } catch (IllegalArgumentException e) {
+            throw e;
+        } catch (Throwable e) {
             throw new RuntimeException("Failed to perform cmdline operation: " + e.getMessage(), e);
         }
 
         return 0;
     }
 
-    protected void process(ListIterator listIterator, boolean install) throws IOException {
+    protected void process(ListIterator listIterator, boolean install) throws Throwable {
         if (!listIterator.hasNext()) {
             throw new IllegalArgumentException("Plugins list parameter is missing");
         }

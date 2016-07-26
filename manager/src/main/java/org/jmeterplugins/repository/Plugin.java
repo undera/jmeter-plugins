@@ -167,7 +167,7 @@ public class Plugin {
         return VER_STOCK;
     }
 
-    private String getJARPath(String className) {
+    public static String getJARPath(String className) {
         Class cls;
         try {
             log.debug("Trying: " + className);
@@ -184,7 +184,6 @@ public class Plugin {
         String file = cls.getProtectionDomain().getCodeSource().getLocation().getFile();
         if (!file.toLowerCase().endsWith(".jar")) {
             log.warn("Path is not JAR: " + file);
-            return null;
         }
 
         return file;

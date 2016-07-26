@@ -17,7 +17,7 @@ public class PluginManagerDialogTest {
     @Test
     public void displayGUI() throws InterruptedException {
         if (!GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance()) {
-            JMeterUtils.setProperty("jpgc.repo.address", "http://localhost:80");
+            //JMeterUtils.setProperty("jpgc.repo.address", "http://localhost:80");
             System.setProperty("http.proxyHost", "localhost");
             System.setProperty("http.proxyPort", "81");
             PluginManagerDialog frame = new PluginManagerDialog(new PluginManager());

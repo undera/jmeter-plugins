@@ -66,7 +66,7 @@ The information is completely anonymous, you can validate that through our sourc
 If you want to use the Plugins Manager in an automated fashion, you will need to make some preparations first:
  
   # make sure {{{cmdrunner-2.0.jar}}} is present in {{{jmeter/lib}}} directory. If not, take it from here: http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar
-  # make sure {{{PluginsManagerCMD.sh}}} or {{{PluginsManagerCMD.bat}}} is present in {{{jmeter/bin}}} directory. If not, run {{{java -cp jmeter/lib/ext/jmeter-plugins-manager-0.8.jar org.jmeterplugins.repository.PluginManagerCMDInstaller}}} to have the files created
+  # make sure {{{PluginsManagerCMD.sh}}} or {{{PluginsManagerCMD.bat}}} is present in {{{jmeter/bin}}} directory. If not, run {{{java -cp jmeter/lib/ext/jmeter-plugins-manager-0.9.jar org.jmeterplugins.repository.PluginManagerCMDInstaller}}} to have the files created
     
 Now, you can use {{{PluginsManagerCMD}}} to get the status of plugins, install or uninstall them. The command-line is simple:
 

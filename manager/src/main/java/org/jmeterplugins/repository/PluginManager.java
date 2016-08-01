@@ -116,12 +116,24 @@ public class PluginManager {
 
         String jarPath = Plugin.getJARPath(JMeterEngine.class.getCanonicalName());
         if (jarPath != null) {
-            File libext = new File(jarPath).getParentFile();
-            if (!libext.canWrite()) {
+            File libext = new File(URLDecoder.decode(jarPath, "UTF-8")).getParentFile();
+            if (!isWritable(libext)) {
                 allPlugins.clear();
                 String msg = "Have no write access for JMeter directories, not possible to use Plugins Manager: ";
                 throw new AccessDeniedException(msg + libext);
             }
+        }
+    }
+
+    private boolean isWritable(File path) {
+        File sample = new File(path.getParent(), "empty.txt");
+        try {
+            sample.createNewFile();
+            sample.delete();
+            return true;
+        } catch (IOException e) {
+            log.debug("Write check failed for " + path, e);
+            return false;
         }
     }
 
@@ -136,20 +148,26 @@ public class PluginManager {
 
         HttpResponse result = httpClient.execute(get);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        result.getEntity().writeTo(bos);
-        byte[] bytes = bos.toByteArray();
-        if (bytes == null) {
-            bytes = "null".getBytes();
+        HttpEntity entity = result.getEntity();
+        try {
+            entity.writeTo(bos);
+            byte[] bytes = bos.toByteArray();
+            if (bytes == null) {
+                bytes = "null".getBytes();
+            }
+            String response = new String(bytes);
+            int statusCode = result.getStatusLine().getStatusCode();
+            if (statusCode >= 300) {
+                log.warn("Response with code " + result + ": " + response);
+                throw new IOException("Repository responded with wrong status code: " + statusCode);
+            } else {
+                log.debug("Response with code " + result + ": " + response);
+            }
+            return JSONSerializer.toJSON(response, new JsonConfig());
+        } finally {
+            get.abort();
+            entity.getContent().close();
         }
-        String response = new String(bytes);
-        int statusCode = result.getStatusLine().getStatusCode();
-        if (statusCode >= 300) {
-            log.warn("Response with code " + result + ": " + response);
-            throw new IOException("Repository responded with wrong status code: " + statusCode);
-        } else {
-            log.debug("Response with code " + result + ": " + response);
-        }
-        return JSONSerializer.toJSON(response, new JsonConfig());
     }
 
     public void startModifications(Set<Plugin> delPlugins, Set<Plugin> installPlugins, Map<String, String> installLibs, Set<String> libDeletions) throws IOException {
@@ -230,6 +248,7 @@ public class PluginManager {
 
         log.debug("Requesting " + uri);
         httpClient.execute(post);
+        post.abort();
     }
 
     protected String getUsageStats() {

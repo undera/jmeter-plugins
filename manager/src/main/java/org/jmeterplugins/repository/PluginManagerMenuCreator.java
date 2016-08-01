@@ -15,7 +15,7 @@ public class PluginManagerMenuCreator implements MenuCreator {
             try {
                 PluginManagerCMDInstaller.main(new String[0]);
             } catch (Throwable e) {
-                log.warn("Was unable to install pmgr cmdline tool");
+                log.warn("Was unable to install pmgr cmdline tool", e);
             }
 
             try {
@@ -24,7 +24,6 @@ public class PluginManagerMenuCreator implements MenuCreator {
                 log.error("Failed to load Plugins Manager", e);
                 return new JMenuItem[0];
             }
-
         } else {
             return new JMenuItem[0];
         }

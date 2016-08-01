@@ -43,7 +43,7 @@ public class PluginManagerTest {
         String jarPath = Plugin.getJARPath(JMeterEngine.class.getCanonicalName());
         assert jarPath != null;
         File ifile = new File(jarPath).getParentFile();
-        ifile.setWritable(false);
+        ifile.setReadOnly();
         try {
             mgr.load();
             fail();

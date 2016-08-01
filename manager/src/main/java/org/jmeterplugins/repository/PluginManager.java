@@ -118,7 +118,7 @@ public class PluginManager {
         if (jarPath != null) {
             File libext = new File(URLDecoder.decode(jarPath, "UTF-8")).getParentFile();
             if (!isWritable(libext)) {
-                allPlugins.clear();
+                allPlugins.clear(); // TODO: this makes it to retry requests, which is not good
                 String msg = "Have no write access for JMeter directories, not possible to use Plugins Manager: ";
                 throw new AccessDeniedException(msg + libext);
             }
@@ -126,7 +126,7 @@ public class PluginManager {
     }
 
     private boolean isWritable(File path) {
-        File sample = new File(path.getParent(), "empty.txt");
+        File sample = new File(path, "empty.txt");
         try {
             sample.createNewFile();
             sample.delete();

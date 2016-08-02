@@ -120,3 +120,7 @@ org.jmeterplugins.repository.PluginManager.getAllPluginsStatus()
 }}}
 
 Example result of this function call is string like {{{[jpgc-graphs-basic=1.3.1, jpgc-sense=1.3.1, jpgc-cmd=1.3.1, jpgc-graphs-composite=1.3.1, jmeter-core=2.13, jmeter-components=2.13]}}}.
+
+== Network Timeout ==
+
+If you experiencing "Connection Timed Out" errors, try setting property in user.properties file: {{{jpgc.repo.timeout=60000}}}.

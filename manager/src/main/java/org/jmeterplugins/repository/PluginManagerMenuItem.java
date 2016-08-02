@@ -32,7 +32,7 @@ public class PluginManagerMenuItem extends JMenuItem implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (dialog == null) {
-            int timeout = Integer.parseInt(JMeterUtils.getPropDefault("jpgc.repo.timeout", "5000"));
+            int timeout = Integer.parseInt(JMeterUtils.getPropDefault("jpgc.repo.timeout", "30000"));
             mgr.setTimeout(timeout);
             dialog = new PluginManagerDialog(mgr);
         }

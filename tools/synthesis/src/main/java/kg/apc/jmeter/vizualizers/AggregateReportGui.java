@@ -50,6 +50,8 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         "average",
         "aggregate_report_median",
         "aggregate_report_90%_line",
+        "aggregate_report_95%_line",
+        "aggregate_report_99%_line",
         "aggregate_report_min",
         "aggregate_report_max",
         "aggregate_report_error%",
@@ -80,6 +82,10 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
                     new Functor("getMedian"),
                     new Functor("getPercentPoint",
                     new Object[]{new Float(.900)}),
+                     new Functor("getPercentPoint",
+                    new Object[]{new Float(.950)}),
+                     new Functor("getPercentPoint",
+                    new Object[]{new Float(.990)}),
                     new Functor("getMin"),
                     new Functor("getMax"),
                     new Functor("getErrorPercentage"),
@@ -106,6 +112,8 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
             null, // Mean
             null, // median
             null, // 90%
+            null, // 95%
+            null, // 99%
             null, // Min
             null, // Max
             new NumberRenderer("#0.00%"), // Error %age
@@ -122,6 +130,8 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
             null, // Mean
             null, // median
             null, // 90%
+            null, // 95%
+            null, // 99%
             null, // Min
             null, // Max
             new DecimalFormat("#0.00%"), // Error %age

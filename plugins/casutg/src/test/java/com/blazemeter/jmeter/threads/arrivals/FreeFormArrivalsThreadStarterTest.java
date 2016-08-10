@@ -25,6 +25,7 @@ public class FreeFormArrivalsThreadStarterTest {
     public void testSchedule() throws Exception {
         CollectionProperty sched = new CollectionProperty(FreeFormArrivalsThreadGroup.SCHEDULE, new LinkedHashSet<>());
         sched.addProperty(getRow(1, 10, 30));
+        sched.addProperty(getRow(0, 0, 5));
         sched.addProperty(getRow(10, 1, 15));
 
         FreeFormArrivalsThreadGroup atg = new FreeFormArrivalsThreadGroup();

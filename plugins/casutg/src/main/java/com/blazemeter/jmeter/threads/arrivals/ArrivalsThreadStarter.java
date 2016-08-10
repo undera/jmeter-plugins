@@ -44,7 +44,16 @@ public class ArrivalsThreadStarter extends AbstractThreadStarter {
             startTime = rollingTime / 1000.0;
         }
 
-        double currentRate = getCurrentRate();
+        double currentRate;
+        do {
+            currentRate = getCurrentRate();
+            if (currentRate == 0) {
+                log.debug("Zero arrivals rate, waiting a bit");
+                rollingTime += 200; // FIXME: magic constant
+                Thread.sleep(200);
+            }
+        } while (currentRate == 0);
+
         if (currentRate < 0) {
             log.info("Duration limit reached, no more arrivals needed, had arrivals: " + scheduledCount);
             ((ArrivalsThreadGroup) owner).setArrivalsLimit(String.valueOf(scheduledCount));
@@ -80,8 +89,12 @@ public class ArrivalsThreadStarter extends AbstractThreadStarter {
     }
 
     protected void tickRollingTime(double currentRate) {
-        double delay = currentRate > 0 ? (1000.0 / currentRate) : 0;
-        rollingTime += delay;
-        scheduledCount++;
+        if (currentRate > 0) {
+            double delay = currentRate > 0 ? (1000.0 / currentRate) : 0;
+            rollingTime += delay;
+            scheduledCount++;
+        } else {
+            log.debug("Negative arrivals rate, ignoring");
+        }
     }
 }

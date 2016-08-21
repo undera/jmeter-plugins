@@ -18,7 +18,7 @@ public class UDPSamplerGuiTest {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @Test
+    //@Test
     public void displayGUI() throws InterruptedException {
         if (!GraphicsEnvironment.isHeadless()) {
             UDPSamplerGui obj = new UDPSamplerGui();

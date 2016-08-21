@@ -1,18 +1,12 @@
 package kg.apc.jmeter.samplers;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class UDPSamplerGui extends AbstractSamplerGui {
 
@@ -35,7 +29,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         return JMeterPluginsUtils.prefixLabel("UDP Request");
     }
 
-   @Override
+    @Override
     public String getLabelResource() {
         return getClass().getCanonicalName();
     }
@@ -56,7 +50,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         }
     }
 
-   @Override
+    @Override
     public TestElement createTestElement() {
         UDPSampler sampler = new UDPSampler();
         modifyTestElement(sampler);
@@ -64,13 +58,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         return sampler;
     }
 
-    /**
-     * Modifies a given TestElement to mirror the data in the gui components.
-     *
-     * @param sampler
-     * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
-     */
-   @Override
+    @Override
     public void modifyTestElement(TestElement el) {
         super.configureTestElement(el);
 

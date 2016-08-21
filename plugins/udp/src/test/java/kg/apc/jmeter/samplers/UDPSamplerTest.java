@@ -174,17 +174,6 @@ public class UDPSamplerTest {
     }
 
     @Test
-    public void testProcessIO() throws Exception {
-        System.out.println("processIO");
-        instance.threadStarted();
-        SampleResult res = new SampleResult();
-        instance.setRequestData("453555");
-        byte[] result = instance.processIO(res);
-        assertEquals("", new String(result));
-    }
-
-
-    @Test
     public void testThreadStarted() {
         System.out.println("threadStarted");
         instance.threadStarted();

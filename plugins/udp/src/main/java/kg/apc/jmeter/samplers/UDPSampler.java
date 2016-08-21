@@ -20,6 +20,8 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
     public static final String ENCODECLASS = "encodeclass";
     public static final String WAITRESPONSE = "waitresponse";
     public static final String CLOSECHANNEL = "closechannel";
+    public static final String BIND_ADDRESS = "bind_address";
+    public static final String BIND_PORT = "bind_port";
     private DatagramChannel channel;
     private UDPTrafficDecoder encoder;
 
@@ -45,6 +47,26 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
 
     public void setEncoderClass(String text) {
         setProperty(ENCODECLASS, text);
+    }
+
+    public String getBindAddress() {
+        return getPropertyAsString(BIND_ADDRESS);
+    }
+
+    public void setBindAddress(String text) {
+        setProperty(BIND_ADDRESS, text);
+    }
+
+    public String getBindPort() {
+        return getPropertyAsString(BIND_PORT);
+    }
+
+    public int getBindPortAsInt() {
+        return getPropertyAsInt(BIND_PORT);
+    }
+
+    public void setBindPort(String text) {
+        setProperty(BIND_PORT, text);
     }
 
     @Override
@@ -125,6 +147,12 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         if (channel == null || !channel.isOpen()) {
             try {
                 channel = (DatagramChannel) getChannel();
+                String bindAddress = getBindAddress();
+                if (bindAddress.isEmpty()) {
+                    bindAddress = "0.0.0.0";
+                }
+
+                channel.socket().bind(new InetSocketAddress(bindAddress, getBindPortAsInt()));
             } catch (IOException ex) {
                 log.error("Cannot open channel", ex);
             }

@@ -1,18 +1,12 @@
 package kg.apc.jmeter.samplers;
 
-import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class UDPSamplerGui extends AbstractSamplerGui {
 
@@ -24,6 +18,8 @@ public class UDPSamplerGui extends AbstractSamplerGui {
     private JTextField timeout;
     private JTextField messageEncodeClass;
     private JTextArea requestData;
+    private JTextField bindAddress;
+    private JTextField bindPort;
 
     public UDPSamplerGui() {
         init();
@@ -35,7 +31,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         return JMeterPluginsUtils.prefixLabel("UDP Request");
     }
 
-   @Override
+    @Override
     public String getLabelResource() {
         return getClass().getCanonicalName();
     }
@@ -53,10 +49,12 @@ public class UDPSamplerGui extends AbstractSamplerGui {
             closeChannel.setSelected(sampler.isCloseChannel());
             messageEncodeClass.setText(sampler.getEncoderClass());
             requestData.setText(sampler.getRequestData());
+            bindAddress.setText(sampler.getBindAddress());
+            bindPort.setText(sampler.getBindPort());
         }
     }
 
-   @Override
+    @Override
     public TestElement createTestElement() {
         UDPSampler sampler = new UDPSampler();
         modifyTestElement(sampler);
@@ -64,13 +62,7 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         return sampler;
     }
 
-    /**
-     * Modifies a given TestElement to mirror the data in the gui components.
-     *
-     * @param sampler
-     * @see org.apache.jmeter.gui.JMeterGUIComponent#modifyTestElement(TestElement)
-     */
-   @Override
+    @Override
     public void modifyTestElement(TestElement el) {
         super.configureTestElement(el);
 
@@ -83,6 +75,8 @@ public class UDPSamplerGui extends AbstractSamplerGui {
             sampler.setTimeout(timeout.getText());
             sampler.setRequestData(transformCRLF(requestData.getText()));
             sampler.setEncoderClass(messageEncodeClass.getText());
+            sampler.setBindAddress(bindAddress.getText());
+            sampler.setBindPort(bindPort.getText());
         }
     }
 
@@ -147,6 +141,13 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         editConstraints.fill = GridBagConstraints.BOTH;
         requestData = new JTextArea();
         addToPanel(mainPanel, editConstraints, 1, 7, GuiBuilderHelper.getTextAreaScrollPaneContainer(requestData, 10));
+
+        addToPanel(mainPanel, labelConstraints, 0, 8, new JLabel("Bind Local Address: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 8, bindAddress = new JTextField(20));
+
+        addToPanel(mainPanel, labelConstraints, 0, 9, new JLabel("Bind Local Port: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 9, bindPort = new JTextField(20));
+
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

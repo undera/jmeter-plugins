@@ -1,9 +1,10 @@
 package kg.apc.jmeter.samplers;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.xbill.DNS.*;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
 
 public class DNSJavaDecoder implements UDPTrafficDecoder {
 
@@ -14,7 +15,7 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
     public ByteBuffer encode(String data) {
         return ByteBuffer.wrap(getMessageBytes(data));
     }
-    
+
     protected byte[] getMessageBytes(String data) {
         Message msg = new Message();
         String recs[] = data.split(NL);
@@ -49,7 +50,7 @@ public class DNSJavaDecoder implements UDPTrafficDecoder {
         try {
             m = new Message(buf);
         } catch (IOException ex) {
-            throw new RuntimeException("Cannot decode DNS message: "+JOrphanUtils.baToHexString(buf), ex);
+            throw new RuntimeException("Cannot decode DNS message: " + JOrphanUtils.baToHexString(buf), ex);
         }
         return m.toString().getBytes();
     }

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-udp</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 
     <name>UDP protocol support</name>
     <description>UDP protocol</description>

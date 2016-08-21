@@ -2,38 +2,43 @@ package kg.apc.jmeter.samplers;
 
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import javax.swing.*;
+import java.awt.*;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class UDPSamplerGuiTest {
-
-    public UDPSamplerGuiTest() {
-    }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
+    //@Test
+    public void displayGUI() throws InterruptedException {
+        if (!GraphicsEnvironment.isHeadless()) {
+            UDPSamplerGui obj = new UDPSamplerGui();
+            UDPSampler te = (UDPSampler) obj.createTestElement();
+            obj.configure(te);
+            obj.clearGui();
+            obj.modifyTestElement(te);
+
+            JFrame frame = new JFrame(obj.getStaticLabel());
+            frame.setPreferredSize(new Dimension(800, 600));
+            frame.getContentPane().add(obj, BorderLayout.CENTER);
+            frame.pack();
+            frame.setVisible(true);
+
+            while (frame.isVisible()) {
+                Thread.sleep(1000);
+            }
+        }
     }
 
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of getStaticLabel method, of class UDPSamplerGui.
-     */
     @Test
     public void testGetStaticLabel() {
         System.out.println("getStaticLabel");
@@ -42,9 +47,6 @@ public class UDPSamplerGuiTest {
         assertTrue(result.length() > 0);
     }
 
-    /**
-     * Test of getLabelResource method, of class UDPSamplerGui.
-     */
     @Test
     public void testGetLabelResource() {
         System.out.println("getLabelResource");
@@ -53,9 +55,6 @@ public class UDPSamplerGuiTest {
         assertTrue(result.length() > 0);
     }
 
-    /**
-     * Test of configure method, of class UDPSamplerGui.
-     */
     @Test
     public void testConfigure() {
         System.out.println("configure");
@@ -64,9 +63,6 @@ public class UDPSamplerGuiTest {
         instance.configure(element);
     }
 
-    /**
-     * Test of createTestElement method, of class UDPSamplerGui.
-     */
     @Test
     public void testCreateTestElement() {
         System.out.println("createTestElement");
@@ -75,9 +71,6 @@ public class UDPSamplerGuiTest {
         assertNotNull(result);
     }
 
-    /**
-     * Test of modifyTestElement method, of class UDPSamplerGui.
-     */
     @Test
     public void testModifyTestElement() {
         System.out.println("modifyTestElement");
@@ -86,9 +79,6 @@ public class UDPSamplerGuiTest {
         instance.modifyTestElement(sampler);
     }
 
-    /**
-     * Test of clearGui method, of class UDPSamplerGui.
-     */
     @Test
     public void testClearGui() {
         System.out.println("clearGui");

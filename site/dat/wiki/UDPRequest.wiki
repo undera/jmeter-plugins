@@ -8,6 +8,10 @@ to wait for response and corresponding timeout setting.
 
 [/img/wiki/UDPRequest.png]
 
+"Close UDP Socket" - the flag to close socket after processing request. Otherwise, the socket will stay open for the next iteration.
+
+"Bind Local Address/Port" - the options to manually choose which local IP and port should be used to send the request.
+
 == Encode/Decode Class ==
 
 Most of UDP applications use binary packet data, which cannot be directly specified

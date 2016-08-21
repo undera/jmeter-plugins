@@ -18,6 +18,8 @@ public class UDPSamplerGui extends AbstractSamplerGui {
     private JTextField timeout;
     private JTextField messageEncodeClass;
     private JTextArea requestData;
+    private JTextField bindAddress;
+    private JTextField bindPort;
 
     public UDPSamplerGui() {
         init();
@@ -47,6 +49,8 @@ public class UDPSamplerGui extends AbstractSamplerGui {
             closeChannel.setSelected(sampler.isCloseChannel());
             messageEncodeClass.setText(sampler.getEncoderClass());
             requestData.setText(sampler.getRequestData());
+            bindAddress.setText(sampler.getBindAddress());
+            bindPort.setText(sampler.getBindPort());
         }
     }
 
@@ -71,6 +75,8 @@ public class UDPSamplerGui extends AbstractSamplerGui {
             sampler.setTimeout(timeout.getText());
             sampler.setRequestData(transformCRLF(requestData.getText()));
             sampler.setEncoderClass(messageEncodeClass.getText());
+            sampler.setBindAddress(bindAddress.getText());
+            sampler.setBindPort(bindPort.getText());
         }
     }
 
@@ -135,6 +141,13 @@ public class UDPSamplerGui extends AbstractSamplerGui {
         editConstraints.fill = GridBagConstraints.BOTH;
         requestData = new JTextArea();
         addToPanel(mainPanel, editConstraints, 1, 7, GuiBuilderHelper.getTextAreaScrollPaneContainer(requestData, 10));
+
+        addToPanel(mainPanel, labelConstraints, 0, 8, new JLabel("Bind Local Address: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 8, bindAddress = new JTextField(20));
+
+        addToPanel(mainPanel, labelConstraints, 0, 9, new JLabel("Bind Local Port: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 9, bindPort = new JTextField(20));
+
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

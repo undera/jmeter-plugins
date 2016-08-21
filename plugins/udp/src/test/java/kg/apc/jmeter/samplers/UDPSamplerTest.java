@@ -37,7 +37,7 @@ public class UDPSamplerTest {
         instance.setEncoderClass(HexStringUDPDecoder.class.getCanonicalName());
     }
 
-    @Test
+    //@Test
     public void testReal() {
         System.out.println("real");
         instance = new UDPSampler();
@@ -172,17 +172,6 @@ public class UDPSamplerTest {
         byte[] result = instance.decode("test".getBytes());
         assertEquals(4, result.length);
     }
-
-    @Test
-    public void testProcessIO() throws Exception {
-        System.out.println("processIO");
-        instance.threadStarted();
-        SampleResult res = new SampleResult();
-        instance.setRequestData("453555");
-        byte[] result = instance.processIO(res);
-        assertEquals("", new String(result));
-    }
-
 
     @Test
     public void testThreadStarted() {

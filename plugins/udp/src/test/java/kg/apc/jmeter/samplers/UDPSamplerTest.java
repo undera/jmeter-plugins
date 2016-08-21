@@ -37,7 +37,7 @@ public class UDPSamplerTest {
         instance.setEncoderClass(HexStringUDPDecoder.class.getCanonicalName());
     }
 
-    @Test
+    //@Test
     public void testReal() {
         System.out.println("real");
         instance = new UDPSampler();

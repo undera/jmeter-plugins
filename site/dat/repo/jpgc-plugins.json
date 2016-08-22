@@ -446,6 +446,13 @@
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
           "jmeter-plugins-common-io": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
         }
+      },
+      "0.2": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-udp/0.2/jmeter-plugins-udp-0.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "jmeter-plugins-common-io": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
+        }
       }
     }
   },

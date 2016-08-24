@@ -26,6 +26,7 @@ import org.apache.log.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.*;
 import java.nio.file.AccessDeniedException;
 import java.util.*;
@@ -38,7 +39,6 @@ public class PluginManager {
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
     private static PluginManager staticManager = new PluginManager();
     private boolean doRestart = true;
-    private boolean isCheckRW = true;
 
     public PluginManager() {
         httpClient = getHTTPClient();
@@ -118,19 +118,18 @@ public class PluginManager {
             }
         }
 
-        if (isCheckRW) {
-            String jarPath = Plugin.getJARPath(JMeterEngine.class.getCanonicalName());
-            if (jarPath != null) {
-                File libext = new File(URLDecoder.decode(jarPath, "UTF-8")).getParentFile();
-                if (!isWritable(libext)) {
-                    allPlugins.clear(); // TODO: this makes it to retry requests, which is not good
-                    String msg = "Have no write access for JMeter directories, not possible to use Plugins Manager: ";
-                    throw new AccessDeniedException(msg + libext);
-                }
+        log.info("Plugins Status: " + getAllPluginsStatusString());
+    }
+
+    private void checkRW() throws UnsupportedEncodingException, AccessDeniedException {
+        String jarPath = Plugin.getJARPath(JMeterEngine.class.getCanonicalName());
+        if (jarPath != null) {
+            File libext = new File(URLDecoder.decode(jarPath, "UTF-8")).getParentFile();
+            if (!isWritable(libext)) {
+                String msg = "Have no write access for JMeter directories, not possible to use Plugins Manager: ";
+                throw new AccessDeniedException(msg + libext);
             }
         }
-
-        log.info("Plugins Status: " + getAllPluginsStatusString());
     }
 
     private boolean isWritable(File path) {
@@ -194,6 +193,12 @@ public class PluginManager {
     }
 
     public void applyChanges(GenericCallback<String> statusChanged) {
+        try {
+            checkRW();
+        } catch (Throwable e) {
+            throw new RuntimeException("Cannot apply changes: " + e.getMessage(), e);
+        }
+
         DependencyResolver resolver = new DependencyResolver(allPlugins);
         Set<Plugin> additions = resolver.getAdditions();
         Map<String, String> libInstalls = new HashMap<>();
@@ -425,13 +430,7 @@ public class PluginManager {
      */
     public static String getAllPluginsStatus() {
         PluginManager manager = getStaticManager();
-        boolean oldVal = manager.isCheckRW;
-        try {
-            manager.isCheckRW = false;
-            return manager.getAllPluginsStatusString();
-        } finally {
-            manager.isCheckRW = oldVal;
-        }
+        return manager.getAllPluginsStatusString();
     }
 
     private String getAllPluginsStatusString() {

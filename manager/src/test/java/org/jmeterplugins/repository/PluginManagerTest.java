@@ -38,18 +38,19 @@ public class PluginManagerTest {
     }
 
     @Test
-    public void testReadOnly() throws IOException {
+    public void testReadOnly() throws Throwable {
         PluginManager mgr = new PluginManager();
         String jarPath = Plugin.getJARPath(JMeterEngine.class.getCanonicalName());
         assert jarPath != null;
         File ifile = new File(jarPath).getParentFile();
         ifile.setReadOnly();
+        mgr.load();
         try {
-            mgr.load();
+            mgr.applyChanges(new LoggingCallback());
             fail();
-        } catch (Throwable e) {
+        } catch (RuntimeException e) {
             String prefix = "Have no write access for JMeter directories, not possible to use Plugins Manager:";
-            assertTrue(e.getMessage().startsWith(prefix));
+            assertTrue(e.getMessage().contains(prefix));
         } finally {
             ifile.setWritable(true);
         }
@@ -65,6 +66,13 @@ public class PluginManagerTest {
         @Override
         public String getUsageStats() {
             return super.getUsageStats();
+        }
+    }
+
+    private class LoggingCallback implements GenericCallback<String> {
+        @Override
+        public void notify(String s) {
+            System.out.println(s);
         }
     }
 }

@@ -38,13 +38,19 @@ public class PluginManager {
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
     private static PluginManager staticManager = new PluginManager();
     private boolean doRestart = true;
+    private boolean isCheckRW = true;
 
     public PluginManager() {
+        httpClient = getHTTPClient();
+    }
+
+    private AbstractHttpClient getHTTPClient() {
+        AbstractHttpClient client = new DefaultHttpClient();
         String proxyHost = System.getProperty("https.proxyHost", "");
         if (!proxyHost.isEmpty()) {
             int proxyPort = Integer.parseInt(System.getProperty("https.proxyPort", "-1"));
             log.info("Using proxy " + proxyHost + ":" + proxyPort);
-            HttpParams params = httpClient.getParams();
+            HttpParams params = client.getParams();
             HttpHost proxy = new HttpHost(proxyHost, proxyPort);
             params.setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
 
@@ -52,22 +58,22 @@ public class PluginManager {
             if (proxyUser != null) {
                 log.info("Using authenticated proxy with username: " + proxyUser);
                 String proxyPass = System.getProperty(JMeter.HTTP_PROXY_PASS, JMeterUtils.getProperty(JMeter.HTTP_PROXY_PASS));
-                String localHost = getLocalHost();
+
+                String localHost;
+                try {
+                    localHost = InetAddress.getLocalHost().getCanonicalHostName();
+                } catch (Throwable e) {
+                    log.error("Failed to get local host name, defaulting to 'localhost'", e);
+                    localHost = "localhost";
+                }
+
                 AuthScope authscope = new AuthScope(proxyHost, proxyPort);
                 String proxyDomain = JMeterUtils.getPropDefault("http.proxyDomain", "");
                 NTCredentials credentials = new NTCredentials(proxyUser, proxyPass, localHost, proxyDomain);
-                httpClient.getCredentialsProvider().setCredentials(authscope, credentials);
+                client.getCredentialsProvider().setCredentials(authscope, credentials);
             }
         }
-    }
-
-    private String getLocalHost() {
-        try {
-            return InetAddress.getLocalHost().getCanonicalHostName();
-        } catch (Throwable e) {
-            log.error("Failed to get local host name, defaulting to 'localhost'", e);
-            return "localhost";
-        }
+        return client;
     }
 
     public void load() throws Throwable {
@@ -104,8 +110,6 @@ public class PluginManager {
             }
         }
 
-        log.info("Plugins Status: " + getAllPluginsStatusString());
-
         if (JMeterUtils.getPropDefault("jpgc.repo.sendstats", "true").equals("true")) {
             try {
                 reportStats();
@@ -114,15 +118,19 @@ public class PluginManager {
             }
         }
 
-        String jarPath = Plugin.getJARPath(JMeterEngine.class.getCanonicalName());
-        if (jarPath != null) {
-            File libext = new File(URLDecoder.decode(jarPath, "UTF-8")).getParentFile();
-            if (!isWritable(libext)) {
-                allPlugins.clear(); // TODO: this makes it to retry requests, which is not good
-                String msg = "Have no write access for JMeter directories, not possible to use Plugins Manager: ";
-                throw new AccessDeniedException(msg + libext);
+        if (isCheckRW) {
+            String jarPath = Plugin.getJARPath(JMeterEngine.class.getCanonicalName());
+            if (jarPath != null) {
+                File libext = new File(URLDecoder.decode(jarPath, "UTF-8")).getParentFile();
+                if (!isWritable(libext)) {
+                    allPlugins.clear(); // TODO: this makes it to retry requests, which is not good
+                    String msg = "Have no write access for JMeter directories, not possible to use Plugins Manager: ";
+                    throw new AccessDeniedException(msg + libext);
+                }
             }
         }
+
+        log.info("Plugins Status: " + getAllPluginsStatusString());
     }
 
     private boolean isWritable(File path) {
@@ -417,7 +425,13 @@ public class PluginManager {
      */
     public static String getAllPluginsStatus() {
         PluginManager manager = getStaticManager();
-        return manager.getAllPluginsStatusString();
+        boolean oldVal = manager.isCheckRW;
+        try {
+            manager.isCheckRW = false;
+            return manager.getAllPluginsStatusString();
+        } finally {
+            manager.isCheckRW = oldVal;
+        }
     }
 
     private String getAllPluginsStatusString() {

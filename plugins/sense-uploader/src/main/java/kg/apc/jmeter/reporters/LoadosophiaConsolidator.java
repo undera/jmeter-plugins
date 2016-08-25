@@ -126,7 +126,7 @@ public class LoadosophiaConsolidator extends ResultCollector
         }
 
         if (isOnlineInitiated) {
-            finishOnline(redirectLink);
+            finishOnline(redirectLink + "#tab=tabTimelines");
         }
 
         clearData();

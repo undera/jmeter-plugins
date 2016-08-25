@@ -2,6 +2,8 @@ package kg.apc.jmeter.reporters;
 
 
 import kg.apc.emulators.TestJMeterUtils;
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.BeforeClass;
@@ -17,33 +19,18 @@ public class LoadosophiaConsolidatorTest {
 
     @Test
     public void testFlow() throws Exception {
-        LinkedList<String[]> response = new LinkedList<>();
-        response.add(new String[]{"{}", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
-        response.add(new String[]{"4", "4"});
+        LinkedList<JSON> response = new LinkedList<>();
+        response.add(getFake());
+        response.add(getFake());
+        response.add(getFake());
+        response.add(getFake());
+        response.add(getFake());
+        response.add(getFake());
+        response.add(getFake());
+        response.add(getFake());
+        response.add(getFake());
+        response.add(getFake());
+
         LoadosophiaConsolidator obj = new ConsolidatorEmul(response);
 
         LoadosophiaUploader source = new LoadosophiaUploader();
@@ -58,5 +45,13 @@ public class LoadosophiaConsolidatorTest {
         obj.sampleOccurred(new SampleEvent(new SampleResult(System.currentTimeMillis() + 5000, 1), ""));
         obj.sampleOccurred(new SampleEvent(new SampleResult(System.currentTimeMillis() + 6000, 1), ""));
         obj.remove(source);
+    }
+
+    private JSONObject getFake() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("QueueID", 1);
+        jsonObject.put("status", 4);
+        jsonObject.put("TestID", 4);
+        return jsonObject;
     }
 }

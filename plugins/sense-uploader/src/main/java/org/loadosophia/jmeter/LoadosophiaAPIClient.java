@@ -1,20 +1,34 @@
 package org.loadosophia.jmeter;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.multipart.*;
-import org.apache.commons.io.IOUtils;
+import net.sf.json.*;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.NTCredentials;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPatch;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.FormBodyPart;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.AbstractHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.params.HttpParams;
+import org.apache.jmeter.JMeter;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
 import java.io.*;
-import java.net.URLEncoder;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
+import java.net.InetAddress;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.zip.GZIPOutputStream;
@@ -24,8 +38,9 @@ public class LoadosophiaAPIClient {
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String COLOR_NONE = "none";
     public static final String[] colors = {COLOR_NONE, "red", "green", "blue", "gray", "orange", "violet", "cyan", "black"};
-    public static final String STATUS_DONE = "4";
-    private final HttpClient httpClient = new HttpClient();
+    public static final int STATUS_DONE = 4;
+    public static final int STATUS_ERROR = 5;
+    private final AbstractHttpClient httpClient;
     private final StatusNotifierCallback notifier;
     private final String project;
     private final String address;
@@ -41,21 +56,68 @@ public class LoadosophiaAPIClient {
         notifier = informer;
         colorFlag = aColorFlag;
         title = aTitle;
+        httpClient = getHTTPClient();
+    }
 
-        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(TIMEOUT * 1000);
-        httpClient.getHttpConnectionManager().getParams().setSoTimeout(TIMEOUT * 1000);
+    private static AbstractHttpClient getHTTPClient() {
+        AbstractHttpClient client = new DefaultHttpClient();
+        String proxyHost = System.getProperty("https.proxyHost", "");
+        if (!proxyHost.isEmpty()) {
+            int proxyPort = Integer.parseInt(System.getProperty("https.proxyPort", "-1"));
+            log.info("Using proxy " + proxyHost + ":" + proxyPort);
+            HttpParams params = client.getParams();
+            HttpHost proxy = new HttpHost(proxyHost, proxyPort);
+            params.setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+
+            String proxyUser = System.getProperty(JMeter.HTTP_PROXY_USER, JMeterUtils.getProperty(JMeter.HTTP_PROXY_USER));
+            if (proxyUser != null) {
+                log.info("Using authenticated proxy with username: " + proxyUser);
+                String proxyPass = System.getProperty(JMeter.HTTP_PROXY_PASS, JMeterUtils.getProperty(JMeter.HTTP_PROXY_PASS));
+
+                String localHost;
+                try {
+                    localHost = InetAddress.getLocalHost().getCanonicalHostName();
+                } catch (Throwable e) {
+                    log.error("Failed to get local host name, defaulting to 'localhost'", e);
+                    localHost = "localhost";
+                }
+
+                AuthScope authscope = new AuthScope(proxyHost, proxyPort);
+                String proxyDomain = JMeterUtils.getPropDefault("http.proxyDomain", "");
+                NTCredentials credentials = new NTCredentials(proxyUser, proxyPass, localHost, proxyDomain);
+                client.getCredentialsProvider().setCredentials(authscope, credentials);
+            }
+        }
+        return client;
     }
 
     public LoadosophiaUploadResults sendFiles(File targetFile, LinkedList<String> perfMonFiles) throws IOException {
         LoadosophiaUploadResults results = new LoadosophiaUploadResults();
+        LinkedList<FormBodyPart> partsList = getUploadParts(targetFile, perfMonFiles);
+
+        notifier.notifyAbout("Starting upload to BM.Sense");
+        JSONObject res = queryObject(createPost(address + "api/files", partsList), 200);
+
+        int queueID = res.getInt("QueueID");
+        results.setQueueID(queueID);
+
+        int testID = getTestByUpload(queueID);
+        results.setTestID(testID);
+
+        setTestTitleAndColor(testID, title.trim(), colorFlag);
+        results.setRedirectLink(address + "gui/" + testID + "/");
+        return results;
+    }
+
+    private LinkedList<FormBodyPart> getUploadParts(File targetFile, LinkedList<String> perfMonFiles) throws IOException {
         if (targetFile.length() == 0) {
             throw new IOException("Cannot send empty file to BM.Sense");
         }
 
         log.info("Preparing files to send");
-        LinkedList<Part> partsList = new LinkedList<>();
-        partsList.add(new StringPart("projectKey", project));
-        partsList.add(new FilePart("jtl_file", new FilePartSource(gzipFile(targetFile))));
+        LinkedList<FormBodyPart> partsList = new LinkedList<>();
+        partsList.add(new FormBodyPart("projectKey", new StringBody(project)));
+        partsList.add(new FormBodyPart("jtl_file", new FileBody(gzipFile(targetFile))));
 
         Iterator<String> it = perfMonFiles.iterator();
         int index = 0;
@@ -71,59 +133,36 @@ public class LoadosophiaAPIClient {
                 continue;
             }
 
-            partsList.add(new FilePart("perfmon_" + index, new FilePartSource(gzipFile(perfmonFile))));
+            partsList.add(new FormBodyPart("perfmon_" + index, new FileBody(gzipFile(perfmonFile))));
             index++;
         }
-
-        notifier.notifyAbout("Starting upload to BM.Sense");
-        String[] fields = multipartPost(partsList, getUploaderURI(), HttpStatus.SC_OK);
-        int queueID = Integer.parseInt(fields[0]);
-        results.setQueueID(queueID);
-
-        if (!title.trim().isEmpty() || !colorFlag.equals(COLOR_NONE)) {
-            int testID = getTestByUpload(queueID);
-            results.setTestID(testID);
-
-            if (!title.trim().isEmpty()) {
-                setTestTitle(testID, title.trim());
-            }
-
-            if (!colorFlag.equals(COLOR_NONE)) {
-                setTestColor(testID, colorFlag);
-            }
-
-            results.setRedirectLink(address + "gui/" + testID + "/");
-        } else {
-            results.setRedirectLink(address + "api/file/status/" + queueID + "/?redirect=true");
-        }
-        return results;
+        return partsList;
     }
 
     public String startOnline() throws IOException {
-        String uri = address + "api/active/receiver/start/";
-        LinkedList<Part> partsList = new LinkedList<>();
-        partsList.add(new StringPart("token", token));
-        partsList.add(new StringPart("projectKey", project));
-        partsList.add(new StringPart("title", title));
-        String[] res = multipartPost(partsList, uri, HttpStatus.SC_CREATED);
-        JSONObject obj = JSONObject.fromObject(res[0]);
+        String uri = address + "api/active/receiver/start";
+        LinkedList<FormBodyPart> partsList = new LinkedList<>();
+        partsList.add(new FormBodyPart("token", new StringBody(token)));
+        partsList.add(new FormBodyPart("projectKey", new StringBody(project)));
+        partsList.add(new FormBodyPart("title", new StringBody(title)));
+        JSONObject obj = queryObject(createPost(uri, partsList), 201);
         return address + "gui/active/" + obj.optString("OnlineID", "N/A") + "/";
     }
 
     public void sendOnlineData(JSONArray data) throws IOException {
-        String uri = address + "api/active/receiver/data/";
-        LinkedList<Part> partsList = new LinkedList<>();
+        String uri = address + "api/active/receiver/data";
+        LinkedList<FormBodyPart> partsList = new LinkedList<>();
         String dataStr = data.toString();
         log.debug("Sending active test data: " + dataStr);
-        partsList.add(new StringPart("data", dataStr));
-        multipartPost(partsList, uri, HttpStatus.SC_ACCEPTED);
+        partsList.add(new FormBodyPart("data", new StringBody(dataStr)));
+        query(createPost(uri, partsList), 202);
     }
 
     public void endOnline(String redirectLink) throws IOException {
-        String uri = address + "api/active/receiver/stop/";
-        LinkedList<Part> partsList = new LinkedList<>();
-        partsList.add(new StringPart("redirect", redirectLink));
-        multipartPost(partsList, uri, HttpStatus.SC_RESET_CONTENT);
+        String uri = address + "api/active/receiver/stop";
+        LinkedList<FormBodyPart> partsList = new LinkedList<>();
+        partsList.add(new FormBodyPart("redirect", new StringBody(redirectLink)));
+        query(createPost(uri, partsList), 205);
     }
 
     private File gzipFile(File src) throws IOException {
@@ -158,73 +197,100 @@ public class LoadosophiaAPIClient {
             try {
                 Thread.sleep(5000); // TODO: parameterize it
             } catch (InterruptedException ex) {
-                throw new RuntimeException("Failed to get test ID");
+                throw new RuntimeException("Interrupted on getting TestID");
             }
 
-            String[] status = getUploadStatus(queueID);
-            if (status.length > 2 && !status[2].isEmpty()) {
-                throw new RuntimeException("BM.Sense processing error: " + status[2]);
-            }
+            JSONObject status = queryObject(new HttpGet(address + "api/files/" + queueID), 200);
 
-            if (status[1].equals(STATUS_DONE)) {
-                return Integer.parseInt(status[0]);
+            if (status.getInt("status") == STATUS_DONE) {
+                return status.getInt("TestID");
+            } else if (status.getInt("status") == STATUS_ERROR) {
+                throw new IOException("File processing finished with error: " + status.getString("UserError"));
             }
         }
     }
 
-    private void setTestTitle(int testID, String trim) throws IOException {
-        String uri = address + "api/test/edit/title/" + testID + "/?title=" + URLEncoder.encode(trim, "UTF-8");
-        multipartPost(new LinkedList<Part>(), uri, HttpStatus.SC_NO_CONTENT);
+    private void setTestTitleAndColor(int testID, String title, String color) throws IOException {
+        if (title.isEmpty() && color.isEmpty()) {
+            return;
+        }
+
+        JSONObject data = new JSONObject();
+        if (!title.isEmpty()) {
+            data.put("title", title);
+        }
+
+        if (!title.isEmpty()) {
+            data.put("color", title);
+        }
+
+        query(createPatch(address + "api/tests/" + testID, data), 200);
     }
 
-    private void setTestColor(int testID, String colorFlag) throws IOException {
-        String uri = address + "api/test/edit/color/" + testID + "/?color=" + colorFlag;
-        multipartPost(new LinkedList<Part>(), uri, HttpStatus.SC_NO_CONTENT);
-    }
+    protected JSON query(HttpRequestBase request, int expectedCode) throws IOException {
+        request.setHeader("Authorization", "Token " + token);
+        log.debug("Requesting: " + request);
 
-    private String getUploaderURI() {
-        return address + "api/file/upload/?format=csv";
-    }
+        HttpParams requestParams = request.getParams();
+        requestParams.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, TIMEOUT * 1000);
+        requestParams.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, TIMEOUT * 1000);
 
-    protected String[] getUploadStatus(int queueID) throws IOException {
-        String uri = address + "api/file/status/" + queueID + "/?format=csv";
-        return multipartPost(new LinkedList<Part>(), uri, HttpStatus.SC_OK);
-    }
-
-    protected String[] multipartPost(LinkedList<Part> parts, String URL, int expectedSC) throws IOException {
-        log.debug("Request POST: " + URL);
-        parts.add(new StringPart("token", token));
-
-        PostMethod postRequest = new PostMethod(URL);
-        MultipartRequestEntity multipartRequest = new MultipartRequestEntity(parts.toArray(new Part[parts.size()]), postRequest.getParams());
-        postRequest.setRequestEntity(multipartRequest);
         synchronized (httpClient) {
-            int result = httpClient.executeMethod(postRequest);
-            InputStream respBody = postRequest.getResponseBodyAsStream();
-            if (result != expectedSC) {
-                if (respBody != null) {
-                    saveErrorResponse(respBody);
+            HttpResponse result = httpClient.execute(request);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            HttpEntity entity = result.getEntity();
+            try {
+                entity.writeTo(bos);
+                byte[] bytes = bos.toByteArray();
+                if (bytes == null) {
+                    bytes = "null".getBytes();
                 }
-                throw new HttpException("Request returned not " + expectedSC + " status code: " + result);
-            }
+                String response = new String(bytes);
+                int statusCode = result.getStatusLine().getStatusCode();
 
-            byte[] bytes;
-            if (respBody != null) {
-                bytes = IOUtils.toByteArray(respBody);
-            } else {
-                bytes = new byte[0];
+                if (statusCode != expectedCode) {
+                    notifier.notifyAbout("Response with code " + statusCode + ": " + response);
+                    throw new IOException("API responded with wrong status code: " + statusCode);
+                } else {
+                    log.debug("Response with code " + result + ": " + response);
+                }
+                return JSONSerializer.toJSON(response, new JsonConfig());
+            } finally {
+                request.abort();
+                entity.getContent().close();
             }
-            String response = new String(bytes);
-            return response.trim().split(";");
         }
     }
 
-    private void saveErrorResponse(InputStream respBody) throws IOException {
-        String fname = File.createTempFile("error_", ".html").getAbsolutePath();
-        notifier.notifyAbout("Saving server error response to: " + fname);
-        FileOutputStream fos = new FileOutputStream(fname);
-        FileChannel resultFile = fos.getChannel();
-        resultFile.write(ByteBuffer.wrap(IOUtils.toByteArray(respBody)));
-        resultFile.close();
+    private JSONObject queryObject(HttpRequestBase req, int expectedRC) throws IOException {
+        JSON res = query(req, expectedRC);
+        if (!(res instanceof JSONObject)) {
+            throw new IOException("Unexpected response: " + res);
+        }
+        return (JSONObject) res;
     }
+
+    private HttpPost createPost(String uri, LinkedList<FormBodyPart> partsList) {
+        HttpPost postRequest = new HttpPost(uri);
+        MultipartEntity multipartRequest = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+        for (FormBodyPart part : partsList) {
+            multipartRequest.addPart(part);
+        }
+        postRequest.setEntity(multipartRequest);
+        return postRequest;
+    }
+
+    private HttpPatch createPatch(String url, JSON data) {
+        HttpPatch patch = new HttpPatch(url);
+        patch.setHeader("Content-Type", "application/json");
+
+        String string = data.toString(1);
+        try {
+            patch.setEntity(new StringEntity(string, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+        return patch;
+    }
+
 }

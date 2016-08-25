@@ -98,7 +98,7 @@ public class LoadosophiaAPIClient {
 
         JSONObject res = queryObject(createPost(address + "api/files", partsList), 201);
 
-        int queueID = res.getInt("QueueID");
+        int queueID = Integer.parseInt(res.getString("QueueID"));
         results.setQueueID(queueID);
 
         int testID = getTestByUpload(queueID);
@@ -202,9 +202,10 @@ public class LoadosophiaAPIClient {
 
             JSONObject status = queryObject(new HttpGet(address + "api/files/" + queueID), 200);
 
-            if (status.getInt("status") == STATUS_DONE) {
-                return status.getInt("TestID");
-            } else if (status.getInt("status") == STATUS_ERROR) {
+            int intStatus = Integer.parseInt(status.getString("status"));
+            if (intStatus == STATUS_DONE) {
+                return Integer.parseInt(status.getString("TestID"));
+            } else if (intStatus == STATUS_ERROR) {
                 throw new IOException("File processing finished with error: " + status.getString("UserError"));
             }
         }

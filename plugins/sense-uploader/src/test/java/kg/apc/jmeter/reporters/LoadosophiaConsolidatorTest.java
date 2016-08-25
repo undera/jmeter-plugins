@@ -30,6 +30,10 @@ public class LoadosophiaConsolidatorTest {
         response.add(getFake());
         response.add(getFake());
         response.add(getFake());
+        response.add(getFake());
+        response.add(getFake());
+        response.add(getFake());
+        response.add(getFake());
 
         LoadosophiaConsolidator obj = new ConsolidatorEmul(response);
 

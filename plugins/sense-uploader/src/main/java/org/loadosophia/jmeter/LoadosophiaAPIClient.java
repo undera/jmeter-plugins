@@ -92,11 +92,11 @@ public class LoadosophiaAPIClient {
     }
 
     public LoadosophiaUploadResults sendFiles(File targetFile, LinkedList<String> perfMonFiles) throws IOException {
+        notifier.notifyAbout("Starting upload to BM.Sense");
         LoadosophiaUploadResults results = new LoadosophiaUploadResults();
         LinkedList<FormBodyPart> partsList = getUploadParts(targetFile, perfMonFiles);
 
-        notifier.notifyAbout("Starting upload to BM.Sense");
-        JSONObject res = queryObject(createPost(address + "api/files", partsList), 200);
+        JSONObject res = queryObject(createPost(address + "api/files", partsList), 201);
 
         int queueID = res.getInt("QueueID");
         results.setQueueID(queueID);
@@ -228,36 +228,61 @@ public class LoadosophiaAPIClient {
     }
 
     protected JSON query(HttpRequestBase request, int expectedCode) throws IOException {
+        log.info("Requesting: " + request);
         request.setHeader("Authorization", "Token " + token);
-        log.debug("Requesting: " + request);
 
         HttpParams requestParams = request.getParams();
         requestParams.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, TIMEOUT * 1000);
         requestParams.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, TIMEOUT * 1000);
 
         synchronized (httpClient) {
-            HttpResponse result = httpClient.execute(request);
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            HttpEntity entity = result.getEntity();
+            String response;
             try {
-                entity.writeTo(bos);
-                byte[] bytes = bos.toByteArray();
-                if (bytes == null) {
-                    bytes = "null".getBytes();
-                }
-                String response = new String(bytes);
+                HttpResponse result = httpClient.execute(request);
+
                 int statusCode = result.getStatusLine().getStatusCode();
+
+                response = getResponseEntity(result);
 
                 if (statusCode != expectedCode) {
                     notifier.notifyAbout("Response with code " + statusCode + ": " + response);
                     throw new IOException("API responded with wrong status code: " + statusCode);
                 } else {
-                    log.debug("Response with code " + result + ": " + response);
+                    log.debug("Response: " + response);
                 }
-                return JSONSerializer.toJSON(response, new JsonConfig());
             } finally {
                 request.abort();
-                entity.getContent().close();
+            }
+
+            if (response == null || response.isEmpty()) {
+                return JSONNull.getInstance();
+            } else {
+                return JSONSerializer.toJSON(response, new JsonConfig());
+            }
+        }
+    }
+
+    private String getResponseEntity(HttpResponse result) throws IOException {
+        HttpEntity entity = result.getEntity();
+        if (entity == null) {
+            log.debug("Null response entity");
+            return null;
+        }
+
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            entity.writeTo(bos);
+            byte[] bytes = bos.toByteArray();
+            if (bytes == null) {
+                bytes = "null".getBytes();
+            }
+            String response = new String(bytes);
+            log.debug("Response with code " + result + ": " + response);
+            return response;
+        } finally {
+            InputStream content = entity.getContent();
+            if (content != null) {
+                content.close();
             }
         }
     }

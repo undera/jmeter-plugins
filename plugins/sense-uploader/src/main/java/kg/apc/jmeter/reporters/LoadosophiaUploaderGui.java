@@ -6,22 +6,30 @@ import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 import org.loadosophia.jmeter.LoadosophiaAPIClient;
 
 import javax.swing.*;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
-public class LoadosophiaUploaderGui extends AbstractVisualizer {
-
+public class LoadosophiaUploaderGui extends AbstractVisualizer implements HyperlinkListener { // FIXME: Why Visualizer? We've grownups now!
+    private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String WIKIPAGE = "LoadosophiaUploader";
     private JTextField testTitle;
     private JTextArea uploadToken;
     private JTextField projectKey;
-    private JTextArea infoArea;
+    private JTextPane infoArea;
     private JTextField storeDir;
-    private JComboBox colorFlag;
+    private JComboBox<String> colorFlag;
     private JCheckBox useOnline;
+    private String infoText = "";
 
     public LoadosophiaUploaderGui() {
         super();
@@ -111,7 +119,7 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer {
 
         row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Color Flag: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, row, colorFlag = new JComboBox(LoadosophiaAPIClient.colors));
+        addToPanel(mainPanel, editConstraints, 1, row, colorFlag = new JComboBox<>(LoadosophiaAPIClient.colors));
 
         editConstraints.fill = GridBagConstraints.BOTH;
 
@@ -136,14 +144,21 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer {
 
         row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Info Area: ", JLabel.RIGHT));
-        infoArea = new JTextArea();
+        infoArea = new JTextPane();
         infoArea.setEditable(false);
         infoArea.setOpaque(false);
+        infoArea.setContentType("text/html");
+        infoArea.addHyperlinkListener(this);
 
         GuiBuilderHelper.strechItemToComponent(storeDir, infoArea);
 
+        JScrollPane ret = new JScrollPane();
+        ret.setViewportView(infoArea);
+        addToPanel(mainPanel, editConstraints, 1, row, ret);
 
-        addToPanel(mainPanel, editConstraints, 1, row, GuiBuilderHelper.getTextAreaScrollPaneContainer(infoArea, 10));
+        ret.setMinimumSize(new Dimension(0, 200));
+        ret.setPreferredSize(new Dimension(0, 200));
+        ret.setSize(new Dimension(0, 200));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
@@ -173,11 +188,13 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer {
 
     @Override
     public void clearData() {
+        infoText = "";
         infoArea.setText("");
     }
 
     public void inform(String string) {
-        infoArea.append(string + "\n");
+        infoText += string + "<br/>\n";
+        infoArea.setText(infoText);
     }
 
     private String indexToColor(int selectedIndex) {
@@ -195,5 +212,22 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer {
     @Override
     public void add(SampleResult sample) {
 
+    }
+
+    @Override
+    public void hyperlinkUpdate(HyperlinkEvent e) {
+        if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+            openInBrowser(e.getURL().toString());
+        }
+    }
+
+    public static void openInBrowser(String string) {
+        if (java.awt.Desktop.isDesktopSupported()) {
+            try {
+                java.awt.Desktop.getDesktop().browse(new URI(string));
+            } catch (IOException | URISyntaxException ignored) {
+                log.debug("Failed to open in browser", ignored);
+            }
+        }
     }
 }

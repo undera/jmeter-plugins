@@ -3,35 +3,42 @@ package kg.apc.jmeter.reporters;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class LoadosophiaUploaderGuiTest {
 
-    public LoadosophiaUploaderGuiTest() {
-    }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
+    //@Test
+    public void displayGUI() throws InterruptedException {
+        if (!GraphicsEnvironment.isHeadless()) {
+            LoadosophiaUploaderGui obj = new LoadosophiaUploaderGui();
+            TestElement te = obj.createTestElement();
+            obj.configure(te);
+            obj.clearGui();
+            obj.modifyTestElement(te);
+
+            JFrame frame = new JFrame(obj.getStaticLabel());
+            frame.setPreferredSize(new Dimension(800, 600));
+            frame.getContentPane().add(obj, BorderLayout.CENTER);
+            frame.pack();
+            frame.setVisible(true);
+
+            while (frame.isVisible()) {
+                Thread.sleep(1000);
+            }
+        }
     }
 
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of getStaticLabel method, of class LoadosophiaUploaderGui.
-     */
     @Test
     public void testGetStaticLabel() {
         System.out.println("getStaticLabel");
@@ -40,9 +47,6 @@ public class LoadosophiaUploaderGuiTest {
         Assert.assertTrue(result.length() > 0);
     }
 
-    /**
-     * Test of getLabelResource method, of class LoadosophiaUploaderGui.
-     */
     @Test
     public void testGetLabelResource() {
         System.out.println("getLabelResource");
@@ -51,9 +55,6 @@ public class LoadosophiaUploaderGuiTest {
         Assert.assertTrue(result.length() > 0);
     }
 
-    /**
-     * Test of createTestElement method, of class LoadosophiaUploaderGui.
-     */
     @Test
     public void testCreateTestElement() {
         System.out.println("createTestElement");
@@ -62,9 +63,6 @@ public class LoadosophiaUploaderGuiTest {
         Assert.assertTrue(result instanceof LoadosophiaUploader);
     }
 
-    /**
-     * Test of modifyTestElement method, of class LoadosophiaUploaderGui.
-     */
     @Test
     public void testModifyTestElement() {
         System.out.println("modifyTestElement");
@@ -73,9 +71,6 @@ public class LoadosophiaUploaderGuiTest {
         instance.modifyTestElement(te);
     }
 
-    /**
-     * Test of configure method, of class LoadosophiaUploaderGui.
-     */
     @Test
     public void testConfigure() {
         System.out.println("configure");
@@ -84,9 +79,6 @@ public class LoadosophiaUploaderGuiTest {
         instance.configure(element);
     }
 
-    /**
-     * Test of clearGui method, of class LoadosophiaUploaderGui.
-     */
     @Test
     public void testClearGui() {
         System.out.println("clearGui");
@@ -94,9 +86,6 @@ public class LoadosophiaUploaderGuiTest {
         instance.clearGui();
     }
 
-    /**
-     * Test of add method, of class LoadosophiaUploaderGui.
-     */
     @Test
     public void testAdd() {
         System.out.println("add");
@@ -104,9 +93,6 @@ public class LoadosophiaUploaderGuiTest {
         instance.add((SampleResult) null);
     }
 
-    /**
-     * Test of clearData method, of class LoadosophiaUploaderGui.
-     */
     @Test
     public void testClearData() {
         System.out.println("clearData");
@@ -114,9 +100,6 @@ public class LoadosophiaUploaderGuiTest {
         instance.clearData();
     }
 
-    /**
-     * Test of inform method, of class LoadosophiaUploaderGui.
-     */
     @Test
     public void testInform() {
         System.out.println("inform");
@@ -125,9 +108,6 @@ public class LoadosophiaUploaderGuiTest {
         instance.inform(string);
     }
 
-    /**
-     * Test of isStats method, of class LoadosophiaUploaderGui.
-     */
     @Test
     public void testIsStats() {
         System.out.println("isStats");
@@ -136,9 +116,6 @@ public class LoadosophiaUploaderGuiTest {
         Assert.assertEquals(false, result);
     }
 
-    /**
-     * Test of getFilePanel method, of class LoadosophiaUploaderGui.
-     */
     @Test
     public void testGetFilePanel() {
         System.out.println("getFilePanel");

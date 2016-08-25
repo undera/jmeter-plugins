@@ -42,7 +42,7 @@ public class LoadosophiaConsolidator extends ResultCollector
 
     protected LoadosophiaConsolidator() {
         super();
-        address = JMeterUtils.getPropDefault("loadosophia.address", "https://sense.blazemeter.com/");
+        address = JMeterUtils.getPropDefault("sense.address", "https://sense.blazemeter.com/");
     }
 
     public static LoadosophiaConsolidator getInstance() {
@@ -118,8 +118,8 @@ public class LoadosophiaConsolidator extends ResultCollector
                 }
                 LoadosophiaUploadResults uploadResult = this.apiClient.sendFiles(new File(fileName), monFiles);
                 redirectLink = uploadResult.getRedirectLink();
-                source.informUser("Uploaded successfully, go to results: " + redirectLink);
-            } catch (IOException ex) {
+                source.informUser("<p>Uploaded successfully, go to results: <a href='" + redirectLink + "'>" + redirectLink + "</a></p>");
+            } catch (Throwable ex) {
                 source.informUser("Failed to upload results to BM.Sense, see log for detais: " + ex.getMessage());
                 log.error("Failed to upload results to BM.Sense", ex);
             }
@@ -239,7 +239,8 @@ public class LoadosophiaConsolidator extends ResultCollector
         if (source.isUseOnline()) {
             try {
                 log.info("Starting BM.Sense online test");
-                source.informUser("Started active test: " + apiClient.startOnline());
+                String url = apiClient.startOnline();
+                source.informUser("<p>Started active test: <a href='" + url + "'>" + url + "</a></p>");
                 aggregator = new LoadosophiaAggregator();
                 processingQueue = new LinkedBlockingQueue<>();
                 processorThread = new Thread(this);

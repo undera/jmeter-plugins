@@ -64,7 +64,7 @@ public class LoadosophiaUploader extends ResultCollector implements StatusNotifi
     }
 
     public String getUploadToken() {
-        return getPropertyAsString(UPLOAD_TOKEN);
+        return getPropertyAsString(UPLOAD_TOKEN).trim();
     }
 
     public void setTitle(String prefix) {

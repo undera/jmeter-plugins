@@ -212,7 +212,7 @@ public class LoadosophiaAPIClient {
     }
 
     private void setTestTitleAndColor(int testID, String title, String color) throws IOException {
-        if (title.isEmpty() && color.isEmpty()) {
+        if (title.isEmpty() && (color.isEmpty() || color.equals(COLOR_NONE)) ) {
             return;
         }
 

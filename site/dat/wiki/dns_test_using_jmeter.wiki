@@ -350,5 +350,5 @@ usual places.
 == Links ==
 
   * [https://groups.google.com/forum/#!topic/jmeter-plugins/QfI0AcCeFF8 Discuss this article]
-  * [http://jmeter-plugins.googlecode.com/svn-history/trunk/examples/DNS_Test_Example.jmx Download Final Test Plan]
+  * [http://jmeter-plugins.org/img/examples/DNS_Test_Example.jmx Download Final Test Plan]
   * [http://jmeter-plugins.org/ JP@GC Plugins Set - Project Page]

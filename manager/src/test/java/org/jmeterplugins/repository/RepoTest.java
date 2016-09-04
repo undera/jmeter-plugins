@@ -57,8 +57,6 @@ public class RepoTest {
                 if (vers.getJSONObject("").isEmpty()) {
                     merged.add(spec);
                 }
-
-                break; // FIXME
             }
         }
 

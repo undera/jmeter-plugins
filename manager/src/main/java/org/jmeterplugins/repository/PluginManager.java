@@ -3,6 +3,7 @@ package org.jmeterplugins.repository;
 
 import net.sf.json.*;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -35,7 +36,7 @@ public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private int timeout = 1000; // don't delay JMeter startup for more than 1 second
     protected AbstractHttpClient httpClient = new DefaultHttpClient();
-    private final static String address = JMeterUtils.getPropDefault("jpgc.repo.address", System.getProperty("jpgc.repo.address", "https://jmeter-plugins.org"));
+    private final String address = JMeterUtils.getPropDefault("jpgc.repo.address", System.getProperty("jpgc.repo.address", "https://jmeter-plugins.org/repo/"));
     protected Map<Plugin, Boolean> allPlugins = new HashMap<>();
     private static PluginManager staticManager = new PluginManager();
     private boolean doRestart = true;
@@ -81,7 +82,14 @@ public class PluginManager {
             return;
         }
 
-        JSON json = getJSON("/repo/?installID=" + getInstallID());
+        JSON json;
+        File jsonFile = new File(address);
+        if (jsonFile.isFile()) {
+            json = JSONSerializer.toJSON(FileUtils.readFileToString(jsonFile), new JsonConfig());
+        } else {
+            json = getJSON("?installID=" + getInstallID());
+        }
+
         if (!(json instanceof JSONArray)) {
             throw new RuntimeException("Result is not array");
         }
@@ -110,7 +118,7 @@ public class PluginManager {
             }
         }
 
-        if (JMeterUtils.getPropDefault("jpgc.repo.sendstats", "true").equals("true")) {
+        if (!jsonFile.isFile() && JMeterUtils.getPropDefault("jpgc.repo.sendstats", "true").equals("true")) {
             try {
                 reportStats();
             } catch (Exception e) {
@@ -251,7 +259,7 @@ public class PluginManager {
     }
 
     private void reportStats() throws IOException {
-        String uri = address + "/repo/";
+        String uri = address;
         HttpPost post = new HttpPost(uri);
         HttpEntity body = new StringEntity("stats=" + URLEncoder.encode(getUsageStats(), "UTF-8"));
         post.setEntity(body);

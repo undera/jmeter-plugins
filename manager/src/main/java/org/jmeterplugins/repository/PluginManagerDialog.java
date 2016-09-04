@@ -16,7 +16,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 
 public class PluginManagerDialog extends JDialog implements ActionListener, ComponentListener {
@@ -84,7 +83,6 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
                 }
             }
         };
-
 
         installed = new PluginsList(manager.getInstalledPlugins(), cbNotifier, statusRefresh);
         available = new PluginsList(manager.getAvailablePlugins(), cbNotifier, statusRefresh);

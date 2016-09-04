@@ -42,6 +42,10 @@ cp manager/target/jmeter-plugins-manager-*.jar upload/files/nightly/
 PAT="s/.jar/_$REV.jar/"
 rename $PAT upload/files/nightly/*
 
+cd manager/target/jpgc-repo
+zip -vr upload/files/nightly/self-containing.zip .
+cd ../../../
+
 # examples
 cp -r examples upload/img/
 

@@ -115,7 +115,7 @@ public class Plugin {
         }
     }
 
-    private boolean isVersionFrozenToJMeter() {
+    public boolean isVersionFrozenToJMeter() {
         return versions.containsKey("");
     }
 

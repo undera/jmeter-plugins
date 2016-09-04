@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public class RepoTest {
     private File repo = new File(System.getProperty("project.build.directory", "target") + s + "jpgc-repo");
     private File lib = new File(repo.getAbsolutePath() + s + "lib");
     private File libExt = new File(lib.getAbsolutePath() + s + "ext");
+    private JARSource jarSource = new JARSourceHTTP("https://jmeter-plugins.org/repo/");
 
     public RepoTest() {
         try {
@@ -92,13 +92,14 @@ public class RepoTest {
         try {
             System.out.println("Checking plugin: " + plugin);
             plugin.setCandidateVersion(maxVersion);
-            plugin.download(new JARSourceHTTP("https://jmeter-plugins.org/repo/"), dummy);
+            plugin.download(jarSource, dummy);
 
-            File jar = new File(plugin.getTempName());
-            File dest = new File(plugin.getDestName());
-            File to = new File(libExt.getAbsolutePath() + File.separator + dest.getName());
-            jar.renameTo(to);
-            if (!maxVerObject.isEmpty()) {
+            if (!plugin.isVersionFrozenToJMeter()) {
+                File jar = new File(plugin.getTempName());
+                File dest = new File(plugin.getDestName());
+                File to = new File(libExt.getAbsolutePath() + File.separator + dest.getName());
+                jar.renameTo(to);
+
                 maxVerObject.put("downloadUrl", "lib/ext/" + dest.getName());
             }
         } catch (Throwable e) {
@@ -120,10 +121,9 @@ public class RepoTest {
         for (String id : libs.keySet()) {
             if (!cache.containsKey(libs.get(id))) {
                 try {
-                    Downloader dwn = new Downloader(dummy);
-                    String file = dwn.download(id, new URI(libs.get(id)));
+                    JARSource.DownloadResult dwn = jarSource.getJAR(id, libs.get(id), dummy);
 
-                    File jar = new File(file);
+                    File jar = new File(dwn.getTmpFile());
                     File dest = new File(lib.getAbsolutePath() + File.separator + dwn.getFilename());
                     jar.renameTo(dest);
 

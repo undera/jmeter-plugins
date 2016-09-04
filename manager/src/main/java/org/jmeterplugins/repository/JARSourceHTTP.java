@@ -4,27 +4,30 @@ import net.sf.json.JSON;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
+import org.apache.http.*;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.NTCredentials;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.ExecutionContext;
+import org.apache.http.protocol.HttpContext;
 import org.apache.jmeter.JMeter;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,7 +106,11 @@ public class JARSourceHTTP extends JARSource {
             return JSONSerializer.toJSON(response, new JsonConfig());
         } finally {
             get.abort();
-            entity.getContent().close();
+            try {
+                entity.getContent().close();
+            } catch (IOException | IllegalStateException e) {
+                log.warn("Exception in finalizing request", e);
+            }
         }
     }
 
@@ -145,10 +152,47 @@ public class JARSourceHTTP extends JARSource {
     }
 
     @Override
-    public DownloadResult getJAR(String id, String location, GenericCallback<String> statusChanged) throws IOException {
-        final Downloader dwn = new Downloader(statusChanged);
-        String tmpFile = dwn.download(id, URI.create(location));
-        return new DownloadResult(tmpFile, dwn.getFilename());
+    public DownloadResult getJAR(final String id, String location, final GenericCallback<String> callback) throws IOException {
+        URI url = URI.create(location);
+        log.info("Downloading: " + url);
+        callback.notify("Downloading " + id + "...");
+        HttpGet httpget = new HttpGet(url);
+
+        HttpContext context = new BasicHttpContext();
+        HttpResponse response = httpClient.execute(httpget, context);
+        if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+            throw new IOException(response.getStatusLine().toString());
+        }
+
+        HttpEntity entity = response.getEntity();
+
+        File tempFile = File.createTempFile(id, ".jar");
+
+        final long size = entity.getContentLength();
+
+        InputStream inputStream = entity.getContent();
+        OutputStream outputStream = new FileOutputStream(tempFile);
+        copyLarge(inputStream, outputStream, new GenericCallback<Long>() {
+            @Override
+            public void notify(Long progress) {
+                callback.notify(String.format("Downloading %s: %d%%", id, 100 * progress / size));
+            }
+        });
+        outputStream.close();
+        callback.notify("Downloaded " + id + "...");
+
+        Header cd = response.getLastHeader("Content-Disposition");
+        String filename;
+        if (cd != null) {
+            filename = cd.getValue().split(";")[1].split("=")[1];
+        } else {
+            HttpUriRequest currentReq = (HttpUriRequest) context.getAttribute(ExecutionContext.HTTP_REQUEST);
+            HttpHost currentHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+            String currentUrl = (currentReq.getURI().isAbsolute()) ? currentReq.getURI().toString() : (currentHost.toURI() + currentReq.getURI());
+            filename = FilenameUtils.getName(currentUrl);
+        }
+
+        return new DownloadResult(tempFile.getPath(), filename);
     }
 
     @Override
@@ -168,5 +212,18 @@ public class JARSourceHTTP extends JARSource {
         log.debug("Requesting " + uri);
         httpClient.execute(post);
         post.abort();
+    }
+
+    private long copyLarge(InputStream input, OutputStream output, GenericCallback<Long> progressCallback) throws IOException {
+        byte[] buffer = new byte[4096];
+        long count = 0L;
+
+        int n;
+        for (; -1 != (n = input.read(buffer)); count += (long) n) {
+            output.write(buffer, 0, n);
+            progressCallback.notify(count);
+        }
+
+        return count;
     }
 }

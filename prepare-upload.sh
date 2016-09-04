@@ -43,7 +43,7 @@ PAT="s/.jar/_$REV.jar/"
 rename $PAT upload/files/nightly/*
 
 cd manager/target/jpgc-repo
-zip -vr upload/files/nightly/self-containing.zip .
+zip -vr ../../../upload/files/nightly/self-containing.zip .
 cd ../../../
 
 # examples

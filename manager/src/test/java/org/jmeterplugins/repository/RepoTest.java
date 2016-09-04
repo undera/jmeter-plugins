@@ -2,6 +2,7 @@ package org.jmeterplugins.repository;
 
 import junit.framework.AssertionFailedError;
 import net.sf.json.*;
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 import java.io.File;
@@ -13,6 +14,18 @@ import java.util.*;
 
 public class RepoTest {
     private final Set<String> cache = new HashSet<>();
+    private String s = File.separator;
+    private File lib = new File(System.getProperty("project.build.directory", "target") + s + "jars" + s + "lib");
+    private File libExt = new File(lib.getAbsolutePath() + s + "ext");
+
+    public RepoTest() {
+        try {
+            FileUtils.deleteDirectory(lib);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        libExt.mkdirs();
+    }
 
     @Test
     public void testAll() throws IOException {
@@ -21,7 +34,7 @@ public class RepoTest {
             System.out.println("Not running test inside Travis CI");
             return;
         }
-        
+
         List<String> problems = new ArrayList<>();
         String path = getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
         String up = File.separator + "..";
@@ -53,6 +66,11 @@ public class RepoTest {
             System.out.println("Checking plugin: " + plugin);
             plugin.setCandidateVersion(plugin.getMaxVersion());
             plugin.download(dummy);
+
+            File jar = new File(plugin.getTempName());
+            File dest = new File(plugin.getDestName());
+            File to = new File(libExt.getAbsolutePath() + File.separator + dest.getName());
+            jar.renameTo(to);
         } catch (Throwable e) {
             problems.add(f.getName() + ":" + plugin);
             System.err.println("Problem with " + plugin);
@@ -64,7 +82,12 @@ public class RepoTest {
             if (!cache.contains(libs.get(id))) {
                 try {
                     Downloader dwn = new Downloader(dummy);
-                    dwn.download(id, new URI(libs.get(id)));
+                    String file = dwn.download(id, new URI(libs.get(id)));
+
+                    File jar = new File(file);
+                    File dest = new File(lib.getAbsolutePath() + File.separator + dwn.getFilename());
+                    jar.renameTo(dest);
+
                     cache.add(libs.get(id));
                 } catch (Throwable e) {
                     problems.add(f.getName() + ":" + plugin + ":" + id);

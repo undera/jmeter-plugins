@@ -15,12 +15,14 @@ public class PluginManagerDialogTest {
     }
 
     @Test
-    public void displayGUI() throws InterruptedException {
+    public void displayGUI() throws Throwable {
         if (!GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance()) {
-            //JMeterUtils.setProperty("jpgc.repo.address", "http://localhost:80");
+            JMeterUtils.setProperty("jpgc.repo.address", "/home/undera/Sources/JMeter/jmeter-plugins/target/jpgc-repo/all.json");
             System.setProperty("http.proxyHost", "localhost");
             System.setProperty("http.proxyPort", "81");
-            PluginManagerDialog frame = new PluginManagerDialog(new PluginManager());
+            PluginManager aManager = new PluginManager();
+            aManager.load();
+            PluginManagerDialog frame = new PluginManagerDialog(aManager);
 
             frame.setPreferredSize(new Dimension(800, 600));
             frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
@@ -29,6 +31,7 @@ public class PluginManagerDialogTest {
             while (frame.isVisible()) {
                 Thread.sleep(1000);
             }
+            JMeterUtils.setProperty("jpgc.repo.address", null);
         }
     }
 }

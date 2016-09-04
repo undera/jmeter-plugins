@@ -10,14 +10,6 @@ import static org.junit.Assert.*;
 
 public class PluginManagerTest {
     @Test
-    public void testInstallID() throws Exception {
-        PluginManager obj = new PluginManager();
-        assertEquals(32, obj.getInstallID().length());
-        String res = obj.getUsageStats();
-        assertNotNull(res);
-    }
-
-    @Test
     public void testResolve() throws IOException {
         Plugin[] init = new Plugin[]{};
         PluginManager obj = new PluginManagerEmul(init);
@@ -64,7 +56,7 @@ public class PluginManagerTest {
         }
 
         @Override
-        public String getUsageStats() {
+        public String[] getUsageStats() {
             return super.getUsageStats();
         }
     }

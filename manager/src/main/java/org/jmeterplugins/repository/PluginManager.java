@@ -12,7 +12,7 @@ import org.apache.log.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.*;
+import java.net.URLDecoder;
 import java.nio.file.AccessDeniedException;
 import java.util.*;
 
@@ -24,12 +24,13 @@ public class PluginManager {
     private boolean doRestart = true;
 
     public PluginManager() {
-        String address = System.getProperty("jpgc.repo.address", "https://jmeter-plugins.org/repo/");
-        File jsonFile = new File(address);
+        String sysProp = System.getProperty("jpgc.repo.address", "https://jmeter-plugins.org/repo/");
+        String jmProp = JMeterUtils.getPropDefault("jpgc.repo.address", sysProp);
+        File jsonFile = new File(jmProp);
         if (jsonFile.isFile()) {
             jarSource = new JARSourceFilesystem(jsonFile);
         } else {
-            jarSource = new JARSourceHTTP(address);
+            jarSource = new JARSourceHTTP(jmProp);
         }
     }
 
@@ -129,11 +130,10 @@ public class PluginManager {
         Map<String, String> libInstalls = new HashMap<>();
 
         for (Map.Entry<String, String> entry : resolver.getLibAdditions().entrySet()) {
-            Downloader dwn = new Downloader(statusChanged);
             try {
-                String tmpFile = dwn.download(entry.getKey(), new URI(entry.getValue()));
-                libInstalls.put(tmpFile, dwn.getFilename());
-            } catch (Exception e) {
+                JARSource.DownloadResult dwn = jarSource.getJAR(entry.getKey(), entry.getValue(), statusChanged);
+                libInstalls.put(dwn.getTmpFile(), dwn.getFilename());
+            } catch (Throwable e) {
                 String msg = "Failed to download " + entry.getKey();
                 log.error(msg, e);
                 statusChanged.notify(msg);
@@ -143,7 +143,7 @@ public class PluginManager {
 
         for (Plugin plugin : additions) {
             try {
-                plugin.download(statusChanged);
+                plugin.download(jarSource, statusChanged);
             } catch (IOException e) {
                 String msg = "Failed to download " + plugin;
                 log.error(msg, e);

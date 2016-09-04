@@ -11,7 +11,6 @@ import org.apache.log.Logger;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -228,7 +227,7 @@ public class Plugin {
         return installedPath != null;
     }
 
-    public void download(GenericCallback<String> notify) throws IOException {
+    public void download(JARSource jarSource, GenericCallback<String> notify) throws IOException {
         if (isVirtual()) {
             log.debug("Virtual set, won't download: " + this);
             return;
@@ -236,19 +235,19 @@ public class Plugin {
 
         String version = getCandidateVersion();
 
-        URI url;
+        String location;
         if (isVersionFrozenToJMeter()) {
             String downloadUrl = versions.getJSONObject("").getString("downloadUrl");
-            url = URI.create(String.format(downloadUrl, getJMeterVersion()));
+            location = String.format(downloadUrl, getJMeterVersion());
         } else {
             if (!versions.containsKey(version)) {
                 throw new IllegalArgumentException("Version " + version + " not found for plugin " + this);
             }
-            url = URI.create(versions.getJSONObject(version).getString("downloadUrl"));
+            location = versions.getJSONObject(version).getString("downloadUrl");
         }
 
-        Downloader dwn = new Downloader(notify);
-        tempName = dwn.download(id, url);
+        JARSource.DownloadResult dwn = jarSource.getJAR(id, location, notify);
+        tempName = dwn.getTmpFile();
         File f = new File(JMeterEngine.class.getProtectionDomain().getCodeSource().getLocation().getFile());
         destName = URLDecoder.decode(f.getParent(), "UTF-8") + File.separator + dwn.getFilename();
     }

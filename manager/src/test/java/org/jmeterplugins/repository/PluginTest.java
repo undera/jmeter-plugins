@@ -51,7 +51,7 @@ public class PluginTest {
         obj.detectInstalled(others);
         assertTrue(obj.isInstalled());
 
-        obj.download(new GenericCallback<String>() {
+        obj.download(new JARSourceEmul(), new GenericCallback<String>() {
             @Override
             public void notify(String s) {
             }

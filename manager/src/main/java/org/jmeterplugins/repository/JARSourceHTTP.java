@@ -145,6 +145,13 @@ public class JARSourceHTTP extends JARSource {
     }
 
     @Override
+    public DownloadResult getJAR(String id, String location, GenericCallback<String> statusChanged) throws IOException {
+        final Downloader dwn = new Downloader(statusChanged);
+        String tmpFile = dwn.download(id, URI.create(location));
+        return new DownloadResult(tmpFile, dwn.getFilename());
+    }
+
+    @Override
     public void reportStats(String[] usageStats) throws IOException {
         ArrayList<String> stats = new ArrayList<>();
         stats.add(getInstallID());

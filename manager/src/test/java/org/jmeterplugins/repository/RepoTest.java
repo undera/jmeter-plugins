@@ -52,11 +52,7 @@ public class RepoTest {
             for (Object item : list) {
                 JSONObject spec = (JSONObject) item;
                 checkPlugin(problems, repoFile, spec);
-
-                JSONObject vers = spec.getJSONObject("versions");
-                if (vers.getJSONObject("").isEmpty()) {
-                    merged.add(spec);
-                }
+                merged.add(spec);
             }
         }
 
@@ -96,7 +92,7 @@ public class RepoTest {
         try {
             System.out.println("Checking plugin: " + plugin);
             plugin.setCandidateVersion(maxVersion);
-            plugin.download(dummy);
+            plugin.download(new JARSourceHTTP("https://jmeter-plugins.org/repo/"), dummy);
 
             File jar = new File(plugin.getTempName());
             File dest = new File(plugin.getDestName());

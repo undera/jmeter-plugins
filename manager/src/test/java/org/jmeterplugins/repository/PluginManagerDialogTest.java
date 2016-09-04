@@ -17,7 +17,7 @@ public class PluginManagerDialogTest {
     @Test
     public void displayGUI() throws Throwable {
         if (!GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance()) {
-            JMeterUtils.setProperty("jpgc.repo.address", "/home/undera/Sources/JMeter/jmeter-plugins/target/jpgc-repo/all.json");
+            JMeterUtils.setProperty("jpgc.repo.address", "/home/undera/Sources/JMeter/jmeter-plugins/manager/target/jpgc-repo/all.json");
             System.setProperty("http.proxyHost", "localhost");
             System.setProperty("http.proxyPort", "81");
             PluginManager aManager = new PluginManager();

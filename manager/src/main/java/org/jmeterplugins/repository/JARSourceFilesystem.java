@@ -13,10 +13,12 @@ import java.io.IOException;
 
 public class JARSourceFilesystem extends JARSource {
     private static final Logger log = LoggingManager.getLoggerForClass();
+    private final File base;
     private File jsonFile;
 
     public JARSourceFilesystem(File jsonFile) {
         this.jsonFile = jsonFile;
+        this.base = jsonFile.getParentFile();
     }
 
     @Override
@@ -32,5 +34,13 @@ public class JARSourceFilesystem extends JARSource {
     @Override
     public void setTimeout(int timeout) {
         log.debug("Filesystem does not care of timeout");
+    }
+
+    @Override
+    public DownloadResult getJAR(String id, String location, GenericCallback<String> statusChanged) throws IOException {
+        File orig = new File(base.getAbsolutePath() + File.separator + location);
+        File tmp = File.createTempFile("jpgc-", ".jar");
+        FileUtils.copyFile(orig, tmp);
+        return new DownloadResult(tmp.getAbsolutePath(), orig.getName());
     }
 }

@@ -11,10 +11,13 @@ import java.io.PrintWriter;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RepoTest {
-    private final Set<String> cache = new HashSet<>();
+    private final Map<String, String> cache = new HashMap<>();
     private String s = File.separator;
     private File repo = new File(System.getProperty("project.build.directory", "target") + s + "jpgc-repo");
     private File lib = new File(repo.getAbsolutePath() + s + "lib");
@@ -110,7 +113,7 @@ public class RepoTest {
             e.printStackTrace(System.err);
         }
 
-        checkLibs(problems, repoFile, plugin);
+        checkLibs(problems, repoFile, plugin, maxVerObject);
 
         if (!maxVerObject.isEmpty()) {
             newVersions.put(maxVersion, maxVerObject);
@@ -118,10 +121,10 @@ public class RepoTest {
         }
     }
 
-    private void checkLibs(List<String> problems, File repoFile, Plugin plugin) {
+    private void checkLibs(List<String> problems, File repoFile, Plugin plugin, JSONObject maxVerObject) {
         Map<String, String> libs = plugin.getLibs(plugin.getCandidateVersion());
         for (String id : libs.keySet()) {
-            if (!cache.contains(libs.get(id))) {
+            if (!cache.containsKey(libs.get(id))) {
                 try {
                     Downloader dwn = new Downloader(dummy);
                     String file = dwn.download(id, new URI(libs.get(id)));
@@ -130,13 +133,15 @@ public class RepoTest {
                     File dest = new File(lib.getAbsolutePath() + File.separator + dwn.getFilename());
                     jar.renameTo(dest);
 
-                    cache.add(libs.get(id));
+                    cache.put(libs.get(id), dwn.getFilename());
                 } catch (Throwable e) {
                     problems.add(repoFile.getName() + ":" + plugin + ":" + id);
                     System.err.println("Problem with " + id);
                     e.printStackTrace(System.err);
                 }
             }
+
+            maxVerObject.getJSONObject("libs").put(id, "lib/" + cache.get(libs.get(id)));
         }
     }
 

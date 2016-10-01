@@ -222,7 +222,7 @@ public class LoadosophiaAPIClient {
         }
 
         if (!title.isEmpty()) {
-            data.put("color", title);
+            data.put("colorFlag", title);
         }
 
         query(createPatch(address + "api/tests/" + testID, data), 200);

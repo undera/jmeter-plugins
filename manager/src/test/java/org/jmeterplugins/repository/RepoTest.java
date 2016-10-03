@@ -31,8 +31,7 @@ public class RepoTest {
         }
         libExt.mkdirs();
     }
-
-    @Test
+    
     public void testAll() throws IOException {
         Map<String, String> env = System.getenv();
         if (env.containsKey("TRAVIS")) {

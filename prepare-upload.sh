@@ -23,10 +23,6 @@ for D in `ls` ; do
     fi
 done
 
-cd manager/target/jpgc-repo
-zip -vr ../../../upload/files/nightly/jmeter-plugins-all.zip .
-cd ../../../
-
 cp manager/target/jmeter-plugins-manager-*.jar upload/files/nightly/
 
 rename "s/.jar/_$REV.jar/" upload/files/nightly/*.jar

@@ -18,8 +18,7 @@ dest_dir = os.path.join(base_dir, "site", "files", "packages")
 
 
 def is_version_packed(fname):
-    resp = requests.head("https://jmeter-plugins.org/files/packages/%s" % fname)  # FIXME
-    logging.debug("%s %s %s", resp.status_code, resp.text, resp.headers)
+    resp = requests.head("https://jmeter-plugins.org/files/packages/%s" % fname)
     resp.close()
     return resp.status_code == 200
 
@@ -82,6 +81,8 @@ if __name__ == "__main__":
 
     for plugin in plugins:
         logging.debug("Processing plugin: %s", plugin['id'])
+        if plugin['id'] == 'jpgc-plugins-manager':
+            continue
 
         for version in plugin['versions']:
             logging.debug("Version: %s", version)

@@ -1,7 +1,3 @@
-# TODO: add dependency info to catalogue
-# TODO: add instruction on downloading into pmgr doc page
-# TODO: add link to catalogue search to every doc page
-
 import json
 import logging
 import os

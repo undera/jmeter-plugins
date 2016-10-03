@@ -1,4 +1,6 @@
-= Redis Data Set <sup><font color=gray size="1">since 1.1.3</font></sup>=
+= Redis Data Set =
+
+<span class=''>[/?search=jpgc-redis <i class='fa fa-download'></i> Download]</span>
 
 == Description ==
 

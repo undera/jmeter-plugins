@@ -1,4 +1,6 @@
 = BlazeMeter's XMPP Set =
+<span class=''>[/?search=jpgc-xmpp <i class='fa fa-download'></i> Download]</span>
+
 <span class="pull-right" style="margin-left: 1em">
 [http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki https://d3qmoqvtroy6p7.cloudfront.net/logo.png]
 </span>

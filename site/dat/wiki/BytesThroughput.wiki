@@ -1,4 +1,6 @@
-= Bytes Throughput Over Time <sup><font color=gray size="1">since 0.4.0</font></sup>=
+= Bytes Throughput Over Time =
+
+<span class=''>[/?search=jpgc-graphs-additional <i class='fa fa-download'></i> Download]</span>
 
 This graph will display the amount of bytes sent and received by JMeter during the load test.
 

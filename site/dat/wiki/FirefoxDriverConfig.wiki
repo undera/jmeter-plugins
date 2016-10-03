@@ -1,4 +1,6 @@
-= Firefox Driver Config<sup><font color=gray size="1">since 1.1.0</font></sup>=
+= Firefox Driver Config=
+
+<span class=''>[/?search=jpgc-webdriver <i class='fa fa-download'></i> Download]</span>
 
 == Introduction ==
 Add this configuration to enable browser based performance testing using Firefox.  This document covers the various configuration options available on the Firefox browser.  For an overview of performing client sider performance testing, refer to the [WebDriverTutorial Web Driver Tutorial].  

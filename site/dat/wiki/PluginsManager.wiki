@@ -37,7 +37,7 @@ Plugins Manager respects JMeter's [http://jmeter.apache.org/usermanual/get-start
 JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080" jmeter\bin\jmeter.bat
 }}}
 
-If you need proxy username/password, specify them with two additional properties {{{https.proxyUsername}}} and {{{https.proxyPassword}}} like this:
+If you need proxy username/password, specify them with two additional properties {{{http.proxyUser}}} and {{{http.proxyPass}}} like this:
 
 {{{
 JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080 -Dhttp.proxyUser=john -Dhttp.proxyPass=***" jmeter\bin\jmeter.bat

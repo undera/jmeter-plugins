@@ -1,4 +1,6 @@
-= Merge Results <sup><font color=gray size="1">since 1.2.0</font></sup>=
+= Merge Results =
+
+<span class=''>[/?search=jpgc-mergeresults <i class='fa fa-download'></i> Download]</span>
 
 Merge Results is a tool to merge files of results (to simplify the comparison of two or more load tests). It requires both Standard Set and Extras Set to be installed.
 

@@ -1,4 +1,7 @@
-= Filter Results Tool <sup><font color=gray size="1">since 1.4.0</font></sup>=
+= Filter Results Tool =
+
+<span class=''>[/?search=jpgc-filterresults <i class='fa fa-download'></i> Download]</span>
+
 
 Often it's necessary to filter the results of a test to obtain a global vision with pages without all the urls that are declared in the html page.
 

@@ -1,4 +1,6 @@
-= Console Status Logger <sup><font color=gray size="1">since 0.4.1</font></sup>=
+= Console Status Logger =
+
+<span class=''>[/?search=jpgc-csl <i class='fa fa-download'></i> Download]</span>
 
 
 This is simple listener plugin that prints short summary log to console while JMeter running in non-GUI mode.

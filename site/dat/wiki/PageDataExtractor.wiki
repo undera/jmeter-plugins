@@ -1,4 +1,6 @@
-= Page Data Extractor <sup><font color=gray size="1">since 0.5.3</font></sup>=
+= Page Data Extractor =
+
+<span class=''>[/?search=jpgc-pde <i class='fa fa-download'></i> Download]</span>
 
 This graph will plot data extracted from page results (status, health pages, etc.).<BR>
 It uses regular expressions to get key/value pairs.

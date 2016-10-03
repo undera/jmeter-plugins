@@ -1,4 +1,5 @@
-= XMPP Sampler <sup><font color=gray size="1">since 1.4.0</font></sup>=
+= XMPP Sampler =
+<span class=''>[/?search=jpgc-xmpp <i class='fa fa-download'></i> Download]</span>
 
 == Authorship ==
 <span class="pull-right" style="margin-left: 1em">

@@ -1,4 +1,6 @@
-= Inter-Thread Communication <sup><font color=gray size="1">since 0.5.2</font></sup>=
+= Inter-Thread Communication =
+
+<span class=''>[/?search=jpgc-fifo <i class='fa fa-download'></i> Download]</span>
 
 JP@GC offers global string queues for inter-thread communication. These queues
 work in First-In-First-Out manner. You can put a string value into a queue from one thread,

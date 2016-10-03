@@ -1,4 +1,6 @@
-= Graphs Generator Listener <sup><font color=gray size="1">since 1.1.3</font></sup>=
+= Graphs Generator Listener =
+
+<span class=''>[/?search=jpgc-ggl <i class='fa fa-download'></i> Download]</span>
 
 == Description ==
 Graphs Generator Listener generates the following graphs at end of test:

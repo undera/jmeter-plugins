@@ -1,4 +1,6 @@
-= AutoStop <sup><font color=gray size="1">since 0.4.1</font></sup>=
+= AutoStop =
+
+<span class=''>[/?search=jpgc-autostop <i class='fa fa-download'></i> Download]</span>
 
 AutoStop used when you want to stop test on some runtime criteria.
 Currently 3 criteria available: average response time, average latency and error rate.

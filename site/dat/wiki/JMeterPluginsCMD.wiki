@@ -1,4 +1,6 @@
-= JMeterPluginsCMD Command Line Tool <sup><font color=gray size="1">since 0.4.1</font></sup>=
+= JMeterPluginsCMD Command Line Tool =
+
+<span class=''>[/?search=jpgc-cmd <i class='fa fa-download'></i> Download]</span>
 
 There is small command-line utility for generating graphs out of JTL files. It behave just like right-click context menu on all graphs. The tool can generate PNG, CSV or both.
 Note you can use [GraphsGeneratorListener] if you want to bulk generate graphs after a test or for existing results.

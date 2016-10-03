@@ -1,4 +1,6 @@
-= HTTP Raw Request <sup><font color=gray size="1">since 0.4.1</font></sup>=
+= HTTP Raw Request =
+
+<span class=''>[/?search=jpgc-httpraw <i class='fa fa-download'></i> Download]</span>
 
 == Weak points of original HTTP Request ==
 JMeter's original [http://jmeter.apache.org/usermanual/component_reference.html#HTTP_Request HTTP Request]

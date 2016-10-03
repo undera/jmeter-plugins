@@ -1,4 +1,6 @@
-= Remote Driver Config<sup><font color=gray size="1">since 1.2.1</font></sup>=
+= Remote Driver Config =
+
+<span class=''>[/?search=jpgc-webdriver <i class='fa fa-download'></i> Download]</span>
 
 == Introduction ==
 Add this configuration to enable browser based performance testing using a Remote Selenium Grid.  This document covers the various configuration options available on the Remote browser from a Selenium Grid.  For an overview of performing client sider performance testing, refer to the [WebDriverTutorial Web Driver Tutorial].  

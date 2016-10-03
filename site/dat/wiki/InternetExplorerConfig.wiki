@@ -1,4 +1,6 @@
-= InternetExplorer Driver Config<sup><font color=gray size="1">since 1.1.0</font></sup>=
+= InternetExplorer Driver Config =
+
+<span class=''>[/?search=jpgc-webdriver <i class='fa fa-download'></i> Download]</span>
 
 == Introduction ==
 Add this configuration to enable browser based performance testing using InternetExplorer.  This document covers the various configuration options available on the InternetExplorer browser.  For an overview of performing client sider performance testing, refer to the [WebDriverTutorial Web Driver Tutorial].

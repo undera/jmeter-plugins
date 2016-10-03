@@ -1,4 +1,7 @@
-= Connect Times Over Time <sup><font color=gray size="1">since 1.3.1</font></sup>=
+= Connect Times Over Time =
+
+<span class=''>[/?search=jpgc-graphs-additional <i class='fa fa-download'></i> Download]</span>
+
 
 This graph will display the average time to establish connection during the load test. Note that this metric became available since
 JMeter 2.13.

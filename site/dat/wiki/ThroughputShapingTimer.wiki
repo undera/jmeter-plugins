@@ -1,4 +1,6 @@
-= Throughput Shaping Timer <sup><font color=gray size="1">since 0.4.1</font></sup>=
+= Throughput Shaping Timer =
+
+<span class=''>[/?search=jpgc-tst <i class='fa fa-download'></i> Download]</span>
 
 Long time JMeter users had to try their tests on and on,
 finding exact number of threads and timer delays

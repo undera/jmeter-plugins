@@ -1,4 +1,6 @@
-= Composite Graph <sup><font color=gray size="1">since 0.4.0</font></sup>=
+= Composite Graph =
+
+<span class=''>[/?search=jpgc-graphs-composite <i class='fa fa-download'></i> Download]</span>
 
 This graph will allow you to pick any row from any other graph of your test plan
 and compose a new one with them. This is very useful to see the correlation

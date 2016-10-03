@@ -1,4 +1,6 @@
-= Ultimate Thread Group <sup><font color=gray size="1">since 0.2.1</font></sup>=
+= Ultimate Thread Group =
+
+<span class=''>[/?search=jpgc-casutg <i class='fa fa-download'></i> Download]</span>
 
 "Ultimate" means there will be no need in further Thread Group plugins. The features that everyone needed in JMeter and they finally available:
   * infinite number of schedule records

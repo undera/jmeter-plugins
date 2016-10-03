@@ -1,4 +1,6 @@
-<font size="5"><B>Servers Performance Monitoring</B><sup><font color=gray size="1">since 0.3.0</font></sup></font>
+<font size="5"><B>Servers Performance Monitoring</B></font>
+
+<span class=''>[/?search=jpgc-perfmon <i class='fa fa-download'></i> Download]</span>
 
 =Introduction=
 

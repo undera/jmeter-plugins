@@ -1,8 +1,0 @@
-= Hadoop Set =
-Hadoop/HBase testing plugins.
-  * [HBaseConnection HBase Connection Config]
-  * [HDFSOperations HDFS Operations]
-  * [HadoopJobTracker Hadoop Job Tracker Sampler]
-  * [HBaseCRUDSampler HBase CRUD Sampler]
-  * [HBaseScanSampler HBase Scan Sampler]
-  * [HBaseRowkeySampler HBase Rowkey Sampler]

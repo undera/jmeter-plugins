@@ -1,4 +1,6 @@
-= Active Threads Over Time Listener <sup><font color=gray size="1">since 0.1.0</font></sup>=
+= Active Threads Over Time Listener =
+<span class=''>[/?search=jpgc-graphs-basic <i class='fa fa-download'></i> Download]</span>
+
 
 [/img/icons/warning.gif] <font color="brown"><b>Don't forget to [PluginInstall#Configure-JMeter set up saving thread counts] when running in non-GUI mode!</b></font>
 

@@ -1,4 +1,6 @@
-= Hadoop JobTracker Counters Sampler <sup><font color=gray size="1">since 1.0.0</font></sup>=
+= Hadoop JobTracker Counters Sampler =
+
+<span class=''>[/?search=jpgc-hadoop <i class='fa fa-download'></i> Download]</span>
 
 <i>This plugin was originally developed by [http://www.atlantbh.com/ Atlantbh d.o.o.], 
 released as [https://github.com/ATLANTBH/jmeter-components jmeter-components], 

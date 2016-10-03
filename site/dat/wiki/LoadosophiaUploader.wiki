@@ -1,4 +1,6 @@
-= BM.Sense Uploader <sup><font color=gray size="1">since 0.4.2</font></sup>=
+= BM.Sense Uploader =
+
+<span class=''>[/?search=jpgc-sense-uploader <i class='fa fa-download'></i> Download]</span>
 
 This is special plugin for uploading results to
 [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=link&utm_campaign=wiki BlazeMeter Sense]

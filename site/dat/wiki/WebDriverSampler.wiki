@@ -1,4 +1,5 @@
-= Web Driver Sampler <sup><font color=gray size="1">since 1.1.0</font></sup>=
+= Web Driver Sampler =
+<span class=''>[/?search=jpgc-webdriver <i class='fa fa-download'></i> Download]</span>
 
 == Introduction ==
 Unlike most Samplers, the Web Driver Sampler provides the reader with an empty editor field, much like a blank canvas.  Do not be dismayed, as with great responsibility comes great power! This wiki will document what each of these fields does, and will also detail some of the common use cases that the scripter may have. If the reader has not yet done so, it is *highly recommended* that they quickly go over the [WebDriverTutorial 2 minute tutorial] before continuing on with this section.

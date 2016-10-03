@@ -1,4 +1,6 @@
-= UDP Request <sup><font color=gray size="1">since 0.4.1</font></sup>=
+= UDP Request =
+
+<span class=''>[/?search=jpgc-udp <i class='fa fa-download'></i> Download]</span>
 
 This plugin adds [http://en.wikipedia.org/wiki/User_Datagram_Protocol UDP] protocol support to JMeter.
 With this plugin you can load test DNS, NTP, TFTP, Boot servers and many-many other systems.

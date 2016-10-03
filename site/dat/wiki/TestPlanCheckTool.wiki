@@ -1,4 +1,6 @@
-= JMX Checker Tool <sup><font color=gray size="1">since 1.2.1</font></sup>=
+= JMX Checker Tool =
+
+<span class=''>[/?search=jpgc-plancheck <i class='fa fa-download'></i> Download]</span>
 
 Sometimes you need an automated way to check JMX file consistency without running the test. For example, if you plan to spin up tens of AWS machines to generate the load, you don't want all them to fail because of missing JAR for third-party plugin. To avoid that, use JMX Checker Tool to verify that JMX is loadable. Additionally, the tool can dump the test tree or print simple elements count.
 

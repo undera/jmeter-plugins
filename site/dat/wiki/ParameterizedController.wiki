@@ -1,4 +1,6 @@
-= Parameterized Controller <sup><font color=gray size="1">since 0.1.0</font></sup>=
+= Parameterized Controller =
+
+<span class=''>[/?search=jpgc-prmctl <i class='fa fa-download'></i> Download]</span>
 
 When your JMeter test plan tree becomes like a [http://en.wikipedia.org/wiki/Hyperion_(tree) sequoia] or a [http://en.wikipedia.org/wiki/The_Great_Banyan banyan], you start feeling yourself like a monkey in a jungle, jumping from branch to branch, trying to support this important test consistent. You really need some way to have parameterized subroutines, to reuse parts of test plan like regular programming language functions and procedures.
 

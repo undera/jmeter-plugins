@@ -1,4 +1,8 @@
-= Weighted Switch Controller <sup><font color=gray size="1">since 1.4.0</font></sup>=
+= Weighted Switch Controller =
+
+<span class=''>[/?search=jpgc-wsc <i class='fa fa-download'></i> Download]</span>
+
+<span class="alert alert-danger">This plugin is experimental and unstable. It is not recommended to use it.</span>
 
 == Authorship ==
 <div class="pull-right text-center" style="margin-left: 1em; line-height: 200%;">

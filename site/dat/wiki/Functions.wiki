@@ -1,5 +1,7 @@
 = Custom JMeter Functions =
 
+<span class=''>[/?search=jpgc-functions <i class='fa fa-download'></i> Download]</span>
+
 In addition to standard [http://jakarta.apache.org/jmeter/usermanual/functions.html JMeter functions] we provide:
 
 == chooseRandom<sup><font color=gray size="1">since 1.0.1</font></sup> ==

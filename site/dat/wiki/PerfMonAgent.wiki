@@ -1,5 +1,3 @@
-#summary PerfMon server agent tool
-
 = PerfMon Server Agent=
 
 == Download ==

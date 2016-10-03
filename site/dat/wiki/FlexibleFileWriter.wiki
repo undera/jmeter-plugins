@@ -1,4 +1,6 @@
-= Flexible File Writer <sup><font color=gray size="1">since 0.4.1</font></sup>=
+= Flexible File Writer =
+
+<span class=''>[/?search=jpgc-ffw <i class='fa fa-download'></i> Download]</span>
 
 JMeter has very simpe test results writing capabilities 
 with [http://jakarta.apache.org/jmeter/usermanual/component_reference.html#Simple_Data_Writer Simple Data Writer] plugin.

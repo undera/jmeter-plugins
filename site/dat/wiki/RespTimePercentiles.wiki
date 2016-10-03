@@ -1,4 +1,6 @@
-= Response Times Percentiles <sup><font color=gray size="1">since 0.4.0</font></sup>=
+= Response Times Percentiles =
+
+<span class=''>[/?search=jpgc-graphs-dist <i class='fa fa-download'></i> Download]</span>
 
 This graph will display the percentiles for the response time values. X Axis represents percentage, Y Axis Response time values. One point (P, Value) means for the whole scenario, P percent of the values are bellow Value ms.
 

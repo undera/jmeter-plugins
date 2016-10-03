@@ -1,4 +1,6 @@
-= HTTP Simple Table Server <sup><font color=gray size="1">since 1.2.0</font></sup> =
+= HTTP Simple Table Server =
+
+<span class=''>[/?search=jpgc-sts <i class='fa fa-download'></i> Download]</span>
 
 Performance testing with JMeter can be done with several JMeter injectors (on a remote host) and one JMeter controller (with GUI, on your local host).
 Scripts are sent to JMeter injectors using RMI protocol.

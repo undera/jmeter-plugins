@@ -20,6 +20,7 @@ dest_dir = os.path.join(base_dir, "site", "files", "packages")
 def is_version_packed(fname):
     resp = requests.head("https://jmeter-plugins.org/files/packages/%s" % fname)  # FIXME
     logging.debug("%s %s %s", resp.status_code, resp.text, resp.headers)
+    resp.close()
     return resp.status_code == 200
 
 
@@ -47,6 +48,7 @@ def download_into_zip(ziph, url, dest_subpath):
     assert resp.status_code == 200
     remote_filename = re.findall("filename=(.+)", resp.headers['content-disposition'])[0]
     ziph.writestr(os.path.join(dest_subpath, remote_filename), resp.content)
+    resp.close()
 
 
 def get_pmgr(plugins_list):

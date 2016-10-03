@@ -24,37 +24,36 @@ def is_version_packed(fname):
 
 
 def pack_version(fname, ver_obj, pmgr_obj):
-    # TODO: pack every plugin from repo into zip
-    # TODO: using dependencies from target
     with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as zip:
         # pack pmgr
-        resp = requests.get(pmgr_obj['downloadUrl'])
-        assert resp.status_code == 200
-        remote_filename = re.findall("filename=(.+)", resp.headers['content-disposition'])[0]
-        zip.writestr(os.path.join("lib", "ext", remote_filename), resp.content)
+        download_into_zip(zip, pmgr_obj['downloadUrl'], os.path.join("lib", "ext"))
 
         # pack main file
-        resp = requests.get(ver_obj['downloadUrl'])
-        assert resp.status_code == 200
-        remote_filename = re.findall("filename=(.+)", resp.headers['content-disposition'])[0]
-        zip.writestr(os.path.join("lib", "ext", remote_filename), resp.content)
+        download_into_zip(zip, ver_obj['downloadUrl'], os.path.join("lib", "ext"))
 
         # pack libs
         if 'libs' in ver_obj:
             for libname in ver_obj['libs']:
-                resp = requests.get(ver_obj['libs'][libname])
-                assert resp.status_code == 200
-                remote_filename = re.findall("filename=(.+)", resp.headers['content-disposition'])[0]
-                zip.writestr(os.path.join("lib", remote_filename), resp.content)
+                download_into_zip(zip, ver_obj['libs'][libname], os.path.join("lib"))
 
 
-def get_pmgr():
-    global pmgr_obj, plugin
-    pmgr_obj = None
-    for plugin in plugins:
-        if plugin['id'] == 'jpgc-plugins-manager':
-            versions = sorted(plugin['versions'].keys(), key=StrictVersion)
-            return plugin['versions'][versions[-1]]
+def download_into_zip(ziph, url, dest_subpath):
+    """
+    :type ziph: zipfile.ZipFile
+    :type url: str
+    """
+    logging.info("Downloading: %s", url)
+    resp = requests.get(url)
+    assert resp.status_code == 200
+    remote_filename = re.findall("filename=(.+)", resp.headers['content-disposition'])[0]
+    ziph.writestr(os.path.join(dest_subpath, remote_filename), resp.content)
+
+
+def get_pmgr(plugins_list):
+    for plug in plugins_list:
+        if plug['id'] == 'jpgc-plugins-manager':
+            versions = sorted(plug['versions'].keys(), key=StrictVersion)
+            return plug['versions'][versions[-1]]
 
     raise Exception("Failed to find plugins manager meta info")
 
@@ -71,7 +70,7 @@ if __name__ == "__main__":
             plugins.extend(json.loads(fhd.read()))
 
     # find pmgr
-    pmgr_obj = get_pmgr()
+    pmgr_obj = get_pmgr(plugins)
 
     for plugin in plugins:
         logging.debug("Processing plugin: %s", plugin['id'])

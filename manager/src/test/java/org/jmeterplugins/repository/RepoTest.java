@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @deprecated in favor of python-based builder
+ */
 public class RepoTest {
     private final Map<String, String> cache = new HashMap<>();
     private String s = File.separator;
@@ -31,7 +34,7 @@ public class RepoTest {
         }
         libExt.mkdirs();
     }
-    
+
     public void testAll() throws IOException {
         Map<String, String> env = System.getenv();
         if (env.containsKey("TRAVIS")) {

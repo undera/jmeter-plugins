@@ -46,7 +46,10 @@ def download_into_zip(ziph, url, dest_subpath):
     logging.info("Downloading: %s", url)
     resp = requests.get(url)
     assert resp.status_code == 200
-    remote_filename = re.findall("filename=(.+)", resp.headers['content-disposition'])[0]
+    if 'content-disposition' in resp.headers:
+        remote_filename = re.findall("filename=(.+)", resp.headers['content-disposition'])[0]
+    else:
+        remote_filename=os.path.basename(resp.url)
     ziph.writestr(os.path.join(dest_subpath, remote_filename), resp.content)
     resp.close()
 

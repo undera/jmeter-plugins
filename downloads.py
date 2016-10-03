@@ -25,17 +25,20 @@ def is_version_packed(fname):
 
 
 def pack_version(fname, ver_obj, pmgr_obj):
-    with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as zip:
-        # pack pmgr
-        download_into_zip(zip, pmgr_obj['downloadUrl'], os.path.join("lib", "ext"))
+    if not ver_obj['downloadUrl']:
+        return
 
+    with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as ziph:
         # pack main file
-        download_into_zip(zip, ver_obj['downloadUrl'], os.path.join("lib", "ext"))
+        download_into_zip(ziph, ver_obj['downloadUrl'], os.path.join("lib", "ext"))
 
         # pack libs
         if 'libs' in ver_obj:
             for libname in ver_obj['libs']:
-                download_into_zip(zip, ver_obj['libs'][libname], os.path.join("lib"))
+                download_into_zip(ziph, ver_obj['libs'][libname], os.path.join("lib"))
+
+        # pack pmgr
+        download_into_zip(ziph, pmgr_obj['downloadUrl'], os.path.join("lib", "ext"))
 
 
 def download_into_zip(ziph, url, dest_subpath):
@@ -49,7 +52,7 @@ def download_into_zip(ziph, url, dest_subpath):
     if 'content-disposition' in resp.headers:
         remote_filename = re.findall("filename=(.+)", resp.headers['content-disposition'])[0]
     else:
-        remote_filename=os.path.basename(resp.url)
+        remote_filename = os.path.basename(resp.url)
     ziph.writestr(os.path.join(dest_subpath, remote_filename), resp.content)
     resp.close()
 

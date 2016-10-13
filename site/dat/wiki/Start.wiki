@@ -1,5 +1,6 @@
 = Project Documentation Wiki =
   * [PluginInstall Installation Procedure] to have correct setup
+  * [SettingsPanel] GUI Customizing Graphs Plugins
 
 == Graphs ==
   * [PerfMon PerfMon Metrics Collector] and [PerfMonAgent Server Agent]
@@ -13,8 +14,8 @@
   * [ConnectTimeOverTime Connect Times Over Time]
   * [BytesThroughput Bytes Throughput Over Time]
   * [PageDataExtractor Extracted Data Over Time]
-  * [DbMon DbMon Sample Collector]
-  * [JMXMon JMX Monitoring Collector]
+  * [DbMon DbMon Sample Collector] DataBase, get performance counters via sql
+  * [JMXMon JMX Monitoring Collector] Java Management Extensions counters
   * [ResponseTimesVsThreads Response Times vs Threads]
   * [TransactionThroughputVsThreads Transaction Throughput vs Threads]
   * [RespTimesDistribution Response Times Distribution]
@@ -33,7 +34,7 @@
 == Listeners ==
   * [FlexibleFileWriter Flexible File Writer]
   * [ConsoleStatusLogger Non-GUI Console Status Logger] 
-  * [SynthesisReport Synthesis Report] filterable
+  * [SynthesisReport Synthesis Report] filterable by label (regex), offset
   * [LoadosophiaUploader BM.Sense Uploader] (aka Loadosophia Uploader)
   * [AutoStop] Trigger
   * [GraphsGeneratorListener Graphs Generator]
@@ -42,10 +43,10 @@
   * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
   * [InterThreadCommunication Inter-Thread Communication]
   * [TestPlanCheckTool Tool to check Test Plan consistency]
-  * [FilterResultsTool Command-Line filtered results] by label (regex), offset, success
-  * [HttpSimpleTableServer HTTP Simple Table Server] to manage the dataset
+  * [FilterResultsTool Command-Line filtered results] by label (regex), offset, success and export in xml or csv format
+  * [HttpSimpleTableServer HTTP Simple Table Server] a internal mini http server to manage the dataset (csv)
   * [MergeResults Merge Results] to simplify the comparison of two or more load tests
-  * [JMSSampler JMS Sampler] classes for Java Request Sampler
+  * [JMSSampler JMS Sampler] classes for Java Messaging Service Sampler
 
 == Functions ==
   * [Functions Custom JMeter Functions]
@@ -64,20 +65,20 @@
   * [HBaseCRUDSampler HBase CRUD Sampler]
   * [HBaseScanSampler HBase Scan Sampler]
   * [HBaseRowkeySampler HBase Rowkey Sampler]
-  * [WebDriverSampler WebDriver Sampler] for full browser tests
+  * [WebDriverSampler WebDriver Sampler] for full browser tests, use Selenium
   * [XMPPSampler XMPP Sampler]
 
 == Config Items ==
   * [HBaseConnection HBase Connection Config]
   * [VariablesFromCSV Variables from CSV] configuration item
-  * [LockFile Lock Files]
+  * [LockFile Lock Files] test will not be started if lock files found
   * [RedisDataSet Redis Data Set]
-  * [AndroidDriverConfig Android Config]
-  * [ChromeDriverConfig Chrome Config]
-  * [FirefoxDriverConfig Firefox Config]
-  * [HtmlUnitDriverConfig HTMLUnit Config]
-  * [RemoteDriverConfig Remote WebDriver Config]
-  * [PhantomJSDriverConfig PhantomJS Config]
+  * [AndroidDriverConfig Android Config] for WebDriver
+  * [ChromeDriverConfig Chrome Config] for WebDriver
+  * [FirefoxDriverConfig Firefox Config] for WebDriver
+  * [HtmlUnitDriverConfig HTMLUnit Config] for WebDriver
+  * [RemoteDriverConfig Remote WebDriver Config] for WebDriver
+  * [PhantomJSDriverConfig PhantomJS Config]  for WebDriver
   * [XMPPConnection XMPP Connection Config]
 
 == Pre-Processors ==

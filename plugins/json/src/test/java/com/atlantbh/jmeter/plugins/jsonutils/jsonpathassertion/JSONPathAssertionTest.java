@@ -126,6 +126,24 @@ public class JSONPathAssertionTest {
     }
 
     @Test
+    public void testGetResult_not_regexp() {
+        System.out.println("not regexp");
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData("{\"myval\": \"some complicated value\"}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval");
+        instance.setJsonValidationBool(true);
+        instance.setExpectedValue("some.+");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(false, result.isFailure());
+
+        instance.setIsRegex(false);
+        AssertionResult result2 = instance.getResult(samplerResult);
+        assertEquals(true, result2.isFailure());
+    }
+
+    @Test
     public void testGetResult_negative() {
         System.out.println("getResult simple");
         SampleResult samplerResult = new SampleResult();

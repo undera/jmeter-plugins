@@ -34,6 +34,7 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
     public static final String JSONVALIDATION = "JSONVALIDATION";
     public static final String EXPECT_NULL = "EXPECT_NULL";
     public static final String INVERT = "INVERT";
+    public static final String ISREGEX = "ISREGEX";
 
     public String getJsonPath() {
         return getPropertyAsString(JSONPATH);
@@ -75,6 +76,14 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         return getPropertyAsBoolean(INVERT);
     }
 
+    public void setIsRegex(boolean flag) {
+        setProperty(ISREGEX, flag);
+    }
+
+    public boolean isUseRegex() {
+        return getPropertyAsBoolean(ISREGEX, true);
+    }
+
     private void doAssert(String jsonString) {
         Object value = JsonPath.read(jsonString, getJsonPath());
 
@@ -111,8 +120,12 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
 
     private boolean isEquals(Object subj) {
         String str = JSONPathExtractor.objectToString(subj);
-        Pattern pattern = JMeterUtils.getPatternCache().getPattern(getExpectedValue());
-        return JMeterUtils.getMatcher().matches(str, pattern);
+        if (isUseRegex()) {
+            Pattern pattern = JMeterUtils.getPatternCache().getPattern(getExpectedValue());
+            return JMeterUtils.getMatcher().matches(str, pattern);
+        } else {
+            return str.equals(getExpectedValue());
+        }
     }
 
     @Override

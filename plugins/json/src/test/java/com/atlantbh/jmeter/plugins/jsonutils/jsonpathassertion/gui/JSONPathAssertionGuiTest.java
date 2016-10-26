@@ -17,29 +17,34 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.gui;
 
 import com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion;
 import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.gui.AbstractJMeterGuiComponent;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.*;
 
-public class JSONPathAssertionGuiTest {
+import javax.swing.*;
+import java.awt.*;
 
-    public JSONPathAssertionGuiTest() {
-    }
+public class JSONPathAssertionGuiTest {
 
     @BeforeClass
     public static void setUpClass() {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    public void displayGUI() throws InterruptedException {
+        AbstractJMeterGuiComponent obj = new JSONPathAssertionGui();
+        JSONPathAssertion te = (JSONPathAssertion) obj.createTestElement();
+        obj.configure(te);
+        obj.clearGui();
+        obj.modifyTestElement(te);
 
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
+        JFrame frame = new JFrame("FrameDemo");
+        frame.setPreferredSize(new Dimension(800, 600));
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.getContentPane().add(obj, BorderLayout.CENTER);
+        frame.pack();
+        frame.setVisible(true);
+        Thread.sleep(60000);
     }
 
     @Test

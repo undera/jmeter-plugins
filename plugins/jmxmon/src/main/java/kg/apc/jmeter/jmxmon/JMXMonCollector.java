@@ -9,10 +9,14 @@ import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.List;
 
+import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
+import org.apache.jmeter.threads.JMeterContext;
+import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -44,6 +48,11 @@ public class JMXMonCollector
     private String autoFileBaseName = null;
     private static int counter = 0;
     private String workerHost = null;
+
+	/**
+	 * Jmeter context used to share with worker thread context
+	 */
+	private JMeterContext ctx;
 
     static {
         autoGenerateFiles = (JMeterUtils.getPropDefault("forceJmxMonFile", "false")).trim().equalsIgnoreCase("true");
@@ -78,12 +87,39 @@ public class JMXMonCollector
         return getProperty(DATA_PROPERTY);
     }
 
+    /**
+     * Update the worker thread jmeter context with the main thread one
+     * @param isInit if true the context a full copy is done, if false only update is done
+     */
+    private void syncContext(boolean isInit)
+    {
+    	// jmeter context synchronisation
+    	JMeterContext current = JMeterContextService.getContext();
+		JMeterContext ctx = this.getThreadContext();
+		
+		if (isInit)
+		{
+			current.setCurrentSampler(ctx.getCurrentSampler());
+			current.setEngine(ctx.getEngine());
+			current.setRestartNextLoop(ctx.isRestartNextLoop());
+			current.setSamplingStarted(ctx.isSamplingStarted());
+			current.setThread(ctx.getThread());
+			current.setThreadGroup(ctx.getThreadGroup());
+			current.setThreadNum(ctx.getThreadNum());
+		}
+		current.setVariables(ctx.getVariables());
+		current.setPreviousResult(ctx.getPreviousResult());
+		//current.getSamplerContext().putAll(ctx.getSamplerContext());
+    }
     @Override
     public synchronized void run() {
         try {
+        	
+        	syncContext(true);
             while (true) {
                 processConnectors();
                 this.wait(interval);
+                syncContext(false);
             }
         } catch (InterruptedException ex) {
             log.debug("Monitoring thread was interrupted", ex);
@@ -116,6 +152,7 @@ public class JMXMonCollector
             }
         }
         
+        ctx = JMeterContextService.getContext();
         initiateConnectors();
         
         workerThread = new Thread(this);
@@ -163,7 +200,7 @@ public class JMXMonCollector
         for (int i = 0; i < rows.size(); i++) {
             ArrayList<Object> row = (ArrayList<Object>) rows.get(i).getObjectValue();
             String label = ((JMeterProperty) row.get(0)).getStringValue();
-            String jmxUrl = ((JMeterProperty) row.get(1)).getStringValue();
+            JMeterProperty jmxUrl = (JMeterProperty) row.get(1);
             String username = ((JMeterProperty) row.get(2)).getStringValue();
             String password = ((JMeterProperty) row.get(3)).getStringValue();
             String objectName = ((JMeterProperty) row.get(4)).getStringValue();
@@ -176,7 +213,7 @@ public class JMXMonCollector
             	Hashtable attributes = new Hashtable();
                 String[] buffer = {username, password};
                 attributes.put("jmx.remote.credentials", (String[]) buffer);
-
+                
                 initiateConnector(attributes, jmxUrl, label, isDelta, objectName, attribute, key, canRetry);
             } catch (MalformedURLException ex) {
                 //throw new RuntimeException(ex);
@@ -187,12 +224,13 @@ public class JMXMonCollector
         }
     }
 
-    protected void initiateConnector(Hashtable attributes, String jmxUrl, String name, boolean delta, String objectName, String attribute, String key, boolean canRetry) throws IOException {
+    protected void initiateConnector(Hashtable attributes, JMeterProperty jmxUrl, String name, 
+    		boolean delta, String objectName, String attribute, String key, boolean canRetry) throws IOException {
         
-    	if (!canRetry && pool.getConnection(jmxUrl, attributes, true) == null)
+    	if (!canRetry && pool.getConnection(jmxUrl.getStringValue(), attributes, true) == null)
     		return;
     	
-        jmxMonSamplers.add(new JMXMonSampler(pool, attributes, jmxUrl,  name, objectName, attribute, key, delta, canRetry));
+        jmxMonSamplers.add(new JMXMonSampler(this, pool, attributes, jmxUrl,  name, objectName, attribute, key, delta, canRetry));
     }
 
      private void shutdownConnectors() {
@@ -214,6 +252,10 @@ public class JMXMonCollector
     @Override
     public void sampleOccurred(SampleEvent event) {
         // just dropping regular test samples
+    	
+    	// update JMeterContext for share with samplers thread in order to provide
+    	// updated variables
+    	this.ctx = JMeterContextService.getContext();
     }
 
     protected void jmxMonSampleOccurred(SampleEvent event) {
@@ -229,4 +271,13 @@ public class JMXMonCollector
         SampleEvent e = new SampleEvent(res, JMXMON);
         jmxMonSampleOccurred(e);
     }
+
+	@Override
+	public JMeterContext getThreadContext() {
+		if (this.ctx != null)
+			return this.ctx;
+		return super.getThreadContext();
+	}
+    
+    
 }

@@ -1,11 +1,6 @@
 package org.jmeterplugins.repository;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
-
-import javax.swing.*;
-import javax.swing.event.*;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,8 +12,31 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+
 public class PluginsList extends JPanel implements ListSelectionListener, HyperlinkListener {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 295116233618658217L;
+
+	private static final Logger log = LoggingManager.getLoggerForClass();
 
     private final JTextPane description = new JTextPane();
     private JList<PluginCheckbox> list = new CheckBoxList<>(5);
@@ -174,7 +192,12 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     }
 
     private class ToggleAllPopupMenu extends JPopupMenu implements ActionListener {
-        public ToggleAllPopupMenu() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4299203920659842279L;
+
+		public ToggleAllPopupMenu() {
             super("Toggle All");
             JMenuItem menuItem = new JMenuItem("Toggle All");
             menuItem.addActionListener(this);

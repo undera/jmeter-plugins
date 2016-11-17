@@ -38,7 +38,7 @@ public class ChangesMakerTest {
 
     @Test
     public void getMovementsFile() throws Exception {
-
+    	// NOOP
     }
 
 }

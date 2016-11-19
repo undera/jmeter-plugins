@@ -203,6 +203,7 @@ public class JARSourceHTTP extends JARSource {
 
         String uri = address;
         HttpPost post = new HttpPost(uri);
+        post.setHeader("Content-Type", "application/x-www-form-urlencoded");
         HttpEntity body = new StringEntity("stats=" + URLEncoder.encode(Arrays.toString(stats.toArray(new String[0])), "UTF-8"));
         post.setEntity(body);
         HttpParams requestParams = post.getParams();

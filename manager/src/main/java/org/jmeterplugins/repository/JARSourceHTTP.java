@@ -186,29 +186,29 @@ public class JARSourceHTTP extends JARSource {
         final long size = entity.getContentLength();
 
         try (InputStream inputStream = entity.getContent();
-                OutputStream fos = new FileOutputStream(tempFile);
-        		BufferedOutputStream bos = new BufferedOutputStream(fos);) {
+             OutputStream fos = new FileOutputStream(tempFile);
+             BufferedOutputStream bos = new BufferedOutputStream(fos);) {
 
-	        copyLarge(inputStream, bos, new GenericCallback<Long>() {
-	            @Override
-	            public void notify(Long progress) {
-	                callback.notify(String.format("Downloading %s: %d%%", id, 100 * progress / size));
-	            }
-	        });
-	        callback.notify("Downloaded " + id + "...");
+            copyLarge(inputStream, bos, new GenericCallback<Long>() {
+                @Override
+                public void notify(Long progress) {
+                    callback.notify(String.format("Downloading %s: %d%%", id, 100 * progress / size));
+                }
+            });
+            callback.notify("Downloaded " + id + "...");
 
-	        Header cd = response.getLastHeader("Content-Disposition");
-	        String filename;
-	        if (cd != null) {
-	            filename = cd.getValue().split(";")[1].split("=")[1];
-	        } else {
-	            HttpUriRequest currentReq = (HttpUriRequest) context.getAttribute(ExecutionContext.HTTP_REQUEST);
-	            HttpHost currentHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
-	            String currentUrl = (currentReq.getURI().isAbsolute()) ? currentReq.getURI().toString() : (currentHost.toURI() + currentReq.getURI());
-	            filename = FilenameUtils.getName(currentUrl);
-	        }
+            Header cd = response.getLastHeader("Content-Disposition");
+            String filename;
+            if (cd != null) {
+                filename = cd.getValue().split(";")[1].split("=")[1];
+            } else {
+                HttpUriRequest currentReq = (HttpUriRequest) context.getAttribute(ExecutionContext.HTTP_REQUEST);
+                HttpHost currentHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+                String currentUrl = (currentReq.getURI().isAbsolute()) ? currentReq.getURI().toString() : (currentHost.toURI() + currentReq.getURI());
+                filename = FilenameUtils.getName(currentUrl);
+            }
 
-	        return new DownloadResult(tempFile.getPath(), filename);
+            return new DownloadResult(tempFile.getPath(), filename);
         }
     }
 
@@ -221,24 +221,24 @@ public class JARSourceHTTP extends JARSource {
         String uri = address;
         HttpPost post = null;
         try {
-        	post = new HttpPost(uri);
+            post = new HttpPost(uri);
             post.setHeader("Content-Type", "application/x-www-form-urlencoded");
             HttpEntity body = new StringEntity("stats=" + URLEncoder.encode(Arrays.toString(stats.toArray(new String[0])), "UTF-8"));
-	        post.setEntity(body);
-	        HttpParams requestParams = post.getParams();
-	        requestParams.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 3000);
-	        requestParams.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1000);
+            post.setEntity(body);
+            HttpParams requestParams = post.getParams();
+            requestParams.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 3000);
+            requestParams.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1000);
 
-	        log.debug("Requesting " + uri);
-	        httpClient.execute(post);
+            log.debug("Requesting " + uri);
+            httpClient.execute(post);
         } finally {
-        	if(post != null) {
-        		try {
-					post.abort();
-				} catch (Exception e) {
-					// NOOP
-				}
-        	}
+            if (post != null) {
+                try {
+                    post.abort();
+                } catch (Exception e) {
+                    log.warn("Failure while aborting POST", e);
+                }
+            }
         }
     }
 

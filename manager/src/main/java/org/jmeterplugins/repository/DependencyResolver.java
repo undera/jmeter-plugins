@@ -1,12 +1,12 @@
 package org.jmeterplugins.repository;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 public class DependencyResolver {
     private static final Logger log = LoggingManager.getLoggerForClass();

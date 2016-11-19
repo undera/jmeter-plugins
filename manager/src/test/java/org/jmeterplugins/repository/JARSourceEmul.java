@@ -12,12 +12,12 @@ public class JARSourceEmul extends JARSource {
 
     @Override
     public void reportStats(String[] usageStats) throws IOException {
-
+    	// NOOP
     }
 
     @Override
     public void setTimeout(int timeout) {
-
+    	// NOOP
     }
 
     @Override

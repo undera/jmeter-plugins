@@ -1,8 +1,8 @@
 package org.jmeterplugins.repository;
 
-import net.sf.json.JSON;
-
 import java.io.IOException;
+
+import net.sf.json.JSON;
 
 abstract public class JARSource {
     public abstract JSON getRepo() throws IOException;

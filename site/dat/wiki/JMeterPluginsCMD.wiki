@@ -71,6 +71,8 @@ Most of class names are self-explanatory:
   * HitsPerSecond
   * LatenciesOverTime
   * PerfMon = [PerfMon] Metrics Collector
+  * DbMon = [DbMon] Metrics Collector, DataBase, get performance counters via sql
+  * JMXMon = [JMXMon] Metrics Collector, Java Management Extensions counters
   * ResponseCodesPerSecond
   * ResponseTimesDistribution
   * ResponseTimesOverTime
@@ -79,7 +81,7 @@ Most of class names are self-explanatory:
   * TimesVsThreads = Response Times VS Threads
   * TransactionsPerSecond
   * PageDataExtractorOverTime
-  * MergeResults
+  * MergeResults = [MergeResults] Command Line Merge Tool to simplify the comparison of two or more load tests, need properties file (like merge-results.properties)
 
 == Other Ways to Automate Reporting ==
 

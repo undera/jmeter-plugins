@@ -36,10 +36,10 @@ import org.apache.log.Logger;
 
 public class PluginManagerDialog extends JDialog implements ActionListener, ComponentListener {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 888467568782611707L;
-	private static final Logger log = LoggingManager.getLoggerForClass();
+     *
+     */
+    private static final long serialVersionUID = 888467568782611707L;
+    private static final Logger log = LoggingManager.getLoggerForClass();
     public static final Border SPACING = BorderFactory.createEmptyBorder(5, 5, 5, 5);
     private final PluginManager manager;
     private final JTextPane modifs = new JTextPane();
@@ -157,7 +157,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
         installed.setEnabled(false);
         available.setEnabled(false);
         upgrades.setEnabled(false);
-        apply.setEnabled(false);								
+        apply.setEnabled(false);
         new Thread() {
             @Override
             public void run() {
@@ -165,15 +165,15 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
                 GenericCallback<String> statusChanged = new GenericCallback<String>() {
                     @Override
                     public void notify(final String s) {
-                    	SwingUtilities.invokeLater(
-                    			new Runnable() {
-									
-									@Override
-									public void run() {
-				                    	statusLabel.setText(s);
-				                    	repaint();
-									}
-								});
+                        SwingUtilities.invokeLater(
+                                new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        statusLabel.setText(s);
+                                        repaint();
+                                    }
+                                });
                     }
                 };
                 try {
@@ -182,7 +182,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
                 } catch (Exception ex) {
                     statusChanged.notify("Failed to apply changes: " + ex.getMessage());
                     throw ex;
-                }	
+                }
             }
         }.start();
     }

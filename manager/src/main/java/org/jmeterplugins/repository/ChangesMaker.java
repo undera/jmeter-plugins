@@ -59,20 +59,20 @@ public class ChangesMaker {
     public File getRestartFile() throws IOException {
         File file = File.createTempFile("jpgc-restart-", ".list");
         try (PrintWriter out = new PrintWriter(file);) {
-	        
-	        out.print(SafeDeleter.getJVM() + "\n");
-	
-	        RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
-	        List<String> jvmArgs = runtimeMXBean.getInputArguments();
-	        for (String arg : jvmArgs) {
-	            out.print(arg + "\n");
-	        }
-	
-	        out.print("-jar\n");
-	
-	        out.print(JMeterUtils.getJMeterBinDir() + File.separator + "ApacheJMeter.jar\n");
-	
-	        return file;
+
+            out.print(SafeDeleter.getJVM() + "\n");
+
+            RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+            List<String> jvmArgs = runtimeMXBean.getInputArguments();
+            for (String arg : jvmArgs) {
+                out.print(arg + "\n");
+            }
+
+            out.print("-jar\n");
+
+            out.print(JMeterUtils.getJMeterBinDir() + File.separator + "ApacheJMeter.jar\n");
+
+            return file;
         }
     }
 
@@ -81,12 +81,12 @@ public class ChangesMaker {
         try (PrintWriter out = new PrintWriter(file);) {
             for (Plugin plugin : plugins) {
                 String cls = plugin.getInstallerClass();
-	            if (cls != null) {
-	                log.debug("Plugin " + plugin + " has installer: " + cls);
-	                out.print(plugin.getDestName() + "\t" + cls + "\n");
-	            }
-	        }
-	        return file;
+                if (cls != null) {
+                    log.debug("Plugin " + plugin + " has installer: " + cls);
+                    out.print(plugin.getDestName() + "\t" + cls + "\n");
+                }
+            }
+            return file;
         }
     }
 
@@ -95,42 +95,42 @@ public class ChangesMaker {
         final File file = File.createTempFile("jpgc-jar-changes", ".list");
         try (PrintWriter out = new PrintWriter(file);) {
 
-	        if (!deletes.isEmpty() || !libDeletions.isEmpty()) {
-	            File delDir = File.createTempFile("jpgc-deleted-jars-", "");
-	            delDir.delete();
-	            delDir.mkdir();
-	            log.info("Will move deleted JARs to directory " + delDir);
-	            for (Plugin plugin : deletes) {
-	                File installed = new File(plugin.getInstalledPath());
-	                String delTo = delDir + File.separator + installed.getName();
-	                out.print(plugin.getInstalledPath() + "\t" + delTo + "\n");
-	            }
-	
-	            for (String lib : libDeletions) {
-	                for (Plugin plugin : allPlugins.keySet()) {
-	                    if (plugin.isInstalled() && plugin.getInstalledPath().equals(lib)) {
-	                        log.warn("Cannot delete " + lib + " since it is part of plugin " + plugin);
-	                        libDeletions.remove(lib);
-	                    }
-	                }
-	            }
-	
-	            for (String lib : libDeletions) {
-	                File installed = new File(lib);
-	                String delTo = delDir + File.separator + installed.getName();
-	                out.print(lib + "\t" + delTo + "\n");
-	            }
-	        }
-	
-	        String libPath = new File(JOrphanUtils.class.getProtectionDomain().getCodeSource().getLocation().getFile()).getParent();
-	        for (Map.Entry<String, String> lib : installLibs.entrySet()) {
-	            out.print(lib.getKey() + "\t" + URLDecoder.decode(libPath, "UTF-8") + File.separator + lib.getValue() + "\n");
-	        }
-	
-	        for (Plugin plugin : installs) {
-	            out.print(plugin.getTempName() + "\t" + plugin.getDestName() + "\n");
-	        }
-	        return file;
+            if (!deletes.isEmpty() || !libDeletions.isEmpty()) {
+                File delDir = File.createTempFile("jpgc-deleted-jars-", "");
+                delDir.delete();
+                delDir.mkdir();
+                log.info("Will move deleted JARs to directory " + delDir);
+                for (Plugin plugin : deletes) {
+                    File installed = new File(plugin.getInstalledPath());
+                    String delTo = delDir + File.separator + installed.getName();
+                    out.print(plugin.getInstalledPath() + "\t" + delTo + "\n");
+                }
+
+                for (String lib : libDeletions) {
+                    for (Plugin plugin : allPlugins.keySet()) {
+                        if (plugin.isInstalled() && plugin.getInstalledPath().equals(lib)) {
+                            log.warn("Cannot delete " + lib + " since it is part of plugin " + plugin);
+                            libDeletions.remove(lib);
+                        }
+                    }
+                }
+
+                for (String lib : libDeletions) {
+                    File installed = new File(lib);
+                    String delTo = delDir + File.separator + installed.getName();
+                    out.print(lib + "\t" + delTo + "\n");
+                }
+            }
+
+            String libPath = new File(JOrphanUtils.class.getProtectionDomain().getCodeSource().getLocation().getFile()).getParent();
+            for (Map.Entry<String, String> lib : installLibs.entrySet()) {
+                out.print(lib.getKey() + "\t" + URLDecoder.decode(libPath, "UTF-8") + File.separator + lib.getValue() + "\n");
+            }
+
+            for (Plugin plugin : installs) {
+                out.print(plugin.getTempName() + "\t" + plugin.getDestName() + "\n");
+            }
+            return file;
         }
     }
 }

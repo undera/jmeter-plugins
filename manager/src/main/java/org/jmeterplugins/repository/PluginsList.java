@@ -32,11 +32,11 @@ import org.apache.log.Logger;
 
 public class PluginsList extends JPanel implements ListSelectionListener, HyperlinkListener {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 295116233618658217L;
+     *
+     */
+    private static final long serialVersionUID = 295116233618658217L;
 
-	private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggingManager.getLoggerForClass();
 
     private final JTextPane description = new JTextPane();
     private JList<PluginCheckbox> list = new CheckBoxList<>(5);
@@ -193,11 +193,11 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
 
     private class ToggleAllPopupMenu extends JPopupMenu implements ActionListener {
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = -4299203920659842279L;
+         *
+         */
+        private static final long serialVersionUID = -4299203920659842279L;
 
-		public ToggleAllPopupMenu() {
+        public ToggleAllPopupMenu() {
             super("Toggle All");
             JMenuItem menuItem = new JMenuItem("Toggle All");
             menuItem.addActionListener(this);

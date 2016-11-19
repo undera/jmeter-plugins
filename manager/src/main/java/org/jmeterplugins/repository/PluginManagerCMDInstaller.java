@@ -21,8 +21,8 @@ public class PluginManagerCMDInstaller {
         File dest = new File(home + File.separator + "bin" + File.separator + src.getName());
 
         try (InputStream is = PluginManagerCMDInstaller.class.getResourceAsStream(resName);) {
-        	Files.copy(is, dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        	dest.setExecutable(executable);
+            Files.copy(is, dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            dest.setExecutable(executable);
         }
     }
 }

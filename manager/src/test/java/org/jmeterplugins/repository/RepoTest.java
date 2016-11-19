@@ -67,7 +67,7 @@ public class RepoTest {
         }
 
         try (PrintWriter out = new PrintWriter(new File(repo.getAbsolutePath() + s + "all.json"));) {
-        	out.print(merged.toString(1));
+            out.print(merged.toString(1));
         }
     }
 

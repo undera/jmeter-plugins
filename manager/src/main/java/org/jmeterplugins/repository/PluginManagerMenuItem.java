@@ -1,15 +1,21 @@
 package org.jmeterplugins.repository;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JMenuItem;
+
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class PluginManagerMenuItem extends JMenuItem implements ActionListener {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8708638472918746046L;
+	private static final Logger log = LoggingManager.getLoggerForClass();
     private static PluginManagerDialog dialog;
     private final PluginManager mgr;
 

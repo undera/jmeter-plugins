@@ -2,12 +2,19 @@ package org.jmeterplugins.repository;
 
 // http://www.devx.com/tips/Tip/5342
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.Icon;
+import javax.swing.JCheckBox;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 public class CheckBoxList<T extends JCheckBox> extends JList<T> {
     protected static Border noFocusBorder = new EmptyBorder(1, 1, 1, 1);

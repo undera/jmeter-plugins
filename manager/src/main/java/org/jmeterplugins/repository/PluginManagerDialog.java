@@ -1,16 +1,10 @@
 package org.jmeterplugins.repository;
 
-import org.apache.jmeter.gui.action.ActionNames;
-import org.apache.jmeter.gui.action.ActionRouter;
-import org.apache.jorphan.gui.ComponentUtil;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -18,8 +12,34 @@ import java.awt.event.ComponentListener;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import org.apache.jmeter.gui.action.ActionNames;
+import org.apache.jmeter.gui.action.ActionRouter;
+import org.apache.jorphan.gui.ComponentUtil;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+
 public class PluginManagerDialog extends JDialog implements ActionListener, ComponentListener {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 888467568782611707L;
+	private static final Logger log = LoggingManager.getLoggerForClass();
     public static final Border SPACING = BorderFactory.createEmptyBorder(5, 5, 5, 5);
     private final PluginManager manager;
     private final JTextPane modifs = new JTextPane();
@@ -134,19 +154,26 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        installed.setEnabled(false);
+        available.setEnabled(false);
+        upgrades.setEnabled(false);
+        apply.setEnabled(false);								
         new Thread() {
             @Override
             public void run() {
-                installed.setEnabled(false);
-                available.setEnabled(false);
-                upgrades.setEnabled(false);
-                apply.setEnabled(false);
                 // FIXME: what to do when user presses "cancel" on save test plan dialog?
                 GenericCallback<String> statusChanged = new GenericCallback<String>() {
                     @Override
-                    public void notify(String s) {
-                        statusLabel.setText(s);
-                        repaint();
+                    public void notify(final String s) {
+                    	SwingUtilities.invokeLater(
+                    			new Runnable() {
+									
+									@Override
+									public void run() {
+				                    	statusLabel.setText(s);
+				                    	repaint();
+									}
+								});
                     }
                 };
                 try {
@@ -155,7 +182,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
                 } catch (Exception ex) {
                     statusChanged.notify("Failed to apply changes: " + ex.getMessage());
                     throw ex;
-                }
+                }	
             }
         }.start();
     }

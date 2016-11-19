@@ -1,14 +1,15 @@
 package org.jmeterplugins.repository;
 
-import kg.apc.cmdtools.AbstractCMDTool;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
-import org.apache.log.Priority;
-
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Map;
+
+import kg.apc.cmdtools.AbstractCMDTool;
+
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+import org.apache.log.Priority;
 
 public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback<String> {
     private static final Logger log = LoggingManager.getLoggerForClass();

@@ -11,6 +11,10 @@
          class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" single_page="Install" accept="1"
     />
 
+    <url link="catalogue" title="Browse Plugins" menu="1" ico="fa-search"
+         class="PWE\Modules\RedirectAccepted\RedirectAccepted" accept="1" base="/"
+    />
+
     <url link="downloads" title="Download" menu="0" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl"
          start_page="all" files_base="files" download_link="../file" accept="1" ico="fa-download">
         <url link="file" files_base="files" class="PWE\Modules\FileDownloads\FileDownloads" accept="2"/>

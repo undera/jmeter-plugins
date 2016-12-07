@@ -50,7 +50,7 @@ public abstract class TestJMeterUtils {
         JMeterUtils.setProperty("sample_variables", "TEST1,TEST2,TEST3"); // for Flexible File Writer Test
         JMeterUtils.setProperty("saveservice_properties", "/ss.props");
         JMeterUtils.setProperty("upgrade_properties", "/ss.props");
-
+        JMeterUtils.setProperty("sampleresult.default.encoding", "UTF-8"); // enable multibyte
     }
 
     public static String getTempDir() {

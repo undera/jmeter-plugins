@@ -1,41 +1,11 @@
 package kg.apc.jmeter.samplers;
 
-import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
-import org.junit.*;
-
-import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class DummySamplerTest {
-
-    /**
-     *
-     */
-    public DummySamplerTest() {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    /**
-     *
-     */
-    @Before
-    public void setUp() {
-    }
 
     /**
      * Call interrupted to unset the interrupted state, as other classes that implement Interruptible will have an
@@ -47,34 +17,23 @@ public class DummySamplerTest {
         Thread.interrupted();
     }
 
-    /**
-     * Test of sample method, of class DummySampler.
-     */
     @Test
     public void testSample() {
         System.out.println("sample");
-        Entry e = null;
         String data = "test";
         DummySampler instance = new DummySampler();
         instance.setResponseData(data);
-        SampleResult result = instance.sample(e);
+        SampleResult result = instance.sample(null);
         Assert.assertEquals(data, result.getResponseDataAsString());
     }
 
-    /**
-     * Test of setSuccessful method, of class DummySampler.
-     */
     @Test
     public void testSetSuccessful() {
         System.out.println("setSuccessful");
-        boolean selected = false;
         DummySampler instance = new DummySampler();
-        instance.setSuccessful(selected);
+        instance.setSuccessful(false);
     }
 
-    /**
-     * Test of setResponseCode method, of class DummySampler.
-     */
     @Test
     public void testSetResponseCode() {
         System.out.println("setResponseCode");
@@ -83,9 +42,6 @@ public class DummySamplerTest {
         instance.setResponseCode(text);
     }
 
-    /**
-     * Test of setResponseMessage method, of class DummySampler.
-     */
     @Test
     public void testSetResponseMessage() {
         System.out.println("setResponseMessage");
@@ -94,9 +50,6 @@ public class DummySamplerTest {
         instance.setResponseMessage(text);
     }
 
-    /**
-     * Test of setResponseData method, of class DummySampler.
-     */
     @Test
     public void testSetResponseData() {
         System.out.println("setResponseData");
@@ -105,21 +58,14 @@ public class DummySamplerTest {
         instance.setResponseData(text);
     }
 
-    /**
-     * Test of isSuccessfull method, of class DummySampler.
-     */
     @Test
     public void testIsSuccessfull() {
         System.out.println("isSuccessfull");
         DummySampler instance = new DummySampler();
-        boolean expResult = false;
         boolean result = instance.isSuccessfull();
-        Assert.assertEquals(expResult, result);
+        Assert.assertEquals(false, result);
     }
 
-    /**
-     * Test of getResponseCode method, of class DummySampler.
-     */
     @Test
     public void testGetResponseCode() {
         System.out.println("getResponseCode");
@@ -129,9 +75,6 @@ public class DummySamplerTest {
         Assert.assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getResponseMessage method, of class DummySampler.
-     */
     @Test
     public void testGetResponseMessage() {
         System.out.println("getResponseMessage");
@@ -141,9 +84,6 @@ public class DummySamplerTest {
         Assert.assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getResponseData method, of class DummySampler.
-     */
     @Test
     public void testGetResponseData() {
         System.out.println("getResponseData");
@@ -153,9 +93,6 @@ public class DummySamplerTest {
         Assert.assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getResponseTime method, of class DummySampler.
-     */
     @Test
     public void testGetResponseTime() {
         System.out.println("getResponseTime");
@@ -165,9 +102,6 @@ public class DummySamplerTest {
         Assert.assertEquals(expResult, result);
     }
 
-    /**
-     * Test of setResponseTime method, of class DummySampler.
-     */
     @Test
     public void testSetResponseTime() {
         System.out.println("setResponseTime");
@@ -175,9 +109,6 @@ public class DummySamplerTest {
         instance.setResponseTime("10");
     }
 
-    /**
-     * Test of setRequestData method, of class DummySampler.
-     */
     @Test
     public void testSetRequestData() {
         System.out.println("setRequestData");
@@ -186,9 +117,6 @@ public class DummySamplerTest {
         instance.setRequestData(text);
     }
 
-    /**
-     * Test of getRequestData method, of class DummySampler.
-     */
     @Test
     public void testGetRequestData() {
         System.out.println("getRequestData");
@@ -198,9 +126,6 @@ public class DummySamplerTest {
         Assert.assertEquals(expResult, result);
     }
 
-    /**
-     * Test of getLatency method, of class DummySampler.
-     */
     @Test
     public void testGetLatency() {
         System.out.println("getLatency");
@@ -210,32 +135,21 @@ public class DummySamplerTest {
         Assert.assertEquals(expResult, result);
     }
 
-    /**
-     * Test of setSimulateWaiting method, of class DummySampler.
-     */
     @Test
     public void testSetSimulateWaiting() {
         System.out.println("setSimulateWaiting");
-        boolean selected = false;
         DummySampler instance = new DummySampler();
-        instance.setSimulateWaiting(selected);
+        instance.setSimulateWaiting(false);
     }
 
-    /**
-     * Test of isSimulateWaiting method, of class DummySampler.
-     */
     @Test
     public void testIsSimulateWaiting() {
         System.out.println("isSimulateWaiting");
         DummySampler instance = new DummySampler();
-        boolean expResult = false;
         boolean result = instance.isSimulateWaiting();
-        Assert.assertEquals(expResult, result);
+        Assert.assertEquals(false, result);
     }
 
-    /**
-     * Test of setLatency method, of class DummySampler.
-     */
     @Test
     public void testSetLatency() {
         System.out.println("setLatency");
@@ -244,15 +158,11 @@ public class DummySamplerTest {
         instance.setLatency(time);
     }
 
-    /**
-     * Test of interrupt method, of class DummySampler.
-     */
     @Test
     public void testInterrupt() {
         System.out.println("interrupt");
         DummySampler instance = new DummySampler();
-        boolean expResult = true;
         boolean result = instance.interrupt();
-        Assert.assertEquals(expResult, result);
+        Assert.assertEquals(true, result);
     }
 }

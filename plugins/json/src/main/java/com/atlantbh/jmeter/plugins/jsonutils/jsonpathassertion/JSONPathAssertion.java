@@ -131,8 +131,8 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
     @Override
     public AssertionResult getResult(SampleResult samplerResult) {
         AssertionResult result = new AssertionResult(getName());
-        byte[] responseData = samplerResult.getResponseData();
-        if (responseData.length == 0) {
+        String responseData = samplerResult.getResponseDataAsString();
+        if (responseData.isEmpty()) {
             return result.setResultForNull();
         }
 
@@ -141,7 +141,7 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
 
         if (!isInvert()) {
             try {
-                doAssert(new String(responseData));
+                doAssert(responseData);
             } catch (Exception e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Assertion failed", e);
@@ -151,7 +151,7 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
             }
         } else {
             try {
-                doAssert(new String(responseData));
+                doAssert(responseData);
                 result.setFailure(true);
                 if (isJsonValidationBool()) {
                     if (isExpectNull())

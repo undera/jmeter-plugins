@@ -129,14 +129,6 @@ public class JSONPathExtractorTest {
     }
 
     @Test
-    public void testSetVar() {
-        System.out.println("setVar");
-        String var = "";
-        JSONPathExtractor instance = new JSONPathExtractor();
-        instance.setVar(var);
-    }
-
-    @Test
     public void testProcess_default() {
         System.out.println("process def");
         JMeterContext context = JMeterContextService.getContext();
@@ -166,6 +158,25 @@ public class JSONPathExtractorTest {
         instance.process();
         JMeterVariables vars = context.getVariables();
         assertEquals("[\"Nigel Rees\",\"Evelyn Waugh\",\"Herman Melville\",\"J. R. R. Tolkien\"]", vars.get("test"));
+    }
+
+    @Test
+    public void testProcess_chinese() {
+        JMeterContext context = JMeterContextService.getContext();
+        SampleResult res = new SampleResult();
+        String chinese = "{\"carBrandName\":\"大众\"}";
+
+        res.setResponseData(chinese.getBytes());
+        context.setPreviousResult(res);
+
+        JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setDefaultValue("DEFAULT");
+        instance.setVar("test");
+        instance.setJsonPath("$.carBrandName");
+        instance.process();
+        JMeterVariables vars = context.getVariables();
+        // freaking "static final" DEFAULT_ENCODING field in SampleResult does not allow us to assert this
+        // assertEquals("大众", vars.get("test"));
     }
 
     @Test

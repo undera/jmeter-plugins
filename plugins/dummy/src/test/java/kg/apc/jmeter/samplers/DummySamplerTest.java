@@ -1,11 +1,17 @@
 package kg.apc.jmeter.samplers;
 
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class DummySamplerTest {
+    @Before
+    public void setUpClass() throws Exception {
+        TestJMeterUtils.createJmeterEnv(); // to set UTF-8
+    }
 
     /**
      * Call interrupted to unset the interrupted state, as other classes that implement Interruptible will have an
@@ -25,6 +31,16 @@ public class DummySamplerTest {
         instance.setResponseData(data);
         SampleResult result = instance.sample(null);
         Assert.assertEquals(data, result.getResponseDataAsString());
+    }
+
+    @Test
+    public void testSample_chinese() {
+        String data = "大众";
+        DummySampler instance = new DummySampler();
+        instance.setResponseData(data);
+        SampleResult result = instance.sample(null);
+        // freaking "static final" DEFAULT_ENCODING field in SampleResult does not allow us to assert this
+        // Assert.assertEquals(data, result.getResponseDataAsString());
     }
 
     @Test

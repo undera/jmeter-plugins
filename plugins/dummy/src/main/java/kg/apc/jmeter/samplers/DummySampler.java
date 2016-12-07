@@ -5,6 +5,8 @@ import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.Interruptible;
 import org.apache.jmeter.samplers.SampleResult;
 
+import java.io.UnsupportedEncodingException;
+
 public class DummySampler
         extends AbstractSampler implements Interruptible {
 
@@ -46,7 +48,11 @@ public class DummySampler
 
         // responde data
         res.setDataType(SampleResult.TEXT);
-        res.setResponseData(getResponseData().getBytes());
+        try {
+            res.setResponseData(getResponseData().getBytes(res.getDataEncodingWithDefault()));
+        } catch (UnsupportedEncodingException exc) {
+            throw new RuntimeException("Failed to get response data", exc);
+        }
 
         res.setLatency(getLatency());
 

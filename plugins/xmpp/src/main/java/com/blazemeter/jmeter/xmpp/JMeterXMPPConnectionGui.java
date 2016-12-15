@@ -5,6 +5,7 @@ import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.jivesoftware.smack.XMPPConnection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class JMeterXMPPConnectionGui extends AbstractConfigGui {
     private JTextField serviceName;
     private JTextField timeout;
     private JComboBox<JMeterXMPPConnection.Type> connectionClass;
+    private JComboBox<XMPPConnection.FromMode> fromMode;
 
     public JMeterXMPPConnectionGui() {
         super();
@@ -29,6 +31,7 @@ public class JMeterXMPPConnectionGui extends AbstractConfigGui {
         serviceName.setText("localhost");
         timeout.setText("1000");
         connectionClass.setSelectedItem(JMeterXMPPConnectionBase.Type.TCP);
+        fromMode.setSelectedItem(XMPPConnection.FromMode.USER);
     }
 
     private void init() {
@@ -66,6 +69,12 @@ public class JMeterXMPPConnectionGui extends AbstractConfigGui {
         addToPanel(mainPanel, editConstraints, 1, 4, connectionClass = new JComboBox<>());
         connectionClass.addItem(JMeterXMPPConnectionBase.Type.TCP);
         connectionClass.addItem(JMeterXMPPConnectionBase.Type.BOSH);
+
+        addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Value for 'from' attribute: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 5, fromMode = new JComboBox<>());
+        fromMode.addItem(XMPPConnection.FromMode.USER);
+        fromMode.addItem(XMPPConnection.FromMode.UNCHANGED);
+        fromMode.addItem(XMPPConnection.FromMode.OMITTED);
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
@@ -117,6 +126,7 @@ public class JMeterXMPPConnectionGui extends AbstractConfigGui {
             serviceName.setText(conn.getServiceName());
             timeout.setText(conn.getPacketReplyTimeout());
             connectionClass.setSelectedItem(conn.getConnectionType());
+            fromMode.setSelectedItem(conn.getFromMode());
         }
     }
 
@@ -130,8 +140,7 @@ public class JMeterXMPPConnectionGui extends AbstractConfigGui {
             conn.setServiceName(serviceName.getText());
             conn.setPacketReplyTimeout(timeout.getText());
             conn.setConnectionType(connectionClass.getSelectedItem().toString());
+            conn.setFromMode(fromMode.getSelectedItem().toString());
         }
     }
-
-
 }

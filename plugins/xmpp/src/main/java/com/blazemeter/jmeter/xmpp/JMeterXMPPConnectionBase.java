@@ -1,18 +1,20 @@
 package com.blazemeter.jmeter.xmpp;
 
+import org.apache.jmeter.config.ConfigTestElement;
+import org.apache.jmeter.testelement.TestStateListener;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+import org.jivesoftware.smack.XMPPConnection;
+
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import org.apache.jmeter.config.ConfigTestElement;
-import org.apache.jmeter.testelement.TestStateListener;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 public abstract class JMeterXMPPConnectionBase extends ConfigTestElement implements TestStateListener {
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -24,6 +26,7 @@ public abstract class JMeterXMPPConnectionBase extends ConfigTestElement impleme
     private static final String TYPE = "class";
     private static final String BOSH_IS_SSL = "bosh_is_ssl";
     private static final String BOSH_URL = "bosh_url";
+    private static final String FROM_MODE = "from_mode";
 
     public String getAddress() {
         return getPropertyAsString(ADDRESS);
@@ -79,6 +82,14 @@ public abstract class JMeterXMPPConnectionBase extends ConfigTestElement impleme
 
     public void setConnectionType(String value) {
         setProperty(TYPE, value);
+    }
+
+    public String getFromMode() {
+        return getPropertyAsString(FROM_MODE, XMPPConnection.FromMode.USER.toString());
+    }
+
+    public void setFromMode(String value) {
+        setProperty(FROM_MODE, value);
     }
 
     @Override

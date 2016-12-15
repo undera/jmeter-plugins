@@ -89,7 +89,9 @@ public class JMeterXMPPSamplerGui extends AbstractSamplerGui implements ActionLi
             action.clearGui();
         }
 
-        actionsGroup.getElements().nextElement().doClick();
+        if (actionsGroup.getButtonCount() > 0) {
+            actionsGroup.getElements().nextElement().doClick();
+        }
     }
 
     private void init() {

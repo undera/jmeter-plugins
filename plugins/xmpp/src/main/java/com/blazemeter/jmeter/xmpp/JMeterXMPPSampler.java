@@ -2,8 +2,6 @@ package com.blazemeter.jmeter.xmpp;
 
 import com.blazemeter.jmeter.xmpp.actions.AbstractXMPPAction;
 import com.blazemeter.jmeter.xmpp.actions.Connect;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
@@ -13,6 +11,9 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPConnection;
+
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 public class JMeterXMPPSampler extends AbstractSampler {
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -76,7 +77,7 @@ public class JMeterXMPPSampler extends AbstractSampler {
         setProperty(ACTION, value);
     }
 
-    public XMPPConnection getXMPPConnection() throws KeyManagementException, NoSuchAlgorithmException, SmackException {
+    public XMPPConnection getXMPPConnection() throws KeyManagementException, NoSuchAlgorithmException, SmackException, InterruptedException {
         return connConfig.getConnection();
     }
 

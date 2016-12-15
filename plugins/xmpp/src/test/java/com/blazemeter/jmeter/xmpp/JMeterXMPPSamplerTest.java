@@ -1,18 +1,6 @@
 package com.blazemeter.jmeter.xmpp;
 
-import com.blazemeter.jmeter.xmpp.actions.AbstractXMPPAction;
-import com.blazemeter.jmeter.xmpp.actions.Connect;
-import com.blazemeter.jmeter.xmpp.actions.Disconnect;
-import com.blazemeter.jmeter.xmpp.actions.GetBookmarks;
-import com.blazemeter.jmeter.xmpp.actions.Login;
-import com.blazemeter.jmeter.xmpp.actions.NoOp;
-import com.blazemeter.jmeter.xmpp.actions.RosterAction;
-import com.blazemeter.jmeter.xmpp.actions.SendFileXEP0096;
-import com.blazemeter.jmeter.xmpp.actions.SendMessage;
-import com.blazemeter.jmeter.xmpp.actions.SendPresence;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Map;
+import com.blazemeter.jmeter.xmpp.actions.*;
 import junit.framework.AssertionFailedError;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleResult;
@@ -25,6 +13,11 @@ import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smackx.iqprivate.packet.PrivateData;
 import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -37,15 +30,17 @@ public class JMeterXMPPSamplerTest {
             throws Exception {
     }
 
+    @Test
     public void testSample_noConfig() throws Exception {
         JMeterXMPPSampler obj = new JMeterXMPPSampler();
         try {
             doAction(obj, Login.class);
             fail();
-        } catch (AssertionFailedError ignored) {
+        } catch (AssertionError ignored) {
         }
     }
 
+    @Test
     public void testSample1() throws Exception {
         JMeterXMPPSampler obj = getjMeterXMPPSampler();
 

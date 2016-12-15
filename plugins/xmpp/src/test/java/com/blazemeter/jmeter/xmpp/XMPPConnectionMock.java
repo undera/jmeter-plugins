@@ -13,7 +13,7 @@ public class XMPPConnectionMock extends XMPPConnection {
     public boolean isConnected = true;
     public boolean isAuthenticated = true;
 
-    XMPPConnectionMock() {
+    public XMPPConnectionMock() {
         super(new ConnectionConfiguration("unitTest"));
     }
 

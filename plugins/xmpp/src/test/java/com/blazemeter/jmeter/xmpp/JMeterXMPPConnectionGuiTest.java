@@ -2,6 +2,7 @@ package com.blazemeter.jmeter.xmpp;
 
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.util.JMeterUtils;
+import org.jivesoftware.smack.XMPPConnection;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -43,12 +44,16 @@ public class JMeterXMPPConnectionGuiTest {
         obj.modifyTestElement(obj.createTestElement());
     }
 
-    //@Test
+    @Test
     public void displayGUI() throws Throwable {
         setSearchPaths();
 
         if (!GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance()) {
-            Component gui = new JMeterXMPPConnectionGui();
+            JMeterXMPPConnection te = new JMeterXMPPConnection();
+            te.setFromMode(XMPPConnection.FromMode.OMITTED.toString());
+
+            JMeterXMPPConnectionGui gui = new JMeterXMPPConnectionGui();
+            gui.configure(te);
             JDialog dialog = new JDialog();
             dialog.add(gui);
 

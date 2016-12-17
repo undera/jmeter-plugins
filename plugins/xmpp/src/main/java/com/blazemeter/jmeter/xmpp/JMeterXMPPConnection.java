@@ -80,15 +80,7 @@ public class JMeterXMPPConnection extends JMeterXMPPConnectionBase {
             connectionRegistry.put(newConn);
             setUpConnection(newConn);
 
-            if (getFromMode().equals(XMPPConnection.FromMode.USER.toString())) {
-                conn.setFromMode(XMPPConnection.FromMode.USER);
-            } else if (getFromMode().equals(XMPPConnection.FromMode.UNCHANGED.toString())) {
-                conn.setFromMode(XMPPConnection.FromMode.UNCHANGED);
-            } else if (getFromMode().equals(XMPPConnection.FromMode.OMITTED.toString())) {
-                conn.setFromMode(XMPPConnection.FromMode.OMITTED);
-            } else {
-                throw new IllegalArgumentException("Unhandled value for fromMode: " + getFromMode());
-            }
+            conn.setFromMode(getFromMode());
         }
 
         return conn;

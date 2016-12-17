@@ -84,8 +84,17 @@ public abstract class JMeterXMPPConnectionBase extends ConfigTestElement impleme
         setProperty(TYPE, value);
     }
 
-    public String getFromMode() {
-        return getPropertyAsString(FROM_MODE, XMPPConnection.FromMode.USER.toString());
+    public XMPPConnection.FromMode getFromMode() {
+        String str = getPropertyAsString(FROM_MODE, XMPPConnection.FromMode.USER.toString());
+        if (str.equals(XMPPConnection.FromMode.USER.toString())) {
+            return XMPPConnection.FromMode.USER;
+        } else if (str.equals(XMPPConnection.FromMode.UNCHANGED.toString())) {
+            return XMPPConnection.FromMode.UNCHANGED;
+        } else if (str.equals(XMPPConnection.FromMode.OMITTED.toString())) {
+            return XMPPConnection.FromMode.OMITTED;
+        } else {
+            throw new IllegalArgumentException("Unhandled value for fromMode: " + str);
+        }
     }
 
     public void setFromMode(String value) {

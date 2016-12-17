@@ -79,8 +79,6 @@ public class JMeterXMPPConnection extends JMeterXMPPConnectionBase {
 
             connectionRegistry.put(newConn);
             setUpConnection(newConn);
-
-            conn.setFromMode(getFromMode());
         }
 
         return conn;
@@ -89,6 +87,7 @@ public class JMeterXMPPConnection extends JMeterXMPPConnectionBase {
     private void setUpConnection(XMPPConnection newConn) {
         conn = newConn;
         conn.setPacketReplyTimeout(Integer.parseInt(getPacketReplyTimeout()));
+        conn.setFromMode(getFromMode());
 
         if (log.isDebugEnabled()) {
             conn.addConnectionListener(new Loggers.LogConn(conn));

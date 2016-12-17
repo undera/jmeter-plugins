@@ -49,8 +49,19 @@ public class JMeterXMPPSamplerTest {
         doAction(obj, Login.class);
     }
 
+    @Test
+    public void sendMessageFrom() throws Exception {
+        JMeterXMPPSampler obj = getjMeterXMPPSampler();
+        obj.getXMPPConnection().setFromMode(XMPPConnection.FromMode.USER);
 
-   public void testLoginLogout() throws Exception {
+        obj.setProperty(SendMessage.RECIPIENT, "user2@undera-desktop");
+        obj.setProperty(SendMessage.BODY, "body");
+        SampleResult res = doAction(obj, SendMessage.class);
+        assertTrue(res.getSamplerData().contains("from"));
+    }
+
+
+    public void testLoginLogout() throws Exception {
         TestJMeterUtils.createJmeterEnv();
         JMeterXMPPSampler obj = new JMeterXMPPSampler();
         JMeterXMPPConnection conn = new JMeterXMPPConnection();
@@ -70,7 +81,7 @@ public class JMeterXMPPSamplerTest {
         conn.setPacketReplyTimeout("5000");
         conn.setBOSHURL("/http-bind/");
 
-        
+
         conn.testStarted();
         obj.addTestElement(conn);
         obj.setProperty(Login.LOGIN, "dkollava@cisco.com");

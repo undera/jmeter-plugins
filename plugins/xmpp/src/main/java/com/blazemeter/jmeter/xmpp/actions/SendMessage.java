@@ -60,6 +60,7 @@ public class SendMessage extends AbstractXMPPAction implements PacketListener, C
         msg.addBody("", body);
         res.setSamplerData(msg.toXML().toString());
         sampler.getXMPPConnection().sendPacket(msg);
+        res.setSamplerData(msg.toXML().toString()); // second time to reflect the changes made to packet by conn
 
         if (wait_response) {
             return waitResponse(res, recipient);

@@ -27,6 +27,7 @@ public class SendMessageTest {
         SampleResult res = new SampleResult();
         action.perform(sampler, res);
         Assert.assertTrue(res.getResponseDataAsString().contains(SendMessage.RESPONSE_MARKER));
+        Assert.assertTrue(res.getSamplerData().contains("from"));
     }
 
 }

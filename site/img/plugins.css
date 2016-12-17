@@ -281,3 +281,12 @@ table.wiki img {
 .sparkline-container {
     margin-top: 1em;
 }
+
+.jqstooltip {
+    padding: 0!important;
+    border: none!important;
+}
+
+.jqsfield > span {
+    display: none;
+}

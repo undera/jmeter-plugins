@@ -12,7 +12,7 @@
     />
 
     <url link="catalogue" title="Browse Plugins" menu="1" ico="fa-search"
-         class="PWE\Modules\RedirectAccepted\RedirectAccepted" accept="1" base="/"
+         class="PWE\Modules\RedirectAccepted\RedirectAccepted" accept="1" base=""
     />
 
     <url link="downloads" title="Download" menu="0" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl"

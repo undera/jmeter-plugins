@@ -564,6 +564,18 @@
           "smack-extensions": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-extensions/4.0.7/smack-extensions-4.0.7.jar",
           "jbosh": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/jbosh/jbosh/0.8.0/jbosh-0.8.0.jar"
         }
+      },
+      "1.5.1": {
+        "changes": "Added support for 'from mode' option in XMPP Connection",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-xmpp/1.5.1/jmeter-plugins-xmpp-1.5.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "smack-core": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-core/4.0.7/smack-core-4.0.7.jar",
+          "smack-tcp": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-tcp/4.0.7/smack-tcp-4.0.7.jar",
+          "smack-bosh": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-bosh/4.0.7/smack-bosh-4.0.7.jar",
+          "smack-extensions": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/smack/smack-extensions/4.0.7/smack-extensions-4.0.7.jar",
+          "jbosh": "https://search.maven.org/remotecontent?filepath=org/igniterealtime/jbosh/jbosh/0.8.0/jbosh-0.8.0.jar"
+        }
       }
     }
   },

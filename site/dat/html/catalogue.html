@@ -38,7 +38,7 @@
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
         var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
+            results = regex.exec(url);
         if (!results) return null;
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, " "));
@@ -70,6 +70,9 @@
                 var vers = $("<p><i class='fa fa-download'></i> Download Versions: </p>").addClass('small');
                 for (var n = 0; n < vers_list.length; n++) {
                     var ver_link = $('<a href="/files/packages/' + plugin.id + '-' + vers_list[n] + '.zip">' + vers_list[n] + "</a>");
+                    if (plugin.versions[vers_list[n]]['changes']) {
+                        ver_link.attr('title', 'Changes: ' + plugin.versions[vers_list[n]]['changes']);
+                    }
                     vers.append(ver_link);
                     if (n < vers_list.length - 1) {
                         vers.append(", ")

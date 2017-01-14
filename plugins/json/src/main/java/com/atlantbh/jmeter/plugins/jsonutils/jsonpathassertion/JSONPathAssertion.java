@@ -89,18 +89,8 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
 
         if (isJsonValidationBool()) {
             if (value instanceof JSONArray) {
-                JSONArray arr = (JSONArray) value;
-
-                if (arr.isEmpty() && getExpectedValue().equals("[]")) {
+                if (arrayMatched((JSONArray) value)) {
                     return;
-                }
-
-                for (Object subj : arr.toArray()) {
-                    if (isExpectNull() && subj == null) {
-                        return;
-                    } else if (isEquals(subj)) {
-                        return;
-                    }
                 }
             } else {
                 if (isExpectNull() && value == null) {
@@ -116,6 +106,22 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
                 throw new RuntimeException(String.format("Value expected to be '%s', but found '%s'", getExpectedValue(), JSONPathExtractor.objectToString(value)));
             }
         }
+    }
+
+    private boolean arrayMatched(JSONArray value) {
+        if (value.isEmpty() && getExpectedValue().equals("[]")) {
+            return true;
+        }
+
+        for (Object subj : value.toArray()) {
+            if (isExpectNull() && subj == null) {
+                return true;
+            } else if (isEquals(subj)) {
+                return true;
+            }
+        }
+
+        return isEquals(value);
     }
 
     private boolean isEquals(Object subj) {

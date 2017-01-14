@@ -353,4 +353,35 @@ public class JSONPathAssertionTest {
         assertEquals(true, result.isFailure());
         assertEquals("Value expected to be '{headerkey=header value}', but found '{\"headerkey\":\"header value\"}'", result.getFailureMessage());
     }
+
+    @Test
+    public void testGetResult_match_msg_problem2() {
+        SampleResult samplerResult = new SampleResult();
+        String str = "{\n" +
+                " \"code\":200,\n" +
+                " \"contact\":{\n" +
+                "   \"id\":28071,\n" +
+                "   \"description\":\"test description\",\n" +
+                "   \"info\":{\n" +
+                "       \"ngn_number\":[\n" +
+                "           \"2003\",\n" +
+                "           \"2004\"\n" +
+                "       ]\n" +
+                "   }\n" +
+                " }\n" +
+                "}";
+        samplerResult.setResponseData(str.getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.contact.info.ngn_number");
+        instance.setJsonValidationBool(true);
+        instance.setExpectNull(false);
+        instance.setExpectedValue("[\"2003\",\"2004\"]");
+        instance.setInvert(false);
+        instance.setIsRegex(false);
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(false, result.isFailure());
+    }
 }

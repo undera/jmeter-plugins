@@ -82,10 +82,6 @@
                 left.append(vers);
             }
 
-
-            // TODO: give download links
-            // TODO: list dependencies
-
             var mid = $("<div></div>").addClass("pull-left col-md-3 text-center");
             if (plugin.screenshotUrl) {
                 var a = $("<a href='" + plugin.helpUrl + "'></a>");
@@ -165,7 +161,7 @@
                 clearTimeout(typingTimer);
             }).change(refreshCatalogue);
 
-            data.sort(function (a, b) {
+            data.sort(function () {
                 return Math.random() > 0.5 ? 1 : -1;
             });
 

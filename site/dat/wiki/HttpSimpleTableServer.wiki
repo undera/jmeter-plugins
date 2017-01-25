@@ -79,6 +79,9 @@ login5;password5
 
 *Load file in memory. Lines are stored in a linked list, 1 line = 1 element*
 
+The filename is limited to 128 characters maxi and must not contains characters \ / : or ..
+
+
 {{{
 http://hostname:port/sts/INITFILE?FILENAME=logins.csv
 }}}

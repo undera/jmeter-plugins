@@ -6,7 +6,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-table-server</artifactId>
-    <version>2.2</version>
+    <version>2.3</version>
 
     <name>Table server</name>
     <description>Table server</description>

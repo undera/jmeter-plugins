@@ -30,7 +30,7 @@ import java.util.*;
 public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWaiter {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
-    public static final String STS_VERSION = "1.2";
+    public static final String STS_VERSION = "1.3";
     public static final String ROOT = "/sts/";
     public static final String ROOT2 = "/sts";
     public static final String URI_INITFILE = "INITFILE";
@@ -116,13 +116,13 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         } else {
             msg = doAction(uri, method, parms);
         }
-		
-		Response response = new NanoHTTPD.Response(msg);
-		
-		// no cache for the response
-		response.addHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-		response.addHeader("Pragma", "no-cache");
-		response.addHeader("Expires", "0");		
+
+        Response response = new NanoHTTPD.Response(msg);
+
+        // no cache for the response
+        response.addHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.addHeader("Pragma", "no-cache");
+        response.addHeader("Expires", "0");		
         return response;
     }
 
@@ -359,6 +359,18 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
                     + "<body>Error : FILENAME parameter was missing !</body>"
                     + lineSeparator + "</html>";
         }
+        if (filename.matches(".*[\\\\/:].*") || filename.equals(".")
+                || filename.equals("..")) {
+            return "<html><title>KO</title>" + lineSeparator
+                    + "<body>Error : Illegal character found !</body>"
+                    + lineSeparator + "</html>";
+        }
+        if (filename.length() > 128) {
+            return "<html><title>KO</title>" + lineSeparator
+                    + "<body>Error : Maximum size reached (128) !</body>"
+                    + lineSeparator + "</html>";
+        }
+
         LinkedList<String> lines = new LinkedList<String>();
         BufferedReader bufferReader = null;
         File f = new File(myDataDirectory, filename);

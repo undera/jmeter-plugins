@@ -3,25 +3,25 @@
 <span class=''>[/?search=jpgc-cmd <i class='fa fa-download'></i> Download]</span>
 
 There is small command-line utility for generating graphs out of JTL files. It behave just like right-click context menu on all graphs. The tool can generate PNG, CSV or both.
+
 Note you can use [GraphsGeneratorListener] if you want to bulk generate graphs after a test or for existing results.
+
 == Installation ==
-The tool is placed inside distribution ZIP. The tool consists of CMDRunner.jar and shell wrappers. Wrappers just shorten call of _"java -jar CMDRunner.jar --tool Reporter ..."_. The tool files must be placed inside _lib/ext_ directory of JMeter installation. The tool requires JMeterPlugins.jar to be placed in _lib/ext_ also.
-The tool requires JMeter 2.4 to function properly (2.3 will work only for PNG generation).
+
+The tool is installed normally with [PluginsManager], producing launcher bat/sh files in JMeter's {{{bin}}} directory. Use {{{JMeterPluginsCMD.bat}}} on Windows and {{{JMeterPluginsCMD.sh}}} on MacOS and Linux.
 
 == Usage and Parameters ==
 
 Generating PNG:
 
 {{{
-java -jar CMDRunner.jar --tool Reporter --generate-png test.png --input-jtl results.jtl \
-  --plugin-type ResponseTimesOverTime --width 800 --height 600
+JMeterPluginsCMD.bat --generate-png test.png --input-jtl results.jtl --plugin-type ResponseTimesOverTime --width 800 --height 600
 }}}
 
 Generating CSV:
 
 {{{
-java -jar CMDRunner.jar --tool Reporter --generate-csv test.csv \
-  --input-jtl results.jtl --plugin-type ResponseTimesOverTime
+JMeterPluginsCMD.bat --generate-csv test.csv --input-jtl results.jtl --plugin-type ResponseTimesOverTime
 }}}
 
 Yoy may generate CSV and PNG in single tool run. {{{--help}}} will show you short help list on available parameters.
@@ -31,7 +31,7 @@ Yoy may generate CSV and PNG in single tool run. {{{--help}}} will show you shor
 || {{{--input-jtl <file>}}} || load data from specified JTL file ||
 || {{{--plugin-type <class>}}} || which type of graph use for results generation ||
 
-*Use {{{--input-jtl merge-results.properties}}} with {{{--plugin-type MergeResults}}}*. The merge-results.properties file is in JMETER_HOME/bin dir.
+Use {{{--input-jtl merge-results.properties}}} with {{{--plugin-type MergeResults}}}. The merge-results.properties file is in JMETER_HOME/bin dir.
 
 You may customize graph drawing and data processing
 like [SettingsPanel GUI settings] do with optional parameters:

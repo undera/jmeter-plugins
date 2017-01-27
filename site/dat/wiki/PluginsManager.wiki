@@ -29,6 +29,8 @@ Sometimes plugins have dependencies from each other, so there might be additiona
 
 Right mouse click over checkbox lists opens "Toggle All" option, which takes some time to toggle all items in the list.
 
+<div class="alert alert-warning">If you see empty dialog, this means that most likely you have proxy requirement for Internet connection. Please see below for instructions.</div>
+
 == Using Behind the Proxy ==
 
 Plugins Manager respects JMeter's [http://jmeter.apache.org/usermanual/get-started.html#proxy_server proxy settings]. However, to avoid editing the properties files, we recommend to launch JMeter with additional parameters to pass it the proxy settings:

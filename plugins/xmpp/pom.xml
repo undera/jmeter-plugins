@@ -74,6 +74,17 @@
             <groupId>org.igniterealtime.smack</groupId>
             <artifactId>smack-bosh</artifactId>
             <version>4.0.7</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.igniterealtime.jbosh</groupId>
+                    <artifactId>jbosh</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.igniterealtime.jbosh</groupId>
+            <artifactId>jbosh</artifactId>
+            <version>0.9.0</version>
         </dependency>
         <dependency>
             <groupId>org.igniterealtime.smack</groupId>

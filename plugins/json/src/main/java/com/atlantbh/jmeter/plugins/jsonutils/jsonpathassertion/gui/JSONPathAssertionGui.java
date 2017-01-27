@@ -48,8 +48,8 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
         VerticalPanel panel = new VerticalPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
-        jsonPath = new JLabeledTextField("JSON Path: ");
-        jsonValidation = new JCheckBox("Validate against expected value");
+        jsonPath = new JLabeledTextField("Assert JSON Path exists: ");
+        jsonValidation = new JCheckBox("Additionally assert value");
         isRegex = new JCheckBox("Match as regular expression");
         jsonValue = new JLabeledTextArea("Expected Value: ");
         expectNull = new JCheckBox("Expect null");

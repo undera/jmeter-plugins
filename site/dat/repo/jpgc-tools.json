@@ -182,13 +182,6 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }
-      },
-      "2.3": {
-        "changes": "Add more controls for the filename (no directory and size)",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/2.3/jmeter-plugins-table-server-2.3.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
-        }
       }
     }
   }

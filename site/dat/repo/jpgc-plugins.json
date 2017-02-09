@@ -567,9 +567,9 @@
   {
     "id": "jpgc-xmpp",
     "name": "XMPP Protocol Support",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "description": "Enables testing XMPP (Jabber) protocol servers",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/xmpp-connection.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/XMPPSampler/",
     "vendor": "BlazeMeter.com",
     "markerClass": "com.blazemeter.jmeter.xmpp.JMeterXMPPSampler",
     "versions": {

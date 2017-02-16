@@ -159,7 +159,7 @@
                 typingTimer = setTimeout(refreshCatalogue, doneTypingInterval);
             }).on('keydown', function () {
                 clearTimeout(typingTimer);
-            }).change(refreshCatalogue);
+            });//.change(refreshCatalogue);
 
             data.sort(function () {
                 return Math.random() > 0.5 ? 1 : -1;

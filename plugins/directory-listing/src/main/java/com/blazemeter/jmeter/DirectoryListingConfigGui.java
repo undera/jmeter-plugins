@@ -8,7 +8,7 @@ import org.apache.jmeter.testelement.TestElement;
 import javax.swing.*;
 import java.awt.*;
 
-public class DirectoryListingGui extends AbstractConfigGui {
+public class DirectoryListingConfigGui extends AbstractConfigGui {
 
     private JTextField sourceDirectoryField;
     private JButton browseButton;
@@ -26,7 +26,7 @@ public class DirectoryListingGui extends AbstractConfigGui {
     private JTextArea checkArea;
 
 
-    public DirectoryListingGui() {
+    public DirectoryListingConfigGui() {
         initGui();
         initGuiValues();
     }
@@ -131,7 +131,7 @@ public class DirectoryListingGui extends AbstractConfigGui {
 
     @Override
     public TestElement createTestElement() {
-        DirectoryListing element = new DirectoryListing();
+        DirectoryListingConfig element = new DirectoryListingConfig();
         modifyTestElement(element);
         return element;
     }
@@ -140,17 +140,17 @@ public class DirectoryListingGui extends AbstractConfigGui {
     public void modifyTestElement(TestElement element) {
         configureTestElement(element);
 
-        if (element instanceof DirectoryListing) {
-            DirectoryListing directoryListing = (DirectoryListing) element;
+        if (element instanceof DirectoryListingConfig) {
+            DirectoryListingConfig directoryListingConfig = (DirectoryListingConfig) element;
 
-            directoryListing.setSourceDirectory(this.sourceDirectoryField.getText());
-            directoryListing.setDestinationVariableName(this.destinationVariableField.getText());
-            directoryListing.setUseFullPath(this.isUseFullPathCheckBox.isSelected());
-            directoryListing.setRandomOrder(this.isRandomOrderCheckBox.isSelected());
-            directoryListing.setRecursiveListing(this.isRecursiveListing.isSelected());
-            directoryListing.setRewindOnTheEnd(this.isRewindOnTheEndCheckBox.isSelected());
-            directoryListing.setReReadDirectoryOnTheEndOfList(this.isReReadDirectoryCheckBox.isSelected());
-            directoryListing.setIndependentListPerThread(this.isIndependentListCheckBox.isSelected());
+            directoryListingConfig.setSourceDirectory(this.sourceDirectoryField.getText());
+            directoryListingConfig.setDestinationVariableName(this.destinationVariableField.getText());
+            directoryListingConfig.setUseFullPath(this.isUseFullPathCheckBox.isSelected());
+            directoryListingConfig.setRandomOrder(this.isRandomOrderCheckBox.isSelected());
+            directoryListingConfig.setRecursiveListing(this.isRecursiveListing.isSelected());
+            directoryListingConfig.setRewindOnTheEnd(this.isRewindOnTheEndCheckBox.isSelected());
+            directoryListingConfig.setReReadDirectoryOnTheEndOfList(this.isReReadDirectoryCheckBox.isSelected());
+            directoryListingConfig.setIndependentListPerThread(this.isIndependentListCheckBox.isSelected());
         }
     }
 
@@ -158,17 +158,17 @@ public class DirectoryListingGui extends AbstractConfigGui {
     public void configure(TestElement element) {
         super.configure(element);
 
-        if (element instanceof DirectoryListing) {
-            DirectoryListing directoryListing = (DirectoryListing) element;
+        if (element instanceof DirectoryListingConfig) {
+            DirectoryListingConfig directoryListingConfig = (DirectoryListingConfig) element;
 
-            sourceDirectoryField.setText(directoryListing.getSourceDirectory());
-            destinationVariableField.setText(directoryListing.getDestinationVariableName());
-            isUseFullPathCheckBox.setSelected(directoryListing.getUseFullPath());
-            isRandomOrderCheckBox.setSelected(directoryListing.getRandomOrder());
-            isRecursiveListing.setSelected(directoryListing.getRecursiveListing());
-            isRewindOnTheEndCheckBox.setSelected(directoryListing.getRewindOnTheEnd());
-            isReReadDirectoryCheckBox.setSelected(directoryListing.getReReadDirectoryOnTheEndOfList());
-            isIndependentListCheckBox.setSelected(directoryListing.getIndependentListPerThread());
+            sourceDirectoryField.setText(directoryListingConfig.getSourceDirectory());
+            destinationVariableField.setText(directoryListingConfig.getDestinationVariableName());
+            isUseFullPathCheckBox.setSelected(directoryListingConfig.getUseFullPath());
+            isRandomOrderCheckBox.setSelected(directoryListingConfig.getRandomOrder());
+            isRecursiveListing.setSelected(directoryListingConfig.getRecursiveListing());
+            isRewindOnTheEndCheckBox.setSelected(directoryListingConfig.getRewindOnTheEnd());
+            isReReadDirectoryCheckBox.setSelected(directoryListingConfig.getReReadDirectoryOnTheEndOfList());
+            isIndependentListCheckBox.setSelected(directoryListingConfig.getIndependentListPerThread());
         }
     }
 

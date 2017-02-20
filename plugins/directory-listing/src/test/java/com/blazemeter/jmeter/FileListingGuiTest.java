@@ -20,7 +20,7 @@ public class FileListingGuiTest {
 //    @Test
     public void showGui() throws Exception {
         if (!GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance()) {
-            DirectoryListingGui gui = new DirectoryListingGui();
+            DirectoryListingConfigGui gui = new DirectoryListingConfigGui();
             JDialog frame = new JDialog();
             frame.add(gui);
 
@@ -36,10 +36,10 @@ public class FileListingGuiTest {
 
     @Test
     public void testGui() throws Exception {
-        DirectoryListingGui gui = new DirectoryListingGui();
+        DirectoryListingConfigGui gui = new DirectoryListingConfigGui();
 
-        DirectoryListing element1 = (DirectoryListing) gui.createTestElement();
-        DirectoryListing element2 = (DirectoryListing) gui.createTestElement();
+        DirectoryListingConfig element1 = (DirectoryListingConfig) gui.createTestElement();
+        DirectoryListingConfig element2 = (DirectoryListingConfig) gui.createTestElement();
 
         element1.setSourceDirectory("/tmp/csv/");
         element1.setDestinationVariableName("fname");

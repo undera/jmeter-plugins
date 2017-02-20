@@ -8,7 +8,7 @@ import java.io.File;
 
 import static org.junit.Assert.*;
 
-public class TestDirectoryListingActionTest {
+public class TestDirectoryListingConfigActionTest {
 
     @BeforeClass
     public static void setUpClass()
@@ -18,7 +18,7 @@ public class TestDirectoryListingActionTest {
 
     @Test
     public void testAction() throws Exception {
-        DirectoryListingGui gui = new DirectoryListingGui();
+        DirectoryListingConfigGui gui = new DirectoryListingConfigGui();
 
         // create next file tree:
         // rootTmpDir :
@@ -55,14 +55,12 @@ public class TestDirectoryListingActionTest {
         action.actionPerformed(null);
 
         assertTrue(gui.getCheckArea().getText().startsWith("Listing of directory successfully finished, 2"));
-
-        System.out.println(gui.getCheckArea().getText());
     }
 
 
     @Test
     public void testActionWithException() throws Exception {
-        DirectoryListingGui gui = new DirectoryListingGui();
+        DirectoryListingConfigGui gui = new DirectoryListingConfigGui();
 
         File tmpDir = File.createTempFile("rootTmpDir", "1");
         tmpDir.delete();

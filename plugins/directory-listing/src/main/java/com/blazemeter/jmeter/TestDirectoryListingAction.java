@@ -9,28 +9,28 @@ import java.util.List;
 
 public class TestDirectoryListingAction implements ActionListener {
 
-    private final DirectoryListingGui directoryListingGui;
+    private final DirectoryListingConfigGui directoryListingConfigGui;
 
-    public TestDirectoryListingAction(DirectoryListingGui fileListingGui) {
-        this.directoryListingGui = fileListingGui;
+    public TestDirectoryListingAction(DirectoryListingConfigGui fileListingGui) {
+        this.directoryListingConfigGui = fileListingGui;
     }
 
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        String path = directoryListingGui.getSourceDirectoryField().getText();
+        String path = directoryListingConfigGui.getSourceDirectoryField().getText();
 
-        boolean isRandomOrder = directoryListingGui.getIsRandomOrderCheckBox().isSelected();
-        boolean isRecursiveListing = directoryListingGui.getIsRecursiveListing().isSelected();
+        boolean isRandomOrder = directoryListingConfigGui.getIsRandomOrderCheckBox().isSelected();
+        boolean isRecursiveListing = directoryListingConfigGui.getIsRecursiveListing().isSelected();
 
 
-        JTextArea checkArea = directoryListingGui.getCheckArea();
+        JTextArea checkArea = directoryListingConfigGui.getCheckArea();
 
         try {
-            final List<File> files = DirectoryListing.getDirectoryListing(path, isRandomOrder, isRecursiveListing);
+            final List<File> files = DirectoryListingConfig.getDirectoryListing(path, isRandomOrder, isRecursiveListing);
 
-            boolean isUseFullPath = directoryListingGui.getIsUseFullPathCheckBox().isSelected();
-            String variableName = directoryListingGui.getDestinationVariableField().getText();
+            boolean isUseFullPath = directoryListingConfigGui.getIsUseFullPathCheckBox().isSelected();
+            String variableName = directoryListingConfigGui.getDestinationVariableField().getText();
 
             final StringBuilder builder = new StringBuilder();
 

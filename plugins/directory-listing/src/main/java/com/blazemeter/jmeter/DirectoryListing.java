@@ -3,15 +3,17 @@ package com.blazemeter.jmeter;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
+import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jmeter.threads.JMeterVariables;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class DirectoryListing extends ConfigTestElement implements LoopIterationListener {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryListing.class);
 
     public static final String SOURCE_DIRECTORY = "directory";
     public static final String DESTINATION_VARIABLE_NAME = "variableName";
@@ -22,10 +24,43 @@ public class DirectoryListing extends ConfigTestElement implements LoopIteration
     public static final String INDEPENDENT_LIST_PER_THREAD = "independentListPerThread";
     public static final String RE_READ_DIRECTORY_ON_THE_END_OF_LIST = "reReadDirectory";
 
+    private Iterator<File> iterator;
+    private List<File> list;
+
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
-        // TODO: independentListPerThread, rewindOnTheEndOfList, reReadDirectory
+        // TODO: independentListPerThread
 
+        try {
+            if (list == null) {
+                list = getDirectoryListing();
+            }
+
+            if (iterator == null || !iterator.hasNext()) {
+                boolean isReRead = getReReadDirectoryOnTheEndOfList();
+                boolean isRewindOnTheEnd = getRewindOnTheEnd();
+
+                if (isReRead && isRewindOnTheEnd) {
+                    this.list = getDirectoryListing();
+                    this.iterator = list.iterator();
+                } else if (isRewindOnTheEnd) {
+                    this.iterator = list.iterator();
+                } else {
+                    return;
+                }
+            }
+
+        } catch (FileNotFoundException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+        }
+
+
+        JMeterVariables variables = JMeterContextService.getContext().getVariables();
+        variables.put(getDestinationVariableName(), iterator.next().getAbsolutePath());
+    }
+
+    private List<File> getDirectoryListing() throws FileNotFoundException {
+        return getDirectoryListing(getSourceDirectory(), getRandomOrder(), getRecursiveListing());
     }
 
     protected static List<File> getDirectoryListing(String dirPath, boolean isRandomOrder, boolean isRecursiveListing) throws FileNotFoundException {

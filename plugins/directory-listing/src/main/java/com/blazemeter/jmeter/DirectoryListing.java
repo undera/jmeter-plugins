@@ -25,6 +25,7 @@ public class DirectoryListing extends ConfigTestElement implements LoopIteration
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
         // TODO: independentListPerThread, rewindOnTheEndOfList, reReadDirectory
+
     }
 
     protected static List<File> getDirectoryListing(String dirPath, boolean isRandomOrder, boolean isRecursiveListing) throws FileNotFoundException {
@@ -53,9 +54,10 @@ public class DirectoryListing extends ConfigTestElement implements LoopIteration
         }
 
         for (File file : files) {
-            if (isRecursiveListing && file.isDirectory()) {
+            boolean isDirectory = file.isDirectory();
+            if (isRecursiveListing && isDirectory) {
                 resultList.addAll(getDirectoryListing(file, true));
-            } else {
+            } else if (!isDirectory) {
                 resultList.add(file);
             }
         }

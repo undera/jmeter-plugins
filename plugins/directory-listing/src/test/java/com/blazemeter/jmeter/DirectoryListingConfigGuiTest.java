@@ -9,7 +9,7 @@ import java.awt.*;
 
 import static org.junit.Assert.assertEquals;
 
-public class FileListingGuiTest {
+public class DirectoryListingConfigGuiTest {
 
     @BeforeClass
     public static void setUpClass()

@@ -34,9 +34,10 @@ public class DirectoryListing extends ConfigTestElement implements LoopIteration
         try {
             if (list == null) {
                 list = getDirectoryListing();
+                iterator = list.iterator();
             }
 
-            if (iterator == null || !iterator.hasNext()) {
+            if (!iterator.hasNext()) {
                 boolean isReRead = getReReadDirectoryOnTheEndOfList();
                 boolean isRewindOnTheEnd = getRewindOnTheEnd();
 
@@ -46,6 +47,7 @@ public class DirectoryListing extends ConfigTestElement implements LoopIteration
                 } else if (isRewindOnTheEnd) {
                     this.iterator = list.iterator();
                 } else {
+                    // if the end of list && !isRewindOnTheEnd
                     return;
                 }
             }

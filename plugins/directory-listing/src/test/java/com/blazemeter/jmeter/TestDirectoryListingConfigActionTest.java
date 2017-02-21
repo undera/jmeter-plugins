@@ -16,17 +16,14 @@ public class TestDirectoryListingConfigActionTest {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @Test
-    public void testAction() throws Exception {
-        DirectoryListingConfigGui gui = new DirectoryListingConfigGui();
-
-        // create next file tree:
-        // rootTmpDir :
-        // --- tmpFile1_*****.csv
-        // --- nestedTmpDir :
-        // --- --- tmpFile2_*****.csv
-        // --- nestedEmptyTmpDir :
-        //
+    // create next file tree:
+    // rootTmpDir :
+    // --- tmpFile1_*****.csv
+    // --- nestedTmpDir :
+    // --- --- tmpFile2_*****.csv
+    // --- nestedEmptyTmpDir :
+    //
+    public static File createFileTree() throws Exception {
         File tmpDir = File.createTempFile("rootTmpDir", "");
         tmpDir.deleteOnExit();
         tmpDir.delete();
@@ -46,9 +43,20 @@ public class TestDirectoryListingConfigActionTest {
         nestedEmptyTmpDir.delete();
         nestedEmptyTmpDir.mkdirs();
 
-        gui.getSourceDirectoryField().setText(tmpDir.getAbsolutePath());
-        gui.getIsRecursiveListing().setSelected(true);
-        gui.getIsRandomOrderCheckBox().setSelected(true);
+        return tmpDir;
+    }
+
+    @Test
+    public void testAction() throws Exception {
+        File tmpDir = createFileTree();
+
+        DirectoryListingConfig config = new DirectoryListingConfig();
+        config.setSourceDirectory(tmpDir.getAbsolutePath());
+        config.setRecursiveListing(true);
+
+        DirectoryListingConfigGui gui = new DirectoryListingConfigGui();
+
+        gui.configure(config);
 
         TestDirectoryListingAction action = new TestDirectoryListingAction(gui);
 
@@ -60,23 +68,21 @@ public class TestDirectoryListingConfigActionTest {
 
     @Test
     public void testActionWithException() throws Exception {
-        DirectoryListingConfigGui gui = new DirectoryListingConfigGui();
-
         File tmpDir = File.createTempFile("rootTmpDir", "1");
         tmpDir.delete();
 
+        DirectoryListingConfig config = new DirectoryListingConfig();
+        config.setSourceDirectory(tmpDir.getAbsolutePath());
 
-        gui.getSourceDirectoryField().setText(tmpDir.getAbsolutePath());
+        DirectoryListingConfigGui gui = new DirectoryListingConfigGui();
 
-        System.out.println(tmpDir.getAbsolutePath());
+        gui.configure(config);
 
         TestDirectoryListingAction action = new TestDirectoryListingAction(gui);
 
         action.actionPerformed(null);
 
-        assertEquals("Directory does not exists: " + tmpDir.getAbsolutePath(), gui.getCheckArea().getText());
+        assertEquals("java.io.FileNotFoundException: Directory does not exists: " + tmpDir.getAbsolutePath(), gui.getCheckArea().getText());
     }
-
-
 
 }

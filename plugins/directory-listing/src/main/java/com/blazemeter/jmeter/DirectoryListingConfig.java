@@ -34,6 +34,7 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
 
     // TODO: how to switch isIndependentListPerThread flag in RunningTest mode????
 
+
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
         boolean isIndependentListPerThread = getIndependentListPerThread();
@@ -48,7 +49,7 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
         if (hasNext) {
             JMeterVariables variables = JMeterContextService.getContext().getVariables();
             variables.put(getDestinationVariableName(),
-                    (isIndependentListPerThread ? iterator : globalIterator).next().getAbsolutePath());
+                    getFilePath((isIndependentListPerThread ? iterator : globalIterator).next()));
         }
     }
 
@@ -65,6 +66,7 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
 
             if (isReRead && isRewindOnTheEnd) {
                 initList(isIndependentListPerThread);
+                initIterator(isIndependentListPerThread);
             } else if (isRewindOnTheEnd) {
                 if (getRandomOrder()) {
                     shuffleList(isIndependentListPerThread ? list : globalList);
@@ -101,7 +103,7 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
         iterator = globalIterator = null;
     }
 
-    private List<File> getDirectoryListing() {
+    protected List<File> getDirectoryListing() {
         try {
             return getDirectoryListing(getSourceDirectory(), getRandomOrder(), getRecursiveListing());
         } catch (FileNotFoundException ex) {
@@ -164,6 +166,17 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
         }
 
         return resultList;
+    }
+
+    protected String getFilePath(File file) {
+        return getUseFullPath() ?
+                file.getAbsolutePath() :
+                getSubPath(file.getAbsolutePath());
+    }
+
+    private String getSubPath(String absolutePath) {
+        String rootDir = getSourceDirectory();
+        return absolutePath.substring(rootDir.length());
     }
 
 

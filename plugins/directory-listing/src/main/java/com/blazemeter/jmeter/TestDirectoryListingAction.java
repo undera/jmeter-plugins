@@ -15,22 +15,16 @@ public class TestDirectoryListingAction implements ActionListener {
         this.directoryListingConfigGui = fileListingGui;
     }
 
-
     @Override
     public void actionPerformed(ActionEvent event) {
-        String path = directoryListingConfigGui.getSourceDirectoryField().getText();
-
-        boolean isRandomOrder = directoryListingConfigGui.getIsRandomOrderCheckBox().isSelected();
-        boolean isRecursiveListing = directoryListingConfigGui.getIsRecursiveListing().isSelected();
-
+        final DirectoryListingConfig config = (DirectoryListingConfig) directoryListingConfigGui.createTestElement();
 
         JTextArea checkArea = directoryListingConfigGui.getCheckArea();
 
         try {
-            final List<File> files = DirectoryListingConfig.getDirectoryListing(path, isRandomOrder, isRecursiveListing);
+            final List<File> files = config.getDirectoryListing();
 
-            boolean isUseFullPath = directoryListingConfigGui.getIsUseFullPathCheckBox().isSelected();
-            String variableName = directoryListingConfigGui.getDestinationVariableField().getText();
+            String variableName = config.getDestinationVariableName();
 
             final StringBuilder builder = new StringBuilder();
 
@@ -38,14 +32,14 @@ public class TestDirectoryListingAction implements ActionListener {
 
             for (File file : files) {
                 builder.append("${").append(variableName).append("} = ");
-                builder.append(isUseFullPath ? file.getAbsolutePath() : file.getName());
+                builder.append(config.getFilePath(file));
                 builder.append("\r\n");
             }
 
             checkArea.setText(builder.toString());
             // move scroll to top
             checkArea.setCaretPosition(0);
-        } catch (FileNotFoundException e) {
+        } catch (RuntimeException e) {
             checkArea.setText(e.getMessage());
         }
     }

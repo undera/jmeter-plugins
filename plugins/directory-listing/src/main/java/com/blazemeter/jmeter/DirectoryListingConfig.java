@@ -1,5 +1,6 @@
 package com.blazemeter.jmeter;
 
+
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
@@ -14,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class DirectoryListingConfig extends ConfigTestElement implements LoopIterationListener, TestStateListener {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryListingConfig.class);
+//    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryListingConfig.class);
 
     public static final String SOURCE_DIRECTORY = "directory";
     public static final String DESTINATION_VARIABLE_NAME = "variableName";
@@ -37,14 +38,27 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
         boolean isIndependentListPerThread = getIndependentListPerThread();
 
-        checkNext(isIndependentListPerThread, isIndependentListPerThread ? iterator : globalIterator);
+        if (isIndependentListPerThread && list == null) {
+            initList(true);
+            initIterator(true);
+        }
 
-        JMeterVariables variables = JMeterContextService.getContext().getVariables();
-        variables.put(getDestinationVariableName(),
-                (isIndependentListPerThread ? iterator : globalIterator).next().getAbsolutePath());
+        boolean hasNext = checkNext(isIndependentListPerThread, isIndependentListPerThread ? iterator : globalIterator);
+
+        if (hasNext) {
+            JMeterVariables variables = JMeterContextService.getContext().getVariables();
+            variables.put(getDestinationVariableName(),
+                    (isIndependentListPerThread ? iterator : globalIterator).next().getAbsolutePath());
+        }
     }
 
-    private void checkNext(boolean isIndependentListPerThread, Iterator<File> iterator) {
+    private boolean checkNext(boolean isIndependentListPerThread, Iterator<File> iterator) {
+        if (iterator == null) {
+            nullifyAll();
+            JMeterContextService.getContext().getThread().stop();
+            return false;
+        }
+
         if (!iterator.hasNext()) {
             boolean isReRead = getReReadDirectoryOnTheEndOfList();
             boolean isRewindOnTheEnd = getRewindOnTheEnd();
@@ -60,8 +74,10 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
                 // if the end of list && !isRewindOnTheEnd
                 nullifyAll();
                 JMeterContextService.getContext().getThread().stop();
+                return false;
             }
         }
+        return true;
     }
 
     private void initList(boolean isIndependentPerThreadList) {
@@ -223,8 +239,10 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
     @Override
     public void testStarted(String s) {
         boolean independentListPerThread = getIndependentListPerThread();
-        initList(independentListPerThread);
-        initIterator(independentListPerThread);
+        if (!independentListPerThread) {
+            initList(false);
+            initIterator(false);
+        }
     }
 
 

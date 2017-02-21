@@ -182,23 +182,4 @@ public class DirectoryListingConfigGui extends AbstractConfigGui {
         return checkArea;
     }
 
-    public JCheckBox getIsUseFullPathCheckBox() {
-        return isUseFullPathCheckBox;
-    }
-
-    public JCheckBox getIsRandomOrderCheckBox() {
-        return isRandomOrderCheckBox;
-    }
-
-    public JCheckBox getIsRecursiveListing() {
-        return isRecursiveListing;
-    }
-
-    public JTextField getSourceDirectoryField() {
-        return sourceDirectoryField;
-    }
-
-    public JTextField getDestinationVariableField() {
-        return destinationVariableField;
-    }
 }

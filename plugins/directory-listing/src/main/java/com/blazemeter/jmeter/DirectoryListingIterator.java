@@ -9,7 +9,7 @@ public class DirectoryListingIterator implements Iterator<File>{
 
     private final String srcDir;
 //    private final String destVar;
-    private final boolean useFullPath;
+//    private final boolean useFullPath;
     private final boolean isRandomOrder;
     private final boolean isRecursiveListing;
     private final boolean isRewindOnEndOfList;
@@ -19,7 +19,7 @@ public class DirectoryListingIterator implements Iterator<File>{
 
     public DirectoryListingIterator(String srcDir,
 //                                    String destVar,
-                                    boolean useFullPath,
+//                                    boolean useFullPath,
                                     boolean isRandomOrder,
                                     boolean isRecursiveListing,
                                     boolean isRewindOnEndOfList,
@@ -27,14 +27,14 @@ public class DirectoryListingIterator implements Iterator<File>{
                                     boolean isReReadDirectory) {
         this.srcDir = srcDir;
 //        this.destVar = destVar;
-        this.useFullPath = useFullPath;
+//        this.useFullPath = useFullPath;
         this.isRandomOrder = isRandomOrder;
         this.isRecursiveListing = isRecursiveListing;
         this.isRewindOnEndOfList = isRewindOnEndOfList;
         this.isIndependentList = isIndependentList;
         this.isReReadDirectory = isReReadDirectory;
 
-        this.list = getDirectoryListing();
+        this.list = getDirectoryListing(isRandomOrder);
         this.iterator = this.list.iterator();
     }
 
@@ -43,22 +43,19 @@ public class DirectoryListingIterator implements Iterator<File>{
 
     public boolean hasNext() {
         if (!iterator.hasNext()) {
+            if (isRewindOnEndOfList) {
+                if (isReReadDirectory) {
+                    list = getDirectoryListing(isRandomOrder);
+                }
 
-            if (isReReadDirectory && isRewindOnEndOfList) {
-                list = getDirectoryListing();
-                iterator = list.iterator();
-            } else if (isRewindOnEndOfList) {
                 if (isRandomOrder) {
                     shuffleList(list);
                 }
+
                 iterator = list.iterator();
-            } else {
-                // if the end of list && !isRewindOnTheEnd
-                nullifyAll();
-                return false;
             }
         }
-        return true;
+        return iterator.hasNext();
     }
 
     public File next() {
@@ -67,20 +64,20 @@ public class DirectoryListingIterator implements Iterator<File>{
 
     @Override
     public void remove() {
-        throw new UnsupportedOperationException("remove");
+        throw new UnsupportedOperationException("Removing is not supported for this iterator");
     }
 
-    private void nullifyAll() {
-        list = null;
-        iterator = null;
-    }
-
-    protected List<File> getDirectoryListing() {
+    protected List<File> getDirectoryListing(boolean isRandomOrder) {
         try {
-            return getDirectoryListing(srcDir, isRandomOrder, isRecursiveListing);
+            final List<File> list = getDirectoryListing(new File(srcDir), isRecursiveListing);
+
+            if (isRandomOrder) {
+                shuffleList(list);
+            }
+
+            return list;
         } catch (FileNotFoundException ex) {
             throw new RuntimeException(ex);
-//            LOGGER.error(ex.getMessage(), ex);
         }
     }
 
@@ -90,28 +87,6 @@ public class DirectoryListingIterator implements Iterator<File>{
         }
         return list;
     }
-
-    public static List<File> getDirectoryListing(String dirPath, boolean isRandomOrder, boolean isRecursiveListing) throws FileNotFoundException {
-
-        final List<File> list = getDirectoryListing(new File(dirPath), isRecursiveListing);
-
-        if (isRandomOrder) {
-            shuffleList(list);
-        }
-//        TODO: remove it
-//        else {
-//            Collections.sort(list, new Comparator<File>() {
-//                @Override
-//                public int compare(File o1, File o2) {
-//                    return o1.getName().compareTo(o2.getName());
-//                }
-//            });
-//        }
-
-        return list;
-    }
-
-
 
     public static List<File> getDirectoryListing(File baseDir, boolean isRecursiveListing) throws FileNotFoundException {
 

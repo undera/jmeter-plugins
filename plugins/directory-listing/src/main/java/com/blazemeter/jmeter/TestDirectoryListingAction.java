@@ -24,7 +24,7 @@ public class TestDirectoryListingAction implements ActionListener {
         try {
             final DirectoryListingIterator listingIterator  = config.createDirectoryListingIterator();
 
-            final List<File> files = listingIterator.getDirectoryListing();
+            final List<File> files = listingIterator.getDirectoryListing(config.getRandomOrder());
 
             String variableName = config.getDestinationVariableName();
 

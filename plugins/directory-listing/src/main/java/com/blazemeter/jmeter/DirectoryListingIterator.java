@@ -69,14 +69,12 @@ public class DirectoryListingIterator implements Iterator<File>{
         }
     }
 
-    public static List<File> shuffleList(List<File> list) {
-        if (list != null) {
-            Collections.shuffle(list, new Random(System.currentTimeMillis()));
-        }
-        return list;
+    public static void shuffleList(List<File> list) {
+        Collections.shuffle(list, new Random(System.currentTimeMillis()));
     }
 
     public static List<File> getDirectoryListing(File baseDir, boolean isRecursiveListing) throws FileNotFoundException {
+        final List<File> resultList = new ArrayList<>();
 
         if (!baseDir.exists()) {
             throw new FileNotFoundException("Directory does not exists: " + baseDir.getAbsolutePath());
@@ -84,17 +82,16 @@ public class DirectoryListingIterator implements Iterator<File>{
 
         File[] files = baseDir.listFiles();
 
-        if (files == null || files.length == 0) {
-            return null;
+        if (files == null) {
+            return resultList;
         }
 
-        final List<File> resultList = new ArrayList<>();
 
         for (File file : files) {
             boolean isDirectory = file.isDirectory();
             if (isRecursiveListing && isDirectory) {
                 List<File> nestedListing = getDirectoryListing(file, true);
-                if (nestedListing != null) {
+                if (!nestedListing.isEmpty()) {
                     resultList.addAll(nestedListing);
                 }
             } else if (!isDirectory) {

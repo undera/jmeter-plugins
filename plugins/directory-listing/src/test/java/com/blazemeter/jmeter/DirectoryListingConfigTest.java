@@ -6,12 +6,11 @@ import org.apache.jorphan.collections.HashTree;
 import org.junit.Test;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class DirectoryListingConfigTest {
 
@@ -108,10 +107,12 @@ public class DirectoryListingConfigTest {
 
         config.iterationStart(null);
 
-        config.testEnded();
-        config.setIndependentListPerThread(false);
-        config.iterationStart(null);
-        // TODO: assert something here
+        // TODO: ??????????????????????/
+        Class<?> jmeterThreadCls = JMeterThread.class;
+        Field isRunning = jmeterThreadCls.getDeclaredField("running");
+        isRunning.setAccessible(true);
+
+        assertFalse(isRunning.getBoolean(thread));
     }
 
     private void testFlow(DirectoryListingConfig config) {

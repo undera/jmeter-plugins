@@ -8,30 +8,21 @@ import java.util.*;
 public class DirectoryListingIterator implements Iterator<File>{
 
     private final String srcDir;
-//    private final String destVar;
-//    private final boolean useFullPath;
     private final boolean isRandomOrder;
     private final boolean isRecursiveListing;
     private final boolean isRewindOnEndOfList;
-    private final boolean isIndependentList;
     private final boolean isReReadDirectory;
 
 
     public DirectoryListingIterator(String srcDir,
-//                                    String destVar,
-//                                    boolean useFullPath,
                                     boolean isRandomOrder,
                                     boolean isRecursiveListing,
                                     boolean isRewindOnEndOfList,
-                                    boolean isIndependentList,
                                     boolean isReReadDirectory) {
         this.srcDir = srcDir;
-//        this.destVar = destVar;
-//        this.useFullPath = useFullPath;
         this.isRandomOrder = isRandomOrder;
         this.isRecursiveListing = isRecursiveListing;
         this.isRewindOnEndOfList = isRewindOnEndOfList;
-        this.isIndependentList = isIndependentList;
         this.isReReadDirectory = isReReadDirectory;
 
         this.list = getDirectoryListing(isRandomOrder);

@@ -70,11 +70,9 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
     public DirectoryListingIterator createDirectoryListingIterator() {
         return new DirectoryListingIterator(
                 getSourceDirectory(),
-                getUseFullPath(),
                 getRandomOrder(),
                 getRecursiveListing(),
                 getRewindOnTheEnd(),
-                getIndependentListPerThread(),
                 getReReadDirectoryOnTheEndOfList()
         );
     }

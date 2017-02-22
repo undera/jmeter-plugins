@@ -40,56 +40,6 @@ public class DirectoryListingConfigTest {
         testFlow(config);
     }
 
-    @Test
-    public void testReRead() throws Exception {
-        DirectoryListingConfig config = new DirectoryListingConfig();
-
-        File rootDir = TestDirectoryListingConfigActionTest.createFileTree();
-
-        setDirectoryConfig(config, rootDir.getAbsolutePath(), VARIABLE_NAME, true, false, true, true, true, true);
-
-        testFlow(config);
-
-        File.createTempFile("tmpFile3_", ".csv", rootDir);
-
-        testFlow(config);
-    }
-
-    @Test
-    public void testOnlyRewind() throws Exception {
-        DirectoryListingConfig config = new DirectoryListingConfig();
-
-        File rootDir = TestDirectoryListingConfigActionTest.createFileTree();
-
-        setDirectoryConfig(config, rootDir.getAbsolutePath(), VARIABLE_NAME, true, false, true, true, true, false);
-
-        testFlow(config);
-
-        config.setRandomOrder(true);
-        JMeterVariables variables = JMeterContextService.getContext().getVariables();
-        assertNotNull(variables);
-
-        List<File> etalonList = config.createDirectoryListingIterator().getDirectoryListing();
-        DirectoryListingIterator.shuffleList(etalonList);
-
-        assertNotNull(etalonList);
-
-        List<String> filesNames = new ArrayList<>(etalonList.size());
-        for (File f : etalonList) {
-            filesNames.add(f.getAbsolutePath());
-        }
-
-
-        for (int i = 0; i <  etalonList.size(); i++) {
-            config.iterationStart(null);
-            String actualName = variables.get(VARIABLE_NAME);
-            assertTrue(filesNames.contains(actualName));
-            filesNames.remove(actualName);
-        }
-
-        assertEquals(0, filesNames.size());
-
-    }
 
     @Test
     public void testThreadStopping() throws Exception {

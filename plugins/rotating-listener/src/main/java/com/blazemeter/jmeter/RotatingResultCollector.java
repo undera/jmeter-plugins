@@ -65,8 +65,8 @@ public class RotatingResultCollector extends ResultCollector {
         return getPropertyAsString(MAX_SAMPLES_COUNT, "");
     }
 
-    public void setMaxSamplesCount(String maxFileSize) {
-        setProperty(MAX_SAMPLES_COUNT, maxFileSize);
+    public void setMaxSamplesCount(String maxSamplesCount) {
+        setProperty(MAX_SAMPLES_COUNT, maxSamplesCount);
     }
 
     protected static String getRotatedFilename(String origFile) {

@@ -23,7 +23,6 @@ public class DirectoryListingConfigTest {
         File rootDir = TestDirectoryListingConfigActionTest.createFileTree();
 
         setDirectoryConfig(config, rootDir.getAbsolutePath(), VARIABLE_NAME, true, false, true, false, false, false);
-
         config.testStarted();
         testFlow(config);
         config.testEnded();

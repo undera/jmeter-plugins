@@ -4,14 +4,25 @@ package com.blazemeter.jmeter;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
+import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
-public class DirectoryListingConfig extends ConfigTestElement implements LoopIterationListener, TestStateListener {
-//    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryListingConfig.class);
+public class DirectoryListingConfig extends ConfigTestElement implements NoThreadClone, LoopIterationListener, TestStateListener {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryListingConfig.class);
+
+    private final ThreadLocal<DirectoryListingIterator> threadLocalIterator = new ThreadLocal<DirectoryListingIterator>(){
+        @Override
+        protected DirectoryListingIterator initialValue()
+        {
+            return createDirectoryListingIterator();
+        }
+    };
 
     public static final String SOURCE_DIRECTORY = "directory";
     public static final String DESTINATION_VARIABLE_NAME = "variableName";
@@ -22,38 +33,31 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
     public static final String INDEPENDENT_LIST_PER_THREAD = "independentListPerThread";
     public static final String RE_READ_DIRECTORY_ON_THE_END_OF_LIST = "reReadDirectory";
 
+
+
     private DirectoryListingIterator directoryListingIterator;
 
     @Override
     public void iterationStart(LoopIterationEvent loopIterationEvent) {
-
-        // TODO: isIndependentListPerThread
         boolean isIndependentListPerThread = getIndependentListPerThread();
 
-        if (directoryListingIterator == null) {
-            directoryListingIterator = createDirectoryListingIterator();
+        if (!isIndependentListPerThread && directoryListingIterator == null) {
+            JMeterContextService.getContext().getThread().stop();
+            return;
         }
 
-
-        if (!isIndependentListPerThread) {
-            synchronized (directoryListingIterator) {
-                setVariable();
-            }
-        } else {
-            setVariable();
-        }
-
-    }
-
-    private void setVariable() {
-        if (directoryListingIterator.hasNext()) {
+        if (getIterator().hasNext()) {
             JMeterVariables variables = JMeterContextService.getContext().getVariables();
-            variables.put(getDestinationVariableName(), getFilePath(directoryListingIterator.next()));
+            variables.put(getDestinationVariableName(), getFilePath(getIterator().next()));
         } else {
             // TODO: interrupt iteration
             JMeterContextService.getContext().getThread().stop();
             directoryListingIterator = null;
         }
+    }
+
+    private DirectoryListingIterator getIterator() {
+        return getIndependentListPerThread() ? threadLocalIterator.get() : directoryListingIterator;
     }
 
     protected String getFilePath(File file) {
@@ -141,6 +145,7 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
         setProperty(RE_READ_DIRECTORY_ON_THE_END_OF_LIST, reReadDirectoryOnTheEndOfList);
     }
 
+
     @Override
     public void testStarted() {
         testStarted("*local*");
@@ -148,11 +153,8 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
 
     @Override
     public void testStarted(String s) {
-//        if (!getIndependentListPerThread()) {
-//            pool.init(this);
-//        }
+        directoryListingIterator = createDirectoryListingIterator();
     }
-
 
     @Override
     public void testEnded() {
@@ -161,8 +163,6 @@ public class DirectoryListingConfig extends ConfigTestElement implements LoopIte
 
     @Override
     public void testEnded(String s) {
-//        if (!getIndependentListPerThread()) {
-//            pool.nullify();
-//        }
+        directoryListingIterator = null;
     }
 }

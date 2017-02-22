@@ -38,7 +38,7 @@ public class DirectoryListingIterator implements Iterator<File>{
                 if (isReReadDirectory) {
                     list = getDirectoryListing(isRandomOrder);
                 }
-
+                // else // for removing double shuffle when re-read list
                 if (isRandomOrder) {
                     shuffleList(list);
                 }

@@ -22,7 +22,9 @@ public class TestDirectoryListingAction implements ActionListener {
         JTextArea checkArea = directoryListingConfigGui.getCheckArea();
 
         try {
-            final List<File> files = config.getDirectoryListing();
+            final DirectoryListingIterator listingIterator  = config.createDirectoryListingIterator();
+
+            final List<File> files = listingIterator.getDirectoryListing();
 
             String variableName = config.getDestinationVariableName();
 

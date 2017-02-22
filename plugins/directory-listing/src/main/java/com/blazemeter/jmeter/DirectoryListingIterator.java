@@ -25,7 +25,10 @@ public class DirectoryListingIterator implements Iterator<File>{
         this.isRewindOnEndOfList = isRewindOnEndOfList;
         this.isReReadDirectory = isReReadDirectory;
 
-        this.list = getDirectoryListing(isRandomOrder);
+        this.list = getDirectoryListing();
+        if (isRandomOrder) {
+            shuffleList(list);
+        }
         this.iterator = this.list.iterator();
     }
 
@@ -36,9 +39,9 @@ public class DirectoryListingIterator implements Iterator<File>{
         if (!iterator.hasNext()) {
             if (isRewindOnEndOfList) {
                 if (isReReadDirectory) {
-                    list = getDirectoryListing(isRandomOrder);
+                    list = getDirectoryListing();
                 }
-                // else // for removing double shuffle when re-read list
+
                 if (isRandomOrder) {
                     shuffleList(list);
                 }
@@ -58,15 +61,9 @@ public class DirectoryListingIterator implements Iterator<File>{
         throw new UnsupportedOperationException("Removing is not supported for this iterator");
     }
 
-    protected List<File> getDirectoryListing(boolean isRandomOrder) {
+    protected List<File> getDirectoryListing() {
         try {
-            final List<File> list = getDirectoryListing(new File(srcDir), isRecursiveListing);
-
-            if (isRandomOrder) {
-                shuffleList(list);
-            }
-
-            return list;
+            return getDirectoryListing(new File(srcDir), isRecursiveListing);
         } catch (FileNotFoundException ex) {
             throw new RuntimeException(ex);
         }

@@ -69,7 +69,9 @@ public class DirectoryListingConfigTest {
         JMeterVariables variables = JMeterContextService.getContext().getVariables();
         assertNotNull(variables);
 
-        List<File> etalonList = config.createDirectoryListingIterator().getDirectoryListing(true);
+        List<File> etalonList = config.createDirectoryListingIterator().getDirectoryListing();
+        DirectoryListingIterator.shuffleList(etalonList);
+
         assertNotNull(etalonList);
 
         List<String> filesNames = new ArrayList<>(etalonList.size());
@@ -116,7 +118,11 @@ public class DirectoryListingConfigTest {
     }
 
     private void testFlow(DirectoryListingConfig config) {
-        List<File> etalonList = config.createDirectoryListingIterator().getDirectoryListing(config.getRandomOrder());
+        List<File> etalonList = config.createDirectoryListingIterator().getDirectoryListing();
+
+        if (config.getRandomOrder()) {
+            DirectoryListingIterator.shuffleList(etalonList);
+        }
 
         assertNotNull(etalonList);
 

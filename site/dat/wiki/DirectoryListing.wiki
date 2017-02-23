@@ -1,0 +1,18 @@
+= Directory Listing Config =
+
+<span class=''>[/?search=jpgc-directory-listing <i class='fa fa-download'></i> Download]</span>
+
+Directory listing config plugin offers opportunities that allows to set file path from source directory into jmeter-variable in iteration loop.
+This plugin have some config options, that influence for the behavior:
+  * "Use full path" - is this flag does not selected plugin will be set sub-path from source path into destination variable;
+  * "Random order"  - shuffle listing in random order;
+  * "Recursive listing" - meaning, that plugin will be looking for all sub-folders in source directory;
+  * "Rewind on end of list" - if the flag is selected and an iteration loop has reached the end, the new loop will be started;
+  * "Re-read directory on the end of list" - re-read directory before starting new iteration loop;
+  * "Independent list per thread" - determines that listing will be shared for all threads or each thread will be have own local copy.
+
+[/img/wiki/directoryListing.png]
+
+== Example ==
+
+[/img/examples/DirectoryListingDataSource.jmx Download Example Test Plan]

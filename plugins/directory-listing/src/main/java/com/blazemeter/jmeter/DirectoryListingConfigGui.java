@@ -7,6 +7,8 @@ import org.apache.jmeter.testelement.TestElement;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class DirectoryListingConfigGui extends AbstractConfigGui {
 
@@ -74,13 +76,18 @@ public class DirectoryListingConfigGui extends AbstractConfigGui {
         addToPanel(mainPanel, labelConstraints, 0, 5, new JLabel("Rewind on end of list: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 5, isRewindOnTheEndCheckBox = new JCheckBox());
 
+        addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Re-read directory on end of list: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 6, isReReadDirectoryCheckBox = new JCheckBox());
 
-        addToPanel(mainPanel, labelConstraints, 0, 6, new JLabel("Independent list per thread: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 6, isIndependentListCheckBox = new JCheckBox());
+        addToPanel(mainPanel, labelConstraints, 0, 7, new JLabel("Independent list per thread: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 7, isIndependentListCheckBox = new JCheckBox());
 
+        isRewindOnTheEndCheckBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                isReReadDirectoryCheckBox.setEnabled(isRewindOnTheEndCheckBox.isSelected());
+            }
+        });
 
-        addToPanel(mainPanel, labelConstraints, 0, 7, new JLabel("Re-read directory on end of list: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 7, isReReadDirectoryCheckBox = new JCheckBox());
 
         editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
         labelConstraints.insets = new java.awt.Insets(4, 0, 0, 2);
@@ -169,6 +176,9 @@ public class DirectoryListingConfigGui extends AbstractConfigGui {
             isRewindOnTheEndCheckBox.setSelected(directoryListingConfig.getRewindOnTheEnd());
             isReReadDirectoryCheckBox.setSelected(directoryListingConfig.getReReadDirectoryOnTheEndOfList());
             isIndependentListCheckBox.setSelected(directoryListingConfig.getIndependentListPerThread());
+
+            isReReadDirectoryCheckBox.setEnabled(isRewindOnTheEndCheckBox.isSelected());
+
         }
     }
 

@@ -8,13 +8,10 @@ import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 public class DirectoryListingConfig extends ConfigTestElement implements NoThreadClone, LoopIterationListener, TestStateListener {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DirectoryListingConfig.class);
 
     private final ThreadLocal<DirectoryListingIterator> threadLocalIterator = new ThreadLocal<DirectoryListingIterator>(){
         @Override
@@ -144,7 +141,6 @@ public class DirectoryListingConfig extends ConfigTestElement implements NoThrea
     public void setReReadDirectoryOnTheEndOfList(boolean reReadDirectoryOnTheEndOfList) {
         setProperty(RE_READ_DIRECTORY_ON_THE_END_OF_LIST, reReadDirectoryOnTheEndOfList);
     }
-
 
     @Override
     public void testStarted() {

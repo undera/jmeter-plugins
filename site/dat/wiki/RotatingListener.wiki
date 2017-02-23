@@ -10,6 +10,6 @@ File names form sequence like "result.jtl => result.1.jtl => result.2.jtl".
 
 [/img/wiki/rotatingListener.png]
 
-== Sampls Test Plan ==
+== Sample Test Plan ==
 
 [/img/examples/RotatingSimpleDataWriter.jmx Download Example Test Plan]

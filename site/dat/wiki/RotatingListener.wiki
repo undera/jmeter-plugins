@@ -1,0 +1,15 @@
+= Rotating JTL Listener =
+
+<span class=''>[/?search=jpgc-rotating-listener <i class='fa fa-download'></i> Download]</span>
+
+
+Rotating JTL Listener is a feature, that allows writing sequence of files, limited by number of samples per file.
+This enables recorded file to be handled in some background process, archived/deleted for saving free space.
+File names form sequence like "result.jtl => result.1.jtl => result.2.jtl".
+
+
+[/img/wiki/rotatingListener.png]
+
+== Sampls Test Plan ==
+
+[/img/examples/RotatingSimpleDataWriter.jmx Download Example Test Plan]

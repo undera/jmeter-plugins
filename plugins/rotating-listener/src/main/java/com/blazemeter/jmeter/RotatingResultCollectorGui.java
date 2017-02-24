@@ -1,5 +1,6 @@
 package com.blazemeter.jmeter;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.SimpleDataWriter;
@@ -8,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RotatingResultCollectorGui extends SimpleDataWriter {
+    public static final String WIKIPAGE = "RotatingListener";
+
     private JTextField maxSamplesCount;
 
     public RotatingResultCollectorGui() {
@@ -16,9 +19,12 @@ public class RotatingResultCollectorGui extends SimpleDataWriter {
     }
 
     private void init() {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
+
         Container topPanel = makeTitlePanel();
+
+        add(JMeterPluginsUtils.addHelpLinkToPanel(topPanel, WIKIPAGE), BorderLayout.NORTH);
         add(topPanel, BorderLayout.NORTH);
 
         JPanel mainPanel = new HorizontalPanel();
@@ -33,7 +39,7 @@ public class RotatingResultCollectorGui extends SimpleDataWriter {
 
     @Override
     public String getStaticLabel() {
-        return "Rotating Simple Data Writer";
+        return JMeterPluginsUtils.prefixLabel("Rotating Simple Data Writer");
     }
 
     public TestElement createTestElement() {

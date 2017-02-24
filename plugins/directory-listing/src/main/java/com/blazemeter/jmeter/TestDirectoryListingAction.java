@@ -1,5 +1,7 @@
 package com.blazemeter.jmeter;
 
+import org.apache.jmeter.engine.util.CompoundVariable;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +10,9 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public class TestDirectoryListingAction implements ActionListener {
+
+    private final StringBuilder builder = new StringBuilder();
+    private final CompoundVariable compoundVariable = new CompoundVariable();
 
     private final DirectoryListingConfigGui directoryListingConfigGui;
 
@@ -21,18 +26,22 @@ public class TestDirectoryListingAction implements ActionListener {
 
         JTextArea checkArea = directoryListingConfigGui.getCheckArea();
 
-        try {
-            final DirectoryListingIterator listingIterator  = config.createDirectoryListingIterator();
+        builder.setLength(0);
 
-            final List<File> files = listingIterator.getDirectoryListing();
+        try {
+            compoundVariable.setParameters(config.getSourceDirectory());
+            config.setSourceDirectory(compoundVariable.execute());
+
+            compoundVariable.setParameters(config.getDestinationVariableName());
+            config.setDestinationVariableName(compoundVariable.execute());
+
+            final List<File> files = config.createDirectoryListingIterator().getDirectoryListing();
 
             if (config.getRandomOrder()) {
                 DirectoryListingIterator.shuffleList(files);
             }
 
             String variableName = config.getDestinationVariableName();
-
-            final StringBuilder builder = new StringBuilder();
 
             builder.append("Listing of directory successfully finished, ").append(files.size()).append(" files found:\r\n");
 
@@ -45,8 +54,9 @@ public class TestDirectoryListingAction implements ActionListener {
             checkArea.setText(builder.toString());
             // move scroll to top
             checkArea.setCaretPosition(0);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             checkArea.setText(e.getMessage());
         }
     }
+
 }

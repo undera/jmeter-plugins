@@ -94,6 +94,23 @@
     }
   },
   {
+    "id": "jpgc-directory-listing",
+    "name": "Directory Listing Config",
+    "description": "Directory listing config allows to set file path from source directory into jmeter-variable",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/directoryListing.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/DirectoryListing/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "com.blazemeter.jmeter.DirectoryListingConfig",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-directory-listing/0.1/jmeter-plugins-directory-listing-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
+  },
+  {
     "id": "jpgc-dummy",
     "name": "Dummy Sampler",
     "description": "Debugging sampler that just generates result as you specified. Very convenient to debug your complex scripts",

@@ -74,6 +74,7 @@
   * [VariablesFromCSV Variables from CSV] configuration item
   * [LockFile Lock Files] test will not be started if lock files found
   * [RedisDataSet Redis Data Set]
+  * [DirectoryListing Directory Listing Config]
   * [AndroidDriverConfig Android Config] for WebDriver
   * [ChromeDriverConfig Chrome Config] for WebDriver
   * [FirefoxDriverConfig Firefox Config] for WebDriver

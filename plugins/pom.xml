@@ -27,6 +27,7 @@
         <module>csvars</module>
         <module>dbmon</module>
         <module>deprecated</module>
+        <module>directory-listing</module>
         <module>dummy</module>
         <module>ffw</module>
         <module>fifo</module>

@@ -47,6 +47,11 @@
             <version>0.4</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>kg.apc</groupId>
+            <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
+            <version>0.3</version>
+        </dependency>
     </dependencies>
 
 </project>

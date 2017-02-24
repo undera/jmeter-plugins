@@ -2,13 +2,13 @@ package com.blazemeter.jmeter;
 
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 import java.lang.reflect.Field;
 
 public class RotatingResultCollector extends ResultCollector {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RotatingResultCollector.class);
+    private static final Logger LOGGER = LoggingManager.getLoggerForClass();
     public static final String MAX_SAMPLES_COUNT = "maxSamplesCount";
 
     private int maxSamplesCount;

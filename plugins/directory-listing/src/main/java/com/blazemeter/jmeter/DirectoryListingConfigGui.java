@@ -1,5 +1,6 @@
 package com.blazemeter.jmeter;
 
+import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DirectoryListingConfigGui extends AbstractConfigGui {
+    public static final String WIKIPAGE = "DirectoryListing";
 
     private JTextField sourceDirectoryField;
     private JButton browseButton;
@@ -38,6 +40,8 @@ public class DirectoryListingConfigGui extends AbstractConfigGui {
         setBorder(makeBorder());
 
         Container topPanel = makeTitlePanel();
+
+        add(JMeterPluginsUtils.addHelpLinkToPanel(topPanel, WIKIPAGE), BorderLayout.NORTH);
         add(topPanel, BorderLayout.NORTH);
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
@@ -133,7 +137,7 @@ public class DirectoryListingConfigGui extends AbstractConfigGui {
 
     @Override
     public String getStaticLabel() {
-        return "Directory Listing Data Source";
+        return JMeterPluginsUtils.prefixLabel("Directory Listing Data Source");
     }
 
     @Override

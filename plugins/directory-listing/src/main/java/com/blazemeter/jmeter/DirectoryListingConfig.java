@@ -12,6 +12,8 @@ import org.apache.jmeter.threads.JMeterVariables;
 import java.io.File;
 
 public class DirectoryListingConfig extends ConfigTestElement implements NoThreadClone, LoopIterationListener, TestStateListener {
+    public static final String DEFAULT_DESTINATION_VARIABLE_NAME = "filename";
+
 
     private final ThreadLocal<DirectoryListingIterator> threadLocalIterator = new ThreadLocal<DirectoryListingIterator>(){
         @Override
@@ -83,7 +85,13 @@ public class DirectoryListingConfig extends ConfigTestElement implements NoThrea
     }
 
     public String getDestinationVariableName() {
-        return getPropertyAsString(DESTINATION_VARIABLE_NAME);
+        return getPropertyAsString(DESTINATION_VARIABLE_NAME, DEFAULT_DESTINATION_VARIABLE_NAME);
+    }
+
+    @Override
+    public String getPropertyAsString(String key, String defaultValue) {
+        String str = super.getPropertyAsString(key, defaultValue);
+        return (str == null || str.isEmpty()) ? defaultValue : str;
     }
 
     public boolean getUseFullPath() {

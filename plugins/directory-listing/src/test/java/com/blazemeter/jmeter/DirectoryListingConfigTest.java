@@ -3,6 +3,7 @@ package com.blazemeter.jmeter;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.threads.*;
 import org.apache.jorphan.collections.HashTree;
+import org.apache.jorphan.util.JMeterStopThreadException;
 import org.junit.Test;
 
 import java.io.File;
@@ -56,14 +57,11 @@ public class DirectoryListingConfigTest {
 
         testFlow(config);
 
-        config.iterationStart(null);
-
-        // TODO: ??????????????????????/
-        Class<?> jmeterThreadCls = JMeterThread.class;
-        Field isRunning = jmeterThreadCls.getDeclaredField("running");
-        isRunning.setAccessible(true);
-
-        assertFalse(isRunning.getBoolean(thread));
+        try {
+            config.iterationStart(null);
+        } catch (JMeterStopThreadException ex) {
+            assertEquals("All files in the directory have been passed.", ex.getMessage());
+        }
     }
 
     private void testFlow(DirectoryListingConfig config) {

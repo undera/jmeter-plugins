@@ -8,6 +8,7 @@ import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jorphan.util.JMeterStopThreadException;
 
 import java.io.File;
 
@@ -50,8 +51,8 @@ public class DirectoryListingConfig extends ConfigTestElement implements NoThrea
             variables.put(getDestinationVariableName(), getFilePath(getIterator().next()));
         } else {
             // TODO: interrupt iteration
-            JMeterContextService.getContext().getThread().stop();
             directoryListingIterator = null;
+            throw new JMeterStopThreadException("All files in the directory have been passed.");
         }
     }
 

@@ -42,8 +42,7 @@ public class DirectoryListingConfig extends ConfigTestElement implements NoThrea
         boolean isIndependentListPerThread = getIndependentListPerThread();
 
         if (!isIndependentListPerThread && directoryListingIterator == null) {
-            JMeterContextService.getContext().getThread().stop();
-            return;
+            throw new JMeterStopThreadException("All files in the directory have been passed.");
         }
 
         if (getIterator().hasNext()) {

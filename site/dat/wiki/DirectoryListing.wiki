@@ -12,7 +12,3 @@ This plugin have some config options, that influence for the behavior:
   * "Independent list per thread" - determines that listing will be shared for all threads or each thread will be have own local copy.
 
 [/img/wiki/directoryListing.png]
-
-== Example ==
-
-[/img/examples/DirectoryListingDataSource.jmx Download Example Test Plan]

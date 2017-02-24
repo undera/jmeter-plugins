@@ -431,6 +431,23 @@
     }
   },
   {
+    "id": "jpgc-rotating-listener",
+    "name": "Rotating JTL Listener",
+    "description": "Rotating listener provides writing sequence of files, limited by number of samples per file.",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/rotatingListener.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/RotatingListener/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "com.blazemeter.jmeter.RotatingResultCollector",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-rotating-listener/0.1/jmeter-plugins-rotating-listener-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
+  },
+  {
     "id": "jpgc-sense",
     "name": "BM.Sense Uploader",
     "description": "This is special plugin in for uploading results to BlazeMeter Sense immediately after test end",

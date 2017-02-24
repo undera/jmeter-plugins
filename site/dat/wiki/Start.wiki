@@ -38,6 +38,7 @@
   * [LoadosophiaUploader BM.Sense Uploader] (aka Loadosophia Uploader)
   * [AutoStop] Trigger
   * [GraphsGeneratorListener Graphs Generator]
+  * [RotatingListener Rotating JTL Listener]
 
 == Tools ==
   * [JMeterPluginsCMD Command-Line Graph Plotting Tool]

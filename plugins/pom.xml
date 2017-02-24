@@ -41,6 +41,7 @@
         <module>perfmon</module>
         <module>prmctl</module>
         <module>redis</module>
+        <module>rotating-listener</module>
         <module>sense-uploader</module>
         <module>tst</module>
         <module>udp</module>

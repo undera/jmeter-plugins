@@ -3,8 +3,8 @@ import logging
 import os
 import re
 import zipfile
+import tempfile
 from distutils.version import StrictVersion
-
 import requests
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -18,22 +18,75 @@ def is_version_packed(fname):
     return resp.status_code == 200
 
 
-def pack_version(fname, ver_obj, pmgr_obj):
+def pack_version(fname, ver_obj, pmgr_obj, installer_cls):
     if not ver_obj['downloadUrl']:
         return
 
-    with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as ziph:
-        # pack main file
-        download_into_zip(ziph, ver_obj['downloadUrl'], os.path.join("lib", "ext"))
+    if installer_cls is not None:
+        tmpDir = tempfile.mkdtemp()
 
-        # pack libs
+        # download main jar
+        jar_path = download_into_dir(tmpDir, ver_obj['downloadUrl'], os.path.join("lib", "ext"))
+
+        os.mkdir(os.path.join(tmpDir, 'bin'))
+        install_plugin(jar_path, installer_cls)
+
+        # download libs
         if 'libs' in ver_obj:
             for libname in ver_obj['libs']:
-                download_into_zip(ziph, ver_obj['libs'][libname], os.path.join("lib"))
+                download_into_dir(tmpDir, ver_obj['libs'][libname], os.path.join("lib"))
 
-        # pack pmgr
-        download_into_zip(ziph, pmgr_obj['downloadUrl'], os.path.join("lib", "ext"))
+        # download pmgr
+        download_into_dir(tmpDir, pmgr_obj['downloadUrl'], os.path.join("lib", "ext"))
 
+        # archive temp folder
+        zipf = zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED)
+        zipdir(tmpDir, zipf)
+        zipf.close()
+
+    else:
+        with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as ziph:
+            # pack main file
+            download_into_zip(ziph, ver_obj['downloadUrl'], os.path.join("lib", "ext"))
+
+            # pack libs
+            if 'libs' in ver_obj:
+                for libname in ver_obj['libs']:
+                    download_into_zip(ziph, ver_obj['libs'][libname], os.path.join("lib"))
+
+            # pack pmgr
+            download_into_zip(ziph, pmgr_obj['downloadUrl'], os.path.join("lib", "ext"))
+
+def zipdir(path, ziph):
+    # ziph is zipfile handle
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            ziph.write(os.path.join(root, file), os.path.join(root[len(path):], file))
+
+def install_plugin(jarPath, javaClass):
+    # HACK: run with -cp, because manifest file does not contains property "Main class"
+    os.system('java -cp ' + jarPath + ' ' + javaClass)
+
+def download_into_dir(dir, url, dest_subpath):
+
+    logging.info("Downloading: %s", url)
+    resp = requests.get(url)
+    assert resp.status_code == 200
+    if 'content-disposition' in resp.headers:
+        remote_filename = re.findall("filename=(.+)", resp.headers['content-disposition'])[0]
+    else:
+        remote_filename = os.path.basename(resp.url)
+
+
+    dirPath = os.path.join(dir, dest_subpath)
+    if not os.path.exists(dirPath):
+        os.makedirs(dirPath)
+
+    file = open(os.path.join(dir, dest_subpath, remote_filename), 'w')
+    file.write(resp.content)
+    file.close()
+    resp.close()
+    return os.path.join(dirPath, remote_filename)
 
 def download_into_zip(ziph, url, dest_subpath):
     """
@@ -49,6 +102,7 @@ def download_into_zip(ziph, url, dest_subpath):
         remote_filename = os.path.basename(resp.url)
     ziph.writestr(os.path.join(dest_subpath, remote_filename), resp.content)
     resp.close()
+
 
 
 def get_pmgr(plugins_list):
@@ -88,4 +142,4 @@ if __name__ == "__main__":
                 logging.info("Skip: %s", plugin['id'])
                 continue
 
-            pack_version(os.path.join(dest_dir, dest_file), plugin['versions'][version], pmgr_obj)
+            pack_version(os.path.join(dest_dir, dest_file), plugin['versions'][version], pmgr_obj, plugin.get('installerClass'))

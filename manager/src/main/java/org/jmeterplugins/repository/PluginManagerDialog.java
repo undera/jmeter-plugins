@@ -154,6 +154,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        statusLabel.setForeground(Color.BLACK);
         installed.setEnabled(false);
         available.setEnabled(false);
         upgrades.setEnabled(false);
@@ -180,6 +181,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
                     manager.applyChanges(statusChanged);
                     ActionRouter.getInstance().actionPerformed(new ActionEvent(this, 0, ActionNames.EXIT));
                 } catch (Exception ex) {
+                    statusLabel.setForeground(Color.RED);
                     statusChanged.notify("Failed to apply changes: " + ex.getMessage());
                     throw ex;
                 }

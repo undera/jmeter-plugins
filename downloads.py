@@ -32,9 +32,7 @@ def pack_version(fname, ver_obj, pmgr_obj, installer_cls):
 
         if installer_cls is not None:
             os.mkdir(os.path.join(tmp_dir, 'bin'))
-            return_code = subprocess.call(["java", "-cp", jar_path, installer_cls])
-            if return_code != 0:
-                logging.error("Failed to install " + os.path.basename(jar_path))
+            subprocess.check_call(["java", "-cp", jar_path, installer_cls])
 
         # download libs
         if 'libs' in ver_obj:

@@ -15,7 +15,7 @@
  * limitations under the License.
  *
  */
-package org.jmeterplugins.save;
+package kg.apc.save;
 
 import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;

@@ -1,4 +1,4 @@
-package org.jmeterplugins.save;
+package kg.apc.save;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.nio.file.StandardCopyOption;
 
 public class MergeResultsInstaller {
     public static void main(String[] argv) throws IOException {
-        writeOut("/org/jmeterplugins/save/merge-results.properties", false);
+        writeOut("/kg/apc/save/merge-results.properties", false);
     }
 
     private static void writeOut(String resName, boolean executable) throws IOException {

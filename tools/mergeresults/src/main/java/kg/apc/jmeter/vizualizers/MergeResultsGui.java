@@ -68,7 +68,7 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.gui.ComponentUtil;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.jmeterplugins.save.MergeResultsService;
+import kg.apc.save.MergeResultsService;
 
 public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
         TableModelListener, CellEditorListener, ChangeListener, ActionListener {

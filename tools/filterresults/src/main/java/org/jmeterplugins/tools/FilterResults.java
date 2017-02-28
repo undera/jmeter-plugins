@@ -13,7 +13,7 @@ import javax.swing.border.EmptyBorder;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.jmeterplugins.save.MergeResultsService;
+import kg.apc.save.MergeResultsService;
 
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;

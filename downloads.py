@@ -2,9 +2,11 @@ import json
 import logging
 import os
 import re
+import subprocess
+import tempfile
 import zipfile
-from distutils.version import StrictVersion
 
+from distutils.version import StrictVersion
 import requests
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -18,28 +20,76 @@ def is_version_packed(fname):
     return resp.status_code == 200
 
 
-def pack_version(fname, ver_obj, pmgr_obj):
+def pack_version(fname, ver_obj, pmgr_obj, installer_cls):
     if not ver_obj['downloadUrl']:
         return
 
     with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as ziph:
-        # pack main file
-        download_into_zip(ziph, ver_obj['downloadUrl'], os.path.join("lib", "ext"))
+        if installer_cls is not None:
+            tmp_dir = tempfile.mkdtemp()
 
-        # pack libs
-        if 'libs' in ver_obj:
-            for libname in ver_obj['libs']:
-                download_into_zip(ziph, ver_obj['libs'][libname], os.path.join("lib"))
+            # download main jar
+            jar_path = download_into_dir(tmp_dir, ver_obj['downloadUrl'], os.path.join("lib", "ext"))
 
-        # pack pmgr
-        download_into_zip(ziph, pmgr_obj['downloadUrl'], os.path.join("lib", "ext"))
+            os.mkdir(os.path.join(tmp_dir, 'bin'))
 
+            return_code = subprocess.call(["java", "-cp", jar_path, installer_cls])
+            if return_code != 0:
+                logging.error("Failed to install " + os.path.basename(jar_path))
+
+            # download libs
+            if 'libs' in ver_obj:
+                for libname in ver_obj['libs']:
+                    download_into_dir(tmp_dir, ver_obj['libs'][libname], os.path.join("lib"))
+
+            # download pmgr
+            download_into_dir(tmp_dir, pmgr_obj['downloadUrl'], os.path.join("lib", "ext"))
+
+            # archive temp folder
+            zipdir(tmp_dir, ziph)
+        else:
+            # pack main file
+            download_into_zip(ziph, ver_obj['downloadUrl'], os.path.join("lib", "ext"))
+
+            # pack libs
+            if 'libs' in ver_obj:
+                for libname in ver_obj['libs']:
+                    download_into_zip(ziph, ver_obj['libs'][libname], os.path.join("lib"))
+
+            # pack pmgr
+            download_into_zip(ziph, pmgr_obj['downloadUrl'], os.path.join("lib", "ext"))
+
+def zipdir(path, ziph):
+    # ziph is zipfile handle
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            ziph.write(os.path.join(root, file), os.path.join(root[len(path):], file))
+
+
+def download_into_dir(dir, url, dest_subpath):
+    remote_filename, resp = download_resource(url)
+
+    dir_path = os.path.join(dir, dest_subpath)
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
+
+    file = open(os.path.join(dir, dest_subpath, remote_filename), 'w')
+    file.write(resp.content)
+    file.close()
+    resp.close()
+    return os.path.join(dir_path, remote_filename)
 
 def download_into_zip(ziph, url, dest_subpath):
     """
     :type ziph: zipfile.ZipFile
     :type url: str
     """
+    remote_filename, resp = download_resource(url)
+
+    ziph.writestr(os.path.join(dest_subpath, remote_filename), resp.content)
+    resp.close()
+
+def download_resource(url):
     logging.info("Downloading: %s", url)
     resp = requests.get(url)
     assert resp.status_code == 200
@@ -47,9 +97,7 @@ def download_into_zip(ziph, url, dest_subpath):
         remote_filename = re.findall("filename=(.+)", resp.headers['content-disposition'])[0]
     else:
         remote_filename = os.path.basename(resp.url)
-    ziph.writestr(os.path.join(dest_subpath, remote_filename), resp.content)
-    resp.close()
-
+    return remote_filename, resp
 
 def get_pmgr(plugins_list):
     for plug in plugins_list:
@@ -88,4 +136,4 @@ if __name__ == "__main__":
                 logging.info("Skip: %s", plugin['id'])
                 continue
 
-            pack_version(os.path.join(dest_dir, dest_file), plugin['versions'][version], pmgr_obj)
+            pack_version(os.path.join(dest_dir, dest_file), plugin['versions'][version], pmgr_obj, plugin.get('installerClass'))

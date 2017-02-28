@@ -66,7 +66,7 @@ public class DirectoryListingConfigGuiTest {
         gui.modifyTestElement(element2);
 
         assertEquals("", element2.getSourceDirectory());
-        assertEquals("filename", element2.getDestinationVariableName());
+        assertEquals("", element2.getDestinationVariableName());
         assertEquals(false, element2.getUseFullPath());
         assertEquals(false, element2.getRandomOrder());
         assertEquals(false, element2.getRecursiveListing());

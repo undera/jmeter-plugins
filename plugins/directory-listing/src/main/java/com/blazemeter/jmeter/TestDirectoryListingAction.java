@@ -40,7 +40,10 @@ public class TestDirectoryListingAction implements ActionListener {
             compoundVariable.setParameters(config.getDestinationVariableName());
             config.setDestinationVariableName(compoundVariable.execute());
 
-            String variableName = config.getDestinationVariableName();
+            String variableName = DirectoryListingConfig.getStringOrDefault(
+                    config.getDestinationVariableName(),
+                    DirectoryListingConfig.DEFAULT_DESTINATION_VARIABLE_NAME
+            );
 
             JMeterVariables variables = new JMeterVariables();
             JMeterContextService.getContext().setVariables(variables);

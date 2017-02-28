@@ -14,6 +14,7 @@ import java.io.File;
 
 public class DirectoryListingConfig extends ConfigTestElement implements NoThreadClone, LoopIterationListener, TestStateListener {
     public static final String DEFAULT_DESTINATION_VARIABLE_NAME = "filename";
+    public static final String DEFAULT_SOURCE_DIRECTORY = ".";
 
 
     private final ThreadLocal<DirectoryListingIterator> threadLocalIterator = new ThreadLocal<DirectoryListingIterator>(){
@@ -47,7 +48,10 @@ public class DirectoryListingConfig extends ConfigTestElement implements NoThrea
 
         if (getIterator().hasNext()) {
             JMeterVariables variables = JMeterContextService.getContext().getVariables();
-            variables.put(getDestinationVariableName(), getFilePath(getIterator().next()));
+            variables.put(
+                    getStringOrDefault(getDestinationVariableName(), DEFAULT_DESTINATION_VARIABLE_NAME),
+                    getFilePath(getIterator().next())
+            );
         } else {
             // TODO: interrupt iteration
             directoryListingIterator = null;
@@ -72,7 +76,7 @@ public class DirectoryListingConfig extends ConfigTestElement implements NoThrea
 
     public DirectoryListingIterator createDirectoryListingIterator() {
         return new DirectoryListingIterator(
-                getSourceDirectory(),
+                getStringOrDefault(getSourceDirectory(), DEFAULT_SOURCE_DIRECTORY),
                 getRandomOrder(),
                 getRecursiveListing(),
                 getRewindOnTheEnd(),
@@ -85,12 +89,10 @@ public class DirectoryListingConfig extends ConfigTestElement implements NoThrea
     }
 
     public String getDestinationVariableName() {
-        return getPropertyAsString(DESTINATION_VARIABLE_NAME, DEFAULT_DESTINATION_VARIABLE_NAME);
+        return getPropertyAsString(DESTINATION_VARIABLE_NAME);
     }
 
-    @Override
-    public String getPropertyAsString(String key, String defaultValue) {
-        String str = super.getPropertyAsString(key, defaultValue);
+    public static String getStringOrDefault(String str, String defaultValue) {
         return (str == null || str.isEmpty()) ? defaultValue : str;
     }
 

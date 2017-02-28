@@ -85,4 +85,22 @@ public class TestDirectoryListingConfigActionTest {
         assertEquals("java.io.FileNotFoundException: Directory does not exists: " + tmpDir.getAbsolutePath(), gui.getCheckArea().getText());
     }
 
+    @Test
+    public void testActionHomeFolder() throws Exception {
+
+        DirectoryListingConfig config = new DirectoryListingConfig();
+        config.setSourceDirectory("");
+        config.setRecursiveListing(true);
+
+        DirectoryListingConfigGui gui = new DirectoryListingConfigGui();
+
+        gui.configure(config);
+
+        TestDirectoryListingAction action = new TestDirectoryListingAction(gui);
+
+        action.actionPerformed(null);
+
+        System.out.println(gui.getCheckArea().getText());
+        assertTrue(gui.getCheckArea().getText().startsWith("Listing of directory successfully finished, "));
+    }
 }

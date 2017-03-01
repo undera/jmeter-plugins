@@ -8,7 +8,7 @@ import java.nio.file.StandardCopyOption;
 
 public class MergeResultsInstaller {
     public static void main(String[] argv) throws IOException {
-        writeOut("/kg/apc/save/merge-results.properties", false);
+        writeOut("/org/jmeterplugins/save/merge-results.properties", false);
     }
 
     private static void writeOut(String resName, boolean executable) throws IOException {

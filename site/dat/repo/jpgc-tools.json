@@ -165,12 +165,6 @@
     "markerClass": "org.jmeterplugins.protocol.http.control.HttpSimpleTableServer",
     "installerClass": "org.jmeterplugins.protocol.http.control.STSInstaller",
     "versions": {
-      "2.0": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/2.0/jmeter-plugins-table-server-2.0.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
-        }
-      },
       "2.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/2.1/jmeter-plugins-table-server-2.1.jar",
         "libs": {

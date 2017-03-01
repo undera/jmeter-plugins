@@ -81,8 +81,8 @@
     "markerClass": "org.jmeterplugins.save.MergeResultsService",
     "installerClass": "org.jmeterplugins.save.MergeResultsInstaller",
     "versions": {
-      "2.0": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-mergeresults/2.0/jmeter-plugins-mergeresults-2.0.jar",
+      "2.1": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-mergeresults/2.1/jmeter-plugins-mergeresults-2.1.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
         }

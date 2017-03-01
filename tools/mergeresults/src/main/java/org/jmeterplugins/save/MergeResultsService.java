@@ -16,7 +16,7 @@
  *
  */
 
-package kg.apc.save;
+package org.jmeterplugins.save;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

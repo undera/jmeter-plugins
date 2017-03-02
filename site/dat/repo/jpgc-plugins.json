@@ -546,6 +546,7 @@
         }
       },
       "0.3": {
+        "changes": "Fixed bind to local address/port",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-udp/0.3/jmeter-plugins-udp-0.3.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",

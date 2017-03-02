@@ -340,6 +340,15 @@ public class Plugin {
         return depends;
     }
 
+    public String getVersionChanges(String versionStr) {
+        Map<String, String> depends = new HashMap<>();
+        JSONObject version = versions.getJSONObject(versionStr);
+        if (version.containsKey("changes")) {
+            return version.getString("changes");
+        }
+        return null;
+    }
+
     public String getInstallerClass() {
         return installerClass;
     }

@@ -126,6 +126,10 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         if (!plugin.getVendor().isEmpty()) {
             txt += "<p>Vendor: <i>" + plugin.getVendor() + "</i></p>";
         }
+        String changes = plugin.getVersionChanges(plugin.getCandidateVersion());
+        if (null != changes) {
+            txt += "<p>What's new: " + changes + "</p>";
+        }
         if (!plugin.getDescription().isEmpty()) {
             txt += "<p>" + plugin.getDescription() + "</p>";
         }

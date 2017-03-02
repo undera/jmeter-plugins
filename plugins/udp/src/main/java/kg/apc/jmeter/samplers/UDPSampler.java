@@ -78,6 +78,14 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         } else {
             c = DatagramChannel.open();
         }
+
+        String bindAddress = getBindAddress();
+        if (bindAddress.isEmpty()) {
+            bindAddress = "0.0.0.0";
+        }
+        int adr = getBindPortAsInt();
+        c.bind(new InetSocketAddress(bindAddress, adr));
+
         int port = Integer.parseInt(getPort());
         c.connect(new InetSocketAddress(getHostName(), port));
         return c;
@@ -147,12 +155,6 @@ public class UDPSampler extends AbstractIPSampler implements UDPTrafficDecoder, 
         if (channel == null || !channel.isOpen()) {
             try {
                 channel = (DatagramChannel) getChannel();
-                String bindAddress = getBindAddress();
-                if (bindAddress.isEmpty()) {
-                    bindAddress = "0.0.0.0";
-                }
-
-                channel.socket().bind(new InetSocketAddress(bindAddress, getBindPortAsInt()));
             } catch (IOException ex) {
                 log.error("Cannot open channel", ex);
             }

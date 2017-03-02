@@ -1,6 +1,11 @@
 package org.jmeterplugins.repository;
 
-import java.awt.BorderLayout;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -8,27 +13,8 @@ import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import java.util.*;
+import java.util.List;
 
 public class PluginsList extends JPanel implements ListSelectionListener, HyperlinkListener {
     /**
@@ -94,7 +80,18 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
             Plugin plugin = list.getSelectedValue().getPlugin();
             description.setText(getDescriptionHTML(plugin));
             setUpVersionsList(list.getSelectedValue());
+            setToolTipRenderer(plugin);
         }
+    }
+
+    private void setToolTipRenderer(Plugin plugin) {
+        final List<String> tooltips = new ArrayList<>();
+
+        for (String version : plugin.getVersions()) {
+            tooltips.add(plugin.getVersionChanges(version));
+        }
+
+        version.setRenderer(new ComboboxToolTipRenderer(tooltips));
     }
 
     protected void setUpVersionsList(PluginCheckbox cb) {
@@ -189,7 +186,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
                     Plugin plugin = list.getSelectedValue().getPlugin();
                     plugin.setCandidateVersion(item);
                     dialogRefresh.notify(this);
-                    // TODO: file description text refresh, because of depends list there
+                    description.setText(getDescriptionHTML(plugin));
                 }
             }
         }
@@ -217,6 +214,27 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
                 }
             }
             list.repaint();
+        }
+    }
+
+    private class ComboboxToolTipRenderer extends DefaultListCellRenderer {
+        private final List<String> tooltips;
+
+        public ComboboxToolTipRenderer(List<String> tooltips) {
+            this.tooltips = tooltips;
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value,
+                                                      int index, boolean isSelected, boolean cellHasFocus) {
+
+            JComponent comp = (JComponent) super.getListCellRendererComponent(list,
+                    value, index, isSelected, cellHasFocus);
+
+            if (-1 < index && null != value && null != tooltips && tooltips.size() > index) {
+                list.setToolTipText(tooltips.get(index));
+            }
+            return comp;
         }
     }
 }

@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
 
 import kg.apc.cmdtools.AbstractCMDTool;
 
@@ -18,6 +19,8 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
     protected int processParams(ListIterator listIterator) throws UnsupportedOperationException, IllegalArgumentException {
         LoggingManager.setPriority(Priority.INFO);
         if (!listIterator.hasNext()) {
+//            showHelp(System.out);
+//            return -1;
             throw new IllegalArgumentException("Command parameter is missing");
         }
 
@@ -33,6 +36,15 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
                     break;
                 case "uninstall":
                     process(listIterator, false);
+                    break;
+                case "help":
+                    showHelp(System.out);
+                    break;
+                case "available":
+                    showAvailable();
+                    break;
+                case "upgrades":
+                    showUpgrades();
                     break;
                 default:
                     throw new UnsupportedOperationException("Wrong command: " + command);
@@ -84,7 +96,46 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
     @Override
     protected void showHelp(PrintStream printStream) {
         printStream.println("Options for tool 'PluginManagerCMD': <command> <paramstr> "
-                + " where <command> is one of: status, install, uninstall");
+                + " where <command> is one of: status, install, uninstall, help, available, upgrades");
+    }
+
+    protected void showAvailable() {
+        //TODO: remove
+        System.out.println("showAvailable");
+
+        PluginManager pmgr = PluginManager.getStaticManager();
+
+        final Set<Plugin> availablePlugins = pmgr.getAvailablePlugins();
+
+
+        final StringBuilder buf = new StringBuilder("Available Plugins\r\n");
+
+        for (Plugin plugin : availablePlugins) {
+            buf.append("[");
+
+            String id = plugin.getID();
+
+            Set<String> versionSet = plugin.getVersions();
+            String[] versions = versionSet.toArray(new String[versionSet.size()]);
+
+            for (int i = versions.length - 1; i >= 0; i--) {
+                buf.append(id).append('=').append(versions[i]);
+                if (i != 0) {
+                    buf.append(", ");
+                }
+            }
+            buf.append("]\r\n");
+
+        }
+
+        System.out.println(buf.toString());
+    }
+
+    protected void showUpgrades() {
+        //TODO: remove
+        System.out.println("showUpgrades");
+
+
     }
 
     @Override

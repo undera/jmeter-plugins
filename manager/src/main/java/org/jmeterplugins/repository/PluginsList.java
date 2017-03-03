@@ -84,6 +84,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
             setUpVersionsList(list.getSelectedValue());
             setToolTipRenderer(plugin);
             cacheImage(plugin);
+            description.setCaretPosition(0);
         }
     }
 
@@ -190,7 +191,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
                     plugin.setCandidateVersion(item);
                     dialogRefresh.notify(this);
                     description.setText(getDescriptionHTML(plugin));
-                    cacheImage(plugin);
+                    description.setCaretPosition(0);
                 }
             }
         }
@@ -212,7 +213,6 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
                 log.warn("Cannot cached image " + plugin.getScreenshot());
             }
         }
-        description.setCaretPosition(0);
     }
 
     private class ToggleAllPopupMenu extends JPopupMenu implements ActionListener {

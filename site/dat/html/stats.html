@@ -132,19 +132,29 @@ By the number of known users:
         };
     }
 
-    function plugin_vers_graph(id, data) {
+    function plugin_vers_graph(id, data, repo_entry) {
         var series = [];
         var sum = values(data).reduce(function (a, b) {
             return a + b;
         }, 0);
 
         var keys = Object.keys(data);
+        var repo_keys = Object.keys(repo_entry.versions);
         keys.sort();
 
+        var other=0;
         for (var n = 0; n < keys.length; n++) {
             var ver = keys[n];
             var val = Math.round(1000 * data[ver] / sum) / 10;
-            series.push(['v ' + ver, val]);
+            if ($.inArray(ver, repo_keys) >= 0) {
+                series.push(['v ' + ver, val]);
+            } else {
+                other += val;
+            }
+        }
+
+        if (other) {
+            series.push(['N/A', other]);
         }
 
         return {
@@ -246,7 +256,7 @@ By the number of known users:
                             var item = $(this).data("plugin");
 
                             $('#pluginhist').highcharts(plugin_hist_graph(item.plugin, item.data, pmgr.data));
-                            $('#pluginvers').highcharts(plugin_vers_graph(item.plugin, item.vers));
+                            $('#pluginvers').highcharts(plugin_vers_graph(item.plugin, item.vers, repo[item.plugin]));
                         });
 
                         var li = $("<li></li>");

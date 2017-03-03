@@ -146,5 +146,27 @@
         ]
       }
     }
+  },
+  {
+    "id": "tilln-wssecurity",
+    "name": "WS Security for SOAP",
+    "description": "Apache JMeter plugin for signing and encrypting SOAP messages (WS-Security).",
+    "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-wssecurity/master/docs/signature.png",
+    "helpUrl": "https://github.com/tilln/jmeter-wssecurity",
+    "vendor": "Till Neunast",
+    "markerClass": "nz.co.breakpoint.jmeter.modifiers.SamplerPayloadAccessor",
+    "versions": {
+      "1.1": {
+        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/jmeter-wssecurity-1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ],
+        "libs": {
+           "wss4j-ws-security-dom": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
+           "wss4j-ws-security-common": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
+           "xmlsec": "http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
+        }
+      }
+    }
   }
 ]

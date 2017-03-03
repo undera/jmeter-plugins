@@ -340,6 +340,13 @@ public class Plugin {
         return depends;
     }
 
+    public String getVersionChanges(String versionStr) {
+        JSONObject version = versions.getJSONObject(versionStr);
+        return version.containsKey("changes") ?
+                version.getString("changes") :
+                null;
+    }
+
     public String getInstallerClass() {
         return installerClass;
     }

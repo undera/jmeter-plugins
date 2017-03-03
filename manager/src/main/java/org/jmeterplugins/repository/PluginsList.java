@@ -1,34 +1,23 @@
 package org.jmeterplugins.repository;
 
-import java.awt.BorderLayout;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import java.net.URL;
+import java.util.*;
+import java.util.List;
 
 public class PluginsList extends JPanel implements ListSelectionListener, HyperlinkListener {
     /**
@@ -39,7 +28,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     private final JTextPane description = new JTextPane();
-    private JList<PluginCheckbox> list = new CheckBoxList<>(5);
+    protected JList<PluginCheckbox> list = new CheckBoxList<>(5);
     private DefaultListModel<PluginCheckbox> listModel = new DefaultListModel<>();
     protected final JComboBox<String> version = new JComboBox<>();
     private ItemListener itemListener = new VerChoiceChanged();
@@ -94,7 +83,20 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
             Plugin plugin = list.getSelectedValue().getPlugin();
             description.setText(getDescriptionHTML(plugin));
             setUpVersionsList(list.getSelectedValue());
+            setToolTipRenderer(plugin);
+            cacheImage(plugin);
+            description.setCaretPosition(0);
         }
+    }
+
+    private void setToolTipRenderer(Plugin plugin) {
+        final List<String> tooltips = new ArrayList<>();
+
+        for (String version : plugin.getVersions()) {
+            tooltips.add(plugin.getVersionChanges(version));
+        }
+
+        version.setRenderer(new ComboboxToolTipRenderer(tooltips));
     }
 
     protected void setUpVersionsList(PluginCheckbox cb) {
@@ -125,6 +127,10 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
         }
         if (!plugin.getVendor().isEmpty()) {
             txt += "<p>Vendor: <i>" + plugin.getVendor() + "</i></p>";
+        }
+        String changes = plugin.getVersionChanges(plugin.getCandidateVersion());
+        if (null != changes) {
+            txt += "<p>What's new: " + changes + "</p>";
         }
         if (!plugin.getDescription().isEmpty()) {
             txt += "<p>" + plugin.getDescription() + "</p>";
@@ -185,8 +191,27 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
                     Plugin plugin = list.getSelectedValue().getPlugin();
                     plugin.setCandidateVersion(item);
                     dialogRefresh.notify(this);
-                    // TODO: file description text refresh, because of depends list there
+                    description.setText(getDescriptionHTML(plugin));
+                    description.setCaretPosition(0);
                 }
+            }
+        }
+    }
+
+
+    private void cacheImage(Plugin plugin) {
+        if (!plugin.getScreenshot().isEmpty()) {
+            try {
+                Dictionary cache = (Dictionary) description.getDocument().getProperty("imageCache");
+                if (cache == null) {
+                    cache = new Hashtable();
+                    description.getDocument().putProperty("imageCache", cache);
+                }
+
+                URL url = new URL(plugin.getScreenshot());
+                cache.put(url, ImageIO.read(url));
+            } catch (IOException e) {
+                log.warn("Cannot cached image " + plugin.getScreenshot());
             }
         }
     }
@@ -213,6 +238,27 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
                 }
             }
             list.repaint();
+        }
+    }
+
+    private class ComboboxToolTipRenderer extends DefaultListCellRenderer {
+        private final List<String> tooltips;
+
+        public ComboboxToolTipRenderer(List<String> tooltips) {
+            this.tooltips = tooltips;
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value,
+                                                      int index, boolean isSelected, boolean cellHasFocus) {
+
+            JComponent comp = (JComponent) super.getListCellRendererComponent(list,
+                    value, index, isSelected, cellHasFocus);
+
+            if (-1 < index && null != value && null != tooltips && tooltips.size() > index) {
+                list.setToolTipText(tooltips.get(index));
+            }
+            return comp;
         }
     }
 }

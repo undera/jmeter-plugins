@@ -64,4 +64,17 @@ public class PluginTest {
         Plugin p = Plugin.fromJSON(JSONObject.fromObject(str, new JsonConfig()));
         assertEquals("test", p.getInstallerClass());
     }
+
+    @Test
+    public void testVersionChanges() {
+        String str = "{\"id\": 0,  \"markerClass\": 0, \"name\": 0, \"description\": 0, \"helpUrl\": 0, \"vendor\": 0, \"installerClass\": \"test\", " +
+                "\"versions\" : { \"0.1\" : { \"changes\": \"fix verified exception\" } }}";
+        Plugin p = Plugin.fromJSON(JSONObject.fromObject(str, new JsonConfig()));
+        assertEquals("fix verified exception", p.getVersionChanges("0.1"));
+
+        str = "{\"id\": 0,  \"markerClass\": 0, \"name\": 0, \"description\": 0, \"helpUrl\": 0, \"vendor\": 0, \"installerClass\": \"test\", " +
+                "\"versions\" : { \"0.1\" : {  } }}";
+        p = Plugin.fromJSON(JSONObject.fromObject(str, new JsonConfig()));
+        assertNull(p.getVersionChanges("0.1"));
+    }
 }

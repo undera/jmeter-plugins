@@ -3,6 +3,7 @@ package org.jmeterplugins.repository;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
@@ -13,6 +14,7 @@ import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 import java.util.List;
 
@@ -81,6 +83,7 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
             description.setText(getDescriptionHTML(plugin));
             setUpVersionsList(list.getSelectedValue());
             setToolTipRenderer(plugin);
+            cacheImage(plugin);
         }
     }
 
@@ -187,9 +190,29 @@ public class PluginsList extends JPanel implements ListSelectionListener, Hyperl
                     plugin.setCandidateVersion(item);
                     dialogRefresh.notify(this);
                     description.setText(getDescriptionHTML(plugin));
+                    cacheImage(plugin);
                 }
             }
         }
+    }
+
+
+    private void cacheImage(Plugin plugin) {
+        if (!plugin.getScreenshot().isEmpty()) {
+            try {
+                Dictionary cache = (Dictionary) description.getDocument().getProperty("imageCache");
+                if (cache == null) {
+                    cache = new Hashtable();
+                    description.getDocument().putProperty("imageCache", cache);
+                }
+
+                URL url = new URL(plugin.getScreenshot());
+                cache.put(url, ImageIO.read(url));
+            } catch (IOException e) {
+                log.warn("Cannot cached image " + plugin.getScreenshot());
+            }
+        }
+        description.setCaretPosition(0);
     }
 
     private class ToggleAllPopupMenu extends JPopupMenu implements ActionListener {

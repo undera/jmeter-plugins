@@ -69,4 +69,15 @@ public class PluginManagerCMDTest {
         }
     }
 
+    @Test
+    public void testAvailable() throws Exception {
+        PluginManagerCMD cmd = new PluginManagerCMD();
+        cmd.showAvailable();
+    }
+
+    @Test
+    public void testUpgrades() throws Exception {
+        PluginManagerCMD cmd = new PluginManagerCMD();
+        cmd.showUpgrades();
+    }
 }

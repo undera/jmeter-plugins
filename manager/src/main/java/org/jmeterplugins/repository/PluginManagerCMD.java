@@ -1,10 +1,7 @@
 package org.jmeterplugins.repository;
 
 import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import kg.apc.cmdtools.AbstractCMDTool;
 
@@ -100,15 +97,10 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
     }
 
     protected void showAvailable() {
-        //TODO: remove
-        System.out.println("showAvailable");
-
         PluginManager pmgr = PluginManager.getStaticManager();
 
         final Set<Plugin> availablePlugins = pmgr.getAvailablePlugins();
-
-
-        final StringBuilder buf = new StringBuilder("Available Plugins\r\n");
+        final StringBuilder buf = new StringBuilder("\r\nAvailable Plugins\r\n\r\n");
 
         for (Plugin plugin : availablePlugins) {
             buf.append("[");
@@ -125,18 +117,55 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
                 }
             }
             buf.append("]\r\n");
-
         }
 
         System.out.println(buf.toString());
     }
 
     protected void showUpgrades() {
-        //TODO: remove
-        System.out.println("showUpgrades");
+        PluginManager pmgr = PluginManager.getStaticManager();
 
+        final Set<Plugin> upgradablePlugins = pmgr.getUpgradablePlugins();
 
+        final StringBuilder buf = new StringBuilder("\r\nUpgradable Plugin\r\n\r\n");
+
+        final List<String> pluginsId = new ArrayList<>();
+
+        for (Plugin plugin : upgradablePlugins) {
+
+            String id = plugin.getID();
+            pluginsId.add(id);
+
+            buf.append("uninstall").append(' ').append(id).append("\r\n");
+            buf.append("install").append(' ').append(id).append("\r\n\r\n");
+        }
+
+        if (pluginsId.size() > 1) {
+            String[] ids = pluginsId.toArray(new String[pluginsId.size()]);
+
+            buf.append("Update all plugins commands: \r\n");
+
+            buf.append("uninstall ");
+            appendArrayByComma(buf, ids);
+            buf.append("\r\n");
+
+            buf.append("install ");
+            appendArrayByComma(buf, ids);
+            buf.append("\r\n\r\n");
+        }
+
+        System.out.println(buf.toString());
     }
+
+    private void appendArrayByComma(StringBuilder buf, Object[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            buf.append(arr[i]);
+            if (i < arr.length - 1) {
+                buf.append(',');
+            }
+        }
+    }
+
 
     @Override
     public void notify(String s) {

@@ -6,13 +6,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.AccessDeniedException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
@@ -331,4 +325,41 @@ public class PluginManager {
         }
         return Arrays.toString(res.toArray());
     }
+
+    /**
+     * @return Available plugins
+     */
+    public static String getAvailablePluginsAsString() {
+        PluginManager manager = getStaticManager();
+        return manager.getAvailablePluginsString();
+    }
+
+    private String getAvailablePluginsString() {
+        ArrayList<String> res = new ArrayList<>();
+        for (Plugin plugin : getAvailablePlugins()) {
+            List<String> versions = new ArrayList<>(plugin.getVersions());
+            Collections.reverse(versions);
+            res.add(plugin.getID() + "=" + Arrays.toString(versions.toArray()));
+        }
+        return Arrays.toString(res.toArray());
+    }
+
+    /**
+     * @return Upgradable plugins
+     */
+    public static String getUpgradablePluginsAsString() {
+        PluginManager manager = getStaticManager();
+        return manager.getUpgradablePluginsString();
+    }
+
+    private String getUpgradablePluginsString() {
+        ArrayList<String> res = new ArrayList<>();
+        for (Plugin plugin : getUpgradablePlugins()) {
+            res.add(plugin.getID() + "=" + plugin.getMaxVersion());
+        }
+        return (res.size() != 0) ?
+                Arrays.toString(res.toArray()) :
+                "There is nothing to update.";
+    }
+
 }

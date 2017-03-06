@@ -1,9 +1,7 @@
 package org.jmeterplugins.repository;
 
 import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.ListIterator;
-import java.util.Map;
+import java.util.*;
 
 import kg.apc.cmdtools.AbstractCMDTool;
 
@@ -18,6 +16,7 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
     protected int processParams(ListIterator listIterator) throws UnsupportedOperationException, IllegalArgumentException {
         LoggingManager.setPriority(Priority.INFO);
         if (!listIterator.hasNext()) {
+            showHelp(System.out);
             throw new IllegalArgumentException("Command parameter is missing");
         }
 
@@ -34,7 +33,17 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
                 case "uninstall":
                     process(listIterator, false);
                     break;
+                case "help":
+                    showHelp(System.out);
+                    break;
+                case "available":
+                    System.out.println(PluginManager.getAvailablePluginsAsString());
+                    break;
+                case "upgrades":
+                    System.out.println(PluginManager.getUpgradablePluginsAsString());
+                    break;
                 default:
+                    showHelp(System.out);
                     throw new UnsupportedOperationException("Wrong command: " + command);
             }
         } catch (IllegalArgumentException e) {
@@ -84,7 +93,7 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
     @Override
     protected void showHelp(PrintStream printStream) {
         printStream.println("Options for tool 'PluginManagerCMD': <command> <paramstr> "
-                + " where <command> is one of: status, install, uninstall");
+                + " where <command> is one of: help, status, available, upgrades, install, uninstall.");
     }
 
     @Override

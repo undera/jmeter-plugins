@@ -17,7 +17,7 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
         LoggingManager.setPriority(Priority.INFO);
         if (!listIterator.hasNext()) {
             showHelp(System.out);
-            return -1;
+            throw new IllegalArgumentException("Command parameter is missing");
         }
 
         String command = listIterator.next().toString();
@@ -37,14 +37,14 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
                     showHelp(System.out);
                     break;
                 case "available":
-                    showAvailable();
+                    System.out.println(PluginManager.getAvailablePluginsAsString());
                     break;
                 case "upgrades":
-                    showUpgrades();
+                    System.out.println(PluginManager.getUpgradablePluginsAsString());
                     break;
                 default:
                     showHelp(System.out);
-                    return -1;
+                    throw new UnsupportedOperationException("Wrong command: " + command);
             }
         } catch (IllegalArgumentException e) {
             throw e;
@@ -95,86 +95,6 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
         printStream.println("Options for tool 'PluginManagerCMD': <command> <paramstr> "
                 + " where <command> is one of: help, status, available, upgrades, install, uninstall.");
     }
-
-    protected void showAvailable() {
-        PluginManager pmgr = PluginManager.getStaticManager();
-
-        final Set<Plugin> availablePlugins = pmgr.getAvailablePlugins();
-        final StringBuilder buf = new StringBuilder("\r\nAvailable Plugins\r\n\r\n");
-
-        for (Plugin plugin : availablePlugins) {
-            String id = plugin.getID();
-
-            Set<String> versionSet = plugin.getVersions();
-            String[] versions = versionSet.toArray(new String[versionSet.size()]);
-
-            if (versions.length == 1) {
-                buf.append("install ").append(id).append('=').append(versions[0]).append("\r\n");
-            } else {
-                buf.append("install [");
-
-                for (int i = versions.length - 1; i >= 0; i--) {
-                    buf.append(id).append('=').append(versions[i]);
-                    if (i != 0) {
-                        buf.append(", ");
-                    }
-                }
-                buf.append("]\r\n");
-            }
-        }
-
-        System.out.println(buf.toString());
-    }
-
-    protected void showUpgrades() {
-        PluginManager pmgr = PluginManager.getStaticManager();
-
-        final Set<Plugin> upgradablePlugins = pmgr.getUpgradablePlugins();
-
-        if (upgradablePlugins.size() == 0) {
-            System.out.println("There is nothing to update.");
-            return;
-        }
-
-        final StringBuilder buf = new StringBuilder("\r\nUpgradable Plugins\r\n\r\n");
-
-        final List<String> pluginsId = new ArrayList<>();
-
-        for (Plugin plugin : upgradablePlugins) {
-
-            String id = plugin.getID();
-            pluginsId.add(id);
-
-            buf.append("uninstall").append(' ').append(id).append("\r\n");
-            buf.append("install").append(' ').append(id).append("\r\n\r\n");
-        }
-
-        if (pluginsId.size() > 1) {
-            String[] ids = pluginsId.toArray(new String[pluginsId.size()]);
-
-            buf.append("Update all plugins commands: \r\n\r\n");
-
-            buf.append("uninstall ");
-            appendArrayByComma(buf, ids);
-            buf.append("\r\n");
-
-            buf.append("install ");
-            appendArrayByComma(buf, ids);
-            buf.append("\r\n\r\n");
-        }
-
-        System.out.println(buf.toString());
-    }
-
-    private void appendArrayByComma(StringBuilder buf, Object[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            buf.append(arr[i]);
-            if (i < arr.length - 1) {
-                buf.append(',');
-            }
-        }
-    }
-
 
     @Override
     public void notify(String s) {

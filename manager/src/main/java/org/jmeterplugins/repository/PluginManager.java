@@ -6,13 +6,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.AccessDeniedException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
@@ -330,5 +324,92 @@ public class PluginManager {
             res.add(plugin.getID() + "=" + plugin.getInstalledVersion());
         }
         return Arrays.toString(res.toArray());
+    }
+
+    /**
+     * @return Available plugins
+     */
+    public static String getAvailablePluginsAsString() {
+        PluginManager manager = getStaticManager();
+        return manager.getAvailablePluginsString();
+    }
+
+    private String getAvailablePluginsString() {
+        final StringBuilder buf = new StringBuilder("Available Plugins\r\n");
+
+        for (Plugin plugin : getAvailablePlugins()) {
+            Set<String> versionSet = plugin.getVersions();
+            String[] versions = versionSet.toArray(new String[versionSet.size()]);
+
+            if (versions.length == 1) {
+                buf.append("install ").append(plugin.getID()).append('=').append(versions[0]).append("\r\n");
+            } else {
+                buf.append("install [");
+
+                for (int i = versions.length - 1; i >= 0; i--) {
+                    buf.append(plugin.getID()).append('=').append(versions[i]);
+                    if (i != 0) {
+                        buf.append(", ");
+                    }
+                }
+                buf.append("]\r\n");
+            }
+        }
+
+        return buf.toString();
+    }
+
+    /**
+     * @return Upgradable plugins
+     */
+    public static String getUpgradablePluginsAsString() {
+        PluginManager manager = getStaticManager();
+        return manager.getUpgradablePluginsString();
+    }
+
+    private String getUpgradablePluginsString() {
+        final Set<Plugin> upgradablePlugins = getUpgradablePlugins();
+
+        if (upgradablePlugins.size() == 0) {
+            return "There is nothing to update.";
+        }
+
+        final StringBuilder buf = new StringBuilder("Upgradable Plugins\r\n");
+
+        final List<String> pluginsId = new ArrayList<>();
+
+        for (Plugin plugin : upgradablePlugins) {
+
+            String id = plugin.getID();
+            pluginsId.add(id);
+
+            buf.append("uninstall").append(' ').append(id).append("\r\n");
+            buf.append("install").append(' ').append(id).append("\r\n\r\n");
+        }
+
+        if (pluginsId.size() > 1) {
+            String[] ids = pluginsId.toArray(new String[pluginsId.size()]);
+
+            buf.append("Update all plugins commands: \r\n\r\n");
+
+            buf.append("uninstall ");
+            appendArrayByComma(buf, ids);
+            buf.append("\r\n");
+
+            buf.append("install ");
+            appendArrayByComma(buf, ids);
+            buf.append("\r\n\r\n");
+        }
+
+        return buf.toString();
+    }
+
+    private void appendArrayByComma(StringBuilder buf, Object[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            buf.append(arr[i]);
+            if (i < arr.length - 1) {
+                buf.append(',');
+            }
+        }
     }
 }

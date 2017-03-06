@@ -54,7 +54,9 @@ public class PluginManager {
                     continue;
                 }
 
-                plugin.detectInstalled(getInstalledPlugins());
+                if (!plugin.isVirtual()) {
+                    plugin.detectInstalled(getInstalledPlugins());
+                }
                 allPlugins.put(plugin, plugin.isInstalled());
             } else {
                 log.warn("Invalid array element: " + elm);
@@ -65,6 +67,7 @@ public class PluginManager {
         for (Plugin plugin : allPlugins.keySet()) {
             if (plugin.isVirtual()) {
                 plugin.detectInstalled(getInstalledPlugins());
+                allPlugins.put(plugin, plugin.isInstalled());
             }
         }
 

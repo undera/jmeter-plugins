@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.LinkedList;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.fail;
 
 public class PluginManagerCMDTest {
@@ -60,24 +61,37 @@ public class PluginManagerCMDTest {
     @Test
     public void showHelp() throws Exception {
         PluginManagerCMD cmd = new PluginManagerCMD();
-        cmd.showHelp(System.out);
 
-        try {
-            cmd.processParams(new LinkedList<>().listIterator());
-            fail();
-        } catch (IllegalArgumentException ignored) {
-        }
+        LinkedList<String> params = new LinkedList<>();
+        params.add("help");
+        int code = cmd.processParams(params.listIterator());
+        assertEquals(0, code);
+
+        params.clear();
+        params.add("help me pls");
+        code = cmd.processParams(params.listIterator());
+        assertEquals(-1, code);
+
+        params.clear();
+        code = cmd.processParams(params.listIterator());
+        assertEquals(-1, code);
     }
 
     @Test
     public void testAvailable() throws Exception {
         PluginManagerCMD cmd = new PluginManagerCMD();
-        cmd.showAvailable();
+        LinkedList<String> params = new LinkedList<>();
+        params.add("available");
+        int code = cmd.processParams(params.listIterator());
+        assertEquals(0, code);
     }
 
     @Test
     public void testUpgrades() throws Exception {
         PluginManagerCMD cmd = new PluginManagerCMD();
-        cmd.showUpgrades();
+        LinkedList<String> params = new LinkedList<>();
+        params.add("upgrades");
+        int code = cmd.processParams(params.listIterator());
+        assertEquals(0, code);
     }
 }

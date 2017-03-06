@@ -1,0 +1,54 @@
+[
+  {
+    "id": "jpgc-dep1",
+    "name": "Dependency plugin1",
+    "description": "<ul><li>Average Response Time</li><li>Active Threads</li><li>Successful/Failed Transactions</li></ul>",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/response_times_over_time.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/ResponseTimesOverTime/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "org.jmeterplugins.repository.PluginManagerTest",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-basic/2.0/jmeter-plugins-graphs-basic-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "jpgc-dep2",
+    "name": "Dependency plugin2",
+    "description": "Dependency plugin for test ",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/response_times_over_time.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/ResponseTimesOverTime/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "org.jmeterplugins.repository.PluginManagerTest",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-basic/2.0/jmeter-plugins-graphs-basic-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "jpgc-standard",
+    "name": "jpgc - Standard Set",
+    "description": "Virtual package, select to install its dependencies",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": null,
+    "versions": {
+      "2.0": {
+        "downloadUrl": null,
+        "depends": [
+          "jpgc-dep1",
+          "jpgc-dep2"
+        ]
+      }
+    }
+  }
+]

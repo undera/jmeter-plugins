@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import static org.junit.Assert.*;
 
@@ -14,6 +15,21 @@ public class PluginManagerTest {
         Plugin[] init = new Plugin[]{};
         PluginManager obj = new PluginManagerEmul(init);
         obj.getChangesAsText();
+    }
+
+    @Test
+    public void testStandardSet() throws Throwable {
+        URL url = PluginManagerCMDInstaller.class.getResource("/testVirtualPlugin.json");
+        System.setProperty("jpgc.repo.address", url.getFile());
+
+        PluginManager pmgr = new PluginManager();
+        pmgr.load();
+
+        for (Plugin plugin : pmgr.allPlugins.keySet()) {
+            if (plugin.getID().equals("jpgc-standard")) {
+                assertTrue(pmgr.allPlugins.get(plugin));
+            }
+        }
     }
 
     @Test

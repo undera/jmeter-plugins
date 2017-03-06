@@ -355,7 +355,7 @@ public class PluginManager {
     private String getUpgradablePluginsString() {
         ArrayList<String> res = new ArrayList<>();
         for (Plugin plugin : getUpgradablePlugins()) {
-            res.add(plugin.getID() + "=" + plugin.getInstalledVersion());
+            res.add(plugin.getID() + "=" + plugin.getMaxVersion());
         }
         return (res.size() != 0) ?
                 Arrays.toString(res.toArray()) :

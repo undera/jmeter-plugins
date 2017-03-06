@@ -23,7 +23,7 @@
     "screenshotUrl": "https://jmeter-plugins.org/img/wiki/response_times_over_time.png",
     "helpUrl": "https://jmeter-plugins.org/wiki/ResponseTimesOverTime/",
     "vendor": "JMeter-Plugins.org",
-    "markerClass": "org.jmeterplugins.repository.PluginManagerTest",
+    "markerClass": "not.installed.dependecy.Class",
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-basic/2.0/jmeter-plugins-graphs-basic-2.0.jar",

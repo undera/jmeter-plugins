@@ -16,9 +16,8 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
     protected int processParams(ListIterator listIterator) throws UnsupportedOperationException, IllegalArgumentException {
         LoggingManager.setPriority(Priority.INFO);
         if (!listIterator.hasNext()) {
-//            showHelp(System.out);
-//            return -1;
-            throw new IllegalArgumentException("Command parameter is missing");
+            showHelp(System.out);
+            return -1;
         }
 
         String command = listIterator.next().toString();
@@ -44,7 +43,8 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
                     showUpgrades();
                     break;
                 default:
-                    throw new UnsupportedOperationException("Wrong command: " + command);
+                    showHelp(System.out);
+                    return -1;
             }
         } catch (IllegalArgumentException e) {
             throw e;
@@ -127,7 +127,7 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
 
         final Set<Plugin> upgradablePlugins = pmgr.getUpgradablePlugins();
 
-        final StringBuilder buf = new StringBuilder("\r\nUpgradable Plugin\r\n\r\n");
+        final StringBuilder buf = new StringBuilder("\r\nUpgradable Plugins\r\n\r\n");
 
         final List<String> pluginsId = new ArrayList<>();
 
@@ -143,7 +143,7 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
         if (pluginsId.size() > 1) {
             String[] ids = pluginsId.toArray(new String[pluginsId.size()]);
 
-            buf.append("Update all plugins commands: \r\n");
+            buf.append("Update all plugins commands: \r\n\r\n");
 
             buf.append("uninstall ");
             appendArrayByComma(buf, ids);

@@ -103,20 +103,24 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
         final StringBuilder buf = new StringBuilder("\r\nAvailable Plugins\r\n\r\n");
 
         for (Plugin plugin : availablePlugins) {
-            buf.append("[");
-
             String id = plugin.getID();
 
             Set<String> versionSet = plugin.getVersions();
             String[] versions = versionSet.toArray(new String[versionSet.size()]);
 
-            for (int i = versions.length - 1; i >= 0; i--) {
-                buf.append(id).append('=').append(versions[i]);
-                if (i != 0) {
-                    buf.append(", ");
+            if (versions.length == 1) {
+                buf.append("install ").append(id).append('=').append(versions[0]).append("\r\n");
+            } else {
+                buf.append("install [");
+
+                for (int i = versions.length - 1; i >= 0; i--) {
+                    buf.append(id).append('=').append(versions[i]);
+                    if (i != 0) {
+                        buf.append(", ");
+                    }
                 }
+                buf.append("]\r\n");
             }
-            buf.append("]\r\n");
         }
 
         System.out.println(buf.toString());
@@ -126,6 +130,11 @@ public class PluginManagerCMD extends AbstractCMDTool implements GenericCallback
         PluginManager pmgr = PluginManager.getStaticManager();
 
         final Set<Plugin> upgradablePlugins = pmgr.getUpgradablePlugins();
+
+        if (upgradablePlugins.size() == 0) {
+            System.out.println("There is nothing to update.");
+            return;
+        }
 
         final StringBuilder buf = new StringBuilder("\r\nUpgradable Plugins\r\n\r\n");
 

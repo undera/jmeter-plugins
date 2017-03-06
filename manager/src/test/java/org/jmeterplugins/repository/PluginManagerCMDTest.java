@@ -69,12 +69,18 @@ public class PluginManagerCMDTest {
 
         params.clear();
         params.add("help me pls");
-        code = cmd.processParams(params.listIterator());
-        assertEquals(-1, code);
+        try {
+            cmd.processParams(params.listIterator());
+        } catch (Throwable ex) {
+            //
+        }
 
         params.clear();
-        code = cmd.processParams(params.listIterator());
-        assertEquals(-1, code);
+        try {
+            cmd.processParams(params.listIterator());
+        } catch (IllegalArgumentException ex) {
+            //
+        }
     }
 
     @Test

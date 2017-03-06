@@ -335,28 +335,13 @@ public class PluginManager {
     }
 
     private String getAvailablePluginsString() {
-        final StringBuilder buf = new StringBuilder("Available Plugins\r\n");
-
+        ArrayList<String> res = new ArrayList<>();
         for (Plugin plugin : getAvailablePlugins()) {
-            Set<String> versionSet = plugin.getVersions();
-            String[] versions = versionSet.toArray(new String[versionSet.size()]);
-
-            if (versions.length == 1) {
-                buf.append("install ").append(plugin.getID()).append('=').append(versions[0]).append("\r\n");
-            } else {
-                buf.append("install [");
-
-                for (int i = versions.length - 1; i >= 0; i--) {
-                    buf.append(plugin.getID()).append('=').append(versions[i]);
-                    if (i != 0) {
-                        buf.append(", ");
-                    }
-                }
-                buf.append("]\r\n");
-            }
+            List<String> versions = new ArrayList<>(plugin.getVersions());
+            Collections.reverse(versions);
+            res.add(plugin.getID() + "=" + Arrays.toString(versions.toArray()));
         }
-
-        return buf.toString();
+        return Arrays.toString(res.toArray());
     }
 
     /**
@@ -368,48 +353,13 @@ public class PluginManager {
     }
 
     private String getUpgradablePluginsString() {
-        final Set<Plugin> upgradablePlugins = getUpgradablePlugins();
-
-        if (upgradablePlugins.size() == 0) {
-            return "There is nothing to update.";
+        ArrayList<String> res = new ArrayList<>();
+        for (Plugin plugin : getUpgradablePlugins()) {
+            res.add(plugin.getID() + "=" + plugin.getInstalledVersion());
         }
-
-        final StringBuilder buf = new StringBuilder("Upgradable Plugins\r\n");
-
-        final List<String> pluginsId = new ArrayList<>();
-
-        for (Plugin plugin : upgradablePlugins) {
-
-            String id = plugin.getID();
-            pluginsId.add(id);
-
-            buf.append("uninstall").append(' ').append(id).append("\r\n");
-            buf.append("install").append(' ').append(id).append("\r\n\r\n");
-        }
-
-        if (pluginsId.size() > 1) {
-            String[] ids = pluginsId.toArray(new String[pluginsId.size()]);
-
-            buf.append("Update all plugins commands: \r\n\r\n");
-
-            buf.append("uninstall ");
-            appendArrayByComma(buf, ids);
-            buf.append("\r\n");
-
-            buf.append("install ");
-            appendArrayByComma(buf, ids);
-            buf.append("\r\n\r\n");
-        }
-
-        return buf.toString();
+        return (res.size() != 0) ?
+                Arrays.toString(res.toArray()) :
+                "There is nothing to update.";
     }
 
-    private void appendArrayByComma(StringBuilder buf, Object[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            buf.append(arr[i]);
-            if (i < arr.length - 1) {
-                buf.append(',');
-            }
-        }
-    }
 }

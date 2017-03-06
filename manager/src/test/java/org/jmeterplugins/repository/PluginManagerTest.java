@@ -19,7 +19,8 @@ public class PluginManagerTest {
 
     @Test
     public void testStandardSet() throws Throwable {
-        URL url = PluginManagerCMDInstaller.class.getResource("/testVirtualPlugin.json");
+        URL url = PluginManagerTest.class.getResource("/testVirtualPlugin.json");
+
         System.setProperty("jpgc.repo.address", url.getFile());
 
         PluginManager pmgr = new PluginManager();

@@ -110,7 +110,7 @@ public class Plugin {
                     installedPath = "";
                 }
             }
-            if (installedPath == null) {
+            if ("".equals(installedPath)) {
                 break;
             }
         }

@@ -67,6 +67,7 @@ public class PluginManager {
         for (Plugin plugin : allPlugins.keySet()) {
             if (plugin.isVirtual()) {
                 plugin.detectInstalled(getInstalledPlugins());
+                allPlugins.put(plugin, plugin.isInstalled());
             }
         }
 

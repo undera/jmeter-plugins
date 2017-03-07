@@ -1,21 +1,20 @@
 package org.jmeterplugins.repository;
 
 
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.jmeter.engine.JMeterEngine;
+import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.AccessDeniedException;
 import java.util.*;
-
-import net.sf.json.JSON;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
-import org.apache.jmeter.engine.JMeterEngine;
-import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -27,12 +26,35 @@ public class PluginManager {
     public PluginManager() {
         String sysProp = System.getProperty("jpgc.repo.address", "https://jmeter-plugins.org/repo/");
         String jmProp = JMeterUtils.getPropDefault("jpgc.repo.address", sysProp);
-        File jsonFile = new File(jmProp);
-        if (jsonFile.isFile()) {
-            jarSource = new JARSourceFilesystem(jsonFile);
+
+        String[] urls = jmProp.split("[;]");
+        if (isFileConfiguration(urls)) {
+            jarSource = new JARSourceFilesystem(new File(urls[0]));
         } else {
-            jarSource = new JARSourceHTTP(jmProp);
+            jarSource = new JARSourceHTTP(urls);
         }
+    }
+
+    private boolean isFileConfiguration(String[] urls) {
+        if (!isSupportedConfiguration(urls)) {
+            throw new RuntimeException("Unsupported sources repository config : " + Arrays.toString(urls));
+        }
+
+        return new File(urls[0]).isFile();
+    }
+
+    private boolean isSupportedConfiguration(String[] urls) {
+        boolean hasFile = false, hasHTTP = false;
+        for (String url : urls) {
+            File file = new File(url);
+            if (file.isFile()) {
+                hasFile = true;
+            } else {
+                hasHTTP = true;
+            }
+        }
+
+        return hasFile != hasHTTP;
     }
 
     public void load() throws Throwable {

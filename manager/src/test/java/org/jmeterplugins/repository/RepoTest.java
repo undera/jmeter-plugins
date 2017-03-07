@@ -28,7 +28,7 @@ public class RepoTest {
     private File repo = new File(System.getProperty("project.build.directory", "target") + s + "jpgc-repo");
     private File lib = new File(repo.getAbsolutePath() + s + "lib");
     private File libExt = new File(lib.getAbsolutePath() + s + "ext");
-    private JARSource jarSource = new JARSourceHTTP("https://jmeter-plugins.org/repo/");
+    private JARSource jarSource = new JARSourceHTTP(new String[] {"https://jmeter-plugins.org/repo/"});
 
     public RepoTest() {
         try {

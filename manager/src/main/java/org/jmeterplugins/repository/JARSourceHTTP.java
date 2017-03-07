@@ -1,34 +1,13 @@
 package org.jmeterplugins.repository;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Enumeration;
-
 import net.sf.json.JSON;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
+import org.apache.http.*;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.NTCredentials;
 import org.apache.http.client.methods.HttpGet;
@@ -49,14 +28,18 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
 public class JARSourceHTTP extends JARSource {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private final String address;
+    private final String[] addresses;
     protected AbstractHttpClient httpClient = new DefaultHttpClient();
     private int timeout = 1000; // don't delay JMeter startup for more than 1 second
 
-    public JARSourceHTTP(String address) {
-        this.address = address;
+    public JARSourceHTTP(String[] addresses) {
+        this.addresses = addresses;
         httpClient = getHTTPClient();
     }
 
@@ -92,8 +75,8 @@ public class JARSourceHTTP extends JARSource {
         return client;
     }
 
-    protected JSON getJSON(String path) throws IOException {
-        String uri = address + path;
+    protected JSON getJSON(String uri) throws IOException {
+
         log.debug("Requesting " + uri);
 
         HttpRequestBase get = new HttpGet(uri);
@@ -129,10 +112,26 @@ public class JARSourceHTTP extends JARSource {
         }
     }
 
+    public JSON getRepositories(String path) throws IOException {
+        final List<JSON> repositories = new ArrayList<>(addresses.length);
+        for (String address : addresses) {
+            repositories.add(getJSON(address + path));
+        }
+        final JSONArray result = new JSONArray();
+        for (JSON json : repositories) {
+            if (!(json instanceof JSONArray)) {
+                throw new RuntimeException("Result is not array");
+            }
+            for (Object elm : (JSONArray) json) {
+                result.add(elm);
+            }
+        }
+        return result;
+    }
 
     @Override
     public JSON getRepo() throws IOException {
-        return getJSON("?installID=" + getInstallID());
+        return getRepositories("?installID=" + getInstallID());
     }
 
     /**
@@ -218,25 +217,26 @@ public class JARSourceHTTP extends JARSource {
         stats.add(getInstallID());
         Collections.addAll(stats, usageStats);
 
-        String uri = address;
-        HttpPost post = null;
-        try {
-            post = new HttpPost(uri);
-            post.setHeader("Content-Type", "application/x-www-form-urlencoded");
-            HttpEntity body = new StringEntity("stats=" + URLEncoder.encode(Arrays.toString(stats.toArray(new String[0])), "UTF-8"));
-            post.setEntity(body);
-            HttpParams requestParams = post.getParams();
-            requestParams.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 3000);
-            requestParams.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1000);
+        for (String uri : addresses) {
+            HttpPost post = null;
+            try {
+                post = new HttpPost(uri);
+                post.setHeader("Content-Type", "application/x-www-form-urlencoded");
+                HttpEntity body = new StringEntity("stats=" + URLEncoder.encode(Arrays.toString(stats.toArray(new String[0])), "UTF-8"));
+                post.setEntity(body);
+                HttpParams requestParams = post.getParams();
+                requestParams.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 3000);
+                requestParams.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1000);
 
-            log.debug("Requesting " + uri);
-            httpClient.execute(post);
-        } finally {
-            if (post != null) {
-                try {
-                    post.abort();
-                } catch (Exception e) {
-                    log.warn("Failure while aborting POST", e);
+                log.debug("Requesting " + uri);
+                httpClient.execute(post);
+            } finally {
+                if (post != null) {
+                    try {
+                        post.abort();
+                    } catch (Exception e) {
+                        log.warn("Failure while aborting POST", e);
+                    }
                 }
             }
         }

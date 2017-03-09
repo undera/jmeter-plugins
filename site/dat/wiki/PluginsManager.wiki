@@ -29,7 +29,7 @@ Sometimes plugins have dependencies from each other, so there might be additiona
 
 Right mouse click over checkbox lists opens "Toggle All" option, which takes some time to toggle all items in the list.
 
-If you want to use the Plugins Manager in command-line read [/wiki/PluginsManagerFromCMD/ this usage guide].
+If you want to use the Plugins Manager from command-line read [/wiki/PluginsManagerFromCMD/ this usage guide].
 
 <div class="alert alert-warning">If you see empty dialog, this means that most likely you have proxy requirement for Internet connection. Please see [/wiki/PluginsManagerNetworkConfiguration next instructions].</div>
 

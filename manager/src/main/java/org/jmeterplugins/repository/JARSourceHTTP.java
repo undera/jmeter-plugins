@@ -130,7 +130,7 @@ public class JARSourceHTTP extends JARSource {
         }
     }
 
-    protected JSON getRepositories(String path) throws IOException {
+    protected JSONArray getRepositories(String path) throws IOException {
         final List<JSON> repositories = new ArrayList<>(addresses.length);
         for (String address : addresses) {
             repositories.add(getJSON(address + path));

@@ -58,7 +58,7 @@ Main goal is not to ship undesired plugins into popup menus to not distract JMet
 
 == Plugin's Sources Configuration ==
 
-You can configure plugin's sources using JMeter properties. For it's need to set "jpgc.repo.address" property, that contain HTTP URLs with plugins sources. URLs must be separated by  a semicolon ';'.
+You can configure plugin's sources using JMeter properties. For it's need to set "jpgc.repo.address" property, that contain HTTP URLs with plugins sources. URLs must be separated by  a semicolon ';' and satisfy special [/wiki/RequirementsForURLContent/ requirements] for their content.
 
 If two or more repositories have plugins-ID conflicts it will be resolved for the next principle: *the first ID have more priority and the next IDs does not override it*.
 

@@ -1,20 +1,20 @@
 package org.jmeterplugins.repository;
 
-
-import net.sf.json.JSON;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import org.apache.jmeter.engine.JMeterEngine;
-import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.AccessDeniedException;
 import java.util.*;
+
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.jmeter.engine.JMeterEngine;
+import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.logging.LoggingManager;
+import org.apache.log.Logger;
 
 public class PluginManager {
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -26,16 +26,13 @@ public class PluginManager {
     public PluginManager() {
         String sysProp = System.getProperty("jpgc.repo.address", "https://jmeter-plugins.org/repo/");
         String jmProp = JMeterUtils.getPropDefault("jpgc.repo.address", sysProp);
-
-        File jsonFile = new java.io.File(jmProp);
+        File jsonFile = new File(jmProp);
         if (jsonFile.isFile()) {
             jarSource = new JARSourceFilesystem(jsonFile);
         } else {
             jarSource = new JARSourceHTTP(jmProp);
         }
     }
-
-
 
     public void load() throws Throwable {
         if (allPlugins.size() > 0) {

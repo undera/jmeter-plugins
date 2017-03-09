@@ -55,6 +55,15 @@ If you are interested, please raise the topic on our [/support/ community forum]
 As a related note: there is a intention to split existing plugin sets from JPGC into smaller pieces that would fit users better.
 Main goal is not to ship undesired plugins into popup menus to not distract JMeter users from their main job.
 
+
+== Plugin's Sources Configuration ==
+
+You can configure plugin's sources using JMeter properties. For it's need to set "jpgc.repo.address" property, that contain HTTP URLs with plugins sources. URLs must be separated by  a semicolon ';'.
+
+If two or more repositories have plugins-ID conflicts it will be resolved for the next principle: *the first ID have more priority and the next IDs does not override it*.
+
+_Default URL is "https://jmeter-plugins.org/repo/"._
+
 == Usage Statistics Collected ==
 
 By default, Plugins Manager sends some anonymous information to JMeter-Plugins.org, including: full version of JMeter used,

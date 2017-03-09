@@ -37,9 +37,9 @@ This JSON object contains information about plugin version and consists from the
         "installerClass": "com.site.my.demo.plugin.InstallerClass",
         "versions" : {
             "0.1" : {
-                "downloadUrl" : "https://my.site.com/demoPlugin/0.1/my-beta-plugin-id-0.1.jar",
+                "downloadUrl" : "https://my.site.com/demoPlugin/my-beta-plugin-id-0.1.jar",
                 "libs" : {
-                    "external-graph-builder" : "https://other.site.com/graph-builder-0.2.jar"
+                    "graph-builder" : "https://other.site.com/graph-builder-0.2.jar"
                 },
                 "depends" : [
                     "jpgc-graphs-basic",
@@ -48,9 +48,9 @@ This JSON object contains information about plugin version and consists from the
             },
             "0.2" : {
                 "changes" : "In version 0.2 we fixed some bugs and added some new features."
-                "downloadUrl" : "https://my.site.com/demoPlugin/0.1/my-beta-plugin-id-0.2.jar",
+                "downloadUrl" : "https://my.site.com/demoPlugin/my-beta-plugin-id-0.2.jar",
                 "libs" : {
-                    "external-graph-builder" : "https://other.site.com/graph-builder-0.2.jar"
+                    "graph-builder" : "https://other.site.com/graph-builder-0.2.jar"
                 },
                 "depends" : [
                     "jpgc-graphs-basic",

@@ -1,4 +1,5 @@
 = Project Documentation Wiki =
+  * [PluginsManager Plugins Manager]
   * [PluginInstall Installation Procedure] to have correct setup
   * [SettingsPanel] GUI Customizing Graphs Plugins
 

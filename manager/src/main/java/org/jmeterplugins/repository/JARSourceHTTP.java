@@ -1,13 +1,35 @@
 package org.jmeterplugins.repository;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.http.*;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.NTCredentials;
 import org.apache.http.client.methods.HttpGet;
@@ -28,18 +50,14 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-
 public class JARSourceHTTP extends JARSource {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private final String[] addresses;
     protected AbstractHttpClient httpClient = new DefaultHttpClient();
     private int timeout = 1000; // don't delay JMeter startup for more than 1 second
 
-    public JARSourceHTTP(String[] addresses) {
-        this.addresses = addresses;
+    public JARSourceHTTP(String jmProp) {
+        this.addresses = jmProp.split("[;]");
         httpClient = getHTTPClient();
     }
 
@@ -117,13 +135,24 @@ public class JARSourceHTTP extends JARSource {
         for (String address : addresses) {
             repositories.add(getJSON(address + path));
         }
+
         final JSONArray result = new JSONArray();
+        final List<String> pluginsIDs = new ArrayList<>();
+
         for (JSON json : repositories) {
             if (!(json instanceof JSONArray)) {
                 throw new RuntimeException("Result is not array");
             }
+
             for (Object elm : (JSONArray) json) {
-                result.add(elm);
+                // resolve plugin-id conflicts
+                String id = ((JSONObject) elm).getString("id");
+                if (!pluginsIDs.contains(id)) {
+                    pluginsIDs.add(id);
+                    result.add(elm);
+                } else {
+                    log.info("Plugin " + id + " will be skipped, because it is duplicated.");
+                }
             }
         }
         return result;

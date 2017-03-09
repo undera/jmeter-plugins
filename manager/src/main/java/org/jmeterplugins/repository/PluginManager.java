@@ -27,35 +27,15 @@ public class PluginManager {
         String sysProp = System.getProperty("jpgc.repo.address", "https://jmeter-plugins.org/repo/");
         String jmProp = JMeterUtils.getPropDefault("jpgc.repo.address", sysProp);
 
-        String[] urls = jmProp.split("[;]");
-        if (isFileConfiguration(urls)) {
-            jarSource = new JARSourceFilesystem(new File(urls[0]));
+        File jsonFile = new java.io.File(jmProp);
+        if (jsonFile.isFile()) {
+            jarSource = new JARSourceFilesystem(jsonFile);
         } else {
-            jarSource = new JARSourceHTTP(urls);
+            jarSource = new JARSourceHTTP(jmProp);
         }
     }
 
-    private boolean isFileConfiguration(String[] urls) {
-        if (!isSupportedConfiguration(urls)) {
-            throw new RuntimeException("Unsupported sources repository config : " + Arrays.toString(urls));
-        }
 
-        return new File(urls[0]).isFile();
-    }
-
-    private boolean isSupportedConfiguration(String[] urls) {
-        boolean hasFile = false, hasHTTP = false;
-        for (String url : urls) {
-            File file = new File(url);
-            if (file.isFile()) {
-                hasFile = true;
-            } else {
-                hasHTTP = true;
-            }
-        }
-
-        return hasFile != hasHTTP;
-    }
 
     public void load() throws Throwable {
         if (allPlugins.size() > 0) {

@@ -1,6 +1,6 @@
-= Requirements For URL Content =
+= Plugin Repository Descriptor Format =
 
-The URL's content should be represented in JSON array form, where each plugin is a array element.
+Plugin Repository Descriptor should be represented in JSON array form, where each plugin is a array element.
 Each plugin is a JSON object that contains next fields: "id", "name", "description", "screenshotUrl", "helpUrl", "vendor", "markerClass", "installerClass" and "versions".
 
     * "id" - represents a unique plugin identifier;

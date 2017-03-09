@@ -16,11 +16,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
-
+import java.util.List;
 import net.sf.json.JSON;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
@@ -51,12 +52,12 @@ import org.apache.log.Logger;
 
 public class JARSourceHTTP extends JARSource {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private final String address;
+    private final String[] addresses;
     protected AbstractHttpClient httpClient = new DefaultHttpClient();
     private int timeout = 1000; // don't delay JMeter startup for more than 1 second
 
-    public JARSourceHTTP(String address) {
-        this.address = address;
+    public JARSourceHTTP(String jmProp) {
+        this.addresses = jmProp.split("[;]");
         httpClient = getHTTPClient();
     }
 
@@ -92,8 +93,8 @@ public class JARSourceHTTP extends JARSource {
         return client;
     }
 
-    protected JSON getJSON(String path) throws IOException {
-        String uri = address + path;
+    protected JSON getJSON(String uri) throws IOException {
+
         log.debug("Requesting " + uri);
 
         HttpRequestBase get = new HttpGet(uri);
@@ -129,10 +130,37 @@ public class JARSourceHTTP extends JARSource {
         }
     }
 
+    protected JSONArray getRepositories(String path) throws IOException {
+        final List<JSON> repositories = new ArrayList<>(addresses.length);
+        for (String address : addresses) {
+            repositories.add(getJSON(address + path));
+        }
+
+        final JSONArray result = new JSONArray();
+        final List<String> pluginsIDs = new ArrayList<>();
+
+        for (JSON json : repositories) {
+            if (!(json instanceof JSONArray)) {
+                throw new RuntimeException("Result is not array");
+            }
+
+            for (Object elm : (JSONArray) json) {
+                // resolve plugin-id conflicts
+                String id = ((JSONObject) elm).getString("id");
+                if (!pluginsIDs.contains(id)) {
+                    pluginsIDs.add(id);
+                    result.add(elm);
+                } else {
+                    log.info("Plugin " + id + " will be skipped, because it is duplicated.");
+                }
+            }
+        }
+        return result;
+    }
 
     @Override
     public JSON getRepo() throws IOException {
-        return getJSON("?installID=" + getInstallID());
+        return getRepositories("?installID=" + getInstallID());
     }
 
     /**
@@ -218,25 +246,26 @@ public class JARSourceHTTP extends JARSource {
         stats.add(getInstallID());
         Collections.addAll(stats, usageStats);
 
-        String uri = address;
-        HttpPost post = null;
-        try {
-            post = new HttpPost(uri);
-            post.setHeader("Content-Type", "application/x-www-form-urlencoded");
-            HttpEntity body = new StringEntity("stats=" + URLEncoder.encode(Arrays.toString(stats.toArray(new String[0])), "UTF-8"));
-            post.setEntity(body);
-            HttpParams requestParams = post.getParams();
-            requestParams.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 3000);
-            requestParams.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1000);
+        for (String uri : addresses) {
+            HttpPost post = null;
+            try {
+                post = new HttpPost(uri);
+                post.setHeader("Content-Type", "application/x-www-form-urlencoded");
+                HttpEntity body = new StringEntity("stats=" + URLEncoder.encode(Arrays.toString(stats.toArray(new String[0])), "UTF-8"));
+                post.setEntity(body);
+                HttpParams requestParams = post.getParams();
+                requestParams.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 3000);
+                requestParams.setIntParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 1000);
 
-            log.debug("Requesting " + uri);
-            httpClient.execute(post);
-        } finally {
-            if (post != null) {
-                try {
-                    post.abort();
-                } catch (Exception e) {
-                    log.warn("Failure while aborting POST", e);
+                log.debug("Requesting " + uri);
+                httpClient.execute(post);
+            } finally {
+                if (post != null) {
+                    try {
+                        post.abort();
+                    } catch (Exception e) {
+                        log.warn("Failure while aborting POST", e);
+                    }
                 }
             }
         }

@@ -49,7 +49,7 @@
         }
       },
       "0.0.12": {
-        "changes": "<html><p>- Added \"help\", \"available\" and \"upgrades\" commands to cmd;</p><p>- Added displaying information about changes in version;</p><p>- Added caching images;</p><p>- Added tooltips in versions, with version changes;</p><p>- Fixed Standard Set tries to uninstall;</p><p>- Fixed error changing the color to red.</p>",
+        "changes": "<html><p>- Added configurable plugin sources;</p><p>- Added \"help\", \"available\" and \"upgrades\" commands to cmd;</p><p>- Added displaying information about changes in version;</p><p>- Added caching images;</p><p>- Added tooltips in versions, with version changes;</p><p>- Fixed Standard Set tries to uninstall;</p><p>- Fixed error changing the color to red.</p>",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.12/jmeter-plugins-manager-0.12.jar",
         "libs": {
           "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"

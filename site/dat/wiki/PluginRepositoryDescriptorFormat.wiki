@@ -1,28 +1,32 @@
 = Plugin Repository Descriptor Format =
 
-Plugin Repository Descriptor should be represented in JSON array form, where each plugin is a array element.
-Each plugin is a JSON object that contains next fields: "id", "name", "description", "screenshotUrl", "helpUrl", "vendor", "markerClass", "installerClass" and "versions".
+Plugin Repositories are used by [PluginsManager JMeter Plugins Manager] to offer user with additional plugins to install.
+You can see example of valid plugins repository [/repo/ here].
 
-    * "id" - represents a unique plugin identifier;
-    * "name" - simple plugin name;
-    * "description" - description of plugin or usage guide for this plugin;
-    * "screenshotUrl" - URL with screenshot of this plugin;
-    * "helpUrl" - URL with help page for this plugin;
-    * "vendor" -  vendor of this plugin;
-    * "markerClass" - some class from this plugin, the presence of which may indicate that the plugin is installed;
-    * "installerClass" - the class that will be launched during the installation of the plugin. _This field is optional_.
+Plugin Repository URL should respond with JSON array, where each item represents the plugin descriptor.
+Each plugin is a JSON object that contains following fields:
 
-== Versions Field ==
+    * {{{id}}} - represents a unique plugin identifier;
+    * {{{name}}} - simple plugin name;
+    * {{{description}}} - description of plugin or usage guide for this plugin;
+    * {{{screenshotUrl}}} - URL with screenshot of this plugin;
+    * {{{helpUrl}}} - URL with help page for this plugin;
+    * {{{vendor}}} -  vendor of this plugin;
+    * {{{markerClass}}} - some class from this plugin, the presence of which may indicate that the plugin is installed;
+    * {{{installerClass}}} - the class that will be launched during the installation of the plugin. _This field is optional_.
+    * {{{versions}}} - mapping of version number to version descriptor, as explained below
 
-Field "versions" - is a json array, that contains key-value pairs, where key is a version and value is a JSON object.
-This JSON object contains information about plugin version and consists from the next fields: "downloadUrl", "changes", "libs" and "depends".
 
-    * "downloadUrl" - URL for download this plugin;
-    * "changes" - information about changes in this version;
-    * "libs" - it is a JSON map of plugins dependency libraries, where key is a library name and value is link for download this library;
-    * "depends" - array of dependencies from other plugins, that contains from plugin IDs.
+== Version Descriptor ==
 
-== Example Content ==
+This JSON object contains information about plugin version and consists from the next fields:
+
+    * {{{downloadUrl}}} - URL for download this plugin;
+    * {{{changes}}} - information about changes in this version, optional;
+    * {{{libs}}} - it is a JSON map of plugins dependency libraries, where key is a library name and value is link for download this library;
+    * {{{depends}}} - array of dependencies from other plugins, by plugin IDs.
+
+== Example Plugin Descriptor ==
 
 {{{
 [
@@ -62,4 +66,3 @@ This JSON object contains information about plugin version and consists from the
 ]
 }}}
 
-A larger example of json you can find [/repo/ here].

@@ -2,7 +2,7 @@
 
 == Using Behind the Proxy ==
 
-Plugins Manager respects JMeter's [http://jmeter.apache.org/usermanual/get-started.html#proxy_server proxy settings]. However, to avoid editing the properties files, we recommend to launch JMeter with additional parameters to pass it the proxy settings:
+[PluginsManager Plugins Manager] respects JMeter's [http://jmeter.apache.org/usermanual/get-started.html#proxy_server proxy settings]. However, to avoid editing the properties files, we recommend to launch JMeter with additional parameters to pass it the proxy settings:
 
 {{{
 JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080" jmeter\bin\jmeter.bat

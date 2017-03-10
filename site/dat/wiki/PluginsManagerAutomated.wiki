@@ -1,9 +1,9 @@
 = Plugins Manager from Command-Line =
 
-If you want to use the Plugins Manager in an automated fashion, you will need to make some preparations first:
+If you want to use [PluginsManager JMeter Plugins Manager] in an automated fashion, you will need to make some preparations first:
 
   # make sure {{{cmdrunner-2.0.jar}}} is present in {{{jmeter/lib}}} directory. If not, take it from here: http://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar
-  # make sure {{{PluginsManagerCMD.sh}}} or {{{PluginsManagerCMD.bat}}} is present in {{{jmeter/bin}}} directory. If not, run {{{java -cp jmeter/lib/ext/jmeter-plugins-manager-0.9.jar org.jmeterplugins.repository.PluginManagerCMDInstaller}}} to have the files created
+  # make sure {{{PluginsManagerCMD.sh}}} or {{{PluginsManagerCMD.bat}}} is present in {{{jmeter/bin}}} directory. If not, run {{{java -cp jmeter/lib/ext/jmeter-plugins-manager-x.x.jar org.jmeterplugins.repository.PluginManagerCMDInstaller}}} to have the files created
 
 Now, you can use {{{PluginsManagerCMD}}} to get the status of plugins, install or uninstall them. The command-line is simple:
 
@@ -36,3 +36,32 @@ If you need username/proxy for proxy, pass them like this:
 {{{
 JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080 -Dhttp.proxyUser=john -Dhttp.proxyPass=***" PluginsManagerCMD status
 }}}
+
+
+== Using from BeanShell or JSR223 ==
+
+
+If you need to access the plugins versions information from scriptable components like BeanShell sampler, please use these two methods:
+
+
+=== Single Plugin Info ===
+
+
+Request for single plugin version, returns version string if plugin is installed, or null if plugin is not installed:
+
+
+{{{
+org.jmeterplugins.repository.PluginManager.getPluginStatus("jpgc-graphs-basic")
+}}}
+
+Example result of this function call is string like {{{1.3.0}}}.
+
+=== All Plugins Info ===
+
+Returns a string containing plugin IDs with corresponding versions. Only the installed plugins are listed.
+
+{{{
+org.jmeterplugins.repository.PluginManager.getAllPluginsStatus()
+}}}
+
+Example result of this function call is string like {{{[jpgc-graphs-basic=1.3.1, jpgc-sense=1.3.1, jpgc-cmd=1.3.1, jpgc-graphs-composite=1.3.1, jmeter-core=2.13, jmeter-components=2.13]}}}.

@@ -1,13 +1,30 @@
 package org.jmeterplugins.repository;
 
+import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.util.JMeterUtils;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.net.URL;
 import java.util.LinkedList;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.fail;
 
 public class PluginManagerCMDTest {
+    @BeforeClass
+    public static void setup() {
+        TestJMeterUtils.createJmeterEnv();
+        URL url = PluginManagerTest.class.getResource("/testVirtualPlugin.json");
+        JMeterUtils.setProperty("jpgc.repo.address", url.getFile());
+    }
+
+    @AfterClass
+    public static void tearDown() throws Exception {
+        JMeterUtils.getJMeterProperties().remove("jpgc.repo.address");
+    }
+
     @Test
     public void processParams_status() throws Exception {
         PluginManagerCMD cmd = new PluginManagerCMD();
@@ -26,7 +43,7 @@ public class PluginManagerCMDTest {
             fail();
         } catch (IllegalArgumentException ignored) {
         }
-        params.add("jpgc-json,jpgc-cmd=2.0");
+        params.add("jpgc-dep1,jpgc-dep2=2.0");
         cmd.processParams(params.listIterator());
     }
 
@@ -53,7 +70,7 @@ public class PluginManagerCMDTest {
             fail();
         } catch (IllegalArgumentException ignored) {
         }
-        params.add("jpgc-json=2.0,jpgc-cmd");
+        params.add("jpgc-dep1,jpgc-dep2=2.0");
         cmd.processParams(params.listIterator());
     }
 

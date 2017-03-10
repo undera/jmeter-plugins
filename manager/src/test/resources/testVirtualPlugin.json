@@ -9,9 +9,9 @@
     "markerClass": "org.jmeterplugins.repository.PluginManagerTest",
     "versions": {
       "2.0": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-basic/2.0/jmeter-plugins-graphs-basic-2.0.jar",
+        "downloadUrl": "dummy.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "dummy.jar"
         }
       }
     }
@@ -26,9 +26,9 @@
     "markerClass": "org.jmeterplugins.repository.PluginManagerTest",
     "versions": {
       "2.0": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-basic/2.0/jmeter-plugins-graphs-basic-2.0.jar",
+        "downloadUrl": "dummy.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar"
+          "jmeter-plugins-cmn-jmeter": "dummy.jar"
         }
       }
     }

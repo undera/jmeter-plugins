@@ -31,7 +31,7 @@ Right mouse click over checkbox lists opens "Toggle All" option, which takes som
 
 If you want to use the Plugins Manager from command-line read [/wiki/PluginsManagerFromCMD/ this usage guide].
 
-<div class="alert alert-warning">If you see empty dialog, this means that most likely you have proxy requirement for Internet connection. Please see [/wiki/PluginsManagerNetworkConfiguration next instructions].</div>
+<div class="alert alert-warning">If you see empty dialog, this means that most likely you have proxy requirement for Internet connection. Please see [/wiki/PluginsManagerNetworkConfiguration the next instructions].</div>
 
 == Add Your Plugin ==
 

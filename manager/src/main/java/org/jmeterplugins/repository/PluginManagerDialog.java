@@ -11,7 +11,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -21,12 +20,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.JEditorPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 import org.apache.jmeter.gui.action.ActionNames;
 import org.apache.jmeter.gui.action.ActionRouter;
@@ -34,7 +35,7 @@ import org.apache.jorphan.gui.ComponentUtil;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-public class PluginManagerDialog extends JDialog implements ActionListener, ComponentListener {
+public class PluginManagerDialog extends JDialog implements ActionListener, ComponentListener, HyperlinkListener {
     /**
      *
      */
@@ -49,7 +50,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
     private final PluginUpgradesList upgrades;
     private final JSplitPane topAndDown = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
     private JLabel statusLabel = new JLabel("");
-    private JTextArea failureLabel = new JTextArea();
+    private JEditorPane failureLabel = new JEditorPane();
 
 
     public PluginManagerDialog(PluginManager aManager) {
@@ -63,9 +64,9 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
         setIconImage(PluginManagerMenuItem.getPluginsIcon().getImage());
         ComponentUtil.centerComponentInWindow(this);
 
-        failureLabel.setForeground(Color.RED);
-        failureLabel.setEditable(false);
-        add(failureLabel, BorderLayout.NORTH);
+        failureLabel.setContentType("text/html");
+        failureLabel.addHyperlinkListener(this);
+        add(new JScrollPane(failureLabel), BorderLayout.NORTH);
 
         final GenericCallback<Object> statusRefresh = new GenericCallback<Object>() {
             @Override
@@ -207,16 +208,29 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
             log.error("Failed to load plugins manager", e);
             ByteArrayOutputStream text = new ByteArrayOutputStream(4096);
             e.printStackTrace(new PrintStream(text));
-            failureLabel.setText(text.toString());
+            failureLabel.setText("<html> <h2>Most likely you have proxy requirement for Internet connection. " +
+                    " Please see the next instructions: " +
+                    "<a href=\"https://jmeter-plugins.org/wiki/PluginsManagerNetworkConfiguration/\">" +
+                    "https://jmeter-plugins.org/wiki/PluginsManagerNetworkConfiguration/</a> </h2>" +
+                    " <br><br> <pre>" + text.toString() + "</pre><br></html>");
         }
 
         topAndDown.setVisible(!manager.allPlugins.isEmpty());
         failureLabel.setVisible(manager.allPlugins.isEmpty());
+        failureLabel.setEditable(false);
+
         pack();
     }
 
     @Override
     public void componentHidden(ComponentEvent e) {
 
+    }
+
+    @Override
+    public void hyperlinkUpdate(HyperlinkEvent e) {
+        if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+            PluginsList.openInBrowser(e.getURL().toString());
+        }
     }
 }

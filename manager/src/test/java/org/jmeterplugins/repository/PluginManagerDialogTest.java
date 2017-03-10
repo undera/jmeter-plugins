@@ -21,7 +21,7 @@ public class PluginManagerDialogTest {
             System.setProperty("http.proxyHost", "localhost");
             System.setProperty("http.proxyPort", "81");
             PluginManager aManager = new PluginManager();
-            aManager.load();
+            //aManager.load();
             PluginManagerDialog frame = new PluginManagerDialog(aManager);
 
             frame.setPreferredSize(new Dimension(800, 600));

@@ -208,11 +208,13 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
             log.error("Failed to load plugins manager", e);
             ByteArrayOutputStream text = new ByteArrayOutputStream(4096);
             e.printStackTrace(new PrintStream(text));
-            failureLabel.setText("<html> <h2>Most likely you have proxy requirement for Internet connection. " +
-                    " Please see the next instructions: " +
+            String msg = "<p>Failed to download plugins repository.<br/>";
+            msg += "One of the possible reasons is that you have proxy requirement for Internet connection.</p>" +
+                    " Please read the instructions on this page: " +
                     "<a href=\"https://jmeter-plugins.org/wiki/PluginsManagerNetworkConfiguration/\">" +
-                    "https://jmeter-plugins.org/wiki/PluginsManagerNetworkConfiguration/</a> </h2>" +
-                    " <br><br> <pre>" + text.toString() + "</pre><br></html>");
+                    "https://jmeter-plugins.org/wiki/PluginsManagerNetworkConfiguration/</a>" +
+                    " <br><br>Error's technical details: <pre>" + text.toString() + "</pre><br>";
+            failureLabel.setText("<html>" + msg + "</html>");
         }
 
         topAndDown.setVisible(!manager.allPlugins.isEmpty());

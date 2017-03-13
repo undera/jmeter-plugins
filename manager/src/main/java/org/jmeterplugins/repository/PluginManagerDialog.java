@@ -51,7 +51,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
     private final JSplitPane topAndDown = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
     private JLabel statusLabel = new JLabel("");
     private JEditorPane failureLabel = new JEditorPane();
-
+    private JScrollPane failureScrollPane = new JScrollPane(failureLabel);
 
     public PluginManagerDialog(PluginManager aManager) {
         super((JFrame) null, "JMeter Plugins Manager", true);
@@ -66,7 +66,6 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
 
         failureLabel.setContentType("text/html");
         failureLabel.addHyperlinkListener(this);
-        add(new JScrollPane(failureLabel), BorderLayout.NORTH);
 
         final GenericCallback<Object> statusRefresh = new GenericCallback<Object>() {
             @Override
@@ -215,11 +214,13 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
                     "https://jmeter-plugins.org/wiki/PluginsManagerNetworkConfiguration/</a>" +
                     " <br><br>Error's technical details: <pre>" + text.toString() + "</pre><br>";
             failureLabel.setText("<html>" + msg + "</html>");
+            failureLabel.setEditable(false);
+            add(failureScrollPane, BorderLayout.CENTER);
+            failureLabel.setCaretPosition(0);
         }
 
         topAndDown.setVisible(!manager.allPlugins.isEmpty());
         failureLabel.setVisible(manager.allPlugins.isEmpty());
-        failureLabel.setEditable(false);
 
         pack();
     }

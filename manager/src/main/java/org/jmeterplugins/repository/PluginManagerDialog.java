@@ -66,7 +66,6 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
 
         failureLabel.setContentType("text/html");
         failureLabel.addHyperlinkListener(this);
-        add(new JScrollPane(failureLabel), BorderLayout.NORTH);
 
         final GenericCallback<Object> statusRefresh = new GenericCallback<Object>() {
             @Override
@@ -220,6 +219,8 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
         topAndDown.setVisible(!manager.allPlugins.isEmpty());
         failureLabel.setVisible(manager.allPlugins.isEmpty());
         failureLabel.setEditable(false);
+        add(new JScrollPane(failureLabel), BorderLayout.CENTER);
+        failureLabel.setCaretPosition(0);
 
         pack();
     }

@@ -23,7 +23,7 @@ for D in `ls` ; do
     fi
 done
 
-cp manager/target/jmeter-plugins-manager-*.jar upload/files/nightly/
+#cp manager/target/jmeter-plugins-manager-*.jar upload/files/nightly/
 
 rename "s/.jar/_$REV.jar/" upload/files/nightly/*.jar
 rename "s/.zip/_$REV.zip/" upload/files/nightly/*.zip

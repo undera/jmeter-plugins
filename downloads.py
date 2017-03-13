@@ -5,8 +5,8 @@ import re
 import subprocess
 import tempfile
 import zipfile
-
 from distutils.version import StrictVersion
+
 import requests
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -49,11 +49,11 @@ def pack_version(fname, ver_obj, pmgr_obj, installer_cls):
 def zip_dir(path, ziph):
     # ziph is zipfile handle
     for root, dirs, files in os.walk(path):
-        for file in files:
-            ziph.write(os.path.join(root, file), os.path.join(root[len(path):], file))
+        for fname in files:
+            ziph.write(os.path.join(root, fname), os.path.join(root[len(path):], fname))
 
 
-def download_into_dir(dir, url, dest_subpath):
+def download_into_dir(dirname, url, dest_subpath):
     logging.info("Downloading: %s", url)
     resp = requests.get(url)
     assert resp.status_code == 200
@@ -62,13 +62,13 @@ def download_into_dir(dir, url, dest_subpath):
     else:
         remote_filename = os.path.basename(resp.url)
 
-    dir_path = os.path.join(dir, dest_subpath)
+    dir_path = os.path.join(dirname, dest_subpath)
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
 
-    file = open(os.path.join(dir, dest_subpath, remote_filename), 'w')
-    file.write(resp.content)
-    file.close()
+    with open(os.path.join(dirname, dest_subpath, remote_filename), 'w') as fname:
+        fname.write(resp.content)
+        fname.close()
     resp.close()
     return os.path.join(dir_path, remote_filename)
 
@@ -95,6 +95,7 @@ if __name__ == "__main__":
 
     # find pmgr
     pmgr_obj = get_pmgr(plugins)
+    download_into_dir(tempfile.mkdtemp(), pmgr_obj['downloadUrl'], "pmgr")  # TODO: use it as cached
 
     for plugin in plugins:
         logging.debug("Processing plugin: %s", plugin['id'])
@@ -110,4 +111,5 @@ if __name__ == "__main__":
                 logging.info("Skip: %s", plugin['id'])
                 continue
 
-            pack_version(os.path.join(dest_dir, dest_file), plugin['versions'][version], pmgr_obj, plugin.get('installerClass'))
+            pack_version(os.path.join(dest_dir, dest_file), plugin['versions'][version], pmgr_obj,
+                         plugin.get('installerClass'))

@@ -4,7 +4,7 @@
      class="PWE\Modules\HTMLPage\HTMLPage" src="catalogue.html">
 
     <url link="get" class="PWE\Modules\RedirectAccepted\RedirectAccepted"
-         base="http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.11/jmeter-plugins-manager-0.11.jar"
+         base="http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.12/jmeter-plugins-manager-0.12.jar"
          no_final_slash="1"/>
 
     <url link="install" title="Install" menu="1" ico="fa-download"

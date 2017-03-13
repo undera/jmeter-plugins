@@ -1,7 +1,6 @@
 package kg.apc.jmeter;
 
 import kg.apc.emulators.TestJMeterUtils;
-import kg.apc.jmeter.JMeterPluginsUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

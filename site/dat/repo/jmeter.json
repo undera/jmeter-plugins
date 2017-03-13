@@ -181,19 +181,5 @@
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_components/%1$s/ApacheJMeter_components-%1$s.jar"
       }
     }
-  },
-  {
-    "id": "jmeter-monitors",
-    "name": "JMeter 'Monitors' (Deprecated)",
-    "description": "A deprecated library, mostly not used",
-    "vendor": "JMeter Core Team",
-    "screenshotUrl": "http://jmeter.apache.org/images/screenshots/monitor_screencap.png",
-    "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#Monitor_Results",
-    "markerClass": "org.apache.jmeter.monitor.parser.MonitorHandler",
-    "versions": {
-      "": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_monitors/%1$s/ApacheJMeter_monitors-%1$s.jar"
-      }
-    }
   }
 ]

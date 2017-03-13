@@ -94,7 +94,7 @@ By the number of known users:
                 }
             },
             title: {
-                text: 'Active Installations Over Time: ' + id
+                text: 'Montly Active Installations: ' + id
             },
             subtitle: {
                 text: 'Source: jmeter-plugins.org'
@@ -142,7 +142,7 @@ By the number of known users:
         var repo_keys = Object.keys(repo_entry.versions);
         keys.sort();
 
-        var other=0;
+        var other = 0;
         for (var n = 0; n < keys.length; n++) {
             var ver = keys[n];
             var val = Math.round(1000 * data[ver] / sum) / 10;
@@ -223,6 +223,10 @@ By the number of known users:
                     var list = [];
                     for (var k in json) {
                         if (k.startsWith('jmeter-')) continue;
+                        if (!repo[k]) {
+                            console.warn("No such entry in repo: " + k);
+                            continue;
+                        }
 
                         var values2 = values(json[k]);
                         var plugin = {

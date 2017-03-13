@@ -214,13 +214,13 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
                     "https://jmeter-plugins.org/wiki/PluginsManagerNetworkConfiguration/</a>" +
                     " <br><br>Error's technical details: <pre>" + text.toString() + "</pre><br>";
             failureLabel.setText("<html>" + msg + "</html>");
+            failureLabel.setEditable(false);
+            add(new JScrollPane(failureLabel), BorderLayout.CENTER);
+            failureLabel.setCaretPosition(0);
         }
 
         topAndDown.setVisible(!manager.allPlugins.isEmpty());
         failureLabel.setVisible(manager.allPlugins.isEmpty());
-        failureLabel.setEditable(false);
-        add(new JScrollPane(failureLabel), BorderLayout.CENTER);
-        failureLabel.setCaretPosition(0);
 
         pack();
     }

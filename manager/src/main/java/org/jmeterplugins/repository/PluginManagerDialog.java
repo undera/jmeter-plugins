@@ -51,7 +51,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
     private final JSplitPane topAndDown = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
     private JLabel statusLabel = new JLabel("");
     private JEditorPane failureLabel = new JEditorPane();
-
+    private JScrollPane failureScrollPane = new JScrollPane(failureLabel);
 
     public PluginManagerDialog(PluginManager aManager) {
         super((JFrame) null, "JMeter Plugins Manager", true);
@@ -215,7 +215,7 @@ public class PluginManagerDialog extends JDialog implements ActionListener, Comp
                     " <br><br>Error's technical details: <pre>" + text.toString() + "</pre><br>";
             failureLabel.setText("<html>" + msg + "</html>");
             failureLabel.setEditable(false);
-            add(new JScrollPane(failureLabel), BorderLayout.CENTER);
+            add(failureScrollPane, BorderLayout.CENTER);
             failureLabel.setCaretPosition(0);
         }
 

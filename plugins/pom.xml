@@ -32,7 +32,6 @@
         <module>ffw</module>
         <module>fifo</module>
         <module>functions</module>
-        <module>hadoop</module>
         <module>httpraw</module>
         <module>jms</module>
         <module>jmxmon</module>

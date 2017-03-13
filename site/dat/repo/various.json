@@ -168,5 +168,28 @@
         }
       }
     }
+  },
+  {
+    "id": "jpgc-hadoop",
+    "name": "Hadoop/HBase Testing",
+    "description": "<ul><li>HBase Connection Config</li><li>HDFS Operations</li><li>Hadoop Job Tracker Sampler</li><li>HBase CRUD Sampler</li><li>HBase Scan Sampler</li><li>HBase Rowkey Sampler</li></ul>",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/HBaseConnection1.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/HadoopSet/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations",
+    "versions": {
+      "2.0": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-hadoop/2.0/jmeter-plugins-hadoop-2.0.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.3/jmeter-plugins-cmn-jmeter-0.3.jar",
+          "hbase": "https://search.maven.org/remotecontent?filepath=org/apache/hbase/hbase/0.94.5/hbase-0.94.5.jar",
+          "zookeeper": "https://search.maven.org/remotecontent?filepath=org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar",
+          "commons-beanutils": "https://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
+          "guava": "https://search.maven.org/remotecontent?filepath=com/google/guava/guava/11.0.2/guava-11.0.2.jar",
+          "hadoop-core": "https://search.maven.org/remotecontent?filepath=org/apache/hadoop/hadoop-core/1.1.2/hadoop-core-1.1.2.jar",
+          "jackson-mapper-asl": "https://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-mapper-asl/1.8.8/jackson-mapper-asl-1.8.8.jar"
+        }
+      }
+    }
   }
 ]

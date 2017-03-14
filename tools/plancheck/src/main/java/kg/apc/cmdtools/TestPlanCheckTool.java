@@ -26,8 +26,6 @@ import org.apache.log.Logger;
 import org.apache.log.Priority;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ListIterator;
 
@@ -102,7 +100,7 @@ public class TestPlanCheckTool extends AbstractCMDTool {
     private int doJob() {
         HashTree testTree;
         try {
-            testTree = loadJMX(new FileInputStream(new File(jmx)));
+            testTree = loadJMX(new File(jmx));
             log.info("JMX is fine");
         } catch (Exception e) {
             log.error("Failed to load JMX", e);
@@ -132,8 +130,8 @@ public class TestPlanCheckTool extends AbstractCMDTool {
         stats.logStats();
     }
 
-    private HashTree loadJMX(InputStream reader) throws Exception {
-        HashTree tree = SaveService.loadTree(reader);
+    private HashTree loadJMX(File file) throws Exception {
+        HashTree tree = SaveService.loadTree(file);
 
         // unfortunately core JMeter code does not throw exception, we may only guess...
         if (tree == null) {

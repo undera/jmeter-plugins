@@ -3,7 +3,6 @@ package kg.apc.jmeter.vizualizers;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -265,10 +264,7 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
             FileWriter writer = null;
             try {
                 writer = new FileWriter(file);
-                CSVSaveService.saveCSVStats(SynthesisReportGui.getAllTableData(statModel, FORMATS)
-                		, writer, saveHeaders.isSelected() ? COLUMNS : null);
-            } catch (FileNotFoundException e) {
-                log.warn(e.getMessage());
+                CSVSaveService.saveCSVStats(SynthesisReportGui.getAllDataAsTable(statModel, FORMATS, COLUMNS), writer, saveHeaders.isSelected());
             } catch (IOException e) {
                 log.warn(e.getMessage());
             } finally {

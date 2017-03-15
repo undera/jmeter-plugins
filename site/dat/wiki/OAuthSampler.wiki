@@ -1,4 +1,4 @@
-= OAuth Sampler =
+= OAuth Sampler (Deprecated) =
 
 <span class=''>[/?search=jpgc-oauth <i class='fa fa-download'></i> Download]</span>
 
@@ -6,6 +6,7 @@
 released as [https://github.com/ATLANTBH/jmeter-components jmeter-components], 
 then merged into JP@GC.</i>
 
+_Does not work with JMeter v3.2+._
 
 OAuth is an authentication protocol which provides the possibility to users to hand out tokens instead of credentials to their data hosted by a given service provider. The token grants  access for specific resources for a defined period of time.
 

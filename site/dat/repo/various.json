@@ -157,7 +157,7 @@
     "markerClass": "nz.co.breakpoint.jmeter.modifiers.SamplerPayloadAccessor",
     "versions": {
       "1.1": {
-        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/jmeter-wssecurity-1.1.jar",
+        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.1/jmeter-wssecurity-1.1.jar",
         "depends": [
           "jmeter-core"
         ],
@@ -169,7 +169,7 @@
       },
       "1.2": {
         "changes" : "Bug fix release",
-        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/jmeter-wssecurity-1.2.jar",
+        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.2/jmeter-wssecurity-1.2.jar",
         "depends": [
           "jmeter-core"
         ],

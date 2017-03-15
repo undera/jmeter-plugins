@@ -168,6 +168,7 @@
         }
       },
       "1.2": {
+        "changes" : "Bug fix release",
         "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/jmeter-wssecurity-1.2.jar",
         "depends": [
           "jmeter-core"

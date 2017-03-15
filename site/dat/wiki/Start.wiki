@@ -61,7 +61,7 @@
   * [DummySampler Dummy Sampler] for debugging and programming tests
   * [UDPRequest UDP Sampler]
   * [RawRequest HTTP Raw Request]
-  * [OAuthSampler OAuth Sampler]
+  * [OAuthSampler OAuth Sampler (Deprecated)]
   * [HDFSOperations HDFS Operations]
   * [HadoopJobTracker Hadoop Job Tracker Sampler]
   * [HBaseCRUDSampler HBase CRUD Sampler]

@@ -323,8 +323,8 @@
   },
   {
     "id": "jpgc-oauth",
-    "name": "OAuth Sampler",
-    "description": "OAuth sampler is an extended REST sampler which in addition includes the properties needed for this authorization",
+    "name": "OAuth Sampler (Deprecated)",
+    "description": "Does not work with JMeter v3.2+. OAuth sampler is an extended REST sampler which in addition includes the properties needed for this authorization",
     "screenshotUrl": "https://jmeter-plugins.org/img/wiki/OAuth-Sampler.png",
     "helpUrl": "https://jmeter-plugins.org/wiki/OAuthSampler/",
     "vendor": "JMeter-Plugins.org",

@@ -18,7 +18,7 @@
   },
   {
     "id": "websocket-sampler",
-    "name": "WebSocket Protocol Support",
+    "name": "WebSocket Sampler by Maciej Zaleski",
     "description": "",
     "screenshotUrl": "",
     "helpUrl": "https://github.com/maciejzaleski/JMeter-WebSocketSampler/wiki",
@@ -205,6 +205,23 @@
           "jackson-core-asl": "https://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-core-asl/1.8.8/jackson-core-asl-1.8.8.jar",
           "jackson-mapper-asl": "https://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-mapper-asl/1.8.8/jackson-mapper-asl-1.8.8.jar"
         }
+      }
+    }
+  },
+  {
+    "id": "websocket-samplers",
+    "name": "WebSocket Samplers by Peter Doornbosch",
+    "description": "Provides a number of samplers for load testing WebSocket applications.",
+    "screenshotUrl": "https://bytebucket.org/pjtr/jmeter-websocket-samplers/raw/master/docs/request-response-sample.png",
+    "helpUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/issues",
+    "vendor": "Peter Doornbosch",
+    "markerClass": "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler",
+    "versions": {
+      "0.7.3": {
+        "downloadUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/downloads/JMeterWebSocketSamplers-0.7.3.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   }

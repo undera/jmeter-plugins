@@ -207,5 +207,22 @@
         }
       }
     }
+  },
+  {
+    "id": "websocket-samplers",
+    "name": "WebSocket Samplers",
+    "description": "Provides a number of samplers for load testing WebSocket applications.",
+    "screenshotUrl": "https://bytebucket.org/pjtr/jmeter-websocket-samplers/raw/master/docs/request-response-sample.png",
+    "helpUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/issues",
+    "vendor": "Peter Doornbosch",
+    "markerClass": "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler",
+    "versions": {
+      "0.7.3": {
+        "downloadUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/downloads/JMeterWebSocketSamplers-0.7.3.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
   }
 ]

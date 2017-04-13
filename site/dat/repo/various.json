@@ -18,7 +18,7 @@
   },
   {
     "id": "websocket-sampler",
-    "name": "WebSocket Protocol Support",
+    "name": "WebSocket Sampler by Maciej Zaleski",
     "description": "",
     "screenshotUrl": "",
     "helpUrl": "https://github.com/maciejzaleski/JMeter-WebSocketSampler/wiki",
@@ -210,7 +210,7 @@
   },
   {
     "id": "websocket-samplers",
-    "name": "WebSocket Samplers",
+    "name": "WebSocket Samplers by Peter Doornbosch",
     "description": "Provides a number of samplers for load testing WebSocket applications.",
     "screenshotUrl": "https://bytebucket.org/pjtr/jmeter-websocket-samplers/raw/master/docs/request-response-sample.png",
     "helpUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/issues",

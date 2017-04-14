@@ -213,7 +213,7 @@
     "name": "WebSocket Samplers by Peter Doornbosch",
     "description": "Provides a number of samplers for load testing WebSocket applications.",
     "screenshotUrl": "https://bytebucket.org/pjtr/jmeter-websocket-samplers/raw/master/docs/request-response-sample.png",
-    "helpUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/issues",
+    "helpUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/overview",
     "vendor": "Peter Doornbosch",
     "markerClass": "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler",
     "versions": {

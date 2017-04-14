@@ -18,7 +18,7 @@
   },
   {
     "id": "websocket-sampler",
-    "name": "WebSocket Protocol Support",
+    "name": "WebSocket Sampler by Maciej Zaleski",
     "description": "",
     "screenshotUrl": "",
     "helpUrl": "https://github.com/maciejzaleski/JMeter-WebSocketSampler/wiki",
@@ -93,7 +93,9 @@
         "libs": {
           "guava": "https://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
           "kafka_2.8.2": "https://search.maven.org/remotecontent?filepath=org/apache/kafka/kafka_2.8.2/0.8.0/kafka_2.8.2-0.8.0.jar",
-          "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.2.4/gson-2.2.4.jar"
+          "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.2.4/gson-2.2.4.jar",
+          "scala" : "https://search.maven.org/remotecontent?filepath=org/scala-lang/scala-library/2.8.2/scala-library-2.8.2.jar",
+          "metrics-core" : "https://search.maven.org/remotecontent?filepath=com/yammer/metrics/metrics-core/2.2.0/metrics-core-2.2.0.jar"
         }
       }
     }
@@ -197,10 +199,29 @@
           "hbase": "https://search.maven.org/remotecontent?filepath=org/apache/hbase/hbase/0.94.5/hbase-0.94.5.jar",
           "zookeeper": "https://search.maven.org/remotecontent?filepath=org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar",
           "commons-beanutils": "https://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
+          "commons-configuration": "https://search.maven.org/remotecontent?filepath=commons-configuration/commons-configuration/1.6/commons-configuration-1.6.jar",
           "guava": "https://search.maven.org/remotecontent?filepath=com/google/guava/guava/11.0.2/guava-11.0.2.jar",
           "hadoop-core": "https://search.maven.org/remotecontent?filepath=org/apache/hadoop/hadoop-core/1.1.2/hadoop-core-1.1.2.jar",
+          "jackson-core-asl": "https://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-core-asl/1.8.8/jackson-core-asl-1.8.8.jar",
           "jackson-mapper-asl": "https://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-mapper-asl/1.8.8/jackson-mapper-asl-1.8.8.jar"
         }
+      }
+    }
+  },
+  {
+    "id": "websocket-samplers",
+    "name": "WebSocket Samplers by Peter Doornbosch",
+    "description": "Provides a number of samplers for load testing WebSocket applications.",
+    "screenshotUrl": "https://bytebucket.org/pjtr/jmeter-websocket-samplers/raw/master/docs/request-response-sample.png",
+    "helpUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/issues",
+    "vendor": "Peter Doornbosch",
+    "markerClass": "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler",
+    "versions": {
+      "0.7.3": {
+        "downloadUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/downloads/JMeterWebSocketSamplers-0.7.3.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   }

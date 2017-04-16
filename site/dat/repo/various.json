@@ -218,7 +218,7 @@
     "markerClass": "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler",
     "versions": {
       "0.7.3": {
-        "downloadUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/downloads/JMeterWebSocketSamplers-0.7.3.jar",
+        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.7.3/JMeterWebSocketSamplers-0.7.3.jar",
         "depends": [
           "jmeter-core"
         ]

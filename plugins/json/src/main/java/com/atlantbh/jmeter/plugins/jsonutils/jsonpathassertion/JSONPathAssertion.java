@@ -135,8 +135,6 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         if (isUseRegex()) {
             Pattern pattern = JMeterUtils.getPatternCache().getPattern(getExpectedValue());
             return JMeterUtils.getMatcher().matches(str, pattern);
-        } else if (subj instanceof Double || subj instanceof Float) {
-            return str.equals(String.valueOf(new Double(getExpectedValue())));
         } else {
             return str.equals(getExpectedValue());
         }

@@ -387,7 +387,6 @@ public class JSONPathAssertionTest {
 
     @Test
     public void testGetResultFloat() {
-
         System.out.println("testGetResultFloat");
         SampleResult samplerResult = new SampleResult();
 
@@ -397,7 +396,7 @@ public class JSONPathAssertionTest {
         instance.setJsonPath("$.myval[*].test");
         instance.setJsonValidationBool(true);
         instance.setIsRegex(false);
-        instance.setExpectedValue("1.23456789E-5");
+        instance.setExpectedValue("0.0000123456789");
 
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);

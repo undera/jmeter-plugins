@@ -19,6 +19,7 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.apache.oro.text.regex.Pattern;
+import sun.misc.FloatingDecimal;
 
 import java.io.Serializable;
 
@@ -135,6 +136,8 @@ public class JSONPathAssertion extends AbstractTestElement implements Serializab
         if (isUseRegex()) {
             Pattern pattern = JMeterUtils.getPatternCache().getPattern(getExpectedValue());
             return JMeterUtils.getMatcher().matches(str, pattern);
+        } else if (subj instanceof Double || subj instanceof Float) {
+            return str.equals(FloatingDecimal.toJavaFormatString(Double.parseDouble(getExpectedValue())));
         } else {
             return str.equals(getExpectedValue());
         }

@@ -384,4 +384,24 @@ public class JSONPathAssertionTest {
         assertEquals(expResult.getName(), result.getName());
         assertEquals(false, result.isFailure());
     }
+
+    @Test
+    public void testGetResultFloat() {
+
+        System.out.println("testGetResultFloat");
+        SampleResult samplerResult = new SampleResult();
+
+        samplerResult.setResponseData("{\"myval\": [{\"test\":0.0000123456789}]}".getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setJsonPath("$.myval[*].test");
+        instance.setJsonValidationBool(true);
+        instance.setIsRegex(false);
+        instance.setExpectedValue("1.23456789E-5");
+
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertEquals(false, result.isFailure());
+    }
 }

@@ -19,7 +19,6 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.apache.oro.text.regex.Pattern;
-import sun.misc.FloatingDecimal;
 
 import java.io.Serializable;
 

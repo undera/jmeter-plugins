@@ -21,6 +21,7 @@ import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 
 /**
@@ -40,6 +41,12 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
 
     public static final String SUBJECT_BODY = "BODY";
     public static final String SUBJECT_VARIABLE = "VAR";
+
+    public static final DecimalFormat decimalFormatter = new DecimalFormat("#.#");
+    static {
+        decimalFormatter.setMaximumFractionDigits(340); // java.text.DecimalFormat.DOUBLE_FRACTION_DIGITS == 340
+        decimalFormatter.setMinimumFractionDigits(1);
+    }
 
     public JSONPathExtractor() {
         super();
@@ -141,6 +148,8 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
         } else if (subj instanceof Map) {
             //noinspection unchecked
             str = new JSONObject((Map<String, ?>) subj).toJSONString();
+        } else if (subj instanceof Double || subj instanceof Float) {
+            str = decimalFormatter.format(subj);
         } else {
             str = subj.toString();
         }

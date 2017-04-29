@@ -4,7 +4,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
-    <version>0.3</version>
+    <version>0.4</version>
 
     <name>JMeter Plugins Common Classes</name>
     <description>Various utility classes to ease development of plugins</description>

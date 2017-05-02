@@ -253,7 +253,6 @@ public abstract class JMeterPluginsUtils {
         conf.setAsXml(false);
         conf.setFieldNames(true);
 
-        conf.setFormatter(null);
         conf.setSamplerData(false);
         conf.setRequestHeaders(false);
         conf.setFileName(false);

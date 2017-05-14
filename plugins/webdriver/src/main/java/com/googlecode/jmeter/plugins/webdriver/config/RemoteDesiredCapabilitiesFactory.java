@@ -1,5 +1,6 @@
 package com.googlecode.jmeter.plugins.webdriver.config;
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -24,6 +25,9 @@ public class RemoteDesiredCapabilitiesFactory {
 		  return desiredCapabilities;
 	  } else if (RemoteCapability.PHANTOMJS.equals(capability)){
 		  desiredCapabilities = DesiredCapabilities.phantomjs();
+		  return desiredCapabilities;
+	  } else if (RemoteCapability.JBROWSER.equals(capability)){
+		  desiredCapabilities = new DesiredCapabilities("jbrowserdriver", "", Platform.ANY);
 		  return desiredCapabilities;
 	  }
 	  throw new IllegalArgumentException("No such capability");

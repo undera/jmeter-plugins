@@ -62,6 +62,8 @@ public class RemoteDriverConfigTest {
 		assertThat(config.getCapability(), is(RemoteCapability.INTERNET_EXPLORER));
 		config.setCapability(RemoteCapability.PHANTOMJS);
 		assertThat(config.getCapability(), is(RemoteCapability.PHANTOMJS));
+		config.setCapability(RemoteCapability.JBROWSER);
+		assertThat(config.getCapability(), is(RemoteCapability.JBROWSER));
 	}
 
     @Test

@@ -37,6 +37,12 @@ public class RemoteDesiredCapabilitiesFactoryTest {
 		assertThat(capabilities.getBrowserName(), is("phantomjs"));
 	}
 
+	@Test
+	public void shouldReturnStarWhenAnyCapabilityIsPassed() throws Exception {
+		DesiredCapabilities capabilities = RemoteDesiredCapabilitiesFactory.build(RemoteCapability.JBROWSER);
+		assertThat(capabilities.getBrowserName(), is("jbrowserdriver"));
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowAnExceptionWhenAnInvalidCapabilityIsPassed() throws Exception {
 		RemoteDesiredCapabilitiesFactory.build(null);

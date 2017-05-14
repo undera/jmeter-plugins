@@ -16,3 +16,13 @@ Visit http://jmeter-plugins.org/ for latest information
 and downloads. For troubleshooting and feedback use http://groups.google.com/group/jmeter-plugins
 
 https://travis-ci.org/undera/jmeter-plugins.png
+
+4- Upcoming changes in Jmeter JTL reporting
+New coloumn titled "SentBytes" has been added in Jmeter JTL reporting file. This was a Jmeter bug fix https://bz.apache.org/bugzilla/show_bug.cgi?id=60229 
+In addition, Jmeter aggregate report has added Sent KB/s calculation to aggregate report.  This is an addition to the existing KB/s column.
+
+These changes are verified on  https://builds.apache.org/job/JMeter-trunk/5505/  
+
+Jmeters plugins need to be aware of these new columns and to be able to calculate the current and the new format of Jmeter JTL.
+Also, Jmeter plugins need to add the sent KB/s reporting to all the reports and graphs (For example: SynthesisReport AND Bytes Throughput Over Time)
+

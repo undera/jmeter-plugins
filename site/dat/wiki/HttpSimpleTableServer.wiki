@@ -16,7 +16,7 @@ In jmeter.properties file:
 {{{
 jmeterPlugin.sts.port=9191
 jmeterPlugin.sts.addTimestamp=true
-jmeterPlugin.sts.datasetDirectory=D:/outils/jmeter/apache-jmeter-2.11/bin/dataset
+jmeterPlugin.sts.datasetDirectory=D:/jmeter/dataset
 jmeterPlugin.sts.loadAndRunOnStartup=false
 }}}
 
@@ -28,7 +28,7 @@ sampleresult.default.encoding=UTF-8
 }}}
 
 If you want automatically start a Simple Table Server on JMeter startup simply add "simple-table-server.bsh" in the "beanshell.init.file" property.
-Be sure that startup-simple-table-server.bsh file is in your JMETER_HOME/bin directory.
+Be sure that simple-table-server.bsh file is in your JMETER_HOME/bin directory.
 
 The Simple Table Server is a tiny http server which can send http GET/POST requests on port 9191 (by default).
 You can set a custom port through the graphical user interface or by overriding the jmeterplugin.sts.port property.
@@ -52,13 +52,13 @@ There are different ways to start the STS:
 [/img/wiki/http_simple_table_server.png]
 
   * with simple-table-server.cmd (.sh for UNIX) script located in your JMETER_HOME/bin directory
-  * on JMeter startup with following properties in jmeter.properties file:
+  * on JMeter CLI startup with following properties in jmeter.properties file:
 
 {{{
 jmeterPlugin.sts.loadAndRunOnStartup=true
 jmeterPlugin.sts.port=9191
   
-beanshell.init.file=startup-simple-table-server.bsh
+beanshell.init.file=simple-table-server.bsh
 }}}
 
 When the STS is running go to {{{http://<HOST>:<PORT>/sts/}}} to see all available commands.
@@ -343,13 +343,19 @@ In a loop, read random values from a file containing a login and a password at e
 
 [/img/examples/demo_sts_read_random.jmx Download Example Test Plan 1]
 
+
+
 Read value from a file containing a login and a password at each row, each value is unique and cannot be read anymore:
 
 [/img/examples/demo_sts_read_first_remove.jmx Download Example Test Plan 2]
 
+
+
 Add rows in a new linked list and save it in a file when the test is done:
 
 [/img/examples/demo_sts_add_save.jmx Download Example Test Plan 3]
+
+
 
 Read in a random mode a dataset located on the controller machine with severals slaves.
 The first injector loads the dataset in memory while the other injectors are waiting few seconds.
@@ -359,10 +365,10 @@ When the test is done the first injector save the values in a file with a timest
 [/img/examples/demo_sts_read_random_for2slaves.jmx Download Example Test Plan 4]
 
 You can override STS settings using command-line options:
-  * DjmeterPlugin.sts.port=\<port number>
-  * DjmeterPlugin.sts.loadAndRunOnStartup=\<true/false>
-  * DjmeterPlugin.sts.datasetDirectory=\<path/to/your/directory>
-  * DjmeterPlugin.sts.addTimestamp=\<true/false>
+  * -DjmeterPlugin.sts.port=\<port number>
+  * -DjmeterPlugin.sts.loadAndRunOnStartup=\<true/false>
+  * -DjmeterPlugin.sts.datasetDirectory=\<path/to/your/directory>
+  * -DjmeterPlugin.sts.addTimestamp=\<true/false>
 
 {{{
 jmeter.bat -DjmeterPlugin.sts.loadAndRunOnStartup=true -DjmeterPlugin.sts.port=9191 -DjmeterPlugin.sts.datasetDirectory=d:\data -n –t testdemo.jmx

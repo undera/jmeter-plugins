@@ -45,6 +45,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
@@ -59,6 +60,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -445,13 +447,37 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
             try {
                 writer = new FileWriter(chooser.getSelectedFile()); // TODO
                 // Charset ?
-                CSVSaveService.saveCSVStats(getAllTableData(model, FORMATS), writer, saveHeaders.isSelected() ? getLabels(COLUMNS) : null);
+                CSVSaveService.saveCSVStats(getAllDataAsTable(model, FORMATS, getLabels(COLUMNS)), writer, saveHeaders.isSelected());
             } catch (IOException e) {
                 log.warn(e.getMessage());
             } finally {
                 JOrphanUtils.closeQuietly(writer);
             }
         }
+    }
+
+    /**
+     * Present data in javax.swing.table.DefaultTableModel form.
+     *
+     * @param model   {@link ObjectTableModel}
+     * @param formats Array of {@link Format} array can contain null formatters in this case value is added as is
+     * @param columns Columns headers
+     * @return data in table form
+     */
+    public static DefaultTableModel getAllDataAsTable(ObjectTableModel model, Format[] formats, String[] columns) {
+        final List<List<Object>> table = getAllTableData(model, formats);
+
+        final DefaultTableModel tableModel = new DefaultTableModel();
+
+        for (String header : columns) {
+            tableModel.addColumn(header);
+        }
+
+        for (List<Object> row : table) {
+            tableModel.addRow(new Vector(row));
+        }
+
+        return tableModel;
     }
 
     /**
@@ -494,7 +520,7 @@ public class SynthesisReportGui extends AbstractGraphPanelVisualizer implements
             FileWriter writer = null;
             try {
                 writer = new FileWriter(file);
-                CSVSaveService.saveCSVStats(getAllTableData(model, FORMATS), writer, saveHeaders.isSelected() ? getLabels(COLUMNS) : null);
+                CSVSaveService.saveCSVStats(getAllDataAsTable(model, FORMATS, getLabels(COLUMNS)), writer, saveHeaders.isSelected());
             } catch (IOException e) {
                 log.warn(e.getMessage());
             } finally {

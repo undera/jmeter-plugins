@@ -94,13 +94,26 @@ By the number of known users:
                 }
             },
             title: {
-                text: 'Montly Active Installations: ' + id
+                text: 'Monthly Active Installations: ' + id
             },
             subtitle: {
                 text: 'Source: jmeter-plugins.org'
             },
             xAxis: {
-                type: "datetime"
+                type: "datetime",
+                plotLines: [{
+                    color: 'silver',
+                    dashStyle: 'longdashdot',
+                    value: new Date("2016-11-21"),
+                    width: 1,
+                    label: {
+                        style: {
+                            color: 'silver'
+                        },
+                        text: 'Fixed data collecting',
+                        align: 'left'
+                    }
+                }]
             },
             yAxis: {
                 title: {

@@ -114,7 +114,9 @@ public class WeightedSwitchControllerTest {
         topWSC.setData(topPTM);
 
         DebugSampler d1 = new DebugSampler();
+        d1.setName("D1");
         DebugSampler d2 = new DebugSampler();
+        d2.setName("D2");
 
         // first child WSC of top WSC
         WeightedSwitchController childWSC1 = new WeightedSwitchController();
@@ -124,7 +126,9 @@ public class WeightedSwitchControllerTest {
         childWSC1.setData(childPTM1);
 
         DebugSampler d1_1 = new DebugSampler();
+        d1_1.setName("D1_1");
         DebugSampler d1_2 = new DebugSampler();
+        d1_2.setName("D1_2");
 
         // second child WSC of top WSC
         WeightedSwitchController childWSC2 = new WeightedSwitchController();
@@ -134,7 +138,9 @@ public class WeightedSwitchControllerTest {
         childWSC2.setData(childPTM2);
 
         DebugSampler d2_1 = new DebugSampler();
+        d2_1.setName("D2_1");
         DebugSampler d2_2 = new DebugSampler();
+        d2_2.setName("D2_2");
 
         // main loop
         LoopController loop = new LoopController();
@@ -146,14 +152,16 @@ public class WeightedSwitchControllerTest {
         hashTree.add(loop);
         hashTree.add(loop, topWSC);
         hashTree.add(topWSC, listener);
-        hashTree.add(topWSC, d1);
-        hashTree.add(topWSC, d2);
         hashTree.add(topWSC, childWSC1);
-        hashTree.add(topWSC, childWSC2);
         hashTree.add(childWSC1, d1_1);
         hashTree.add(childWSC1, d1_2);
+        hashTree.add(childWSC1, listener);
+        hashTree.add(topWSC, childWSC2);
         hashTree.add(childWSC2, d2_1);
         hashTree.add(childWSC2, d2_2);
+        hashTree.add(childWSC2, listener);
+        hashTree.add(topWSC, d1);
+        hashTree.add(topWSC, d2);
 
         TestCompiler compiler = new TestCompiler(hashTree);
         hashTree.traverse(compiler);

@@ -1,9 +1,12 @@
 package com.blazemeter.jmeter.control;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.jmeter.control.Controller;
 import org.apache.jmeter.control.GenericController;
+import org.apache.jmeter.control.TransactionController;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.Sampler;
+import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jorphan.logging.LoggingManager;
@@ -17,6 +20,7 @@ public class WeightedSwitchController extends GenericController implements Seria
     private boolean chosen = false;
     protected long[] counts = null;
     protected long totalCount = 0;
+    protected transient int currentCopy;
 
     public void setData(PowerTableModel model) {
         CollectionProperty prop = JMeterPluginsUtils.tableModelRowsToCollectionProperty(model, WEIGHTS);
@@ -38,8 +42,19 @@ public class WeightedSwitchController extends GenericController implements Seria
     @Override
     public Sampler next() {
         if (chosen) {
-            chosen = false;
-            return null;
+            Sampler result = super.next();
+
+            if (result == null || currentCopy != current ||
+                    (super.getSubControllers().get(current) instanceof TransactionController)) {
+                reset();
+                for (TestElement element : super.getSubControllers()) {
+                    if (element instanceof Controller) {
+                        ((Controller) element).triggerEndOfLoop();
+                    }
+                }
+                return null;
+            }
+            return result;
         } else {
             chosen = true;
             choose();
@@ -79,7 +94,7 @@ public class WeightedSwitchController extends GenericController implements Seria
 
         totalCount++;
         counts[maxDiffIndex]++;
-        current = maxDiffIndex;
+        current = currentCopy = maxDiffIndex;
     }
 
     private double[] getWeights(CollectionProperty data) {
@@ -98,4 +113,14 @@ public class WeightedSwitchController extends GenericController implements Seria
         return weights;
     }
 
+
+    public void reset() {
+        this.chosen = false;
+        // reset child WSC
+        for (TestElement controller : this.getSubControllers()) {
+            if (controller instanceof WeightedSwitchController) {
+                ((WeightedSwitchController) controller).reset();
+            }
+        }
+    }
 }

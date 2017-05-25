@@ -1,5 +1,6 @@
 package com.blazemeter.jmeter.control;
 
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.control.GenericController;
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.control.TransactionController;
@@ -20,6 +21,7 @@ import org.apache.jorphan.collections.ListedHashTree;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -32,6 +34,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class WeightedSwitchControllerTest {
+
+    @BeforeClass
+    public static void setUpClass()
+            throws Exception {
+        TestJMeterUtils.createJmeterEnv();
+    }
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
@@ -103,7 +111,6 @@ public class WeightedSwitchControllerTest {
 
     @Test
     public void testNestedWSC() throws Exception {
-        JMeterUtils.loadJMeterProperties(getClass().getResource("jmeter.properties").getFile());
         JMeterContextService.getContext().setVariables(new JMeterVariables());
 
 
@@ -197,7 +204,6 @@ public class WeightedSwitchControllerTest {
     // https://groups.google.com/forum/?hl=ru#!searchin/jmeter-plugins/Weighted$20Switch$20Controller|sort:relevance/jmeter-plugins/P9Nx9OqgWj4/aeC-RaNgCAAJ
     @Test
     public void testNestedSimpleControllers() throws Exception {
-        JMeterUtils.loadJMeterProperties(getClass().getResource("jmeter.properties").getFile());
         JMeterContextService.getContext().setVariables(new JMeterVariables());
 
 
@@ -278,7 +284,6 @@ public class WeightedSwitchControllerTest {
 
     @Test
     public void testNestedTransactionControllers() throws Exception {
-        JMeterUtils.loadJMeterProperties(getClass().getResource("jmeter.properties").getFile());
         JMeterContextService.getContext().setVariables(new JMeterVariables());
 
 

@@ -3,6 +3,7 @@ package com.blazemeter.jmeter.control;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.control.Controller;
 import org.apache.jmeter.control.GenericController;
+import org.apache.jmeter.control.TransactionController;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.testelement.TestElement;
@@ -42,7 +43,9 @@ public class WeightedSwitchController extends GenericController implements Seria
     public Sampler next() {
         if (chosen) {
             Sampler result = super.next();
-            if (result == null || currentCopy != current) {
+
+            if (result == null || currentCopy != current ||
+                    (super.getSubControllers().get(current) instanceof TransactionController)) {
                 reset();
                 for (TestElement element : super.getSubControllers()) {
                     if (element instanceof Controller) {

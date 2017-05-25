@@ -1,7 +1,6 @@
 package com.blazemeter.jmeter.control;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.jmeter.control.Controller;
 import org.apache.jmeter.control.GenericController;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.Sampler;

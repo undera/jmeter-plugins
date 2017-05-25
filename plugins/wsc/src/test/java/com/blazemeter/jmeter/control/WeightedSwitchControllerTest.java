@@ -2,6 +2,7 @@ package com.blazemeter.jmeter.control;
 
 import org.apache.jmeter.control.GenericController;
 import org.apache.jmeter.control.LoopController;
+import org.apache.jmeter.control.TransactionController;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.sampler.DebugSampler;
@@ -210,7 +211,7 @@ public class WeightedSwitchControllerTest {
         topWSC.setData(topPTM);
 
 
-        // first child simple controller
+        // first child: simple controller
         GenericController ex1 = new GenericController();
 
         DebugSampler example1_1 = new DebugSampler();
@@ -218,7 +219,7 @@ public class WeightedSwitchControllerTest {
         DebugSampler example1_2 = new DebugSampler();
         example1_2.setName("example1_2");
 
-        // second child WSC of top WSC
+        // second child: simple controller
         GenericController ex2 = new GenericController();
 
         DebugSampler example2_1 = new DebugSampler();
@@ -273,6 +274,86 @@ public class WeightedSwitchControllerTest {
         assertEquals(20, (int) totalResults.get("example1_2"));
         assertEquals(40, (int) totalResults.get("example2_1"));
         assertEquals(40, (int) totalResults.get("example2_2"));
+    }
+
+    @Test
+    public void testNestedTransactionControllers() throws Exception {
+        JMeterUtils.loadJMeterProperties(getClass().getResource("jmeter.properties").getFile());
+        JMeterContextService.getContext().setVariables(new JMeterVariables());
+
+
+        TestSampleListener listener = new TestSampleListener();
+
+        // top WSC
+        WeightedSwitchController topWSC = new WeightedSwitchController();
+        PowerTableModel topPTM = new PowerTableModel(new String[]{"name", WeightedSwitchController.WEIGHTS}, new Class[]{String.class, String.class});
+        topPTM.addRow(new String[]{"ex1", "10"});
+        topPTM.addRow(new String[]{"ex2", "20"});
+        topWSC.setData(topPTM);
+
+
+        // first child: transaction controller
+        TransactionController ex1 = new TransactionController();
+
+        DebugSampler example1_1 = new DebugSampler();
+        example1_1.setName("example1_1");
+        DebugSampler example1_2 = new DebugSampler();
+        example1_2.setName("example1_2");
+
+        // second child: transaction controller
+        TransactionController ex2 = new TransactionController();
+
+        DebugSampler example2_1 = new DebugSampler();
+        example2_1.setName("example2_1");
+        DebugSampler example2_2 = new DebugSampler();
+        example2_2.setName("example2_2");
+
+        // main loop
+        LoopController loop = new LoopController();
+        loop.setLoops(60);
+        loop.setContinueForever(false);
+
+        // test tree
+        ListedHashTree hashTree = new ListedHashTree();
+        hashTree.add(loop);
+        hashTree.add(loop, topWSC);
+        hashTree.add(topWSC, listener);
+        hashTree.add(topWSC, ex1);
+        hashTree.add(ex1, example1_1);
+        hashTree.add(ex1, example1_2);
+        hashTree.add(ex1, listener);
+        hashTree.add(topWSC, ex2);
+        hashTree.add(ex2, example2_1);
+        hashTree.add(ex2, example2_2);
+        hashTree.add(ex2, listener);
+
+        TestCompiler compiler = new TestCompiler(hashTree);
+        hashTree.traverse(compiler);
+
+        ThreadGroup threadGroup = new ThreadGroup();
+        threadGroup.setNumThreads(1);
+
+        ListenerNotifier notifier = new ListenerNotifier();
+
+        JMeterThread thread = new JMeterThread(hashTree, threadGroup, notifier);
+        thread.setThreadGroup(threadGroup);
+        thread.setOnErrorStopThread(true);
+        thread.run();
+
+        Map<String, Integer> totalResults = new HashMap<>();
+        for (SampleEvent event : listener.events) {
+            String label = event.getResult().getSampleLabel();
+            if (totalResults.containsKey(label)) {
+                totalResults.put(label, totalResults.get(label) + 1);
+            } else {
+                totalResults.put(label, 1);
+            }
+        }
+
+        assertEquals(120, listener.events.size());
+        assertEquals(20, (int) totalResults.get("example1_1"));
+        assertEquals(40, (int) totalResults.get("example2_1"));
+        assertEquals(60, (int) totalResults.get("")); // transaction result
     }
 
     public class TestSampleListener extends ResultCollector implements SampleListener {

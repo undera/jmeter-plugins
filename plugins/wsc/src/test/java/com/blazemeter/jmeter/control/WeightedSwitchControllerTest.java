@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class WeightedSwitchControllerTest {
 
@@ -177,7 +178,16 @@ public class WeightedSwitchControllerTest {
         thread.run();
 
         assertEquals(6, listener.events.size());
-        System.out.println();
+        List<String> labels = new ArrayList<>();
+        labels.add("D1");
+        labels.add("D2");
+        labels.add("D1_1");
+        labels.add("D1_2");
+        labels.add("D2_1");
+        labels.add("D2_2");
+        for (SampleEvent event : listener.events) {
+            assertTrue(labels.contains(event.getResult().getSampleLabel()));
+        }
     }
 
     public class TestSampleListener extends ResultCollector implements SampleListener {

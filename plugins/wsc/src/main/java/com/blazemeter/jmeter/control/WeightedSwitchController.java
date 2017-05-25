@@ -1,9 +1,11 @@
 package com.blazemeter.jmeter.control;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.jmeter.control.Controller;
 import org.apache.jmeter.control.GenericController;
 import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.samplers.Sampler;
+import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jorphan.logging.LoggingManager;
@@ -38,7 +40,7 @@ public class WeightedSwitchController extends GenericController implements Seria
     @Override
     public Sampler next() {
         if (chosen) {
-            chosen = false;
+            reset();
             return null;
         } else {
             chosen = true;
@@ -98,4 +100,14 @@ public class WeightedSwitchController extends GenericController implements Seria
         return weights;
     }
 
+
+    public void reset() {
+        this.chosen = false;
+        // reset child WSC
+        for (TestElement controller : this.getSubControllers()) {
+            if (controller instanceof WeightedSwitchController) {
+                ((WeightedSwitchController) controller).reset();
+            }
+        }
+    }
 }

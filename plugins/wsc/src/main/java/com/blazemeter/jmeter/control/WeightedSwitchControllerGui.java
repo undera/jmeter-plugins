@@ -18,6 +18,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -96,7 +97,6 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
         // from model to GUI
         super.configure(element);
         log.debug("Props: " + this.isShowing() + " " + isVisible() + " " + isEnabled() + " " + isFocusOwner());
-
         GuiPackage gp = GuiPackage.getInstance();
 
         if (gp != null && element instanceof WeightedSwitchController) {
@@ -127,22 +127,13 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
         JMeterTreeNode root = (JMeterTreeNode) treeModel.getRoot();
 
         Map<JMeterTreeNode, Boolean> childItems = getChildItems(root, wsc);
-        for (JMeterTreeNode node : childItems.keySet()) { // TODO: sort by tree
-//        for (int n = 0; n < childItems.size(); n++) {
-//            JMeterTreeNode node = childItems.get(n);
+        for (JMeterTreeNode node : childItems.keySet()) {
             String w = "100";
             JMeterProperty row = getRowByName(node.getTestElement().getName(), oldData);
             if (row != null) {
                 w = ((CollectionProperty) row).get(1).getStringValue();
             }
-//            if (oldData.size() > n && oldData.get(n) != null) {
-//                JMeterProperty row = oldData.get(n);
-//                if (row instanceof CollectionProperty) {
-//                    w = ((CollectionProperty) row).get(1).getStringValue();
-//                }
-//            }
             grid.getModel().addRow(new String[]{node.getTestElement().getName(), w, childItems.get(node).toString()});
-            // FIXME: what about disabled items? will they screw up it all?
         }
     }
 
@@ -156,7 +147,7 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
     }
 
     private Map<JMeterTreeNode, Boolean> getChildItems(JMeterTreeNode root, WeightedSwitchController element) {
-        Map<JMeterTreeNode, Boolean> result = new HashMap<>();
+        Map<JMeterTreeNode, Boolean> result = new LinkedHashMap<>();
         for (int i = 0; i < root.getChildCount(); i++) {
             JMeterTreeNode child = (JMeterTreeNode) root.getChildAt(i);
 

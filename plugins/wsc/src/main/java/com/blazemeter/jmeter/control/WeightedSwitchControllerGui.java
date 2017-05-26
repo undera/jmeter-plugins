@@ -119,7 +119,7 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
             if (element != root.getTestElement()) {
                 result.addAll(getChildItems(child, element));
             } else {
-                if (te instanceof Sampler || te instanceof Controller) {
+                if ((te instanceof Sampler || te instanceof Controller) && te.isEnabled()) {
                     result.add(child);
                 }
             }

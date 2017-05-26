@@ -14,8 +14,12 @@ import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class WeightedSwitchControllerGui extends AbstractControllerGui {
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -33,11 +37,29 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
         setBorder(makeBorder());
 
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), getClass().getSimpleName()), BorderLayout.NORTH);
-
+        final JTable table = new JTable() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return (column != 0) && Boolean.parseBoolean((String) getModel().getValueAt(row, 2));
+            }
+        };
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, java.lang.Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                final Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                try {
+                    String val = table.getModel().getValueAt(row, 2).toString();
+                    cellComponent.setBackground(Boolean.parseBoolean(val) ? Color.white : Color.lightGray);
+                } catch (Exception ex) {
+                    cellComponent.setBackground(Color.white);
+                }
+                return cellComponent;
+            }
+        });
         grid = new Grid("Child Item Weights",
-                new String[]{"Name", WEIGHTS},
-                new Class[]{String.class, String.class},
-                new String[]{"", "100"});
+                new String[]{"Name", WEIGHTS, "Enabled"},
+                new Class[]{String.class, String.class, String.class},
+                new String[]{"", "100", "true"}, table);
+        table.removeColumn(table.getColumn("Enabled"));
 
         grid.getComponent(2).setVisible(false); // hide grid mgmt buttons
         add(grid, BorderLayout.CENTER);
@@ -79,7 +101,7 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
 
         if (gp != null && element instanceof WeightedSwitchController) {
             WeightedSwitchController wsc = (WeightedSwitchController) element;
-            CollectionProperty oldData = wsc.getData();
+            CollectionProperty oldData = migrateData(wsc.getData());
 
             grid.getModel().clearData();
 
@@ -91,36 +113,59 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
         }
     }
 
+    private CollectionProperty migrateData(CollectionProperty data) {
+        for (JMeterProperty property : data) {
+            if (property instanceof CollectionProperty && ((CollectionProperty) property).size() == 2) {
+                ((CollectionProperty) property).addItem("true");
+            }
+        }
+        return data;
+    }
+
     private void fillGridFromTree(WeightedSwitchController wsc, CollectionProperty oldData) {
         JMeterTreeModel treeModel = GuiPackage.getInstance().getTreeModel();
         JMeterTreeNode root = (JMeterTreeNode) treeModel.getRoot();
 
-        LinkedList<JMeterTreeNode> childItems = getChildItems(root, wsc);
-        for (int n = 0; n < childItems.size(); n++) {
-            JMeterTreeNode node = childItems.get(n);
+        Map<JMeterTreeNode, Boolean> childItems = getChildItems(root, wsc);
+        for (JMeterTreeNode node : childItems.keySet()) { // TODO: sort by tree
+//        for (int n = 0; n < childItems.size(); n++) {
+//            JMeterTreeNode node = childItems.get(n);
             String w = "100";
-            if (oldData.size() > n && oldData.get(n) != null) {
-                JMeterProperty row = oldData.get(n);
-                if (row instanceof CollectionProperty) {
-                    w = ((CollectionProperty) row).get(1).getStringValue();
-                }
+            JMeterProperty row = getRowByName(node.getTestElement().getName(), oldData);
+            if (row != null) {
+                w = ((CollectionProperty) row).get(1).getStringValue();
             }
-            grid.getModel().addRow(new String[]{node.getTestElement().getName(), w});
+//            if (oldData.size() > n && oldData.get(n) != null) {
+//                JMeterProperty row = oldData.get(n);
+//                if (row instanceof CollectionProperty) {
+//                    w = ((CollectionProperty) row).get(1).getStringValue();
+//                }
+//            }
+            grid.getModel().addRow(new String[]{node.getTestElement().getName(), w, childItems.get(node).toString()});
             // FIXME: what about disabled items? will they screw up it all?
         }
     }
 
-    private LinkedList<JMeterTreeNode> getChildItems(JMeterTreeNode root, WeightedSwitchController element) {
-        LinkedList<JMeterTreeNode> result = new LinkedList<>();
+    private JMeterProperty getRowByName(String rowName, CollectionProperty oldData) {
+        for (JMeterProperty row : oldData) {
+            if (row instanceof CollectionProperty && rowName.equals(((CollectionProperty) row).get(0).getStringValue())) {
+                return row;
+            }
+        }
+        return null;
+    }
+
+    private Map<JMeterTreeNode, Boolean> getChildItems(JMeterTreeNode root, WeightedSwitchController element) {
+        Map<JMeterTreeNode, Boolean> result = new HashMap<>();
         for (int i = 0; i < root.getChildCount(); i++) {
             JMeterTreeNode child = (JMeterTreeNode) root.getChildAt(i);
 
             TestElement te = child.getTestElement();
             if (element != root.getTestElement()) {
-                result.addAll(getChildItems(child, element));
+                result.putAll(getChildItems(child, element));
             } else {
-                if ((te instanceof Sampler || te instanceof Controller) && te.isEnabled()) {
-                    result.add(child);
+                if (te instanceof Sampler || te instanceof Controller) {
+                    result.put(child, te.isEnabled());
                 }
             }
         }

@@ -8,11 +8,7 @@ import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import kg.apc.jmeter.vizualizers.MonitoringResultsCollector;
 import kg.apc.jmeter.vizualizers.MonitoringSampleResult;
 import org.apache.jmeter.testelement.TestElement;
-import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class AbstractMonitoringVisualizerTest {

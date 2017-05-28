@@ -15,10 +15,6 @@
  */
 package kg.apc.jmeter.vizualizers;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class MonitoringSampleGeneratorTest {
@@ -39,10 +35,8 @@ public class MonitoringSampleGeneratorTest {
 
     public class MonitoringSampleGeneratorImpl implements MonitoringSampleGenerator {
 
-        /**
-         * No-op implemenation for testing.
-         */
         public void generateSample(double d, String string) {
+            // No-op implemenation for testing
         }
     }
 }

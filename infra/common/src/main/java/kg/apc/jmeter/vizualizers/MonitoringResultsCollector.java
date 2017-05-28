@@ -199,13 +199,17 @@ public class MonitoringResultsCollector
     /**
      * No-op implementation that sub-classes are to refine as required.
      */
-    protected void initiateConnectors() {}
+    protected void initiateConnectors() {
+        // may be refined by sub-classes
+    }
 
     /**
      * No-op implementation that sub-classes are to refine as required.
      */
-    protected void shutdownConnectors() {}
-
+    protected void shutdownConnectors() {
+        // may be refined by sub-classes
+    }
+    
     protected void processConnectors() {
         for (MonitoringSampler sampler : samplers) {
             sampler.generateSamples(this);

@@ -19,6 +19,8 @@ public class MonitoringResultsCollectorTest {
         CollectionProperty rows = new CollectionProperty();
         MonitoringResultsCollector instance = new MonitoringResultsCollector();
         instance.setData(rows);
+        JMeterProperty result = instance.getProperty(MonitoringResultsCollector.DATA_PROPERTY);
+        assertNotNull(result);
     }
 
     /**
@@ -39,7 +41,10 @@ public class MonitoringResultsCollectorTest {
     public void testRun() {
         System.out.println("run");
         MonitoringResultsCollector instance = new MonitoringResultsCollector();
-        // instance.run(); avoiding infinite loop
+        Thread t = new Thread(instance);
+        t.start(); 
+        assertTrue(t.isAlive());
+        instance.testEnded(); // stop thread
     }
 
     /**

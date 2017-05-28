@@ -7,6 +7,7 @@ import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import kg.apc.jmeter.vizualizers.MonitoringResultsCollector;
 import kg.apc.jmeter.vizualizers.MonitoringSampleResult;
+import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.TestElement;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -89,6 +90,7 @@ public class AbstractMonitoringVisualizerTest {
         TestElement c = new MonitoringResultsCollector();
         AbstractMonitoringVisualizer instance = new AbstractMonitoringVisualizerImpl();
         instance.modifyTestElement(c);
+        assertNotNull(c.getProperty(MonitoringResultsCollector.DATA_PROPERTY));
     }
 
     @Test
@@ -97,6 +99,7 @@ public class AbstractMonitoringVisualizerTest {
         TestElement el = new MonitoringResultsCollector();
         AbstractMonitoringVisualizer instance = new AbstractMonitoringVisualizerImpl();
         instance.configure(el);
+        assertNotNull(instance.tableModel);
     }
 
     @Test
@@ -125,6 +128,7 @@ public class AbstractMonitoringVisualizerTest {
         System.out.println("clearErrorMessage");
         AbstractMonitoringVisualizer instance = new AbstractMonitoringVisualizerImpl();
         instance.clearErrorMessage();
+        assertEquals(instance.errorTextArea.getText().length(), 0);
     }
 
     @Test
@@ -132,5 +136,6 @@ public class AbstractMonitoringVisualizerTest {
         System.out.println("clearData");
         AbstractMonitoringVisualizer instance = new AbstractMonitoringVisualizerImpl();
         instance.clearData();
+        assertEquals(instance.relativeStartTime, 0);
     }
 }

@@ -211,7 +211,7 @@
   {
     "id": "websocket-samplers",
     "name": "WebSocket Samplers by Peter Doornbosch",
-    "description": "Provides a number of samplers for load testing WebSocket applications.",
+    "description": "Provides 6 samplers for load testing WebSocket applications. Use the WebSocket request-response sampler for testing a basic request-response flow (the most common case), or combine the other samplers to support a more sophisticated WebSocket test scenario.",
     "screenshotUrl": "https://bytebucket.org/pjtr/jmeter-websocket-samplers/raw/master/docs/request-response-sample.png",
     "helpUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/overview",
     "vendor": "Peter Doornbosch",
@@ -219,6 +219,12 @@
     "versions": {
       "0.7.3": {
         "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.7.3/JMeterWebSocketSamplers-0.7.3.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "0.8": {
+        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.8/JMeterWebSocketSamplers-0.8.jar",
         "depends": [
           "jmeter-core"
         ]

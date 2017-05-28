@@ -53,6 +53,9 @@
         function getSparkline(plugin) {
             var pluginSpark = $("<div></div>").addClass("sparkline-container");
             var vals = values(stats[plugin.id]);
+            while (vals.length>30) {
+                vals.shift();
+            }
             var span = $("<span></span>").addClass("sparkline").text(vals);
             pluginSpark.append(span);
             pluginSpark.append("<br/>");

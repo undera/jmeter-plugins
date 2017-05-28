@@ -15,8 +15,6 @@
  */
 package kg.apc.jmeter.vizualizers;
 
-import kg.apc.emulators.TestJMeterUtils;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -25,25 +23,6 @@ import org.junit.Test;
 
 public class MonitoringSampleGeneratorTest {
     
-    public MonitoringSampleGeneratorTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test of generateSample method, of class MonitoringSampleGenerator.
      */
@@ -60,6 +39,9 @@ public class MonitoringSampleGeneratorTest {
 
     public class MonitoringSampleGeneratorImpl implements MonitoringSampleGenerator {
 
+        /**
+         * No-op implemenation for testing.
+         */
         public void generateSample(double d, String string) {
         }
     }

@@ -16,26 +16,6 @@ import org.junit.Test;
 
 public class MonitoringResultsCollectorTest {
     
-    public MonitoringResultsCollectorTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-        TestJMeterUtils.createJmeterEnv();
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test of setData method, of class MonitoringResultsCollector.
      */

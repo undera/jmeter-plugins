@@ -1,20 +1,17 @@
 package kg.apc.jmeter.vizualizers;
 
 import java.io.File;
-import java.io.InterruptedIOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -34,7 +31,6 @@ public class MonitoringResultsCollector
     private Thread workerThread;
     private volatile boolean stop = false;
     protected List<MonitoringSampler> samplers = new ArrayList<MonitoringSampler>();
-    private static boolean autoGenerateFiles;
     private String autoFileBaseName = null;
     private static int counter = 0;
     private String workerHost = null;
@@ -200,8 +196,14 @@ public class MonitoringResultsCollector
         log.debug("End   testEnded");
     }
 
+    /**
+     * No-op implementation that sub-classes are to refine as required.
+     */
     protected void initiateConnectors() {}
 
+    /**
+     * No-op implementation that sub-classes are to refine as required.
+     */
     protected void shutdownConnectors() {}
 
     protected void processConnectors() {

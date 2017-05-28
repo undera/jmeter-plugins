@@ -17,31 +17,8 @@ import org.junit.Test;
 
 public class AbstractMonitoringVisualizerTest {
 
-    public AbstractMonitoringVisualizerTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-        TestJMeterUtils.createJmeterEnv();
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
     public class AbstractMonitoringVisualizerImpl
             extends AbstractMonitoringVisualizer {
-        
-        public AbstractMonitoringVisualizerImpl() {
-        }
         
         @Override
         protected String[] getColumnIdentifiers() { return new String[]{ "Label", "URL", "Flag", "Value" }; }

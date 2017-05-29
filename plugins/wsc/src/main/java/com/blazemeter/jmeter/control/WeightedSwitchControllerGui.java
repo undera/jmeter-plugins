@@ -17,9 +17,7 @@ import org.apache.log.Logger;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 public class WeightedSwitchControllerGui extends AbstractControllerGui {

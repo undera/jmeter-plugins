@@ -125,33 +125,35 @@ public class WeightedSwitchControllerTest {
         topWSC.setData(topPTM);
 
         DebugSampler d1 = new DebugSampler();
-        d1.setName("D1");
+        d1.setName("D_#1");
         DebugSampler d2 = new DebugSampler();
-        d2.setName("D2");
+        d2.setName("D_#2");
 
         // first child WSC of top WSC
         WeightedSwitchController childWSC1 = new WeightedSwitchController();
+        childWSC1.setName("wsc1");
         PowerTableModel childPTM1 = new PowerTableModel(new String[]{"name", WeightedSwitchController.WEIGHTS}, new Class[]{String.class, String.class});
         childPTM1.addRow(new String[]{"D1_#1", "1"});
         childPTM1.addRow(new String[]{"D1_#2", "1"});
         childWSC1.setData(childPTM1);
 
         DebugSampler d1_1 = new DebugSampler();
-        d1_1.setName("D1_1");
+        d1_1.setName("D1_#1");
         DebugSampler d1_2 = new DebugSampler();
-        d1_2.setName("D1_2");
+        d1_2.setName("D1_#2");
 
         // second child WSC of top WSC
         WeightedSwitchController childWSC2 = new WeightedSwitchController();
+        childWSC2.setName("wsc2");
         PowerTableModel childPTM2 = new PowerTableModel(new String[]{"name", WeightedSwitchController.WEIGHTS}, new Class[]{String.class, String.class});
         childPTM2.addRow(new String[]{"D2_#1", "1"});
         childPTM2.addRow(new String[]{"D2_#2", "1"});
         childWSC2.setData(childPTM2);
 
         DebugSampler d2_1 = new DebugSampler();
-        d2_1.setName("D2_1");
+        d2_1.setName("D2_#1");
         DebugSampler d2_2 = new DebugSampler();
-        d2_2.setName("D2_2");
+        d2_2.setName("D2_#2");
 
         // main loop
         LoopController loop = new LoopController();
@@ -189,12 +191,12 @@ public class WeightedSwitchControllerTest {
 
         assertEquals(6, listener.events.size());
         List<String> labels = new ArrayList<>();
-        labels.add("D1");
-        labels.add("D2");
-        labels.add("D1_1");
-        labels.add("D1_2");
-        labels.add("D2_1");
-        labels.add("D2_2");
+        labels.add("D_#1");
+        labels.add("D_#2");
+        labels.add("D1_#1");
+        labels.add("D1_#2");
+        labels.add("D2_#1");
+        labels.add("D2_#2");
         for (SampleEvent event : listener.events) {
             assertTrue(labels.contains(event.getResult().getSampleLabel()));
         }
@@ -218,7 +220,7 @@ public class WeightedSwitchControllerTest {
 
         // first child: simple controller
         GenericController ex1 = new GenericController();
-
+        ex1.setName("ex1");
         DebugSampler example1_1 = new DebugSampler();
         example1_1.setName("example1_1");
         DebugSampler example1_2 = new DebugSampler();
@@ -226,7 +228,7 @@ public class WeightedSwitchControllerTest {
 
         // second child: simple controller
         GenericController ex2 = new GenericController();
-
+        ex2.setName("ex2");
         DebugSampler example2_1 = new DebugSampler();
         example2_1.setName("example2_1");
         DebugSampler example2_2 = new DebugSampler();
@@ -298,7 +300,7 @@ public class WeightedSwitchControllerTest {
 
         // first child: transaction controller
         TransactionController ex1 = new TransactionController();
-
+        ex1.setName("ex1");
         DebugSampler example1_1 = new DebugSampler();
         example1_1.setName("example1_1");
         DebugSampler example1_2 = new DebugSampler();
@@ -306,7 +308,7 @@ public class WeightedSwitchControllerTest {
 
         // second child: transaction controller
         TransactionController ex2 = new TransactionController();
-
+        ex2.setName("ex2");
         DebugSampler example2_1 = new DebugSampler();
         example2_1.setName("example2_1");
         DebugSampler example2_2 = new DebugSampler();
@@ -357,7 +359,8 @@ public class WeightedSwitchControllerTest {
         assertEquals(120, listener.events.size());
         assertEquals(20, (int) totalResults.get("example1_1"));
         assertEquals(40, (int) totalResults.get("example2_1"));
-        assertEquals(60, (int) totalResults.get("")); // transaction result
+        assertEquals(20, (int) totalResults.get("ex1")); // transaction result
+        assertEquals(40, (int) totalResults.get("ex2")); // transaction result
     }
 
     public class TestSampleListener extends ResultCollector implements SampleListener {

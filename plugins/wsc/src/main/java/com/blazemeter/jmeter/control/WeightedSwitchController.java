@@ -100,7 +100,8 @@ public class WeightedSwitchController extends GenericController implements Seria
 
     private CollectionProperty removeDisableSubGroups(CollectionProperty data) {
         CollectionProperty result = new CollectionProperty();
-        for (JMeterProperty property : data) {
+        for (int i = 0; i <  data.size(); i++) {
+            JMeterProperty property = data.get(i);
             if (property instanceof CollectionProperty &&
                     ((CollectionProperty) property).size() == 3 &&
                     "true".equals(((CollectionProperty) property).get(2).getStringValue())) {
@@ -111,7 +112,8 @@ public class WeightedSwitchController extends GenericController implements Seria
     }
 
     private CollectionProperty setEnabledSubGroups(CollectionProperty data) {
-        for (JMeterProperty property : data) {
+        for (int i = 0; i <  data.size(); i++) {
+            JMeterProperty property = data.get(i);
             if (property instanceof CollectionProperty) {
 
                 CollectionProperty prop = (CollectionProperty) property;

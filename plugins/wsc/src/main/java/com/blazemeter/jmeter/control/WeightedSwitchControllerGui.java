@@ -127,7 +127,8 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
     }
 
     private JMeterProperty getRowByName(String rowName, CollectionProperty oldData) {
-        for (JMeterProperty row : oldData) {
+        for (int i = 0; i <  oldData.size(); i++) {
+            JMeterProperty row = oldData.get(i);
             if (row instanceof CollectionProperty && rowName.equals(((CollectionProperty) row).get(0).getStringValue())) {
                 return row;
             }

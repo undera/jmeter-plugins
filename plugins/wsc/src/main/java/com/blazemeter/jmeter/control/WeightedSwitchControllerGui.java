@@ -101,7 +101,7 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
 
         if (gp != null && element instanceof WeightedSwitchController) {
             WeightedSwitchController wsc = (WeightedSwitchController) element;
-            CollectionProperty oldData = migrateData(wsc.getData());
+            CollectionProperty oldData = wsc.getData();
 
             grid.getModel().clearData();
 
@@ -111,15 +111,6 @@ public class WeightedSwitchControllerGui extends AbstractControllerGui {
                 JMeterPluginsUtils.collectionPropertyToTableModelRows(oldData, grid.getModel());
             }
         }
-    }
-
-    private CollectionProperty migrateData(CollectionProperty data) {
-        for (JMeterProperty property : data) {
-            if (property instanceof CollectionProperty && ((CollectionProperty) property).size() == 2) {
-                ((CollectionProperty) property).addItem("true");
-            }
-        }
-        return data;
     }
 
     private void fillGridFromTree(WeightedSwitchController wsc, CollectionProperty oldData) {

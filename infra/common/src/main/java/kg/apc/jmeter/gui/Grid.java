@@ -16,10 +16,15 @@ public class Grid extends VerticalPanel {
     private PowerTableModel tableModel;
 
     public Grid(String title, String[] columnIdentifiers, Class<?>[] columnClasses, Object[] defaultValues) {
+        this(title, columnIdentifiers, columnClasses, defaultValues, new JTable());
+    }
+
+    public Grid(String title, String[] columnIdentifiers, Class<?>[] columnClasses, Object[] defaultValues, JTable grid) {
         super();
+
         this.setBorder(BorderFactory.createTitledBorder(title));
         this.setPreferredSize(new Dimension(150, 150));
-
+        this.grid = grid;
         JScrollPane scroll = new JScrollPane(createGrid(columnIdentifiers, columnClasses));
         scroll.setPreferredSize(scroll.getMinimumSize());
         this.add(scroll, BorderLayout.CENTER);
@@ -29,7 +34,6 @@ public class Grid extends VerticalPanel {
     }
 
     private JTable createGrid(String[] columnIdentifiers, Class<?>[] columnClasses) {
-        grid = new JTable();
         tableModel = new PowerTableModel(columnIdentifiers, columnClasses);
         grid.setModel(tableModel);
         grid.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -40,5 +44,9 @@ public class Grid extends VerticalPanel {
 
     public PowerTableModel getModel() {
         return tableModel;
+    }
+
+    public JTable getGrid() {
+        return grid;
     }
 }

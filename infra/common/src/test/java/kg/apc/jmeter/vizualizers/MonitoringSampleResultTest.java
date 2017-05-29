@@ -29,7 +29,7 @@ public class MonitoringSampleResultTest {
     }
 
     @Test
-    public void testGetValue_0args() {
+    public void testGetValue0args() {
         System.out.println("getValue");
         MonitoringSampleResult instance = new MonitoringSampleResult();
         instance.setResponseMessage("0");
@@ -39,7 +39,7 @@ public class MonitoringSampleResultTest {
     }
 
     @Test
-    public void testGetValue_SampleResult() {
+    public void testGetValueSampleResult() {
         System.out.println("getValue");
         SampleResult res = new SampleResult();
         res.setResponseMessage("0");

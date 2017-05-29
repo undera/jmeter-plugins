@@ -20,8 +20,8 @@ public class MonitoringSampleGeneratorTest {
     }
 
     public class MonitoringSampleGeneratorImpl implements MonitoringSampleGenerator {
-        String metric;
-        double value;
+        protected String metric;
+        protected double value;
 
         public void generateSample(double d, String string) {
             this.metric = string;

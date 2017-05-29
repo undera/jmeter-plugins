@@ -3,11 +3,9 @@ package kg.apc.jmeter.graphs;
 import java.util.concurrent.ConcurrentSkipListMap;
 import javax.swing.JPanel;
 import kg.apc.charting.AbstractGraphRow;
-import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import kg.apc.jmeter.vizualizers.MonitoringResultsCollector;
 import kg.apc.jmeter.vizualizers.MonitoringSampleResult;
-import org.apache.jmeter.gui.util.PowerTableModel;
 import org.apache.jmeter.testelement.TestElement;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -35,11 +33,11 @@ public class AbstractMonitoringVisualizerTest {
         @Override
         public String getStaticLabel() { return "AbstractMonitoringVisualizerImpl"; }
 
-        public ConcurrentSkipListMap<String, AbstractGraphRow> getModel_multi() {
+        public ConcurrentSkipListMap<String, AbstractGraphRow> getModelMulti() {
             return model;
         }
 
-        public ConcurrentSkipListMap<String, AbstractGraphRow> getModel_aggr() {
+        public ConcurrentSkipListMap<String, AbstractGraphRow> getModelAggr() {
             return modelAggregate;
         }
     }
@@ -110,9 +108,9 @@ public class AbstractMonitoringVisualizerTest {
         res.setValue(1.0);
         AbstractMonitoringVisualizerImpl instance = new AbstractMonitoringVisualizerImpl();
         instance.add(res);
-        assertEquals(1, instance.getModel_multi().size());
-        assertEquals(1, instance.getModel_multi().firstEntry().getValue().size());
-        assertEquals(0, instance.getModel_aggr().size());
+        assertEquals(1, instance.getModelMulti().size());
+        assertEquals(1, instance.getModelMulti().firstEntry().getValue().size());
+        assertEquals(0, instance.getModelAggr().size());
     }
 
     @Test

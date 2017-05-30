@@ -16,7 +16,6 @@ import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.threads.ListenerNotifier;
 import org.apache.jmeter.threads.TestCompiler;
 import org.apache.jmeter.threads.ThreadGroup;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -126,33 +125,35 @@ public class WeightedSwitchControllerTest {
         topWSC.setData(topPTM);
 
         DebugSampler d1 = new DebugSampler();
-        d1.setName("D1");
+        d1.setName("D_#1");
         DebugSampler d2 = new DebugSampler();
-        d2.setName("D2");
+        d2.setName("D_#2");
 
         // first child WSC of top WSC
         WeightedSwitchController childWSC1 = new WeightedSwitchController();
+        childWSC1.setName("wsc1");
         PowerTableModel childPTM1 = new PowerTableModel(new String[]{"name", WeightedSwitchController.WEIGHTS}, new Class[]{String.class, String.class});
         childPTM1.addRow(new String[]{"D1_#1", "1"});
         childPTM1.addRow(new String[]{"D1_#2", "1"});
         childWSC1.setData(childPTM1);
 
         DebugSampler d1_1 = new DebugSampler();
-        d1_1.setName("D1_1");
+        d1_1.setName("D1_#1");
         DebugSampler d1_2 = new DebugSampler();
-        d1_2.setName("D1_2");
+        d1_2.setName("D1_#2");
 
         // second child WSC of top WSC
         WeightedSwitchController childWSC2 = new WeightedSwitchController();
+        childWSC2.setName("wsc2");
         PowerTableModel childPTM2 = new PowerTableModel(new String[]{"name", WeightedSwitchController.WEIGHTS}, new Class[]{String.class, String.class});
         childPTM2.addRow(new String[]{"D2_#1", "1"});
         childPTM2.addRow(new String[]{"D2_#2", "1"});
         childWSC2.setData(childPTM2);
 
         DebugSampler d2_1 = new DebugSampler();
-        d2_1.setName("D2_1");
+        d2_1.setName("D2_#1");
         DebugSampler d2_2 = new DebugSampler();
-        d2_2.setName("D2_2");
+        d2_2.setName("D2_#2");
 
         // main loop
         LoopController loop = new LoopController();
@@ -190,12 +191,12 @@ public class WeightedSwitchControllerTest {
 
         assertEquals(6, listener.events.size());
         List<String> labels = new ArrayList<>();
-        labels.add("D1");
-        labels.add("D2");
-        labels.add("D1_1");
-        labels.add("D1_2");
-        labels.add("D2_1");
-        labels.add("D2_2");
+        labels.add("D_#1");
+        labels.add("D_#2");
+        labels.add("D1_#1");
+        labels.add("D1_#2");
+        labels.add("D2_#1");
+        labels.add("D2_#2");
         for (SampleEvent event : listener.events) {
             assertTrue(labels.contains(event.getResult().getSampleLabel()));
         }
@@ -219,7 +220,7 @@ public class WeightedSwitchControllerTest {
 
         // first child: simple controller
         GenericController ex1 = new GenericController();
-
+        ex1.setName("ex1");
         DebugSampler example1_1 = new DebugSampler();
         example1_1.setName("example1_1");
         DebugSampler example1_2 = new DebugSampler();
@@ -227,7 +228,7 @@ public class WeightedSwitchControllerTest {
 
         // second child: simple controller
         GenericController ex2 = new GenericController();
-
+        ex2.setName("ex2");
         DebugSampler example2_1 = new DebugSampler();
         example2_1.setName("example2_1");
         DebugSampler example2_2 = new DebugSampler();
@@ -299,7 +300,7 @@ public class WeightedSwitchControllerTest {
 
         // first child: transaction controller
         TransactionController ex1 = new TransactionController();
-
+        ex1.setName("ex1");
         DebugSampler example1_1 = new DebugSampler();
         example1_1.setName("example1_1");
         DebugSampler example1_2 = new DebugSampler();
@@ -307,7 +308,7 @@ public class WeightedSwitchControllerTest {
 
         // second child: transaction controller
         TransactionController ex2 = new TransactionController();
-
+        ex2.setName("ex2");
         DebugSampler example2_1 = new DebugSampler();
         example2_1.setName("example2_1");
         DebugSampler example2_2 = new DebugSampler();
@@ -358,9 +359,99 @@ public class WeightedSwitchControllerTest {
         assertEquals(120, listener.events.size());
         assertEquals(20, (int) totalResults.get("example1_1"));
         assertEquals(40, (int) totalResults.get("example2_1"));
-        assertEquals(60, (int) totalResults.get("")); // transaction result
+        assertEquals(20, (int) totalResults.get("ex1")); // transaction result
+        assertEquals(40, (int) totalResults.get("ex2")); // transaction result
     }
 
+
+    @Test
+    public void testNestedDisableController() throws Exception {
+        JMeterContextService.getContext().setVariables(new JMeterVariables());
+
+        TestSampleListener listener = new TestSampleListener();
+
+        // top WSC
+        WeightedSwitchController topWSC = new WeightedSwitchController();
+        PowerTableModel topPTM = new PowerTableModel(new String[]{"name", WeightedSwitchController.WEIGHTS}, new Class[]{String.class, String.class});
+        topPTM.addRow(new String[]{"ex1", "10"});
+        topPTM.addRow(new String[]{"ex2", "20"});
+        topPTM.addRow(new String[]{"ex3", "30"});
+        topWSC.setData(topPTM);
+
+
+        // first child: transaction controller
+        TransactionController ex1 = new TransactionController();
+        ex1.setName("ex1");
+        DebugSampler example1_1 = new DebugSampler();
+        example1_1.setName("example1_1");
+        DebugSampler example1_2 = new DebugSampler();
+        example1_2.setName("example1_2");
+
+        // second child: transaction controller
+        TransactionController ex2 = new TransactionController();
+        ex2.setName("ex2");
+        ex2.setEnabled(false);
+        DebugSampler example2_1 = new DebugSampler();
+        example2_1.setName("example2_1");
+        DebugSampler example2_2 = new DebugSampler();
+        example2_2.setName("example2_2");
+
+        // third child: transaction controller
+        TransactionController ex3 = new TransactionController();
+        ex3.setName("ex3");
+        DebugSampler example3_1 = new DebugSampler();
+        example3_1.setName("example3_1");
+        DebugSampler example3_2 = new DebugSampler();
+        example3_2.setName("example3_2");
+
+        // main loop
+        LoopController loop = new LoopController();
+        loop.setLoops(80);
+        loop.setContinueForever(false);
+
+        // test tree
+        ListedHashTree hashTree = new ListedHashTree();
+        hashTree.add(loop);
+        hashTree.add(loop, topWSC);
+        hashTree.add(topWSC, listener);
+        hashTree.add(topWSC, ex1);
+        hashTree.add(ex1, example1_1);
+        hashTree.add(ex1, example1_2);
+        hashTree.add(ex1, listener);
+        hashTree.add(topWSC, ex3);
+        hashTree.add(ex3, example3_1);
+        hashTree.add(ex3, example3_2);
+        hashTree.add(ex3, listener);
+
+        TestCompiler compiler = new TestCompiler(hashTree);
+        hashTree.traverse(compiler);
+
+        ThreadGroup threadGroup = new ThreadGroup();
+        threadGroup.setNumThreads(1);
+
+        ListenerNotifier notifier = new ListenerNotifier();
+
+        JMeterThread thread = new JMeterThread(hashTree, threadGroup, notifier);
+        thread.setThreadGroup(threadGroup);
+        thread.setOnErrorStopThread(true);
+        thread.run();
+
+        Map<String, Integer> totalResults = new HashMap<>();
+        for (SampleEvent event : listener.events) {
+            String label = event.getResult().getSampleLabel();
+            if (totalResults.containsKey(label)) {
+                totalResults.put(label, totalResults.get(label) + 1);
+            } else {
+                totalResults.put(label, 1);
+            }
+        }
+
+        assertEquals(160, listener.events.size());
+        assertEquals(20, (int) totalResults.get("example1_1"));
+        assertEquals(60, (int) totalResults.get("example3_1"));
+        assertEquals(20, (int) totalResults.get("ex1")); // transaction result
+        assertEquals(60, (int) totalResults.get("ex3")); // transaction result
+    }
     public class TestSampleListener extends ResultCollector implements SampleListener {
         public List<SampleEvent> events = new ArrayList<>();
 

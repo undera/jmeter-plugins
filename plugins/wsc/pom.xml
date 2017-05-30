@@ -6,10 +6,10 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-wsc</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 
-    <name>Weighted switch</name>
-    <description>Weighted switch</description>
+    <name>Weighted Switch Controller</name>
+    <description>Weighted switch controller plugin</description>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>

@@ -580,6 +580,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "0.2": {
+        "changes" : "<p>Fixed samples generation in nested controllers(Transaction, Simple, Weighted Switch);</p><p>- Fixed samples generation with disabled subgroups;</p><p>- Added effect of disabled subgroups in GUI;</p><p>- Added a ban on changing the column 'Name' and the disabled subgroup in GUI</p>",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-wsc/0.2/jmeter-plugins-wsc-0.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
+        }
       }
     }
   },

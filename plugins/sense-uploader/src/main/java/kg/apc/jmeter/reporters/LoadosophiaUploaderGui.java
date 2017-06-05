@@ -5,6 +5,7 @@ import kg.apc.jmeter.gui.BrowseAction;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -19,7 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
-public class LoadosophiaUploaderGui extends AbstractVisualizer implements HyperlinkListener { // FIXME: Why Visualizer? We've grownups now!
+public class LoadosophiaUploaderGui extends AbstractListenerGui implements HyperlinkListener { // FIXME: Why Visualizer? We've grownups now!
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String WIKIPAGE = "LoadosophiaUploader";
     private JTextField testTitle;
@@ -37,7 +38,7 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer implements Hyperl
         initFields();
     }
 
-    @Override
+//    @Override
     protected Component getFilePanel() {
         return new JPanel();
     }
@@ -62,7 +63,7 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer implements Hyperl
 
     @Override
     public void modifyTestElement(TestElement te) {
-        super.modifyTestElement(te);
+//        super.modifyTestElement(te);
         if (te instanceof LoadosophiaUploader) {
             LoadosophiaUploader fw = (LoadosophiaUploader) te;
             fw.setProject(projectKey.getText());
@@ -186,7 +187,7 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer implements Hyperl
         initFields();
     }
 
-    @Override
+//    @Override
     public void clearData() {
         infoText = "";
         infoArea.setText("");
@@ -209,10 +210,10 @@ public class LoadosophiaUploaderGui extends AbstractVisualizer implements Hyperl
         return Arrays.asList(LoadosophiaAPIClient.colors).indexOf(colorFlag);
     }
 
-    @Override
-    public void add(SampleResult sample) {
-
-    }
+//    @Override
+//    public void add(SampleResult sample) {
+//
+//    }
 
     @Override
     public void hyperlinkUpdate(HyperlinkEvent e) {

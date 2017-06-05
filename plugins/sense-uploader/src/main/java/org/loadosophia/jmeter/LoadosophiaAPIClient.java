@@ -41,7 +41,7 @@ public class LoadosophiaAPIClient {
     public static final int STATUS_DONE = 4;
     public static final int STATUS_ERROR = 5;
     private final AbstractHttpClient httpClient;
-    private final StatusNotifierCallback notifier;
+//    private final StatusNotifierCallback notifier;
     private final String project;
     private final String address;
     private final String token;
@@ -53,7 +53,7 @@ public class LoadosophiaAPIClient {
         project = projectName;
         address = aAddress;
         token = aToken;
-        notifier = informer;
+//        notifier = informer;
         colorFlag = aColorFlag;
         title = aTitle;
         httpClient = getHTTPClient();
@@ -92,7 +92,7 @@ public class LoadosophiaAPIClient {
     }
 
     public LoadosophiaUploadResults sendFiles(File targetFile, LinkedList<String> perfMonFiles) throws IOException {
-        notifier.notifyAbout("Starting upload to BM.Sense");
+//        notifier.notifyAbout("Starting upload to BM.Sense");
         LoadosophiaUploadResults results = new LoadosophiaUploadResults();
         LinkedList<FormBodyPart> partsList = getUploadParts(targetFile, perfMonFiles);
 
@@ -169,7 +169,7 @@ public class LoadosophiaAPIClient {
         // Never try to make it stream-like on the fly, because content-length still required
         // Create the GZIP output stream
         String outFilename = src.getAbsolutePath() + ".gz";
-        notifier.notifyAbout("Gzipping " + src.getAbsolutePath());
+//        notifier.notifyAbout("Gzipping " + src.getAbsolutePath());
         GZIPOutputStream out = new GZIPOutputStream(new FileOutputStream(outFilename), 1024 * 8, true);
 
         // Open the input file
@@ -246,7 +246,7 @@ public class LoadosophiaAPIClient {
                 response = getResponseEntity(result);
 
                 if (statusCode != expectedCode) {
-                    notifier.notifyAbout("Response with code " + statusCode + ": " + response);
+//                    notifier.notifyAbout("Response with code " + statusCode + ": " + response);
                     throw new IOException("API responded with wrong status code: " + statusCode);
                 } else {
                     log.debug("Response: " + response);

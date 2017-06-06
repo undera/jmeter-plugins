@@ -10,12 +10,8 @@ import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jmeter.visualizers.backend.AbstractBackendListenerClient;
-import org.apache.jmeter.visualizers.backend.BackendListener;
 import org.apache.jmeter.visualizers.backend.BackendListenerClient;
 import org.apache.jmeter.visualizers.backend.BackendListenerContext;
-import org.apache.jmeter.visualizers.backend.SamplerMetric;
-import org.apache.jmeter.visualizers.backend.UserMetric;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.loadosophia.jmeter.LoadosophiaAPIClient;
@@ -27,14 +23,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
 import java.util.Stack;
+import java.util.TreeMap;
 
 public class LoadosophiaClient extends ResultCollector implements BackendListenerClient {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
 
     private String address = JMeterUtils.getPropDefault("sense.address", "https://sense.blazemeter.com/");
@@ -44,6 +48,7 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
     public LoadosophiaClient() {
     }
 
+    @Override
     public void setupTest(BackendListenerContext context) throws Exception {
         apiClient = new LoadosophiaAPIClient(
                 null, // TODO :!!!!!!!
@@ -54,7 +59,7 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
                 context.getParameter(LoadosophiaUploader.TITLE)
         );
 
-//        addTestElement(this);
+        addTestElement(this);
         // TODO: isSaving flag
         setupSaving(context);
 
@@ -65,9 +70,10 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
                 context.getParameter(LoadosophiaUploader.TITLE) +
                 context.getParameter(LoadosophiaUploader.STORE_DIR) +
                 context.getParameter(LoadosophiaUploader.USE_ONLINE));
+
+
         String url = apiClient.startOnline();
         log.warn("<p>Started active test: <a href='" + url + "'>" + url + "</a></p>");
-
         super.testStarted(MainFrame.LOCAL);
     }
 
@@ -117,14 +123,16 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
             } catch (IOException ex) {
                 log.warn("Failed to send active test data", ex);
             }
-//            try {
-//                Thread.sleep(500); // TODO:! what about sleep???
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            try {
+
+                Thread.sleep(500); // TODO:! what about sleep???
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
+    @Override
     public void teardownTest(BackendListenerContext context) throws Exception {
         super.testEnded(MainFrame.LOCAL);
         stop(context);
@@ -232,29 +240,54 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
 
     public JSONArray getDataToSend(List<SampleResult> list) {
         JSONArray data = new JSONArray();
-        data.add(getAggregateSecond(list));
+
+        SortedMap<Long, List<SampleResult>> sortedResults = sortResults(list);
+        for (Long sec : sortedResults.keySet()) {
+            data.add(getAggregateSecond(sec, sortedResults.get(sec)));
+        }
         return data;
     }
 
-    private JSONObject getAggregateSecond(List<SampleResult> raw) {
+    private SortedMap<Long, List<SampleResult>> sortResults(List<SampleResult> list) {
+        SortedMap<Long, List<SampleResult>> sortedResults = new TreeMap<>();
+
+        for (SampleResult result : list) {
+            long time = result.getTime();
+            if (!sortedResults.containsKey(time)) {
+                sortedResults.put(time, new LinkedList<SampleResult>());
+            }
+            sortedResults.get(time).add(result);
+        }
+
+        return sortedResults;
+    }
+
+
+    private JSONObject getAggregateSecond(Long sec, List<SampleResult> raw) {
         /*
          "rc": item.http_codes,
          "net": item.net_codes
          */
         JSONObject result = new JSONObject();
 //        this.lastAggregatedTime = sec;
-//        Date ts = new Date(sec * 1000);
-//        log.debug("Aggregating " + sec);
-//        result.put("ts", format.format(ts));
+        Date ts = new Date(sec * 1000);
+        log.debug("Aggregating " + sec);
+        result.put("ts", format.format(ts));
 
-//        Map<String, Integer> threads = new HashMap<>();
+        Map<String, Integer> threads = new HashMap<>();
         int avg_rt = 0;
         Long[] rtimes = new Long[raw.size()];
         String[] rcodes = new String[raw.size()];
         int cnt = 0;
         int failedCount = 0;
-        long tsum = 0;
         for (SampleResult res : raw) {
+//            SampleResult res = evt.getResult();
+
+            if (!threads.containsKey(res.getThreadName())) {
+                threads.put(res.getThreadName(), 0);
+            }
+            threads.put(res.getThreadName(), res.getAllThreads());
+
             avg_rt += res.getTime();
             rtimes[cnt] = res.getTime();
             rcodes[cnt] = res.getResponseCode();
@@ -262,14 +295,14 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
                 failedCount++;
             }
             cnt++;
-
-            if (tsum < res.getAllThreads()) {
-                tsum = res.getAllThreads();
-            }
         }
 
+        long tsum = 0;
+        for (Integer tcount : threads.values()) {
+            tsum += tcount;
+        }
         result.put("rps", cnt);
-        result.put("threads", raw);
+        result.put("threads", tsum);
         result.put("avg_rt", avg_rt / cnt);
         result.put("quantiles", getQuantilesJSON(rtimes));
         result.put("net", getNetJSON(failedCount, cnt - failedCount));

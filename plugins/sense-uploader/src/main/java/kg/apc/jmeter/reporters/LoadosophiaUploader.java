@@ -3,13 +3,13 @@ package kg.apc.jmeter.reporters;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.gui.MainFrame;
 import org.apache.jmeter.reporters.ResultCollector;
-import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jmeter.visualizers.Visualizer;
 import org.apache.jmeter.visualizers.backend.BackendListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.loadosophia.jmeter.StatusNotifierCallback;
+
+import java.lang.reflect.Field;
 
 public class LoadosophiaUploader extends BackendListener implements StatusNotifierCallback {
 
@@ -40,6 +40,23 @@ public class LoadosophiaUploader extends BackendListener implements StatusNotifi
     public void testStarted(String host) {
         setArguments(createArguments());
         super.testStarted(host);
+        addClientAsTestElement();
+    }
+
+    private void addClientAsTestElement() {
+        try {
+            Field listenerClientData = getClass().getSuperclass().getDeclaredField("listenerClientData");
+            listenerClientData.setAccessible(true);
+            Object clientData = listenerClientData.get(this);
+            Field client = clientData.getClass().getDeclaredField("client");
+            client.setAccessible(true);
+            ResultCollector collector = (ResultCollector) client.get(clientData);
+            addTestElement(collector);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
     }
 
     private Arguments createArguments() {
@@ -48,6 +65,8 @@ public class LoadosophiaUploader extends BackendListener implements StatusNotifi
         arguments.addArgument(TITLE, getTitle());
         arguments.addArgument(COLOR, getColorFlag());
         arguments.addArgument(UPLOAD_TOKEN, getUploadToken());
+        arguments.addArgument(USE_ONLINE, Boolean.toString(isUseOnline()));
+        arguments.addArgument(STORE_DIR, getStoreDir());
         return arguments;
     }
 

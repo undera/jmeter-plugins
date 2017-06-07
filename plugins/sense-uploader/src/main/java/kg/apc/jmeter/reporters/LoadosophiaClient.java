@@ -2,11 +2,13 @@ package kg.apc.jmeter.reporters;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
+import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.gui.MainFrame;
 import org.apache.jmeter.reporters.ResultCollector;
+import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.util.JMeterUtils;
@@ -16,6 +18,7 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.loadosophia.jmeter.LoadosophiaAPIClient;
 import org.loadosophia.jmeter.LoadosophiaUploadResults;
+import org.loadosophia.jmeter.StatusNotifierCallback;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,7 +27,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,81 +37,54 @@ import java.util.SortedMap;
 import java.util.Stack;
 import java.util.TreeMap;
 
-public class LoadosophiaClient extends ResultCollector implements BackendListenerClient {
+public class LoadosophiaClient implements BackendListenerClient {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
+    protected String address = JMeterUtils.getPropDefault("sense.address", "https://sense.blazemeter.com/");
+    protected String fileName;
+    protected boolean isOnlineInitiated = false;
+    protected LoadosophiaAPIClient apiClient;
 
-    private String address = JMeterUtils.getPropDefault("sense.address", "https://sense.blazemeter.com/");
-    private String fileName;
-    private LoadosophiaAPIClient apiClient;
+    // this field set from LoadosophiaUploader after BackendListener created instance of this class
+    protected CorrectedResultCollector resultCollector;
+    protected StatusNotifierCallback informer;
 
-    public LoadosophiaClient() {
-    }
 
+    // BackendListener called this method when test was started
     @Override
     public void setupTest(BackendListenerContext context) throws Exception {
+        init(context);
+        initiateOnline();
+    }
+
+    private void init(BackendListenerContext context) {
         apiClient = new LoadosophiaAPIClient(
-                null, // TODO :!!!!!!!
+                informer,
                 address,
                 context.getParameter(LoadosophiaUploader.UPLOAD_TOKEN),
                 context.getParameter(LoadosophiaUploader.PROJECT),
                 context.getParameter(LoadosophiaUploader.COLOR),
                 context.getParameter(LoadosophiaUploader.TITLE)
         );
-
-        addTestElement(this);
-        // TODO: isSaving flag
-        setupSaving(context);
-
-        log.warn("API: " +address+ " "+
-                context.getParameter(LoadosophiaUploader.UPLOAD_TOKEN)+" "+
-                context.getParameter(LoadosophiaUploader.PROJECT)+" "+
-                context.getParameter(LoadosophiaUploader.COLOR)+" "+
-                context.getParameter(LoadosophiaUploader.TITLE) +
-                context.getParameter(LoadosophiaUploader.STORE_DIR) +
-                context.getParameter(LoadosophiaUploader.USE_ONLINE));
-
-
-        String url = apiClient.startOnline();
-        log.warn("<p>Started active test: <a href='" + url + "'>" + url + "</a></p>");
-        super.testStarted(MainFrame.LOCAL);
+        fileName = context.getParameter(LoadosophiaUploader.FILE_NAME);
+        isOnlineInitiated = context.containsParameter(LoadosophiaUploader.USE_ONLINE);
     }
 
-    private void setupSaving(BackendListenerContext context) throws IOException {
-        log.debug("Set up saving with " + context);
-        String dir = context.getParameter(LoadosophiaUploader.STORE_DIR);
-        File tmpFile;
-        try {
-            if (dir == null || dir.trim().isEmpty()) {
-                tmpFile = File.createTempFile("Sense_", ".jtl");
-            } else {
-                File storeDir = new File(dir);
-                storeDir.mkdirs();
-                tmpFile = File.createTempFile("Sense_", ".jtl", storeDir);
+    private void initiateOnline() {
+        if (isOnlineInitiated) {
+            try {
+                log.info("Starting BM.Sense online test");
+                String url = apiClient.startOnline();
+                //TODO: fix NPE here
+                informer.notifyAbout("<p>Started active test: <a href='" + url + "'>" + url + "</a></p>");
+            } catch (IOException ex) {
+                informer.notifyAbout("Failed to start active test");
+                log.warn("Failed to initiate active test", ex);
+                this.isOnlineInitiated = false;
             }
-        } catch (IOException ex) {
-            log.warn("Unable to create temp file: " + ex.getMessage());
-            log.warn("Try to set another directory in the above field.");
-            throw ex;
         }
-
-        fileName = tmpFile.getAbsolutePath();
-        tmpFile.delete(); // IMPORTANT! this is required to have CSV headers
-        log.warn("Storing results for upload to Sense: " + fileName);
-
-
-        setFilename(fileName);
-        // OMG, I spent 2 days finding that setting properties in testStarted
-        // marks them temporary, though they cleared in some places.
-        // So we do dirty(?) hack here...
-        clearTemporary(getProperty(ResultCollector.FILENAME));
-
-        SampleSaveConfiguration conf = getSaveConfig();
-        JMeterPluginsUtils.doBestCSVSetup(conf);
-
-        setSaveConfig(conf);
     }
 
     @Override
@@ -124,34 +99,21 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
                 log.warn("Failed to send active test data", ex);
             }
             try {
-
-                Thread.sleep(500); // TODO:! what about sleep???
+                Thread.sleep(500);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.warn("Backend listener client thread was interrupted");
             }
         }
     }
 
+    // BackendListener called this method when test was ended
     @Override
     public void teardownTest(BackendListenerContext context) throws Exception {
-        super.testEnded(MainFrame.LOCAL);
         stop(context);
-    }
-
-    @Override
-    public Arguments getDefaultParameters() {
-        return null;
-    }
-
-    @Override
-    public SampleResult createSampleResult(BackendListenerContext backendListenerContext, SampleResult sampleResult) {
-        return sampleResult;
     }
 
     protected void stop(BackendListenerContext context) {
         String redirectLink = "";
-
-
             try {
                 flush();
 
@@ -159,8 +121,6 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
                     throw new IOException("File for upload was not set, search for errors above in log");
                 }
 
-                // TODO:
-//                isSaving = false;
                 LinkedList<String> monFiles;
                 if (hasStandardSet()) {
                     monFiles = PerfMonCollector.getFiles();
@@ -171,9 +131,9 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
                 log.warn("TRY TO DUMP FILE:   " + fileToString(fileName));
                 LoadosophiaUploadResults uploadResult = this.apiClient.sendFiles(new File(fileName), monFiles);
                 redirectLink = uploadResult.getRedirectLink();
-                log.warn("<p>Uploaded successfully, go to results: <a href='" + redirectLink + "'>" + redirectLink + "</a></p>");
+                informer.notifyAbout("<p>Uploaded successfully, go to results: <a href='" + redirectLink + "'>" + redirectLink + "</a></p>");
             } catch (Throwable ex) {
-                log.warn("Failed to upload results to BM.Sense, see log for detais: " + ex.getMessage());
+                informer.notifyAbout("Failed to upload results to BM.Sense, see log for detais: " + ex.getMessage());
                 log.error("Failed to upload results to BM.Sense", ex);
             }
 
@@ -184,31 +144,14 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
             } catch (IOException ex) {
                 log.warn("Failed to finalize active test", ex);
             }
-//            isOnlineInitiated = false;
         }
 
-//        clearData();
         if (hasStandardSet()) {
             PerfMonCollector.clearFiles();
         }
-
     }
 
-    private void flush() {
-        // FIXME: trying to handle safe upgrade, needs to be removed in the future
-        // @see https://issues.apache.org/bugzilla/show_bug.cgi?id=56807
-        try {
-            Class<ResultCollector> c = ResultCollector.class;
-            Method m = c.getDeclaredMethod("flushFile");
-            m.invoke(this);
-            log.info("Successfully flushed results file");
-        } catch (NoSuchMethodException ex) {
-            log.warn("Cannot flush results file since you are using old version of JMeter, consider upgrading to latest. Currently the results may be incomplete.");
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            log.error("Failed to flush file", e);
-        }
-    }
-
+    // TODO: remove it
     public static String fileToString(String fileName) {
         StringBuilder sb = new StringBuilder();
         try {
@@ -226,17 +169,6 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
         }
         return sb.toString();
     }
-
-    private boolean hasStandardSet() {
-        boolean hasStandardSet = true;
-        try {
-            Class.forName("kg.apc.jmeter.perfmon.PerfMonCollector");
-        } catch (ClassNotFoundException e) {
-            hasStandardSet = false;
-        }
-        return hasStandardSet;
-    }
-
 
     public JSONArray getDataToSend(List<SampleResult> list) {
         JSONArray data = new JSONArray();
@@ -353,5 +285,63 @@ public class LoadosophiaClient extends ResultCollector implements BackendListene
         return result;
     }
 
+    @Override
+    public Arguments getDefaultParameters() {
+        return null;
+    }
 
+    @Override
+    public SampleResult createSampleResult(BackendListenerContext backendListenerContext, SampleResult sampleResult) {
+        return sampleResult;
+    }
+
+    private void flush() {
+        // FIXME: trying to handle safe upgrade, needs to be removed in the future
+        // @see https://issues.apache.org/bugzilla/show_bug.cgi?id=56807
+        try {
+            Class<ResultCollector> c = ResultCollector.class;
+            Method m = c.getDeclaredMethod("flushFile");
+            m.invoke(resultCollector);
+            log.info("Successfully flushed results file");
+        } catch (NoSuchMethodException ex) {
+            log.warn("Cannot flush results file since you are using old version of JMeter, consider upgrading to latest. Currently the results may be incomplete.");
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            log.error("Failed to flush file", e);
+        }
+    }
+
+    private boolean hasStandardSet() {
+        boolean hasStandardSet = true;
+        try {
+            Class.forName("kg.apc.jmeter.perfmon.PerfMonCollector");
+        } catch (ClassNotFoundException e) {
+            hasStandardSet = false;
+        }
+        return hasStandardSet;
+    }
+
+    public LoadosophiaAPIClient getApiClient() {
+        return apiClient;
+    }
+
+    public void setApiClient(LoadosophiaAPIClient apiClient) {
+        this.apiClient = apiClient;
+    }
+
+    public CorrectedResultCollector getResultCollector() {
+        return resultCollector;
+    }
+
+    public void setResultCollector(CorrectedResultCollector resultCollector) {
+        this.resultCollector = resultCollector;
+    }
+
+    public StatusNotifierCallback getInformer() {
+        return informer;
+    }
+
+    public void setInformer(StatusNotifierCallback informer) {
+        log.error("INIT INFORMAER");
+        this.informer = informer;
+    }
 }

@@ -72,6 +72,7 @@ public class LoadosophiaUploaderGui extends AbstractListenerGui implements Hyper
             fw.setColorFlag(indexToColor(colorFlag.getSelectedIndex()));
             fw.setTitle(testTitle.getText());
             fw.setUseOnline(useOnline.isSelected());
+            fw.setGui(this);
         }
     }
 

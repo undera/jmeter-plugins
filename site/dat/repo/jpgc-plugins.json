@@ -483,6 +483,22 @@
     }
   },
   {
+    "id": "jpgc-sshmon",
+    "name": "SSHMon Sample Collector",
+    "description": "SSHMon lets you plot performance metrics over time when the test is running.",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/sshmon_samples_collector.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/SSHMon/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "nz.co.breakpoint.jmeter.vizualizers.sshmon.SSHMonCollector",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-sshmon/0.1/jmeter-plugins-sshmon-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
+        }
+    }
+  },
+  {
     "id": "jpgc-tst",
     "name": "Throughput Shaping Timer",
     "description": "A plugin to set desired hits/s (RPS) schedule",

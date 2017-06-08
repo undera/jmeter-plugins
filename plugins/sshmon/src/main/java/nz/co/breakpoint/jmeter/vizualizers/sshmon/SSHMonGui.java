@@ -2,8 +2,6 @@ package nz.co.breakpoint.jmeter.vizualizers.sshmon;
 
 import kg.apc.jmeter.graphs.AbstractMonitoringVisualizer;
 import kg.apc.jmeter.vizualizers.MonitoringResultsCollector;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 /**
  * GUI class defining the config settings of monitoring samplers

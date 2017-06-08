@@ -43,6 +43,7 @@ public class LoadosophiaClient implements BackendListenerClient {
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
     protected String address = JMeterUtils.getPropDefault("sense.address", "https://sense.blazemeter.com/");
+    protected long delay = JMeterUtils.getPropDefault("sense.delay", 1000);
     protected String fileName;
     protected boolean isOnlineInitiated = false;
     protected String token;
@@ -69,7 +70,7 @@ public class LoadosophiaClient implements BackendListenerClient {
         color = context.getParameter(LoadosophiaUploader.COLOR);
         title = context.getParameter(LoadosophiaUploader.TITLE);
         fileName = context.getParameter(LoadosophiaUploader.FILE_NAME);
-        isOnlineInitiated = context.containsParameter(LoadosophiaUploader.USE_ONLINE);
+        isOnlineInitiated = Boolean.parseBoolean(context.getParameter(LoadosophiaUploader.USE_ONLINE));
     }
 
     public void initiateOnline() {
@@ -99,7 +100,7 @@ public class LoadosophiaClient implements BackendListenerClient {
                 log.warn("Failed to send active test data", ex);
             }
             try {
-                Thread.sleep(500);
+                Thread.sleep(delay);
             } catch (InterruptedException e) {
                 log.warn("Backend listener client thread was interrupted");
             }

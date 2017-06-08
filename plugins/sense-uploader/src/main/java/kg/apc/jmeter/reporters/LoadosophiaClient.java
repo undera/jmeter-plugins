@@ -1,7 +1,6 @@
 package kg.apc.jmeter.reporters;
 
 import kg.apc.jmeter.perfmon.PerfMonCollector;
-import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.config.Arguments;

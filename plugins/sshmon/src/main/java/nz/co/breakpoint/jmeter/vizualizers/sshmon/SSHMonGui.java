@@ -13,18 +13,16 @@ import org.apache.log.Logger;
 public class SSHMonGui
         extends AbstractMonitoringVisualizer {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
-
-    static String[] columnIdentifiers = new String[]{
+    protected static String[] columnIdentifiers = new String[]{
         "Label", "Host", "Port", "Username", "Private Key (PEM)", "Password", "Command", "Delta"
     };
-    static Class[] columnClasses = new Class[]{
+    protected static Class[] columnClasses = new Class[]{
         String.class, String.class, Integer.class, String.class, String.class, String.class, String.class, Boolean.class
     };
-    static Object[] defaultValues = new Object[]{
+    protected static Object[] defaultValues = new Object[]{
         "", "", 22, "", "", "", "", false
     };
-    static int[] columnWidths = new int[]{
+    protected static int[] columnWidths = new int[]{
         100, 100, 50, 100, 100, 100, 500, 20
     };
 

@@ -34,7 +34,8 @@ public class SSHSessionFactory extends BaseKeyedPooledObjectFactory<ConnectionDe
             session.setTimeout(60000);
             session.connect();
         } catch (Exception e) {
-            throw new RuntimeException("ERROR: Failed to connect to " + connectionDetails, e);
+            log.error("Failed to connect to "+connectionDetails);
+            throw e;
         }
         return session;
     }

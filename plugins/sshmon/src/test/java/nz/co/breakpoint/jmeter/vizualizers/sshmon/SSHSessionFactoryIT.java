@@ -1,10 +1,5 @@
 package nz.co.breakpoint.jmeter.vizualizers.sshmon;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 

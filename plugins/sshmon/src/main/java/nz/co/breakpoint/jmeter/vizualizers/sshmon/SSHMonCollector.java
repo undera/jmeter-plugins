@@ -7,7 +7,6 @@ import kg.apc.jmeter.vizualizers.MonitoringResultsCollector;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.commons.io.FileUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
@@ -51,6 +50,8 @@ public class SSHMonCollector
 
             ConnectionDetails connectionDetails = new ConnectionDetails(username, host, port, password, 
                 privateKey.isEmpty()? null: privateKey.getBytes());
+            
+            log.debug("Adding sampler for "+connectionDetails+" / "+command);
             samplers.add(new SSHMonSampler(label, connectionDetails, command, isDelta));
         }
     }

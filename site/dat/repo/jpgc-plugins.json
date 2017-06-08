@@ -496,6 +496,7 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
         }
+      }
     }
   },
   {

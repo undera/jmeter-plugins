@@ -15,7 +15,6 @@
  */
 package org.loadosophia.jmeter;
 
-import org.loadosophia.jmeter.StatusNotifierCallback;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

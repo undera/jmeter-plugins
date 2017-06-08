@@ -6,7 +6,6 @@ import net.sf.json.JSONObject;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.util.JMeterUtils;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.loadosophia.jmeter.LoadosophiaAPIClient;

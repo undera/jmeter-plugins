@@ -1,7 +1,6 @@
 package kg.apc.jmeter.reporters;
 
 import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.Assert;
 import org.junit.BeforeClass;

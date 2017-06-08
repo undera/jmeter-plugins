@@ -38,7 +38,6 @@ public class LoadosophiaUploaderGui extends AbstractListenerGui implements Hyper
         initFields();
     }
 
-//    @Override
     protected Component getFilePanel() {
         return new JPanel();
     }
@@ -63,7 +62,6 @@ public class LoadosophiaUploaderGui extends AbstractListenerGui implements Hyper
 
     @Override
     public void modifyTestElement(TestElement te) {
-//        super.modifyTestElement(te);
         if (te instanceof LoadosophiaUploader) {
             LoadosophiaUploader fw = (LoadosophiaUploader) te;
             fw.setProject(projectKey.getText());
@@ -188,7 +186,6 @@ public class LoadosophiaUploaderGui extends AbstractListenerGui implements Hyper
         initFields();
     }
 
-//    @Override
     public void clearData() {
         infoText = "";
         infoArea.setText("");
@@ -210,11 +207,6 @@ public class LoadosophiaUploaderGui extends AbstractListenerGui implements Hyper
     private int colorToIndex(String colorFlag) {
         return Arrays.asList(LoadosophiaAPIClient.colors).indexOf(colorFlag);
     }
-
-//    @Override
-//    public void add(SampleResult sample) {
-//
-//    }
 
     @Override
     public void hyperlinkUpdate(HyperlinkEvent e) {

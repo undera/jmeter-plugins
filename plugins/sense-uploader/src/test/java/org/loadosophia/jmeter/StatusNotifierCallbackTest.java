@@ -56,9 +56,15 @@ public class StatusNotifierCallbackTest {
         
     }
 
-    public class StatusNotifierCallbackImpl implements StatusNotifierCallback {
+    public static class StatusNotifierCallbackImpl implements StatusNotifierCallback {
+        StringBuilder buffer = new StringBuilder();
 
         public void notifyAbout(String info) {
+            buffer.append(info);
+        }
+
+        public StringBuilder getBuffer() {
+            return buffer;
         }
     }
 }

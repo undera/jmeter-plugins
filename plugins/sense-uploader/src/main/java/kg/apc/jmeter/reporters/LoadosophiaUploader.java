@@ -193,7 +193,7 @@ public class LoadosophiaUploader extends BackendListener implements StatusNotifi
     // call initiateOnline()
     private void initClient() {
         try {
-            Field listenerClientData = getClass().getSuperclass().getDeclaredField("listenerClientData");
+            Field listenerClientData = LoadosophiaUploader.class.getSuperclass().getDeclaredField("listenerClientData");
             listenerClientData.setAccessible(true);
             Object clientData = listenerClientData.get(this);
             Field clientField = clientData.getClass().getDeclaredField("client");

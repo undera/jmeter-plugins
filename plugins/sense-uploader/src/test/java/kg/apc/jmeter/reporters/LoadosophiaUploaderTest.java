@@ -204,6 +204,7 @@ public class LoadosophiaUploaderTest {
         SampleResult res = new SampleResult();
         SampleEvent event = new SampleEvent(res, "test");
         LoadosophiaUploader instance = new LoadosophiaUploaderEmul();
+        instance.testStarted();
         instance.sampleOccurred(event);
     }
 

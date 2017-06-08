@@ -5,6 +5,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -42,10 +43,10 @@ public class LoadosophiaClientTest {
 
         String str = instance.getDataToSend(list).toString();
         System.out.println("JSON: " + str);
-        Assert.assertTrue(!str.equals("[]"));
-        Assert.assertTrue(!str.equals(""));
+        assertTrue(!str.equals("[]"));
+        assertTrue(!str.equals(""));
         JSONArray test = JSONArray.fromObject(str);
-        Assert.assertEquals(7, test.size());
+        assertEquals(7, test.size());
     }
 
     @Test
@@ -69,6 +70,7 @@ public class LoadosophiaClientTest {
 
     @Test
     public void testHandleSamples() throws Exception {
+        JMeterUtils.setProperty("sense.delay", "10000");
         LoadosophiaClient client = new LoadosophiaClient();
         client.setOnlineInitiated(true);
         client.setResultCollector(new ResultCollector());
@@ -83,8 +85,10 @@ public class LoadosophiaClientTest {
         list.add(new SampleResult(System.currentTimeMillis() + 1000, 1));
         list.add(new SampleResult(System.currentTimeMillis() + 2000, 1));
 
-
+        long start = System.currentTimeMillis();
         client.handleSampleResults(list, null);
+        long end = System.currentTimeMillis();
+        assertTrue((end - start) > 9999);
     }
 
     @Test

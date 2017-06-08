@@ -224,4 +224,13 @@ public class LoadosophiaUploaderTest {
         Thread.sleep(10);
         instance.testEnded("");
     }
+
+    @Test
+    public void testClone() throws Exception {
+        LoadosophiaUploader uploader = new LoadosophiaUploader();
+        LoadosophiaUploaderGui gui = new LoadosophiaUploaderGui();
+        uploader.setGui(gui);
+        LoadosophiaUploader clone = (LoadosophiaUploader) uploader.clone();
+        Assert.assertEquals(gui, clone.gui);
+    }
 }

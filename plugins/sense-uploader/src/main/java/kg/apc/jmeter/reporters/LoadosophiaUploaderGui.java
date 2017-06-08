@@ -18,7 +18,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
-public class LoadosophiaUploaderGui extends AbstractListenerGui implements HyperlinkListener { // FIXME: Why Visualizer? We've grownups now!
+public class LoadosophiaUploaderGui extends AbstractListenerGui implements HyperlinkListener {
     private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String WIKIPAGE = "LoadosophiaUploader";
     private JTextField testTitle;

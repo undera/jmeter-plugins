@@ -182,6 +182,13 @@ public class LoadosophiaUploader extends BackendListener implements StatusNotifi
         this.gui = gui;
     }
 
+    @Override
+    public Object clone() {
+        LoadosophiaUploader clone = (LoadosophiaUploader) super.clone();
+        clone.gui = this.gui;
+        return clone;
+    }
+
     // Inject StatusNotifierCallback (this) and resultCollector into private backendListenerClient
     // call initiateOnline()
     private void initClient() {

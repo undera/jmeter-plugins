@@ -161,7 +161,7 @@ public class LoadosophiaClient implements BackendListenerClient {
         SortedMap<Long, List<SampleResult>> sortedResults = new TreeMap<>();
 
         for (SampleResult result : list) {
-            long time = result.getTime();
+            long time = result.getEndTime() / 1000;
             if (!sortedResults.containsKey(time)) {
                 sortedResults.put(time, new LinkedList<SampleResult>());
             }

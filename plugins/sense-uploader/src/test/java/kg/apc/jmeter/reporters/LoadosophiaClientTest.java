@@ -11,7 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.loadosophia.jmeter.LoadosophiaAPIClient;
 import org.loadosophia.jmeter.LoadosophiaAPIClientEmul;
-import org.loadosophia.jmeter.StatusNotifierCallback;
 import org.loadosophia.jmeter.StatusNotifierCallbackTest;
 
 import java.util.LinkedList;
@@ -43,8 +42,8 @@ public class LoadosophiaClientTest {
 
         String str = instance.getDataToSend(list).toString();
         System.out.println("JSON: " + str);
-        assertTrue(!str.equals("[]"));
-        assertTrue(!str.equals(""));
+        assertFalse(str.equals("[]"));
+        assertFalse(str.equals(""));
         JSONArray test = JSONArray.fromObject(str);
         assertEquals(7, test.size());
     }
@@ -54,7 +53,7 @@ public class LoadosophiaClientTest {
         System.out.println("getQuantiles");
         Long[] rtimes = {1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L};
         JSONObject result = LoadosophiaClient.getQuantilesJSON(rtimes);
-        Assert.assertEquals("{\"100.0\":10,\"99.0\":10,\"98.0\":10,\"95.0\":10,\"90.0\":9,\"80.0\":8,\"75.0\":8,\"50.0\":5,\"25.0\":3}", result.toString());
+        assertEquals("{\"100.0\":10,\"99.0\":10,\"98.0\":10,\"95.0\":10,\"90.0\":9,\"80.0\":8,\"75.0\":8,\"50.0\":5,\"25.0\":3}", result.toString());
     }
 
     /**

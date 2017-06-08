@@ -47,7 +47,7 @@ public class LoadosophiaClient implements BackendListenerClient {
     protected LoadosophiaAPIClient apiClient;
 
     // this field set from LoadosophiaUploader after BackendListener created instance of this class
-    protected CorrectedResultCollector resultCollector;
+    protected ResultCollector resultCollector;
     protected StatusNotifierCallback informer;
 
 
@@ -303,11 +303,11 @@ public class LoadosophiaClient implements BackendListenerClient {
         this.apiClient = apiClient;
     }
 
-    public CorrectedResultCollector getResultCollector() {
+    public ResultCollector getResultCollector() {
         return resultCollector;
     }
 
-    public void setResultCollector(CorrectedResultCollector resultCollector) {
+    public void setResultCollector(ResultCollector resultCollector) {
         this.resultCollector = resultCollector;
     }
 

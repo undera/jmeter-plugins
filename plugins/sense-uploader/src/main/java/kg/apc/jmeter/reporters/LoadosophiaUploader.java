@@ -27,7 +27,7 @@ public class LoadosophiaUploader extends BackendListener implements StatusNotifi
     public static final String STORE_DIR = "storeDir";
     public static final String USE_ONLINE = "useOnline";
 
-    protected CorrectedResultCollector resultCollector = new CorrectedResultCollector();
+    protected ResultCollector resultCollector = new CorrectedResultCollector();
     protected String fileName;
     protected LoadosophiaUploaderGui gui;
     public static final String FILE_NAME = "fileName";

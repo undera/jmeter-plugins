@@ -138,18 +138,6 @@ public class LoadosophiaUploaderTest {
     private static class LoadosophiaUploaderEmul extends LoadosophiaUploader {
         public LoadosophiaUploaderEmul() {
             super();
-            consolidator = new ConsolidatorEmul1();
-        }
-
-        private class ConsolidatorEmul1 extends LoadosophiaConsolidator {
-            @Override
-            protected void start(LoadosophiaUploader source) {
-            }
-
-            @Override
-            protected void stop(LoadosophiaUploader source) {
-
-            }
         }
     }
 

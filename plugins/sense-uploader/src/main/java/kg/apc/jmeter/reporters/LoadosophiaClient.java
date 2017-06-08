@@ -45,6 +45,10 @@ public class LoadosophiaClient implements BackendListenerClient {
     protected String address = JMeterUtils.getPropDefault("sense.address", "https://sense.blazemeter.com/");
     protected String fileName;
     protected boolean isOnlineInitiated = false;
+    protected String token;
+    protected String project;
+    protected String color;
+    protected String title;
     protected LoadosophiaAPIClient apiClient;
 
     // this field set from LoadosophiaUploader after BackendListener created instance of this class
@@ -52,32 +56,28 @@ public class LoadosophiaClient implements BackendListenerClient {
     protected StatusNotifierCallback informer;
 
 
+
     // BackendListener called this method when test was started
     @Override
     public void setupTest(BackendListenerContext context) throws Exception {
         init(context);
-        initiateOnline();
     }
 
     private void init(BackendListenerContext context) {
-        apiClient = new LoadosophiaAPIClient(
-                informer,
-                address,
-                context.getParameter(LoadosophiaUploader.UPLOAD_TOKEN),
-                context.getParameter(LoadosophiaUploader.PROJECT),
-                context.getParameter(LoadosophiaUploader.COLOR),
-                context.getParameter(LoadosophiaUploader.TITLE)
-        );
+        token = context.getParameter(LoadosophiaUploader.UPLOAD_TOKEN);
+        project = context.getParameter(LoadosophiaUploader.PROJECT);
+        color = context.getParameter(LoadosophiaUploader.COLOR);
+        title = context.getParameter(LoadosophiaUploader.TITLE);
         fileName = context.getParameter(LoadosophiaUploader.FILE_NAME);
         isOnlineInitiated = context.containsParameter(LoadosophiaUploader.USE_ONLINE);
     }
 
-    private void initiateOnline() {
+    public void initiateOnline() {
+        apiClient = new LoadosophiaAPIClient(informer, address, token, project,color, title);
         if (isOnlineInitiated) {
             try {
                 log.info("Starting BM.Sense online test");
                 String url = apiClient.startOnline();
-                //TODO: fix NPE here
                 informer.notifyAbout("<p>Started active test: <a href='" + url + "'>" + url + "</a></p>");
             } catch (IOException ex) {
                 informer.notifyAbout("Failed to start active test");
@@ -89,7 +89,7 @@ public class LoadosophiaClient implements BackendListenerClient {
 
     @Override
     public void handleSampleResults(List<SampleResult> list, BackendListenerContext backendListenerContext) {
-        if (list != null) {
+        if (list != null && isOnlineInitiated) {
             try {
                 JSONArray array = getDataToSend(list);
                 log.warn("send samples " + list.size());
@@ -201,7 +201,6 @@ public class LoadosophiaClient implements BackendListenerClient {
          "net": item.net_codes
          */
         JSONObject result = new JSONObject();
-//        this.lastAggregatedTime = sec;
         Date ts = new Date(sec * 1000);
         log.debug("Aggregating " + sec);
         result.put("ts", format.format(ts));
@@ -213,8 +212,6 @@ public class LoadosophiaClient implements BackendListenerClient {
         int cnt = 0;
         int failedCount = 0;
         for (SampleResult res : raw) {
-//            SampleResult res = evt.getResult();
-
             if (!threads.containsKey(res.getThreadName())) {
                 threads.put(res.getThreadName(), 0);
             }
@@ -341,7 +338,62 @@ public class LoadosophiaClient implements BackendListenerClient {
     }
 
     public void setInformer(StatusNotifierCallback informer) {
-        log.error("INIT INFORMAER");
         this.informer = informer;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public boolean isOnlineInitiated() {
+        return isOnlineInitiated;
+    }
+
+    public void setOnlineInitiated(boolean onlineInitiated) {
+        isOnlineInitiated = onlineInitiated;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

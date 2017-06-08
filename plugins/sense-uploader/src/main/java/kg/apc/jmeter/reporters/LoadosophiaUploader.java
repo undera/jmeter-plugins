@@ -56,11 +56,9 @@ public class LoadosophiaUploader extends BackendListener implements StatusNotifi
         }
         setArguments(createArguments());
         super.testStarted(host);
-        // inject next links : this, CorrectedResultCollector
-        injectHelpObjectsIntoClient();
+        initClient();
         resultCollector.testStarted(host);
     }
-
 
 
     private Arguments createArguments() {
@@ -185,7 +183,8 @@ public class LoadosophiaUploader extends BackendListener implements StatusNotifi
     }
 
     // Inject StatusNotifierCallback (this) and resultCollector into private backendListenerClient
-    private void injectHelpObjectsIntoClient() {
+    // call initiateOnline()
+    private void initClient() {
         try {
             Field listenerClientData = getClass().getSuperclass().getDeclaredField("listenerClientData");
             listenerClientData.setAccessible(true);
@@ -195,6 +194,7 @@ public class LoadosophiaUploader extends BackendListener implements StatusNotifi
             LoadosophiaClient client = (LoadosophiaClient) clientField.get(clientData);
             client.setInformer(this);
             client.setResultCollector(resultCollector);
+            client.initiateOnline();
         } catch (IllegalAccessException | NoSuchFieldException e) {
             log.error("Cannot inject links into backend listener client", e);
         }

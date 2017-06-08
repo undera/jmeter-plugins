@@ -1,16 +1,12 @@
 package kg.apc.jmeter.reporters;
 
-import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.perfmon.PerfMonCollector;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.config.Arguments;
-import org.apache.jmeter.gui.MainFrame;
 import org.apache.jmeter.reporters.ResultCollector;
-import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.backend.BackendListenerClient;
 import org.apache.jmeter.visualizers.backend.BackendListenerContext;
@@ -20,9 +16,7 @@ import org.loadosophia.jmeter.LoadosophiaAPIClient;
 import org.loadosophia.jmeter.LoadosophiaUploadResults;
 import org.loadosophia.jmeter.StatusNotifierCallback;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -57,7 +51,6 @@ public class LoadosophiaClient implements BackendListenerClient {
     protected StatusNotifierCallback informer;
 
 
-
     // BackendListener called this method when test was started
     @Override
     public void setupTest(BackendListenerContext context) throws Exception {
@@ -74,7 +67,7 @@ public class LoadosophiaClient implements BackendListenerClient {
     }
 
     public void initiateOnline() {
-        apiClient = new LoadosophiaAPIClient(informer, address, token, project,color, title);
+        apiClient = new LoadosophiaAPIClient(informer, address, token, project, color, title);
         if (isOnlineInitiated) {
             try {
                 log.info("Starting BM.Sense online test");
@@ -93,8 +86,6 @@ public class LoadosophiaClient implements BackendListenerClient {
         if (list != null && isOnlineInitiated) {
             try {
                 JSONArray array = getDataToSend(list);
-                log.warn("send samples " + list.size());
-                log.warn(array.toString());
                 apiClient.sendOnlineData(array);
             } catch (IOException ex) {
                 log.warn("Failed to send active test data", ex);
@@ -110,65 +101,50 @@ public class LoadosophiaClient implements BackendListenerClient {
     // BackendListener called this method when test was ended
     @Override
     public void teardownTest(BackendListenerContext context) throws Exception {
-        stop(context);
+        stop();
     }
 
-    protected void stop(BackendListenerContext context) {
+    protected void stop() {
         String redirectLink = "";
-            try {
-                flush();
+        try {
+            flush();
 
-                if (fileName == null) {
-                    throw new IOException("File for upload was not set, search for errors above in log");
-                }
-
-                LinkedList<String> monFiles;
-                if (hasStandardSet()) {
-                    monFiles = PerfMonCollector.getFiles();
-                } else {
-                    monFiles = new LinkedList<>();
-                }
-                log.warn("TRY TO SEND monFiles:  " + monFiles.size());
-                log.warn("TRY TO DUMP FILE:   " + fileToString(fileName));
-                LoadosophiaUploadResults uploadResult = this.apiClient.sendFiles(new File(fileName), monFiles);
-                redirectLink = uploadResult.getRedirectLink();
-                informer.notifyAbout("<p>Uploaded successfully, go to results: <a href='" + redirectLink + "'>" + redirectLink + "</a></p>");
-            } catch (Throwable ex) {
-                informer.notifyAbout("Failed to upload results to BM.Sense, see log for detais: " + ex.getMessage());
-                log.error("Failed to upload results to BM.Sense", ex);
+            if (fileName == null) {
+                throw new IOException("File for upload was not set, search for errors above in log");
             }
 
-        if (Boolean.parseBoolean(context.getParameter(LoadosophiaUploader.USE_ONLINE))) {
-            log.info("Ending BM.Sense online test");
-            try {
-                apiClient.endOnline(redirectLink);
-            } catch (IOException ex) {
-                log.warn("Failed to finalize active test", ex);
+            LinkedList<String> monFiles;
+            if (hasStandardSet()) {
+                monFiles = PerfMonCollector.getFiles();
+            } else {
+                monFiles = new LinkedList<>();
             }
+            LoadosophiaUploadResults uploadResult = this.apiClient.sendFiles(new File(fileName), monFiles);
+            redirectLink = uploadResult.getRedirectLink();
+            informer.notifyAbout("<p>Uploaded successfully, go to results: <a href='" + redirectLink + "'>" + redirectLink + "</a></p>");
+        } catch (Throwable ex) {
+            informer.notifyAbout("Failed to upload results to BM.Sense, see log for detais: " + ex.getMessage());
+            log.error("Failed to upload results to BM.Sense", ex);
         }
 
+        if (isOnlineInitiated) {
+            finishOnline(redirectLink + "#tab=tabTimelines");
+        }
+
+        resultCollector.clearData();
         if (hasStandardSet()) {
             PerfMonCollector.clearFiles();
         }
     }
 
-    // TODO: remove it
-    public static String fileToString(String fileName) {
-        StringBuilder sb = new StringBuilder();
+    private void finishOnline(String redirectLink) {
+        log.info("Ending BM.Sense online test");
         try {
-            final BufferedReader reader = new BufferedReader(new FileReader(new File(fileName)));
-                String line = reader.readLine();
-                if (line != null) {
-                    do {
-                        sb.append(line);
-                        line = reader.readLine();
-                    } while (line != null);
-                }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            apiClient.endOnline(redirectLink);
+        } catch (IOException ex) {
+            log.warn("Failed to finalize active test", ex);
         }
-        return sb.toString();
+        isOnlineInitiated = false;
     }
 
     public JSONArray getDataToSend(List<SampleResult> list) {

@@ -275,6 +275,7 @@ public class LoadosophiaClient implements BackendListenerClient {
         try {
             Class<ResultCollector> c = ResultCollector.class;
             Method m = c.getDeclaredMethod("flushFile");
+            m.setAccessible(true);
             m.invoke(resultCollector);
             log.info("Successfully flushed results file");
         } catch (NoSuchMethodException ex) {

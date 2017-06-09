@@ -41,8 +41,8 @@ public class LoadosophiaClientTest {
 
         String str = instance.getDataToSend(list).toString();
         System.out.println("JSON: " + str);
-        assertFalse(str.equals("[]"));
-        assertFalse(str.equals(""));
+        assertFalse("[]".equals(str));
+        assertFalse("".equals(str));
         JSONArray test = JSONArray.fromObject(str);
         assertEquals(7, test.size());
     }

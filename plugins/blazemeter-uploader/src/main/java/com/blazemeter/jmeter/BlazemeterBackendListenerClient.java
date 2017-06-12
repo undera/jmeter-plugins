@@ -3,6 +3,7 @@ package com.blazemeter.jmeter;
 import com.blazemeter.api.BlazemeterAPIClient;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.backend.BackendListenerClient;
 import org.apache.jmeter.visualizers.backend.BackendListenerContext;
 import org.apache.jorphan.logging.LoggingManager;
@@ -15,6 +16,7 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
 
+    protected String address = JMeterUtils.getPropDefault("blazemeter.address", "https://a.blazemeter.com/");
     protected BlazemeterAPIClient apiClient;
     protected String token;
     protected String project;
@@ -35,6 +37,8 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     private void init(BackendListenerContext context) {
         token = context.getParameter(BlazemeterUploader.UPLOAD_TOKEN);
         project = context.getParameter(BlazemeterUploader.PROJECT);
+        workspace = context.getParameter(BlazemeterUploader.WORKSPACE);
+        title = context.getParameter(BlazemeterUploader.TITLE);
     }
 
     public void initiateOnline() {

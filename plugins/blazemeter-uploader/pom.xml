@@ -46,7 +46,6 @@
             </plugin>
         </plugins>
     </build>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -75,6 +74,12 @@
             <classifier>jdk15</classifier>
         </dependency>
         <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
             <version>0.3</version>
@@ -82,7 +87,7 @@
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-emulators</artifactId>
-            <version>0.4</version>
+            <version>0.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

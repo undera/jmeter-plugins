@@ -1,7 +1,7 @@
 package com.blazemeter.api;
 
 import com.blazemeter.jmeter.StatusNotifierCallback;
-import org.apache.commons.httpclient.HttpHost;
+import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.NTCredentials;
 import org.apache.http.conn.params.ConnRoutePNames;
@@ -23,6 +23,11 @@ public class BlazemeterAPIClient {
 
     private final AbstractHttpClient httpClient;
     private final StatusNotifierCallback notifier;
+    private final String address;
+    private final String project;
+    private final String workspace;
+    private final String token;
+    private final String title;
 
 
 
@@ -31,9 +36,14 @@ public class BlazemeterAPIClient {
 //    elif self.token:
 //    headers["X-Api-Key"] = self.token
 
-    public BlazemeterAPIClient(StatusNotifierCallback notifier) {
+    public BlazemeterAPIClient(StatusNotifierCallback notifier, String address, String project, String workspace, String token, String title) {
         this.notifier = notifier;
-        httpClient = getHTTPClient();
+        this.address = address;
+        this.project = project;
+        this.workspace = workspace;
+        this.token = token;
+        this.title = title;
+        this.httpClient = getHTTPClient();
     }
 
     public String startOnline() throws IOException {

@@ -17,7 +17,7 @@ public class BlazemeterUploaderGuiTest {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    @Test
+//    @Test
     public void displayGUI() throws InterruptedException {
         if (!GraphicsEnvironment.isHeadless()) {
             BlazemeterUploaderGui obj = new BlazemeterUploaderGui();

@@ -8,6 +8,7 @@ import org.apache.jmeter.visualizers.backend.BackendListenerClient;
 import org.apache.jmeter.visualizers.backend.BackendListenerContext;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.json.simple.JSONArray;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,8 +23,6 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     protected String project;
     protected String workspace;
     protected String title;
-
-
 
     // this field set from BlazemeterUploader after BackendListener created instance of this class
     protected StatusNotifierCallback informer;
@@ -42,9 +41,9 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     }
 
     public void initiateOnline() {
-        apiClient = new BlazemeterAPIClient(informer);
+        apiClient = new BlazemeterAPIClient(informer, address, project, workspace, token, title);
         try {
-            log.info("Starting BM.Sense online test");
+            log.info("Starting BlazeMeter test");
             String url = apiClient.startOnline();
             informer.notifyAbout("<p>Started active test: <a href='" + url + "'>" + url + "</a></p>");
         } catch (IOException ex) {
@@ -55,12 +54,16 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
 
     @Override
     public void handleSampleResults(List<SampleResult> list, BackendListenerContext backendListenerContext) {
+        JSONArray data = convertToJSON(list);
         try {
             apiClient.sendOnlineData(null);
         } catch (IOException e) {
-            e.printStackTrace();
-            // TODO:
+            log.warn("Failed to send data: " + data, e);
         }
+    }
+
+    private JSONArray convertToJSON(List<SampleResult> list) {
+        return null;
     }
 
     @Override

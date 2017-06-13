@@ -1,6 +1,8 @@
 package com.blazemeter.jmeter;
 
 import com.blazemeter.api.BlazemeterAPIClient;
+import com.blazemeter.api.JSONConverter;
+import net.sf.json.JSONObject;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.util.JMeterUtils;
@@ -54,16 +56,12 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
 
     @Override
     public void handleSampleResults(List<SampleResult> list, BackendListenerContext backendListenerContext) {
-        JSONArray data = convertToJSON(list);
+        JSONArray data = JSONConverter.convertToJSON(list);
         try {
             apiClient.sendOnlineData(null);
         } catch (IOException e) {
             log.warn("Failed to send data: " + data, e);
         }
-    }
-
-    private JSONArray convertToJSON(List<SampleResult> list) {
-        return null;
     }
 
     @Override

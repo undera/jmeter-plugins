@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
  */
 public class StatusNotifierCallbackTest implements StatusNotifierCallback{
 
-    private StringBuilder buffer;
+    private StringBuilder buffer = new StringBuilder();
 
     @Override
     public void notifyAbout(String info) {

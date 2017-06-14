@@ -6,7 +6,7 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.json.simple.JSONArray;
 
 import java.util.Arrays;
-import java.util.Date;import java.util.HashMap;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -139,13 +139,8 @@ public class JSONConverter {
 
         long average = sumTime / list.size();
         summaryValues.put("avg", average);
-        Map<String, Long>  percentiles = getQuantiles(rtimes, average);
-        summaryValues.put("min", percentiles.containsKey("pect_0.0") ? percentiles.get("perc_0.0") : 0);
-        summaryValues.put("max", percentiles.containsKey("pect_100.0") ? percentiles.get("perc_100.0") : 0);
-        summaryValues.put("tp90", percentiles.containsKey("pect_90.0") ? percentiles.get("perc_90.0") : 0);
-        summaryValues.put("tp95", percentiles.containsKey("pect_95.0") ? percentiles.get("perc_95.0") : 0);
-        summaryValues.put("tp99", percentiles.containsKey("pect_99.0") ? percentiles.get("perc_99.0") : 0);
-        summaryValues.put("std", percentiles.containsKey("stdev") ? percentiles.get("stdev") : 0);
+        setQuantiles(summaryValues, rtimes, average);
+
 
         summaryValues.put("latencyAvg", sumLatency / list.size());
         summaryValues.put("latencyMax", 0L);
@@ -164,11 +159,10 @@ public class JSONConverter {
     }
 
 
-    public static Map<String, Long> getQuantiles(Long[] rtimes, long average) {
-        Map<String, Long> result = new JSONObject();
+    public static void setQuantiles(JSONObject summaryValues, Long[] rtimes, long average) {
         Arrays.sort(rtimes);
 
-        double[] quantiles = {0.0, 0.25, 0.50, 0.75, 0.80, 0.90, 0.95, 0.98, 0.99, 1.00};
+        double[] quantiles = {0.0, 0.90, 0.95, 0.99, 1.00};
 
         Stack<Long> timings = new Stack<>();
         timings.addAll(Arrays.asList(rtimes));
@@ -182,10 +176,25 @@ public class JSONConverter {
                 level -= 1.0 / rtimes.length;
                 sqr_diffs += timing * Math.pow(timing - average, 2);
             }
-            result.put("perc_" + String.valueOf(quan), timing);
+            summaryValues.put(getMetricLabel(quan), timing);
         }
-        result.put("stdev", (long) Math.sqrt(sqr_diffs / rtimes.length));
-        return result;
+        summaryValues.put("std", Math.sqrt(sqr_diffs / rtimes.length));
+    }
+
+    private static String getMetricLabel(double perc) {
+        if (perc == 0.0) {
+            return "min";
+        } else if (perc == 100.0) {
+            return "max";
+        } else if (perc == 90.0) {
+            return "tp90";
+        } else if (perc == 95.0) {
+            return "tp95";
+        } else if (perc == 99.0) {
+            return "tp99";
+        } else {
+            return "";
+        }
     }
 
     private static JSONArray calculateIntervals(List<SampleResult> list) {
@@ -213,14 +222,32 @@ public class JSONConverter {
             interval.put("failed", fails);
             interval.put("na", getThreadsCount(list));
 
-
-            /**
-             "na": 11,
-             "ts": 1497353321,
-             "ec": 0,
-             "n": 62
-             */
-
+/**
+ * "t": {
+ "min": int(1000 * item[KPISet.PERCENTILES]["0.0"]) if "0.0" in item[KPISet.PERCENTILES] else 0,
+ "max": int(1000 * item[KPISet.PERCENTILES]["100.0"]) if "100.0" in item[KPISet.PERCENTILES] else 0,
+ "sum": 1000 * item[KPISet.AVG_RESP_TIME] * item[KPISet.SAMPLE_COUNT],
+ "n": item[KPISet.SAMPLE_COUNT],
+ "std": 1000 * item[KPISet.STDEV_RESP_TIME],
+ "avg": 1000 * item[KPISet.AVG_RESP_TIME]
+ },
+ "lt": {
+ "min": 0,
+ "max": 0,
+ "sum": 1000 * item[KPISet.AVG_LATENCY] * item[KPISet.SAMPLE_COUNT],
+ "n": 1000 * item[KPISet.SAMPLE_COUNT],
+ "std": 0,
+ "avg": 1000 * item[KPISet.AVG_LATENCY]
+ },
+ "by": {
+ "min": 0,
+ "max": 0,
+ "sum": item[KPISet.BYTE_COUNT],
+ "n": item[KPISet.SAMPLE_COUNT],
+ "std": 0,
+ "avg": item[KPISet.BYTE_COUNT] / float(item[KPISet.SAMPLE_COUNT])
+ },
+ */
             result.add(interval);
         }
 

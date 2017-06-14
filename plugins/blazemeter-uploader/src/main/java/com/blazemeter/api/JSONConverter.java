@@ -1,6 +1,7 @@
 package com.blazemeter.api;
 
 import net.sf.json.JSONObject;
+import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
 import org.json.simple.JSONArray;
 
@@ -56,15 +57,44 @@ public class JSONConverter {
         res.put("failedEmbeddedResources", "[]");               // not used
         res.put("failedEmbeddedResourcesSpilloverCount", 0);    // not used
         res.put("otherErrorsCount", 0);                         // not used
-        res.put("errors", generateErrorList(list));             // list of errors
-        res.put("assertions", generateAssertionsList(list));    // list of assertions
         res.put("percentileHistogram", "[]");                   // not used
         res.put("percentileHistogramLatency", "[]");            // not used
         res.put("percentileHistogramBytes", "[]");              // not used
         res.put("empty", "[]");                                 // not used
         res.put("summary", generateSummary(list));              // summary info
 
+        addErrors(res, list);
+
         return res;
+    }
+
+    private static void addErrors(JSONObject res, List<SampleResult> list) {
+        JSONArray errors = new JSONArray();
+        JSONArray assertions = new JSONArray();
+
+        for (SampleResult sample : list) {
+            if (!sample.isSuccessful()) {
+                AssertionResult[] assertionResults = sample.getAssertionResults();
+                if (assertionResults != null && assertionResults.length != 0) {
+                    for (AssertionResult result : assertionResults) {
+                        JSONObject obj = new JSONObject();
+                        obj.put("failureMessage", result.getFailureMessage());
+                        obj.put("name", "All Assertions");
+                        obj.put("failures", sample.getErrorCount());
+                        assertions.add(obj);
+                    }
+                } else {
+                    JSONObject obj = new JSONObject();
+                    obj.put("m", sample.getResponseMessage());
+                    obj.put("rc", sample.getResponseCode());
+                    obj.put("failures", sample.getErrorCount());
+                    errors.add(obj);
+                }
+            }
+        }
+
+        res.put("errors", errors);             // list of errors
+        res.put("assertions", assertions);    // list of assertions
     }
 
 

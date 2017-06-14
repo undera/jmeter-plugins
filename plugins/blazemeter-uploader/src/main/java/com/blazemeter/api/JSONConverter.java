@@ -6,8 +6,7 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.json.simple.JSONArray;
 
 import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.Date;import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +50,6 @@ public class JSONConverter {
         res.put("n", list.size());                              // total count of samples
         res.put("name", label);                                 // label
         res.put("interval", 1);                                 // not used
-        res.put("intervals", calculateIntervals(list));         // list of intervals
         res.put("samplesNotCounted", 0);                        // not used
         res.put("assertionsNotCounted", 0);                     // not used
         res.put("failedEmbeddedResources", "[]");               // not used
@@ -62,6 +60,7 @@ public class JSONConverter {
         res.put("percentileHistogramBytes", "[]");              // not used
         res.put("empty", "[]");                                 // not used
         res.put("summary", generateSummary(list));              // summary info
+        res.put("intervals", calculateIntervals(list));         // list of intervals
 
         addErrors(res, list);
 
@@ -189,15 +188,98 @@ public class JSONConverter {
         return result;
     }
 
-    private static Object generateAssertionsList(List<SampleResult> list) {
-        return null;
+    private static JSONArray calculateIntervals(List<SampleResult> list) {
+        Map<Long, List<SampleResult>> intervals = new HashMap<>();
+
+        for (SampleResult sample : list) {
+            long time = sample.getEndTime() / 1000;
+            if (!intervals.containsKey(time)) {
+                intervals.put(time, new LinkedList<SampleResult>());
+            }
+            intervals.get(time).add(sample);
+        }
+
+        JSONArray result = new JSONArray();
+        for (Long second : intervals.keySet()) {
+            JSONObject interval = new JSONObject();
+
+            List<SampleResult> results = intervals.get(second);
+
+            interval.put("ts", second);
+            interval.put("n", results.size());
+            interval.put("rc", generateResponseCodec(results));
+            int fails = getFails(list);
+            interval.put("ec", fails);
+            interval.put("failed", fails);
+            interval.put("na", getThreadsCount(list));
+
+
+            /**
+             "na": 11,
+             "ts": 1497353321,
+             "ec": 0,
+             "n": 62
+             */
+
+            result.add(interval);
+        }
+
+        return result;
     }
 
-    private static Object generateErrorList(List<SampleResult> list) {
-        return null;
+    private static long getThreadsCount(List<SampleResult> list) {
+        Map<String, Integer> threads = new HashMap<>();
+        for (SampleResult res : list) {
+            if (!threads.containsKey(res.getThreadName())) {
+                threads.put(res.getThreadName(), 0);
+            }
+            threads.put(res.getThreadName(), res.getAllThreads());
+        }
+        long tsum = 0;
+        for (Integer tcount : threads.values()) {
+            tsum += tcount;
+        }
+        return tsum;
     }
 
-    private static Object calculateIntervals(List<SampleResult> list) {
-        return null;
+    private static int getFails(List<SampleResult> list) {
+        int res = 0;
+        for (SampleResult result : list) {
+            if (!result.isSuccessful()) {
+                res++;
+            }
+        }
+        return res;
     }
+
+    private static JSONArray generateResponseCodec(List<SampleResult> list) {
+        JSONArray rc = new JSONArray();
+
+        Map<String, List<SampleResult>> samplesSortedByResponseCode = new HashMap<>();
+        for (SampleResult result : list) {
+            String responseCode = result.getResponseCode();
+            if (!samplesSortedByResponseCode.containsKey(responseCode)) {
+                samplesSortedByResponseCode.put(responseCode, new LinkedList<SampleResult>());
+            }
+            samplesSortedByResponseCode.get(responseCode).add(result);
+        }
+
+        for (String responseCode : samplesSortedByResponseCode.keySet()) {
+            int failes = 0;
+            List<SampleResult> results = samplesSortedByResponseCode.get(responseCode);
+            for (SampleResult result : results) {
+                if (!result.isSuccessful()) {
+                    failes++;
+                }
+            }
+            JSONObject obj = new JSONObject();
+            obj.put("f", failes);
+            obj.put("n", results.size());
+            obj.put("rc", responseCode);
+            rc.add(obj);
+        }
+
+        return rc;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.blazemeter.api;
 
+import com.blazemeter.jmeter.BlazemeterUploaderGui;
 import com.blazemeter.jmeter.StatusNotifierCallback;
 import net.sf.json.JSON;
 import net.sf.json.JSONNull;
@@ -70,7 +71,7 @@ public class BlazemeterAPIClient {
     }
 
     public String startOnline() throws IOException {
-        if (token == null || token.isEmpty()) {
+        if (isAnonymousTest()) {
             notifier.notifyAbout("No BlazeMeter API key provided, will upload anonymously");
             return startAnonymousTest();
         } else {
@@ -111,13 +112,9 @@ public class BlazemeterAPIClient {
                 String.format("/submit.php?session_id=%s&signature=%s&test_id=%s&user_id=%s",
                         session.getId(), signature, session.getTestId(), session.getUserId());
         uri += "&pq=0&target=labels_bulk&update=1"; //TODO: % self.kpi_target
-//        LinkedList<FormBodyPart> partsList = new LinkedList<>();
         String dataStr = data.toString();
         log.debug("Sending active test data: " + dataStr);
-//        partsList.add(new FormBodyPart("data", new StringBody(dataStr)));
-//        HttpPost httpPost = createPost(uri, partsList);
         HttpPost httpPost = new HttpPost(uri);
-
         httpPost.setHeader("Content-Type", "application/json");
         HttpEntity entity = new StringEntity(dataStr, ContentType.APPLICATION_JSON);
         httpPost.setEntity(entity);
@@ -146,7 +143,7 @@ public class BlazemeterAPIClient {
     }
 
     private boolean isAnonymousTest() {
-        return token == null || token.isEmpty();
+        return token == null || token.isEmpty() || BlazemeterUploaderGui.UPLOAD_TOKEN_PLACEHOLDER.equals(token);
     }
 
     protected JSON query(HttpRequestBase request, int expectedCode) throws IOException {

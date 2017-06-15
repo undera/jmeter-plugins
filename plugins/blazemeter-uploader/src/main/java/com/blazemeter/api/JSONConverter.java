@@ -115,7 +115,7 @@ public class JSONConverter {
 
         long first = (long) mainMetrics.get("first") / 1000;
         long last = (long) mainMetrics.get("last") / 1000;
-        summaryValues.put("first", first / 100);
+        summaryValues.put("first", first);
         summaryValues.put("last", last);
         summaryValues.put("duration", last - first);
         summaryValues.put("failed", mainMetrics.get("failed"));

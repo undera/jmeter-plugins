@@ -15,7 +15,6 @@
  */
 package org.loadosophia.jmeter;
 
-import org.loadosophia.jmeter.StatusNotifierCallback;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -56,9 +55,15 @@ public class StatusNotifierCallbackTest {
         
     }
 
-    public class StatusNotifierCallbackImpl implements StatusNotifierCallback {
+    public static class StatusNotifierCallbackImpl implements StatusNotifierCallback {
+        private StringBuilder buffer = new StringBuilder();
 
         public void notifyAbout(String info) {
+            buffer.append(info);
+        }
+
+        public StringBuilder getBuffer() {
+            return buffer;
         }
     }
 }

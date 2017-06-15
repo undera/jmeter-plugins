@@ -1,7 +1,6 @@
 package kg.apc.jmeter.reporters;
 
 import kg.apc.emulators.TestJMeterUtils;
-import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -87,13 +86,6 @@ public class LoadosophiaUploaderGuiTest {
     }
 
     @Test
-    public void testAdd() {
-        System.out.println("add");
-        LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
-        instance.add((SampleResult) null);
-    }
-
-    @Test
     public void testClearData() {
         System.out.println("clearData");
         LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
@@ -108,13 +100,6 @@ public class LoadosophiaUploaderGuiTest {
         instance.inform(string);
     }
 
-    @Test
-    public void testIsStats() {
-        System.out.println("isStats");
-        LoadosophiaUploaderGui instance = new LoadosophiaUploaderGui();
-        boolean result = instance.isStats();
-        Assert.assertEquals(false, result);
-    }
 
     @Test
     public void testGetFilePanel() {

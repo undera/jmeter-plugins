@@ -138,18 +138,6 @@ public class LoadosophiaUploaderTest {
     private static class LoadosophiaUploaderEmul extends LoadosophiaUploader {
         public LoadosophiaUploaderEmul() {
             super();
-            consolidator = new ConsolidatorEmul1();
-        }
-
-        private class ConsolidatorEmul1 extends LoadosophiaConsolidator {
-            @Override
-            protected void start(LoadosophiaUploader source) {
-            }
-
-            @Override
-            protected void stop(LoadosophiaUploader source) {
-
-            }
         }
     }
 
@@ -216,6 +204,7 @@ public class LoadosophiaUploaderTest {
         SampleResult res = new SampleResult();
         SampleEvent event = new SampleEvent(res, "test");
         LoadosophiaUploader instance = new LoadosophiaUploaderEmul();
+        instance.testStarted();
         instance.sampleOccurred(event);
     }
 
@@ -234,5 +223,14 @@ public class LoadosophiaUploaderTest {
         }
         Thread.sleep(10);
         instance.testEnded("");
+    }
+
+    @Test
+    public void testClone() throws Exception {
+        LoadosophiaUploader uploader = new LoadosophiaUploader();
+        LoadosophiaUploaderGui gui = new LoadosophiaUploaderGui();
+        uploader.setGui(gui);
+        LoadosophiaUploader clone = (LoadosophiaUploader) uploader.clone();
+        Assert.assertEquals(gui, clone.gui);
     }
 }

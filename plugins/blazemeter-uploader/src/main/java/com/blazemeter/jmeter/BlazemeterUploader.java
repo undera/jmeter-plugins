@@ -2,6 +2,7 @@ package com.blazemeter.jmeter;
 
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.gui.MainFrame;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.backend.BackendListener;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -18,6 +19,11 @@ public class BlazemeterUploader extends BackendListener implements StatusNotifie
     public static final String TITLE = "title";
 
     protected BlazemeterUploaderGui gui;
+
+    public BlazemeterUploader() {
+        super();
+        setClassname(JMeterUtils.getPropDefault("blazemeter.client", BlazemeterBackendListenerClient.class.getName()));
+    }
 
     @Override
     public void testStarted() {

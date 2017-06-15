@@ -14,7 +14,7 @@ import java.util.Stack;
 
 public class JSONConverter {
 
-    public static final String  SUMMARY_LABEL = "ALL";
+    public static final String SUMMARY_LABEL = "ALL";
 
     public static JSONArray convertToJSON(List<SampleResult> list) {
         JSONArray jsonArray = new JSONArray();
@@ -59,6 +59,8 @@ public class JSONConverter {
         res.put("percentileHistogramLatency", "[]");            // not used
         res.put("percentileHistogramBytes", "[]");              // not used
         res.put("empty", "[]");                                 // not used
+
+        // TODO: use samples from test started
         res.put("summary", generateSummary(list));              // summary info
         res.put("intervals", calculateIntervals(list));         // list of intervals
 
@@ -100,6 +102,38 @@ public class JSONConverter {
     private static JSONObject generateSummary(List<SampleResult> list) {
         final JSONObject summaryValues = new JSONObject();
 
+        final Map<String, Object> mainMetrics = getMainMetrics(list);
+
+        long first = (long) mainMetrics.get("first") / 1000;
+        long last = (long) mainMetrics.get("last") / 1000;
+        summaryValues.put("first", first / 100);
+        summaryValues.put("last", last);
+        summaryValues.put("duration", last - first);
+        summaryValues.put("failed", mainMetrics.get("failed"));
+        summaryValues.put("hits", list.size());
+
+        long average = (long) mainMetrics.get("sumTime") / list.size();
+        summaryValues.put("avg", average);
+        summaryValues.accumulateAll(getQuantiles((Long[]) mainMetrics.get("rtimes"), average));
+
+
+        summaryValues.put("latencyAvg", (long) mainMetrics.get("sumLatency")  / list.size());
+        summaryValues.put("latencyMax", 0L);
+        summaryValues.put("latencyMin", 0L);
+        summaryValues.put("latencySTD", 0L);
+
+        summaryValues.put("bytes", mainMetrics.get("bytesCount"));
+        summaryValues.put("bytesMax", 0L);
+        summaryValues.put("bytesMin", 0L);
+        summaryValues.put("bytesAvg",  (long) mainMetrics.get("bytesCount") / list.size());
+        summaryValues.put("bytesSTD", 0L);
+
+        summaryValues.put("otherErrorsSpillcount", 0L);
+
+        return summaryValues;
+    }
+
+    private static Map<String, Object> getMainMetrics(List<SampleResult> list) {
         long first = Long.MAX_VALUE;
         long last = 0;
         long failed = 0;
@@ -131,35 +165,22 @@ public class JSONConverter {
             counter++;
         }
 
-        summaryValues.put("first", first);  // TODO: cast to sec?
-        summaryValues.put("last", last);     // TODO: cast to sec?
-        summaryValues.put("duration", last - first); // TODO: cast to sec?
-        summaryValues.put("failed", failed);
-        summaryValues.put("hits", list.size());
+        final Map<String, Object> results = new HashMap<>();
 
-        long average = sumTime / list.size();
-        summaryValues.put("avg", average);
-        setQuantiles(summaryValues, rtimes, average);
+        results.put("first", first);
+        results.put("last", last);
+        results.put("failed", failed);
+        results.put("bytesCount", bytesCount);
+        results.put("sumTime", sumTime);
+        results.put("sumLatency", sumLatency);
+        results.put("rtimes", rtimes);
 
-
-        summaryValues.put("latencyAvg", sumLatency / list.size());
-        summaryValues.put("latencyMax", 0L);
-        summaryValues.put("latencyMin", 0L);
-        summaryValues.put("latencySTD", 0L);
-
-        summaryValues.put("bytes", bytesCount);
-        summaryValues.put("bytesMax", 0L);
-        summaryValues.put("bytesMin", 0L);
-        summaryValues.put("bytesAvg", bytesCount / list.size());
-        summaryValues.put("bytesSTD", 0L);
-
-        summaryValues.put("otherErrorsSpillcount", 0L);
-
-        return summaryValues;
+        return results;
     }
 
 
-    public static void setQuantiles(JSONObject summaryValues, Long[] rtimes, long average) {
+    public static Map<String, Long> getQuantiles(Long[] rtimes, long average) {
+        Map<String, Long> result = new HashMap<>();
         Arrays.sort(rtimes);
 
         double[] quantiles = {0.0, 0.90, 0.95, 0.99, 1.00};
@@ -176,21 +197,22 @@ public class JSONConverter {
                 level -= 1.0 / rtimes.length;
                 sqr_diffs += timing * Math.pow(timing - average, 2);
             }
-            summaryValues.put(getMetricLabel(quan), timing);
+            result.put(getMetricLabel(quan), timing);
         }
-        summaryValues.put("std", Math.sqrt(sqr_diffs / rtimes.length));
+        result.put("std", (long) Math.sqrt(sqr_diffs / rtimes.length));
+        return result;
     }
 
     private static String getMetricLabel(double perc) {
         if (perc == 0.0) {
             return "min";
-        } else if (perc == 100.0) {
+        } else if (perc == 1.00) {
             return "max";
-        } else if (perc == 90.0) {
+        } else if (perc == 0.90) {
             return "tp90";
-        } else if (perc == 95.0) {
+        } else if (perc == 0.95) {
             return "tp95";
-        } else if (perc == 99.0) {
+        } else if (perc == 0.99) {
             return "tp99";
         } else {
             return "";
@@ -210,46 +232,68 @@ public class JSONConverter {
 
         JSONArray result = new JSONArray();
         for (Long second : intervals.keySet()) {
-            JSONObject interval = new JSONObject();
+            JSONObject intervalResult = new JSONObject();
 
-            List<SampleResult> results = intervals.get(second);
+            List<SampleResult> intervalValues = intervals.get(second);
 
-            interval.put("ts", second);
-            interval.put("n", results.size());
-            interval.put("rc", generateResponseCodec(results));
-            int fails = getFails(list);
-            interval.put("ec", fails);
-            interval.put("failed", fails);
-            interval.put("na", getThreadsCount(list));
+            intervalResult.put("ts", second);
+            intervalResult.put("n", intervalValues.size());
+            intervalResult.put("rc", generateResponseCodec(intervalValues));
+            int fails = getFails(intervalValues);
+            intervalResult.put("ec", fails);
+            intervalResult.put("failed", fails);
+            intervalResult.put("na", getThreadsCount(intervalValues));
 
-/**
- * "t": {
- "min": int(1000 * item[KPISet.PERCENTILES]["0.0"]) if "0.0" in item[KPISet.PERCENTILES] else 0,
- "max": int(1000 * item[KPISet.PERCENTILES]["100.0"]) if "100.0" in item[KPISet.PERCENTILES] else 0,
- "sum": 1000 * item[KPISet.AVG_RESP_TIME] * item[KPISet.SAMPLE_COUNT],
- "n": item[KPISet.SAMPLE_COUNT],
- "std": 1000 * item[KPISet.STDEV_RESP_TIME],
- "avg": 1000 * item[KPISet.AVG_RESP_TIME]
- },
- "lt": {
- "min": 0,
- "max": 0,
- "sum": 1000 * item[KPISet.AVG_LATENCY] * item[KPISet.SAMPLE_COUNT],
- "n": 1000 * item[KPISet.SAMPLE_COUNT],
- "std": 0,
- "avg": 1000 * item[KPISet.AVG_LATENCY]
- },
- "by": {
- "min": 0,
- "max": 0,
- "sum": item[KPISet.BYTE_COUNT],
- "n": item[KPISet.SAMPLE_COUNT],
- "std": 0,
- "avg": item[KPISet.BYTE_COUNT] / float(item[KPISet.SAMPLE_COUNT])
- },
- */
-            result.add(interval);
+            final Map<String, Object> mainMetrics = getMainMetrics(intervalValues);
+            int intervalSize = intervalValues.size();
+            intervalResult.put("t", generateTimestamp(mainMetrics, intervalSize));
+            intervalResult.put("lt", generateLatencyTime(mainMetrics, intervalSize));
+            intervalResult.put("by", generateBytes(mainMetrics, intervalSize));
+
+            result.add(intervalResult);
         }
+
+        return result;
+    }
+
+    private static JSONObject generateTimestamp(Map<String, Object> mainMetrics, int sampleCount) {
+        JSONObject result = new JSONObject();
+
+        result.put("sum", mainMetrics.get("sumTime"));
+        result.put("n", sampleCount);
+
+        long average = (long) mainMetrics.get("sumTime") / sampleCount;
+        Map<String, Long> perc = getQuantiles((Long[]) mainMetrics.get("rtimes"), average);
+        result.put("avg", average);
+        result.put("std", perc.get("std"));
+        result.put("min", perc.get("min"));
+        result.put("max", perc.get("max"));
+
+        return result;
+    }
+
+    private static JSONObject generateLatencyTime(Map<String, Object> mainMetrics, int sampleCount) {
+        JSONObject result = new JSONObject();
+
+        result.put("min", 0);
+        result.put("max", 0);
+        result.put("std", 0);
+        result.put("sum", mainMetrics.get("sumLatency"));
+        result.put("avg", (long) mainMetrics.get("sumLatency") / sampleCount);
+        result.put("n", sampleCount);
+
+        return result;
+    }
+
+    private static JSONObject generateBytes(Map<String, Object> mainMetrics, int sampleCount) {
+        JSONObject result = new JSONObject();
+
+        result.put("min", 0);
+        result.put("max", 0);
+        result.put("std", 0);
+        result.put("sum", mainMetrics.get("bytesCount"));
+        result.put("avg", (long) mainMetrics.get("bytesCount") / sampleCount);
+        result.put("n", sampleCount);
 
         return result;
     }

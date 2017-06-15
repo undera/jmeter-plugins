@@ -179,8 +179,12 @@ public abstract class JMeterPluginsUtils {
             return panel;
         }
 
-        if (helpPage.endsWith("Gui")) {
-            helpPage = helpPage.substring(0, helpPage.length() - 3);
+        // build link to help page unless it's already a URL:
+        if (!helpPage.toLowerCase().startsWith("http")) {
+            if (helpPage.endsWith("Gui")) {
+                helpPage = helpPage.substring(0, helpPage.length() - 3);
+            }
+            helpPage = WIKI_BASE + helpPage + "/?utm_source=jmeter&utm_medium=helplink&utm_campaign=" + helpPage;
         }
 
         JLabel icon = new JLabel();
@@ -190,7 +194,7 @@ public abstract class JMeterPluginsUtils {
         link.setForeground(Color.blue);
         link.setFont(link.getFont().deriveFont(Font.PLAIN));
         link.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        link.addMouseListener(new URIOpener(WIKI_BASE + helpPage + "/?utm_source=jmeter&utm_medium=helplink&utm_campaign=" + helpPage));
+        link.addMouseListener(new URIOpener(helpPage));
         Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.blue);
         link.setBorder(border);
 

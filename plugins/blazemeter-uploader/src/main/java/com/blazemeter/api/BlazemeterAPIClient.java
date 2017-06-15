@@ -15,6 +15,8 @@ import org.apache.http.auth.NTCredentials;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.conn.params.ConnRoutePNames;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.FormBodyPart;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
@@ -27,7 +29,6 @@ import org.apache.jmeter.JMeter;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.json.simple.JSONArray;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,6 +44,7 @@ public class BlazemeterAPIClient {
     private final AbstractHttpClient httpClient;
     private final StatusNotifierCallback notifier;
     private final String address;
+    private final String dataAddress;
     private final String project;
     private final String workspace;
     private final String token;
@@ -56,9 +58,10 @@ public class BlazemeterAPIClient {
 //    elif self.token:
 //    headers["X-Api-Key"] = self.token
 
-    public BlazemeterAPIClient(StatusNotifierCallback notifier, String address, String project, String workspace, String token, String title) {
+    public BlazemeterAPIClient(StatusNotifierCallback notifier, String address, String dataAddress, String project, String workspace, String token, String title) {
         this.notifier = notifier;
         this.address = address;
+        this.dataAddress = dataAddress;
         this.project = project;
         this.workspace = workspace;
         this.token = token;
@@ -94,7 +97,31 @@ public class BlazemeterAPIClient {
     }
 
 
-    public void sendOnlineData(JSONArray data) throws IOException {
+    public void sendOnlineData(JSONObject data) throws IOException {
+        if (isAnonymousTest()) {
+            sendAnonymousData(data);
+        } else {
+            // TODO:
+        }
+
+    }
+
+    private void sendAnonymousData(JSONObject data) throws IOException {
+        String uri = dataAddress +
+                String.format("/submit.php?session_id=%s&signature=%s&test_id=%s&user_id=%s",
+                        session.getId(), signature, session.getTestId(), session.getUserId());
+        uri += "&pq=0&target=labels_bulk&update=1"; //TODO: % self.kpi_target
+//        LinkedList<FormBodyPart> partsList = new LinkedList<>();
+        String dataStr = data.toString();
+        log.debug("Sending active test data: " + dataStr);
+//        partsList.add(new FormBodyPart("data", new StringBody(dataStr)));
+//        HttpPost httpPost = createPost(uri, partsList);
+        HttpPost httpPost = new HttpPost(uri);
+
+        httpPost.setHeader("Content-Type", "application/json");
+        HttpEntity entity = new StringEntity(dataStr, ContentType.APPLICATION_JSON);
+        httpPost.setEntity(entity);
+        query(httpPost, 200);
 
     }
 

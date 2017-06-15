@@ -3,7 +3,7 @@ package com.blazemeter.api;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
-import org.json.simple.JSONArray;
+import net.sf.json.JSONArray;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,7 +16,16 @@ public class JSONConverter {
 
     public static final String SUMMARY_LABEL = "ALL";
 
-    public static JSONArray convertToJSON(List<SampleResult> list) {
+    public static JSONObject convertToJSON(List<SampleResult> list) {
+        JSONObject result = new JSONObject();
+
+        // TODO: sourceID???
+        result.put("labels", getLabels(list));
+
+        return result;
+    }
+
+    public static JSONArray getLabels(List<SampleResult> list) {
         JSONArray jsonArray = new JSONArray();
 
         jsonArray.add(caclucateMetrics(list, SUMMARY_LABEL));

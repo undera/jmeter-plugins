@@ -20,6 +20,7 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     protected String address = JMeterUtils.getPropDefault("blazemeter.address", "https://a.blazemeter.com/");
+    protected String dataAddress = JMeterUtils.getPropDefault("blazemeter.dataAddress", "https://data.blazemeter.com/");
     protected BlazemeterAPIClient apiClient;
     protected String token;
     protected String project;
@@ -43,7 +44,7 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     }
 
     public void initiateOnline() {
-        apiClient = new BlazemeterAPIClient(informer, address, project, workspace, token, title);
+        apiClient = new BlazemeterAPIClient(informer, address, dataAddress, project, workspace, token, title);
         try {
             log.info("Starting BlazeMeter test");
             String url = apiClient.startOnline();
@@ -56,9 +57,9 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
 
     @Override
     public void handleSampleResults(List<SampleResult> list, BackendListenerContext backendListenerContext) {
-        JSONArray data = JSONConverter.convertToJSON(list);
+        JSONObject data = JSONConverter.convertToJSON(list);
         try {
-            apiClient.sendOnlineData(null);
+            apiClient.sendOnlineData(data);
         } catch (IOException e) {
             log.warn("Failed to send data: " + data, e);
         }

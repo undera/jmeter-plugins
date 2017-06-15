@@ -15,7 +15,7 @@ public class BlazemeterBackendListenerClientTest {
         client.setInformer(informer);
         assertEquals(informer, client.getInformer());
 
-        BlazemeterAPIClient apiClient = new BlazemeterAPIClient(null, null, null, null, null, null);
+        BlazemeterAPIClient apiClient = new BlazemeterAPIClient(null, null, null, null, null, null, null);
         client.setApiClient(apiClient);
         assertEquals(apiClient, client.getApiClient());
 

@@ -19,9 +19,9 @@ public class BlazemeterAPIClientTest {
         String link = apiClient.startOnline();
         System.out.println(link);
         assertFalse(link.isEmpty());
-        apiClient.sendOnlineData(JSONConverter.convertToJSON(generateResults()));
+        List<SampleResult> sampleResults = generateResults();
+        apiClient.sendOnlineData(JSONConverter.convertToJSON(sampleResults, sampleResults));
         apiClient.endOnline();
-
     }
 
     private List<SampleResult> generateResults() {

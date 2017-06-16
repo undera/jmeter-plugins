@@ -38,7 +38,7 @@ public class JSONConverterTest {
         list.add(res);
 
 
-        JSONObject result = JSONConverter.convertToJSON(list);
+        JSONObject result = JSONConverter.convertToJSON(list, list);
 
         System.out.println(result);
     }

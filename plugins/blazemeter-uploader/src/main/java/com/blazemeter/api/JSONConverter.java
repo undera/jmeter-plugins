@@ -16,24 +16,25 @@ public class JSONConverter {
 
     public static final String SUMMARY_LABEL = "ALL";
 
-    public static JSONObject convertToJSON(List<SampleResult> list) {
+    public static JSONObject convertToJSON(List<SampleResult> accumulatedValues, List<SampleResult> intervalValues) {
         JSONObject result = new JSONObject();
 
         // TODO: sourceID???
-        result.put("labels", getLabels(list));
+        result.put("labels", getLabels(accumulatedValues, intervalValues));
 
         return result;
     }
 
-    public static JSONArray getLabels(List<SampleResult> list) {
+    public static JSONArray getLabels(List<SampleResult> accumulatedValues, List<SampleResult> intervalValues) {
         JSONArray jsonArray = new JSONArray();
 
-        jsonArray.add(caclucateMetrics(list, SUMMARY_LABEL));
+        jsonArray.add(caclucateMetrics(accumulatedValues, intervalValues, SUMMARY_LABEL));
 
-        Map<String, List<SampleResult>> sortedSamples = sortSamplesByLabel(list);
+        Map<String, List<SampleResult>> sortedAccumulatedSamples = sortSamplesByLabel(accumulatedValues);
+        Map<String, List<SampleResult>> sortedIntervalSamples = sortSamplesByLabel(intervalValues);
 
-        for (String label : sortedSamples.keySet()) {
-            jsonArray.add(caclucateMetrics(sortedSamples.get(label), label));
+        for (String label : sortedIntervalSamples.keySet()) {
+            jsonArray.add(caclucateMetrics(sortedAccumulatedSamples.get(label), sortedIntervalSamples.get(label), label));
         }
 
         return jsonArray;
@@ -53,10 +54,10 @@ public class JSONConverter {
         return result;
     }
 
-    private static JSONObject caclucateMetrics(List<SampleResult> list, String label) {
+    private static JSONObject caclucateMetrics(List<SampleResult> accumulatedValues, List<SampleResult> intervalValues, String label) {
         final JSONObject res = new JSONObject();
 
-        res.put("n", list.size());                              // total count of samples
+        res.put("n", accumulatedValues.size());                              // total count of samples
         res.put("name", label);                                 // label
         res.put("interval", 1);                                 // not used
         res.put("samplesNotCounted", 0);                        // not used
@@ -69,11 +70,10 @@ public class JSONConverter {
         res.put("percentileHistogramBytes", "[]");              // not used
         res.put("empty", "[]");                                 // not used
 
-        // TODO: use samples from test started
-        res.put("summary", generateSummary(list));              // summary info
-        res.put("intervals", calculateIntervals(list));         // list of intervals
+        res.put("summary", generateSummary(accumulatedValues));              // summary info
+        res.put("intervals", calculateIntervals(intervalValues));         // list of intervals
 
-        addErrors(res, list);
+        addErrors(res, accumulatedValues);
 
         return res;
     }

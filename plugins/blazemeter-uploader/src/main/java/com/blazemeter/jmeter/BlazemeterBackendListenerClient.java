@@ -13,6 +13,7 @@ import org.apache.log.Logger;
 import org.json.simple.JSONArray;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlazemeterBackendListenerClient implements BackendListenerClient {
@@ -21,11 +22,14 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
 
     protected String address = JMeterUtils.getPropDefault("blazemeter.address", "https://a.blazemeter.com/");
     protected String dataAddress = JMeterUtils.getPropDefault("blazemeter.dataAddress", "https://data.blazemeter.com/");
+    protected long delay = JMeterUtils.getPropDefault("blazemeter.delay", 5000);
     protected BlazemeterAPIClient apiClient;
     protected String token;
     protected String project;
     protected String workspace;
     protected String title;
+
+    private final List<SampleResult> accumulator = new ArrayList<>();
 
     // this field set from BlazemeterUploader after BackendListener created instance of this class
     protected StatusNotifierCallback informer;
@@ -34,6 +38,7 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     @Override
     public void setupTest(BackendListenerContext context) throws Exception {
         init(context);
+        accumulator.clear();
     }
 
     private void init(BackendListenerContext context) {
@@ -57,17 +62,25 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
 
     @Override
     public void handleSampleResults(List<SampleResult> list, BackendListenerContext backendListenerContext) {
-        JSONObject data = JSONConverter.convertToJSON(list);
+        accumulator.addAll(list);
+        JSONObject data = JSONConverter.convertToJSON(accumulator, list);
         try {
             apiClient.sendOnlineData(data);
         } catch (IOException e) {
             log.warn("Failed to send data: " + data, e);
+        }
+
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            log.warn("Backend listener client thread was interrupted");
         }
     }
 
     @Override
     public void teardownTest(BackendListenerContext backendListenerContext) throws Exception {
         apiClient.endOnline();
+        accumulator.clear();
     }
 
     @Override

@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public abstract class JMeterPluginsUtils {
     private static final Logger log = LoggingManager.getLoggerForClass();
@@ -166,11 +167,33 @@ public abstract class JMeterPluginsUtils {
     }
 
     /**
+     * Builds full URL from wiki page name unless a URL is already passed in.
+     *
+     * @param helpPage wiki page name (not full URL) or URL to external wiki
+     * @return full URL to helpPage
+     */
+    public static String buildHelpPageUrl(String helpPage) {
+        try {
+            if (helpPage.matches("[hH][tT][tT][pP][sS]?://.*")) {
+                log.debug("Help page URL found, skipping building link to "+WIKI_BASE);
+                return helpPage;
+            }
+        } catch (PatternSyntaxException ex) {
+            log.warn("Invalid regex", ex);
+        }
+
+        if (helpPage.endsWith("Gui")) {
+            helpPage = helpPage.substring(0, helpPage.length() - 3);
+        }
+        return WIKI_BASE + helpPage + "/?utm_source=jmeter&utm_medium=helplink&utm_campaign=" + helpPage;
+    }
+
+    /**
      * Find in panel appropriate place and put hyperlink there. I know that it
      * is stupid way. But the result is so good!
      *
      * @param panel    - supposed to be result of makeTitlePanel()
-     * @param helpPage wiki page name, not full URL
+     * @param helpPage wiki page name, or full URL in case of external wiki
      * @return original panel
      * @see AbstractJMeterGuiComponent
      */
@@ -178,15 +201,6 @@ public abstract class JMeterPluginsUtils {
         if (!java.awt.Desktop.isDesktopSupported()) {
             return panel;
         }
-
-        // build link to help page unless it's already a URL:
-        if (!helpPage.toLowerCase().startsWith("http")) {
-            if (helpPage.endsWith("Gui")) {
-                helpPage = helpPage.substring(0, helpPage.length() - 3);
-            }
-            helpPage = WIKI_BASE + helpPage + "/?utm_source=jmeter&utm_medium=helplink&utm_campaign=" + helpPage;
-        }
-
         JLabel icon = new JLabel();
         icon.setIcon(new javax.swing.ImageIcon(JMeterPluginsUtils.class.getResource("vizualizers/information.png")));
 
@@ -194,7 +208,7 @@ public abstract class JMeterPluginsUtils {
         link.setForeground(Color.blue);
         link.setFont(link.getFont().deriveFont(Font.PLAIN));
         link.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        link.addMouseListener(new URIOpener(helpPage));
+        link.addMouseListener(new URIOpener(buildHelpPageUrl(helpPage)));
         Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, java.awt.Color.blue);
         link.setBorder(border);
 

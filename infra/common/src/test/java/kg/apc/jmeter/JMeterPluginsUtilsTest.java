@@ -62,6 +62,23 @@ public class JMeterPluginsUtilsTest {
     }
 
     @Test
+    public void testBuildHelpPageUrlInternal() {
+        System.out.println("buildHelpPageUrlInternal");
+        String pageName = "TestWikiPageName";
+        String helpPage = JMeterPluginsUtils.buildHelpPageUrl(pageName);
+        assertTrue(helpPage.startsWith(JMeterPluginsUtils.WIKI_BASE));
+        assertTrue(helpPage.contains(pageName));
+    }
+
+    @Test
+    public void testBuildHelpPageUrlExternal() {
+        System.out.println("buildHelpPageUrlExternal");
+        String externalUrl = "HTTPS://somewhere-else.org/";
+        String helpPage = JMeterPluginsUtils.buildHelpPageUrl(externalUrl);
+        assertEquals(externalUrl, helpPage);
+    }
+
+    @Test
     public void testAddHelpLinkToPanel() {
         System.out.println("addHelpLinkToPanel");
         VerticalPanel titlePanel = new VerticalPanel();

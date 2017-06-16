@@ -7,9 +7,11 @@ import net.sf.json.JSONArray;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 public class JSONConverter {
@@ -308,18 +310,13 @@ public class JSONConverter {
     }
 
     private static long getThreadsCount(List<SampleResult> list) {
-        Map<String, Integer> threads = new HashMap<>();
+        Set<String> threads = new HashSet<>();
         for (SampleResult res : list) {
-            if (!threads.containsKey(res.getThreadName())) {
-                threads.put(res.getThreadName(), 0);
+            if (!threads.contains(res.getThreadName())) {
+                threads.add(res.getThreadName());
             }
-            threads.put(res.getThreadName(), res.getAllThreads());
         }
-        long tsum = 0;
-        for (Integer tcount : threads.values()) {
-            tsum += tcount;
-        }
-        return tsum;
+        return threads.size();
     }
 
     private static int getFails(List<SampleResult> list) {

@@ -79,46 +79,12 @@ public class BlazemeterAPIClient {
         }
     }
 
-    private String startAnonymousTest() throws IOException {
-        String uri = address + "/api/v4/sessions";
-        JSONObject response = queryObject(createPost(uri, new LinkedList<FormBodyPart>()), 201);
-        JSONObject result = response.getJSONObject("result");
-        this.session = getSession(result);
-        this.signature = result.optString("signature");
-        return result.optString("publicTokenUrl");
-    }
-
-    private Session getSession(JSONObject result) {
-        final JSONObject session = result.getJSONObject("session");
-        return new Session(session.optString("id"), session.optString("testId"), session.optString("userId"));
-    }
-
-    private String startTest() {
-        return "startTest";
-    }
-
-
     public void sendOnlineData(JSONObject data) throws IOException {
         if (isAnonymousTest()) {
             sendAnonymousData(data);
         } else {
             // TODO:
         }
-
-    }
-
-    private void sendAnonymousData(JSONObject data) throws IOException {
-        String uri = dataAddress +
-                String.format("/submit.php?session_id=%s&signature=%s&test_id=%s&user_id=%s",
-                        session.getId(), signature, session.getTestId(), session.getUserId());
-        uri += "&pq=0&target=labels_bulk&update=1"; //TODO: % self.kpi_target
-        String dataStr = data.toString();
-        log.debug("Sending active test data: " + dataStr);
-        HttpPost httpPost = new HttpPost(uri);
-        httpPost.setHeader("Content-Type", "application/json");
-        HttpEntity entity = new StringEntity(dataStr, ContentType.APPLICATION_JSON);
-        httpPost.setEntity(entity);
-        query(httpPost, 200);
 
     }
 
@@ -130,13 +96,51 @@ public class BlazemeterAPIClient {
         }
     }
 
+    private String startAnonymousTest() throws IOException {
+        String uri = address + "/api/v4/sessions";
+        JSONObject response = queryObject(createPost(uri, ""), 201);
+        JSONObject result = response.getJSONObject("result");
+        this.session = extractSession(result);
+        this.signature = result.optString("signature");
+        return result.optString("publicTokenUrl");
+    }
+
+    private Session extractSession(JSONObject result) {
+        final JSONObject session = result.getJSONObject("session");
+        return new Session(session.optString("id"), session.optString("testId"), session.optString("userId"));
+    }
+
+    private String startTest() {
+        return "startTest";
+    }
+
+    private void sendAnonymousData(JSONObject data) throws IOException {
+        String uri = dataAddress +
+                String.format("/submit.php?session_id=%s&signature=%s&test_id=%s&user_id=%s",
+                        session.getId(), signature, session.getTestId(), session.getUserId());
+        uri += "&pq=0&target=labels_bulk&update=1"; //TODO: % self.kpi_target
+        String dataStr = data.toString();
+        log.info("Sending active test data: " + dataStr);
+        // TODO:
+        System.out.println("Sending active test data: " + dataStr);
+        query(createPost(uri, dataStr), 200);
+
+    }
+    private HttpPost createPost(String uri, String data) {
+        HttpPost httpPost = new HttpPost(uri);
+        httpPost.setHeader("Content-Type", "application/json");
+        HttpEntity entity = new StringEntity(data, ContentType.APPLICATION_JSON);
+        httpPost.setEntity(entity);
+        return httpPost;
+    }
+
     private void finishAnonymousTest() throws IOException {
         String uri = address + String.format("/api/v4/sessions/%s/terminate-external", session.getId());
-        LinkedList<FormBodyPart> partsList = new LinkedList<>();
-        partsList.add(new FormBodyPart("signature", new StringBody(signature)));
-        partsList.add(new FormBodyPart("testId", new StringBody(session.getTestId())));
-        partsList.add(new FormBodyPart("sessionId", new StringBody(session.getId())));
-        query(createPost(uri, partsList), 201);
+        JSONObject data = new JSONObject();
+        data.put("signature", signature);
+        data.put("testId", session.getTestId());
+        data.put("sessionId", session.getId());
+        query(createPost(uri, data.toString()), 500);
     }
 
     private void finishTest() {
@@ -189,15 +193,7 @@ public class BlazemeterAPIClient {
         return (JSONObject) res;
     }
 
-    private HttpPost createPost(String uri, LinkedList<FormBodyPart> partsList) {
-        HttpPost postRequest = new HttpPost(uri);
-        MultipartEntity multipartRequest = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-        for (FormBodyPart part : partsList) {
-            multipartRequest.addPart(part);
-        }
-        postRequest.setEntity(multipartRequest);
-        return postRequest;
-    }
+
 
     private String getResponseEntity(HttpResponse result) throws IOException {
         HttpEntity entity = result.getEntity();

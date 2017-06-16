@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -21,6 +22,7 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
     public static final String WIKIPAGE = "BlazemeterUploader";
     public static final String UPLOAD_TOKEN_PLACEHOLDER = "Replace this text with upload token received at a.blazemeter.com\nCan be used deprecated API keys or new improved keys.\nRemember that anyone who has this token can upload files to your account.\nPlease, treat your token as confidential data.\nSee plugin help for details.";
 
+    private JCheckBox anonymousTest;
     private JTextField projectKey;
     private JTextField testTitle;
     private JTextField testWorkspace;
@@ -57,9 +59,10 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
         if (te instanceof BlazemeterUploader) {
             BlazemeterUploader uploader = (BlazemeterUploader) te;
             uploader.setProject(projectKey.getText());
-            uploader.setUploadToken(uploadToken.getText());
+            uploader.setUploadToken(UPLOAD_TOKEN_PLACEHOLDER.equals(uploadToken.getText()) ? "" : uploadToken.getText());
             uploader.setTitle(testTitle.getText());
             uploader.setWorkspace(testWorkspace.getText());
+
             uploader.setGui(this);
         }
     }
@@ -91,6 +94,10 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         int row = 0;
+        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Anonymous test: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, row, anonymousTest = new JCheckBox());
+
+        row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Upload to Project: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, row, projectKey = new JTextField(20));
 
@@ -138,6 +145,21 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
         add(container, BorderLayout.CENTER);
+
+        anonymousTest.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disableComponent(!anonymousTest.isSelected());
+            }
+
+            private void disableComponent(boolean enable) {
+                testTitle.setEnabled(enable);
+                projectKey.setEnabled(enable);
+                testWorkspace.setEnabled(enable);
+                uploadToken.setEnabled(enable);
+
+            }
+        });
     }
 
     private void initFields() {
@@ -145,6 +167,7 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
         projectKey.setText("Default project");
         testWorkspace.setText("");
         uploadToken.setText(UPLOAD_TOKEN_PLACEHOLDER);
+        anonymousTest.setSelected(false);
     }
 
     private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {

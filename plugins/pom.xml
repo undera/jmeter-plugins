@@ -43,6 +43,7 @@
         <module>redis</module>
         <module>rotating-listener</module>
         <module>sense-uploader</module>
+        <module>sshmon</module>
         <module>tst</module>
         <module>udp</module>
         <module>webdriver</module>

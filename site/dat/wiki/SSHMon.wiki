@@ -1,0 +1,27 @@
+<font size="5"><B>SSHMon Sample Collector</B></font>
+
+<span class=''>[/?search=jpgc-sshmon <i class='fa fa-download'></i> Download]</span>
+
+=Introduction=
+SSHMon collects performance metrics that are returned from a command remotely executed over an SSH connection.
+Those metrics can be plotted over time and/or written to file (CSV/JTL).
+
+[/img/wiki/sshmon_samples_collector.png]
+
+=Usage=
+From the context menu, select "Add" / "Listeners" / "SSHMon Samples Collector".
+Add one row for each metric to be collected with the following settings:
+  * Label: Name of the metric (for chart and file)
+  * Host: Hostname or IP address of the remote server
+  * Port: TCP port the server's SSH daemon is listening (usually 22)
+  * Username: For remote authentication
+  * Private Key (PEM): (Optional) For public-key authentication; actual content of the private key file (from a JMeter property or via ${__FileToString(pem_file)})
+  * Password: User's password (for password authentication) or private key password (for public-key authentication)
+  * Command: The command to be executed on the remote server
+  * Delta: Flag that indicates whether to plot the absolute value (delta=false) or the difference (delta=true) from the previous sample
+
+==Configuration==
+
+==JMeter Properties==
+  * {{{jmeterPlugin.sshmon.interval}}} - metrics collection interval in milliseconds
+  * {{{forceSSHMonFile}}} - (true/false) makes sure JMeter writes metrics to CSV file in the current directory if no filename is specified

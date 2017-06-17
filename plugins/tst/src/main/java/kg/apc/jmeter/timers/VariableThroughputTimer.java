@@ -37,7 +37,7 @@ public class VariableThroughputTimer
     public static final int TO_FIELD_NO = 1;
     private static final Logger log = LoggingManager.getLoggerForClass();
     /* put this in fields because we don't want create variables in tight loops */
-    private long cntDelayed;
+    private int cntDelayed;
     private double time = 0;
     private double msecPerReq;
     private long cntSent;
@@ -115,6 +115,10 @@ public class VariableThroughputTimer
             log.warn("No free threads left in worker pool, made  " + cntSent + '/' + rps + " samples");
         }
 
+        JMeterUtils.setProperty(getName() + "_cntDelayed", String.valueOf(cntDelayed));
+        JMeterUtils.setProperty(getName() + "_cntSent", String.valueOf(cntSent));
+        JMeterUtils.setProperty(getName() + "_rps", String.valueOf(rps));
+
         cntSent = 0;
         msecPerReq = 1000d / rps;
     }
@@ -127,11 +131,11 @@ public class VariableThroughputTimer
         return 0;
     }
 
-    void setData(CollectionProperty rows) {
+    public void setData(CollectionProperty rows) {
         setProperty(rows);
     }
 
-    JMeterProperty getData() {
+    public JMeterProperty getData() {
         if (overrideProp != null) {
             return overrideProp;
         }

@@ -3,8 +3,10 @@ package kg.apc.jmeter.timers.functions;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.functions.AbstractFunction;
 import org.apache.jmeter.functions.InvalidVariableException;
+import org.apache.jmeter.gui.MainFrame;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
+import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -13,7 +15,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TSTFeedback extends AbstractFunction {
+public class TSTFeedback extends AbstractFunction implements TestStateListener {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     private static final List<String> desc = new LinkedList<>();
@@ -21,29 +23,45 @@ public class TSTFeedback extends AbstractFunction {
 
     // Number of parameters expected - used to reject invalid calls
     private static final int MIN_PARAMETER_COUNT = 2;
-    private static final int MAX_PARAMETER_COUNT = 4;
 
     static {
-        //desc.add("Name of environment variable");
-        //desc.add("Name of variable in which to store the result (optional)");
-        //desc.add("Default value");
+        desc.add("Name of Throughput Shaping Timer to integrate with");
+        desc.add("Starting concurrency");
+        desc.add("Max concurrency");
+        desc.add("Spare threads ratio");
     }
 
     private CompoundVariable[] values;
+    private boolean justStarted = true;
 
     @Override
     public synchronized String execute(SampleResult previousResult, Sampler currentSampler)
             throws InvalidVariableException {
         String tstName = values[0].execute();
-        String concName = values[1].execute();
-        double spare = 0.1;
-        if (values.length > 2) { // We have a 3rd parameter
-            spare = Double.parseDouble(values[2].execute());
+        String concName = tstName + "_concurrency";
+
+        if (justStarted) {
+            JMeterUtils.setProperty(concName, String.valueOf(values[1].execute()));
+            justStarted = false;
         }
 
         int limit = Integer.MAX_VALUE;
-        if (values.length > 3) {
-            limit = Integer.parseInt(values[3].execute());
+        if (values.length > 2) {
+            try {
+                limit = Integer.parseInt(values[2].execute());
+            } catch (NumberFormatException exc) {
+                log.debug("Failed to parse value for limit, defaulting to infinity", exc);
+            }
+        }
+
+        double spare = 0.1; //TODO: parameterize it somehow?
+        if (values.length > 3) { // We have a 3rd parameter
+            try {
+                spare = Double.parseDouble(values[3].execute());
+            } catch (NumberFormatException exc) {
+                log.debug("Failed to parse value for spare ratio, defaulting to 0", exc);
+                spare = 1;
+            }
         }
 
         int con = Integer.parseInt(JMeterUtils.getPropDefault(concName, "1"));
@@ -54,9 +72,7 @@ public class TSTFeedback extends AbstractFunction {
         if (rps <= 0) {
             // no action needed
         } else if (delayed > 0) {
-            if (delayed > Math.ceil(con * spare)) {
-                needed = (int) (con * (1 - spare));
-            }
+            needed = decreaseNeeded(spare, con, delayed, needed);
         } else if (sent < rps) {
             needed = (int) Math.ceil(con * (2 - sent / rps));
             if (needed > limit) {
@@ -64,8 +80,8 @@ public class TSTFeedback extends AbstractFunction {
             }
         }
 
-        if (needed != con) {
-            log.info("Need to change " + concName + ": " + con + "=>" + needed + " (" + sent + "/" + rps + "/" + delayed + ")");
+        if (needed != con && log.isDebugEnabled()) {
+            log.debug("Need to change " + concName + ": " + con + "=>" + needed + " (" + sent + "/" + rps + "/" + delayed + ")");
         }
 
         JMeterUtils.setProperty(concName, String.valueOf(needed));
@@ -73,9 +89,22 @@ public class TSTFeedback extends AbstractFunction {
         return String.valueOf(needed);
     }
 
+    private int decreaseNeeded(double spare, int con, int delayed, int needed) {
+        if (spare >= 1) { // absolute count
+            if (delayed > spare) {
+                needed -= delayed - spare;
+            }
+        } else {
+            if (delayed > Math.ceil(con * spare)) {
+                needed = (int) (con * (1 - spare));
+            }
+        }
+        return needed;
+    }
+
     @Override
     public synchronized void setParameters(Collection<CompoundVariable> parameters) throws InvalidVariableException {
-        checkParameterCount(parameters, MIN_PARAMETER_COUNT, MAX_PARAMETER_COUNT);
+        checkParameterCount(parameters, MIN_PARAMETER_COUNT, desc.size());
         values = parameters.toArray(new CompoundVariable[0]);
     }
 
@@ -88,4 +117,25 @@ public class TSTFeedback extends AbstractFunction {
     public List<String> getArgumentDesc() {
         return desc;
     }
+
+    @Override
+    public void testStarted() {
+        testStarted(MainFrame.LOCAL);
+    }
+
+    @Override
+    public void testStarted(String s) {
+        justStarted = true;
+    }
+
+    @Override
+    public void testEnded() {
+        testEnded(MainFrame.LOCAL);
+    }
+
+    @Override
+    public void testEnded(String s) {
+
+    }
+
 }

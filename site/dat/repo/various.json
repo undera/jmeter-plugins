@@ -235,9 +235,9 @@
     "id": "jpgc-directory-listing",
     "name": "Directory Listing Config",
     "description": "Directory listing config allows to set file path from source directory into jmeter-variable",
-    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/directoryListing.png",
-    "helpUrl": "https://jmeter-plugins.org/wiki/DirectoryListing/",
-    "vendor": "JMeter-Plugins.org",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-bzm-plugins/master/directory-listing/directoryListing.png",
+    "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/directory-listing/DirectoryListing.md",
+    "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.DirectoryListingConfig",
     "versions": {
       "0.1": {
@@ -252,9 +252,9 @@
     "id": "jpgc-rotating-listener",
     "name": "Rotating JTL Listener",
     "description": "Rotating listener provides writing sequence of files, limited by number of samples per file.",
-    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/rotatingListener.png",
-    "helpUrl": "https://jmeter-plugins.org/wiki/RotatingListener/",
-    "vendor": "JMeter-Plugins.org",
+    "screenshotUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/raw/master/rotating-listener/rotatingListener.png",
+    "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/rotating-listener/RotatingListener.md",
+    "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.RotatingResultCollector",
     "versions": {
       "0.1": {
@@ -271,7 +271,7 @@
     "description": "This is special plugin in for uploading results to BlazeMeter Sense immediately after test end",
     "screenshotUrl": "https://jmeter-plugins.org/img/wiki/loadosophia_uploader.png",
     "helpUrl": "https://jmeter-plugins.org/wiki/LoadosophiaUploader/",
-    "vendor": "JMeter-Plugins.org",
+    "vendor": "BlazeMeter",
     "markerClass": "kg.apc.jmeter.reporters.LoadosophiaUploader",
     "versions": {
       "2.0": {
@@ -310,8 +310,8 @@
     "id": "jpgc-wsc",
     "name": "Weighted Switch Controller",
     "description": "This controller takes the information about child elements and offers managing relative weights for them.",
-    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/WeightedSwitchController.png",
-    "helpUrl": "https://jmeter-plugins.org/wiki/WeightedSwitchController/",
+    "screenshotUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/wsc/WeightedSwitchController.png",
+    "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/wsc/WeightedSwitchController.md",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.blazemeter.jmeter.control.WeightedSwitchController",
     "versions": {
@@ -334,8 +334,8 @@
     "id": "jpgc-xmpp",
     "name": "XMPP Protocol Support",
     "description": "Enables testing XMPP (Jabber) protocol servers",
-    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/xmpp-connection.png",
-    "helpUrl": "https://jmeter-plugins.org/wiki/XMPPSampler/",
+    "screenshotUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/xmpp/xmpp-connection.png",
+    "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/xmpp/XMPPSampler.md",
     "vendor": "BlazeMeter.com",
     "markerClass": "com.blazemeter.jmeter.xmpp.JMeterXMPPSampler",
     "versions": {

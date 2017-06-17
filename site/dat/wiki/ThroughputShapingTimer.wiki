@@ -61,3 +61,11 @@ Duration value in every function may be specified with shorthand case-insensitiv
 Duration setting may be combined like _1d11h23m6s_.
 
 Example of load profile string: {{{load_profile=const(10,10s) line(10,100,1m) step(5,25,5,1h)}}}
+
+== Scedule Feedback Function ==
+There is special JMeter function that enables feeback loop for number of threads.
+Thread groups like [ConcurrencyThreadGroup.wiki Concurrency Thread Group] can use that function to supply additional
+threads during test runs when requested RPS schedule is not met.
+
+Example function call: {{{ ${__tstFeedback(tst-name,1,100,10)} }}}, where "tst-name" is name of Throughput Shaping Timer to integrate with, 1 and 100 are starting threads and max allowed threads, 10 is how many spare threads to keep in thread pool.
+

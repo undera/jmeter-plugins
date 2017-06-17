@@ -39,7 +39,6 @@
   * [LoadosophiaUploader BM.Sense Uploader] (aka Loadosophia Uploader)
   * [AutoStop] Trigger
   * [GraphsGeneratorListener Graphs Generator]
-  * [RotatingListener Rotating JTL Listener]
 
 == Tools ==
   * [JMeterPluginsCMD Command-Line Graph Plotting Tool]
@@ -54,7 +53,6 @@
   * [Functions Custom JMeter Functions]
 
 == Logic Controllers ==
-  * [WeightedSwitchController Weighted Switch Controller] 
   * [ParameterizedController Parameterized Controller] to re-use test plan modules
 
 == Samplers ==
@@ -68,7 +66,6 @@
   * [HBaseScanSampler HBase Scan Sampler]
   * [HBaseRowkeySampler HBase Rowkey Sampler]
   * [WebDriverSampler WebDriver Sampler] for full browser tests, use Selenium
-  * [XMPPSampler XMPP Sampler]
 
 == Config Items ==
   * [HBaseConnection HBase Connection Config]
@@ -82,7 +79,6 @@
   * [HtmlUnitDriverConfig HTMLUnit Config] for WebDriver
   * [RemoteDriverConfig Remote WebDriver Config] for WebDriver
   * [PhantomJSDriverConfig PhantomJS Config]  for WebDriver
-  * [XMPPConnection XMPP Connection Config]
 
 == Pre-Processors ==
   * [RawDataSource Raw Data Source]

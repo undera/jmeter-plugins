@@ -150,6 +150,26 @@
     }
   },
   {
+    "id": "tilln-sshmon",
+    "name": "SSHMon Sample Collector",
+    "description": "Monitoring plugin for agentless collection and plotting of remote server metrics via SSH connections",
+    "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-sshmon/master/docs/sshmon_samples_collector.png",
+    "helpUrl": "https://github.com/tilln/jmeter-sshmon",
+    "vendor": "Till Neunast",
+    "markerClass": "nz.co.breakpoint.jmeter.vizualizers.sshmon.SSHMonCollector",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "https://github.com/tilln/jmeter-sshmon/releases/download/1.0/jmeter-sshmon-1.0.jar",
+        "libs": {
+          "commons-io": "https://search.maven.org/remotecontent?filepath=commons-io/commons-io/2.5/commons-io-2.5.jar",
+          "commons-pool": "https://search.maven.org/remotecontent?filepath=org/apache/commons/commons-pool2/2.4.2/commons-pool2-2.4.2.jar",
+          "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar",
+          "jsch": "https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.54/jsch-0.1.54.jar"
+        }
+      }
+    }
+  },
+  {
     "id": "tilln-wssecurity",
     "name": "WS Security for SOAP",
     "description": "Apache JMeter plugin for signing and encrypting SOAP messages (WS-Security).",

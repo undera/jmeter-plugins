@@ -27,7 +27,6 @@
         <module>csvars</module>
         <module>dbmon</module>
         <module>deprecated</module>
-        <module>directory-listing</module>
         <module>dummy</module>
         <module>ffw</module>
         <module>fifo</module>
@@ -41,13 +40,10 @@
         <module>perfmon</module>
         <module>prmctl</module>
         <module>redis</module>
-        <module>rotating-listener</module>
         <module>sense-uploader</module>
         <module>tst</module>
         <module>udp</module>
         <module>webdriver</module>
-        <module>wsc</module>
         <module>xml</module>
-        <module>xmpp</module>
     </modules>
 </project>

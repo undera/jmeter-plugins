@@ -62,7 +62,7 @@ Duration setting may be combined like _1d11h23m6s_.
 
 Example of load profile string: {{{load_profile=const(10,10s) line(10,100,1m) step(5,25,5,1h)}}}
 
-== Scedule Feedback Function ==
+== Schedule Feedback Function ==
 There is special JMeter function that enables feeback loop for number of threads.
 Thread groups like [ConcurrencyThreadGroup.wiki Concurrency Thread Group] can use that function to supply additional
 threads during test runs when requested RPS schedule is not met.

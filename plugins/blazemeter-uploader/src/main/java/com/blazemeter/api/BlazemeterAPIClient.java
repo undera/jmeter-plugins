@@ -1,12 +1,12 @@
 package com.blazemeter.api;
 
-import com.blazemeter.jmeter.BlazemeterUploaderGui;
 import com.blazemeter.jmeter.StatusNotifierCallback;
 import net.sf.json.JSON;
 import net.sf.json.JSONNull;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -18,10 +18,6 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.entity.mime.FormBodyPart;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
@@ -34,7 +30,6 @@ import org.apache.log.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
-import java.util.LinkedList;
 
 public class BlazemeterAPIClient {
 
@@ -63,6 +58,25 @@ public class BlazemeterAPIClient {
         this.dataAddress = dataAddress;
         this.report = report;
         this.httpClient = getHTTPClient();
+        if (!isAnonymousTest()) {
+            prepareClient();
+        }
+    }
+
+    private void prepareClient() {
+        try {
+            ping();
+        } catch (IOException e) {
+            log.error("Cannot reach online results storage, maybe the address/token is wrong");
+            return;
+        }
+        System.out.println();
+
+    }
+
+    public void ping() throws IOException {
+        String uri = address + "/api/v4/web/version";
+        query(createPost(uri, ""), 200);
     }
 
     public String startOnline() throws IOException {
@@ -119,14 +133,26 @@ public class BlazemeterAPIClient {
         // TODO:
         System.out.println("Sending active test data: " + dataStr);
         query(createPost(uri, dataStr), 200);
-
     }
+
     private HttpPost createPost(String uri, String data) {
         HttpPost httpPost = new HttpPost(uri);
         httpPost.setHeader("Content-Type", "application/json");
+        setTokenToHeader(httpPost);
         HttpEntity entity = new StringEntity(data, ContentType.APPLICATION_JSON);
         httpPost.setEntity(entity);
         return httpPost;
+    }
+
+    private void setTokenToHeader(HttpPost httpPost) {
+        if (isAnonymousTest()) {
+            String token = report.getToken();
+            if (token.contains(":")) {
+                httpPost.setHeader("Authorization", "Basic" + new String(Base64.encodeBase64("Test".getBytes())));
+            } else {
+                httpPost.setHeader("X-Api-Key", token);
+            }
+        }
     }
 
     private void finishAnonymousTest() throws IOException {

@@ -18,6 +18,8 @@ public class BlazemeterUploader extends BackendListener implements StatusNotifie
     public static final String PROJECT = "project";
     public static final String WORKSPACE = "workspace";
     public static final String TITLE = "title";
+    public static final String ANONYMOUS_TEST = "anonymous";
+    public static final String SHARE_TEST = "share";
 
     protected BlazemeterUploaderGui gui;
 
@@ -65,6 +67,7 @@ public class BlazemeterUploader extends BackendListener implements StatusNotifie
             gui.inform(info);
         }
         log.info(info);
+        System.out.println(info);
     }
 
     @Override
@@ -74,12 +77,22 @@ public class BlazemeterUploader extends BackendListener implements StatusNotifie
         return clone;
     }
 
-    public void setProject(String proj) {
-        setProperty(PROJECT, proj);
+
+
+    public boolean isAnonymousTest() {
+        return getPropertyAsBoolean(ANONYMOUS_TEST);
     }
 
-    public String getProject() {
-        return getPropertyAsString(PROJECT);
+    public void setAnonymousTest(boolean selected) {
+        setProperty(ANONYMOUS_TEST, selected);
+    }
+
+    public boolean isShareTest() {
+        return getPropertyAsBoolean(SHARE_TEST);
+    }
+
+    public void setShareTest(boolean selected) {
+        setProperty(SHARE_TEST, selected);
     }
 
     public void setWorkspace(String workspace) {
@@ -90,12 +103,12 @@ public class BlazemeterUploader extends BackendListener implements StatusNotifie
         return getPropertyAsString(WORKSPACE);
     }
 
-    public void setUploadToken(String token) {
-        setProperty(UPLOAD_TOKEN, token);
+    public void setProject(String proj) {
+        setProperty(PROJECT, proj);
     }
 
-    public String getUploadToken() {
-        return getPropertyAsString(UPLOAD_TOKEN).trim();
+    public String getProject() {
+        return getPropertyAsString(PROJECT);
     }
 
     public void setTitle(String prefix) {
@@ -104,6 +117,14 @@ public class BlazemeterUploader extends BackendListener implements StatusNotifie
 
     public String getTitle() {
         return getPropertyAsString(TITLE);
+    }
+
+    public void setUploadToken(String token) {
+        setProperty(UPLOAD_TOKEN, token);
+    }
+
+    public String getUploadToken() {
+        return getPropertyAsString(UPLOAD_TOKEN).trim();
     }
 
     public void setGui(BlazemeterUploaderGui gui) {

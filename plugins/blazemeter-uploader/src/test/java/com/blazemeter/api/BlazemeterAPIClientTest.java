@@ -14,7 +14,9 @@ public class BlazemeterAPIClientTest {
     @Test
     public void testStartAnonTest() throws Exception {
         StatusNotifierCallbackTest callback = new StatusNotifierCallbackTest();
-        BlazemeterAPIClient apiClient = new BlazemeterAPIClient(callback, "https://a.blazemeter.com/", "https://data.blazemeter.com/", null, null, null, null);
+        BlazemeterReport report = new BlazemeterReport();
+        report.setAnonymousTest(true);
+        BlazemeterAPIClient apiClient = new BlazemeterAPIClient(callback, "https://a.blazemeter.com/", "https://data.blazemeter.com/", report);
 
         String link = apiClient.startOnline();
         System.out.println(link);

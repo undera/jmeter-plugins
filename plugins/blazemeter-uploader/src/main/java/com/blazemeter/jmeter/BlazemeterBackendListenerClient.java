@@ -1,6 +1,7 @@
 package com.blazemeter.jmeter;
 
 import com.blazemeter.api.BlazemeterAPIClient;
+import com.blazemeter.api.BlazemeterReport;
 import com.blazemeter.api.JSONConverter;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.config.Arguments;
@@ -10,7 +11,6 @@ import org.apache.jmeter.visualizers.backend.BackendListenerClient;
 import org.apache.jmeter.visualizers.backend.BackendListenerContext;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
-import org.json.simple.JSONArray;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,10 +24,7 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     protected String dataAddress = JMeterUtils.getPropDefault("blazemeter.dataAddress", "https://data.blazemeter.com/");
     protected long delay = JMeterUtils.getPropDefault("blazemeter.delay", 5000);
     protected BlazemeterAPIClient apiClient;
-    protected String token;
-    protected String project;
-    protected String workspace;
-    protected String title;
+    protected BlazemeterReport report;
 
     private final List<SampleResult> accumulator = new ArrayList<>();
 
@@ -42,14 +39,17 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     }
 
     private void init(BackendListenerContext context) {
-        token = context.getParameter(BlazemeterUploader.UPLOAD_TOKEN);
-        project = context.getParameter(BlazemeterUploader.PROJECT);
-        workspace = context.getParameter(BlazemeterUploader.WORKSPACE);
-        title = context.getParameter(BlazemeterUploader.TITLE);
+        report = new BlazemeterReport();
+        report.setAnonymousTest(Boolean.valueOf(context.getParameter(BlazemeterUploader.ANONYMOUS_TEST)));
+        report.setShareTest(Boolean.valueOf(context.getParameter(BlazemeterUploader.SHARE_TEST)));
+        report.setWorkspace(context.getParameter(BlazemeterUploader.WORKSPACE));
+        report.setProject(context.getParameter(BlazemeterUploader.PROJECT));
+        report.setTitle(context.getParameter(BlazemeterUploader.TITLE));
+        report.setToken(context.getParameter(BlazemeterUploader.UPLOAD_TOKEN));
     }
 
     public void initiateOnline() {
-        apiClient = new BlazemeterAPIClient(informer, address, dataAddress, project, workspace, token, title);
+        apiClient = new BlazemeterAPIClient(informer, address, dataAddress, report);
         try {
             log.info("Starting BlazeMeter test");
             String url = apiClient.startOnline();
@@ -109,35 +109,11 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
         this.informer = informer;
     }
 
-    public String getToken() {
-        return token;
+    public BlazemeterReport getReport() {
+        return report;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getProject() {
-        return project;
-    }
-
-    public void setProject(String project) {
-        this.project = project;
-    }
-
-    public String getWorkspace() {
-        return workspace;
-    }
-
-    public void setWorkspace(String workspace) {
-        this.workspace = workspace;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setReport(BlazemeterReport report) {
+        this.report = report;
     }
 }

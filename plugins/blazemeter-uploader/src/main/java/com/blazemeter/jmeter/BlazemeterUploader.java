@@ -49,9 +49,11 @@ public class BlazemeterUploader extends BackendListener implements StatusNotifie
 
     private Arguments createArguments() {
         final Arguments arguments = new Arguments();
+        arguments.addArgument(ANONYMOUS_TEST, Boolean.toString(isAnonymousTest()));
+        arguments.addArgument(SHARE_TEST, Boolean.toString(isShareTest()));
+        arguments.addArgument(WORKSPACE, getWorkspace());
         arguments.addArgument(PROJECT, getProject());
         arguments.addArgument(TITLE, getTitle());
-        arguments.addArgument(WORKSPACE, getWorkspace());
         arguments.addArgument(UPLOAD_TOKEN, getUploadToken());
         return arguments;
     }

@@ -46,10 +46,8 @@ public class BlazemeterAPIClient {
     private final StatusNotifierCallback notifier;
     private final String address;
     private final String dataAddress;
-    private final String project;
-    private final String workspace;
-    private final String token;
-    private final String title;
+
+    private final BlazemeterReport report;
 
     private Session session;
     private String signature;
@@ -59,14 +57,11 @@ public class BlazemeterAPIClient {
 //    elif self.token:
 //    headers["X-Api-Key"] = self.token
 
-    public BlazemeterAPIClient(StatusNotifierCallback notifier, String address, String dataAddress, String project, String workspace, String token, String title) {
+    public BlazemeterAPIClient(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report) {
         this.notifier = notifier;
         this.address = address;
         this.dataAddress = dataAddress;
-        this.project = project;
-        this.workspace = workspace;
-        this.token = token;
-        this.title = title;
+        this.report = report;
         this.httpClient = getHTTPClient();
     }
 
@@ -147,7 +142,7 @@ public class BlazemeterAPIClient {
     }
 
     private boolean isAnonymousTest() {
-        return token == null || token.isEmpty() || BlazemeterUploaderGui.UPLOAD_TOKEN_PLACEHOLDER.equals(token);
+        return report.isAnonymousTest();
     }
 
     protected JSON query(HttpRequestBase request, int expectedCode) throws IOException {

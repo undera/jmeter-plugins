@@ -23,9 +23,10 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
     public static final String UPLOAD_TOKEN_PLACEHOLDER = "Replace this text with upload token received at a.blazemeter.com\nCan be used deprecated API keys or new improved keys.\nRemember that anyone who has this token can upload files to your account.\nPlease, treat your token as confidential data.\nSee plugin help for details.";
 
     private JCheckBox anonymousTest;
+    private JCheckBox shareTest;
+    private JTextField testWorkspace;
     private JTextField projectKey;
     private JTextField testTitle;
-    private JTextField testWorkspace;
     private JTextArea uploadToken;
     private JTextPane infoArea;
     private String infoText = "";
@@ -58,11 +59,13 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
     public void modifyTestElement(TestElement te) {
         if (te instanceof BlazemeterUploader) {
             BlazemeterUploader uploader = (BlazemeterUploader) te;
-            uploader.setProject(projectKey.getText());
-            uploader.setUploadToken(UPLOAD_TOKEN_PLACEHOLDER.equals(uploadToken.getText()) ? "" : uploadToken.getText());
+            uploader.setAnonymousTest(anonymousTest.isSelected());
+            uploader.setShareTest(shareTest.isSelected());
             uploader.setTitle(testTitle.getText());
             uploader.setWorkspace(testWorkspace.getText());
-
+            uploader.setProject(projectKey.getText());
+            String token = uploadToken.getText();
+            uploader.setUploadToken(UPLOAD_TOKEN_PLACEHOLDER.equals(token) ? "" : token);
             uploader.setGui(this);
         }
     }
@@ -71,10 +74,12 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
     public void configure(TestElement element) {
         super.configure(element);
         BlazemeterUploader uploader = (BlazemeterUploader) element;
-        projectKey.setText(uploader.getProject());
-        uploadToken.setText(uploader.getUploadToken());
+        anonymousTest.setSelected(uploader.isAnonymousTest());
+        shareTest.setSelected(uploader.isShareTest());
         testWorkspace.setText(uploader.getWorkspace());
+        projectKey.setText(uploader.getProject());
         testTitle.setText(uploader.getTitle());
+        uploadToken.setText(uploader.getUploadToken());
     }
 
     private void init() {
@@ -98,6 +103,19 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
         addToPanel(mainPanel, editConstraints, 1, row, anonymousTest = new JCheckBox());
 
         row++;
+        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Share test: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, row, shareTest = new JCheckBox());
+
+        row++;
+        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Project Workspace: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, row, testWorkspace = new JTextField(20));
+
+        editConstraints.fill = GridBagConstraints.BOTH;
+
+        editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+
+        row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Upload to Project: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, row, projectKey = new JTextField(20));
 
@@ -109,21 +127,11 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
         addToPanel(mainPanel, editConstraints, 1, row, testTitle = new JTextField(20));
 
         row++;
-        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Test Workspace: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, row, testWorkspace = new JTextField(20));
-
-        editConstraints.fill = GridBagConstraints.BOTH;
-
-        editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
-        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
-
-        row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Upload Token: ", JLabel.RIGHT));
 
         uploadToken = new JTextArea();
         uploadToken.setLineWrap(true);
         addToPanel(mainPanel, editConstraints, 1, row, GuiBuilderHelper.getTextAreaScrollPaneContainer(uploadToken, 6));
-
 
         row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Info Area: ", JLabel.RIGHT));
@@ -132,7 +140,6 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
         infoArea.setOpaque(false);
         infoArea.setContentType("text/html");
         infoArea.addHyperlinkListener(this);
-
 
         JScrollPane ret = new JScrollPane();
         ret.setViewportView(infoArea);
@@ -153,21 +160,22 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
             }
 
             private void disableComponent(boolean enable) {
-                testTitle.setEnabled(enable);
-                projectKey.setEnabled(enable);
+                shareTest.setEnabled(enable);
                 testWorkspace.setEnabled(enable);
+                projectKey.setEnabled(enable);
+                testTitle.setEnabled(enable);
                 uploadToken.setEnabled(enable);
-
             }
         });
     }
 
     private void initFields() {
+        anonymousTest.setSelected(false);
+        shareTest.setSelected(false);
         testTitle.setText("");
         projectKey.setText("Default project");
-        testWorkspace.setText("");
+        testWorkspace.setText("Default workspace");
         uploadToken.setText(UPLOAD_TOKEN_PLACEHOLDER);
-        anonymousTest.setSelected(false);
     }
 
     private void addToPanel(JPanel panel, GridBagConstraints constraints, int col, int row, JComponent component) {

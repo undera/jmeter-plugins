@@ -13,6 +13,7 @@ import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.NTCredentials;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.conn.params.ConnRoutePNames;
@@ -76,8 +77,9 @@ public class BlazemeterAPIClient {
 
     public void ping() throws IOException {
         String uri = address + "/api/v4/web/version";
-        query(createPost(uri, ""), 200);
+        query(createGet(uri), 200);
     }
+
 
     public String startOnline() throws IOException {
         if (isAnonymousTest()) {
@@ -135,6 +137,13 @@ public class BlazemeterAPIClient {
         query(createPost(uri, dataStr), 200);
     }
 
+    private HttpGet createGet(String uri) {
+        HttpGet httpGet = new HttpGet(uri);
+        httpGet.setHeader("Content-Type", "application/json");
+        setTokenToHeader(httpGet);
+        return httpGet;
+    }
+
     private HttpPost createPost(String uri, String data) {
         HttpPost httpPost = new HttpPost(uri);
         httpPost.setHeader("Content-Type", "application/json");
@@ -144,13 +153,13 @@ public class BlazemeterAPIClient {
         return httpPost;
     }
 
-    private void setTokenToHeader(HttpPost httpPost) {
-        if (isAnonymousTest()) {
+    private void setTokenToHeader(HttpRequestBase httpRequestBase) {
+        if (!isAnonymousTest()) {
             String token = report.getToken();
             if (token.contains(":")) {
-                httpPost.setHeader("Authorization", "Basic" + new String(Base64.encodeBase64("Test".getBytes())));
+                httpRequestBase.setHeader("Authorization", "Basic" + new String(Base64.encodeBase64("Test".getBytes())));
             } else {
-                httpPost.setHeader("X-Api-Key", token);
+                httpRequestBase.setHeader("X-Api-Key", token);
             }
         }
     }

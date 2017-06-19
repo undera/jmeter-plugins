@@ -1,9 +1,9 @@
 package com.blazemeter.api;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
-import net.sf.json.JSONArray;
 
 import java.util.Arrays;
 import java.util.HashMap;

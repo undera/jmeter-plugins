@@ -248,6 +248,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "0.9": {
+        "changes": "Single read sampler can be made optional, which avoids the sampler to fail when no websocket frame is received; this is useful in test scenario's where you can not exactly predict the server's behavior.",
+        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.9/JMeterWebSocketSamplers-0.9.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

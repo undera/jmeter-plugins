@@ -23,7 +23,7 @@ public class Project extends HttpBaseEntity {
         data.put("projectId", getId());
         data.put("configuration", "{\"type\": \"external\"}");
         JSONObject response = queryObject(createPost(uri, data.toString()), 201);
-        return Test.fromJSON(response.getJSONObject("result"));
+        return Test.fromJSON(this, response.getJSONObject("result"));
     }
 
     public List<Test> getTests() throws IOException {
@@ -36,7 +36,7 @@ public class Project extends HttpBaseEntity {
         List<Test> accounts = new ArrayList<>();
 
         for (Object obj : result) {
-            accounts.add(Test.fromJSON((JSONObject) obj));
+            accounts.add(Test.fromJSON(this, (JSONObject) obj));
         }
 
         return accounts;

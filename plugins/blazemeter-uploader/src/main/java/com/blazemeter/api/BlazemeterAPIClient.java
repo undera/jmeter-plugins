@@ -1,7 +1,6 @@
 package com.blazemeter.api;
 
 import com.blazemeter.api.entity.BlazemeterReport;
-import com.blazemeter.api.explorer.Session;
 import com.blazemeter.api.explorer.Test;
 import com.blazemeter.api.explorer.base.HttpBaseEntity;
 import com.blazemeter.api.explorer.Account;
@@ -16,9 +15,8 @@ import java.util.List;
 
 public class BlazemeterAPIClient extends HttpBaseEntity {
 
-    private Session session;
-    private String signature;
 
+    private Test test;
 
     public BlazemeterAPIClient(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report) {
         super(notifier, address, dataAddress, report);
@@ -33,6 +31,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
                 prepareClient();
             } catch (IOException e) {
                 log.error("Cannot prepare client for sending report", e);
+                throw new RuntimeException(e);
             }
         }
 
@@ -49,8 +48,35 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
         Workspace workspace = findWorkspace(accounts);
         if (workspace != null) {
             Project project = findProject(workspace);
-            Test test = findTest(project);
+            test = findTest(project);
         }
+    }
+    public String startOnline() throws IOException {
+        if (isAnonymousTest()) {
+            notifier.notifyAbout("No BlazeMeter API key provided, will upload anonymously");
+            test = new Test(this);
+            return test.startAnonymousExternal();
+        } else {
+            return test.startExternal();
+        }
+    }
+
+    public void sendOnlineData(JSONObject data) throws IOException {
+        if (isAnonymousTest()) {
+            sendAnonymousData(data);
+        } else {
+            // TODO:
+        }
+
+    }
+
+    public void endOnline() throws IOException {
+        if (isAnonymousTest()) {
+            test.getSession().stopAnonymous();
+        } else {
+            finishTest();
+        }
+        test = null;
     }
 
     private Test findTest(Project project) throws IOException {
@@ -114,56 +140,13 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
         return null;
     }
 
-    public String startOnline() throws IOException {
-        if (isAnonymousTest()) {
-            notifier.notifyAbout("No BlazeMeter API key provided, will upload anonymously");
-            return startAnonymousTest();
-        } else {
-            return startTest();
-        }
-    }
 
-    public void sendOnlineData(JSONObject data) throws IOException {
-        if (isAnonymousTest()) {
-            sendAnonymousData(data);
-        } else {
-            // TODO:
-        }
-
-    }
-
-    public void endOnline() throws IOException {
-        if (isAnonymousTest()) {
-            finishAnonymousTest();
-        } else {
-            finishTest();
-        }
-    }
-
-    private String startAnonymousTest() throws IOException {
-        String uri = address + "/api/v4/sessions";
-        JSONObject response = queryObject(createPost(uri, ""), 201);
-        JSONObject result = response.getJSONObject("result");
-        this.session = extractSession(result);
-        this.signature = result.optString("signature");
-        return result.optString("publicTokenUrl");
-    }
-
-    private String startTest() {
-        return "startTest";
-    }
-
-    private Session extractSession(JSONObject result) {
-        final JSONObject session = result.getJSONObject("session");
-        return new Session(this, session.optString("id"), session.optString("name"),
-                Test.fromJSON(result.getJSONObject("test")), session.optString("userId"));
-    }
 
 
     private void sendAnonymousData(JSONObject data) throws IOException {
         String uri = dataAddress +
                 String.format("/submit.php?session_id=%s&signature=%s&test_id=%s&user_id=%s",
-                        session.getId(), signature, session.getTest().getId(), session.getUserId());
+                        test.getSession().getId(), test.getSignature(), test.getId(), test.getSession().getUserId());
         uri += "&pq=0&target=labels_bulk&update=1"; //TODO: % self.kpi_target
         String dataStr = data.toString();
         log.info("Sending active test data: " + dataStr);
@@ -172,14 +155,6 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
 
 
 
-    private void finishAnonymousTest() throws IOException {
-        String uri = address + String.format("/api/v4/sessions/%s/terminate-external", session.getId());
-        JSONObject data = new JSONObject();
-        data.put("signature", signature);
-        data.put("testId", session.getTest().getId());
-        data.put("sessionId", session.getId());
-        query(createPost(uri, data.toString()), 500);
-    }
 
     private void finishTest() {
     }

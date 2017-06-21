@@ -1,4 +1,4 @@
-package com.blazemeter.api;
+package com.blazemeter.api.data;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

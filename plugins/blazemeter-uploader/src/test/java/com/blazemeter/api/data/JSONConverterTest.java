@@ -1,14 +1,12 @@
-package com.blazemeter.api;
+package com.blazemeter.api.data;
 
+import com.blazemeter.api.data.JSONConverter;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.samplers.SampleResult;
-import org.json.simple.JSONArray;
 import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class JSONConverterTest {
 

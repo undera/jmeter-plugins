@@ -1,7 +1,7 @@
 package com.blazemeter.jmeter;
 
 import com.blazemeter.api.BlazemeterAPIClient;
-import com.blazemeter.api.BlazemeterReport;
+import com.blazemeter.api.entity.BlazemeterReport;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

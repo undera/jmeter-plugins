@@ -1,4 +1,4 @@
-package com.blazemeter.api;
+package com.blazemeter.api.entity;
 
 public class Session {
 

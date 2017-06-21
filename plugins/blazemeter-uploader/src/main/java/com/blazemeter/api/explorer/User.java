@@ -1,7 +1,6 @@
 package com.blazemeter.api.explorer;
 
-import com.blazemeter.api.entity.BlazemeterReport;
-import com.blazemeter.jmeter.StatusNotifierCallback;
+import com.blazemeter.api.explorer.base.HttpBaseEntity;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -9,10 +8,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User extends BaseEntity {
+public class User extends HttpBaseEntity {
 
-    public User(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report) {
-        super(notifier, address, dataAddress, report, "userId", "name");
+    public User(HttpBaseEntity entity) {
+        super(entity);
     }
 
     public List<Account> getAccounts() throws IOException {
@@ -25,14 +24,12 @@ public class User extends BaseEntity {
         List<Account> accounts = new ArrayList<>();
 
         for (Object obj : result) {
-            accounts.add(convertToAccount((JSONObject) obj));
+            accounts.add(Account.fromJSON(this, (JSONObject) obj));
         }
 
         return accounts;
     }
 
-    private Account convertToAccount(JSONObject obj) {
-        return new Account(notifier, address, dataAddress, report, obj.getString("id"), obj.getString("name"));
-    }
+
 
 }

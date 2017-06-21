@@ -1,22 +1,19 @@
 package com.blazemeter.api.explorer;
 
-import com.blazemeter.api.entity.BlazemeterReport;
-import com.blazemeter.api.entity.Test;
-import com.blazemeter.jmeter.StatusNotifierCallback;
+import com.blazemeter.api.explorer.base.HttpBaseEntity;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Project extends BaseEntity {
+public class Project extends HttpBaseEntity {
 
     public static final String DEFAULT_PROJECT = "Default project";
 
-    public Project(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report, String id, String name) {
-        super(notifier, address, dataAddress, report, id, name);
+    public Project(HttpBaseEntity entity, String id, String name) {
+        super(entity, id, name);
     }
 
     public Test createTest(String name) throws IOException {
@@ -26,12 +23,11 @@ public class Project extends BaseEntity {
         data.put("projectId", getId());
         data.put("configuration", "{\"type\": \"external\"}");
         JSONObject response = queryObject(createPost(uri, data.toString()), 201);
-        return convertToTest(response.getJSONObject("result"));
+        return Test.fromJSON(response.getJSONObject("result"));
     }
 
     public List<Test> getTests() throws IOException {
-        String params = "?projectId=" + getId();
-        String uri = address + "/api/v4/tests" + params;
+        String uri = address + "/api/v4/tests?projectId=" + getId();
         JSONObject response = queryObject(createGet(uri), 200);
         return extractTests(response.getJSONArray("result"));
     }
@@ -40,14 +36,15 @@ public class Project extends BaseEntity {
         List<Test> accounts = new ArrayList<>();
 
         for (Object obj : result) {
-            accounts.add(convertToTest((JSONObject) obj));
+            accounts.add(Test.fromJSON((JSONObject) obj));
         }
 
         return accounts;
     }
 
-    private Test convertToTest(JSONObject obj) {
-        return new Test(obj.getString("id"), obj.getString("name"));
+
+    public static Project fromJSON(HttpBaseEntity entity, JSONObject obj) {
+        return new Project(entity, obj.getString("id"), obj.getString("name"));
     }
 
 }

@@ -1,7 +1,6 @@
 package com.blazemeter.api.explorer;
 
-import com.blazemeter.api.entity.BlazemeterReport;
-import com.blazemeter.jmeter.StatusNotifierCallback;
+import com.blazemeter.api.explorer.base.HttpBaseEntity;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -9,13 +8,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Workspace extends BaseEntity {
+public class Workspace extends HttpBaseEntity {
 
     public static final String DEFAULT_WORKSPACE = "Default workspace";
 
 
-    public Workspace(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report, String id, String name) {
-        super(notifier, address, dataAddress, report, id, name);
+    public Workspace(HttpBaseEntity entity, String id, String name) {
+        super(entity, id, name);
     }
 
     public List<Project> getProjects() throws IOException {
@@ -28,17 +27,18 @@ public class Workspace extends BaseEntity {
         List<Project> projects = new ArrayList<>();
 
         for (Object obj : result) {
-            projects.add(convertToProject((JSONObject) obj));
+            projects.add(Project.fromJSON(this, (JSONObject) obj));
         }
 
         return projects;
     }
 
-    private Project convertToProject(JSONObject obj) {
-        return new Project(notifier, address, dataAddress, report, obj.getString("id"), obj.getString("name"));
-    }
 
     public Project createProject(String name) {
         return null;
+    }
+
+    public static Workspace fromJSON(HttpBaseEntity entity, JSONObject obj) {
+        return new Workspace(entity, obj.getString("id"), obj.getString("name"));
     }
 }

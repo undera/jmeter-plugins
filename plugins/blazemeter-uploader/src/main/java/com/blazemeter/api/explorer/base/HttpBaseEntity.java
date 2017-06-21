@@ -1,4 +1,4 @@
-package com.blazemeter.api.explorer;
+package com.blazemeter.api.explorer.base;
 
 import com.blazemeter.api.entity.BlazemeterReport;
 import com.blazemeter.jmeter.StatusNotifierCallback;
@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 
-public class AbstractHttpEntity {
+public class HttpBaseEntity extends BaseEntity {
 
     protected static final Logger log = LoggingManager.getLoggerForClass();
     protected final static int TIMEOUT = 5;
@@ -44,12 +44,31 @@ public class AbstractHttpEntity {
     protected final String dataAddress;
     protected final BlazemeterReport report;
 
-    public AbstractHttpEntity(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report) {
+    public HttpBaseEntity(HttpBaseEntity entity) {
+        super("", "");
+        this.notifier = entity.getNotifier();
+        this.address = entity.getAddress();
+        this.dataAddress = entity.getDataAddress();
+        this.report = entity.getReport();
+        this.httpClient = entity.getHttpClient();
+    }
+
+    public HttpBaseEntity(HttpBaseEntity entity, String id, String name) {
+        super(id, name);
+        this.notifier = entity.getNotifier();
+        this.address = entity.getAddress();
+        this.dataAddress = entity.getDataAddress();
+        this.report = entity.getReport();
+        this.httpClient = entity.getHttpClient();
+    }
+
+    public HttpBaseEntity(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report) {
+        super("", "");
         this.notifier = notifier;
         this.address = address;
         this.dataAddress = dataAddress;
         this.report = report;
-        this.httpClient = getHTTPClient();
+        this.httpClient = createHTTPClient();
     }
 
     protected HttpGet createGet(String uri) {
@@ -149,7 +168,7 @@ public class AbstractHttpEntity {
         }
     }
 
-    private static AbstractHttpClient getHTTPClient() {
+    private static AbstractHttpClient createHTTPClient() {
         AbstractHttpClient client = new DefaultHttpClient();
         String proxyHost = System.getProperty("https.proxyHost", "");
         if (!proxyHost.isEmpty()) {
@@ -179,5 +198,25 @@ public class AbstractHttpEntity {
             }
         }
         return client;
+    }
+
+    public AbstractHttpClient getHttpClient() {
+        return httpClient;
+    }
+
+    public StatusNotifierCallback getNotifier() {
+        return notifier;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getDataAddress() {
+        return dataAddress;
+    }
+
+    public BlazemeterReport getReport() {
+        return report;
     }
 }

@@ -1,9 +1,9 @@
 package com.blazemeter.api;
 
 import com.blazemeter.api.entity.BlazemeterReport;
-import com.blazemeter.api.entity.Session;
-import com.blazemeter.api.entity.Test;
-import com.blazemeter.api.explorer.AbstractHttpEntity;
+import com.blazemeter.api.explorer.Session;
+import com.blazemeter.api.explorer.Test;
+import com.blazemeter.api.explorer.base.HttpBaseEntity;
 import com.blazemeter.api.explorer.Account;
 import com.blazemeter.api.explorer.Project;
 import com.blazemeter.api.explorer.User;
@@ -14,7 +14,7 @@ import net.sf.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
-public class BlazemeterAPIClient extends AbstractHttpEntity {
+public class BlazemeterAPIClient extends HttpBaseEntity {
 
     private Session session;
     private String signature;
@@ -44,7 +44,7 @@ public class BlazemeterAPIClient extends AbstractHttpEntity {
     }
 
     private void prepareClient() throws IOException {
-        User user = new User(notifier, address, dataAddress, report);
+        User user = new User(this);
         List<Account> accounts = user.getAccounts();
         Workspace workspace = findWorkspace(accounts);
         if (workspace != null) {
@@ -155,14 +155,15 @@ public class BlazemeterAPIClient extends AbstractHttpEntity {
 
     private Session extractSession(JSONObject result) {
         final JSONObject session = result.getJSONObject("session");
-        return new Session(session.optString("id"), session.optString("testId"), session.optString("userId"));
+        return new Session(this, session.optString("id"), session.optString("name"),
+                Test.fromJSON(result.getJSONObject("test")), session.optString("userId"));
     }
 
 
     private void sendAnonymousData(JSONObject data) throws IOException {
         String uri = dataAddress +
                 String.format("/submit.php?session_id=%s&signature=%s&test_id=%s&user_id=%s",
-                        session.getId(), signature, session.getTestId(), session.getUserId());
+                        session.getId(), signature, session.getTest().getId(), session.getUserId());
         uri += "&pq=0&target=labels_bulk&update=1"; //TODO: % self.kpi_target
         String dataStr = data.toString();
         log.info("Sending active test data: " + dataStr);
@@ -175,7 +176,7 @@ public class BlazemeterAPIClient extends AbstractHttpEntity {
         String uri = address + String.format("/api/v4/sessions/%s/terminate-external", session.getId());
         JSONObject data = new JSONObject();
         data.put("signature", signature);
-        data.put("testId", session.getTestId());
+        data.put("testId", session.getTest().getId());
         data.put("sessionId", session.getId());
         query(createPost(uri, data.toString()), 500);
     }

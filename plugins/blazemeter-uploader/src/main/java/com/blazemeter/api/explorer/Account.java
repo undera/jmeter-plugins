@@ -9,13 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account extends AbstractHttpEntity {
+public class Account extends BaseEntity {
 
-    private final String id;
-
-    public Account(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report, String id) {
-        super(notifier, address, dataAddress, report);
-        this.id = id;
+    public Account(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report, String id, String name) {
+        super(notifier, address, dataAddress, report, id, name);
     }
 
     public List<Workspace> getWorkspaces() throws IOException {

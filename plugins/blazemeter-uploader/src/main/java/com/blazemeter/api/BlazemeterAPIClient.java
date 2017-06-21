@@ -2,6 +2,7 @@ package com.blazemeter.api;
 
 import com.blazemeter.api.entity.BlazemeterReport;
 import com.blazemeter.api.entity.Session;
+import com.blazemeter.api.entity.Test;
 import com.blazemeter.api.explorer.AbstractHttpEntity;
 import com.blazemeter.api.explorer.Account;
 import com.blazemeter.api.explorer.Project;
@@ -37,7 +38,6 @@ public class BlazemeterAPIClient extends AbstractHttpEntity {
 
     }
 
-
     public void ping() throws IOException {
         String uri = address + "/api/v4/web/version";
         query(createGet(uri), 200);
@@ -48,30 +48,63 @@ public class BlazemeterAPIClient extends AbstractHttpEntity {
         List<Account> accounts = user.getAccounts();
         Workspace workspace = findWorkspace(accounts);
         if (workspace != null) {
-            findProject(workspace);
+            Project project = findProject(workspace);
+            Test test = findTest(project);
         }
     }
 
-    private Project findProject(Workspace workspace) throws IOException {
-        List<Project> projects = workspace.getProjects();
+    private Test findTest(Project project) throws IOException {
+        String testNameOrId = report.getTitle();
+        if (testNameOrId == null || testNameOrId.isEmpty()) {
+            testNameOrId = Test.DEFAULT_TEST;
+            log.warn("Empty test title. Will be used '" + Test.DEFAULT_TEST + "' as test title");
+        }
 
-        return null;
+        final List<Test> tests = project.getTests();
+        for (Test test : tests) {
+            if (testNameOrId.equals(test.getId()) || testNameOrId.equals(test.getName())) {
+                return test;
+            }
+        }
+
+        return project.createTest(testNameOrId);
+    }
+
+    private Project findProject(Workspace workspace) throws IOException {
+        String projectNameOrId = report.getProject();
+        if (projectNameOrId == null || projectNameOrId.isEmpty()) {
+            projectNameOrId = Project.DEFAULT_PROJECT;
+            log.warn("Empty project name. Will be used '" + Project.DEFAULT_PROJECT + "' as project name");
+        }
+
+        final List<Project> projects = workspace.getProjects();
+        for (Project project : projects) {
+            if (projectNameOrId.equals(project.getId()) || projectNameOrId.equals(project.getName())) {
+                return project;
+            }
+        }
+
+        return workspace.createProject(projectNameOrId);
     }
 
     private Workspace findWorkspace(List<Account> accounts) throws IOException {
-        final String workspace = report.getWorkspace();
+        String workspaceNameOrId = report.getWorkspace();
+        if (workspaceNameOrId == null || workspaceNameOrId.isEmpty()) {
+            workspaceNameOrId = Workspace.DEFAULT_WORKSPACE;
+            log.warn("Empty workspace name. Will be used '" + Workspace.DEFAULT_WORKSPACE + "' as workspace name");
+        }
 
         for (Account account : accounts) {
-            List<Workspace> workspaces = account.getWorkspaces();
-            for (Workspace wsp : workspaces) {
-                if (workspace.equals(wsp.getId()) || workspace.equals(wsp.getName())) {
-                    return wsp;
+            final List<Workspace> workspaces = account.getWorkspaces();
+            for (Workspace workspace : workspaces) {
+                if (workspaceNameOrId.equals(workspace.getId()) || workspaceNameOrId.equals(workspace.getName())) {
+                    return workspace;
                 }
             }
         }
 
         for (Account account : accounts) {
-            Workspace wsp = account.createWorkspace(workspace);
+            Workspace wsp = account.createWorkspace(workspaceNameOrId);
             if (wsp != null) {
                 return wsp;
             }

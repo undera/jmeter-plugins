@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User extends AbstractHttpEntity {
+public class User extends BaseEntity {
 
     public User(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report) {
-        super(notifier, address, dataAddress, report);
+        super(notifier, address, dataAddress, report, "userId", "name");
     }
 
     public List<Account> getAccounts() throws IOException {
@@ -25,14 +25,14 @@ public class User extends AbstractHttpEntity {
         List<Account> accounts = new ArrayList<>();
 
         for (Object obj : result) {
-            accounts.add(createAccount((JSONObject) obj));
+            accounts.add(convertToAccount((JSONObject) obj));
         }
 
         return accounts;
     }
 
-    private Account createAccount(JSONObject obj) {
-        return new Account(notifier, address, dataAddress, report, obj.getString("id"));
+    private Account convertToAccount(JSONObject obj) {
+        return new Account(notifier, address, dataAddress, report, obj.getString("id"), obj.getString("name"));
     }
 
 }

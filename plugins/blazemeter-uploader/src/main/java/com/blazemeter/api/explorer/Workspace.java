@@ -9,15 +9,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Workspace extends AbstractHttpEntity {
+public class Workspace extends BaseEntity {
 
-    private String id;
-    private String name;
+    public static final String DEFAULT_WORKSPACE = "Default workspace";
+
 
     public Workspace(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report, String id, String name) {
-        super(notifier, address, dataAddress, report);
-        this.id = id;
-        this.name = name;
+        super(notifier, address, dataAddress, report, id, name);
     }
 
     public List<Project> getProjects() throws IOException {
@@ -30,15 +28,14 @@ public class Workspace extends AbstractHttpEntity {
         List<Project> projects = new ArrayList<>();
 
         for (Object obj : result) {
-            projects.add(createProject((JSONObject) obj));
+            projects.add(convertToProject((JSONObject) obj));
         }
 
         return projects;
     }
 
-    private Project createProject(JSONObject obj) {
-        return new Project();
-//        return new Project(notifier, address, dataAddress, report, obj.getString("id"), obj.getString("name"));
+    private Project convertToProject(JSONObject obj) {
+        return new Project(notifier, address, dataAddress, report, obj.getString("id"), obj.getString("name"));
     }
 
     public String getId() {
@@ -47,5 +44,9 @@ public class Workspace extends AbstractHttpEntity {
 
     public String getName() {
         return name;
+    }
+
+    public Project createProject(String name) {
+        return null;
     }
 }

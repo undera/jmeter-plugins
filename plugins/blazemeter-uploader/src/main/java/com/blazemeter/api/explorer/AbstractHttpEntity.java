@@ -33,7 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 
-public abstract class AbstractHttpEntity {
+public class AbstractHttpEntity {
 
     protected static final Logger log = LoggingManager.getLoggerForClass();
     protected final static int TIMEOUT = 5;

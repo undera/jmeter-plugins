@@ -7,6 +7,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,15 +26,12 @@ public class Project extends BaseEntity {
         data.put("projectId", getId());
         data.put("configuration", "{\"type\": \"external\"}");
         JSONObject response = queryObject(createPost(uri, data.toString()), 201);
-        System.out.println();
-        return null;
+        return convertToTest(response.getJSONObject("result"));
     }
 
     public List<Test> getTests() throws IOException {
-        String uri = address + String.format("/api/v4/tests?projectId=%s", getId());
-        if (getName() != null && !getName().isEmpty()) {
-            uri += String.format("&name=%s", getName());
-        }
+        String params = "?projectId=" + getId();
+        String uri = address + "/api/v4/tests" + params;
         JSONObject response = queryObject(createGet(uri), 200);
         return extractTests(response.getJSONArray("result"));
     }

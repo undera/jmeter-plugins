@@ -16,7 +16,7 @@ public class Account extends BaseEntity {
     }
 
     public List<Workspace> getWorkspaces() throws IOException {
-        String uri = address + String.format("/api/v4/workspaces?accountId=%s&enabled=true&limit=100", id);
+        String uri = address + String.format("/api/v4/workspaces?accountId=%s&enabled=true&limit=100", getId());
         JSONObject response = queryObject(createGet(uri), 200);
         return extractWorkspaces(response.getJSONArray("result"));
     }

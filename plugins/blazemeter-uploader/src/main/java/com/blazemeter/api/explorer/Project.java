@@ -22,7 +22,7 @@ public class Project extends BaseEntity {
         String uri = address + "/api/v4/tests";
         JSONObject data = new JSONObject();
         data.put("name", name);
-        data.put("projectId", id);
+        data.put("projectId", getId());
         data.put("configuration", "{\"type\": \"external\"}");
         JSONObject response = queryObject(createPost(uri, data.toString()), 201);
         System.out.println();
@@ -30,9 +30,9 @@ public class Project extends BaseEntity {
     }
 
     public List<Test> getTests() throws IOException {
-        String uri = address + String.format("/api/v4/tests?projectId=%s", id);
-        if (name != null && !name.isEmpty()) {
-            uri += String.format("&name=%s", name);
+        String uri = address + String.format("/api/v4/tests?projectId=%s", getId());
+        if (getName() != null && !getName().isEmpty()) {
+            uri += String.format("&name=%s", getName());
         }
         JSONObject response = queryObject(createGet(uri), 200);
         return extractTests(response.getJSONArray("result"));
@@ -52,11 +52,4 @@ public class Project extends BaseEntity {
         return new Test(obj.getString("id"), obj.getString("name"));
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

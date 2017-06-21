@@ -19,7 +19,7 @@ public class Workspace extends BaseEntity {
     }
 
     public List<Project> getProjects() throws IOException {
-        String uri = address + String.format("/api/v4/projects?workspaceId=%s&limit=99999", id);
+        String uri = address + String.format("/api/v4/projects?workspaceId=%s&limit=99999", getId());
         JSONObject response = queryObject(createGet(uri), 200);
         return extractProjects(response.getJSONArray("result"));
     }
@@ -36,14 +36,6 @@ public class Workspace extends BaseEntity {
 
     private Project convertToProject(JSONObject obj) {
         return new Project(notifier, address, dataAddress, report, obj.getString("id"), obj.getString("name"));
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Project createProject(String name) {

@@ -17,6 +17,22 @@ public class Workspace extends HttpBaseEntity {
         super(entity, id, name);
     }
 
+    /**
+     * Create Project in current Workspace
+     * @param name - Name of the new project
+     */
+    public Project createProject(String name) throws IOException {
+        String uri = address + "/api/v4/projects";
+        JSONObject data = new JSONObject();
+        data.put("name", name);
+        data.put("workspaceId", getId());
+        JSONObject response = queryObject(createPost(uri, data.toString()), 201);
+        return Project.fromJSON(this, response.getJSONObject("result"));
+    }
+
+    /**
+     * @return list of Projects in current workspace
+     */
     public List<Project> getProjects() throws IOException {
         String uri = address + String.format("/api/v4/projects?workspaceId=%s&limit=99999", getId());
         JSONObject response = queryObject(createGet(uri), 200);
@@ -31,11 +47,6 @@ public class Workspace extends HttpBaseEntity {
         }
 
         return projects;
-    }
-
-
-    public Project createProject(String name) {
-        return null;
     }
 
     public static Workspace fromJSON(HttpBaseEntity entity, JSONObject obj) {

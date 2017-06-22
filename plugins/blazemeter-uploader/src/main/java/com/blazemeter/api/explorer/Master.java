@@ -11,17 +11,18 @@ public class Master extends HttpBaseEntity {
         super(entity, id, name);
     }
 
-//    url = self.address + "/api/v4/masters/%s/public-token" % self['id']
-//    res = self._request(url, {"publicToken": None}, method="POST")
-//    public_token = res['result']['publicToken']
-//    report_link = self.address + "/app/?public-token=%s#/masters/%s/summary" % (public_token, self['id'])
-//            return report_link
-
     public String makeReportPublic() throws IOException {
         String uri = address + String.format("/api/v4/masters/%s/public-token", getId());
-        JSONObject response = queryObject(createPost(uri, "{\"publicToken\": None}"), 200);
-        System.out.println();
-        return "";
+        JSONObject obj = new JSONObject();
+        obj.put("publicToken", "None");
+        JSONObject response = queryObject(createPost(uri, obj.toString()), 201);
+
+        return address + String.format("/app/?public-token=%s#/masters/%s/summary",
+                extractPublicToken(response.getJSONObject("result")), getId());
+    }
+
+    private String extractPublicToken(JSONObject result) {
+        return result.getString("publicToken");
     }
 
     public static Master fromJSON(HttpBaseEntity entity, JSONObject obj) {

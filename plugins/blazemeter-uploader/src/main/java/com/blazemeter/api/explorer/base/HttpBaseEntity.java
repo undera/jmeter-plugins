@@ -163,8 +163,8 @@ public class HttpBaseEntity extends BaseEntity {
 
     private void setTokenToHeader(HttpRequestBase httpRequestBase) {
         if (!isAnonymousTest) {
-            if (token.contains(":")) {
-                httpRequestBase.setHeader("Authorization", "Basic" + new String(Base64.encodeBase64("Test".getBytes())));
+            if (token != null && token.contains(":")) {
+                httpRequestBase.setHeader("Authorization", "Basic " + new String(Base64.encodeBase64(token.getBytes())));
             } else {
                 httpRequestBase.setHeader("X-Api-Key", token);
             }

@@ -21,37 +21,9 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
     public BlazemeterAPIClient(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report) {
         super(notifier, address, dataAddress, report.getToken(), report.isAnonymousTest());
         this.report = report;
-        try {
-            ping();
-        } catch (IOException e) {
-            log.error("Cannot reach online results storage, maybe the address/token is wrong");
-            return;
-        }
-        if (!isAnonymousTest()) {
-            try {
-                prepareClient();
-            } catch (IOException e) {
-                log.error("Cannot prepare client for sending report", e);
-                throw new RuntimeException(e);
-            }
-        }
-
+        prepare();
     }
 
-    public void ping() throws IOException {
-        String uri = address + "/api/v4/web/version";
-        query(createGet(uri), 200);
-    }
-
-    private void prepareClient() throws IOException {
-        User user = new User(this);
-        List<Account> accounts = user.getAccounts();
-        Workspace workspace = findWorkspace(accounts);
-        if (workspace != null) {
-            Project project = findProject(workspace);
-            test = findTest(project);
-        }
-    }
     public String startOnline() throws IOException {
         if (isAnonymousTest()) {
             notifier.notifyAbout("No BlazeMeter API key provided, will upload anonymously");
@@ -74,6 +46,34 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
             test.getSession().stop();
         }
         test = null;
+    }
+
+    private void prepare() {
+        User user = new User(this);
+        try {
+            user.ping();
+        } catch (IOException e) {
+            log.error("Cannot reach online results storage, maybe the address/token is wrong");
+            return;
+        }
+
+        if (!isAnonymousTest()) {
+            try {
+                prepareClient(user);
+            } catch (IOException e) {
+                log.error("Cannot prepare client for sending report", e);
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void prepareClient(User user) throws IOException {
+        List<Account> accounts = user.getAccounts();
+        Workspace workspace = findWorkspace(accounts);
+        if (workspace != null) {
+            Project project = findProject(workspace);
+            test = findTest(project);
+        }
     }
 
     private Test findTest(Project project) throws IOException {

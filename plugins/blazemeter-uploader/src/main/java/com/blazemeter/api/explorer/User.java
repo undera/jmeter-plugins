@@ -15,6 +15,14 @@ public class User extends HttpBaseEntity {
     }
 
     /**
+     * Quick check if we can access the service
+     */
+    public void ping() throws IOException {
+        String uri = address + "/api/v4/web/version";
+        query(createGet(uri), 200);
+    }
+
+    /**
      * @return list of Account for user token
      */
     public List<Account> getAccounts() throws IOException {

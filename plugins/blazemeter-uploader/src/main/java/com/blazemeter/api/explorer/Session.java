@@ -27,7 +27,7 @@ public class Session extends HttpBaseEntity {
                         getId(), signature, testId, userId);
         uri += "&pq=0&target=labels_bulk&update=1"; //TODO: % self.kpi_target
         String dataStr = data.toString();
-        log.info("Sending active test data: " + dataStr);
+        log.debug("Sending active test data: " + dataStr);
         query(createPost(uri, dataStr), 200);
     }
 

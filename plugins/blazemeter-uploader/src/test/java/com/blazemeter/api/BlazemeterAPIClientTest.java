@@ -1,7 +1,6 @@
 package com.blazemeter.api;
 
 import com.blazemeter.api.data.JSONConverter;
-import com.blazemeter.api.entity.BlazemeterReport;
 import com.blazemeter.jmeter.StatusNotifierCallbackTest;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.Test;

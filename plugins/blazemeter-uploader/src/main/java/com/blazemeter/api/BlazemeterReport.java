@@ -1,4 +1,4 @@
-package com.blazemeter.api.entity;
+package com.blazemeter.api;
 
 public class BlazemeterReport {
 

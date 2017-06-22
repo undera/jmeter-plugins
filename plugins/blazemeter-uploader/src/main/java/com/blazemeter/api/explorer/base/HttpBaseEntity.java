@@ -1,6 +1,5 @@
 package com.blazemeter.api.explorer.base;
 
-import com.blazemeter.api.entity.BlazemeterReport;
 import com.blazemeter.jmeter.StatusNotifierCallback;
 import net.sf.json.JSON;
 import net.sf.json.JSONNull;
@@ -45,41 +44,60 @@ public class HttpBaseEntity extends BaseEntity {
     protected final StatusNotifierCallback notifier;
     protected final String address;
     protected final String dataAddress;
-    protected final BlazemeterReport report;
+    protected final String token;
+    protected final boolean isAnonymousTest;
 
+    /**
+     * Constructor that create new HTTP Client
+     */
+    public HttpBaseEntity(StatusNotifierCallback notifier, String address, String dataAddress, String token, boolean isAnonymousTest) {
+        super("", "");
+        this.notifier = notifier;
+        this.address = address;
+        this.dataAddress = dataAddress;
+        this.token = token;
+        this.isAnonymousTest = isAnonymousTest;
+        this.httpClient = createHTTPClient();
+    }
+
+    /**
+     * Constructor that clone only HttpBaseEntity.class fields
+     */
     public HttpBaseEntity(HttpBaseEntity entity) {
         super("", "");
         this.notifier = entity.getNotifier();
         this.address = entity.getAddress();
         this.dataAddress = entity.getDataAddress();
-        this.report = entity.getReport();
+        this.token = entity.getToken();
+        this.isAnonymousTest = entity.isAnonymousTest();
         this.httpClient = entity.getHttpClient();
     }
 
+    /**
+     * Constructor that clone HttpBaseEntity.class fields
+     */
     public HttpBaseEntity(HttpBaseEntity entity, String id, String name) {
         super(id, name);
         this.notifier = entity.getNotifier();
         this.address = entity.getAddress();
         this.dataAddress = entity.getDataAddress();
-        this.report = entity.getReport();
+        this.token = entity.getToken();
+        this.isAnonymousTest = entity.isAnonymousTest();
         this.httpClient = entity.getHttpClient();
     }
 
-    public HttpBaseEntity(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report) {
-        super("", "");
-        this.notifier = notifier;
-        this.address = address;
-        this.dataAddress = dataAddress;
-        this.report = report;
-        this.httpClient = createHTTPClient();
-    }
-
+    /**
+     * Create Get Request
+     */
     protected HttpGet createGet(String uri) {
         HttpGet httpGet = new HttpGet(uri);
         httpGet.setHeader("Content-Type", "application/json");
         return httpGet;
     }
 
+    /**
+     * Create Post Request
+     */
     protected HttpPost createPost(String uri, String data) {
         HttpPost httpPost = new HttpPost(uri);
         httpPost.setHeader("Content-Type", "application/json");
@@ -88,21 +106,26 @@ public class HttpBaseEntity extends BaseEntity {
         return httpPost;
     }
 
-    protected boolean isAnonymousTest() {
-        return report.isAnonymousTest();
-    }
-
-    protected void setTokenToHeader(HttpRequestBase httpRequestBase) {
-        if (!isAnonymousTest()) {
-            String token = report.getToken();
-            if (token.contains(":")) {
-                httpRequestBase.setHeader("Authorization", "Basic" + new String(Base64.encodeBase64("Test".getBytes())));
-            } else {
-                httpRequestBase.setHeader("X-Api-Key", token);
-            }
+    /**
+     * Execute Http request and verify response
+     * @param request - HTTP Request
+     * @param expectedCode - expected response code
+     * @return - response in JSONObject
+     */
+    protected JSONObject queryObject(HttpRequestBase request, int expectedCode) throws IOException {
+        JSON res = query(request, expectedCode);
+        if (!(res instanceof JSONObject)) {
+            throw new IOException("Unexpected response: " + res);
         }
+        return (JSONObject) res;
     }
 
+    /**
+     * Execute Http request and response code
+     * @param request - HTTP Request
+     * @param expectedCode - expected response code
+     * @return - response in JSONObject
+     */
     protected JSON query(HttpRequestBase request, int expectedCode) throws IOException {
         log.info("Requesting: " + request);
         setTokenToHeader(request);
@@ -138,12 +161,14 @@ public class HttpBaseEntity extends BaseEntity {
         }
     }
 
-    protected JSONObject queryObject(HttpRequestBase req, int expectedRC) throws IOException {
-        JSON res = query(req, expectedRC);
-        if (!(res instanceof JSONObject)) {
-            throw new IOException("Unexpected response: " + res);
+    private void setTokenToHeader(HttpRequestBase httpRequestBase) {
+        if (!isAnonymousTest) {
+            if (token.contains(":")) {
+                httpRequestBase.setHeader("Authorization", "Basic" + new String(Base64.encodeBase64("Test".getBytes())));
+            } else {
+                httpRequestBase.setHeader("X-Api-Key", token);
+            }
         }
-        return (JSONObject) res;
     }
 
     private String getResponseEntity(HttpResponse result) throws IOException {
@@ -219,7 +244,11 @@ public class HttpBaseEntity extends BaseEntity {
         return dataAddress;
     }
 
-    public BlazemeterReport getReport() {
-        return report;
+    public String getToken() {
+        return token;
+    }
+
+    public boolean isAnonymousTest() {
+        return isAnonymousTest;
     }
 }

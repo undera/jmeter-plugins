@@ -1,7 +1,7 @@
 package com.blazemeter.jmeter;
 
 import com.blazemeter.api.BlazemeterAPIClient;
-import com.blazemeter.api.entity.BlazemeterReport;
+import com.blazemeter.api.BlazemeterReport;
 import com.blazemeter.api.data.JSONConverter;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.config.Arguments;

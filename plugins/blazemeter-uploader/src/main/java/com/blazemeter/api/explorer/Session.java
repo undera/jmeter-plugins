@@ -2,7 +2,6 @@ package com.blazemeter.api.explorer;
 
 import com.blazemeter.api.explorer.base.HttpBaseEntity;
 import net.sf.json.JSONObject;
-import org.apache.http.client.methods.HttpPost;
 
 import java.io.IOException;
 

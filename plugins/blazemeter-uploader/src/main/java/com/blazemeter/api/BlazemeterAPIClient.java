@@ -1,6 +1,5 @@
 package com.blazemeter.api;
 
-import com.blazemeter.api.entity.BlazemeterReport;
 import com.blazemeter.api.explorer.Test;
 import com.blazemeter.api.explorer.base.HttpBaseEntity;
 import com.blazemeter.api.explorer.Account;
@@ -17,9 +16,11 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
 
 
     private Test test;
+    private BlazemeterReport report;
 
     public BlazemeterAPIClient(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report) {
-        super(notifier, address, dataAddress, report);
+        super(notifier, address, dataAddress, report.getToken(), report.isAnonymousTest());
+        this.report = report;
         try {
             ping();
         } catch (IOException e) {
@@ -134,6 +135,10 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
 
         log.error("Cannot find workspace or create it");
         return null;
+    }
+
+    public BlazemeterReport getReport() {
+        return report;
     }
 }
 

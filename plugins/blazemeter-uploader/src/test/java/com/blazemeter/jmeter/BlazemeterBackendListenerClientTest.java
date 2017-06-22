@@ -16,12 +16,14 @@ public class BlazemeterBackendListenerClientTest {
         client.setInformer(informer);
         assertEquals(informer, client.getInformer());
 
-        BlazemeterAPIClient apiClient = new BlazemeterAPIClient(null, null, null, null);
+        BlazemeterReport report = new BlazemeterReport();
+        report.setAnonymousTest(true);
+        BlazemeterAPIClient apiClient = new BlazemeterAPIClient(null, "http://a.blazemeter.com", null, report);
         client.setApiClient(apiClient);
         assertEquals(apiClient, client.getApiClient());
 
-        BlazemeterReport report = new BlazemeterReport();
-        client.setReport(report);
-        assertEquals(report, client.getReport());
+        BlazemeterReport report1 = new BlazemeterReport();
+        client.setReport(report1);
+        assertEquals(report1, client.getReport());
     }
 }

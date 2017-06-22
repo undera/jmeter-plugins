@@ -2,6 +2,7 @@ package com.blazemeter.api.explorer;
 
 import com.blazemeter.api.explorer.base.HttpBaseEntity;
 import net.sf.json.JSONObject;
+import org.apache.http.client.methods.HttpPost;
 
 import java.io.IOException;
 
@@ -18,6 +19,20 @@ public class Session extends HttpBaseEntity {
         this.signature = signature;
     }
 
+    public void sendData(JSONObject data) throws IOException {
+        String uri = dataAddress +
+                String.format("/submit.php?session_id=%s&signature=%s&test_id=%s&user_id=%s",
+                        getId(), signature, testId, userId);
+        uri += "&pq=0&target=labels_bulk&update=1"; //TODO: % self.kpi_target
+        String dataStr = data.toString();
+        log.info("Sending active test data: " + dataStr);
+        query(createPost(uri, dataStr), 200);
+    }
+
+    public void stop() throws IOException {
+        String uri = address + String.format("/api/v4/sessions/%s/stop", getId());
+        query(createPost(uri, ""), 202);
+    }
 
     public void stopAnonymous() throws IOException {
         String uri = address + String.format("/api/v4/sessions/%s/terminate-external", getId());
@@ -30,6 +45,14 @@ public class Session extends HttpBaseEntity {
 
     public String getUserId() {
         return userId;
+    }
+
+    public String getTestId() {
+        return testId;
+    }
+
+    public String getSignature() {
+        return signature;
     }
 
     public static Session fromJSON(HttpBaseEntity entity, String testId, String signature, JSONObject session) {

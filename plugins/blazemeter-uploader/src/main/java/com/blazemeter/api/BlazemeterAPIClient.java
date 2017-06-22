@@ -63,19 +63,14 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
     }
 
     public void sendOnlineData(JSONObject data) throws IOException {
-        if (isAnonymousTest()) {
-            sendAnonymousData(data);
-        } else {
-            // TODO:
-        }
-
+        test.getSession().sendData(data);
     }
 
     public void endOnline() throws IOException {
         if (isAnonymousTest()) {
             test.getSession().stopAnonymous();
         } else {
-            finishTest();
+            test.getSession().stop();
         }
         test = null;
     }
@@ -140,27 +135,5 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
         log.error("Cannot find workspace or create it");
         return null;
     }
-
-
-
-
-    private void sendAnonymousData(JSONObject data) throws IOException {
-        String uri = dataAddress +
-                String.format("/submit.php?session_id=%s&signature=%s&test_id=%s&user_id=%s",
-                        test.getSession().getId(), test.getSignature(), test.getId(), test.getSession().getUserId());
-        uri += "&pq=0&target=labels_bulk&update=1"; //TODO: % self.kpi_target
-        String dataStr = data.toString();
-        log.info("Sending active test data: " + dataStr);
-        query(createPost(uri, dataStr), 200);
-    }
-
-
-
-
-    private void finishTest() {
-    }
-
-
-
 }
 

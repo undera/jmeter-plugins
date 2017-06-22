@@ -23,19 +23,28 @@ public class Test extends HttpBaseEntity {
         super(entity, id, name);
     }
 
-    public String startExternal() {
-        return "";
+    public void startExternal() throws IOException {
+        JSONObject result = startTest(address + String.format("/api/v4/tests/%s/start-external", getId()), 202);
+        fillFields(result);
     }
 
     public String startAnonymousExternal() throws IOException {
-        String uri = address + "/api/v4/sessions";
-        JSONObject response = queryObject(createPost(uri, ""), 201);
-        JSONObject result = response.getJSONObject("result");
+        JSONObject result = startTest(address + "/api/v4/sessions", 201);
         setTestFields(result.getJSONObject("test"));
+        reportURL = result.getString("publicTokenUrl");
+        fillFields(result);
+        return reportURL;
+    }
+
+    private void fillFields(JSONObject result) {
         this.signature = result.getString("signature");
         this.session = Session.fromJSON(this, getId(), signature, result.getJSONObject("session"));
         this.master = Master.fromJSON(this, result.getJSONObject("master"));
-        return reportURL = result.getString("publicTokenUrl");
+    }
+
+    private JSONObject startTest(String uri, int expectedRC) throws IOException {
+        JSONObject response = queryObject(createPost(uri, ""), expectedRC);
+        return response.getJSONObject("result");
     }
 
     private void setTestFields(JSONObject obj) {

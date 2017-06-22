@@ -1,6 +1,8 @@
 package com.blazemeter.api.explorer.base;
 
-
+/**
+ * Base entity for BlazeMeter explorer classes
+ */
 public class BaseEntity {
 
     protected String id;

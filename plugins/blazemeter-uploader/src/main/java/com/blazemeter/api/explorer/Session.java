@@ -19,6 +19,9 @@ public class Session extends HttpBaseEntity {
         this.signature = signature;
     }
 
+    /**
+     * Send test json data for the report
+     */
     public void sendData(JSONObject data) throws IOException {
         String uri = dataAddress +
                 String.format("/submit.php?session_id=%s&signature=%s&test_id=%s&user_id=%s",
@@ -29,11 +32,17 @@ public class Session extends HttpBaseEntity {
         query(createPost(uri, dataStr), 200);
     }
 
+    /**
+     * Stop session for user token
+     */
     public void stop() throws IOException {
         String uri = address + String.format("/api/v4/sessions/%s/stop", getId());
         query(createPost(uri, ""), 202);
     }
 
+    /**
+     * Stop anonymous session
+     */
     public void stopAnonymous() throws IOException {
         String uri = address + String.format("/api/v4/sessions/%s/terminate-external", getId());
         JSONObject data = new JSONObject();

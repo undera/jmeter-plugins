@@ -16,6 +16,10 @@ public class Project extends HttpBaseEntity {
         super(entity, id, name);
     }
 
+    /**
+     * Create Test in current Project
+     * @param name - title of the new Test
+     */
     public Test createTest(String name) throws IOException {
         String uri = address + "/api/v4/tests";
         JSONObject data = new JSONObject();
@@ -26,6 +30,9 @@ public class Project extends HttpBaseEntity {
         return Test.fromJSON(this, response.getJSONObject("result"));
     }
 
+    /**
+     * @return list of Tests in current Project
+     */
     public List<Test> getTests() throws IOException {
         String uri = address + "/api/v4/tests?projectId=" + getId();
         JSONObject response = queryObject(createGet(uri), 200);
@@ -42,9 +49,7 @@ public class Project extends HttpBaseEntity {
         return accounts;
     }
 
-
     public static Project fromJSON(HttpBaseEntity entity, JSONObject obj) {
         return new Project(entity, obj.getString("id"), obj.getString("name"));
     }
-
 }

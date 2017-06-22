@@ -33,6 +33,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 
+/**
+ * Base Entity with Http client
+ */
 public class HttpBaseEntity extends BaseEntity {
 
     protected static final Logger log = LoggingManager.getLoggerForClass();

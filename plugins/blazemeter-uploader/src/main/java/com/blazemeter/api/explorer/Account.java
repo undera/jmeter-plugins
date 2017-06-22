@@ -14,6 +14,18 @@ public class Account extends HttpBaseEntity {
         super(entity, id, name);
     }
 
+    /**
+     * Create Workspace in current Account
+     * @param name - Name of the new Workspace
+     */
+    public Workspace createWorkspace(String name) {
+        // TODO:
+        return null;
+    }
+
+    /**
+     * @return list of Workspace in current Account
+     */
     public List<Workspace> getWorkspaces() throws IOException {
         String uri = address + String.format("/api/v4/workspaces?accountId=%s&enabled=true&limit=100", getId());
         JSONObject response = queryObject(createGet(uri), 200);
@@ -28,11 +40,6 @@ public class Account extends HttpBaseEntity {
         }
 
         return workspaces;
-    }
-
-    public Workspace createWorkspace(String name) {
-        // TODO:
-        return null;
     }
 
     public static Account fromJSON(HttpBaseEntity entity, JSONObject obj) {

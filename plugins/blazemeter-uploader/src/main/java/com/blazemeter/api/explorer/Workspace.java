@@ -19,7 +19,7 @@ public class Workspace extends HttpBaseEntity {
 
     /**
      * Create Project in current Workspace
-     * @param name - Name of the new project
+     * @param name - Name of the new Project
      */
     public Project createProject(String name) throws IOException {
         String uri = address + "/api/v4/projects";
@@ -31,7 +31,7 @@ public class Workspace extends HttpBaseEntity {
     }
 
     /**
-     * @return list of Projects in current workspace
+     * @return list of Projects in current Workspace
      */
     public List<Project> getProjects() throws IOException {
         String uri = address + String.format("/api/v4/projects?workspaceId=%s&limit=99999", getId());

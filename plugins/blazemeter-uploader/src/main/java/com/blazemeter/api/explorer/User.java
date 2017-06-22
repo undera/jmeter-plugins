@@ -14,6 +14,9 @@ public class User extends HttpBaseEntity {
         super(entity);
     }
 
+    /**
+     * @return list of Account for user token
+     */
     public List<Account> getAccounts() throws IOException {
         String uri = address + "/api/v4/accounts";
         JSONObject response = queryObject(createGet(uri), 200);
@@ -29,7 +32,4 @@ public class User extends HttpBaseEntity {
 
         return accounts;
     }
-
-
-
 }

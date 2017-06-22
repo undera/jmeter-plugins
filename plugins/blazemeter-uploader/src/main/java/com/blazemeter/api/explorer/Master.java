@@ -11,6 +11,10 @@ public class Master extends HttpBaseEntity {
         super(entity, id, name);
     }
 
+    /**
+     * Makes a private user report public
+     * @return public link to the report
+     */
     public String makeReportPublic() throws IOException {
         String uri = address + String.format("/api/v4/masters/%s/public-token", getId());
         JSONObject obj = new JSONObject();

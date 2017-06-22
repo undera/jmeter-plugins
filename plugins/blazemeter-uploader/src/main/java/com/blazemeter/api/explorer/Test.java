@@ -23,28 +23,35 @@ public class Test extends HttpBaseEntity {
         super(entity, id, name);
     }
 
+    /**
+     * Start External test for user token
+     */
     public void startExternal() throws IOException {
-        JSONObject result = startTest(address + String.format("/api/v4/tests/%s/start-external", getId()), 202);
+        JSONObject result = sendStartTest(address + String.format("/api/v4/tests/%s/start-external", getId()), 202);
         fillFields(result);
     }
 
+    /**
+     * Start Anonymous External test
+     * @return public link to the report
+     */
     public String startAnonymousExternal() throws IOException {
-        JSONObject result = startTest(address + "/api/v4/sessions", 201);
+        JSONObject result = sendStartTest(address + "/api/v4/sessions", 201);
         setTestFields(result.getJSONObject("test"));
         reportURL = result.getString("publicTokenUrl");
         fillFields(result);
         return reportURL;
     }
 
+    private JSONObject sendStartTest(String uri, int expectedRC) throws IOException {
+        JSONObject response = queryObject(createPost(uri, ""), expectedRC);
+        return response.getJSONObject("result");
+    }
+
     private void fillFields(JSONObject result) {
         this.signature = result.getString("signature");
         this.session = Session.fromJSON(this, getId(), signature, result.getJSONObject("session"));
         this.master = Master.fromJSON(this, result.getJSONObject("master"));
-    }
-
-    private JSONObject startTest(String uri, int expectedRC) throws IOException {
-        JSONObject response = queryObject(createPost(uri, ""), expectedRC);
-        return response.getJSONObject("result");
     }
 
     private void setTestFields(JSONObject obj) {

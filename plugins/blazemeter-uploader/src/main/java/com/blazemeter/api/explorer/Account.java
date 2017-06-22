@@ -18,9 +18,13 @@ public class Account extends HttpBaseEntity {
      * Create Workspace in current Account
      * @param name - Name of the new Workspace
      */
-    public Workspace createWorkspace(String name) {
-        // TODO:
-        return null;
+    public Workspace createWorkspace(String name) throws IOException {
+        String uri = address + "/api/v4/workspaces";
+        JSONObject data = new JSONObject();
+        data.put("name", name);
+        data.put("accountId", getId());
+        JSONObject response = queryObject(createPost(uri, data.toString()), 201);
+        return Workspace.fromJSON(this, response.getJSONObject("result"));
     }
 
     /**

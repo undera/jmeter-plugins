@@ -1,6 +1,5 @@
 package com.blazemeter.api;
 
-import com.blazemeter.api.BlazemeterReport;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

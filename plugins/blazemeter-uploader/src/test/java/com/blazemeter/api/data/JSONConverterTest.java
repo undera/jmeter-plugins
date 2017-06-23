@@ -1,6 +1,5 @@
 package com.blazemeter.api.data;
 
-import com.blazemeter.api.data.JSONConverter;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.Test;
@@ -37,7 +36,7 @@ public class JSONConverterTest {
 
 
         JSONObject result = JSONConverter.convertToJSON(list, list);
-
+        // TODO: assertEquals
         System.out.println(result);
     }
 }

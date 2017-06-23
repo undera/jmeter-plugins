@@ -5,14 +5,12 @@ import com.blazemeter.jmeter.StatusNotifierCallbackTest;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.LinkedList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MasterTest {
 
@@ -48,8 +46,6 @@ public class MasterTest {
     }
 
     protected static class MasterExt extends Master {
-        private static final Logger log = LoggingManager.getLoggerForClass();
-
         private LinkedList<JSON> responses = new LinkedList<>();
 
         public MasterExt(HttpBaseEntity entity, String id, String name) {

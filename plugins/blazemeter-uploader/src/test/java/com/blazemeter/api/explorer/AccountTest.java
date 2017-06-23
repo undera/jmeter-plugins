@@ -66,8 +66,6 @@ public class AccountTest {
     }
 
     protected static class AccountExt extends Account {
-        private static final Logger log = LoggingManager.getLoggerForClass();
-
         private LinkedList<JSON> responses = new LinkedList<>();
 
         public AccountExt(HttpBaseEntity entity, String id, String name) {

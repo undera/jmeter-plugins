@@ -64,8 +64,6 @@ public class ProjectTest {
     }
 
     protected static class ProjectExt extends Project {
-        private static final Logger log = LoggingManager.getLoggerForClass();
-
         private LinkedList<JSON> responses = new LinkedList<>();
 
         public ProjectExt(HttpBaseEntity entity, String id, String name) {

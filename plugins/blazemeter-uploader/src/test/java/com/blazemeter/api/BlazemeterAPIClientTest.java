@@ -27,7 +27,7 @@ public class BlazemeterAPIClientTest {
         apiClient.endOnline();
     }
 
-    private List<SampleResult> generateResults() {
+    public static List<SampleResult> generateResults() {
         List<SampleResult> list = new LinkedList<>();
         list.add(new SampleResult(System.currentTimeMillis(), 1));
         list.add(new SampleResult(System.currentTimeMillis() + 1000, 1));

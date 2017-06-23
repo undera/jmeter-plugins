@@ -38,4 +38,41 @@ public class BlazemeterUploaderGuiTest {
         }
     }
 
+    @Test
+    public void testGui() throws Exception {
+        BlazemeterUploaderGui gui = new BlazemeterUploaderGui();
+
+        assertEquals(BlazemeterUploaderGui.class.getCanonicalName(), gui.getLabelResource());
+        assertEquals("bzm - BlazeMeter Uploader", gui.getStaticLabel());
+
+        BlazemeterUploader element1 = (BlazemeterUploader) gui.createTestElement();
+        BlazemeterUploader element2 = (BlazemeterUploader) gui.createTestElement();
+
+        element1.setWorkspace("test_workspace");
+        element1.setProject("test_project");
+        element1.setTitle("test_title");
+        element1.setUploadToken("test_token");
+        element1.setAnonymousTest(true);
+        element1.setShareTest(true);
+
+        gui.configure(element1);
+        gui.modifyTestElement(element2);
+
+        assertEquals(element1.getWorkspace(), element2.getWorkspace());
+        assertEquals(element1.getProject(), element2.getProject());
+        assertEquals(element1.getTitle(), element2.getTitle());
+        assertEquals(element1.getUploadToken(), element2.getUploadToken());
+        assertEquals(element1.isAnonymousTest(), element2.isAnonymousTest());
+        assertEquals(element1.isShareTest(), element2.isShareTest());
+
+        gui.clearGui();
+        gui.modifyTestElement(element2);
+
+        assertEquals("", element2.getTitle());
+        assertEquals("Default workspace", element2.getWorkspace());
+        assertEquals("Default project", element2.getProject());
+        assertEquals("", element2.getUploadToken());
+        assertEquals(false, element2.isAnonymousTest());
+        assertEquals(false, element2.isShareTest());
+    }
 }

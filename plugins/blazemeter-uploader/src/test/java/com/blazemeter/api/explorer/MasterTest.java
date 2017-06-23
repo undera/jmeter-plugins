@@ -3,7 +3,6 @@ package com.blazemeter.api.explorer;
 import com.blazemeter.api.explorer.base.HttpBaseEntity;
 import com.blazemeter.jmeter.StatusNotifierCallbackTest;
 import net.sf.json.JSON;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.jorphan.logging.LoggingManager;
@@ -12,11 +11,10 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-public class AccountTest {
+public class MasterTest {
 
     @Test
     public void testFlow() throws Exception {
@@ -24,30 +22,14 @@ public class AccountTest {
         HttpBaseEntity emul = new HttpBaseEntity(notifier, "test_address", "test_data_address", "test_id", false);
 
         JSONObject result = new JSONObject();
-        result.put("id", "xxx");
-        result.put("name", "NEW_WORKSPACE");
+        result.put("publicToken", "test_token");
         JSONObject response = new JSONObject();
         response.put("result", result);
 
-        AccountExt account = new AccountExt(emul, "account_id", "account_name");
+        MasterExt account = new MasterExt(emul, "master_id", "master_name");
         account.addEmul(response);
-        Workspace workspace = account.createWorkspace("NEW_WORKSPACE");
-        assertEquals("xxx", workspace.getId());
-        assertEquals("NEW_WORKSPACE", workspace.getName());
-
-        response.clear();
-        JSONArray results = new JSONArray();
-        results.add(result);
-        results.add(result);
-        response.put("result", results);
-        account.addEmul(response);
-
-        List<Workspace> workspaces = account.getWorkspaces();
-        assertEquals(2, workspaces.size());
-        for (Workspace wsp :workspaces) {
-            assertEquals("xxx", wsp.getId());
-            assertEquals("NEW_WORKSPACE", wsp.getName());
-        }
+        String url = account.makeReportPublic();
+        assertEquals("test_address/app/?public-token=test_token#/masters/master_id/summary", url);
     }
 
     @Test
@@ -55,22 +37,22 @@ public class AccountTest {
         StatusNotifierCallbackTest notifier = new StatusNotifierCallbackTest();
         HttpBaseEntity emul = new HttpBaseEntity(notifier, "test_address", "test_data_address", "test_id", false);
         JSONObject object = new JSONObject();
-        object.put("id", "accountId");
-        object.put("name", "accountName");
-        Account account = Account.fromJSON(emul, object);
-        assertEquals("accountId", account.getId());
-        assertEquals("accountName", account.getName());
+        object.put("id", "masterId");
+        object.put("name", "masterName");
+        Master account = Master.fromJSON(emul, object);
+        assertEquals("masterId", account.getId());
+        assertEquals("masterName", account.getName());
         assertEquals("test_address", account.getAddress());
         assertEquals("test_data_address", account.getDataAddress());
         assertEquals(notifier, account.getNotifier());
     }
 
-    protected static class AccountExt extends Account {
+    protected static class MasterExt extends Master {
         private static final Logger log = LoggingManager.getLoggerForClass();
 
         private LinkedList<JSON> responses = new LinkedList<>();
 
-        public AccountExt(HttpBaseEntity entity, String id, String name) {
+        public MasterExt(HttpBaseEntity entity, String id, String name) {
             super(entity, id, name);
         }
 

@@ -35,12 +35,6 @@ public class BlazemeterUploader extends BackendListener implements StatusNotifie
     }
 
     @Override
-    public void testEnded() {
-        testEnded(MainFrame.LOCAL);
-    }
-
-
-    @Override
     public void testStarted(String host) {
         setArguments(createArguments());
         super.testStarted(host);
@@ -59,17 +53,11 @@ public class BlazemeterUploader extends BackendListener implements StatusNotifie
     }
 
     @Override
-    public void testEnded(String host) {
-        super.testEnded(host);
-    }
-
-    @Override
     public void notifyAbout(String info) {
         if (gui != null) {
             gui.inform(info);
         }
         log.info(info);
-        System.out.println(info);
     }
 
     @Override

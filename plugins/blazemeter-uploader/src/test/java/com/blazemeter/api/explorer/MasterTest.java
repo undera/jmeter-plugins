@@ -26,9 +26,9 @@ public class MasterTest {
         JSONObject response = new JSONObject();
         response.put("result", result);
 
-        MasterExt account = new MasterExt(emul, "master_id", "master_name");
-        account.addEmul(response);
-        String url = account.makeReportPublic();
+        MasterExt master = new MasterExt(emul, "master_id", "master_name");
+        master.addEmul(response);
+        String url = master.makeReportPublic();
         assertEquals("test_address/app/?public-token=test_token#/masters/master_id/summary", url);
     }
 
@@ -39,12 +39,12 @@ public class MasterTest {
         JSONObject object = new JSONObject();
         object.put("id", "masterId");
         object.put("name", "masterName");
-        Master account = Master.fromJSON(emul, object);
-        assertEquals("masterId", account.getId());
-        assertEquals("masterName", account.getName());
-        assertEquals("test_address", account.getAddress());
-        assertEquals("test_data_address", account.getDataAddress());
-        assertEquals(notifier, account.getNotifier());
+        Master master = Master.fromJSON(emul, object);
+        assertEquals("masterId", master.getId());
+        assertEquals("masterName", master.getName());
+        assertEquals("test_address", master.getAddress());
+        assertEquals("test_data_address", master.getDataAddress());
+        assertEquals(notifier, master.getNotifier());
     }
 
     protected static class MasterExt extends Master {

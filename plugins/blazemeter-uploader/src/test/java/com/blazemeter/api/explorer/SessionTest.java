@@ -1,31 +1,103 @@
 package com.blazemeter.api.explorer;
 
-import com.blazemeter.api.explorer.Session;
-import org.junit.Test;
+import com.blazemeter.api.explorer.base.HttpBaseEntity;
+import com.blazemeter.jmeter.StatusNotifierCallbackTest;
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.LinkedList;
 
 import static org.junit.Assert.assertEquals;
 
 public class SessionTest {
 
-//    @Test
-//    public void test() throws Exception {
-//        Session session = new Session();
-//
-//        String id = "id";
-//        session.setId(id);
-//        assertEquals(id, session.getId());
-//
-//        String userId = "userId";
-//        session.setUserId(userId);
-//        assertEquals(userId, session.getUserId());
-//
-//        String testId = "testId";
-//        session.setTestId(testId);
-//        assertEquals(testId, session.getTestId());
-//
-//        session = new Session(id, testId, userId);
-//        assertEquals(id, session.getId());
-//        assertEquals(userId, session.getUserId());
-//        assertEquals(testId, session.getTestId());
-//    }
+    @org.junit.Test
+    public void testFlow() throws Exception {
+        StatusNotifierCallbackTest notifier = new StatusNotifierCallbackTest();
+        HttpBaseEntity emul = new HttpBaseEntity(notifier, "test_address", "test_data_address", "test_id", false);
+
+        JSONObject data = new JSONObject();
+        data.put("data", "Hello, World!");
+
+        SessionExt session = new SessionExt(emul, "sessionId", "sessionName", "userId", "testId", "testSignature");
+        session.sendData(data);
+        assertEquals(1, session.getRequests().size());
+        assertEquals("{\"data\":\"Hello, World!\"}", session.getRequests().get(0));
+        session.clean();
+
+        session.stop();
+        assertEquals(1, session.getRequests().size());
+        assertEquals("", session.getRequests().get(0));
+        session.clean();
+
+        session.stopAnonymous();
+        assertEquals(1, session.getRequests().size());
+        assertEquals("{\"signature\":\"testSignature\",\"testId\":\"testId\",\"sessionId\":\"sessionId\"}", session.getRequests().get(0));
+        session.clean();
+    }
+
+    @org.junit.Test
+    public void testFromJSON() throws Exception {
+        StatusNotifierCallbackTest notifier = new StatusNotifierCallbackTest();
+        HttpBaseEntity emul = new HttpBaseEntity(notifier, "test_address", "test_data_address", "test_id", false);
+        JSONObject object = new JSONObject();
+        object.put("id", "sessionId");
+        object.put("name", "sessionName");
+        object.put("userId", "testUserId");
+        Session session = Session.fromJSON(emul, "testId", "testSignature", object);
+        assertEquals("sessionId", session.getId());
+        assertEquals("sessionName", session.getName());
+        assertEquals("testId", session.getTestId());
+        assertEquals("testSignature", session.getSignature());
+        assertEquals("testUserId", session.getUserId());
+        assertEquals("test_address", session.getAddress());
+        assertEquals("test_data_address", session.getDataAddress());
+        assertEquals(notifier, session.getNotifier());
+    }
+
+    protected static class SessionExt extends Session {
+        private LinkedList<String> requests = new LinkedList<>();
+
+        public SessionExt(HttpBaseEntity entity, String id, String name, String userId, String testId, String signature) {
+            super(entity, id, name, userId, testId, signature);
+        }
+
+        public void clean() {
+            requests.clear();
+        }
+
+        public LinkedList<String> getRequests() {
+            return requests;
+        }
+
+        @Override
+        protected JSON query(HttpRequestBase request, int expectedCode) throws IOException {
+            extractBody(request);
+            return new JSONObject();
+        }
+
+        private void extractBody(HttpRequestBase request) throws IOException {
+            if (request instanceof HttpPost) {
+                HttpPost post = (HttpPost) request;
+                InputStream inputStream = post.getEntity().getContent();
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                IOUtils.copy(inputStream, outputStream);
+                requests.add(outputStream.toString());
+            } else {
+                throw new IOException("POST request was expected");
+            }
+        }
+
+        @Override
+        protected JSONObject queryObject(HttpRequestBase request, int expectedCode) throws IOException {
+            extractBody(request);
+            return new JSONObject();
+        }
+    }
 }

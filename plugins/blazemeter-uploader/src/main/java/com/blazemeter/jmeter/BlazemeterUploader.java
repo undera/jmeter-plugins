@@ -67,7 +67,15 @@ public class BlazemeterUploader extends BackendListener implements StatusNotifie
         return clone;
     }
 
+    @Override
+    public void testEnded(String host) {
+        super.testEnded(host);
+    }
 
+    @Override
+    public void testEnded() {
+        testEnded(MainFrame.LOCAL);
+    }
 
     public boolean isAnonymousTest() {
         return getPropertyAsBoolean(ANONYMOUS_TEST);

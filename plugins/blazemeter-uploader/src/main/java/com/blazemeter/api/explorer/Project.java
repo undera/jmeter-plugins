@@ -23,9 +23,11 @@ public class Project extends HttpBaseEntity {
     public Test createTest(String name) throws IOException {
         String uri = address + "/api/v4/tests";
         JSONObject data = new JSONObject();
+        data.put("projectId", Long.parseLong(getId()));
+        JSONObject configuration = new JSONObject();
+        configuration.put("type", "external");
+        data.put("configuration", configuration);
         data.put("name", name);
-        data.put("projectId", getId());
-        data.put("configuration", "{\"type\": \"external\"}");
         JSONObject response = queryObject(createPost(uri, data.toString()), 201);
         return Test.fromJSON(this, response.getJSONObject("result"));
     }

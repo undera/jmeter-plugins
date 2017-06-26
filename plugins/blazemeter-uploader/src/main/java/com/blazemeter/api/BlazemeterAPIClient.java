@@ -54,6 +54,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
         try {
             user.ping();
         } catch (IOException e) {
+            notifier.notifyAbout("Cannot reach online results storage, maybe the address/token is wrong");
             log.error("Cannot reach online results storage, maybe the address/token is wrong");
             return;
         }
@@ -91,6 +92,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
             }
         }
 
+        notifier.notifyAbout("Creating a test '" + testNameOrId + "' in '" + project.getName() +"' project");
         return project.createTest(testNameOrId);
     }
 
@@ -108,6 +110,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
             }
         }
 
+        notifier.notifyAbout("Creating a project '" + projectNameOrId + "' in '" + workspace.getName() +"' workspace");
         return workspace.createProject(projectNameOrId);
     }
 
@@ -135,6 +138,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
         }
 
         log.error("Cannot find workspace or create it");
+        notifier.notifyAbout("Cannot find workspace or create it");
         return null;
     }
 

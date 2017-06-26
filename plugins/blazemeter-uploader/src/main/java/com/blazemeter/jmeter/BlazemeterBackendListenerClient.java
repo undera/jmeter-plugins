@@ -81,6 +81,7 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     public void teardownTest(BackendListenerContext backendListenerContext) throws Exception {
         apiClient.endOnline();
         accumulator.clear();
+        informer.notifyAbout("<p>Upload finished successfully</p>");
     }
 
     @Override

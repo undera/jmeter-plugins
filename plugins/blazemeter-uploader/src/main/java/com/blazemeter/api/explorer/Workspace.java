@@ -25,7 +25,7 @@ public class Workspace extends HttpBaseEntity {
         String uri = address + "/api/v4/projects";
         JSONObject data = new JSONObject();
         data.put("name", name);
-        data.put("workspaceId", getId());
+        data.put("workspaceId", Long.parseLong(getId()));
         JSONObject response = queryObject(createPost(uri, data.toString()), 201);
         return Project.fromJSON(this, response.getJSONObject("result"));
     }

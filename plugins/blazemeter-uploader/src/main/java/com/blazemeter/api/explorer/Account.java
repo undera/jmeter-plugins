@@ -22,7 +22,7 @@ public class Account extends HttpBaseEntity {
         String uri = address + "/api/v4/workspaces";
         JSONObject data = new JSONObject();
         data.put("name", name);
-        data.put("accountId", getId());
+        data.put("accountId", Long.parseLong(getId()));
         JSONObject response = queryObject(createPost(uri, data.toString()), 201);
         return Workspace.fromJSON(this, response.getJSONObject("result"));
     }

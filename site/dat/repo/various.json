@@ -158,7 +158,7 @@
     "vendor": "Till Neunast",
     "markerClass": "nz.co.breakpoint.jmeter.vizualizers.sshmon.SSHMonCollector",
     "versions": {
-      "0.1": {
+      "1.0": {
         "downloadUrl": "https://github.com/tilln/jmeter-sshmon/releases/download/1.0/jmeter-sshmon-1.0.jar",
         "libs": {
           "commons-io": "https://search.maven.org/remotecontent?filepath=commons-io/commons-io/2.5/commons-io-2.5.jar",

@@ -92,7 +92,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
             }
         }
 
-        notifier.notifyAbout("Creating a test '" + testNameOrId + "' in '" + project.getName() +"' project");
+        notifier.notifyAbout("Creating a test '" + testNameOrId + "' in '" + project.getName() +"' project (id:" + project.getId() + ")");
         return project.createTest(testNameOrId);
     }
 
@@ -110,7 +110,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
             }
         }
 
-        notifier.notifyAbout("Creating a project '" + projectNameOrId + "' in '" + workspace.getName() +"' workspace");
+        notifier.notifyAbout("Creating a project '" + projectNameOrId + "' in '" + workspace.getName() +"' workspace (id:" + workspace.getId() + ")");
         return workspace.createProject(projectNameOrId);
     }
 

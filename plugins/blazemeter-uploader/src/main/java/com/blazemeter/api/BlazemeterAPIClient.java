@@ -31,7 +31,8 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
             return test.startAnonymousExternal();
         } else {
             test.startExternal();
-            return (report.isShareTest()) ? test.getMaster().makeReportPublic() : "";
+            return (report.isShareTest()) ? test.getMaster().makeReportPublic() :
+                    (address + "/app/#/masters/" + test.getMaster().getId());
         }
     }
 

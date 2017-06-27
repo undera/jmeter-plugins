@@ -20,15 +20,15 @@ public class ProjectTest {
         HttpBaseEntity emul = new HttpBaseEntity(notifier, "test_address", "test_data_address", "test_id", false);
 
         JSONObject result = new JSONObject();
-        result.put("id", "testId");
+        result.put("id", "100");
         result.put("name", "NEW_TEST");
         JSONObject response = new JSONObject();
         response.put("result", result);
 
-        ProjectExt project = new ProjectExt(emul, "projectId", "projectName");
+        ProjectExt project = new ProjectExt(emul, "10", "projectName");
         project.addEmul(response);
         Test test = project.createTest("NEW_WORKSPACE");
-        assertEquals("testId", test.getId());
+        assertEquals("100", test.getId());
         assertEquals("NEW_TEST", test.getName());
 
         response.clear();
@@ -41,7 +41,7 @@ public class ProjectTest {
         List<Test> tests = project.getTests();
         assertEquals(2, tests.size());
         for (Test t :tests) {
-            assertEquals("testId", t.getId());
+            assertEquals("100", t.getId());
             assertEquals("NEW_TEST", t.getName());
         }
     }

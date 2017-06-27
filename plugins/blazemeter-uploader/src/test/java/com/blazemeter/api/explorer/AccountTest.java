@@ -22,15 +22,15 @@ public class AccountTest {
         HttpBaseEntity emul = new HttpBaseEntity(notifier, "test_address", "test_data_address", "test_id", false);
 
         JSONObject result = new JSONObject();
-        result.put("id", "xxx");
+        result.put("id", "100");
         result.put("name", "NEW_WORKSPACE");
         JSONObject response = new JSONObject();
         response.put("result", result);
 
-        AccountExt account = new AccountExt(emul, "account_id", "account_name");
+        AccountExt account = new AccountExt(emul, "777", "account_name");
         account.addEmul(response);
         Workspace workspace = account.createWorkspace("NEW_WORKSPACE");
-        assertEquals("xxx", workspace.getId());
+        assertEquals("100", workspace.getId());
         assertEquals("NEW_WORKSPACE", workspace.getName());
 
         response.clear();
@@ -43,7 +43,7 @@ public class AccountTest {
         List<Workspace> workspaces = account.getWorkspaces();
         assertEquals(2, workspaces.size());
         for (Workspace wsp :workspaces) {
-            assertEquals("xxx", wsp.getId());
+            assertEquals("100", wsp.getId());
             assertEquals("NEW_WORKSPACE", wsp.getName());
         }
     }

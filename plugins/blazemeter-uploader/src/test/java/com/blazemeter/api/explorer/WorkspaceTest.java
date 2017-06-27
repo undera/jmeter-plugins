@@ -20,15 +20,15 @@ public class WorkspaceTest {
         HttpBaseEntity emul = new HttpBaseEntity(notifier, "test_address", "test_data_address", "test_id", false);
 
         JSONObject result = new JSONObject();
-        result.put("id", "xxx");
+        result.put("id", "999");
         result.put("name", "NEW_PROJECT");
         JSONObject response = new JSONObject();
         response.put("result", result);
 
-        WorkspaceExt workspace = new WorkspaceExt(emul, "workspace_id", "workspace_name");
+        WorkspaceExt workspace = new WorkspaceExt(emul, "888", "workspace_name");
         workspace.addEmul(response);
         Project project = workspace.createProject("NEW_PROJECT");
-        assertEquals("xxx", project.getId());
+        assertEquals("999", project.getId());
         assertEquals("NEW_PROJECT", project.getName());
 
         response.clear();
@@ -41,7 +41,7 @@ public class WorkspaceTest {
         List<Project> projects = workspace.getProjects();
         assertEquals(2, projects.size());
         for (Project p :projects) {
-            assertEquals("xxx", p.getId());
+            assertEquals("999", p.getId());
             assertEquals("NEW_PROJECT", p.getName());
         }
     }

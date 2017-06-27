@@ -3,6 +3,9 @@
 <script src="https://code.highcharts.com/modules/data.js"></script>
 
 <div id="jmetervers" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<table id="platforms">
+    <tr></tr>
+</table>
 <hr/>
 
 
@@ -113,7 +116,7 @@ By the number of known users:
                         text: 'Fixed data collecting',
                         align: 'left'
                     }
-                },{
+                }, {
                     color: 'silver',
                     dashStyle: 'longdashdot',
                     value: new Date("2017-05-22"),
@@ -232,6 +235,29 @@ By the number of known users:
 
 
     $(function () {
+        $.getJSON('/dat/stats/platforms.json', function (data) {
+            var tr = $('#platforms').find("tr");
+            var refined = {};
+            var sum = 0;
+            for (var plat in data) {
+                var val = data[plat];
+                if (plat.indexOf("windows") === 0) {
+                    plat = "windows";
+                }
+
+                if (!refined[plat]) {
+                    refined[plat] = 0;
+                }
+
+                refined[plat] += val;
+                sum += val;
+            }
+
+            for (plat in refined) {
+                tr.append("<td>" + plat + ": " + (100*refined[plat]/sum).toFixed(2) + "%</td>");
+            }
+        });
+
         $.get('/dat/stats/jmeter_versions_history.csv', function (csv) {
             $('#jmetervers').highcharts(jmeter_graph(csv));
         });

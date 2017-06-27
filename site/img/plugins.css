@@ -290,3 +290,8 @@ table.wiki img {
 .jqsfield > span {
     display: none;
 }
+
+#platforms {
+    width: 100%;
+    font-size: smaller;
+}

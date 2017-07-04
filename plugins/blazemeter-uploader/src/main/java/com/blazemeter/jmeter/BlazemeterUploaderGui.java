@@ -4,25 +4,21 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.visualizers.gui.AbstractListenerGui;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.awt.event.ActionListener;
 
 public class BlazemeterUploaderGui extends AbstractListenerGui implements HyperlinkListener {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
     public static final String WIKIPAGE = "BlazemeterUploader";
     public static final String UPLOAD_TOKEN_PLACEHOLDER = "Replace this text with upload token received at a.blazemeter.com\nCan be used deprecated API keys or new improved keys.\nRemember that anyone who has this token can upload files to your account.\nPlease, treat your token as confidential data.\nSee plugin help for details.";
 
     private JCheckBox anonymousTest;
+    private ActionListener actionListener;
     private JCheckBox shareTest;
     private JTextField testWorkspace;
     private JTextField projectKey;
@@ -80,6 +76,7 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
         projectKey.setText(uploader.getProject());
         testTitle.setText(uploader.getTitle());
         uploadToken.setText(uploader.getUploadToken());
+        actionListener.actionPerformed(new ActionEvent(anonymousTest, 0, "select"));
     }
 
     private void init() {
@@ -153,7 +150,7 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
         container.add(mainPanel, BorderLayout.NORTH);
         add(container, BorderLayout.CENTER);
 
-        anonymousTest.addActionListener(new AbstractAction() {
+        actionListener = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 disableComponent(!anonymousTest.isSelected());
@@ -166,8 +163,11 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
                 testTitle.setEnabled(enable);
                 uploadToken.setEnabled(enable);
             }
-        });
+        };
+        anonymousTest.addActionListener(actionListener);
     }
+
+
 
     private void initFields() {
         anonymousTest.setSelected(false);

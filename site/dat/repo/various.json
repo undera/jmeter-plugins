@@ -296,8 +296,8 @@
     "id": "jpgc-sense",
     "name": "BM.Sense Uploader",
     "description": "This is special plugin in for uploading results to BlazeMeter Sense immediately after test end",
-    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/loadosophia_uploader.png",
-    "helpUrl": "https://jmeter-plugins.org/wiki/LoadosophiaUploader/",
+    "screenshotUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/raw/master/sense-uploader/loadosophia_uploader.png",
+    "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/sense-uploader/LoadosophiaUploader.md",
     "vendor": "BlazeMeter",
     "markerClass": "kg.apc.jmeter.reporters.LoadosophiaUploader",
     "versions": {

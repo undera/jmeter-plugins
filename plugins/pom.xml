@@ -40,7 +40,6 @@
         <module>perfmon</module>
         <module>prmctl</module>
         <module>redis</module>
-        <module>sense-uploader</module>
         <module>tst</module>
         <module>udp</module>
         <module>webdriver</module>

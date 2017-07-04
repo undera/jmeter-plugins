@@ -36,7 +36,6 @@
   * [FlexibleFileWriter Flexible File Writer]
   * [ConsoleStatusLogger Non-GUI Console Status Logger] 
   * [SynthesisReport Synthesis Report] filterable by label (regex), offset
-  * [LoadosophiaUploader BM.Sense Uploader] (aka Loadosophia Uploader)
   * [AutoStop] Trigger
   * [GraphsGeneratorListener Graphs Generator]
 

@@ -444,7 +444,7 @@
   {
     "id": "jpgc-blazemeter-uploader",
     "name": "BlazeMeter Uploader",
-    "description": "TThis is special plugin for uploading results to BlazeMeter during the test running.",
+    "description": "This is special plugin for uploading results to BlazeMeter during the test running.",
     "screenshotUrl": "https://jmeter-plugins.org/img/wiki/blazemeter_uploader.png",
     "helpUrl": "https://jmeter-plugins.org/wiki/BlazeMeterUploader/",
     "vendor": "JMeter-Plugins.org",

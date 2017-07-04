@@ -20,15 +20,17 @@ public class Session extends HttpBaseEntity {
 
     /**
      * Send test json data for the report
+     * @return session in JSONObject
      */
-    public void sendData(JSONObject data) throws IOException {
+    public JSONObject sendData(JSONObject data) throws IOException {
         String uri = dataAddress +
                 String.format("/submit.php?session_id=%s&signature=%s&test_id=%s&user_id=%s",
                         getId(), signature, testId, userId);
         uri += "&pq=0&target=labels_bulk&update=1"; //TODO: % self.kpi_target
         String dataStr = data.toString();
         log.debug("Sending active test data: " + dataStr);
-        query(createPost(uri, dataStr), 200);
+        JSONObject response = queryObject(createPost(uri, dataStr), 200);
+        return response.getJSONObject("result").getJSONObject("session");
     }
 
     /**

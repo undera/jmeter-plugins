@@ -8,6 +8,7 @@ import com.blazemeter.api.explorer.User;
 import com.blazemeter.api.explorer.Workspace;
 import com.blazemeter.jmeter.StatusNotifierCallback;
 import net.sf.json.JSONObject;
+import org.apache.jorphan.util.JMeterStopTestException;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,7 +39,12 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
     }
 
     public void sendOnlineData(JSONObject data) throws IOException {
-        test.getSession().sendData(data);
+        JSONObject session = test.getSession().sendData(data);
+        int statusCode = session.getInt("statusCode");
+        if (statusCode > 100) {
+            notifier.notifyAbout("Test was stopped through Web UI: " + session.getString("status"));
+            throw new JMeterStopTestException("The test was interrupted through Web UI");
+        }
     }
 
     public void endOnline() throws IOException {

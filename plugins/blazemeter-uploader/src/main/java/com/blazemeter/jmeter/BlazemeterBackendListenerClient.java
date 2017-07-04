@@ -6,11 +6,13 @@ import com.blazemeter.api.data.JSONConverter;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.config.Arguments;
+import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.backend.BackendListenerClient;
 import org.apache.jmeter.visualizers.backend.BackendListenerContext;
 import org.apache.jorphan.logging.LoggingManager;
+import org.apache.jorphan.util.JMeterStopTestException;
 import org.apache.log.Logger;
 
 import java.io.IOException;
@@ -27,6 +29,7 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     protected BlazemeterAPIClient apiClient;
     protected BlazemeterReport report;
 
+    private boolean isInterruptedThroughUI;
     private final List<SampleResult> accumulator = new ArrayList<>();
 
     // this field set from BlazemeterUploader after BackendListener created instance of this class
@@ -37,6 +40,7 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     public void setupTest(BackendListenerContext context) throws Exception {
         init(context);
         accumulator.clear();
+        isInterruptedThroughUI = false;
     }
 
     private void init(BackendListenerContext context) {
@@ -69,10 +73,17 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
 
     @Override
     public void handleSampleResults(List<SampleResult> list, BackendListenerContext backendListenerContext) {
+        if (isInterruptedThroughUI) {
+            return;
+        }
+
         accumulator.addAll(list);
         JSONObject data = JSONConverter.convertToJSON(accumulator, list);
         try {
             apiClient.sendOnlineData(data);
+        } catch (JMeterStopTestException ex) {
+            isInterruptedThroughUI = true;
+            StandardJMeterEngine.stopEngineNow();
         } catch (IOException e) {
             log.warn("Failed to send data: " + data, e);
         }
@@ -86,9 +97,11 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
 
     @Override
     public void teardownTest(BackendListenerContext backendListenerContext) throws Exception {
-        apiClient.endOnline();
+        if (!isInterruptedThroughUI) {
+            apiClient.endOnline();
+            informer.notifyAbout("Upload finished successfully");
+        }
         accumulator.clear();
-        informer.notifyAbout("Upload finished successfully");
     }
 
     @Override

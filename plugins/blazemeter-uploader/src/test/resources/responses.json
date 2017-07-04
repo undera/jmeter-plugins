@@ -146,7 +146,12 @@
   },
 
   {
-    "_comment" : "send data response"
+    "_comment" : "send data response",
+    "result" : {
+      "session" : {
+        "statusCode" : 100
+      }
+    }
   },
 
   {

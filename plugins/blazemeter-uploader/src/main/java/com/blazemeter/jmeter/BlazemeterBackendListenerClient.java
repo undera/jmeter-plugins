@@ -3,6 +3,7 @@ package com.blazemeter.jmeter;
 import com.blazemeter.api.BlazemeterAPIClient;
 import com.blazemeter.api.BlazemeterReport;
 import com.blazemeter.api.data.JSONConverter;
+import kg.apc.jmeter.JMeterPluginsUtils;
 import net.sf.json.JSONObject;
 import org.apache.jmeter.config.Arguments;
 import org.apache.jmeter.samplers.SampleResult;
@@ -55,6 +56,11 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
             log.info("Starting BlazeMeter test");
             String url = apiClient.startOnline();
             informer.notifyAbout("<p>Started active test: <a href='" + url + "'>" + url + "</a></p>");
+            try {
+                JMeterPluginsUtils.openInBrowser(url);
+            } catch (UnsupportedOperationException ex) {
+                log.debug("Failed to open in browser", ex);
+            }
         } catch (IOException ex) {
             informer.notifyAbout("Failed to start active test");
             log.warn("Failed to initiate active test", ex);

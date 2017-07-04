@@ -198,18 +198,7 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
     @Override
     public void hyperlinkUpdate(HyperlinkEvent e) {
         if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-            openInBrowser(e.getURL().toString());
+            JMeterPluginsUtils.openInBrowser(e.getURL().toString());
         }
     }
-
-    public static void openInBrowser(String string) {
-        if (java.awt.Desktop.isDesktopSupported()) {
-            try {
-                java.awt.Desktop.getDesktop().browse(new URI(string));
-            } catch (IOException | URISyntaxException ignored) {
-                log.debug("Failed to open in browser", ignored);
-            }
-        }
-    }
-
 }

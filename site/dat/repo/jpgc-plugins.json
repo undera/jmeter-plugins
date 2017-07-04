@@ -442,6 +442,23 @@
     }
   },
   {
+    "id": "jpgc-blazemeter-uploader",
+    "name": "BlazeMeter Uploader",
+    "description": "TThis is special plugin for uploading results to BlazeMeter during the test running.",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/blazemeter_uploader.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/BlazeMeterUploader/",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "com.blazemeter.jmeter.BlazemeterUploader",
+    "versions": {
+      "0.1": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-blazemeter-uploader/0.1/jmeter-plugins-blazemeter-uploader-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
+        }
+      }
+    }
+  },
+  {
     "id": "jpgc-sense",
     "name": "BM.Sense Uploader",
     "description": "This is special plugin in for uploading results to BlazeMeter Sense immediately after test end",

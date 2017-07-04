@@ -58,6 +58,7 @@ public class BlazemeterUploader extends BackendListener implements StatusNotifie
             gui.inform(info);
         }
         log.info(info);
+        System.out.println(info);
     }
 
     @Override

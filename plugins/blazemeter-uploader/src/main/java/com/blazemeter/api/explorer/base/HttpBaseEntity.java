@@ -144,7 +144,8 @@ public class HttpBaseEntity extends BaseEntity {
                 response = getResponseEntity(result);
 
                 if (statusCode != expectedCode) {
-                    notifier.notifyAbout("Response with code " + statusCode + ": " + response);
+
+                    notifier.notifyAbout("Response with code " + statusCode + ": " + extractErrorMessage(response));
                     throw new IOException("API responded with wrong status code: " + statusCode);
                 } else {
                     log.debug("Response: " + response);
@@ -159,6 +160,20 @@ public class HttpBaseEntity extends BaseEntity {
                 return JSONSerializer.toJSON(response, new JsonConfig());
             }
         }
+    }
+
+    private String extractErrorMessage(String response) {
+        if (response != null && !response.isEmpty()) {
+            JSON jsonResponse = JSONSerializer.toJSON(response, new JsonConfig());
+            if (jsonResponse instanceof JSONObject) {
+                JSONObject object = (JSONObject) jsonResponse;
+                JSONObject errorObj = object.getJSONObject("error");
+                if (errorObj.containsKey("message")) {
+                    return errorObj.getString("message");
+                }
+            }
+        }
+        return response;
     }
 
     private void setTokenToHeader(HttpRequestBase httpRequestBase) {

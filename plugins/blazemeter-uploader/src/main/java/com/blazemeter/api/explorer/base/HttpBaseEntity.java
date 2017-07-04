@@ -217,7 +217,7 @@ public class HttpBaseEntity extends BaseEntity {
         if (!proxyHost.isEmpty()) {
             int proxyPort = Integer.parseInt(System.getProperty("https.proxyPort", "-1"));
             log.info("Using proxy " + proxyHost + ":" + proxyPort);
-            org.apache.http.params.HttpParams params = client.getParams();
+            HttpParams params = client.getParams();
             HttpHost proxy = new HttpHost(proxyHost, proxyPort);
             params.setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
 

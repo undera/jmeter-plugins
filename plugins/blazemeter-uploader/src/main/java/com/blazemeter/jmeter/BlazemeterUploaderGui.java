@@ -109,15 +109,15 @@ public class BlazemeterUploaderGui extends AbstractListenerGui implements Hyperl
 
         editConstraints.fill = GridBagConstraints.BOTH;
 
-        editConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
-        labelConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+        editConstraints.insets = new Insets(4, 0, 0, 0);
+        labelConstraints.insets = new Insets(4, 0, 0, 0);
 
         row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Upload to Project: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, row, projectKey = new JTextField(20));
 
-        editConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-        labelConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
+        editConstraints.insets = new Insets(2, 0, 0, 0);
+        labelConstraints.insets = new Insets(2, 0, 0, 0);
 
         row++;
         addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Test Title: ", JLabel.RIGHT));

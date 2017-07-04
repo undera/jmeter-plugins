@@ -42,6 +42,6 @@ public class BlazemeterUploaderTest {
         BlazemeterUploaderGui gui = new BlazemeterUploaderGui();
         uploader.setGui(gui);
         BlazemeterUploader clone = (BlazemeterUploader) uploader.clone();
-        Assert.assertEquals(gui, clone.gui);
+        assertEquals(gui, clone.gui);
     }
 }

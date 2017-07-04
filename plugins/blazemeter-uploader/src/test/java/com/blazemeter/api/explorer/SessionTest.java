@@ -4,6 +4,8 @@ import com.blazemeter.api.explorer.base.HttpBaseEntity;
 import com.blazemeter.jmeter.StatusNotifierCallbackTest;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+import net.sf.json.JsonConfig;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -26,16 +28,20 @@ public class SessionTest {
         data.put("data", "Hello, World!");
 
         SessionExt session = new SessionExt(emul, "sessionId", "sessionName", "userId", "testId", "testSignature");
+
+        session.addEmul(JSONSerializer.toJSON("{\"result\":{\"session\":{\"statusCode\":15}}}", new JsonConfig()));
         session.sendData(data);
         assertEquals(1, session.getRequests().size());
         assertEquals("{\"data\":\"Hello, World!\"}", session.getRequests().get(0));
         session.clean();
 
+        session.addEmul(new JSONObject());
         session.stop();
         assertEquals(1, session.getRequests().size());
         assertEquals("", session.getRequests().get(0));
         session.clean();
 
+        session.addEmul(new JSONObject());
         session.stopAnonymous();
         assertEquals(1, session.getRequests().size());
         assertEquals("{\"signature\":\"testSignature\",\"testId\":\"testId\",\"sessionId\":\"sessionId\"}", session.getRequests().get(0));
@@ -63,6 +69,7 @@ public class SessionTest {
 
     protected static class SessionExt extends Session {
         private LinkedList<String> requests = new LinkedList<>();
+        private LinkedList<JSON> responses = new LinkedList<>();
 
         public SessionExt(HttpBaseEntity entity, String id, String name, String userId, String testId, String signature) {
             super(entity, id, name, userId, testId, signature);
@@ -75,11 +82,14 @@ public class SessionTest {
         public LinkedList<String> getRequests() {
             return requests;
         }
+        public void addEmul(JSON response) {
+            responses.add(response);
+        }
 
         @Override
         protected JSON query(HttpRequestBase request, int expectedCode) throws IOException {
             extractBody(request);
-            return new JSONObject();
+            return getResponse(request);
         }
 
         private void extractBody(HttpRequestBase request) throws IOException {
@@ -97,7 +107,18 @@ public class SessionTest {
         @Override
         protected JSONObject queryObject(HttpRequestBase request, int expectedCode) throws IOException {
             extractBody(request);
-            return new JSONObject();
+            return (JSONObject) getResponse(request);
+        }
+
+        public JSON getResponse(HttpRequestBase request) throws IOException {
+            log.info("Simulating request: " + request);
+            if (responses.size() > 0) {
+                JSON resp = responses.remove();
+                log.info("Response: " + resp);
+                return resp;
+            } else {
+                throw new IOException("No responses to emulate");
+            }
         }
     }
 }

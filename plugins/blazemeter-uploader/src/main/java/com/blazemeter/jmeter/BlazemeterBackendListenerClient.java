@@ -55,7 +55,7 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
         try {
             log.info("Starting BlazeMeter test");
             String url = apiClient.startOnline();
-            informer.notifyAbout("<p>Started active test: <a href='" + url + "'>" + url + "</a></p>");
+            informer.notifyAbout("Started active test: <a href='" + url + "'>" + url + "</a>");
             try {
                 JMeterPluginsUtils.openInBrowser(url);
             } catch (UnsupportedOperationException ex) {
@@ -88,7 +88,7 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
     public void teardownTest(BackendListenerContext backendListenerContext) throws Exception {
         apiClient.endOnline();
         accumulator.clear();
-        informer.notifyAbout("<p>Upload finished successfully</p>");
+        informer.notifyAbout("Upload finished successfully");
     }
 
     @Override

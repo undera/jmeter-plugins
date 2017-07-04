@@ -1,0 +1,156 @@
+[
+  {
+    "_comment" : "ping response",
+    "api_version" : "v4"
+  },
+
+  {
+    "_comment" : "list of accounts response",
+    "result" : [
+      {
+        "_comment" : "account #1",
+        "id" : "1",
+        "name" : "Default account"
+      },
+      {
+        "_comment" : "account #2",
+        "id" : "2",
+        "name" : "Manager account"
+      }
+    ]
+  },
+
+  {
+    "_comment" : "list of workspaces in Default account response",
+    "result" : [
+      {
+        "_comment" : "workspace #1",
+        "id" : "10",
+        "name" : "Default workspace"
+      },
+      {
+        "_comment" : "workspace #2",
+        "id" : "20",
+        "name" : "User workspace"
+      }
+    ]
+  },
+  {
+    "_comment" : "list of workspaces in Manager account  response",
+    "result" : [
+      {
+        "_comment" : "workspace #1",
+        "id" : "11",
+        "name" : "Default workspace"
+      },
+      {
+        "_comment" : "workspace #2",
+        "id" : "21",
+        "name" : "Manager workspace"
+      }
+    ]
+  },
+  {
+    "_comment" : "create new workspace",
+    "result" : {
+      "id" : "33",
+      "name" : "New workspace"
+    }
+  },
+
+  {
+    "_comment" : "list of projects",
+    "result" : [
+      {
+        "_comment" : "project #1",
+        "id" : "100",
+        "name" : "Default project"
+      },
+      {
+        "_comment" : "project #2",
+        "id" : "200",
+        "name" : "User project"
+      }
+    ]
+  },
+
+  {
+    "_comment" : "create new project",
+    "result" : {
+      "id" : "333",
+      "name" : "New project"
+    }
+  },
+
+  {
+    "_comment" : "list of tests",
+    "result" : [
+      {
+        "_comment" : "test #1",
+        "id" : "1000",
+        "name" : "Default test"
+      },
+      {
+        "_comment" : "project #2",
+        "id" : "2000",
+        "name" : "User test"
+      }
+    ]
+  },
+
+  {
+    "_comment" : "create new test",
+    "result" : {
+      "id" : "3333",
+      "name" : "New test"
+    }
+  },
+
+  {
+    "_comment" : "start 'New test' external",
+    "result" : {
+      "signature": "test_signature",
+      "master": {
+        "id": "master_id",
+        "name": "master_name"
+      },
+      "session": {
+        "id": "session_id",
+        "name": "session_name",
+        "userId": "user_id"
+      }
+    }
+  },
+
+  {
+    "_comment" : "share 'New test'",
+    "result" : {
+      "publicToken" : "public_test_token"
+    }
+  },
+
+  {
+    "_comment" : "start 'New test' external (check private token)",
+    "result" : {
+      "signature": "test_signature",
+      "master": {
+        "id": "master_id",
+        "name": "master_name"
+      },
+      "session": {
+        "id": "session_id",
+        "name": "session_name",
+        "userId": "user_id"
+      }
+    }
+  },
+
+  {
+    "_comment" : "send data response"
+  },
+
+  {
+    "_comment" : "finish test"
+  }
+
+]

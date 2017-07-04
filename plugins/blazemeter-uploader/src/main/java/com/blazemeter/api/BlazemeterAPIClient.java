@@ -16,12 +16,13 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
 
 
     private Test test;
+    protected User user;
     private BlazemeterReport report;
 
     public BlazemeterAPIClient(StatusNotifierCallback notifier, String address, String dataAddress, BlazemeterReport report) {
         super(notifier, address, dataAddress, report.getToken(), report.isAnonymousTest());
         this.report = report;
-        prepare();
+        this.user = new User(this);
     }
 
     public String startOnline() throws IOException {
@@ -49,8 +50,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
         test = null;
     }
 
-    private void prepare() {
-        User user = new User(this);
+    public void prepare() {
         try {
             user.ping();
         } catch (IOException e) {
@@ -69,7 +69,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
         }
     }
 
-    private void prepareClient(User user) throws IOException {
+    protected void prepareClient(User user) throws IOException {
         List<Account> accounts = user.getAccounts();
         Workspace workspace = findWorkspace(accounts);
         if (workspace != null) {
@@ -78,7 +78,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
         }
     }
 
-    private Test findTest(Project project) throws IOException {
+    protected Test findTest(Project project) throws IOException {
         String testNameOrId = report.getTitle();
         if (testNameOrId == null || testNameOrId.isEmpty()) {
             testNameOrId = Test.DEFAULT_TEST;
@@ -96,7 +96,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
         return project.createTest(testNameOrId);
     }
 
-    private Project findProject(Workspace workspace) throws IOException {
+    protected Project findProject(Workspace workspace) throws IOException {
         String projectNameOrId = report.getProject();
         if (projectNameOrId == null || projectNameOrId.isEmpty()) {
             projectNameOrId = Project.DEFAULT_PROJECT;
@@ -114,7 +114,7 @@ public class BlazemeterAPIClient extends HttpBaseEntity {
         return workspace.createProject(projectNameOrId);
     }
 
-    private Workspace findWorkspace(List<Account> accounts) throws IOException {
+    protected Workspace findWorkspace(List<Account> accounts) throws IOException {
         String workspaceNameOrId = report.getWorkspace();
         if (workspaceNameOrId == null || workspaceNameOrId.isEmpty()) {
             workspaceNameOrId = Workspace.DEFAULT_WORKSPACE;

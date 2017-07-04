@@ -50,6 +50,7 @@ public class BlazemeterBackendListenerClient implements BackendListenerClient {
 
     public void initiateOnline() {
         apiClient = new BlazemeterAPIClient(informer, address, dataAddress, report);
+        apiClient.prepare();
         try {
             log.info("Starting BlazeMeter test");
             String url = apiClient.startOnline();

@@ -294,10 +294,10 @@
   },
   {
     "id": "jpgc-sense",
-    "name": "BM.Sense Uploader",
-    "description": "This is special plugin in for uploading results to BlazeMeter Sense immediately after test end",
-    "screenshotUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/raw/master/sense-uploader/loadosophia_uploader.png",
-    "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/sense-uploader/LoadosophiaUploader.md",
+    "name": "BlazeMeter Uploader",
+    "description": "This is special plugin in for uploading results to BlazeMeter/BlazeMeter Sense during test running or immediately after test end",
+    "screenshotUrl": "https://raw.githubusercontent.com/artem-fedorov/jmeter-bzm-plugins/bzm-uploader/sense-uploader/BlazeMeterPlugin.png",
+    "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/sense-uploader/BlazemeterPlugin.md",
     "vendor": "BlazeMeter",
     "markerClass": "kg.apc.jmeter.reporters.LoadosophiaUploader",
     "versions": {
@@ -327,6 +327,13 @@
       },
       "2.4": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-senseuploader/2.4/jmeter-plugins-senseuploader-2.4.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
+      },
+      "3.0": {
+        "changes": "Added BlazeMeter Uploader",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-senseuploader/3.0/jmeter-plugins-senseuploader-3.0.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }

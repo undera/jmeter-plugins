@@ -49,7 +49,7 @@
     "id": "bzm-parallel",
     "name": "Parallel Controller & Sampler",
     "description": "Parallel Controller makes all of its children to run in parallel to each other",
-    "screenshotUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/parallel/ParallelController.png",
+    "screenshotUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/raw/master/parallel/ParallelController.png",
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/parallel/Parallel.md",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.controller.ParallelSampler",

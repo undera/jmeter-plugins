@@ -5,6 +5,7 @@ import org.apache.log.Logger;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jorphan.logging.LoggingManager;
 
+@Deprecated
 public class SteppingThreadGroup
         extends AbstractSimpleThreadGroup {
 

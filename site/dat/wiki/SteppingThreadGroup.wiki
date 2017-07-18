@@ -1,5 +1,9 @@
 = Stepping Thread Group =
 
+<div class="alert alert-danger">
+This plugin is deprecated and should not be used. Use [ConcurrencyThreadGroup Concurrency Thread Group] instead.
+</div>
+
 <span class=''>[/?search=jpgc-casutg <i class='fa fa-download'></i> Download]</span>
 
 JMeter have only one out-of-the-box option for threads (users) scheduling: simple ramp-up. But many users, especially with [http://en.wikipedia.org/wiki/HP_LoadRunner HP LoadRunner] experience miss more flexible thread scheduling algorythm. Stepping Thread Group adds to JMeter thread scheduling similar to [http://en.wikipedia.org/wiki/HP_LoadRunner LoadRunner]'s.

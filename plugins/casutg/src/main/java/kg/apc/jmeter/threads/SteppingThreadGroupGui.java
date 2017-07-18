@@ -21,6 +21,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Deprecated
 public class SteppingThreadGroupGui
         extends AbstractThreadGroupGui {
 

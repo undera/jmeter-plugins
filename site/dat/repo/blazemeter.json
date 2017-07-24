@@ -25,6 +25,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "0.4": {
+        "changes": "Fixed bugs on not evaluating variables",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.4/jmeter-debugger-0.4.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

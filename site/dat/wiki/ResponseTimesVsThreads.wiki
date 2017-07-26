@@ -7,7 +7,3 @@ This graph shows how Response Time changes with amount of parallel threads. Natu
 Example graph:
 
 [/img/wiki/timevsthreads.png]
-
-== Online Version for This Graph ==
-
-There is online version for this graph on [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=wiki&utm_campaign=RTVT BM.Sense] service, see example [https://sense.blazemeter.com/examples/17/?utm_source=jpgc&utm_medium=wiki&utm_campaign=RTVT#tab=tabPivots&zoom=0 here].

@@ -14,9 +14,3 @@ This graph shows the number of transactions per second for each sampler. It coun
 The aggragated display replace the old *Total Transaction per Seconds* graph. You can set this parameter in the Settings panel.
 
 [/img/wiki/total_transactions_per_seconds.png]
-
-===Online Graph For TPS===
-
-There is "Delivered Load" graph on [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=wiki&utm_campaign=TPS BM.Sense] online service, showing the same TPS and Active threads info
-like this plugin do.
-[https://sense.blazemeter.com/examples/23/?utm_source=jpgc&utm_medium=wiki&utm_campaign=TPS#tab=tabTimelines&zoom=0 Here's an example].

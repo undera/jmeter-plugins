@@ -55,8 +55,3 @@ running the test you may load saved file into GUI and see the values timeline.
     * e.g. Default pattern would be: {{{ jmeterPlugin.perfmon.label.useHostname.pattern=([\\w\\-]+)\\..* }}}
     * e.g. Pattern for EC2 us-east/west subdomain matching: {{{ jmeterPlugin.perfmon.label.useHostname.pattern=([\w\-]+\.us-(east|west)-[0-9]).* }}}
   * {{{forcePerfmonFile}}} - true/false, enabling it makes JMeter to write JTL file with perfmon metrics in the current directory
-
-== Seeing PerfMon Data Online ==
-
-There is a feature on [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=wiki&utm_campaign=PerfMon BM.Sense] to see PerfMon collected data in a fancy Web interface.
-[https://sense.blazemeter.com/examples/489029/?utm_source=jpgc&utm_medium=wiki&utm_campaign=PerfMon#tab=tabMonitoring Here's an example].

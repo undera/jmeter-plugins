@@ -82,8 +82,3 @@ Most of class names are self-explanatory:
   * TransactionsPerSecond
   * PageDataExtractorOverTime
   * MergeResults = [MergeResults] Command Line Merge Tool to simplify the comparison of two or more load tests, need properties file (like merge-results.properties)
-
-== Other Ways to Automate Reporting ==
-
-You can use [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=wiki&utm_campaign=TPS BM.Sense] service
-to automate test results storage and reporting. See also: [LoadosophiaUploader BM.Sense Uploader] plugin.

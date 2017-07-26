@@ -7,7 +7,3 @@ This graph will display the response time distribution of the test. The X axis s
 == Sample result ==
 
 [/img/wiki/response_times_distribution.png]
-
-== Online Version ==
-
-An online version of aggregated response times distribution is available on [https://sense.blazemeter.com/?utm_source=jpgc&utm_medium=wiki&utm_campaign=RTD BM.Sense] service, see [https://sense.blazemeter.com/examples/80738/?utm_source=jpgc&utm_medium=wiki&utm_campaign=RTD#tab=tabDistributions&zoom=0 example].

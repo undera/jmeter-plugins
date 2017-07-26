@@ -115,7 +115,7 @@
           "jmeter-http"
         ],
         "libs": {
-          "jpgc-common": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common/1.4.0/jmeter-plugins-common-1.4.0.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
         }
       }
     }

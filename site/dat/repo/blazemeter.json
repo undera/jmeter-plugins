@@ -92,6 +92,7 @@
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.RotatingResultCollector",
     "componentClasses": [
+      "com.blazemeter.jmeter.RotatingResultCollector",
       "com.blazemeter.jmeter.RotatingResultCollectorGui"
     ],
     "versions": {
@@ -112,7 +113,9 @@
     "vendor": "BlazeMeter",
     "markerClass": "kg.apc.jmeter.reporters.LoadosophiaUploader",
     "componentClasses": [
+      "kg.apc.jmeter.reporters.LoadosophiaUploader",
       "kg.apc.jmeter.reporters.LoadosophiaUploaderGui",
+      "kg.apc.jmeter.reporters.bzm.BlazeMeterUploader",
       "kg.apc.jmeter.reporters.bzm.BlazeMeterUploaderGui"
     ],
     "versions": {
@@ -163,7 +166,10 @@
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/wsc/WeightedSwitchController.md",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.blazemeter.jmeter.control.WeightedSwitchController",
-    "componentClasses":["com.blazemeter.jmeter.control.WeightedSwitchController","com.blazemeter.jmeter.control.WeightedSwitchControllerGui"],
+    "componentClasses": [
+      "com.blazemeter.jmeter.control.WeightedSwitchController",
+      "com.blazemeter.jmeter.control.WeightedSwitchControllerGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-wsc/0.1/jmeter-plugins-wsc-0.1.jar",
@@ -251,6 +257,7 @@
       "com.blazemeter.jmeter.http2.sampler.HTTP2Request",
       "com.blazemeter.jmeter.http2.sampler.gui.HTTP2RequestGui",
       "com.blazemeter.jmeter.http2.sampler.gui.Http2DefaultsGui",
+      "com.blazemeter.jmeter.http2.visualizers.ResultCollector",
       "com.blazemeter.jmeter.http2.visualizers.SimpleDataWriter",
       "com.blazemeter.jmeter.http2.visualizers.ViewResultsFullVisualizer"
     ],

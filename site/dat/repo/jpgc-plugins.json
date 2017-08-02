@@ -8,6 +8,7 @@
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.reporters.AutoStop",
     "componentClasses": [
+      "kg.apc.jmeter.reporters.AutoStop",
       "kg.apc.jmeter.reporters.AutoStopGui"
     ],
     "versions": {
@@ -29,6 +30,7 @@
     "markerClass": "com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup",
     "componentClasses": [
       "com.blazemeter.jmeter.control.VirtualUserController",
+      "com.blazemeter.jmeter.reporters.FlushingResultCollector",
       "com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroup",
       "com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroupGui",
       "com.blazemeter.jmeter.threads.arrivals.FreeFormArrivalsThreadGroup",
@@ -64,6 +66,7 @@
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.reporters.ConsoleStatusLogger",
     "componentClasses": [
+      "kg.apc.jmeter.reporters.ConsoleStatusLogger",
       "kg.apc.jmeter.reporters.ConsoleStatusLoggerGui"
     ],
     "versions": {
@@ -105,6 +108,7 @@
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.dbmon.DbMonCollector",
     "componentClasses": [
+      "kg.apc.jmeter.dbmon.DbMonCollector",
       "kg.apc.jmeter.vizualizers.DbMonGui"
     ],
     "versions": {
@@ -156,6 +160,7 @@
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.reporters.FlexibleFileWriter",
     "componentClasses": [
+      "kg.apc.jmeter.reporters.FlexibleFileWriter",
       "kg.apc.jmeter.reporters.FlexibleFileWriterGui"
     ],
     "versions": {
@@ -263,6 +268,7 @@
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.jmxmon.JMXMonCollector",
     "componentClasses": [
+      "kg.apc.jmeter.jmxmon.JMXMonCollector",
       "kg.apc.jmeter.vizualizers.JMXMonGui"
     ],
     "versions": {
@@ -396,6 +402,7 @@
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.perfmon.PerfMonCollector",
     "componentClasses": [
+      "kg.apc.jmeter.perfmon.PerfMonCollector",
       "kg.apc.jmeter.vizualizers.PerfMonGui"
     ],
     "versions": {

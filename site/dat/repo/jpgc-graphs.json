@@ -7,6 +7,11 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/ResponseTimesOverTime/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.vizualizers.ResponseTimesOverTimeGui",
+    "componentClasses": [
+      "kg.apc.jmeter.vizualizers.ResponseTimesOverTimeGui",
+      "kg.apc.jmeter.vizualizers.ThreadsStateOverTimeGui",
+      "kg.apc.jmeter.vizualizers.TransactionsPerSecondGui"
+    ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-basic/2.0/jmeter-plugins-graphs-basic-2.0.jar",
@@ -24,6 +29,13 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/ResponseCodesPerSecond/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.vizualizers.LatenciesOverTimeGui",
+    "componentClasses": [
+      "kg.apc.jmeter.vizualizers.BytesThroughputOverTimeGui",
+      "kg.apc.jmeter.vizualizers.ConnectTimesOverTimeGui",
+      "kg.apc.jmeter.vizualizers.HitsPerSecondGui",
+      "kg.apc.jmeter.vizualizers.LatenciesOverTimeGui",
+      "kg.apc.jmeter.vizualizers.ResponseCodesPerSecondGui"
+    ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-additional/2.0/jmeter-plugins-graphs-additional-2.0.jar",
@@ -41,6 +53,9 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/CompositeGraph/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.vizualizers.CompositeGraphGui",
+    "componentClasses": [
+      "kg.apc.jmeter.vizualizers.CompositeGraphGui"
+    ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-composite/2.0/jmeter-plugins-graphs-composite-2.0.jar",
@@ -58,6 +73,10 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/RespTimesDistribution/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.vizualizers.ResponseTimesDistributionGui",
+    "componentClasses": [
+      "kg.apc.jmeter.vizualizers.ResponseTimesDistributionGui",
+      "kg.apc.jmeter.vizualizers.ResponseTimesPercentilesGui"
+    ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-dist/2.0/jmeter-plugins-graphs-dist-2.0.jar",
@@ -75,6 +94,10 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/ResponseTimesVsThreads/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.vizualizers.ThroughputVsThreadsGui",
+    "componentClasses": [
+      "kg.apc.jmeter.vizualizers.ThroughputVsThreadsGui",
+      "kg.apc.jmeter.vizualizers.TimesVsThreadsGui"
+    ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-graphs-vs/2.0/jmeter-plugins-graphs-vs-2.0.jar",

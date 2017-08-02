@@ -7,6 +7,9 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/AutoStop/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.reporters.AutoStop",
+    "componentClasses": [
+      "kg.apc.jmeter.reporters.AutoStopGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-autostop/0.1/jmeter-plugins-autostop-0.1.jar",
@@ -24,6 +27,19 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/ConcurrencyThreadGroup/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup",
+    "componentClasses": [
+      "com.blazemeter.jmeter.control.VirtualUserController",
+      "com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroup",
+      "com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroupGui",
+      "com.blazemeter.jmeter.threads.arrivals.FreeFormArrivalsThreadGroup",
+      "com.blazemeter.jmeter.threads.arrivals.FreeFormArrivalsThreadGroupGui",
+      "com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroup",
+      "com.blazemeter.jmeter.threads.concurrency.ConcurrencyThreadGroupGui",
+      "kg.apc.jmeter.threads.SteppingThreadGroup",
+      "kg.apc.jmeter.threads.SteppingThreadGroupGui",
+      "kg.apc.jmeter.threads.UltimateThreadGroup",
+      "kg.apc.jmeter.threads.UltimateThreadGroupGui"
+    ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.0/jmeter-plugins-casutg-2.0.jar",
@@ -47,6 +63,9 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/ConsoleStatusLogger/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.reporters.ConsoleStatusLogger",
+    "componentClasses": [
+      "kg.apc.jmeter.reporters.ConsoleStatusLoggerGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csl/0.1/jmeter-plugins-csl-0.1.jar",
@@ -64,6 +83,10 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/VariablesFromCSV/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.config.VariablesFromCSV",
+    "componentClasses": [
+      "kg.apc.jmeter.config.VariablesFromCSV",
+      "kg.apc.jmeter.config.VariablesFromCSVGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-csvars/0.1/jmeter-plugins-csvars-0.1.jar",
@@ -81,6 +104,9 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/DbMon/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.dbmon.DbMonCollector",
+    "componentClasses": [
+      "kg.apc.jmeter.vizualizers.DbMonGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dbmon/0.1/jmeter-plugins-dbmon-0.1.jar",
@@ -101,6 +127,10 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/DummySampler/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.samplers.DummySampler",
+    "componentClasses": [
+      "kg.apc.jmeter.samplers.DummySampler",
+      "kg.apc.jmeter.samplers.DummySamplerGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.1/jmeter-plugins-dummy-0.1.jar",
@@ -125,6 +155,9 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/FlexibleFileWriter/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.reporters.FlexibleFileWriter",
+    "componentClasses": [
+      "kg.apc.jmeter.reporters.FlexibleFileWriterGui"
+    ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-ffw/2.0/jmeter-plugins-ffw-2.0.jar",
@@ -142,6 +175,12 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/InterThreadCommunication/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.modifiers.FifoPopPreProcessorGui",
+    "componentClasses": [
+      "kg.apc.jmeter.modifiers.FifoPopPreProcessor",
+      "kg.apc.jmeter.modifiers.FifoPopPreProcessorGui",
+      "kg.apc.jmeter.modifiers.FifoPutPostProcessor",
+      "kg.apc.jmeter.modifiers.FifoPutPostProcessorGui"
+    ],
     "versions": {
       "0.2": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-fifo/0.2/jmeter-plugins-fifo-0.2.jar",
@@ -176,6 +215,12 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/RawRequest/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.samplers.HTTPRawSampler",
+    "componentClasses": [
+      "kg.apc.jmeter.modifiers.RawRequestSourcePreProcessor",
+      "kg.apc.jmeter.modifiers.RawRequestSourcePreProcessorGui",
+      "kg.apc.jmeter.samplers.HTTPRawSampler",
+      "kg.apc.jmeter.samplers.HTTPRawSamplerGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-httpraw/0.1/jmeter-plugins-httpraw-0.1.jar",
@@ -217,6 +262,9 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/JMXMon/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.jmxmon.JMXMonCollector",
+    "componentClasses": [
+      "kg.apc.jmeter.vizualizers.JMXMonGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jmxmon/0.1/jmeter-plugins-jmxmon-0.1.jar",
@@ -240,6 +288,16 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/JSONPathExtractor/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor",
+    "componentClasses": [
+      "com.atlantbh.jmeter.plugins.jsontoxmlconverter.JSONToXMLConverter",
+      "com.atlantbh.jmeter.plugins.jsontoxmlconverter.gui.JSONToXMLConverterGui",
+      "com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.JSONFormatter",
+      "com.atlantbh.jmeter.plugins.jsonutils.jsonformatter.gui.JSONFormatterGui",
+      "com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion",
+      "com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.gui.JSONPathAssertionGui",
+      "com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor",
+      "com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.gui.JSONPathExtractorGui"
+    ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.0/jmeter-plugins-json-2.0.jar",
@@ -295,6 +353,10 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/LockFile/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.config.LockFile",
+    "componentClasses": [
+      "kg.apc.jmeter.config.LockFile",
+      "kg.apc.jmeter.config.LockFileGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-lockfile/0.1/jmeter-plugins-lockfile-0.1.jar",
@@ -333,6 +395,9 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/PerfMon/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.perfmon.PerfMonCollector",
+    "componentClasses": [
+      "kg.apc.jmeter.vizualizers.PerfMonGui"
+    ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-perfmon/2.0/jmeter-plugins-perfmon-2.0.jar",
@@ -358,6 +423,10 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/ParameterizedController/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.control.ParameterizedController",
+    "componentClasses": [
+      "kg.apc.jmeter.control.ParameterizedController",
+      "kg.apc.jmeter.control.ParameterizedControllerGui"
+    ],
     "versions": {
       "0.2": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-prmctl/0.2/jmeter-plugins-prmctl-0.2.jar",
@@ -381,6 +450,9 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/RedisDataSet/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.config.redis.RedisDataSet",
+    "componentClasses": [
+      "kg.apc.jmeter.config.redis.RedisDataSet"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-redis/0.1/jmeter-plugins-redis-0.1.jar",
@@ -415,6 +487,10 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/ThroughputShapingTimer/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.timers.VariableThroughputTimer",
+    "componentClasses": [
+      "kg.apc.jmeter.timers.VariableThroughputTimer",
+      "kg.apc.jmeter.timers.VariableThroughputTimerGui"
+    ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-tst/2.0/jmeter-plugins-tst-2.0.jar",
@@ -439,6 +515,10 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/UDPRequest/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.samplers.UDPSampler",
+    "componentClasses": [
+      "kg.apc.jmeter.samplers.UDPSampler",
+      "kg.apc.jmeter.samplers.UDPSamplerGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-udp/0.1/jmeter-plugins-udp-0.1.jar",
@@ -472,6 +552,22 @@
     "helpUrl": "",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler",
+    "componentClasses": [
+      "com.blazemeter.jmeter.webdriver.phantomjs.PhantomJSDriverConfig",
+      "com.blazemeter.jmeter.webdriver.phantomjs.PhantomJSDriverConfigGui",
+      "com.googlecode.jmeter.plugins.webdriver.config.ChromeDriverConfig",
+      "com.googlecode.jmeter.plugins.webdriver.config.FirefoxDriverConfig",
+      "com.googlecode.jmeter.plugins.webdriver.config.HtmlUnitDriverConfig",
+      "com.googlecode.jmeter.plugins.webdriver.config.InternetExplorerDriverConfig",
+      "com.googlecode.jmeter.plugins.webdriver.config.RemoteDriverConfig",
+      "com.googlecode.jmeter.plugins.webdriver.config.gui.ChromeDriverConfigGui",
+      "com.googlecode.jmeter.plugins.webdriver.config.gui.FirefoxDriverConfigGui",
+      "com.googlecode.jmeter.plugins.webdriver.config.gui.HtmlUnitDriverConfigGui",
+      "com.googlecode.jmeter.plugins.webdriver.config.gui.InternetExplorerDriverConfigGui",
+      "com.googlecode.jmeter.plugins.webdriver.config.gui.RemoteDriverConfigGui",
+      "com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler",
+      "com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGui"
+    ],
     "versions": {
       "1.4.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/1.4.0/jmeter-plugins-webdriver-1.4.0.jar",
@@ -506,6 +602,10 @@
     "helpUrl": "https://jmeter-plugins.org/wiki/XMLFormatPostProcessor/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.atlantbh.jmeter.plugins.xmlformatter.XMLFormatPostProcessor",
+    "componentClasses": [
+      "com.atlantbh.jmeter.plugins.xmlformatter.XMLFormatPostProcessor",
+      "com.atlantbh.jmeter.plugins.xmlformatter.gui.XMLFormatPostProcessorGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-xml/0.1/jmeter-plugins-xml-0.1.jar",

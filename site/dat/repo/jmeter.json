@@ -1,12 +1,49 @@
 [
   {
     "id": "jmeter-core",
-    "name": "JMeter Core",
+    "name": "jmeter - Core",
     "description": "Core functionality for JMeter, including GUI and engine.",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/http-config/http-config-example.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/index.html",
     "markerClass": "org.apache.jmeter.engine.JMeterEngine",
+    "componentClasses": [
+      "org.apache.jmeter.config.Arguments",
+      "org.apache.jmeter.config.ConfigTestElement",
+      "org.apache.jmeter.config.LoginConfig",
+      "org.apache.jmeter.config.gui.ArgumentsPanel",
+      "org.apache.jmeter.config.gui.LoginConfigGui",
+      "org.apache.jmeter.config.gui.ObsoleteGui",
+      "org.apache.jmeter.config.gui.SimpleConfigGui",
+      "org.apache.jmeter.control.GenericController",
+      "org.apache.jmeter.control.IfController",
+      "org.apache.jmeter.control.LoopController",
+      "org.apache.jmeter.control.RunTime",
+      "org.apache.jmeter.control.TestFragmentController",
+      "org.apache.jmeter.control.TransactionController",
+      "org.apache.jmeter.control.TransactionSampler",
+      "org.apache.jmeter.control.WhileController",
+      "org.apache.jmeter.control.gui.IfControllerPanel",
+      "org.apache.jmeter.control.gui.LogicControllerGui",
+      "org.apache.jmeter.control.gui.LoopControlPanel",
+      "org.apache.jmeter.control.gui.RunTimeGui",
+      "org.apache.jmeter.control.gui.TestFragmentControllerGui",
+      "org.apache.jmeter.control.gui.TestPlanGui",
+      "org.apache.jmeter.control.gui.TransactionControllerGui",
+      "org.apache.jmeter.control.gui.WhileControllerGui",
+      "org.apache.jmeter.control.gui.WorkBenchGui",
+      "org.apache.jmeter.gui.NamePanel",
+      "org.apache.jmeter.reporters.gui.ResultActionGui",
+      "org.apache.jmeter.reporters.gui.ResultSaverGui",
+      "org.apache.jmeter.reporters.gui.SummariserGui",
+      "org.apache.jmeter.testbeans.gui.TestBeanGUI",
+      "org.apache.jmeter.threads.PostThreadGroup",
+      "org.apache.jmeter.threads.SetupThreadGroup",
+      "org.apache.jmeter.threads.ThreadGroup",
+      "org.apache.jmeter.threads.gui.PostThreadGroupGui",
+      "org.apache.jmeter.threads.gui.SetupThreadGroupGui",
+      "org.apache.jmeter.threads.gui.ThreadGroupGui"
+    ],
     "canUninstall": false,
     "versions": {
       "": {
@@ -16,12 +53,17 @@
   },
   {
     "id": "jmeter-tcp",
-    "name": "TCP Protocol Support",
+    "name": "jmeter - TCP Protocol Support",
     "description": "The TCP Sampler opens a TCP/IP connection to the specified server. It then sends the text, and waits for a response.",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/tcpsampler.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#TCP_Sampler",
     "markerClass": "org.apache.jmeter.protocol.tcp.sampler.TCPSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.tcp.config.gui.TCPConfigGui",
+      "org.apache.jmeter.protocol.tcp.control.gui.TCPSamplerGui",
+      "org.apache.jmeter.protocol.tcp.sampler.TCPSampler"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_tcp/%1$s/ApacheJMeter_tcp-%1$s.jar"
@@ -30,12 +72,22 @@
   },
   {
     "id": "jmeter-ldap",
-    "name": "LDAP Protocol Support",
+    "name": "jmeter - LDAP Protocol Support",
     "description": "This Sampler lets you send a different Ldap request(Add, Modify, Delete and Search) to an LDAP server.",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/ldap_request.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#LDAP_Request",
     "markerClass": "org.apache.jmeter.protocol.ldap.sampler.LDAPSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.ldap.config.gui.LDAPArguments",
+      "org.apache.jmeter.protocol.ldap.config.gui.LDAPArgumentsPanel",
+      "org.apache.jmeter.protocol.ldap.config.gui.LdapConfigGui",
+      "org.apache.jmeter.protocol.ldap.config.gui.LdapExtConfigGui",
+      "org.apache.jmeter.protocol.ldap.control.gui.LdapExtTestSamplerGui",
+      "org.apache.jmeter.protocol.ldap.control.gui.LdapTestSamplerGui",
+      "org.apache.jmeter.protocol.ldap.sampler.LDAPExtSampler",
+      "org.apache.jmeter.protocol.ldap.sampler.LDAPSampler"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_ldap/%1$s/ApacheJMeter_ldap-%1$s.jar"
@@ -44,12 +96,16 @@
   },
   {
     "id": "jmeter-native",
-    "name": "OS Process Support",
+    "name": "jmeter - OS Process Support",
     "description": "The OS Process Sampler is a sampler that can be used to execute commands on the local machine.",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/os_process_sampler.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#OS_Process_Sampler",
     "markerClass": "org.apache.jmeter.protocol.system.SystemSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.system.SystemSampler",
+      "org.apache.jmeter.protocol.system.gui.SystemSamplerGui"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_native/%1$s/ApacheJMeter_native-%1$s.jar"
@@ -58,12 +114,16 @@
   },
   {
     "id": "jmeter-mongodb",
-    "name": "MongoDB Support",
+    "name": "jmeter - MongoDB Support",
     "description": "Supports testing MongoDB performance",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/mongodb-source-config.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#MongoDB_Script",
     "markerClass": "org.apache.jmeter.protocol.mongodb.sampler.MongoScriptSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.mongodb.config.MongoSourceElement",
+      "org.apache.jmeter.protocol.mongodb.sampler.MongoScriptSampler"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_mongodb/%1$s/ApacheJMeter_mongodb-%1$s.jar"
@@ -72,12 +132,18 @@
   },
   {
     "id": "jmeter-mail",
-    "name": "Mail/SMTP Support",
+    "name": "jmeter - Mail/SMTP Support",
     "description": "The SMTP Sampler can send mail messages using SMTP/SMTPS protocol.",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/smtp_sampler.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#SMTP_Sampler",
     "markerClass": "org.apache.jmeter.protocol.smtp.sampler.SmtpSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.mail.sampler.MailReaderSampler",
+      "org.apache.jmeter.protocol.mail.sampler.gui.MailReaderSamplerGui",
+      "org.apache.jmeter.protocol.smtp.sampler.SmtpSampler",
+      "org.apache.jmeter.protocol.smtp.sampler.gui.SmtpSamplerGui"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_mail/%1$s/ApacheJMeter_mail-%1$s.jar"
@@ -86,12 +152,16 @@
   },
   {
     "id": "jmeter-junit",
-    "name": "JUnit Support",
+    "name": "jmeter - JUnit Support",
     "description": "Executes JUnit tests compiled into JARs",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/junit_sampler.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#JUnit_Request",
     "markerClass": "org.apache.jmeter.protocol.java.sampler.JUnitSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.java.control.gui.JUnitTestSamplerGui",
+      "org.apache.jmeter.protocol.java.sampler.JUnitSampler"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_junit/%1$s/ApacheJMeter_junit-%1$s.jar"
@@ -100,12 +170,20 @@
   },
   {
     "id": "jmeter-jms",
-    "name": "JMS Support",
+    "name": "jmeter - JMS Support",
     "description": "Offers JMS Subscriber, Publisher and JMS P2P",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/jmssubscriber.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#JMS_Subscriber",
     "markerClass": "org.apache.jmeter.protocol.jms.sampler.JMSSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.jms.control.gui.JMSPublisherGui",
+      "org.apache.jmeter.protocol.jms.control.gui.JMSSamplerGui",
+      "org.apache.jmeter.protocol.jms.control.gui.JMSSubscriberGui",
+      "org.apache.jmeter.protocol.jms.sampler.JMSSampler",
+      "org.apache.jmeter.protocol.jms.sampler.PublisherSampler",
+      "org.apache.jmeter.protocol.jms.sampler.SubscriberSampler"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_jms/%1$s/ApacheJMeter_jms-%1$s.jar"
@@ -114,12 +192,18 @@
   },
   {
     "id": "jmeter-jdbc",
-    "name": "JDBC Support",
+    "name": "jmeter - JDBC Support",
     "description": "This sampler lets you send an JDBC Request (an SQL query) to a database.",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/jdbctest/jdbc-request.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#JDBC_Request",
     "markerClass": "org.apache.jmeter.protocol.jdbc.sampler.JDBCSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.jdbc.config.DataSourceElement",
+      "org.apache.jmeter.protocol.jdbc.processor.JDBCPostProcessor",
+      "org.apache.jmeter.protocol.jdbc.processor.JDBCPreProcessor",
+      "org.apache.jmeter.protocol.jdbc.sampler.JDBCSampler"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_jdbc/%1$s/ApacheJMeter_jdbc-%1$s.jar"
@@ -128,12 +212,22 @@
   },
   {
     "id": "jmeter-java",
-    "name": "Java Components",
+    "name": "jmeter - Java Components",
     "description": "Java Sampler and other components",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "",
     "helpUrl": "",
     "markerClass": "org.apache.jmeter.protocol.java.sampler.JavaSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.java.config.JavaConfig",
+      "org.apache.jmeter.protocol.java.config.gui.JavaConfigGui",
+      "org.apache.jmeter.protocol.java.control.gui.BeanShellSamplerGui",
+      "org.apache.jmeter.protocol.java.control.gui.JavaTestSamplerGui",
+      "org.apache.jmeter.protocol.java.sampler.BSFSampler",
+      "org.apache.jmeter.protocol.java.sampler.BeanShellSampler",
+      "org.apache.jmeter.protocol.java.sampler.JSR223Sampler",
+      "org.apache.jmeter.protocol.java.sampler.JavaSampler"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_java/%1$s/ApacheJMeter_java-%1$s.jar"
@@ -142,12 +236,17 @@
   },
   {
     "id": "jmeter-ftp",
-    "name": "FTP Protocol Support",
+    "name": "jmeter - FTP Protocol Support",
     "description": "This controller lets you send an FTP 'retrieve file' or 'upload file' request to an FTP server.",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/ftptest/ftp-request.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#FTP_Request",
     "markerClass": "org.apache.jmeter.protocol.ftp.sampler.FTPSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.ftp.config.gui.FtpConfigGui",
+      "org.apache.jmeter.protocol.ftp.control.gui.FtpTestSamplerGui",
+      "org.apache.jmeter.protocol.ftp.sampler.FTPSampler"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_ftp/%1$s/ApacheJMeter_ftp-%1$s.jar"
@@ -156,12 +255,44 @@
   },
   {
     "id": "jmeter-http",
-    "name": "HTTP Protocol Support",
+    "name": "jmeter - HTTP Protocol Support",
     "description": "This sampler lets you send an HTTP/HTTPS request to a web server.",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/http-request.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html#HTTP_Request",
     "markerClass": "org.apache.jmeter.protocol.http.sampler.HTTPSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.http.config.gui.HttpDefaultsGui",
+      "org.apache.jmeter.protocol.http.control.AuthManager",
+      "org.apache.jmeter.protocol.http.control.CacheManager",
+      "org.apache.jmeter.protocol.http.control.CookieManager",
+      "org.apache.jmeter.protocol.http.control.DNSCacheManager",
+      "org.apache.jmeter.protocol.http.control.HeaderManager",
+      "org.apache.jmeter.protocol.http.control.RecordingController",
+      "org.apache.jmeter.protocol.http.control.gui.AjpSamplerGui",
+      "org.apache.jmeter.protocol.http.control.gui.HttpMirrorControlGui",
+      "org.apache.jmeter.protocol.http.control.gui.HttpTestSampleGui",
+      "org.apache.jmeter.protocol.http.control.gui.RecordController",
+      "org.apache.jmeter.protocol.http.gui.AuthPanel",
+      "org.apache.jmeter.protocol.http.gui.CacheManagerGui",
+      "org.apache.jmeter.protocol.http.gui.CookiePanel",
+      "org.apache.jmeter.protocol.http.gui.DNSCachePanel",
+      "org.apache.jmeter.protocol.http.gui.HTTPArgumentsPanel",
+      "org.apache.jmeter.protocol.http.gui.HeaderPanel",
+      "org.apache.jmeter.protocol.http.modifier.AnchorModifier",
+      "org.apache.jmeter.protocol.http.modifier.RegExUserParameters",
+      "org.apache.jmeter.protocol.http.modifier.URLRewritingModifier",
+      "org.apache.jmeter.protocol.http.modifier.gui.AnchorModifierGui",
+      "org.apache.jmeter.protocol.http.modifier.gui.RegExUserParametersGui",
+      "org.apache.jmeter.protocol.http.modifier.gui.URLRewritingModifierGui",
+      "org.apache.jmeter.protocol.http.proxy.ProxyControl",
+      "org.apache.jmeter.protocol.http.proxy.gui.ProxyControlGui",
+      "org.apache.jmeter.protocol.http.sampler.AccessLogSampler",
+      "org.apache.jmeter.protocol.http.sampler.AjpSampler",
+      "org.apache.jmeter.protocol.http.sampler.HTTPSampler",
+      "org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy",
+      "org.apache.jmeter.protocol.http.util.HTTPFileArgs"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_http/%1$s/ApacheJMeter_http-%1$s.jar"
@@ -170,12 +301,111 @@
   },
   {
     "id": "jmeter-components",
-    "name": "Various Core Components",
+    "name": "jmeter - Various Core Components",
     "description": "Ships a lot of various components for JMeter, including Debug Sampler",
     "vendor": "JMeter Core Team",
     "screenshotUrl": "http://jmeter.apache.org/images/screenshots/debug_sampler.png",
     "helpUrl": "http://jmeter.apache.org/usermanual/component_reference.html",
     "markerClass": "org.apache.jmeter.sampler.DebugSampler",
+    "componentClasses": [
+      "org.apache.jmeter.assertions.BSFAssertion",
+      "org.apache.jmeter.assertions.BeanShellAssertion",
+      "org.apache.jmeter.assertions.CompareAssertion",
+      "org.apache.jmeter.assertions.DurationAssertion",
+      "org.apache.jmeter.assertions.HTMLAssertion",
+      "org.apache.jmeter.assertions.JSR223Assertion",
+      "org.apache.jmeter.assertions.MD5HexAssertion",
+      "org.apache.jmeter.assertions.ResponseAssertion",
+      "org.apache.jmeter.assertions.SMIMEAssertionTestElement",
+      "org.apache.jmeter.assertions.SizeAssertion",
+      "org.apache.jmeter.assertions.XMLAssertion",
+      "org.apache.jmeter.assertions.XMLSchemaAssertion",
+      "org.apache.jmeter.assertions.XPathAssertion",
+      "org.apache.jmeter.assertions.gui.AssertionGui",
+      "org.apache.jmeter.assertions.gui.BeanShellAssertionGui",
+      "org.apache.jmeter.assertions.gui.DurationAssertionGui",
+      "org.apache.jmeter.assertions.gui.HTMLAssertionGui",
+      "org.apache.jmeter.assertions.gui.MD5HexAssertionGUI",
+      "org.apache.jmeter.assertions.gui.SMIMEAssertionGui",
+      "org.apache.jmeter.assertions.gui.SizeAssertionGui",
+      "org.apache.jmeter.assertions.gui.XMLAssertionGui",
+      "org.apache.jmeter.assertions.gui.XMLSchemaAssertionGUI",
+      "org.apache.jmeter.assertions.gui.XPathAssertionGui",
+      "org.apache.jmeter.config.CSVDataSet",
+      "org.apache.jmeter.config.KeystoreConfig",
+      "org.apache.jmeter.config.RandomVariableConfig",
+      "org.apache.jmeter.control.CriticalSectionController",
+      "org.apache.jmeter.control.ForeachController",
+      "org.apache.jmeter.control.IncludeController",
+      "org.apache.jmeter.control.InterleaveControl",
+      "org.apache.jmeter.control.ModuleController",
+      "org.apache.jmeter.control.OnceOnlyController",
+      "org.apache.jmeter.control.RandomController",
+      "org.apache.jmeter.control.RandomOrderController",
+      "org.apache.jmeter.control.SwitchController",
+      "org.apache.jmeter.control.ThroughputController",
+      "org.apache.jmeter.control.gui.CriticalSectionControllerGui",
+      "org.apache.jmeter.control.gui.ForeachControlPanel",
+      "org.apache.jmeter.control.gui.IncludeControllerGui",
+      "org.apache.jmeter.control.gui.InterleaveControlGui",
+      "org.apache.jmeter.control.gui.ModuleControllerGui",
+      "org.apache.jmeter.control.gui.OnceOnlyControllerGui",
+      "org.apache.jmeter.control.gui.RandomControlGui",
+      "org.apache.jmeter.control.gui.RandomOrderControllerGui",
+      "org.apache.jmeter.control.gui.SwitchControllerGui",
+      "org.apache.jmeter.control.gui.ThroughputControllerGui",
+      "org.apache.jmeter.extractor.BSFPostProcessor",
+      "org.apache.jmeter.extractor.BeanShellPostProcessor",
+      "org.apache.jmeter.extractor.DebugPostProcessor",
+      "org.apache.jmeter.extractor.HtmlExtractor",
+      "org.apache.jmeter.extractor.JSR223PostProcessor",
+      "org.apache.jmeter.extractor.RegexExtractor",
+      "org.apache.jmeter.extractor.XPathExtractor",
+      "org.apache.jmeter.extractor.gui.HtmlExtractorGui",
+      "org.apache.jmeter.extractor.gui.RegexExtractorGui",
+      "org.apache.jmeter.extractor.gui.XPathExtractorGui",
+      "org.apache.jmeter.extractor.json.jsonpath.JSONPostProcessor",
+      "org.apache.jmeter.extractor.json.jsonpath.gui.JSONPostProcessorGui",
+      "org.apache.jmeter.modifiers.BSFPreProcessor",
+      "org.apache.jmeter.modifiers.BeanShellPreProcessor",
+      "org.apache.jmeter.modifiers.JSR223PreProcessor",
+      "org.apache.jmeter.modifiers.UserParameters",
+      "org.apache.jmeter.modifiers.gui.CounterConfigGui",
+      "org.apache.jmeter.modifiers.gui.SampleTimeoutGui",
+      "org.apache.jmeter.modifiers.gui.UserParametersGui",
+      "org.apache.jmeter.sampler.DebugSampler",
+      "org.apache.jmeter.sampler.TestAction",
+      "org.apache.jmeter.sampler.gui.TestActionGui",
+      "org.apache.jmeter.timers.BSFTimer",
+      "org.apache.jmeter.timers.BeanShellTimer",
+      "org.apache.jmeter.timers.ConstantThroughputTimer",
+      "org.apache.jmeter.timers.ConstantTimer",
+      "org.apache.jmeter.timers.GaussianRandomTimer",
+      "org.apache.jmeter.timers.JSR223Timer",
+      "org.apache.jmeter.timers.PoissonRandomTimer",
+      "org.apache.jmeter.timers.SyncTimer",
+      "org.apache.jmeter.timers.UniformRandomTimer",
+      "org.apache.jmeter.timers.gui.ConstantTimerGui",
+      "org.apache.jmeter.timers.gui.GaussianRandomTimerGui",
+      "org.apache.jmeter.timers.gui.PoissonRandomTimerGui",
+      "org.apache.jmeter.timers.gui.UniformRandomTimerGui",
+      "org.apache.jmeter.visualizers.AssertionVisualizer",
+      "org.apache.jmeter.visualizers.BSFListener",
+      "org.apache.jmeter.visualizers.BeanShellListener",
+      "org.apache.jmeter.visualizers.ComparisonVisualizer",
+      "org.apache.jmeter.visualizers.GraphVisualizer",
+      "org.apache.jmeter.visualizers.JSR223Listener",
+      "org.apache.jmeter.visualizers.MailerVisualizer",
+      "org.apache.jmeter.visualizers.PropertyControlGui",
+      "org.apache.jmeter.visualizers.RespTimeGraphVisualizer",
+      "org.apache.jmeter.visualizers.SimpleDataWriter",
+      "org.apache.jmeter.visualizers.StatGraphVisualizer",
+      "org.apache.jmeter.visualizers.StatVisualizer",
+      "org.apache.jmeter.visualizers.SummaryReport",
+      "org.apache.jmeter.visualizers.TableVisualizer",
+      "org.apache.jmeter.visualizers.ViewResultsFullVisualizer",
+      "org.apache.jmeter.visualizers.backend.BackendListenerGui"
+    ],
     "versions": {
       "": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=org/apache/jmeter/ApacheJMeter_components/%1$s/ApacheJMeter_components-%1$s.jar"

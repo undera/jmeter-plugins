@@ -43,6 +43,10 @@
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/directory-listing/DirectoryListing.md",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.DirectoryListingConfig",
+    "componentClasses": [
+      "com.blazemeter.jmeter.DirectoryListingConfig",
+      "com.blazemeter.jmeter.DirectoryListingConfigGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-directory-listing/0.1/jmeter-plugins-directory-listing-0.1.jar",
@@ -60,6 +64,13 @@
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/parallel/Parallel.md",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.controller.ParallelSampler",
+    "componentClasses": [
+      "com.blazemeter.jmeter.controller.DummyThreadGroup",
+      "com.blazemeter.jmeter.controller.ParallelControllerGui",
+      "com.blazemeter.jmeter.controller.ParallelSampler",
+      "com.blazemeter.jmeter.http.ParallelHTTPSampler",
+      "com.blazemeter.jmeter.http.ParallelHTTPSamplerGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jmeter-parallel-0.1/jmeter-parallel-0.1.jar",
@@ -80,6 +91,9 @@
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/rotating-listener/RotatingListener.md",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.RotatingResultCollector",
+    "componentClasses": [
+      "com.blazemeter.jmeter.RotatingResultCollectorGui"
+    ],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-rotating-listener/0.1/jmeter-plugins-rotating-listener-0.1.jar",
@@ -97,6 +111,10 @@
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/sense-uploader/BlazemeterPlugin.md",
     "vendor": "BlazeMeter",
     "markerClass": "kg.apc.jmeter.reporters.LoadosophiaUploader",
+    "componentClasses": [
+      "kg.apc.jmeter.reporters.LoadosophiaUploaderGui",
+      "kg.apc.jmeter.reporters.bzm.BlazeMeterUploaderGui"
+    ],
     "versions": {
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-senseuploader/2.0/jmeter-plugins-senseuploader-2.0.jar",
@@ -145,6 +163,7 @@
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/wsc/WeightedSwitchController.md",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.blazemeter.jmeter.control.WeightedSwitchController",
+    "componentClasses":["com.blazemeter.jmeter.control.WeightedSwitchController","com.blazemeter.jmeter.control.WeightedSwitchControllerGui"],
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-wsc/0.1/jmeter-plugins-wsc-0.1.jar",
@@ -169,6 +188,12 @@
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/xmpp/XMPPSampler.md",
     "vendor": "BlazeMeter.com",
     "markerClass": "com.blazemeter.jmeter.xmpp.JMeterXMPPSampler",
+    "componentClasses": [
+      "com.blazemeter.jmeter.xmpp.JMeterXMPPConnection",
+      "com.blazemeter.jmeter.xmpp.JMeterXMPPConnectionGui",
+      "com.blazemeter.jmeter.xmpp.JMeterXMPPSampler",
+      "com.blazemeter.jmeter.xmpp.JMeterXMPPSamplerGui"
+    ],
     "versions": {
       "1.4.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-xmpp/1.4.0/jmeter-plugins-xmpp-1.4.0.jar",
@@ -202,6 +227,10 @@
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/hls/README.md",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.hls.logic.HlsSampler",
+    "componentClasses": [
+      "com.blazemeter.jmeter.hls.gui.HlsSamplerGui",
+      "com.blazemeter.jmeter.hls.logic.HlsSampler"
+    ],
     "versions": {
       "1.0": {
         "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jmeter-hls-1.0/jmeter-hls-1.0.jar",
@@ -212,12 +241,19 @@
     }
   },
   {
-    "id": "jmeter-bzm-http2",
+    "id": "bzm-http2",
     "name": "HTTP/2 Sampler",
     "description": "HTTP/2 protocol sampler",
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/http2/README.md",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.http2.sampler.HTTP2Request",
+    "componentClasses": [
+      "com.blazemeter.jmeter.http2.sampler.HTTP2Request",
+      "com.blazemeter.jmeter.http2.sampler.gui.HTTP2RequestGui",
+      "com.blazemeter.jmeter.http2.sampler.gui.Http2DefaultsGui",
+      "com.blazemeter.jmeter.http2.visualizers.SimpleDataWriter",
+      "com.blazemeter.jmeter.http2.visualizers.ViewResultsFullVisualizer"
+    ],
     "versions": {
       "1.0": {
         "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/http2-1.0/jmeter-bzm-http2-1.0.jar",

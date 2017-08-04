@@ -11,7 +11,7 @@ Now, you can use {{{PluginsManagerCMD}}} to get the status of plugins, install o
 PluginsManagerCMD &lt;command&gt; [&lt;params&gt;]
 }}}
 
-Where {{{command}}} is one of "help", "status", "upgrades", "available", "install", "uninstall".
+Where {{{command}}} is one of "help", "status", "upgrades", "available", "install", "install-all-except", "uninstall".
 {{{params}}} is a string with plugin IDs, comma-separated, like this: {{{jpgc-cmd,jpgc-json,jpgc-casutg}}}. No spaces allowed currently. If you want to specify exact versions for plugins, do it like this: {{{jpgc-json=2.2,jpgc-casutg=2.0}}}
 
 Example usages:
@@ -22,6 +22,7 @@ PluginsManagerCMD status
 PluginsManagerCMD upgrades
 PluginsManagerCMD available
 PluginsManagerCMD install jpgc-fifo,jpgc-json=2.2
+PluginsManagerCMD install-all-except jpgc-casutg,jpgc-autostop
 PluginsManagerCMD uninstall jmeter-tcp,jmeter-ftp,jmeter-jdbc
 }}}
 

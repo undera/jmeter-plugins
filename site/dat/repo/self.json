@@ -61,6 +61,13 @@
         "libs": {
           "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
         }
+      },
+      "0.14": {
+        "changes": "<p>- Added Plugins Manager button on toolbar;</p><p>- Suggest to install missing plugins;</p><p>- Load last test plan file after restart JMeter;</p><p>- Fixed update lib;</p><p>- Opportunity to fix broken jmeter;</p><p>- Fixed load plugins list;</p><p>- Distinct gui/non-gui mode in stats;</p><p>- Added \"install-all-except\" command to cmd;</p>",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.14/jmeter-plugins-manager-0.14.jar",
+        "libs": {
+          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+        }
       }
     }
   }

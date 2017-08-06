@@ -230,6 +230,7 @@
     "id": "bzm-hls",
     "name": "HLS Sampler",
     "description": "HLS protocol sampler, enabling testing for streaming applications",
+    "screenshotUrl": "",
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/hls/README.md",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.hls.logic.HlsSampler",
@@ -251,6 +252,7 @@
     "name": "HTTP/2 Sampler",
     "description": "HTTP/2 protocol sampler",
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/http2/README.md",
+    "screenshotUrl": "",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.http2.sampler.HTTP2Request",
     "componentClasses": [

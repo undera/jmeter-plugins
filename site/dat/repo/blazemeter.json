@@ -230,7 +230,7 @@
     "id": "bzm-hls",
     "name": "HLS Sampler",
     "description": "HLS protocol sampler, enabling testing for streaming applications",
-    "screenshotUrl": "",
+    "screenshotUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/raw/master/hls/HLSPluginView.png",
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/hls/README.md",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.hls.logic.HlsSampler",
@@ -241,6 +241,15 @@
     "versions": {
       "1.0": {
         "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jmeter-hls-1.0/jmeter-hls-1.0.jar",
+        "depends": [
+          "jmeter-http"
+        ]
+      },
+      "1.1": {
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jmeter-hls-1.1/jmeter-hls-1.1.jar",
+        "libs": {
+          "mqtt-websocket-java": "https://github.com/inventit/mqtt-websocket-java/releases/download/1.0.1/mqtt-websocket-java-1.0.1.jar"
+        },
         "depends": [
           "jmeter-http"
         ]

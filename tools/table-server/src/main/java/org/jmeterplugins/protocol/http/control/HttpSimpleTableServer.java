@@ -45,6 +45,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
     public static final String PARM_LINE = "LINE";
     public static final String PARM_READ_MODE = "READ_MODE";
     public static final String PARM_ADD_MODE = "ADD_MODE";
+    public static final String PARM_UNIQUE = "UNIQUE";
     public static final String PARM_KEEP = "KEEP";
     public static final String VAL_FIRST = "FIRST";
     public static final String VAL_LAST = "LAST";
@@ -62,9 +63,9 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
             + "http://hostname:port/sts/LENGTH?FILENAME=file.txt</p>"
             + "<p>Add a line into a file: (GET OR POST HTTP protocol)<br />"
             + "GET  : http://hostname:port/sts/ADD?FILENAME=file.txt&LINE=D0001123&ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]<br />"
-            + "GET Parameters : FILENAME=file.txt&LINE=D0001123&ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]<br />"
+            + "GET Parameters : FILENAME=file.txt&LINE=D0001123&ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]&UNIQUE=[<i>FALSE</i>,<i>TRUE</i>]<br />"
             + "POST : http://hostname:port/sts/ADD<br />"
-            + "POST Parameters : FILENAME=file.txt,LINE=D0001123,ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]</p>"
+            + "POST Parameters : FILENAME=file.txt,LINE=D0001123,ADD_MODE=[<i>FIRST</i>,<i>LAST</i>],UNIQUE=[<i>FALSE</i>,<i>TRUE</i>]</p>"
             + "<p>Save the specified linked list in a file to the default location:<br />"
             + "http://hostname:port/sts/SAVE?FILENAME=file.txt</p>"
             + "<p>Display the list of loaded files and the number of remaining lines for each linked list:<br />"
@@ -140,7 +141,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         }
         if (uri.equals(ROOT + URI_ADD) && (Method.POST.equals(method) || (Method.GET.equals(method)))) {
             msg = add(parms.get(PARM_ADD_MODE), parms.get(PARM_LINE),
-                    parms.get(PARM_FILENAME));
+                    parms.get(PARM_UNIQUE), parms.get(PARM_FILENAME));
         }
         if (uri.equals(ROOT + URI_LENGTH)) {
             msg = length(parms.get(PARM_FILENAME));
@@ -230,7 +231,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
                 + "</body>" + lineSeparator + "</html>";
     }
 
-    private String add(String addMode, String line, String filename) {
+    private String add(String addMode, String line, String uniqueMode, String filename) {
         if (null == filename) {
             return "<html><title>KO</title>" + lineSeparator
                     + "<body>Error : FILENAME parameter was missing !</body>"
@@ -247,11 +248,29 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         if (null == addMode) {
             addMode = VAL_FIRST;
         }
+        if (null == uniqueMode) {
+            uniqueMode = VAL_FALSE;
+        }
         if (!VAL_FIRST.equals(addMode) && !VAL_LAST.equals(addMode)) {
             return "<html><title>KO</title>"
                     + lineSeparator
                     + "<body>Error : ADD_MODE value has to be FIRST or LAST !</body>"
                     + lineSeparator + "</html>";
+        }
+        if (!VAL_TRUE.equals(uniqueMode) && !VAL_FALSE.equals(uniqueMode)) {
+            return "<html><title>KO</title>"
+                    + lineSeparator
+                    + "<body>Error : UNIQUE value has to be TRUE or FALSE !</body>"
+                    + lineSeparator + "</html>";
+        }
+
+        if (VAL_TRUE.equals(uniqueMode)) {
+            if (database.get(filename).contains(line)) {
+                return "<html><title>KO</title>"
+                        + lineSeparator
+                        + "<body>Error : ENTRY already exists !</body>"
+                        + lineSeparator + "</html>";
+            }
         }
 
         if (VAL_FIRST.equals(addMode)) {

@@ -173,6 +173,23 @@ public class HttpSimpleTableServerTest {
         assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
                 + "</html>", result);
 
+        urlParameters.put("UNIQUE", "TRUE");
+        result = sendHttpPost(obj, "/sts/ADD", urlParameters);
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : ENTRY already exists !</body>"
+                + CRLF + "</html>", result);
+
+        urlParameters.put("UNIQUE", "FALSE");
+        result = sendHttpPost(obj, "/sts/ADD", urlParameters);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>"
+                + CRLF + "</html>", result);
+
+        urlParameters.put("UNIQUE", "UNKNOWN");
+        result = sendHttpPost(obj, "/sts/ADD", urlParameters);
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : UNIQUE value has to be TRUE or FALSE !</body>"
+                + CRLF + "</html>", result);
+
         // ADD (GET) : ERROR ADD SHOULD USE POST METHOD
         result = sendHttpGet(obj, ""
                 + "/sts/ADD?LINE=login4;password4&FILENAME=" + filename);
@@ -218,7 +235,7 @@ public class HttpSimpleTableServerTest {
 
         // SAVE (GET)
         result = sendHttpGet(obj, "/sts/SAVE", this.createParm("FILENAME", filename));
-        assertEquals("<html><title>OK</title>" + CRLF + "<body>3</body>" + CRLF
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>4</body>" + CRLF
                 + "</html>", result);
 
         // SAVE (GET) : ERROR MAX SIZE REACHED

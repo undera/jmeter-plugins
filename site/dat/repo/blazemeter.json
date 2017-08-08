@@ -261,7 +261,7 @@
     "name": "HTTP/2 Sampler",
     "description": "HTTP/2 protocol sampler",
     "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/http2/README.md",
-    "screenshotUrl": "",
+    "screenshotUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/raw/master/http2/http2Sampler.png",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.http2.sampler.HTTP2Request",
     "componentClasses": [

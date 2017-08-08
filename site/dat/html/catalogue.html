@@ -69,7 +69,7 @@
             left.append("<p>" + plugin.description + "</p>");
 
             var vers_list = Object.keys(plugin.versions);
-            if (vers_list[0] != "" && plugin.versions[vers_list[0]].downloadUrl && plugin.id != 'jpgc-plugins-manager') {
+            if (vers_list[0] != "" && plugin.versions[vers_list[0]].downloadUrl && plugin.id !== 'jpgc-plugins-manager') {
                 var vers = $("<p><i class='fa fa-download'></i> Download Versions: </p>").addClass('small');
                 for (var n = 0; n < vers_list.length; n++) {
                     var ver_link = $('<a href="/files/packages/' + plugin.id + '-' + vers_list[n] + '.zip">' + vers_list[n] + "</a>");
@@ -130,6 +130,9 @@
 
                 if (filter) {
                     var data = plugin.id + plugin.name + plugin.description;
+                    if (plugin.componentClasses) {
+                        data+=plugin.componentClasses.join(" ");
+                    }
                     if (data.toLowerCase().indexOf(filter) < 0) {
                         continue;
                     }

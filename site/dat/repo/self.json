@@ -57,17 +57,11 @@
       },
       "0.13": {
         "changes": "<p>- Fixed show empty plugins list;</p><p>- Retry JAR download after failed downloads;</p><p>- Inform on potential JAR conflicts;</p><p>- Re-enable manager after failed JAR downloads;</p><p>- Make stats UUID less sensitive + detect CI, clouds and OS;</p><p>- Version management for libs;</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.13/jmeter-plugins-manager-0.13.jar",
-        "libs": {
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
-        }
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.13/jmeter-plugins-manager-0.13.jar"
       },
       "0.14": {
         "changes": "<p>- Added Plugins Manager button on toolbar</p><p>- Suggest to install missing plugins</p><p>- Load last test plan file after restarting</p><p>- Fixed update libraries</p><p>- Fixed plugins list loading</p><p>- Added \"install-all-except\" command to cmd;</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.14/jmeter-plugins-manager-0.14.jar",
-        "libs": {
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
-        }
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.14/jmeter-plugins-manager-0.14.jar"
       },
       "0.15": {
         "changes": "Fixed bug of 0.14 with NPE on initial install",

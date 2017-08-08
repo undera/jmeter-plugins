@@ -4,7 +4,7 @@
   * [SettingsPanel] GUI Customizing Graphs Plugins
 
 == Graphs ==
-  * [PerfMon PerfMon Metrics Collector] and [PerfMonAgent Server Agent]
+  * [PerfMon PerfMon Metrics Collector]
   * [ActiveThreadsOverTime Active Threads Over Time]
   * [ResponseTimesOverTime Response Times Over Time]
   * [TransactionsPerSecond Transactions per Second]

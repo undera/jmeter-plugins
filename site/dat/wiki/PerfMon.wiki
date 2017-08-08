@@ -7,17 +7,17 @@
 During a load test, it is important to know the health of the servers loaded. 
 It is also nice to see if you are targeting a cluster if the load is correctly 
 dispatched. To address this, the plugin package now supports server monitoring!
-Using it, you can monitor [PerfMonMetrics CPU, Memory, Swap, Disks I/O and Networks I/O]
+Using it, you can monitor [https://github.com/undera/perfmon-agent/blob/master/README.md#supported-metrics CPU, Memory, Swap, Disks I/O and Networks I/O]
 on [http://support.hyperic.com/display/SIGAR/Home#Home-overview almost all platforms]!
 
 Here is how the plugin looks like. It shows the CPU usage of 4 servers involved in the load test:
 
 [/img/wiki/servers_performance_monitoring.png]
 
-=Metrics collected=
+=Metrics Collected=
 
 Since version 0.5.0 the Server Agent tool supports collecting over 75 system metrics.
-[PerfMonMetrics See full list].
+[https://github.com/undera/perfmon-agent/blob/master/README.md#supported-metrics See full list].
 
 =How it works=
 
@@ -33,7 +33,7 @@ It is composed of a Java common part and native libraries per OS.
 
 ==Installation==
 
-Server Agent tool detailed description is placed [PerfMonAgent here].
+Server Agent tool detailed description is placed [https://github.com/undera/perfmon-agent/blob/master/README.md here].
 
 =Usage=
 ==GUI Mode==
@@ -55,3 +55,57 @@ running the test you may load saved file into GUI and see the values timeline.
     * e.g. Default pattern would be: {{{ jmeterPlugin.perfmon.label.useHostname.pattern=([\\w\\-]+)\\..* }}}
     * e.g. Pattern for EC2 us-east/west subdomain matching: {{{ jmeterPlugin.perfmon.label.useHostname.pattern=([\w\-]+\.us-(east|west)-[0-9]).* }}}
   * {{{forcePerfmonFile}}} - true/false, enabling it makes JMeter to write JTL file with perfmon metrics in the current directory
+
+
+= Common Considerations =
+PerfMon Server Agent did support only few metrics in versions up to 0.4.2.
+The old agent still supported in [PerfMon PerfMon Metrics Collector] version 0.5.0+.
+However, version 0.5.0 ships new [https://github.com/undera/perfmon-agent/blob/master/README.md ServerAgent] which provide over 75
+separate metrics, support per-process CPU and Memory metrics and even
+custom metrics for measuring whatever you want: file sizes, database row counts,
+Java heap sizes and garbage collections.
+
+== Specifying Metric Params ==
+[PerfMon PerfMon Metrics Collector] has special "Metric Parameter" column,
+where user can specify metric subtype to collect, specify which process
+should be monitored (which filesystem, network interface).
+Metric parameter string may have several parameters inside it,
+separated with colon `:`. To include colon as a char inside parameter, use
+backslash escaping `\:`. Make note you cannot use tab characters inside
+metric parameter string, all tabs will be converted to spaces silently.
+
+Most of the metrics accepts single parameter called 'type'. This parameter
+specifies which particular number you want to collect. There is default
+metric type for each metric category that will be collected if no 'type'
+parameter specified (see lists below, *bold* first item in each category).
+
+Some metric types are commonly used and considered *primary*,
+leaving some rarely used types as *additional*. Make note that not all metrics
+available on all platforms, we depend on [http://support.hyperic.com/display/SIGAR/Home SIGAR]
+API capabilities here.
+
+Some metrics allow specifying particular object to monitor, you may specify
+_selector parameter_ to monitor values only for this object:
+  * _name_, _pid_ and _[http://support.hyperic.com/display/SIGAR/PTQL ptql]_ selectors for processes
+  * _core_ selector for monitoring specific CPU of multicore systems
+  * _fs_ selector for filesystems
+  * _iface_ selector for network interfaces
+Make note that metric types are different for per-process and total metrics for
+CPU and Memory.
+
+Some example metric parameter strings:
+
+```
+### CPU ###
+combined - measure total CPU usage, equals to 100-idle value
+core=2:user - measure user process CPU usage for third core in system (core numbering starts at 0)
+name=java#2:user - will monitor second java process instance for user time spent
+pid=14523:percent - will monitor process with PID 14523 for total CPU usage percentage
+name=httpd - omitting metric type will use default 'percent'
+
+### Disk IO ###
+fs=/home:writes - will monitor /home filesystem for number of write operations
+
+### Network IO ###
+iface=eth0:tx - will monitor interface eth0 for transmitted packet rate
+```

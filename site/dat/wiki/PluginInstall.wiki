@@ -10,7 +10,7 @@ If you experience any issues with plugins installation, don't hesitate to ask at
 
 == PerfMon Agent ==
 
-ServerAgent does not required to be installed into JMeter directory. You should install and launch it on the target server instead. See [PerfMonAgent] wiki page for details.
+ServerAgent does not required to be installed into JMeter directory. You should install and launch it on the target server instead. See [https://github.com/undera/perfmon-agent/blob/master/README.md server agent] wiki page for details.
 
 = Configure JMeter =
 
@@ -82,7 +82,7 @@ If you look for old-style plugin sets up to version 1.4.0, find them [/downloads
 JMeter-Plugins versionы  before 1.1.1 were shipped via three distribution ZIPs:
   # JMeterPlugins-x.x.x.zip - contains plugins, must be unpacked into _lib/ext_ directory inside JMeter
   # JMeterPlugins-libs-x.x.x.zip - contains additional JARs used by JSON/HBase/Hadoop/etc plugins, must be upnacked into _lib_ directory inside JMeter
-  # ServerAgent-x.x.x.zip - contains [PerfMonAgent server resource monitoring agent] to use with [PerfMon PerfMon Metrics Collector] plugin, standalone utility
+  # ServerAgent-x.x.x.zip - contains [https://github.com/undera/perfmon-agent/blob/master/README.md server resource monitoring agent] to use with [PerfMon PerfMon Metrics Collector] plugin, standalone utility
 
 = Installing Versions Before 1.0.0 =
 

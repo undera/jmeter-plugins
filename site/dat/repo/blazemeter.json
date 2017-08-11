@@ -253,6 +253,16 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "1.2": {
+        "changes": "Some bugs fixed",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jmeter-hls-1.2/jmeter-hls-1.2.jar",
+        "libs": {
+          "mqtt-websocket-java": "https://github.com/inventit/mqtt-websocket-java/releases/download/1.0.1/mqtt-websocket-java-1.0.1.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

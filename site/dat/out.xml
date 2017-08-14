@@ -24,11 +24,11 @@
          files_base="files" download_link="../../downloads/file"
          accept="1" menu="1" title="Documentation"/>
 
-    <url link="support" menu="1" title="Support Forums" class="PWE\Modules\RedirectAccepted\RedirectAccepted"
-         base="http://groups.google.com/forum/#!forum/jmeter-plugins" accept="1" ico="fa-support"/>
-
     <url link="stats" title="Usage Statistics" menu="1" ico="fa-bar-chart"
          class="PWE\Modules\HTMLPage\HTMLPage" src="stats.html"/>
+
+    <url link="support" menu="1" title="Support Forums" class="PWE\Modules\RedirectAccepted\RedirectAccepted"
+         base="http://groups.google.com/forum/#!forum/jmeter-plugins" accept="1" ico="fa-support"/>
 
     <url link="sources" title="Source Code" menu="0" ico="fa-github-alt"
          class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="https://github.com/undera/jmeter-plugins"/>

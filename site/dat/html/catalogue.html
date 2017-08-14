@@ -1,6 +1,7 @@
 <div id="catalogue">
-    <a href="http://jmeter.apache.org/" target="_blank" class="pull-right"><img width="150" 
-            src="https://jmeter.apache.org/images/logo.svg" alt="Apache JMeter"/></a>
+    <a href="http://jmeter.apache.org/" target="_blank" class="pull-right"><img width="150"
+                                                                                src="https://jmeter.apache.org/images/logo.svg"
+                                                                                alt="Apache JMeter"/></a>
     <h1>Custom Plugins for Apache JMeter&trade;</h1>
     <p>
         This project is an independent set of plugins for <a href="http://jmeter.apache.org/">Apache JMeter</a>,
@@ -46,14 +47,13 @@
 
     $(function () {
         var plugins = [];
-        var stats = {};
         var cat = $("#catalogue");
         cat.find("input").val(getParameterByName("search"));
 
-        function getSparkline(plugin) {
+        function getSparkline(stats) {
             var pluginSpark = $("<div></div>").addClass("sparkline-container");
-            var vals = values(stats[plugin.id]);
-            while (vals.length>30) {
+            var vals = values(stats);
+            while (vals.length > 30) {
                 vals.shift();
             }
             var span = $("<span></span>").addClass("sparkline").text(vals);
@@ -99,12 +99,11 @@
                 right.append("<p><small>Depends: " + plugin.versions[vers_list[vers_list.length - 1]].depends + "</small></p>");
             }
 
-            if (stats[plugin.id]) {
-                right.append(getSparkline(plugin));
-            } else {
-                console.log("Skip", stats[plugin.id]);
-            }
-
+            $.get('/dat/stats/plugins/'+plugin.id+'.json').success(function (json) {
+                var sparkline = getSparkline(json['usage']);
+                right.append(sparkline);
+                sparkline.find(".sparkline").sparkline("html", {type: "bar", width: "100%", height: "2em"});
+            });
 
             var card = $("<div></div>").addClass("row");
             card.addClass("alert");
@@ -131,7 +130,7 @@
                 if (filter) {
                     var data = plugin.id + plugin.name + plugin.description;
                     if (plugin.componentClasses) {
-                        data+=plugin.componentClasses.join(" ");
+                        data += plugin.componentClasses.join(" ");
                     }
                     if (data.toLowerCase().indexOf(filter) < 0) {
                         continue;
@@ -147,7 +146,7 @@
             cat.find(".count span").text(cnt);
             cat.find(".fa-spin").hide();
 
-            cat.find(".sparkline").sparkline("html", {type: "bar", width: "100%", height: "2em"});
+            //cat.find(".sparkline").sparkline("html", {type: "bar", width: "100%", height: "2em"});
 
 
             if (!filter && cnt > 5) {
@@ -173,11 +172,7 @@
 
             plugins.push.apply(plugins, data);
 
-            $.get('/dat/stats/plugins_usage_history.json').success(function (json) {
-                stats = json;
-            }).complete(function () {
-                refreshCatalogue();
-            });
+            refreshCatalogue();
         });
     });
 

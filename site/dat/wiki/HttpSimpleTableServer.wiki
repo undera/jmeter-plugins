@@ -202,16 +202,16 @@ login5;password5
 
 GET Protocol
 {{{
-http://hostname:port/sts/ADD?FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST, LAST}
+http://hostname:port/sts/ADD?FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST, LAST}&UNIQUE={FALSE, TRUE}
 }}}
-GET Parameters : FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST, LAST}
+GET Parameters : FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST, LAST}&UNIQUE={FALSE, TRUE}
 
 
 POST Protocol
 {{{
 http://hostname:port/sts/ADD
 }}}
-POST Parameters : FILENAME=dossier.csv, LINE=D0001123, ADD_MODE={FIRST, LAST}
+POST Parameters : FILENAME=dossier.csv, LINE=D0001123, ADD_MODE={FIRST, LAST}, UNIQUE={FALSE, TRUE}
 
 HTML format:
 
@@ -226,6 +226,7 @@ Available options:
   * ADD_MODE=LAST => add to the end
   * FILENAME=dossier.csv => if doesn't already exist it creates a LinkList in memory
   * LINE=1234;98763 => the line to add
+  * UNIQUE=TRUE => do not add line if the list already contains such line
 
 POST Protocol with parameters
 [/img/wiki/http_sts_add_request.png]

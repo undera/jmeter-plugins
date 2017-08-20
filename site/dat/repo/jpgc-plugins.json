@@ -23,7 +23,7 @@
   {
     "id": "jpgc-casutg",
     "name": "Custom Thread Groups",
-    "description": "Adds new Thread Groups: <ul><li>Stepping Thread Group</li><li>Ultimate Thread Group</li><li>Concurrency Thread Group</li><li>Arrivals Thread Group</li><li>Free-Form Arrivals Thread Group</li></ul>",
+    "description": "Adds new Thread Groups: <ul><li><a href=https://jmeter-plugins.org/wiki/SteppingThreadGroup>Stepping Thread Group</a></li><li><a href=https://jmeter-plugins.org/wiki/UltimateThreadGroup >Ultimate Thread Group</a></li><li><a href=https://jmeter-plugins.org/wiki/ConcurrencyThreadGroup>Concurrency Thread Group</a></li><li><a href=https://jmeter-plugins.org/wiki/ArrivalsThreadGroup>Arrivals Thread Group</a></li><li><a href=https://jmeter-plugins.org/wiki/FreeFormArrivalsThreadGroup>Free-Form Arrivals Thread Group</a></li></ul>",
     "screenshotUrl": "https://jmeter-plugins.org/img/wiki/ConcurrencyThreadGroup.png",
     "helpUrl": "https://jmeter-plugins.org/wiki/ConcurrencyThreadGroup/",
     "vendor": "JMeter-Plugins.org",

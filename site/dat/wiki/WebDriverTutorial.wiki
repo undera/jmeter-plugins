@@ -75,7 +75,7 @@ At the time of writing, only Chrome and Firefox browsers are supported.  However
 === Web Driver Sampler ===
 There is more in depth information on the [WebDriverSampler Web Driver Sampler page].  However, it is important to understand that the content of the script editor is to allow the user total control over when the interactions with the browser *as well as* when the sampling should be conducted.  This last part is important as it will allow the reader to not only measure the amount of time it takes to load a URL (as the above example), but also to measure AJAX requests as well (more on this in the [WebDriverSampler Web Driver Sampler page]).
 
-In the above example, the `Browser.get()` method call will make the browser load the specified URL.  The `SampleResult.sampleStart()` will start timing and then calling `SampleResult.sampleEnd()` afterwards will stop the timing and allow JMeter to use the `SampleResult` when measuring the results in the `View Results in Table` component.  
+In the below example, the `Browser.get()` method call will make the browser load the specified URL.  The `SampleResult.sampleStart()` will start timing and then calling `SampleResult.sampleEnd()` afterwards will stop the timing and allow JMeter to use the `SampleResult` when measuring the results in the `View Results in Table` component.
 
 The `Browser` object exposed in the `Script` section is an instance of the `WebDriver` object documented in the [http://selenium.googlecode.com/svn/trunk/docs/api/java/org/openqa/selenium/WebDriver.html Selenium documentation].  It is recommended that the reader have a look at the documentation to see what methods are available on the WebDriver API, to better understand what can be scriptable on the Browser instance.
 

@@ -77,14 +77,22 @@ By the number of known users:
         };
     }
 
-    function hist_series(data) {
+    function hist_series(data, divider) {
         var dates = Object.keys(data);
         dates.sort();
 
         var res = [];
         for (var n = 0; n < dates.length; n++) {
             var date = dates[n];
-            res.push([Date.parse(date), data[date]]);
+            var value = data[date];
+            if (divider && divider[date]) {
+                value = Math.round(1000.0 * value / divider[date]) / 10;
+            }
+            var pdate = Date.parse(date);
+            if (pdate < new Date("2016-11-21")) {
+                continue;
+            }
+            res.push([pdate, value]);
         }
         return res;
     }
@@ -107,18 +115,6 @@ By the number of known users:
                 plotLines: [{
                     color: 'silver',
                     dashStyle: 'longdashdot',
-                    value: new Date("2016-11-21"),
-                    width: 1,
-                    label: {
-                        style: {
-                            color: 'silver'
-                        },
-                        text: 'Fixed data collecting',
-                        align: 'left'
-                    }
-                }, {
-                    color: 'silver',
-                    dashStyle: 'longdashdot',
                     value: new Date("2017-05-22"),
                     width: 1,
                     label: {
@@ -130,33 +126,50 @@ By the number of known users:
                     }
                 }]
             },
-            yAxis: {
-                title: {
-                    text: 'known installations'
+            yAxis: [
+                {
+                    opposite: true,
+                    title: {
+                        text: 'known installations'
+                    },
+                    endOnTick: false,
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
                 },
-                endOnTick: false,
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
+                {
+                    title: {
+                        text: null
+                    },
+                    gridLineWidth: 0,
+                    labels: {
+                        enabled: false
+                    }
+                }
+            ],
             legend: {
                 layout: 'vertical',
                 align: 'right',
                 verticalAlign: 'middle',
                 borderWidth: 0
             },
-            series: [{
-                name: id,
-                data: hist_series(plugin_data)
-            },
+            series: [
                 {
-                    name: "All Plugin Users",
-                    data: hist_series(pmgr_data),
+                    name: id,
+                    data: hist_series(plugin_data),
+                    yAxis: 0
+                },
+                {
+                    name: "% of all users",
+                    data: hist_series(plugin_data, pmgr_data),
                     lineWidth: 1,
-                    dashStyle: 'dot'
-                }]
+                    dashStyle: 'dot',
+                    //marker: 'none',
+                    yAxis: 1
+                }
+            ]
         };
     }
 
@@ -254,7 +267,7 @@ By the number of known users:
             }
 
             for (plat in refined) {
-                tr.append("<td>" + plat + ": " + (100*refined[plat]/sum).toFixed(2) + "%</td>");
+                tr.append("<td>" + plat + ": " + (100 * refined[plat] / sum).toFixed(2) + "%</td>");
             }
         });
 

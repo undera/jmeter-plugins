@@ -331,7 +331,7 @@
     "markerClass": "net.kvak.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
     "versions": {
       "1.0": {
-        "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.0/jmeter.backendlistener.elasticsearch.jar"
+        "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.0/elasticsearch-backend-listener-1.0.jar"
       }
     }
   }

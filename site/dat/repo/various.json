@@ -287,10 +287,14 @@
     "componentClasses": [
       "eu.luminis.jmeter.assertions.BinaryContentAssertion",
       "eu.luminis.jmeter.assertions.BinaryContentAssertionGUI",
+      "eu.luminis.jmeter.wssampler.BinaryFrameFilter",
+      "eu.luminis.jmeter.wssampler.BinaryFrameFilterGui",
       "eu.luminis.jmeter.wssampler.CloseWebSocketSampler",
       "eu.luminis.jmeter.wssampler.CloseWebSocketSamplerGui",
       "eu.luminis.jmeter.wssampler.OpenWebSocketSampler",
       "eu.luminis.jmeter.wssampler.OpenWebSocketSamplerGui",
+      "eu.luminis.jmeter.wssampler.PingFrameFilter",
+      "eu.luminis.jmeter.wssampler.PingFrameFilterGui",
       "eu.luminis.jmeter.wssampler.PingPongSampler",
       "eu.luminis.jmeter.wssampler.PingPongSamplerGui",
       "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler",
@@ -298,7 +302,9 @@
       "eu.luminis.jmeter.wssampler.SingleReadWebSocketSampler",
       "eu.luminis.jmeter.wssampler.SingleReadWebSocketSamplerGui",
       "eu.luminis.jmeter.wssampler.SingleWriteWebSocketSampler",
-      "eu.luminis.jmeter.wssampler.SingleWriteWebSocketSamplerGui"
+      "eu.luminis.jmeter.wssampler.SingleWriteWebSocketSamplerGui",
+      "eu.luminis.jmeter.wssampler.TextFrameFilter",
+      "eu.luminis.jmeter.wssampler.TextFrameFilterGui"
     ],
     "versions": {
       "0.7.3": {
@@ -316,6 +322,13 @@
       "0.9": {
         "changes": "Single read sampler can be made optional, which avoids the sampler to fail when no websocket frame is received; this is useful in test scenario's where you can not exactly predict the server's behavior.",
         "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.9/JMeterWebSocketSamplers-0.9.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "0.10": {
+        "changes": "New feature: frame filters. To handle situations in which the server sends unsolicited messages and the occurrence of such messages is hard to predict or otherwise hard to take into account in the test plan, filters can be used to discard such messages before they are seen by a sampler.",
+        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.10/JMeterWebSocketSamplers-0.10.jar",
         "depends": [
           "jmeter-core"
         ]

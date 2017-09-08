@@ -18,7 +18,7 @@ It gives you the happiness of the "open workload" approach.
 == Few Important Notes ==
 
   # JMeter test will be stopped when RPS schedule finishes.
-  # provide enough working threads for your RPS, JMeter timers can only _delay_ threads (and limit RPS).
+  # provide enough working threads for your RPS, JMeter timers can only _delay_ threads (and limit RPS). You may pair this plugin with [ConcurrencyThreadGroup Concurrency Thread Group] using [ThroughputShapingTimer#Schedule-Feedback-Function Schedule Feedback Function] to dynamically maintain thread count required to achieve target RPS.
   # if you have RPS that lower at the end of test, make threads to lower also. Оtherwise you'll have a spike in last second.
   # avoid using zero RPS value as start of test, this produce spike also
   # avoid zero RPS during the test, this may lead to nasty effects
@@ -67,5 +67,6 @@ There is special JMeter function that enables feeback loop for number of threads
 Thread groups like [ConcurrencyThreadGroup.wiki Concurrency Thread Group] can use that function to supply additional
 threads during test runs when requested RPS schedule is not met.
 
-Example function call: {{{ ${__tstFeedback(tst-name,1,100,10)} }}}, where "tst-name" is name of Throughput Shaping Timer to integrate with, 1 and 100 are starting threads and max allowed threads, 10 is how many spare threads to keep in thread pool.
+Example function call: {{{ ${__tstFeedback(tst-name,1,100,10)} }}}, where "tst-name" is name of Throughput Shaping Timer to integrate with, 1 and 100 are starting threads and max allowed threads, 10 is how many spare threads to keep in thread pool. 
+If spare threads parameter is a float value <1, then it is interpreted as a ratio relative to the current estimate of threads needed.  If above 1, spare threads is interpreted as an absolute count.
 

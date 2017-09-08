@@ -16,3 +16,7 @@ This thread group offers simplified approach for configuring threads schedule. I
 The preview graph reacts immediately to changes in the fields, showing you the planned concurrency schedule.
 
 [/img/wiki/ConcurrencyThreadGroup.png]
+
+== Use With Throughput Shaping Timer Feedback Function ==
+
+When this thread group is used with [ThroughputShapingTimer Throughput Shaping Timer], you may replace Target Concurrency value with a call to the __tstFeedback function to dynamically maintain thread count required to achieve target RPS. When using this approach, leave Concurrency Thread Group Ramp Up Time and Ramp-Up Steps Count fields blank, but be sure to set Hold Target Rate Time to a value equal or greater than the total Duration specified in the Throughput Shaping Timer schedule. See [ThroughputShapingTimer#Schedule-Feedback-Function Throughput Shaping Timer Schedule Feedback Function]for function usage details.

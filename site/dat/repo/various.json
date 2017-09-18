@@ -347,7 +347,7 @@
        "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.0/elasticsearch-backend-listener-1.0.jar"
       },
       "1.5": {
-        "changes": "Added option to trust all SSL certificates. *Be careful with this, it should never be used in production*"
+        "changes": "Added option to trust all SSL certificates. *Be careful with this, it should never be used in production*",
         "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.5.0/elasticsearch-backend-listener-1.5.jar"
       }
     }

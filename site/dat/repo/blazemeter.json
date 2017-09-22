@@ -32,6 +32,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "0.5": {
+        "changes": "<p>- Add last sampler result tab;</p><p>- Choose TG from context of tree;</p><p>- Fixed italic font in tree not shown on Mac;</p><p>- Fixed blue color for current element is blue-on-blue for Mac;</p><p>- Fixed logging lab for old jmeter versions;</p><p>- Fixed clear data in info tabs and listeners;</p><p>- Fixed modification thread groups;</p>",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.5/jmeter-debugger-0.5.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

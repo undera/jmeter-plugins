@@ -172,6 +172,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "3.2": {
+        "changes": "Migrated to BackendListener",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jpgc-sense-3.2/jmeter-plugins-senseuploader-3.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
       }
     }
   },

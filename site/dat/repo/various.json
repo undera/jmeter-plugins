@@ -74,6 +74,7 @@
     "name": "Cassandra Support",
     "description": "",
     "helpUrl": "https://github.com/Netflix/CassJMeter/wiki",
+    "screenshotUrl": "",
     "vendor": "Netflix",
     "markerClass": "com.netflix.jmeter.sampler.AbstractSampler",
     "componentClasses": [

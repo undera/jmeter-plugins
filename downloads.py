@@ -2,12 +2,11 @@ import json
 import logging
 import os
 import re
+import requests
 import subprocess
 import tempfile
 import zipfile
 from distutils.version import StrictVersion
-
-import requests
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 repo_dir = os.path.join(base_dir, "site", "dat", "repo")
@@ -98,6 +97,9 @@ if __name__ == "__main__":
     download_into_dir(tempfile.mkdtemp(), pmgr_obj['downloadUrl'], "pmgr")  # TODO: use it as cached
 
     for plugin in plugins:
+        if 'screenshotUrl' not in plugin:
+            raise ValueError("%s has no screenshotUrl")
+
         logging.debug("Processing plugin: %s", plugin['id'])
         if plugin['id'] == 'jpgc-plugins-manager':
             continue

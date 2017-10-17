@@ -73,7 +73,6 @@
     "id": "netflix-cassandra",
     "name": "Cassandra Support",
     "description": "",
-    "screenshotUrl": "",
     "helpUrl": "https://github.com/Netflix/CassJMeter/wiki",
     "vendor": "Netflix",
     "markerClass": "com.netflix.jmeter.sampler.AbstractSampler",
@@ -340,6 +339,7 @@
     "name": "ElasticSearch backend listener",
     "description": "Apache JMeter plugin for sending sample results to an ElasticSearch engine. <ul><li>Simply add a \"Backend Listener\" and change the implementation</li><li>Change the listener's configuration</li></ul>",
     "helpUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener",
+    "screenshotUrl": "",
     "vendor": "Created by Korteke's modified by Delirius325",
     "markerClass": "net.kvak.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
     "versions": {

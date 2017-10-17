@@ -98,7 +98,7 @@ if __name__ == "__main__":
 
     for plugin in plugins:
         if 'screenshotUrl' not in plugin:
-            raise ValueError("%s has no screenshotUrl")
+            raise ValueError("%s has no screenshotUrl" % plugin['id'])
 
         logging.debug("Processing plugin: %s", plugin['id'])
         if plugin['id'] == 'jpgc-plugins-manager':

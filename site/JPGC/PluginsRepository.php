@@ -25,6 +25,15 @@ class PluginsRepository extends \PWE\Modules\PWEModule implements \PWE\Modules\O
             $plugins = array_merge($plugins, $set);
         }
 
+        if ($_REQUEST['id']) {
+            foreach ($plugins as $plugin) {
+                if ($plugin['id'] == $_REQUEST['id']) {
+                    $plugins = array($plugin);
+                    break;
+                }
+            }
+        }
+
         $this->PWE->sendHTTPHeader("Content-Type: application/json");
         throw new \PWE\Exceptions\HTTP2xxException(json_encode($plugins));
     }

@@ -174,22 +174,6 @@ Connection: close&#xd;
             <stringProp name="JSONINPUT"></stringProp>
           </com.atlantbh.jmeter.plugins.jsontoxmlconverter.JSONToXMLConverter>
           <hashTree/>
-          <com.atlantbh.jmeter.plugins.oauth.OAuthSampler guiclass="com.atlantbh.jmeter.plugins.oauth.gui.OAuthSamplerGui" testclass="com.atlantbh.jmeter.plugins.oauth.OAuthSampler" testname="jp@gc - OAuth Sampler" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="OAuthSampler.consumer_key"></stringProp>
-            <stringProp name="OAuthSampler.consumer_secret"></stringProp>
-            <stringProp name="OAuthSampler.request_body"></stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">true</boolProp>
-            <stringProp name="OAuthSampler.base_host"></stringProp>
-            <stringProp name="OAuthSampler.resource"></stringProp>
-            <stringProp name="OAuthSampler.port_number">8080</stringProp>
-            <stringProp name="OAuthSampler.request_headers"></stringProp>
-          </com.atlantbh.jmeter.plugins.oauth.OAuthSampler>
-          <hashTree/>
           <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="jp@gc - UDP Request" enabled="true">
             <stringProp name="hostname"></stringProp>
             <stringProp name="port"></stringProp>

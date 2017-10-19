@@ -17,10 +17,6 @@ public class VirtualUserController extends GenericController {
     private boolean hasArrived = false;
     protected AbstractDynamicThreadGroup owner;
 
-    public VirtualUserController() {
-        super();
-    }
-
     private long iterationNo = 0;
 
     @Override
@@ -95,8 +91,11 @@ public class VirtualUserController extends GenericController {
         JMeterThread thread = JMeterContextService.getContext().getThread();
         if (owner instanceof ArrivalsThreadGroup) {
             getOwnerAsArrivals().abandonFact(thread, iterationNo);
-        }
-        if (!moveToPool(thread)) {
+
+            if (!moveToPool(thread)) {
+                setDone(true);
+            }
+        } else {
             setDone(true);
         }
     }

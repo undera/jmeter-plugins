@@ -332,6 +332,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "0.11.1": {
+        "changes": "New feature: you can control what's happening with the websocket connections at the end of the test: leave open (default), close on websocket level or close on tcp level, by setting JMeter property websocket.thread.stop.policy. Fix: all result viewers will now correctly show the size of received bytes. Frame payload is counted as 'body', frame headers as 'headers'. By default, filtered frames do not contribute to 'received size', but this can be changed by setting JMeter property websocket.result.size_includes_filtered_frames.",
+        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.11.1/JMeterWebSocketSamplers-0.11.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

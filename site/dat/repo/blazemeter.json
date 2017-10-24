@@ -179,6 +179,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "3.3": {
+        "changes": "Fixed distributed mode",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jpgc-sense-3.3/jmeter-plugins-senseuploader-3.3.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
       }
     }
   },

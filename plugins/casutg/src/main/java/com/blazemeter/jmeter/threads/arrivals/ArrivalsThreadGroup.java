@@ -54,11 +54,6 @@ public class ArrivalsThreadGroup extends AbstractDynamicThreadGroup {
         return new ArrivalsThreadStarter(groupIndex, listenerNotifier, testTree, engine, this);
     }
 
-    @Override
-    public void startNextLoop() {
-        ((VirtualUserController) getSamplerController()).startNextLoop();
-    }
-
     /**
      * Forceful stop of test calls this
      */

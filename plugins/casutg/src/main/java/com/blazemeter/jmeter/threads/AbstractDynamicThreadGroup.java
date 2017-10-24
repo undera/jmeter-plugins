@@ -172,4 +172,8 @@ public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGr
         return getUnitStr(unit);
     }
 
+    @Override
+    public void startNextLoop() {
+        ((VirtualUserController) getSamplerController()).startNextLoop();
+    }
 }

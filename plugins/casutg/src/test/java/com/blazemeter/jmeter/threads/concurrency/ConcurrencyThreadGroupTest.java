@@ -11,11 +11,7 @@ import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleListener;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.property.StringProperty;
-import org.apache.jmeter.threads.AbstractThreadGroup;
-import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jmeter.threads.JMeterVariables;
-import org.apache.jmeter.threads.ListenerNotifier;
-import org.apache.jmeter.threads.TestCompiler;
+import org.apache.jmeter.threads.*;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,7 +21,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ConcurrencyThreadGroupTest {
@@ -60,7 +55,6 @@ public class ConcurrencyThreadGroupTest {
     public void testStartNextLoop() throws Exception {
         JMeterContextService.getContext().setVariables(new JMeterVariables());
 
-
         TestSampleListener listener = new TestSampleListener();
 
         DebugSampler beforeSampler = new DebugSamplerExt();
@@ -78,7 +72,7 @@ public class ConcurrencyThreadGroupTest {
         ctg.setRampUp("0");
         ctg.setTargetLevel("1");
         ctg.setSteps("0");
-        ctg.setHold("1000"); // TODO: increase this value for debugging
+        ctg.setHold("5"); // TODO: increase this value for debugging
         ctg.setIterationsLimit("10");
         ctg.setUnit("S");
 
@@ -96,7 +90,7 @@ public class ConcurrencyThreadGroupTest {
 
         ctg.start(1, notifier, hashTree, new StandardJMeterEngine());
 
-        Thread.sleep(50000); // TODO: increase this value for debugging
+        ctg.waitThreadsStopped();
     }
 
     public static class DebugSamplerExt extends DebugSampler {
@@ -107,7 +101,7 @@ public class ConcurrencyThreadGroupTest {
             try {
                 Thread.sleep(300);
             } catch (InterruptedException ex) {
-                throw new RuntimeException(ex);
+                throw new AssertionError(ex);
             }
             return result;
         }

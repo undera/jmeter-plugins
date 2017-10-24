@@ -17,7 +17,7 @@ public class ConcurrencyThreadGroup extends AbstractDynamicThreadGroup {
         return new ConcurrencyThreadStarter(groupIndex, listenerNotifier, testTree, engine, this);
     }
 
-    public synchronized void waitThreadStopped() {
+    public synchronized void waitThreadStopped() { // FIXME: method named in confusing way
         if (!threads.isEmpty()) {
             try {
                 wait(MIN_CHECK_TIME);

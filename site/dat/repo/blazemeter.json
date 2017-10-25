@@ -39,6 +39,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "0.6": {
+        "changes": "Fix variables in assertions",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-debugger/releases/download/0.6/jmeter-debugger-0.6.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

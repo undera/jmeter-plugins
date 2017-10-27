@@ -572,9 +572,9 @@
   {
     "id": "jpgc-webdriver",
     "name": "Selenium/WebDriver Support",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "description": "This plugin allows testing real browser behavior using Selenium/WebDriver technology",
+    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/web-driver/web-driver-tutorial-web-sampler.png",
+    "helpUrl": "https://jmeter-plugins.org/wiki/WebDriverSampler/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler",
     "componentClasses": [

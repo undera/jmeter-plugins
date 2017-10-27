@@ -132,7 +132,7 @@
           "guava": "https://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
           "kafka_2.8.2": "https://search.maven.org/remotecontent?filepath=org/apache/kafka/kafka_2.8.2/0.8.0/kafka_2.8.2-0.8.0.jar",
           "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.2.4/gson-2.2.4.jar",
-          "scala": "https://search.maven.org/remotecontent?filepath=org/scala-lang/scala-library/2.8.2/scala-library-2.8.2.jar",
+          "scala-library": "https://search.maven.org/remotecontent?filepath=org/scala-lang/scala-library/2.8.2/scala-library-2.8.2.jar",
           "metrics-core": "https://search.maven.org/remotecontent?filepath=com/yammer/metrics/metrics-core/2.2.0/metrics-core-2.2.0.jar"
         }
       }

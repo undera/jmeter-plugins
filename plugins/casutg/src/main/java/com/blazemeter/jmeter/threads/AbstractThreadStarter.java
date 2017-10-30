@@ -39,6 +39,8 @@ public abstract class AbstractThreadStarter extends Thread {
     @Override
     public void run() {
         try {
+            // Copy in ThreadStarter thread context from calling Thread
+            JMeterContextService.getContext().setVariables(this.context.getVariables());
             supplyActiveThreads();
         } catch (InterruptedException e) {
             log.debug("Interrupted", e);

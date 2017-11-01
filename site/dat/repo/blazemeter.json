@@ -71,6 +71,27 @@
     }
   },
   {
+    "id": "bzm-random-csv",
+    "name": "Random CSV Data Set",
+    "description": "Config item that allows reading CSV files in random order",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-bzm-plugins/master/random-csv-data-set/randomCSVDataSetConfig.png",
+    "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/random-csv-data-set/RandomCSVDataSetConfig.md",
+    "vendor": "BlazeMeter",
+    "markerClass": "com.blazemeter.jmeter.RandomCSVDataSetConfig",
+    "componentClasses": [
+      "com.blazemeter.jmeter.RandomCSVDataSetConfig",
+      "com.blazemeter.jmeter.RandomCSVDataSetConfigGui"
+    ],
+    "versions": {
+      "0.1": {
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/csv-random-0.1/jmeter-plugins-random-csv-data-set-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
+      }
+    }
+  },
+  {
     "id": "bzm-parallel",
     "name": "Parallel Controller & Sampler",
     "description": "Parallel Controller makes all of its children to run in parallel to each other",

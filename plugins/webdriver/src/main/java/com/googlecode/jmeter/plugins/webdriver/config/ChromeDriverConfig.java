@@ -24,6 +24,7 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
     private static final String CHROME_SERVICE_PATH = "ChromeDriverConfig.chromedriver_path";
     private static final String ANDROID_ENABLED = "ChromeDriverConfig.android_enabled";
+    private static final String HEADLESS_ENABLED = "ChromeDriverConfig.headless_enabled";
     private static final Map<String, ChromeDriverService> services = new ConcurrentHashMap<String, ChromeDriverService>();
 
     public void setChromeDriverPath(String path) {
@@ -42,9 +43,16 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
 		capabilities.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
         
 
-        if(isAndroidEnabled()) {
-            Map<String, String> chromeOptions = new HashMap<String, String>();
-            chromeOptions.put("androidPackage", "com.android.chrome");
+        if(isAndroidEnabled() || isHeadlessEnabled()) {
+            //Map<String, String> chromeOptions = new HashMap<String, String>();
+            //chromeOptions.put("androidPackage", "com.android.chrome");
+            ChromeOptions chromeOptions = new ChromeOptions();
+            if (isAndroidEnabled()) {
+                chromeOptions.setExperimentalOption("androidPackage", "com.android.chrome");
+            }
+            if (isHeadlessEnabled()) {
+                chromeOptions.addArguments("--headless");
+            }
             capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
         }
 
@@ -92,5 +100,13 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
 
     public void setAndroidEnabled(boolean enabled) {
         setProperty(ANDROID_ENABLED, enabled);
+    }
+
+    public boolean isHeadlessEnabled() {
+        return getPropertyAsBoolean(HEADLESS_ENABLED);
+    }
+
+    public void setHeadlessEnabled(boolean enabled) {
+        setProperty(HEADLESS_ENABLED, enabled);
     }
 }

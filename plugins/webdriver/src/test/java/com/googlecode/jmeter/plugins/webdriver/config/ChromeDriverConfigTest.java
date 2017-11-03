@@ -159,10 +159,10 @@ public class ChromeDriverConfigTest {
         config.setAndroidEnabled(true);
 
         final Capabilities capabilities = config.createCapabilities();
-        Map<String, Object> options = (Map<String, Object>) capabilities.getCapability(ChromeOptions.CAPABILITY);
+        ChromeOptions options = (ChromeOptions) capabilities.getCapability(ChromeOptions.CAPABILITY);
         assertThat("ChromeOption expected", options, is(notNullValue()));
 
-        final String androidConfig = (String) options.get("androidPackage");
+        final String androidConfig = (String) options.getExperimentalOption("androidPackage");
         assertThat(androidConfig, is("com.android.chrome"));
     }
 
@@ -177,5 +177,12 @@ public class ChromeDriverConfigTest {
         assertThat(config.isAndroidEnabled(), is(false));
         config.setAndroidEnabled(true);
         assertThat(config.isAndroidEnabled(), is(true));
+    }
+
+    @Test
+    public void getSetHeadlessEnabled() {
+        assertThat(config.isHeadlessEnabled(), is(false));
+        config.setHeadlessEnabled(true);
+        assertThat(config.isHeadlessEnabled(), is(true));
     }
 }

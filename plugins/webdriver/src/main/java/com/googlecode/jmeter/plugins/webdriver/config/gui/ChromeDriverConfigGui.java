@@ -32,7 +32,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
             ChromeDriverConfig config = (ChromeDriverConfig)element;
             chromeServicePath.setText(config.getChromeDriverPath());
             androidEnabled.setSelected(config.isAndroidEnabled());
-            headlessEnabled.setSelected(config.isHeadlessEnabled());
+            getHeadlessEnabled().setSelected(config.isHeadlessEnabled());
         }
     }
 
@@ -50,7 +50,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
             ChromeDriverConfig config = (ChromeDriverConfig)element;
             config.setChromeDriverPath(chromeServicePath.getText());
             config.setAndroidEnabled(androidEnabled.isSelected());
-            config.setHeadlessEnabled(headlessEnabled.isSelected());
+            config.setHeadlessEnabled(getHeadlessEnabled().isSelected());
         }
     }
 
@@ -59,7 +59,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         super.clearGui();
         chromeServicePath.setText("");
         androidEnabled.setSelected(false);
-        headlessEnabled.setSelected(false);
+        getHeadlessEnabled().setSelected(false);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         browserPanel.add(androidEnabled);
 
         headlessEnabled = new JCheckBox("Use Chrome headless mode");
-        browserPanel.add(headlessEnabled);
+        browserPanel.add(getHeadlessEnabled());
         return browserPanel;
     }
 
@@ -105,4 +105,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
 		return true;
 	}
 
+    public JCheckBox getHeadlessEnabled() {
+        return headlessEnabled;
+    }
 }

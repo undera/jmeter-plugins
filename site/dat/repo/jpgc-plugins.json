@@ -623,6 +623,30 @@
           "guava": "https://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
           "sac": "https://search.maven.org/remotecontent?filepath=org/w3c/css/sac/1.3/sac-1.3.jar"
         }
+      },
+      "2.1": {
+        "changes": "added headless chrome support",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/2.1/jmeter-plugins-webdriver-2.1.jar",
+        "libs": {
+          "selenium-support": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-support/2.52.0/selenium-support-2.52.0.jar",
+          "selenium-api": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-api/2.52.0/selenium-api-2.52.0.jar",
+          "selenium-firefox-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-firefox-driver/2.52.0/selenium-firefox-driver-2.52.0.jar",
+          "selenium-remote-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-remote-driver/2.52.0/selenium-remote-driver-2.52.0.jar",
+          "selenium-ie-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-ie-driver/2.52.0/selenium-ie-driver-2.52.0.jar",
+          "selenium-chrome-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-chrome-driver/2.52.0/selenium-chrome-driver-2.52.0.jar",
+          "selenium-htmlunit-driver": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-htmlunit-driver/2.52.0/selenium-htmlunit-driver-2.52.0.jar",
+          "phantomjsdriver": "https://search.maven.org/remotecontent?filepath=com/codeborne/phantomjsdriver/1.2.1/phantomjsdriver-1.2.1.jar",
+          "nekohtml": "https://search.maven.org/remotecontent?filepath=net/sourceforge/nekohtml/nekohtml/1.9.22/nekohtml-1.9.22.jar",
+          "jsyntaxpane": "https://search.maven.org/remotecontent?filepath=de/sciss/jsyntaxpane/1.0.0/jsyntaxpane-1.0.0.jar",
+          "htmlunit": "https://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit/2.18/htmlunit-2.18.jar",
+          "htmlunit-core-js": "https://search.maven.org/remotecontent?filepath=net/sourceforge/htmlunit/htmlunit-core-js/2.17/htmlunit-core-js-2.17.jar",
+          "commons-exec": "https://search.maven.org/remotecontent?filepath=org/apache/commons/commons-exec/1.3/commons-exec-1.3.jar",
+          "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.3.1/gson-2.3.1.jar",
+          "cglib-nodep": "https://search.maven.org/remotecontent?filepath=cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar",
+          "cssparser": "https://search.maven.org/remotecontent?filepath=net/sourceforge/cssparser/cssparser/0.9.16/cssparser-0.9.16.jar",
+          "guava": "https://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
+          "sac": "https://search.maven.org/remotecontent?filepath=org/w3c/css/sac/1.3/sac-1.3.jar"
+        }
       }
     }
   },

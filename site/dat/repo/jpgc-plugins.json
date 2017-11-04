@@ -624,7 +624,7 @@
           "sac": "https://search.maven.org/remotecontent?filepath=org/w3c/css/sac/1.3/sac-1.3.jar"
         }
       },
-      "2.1": {
+      "2.2": {
         "changes": "added headless chrome support",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/2.1/jmeter-plugins-webdriver-2.1.jar",
         "libs": {

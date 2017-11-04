@@ -58,14 +58,23 @@ public class ChromeDriverConfigGuiTest {
     }
 
     @Test
+    public void shouldSetHeadlessEnabled() {
+        gui.getHeadlessEnabled().setSelected(true);
+        final ChromeDriverConfig testElement = (ChromeDriverConfig) gui.createTestElement();
+        assertThat(testElement.isHeadlessEnabled(), is(true));
+    }
+
+    @Test
     public void shouldResetValuesOnClearGui() {
         gui.chromeServicePath.setText("path");
         gui.androidEnabled.setSelected(true);
+        gui.getHeadlessEnabled().setSelected(true);
 
         gui.clearGui();
 
         assertThat(gui.chromeServicePath.getText(), is(""));
         assertThat(gui.androidEnabled.isSelected(), is(false));
+        assertThat(gui.getHeadlessEnabled().isSelected(), is(false));
     }
 
     @Test
@@ -85,7 +94,16 @@ public class ChromeDriverConfigGuiTest {
 
         assertThat(gui.androidEnabled.isSelected(), is(config.isAndroidEnabled()));
     }
-    
+
+    @Test
+    public void shouldSetHeadlessEnabledOnConfigure() {
+        ChromeDriverConfig config = new ChromeDriverConfig();
+        config.setHeadlessEnabled(true);
+        gui.configure(config);
+
+        assertThat(gui.getHeadlessEnabled().isSelected(), is(config.isHeadlessEnabled()));
+    }
+
     @Test
 	public void shouldEnableProxyAndExperimental() throws Exception {
 		assertThat(gui.isExperimentalEnabled(), is(true));

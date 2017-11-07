@@ -88,6 +88,12 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "0.2": {
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/csv-random-0.2/jmeter-plugins-random-csv-data-set-0.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
       }
     }
   },

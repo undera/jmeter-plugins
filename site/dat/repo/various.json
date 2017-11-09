@@ -339,6 +339,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "0.12": {
+        "changes": "Added support for continuation frames.",
+        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.12/JMeterWebSocketSamplers-0.12.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

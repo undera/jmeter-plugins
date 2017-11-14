@@ -100,6 +100,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "0.4": {
+        "changes": "optimize performance, fix empty lines processing, fix browse button dialog",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/csv-random-0.4/jmeter-plugins-random-csv-data-set-0.4.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
       }
     }
   },

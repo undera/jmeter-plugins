@@ -25,6 +25,10 @@ public class VariableThroughputTimer
         extends AbstractTestElement
         implements Timer, NoThreadClone, TestStateListener {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8557540133988335686L;
     public static final String[] columnIdentifiers = new String[]{
             "Start RPS", "End RPS", "Duration, sec"
     };
@@ -54,37 +58,34 @@ public class VariableThroughputTimer
         trySettingLoadFromProperty();
     }
 
-    public long delay() {
-        synchronized (this) {
+    public synchronized long delay() {
+        while (true) {
+            int delay;
+            long curTime = System.currentTimeMillis();
+            long msecs = curTime % 1000;
+            long secs = curTime - msecs;
+            checkNextSecond(secs);
+            delay = getDelay(msecs);
 
-            while (true) {
-                int delay;
-                long curTime = System.currentTimeMillis();
-                long msecs = curTime % 1000;
-                long secs = curTime - msecs;
-                checkNextSecond(secs);
-                delay = getDelay(msecs);
-
-                if (stopping) {
-                    delay = delay > 0 ? 10 : 0;
-                    notifyAll();
-                }
-
-                if (delay < 1) {
-                    notifyAll();
-                    break;
-                }
-                cntDelayed++;
-                try {
-                    wait(delay);
-                } catch (InterruptedException ex) {
-                    log.error("Waiting thread was interrupted", ex);
-                    Thread.currentThread().interrupt();
-                }
-                cntDelayed--;
+            if (stopping) {
+                delay = delay > 0 ? 10 : 0;
+                notifyAll();
             }
-            cntSent++;
+
+            if (delay < 1) {
+                notifyAll();
+                break;
+            }
+            cntDelayed++;
+            try {
+                wait(delay);
+            } catch (InterruptedException ex) {
+                log.error("Waiting thread was interrupted", ex);
+                Thread.currentThread().interrupt();
+            }
+            cntDelayed--;
         }
+        cntSent++;
         return 0;
     }
 
@@ -102,7 +103,8 @@ public class VariableThroughputTimer
         double nextRps = getRPSForSecond((secs - startSec) / 1000);
         if (nextRps < 0) {
             stopping = true;
-            rps = rps > 0 ? rps * (stopTries > 10 ? 2 : 1) : 1;
+            int factor = stopTries > 10 ? 2 : 1;
+            rps = rps > 0 ? rps * factor : 1;
             stopTest();
             notifyAll();
         } else {
@@ -118,16 +120,16 @@ public class VariableThroughputTimer
             log.warn("No free threads available in current Thread Group, made  {}/{} samples, increase your number of threads", cntSent, rps);
         }
 
-        JMeterUtils.setProperty(getName() + "_cntDelayed", String.valueOf(cntDelayed));
-        JMeterUtils.setProperty(getName() + "_cntSent", String.valueOf(cntSent));
-        JMeterUtils.setProperty(getName() + "_rps", String.valueOf(rps));
+        String elementName = getName();
+        JMeterUtils.setProperty(elementName + "_cntDelayed", String.valueOf(cntDelayed));
+        JMeterUtils.setProperty(elementName + "_cntSent", String.valueOf(cntSent));
+        JMeterUtils.setProperty(elementName + "_rps", String.valueOf(rps));
 
         cntSent = 0;
         msecPerReq = 1000d / rps;
     }
 
     private int getDelay(long msecs) {
-        
         log.debug("Calculating {} {} {}",msecs, cntSent * msecPerReq, cntSent);
         if (msecs < (cntSent * msecPerReq)) {
             return (int) (1 + 1000.0 * (cntDelayed + 1) / rps);
@@ -155,6 +157,7 @@ public class VariableThroughputTimer
         PropertyIterator scheduleIT = rows.iterator();
         double newSec = sec;
         while (scheduleIT.hasNext()) {
+            @SuppressWarnings("unchecked")
             ArrayList<Object> curProp = (ArrayList<Object>) scheduleIT.next().getObjectValue();
 
             int duration = getIntValue(curProp, DURATION_FIELD_NO);
@@ -181,9 +184,9 @@ public class VariableThroughputTimer
 
     private void trySettingLoadFromProperty() {
         String loadProp = JMeterUtils.getProperty(DATA_PROPERTY);
-        log.debug("Load prop: {}", loadProp);
+        log.debug("Loading property: {}={}", DATA_PROPERTY, loadProp);
         if (!StringUtils.isEmpty(loadProp)) {
-            log.info("GUI load profile will be ignored");
+            log.info("GUI load profile will be ignored as property {} is defined", DATA_PROPERTY);
             PowerTableModel dataModel = new PowerTableModel(VariableThroughputTimer.columnIdentifiers, VariableThroughputTimer.columnClasses);
 
             String[] chunks = loadProp.split("\\)");
@@ -192,7 +195,7 @@ public class VariableThroughputTimer
                 try {
                     parseChunk(chunk, dataModel);
                 } catch (RuntimeException e) {
-                    log.warn("Wrong load chunk ignored: {}", chunk, e);
+                    log.warn("Wrong load chunk {} will be ignored", chunk, e);
                 }
             }
 

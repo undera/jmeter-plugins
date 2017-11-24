@@ -115,7 +115,7 @@ public class VariableThroughputTimer
         }
 
         if (cntDelayed < 1) {
-            log.warn("No free threads left in worker pool, made  {}/{} samples", cntSent, rps);
+            log.warn("No free threads available in current Thread Group, made  {}/{} samples, increase your number of threads", cntSent, rps);
         }
 
         JMeterUtils.setProperty(getName() + "_cntDelayed", String.valueOf(cntDelayed));

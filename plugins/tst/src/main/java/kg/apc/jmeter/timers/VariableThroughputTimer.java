@@ -25,9 +25,6 @@ public class VariableThroughputTimer
         extends AbstractTestElement
         implements Timer, NoThreadClone, TestStateListener {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -8557540133988335686L;
     public static final String[] columnIdentifiers = new String[]{
             "Start RPS", "End RPS", "Duration, sec"
@@ -259,10 +256,10 @@ public class VariableThroughputTimer
         lastStopTry = time;
         stopTries++;
         if (stopTries > 10) {
-            log.info("Tried more than 10, stop it NOW!");
+            log.info("Tries more than 10, stopping engine NOW!");
             StandardJMeterEngine.stopEngineNow();
         } else if (stopTries > 5) {
-            log.info("Tried more than 5, stop it!");
+            log.info("Tries more than 5, shutting down engine!");
             StandardJMeterEngine.stopEngine();
         } else {
             JMeterContextService.getContext().getEngine().askThreadsToStop();

@@ -190,14 +190,16 @@
   {
     "id": "tilln-wssecurity",
     "name": "WS Security for SOAP",
-    "description": "Apache JMeter plugin for signing and encrypting SOAP messages (WS-Security).",
+    "description": "Digital signature, encryption, decryption and username token for SOAP messages via Pre/Post-Processors that modify sampler payloads/responses.",
     "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-wssecurity/master/docs/signature.png",
     "helpUrl": "https://github.com/tilln/jmeter-wssecurity",
     "vendor": "Till Neunast",
     "markerClass": "nz.co.breakpoint.jmeter.modifiers.SamplerPayloadAccessor",
     "componentClasses": [
       "nz.co.breakpoint.jmeter.modifiers.WSSEncryptionPreProcessor",
-      "nz.co.breakpoint.jmeter.modifiers.WSSSignaturePreProcessor"
+      "nz.co.breakpoint.jmeter.modifiers.WSSSignaturePreProcessor",
+      "nz.co.breakpoint.jmeter.modifiers.WSSUsernameTokenPreProcessor",
+      "nz.co.breakpoint.jmeter.modifiers.WSSDecryptionPostProcessor"
     ],
     "versions": {
       "1.1": {
@@ -226,6 +228,18 @@
       "1.3": {
         "changes" : "Added support for WSS UsernameToken",
         "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.3/jmeter-wssecurity-1.3.jar",
+        "depends": [
+          "jmeter-core"
+        ],
+        "libs": {
+           "wss4j-ws-security-dom": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
+           "wss4j-ws-security-common": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
+           "xmlsec": "http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
+        }
+      },
+      "1.4": {
+        "changes" : "Added support for decryption of response messages",
+        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.4/jmeter-wssecurity-1.4.jar",
         "depends": [
           "jmeter-core"
         ],

@@ -53,7 +53,7 @@ JMeter allows the creation of multiple threads, and each thread is responsible f
 From experience, the number of browser (threads) that the reader creates should be limited by the following formula:
 
 {{{
-C = B + 1
+C = N + 1
 
 where C = Number of Cores of the host running the test
 and N = Number of Browser (threads).
@@ -77,7 +77,7 @@ There is more in depth information on the [WebDriverSampler Web Driver Sampler p
 
 In the below example, the `Browser.get()` method call will make the browser load the specified URL.  The `SampleResult.sampleStart()` will start timing and then calling `SampleResult.sampleEnd()` afterwards will stop the timing and allow JMeter to use the `SampleResult` when measuring the results in the `View Results in Table` component.
 
-The `Browser` object exposed in the `Script` section is an instance of the `WebDriver` object documented in the [http://selenium.googlecode.com/svn/trunk/docs/api/java/org/openqa/selenium/WebDriver.html Selenium documentation].  It is recommended that the reader have a look at the documentation to see what methods are available on the WebDriver API, to better understand what can be scriptable on the Browser instance.
+The `Browser` object exposed in the `Script` section is an instance of the `WebDriver` object documented in the [https://seleniumhq.github.io/selenium/docs/api/java/org/openqa/selenium/WebDriver.html Selenium documentation].  It is recommended that the reader have a look at the documentation to see what methods are available on the WebDriver API, to better understand what can be scriptable on the Browser instance.
 
 It is also up to the reader to ensure that they verify that the correct page has been loaded and then setting the corresponding `SampleResult.setSuccessful(boolean)` method when invoking this script.  Since the full WebDriver instance is available to the reader, they should be able to verify that the page has loaded successfully and then set the correct status on the SampleResult.  The example below will verify that the page contains the correct title and uses this to indicate success/failure on the SampleResult.
 

@@ -1,17 +1,27 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler;
 
-import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
-import kg.apc.jmeter.JMeterPluginsUtils;
+import java.net.URL;
+
+import javax.script.Bindings;
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.SimpleBindings;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.samplers.AbstractSampler;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.threads.JMeterContext;
+import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.WebDriver;
 
-import javax.script.*;
-import java.net.URL;
+import com.googlecode.jmeter.plugins.webdriver.config.WebDriverConfig;
+
+import kg.apc.jmeter.JMeterPluginsUtils;
 
 
 /**
@@ -78,7 +88,9 @@ public class WebDriverSampler extends AbstractSampler {
             // setup the data in the SampleResult
             res.setResponseData(getWebDriver().getPageSource(), null);
             res.setURL(new URL(getWebDriver().getCurrentUrl()));
-            res.setResponseCode(res.isSuccessful() ? "200" : "500");
+            if(StringUtils.isEmpty(res.getResponseCode())) {
+                res.setResponseCode(res.isSuccessful() ? "200" : "500");
+            }
             if (res.isSuccessful()) {
                 res.setResponseMessageOK();
             }
@@ -134,6 +146,10 @@ public class WebDriverSampler extends AbstractSampler {
         WebDriverScriptable scriptable = new WebDriverScriptable();
         scriptable.setName(getName());
         scriptable.setParameters(getParameters());
+        JMeterContext context = JMeterContextService.getContext();
+        scriptable.setVars(context.getVariables());
+        scriptable.setProps(JMeterUtils.getJMeterProperties());
+        scriptable.setCtx(context);
         scriptable.setLog(LOGGER);
         scriptable.setSampleResult(sampleResult);
         scriptable.setBrowser(getWebDriver());

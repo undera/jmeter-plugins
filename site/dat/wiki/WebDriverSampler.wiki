@@ -18,6 +18,19 @@ The main fields that the scripter can make use of are:
 Within the *Script* section, the Sampler automatically injects a WebDriverScriptable object with the name of *WDS*. This object has the following properties for the scripter to use:
 
   # *WDS.name* - is the value provided in the Name field (above).
+  # *WDS.vars* - <a href="../api/org/apache/jmeter/threads/JMeterVariables.html">JMeterVariables</a>  - e.g.
+<code>
+vars.get("VAR1");
+vars.put("VAR2","value");
+vars.remove("VAR3");
+vars.putObject("OBJ1",new Object());
+</code>
+  # *WDS.props* - JMeterProperties (class <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html"><code>java.util.Properties</code></a>) - e.g.
+<code>
+props.get("START.HMS");
+props.put("PROP1","1234");
+</code>
+  # *WDS.ctx* - <a href="../api/org/apache/jmeter/threads/JMeterContext.html">JMeterContext</a>
   # *WDS.parameters* - is the value provided in the Parameters field (above).
   # *WDS.args* - is an array of the strings provided in the *Parameters* field, but split by the space ' ' character.  This allows the scripter to provide a number of strings as input and access each one by position.
   # *WDS.log* - is a [http://excalibur.apache.org/apidocs/org/apache/log/Logger.html Logger instance] to allow the scripter to debug their scripts by writing information to the jmeter log file (JMeter provides a [http://jmeter.apache.org/usermanual/get-started.html#logging GUI] for its log entries)

@@ -1,6 +1,10 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler;
 
+import java.util.Properties;
+
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.threads.JMeterContext;
+import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.log.Logger;
 import org.openqa.selenium.WebDriver;
 
@@ -15,6 +19,9 @@ public final class WebDriverScriptable {
     private Logger log;
     private WebDriver browser;
     private SampleResult sampleResult;
+    private JMeterVariables vars;
+    private Properties props;
+    private JMeterContext ctx;
 
     public void setName(String name) {
         this.name = name;
@@ -58,5 +65,35 @@ public final class WebDriverScriptable {
 
     public SampleResult getSampleResult() {
         return sampleResult;
+    }
+
+    public void setVars(JMeterVariables variables) {
+        this.vars = variables;
+    }
+
+    /**
+     * @return the variables
+     */
+    public JMeterVariables getVars() {
+        return vars;
+    }
+
+    public void setProps(Properties jMeterProperties) {
+        this.props = jMeterProperties;
+    }
+
+    /**
+     * @return the props
+     */
+    public Properties getProps() {
+        return props;
+    }
+
+    public void setCtx(JMeterContext context) {
+        this.ctx = context;
+    }
+    
+    public JMeterContext getCtx() {
+        return ctx;
     }
 }

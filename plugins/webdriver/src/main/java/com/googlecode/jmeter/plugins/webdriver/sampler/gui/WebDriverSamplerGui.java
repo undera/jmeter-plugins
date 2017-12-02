@@ -1,35 +1,36 @@
 package com.googlecode.jmeter.plugins.webdriver.sampler.gui;
 
-import com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler;
-import jsyntaxpane.DefaultSyntaxKit;
-import kg.apc.jmeter.JMeterPluginsUtils;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import org.apache.jmeter.gui.util.JSyntaxTextArea;
+import org.apache.jmeter.gui.util.JTextScrollPane;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JSR223BeanInfoSupport;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler;
+
+import kg.apc.jmeter.JMeterPluginsUtils;
 
 public class WebDriverSamplerGui extends AbstractSamplerGui {
 
     private static final long serialVersionUID = 100L;
-    private static final Logger LOGGER = LoggingManager.getLoggerForClass();
-
-    static {
-        if (!GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance()) {
-            DefaultSyntaxKit.initKit();
-        } else {
-            LOGGER.info("Headless environment detected. Disabling JSyntaxPane highlighting.");
-        }
-    }
 
     JTextField parameters;
 
-    JEditorPane script;
+    JSyntaxTextArea script;
     JComboBox<String> languages;
 
     public WebDriverSamplerGui() {
@@ -118,14 +119,14 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
             langs[n] = languageNames[n][0];
         }
 
-        languages = new JComboBox<String>(langs);
+        languages = new JComboBox<>(langs);
         languages.setName(WebDriverSampler.PARAMETERS);
         label.setLabelFor(languages);
         languages.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 JComboBox<String> source = (JComboBox<String>) actionEvent.getSource();
-                String ctype = "text/" + source.getSelectedItem();
+                String ctype = (String)source.getSelectedItem();
                 setScriptContentType(ctype);
             }
         });
@@ -139,14 +140,14 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 
     private void setScriptContentType(String ctype) {
         String text = script.getText();
-        script.setContentType(ctype);
+        script.setLanguage(ctype.toLowerCase());
         script.setText(text);
     }
 
     private JPanel createScriptPanel() {
-        script = new JEditorPane();
-        final JScrollPane scrollPane = new JScrollPane(script);
-        setScriptContentType("text/plain");
+        script =  getInstance(25, 80, false);
+        final JScrollPane scrollPane = getInstance(script, true);
+        setScriptContentType("text");
         script.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
         final JLabel label = new JLabel("Script (see below for variables that are defined)");
@@ -163,5 +164,71 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         panel.add(explain, BorderLayout.SOUTH);
 
         return panel;
+    }
+    
+    /**
+     * Creates the default syntax highlighting text area. The following are set:
+     * <ul>
+     * <li>setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA)</li>
+     * <li>setCodeFoldingEnabled(true)</li>
+     * <li>setAntiAliasingEnabled(true)</li>
+     * <li>setLineWrap(true)</li>
+     * <li>setWrapStyleWord(true)</li>
+     * </ul>
+     * TODO Remove when upgrade to minimum 3.0
+     * @param rows
+     *            The number of rows for the text area
+     * @param cols
+     *            The number of columns for the text area
+     * @param disableUndo
+     *            true to disable undo manager
+     * @return {@link JSyntaxTextArea}
+     */
+    private static JSyntaxTextArea getInstance(int rows, int cols, boolean disableUndo) {
+        try {
+            JSyntaxTextArea jSyntaxTextArea = new JSyntaxTextArea(rows, cols, disableUndo);
+            return jSyntaxTextArea;
+        } catch (HeadlessException e) {
+            // Allow override for unit testing only
+            if ("true".equals(System.getProperty("java.awt.headless"))) { // $NON-NLS-1$ $NON-NLS-2$
+                return new JSyntaxTextArea() {
+                    private static final long serialVersionUID = 1L;
+                    @Override
+                    protected void init() {
+                        try {
+                            super.init();
+                        } catch (HeadlessException|NullPointerException e) {
+                            // ignored
+                        }
+                    }
+                    // Override methods that would fail
+                    @Override
+                    public void setCodeFoldingEnabled(boolean b) {  }
+                    @Override
+                    public void setCaretPosition(int b) { }
+                    @Override
+                    public void discardAllEdits() { }
+                    @Override
+                    public void setText(String t) { }
+                    @Override
+                    public boolean isCodeFoldingEnabled(){ return true; }
+                };
+            } else {
+                throw e;
+            }
+        }
+    }
+    
+    // TODO Remove when upgrade to minimum 3.0
+    private static JTextScrollPane getInstance(JSyntaxTextArea scriptField, boolean foldIndicatorEnabled) {
+        try {
+            return new JTextScrollPane(scriptField, foldIndicatorEnabled);
+        } catch (NullPointerException npe) { // for headless unit testing
+            if ("true".equals(System.getProperty("java.awt.headless"))) { // $NON-NLS-1$ $NON-NLS-2$
+                return new JTextScrollPane();                
+            } else {
+                throw npe;
+            }
+        }
     }
 }

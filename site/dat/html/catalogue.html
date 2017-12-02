@@ -94,7 +94,11 @@
 	        	        artifactId = parts[parts.length-3];
 	            	    groupId = "";
 	                	for(var i=0;i<parts.length-3;i++) {
-	                		groupId = groupId+"."+ parts[i];
+	                		if(i==0) {
+	                			groupId = parts[i];
+	                		} else {
+		                		groupId = groupId+"."+ parts[i];
+	                		}
 	                	}
 	                }
                 }

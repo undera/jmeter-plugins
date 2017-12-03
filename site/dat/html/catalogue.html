@@ -85,7 +85,7 @@
                     }
                 }
                 {
-                    var downloadUrl = plugin.versions[vers_list[0]].downloadUrl;
+                    var downloadUrl = plugin.versions[vers_list[vers_list.length-1]].downloadUrl;
                     var indexOfFP = downloadUrl.indexOf("filepath=");
                     if (indexOfFP > 0) {
                         var artifactUrl = downloadUrl.substring(indexOfFP + "filepath=".length);

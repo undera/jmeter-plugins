@@ -70,8 +70,7 @@ class JSyntaxTextArea extends RSyntaxTextArea {
      */
     public static JSyntaxTextArea getInstance(int rows, int cols, boolean disableUndo) {
         try {
-            JSyntaxTextArea jSyntaxTextArea = new JSyntaxTextArea(rows, cols, disableUndo);
-            return jSyntaxTextArea;
+            return new JSyntaxTextArea(rows, cols, disableUndo);
         } catch (HeadlessException e) {
             // Allow override for unit testing only
             if ("true".equals(System.getProperty("java.awt.headless"))) { // $NON-NLS-1$ $NON-NLS-2$
@@ -88,11 +87,17 @@ class JSyntaxTextArea extends RSyntaxTextArea {
                     }
                     // Override methods that would fail
                     @Override
-                    public void setCodeFoldingEnabled(boolean b) {  }
+                    public void setCodeFoldingEnabled(boolean b) { 
+                        // NOOP
+                    }
                     @Override
-                    public void setCaretPosition(int b) { }
+                    public void setCaretPosition(int b) { 
+                        // NOOP
+                    }
                     @Override
-                    public void discardAllEdits() { }
+                    public void discardAllEdits() {
+                        // NOOP
+                    }
                     @Override
                     public void setText(String t) {
                         this.text = t;
@@ -212,7 +217,6 @@ class JSyntaxTextArea extends RSyntaxTextArea {
      */
     public void setLanguage(String language) {
         if(language == null) {
-          // TODO: Log a message?
           // But how to find the name of the offending GUI element in the case of a TestBean?
           super.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
         } else {

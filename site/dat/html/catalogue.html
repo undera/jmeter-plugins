@@ -69,6 +69,9 @@
             left.append("<p>" + plugin.description + "</p>");
 
             var vers_list = Object.keys(plugin.versions);
+            var groupId;
+            var artifactId;
+            var lastVersionId;
             if (vers_list[0] != "" && plugin.versions[vers_list[0]].downloadUrl && plugin.id !== 'jpgc-plugins-manager') {
                 var vers = $("<p><i class='fa fa-download'></i> Download Versions: </p>").addClass('small');
                 for (var n = 0; n < vers_list.length; n++) {
@@ -80,6 +83,24 @@
                     if (n < vers_list.length - 1) {
                         vers.append(", ")
                     }
+                }
+                {
+	                var downloadUrl = plugin.versions[vers_list[0]].downloadUrl;
+	                var indexOfFP = downloadUrl.indexOf("filepath=");
+	                if(indexOfFP>0) {
+		                var artifactUrl = downloadUrl.substring(indexOfFP+"filepath=".length);
+		                var parts = artifactUrl.split("/");
+	    	            lastVersionId = parts[parts.length-2];
+	        	        artifactId = parts[parts.length-3];
+	            	    groupId = "";
+	                	for(var i=0;i<parts.length-3;i++) {
+	                		if(i==0) {
+	                			groupId = parts[i];
+	                		} else {
+		                		groupId = groupId+"."+ parts[i];
+	                		}
+	                	}
+	                }
                 }
                 left.append("<br/>");
                 left.append(vers);
@@ -93,7 +114,10 @@
             }
 
             var right = $("<div></div>").addClass("col-md-3 text-right");
-            right.append("<small>ID: " + plugin.id + "</small>");
+            right.append("<small>ID: " + plugin.id + "</small><br/>");
+            if(groupId != null) {
+	            right.append("<small>Maven Info groupId: " + groupId + ",artifactId:"+artifactId+",version:"+lastVersionId+"</small>");
+            }
 
             if (plugin.versions[vers_list[vers_list.length - 1]].depends) {
                 right.append("<p><small>Depends: " + plugin.versions[vers_list[vers_list.length - 1]].depends + "</small></p>");

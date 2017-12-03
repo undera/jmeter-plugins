@@ -2,7 +2,6 @@ package com.googlecode.jmeter.plugins.webdriver.sampler.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,8 +13,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.apache.jmeter.gui.util.JSyntaxTextArea;
-import org.apache.jmeter.gui.util.JTextScrollPane;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JSR223BeanInfoSupport;
@@ -30,7 +27,7 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
 
     JTextField parameters;
 
-    JSyntaxTextArea script;
+    com.googlecode.jmeter.plugins.webdriver.sampler.gui.JSyntaxTextArea script;
     JComboBox<String> languages;
 
     public WebDriverSamplerGui() {
@@ -145,8 +142,8 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
     }
 
     private JPanel createScriptPanel() {
-        script =  getInstance(25, 80, false);
-        final JScrollPane scrollPane = getInstance(script, true);
+        script =  JSyntaxTextArea.getInstance(25, 80, false);
+        final JScrollPane scrollPane = JTextScrollPane.getInstance(script, true);
         setScriptContentType("text");
         script.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
 
@@ -164,78 +161,5 @@ public class WebDriverSamplerGui extends AbstractSamplerGui {
         panel.add(explain, BorderLayout.SOUTH);
 
         return panel;
-    }
-    
-    /**
-     * Creates the default syntax highlighting text area. The following are set:
-     * <ul>
-     * <li>setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA)</li>
-     * <li>setCodeFoldingEnabled(true)</li>
-     * <li>setAntiAliasingEnabled(true)</li>
-     * <li>setLineWrap(true)</li>
-     * <li>setWrapStyleWord(true)</li>
-     * </ul>
-     * TODO Remove when upgrade to minimum 3.0
-     * @param rows
-     *            The number of rows for the text area
-     * @param cols
-     *            The number of columns for the text area
-     * @param disableUndo
-     *            true to disable undo manager
-     * @return {@link JSyntaxTextArea}
-     */
-    private static JSyntaxTextArea getInstance(int rows, int cols, boolean disableUndo) {
-        try {
-            return new JSyntaxTextArea(rows, cols, disableUndo);
-        } catch (HeadlessException e) {
-            // Allow override for unit testing only
-            if ("true".equals(System.getProperty("java.awt.headless"))) { // $NON-NLS-1$ $NON-NLS-2$
-                return new JSyntaxTextArea() {
-                    private static final long serialVersionUID = 1L;
-                    @Override
-                    protected void init() {
-                        try {
-                            super.init();
-                        } catch (HeadlessException|NullPointerException e) {
-                            // ignored
-                        }
-                    }
-                    // Override methods that would fail
-                    @Override
-                    public void setCodeFoldingEnabled(boolean b) { 
-                        // NOOP
-                    }
-                    @Override
-                    public void setCaretPosition(int b) { 
-                        // NOOP
-                    }
-                    @Override
-                    public void discardAllEdits() {
-                        // NOOP    
-                    }
-                    @Override
-                    public void setText(String t) { 
-                        // NOOP
-                    }
-                    @Override
-                    public boolean isCodeFoldingEnabled(){ return true; }
-                };
-            } else {
-                throw e;
-            }
-        }
-    }
-    
-    // TODO Remove when upgrade to minimum 3.0
-    private static JTextScrollPane getInstance(JSyntaxTextArea scriptField, boolean foldIndicatorEnabled) {
-        try {
-            return new JTextScrollPane(scriptField, foldIndicatorEnabled);
-        } catch (NullPointerException npe) { // for headless unit testing
-            if ("true".equals(System.getProperty("java.awt.headless"))) { // $NON-NLS-1$ $NON-NLS-2$
-                return new JTextScrollPane();                
-            } else {
-                throw npe;
-            }
-        }
     }
 }

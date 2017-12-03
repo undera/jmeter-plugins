@@ -20,13 +20,11 @@ package com.googlecode.jmeter.plugins.webdriver.sampler.gui;
 
 import java.awt.Font;
 import java.awt.HeadlessException;
-import java.io.IOException;
 import java.util.Properties;
 
 import org.apache.jmeter.util.JMeterUtils;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
-import org.fife.ui.rsyntaxtextarea.Theme;
 import org.fife.ui.rtextarea.RUndoManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +33,12 @@ import org.slf4j.LoggerFactory;
  * Utility class to handle RSyntaxTextArea code
  * It's not currently possible to instantiate the RSyntaxTextArea class when running headless.
  * So we use getInstance methods to create the class and allow for headless testing.
+ * FIXME REMOVE WHEN UPGRADE TO 3.0
  */
 class JSyntaxTextArea extends RSyntaxTextArea {
 
     private static final long serialVersionUID = 211L;
     private static final Logger log              = LoggerFactory.getLogger(JSyntaxTextArea.class);
-
-    private static final Theme DARCULA_THEME = initTheme(); 
 
     private final Properties languageProperties = JMeterUtils.loadProperties("org/apache/jmeter/gui/util/textarea.properties"); //$NON-NLS-1$
 
@@ -252,16 +249,5 @@ class JSyntaxTextArea extends RSyntaxTextArea {
     public void setInitialText(String string) {
         setText(string);
         discardAllEdits();
-    }
-    
-
-    private static final Theme initTheme() {
-        try {
-            return Theme.load(JSyntaxTextArea.class.getClassLoader().getResourceAsStream(
-                    "org/apache/jmeter/gui/util/theme/darcula_theme.xml"));
-        } catch (IOException e) {
-            log.error("Error reading darcula_theme for JSyntaxTextArea", e);
-            return null;
-        }
     }
 }

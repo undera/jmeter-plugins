@@ -393,6 +393,10 @@
       "1.5.2": {
         "changes": "Fixed a bug where long test runs would trigger a crash caused by the connection pool of the OkHttp client",
         "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.5.2/elasticsearch-backend-listener-1.5.2.jar"
+      },
+      "1.5.3": {
+        "changes": "Refactored most of the plugin",
+        "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.5.3/elasticsearch-backend-listener-1.5.3.jar"
       }
     }
   }

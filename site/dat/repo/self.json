@@ -73,6 +73,10 @@
       "0.16": {
         "changes": "<p>- Added filter field in Plugins Manager</p><p>- Fixed PluginManagerCMD logging</p><p>- Added \"install-for-jmx\" command to cmd;</p><p>- Optimize downloading plugins repo on JMeter startup</p>",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.16/jmeter-plugins-manager-0.16.jar"
+      },
+      "0.17": {
+        "changes": "<p>- Added maven info to plugin description in dialog</p><p>- Fixed 'connection still allocated' bug</p>",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.17/jmeter-plugins-manager-0.17.jar"
       }
     }
   }

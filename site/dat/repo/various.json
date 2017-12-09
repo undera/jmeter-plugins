@@ -396,7 +396,12 @@
       },
       "1.5.3": {
         "changes": "Refactored most of the plugin",
-        "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.5.3/elasticsearch-backend-listener-1.5.3.jar"
+        "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.5.3/elasticsearch-backend-listener-1.5.3.jar",
+        "libs": {
+          "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.8.2/gson-2.8.2.jar",
+          "okhttp": "https://search.maven.org/remotecontent?filepath=com/squareup/okhttp3/okhttp/3.9.1/okhttp-3.9.1.jar",
+          "okio": "https://search.maven.org/remotecontent?filepath=com/squareup/okio/okio/1.13.0/okio-1.13.0.jar"
+        }
       }
     }
   }

@@ -371,36 +371,36 @@
     }
   },
   {
-    "id": "elasticsearch-backend-listener",
+    "id": "jmeter.backendlistener.elasticsearch",
     "name": "ElasticSearch backend listener",
     "description": "Apache JMeter plugin for sending sample results to an ElasticSearch engine. <ul><li>Simply add a \"Backend Listener\" and change the implementation</li><li>Change the listener's configuration</li></ul>",
-    "helpUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener",
+    "helpUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/issues",
     "screenshotUrl": "",
-    "vendor": "Created by Korteke's modified by Delirius325",
-    "markerClass": "net.kvak.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
+    "vendor": "Delirius325",
+    "markerClass": "net.delirius.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
     "versions": {
       "1.0": {
-       "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.0/elasticsearch-backend-listener-1.0.jar"
+       "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.0/elasticsearch-backend-listener-1.0.jar"
       },
       "1.5": {
         "changes": "Added option to trust all SSL certificates. *Be careful with this, it should never be used in production*",
-        "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.5.0/elasticsearch-backend-listener-1.5.jar"
-      },
-      "1.5.1": {
-        "changes": "Hotfix OkHttp3",
-        "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.5.1/elasticsearch-backend-listener-1.5.jar"
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.5.0/elasticsearch-backend-listener-1.5.jar"
       },
       "1.5.2": {
         "changes": "Fixed a bug where long test runs would trigger a crash caused by the connection pool of the OkHttp client",
-        "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.5.2/elasticsearch-backend-listener-1.5.2.jar"
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.5.2/elasticsearch-backend-listener-1.5.2.jar"
       },
       "1.5.3": {
         "changes": "Refactored most of the plugin",
-        "downloadUrl": "https://github.com/delirius325/JMeter_ElasticsearchBackendListener/releases/download/1.5.3/elasticsearch-backend-listener-1.5.3.jar",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.5.3/elasticsearch-backend-listener-1.5.3.jar" 
         "libs": {
           "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.8.2/gson-2.8.2.jar",
           "okhttp": "https://search.maven.org/remotecontent?filepath=com/squareup/okhttp3/okhttp/3.9.1/okhttp-3.9.1.jar",
           "okio": "https://search.maven.org/remotecontent?filepath=com/squareup/okio/okio/1.13.0/okio-1.13.0.jar"
+        },
+        "2.0.0": {
+          "changes": "Complete refactoring of plugin, switched from OkHttp calls to ElasticSearch 5.5.2 native API calls",
+          "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.0.0/jmeter.backendlistener.elasticsearch-2.0.0.jar"
         }
       }
     }

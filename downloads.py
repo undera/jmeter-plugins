@@ -2,11 +2,13 @@ import json
 import logging
 import os
 import re
-import requests
 import subprocess
 import tempfile
 import zipfile
 from distutils.version import StrictVersion
+
+import requests
+import sys
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 repo_dir = os.path.join(base_dir, "site", "dat", "repo")
@@ -91,6 +93,10 @@ if __name__ == "__main__":
     for repo_file in os.listdir(repo_dir):
         with open(os.path.join(repo_dir, repo_file)) as fhd:
             plugins.extend(json.loads(fhd.read()))
+
+    if len(sys.argv) > 1:
+        logging.info("Doing no downloads")
+        sys.exit(0)
 
     # find pmgr
     pmgr_obj = get_pmgr(plugins)

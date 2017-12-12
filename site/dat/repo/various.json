@@ -397,11 +397,11 @@
           "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.8.2/gson-2.8.2.jar",
           "okhttp": "https://search.maven.org/remotecontent?filepath=com/squareup/okhttp3/okhttp/3.9.1/okhttp-3.9.1.jar",
           "okio": "https://search.maven.org/remotecontent?filepath=com/squareup/okio/okio/1.13.0/okio-1.13.0.jar"
-        },
-        "2.0.0": {
+        }
+      },
+      "2.0.0": {
           "changes": "Complete refactoring of plugin, switched from OkHttp calls to ElasticSearch 5.5.2 native API calls",
           "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.0.0/jmeter.backendlistener.elasticsearch-2.0.0.jar"
-        }
       }
     }
   }

@@ -1,408 +1,408 @@
 [
-  {
-    "id": "ssh-sampler",
-    "name": "SSH Protocol Support",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "https://github.com/yciabaud/jmeter-ssh-sampler",
-    "vendor": "Yoann Ciabaud",
-    "markerClass": "org.apache.jmeter.protocol.ssh.sampler.AbstractSSHSampler",
-    "componentClasses": [
-      "org.apache.jmeter.protocol.ssh.sampler.SSHCommandSampler",
-      "org.apache.jmeter.protocol.ssh.sampler.SSHSFTPSampler"
-    ],
-    "versions": {
-      "1.1.1-SNAPSHOT": {
-        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/ApacheJMeter_ssh-1.1.1-SNAPSHOT.jar",
-        "libs": {
-          "jsch": "https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.50/jsch-0.1.50.jar"
-        }
+   {
+      "id":"ssh-sampler",
+      "name":"SSH Protocol Support",
+      "description":"",
+      "screenshotUrl":"",
+      "helpUrl":"https://github.com/yciabaud/jmeter-ssh-sampler",
+      "vendor":"Yoann Ciabaud",
+      "markerClass":"org.apache.jmeter.protocol.ssh.sampler.AbstractSSHSampler",
+      "componentClasses":[
+         "org.apache.jmeter.protocol.ssh.sampler.SSHCommandSampler",
+         "org.apache.jmeter.protocol.ssh.sampler.SSHSFTPSampler"
+      ],
+      "versions":{
+         "1.1.1-SNAPSHOT":{
+            "downloadUrl":"https://jmeter-plugins.org/files/thirdparty/ApacheJMeter_ssh-1.1.1-SNAPSHOT.jar",
+            "libs":{
+               "jsch":"https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.50/jsch-0.1.50.jar"
+            }
+         }
       }
-    }
-  },
-  {
-    "id": "websocket-sampler",
-    "name": "WebSocket Sampler by Maciej Zaleski",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "https://github.com/maciejzaleski/JMeter-WebSocketSampler/wiki",
-    "vendor": "Maciej Zaleski",
-    "markerClass": "JMeter.plugins.functional.samplers.websocket.WebSocketSampler",
-    "componentClasses": [
-      "JMeter.plugins.functional.samplers.websocket.WebSocketSampler",
-      "JMeter.plugins.functional.samplers.websocket.WebSocketSamplerGui"
-    ],
-    "versions": {
-      "1.0.2-SNAPSHOT": {
-        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/JMeterWebSocketSampler-1.0.2-SNAPSHOT.jar",
-        "libs": {
-          "jetty-http": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.1.1.v20140108/jetty-http-9.1.1.v20140108.jar",
-          "jetty-io": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.1.1.v20140108/jetty-io-9.1.1.v20140108.jar",
-          "jetty-util": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.1.1.v20140108/jetty-util-9.1.1.v20140108.jar",
-          "websocket-api": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-api/9.1.1.v20140108/websocket-api-9.1.1.v20140108.jar",
-          "websocket-client": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-client/9.1.1.v20140108/websocket-client-9.1.1.v20140108.jar",
-          "websocket-common": "https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-common/9.1.1.v20140108/websocket-common-9.1.1.v20140108.jar"
-        }
+   },
+   {
+      "id":"websocket-sampler",
+      "name":"WebSocket Sampler by Maciej Zaleski",
+      "description":"",
+      "screenshotUrl":"",
+      "helpUrl":"https://github.com/maciejzaleski/JMeter-WebSocketSampler/wiki",
+      "vendor":"Maciej Zaleski",
+      "markerClass":"JMeter.plugins.functional.samplers.websocket.WebSocketSampler",
+      "componentClasses":[
+         "JMeter.plugins.functional.samplers.websocket.WebSocketSampler",
+         "JMeter.plugins.functional.samplers.websocket.WebSocketSamplerGui"
+      ],
+      "versions":{
+         "1.0.2-SNAPSHOT":{
+            "downloadUrl":"https://jmeter-plugins.org/files/thirdparty/JMeterWebSocketSampler-1.0.2-SNAPSHOT.jar",
+            "libs":{
+               "jetty-http":"https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.1.1.v20140108/jetty-http-9.1.1.v20140108.jar",
+               "jetty-io":"https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.1.1.v20140108/jetty-io-9.1.1.v20140108.jar",
+               "jetty-util":"https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.1.1.v20140108/jetty-util-9.1.1.v20140108.jar",
+               "websocket-api":"https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-api/9.1.1.v20140108/websocket-api-9.1.1.v20140108.jar",
+               "websocket-client":"https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-client/9.1.1.v20140108/websocket-client-9.1.1.v20140108.jar",
+               "websocket-common":"https://search.maven.org/remotecontent?filepath=org/eclipse/jetty/websocket/websocket-common/9.1.1.v20140108/websocket-common-9.1.1.v20140108.jar"
+            }
+         }
       }
-    }
-  },
-  {
-    "id": "mqtt-sampler",
-    "name": "MQTT Protocol Support",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "https://github.com/hemikak/mqtt-jmeter",
-    "vendor": "Hemika Kodikara",
-    "markerClass": "org.apache.jmeter.protocol.mqtt.sampler.SubscriberSampler",
-    "componentClasses": [
-      "org.apache.jmeter.protocol.mqtt.control.gui.MQTTPublisherGui",
-      "org.apache.jmeter.protocol.mqtt.control.gui.MQTTSubscriberGui",
-      "org.apache.jmeter.protocol.mqtt.sampler.PublisherSampler",
-      "org.apache.jmeter.protocol.mqtt.sampler.SubscriberSampler"
-    ],
-    "versions": {
-      "0.0.1-SNAPSHOT": {
-        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/mqtt-jmeter-0.0.1-SNAPSHOT.jar",
-        "libs": {
-          "org.eclipse.paho.client.mqttv3": "https://search.maven.org/remotecontent?filepath=org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.0.2/org.eclipse.paho.client.mqttv3-1.0.2.jar"
-        }
+   },
+   {
+      "id":"mqtt-sampler",
+      "name":"MQTT Protocol Support",
+      "description":"",
+      "screenshotUrl":"",
+      "helpUrl":"https://github.com/hemikak/mqtt-jmeter",
+      "vendor":"Hemika Kodikara",
+      "markerClass":"org.apache.jmeter.protocol.mqtt.sampler.SubscriberSampler",
+      "componentClasses":[
+         "org.apache.jmeter.protocol.mqtt.control.gui.MQTTPublisherGui",
+         "org.apache.jmeter.protocol.mqtt.control.gui.MQTTSubscriberGui",
+         "org.apache.jmeter.protocol.mqtt.sampler.PublisherSampler",
+         "org.apache.jmeter.protocol.mqtt.sampler.SubscriberSampler"
+      ],
+      "versions":{
+         "0.0.1-SNAPSHOT":{
+            "downloadUrl":"https://jmeter-plugins.org/files/thirdparty/mqtt-jmeter-0.0.1-SNAPSHOT.jar",
+            "libs":{
+               "org.eclipse.paho.client.mqttv3":"https://search.maven.org/remotecontent?filepath=org/eclipse/paho/org.eclipse.paho.client.mqttv3/1.0.2/org.eclipse.paho.client.mqttv3-1.0.2.jar"
+            }
+         }
       }
-    }
-  },
-  {
-    "id": "netflix-cassandra",
-    "name": "Cassandra Support",
-    "description": "",
-    "helpUrl": "https://github.com/Netflix/CassJMeter/wiki",
-    "screenshotUrl": "",
-    "vendor": "Netflix",
-    "markerClass": "com.netflix.jmeter.sampler.AbstractSampler",
-    "componentClasses": [
-      "com.netflix.jmeter.gui.BatchPut",
-      "com.netflix.jmeter.gui.CompositGet",
-      "com.netflix.jmeter.gui.CompositPut",
-      "com.netflix.jmeter.gui.Delete",
-      "com.netflix.jmeter.gui.Get",
-      "com.netflix.jmeter.gui.GetRangeSlice",
-      "com.netflix.jmeter.gui.Put",
-      "com.netflix.jmeter.properties.CassandraProperties",
-      "com.netflix.jmeter.properties.FatclientProperties",
-      "com.netflix.jmeter.properties.SchemaProperties",
-      "com.netflix.jmeter.report.ServoSummariserGui",
-      "com.netflix.jmeter.sampler.BatchPutSampler",
-      "com.netflix.jmeter.sampler.CompositGetSampler",
-      "com.netflix.jmeter.sampler.CompositeBatchPutSampler",
-      "com.netflix.jmeter.sampler.CompsitePutSampler",
-      "com.netflix.jmeter.sampler.DeleteSampler",
-      "com.netflix.jmeter.sampler.GetRangeSliceSampler",
-      "com.netflix.jmeter.sampler.GetSampler",
-      "com.netflix.jmeter.sampler.PutSampler"
-    ],
-    "versions": {
-      "0.2-SNAPSHOT": {
-        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/CassJMeter-0.2-SNAPSHOT.jar",
-        "libs": {
-          "servo-core": "https://search.maven.org/remotecontent?filepath=com/netflix/servo/servo-core/0.4.32/servo-core-0.4.32.jar",
-          "hector-core": "https://search.maven.org/remotecontent?filepath=org/hectorclient/hector-core/1.1-2/hector-core-1.1-2.jar",
-          "astyanax": "https://search.maven.org/remotecontent?filepath=com/netflix/astyanax/astyanax/1.56.25/astyanax-1.56.25.jar",
-          "guava": "https://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
-          "cassandra-driver-core": "https://search.maven.org/remotecontent?filepath=com/datastax/cassandra/cassandra-driver-core/1.0.0/cassandra-driver-core-1.0.0.jar"
-        }
+   },
+   {
+      "id":"netflix-cassandra",
+      "name":"Cassandra Support",
+      "description":"",
+      "helpUrl":"https://github.com/Netflix/CassJMeter/wiki",
+      "screenshotUrl":"",
+      "vendor":"Netflix",
+      "markerClass":"com.netflix.jmeter.sampler.AbstractSampler",
+      "componentClasses":[
+         "com.netflix.jmeter.gui.BatchPut",
+         "com.netflix.jmeter.gui.CompositGet",
+         "com.netflix.jmeter.gui.CompositPut",
+         "com.netflix.jmeter.gui.Delete",
+         "com.netflix.jmeter.gui.Get",
+         "com.netflix.jmeter.gui.GetRangeSlice",
+         "com.netflix.jmeter.gui.Put",
+         "com.netflix.jmeter.properties.CassandraProperties",
+         "com.netflix.jmeter.properties.FatclientProperties",
+         "com.netflix.jmeter.properties.SchemaProperties",
+         "com.netflix.jmeter.report.ServoSummariserGui",
+         "com.netflix.jmeter.sampler.BatchPutSampler",
+         "com.netflix.jmeter.sampler.CompositGetSampler",
+         "com.netflix.jmeter.sampler.CompositeBatchPutSampler",
+         "com.netflix.jmeter.sampler.CompsitePutSampler",
+         "com.netflix.jmeter.sampler.DeleteSampler",
+         "com.netflix.jmeter.sampler.GetRangeSliceSampler",
+         "com.netflix.jmeter.sampler.GetSampler",
+         "com.netflix.jmeter.sampler.PutSampler"
+      ],
+      "versions":{
+         "0.2-SNAPSHOT":{
+            "downloadUrl":"https://jmeter-plugins.org/files/thirdparty/CassJMeter-0.2-SNAPSHOT.jar",
+            "libs":{
+               "servo-core":"https://search.maven.org/remotecontent?filepath=com/netflix/servo/servo-core/0.4.32/servo-core-0.4.32.jar",
+               "hector-core":"https://search.maven.org/remotecontent?filepath=org/hectorclient/hector-core/1.1-2/hector-core-1.1-2.jar",
+               "astyanax":"https://search.maven.org/remotecontent?filepath=com/netflix/astyanax/astyanax/1.56.25/astyanax-1.56.25.jar",
+               "guava":"https://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
+               "cassandra-driver-core":"https://search.maven.org/remotecontent?filepath=com/datastax/cassandra/cassandra-driver-core/1.0.0/cassandra-driver-core-1.0.0.jar"
+            }
+         }
       }
-    }
-  },
-  {
-    "id": "kafkameter",
-    "name": "Kafka Support",
-    "description": "",
-    "screenshotUrl": "",
-    "helpUrl": "https://github.com/BrightTag/kafkameter",
-    "vendor": "www.signal.co",
-    "markerClass": "co.signal.kafkameter.KafkaProducerSampler",
-    "componentClasses": [
-      "co.signal.loadgen.LoadGenerator"
-    ],
-    "versions": {
-      "0.2.0": {
-        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/kafkameter-0.2.0.jar",
-        "depends": [
-          "jmeter-java"
-        ],
-        "libs": {
-          "guava": "https://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
-          "kafka_2.8.2": "https://search.maven.org/remotecontent?filepath=org/apache/kafka/kafka_2.8.2/0.8.0/kafka_2.8.2-0.8.0.jar",
-          "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.2.4/gson-2.2.4.jar",
-          "scala-library": "https://search.maven.org/remotecontent?filepath=org/scala-lang/scala-library/2.8.2/scala-library-2.8.2.jar",
-          "metrics-core": "https://search.maven.org/remotecontent?filepath=com/yammer/metrics/metrics-core/2.2.0/metrics-core-2.2.0.jar"
-        }
+   },
+   {
+      "id":"kafkameter",
+      "name":"Kafka Support",
+      "description":"",
+      "screenshotUrl":"",
+      "helpUrl":"https://github.com/BrightTag/kafkameter",
+      "vendor":"www.signal.co",
+      "markerClass":"co.signal.kafkameter.KafkaProducerSampler",
+      "componentClasses":[
+         "co.signal.loadgen.LoadGenerator"
+      ],
+      "versions":{
+         "0.2.0":{
+            "downloadUrl":"https://jmeter-plugins.org/files/thirdparty/kafkameter-0.2.0.jar",
+            "depends":[
+               "jmeter-java"
+            ],
+            "libs":{
+               "guava":"https://search.maven.org/remotecontent?filepath=io/janusproject/guava/guava/19.0.0/guava-19.0.0.jar",
+               "kafka_2.8.2":"https://search.maven.org/remotecontent?filepath=org/apache/kafka/kafka_2.8.2/0.8.0/kafka_2.8.2-0.8.0.jar",
+               "gson":"https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.2.4/gson-2.2.4.jar",
+               "scala-library":"https://search.maven.org/remotecontent?filepath=org/scala-lang/scala-library/2.8.2/scala-library-2.8.2.jar",
+               "metrics-core":"https://search.maven.org/remotecontent?filepath=com/yammer/metrics/metrics-core/2.2.0/metrics-core-2.2.0.jar"
+            }
+         }
       }
-    }
-  },
-  {
-    "id": "custom-soap",
-    "name": "Custom SOAP Sampler",
-    "description": "",
-    "screenshotUrl": "https://camo.githubusercontent.com/439a3066e3d0053d6e9764f8ca82af3a3af9c572/68747470733a2f2f312e62702e626c6f6773706f742e636f6d2f2d536170454572374e3239302f56724e7161495254566d492f41414141414141414864452f5337345753615a37354c452f73313630302f6d61696e566965772e706e67",
-    "helpUrl": "https://github.com/spinning10/JMeterSoapSampler/wiki",
-    "vendor": "Lukasz W",
-    "markerClass": "com.jmeter.protocol.soap.sampler.CustomSOAPSampler",
-    "componentClasses": [
-      "com.jmeter.protocol.soap.control.gui.CustomSOAPSamplerGui",
-      "com.jmeter.protocol.soap.sampler.CustomSOAPSampler",
-      "com.jmeter.sampler.assertions.SOAPXPathAssertion",
-      "com.jmeter.sampler.assertions.gui.SOAPXPathAssertionGui",
-      "com.jmeter.sampler.config.gui.VariableDefinitionPanel"
-    ],
-    "versions": {
-      "1.3": {
-        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/CustomSoapSampler-1.3.jar",
-        "depends": [
-          "jmeter-http"
-        ],
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
-        }
+   },
+   {
+      "id":"custom-soap",
+      "name":"Custom SOAP Sampler",
+      "description":"",
+      "screenshotUrl":"https://camo.githubusercontent.com/439a3066e3d0053d6e9764f8ca82af3a3af9c572/68747470733a2f2f312e62702e626c6f6773706f742e636f6d2f2d536170454572374e3239302f56724e7161495254566d492f41414141414141414864452f5337345753615a37354c452f73313630302f6d61696e566965772e706e67",
+      "helpUrl":"https://github.com/spinning10/JMeterSoapSampler/wiki",
+      "vendor":"Lukasz W",
+      "markerClass":"com.jmeter.protocol.soap.sampler.CustomSOAPSampler",
+      "componentClasses":[
+         "com.jmeter.protocol.soap.control.gui.CustomSOAPSamplerGui",
+         "com.jmeter.protocol.soap.sampler.CustomSOAPSampler",
+         "com.jmeter.sampler.assertions.SOAPXPathAssertion",
+         "com.jmeter.sampler.assertions.gui.SOAPXPathAssertionGui",
+         "com.jmeter.sampler.config.gui.VariableDefinitionPanel"
+      ],
+      "versions":{
+         "1.3":{
+            "downloadUrl":"https://jmeter-plugins.org/files/thirdparty/CustomSoapSampler-1.3.jar",
+            "depends":[
+               "jmeter-http"
+            ],
+            "libs":{
+               "jmeter-plugins-cmn-jmeter":"https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
+            }
+         }
       }
-    }
-  },
-  {
-    "id": "tilln-sshmon",
-    "name": "SSHMon Sample Collector",
-    "description": "Monitoring plugin for agentless collection and plotting of remote server metrics via SSH connections",
-    "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-sshmon/master/docs/sshmon_samples_collector.png",
-    "helpUrl": "https://github.com/tilln/jmeter-sshmon",
-    "vendor": "Till Neunast",
-    "markerClass": "nz.co.breakpoint.jmeter.vizualizers.sshmon.SSHMonCollector",
-    "componentClasses": [
-      "nz.co.breakpoint.jmeter.vizualizers.sshmon.SSHMonCollector",
-      "nz.co.breakpoint.jmeter.vizualizers.sshmon.SSHMonGui"
-    ],
-    "versions": {
-      "1.0": {
-        "downloadUrl": "https://github.com/tilln/jmeter-sshmon/releases/download/1.0/jmeter-sshmon-1.0.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar",
-          "jsch": "https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.54/jsch-0.1.54.jar"
-        }
+   },
+   {
+      "id":"tilln-sshmon",
+      "name":"SSHMon Sample Collector",
+      "description":"Monitoring plugin for agentless collection and plotting of remote server metrics via SSH connections",
+      "screenshotUrl":"https://raw.githubusercontent.com/tilln/jmeter-sshmon/master/docs/sshmon_samples_collector.png",
+      "helpUrl":"https://github.com/tilln/jmeter-sshmon",
+      "vendor":"Till Neunast",
+      "markerClass":"nz.co.breakpoint.jmeter.vizualizers.sshmon.SSHMonCollector",
+      "componentClasses":[
+         "nz.co.breakpoint.jmeter.vizualizers.sshmon.SSHMonCollector",
+         "nz.co.breakpoint.jmeter.vizualizers.sshmon.SSHMonGui"
+      ],
+      "versions":{
+         "1.0":{
+            "downloadUrl":"https://github.com/tilln/jmeter-sshmon/releases/download/1.0/jmeter-sshmon-1.0.jar",
+            "libs":{
+               "jmeter-plugins-cmn-jmeter>=0.5":"https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar",
+               "jsch":"https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.54/jsch-0.1.54.jar"
+            }
+         }
       }
-    }
-  },
-  {
-    "id": "tilln-wssecurity",
-    "name": "WS Security for SOAP",
-    "description": "Digital signature, encryption, decryption and username token for SOAP messages via Pre/Post-Processors that modify sampler payloads/responses.",
-    "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-wssecurity/master/docs/signature.png",
-    "helpUrl": "https://github.com/tilln/jmeter-wssecurity",
-    "vendor": "Till Neunast",
-    "markerClass": "nz.co.breakpoint.jmeter.modifiers.SamplerPayloadAccessor",
-    "componentClasses": [
-      "nz.co.breakpoint.jmeter.modifiers.WSSEncryptionPreProcessor",
-      "nz.co.breakpoint.jmeter.modifiers.WSSSignaturePreProcessor",
-      "nz.co.breakpoint.jmeter.modifiers.WSSUsernameTokenPreProcessor",
-      "nz.co.breakpoint.jmeter.modifiers.WSSDecryptionPostProcessor"
-    ],
-    "versions": {
-      "1.1": {
-        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.1/jmeter-wssecurity-1.1.jar",
-        "depends": [
-          "jmeter-core"
-        ],
-        "libs": {
-          "wss4j-ws-security-dom": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
-          "wss4j-ws-security-common": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
-          "xmlsec": "http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
-        }
-      },
-      "1.2": {
-        "changes": "Bug fix release",
-        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.2/jmeter-wssecurity-1.2.jar",
-        "depends": [
-          "jmeter-core"
-        ],
-        "libs": {
-          "wss4j-ws-security-dom": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
-          "wss4j-ws-security-common": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
-          "xmlsec": "http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
-        }
-      },
-      "1.3": {
-        "changes": "Added support for WSS UsernameToken",
-        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.3/jmeter-wssecurity-1.3.jar",
-        "depends": [
-          "jmeter-core"
-        ],
-        "libs": {
-          "wss4j-ws-security-dom": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
-          "wss4j-ws-security-common": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
-          "xmlsec": "http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
-        }
-      },
-      "1.4": {
-        "changes": "Added support for decryption of response messages",
-        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.4/jmeter-wssecurity-1.4.jar",
-        "depends": [
-          "jmeter-core"
-        ],
-        "libs": {
-          "wss4j-ws-security-dom": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
-          "wss4j-ws-security-common": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
-          "xmlsec": "http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
-        }
+   },
+   {
+      "id":"tilln-wssecurity",
+      "name":"WS Security for SOAP",
+      "description":"Digital signature, encryption, decryption and username token for SOAP messages via Pre/Post-Processors that modify sampler payloads/responses.",
+      "screenshotUrl":"https://raw.githubusercontent.com/tilln/jmeter-wssecurity/master/docs/signature.png",
+      "helpUrl":"https://github.com/tilln/jmeter-wssecurity",
+      "vendor":"Till Neunast",
+      "markerClass":"nz.co.breakpoint.jmeter.modifiers.SamplerPayloadAccessor",
+      "componentClasses":[
+         "nz.co.breakpoint.jmeter.modifiers.WSSEncryptionPreProcessor",
+         "nz.co.breakpoint.jmeter.modifiers.WSSSignaturePreProcessor",
+         "nz.co.breakpoint.jmeter.modifiers.WSSUsernameTokenPreProcessor",
+         "nz.co.breakpoint.jmeter.modifiers.WSSDecryptionPostProcessor"
+      ],
+      "versions":{
+         "1.1":{
+            "downloadUrl":"https://github.com/tilln/jmeter-wssecurity/releases/download/1.1/jmeter-wssecurity-1.1.jar",
+            "depends":[
+               "jmeter-core"
+            ],
+            "libs":{
+               "wss4j-ws-security-dom":"http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
+               "wss4j-ws-security-common":"http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
+               "xmlsec":"http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
+            }
+         },
+         "1.2":{
+            "changes":"Bug fix release",
+            "downloadUrl":"https://github.com/tilln/jmeter-wssecurity/releases/download/1.2/jmeter-wssecurity-1.2.jar",
+            "depends":[
+               "jmeter-core"
+            ],
+            "libs":{
+               "wss4j-ws-security-dom":"http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
+               "wss4j-ws-security-common":"http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
+               "xmlsec":"http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
+            }
+         },
+         "1.3":{
+            "changes":"Added support for WSS UsernameToken",
+            "downloadUrl":"https://github.com/tilln/jmeter-wssecurity/releases/download/1.3/jmeter-wssecurity-1.3.jar",
+            "depends":[
+               "jmeter-core"
+            ],
+            "libs":{
+               "wss4j-ws-security-dom":"http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
+               "wss4j-ws-security-common":"http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
+               "xmlsec":"http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
+            }
+         },
+         "1.4":{
+            "changes":"Added support for decryption of response messages",
+            "downloadUrl":"https://github.com/tilln/jmeter-wssecurity/releases/download/1.4/jmeter-wssecurity-1.4.jar",
+            "depends":[
+               "jmeter-core"
+            ],
+            "libs":{
+               "wss4j-ws-security-dom":"http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
+               "wss4j-ws-security-common":"http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
+               "xmlsec":"http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
+            }
+         }
       }
-    }
-  },
-  {
-    "id": "jpgc-hadoop",
-    "name": "Hadoop/HBase Testing",
-    "description": "<ul><li>HBase Connection Config</li><li>HDFS Operations</li><li>Hadoop Job Tracker Sampler</li><li>HBase CRUD Sampler</li><li>HBase Scan Sampler</li><li>HBase Rowkey Sampler</li></ul>",
-    "screenshotUrl": "https://jmeter-plugins.org/img/wiki/HBaseConnection1.png",
-    "helpUrl": "https://jmeter-plugins.org/wiki/HadoopSet/",
-    "vendor": "JMeter-Plugins.org",
-    "markerClass": "com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations",
-    "componentClasses": [
-      "com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations",
-      "com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.gui.HdfsOperationsGui",
-      "com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobStatistics",
-      "com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.gui.JobStatisticsGui",
-      "com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnection",
-      "com.atlantbh.jmeter.plugins.hbasecomponents.config.gui.HBaseConnectionGui",
-      "com.atlantbh.jmeter.plugins.hbasecomponents.samplers.HBaseRowkeySampler",
-      "com.atlantbh.jmeter.plugins.hbasecomponents.samplers.HBaseScanSampler",
-      "com.atlantbh.jmeter.plugins.hbasecomponents.samplers.gui.HBaseRowKeySamplerGui",
-      "com.atlantbh.jmeter.plugins.hbasecomponents.samplers.gui.HBaseScanSamplerGui",
-      "com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrud",
-      "com.atlantbh.jmeter.plugins.hbasecrud.gui.HbaseCrudGui"
-    ],
-    "versions": {
-      "2.0": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-hadoop/2.0/jmeter-plugins-hadoop-2.0.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "hbase": "https://search.maven.org/remotecontent?filepath=org/apache/hbase/hbase/0.94.5/hbase-0.94.5.jar",
-          "zookeeper": "https://search.maven.org/remotecontent?filepath=org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar",
-          "commons-beanutils": "https://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
-          "commons-configuration": "https://search.maven.org/remotecontent?filepath=commons-configuration/commons-configuration/1.6/commons-configuration-1.6.jar",
-          "guava": "https://search.maven.org/remotecontent?filepath=com/google/guava/guava/11.0.2/guava-11.0.2.jar",
-          "hadoop-core": "https://search.maven.org/remotecontent?filepath=org/apache/hadoop/hadoop-core/1.1.2/hadoop-core-1.1.2.jar",
-          "jackson-core-asl": "https://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-core-asl/1.8.8/jackson-core-asl-1.8.8.jar",
-          "jackson-mapper-asl": "https://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-mapper-asl/1.8.8/jackson-mapper-asl-1.8.8.jar"
-        }
+   },
+   {
+      "id":"jpgc-hadoop",
+      "name":"Hadoop/HBase Testing",
+      "description":"<ul><li>HBase Connection Config</li><li>HDFS Operations</li><li>Hadoop Job Tracker Sampler</li><li>HBase CRUD Sampler</li><li>HBase Scan Sampler</li><li>HBase Rowkey Sampler</li></ul>",
+      "screenshotUrl":"https://jmeter-plugins.org/img/wiki/HBaseConnection1.png",
+      "helpUrl":"https://jmeter-plugins.org/wiki/HadoopSet/",
+      "vendor":"JMeter-Plugins.org",
+      "markerClass":"com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations",
+      "componentClasses":[
+         "com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.HdfsOperations",
+         "com.atlantbh.jmeter.plugins.hadooputilities.hdfsoperations.gui.HdfsOperationsGui",
+         "com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.JobStatistics",
+         "com.atlantbh.jmeter.plugins.hadooputilities.jobstatistics.gui.JobStatisticsGui",
+         "com.atlantbh.jmeter.plugins.hbasecomponents.config.HBaseConnection",
+         "com.atlantbh.jmeter.plugins.hbasecomponents.config.gui.HBaseConnectionGui",
+         "com.atlantbh.jmeter.plugins.hbasecomponents.samplers.HBaseRowkeySampler",
+         "com.atlantbh.jmeter.plugins.hbasecomponents.samplers.HBaseScanSampler",
+         "com.atlantbh.jmeter.plugins.hbasecomponents.samplers.gui.HBaseRowKeySamplerGui",
+         "com.atlantbh.jmeter.plugins.hbasecomponents.samplers.gui.HBaseScanSamplerGui",
+         "com.atlantbh.jmeter.plugins.hbasecrud.HbaseCrud",
+         "com.atlantbh.jmeter.plugins.hbasecrud.gui.HbaseCrudGui"
+      ],
+      "versions":{
+         "2.0":{
+            "downloadUrl":"https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-hadoop/2.0/jmeter-plugins-hadoop-2.0.jar",
+            "libs":{
+               "jmeter-plugins-cmn-jmeter":"https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
+               "hbase":"https://search.maven.org/remotecontent?filepath=org/apache/hbase/hbase/0.94.5/hbase-0.94.5.jar",
+               "zookeeper":"https://search.maven.org/remotecontent?filepath=org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar",
+               "commons-beanutils":"https://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
+               "commons-configuration":"https://search.maven.org/remotecontent?filepath=commons-configuration/commons-configuration/1.6/commons-configuration-1.6.jar",
+               "guava":"https://search.maven.org/remotecontent?filepath=com/google/guava/guava/11.0.2/guava-11.0.2.jar",
+               "hadoop-core":"https://search.maven.org/remotecontent?filepath=org/apache/hadoop/hadoop-core/1.1.2/hadoop-core-1.1.2.jar",
+               "jackson-core-asl":"https://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-core-asl/1.8.8/jackson-core-asl-1.8.8.jar",
+               "jackson-mapper-asl":"https://search.maven.org/remotecontent?filepath=org/codehaus/jackson/jackson-mapper-asl/1.8.8/jackson-mapper-asl-1.8.8.jar"
+            }
+         }
       }
-    }
-  },
-  {
-    "id": "websocket-samplers",
-    "name": "WebSocket Samplers by Peter Doornbosch",
-    "description": "Provides 6 samplers for load testing WebSocket applications. Use the WebSocket request-response sampler for testing a basic request-response flow (the most common case), or combine the other samplers to support a more sophisticated WebSocket test scenario.",
-    "screenshotUrl": "https://bytebucket.org/pjtr/jmeter-websocket-samplers/raw/master/docs/request-response-sample.png",
-    "helpUrl": "https://bitbucket.org/pjtr/jmeter-websocket-samplers/overview",
-    "vendor": "Peter Doornbosch",
-    "markerClass": "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler",
-    "componentClasses": [
-      "eu.luminis.jmeter.assertions.BinaryContentAssertion",
-      "eu.luminis.jmeter.assertions.BinaryContentAssertionGUI",
-      "eu.luminis.jmeter.wssampler.BinaryFrameFilter",
-      "eu.luminis.jmeter.wssampler.BinaryFrameFilterGui",
-      "eu.luminis.jmeter.wssampler.CloseWebSocketSampler",
-      "eu.luminis.jmeter.wssampler.CloseWebSocketSamplerGui",
-      "eu.luminis.jmeter.wssampler.OpenWebSocketSampler",
-      "eu.luminis.jmeter.wssampler.OpenWebSocketSamplerGui",
-      "eu.luminis.jmeter.wssampler.PingFrameFilter",
-      "eu.luminis.jmeter.wssampler.PingFrameFilterGui",
-      "eu.luminis.jmeter.wssampler.PingPongSampler",
-      "eu.luminis.jmeter.wssampler.PingPongSamplerGui",
-      "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler",
-      "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSamplerGui",
-      "eu.luminis.jmeter.wssampler.SingleReadWebSocketSampler",
-      "eu.luminis.jmeter.wssampler.SingleReadWebSocketSamplerGui",
-      "eu.luminis.jmeter.wssampler.SingleWriteWebSocketSampler",
-      "eu.luminis.jmeter.wssampler.SingleWriteWebSocketSamplerGui",
-      "eu.luminis.jmeter.wssampler.TextFrameFilter",
-      "eu.luminis.jmeter.wssampler.TextFrameFilterGui"
-    ],
-    "versions": {
-      "0.7.3": {
-        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.7.3/JMeterWebSocketSamplers-0.7.3.jar",
-        "depends": [
-          "jmeter-core"
-        ]
-      },
-      "0.8": {
-        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.8/JMeterWebSocketSamplers-0.8.jar",
-        "depends": [
-          "jmeter-core"
-        ]
-      },
-      "0.9": {
-        "changes": "Single read sampler can be made optional, which avoids the sampler to fail when no websocket frame is received; this is useful in test scenario's where you can not exactly predict the server's behavior.",
-        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.9/JMeterWebSocketSamplers-0.9.jar",
-        "depends": [
-          "jmeter-core"
-        ]
-      },
-      "0.10": {
-        "changes": "New feature: frame filters. To handle situations in which the server sends unsolicited messages and the occurrence of such messages is hard to predict or otherwise hard to take into account in the test plan, filters can be used to discard such messages before they are seen by a sampler.",
-        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.10/JMeterWebSocketSamplers-0.10.jar",
-        "depends": [
-          "jmeter-core"
-        ]
-      },
-      "0.11.1": {
-        "changes": "New feature: you can control what's happening with the websocket connections at the end of the test: leave open (default), close on websocket level or close on tcp level, by setting JMeter property websocket.thread.stop.policy. Fix: all result viewers will now correctly show the size of received bytes. Frame payload is counted as 'body', frame headers as 'headers'. By default, filtered frames do not contribute to 'received size', but this can be changed by setting JMeter property websocket.result.size_includes_filtered_frames.",
-        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.11.1/JMeterWebSocketSamplers-0.11.1.jar",
-        "depends": [
-          "jmeter-core"
-        ]
-      },
-      "0.12": {
-        "changes": "Added support for continuation frames.",
-        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.12/JMeterWebSocketSamplers-0.12.jar",
-        "depends": [
-          "jmeter-core"
-        ]
-      },
-      "1.0": {
-        "changes": "New feature: registers size of sent messages too. Requires JMeter version 3.1 or later!",
-        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v1.0/JMeterWebSocketSamplers-1.0.jar",
-        "depends": [
-          "jmeter-core"
-        ]
+   },
+   {
+      "id":"websocket-samplers",
+      "name":"WebSocket Samplers by Peter Doornbosch",
+      "description":"Provides 6 samplers for load testing WebSocket applications. Use the WebSocket request-response sampler for testing a basic request-response flow (the most common case), or combine the other samplers to support a more sophisticated WebSocket test scenario.",
+      "screenshotUrl":"https://bytebucket.org/pjtr/jmeter-websocket-samplers/raw/master/docs/request-response-sample.png",
+      "helpUrl":"https://bitbucket.org/pjtr/jmeter-websocket-samplers/overview",
+      "vendor":"Peter Doornbosch",
+      "markerClass":"eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler",
+      "componentClasses":[
+         "eu.luminis.jmeter.assertions.BinaryContentAssertion",
+         "eu.luminis.jmeter.assertions.BinaryContentAssertionGUI",
+         "eu.luminis.jmeter.wssampler.BinaryFrameFilter",
+         "eu.luminis.jmeter.wssampler.BinaryFrameFilterGui",
+         "eu.luminis.jmeter.wssampler.CloseWebSocketSampler",
+         "eu.luminis.jmeter.wssampler.CloseWebSocketSamplerGui",
+         "eu.luminis.jmeter.wssampler.OpenWebSocketSampler",
+         "eu.luminis.jmeter.wssampler.OpenWebSocketSamplerGui",
+         "eu.luminis.jmeter.wssampler.PingFrameFilter",
+         "eu.luminis.jmeter.wssampler.PingFrameFilterGui",
+         "eu.luminis.jmeter.wssampler.PingPongSampler",
+         "eu.luminis.jmeter.wssampler.PingPongSamplerGui",
+         "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSampler",
+         "eu.luminis.jmeter.wssampler.RequestResponseWebSocketSamplerGui",
+         "eu.luminis.jmeter.wssampler.SingleReadWebSocketSampler",
+         "eu.luminis.jmeter.wssampler.SingleReadWebSocketSamplerGui",
+         "eu.luminis.jmeter.wssampler.SingleWriteWebSocketSampler",
+         "eu.luminis.jmeter.wssampler.SingleWriteWebSocketSamplerGui",
+         "eu.luminis.jmeter.wssampler.TextFrameFilter",
+         "eu.luminis.jmeter.wssampler.TextFrameFilterGui"
+      ],
+      "versions":{
+         "0.7.3":{
+            "downloadUrl":"https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.7.3/JMeterWebSocketSamplers-0.7.3.jar",
+            "depends":[
+               "jmeter-core"
+            ]
+         },
+         "0.8":{
+            "downloadUrl":"https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.8/JMeterWebSocketSamplers-0.8.jar",
+            "depends":[
+               "jmeter-core"
+            ]
+         },
+         "0.9":{
+            "changes":"Single read sampler can be made optional, which avoids the sampler to fail when no websocket frame is received; this is useful in test scenario's where you can not exactly predict the server's behavior.",
+            "downloadUrl":"https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.9/JMeterWebSocketSamplers-0.9.jar",
+            "depends":[
+               "jmeter-core"
+            ]
+         },
+         "0.10":{
+            "changes":"New feature: frame filters. To handle situations in which the server sends unsolicited messages and the occurrence of such messages is hard to predict or otherwise hard to take into account in the test plan, filters can be used to discard such messages before they are seen by a sampler.",
+            "downloadUrl":"https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.10/JMeterWebSocketSamplers-0.10.jar",
+            "depends":[
+               "jmeter-core"
+            ]
+         },
+         "0.11.1":{
+            "changes":"New feature: you can control what's happening with the websocket connections at the end of the test: leave open (default), close on websocket level or close on tcp level, by setting JMeter property websocket.thread.stop.policy. Fix: all result viewers will now correctly show the size of received bytes. Frame payload is counted as 'body', frame headers as 'headers'. By default, filtered frames do not contribute to 'received size', but this can be changed by setting JMeter property websocket.result.size_includes_filtered_frames.",
+            "downloadUrl":"https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.11.1/JMeterWebSocketSamplers-0.11.1.jar",
+            "depends":[
+               "jmeter-core"
+            ]
+         },
+         "0.12":{
+            "changes":"Added support for continuation frames.",
+            "downloadUrl":"https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v0.12/JMeterWebSocketSamplers-0.12.jar",
+            "depends":[
+               "jmeter-core"
+            ]
+         },
+         "1.0":{
+            "changes":"New feature: registers size of sent messages too. Requires JMeter version 3.1 or later!",
+            "downloadUrl":"https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v1.0/JMeterWebSocketSamplers-1.0.jar",
+            "depends":[
+               "jmeter-core"
+            ]
+         }
       }
-    }
-  },
-  {
-    "id": "jmeter.backendlistener.elasticsearch",
-    "name": "ElasticSearch backend listener",
-    "description": "Apache JMeter plugin for sending sample results to an ElasticSearch engine. <ul><li>Simply add a \"Backend Listener\" and change the implementation</li><li>Change the listener's configuration</li></ul>",
-    "helpUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/issues",
-    "screenshotUrl": "",
-    "vendor": "Delirius325",
-    "markerClass": "net.delirius.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
-    "versions": {
-      "1.0": {
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.0/elasticsearch-backend-listener-1.0.jar"
-      },
-      "1.5": {
-        "changes": "Added option to trust all SSL certificates. *Be careful with this, it should never be used in production*",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.5.0/elasticsearch-backend-listener-1.5.jar"
-      },
-      "1.5.2": {
-        "changes": "Fixed a bug where long test runs would trigger a crash caused by the connection pool of the OkHttp client",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.5.2/elasticsearch-backend-listener-1.5.2.jar"
-      },
-      "1.5.3": {
-        "changes": "Refactored most of the plugin",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.5.3/elasticsearch-backend-listener-1.5.3.jar",
-        "libs": {
-          "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.8.2/gson-2.8.2.jar",
-          "okhttp": "https://search.maven.org/remotecontent?filepath=com/squareup/okhttp3/okhttp/3.9.1/okhttp-3.9.1.jar",
-          "okio": "https://search.maven.org/remotecontent?filepath=com/squareup/okio/okio/1.13.0/okio-1.13.0.jar"
-        },
-        "2.0.0": {
-          "changes": "Complete refactoring of plugin, switched from OkHttp calls to ElasticSearch 5.5.2 native API calls",
-          "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.0.0/jmeter.backendlistener.elasticsearch-2.0.0.jar"
-        }
+   },
+   {
+      "id":"jmeter.backendlistener.elasticsearch",
+      "name":"ElasticSearch backend listener",
+      "description":"Apache JMeter plugin for sending sample results to an ElasticSearch engine. <ul><li>Simply add a \"Backend Listener\" and change the implementation</li><li>Change the listener's configuration</li></ul>",
+      "helpUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/issues",
+      "screenshotUrl":"",
+      "vendor":"Delirius325",
+      "markerClass":"net.delirius.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
+      "versions":{
+         "1.0":{
+            "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.0/elasticsearch-backend-listener-1.0.jar"
+         },
+         "1.5":{
+            "changes":"Added option to trust all SSL certificates. *Be careful with this, it should never be used in production*",
+            "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.5.0/elasticsearch-backend-listener-1.5.jar"
+         },
+         "1.5.2":{
+            "changes":"Fixed a bug where long test runs would trigger a crash caused by the connection pool of the OkHttp client",
+            "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.5.2/elasticsearch-backend-listener-1.5.2.jar"
+         },
+         "1.5.3":{
+            "changes":"Refactored most of the plugin",
+            "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/1.5.3/elasticsearch-backend-listener-1.5.3.jar",
+            "libs":{
+               "gson":"https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.8.2/gson-2.8.2.jar",
+               "okhttp":"https://search.maven.org/remotecontent?filepath=com/squareup/okhttp3/okhttp/3.9.1/okhttp-3.9.1.jar",
+               "okio":"https://search.maven.org/remotecontent?filepath=com/squareup/okio/okio/1.13.0/okio-1.13.0.jar"
+            }
+         },
+         "2.0.0":{
+            "changes":"Complete refactoring of plugin, switched from OkHttp calls to ElasticSearch 5.5.2 native API calls",
+            "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.0.0/jmeter.backendlistener.elasticsearch-2.0.0.jar"
+         }
       }
-    }
-  }
+   }
 ]

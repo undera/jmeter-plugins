@@ -21,7 +21,7 @@ public class VirtualUserController extends GenericController {
 
     @Override
     public Sampler next() {
-        if (!owner.isRunning()) {
+        if (owner.isLimitReached()) {
             setDone(true);
         } else if (!hasArrived) {
             if (owner.isLimitReached()) {

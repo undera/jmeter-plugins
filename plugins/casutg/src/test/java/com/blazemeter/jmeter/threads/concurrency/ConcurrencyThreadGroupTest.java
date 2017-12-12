@@ -2,6 +2,7 @@ package com.blazemeter.jmeter.threads.concurrency;
 
 import com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroupTest;
 import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.sampler.DebugSampler;
@@ -11,7 +12,12 @@ import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleListener;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.property.StringProperty;
-import org.apache.jmeter.threads.*;
+import org.apache.jmeter.threads.AbstractThreadGroup;
+import org.apache.jmeter.threads.JMeterContextService;
+import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jmeter.threads.ListenerNotifier;
+import org.apache.jmeter.threads.TestCompiler;
+import org.apache.jmeter.timers.ConstantTimer;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ConcurrencyThreadGroupTest {
@@ -91,6 +98,70 @@ public class ConcurrencyThreadGroupTest {
         ctg.start(1, notifier, hashTree, new StandardJMeterEngine());
 
         ctg.waitThreadsStopped();
+    }
+
+    // WAP-9261
+    @Test(timeout = 25000)
+    public void testSetDoneThreadsAfterHold() throws Exception {
+        JMeterContextService.getContext().setVariables(new JMeterVariables());
+
+        TestSampleListener listener = new TestSampleListener();
+
+        DebugSampler sampler = new DebugSampler();
+        sampler.setName("Sampler");
+
+        ConstantTimer timer = new ConstantTimer();
+        timer.setDelay("2000");
+        timer.setName("timer");
+
+        LoopController loopController = new LoopController();
+        loopController.setContinueForever(true);
+        loopController.setLoops(-1);
+        loopController.setName("loop c");
+
+        ConcurrencyThreadGroupExt ctg = new ConcurrencyThreadGroupExt();
+        ctg.setName("CTG");
+        ctg.setRampUp("5");
+        ctg.setTargetLevel("3");
+        ctg.setSteps("1");
+        ctg.setHold("10"); // TODO: increase this value for debugging
+        ctg.setIterationsLimit("");
+        ctg.setUnit("S");
+
+
+        ListedHashTree loopTree = new ListedHashTree();
+        loopTree.add(loopController, timer);
+        loopTree.add(loopController, sampler);
+        loopTree.add(loopController, listener);
+
+        ListedHashTree hashTree = new ListedHashTree();
+        hashTree.add(ctg, loopTree);
+
+        TestCompiler compiler = new TestCompiler(hashTree);
+        // this hashTree can be save to *jmx
+        hashTree.traverse(compiler);
+
+        ListenerNotifier notifier = new ListenerNotifier();
+
+        long startTime = System.currentTimeMillis();
+        ctg.start(1, notifier, hashTree, new StandardJMeterEngine());
+
+        Thread threadStarter = ctg.getThreadStarter();
+        threadStarter.join();
+        long endTime = System.currentTimeMillis();
+
+        // wait when all thread stopped
+        Thread.currentThread().sleep(5000);
+
+        assertTrue((endTime - startTime) < 20000);
+        //  ALL threads must be stopped
+        assertEquals(0, ctg.getNumberOfThreads());
+    }
+
+    public static class ConcurrencyThreadGroupExt extends ConcurrencyThreadGroup {
+        public Thread getThreadStarter() {
+            return threadStarter;
+        }
     }
 
     public static class DebugSamplerExt extends DebugSampler {

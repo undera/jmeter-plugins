@@ -363,7 +363,7 @@
       },
       "1.0": {
         "changes": "New feature: registers size of sent messages too. Requires JMeter version 3.1 or later!",
-        "downloadUrl": "https://github.com/ptrd/jmeter-websocket-samplers/releases/download/v1.0/JMeterWebSocketSamplers-1.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.0/jmeter-websocket-samplers-1.0.jar",
         "depends": [
           "jmeter-core"
         ]

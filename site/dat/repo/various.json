@@ -140,7 +140,7 @@
   },
   {
     "id": "PepperBox",
-    "name": "Enhanced Kafka Support with customized schema",
+    "name": "Enhanced Kafka Support with customized schema and SASL support",
     "description": "This plugin provides an easy way to generate load on Kafka with customized schema, high throughput and with popular security protocols",
     "screenshotUrl": "",
     "helpUrl": "https://github.com/GSLabDev/pepper-box",
@@ -156,7 +156,7 @@
     ],
     "versions": {
       "v1.0": {
-        "downloadUrl": "https://jmeter-plugins.org/files/thirdparty/kafkameter-0.2.0.jar",
+        "downloadUrl": "https://github.com/GSLabDev/pepper-box/archive/v1.0.zip",
         "depends": [
           "jmeter-java"
         ],

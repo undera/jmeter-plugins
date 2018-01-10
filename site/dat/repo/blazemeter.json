@@ -151,6 +151,16 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "0.3": {
+        "changes" : "Fixed remote execution",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.3/jmeter-parallel-0.3.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

@@ -49,6 +49,26 @@ public class CaseFormatTest {
     }
     
     @Test
+    public void testInvalidCase() throws Exception {
+    	params.add(new CompoundVariable("ab- eF"));
+    	params.add(new CompoundVariable("INVALID_CASE"));
+    	changeCase.setParameters(params);
+    	changeCase.setParameters(params);
+    	String returnValue = changeCase.execute(result, null);
+    	assertEquals("ab- eF", returnValue);
+    }
+    
+    @Test
+    public void testDefaultCase() throws Exception {
+    	params.add(new CompoundVariable("ab- eF"));
+    	params.add(new CompoundVariable("LOWER_CAMEL_CASE"));
+    	changeCase.setParameters(params);
+    	changeCase.setParameters(params);
+    	String returnValue = changeCase.execute(result, null);
+    	assertEquals("abEf", returnValue);
+    }
+    
+    @Test
     public void testLowerCaseNonEnglish() throws Exception {
     	params.add(new CompoundVariable("ab-àÀè_È é É ù Ù ì Ì ò Ò ñ ÑäöüßCD   eF"));
     	params.add(new CompoundVariable("LOWER_CAMEL_CASE"));

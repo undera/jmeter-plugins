@@ -24,20 +24,16 @@ public class CaseFormatTest {
 
     private Collection<CompoundVariable> params;
 
-    private JMeterVariables vars;
-
-    private JMeterContext jmctx;
-
 	private CaseFormat changeCase;
 
     @Before
     public void setUp() {
     	changeCase = new CaseFormat();
         result = new SampleResult();
-        jmctx = JMeterContextService.getContext();
+        JMeterContext jmctx = JMeterContextService.getContext();
         String data = "dummy data";
         result.setResponseData(data, null);
-        vars = new JMeterVariables();
+        JMeterVariables vars = new JMeterVariables();
         jmctx.setVariables(vars);
         jmctx.setPreviousResult(result);
         params = new LinkedList<>();

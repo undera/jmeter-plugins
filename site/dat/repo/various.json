@@ -406,7 +406,7 @@
       "2.0.1": {
           "changes": "Performance tuning, refactor & sends results to ElasticSearch in bulk",
           "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.0.1/jmeter.backendlistener.elasticsearch-2.0.1.jar"
-      }
+      },
       "2.1.1": {
           "changes": "Significant reduction of the java artifact",
           "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.1.1/jmeter.backendlistener.elasticsearch-2.1.1.jar"

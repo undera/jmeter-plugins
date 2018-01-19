@@ -410,7 +410,10 @@
       "2.1.0": {
         "changes": "Added metrics, fixed bugs, added logging, and added timeout to avoid hanging requests.",
         "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.1.0/jmeter.backendlistener.elasticsearch-2.1.0.jar"
-        
+      },
+      "2.1.1": {
+        "changes": "Reduction of the JAR.",
+        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.1.1/jmeter.backendlistener.elasticsearch-2.1.1.jar"
       }
     }
   }

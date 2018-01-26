@@ -367,6 +367,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.1": {
+        "changes": "Ready for / compatible with JMeter 4. New feature: send unsolicited pong.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.1/jmeter-websocket-samplers-1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -406,6 +413,10 @@
       "2.0.1": {
           "changes": "Performance tuning, refactor & sends results to ElasticSearch in bulk",
           "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.0.1/jmeter.backendlistener.elasticsearch-2.0.1.jar"
+      },
+      "2.0.2": {
+        "changes": "Rare null pointer exception fix & removed useless fields",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.0.2/jmeter.backendlistener.elasticsearch-2.0.2.jar"
       },
       "2.1.0": {
         "changes": "Added metrics, fixed bugs, added logging, and added timeout to avoid hanging requests.",

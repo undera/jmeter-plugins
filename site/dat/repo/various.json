@@ -367,6 +367,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.1": {
+        "changes": "Ready for / compatible with JMeter 4. New feature: send unsolicited pong.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.1/jmeter-websocket-samplers-1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

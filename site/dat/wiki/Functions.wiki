@@ -215,4 +215,26 @@ Example, gettig different values for jmeter variable:
 ${__if(${size}, 5, ok, invalid)}
 }}}
 
+== caseFormat<sup><font color=gray size="1">since 2.0</font></sup> ==
 
+This function provides changing string case format.
+
+Parameters:
+  # Original string value  - required
+  # Expected case mode (case insenstive), Default is "LOWER_CAMEL_CASE" (if not valid mode will return string as is)     
+  # Optional variable to store result
+
+Example, save in outputVariable value "MyString"
+
+${__caseFormat("myString", "UPPER_CAMEL_CASE", outputVariable);
+
+Will save in outputVariable value "myString"
+
+Case modes available:
+
+- Lower camel case, as: lowerCamelCase - name: "LOWER_CAMEL_CASE"
+- Upper camel case, as: UpperCamelCase - name: "UPPER_CAMEL_CASE"
+- Snake or lower underscore case, as: snake_lower_underscore_case - name: "SNAKE_CASE"/"LOWER_UNDERSCORE"
+- Lisp or kebab or spinal or lower hyphen case, as: lis-keba-spinal-lower-case - name: "KEBAB_CASE"/"LISP_CASE"/"SPINAL_CASE"/"LOWER_HYPHEN"
+- Train case, as: TRAIN-CASE - name: "TRAIN_CASE"
+- Upper underscore case, as: UPPER_UNDERSCORE_CASE - name: "UPPER_UNDERSCORE"

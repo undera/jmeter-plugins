@@ -415,8 +415,16 @@
           "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.0.1/jmeter.backendlistener.elasticsearch-2.0.1.jar"
       },
       "2.0.2": {
-          "changes": "Rare null pointer exception fix & removed useless fields",
-          "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.0.2/jmeter.backendlistener.elasticsearch-2.0.2.jar"
+        "changes": "Rare null pointer exception fix & removed useless fields",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.0.2/jmeter.backendlistener.elasticsearch-2.0.2.jar"
+      },
+      "2.1.0": {
+        "changes": "Added metrics, fixed bugs, added logging, and added timeout to avoid hanging requests.",
+        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.1.0/jmeter.backendlistener.elasticsearch-2.1.0.jar"
+      },
+      "2.1.1": {
+        "changes": "Reduction of the JAR.",
+        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.1.1/jmeter.backendlistener.elasticsearch-2.1.1.jar"
       }
     }
   }

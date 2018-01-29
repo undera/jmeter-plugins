@@ -145,7 +145,7 @@ public class RedisDataSet extends ConfigTestElement
             }
             
         } finally {
-            pool.returnResource(connection);
+            //pool.returnResource(connection);
         }
     }
 
@@ -232,11 +232,11 @@ public class RedisDataSet extends ConfigTestElement
     @Override
     public void testStarted(String distributedHost) {
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxActive(getMaxActive());
+        config.setMaxTotal(getMaxActive());
         config.setMaxIdle(getMaxIdle());
         config.setMinIdle(getMinIdle());
-        config.setMaxWait(getMaxWait());
-        config.setWhenExhaustedAction((byte)getWhenExhaustedAction());
+        config.setMaxWaitMillis(getMaxWait()*1000);
+        //config.setWhenExhaustedAction((byte)getWhenExhaustedAction());
         config.setTestOnBorrow(getTestOnBorrow());
         config.setTestOnReturn(getTestOnReturn());
         config.setTestWhileIdle(getTestWhileIdle());

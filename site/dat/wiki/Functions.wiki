@@ -226,7 +226,9 @@ Parameters:
 
 Example, save in outputVariable value "MyString"
 
+{{{
 ${__caseFormat("myString", "UPPER_CAMEL_CASE", outputVariable);
+}}}
 
 Will save in outputVariable value "myString"
 

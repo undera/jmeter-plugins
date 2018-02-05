@@ -14,6 +14,7 @@ import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
+import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.timers.Timer;
 import org.apache.jmeter.util.JMeterUtils;
@@ -262,7 +263,9 @@ public class VariableThroughputTimer
             log.info("Tries more than 5, shutting down engine!");
             StandardJMeterEngine.stopEngine();
         } else {
-            JMeterContextService.getContext().getEngine().askThreadsToStop();
+            AbstractThreadGroup threadGroup = JMeterContextService.getContext().getThreadGroup();
+            log.info("Stopping threads of Thread Group : {}", threadGroup.getName());
+            threadGroup.tellThreadsToStop();
         }
     }
 

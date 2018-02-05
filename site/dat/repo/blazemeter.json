@@ -114,6 +114,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "0.6": {
+        "changes": "fix leak with open files",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-random-csv-data-set/0.6/jmeter-plugins-random-csv-data-set-0.6.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
       }
     }
   },

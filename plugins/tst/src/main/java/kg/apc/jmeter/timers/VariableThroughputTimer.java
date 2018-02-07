@@ -2,7 +2,7 @@
 // TODO: create a thread which will wake up at least one sampler to provide rps
 package kg.apc.jmeter.timers;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.engine.StandardJMeterEngine;
@@ -26,10 +26,10 @@ public class VariableThroughputTimer
         implements Timer, NoThreadClone, TestStateListener {
 
     private static final long serialVersionUID = -8557540133988335686L;
-    public static final String[] columnIdentifiers = new String[]{
+    static final String[] columnIdentifiers = new String[]{
             "Start RPS", "End RPS", "Duration, sec"
     };
-    public static final Class[] columnClasses = new Class[]{
+    static final Class[] columnClasses = new Class[]{
             String.class, String.class, String.class
     };
     // TODO: eliminate magic property
@@ -39,10 +39,25 @@ public class VariableThroughputTimer
     public static final int TO_FIELD_NO = 1;
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(VariableThroughputTimer.class);
     /* put this in fields because we don't want create variables in tight loops */
+    /**
+     * Current threads waiting, if < 1 it means we don't have enough threads to reach RPS 
+     */
     private int cntDelayed;
+    /**
+     * Current second in Millis
+     */
     private double time = 0;
+    /**
+     *  How many requests per millis
+     */
     private double msecPerReq;
+    /**
+     * Number of samples sent since last second
+     */
     private long cntSent;
+    /**
+     * Current RPS
+     */
     private double rps;
     private double startSec = 0;
     private CollectionProperty overrideProp;
@@ -55,27 +70,30 @@ public class VariableThroughputTimer
         trySettingLoadFromProperty();
     }
 
+    /**
+     * Internally handles that delay for caller thread
+     * @return 0
+     */
     public synchronized long delay() {
         while (true) {
-            int delay;
-            long curTime = System.currentTimeMillis();
-            long msecs = curTime % 1000;
-            long secs = curTime - msecs;
-            checkNextSecond(secs);
-            delay = getDelay(msecs);
+            long curTimeMs = System.currentTimeMillis();
+            long millisSinceLastSecond = curTimeMs % 1000;
+            long nowInMsRoundedAtSec = curTimeMs - millisSinceLastSecond;
+            checkNextSecond(nowInMsRoundedAtSec);
+            int delayMs = getDelay(millisSinceLastSecond);
 
             if (stopping) {
-                delay = delay > 0 ? 10 : 0;
+                delayMs = delayMs > 0 ? 10 : 0;
                 notifyAll();
             }
 
-            if (delay < 1) {
+            if (delayMs < 1) {
                 notifyAll();
                 break;
             }
             cntDelayed++;
             try {
-                wait(delay);
+                wait(delayMs);
             } catch (InterruptedException ex) {
                 log.error("Waiting thread was interrupted", ex);
                 Thread.currentThread().interrupt();
@@ -86,18 +104,27 @@ public class VariableThroughputTimer
         return 0;
     }
 
-    private synchronized void checkNextSecond(double secs) {
+    /**
+     * If we have switched to next second:
+     * <li>
+     * <ul>Updates time</ul> 
+     * <ul>Updates startSec</ul>
+     * <ul>Resets cntSent</ul>
+     * </li>
+     * @param nowInMsRoundedAtSec Now in millis rounded as second
+     */
+    private synchronized void checkNextSecond(double nowInMsRoundedAtSec) {
         // next second
-        if (time == secs) {
+        if (time == nowInMsRoundedAtSec) {
             return;
         }
 
         if (startSec == 0) {
-            startSec = secs;
+            startSec = nowInMsRoundedAtSec;
         }
-        time = secs;
+        time = nowInMsRoundedAtSec;
 
-        double nextRps = getRPSForSecond((secs - startSec) / 1000);
+        double nextRps = getRPSForSecond((nowInMsRoundedAtSec - startSec) / 1000);
         if (nextRps < 0) {
             stopping = true;
             int factor = stopTries > 10 ? 2 : 1;
@@ -109,12 +136,12 @@ public class VariableThroughputTimer
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("Second changed {} , sleeping: {}, sent {}, RPS: {} rps",
-                    ((secs - startSec) / 1000), cntDelayed, cntSent, rps);
+            log.debug("Second changed {} , waiting: {}, samples sent {}, current rps: {} rps",
+                    ((nowInMsRoundedAtSec - startSec) / 1000), cntDelayed, cntSent, rps);
         }
 
         if (cntDelayed < 1) {
-            log.warn("No free threads available in current Thread Group, made  {}/{} samples, increase your number of threads", cntSent, rps);
+            log.warn("No free threads available in current Thread Group, made {} samples/s for expected rps {} samples/s, increase your number of threads", cntSent, rps);
         }
 
         String elementName = getName();
@@ -126,11 +153,20 @@ public class VariableThroughputTimer
         msecPerReq = 1000d / rps;
     }
 
-    private int getDelay(long msecs) {
-        log.debug("Calculating {} {} {}",msecs, cntSent * msecPerReq, cntSent);
-        if (msecs < (cntSent * msecPerReq)) {
+    /**
+     * 
+     * @param millisSinceLastSecond Millis since last second tick
+     * @return delay to apply at current millis, < 0 if no delay
+     */
+    private int getDelay(long millisSinceLastSecond) {
+        if(log.isDebugEnabled()) {
+            log.debug("Calculating {} {} {}",millisSinceLastSecond, cntSent * msecPerReq, cntSent);
+        }
+        if (millisSinceLastSecond < (cntSent * msecPerReq)) {
+            // TODO : Explain this for other maintainers
             return (int) (1 + 1000.0 * (cntDelayed + 1) / rps);
         }
+        // we're under rate
         return 0;
     }
 
@@ -145,36 +181,40 @@ public class VariableThroughputTimer
         return getProperty(DATA_PROPERTY);
     }
 
-    public double getRPSForSecond(double sec) {
+    /**
+     * @param durationSinceStartOfTestSec Elapsed time since start of test in seconds
+     * @return double RPS at that second or -1 if we're out of schedule
+     */
+    public double getRPSForSecond(final double elapsedSinceStartOfTestSec) {
         JMeterProperty data = getData();
         if (data instanceof NullProperty) {
             return -1;
         }
         CollectionProperty rows = (CollectionProperty) data;
         PropertyIterator scheduleIT = rows.iterator();
-        double newSec = sec;
+        double newSec = elapsedSinceStartOfTestSec;
         while (scheduleIT.hasNext()) {
             @SuppressWarnings("unchecked")
-            ArrayList<Object> curProp = (ArrayList<Object>) scheduleIT.next().getObjectValue();
-
+            List<Object> curProp = (List<Object>) scheduleIT.next().getObjectValue();
             int duration = getIntValue(curProp, DURATION_FIELD_NO);
-            double from = getDoubleValue(curProp, FROM_FIELD_NO);
-            double to = getDoubleValue(curProp, TO_FIELD_NO);
+            double fromRps = getDoubleValue(curProp, FROM_FIELD_NO);
+            double toRps = getDoubleValue(curProp, TO_FIELD_NO);
             if (newSec - duration <= 0) {
-                return from + newSec * (to - from) / (double) duration;
+                return fromRps + newSec * (toRps - fromRps) / (double) duration;
             } else {
+                // We're not yet in the slot
                 newSec -= duration;
             }
         }
         return -1;
     }
 
-    private double getDoubleValue(ArrayList<Object> prop, int colID) {
+    private double getDoubleValue(List<Object> prop, int colID) {
         JMeterProperty val = (JMeterProperty) prop.get(colID);
         return val.getDoubleValue();
     }
 
-    private int getIntValue(ArrayList<Object> prop, int colID) {
+    private int getIntValue(List<Object> prop, int colID) {
         JMeterProperty val = (JMeterProperty) prop.get(colID);
         return val.getIntValue();
     }
@@ -242,8 +282,6 @@ public class VariableThroughputTimer
         }
     }
 
-    // TODO: resolve shutdown problems. Patch JMeter if needed
-    // TODO: make something with test stopping in JMeter. Write custom plugin that tries to kill all threads? Guillotine Stopper! 
     protected void stopTest() {
         if (stopTries > 30) {
             throw new IllegalStateException("More than 30 retries - stopping with exception");

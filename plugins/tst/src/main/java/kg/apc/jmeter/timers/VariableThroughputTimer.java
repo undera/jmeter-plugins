@@ -26,10 +26,10 @@ public class VariableThroughputTimer
         implements Timer, NoThreadClone, TestStateListener {
 
     private static final long serialVersionUID = -8557540133988335686L;
-    static final String[] columnIdentifiers = new String[]{
+    protected static final String[] columnIdentifiers = new String[]{
             "Start RPS", "End RPS", "Duration, sec"
     };
-    static final Class[] columnClasses = new Class[]{
+    protected static final Class[] columnClasses = new Class[]{
             String.class, String.class, String.class
     };
     // TODO: eliminate magic property

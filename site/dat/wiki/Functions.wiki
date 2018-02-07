@@ -221,12 +221,12 @@ This function provides changing string case format.
 
 Parameters:
   # Original string value  - required
-  # Expected case mode (case insenstive), Default is "LOWER\_CAMEL_CASE" (if not valid mode will return string as is)     
+  # Expected case mode (case insenstive), Default is LOWER_CAMEL_CASE (if not valid mode will return string as is)     
   # Optional variable to store result
 
 Example, save in outputVariable value "MyString"
 
-${__caseFormat("myString", "UPPER\_CAMEL_CASE", outputVariable);
+${__caseFormat("my String", "LOWER_HYPHEN", my-string);
 
 Will save in outputVariable value "myString"
 

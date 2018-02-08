@@ -428,7 +428,7 @@
       },
       "2.2.0": {
         "changes": "Makes use of the ElasticSearch low-level REST client. The plugin now works with any version of ElasticSearch.",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.1.1/jmeter.backendlistener.elasticsearch-2.1.1.jar"
+        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.2.0/jmeter.backendlistener.elasticsearch-2.2.0.jar"
       }
     }
   }

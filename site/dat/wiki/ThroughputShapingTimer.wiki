@@ -17,7 +17,7 @@ It gives you the happiness of the "open workload" approach.
 
 == Few Important Notes ==
 
-  # JMeter test will be stopped when RPS schedule finishes.
+  # JMeter threads of Thread Groups in scope of the Element will be stopped when RPS schedule finishes.
   # provide enough working threads for your RPS, JMeter timers can only _delay_ threads (and limit RPS). You may pair this plugin with [ConcurrencyThreadGroup Concurrency Thread Group] using [ThroughputShapingTimer#Schedule-Feedback-Function Schedule Feedback Function] to dynamically maintain thread count required to achieve target RPS.
   # if you're using versions of JMeter lower than 3.3 and if you have RPS that lower at the end of test, make threads to lower also. Оtherwise you'll have a spike in last second.
   # avoid using zero RPS value as start of test, this produce spike also

@@ -199,6 +199,7 @@
       "nz.co.breakpoint.jmeter.modifiers.WSSEncryptionPreProcessor",
       "nz.co.breakpoint.jmeter.modifiers.WSSSignaturePreProcessor",
       "nz.co.breakpoint.jmeter.modifiers.WSSUsernameTokenPreProcessor",
+      "nz.co.breakpoint.jmeter.modifiers.WSSTimestampPreProcessor",
       "nz.co.breakpoint.jmeter.modifiers.WSSDecryptionPostProcessor"
     ],
     "versions": {

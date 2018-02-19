@@ -199,6 +199,7 @@
       "nz.co.breakpoint.jmeter.modifiers.WSSEncryptionPreProcessor",
       "nz.co.breakpoint.jmeter.modifiers.WSSSignaturePreProcessor",
       "nz.co.breakpoint.jmeter.modifiers.WSSUsernameTokenPreProcessor",
+      "nz.co.breakpoint.jmeter.modifiers.WSSTimestampPreProcessor",
       "nz.co.breakpoint.jmeter.modifiers.WSSDecryptionPostProcessor"
     ],
     "versions": {
@@ -240,6 +241,18 @@
       "1.4": {
         "changes": "Added support for decryption of response messages",
         "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.4/jmeter-wssecurity-1.4.jar",
+        "depends": [
+          "jmeter-core"
+        ],
+        "libs": {
+          "wss4j-ws-security-dom": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
+          "wss4j-ws-security-common": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
+          "xmlsec": "http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
+        }
+      },
+      "1.5": {
+        "changes": "Added WSS Timestamp Pre-Processor. Added WSS UsernameToken timestamp precision option and 'no password' option.",
+        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.5/jmeter-wssecurity-1.5.jar",
         "depends": [
           "jmeter-core"
         ],
@@ -401,6 +414,10 @@
       "2.2.1": {
         "changes": "Added filters",
         "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.2.1/jmeter.backendlistener.elasticsearch-2.2.1.jar"
+      },
+      "2.2.2": {
+        "changes": "Fixed a bug that would not send any samplers and leaving filters empty",
+        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.2.2/jmeter.backendlistener.elasticsearch-2.2.2.jar"
       }
     }
   }

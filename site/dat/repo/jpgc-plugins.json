@@ -316,7 +316,7 @@
   },
   {
     "id": "jpgc-json",
-    "name": "JSON Plugins (depreceted)",
+    "name": "JSON Plugins (deprecated)",
     "description": "[Deprecated in favor of core JMeter 4.0+] Allows extracting values from JSON responses using JSONPath syntax. Also ships JSONPath Assertion.",
     "screenshotUrl": "https://jmeter-plugins.org/img/wiki/JSONPathExtractor.png",
     "helpUrl": "https://jmeter-plugins.org/wiki/JSONPathExtractor/",

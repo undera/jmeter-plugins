@@ -39,6 +39,17 @@ Shaping Timer setting in example test plan:
 Actual RPS provided:
 [/img/wiki/throughput_shaping_timer2.png]
 
+== Properties exposed by Component ==
+
+The element will export the following properties that you can access through __P function:
+
+* elementName_totalDuration  - Total duration as sum of the "Duration,sec" column
+* elementName_cntDelayed - Number of current threads waiting, if lower than 1 it means we don't have enough threads to reach RPS
+* elementName_cntSent - Number of samples sent since last second tick
+* elementName_rps - Current RPS
+
+elementName will be the name of your Timer
+
 == Special Property Processing ==
 
 There is a way to specify load pattern from special jmeter property {{{load_profile}}}.

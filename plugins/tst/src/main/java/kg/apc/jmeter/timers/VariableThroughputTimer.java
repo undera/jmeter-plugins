@@ -5,6 +5,7 @@ package kg.apc.jmeter.timers;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.engine.util.NoThreadClone;
 import org.apache.jmeter.gui.util.PowerTableModel;
@@ -125,7 +126,8 @@ public class VariableThroughputTimer
         }
         time = nowInMsRoundedAtSec;
 
-        double nextRps = getRPSForSecond((nowInMsRoundedAtSec - startSec) / 1000);
+        Pair<Double, Long> pair = getRPSForSecond((nowInMsRoundedAtSec - startSec) / 1000);
+        double nextRps = pair.getLeft();
         if (nextRps < 0) {
             stopping = true;
             int factor = stopTries > 10 ? 2 : 1;
@@ -146,6 +148,7 @@ public class VariableThroughputTimer
         }
 
         String elementName = getName();
+        JMeterUtils.setProperty(elementName + "_totalDuration", String.valueOf(pair.getRight()));
         JMeterUtils.setProperty(elementName + "_cntDelayed", String.valueOf(cntDelayed));
         JMeterUtils.setProperty(elementName + "_cntSent", String.valueOf(cntSent));
         JMeterUtils.setProperty(elementName + "_rps", String.valueOf(rps));
@@ -186,28 +189,35 @@ public class VariableThroughputTimer
      * @param durationSinceStartOfTestSec Elapsed time since start of test in seconds
      * @return double RPS at that second or -1 if we're out of schedule
      */
-    public double getRPSForSecond(final double elapsedSinceStartOfTestSec) {
+    public Pair<Double, Long> getRPSForSecond(final double elapsedSinceStartOfTestSec) {
         JMeterProperty data = getData();
         if (data instanceof NullProperty) {
-            return -1;
+            return Pair.of(-1.0, 0L);
         }
         CollectionProperty rows = (CollectionProperty) data;
         PropertyIterator scheduleIT = rows.iterator();
         double newSec = elapsedSinceStartOfTestSec;
+        double result = -1;
+        boolean resultComputed = false;
+        long totalDuration = 0;
         while (scheduleIT.hasNext()) {
             @SuppressWarnings("unchecked")
             List<Object> curProp = (List<Object>) scheduleIT.next().getObjectValue();
             int duration = getIntValue(curProp, DURATION_FIELD_NO);
-            double fromRps = getDoubleValue(curProp, FROM_FIELD_NO);
-            double toRps = getDoubleValue(curProp, TO_FIELD_NO);
-            if (newSec - duration <= 0) {
-                return fromRps + newSec * (toRps - fromRps) / (double) duration;
-            } else {
-                // We're not yet in the slot
-                newSec -= duration;
+            totalDuration += duration;
+            if(!resultComputed) {
+                double fromRps = getDoubleValue(curProp, FROM_FIELD_NO);
+                double toRps = getDoubleValue(curProp, TO_FIELD_NO);
+                if (newSec - duration <= 0) {
+                    result = fromRps + newSec * (toRps - fromRps) / (double) duration;
+                    resultComputed = true;
+                } else {
+                    // We're not yet in the slot
+                    newSec -= duration;
+                }
             }
         }
-        return -1;
+        return Pair.of(result, totalDuration);
     }
 
     private double getDoubleValue(List<Object> prop, int colID) {

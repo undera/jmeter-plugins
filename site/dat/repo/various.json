@@ -397,7 +397,7 @@
     "helpUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/issues",
     "screenshotUrl": "",
     "vendor": "Delirius325",
-    "markerClass": "net.delirius.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
+    "markerClass": "io.github.delirius325.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
     "versions": {
       "2.1.0": {
         "changes": "Added metrics, fixed bugs, added logging, and added timeout to avoid hanging requests.",
@@ -417,7 +417,7 @@
       },
       "2.2.2": {
         "changes": "Fixed a bug that would not send any samplers and leaving filters empty",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.2.2/jmeter.backendlistener.elasticsearch-2.2.2.jar"
+        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.2/jmeter.backendlistener.elasticsearch-2.2.2.jar"
       }
     }
   }

@@ -62,11 +62,18 @@ public class VariableThroughputTimerTest {
     public void testDelay() {
         System.out.println("delay");
         VariableThroughputTimer instance = new VariableThroughputTimer();
+        instance.setName("TEST");
         long expResult = 0L;
         long result = instance.delay();
         assertEquals(expResult, result);
+        assertEquals("0", JMeterUtils.getProperty("TEST_totalDuration"));
+        assertEquals("0", JMeterUtils.getProperty("TEST_cntDelayed"));
+        assertEquals("0", JMeterUtils.getProperty("TEST_cntSent"));
+        assertEquals("1.0", JMeterUtils.getProperty("TEST_rps"));
     }
 
+    
+    
     @Test
     public void testDelay_Prop() {
         System.out.println("delay from property");
@@ -82,6 +89,7 @@ public class VariableThroughputTimerTest {
     public void testDelay1000() throws InterruptedException {
         System.out.println("delay 1000");
         VariableThroughputTimer instance = new VariableThroughputTimerEmul();
+        instance.setName("TEST");
         CollectionProperty prop = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
         instance.setData(prop);
         long start = System.currentTimeMillis();
@@ -90,6 +98,7 @@ public class VariableThroughputTimerTest {
         {
             try {
                 result = instance.delay();
+                assertEquals("9", JMeterUtils.getProperty("TEST_totalDuration"));
                 assertEquals(0, result);
             } catch (RuntimeException ex) {
                 if (!ex.getMessage().equals("Immediate stop")) {

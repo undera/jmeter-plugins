@@ -395,9 +395,9 @@
     "name": "ElasticSearch backend listener",
     "description": "Apache JMeter plugin for sending sample results to an ElasticSearch engine. <ul><li>Simply add a \"Backend Listener\" and change the implementation</li><li>Change the listener's configuration</li><li>To use filters, simple seperate their name by a semicolon. (f1;f2;f3)</li></ul>",
     "helpUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/issues",
-    "screenshotUrl": "",
+    "screenshotUrl": "https://image.ibb.co/bA1oYH/Screen_Shot_2018_02_23_at_2_37_46_PM.png",
     "vendor": "Delirius325",
-    "markerClass": "net.delirius.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
+    "markerClass": "io.github.delirius325.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
     "versions": {
       "2.1.0": {
         "changes": "Added metrics, fixed bugs, added logging, and added timeout to avoid hanging requests.",
@@ -417,7 +417,7 @@
       },
       "2.2.2": {
         "changes": "Fixed a bug that would not send any samplers and leaving filters empty",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.2.2/jmeter.backendlistener.elasticsearch-2.2.2.jar"
+        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.2/jmeter.backendlistener.elasticsearch-2.2.2.jar"
       }
     }
   }

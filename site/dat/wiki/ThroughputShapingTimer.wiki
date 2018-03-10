@@ -41,21 +41,17 @@ Actual RPS provided:
 
 == Properties exposed by Component ==
 
-The element will export the following properties that you can access through [https://jmeter.apache.org/usermanual/functions.html#__P] function or 
-using in JSR223 Test Elements:
-
-<code>
-props.get("property name")
-</code>
+The element will export the following properties that you can access through [https://jmeter.apache.org/usermanual/functions.html#__P __P] function or using in JSR223 Test Elements {{{props.get("property name")}}}
 
 Properties are:
 
-* elementName_totalDuration  - Total duration as sum of the "Duration,sec" column
-* elementName_cntDelayed - Number of current threads waiting, if lower than 1 it means we don't have enough threads to reach RPS
-* elementName_cntSent - Number of samples sent since last second tick
-* elementName_rps - Current RPS
+  * elementName_totalDuration  - Total duration as sum of the "Duration,sec" column
+  * elementName_cntDelayed - Number of current threads waiting, if lower than 1 it means we don't have enough threads to reach RPS
+  * elementName_cntSent - Number of samples sent since last second tick
+  * elementName_rps - Current RPS
 
-elementName will be the name of your Timer
+
+{{{elementName}}} will be the name of your Timer
 
 == Special Property Processing ==
 

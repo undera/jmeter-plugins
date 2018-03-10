@@ -97,7 +97,7 @@ public class VariableThroughputTimer
             try {
                 wait(delayMs);
             } catch (InterruptedException ex) {
-                log.error("Waiting thread was interrupted", ex);
+                log.debug("Waiting thread was interrupted", ex);
                 Thread.currentThread().interrupt();
             }
             cntDelayed--;

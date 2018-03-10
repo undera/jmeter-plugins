@@ -312,7 +312,7 @@ public class VariableThroughputTimer
             StandardJMeterEngine.stopEngine();
         } else if (stopTries > 3) {
             AbstractThreadGroup threadGroup = JMeterContextService.getContext().getThreadGroup();
-            log.info("Hard stopping threads of Thread Group : {}", threadGroup.getName());
+            log.info("Tries more than 3, hard stopping threads of Thread Group : {}", threadGroup.getName());
             threadGroup.tellThreadsToStop();
         } else {
             AbstractThreadGroup threadGroup = JMeterContextService.getContext().getThreadGroup();

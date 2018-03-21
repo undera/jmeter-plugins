@@ -46,6 +46,10 @@
       "0.19": {
         "changes": "<p>- fixed pmgr and plugin upgrade for Windows users</p>",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.19/jmeter-plugins-manager-0.19.jar"
+      },
+      "0.20": {
+        "changes": "<p>- fixed core plugins are not uninstalled for Windows users</p>",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.20/jmeter-plugins-manager-0.20.jar"
       }
     }
   }

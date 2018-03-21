@@ -393,8 +393,8 @@
   {
     "id": "jmeter.backendlistener.elasticsearch",
     "name": "ElasticSearch backend listener",
-    "description": "Apache JMeter plugin for sending sample results to an ElasticSearch engine. <ul><li>Simply add a \"Backend Listener\" and change the implementation</li><li>Change the listener's configuration</li><li>To use filters, simple seperate their name by a semicolon. (f1;f2;f3)</li></ul>",
-    "helpUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/issues",
+    "description": "Apache JMeter plugin for sending sample results to an ElasticSearch engine. <ul><li>Simply add a \"Backend Listener\" and change the implementation</li><li>Change the listener's configuration</li><li>To use filters, simply seperate their name by a semicolon. (f1;f2;f3)</li></ul>",
+    "helpUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener",
     "screenshotUrl": "https://image.ibb.co/bA1oYH/Screen_Shot_2018_02_23_at_2_37_46_PM.png",
     "vendor": "Delirius325",
     "markerClass": "io.github.delirius325.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
@@ -418,6 +418,10 @@
       "2.2.2": {
         "changes": "Fixed a bug that would not send any samplers and leaving filters empty",
         "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.2/jmeter.backendlistener.elasticsearch-2.2.2.jar"
+      },
+      "2.2.3": {
+        "changes": "Added 'es.test.mode' allowing the user to control what information is being sent to the ES engine. Added automatic creation of the index on the engine.",
+        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.3/jmeter.backendlistener.elasticsearch-2.2.3.jar"
       }
     }
   }

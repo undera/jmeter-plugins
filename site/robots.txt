@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /img/
+Disallow: /files/
+Disallow: /dat/
+Disallow: /lib/
+Disallow: /PWE/

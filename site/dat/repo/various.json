@@ -422,6 +422,10 @@
       "2.2.3": {
         "changes": "Added 'es.test.mode' allowing the user to control what information is being sent to the ES engine. Added automatic creation of the index on the engine.",
         "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.3/jmeter.backendlistener.elasticsearch-2.2.3.jar"
+      },
+      "2.2.4": {
+        "changes": "Fixed error with automatic creation of the ElasticSearch index",
+        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.4/jmeter.backendlistener.elasticsearch-2.2.4.jar"
       }
     }
   }

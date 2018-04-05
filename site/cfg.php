@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-$isDebug = $_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR'];
+$isDebug = $_SERVER['SERVER_PORT'] != 80;
 if (!$isDebug) {
     // our real website settings
     $level = \PWE\Core\PWELogger::WARNING;

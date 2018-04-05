@@ -16,6 +16,8 @@ class PluginsRepository extends PWEModule implements Outputable
         if ($_POST['stats'] && $_POST['stats'] != 'null') {
             PWELogger::warn("Status: %s", $_POST['stats']);
             throw new HTTP2xxException("", HTTP2xxException::ACCEPTED);
+        } else {
+            PWELogger::warn("Status: [%s]", $_REQUEST['installID']);
         }
         $node = $this->PWE->getNode();
         $configsDir = $node['!a']['configs'];

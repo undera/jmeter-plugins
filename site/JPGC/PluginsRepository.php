@@ -3,17 +3,24 @@
 namespace JPGC;
 
 
-class PluginsRepository extends \PWE\Modules\PWEModule implements \PWE\Modules\Outputable
+use PWE\Core\PWELogger;
+use PWE\Exceptions\HTTP2xxException;
+use PWE\Exceptions\HTTP5xxException;
+use PWE\Modules\Outputable;
+use PWE\Modules\PWEModule;
+
+class PluginsRepository extends PWEModule implements Outputable
 {
     public function process()
     {
         if ($_POST['stats'] && $_POST['stats'] != 'null') {
-            \PWE\Core\PWELogger::warn("Status: %s", $_POST['stats']);
+            PWELogger::warn("Status: %s", $_POST['stats']);
+            throw new HTTP2xxException("", HTTP2xxException::ACCEPTED);
         }
         $node = $this->PWE->getNode();
         $configsDir = $node['!a']['configs'];
         if (!$configsDir || !is_dir($configsDir)) {
-            throw new \PWE\Exceptions\HTTP5xxException("Configs dir don't exist: " . realpath($configsDir));
+            throw new HTTP5xxException("Configs dir don't exist: " . realpath($configsDir));
         }
 
         $plugins = [];
@@ -35,6 +42,6 @@ class PluginsRepository extends \PWE\Modules\PWEModule implements \PWE\Modules\O
         }
 
         $this->PWE->sendHTTPHeader("Content-Type: application/json");
-        throw new \PWE\Exceptions\HTTP2xxException(json_encode($plugins));
+        throw new HTTP2xxException(json_encode($plugins));
     }
 }

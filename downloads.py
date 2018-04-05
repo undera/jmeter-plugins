@@ -114,6 +114,10 @@ if __name__ == "__main__":
             logging.debug("Version: %s", version)
             if not version:
                 continue
+
+            if not plugin['versions'][version]['downloadUrl']:
+                continue
+
             dest_file = "%s-%s.zip" % (plugin['id'], version)
             if is_version_packed(dest_file):
                 logging.info("Skip: %s", plugin['id'])

@@ -62,7 +62,11 @@ public class ParameterizedSamplerTest {
     public void testSetUserDefinedVariables() {
         System.out.println("setUserDefinedVariables");
         Arguments vars = new Arguments();
+        vars.addArgument("var1", "val0");
         instance.setUserDefinedVariables(vars);
+        JMeterProperty property = instance.getUserDefinedVariablesAsProperty();
+        Arguments args = (Arguments) property.getObjectValue();
+        assertEquals("val0", args.getArgumentsAsMap().get("var1"));
     }
 
     @Test

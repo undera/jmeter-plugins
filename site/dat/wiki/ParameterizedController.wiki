@@ -1,4 +1,4 @@
-= Parameterized Controller & Sampler =
+= Parameterized Controller =
 
 <span class=''>[/?search=jpgc-prmctl <i class='fa fa-download'></i> Download]</span>
 

@@ -15,16 +15,16 @@ import java.awt.*;
 /**
  *
  */
-public class ParameterizedSamplerGui extends AbstractSamplerGui {
-    public static final String WIKIPAGE = "ParameterizedController";
+public class SetVariablesActionGui extends AbstractSamplerGui {
+    public static final String WIKIPAGE = "SetVariablesAction";
     private ArgumentsPanel argsPanel;
 
-    public ParameterizedSamplerGui() {
+    public SetVariablesActionGui() {
         init();
     }
 
     public TestElement createTestElement() {
-        ParameterizedSampler tc = new ParameterizedSampler();
+        SetVariablesAction tc = new SetVariablesAction();
         modifyTestElement(tc);
         tc.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
         return tc;
@@ -32,8 +32,8 @@ public class ParameterizedSamplerGui extends AbstractSamplerGui {
 
     public void modifyTestElement(TestElement te) {
         super.configureTestElement(te);
-        if (te instanceof ParameterizedSampler) {
-            ParameterizedSampler controller = (ParameterizedSampler) te;
+        if (te instanceof SetVariablesAction) {
+            SetVariablesAction controller = (SetVariablesAction) te;
             controller.setUserDefinedVariables((Arguments) argsPanel.createTestElement());
         }
     }
@@ -44,7 +44,7 @@ public class ParameterizedSamplerGui extends AbstractSamplerGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Parameterized Sampler");
+        return JMeterPluginsUtils.prefixLabel("Set Variables Action");
     }
 
     private void init() {
@@ -69,7 +69,7 @@ public class ParameterizedSamplerGui extends AbstractSamplerGui {
     @Override
     public void configure(TestElement te) {
         super.configure(te);
-        ParameterizedSampler controller = (ParameterizedSampler) te;
+        SetVariablesAction controller = (SetVariablesAction) te;
         final JMeterProperty udv = controller.getUserDefinedVariablesAsProperty();
         if (udv != null && !(udv instanceof NullProperty)) {
             argsPanel.configure((Arguments) udv.getObjectValue());

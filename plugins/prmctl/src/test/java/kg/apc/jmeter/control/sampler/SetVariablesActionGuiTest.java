@@ -12,8 +12,8 @@ import static org.junit.Assert.*;
 /**
  *
  */
-public class ParameterizedSamplerGuiTest {
-    private ParameterizedSamplerGui instance;
+public class SetVariablesActionGuiTest {
+    private SetVariablesActionGui instance;
 
     @BeforeClass
     public static void setUpClass()
@@ -23,22 +23,15 @@ public class ParameterizedSamplerGuiTest {
 
     @Before
     public void setUp() {
-        instance = new ParameterizedSamplerGui();
+        instance = new SetVariablesActionGui();
     }
 
     @Test
     public void testCreateTestElement() {
         System.out.println("createTestElement");
-        TestElement expResult = new ParameterizedSampler();
+        TestElement expResult = new SetVariablesAction();
         TestElement result = instance.createTestElement();
         assertEquals(expResult.getClass(), result.getClass());
-    }
-
-    @Test
-    public void testModifyTestElement() {
-        System.out.println("modifyTestElement");
-        TestElement te = new ParameterizedSampler();
-        instance.modifyTestElement(te);
     }
 
     @Test
@@ -57,19 +50,25 @@ public class ParameterizedSamplerGuiTest {
     }
 
     @Test
-    public void testClearGui() {
-        System.out.println("clearGui");
-        instance.clearGui();
-    }
+    public void testGui() throws Exception {
+        SetVariablesActionGui gui = new SetVariablesActionGui();
 
-    @Test
-    public void testConfigure() {
-        System.out.println("configure");
-        ParameterizedSampler te = new ParameterizedSampler();
-        te.setUserDefinedVariables(new Arguments());
-        te.setName("test");
-        te.setComment("test");
+        SetVariablesAction element1 = (SetVariablesAction) gui.createTestElement();
+        SetVariablesAction element2 = (SetVariablesAction) gui.createTestElement();
 
-        instance.configure(te);
+        Arguments args = new Arguments();
+        args.addArgument("var1", "val0");
+        element1.setUserDefinedVariables(args);
+
+        gui.configure(element1);
+        gui.modifyTestElement(element2);
+
+        assertEquals(element1.getUserDefinedVariablesAsProperty().getObjectValue().toString(),
+                element2.getUserDefinedVariablesAsProperty().getObjectValue().toString());
+
+        gui.clearGui();
+        gui.modifyTestElement(element2);
+
+        assertEquals("", element2.getUserDefinedVariablesAsProperty().getObjectValue().toString());
     }
 }

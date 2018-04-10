@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  *
  */
-public class ParameterizedSampler extends AbstractSampler {
+public class SetVariablesAction extends AbstractSampler {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     private void processVariables() {

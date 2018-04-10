@@ -15,8 +15,8 @@ import static org.junit.Assert.*;
 /**
  *
  */
-public class ParameterizedSamplerTest {
-    private ParameterizedSampler instance;
+public class SetVariablesActionTest {
+    private SetVariablesAction instance;
 
     @Before
     public void setUp() {
@@ -25,7 +25,7 @@ public class ParameterizedSamplerTest {
         JMeterContextService.getContext().setVariables(vars);
         JMeterContextService.getContext().setSamplingStarted(true);
 
-        instance = new ParameterizedSampler();
+        instance = new SetVariablesAction();
         instance.setRunningVersion(true);
     }
 

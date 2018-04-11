@@ -27,7 +27,9 @@ public class SetVariablesAction extends AbstractSampler {
         Map.Entry<String, String> var;
         while (it.hasNext()) {
             var = it.next();
-            log.debug("Setting " + var.getKey() + "=" + var.getValue());
+            if (log.isDebugEnabled()) {
+                log.debug("Setting " + var.getKey() + "=" + var.getValue());
+            }
             vars.put(var.getKey(), var.getValue());
         }
     }

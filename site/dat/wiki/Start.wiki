@@ -65,7 +65,7 @@
   * [HBaseScanSampler HBase Scan Sampler]
   * [HBaseRowkeySampler HBase Rowkey Sampler]
   * [WebDriverSampler WebDriver Sampler] for full browser tests, use Selenium
-  * [SetVariablesAction Set Varibles Action]
+  * [SetVariablesAction Set Variables Action]
 
 == Config Items ==
   * [HBaseConnection HBase Connection Config]

@@ -144,7 +144,8 @@ public class VariableThroughputTimer
         }
 
         if (cntDelayed < 1) {
-            log.warn("No free threads available in current Thread Group, made {} samples/s for expected rps {} samples/s, increase your number of threads", cntSent, rps);
+            log.warn("No free threads available in current Thread Group {}, made {} samples/s for expected rps {} samples/s, increase your number of threads", 
+                    JMeterContextService.getContext().getThreadGroup().getName(), cntSent, rps);
         }
 
         String elementName = getName();
@@ -160,7 +161,7 @@ public class VariableThroughputTimer
     /**
      * 
      * @param millisSinceLastSecond Millis since last second tick
-     * @return delay to apply at current millis, < 0 if no delay
+     * @return delay in Millis to apply at current millis, < 0 if no delay
      */
     private int getDelay(long millisSinceLastSecond) {
         if(log.isDebugEnabled()) {
@@ -168,6 +169,7 @@ public class VariableThroughputTimer
         }
         if (millisSinceLastSecond < (cntSent * msecPerReq)) {
             // TODO : Explain this for other maintainers
+            // cntDelayed + 1 : Current threads waiting + this thread
             return (int) (1 + 1000.0 * (cntDelayed + 1) / rps);
         }
         // we're under rate

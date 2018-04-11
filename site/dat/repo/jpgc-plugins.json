@@ -456,15 +456,17 @@
   },
   {
     "id": "jpgc-prmctl",
-    "name": "Parameterized Controller",
-    "description": "A controller to help reuse modules with variables in the scope",
+    "name": "Parameterized Controller & Set Variables Action",
+    "description": "A controller and sampler to help reuse modules with variables in the scope",
     "screenshotUrl": "https://jmeter-plugins.org/img/wiki/parameterizedcontroller.png",
     "helpUrl": "https://jmeter-plugins.org/wiki/ParameterizedController/",
     "vendor": "JMeter-Plugins.org",
     "markerClass": "kg.apc.jmeter.control.ParameterizedController",
     "componentClasses": [
       "kg.apc.jmeter.control.ParameterizedController",
-      "kg.apc.jmeter.control.ParameterizedControllerGui"
+      "kg.apc.jmeter.control.ParameterizedControllerGui",
+      "kg.apc.jmeter.control.sampler.SetVariablesAction",
+      "kg.apc.jmeter.control.sampler.SetVariablesActionGui"
     ],
     "versions": {
       "0.2": {
@@ -475,6 +477,13 @@
       },
       "0.3": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-prmctl/0.3/jmeter-plugins-prmctl-0.3.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
+      },
+      "0.4": {
+        "changes": "Added Set Variables Action",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-prmctl/0.4/jmeter-plugins-prmctl-0.4.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }

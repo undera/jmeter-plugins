@@ -14,9 +14,6 @@ import org.apache.log.Logger;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- *
- */
 public class SetVariablesAction extends AbstractSampler {
     private static final Logger log = LoggingManager.getLoggerForClass();
 

@@ -12,9 +12,6 @@ import org.apache.jmeter.util.JMeterUtils;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- *
- */
 public class SetVariablesActionGui extends AbstractSamplerGui {
     public static final String WIKIPAGE = "SetVariablesAction";
     private ArgumentsPanel argsPanel;

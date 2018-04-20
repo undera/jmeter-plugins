@@ -86,11 +86,11 @@ public class VariableThroughputTimer
 
             if (stopping) {
                 delayMs = delayMs > 0 ? 10 : 0;
-                notifyAll();
+                notify();
             }
 
             if (delayMs < 1) {
-                notifyAll();
+                notify();
                 break;
             }
             cntDelayed++;

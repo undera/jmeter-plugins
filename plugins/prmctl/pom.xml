@@ -7,7 +7,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-prmctl</artifactId>
-    <version>0.3</version>
+    <version>0.4</version>
 
     <name>Parameterized controller</name>
     <description>Parameterized controller</description>

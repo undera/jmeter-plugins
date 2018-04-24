@@ -246,6 +246,63 @@ By the number of known users:
         };
     }
 
+    function prepare_versions_csv(csv) {
+        var csvMap = csvToArrayOfArray(csv);
+        var lastLog = csvMap[csvMap.length - 2];                 // TODO: last line in file is empty
+        var headers = csvMap[0];
+
+
+        // Looking for the most actual versions of JMeter
+        var newHeaders = ["date"];
+        for (i = 1; i < lastLog.length; i++) {                   // zero index = date
+            if (parseFloat(lastLog[i]) >= 1.0) {                 // LAST PERCENT
+                newHeaders.push(headers[i])
+            }
+        }
+        newHeaders.push("Other");
+
+        var newCsv = [];
+        newCsv.push(newHeaders);
+        for (i = 1; i < csvMap.length - 1; i++) {                 // TODO: last line in file is empty
+            var newValues = [];
+            newValues.push(csvMap[i][0]);                         // push date
+            var otherVal = 0.0;
+            for (j = 1; j < headers.length; j++) {
+                if (newHeaders.includes(headers[j])) {
+                    newValues.push(csvMap[i][j]);
+                } else {
+                    if (!isEmpty(csvMap[i][j])) {
+                        otherVal += parseFloat(csvMap[i][j]);
+                    }
+                }
+            }
+            newValues.push(otherVal);
+            newCsv.push(newValues);
+        }
+
+        return arrayOfArrayToCsv(newCsv);
+    };
+
+    function isEmpty(str) {
+        return (str.length === 0 || !str.trim());
+    };
+
+    function csvToArrayOfArray(csv) {
+        rows = csv.split("\n");
+
+        return rows.map(function (row) {
+    	    return row.split(",");
+        });
+    };
+
+    function arrayOfArrayToCsv(val) {
+        var csv = "";
+        for (i = 0; i < val.length; i++) {
+            csv += val[i].join(",");
+            csv += "\n";
+        }
+        return csv;
+    };
 
     $(function () {
         $.getJSON('/dat/stats/platforms.json', function (data) {
@@ -272,7 +329,7 @@ By the number of known users:
         });
 
         $.get('/dat/stats/jmeter_versions_history.csv', function (csv) {
-            $('#jmetervers').highcharts(jmeter_graph(csv));
+            $('#jmetervers').highcharts(jmeter_graph(prepare_versions_csv(csv)));
         });
 
         $.get('/repo/').success(function (repo_json) {

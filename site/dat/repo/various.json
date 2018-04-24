@@ -426,6 +426,10 @@
       "2.2.4": {
         "changes": "Fixed error with automatic creation of the ElasticSearch index",
         "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.4/jmeter.backendlistener.elasticsearch-2.2.4.jar"
+      },
+      "2.2.5": {
+        "changes": "Added request body in info/debug mode -- Forced lowercase for index creation",
+        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.5/jmeter.backendlistener.elasticsearch-2.2.5.jar"
       }
     }
   }

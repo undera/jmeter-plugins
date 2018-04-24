@@ -22,4 +22,4 @@ listener to test plan to visualize results. Now your test plan should look like 
 Run the test. Go to the View Results Tree and investigate Response data tabs for both samples.
 You'll see that step and var1 had different values after each _Set Variables Action_.
 
-[/img/examples/setVariablesAction.jmx Download Example Test Plan]
+[/img/examples/SetVariablesAction.jmx Download Example Test Plan]

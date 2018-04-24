@@ -195,6 +195,7 @@ By the number of known users:
             },
             yAxis: [
                 {
+                    tickAmount: 5,
                     opposite: true,
                     title: {
                         text: 'known installations'
@@ -207,34 +208,40 @@ By the number of known users:
                     }]
                 },
                 {
-                    title: {
-                        text: null
-                    },
                     gridLineWidth: 0,
+                    title: {
+                        text: '% of users',
+                    },
                     labels: {
-                        enabled: false
-                    }
+                        format: '{value} %',
+                    },
+                    endOnTick:false
                 }
             ],
             legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
+                borderWidth: 0,
+                align: 'left',
+                verticalAlign: 'top',
             },
             series: [
                 {
                     name: id,
                     data: hist_series(plugin_data),
-                    yAxis: 0
+                    yAxis: 0,
+                    zIndex: 1,
+                    marker: {
+                        radius: 0
+                    }
                 },
                 {
                     name: "% of all users",
                     data: hist_series(plugin_data, pmgr_data),
                     lineWidth: 1,
-                    dashStyle: 'dot',
                     //marker: 'none',
-                    yAxis: 1
+                    yAxis: 1,
+                    marker: {
+                        radius: 0
+                    }
                 }
             ]
         };
@@ -293,6 +300,7 @@ By the number of known users:
                         return this.value + ' %';
                     }
                 },
+                tickInterval: 5,
                 endOnTick: false,
                 plotLines: [{
                     value: 0,

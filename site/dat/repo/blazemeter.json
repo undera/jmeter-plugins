@@ -195,6 +195,16 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "0.6": {
+        "changes" : "Fixed Concurrency Modification exception for Cookie Manager",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.6/jmeter-parallel-0.6.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

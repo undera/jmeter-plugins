@@ -26,11 +26,14 @@ class PluginsRepository extends PWEModule implements Outputable
         }
 
         $plugins = [];
+        $oldest = 0;
         foreach (scandir($configsDir) as $fname) {
             if ($fname[0] == '.') {
                 continue;
             }
-            $set = json_decode(file_get_contents($configsDir . '/' . $fname), true);
+            $full_name = $configsDir . '/' . $fname;
+            $oldest = max($oldest, filemtime($full_name));
+            $set = json_decode(file_get_contents($full_name), true);
             $plugins = array_merge($plugins, $set);
         }
 
@@ -42,6 +45,10 @@ class PluginsRepository extends PWEModule implements Outputable
                 }
             }
         }
+
+        $this->PWE->sendHTTPHeader('Last-Modified: ' . gmdate('D, d M Y H:i:s', $oldest) . ' GMT');
+        $max_age = 24 * 3600;
+        $this->PWE->sendHTTPHeader("Cache-Control: public, max-age=$max_age");
 
         $this->PWE->sendHTTPHeader("Content-Type: application/json");
         throw new HTTP2xxException(json_encode($plugins));

@@ -185,6 +185,26 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "0.5": {
+        "changes" : "Fixed Concurrency Modification exception for Config elements",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.5/jmeter-parallel-0.5.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
+      },
+      "0.7": {
+        "changes" : "Fixed unnecessary TE clone",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.7/jmeter-parallel-0.7.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

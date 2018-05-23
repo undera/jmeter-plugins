@@ -72,9 +72,9 @@
           "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
         }
       },
-      "1.0": {
+      "1.0.1": {
         "changes": "<p>- Added cache plugins repo</p></p>- Optimize pmgr requests</p><p>- Fixed crash if pmgr put in lib folder</p><p>- Fixed decode PATH for JMeterHome</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.0/jmeter-plugins-manager-1.0.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.0.1/jmeter-plugins-manager-1.0.1.jar",
         "libs": {
           "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
         }

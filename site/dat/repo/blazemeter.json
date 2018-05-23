@@ -487,16 +487,14 @@
           "jmeter-http"
         ],
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar",
-          "jetty-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-client/9.4.9.v20180320/jetty-client-9.4.9.v20180320.jar",
-          "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar",
-          "jetty-http>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.4.9.v20180320/jetty-http-9.4.9.v20180320.jar",
-          "jetty-io>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.9.v20180320/jetty-io-9.4.9.v20180320.jar",
-          "jetty-alpn-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-client/9.4.9.v20180320/jetty-alpn-client-9.4.9.v20180320.jar",
           "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
           "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
           "http2-hpack>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-hpack/9.4.9.v20180320/http2-hpack-9.4.9.v20180320.jar",
-          "jetty-osgi-alpn>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/osgi/jetty-osgi-alpn/9.4.9.v20180320/jetty-osgi-alpn-9.4.9.v20180320.jar"
+          "jetty-alpn-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-client/9.4.9.v20180320/jetty-alpn-client-9.4.9.v20180320.jar",
+          "jetty-alpn-openjdk8-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-openjdk8-client/9.4.9.v20180320/jetty-alpn-openjdk8-client-9.4.9.v20180320.jar",
+          "jetty-http>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.4.9.v20180320/jetty-http-9.4.9.v20180320.jar",
+          "jetty-io>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.9.v20180320/jetty-io-9.4.9.v20180320.jar",
+          "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
         }
       }
     }

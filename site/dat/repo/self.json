@@ -78,7 +78,15 @@
         "libs": {
           "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
         }
+      },
+      "1.1": {
+        "changes": "<p>- Drop cache if we know it is outdated</p></p>- Fix bug with cmdrunner lib install</p>",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.1/jmeter-plugins-manager-1.1.jar",
+        "libs": {
+          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
+        }
       }
+
     }
   }
 ]

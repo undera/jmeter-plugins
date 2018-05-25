@@ -68,7 +68,8 @@ public class RedisDataSet extends ConfigTestElement
     
     public enum GetMode {
         RANDOM_REMOVE((byte)0),
-        RANDOM_KEEP((byte)1);
+        RANDOM_KEEP((byte)1),
+        RANDOM_POP((byte)2);
         private byte value;
         private GetMode(byte value) {
             this.value = value;
@@ -124,8 +125,10 @@ public class RedisDataSet extends ConfigTestElement
         try {
             connection = pool.getResource();
             String line = null;
-            if(getMode.equals(GetMode.RANDOM_REMOVE)) {
-                line = connection.lpop(redisKey);                
+            if (getMode.equals(GetMode.RANDOM_REMOVE)) {
+                line = connection.lpop(redisKey);
+            } else if (getMode.equals(GetMode.RANDOM_POP)) {
+                line = connection.spop(redisKey);
             } else {
                 line = connection.srandmember(redisKey);
             }
@@ -143,9 +146,10 @@ public class RedisDataSet extends ConfigTestElement
             for (int a = 0; a < vars.length && a < values.length; a++) {
                 threadVars.put(vars[a], values[a]);
             }
-            
         } finally {
-            //pool.returnResource(connection);
+            if (connection != null) {
+                this.pool.returnResource(connection);
+            }
         }
     }
 

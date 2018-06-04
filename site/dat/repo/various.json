@@ -387,6 +387,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2": {
+        "changes": "Improved ping/pong filtering and added option to read (binary) payload data from file",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2/jmeter-websocket-samplers-1.2.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

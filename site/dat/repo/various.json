@@ -440,7 +440,11 @@
       },
       "2.3.0": {
         "changes": "Added a new detail mode : 'error' - only send the failing samplers to ElasticSearch",
-        "downloadUrl": "https://oss.sonatype.org/service/local/repositories/releases/content/io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.0/jmeter.backendlistener.elasticsearch-2.3.0.jar"
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.0/jmeter.backendlistener.elasticsearch-2.3.0.jar"
+      },
+      "2.3.1": {
+        "changes": "Fixed a bug where filters wouldn't work in error mode",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.1/jmeter.backendlistener.elasticsearch-2.3.1.jar"
       }
     }
   }

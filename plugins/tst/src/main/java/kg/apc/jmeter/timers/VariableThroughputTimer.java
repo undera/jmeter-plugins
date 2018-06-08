@@ -2,8 +2,7 @@
 // TODO: create a thread which will wake up at least one sampler to provide rps
 package kg.apc.jmeter.timers;
 
-import java.util.List;
-
+import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.jmeter.engine.StandardJMeterEngine;
@@ -21,7 +20,7 @@ import org.apache.jmeter.timers.Timer;
 import org.apache.jmeter.util.JMeterUtils;
 import org.slf4j.LoggerFactory;
 
-import kg.apc.jmeter.JMeterPluginsUtils;
+import java.util.List;
 
 public class VariableThroughputTimer
         extends AbstractTestElement
@@ -42,7 +41,7 @@ public class VariableThroughputTimer
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(VariableThroughputTimer.class);
     /* put this in fields because we don't want create variables in tight loops */
     /**
-     * Current threads waiting, if < 1 it means we don't have enough threads to reach RPS 
+     * Current threads waiting, if &lt; 1 it means we don't have enough threads to reach RPS
      */
     private int cntDelayed;
     /**
@@ -50,7 +49,7 @@ public class VariableThroughputTimer
      */
     private double time = 0;
     /**
-     *  How many requests per millis
+     * How many requests per millis
      */
     private double msecPerReq;
     /**
@@ -74,6 +73,7 @@ public class VariableThroughputTimer
 
     /**
      * Internally handles that delay for caller thread
+     *
      * @return 0
      */
     public synchronized long delay() {
@@ -109,10 +109,11 @@ public class VariableThroughputTimer
     /**
      * If we have switched to next second:
      * <li>
-     * <ul>Updates time</ul> 
+     * <ul>Updates time</ul>
      * <ul>Updates startSec</ul>
      * <ul>Resets cntSent</ul>
      * </li>
+     *
      * @param nowInMsRoundedAtSec Now in millis rounded as second
      */
     private synchronized void checkNextSecond(double nowInMsRoundedAtSec) {
@@ -143,8 +144,8 @@ public class VariableThroughputTimer
                     ((nowInMsRoundedAtSec - startSec) / 1000), cntDelayed, cntSent, rps);
         }
 
-        if (cntDelayed < 1) {
-            log.warn("No free threads available in current Thread Group {}, made {} samples/s for expected rps {} samples/s, increase your number of threads", 
+        if (cntDelayed < 1 && cntSent < rps) {
+            log.warn("No free threads available in current Thread Group {}, made {} samples/s for expected rps {} samples/s, increase your number of threads",
                     JMeterContextService.getContext().getThreadGroup().getName(), cntSent, rps);
         }
 
@@ -159,13 +160,12 @@ public class VariableThroughputTimer
     }
 
     /**
-     * 
      * @param millisSinceLastSecond Millis since last second tick
      * @return delay in Millis to apply at current millis, < 0 if no delay
      */
     private int getDelay(long millisSinceLastSecond) {
-        if(log.isDebugEnabled()) {
-            log.debug("Calculating {} {} {}",millisSinceLastSecond, cntSent * msecPerReq, cntSent);
+        if (log.isDebugEnabled()) {
+            log.debug("Calculating {} {} {}", millisSinceLastSecond, cntSent * msecPerReq, cntSent);
         }
         if (millisSinceLastSecond < (cntSent * msecPerReq)) {
             // TODO : Explain this for other maintainers
@@ -188,7 +188,7 @@ public class VariableThroughputTimer
     }
 
     /**
-     * @param durationSinceStartOfTestSec Elapsed time since start of test in seconds
+     * @param elapsedSinceStartOfTestSec Elapsed time since start of test in seconds
      * @return double RPS at that second or -1 if we're out of schedule
      */
     public Pair<Double, Long> getRPSForSecond(final double elapsedSinceStartOfTestSec) {
@@ -207,7 +207,7 @@ public class VariableThroughputTimer
             List<Object> curProp = (List<Object>) scheduleIT.next().getObjectValue();
             int duration = getIntValue(curProp, DURATION_FIELD_NO);
             totalDuration += duration;
-            if(!resultComputed) {
+            if (!resultComputed) {
                 double fromRps = getDoubleValue(curProp, FROM_FIELD_NO);
                 double toRps = getDoubleValue(curProp, TO_FIELD_NO);
                 if (newSec - duration <= 0) {
@@ -285,11 +285,10 @@ public class VariableThroughputTimer
                 row[FROM_FIELD_NO] = n;
                 row[TO_FIELD_NO] = n;
                 row[DURATION_FIELD_NO] = JMeterPluginsUtils.getSecondsForShortString(parts[4]);
-                log.debug("Adding row from {} to {} with duration {}s", row[FROM_FIELD_NO], 
+                log.debug("Adding row from {} to {} with duration {}s", row[FROM_FIELD_NO],
                         row[TO_FIELD_NO], row[DURATION_FIELD_NO]);
                 model.addRow(row);
             }
-
         } else {
             throw new IllegalArgumentException("Unknown load type: " + parts[0]);
         }

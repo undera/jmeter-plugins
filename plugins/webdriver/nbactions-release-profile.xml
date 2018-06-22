@@ -10,7 +10,7 @@
                 <goal>install</goal>
             </goals>
             <properties>
-                <skipTests>false</skipTests>
+                <skipTests>true</skipTests>
             </properties>
             <activatedProfiles>
                 <activatedProfile>release-profile</activatedProfile>

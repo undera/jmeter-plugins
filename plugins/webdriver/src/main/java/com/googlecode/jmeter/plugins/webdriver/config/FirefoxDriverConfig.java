@@ -3,6 +3,7 @@ package com.googlecode.jmeter.plugins.webdriver.config;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.gui.util.PowerTableModel;

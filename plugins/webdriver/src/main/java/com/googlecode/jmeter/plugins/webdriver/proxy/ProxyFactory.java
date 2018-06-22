@@ -15,7 +15,7 @@ public class ProxyFactory {
     private ProxyFactory() {}
 
     /**
-     * This returns a {@see Proxy} with HTTP, HTTPS and FTP hosts and ports configured as specified.
+     * This returns a Proxy with HTTP, HTTPS and FTP hosts and ports configured as specified.
      *
      *
      * @param httpProxy is the http proxy host and port
@@ -39,7 +39,7 @@ public class ProxyFactory {
     /**
      * This will not use a proxy and expects a direct connection to the internet.
      *
-     * @returns a proxy object that does not use proxies.
+     * @return a proxy object that does not use proxies.
      */
     public Proxy getDirectProxy() {
         return new Proxy()
@@ -49,7 +49,7 @@ public class ProxyFactory {
     /**
      * This is a proxy which will have its settings automatically configured.
      *
-     * @returns a proxy object which will try to automatically detect the proxy settings.
+     * @return a proxy object which will try to automatically detect the proxy settings.
      */
     public Proxy getAutodetectProxy() {
         return new Proxy()
@@ -62,7 +62,7 @@ public class ProxyFactory {
      *
      * @param pacUrl is the url to the Proxy PAC file
      *
-     * @returns a proxy object with its proxies configured automatically using a PAC file.
+     * @return a proxy object with its proxies configured automatically using a PAC file.
      */
     public Proxy getConfigUrlProxy(String pacUrl) {
         return new Proxy()

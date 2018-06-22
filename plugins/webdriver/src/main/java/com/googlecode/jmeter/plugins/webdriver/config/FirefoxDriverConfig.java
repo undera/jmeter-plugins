@@ -63,11 +63,7 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
         for (int i = 0; i < rows.size(); i++) {
             ArrayList row = (ArrayList) rows.get(i).getObjectValue();
             String filename = ((JMeterProperty) row.get(0)).getStringValue();
-            try {
-                profile.addExtension(new File(filename));
-            } catch (IOException e) {
-                log.error("Failed to add extension " + filename, e);
-            }
+            profile.addExtension(new File(filename));
         }
     }
 
@@ -97,7 +93,7 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
 
     @Override
     protected FirefoxDriver createBrowser() {
-        return new FirefoxDriver(new FirefoxBinary(), createProfile(), createCapabilities());
+        return new FirefoxDriver();
     }
 
     public void setUserAgentOverride(String userAgent) {

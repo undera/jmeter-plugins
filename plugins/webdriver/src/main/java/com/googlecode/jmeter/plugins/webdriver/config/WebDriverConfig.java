@@ -15,7 +15,7 @@ import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.SessionNotFoundException;
+import org.openqa.selenium.SessionNotCreatedException;
 
 public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestElement implements LoopIterationListener, ThreadListener {
 
@@ -267,7 +267,7 @@ public abstract class WebDriverConfig<T extends WebDriver> extends ConfigTestEle
         if (browser != null) {
             try {
                 browser.quit();
-            } catch (SessionNotFoundException e) {
+            } catch (SessionNotCreatedException e) {
                 LOGGER.warn("Attempting to quit browser instance that has already exited.");
             }
         }

@@ -22,7 +22,11 @@
 
     <url link="wiki" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" start_page="Start" ico="fa-book"
          files_base="files" download_link="../../downloads/file"
-         accept="1" menu="1" title="Documentation"/>
+         accept="1" menu="1" title="Documentation">
+        <url link="WeightedSwitchController" class="PWE\Modules\RedirectAccepted\RedirectAccepted" no_final_slash="1"
+             base="https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/wsc/WeightedSwitchController.md"/>
+
+    </url>
 
     <url link="stats" title="Usage Statistics" menu="1" ico="fa-bar-chart"
          class="PWE\Modules\HTMLPage\HTMLPage" src="stats.html"/>

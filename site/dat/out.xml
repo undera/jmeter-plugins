@@ -26,6 +26,21 @@
         <url link="WeightedSwitchController" class="PWE\Modules\RedirectAccepted\RedirectAccepted" no_final_slash="1"
              base="https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/wsc/WeightedSwitchController.md"/>
 
+        <url link="RotatingListener" class="PWE\Modules\RedirectAccepted\RedirectAccepted" no_final_slash="1"
+             base="https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/rotating-listener/RotatingListener.md"/>
+
+        <url link="XMPPSampler" class="PWE\Modules\RedirectAccepted\RedirectAccepted" no_final_slash="1"
+             base="https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/xmpp/XMPPSampler.md"/>
+
+        <url link="XMPPConnection" class="PWE\Modules\RedirectAccepted\RedirectAccepted" no_final_slash="1"
+             base="https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/xmpp/XMPPConnection.md"/>
+
+        <url link="DirectoryListing" class="PWE\Modules\RedirectAccepted\RedirectAccepted" no_final_slash="1"
+             base="https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/directory-listing/DirectoryListing.md"/>
+
+        <url link="LoadosophiaUploader" class="PWE\Modules\RedirectAccepted\RedirectAccepted" no_final_slash="1"
+             base="https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/sense-uploader/LoadosophiaUploader.md"/>
+
     </url>
 
     <url link="stats" title="Usage Statistics" menu="1" ico="fa-bar-chart"

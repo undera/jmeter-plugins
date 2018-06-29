@@ -85,6 +85,13 @@
         "libs": {
           "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
         }
+      },
+      "1.2": {
+        "changes": "<p>- Fixed parse test plan(xml version 1.1)</p></p>- Fix bug with install/update libs</p>",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.2/jmeter-plugins-manager-1.2.jar",
+        "libs": {
+          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
+        }
       }
 
     }

@@ -445,6 +445,10 @@
       "2.3.1": {
         "changes": "Fixed a bug where filters wouldn't work in error mode",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.1/jmeter.backendlistener.elasticsearch-2.3.1.jar"
+      },
+      "2.3.2": {
+        "changes":"Fixed a bug where ElapsedTime wouldn't be considered as a date by ES. Added the possibility to send custom fields to ElasticSearch.",
+        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.2/jmeter.backendlistener.elasticsearch-2.3.2.jar"
       }
     }
   }

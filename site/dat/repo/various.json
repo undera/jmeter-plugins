@@ -406,34 +406,6 @@
     "vendor": "Delirius325",
     "markerClass": "io.github.delirius325.jmeter.backendlistener.elasticsearch.ElasticsearchBackend",
     "versions": {
-      "2.1.0": {
-        "changes": "Added metrics, fixed bugs, added logging, and added timeout to avoid hanging requests.",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.1.0/jmeter.backendlistener.elasticsearch-2.1.0.jar"
-      },
-      "2.1.1": {
-        "changes": "Reduction of the JAR.",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.1.1/jmeter.backendlistener.elasticsearch-2.1.1.jar"
-      },
-      "2.2.0": {
-        "changes": "Makes use of the ElasticSearch low-level REST client. The plugin now works with any version of ElasticSearch.",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.2.0/jmeter.backendlistener.elasticsearch-2.2.0.jar"
-      },
-      "2.2.1": {
-        "changes": "Added filters",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.2.1/jmeter.backendlistener.elasticsearch-2.2.1.jar"
-      },
-      "2.2.2": {
-        "changes": "Fixed a bug that would not send any samplers and leaving filters empty",
-        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.2/jmeter.backendlistener.elasticsearch-2.2.2.jar"
-      },
-      "2.2.3": {
-        "changes": "Added 'es.test.mode' allowing the user to control what information is being sent to the ES engine. Added automatic creation of the index on the engine.",
-        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.3/jmeter.backendlistener.elasticsearch-2.2.3.jar"
-      },
-      "2.2.4": {
-        "changes": "Fixed error with automatic creation of the ElasticSearch index",
-        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.4/jmeter.backendlistener.elasticsearch-2.2.4.jar"
-      },
       "2.2.5": {
         "changes": "Added request body in info/debug mode -- Forced lowercase for index creation",
         "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.5/jmeter.backendlistener.elasticsearch-2.2.5.jar"
@@ -449,6 +421,10 @@
       "2.3.2": {
         "changes":"Fixed a bug where ElapsedTime wouldn't be considered as a date by ES. Added the possibility to send custom fields to ElasticSearch.",
         "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.2/jmeter.backendlistener.elasticsearch-2.3.2.jar"
+      },
+      "2.3.3": {
+        "changes":"Added injector hostname in the base ElasticSearch index",
+        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.3/jmeter.backendlistener.elasticsearch-2.3.3.jar"
       }
     }
   }

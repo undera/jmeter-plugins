@@ -428,7 +428,7 @@
       },
       "2.4.0": {
         "changes":"Lots of refactoring, minor bug fixes, no major new feature",
-        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.0/jmeter.backendlistener.elasticsearch-2.3.3.jar"
+        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.0/jmeter.backendlistener.elasticsearch-2.4.0.jar"
       }
     }
   }

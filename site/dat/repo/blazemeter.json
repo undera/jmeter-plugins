@@ -503,6 +503,23 @@
           "jetty-io>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.9.v20180320/jetty-io-9.4.9.v20180320.jar",
           "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
         }
+      },
+      "1.3": {
+        "changes": "Added support for standards JMeter listeners and partial support for push promise",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.3/jmeter-bzm-http2-1.3.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
+          "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
+          "http2-hpack>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-hpack/9.4.9.v20180320/http2-hpack-9.4.9.v20180320.jar",
+          "jetty-alpn-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-client/9.4.9.v20180320/jetty-alpn-client-9.4.9.v20180320.jar",
+          "jetty-alpn-openjdk8-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-openjdk8-client/9.4.9.v20180320/jetty-alpn-openjdk8-client-9.4.9.v20180320.jar",
+          "jetty-http>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.4.9.v20180320/jetty-http-9.4.9.v20180320.jar",
+          "jetty-io>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.9.v20180320/jetty-io-9.4.9.v20180320.jar",
+          "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
+        }
       }
     }
   }

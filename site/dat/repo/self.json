@@ -9,69 +9,6 @@
     "markerClass": "org.jmeterplugins.repository.PluginManager",
     "canUninstall": false,
     "versions": {
-      "0.12": {
-        "changes": "<p>- Added configurable plugin sources;</p><p>- Added \"help\", \"available\" and \"upgrades\" commands to cmd;</p><p>- Added displaying information about changes in version;</p><p>- Added caching images;</p><p>- Added tooltips in versions, with version changes;</p><p>- Fixed Standard Set tries to uninstall;</p><p>- Fixed error changing the color to red.</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.12/jmeter-plugins-manager-0.12.jar",
-        "libs": {
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
-        }
-      },
-      "0.13": {
-        "changes": "<p>- Fixed show empty plugins list;</p><p>- Retry JAR download after failed downloads;</p><p>- Inform on potential JAR conflicts;</p><p>- Re-enable manager after failed JAR downloads;</p><p>- Make stats UUID less sensitive + detect CI, clouds and OS;</p><p>- Version management for libs;</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.13/jmeter-plugins-manager-0.13.jar",
-        "libs": {
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
-        }
-      },
-      "0.14": {
-        "changes": "<p>- Added Plugins Manager button on toolbar</p><p>- Suggest to install missing plugins</p><p>- Load last test plan file after restarting</p><p>- Fixed update libraries</p><p>- Fixed plugins list loading</p><p>- Added \"install-all-except\" command to cmd;</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.14/jmeter-plugins-manager-0.14.jar",
-        "libs": {
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
-        }
-      },
-      "0.15": {
-        "changes": "Fixed bug of 0.14 with NPE on initial install",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.15/jmeter-plugins-manager-0.15.jar",
-        "libs": {
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
-        }
-      },
-      "0.16": {
-        "changes": "<p>- Added filter field in Plugins Manager</p><p>- Fixed PluginManagerCMD logging</p><p>- Added \"install-for-jmx\" command to cmd;</p><p>- Optimize downloading plugins repo on JMeter startup</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.16/jmeter-plugins-manager-0.16.jar",
-        "libs": {
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
-        }
-      },
-      "0.17": {
-        "changes": "<p>- Added maven info to plugin description in dialog</p><p>- Fixed 'connection still allocated' bug</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.17/jmeter-plugins-manager-0.17.jar",
-        "libs": {
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
-        }
-      },
-      "0.18": {
-        "changes": "<p>- fixed pmgr upgrade for Windows users</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.18/jmeter-plugins-manager-0.18.jar",
-        "libs": {
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
-        }
-      },
-      "0.19": {
-        "changes": "<p>- fixed pmgr and plugin upgrade for Windows users</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.19/jmeter-plugins-manager-0.19.jar",
-        "libs": {
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
-        }
-      },
-      "0.20": {
-        "changes": "<p>- fixed core plugins are not uninstalled for Windows users</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/0.20/jmeter-plugins-manager-0.20.jar",
-        "libs": {
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
-        }
-      },
       "1.0.2": {
         "changes": "<p>- Added cache plugins repo</p></p>- Optimize pmgr requests</p><p>- Fixed crash if pmgr put in lib folder</p><p>- Fixed decode PATH for JMeterHome</p>",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.0.2/jmeter-plugins-manager-1.0.2.jar",
@@ -92,8 +29,14 @@
         "libs": {
           "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
         }
+      },
+      "1.3": {
+        "changes": "Improve test plan parsing",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.3/jmeter-plugins-manager-1.3.jar",
+        "libs": {
+          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
+        }
       }
-
     }
   }
 ]

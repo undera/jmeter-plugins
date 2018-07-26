@@ -350,6 +350,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
         }
+      },
+      "0.5": {
+        "changes": "<p>Fixed samples generation in transaction controllers (all nested levels)</p><p>Fixed samples generation with disabled subgroups</p>",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-wsc/0.5/jmeter-plugins-wsc-0.5.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
+        }
       }
     }
   },

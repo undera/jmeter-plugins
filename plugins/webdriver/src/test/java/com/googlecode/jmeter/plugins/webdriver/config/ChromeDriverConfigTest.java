@@ -185,4 +185,11 @@ public class ChromeDriverConfigTest {
         config.setHeadlessEnabled(true);
         assertThat(config.isHeadlessEnabled(), is(true));
     }
+
+    @Test
+    public void getSetInsecureCertsEnabled() {
+        assertThat(config.isInsecureCertsEnabled(), is(false));
+        config.setInsecureCertsEnabled(true);
+        assertThat(config.isInsecureCertsEnabled(), is(true));
+    }
 }

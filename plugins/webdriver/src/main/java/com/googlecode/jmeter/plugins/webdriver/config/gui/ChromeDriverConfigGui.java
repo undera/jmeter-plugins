@@ -14,6 +14,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
     JTextField chromeServicePath;
     JCheckBox androidEnabled;
     private JCheckBox headlessEnabled;
+    private JCheckBox insecureCertsEnabled;
 
     @Override
     public String getStaticLabel() {
@@ -33,6 +34,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
             chromeServicePath.setText(config.getChromeDriverPath());
             androidEnabled.setSelected(config.isAndroidEnabled());
             getHeadlessEnabled().setSelected(config.isHeadlessEnabled());
+            getInsecureCertsEnabled().setSelected(config.isInsecureCertsEnabled());
         }
     }
 
@@ -51,6 +53,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
             config.setChromeDriverPath(chromeServicePath.getText());
             config.setAndroidEnabled(androidEnabled.isSelected());
             config.setHeadlessEnabled(getHeadlessEnabled().isSelected());
+            config.setInsecureCertsEnabled(getInsecureCertsEnabled().isSelected());
         }
     }
 
@@ -60,6 +63,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         chromeServicePath.setText("");
         androidEnabled.setSelected(false);
         getHeadlessEnabled().setSelected(false);
+        getInsecureCertsEnabled().setSelected(false);
     }
 
     @Override
@@ -92,6 +96,9 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
 
         headlessEnabled = new JCheckBox("Use Chrome headless mode");
         browserPanel.add(getHeadlessEnabled());
+
+        insecureCertsEnabled = new JCheckBox("Allow Insecure Certs");
+        browserPanel.add(getInsecureCertsEnabled());
         return browserPanel;
     }
 
@@ -107,5 +114,9 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
 
     public JCheckBox getHeadlessEnabled() {
         return headlessEnabled;
+    }
+    
+    public JCheckBox getInsecureCertsEnabled() {
+        return insecureCertsEnabled;
     }
 }

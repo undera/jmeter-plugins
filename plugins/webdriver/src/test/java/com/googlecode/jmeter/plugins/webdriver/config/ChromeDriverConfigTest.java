@@ -154,6 +154,21 @@ public class ChromeDriverConfigTest {
         assertThat(capabilities.getCapability(ChromeOptions.CAPABILITY), is(nullValue()));
     }
 
+
+    @Test
+    public void shouldHaveInsecureCertsWhenInsecureCertsIsEnabled() {
+        config.setInsecureCertsEnabled(true);
+        final Capabilities capabilities = config.createCapabilities();
+        assertThat((Boolean) capabilities.getCapability("acceptInsecureCerts"), is(true));
+    }
+
+    @Test
+    public void shouldNotHaveInsecureCertsWhenInsecureCertsIsNotEnabled() {
+        config.setInsecureCertsEnabled(false);
+        final Capabilities capabilities = config.createCapabilities();
+        assertThat(capabilities.getCapability("acceptInsecureCerts"), is(nullValue()));
+    }
+
     @Test
     public void shouldHaveAndroidConfigWhenAndroidIsEnabled() {
         config.setAndroidEnabled(true);

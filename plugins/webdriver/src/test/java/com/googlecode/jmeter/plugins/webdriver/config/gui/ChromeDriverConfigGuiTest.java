@@ -65,16 +65,25 @@ public class ChromeDriverConfigGuiTest {
     }
 
     @Test
+    public void shouldSetInsecureCertsEnabled() {
+        gui.getInsecureCertsEnabled().setSelected(true);
+        final ChromeDriverConfig testElement = (ChromeDriverConfig) gui.createTestElement();
+        assertThat(testElement.isInsecureCertsEnabled(), is(true));
+    }
+
+    @Test
     public void shouldResetValuesOnClearGui() {
         gui.chromeServicePath.setText("path");
         gui.androidEnabled.setSelected(true);
         gui.getHeadlessEnabled().setSelected(true);
+        gui.getInsecureCertsEnabled().setSelected(true);
 
         gui.clearGui();
 
         assertThat(gui.chromeServicePath.getText(), is(""));
         assertThat(gui.androidEnabled.isSelected(), is(false));
         assertThat(gui.getHeadlessEnabled().isSelected(), is(false));
+        assertThat(gui.getInsecureCertsEnabled().isSelected(), is(false));
     }
 
     @Test
@@ -102,6 +111,15 @@ public class ChromeDriverConfigGuiTest {
         gui.configure(config);
 
         assertThat(gui.getHeadlessEnabled().isSelected(), is(config.isHeadlessEnabled()));
+    }
+
+    @Test
+    public void shouldSetInsecureCertsEnabledOnConfigure() {
+        ChromeDriverConfig config = new ChromeDriverConfig();
+        config.setInsecureCertsEnabled(true);
+        gui.configure(config);
+
+        assertThat(gui.getInsecureCertsEnabled().isSelected(), is(config.isInsecureCertsEnabled()));
     }
 
     @Test

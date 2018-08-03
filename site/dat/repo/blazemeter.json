@@ -522,5 +522,29 @@
         }
       }
     }
+  },
+  {
+    "id": "bzm-rte",
+    "name": "RTE support",
+    "description": "Support for RTE (remote terminal emulation), providing sampler and config element to interact with remote terminal servers",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/RTEPlugin/master/docs/send-keys.png",
+    "helpUrl": "https://github.com/Blazemeter/RTEPlugin/blob/master/README.md",
+    "vendor": "BlazeMeter.com",
+    "markerClass": "com.blazemeter.jmeter.rte.sampler.RTESampler",
+    "componentClasses": [
+      "com.blazemeter.jmeter.rte.sampler.Inputs",
+      "com.blazemeter.jmeter.rte.sampler.RTESampler",
+      "com.blazemeter.jmeter.rte.sampler.gui.RTEConfigGui",
+      "com.blazemeter.jmeter.rte.sampler.gui.RTESamplerGui"
+    ],
+    "versions": {
+      "1.0.1": {
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.1/jmeter-bzm-rte-1.0.1.jar",
+        "libs": {
+          "xtn5250": "http://search.maven.org/remotecontent?filepath=us/abstracta/xtn5250/2.0.1/xtn5250-2.0.1.jar",
+          "dm3270-lib": "http://search.maven.org/remotecontent?filepath=us/abstracta/dm3270-lib/0.5.1/dm3270-lib-0.5.1.jar"
+        }
+      }
+    }
   }
 ]

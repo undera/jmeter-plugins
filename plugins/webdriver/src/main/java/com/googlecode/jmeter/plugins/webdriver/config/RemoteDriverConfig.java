@@ -66,7 +66,7 @@ public class RemoteDriverConfig extends WebDriverConfig<RemoteWebDriver> {
 		setProperty(REMOTE_FILE_DETECTOR, fileDetectorOption.name());
 	}
 
-	private FileDetector createFileDetector() {
+	protected FileDetector createFileDetector() {
 		try {
 			return getFileDetectorOption().getClazz().newInstance();
 		} catch (Exception e) {

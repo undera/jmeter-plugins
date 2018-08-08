@@ -28,7 +28,9 @@ import org.mockito.Mockito;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.UselessFileDetector;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -101,11 +103,28 @@ public class RemoteDriverConfigTest {
         assertThat(capabilities.getCapability(ChromeOptions.CAPABILITY), is(notNullValue()));
         assertThat(capabilities.isJavascriptEnabled(), is(true));
     }
-    
+
     @Test
-	public void should() throws Exception {
-		
-	}
+    public void should() throws Exception {
+
+    }
+
+    @Test
+    public void shouldRevertToDefaultFileLocator() throws Exception {
+        assertEquals(FileDetectorOption.USELESS, config.getFileDetectorOption());
+    }
+
+    @Test
+    public void shouldProduceLocalFileLocator() throws Exception {
+        config.setFileDetectorOption(FileDetectorOption.LOCAL);
+        assertTrue(config.createFileDetector() instanceof LocalFileDetector);
+    }
+
+    @Test
+    public void shouldProduceUselessFileLocator() throws Exception {
+        config.setFileDetectorOption(FileDetectorOption.USELESS);
+        assertTrue(config.createFileDetector() instanceof UselessFileDetector);
+    }
     
     @Test
 	public void shouldThrowAnExceptionWhenTheURLIsMalformed() throws Exception {

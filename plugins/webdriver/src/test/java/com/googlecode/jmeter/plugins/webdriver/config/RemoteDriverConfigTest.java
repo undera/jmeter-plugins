@@ -110,18 +110,18 @@ public class RemoteDriverConfigTest {
     }
 
     @Test
-    public void shouldRevertToDefaultFileLocator() throws Exception {
+    public void shouldRevertToDefaultFileLocator() {
         assertEquals(FileDetectorOption.USELESS, config.getFileDetectorOption());
     }
 
     @Test
-    public void shouldProduceLocalFileLocator() throws Exception {
+    public void shouldProduceLocalFileLocator() {
         config.setFileDetectorOption(FileDetectorOption.LOCAL);
         assertTrue(config.createFileDetector() instanceof LocalFileDetector);
     }
 
     @Test
-    public void shouldProduceUselessFileLocator() throws Exception {
+    public void shouldProduceUselessFileLocator() {
         config.setFileDetectorOption(FileDetectorOption.USELESS);
         assertTrue(config.createFileDetector() instanceof UselessFileDetector);
     }

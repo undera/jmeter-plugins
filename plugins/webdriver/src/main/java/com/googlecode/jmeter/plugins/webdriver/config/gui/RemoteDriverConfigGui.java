@@ -21,9 +21,10 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
     private static final long serialVersionUID = 100L;
     JTextField remoteSeleniumGridText;
     JComboBox capabilitiesComboBox;
-    JComboBox fileDetectorsComboBox;
     JLabel errorMsg;
-    
+
+    private JComboBox fileDetectorsComboBox;
+
     @Override
     public String getStaticLabel() {
         return JMeterPluginsUtils.prefixLabel("Remote Driver Config");

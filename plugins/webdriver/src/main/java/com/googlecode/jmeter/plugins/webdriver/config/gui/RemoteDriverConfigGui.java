@@ -1,31 +1,27 @@
 package com.googlecode.jmeter.plugins.webdriver.config.gui;
 
-import java.awt.Color;
+import com.googlecode.jmeter.plugins.webdriver.config.FileDetectorOption;
+import com.googlecode.jmeter.plugins.webdriver.config.RemoteCapability;
+import com.googlecode.jmeter.plugins.webdriver.config.RemoteDriverConfig;
+import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.jmeter.gui.util.VerticalPanel;
+import org.apache.jmeter.testelement.TestElement;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import kg.apc.jmeter.JMeterPluginsUtils;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.jmeter.gui.util.VerticalPanel;
-import org.apache.jmeter.testelement.TestElement;
-
-import com.googlecode.jmeter.plugins.webdriver.config.RemoteCapability;
-import com.googlecode.jmeter.plugins.webdriver.config.RemoteDriverConfig;
-
 public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemListener, FocusListener {
 
     private static final long serialVersionUID = 100L;
     JTextField remoteSeleniumGridText;
     JComboBox capabilitiesComboBox;
+    JComboBox fileDetectorsComboBox;
     JLabel errorMsg;
     
     @Override
@@ -67,6 +63,7 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
         	RemoteDriverConfig config = (RemoteDriverConfig) element;
             remoteSeleniumGridText.setText(config.getSeleniumGridUrl());
             capabilitiesComboBox.setSelectedItem(config.getCapability());
+            fileDetectorsComboBox.setSelectedItem(config.getFileDetectorOption());
         }
     }
 
@@ -77,6 +74,7 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
         	RemoteDriverConfig config = (RemoteDriverConfig) element;
             config.setSeleniumGridUrl(remoteSeleniumGridText.getText());
             config.setCapability((RemoteCapability)capabilitiesComboBox.getSelectedItem());
+            config.setFileDetectorOption((FileDetectorOption)fileDetectorsComboBox.getSelectedItem());
         }
     }
 
@@ -85,6 +83,7 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
         final JPanel remotePanel = new VerticalPanel();
         final JLabel remoteUrlLabel = new JLabel();
         final JLabel capabilitiesLabel = new JLabel();
+        final JLabel fileDetectorLabel = new JLabel();
         
         
         remoteUrlLabel.setText("Selenium Grid URL");
@@ -93,13 +92,18 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
         remoteSeleniumGridText.addFocusListener(this);
         capabilitiesLabel.setText("Capability");
         capabilitiesComboBox = new JComboBox(RemoteCapability.values());
-        
+
+        fileDetectorLabel.setText("File detector");
+        fileDetectorsComboBox = new JComboBox(FileDetectorOption.values());
+
         remotePanel.add(remoteUrlLabel);
         remotePanel.add(remoteSeleniumGridText);
         remotePanel.add(errorMsg=new JLabel());
         remotePanel.add(capabilitiesLabel);
         remotePanel.add(capabilitiesComboBox);
-        
+        remotePanel.add(fileDetectorLabel);
+        remotePanel.add(fileDetectorsComboBox);
+
         errorMsg.setForeground(Color.red);
         
         browserPanel.add(remotePanel);
@@ -112,6 +116,7 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
         super.clearGui();
         remoteSeleniumGridText.setText(StringUtils.EMPTY);
         capabilitiesComboBox.setSelectedIndex(2);
+        fileDetectorsComboBox.setSelectedIndex(1);
     }
 
 	@Override

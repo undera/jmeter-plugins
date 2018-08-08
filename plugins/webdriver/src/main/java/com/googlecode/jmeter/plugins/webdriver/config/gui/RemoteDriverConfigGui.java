@@ -84,12 +84,12 @@ public class RemoteDriverConfigGui extends WebDriverConfigGui implements ItemLis
         final JLabel remoteUrlLabel = new JLabel();
         final JLabel capabilitiesLabel = new JLabel();
         final JLabel fileDetectorLabel = new JLabel();
-        
-        
+
         remoteUrlLabel.setText("Selenium Grid URL");
         remoteSeleniumGridText = new JTextField();
         remoteSeleniumGridText.setEnabled(true);
         remoteSeleniumGridText.addFocusListener(this);
+
         capabilitiesLabel.setText("Capability");
         capabilitiesComboBox = new JComboBox(RemoteCapability.values());
 

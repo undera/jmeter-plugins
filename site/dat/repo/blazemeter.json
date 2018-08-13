@@ -551,6 +551,14 @@
           "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.2/xtn5250-2.0.1.jar",
           "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.2/dm3270-lib-0.5.1.jar"
         }
+      },
+      "1.0.3": {
+        "changes": "Fix TN5250 protocol keys mapping for F13-F24, roll down and roll up keys",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.3/jmeter-bzm-rte-1.0.3.jar",
+        "libs": {
+          "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.3/xtn5250-2.0.1.jar",
+          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.3/dm3270-lib-0.5.1.jar"
+        }
       }
     }
   }

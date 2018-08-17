@@ -437,6 +437,10 @@
       "2.4.1": {
         "changes":"Added support for Xpack authentication",
         "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.1/jmeter.backendlistener.elasticsearch-2.4.1.jar"
+      },
+      "2.4.2": {
+        "changes":"Added string conversion to number for ElasticSearch",
+        "downloadUrl":"http://central.maven.org/maven2/io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.2/jmeter.backendlistener.elasticsearch-2.4.2.jar"
       }
     }
   }

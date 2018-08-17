@@ -394,6 +394,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.1": {
+        "changes": "Improved websocket receive performance",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2.1/jmeter-websocket-samplers-1.2.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

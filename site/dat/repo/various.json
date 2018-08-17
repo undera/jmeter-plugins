@@ -448,6 +448,10 @@
       "2.4.2": {
         "changes":"Added string conversion to number for ElasticSearch",
         "downloadUrl":"http://central.maven.org/maven2/io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.2/jmeter.backendlistener.elasticsearch-2.4.2.jar"
+      },
+      "2.4.3": {
+        "changes":"Fixed class loader problem with JavaFX StringConverter class",
+        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.4.3/jmeter.backendlistener.elasticsearch-2.4.3.jar"
       }
     }
   }

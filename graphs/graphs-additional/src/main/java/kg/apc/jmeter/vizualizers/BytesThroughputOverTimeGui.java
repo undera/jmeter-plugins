@@ -3,6 +3,9 @@ package kg.apc.jmeter.vizualizers;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
+
+import java.lang.reflect.Method;
+
 import org.apache.jmeter.samplers.SampleResult;
 
 public class BytesThroughputOverTimeGui
@@ -19,6 +22,10 @@ public class BytesThroughputOverTimeGui
     }
 
     private void addBytes(String threadGroupName, long time, int value) {
+    	this.addBytes(threadGroupName, time, (long)value);
+    }
+    
+    private void addBytes(String threadGroupName, long time, long value) {
         AbstractGraphRow row = model.get(threadGroupName);
 
         if (row == null) {
@@ -47,16 +54,38 @@ public class BytesThroughputOverTimeGui
         }
         super.add(res);
         addBytes("Bytes Received per Second", normalizeTime(res.getEndTime()), res.getBytes());
-        int sentBytes = 0;
-        String samplerData = res.getSamplerData();
-        if (samplerData != null) {
-            sentBytes = samplerData.length();
+        Long sentBytes = getSentBytesByReflecting(res);
+        if ( sentBytes == null || sentBytes == 0L ) {
+            String samplerData = res.getSamplerData();
+            if (samplerData != null) {
+                sentBytes = (long)samplerData.length();
+            } else {
+                sentBytes = 0L;
+            }
         }
         addBytes("Bytes Sent per Second", normalizeTime(res.getEndTime()), sentBytes);
         updateGui(null);
     }
+    
+    
+    static Method sentBytesMethod;
+    static {
+    	try {
+    		sentBytesMethod = SampleResult.class.getMethod("getSentBytes");
+    	} catch(Exception e) {
+    		sentBytesMethod = null;
+    	}
+    }
+    
+    private Long getSentBytesByReflecting(SampleResult res) {
+    	try {
+    		return (Long)sentBytesMethod.invoke(res, new Object[] {});
+    	} catch(Exception e) {
+            return null;
+    	}
+	}
 
-    @Override
+	@Override
     protected JSettingsPanel createSettingsPanel() {
         return new JSettingsPanel(this,
                 JSettingsPanel.TIMELINE_OPTION

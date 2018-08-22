@@ -12,6 +12,16 @@ public class BytesThroughputOverTimeGui
         extends AbstractOverTimeVisualizer {
     //private static final Logger log = LoggingManager.getLoggerForClass();
 
+    private static Method sentBytesMethod;
+    
+    static {
+    	try {
+    		sentBytesMethod = SampleResult.class.getMethod("getSentBytes");
+    	} catch(Exception e) {
+    		sentBytesMethod = null;
+    	}
+    }
+
     /**
      *
      */
@@ -68,14 +78,6 @@ public class BytesThroughputOverTimeGui
     }
     
     
-    static Method sentBytesMethod;
-    static {
-    	try {
-    		sentBytesMethod = SampleResult.class.getMethod("getSentBytes");
-    	} catch(Exception e) {
-    		sentBytesMethod = null;
-    	}
-    }
     
     private Long getSentBytesByReflecting(SampleResult res) {
     	try {

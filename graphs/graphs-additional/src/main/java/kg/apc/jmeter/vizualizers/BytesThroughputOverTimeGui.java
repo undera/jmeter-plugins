@@ -15,11 +15,11 @@ public class BytesThroughputOverTimeGui
     private static Method sentBytesMethod;
     
     static {
-    	try {
-    		sentBytesMethod = SampleResult.class.getMethod("getSentBytes");
-    	} catch(Exception e) {
-    		sentBytesMethod = null;
-    	}
+        try {
+            sentBytesMethod = SampleResult.class.getMethod("getSentBytes");
+        } catch(Exception e) {
+            sentBytesMethod = null;
+        }
     }
 
     /**
@@ -65,10 +65,10 @@ public class BytesThroughputOverTimeGui
         super.add(res);
         addBytes("Bytes Received per Second", normalizeTime(res.getEndTime()), res.getBytes());
         Long sentBytes = getSentBytesByReflecting(res);
-        if ( sentBytes == null || sentBytes == 0L ) {
+        if (sentBytes == null || sentBytes == 0L) {
             String samplerData = res.getSamplerData();
             if (samplerData != null) {
-                sentBytes = (long)samplerData.length();
+                sentBytes = (long) samplerData.length();
             } else {
                 sentBytes = 0L;
             }
@@ -76,18 +76,16 @@ public class BytesThroughputOverTimeGui
         addBytes("Bytes Sent per Second", normalizeTime(res.getEndTime()), sentBytes);
         updateGui(null);
     }
-    
-    
-    
-    private Long getSentBytesByReflecting(SampleResult res) {
-    	try {
-    		return (Long)sentBytesMethod.invoke(res, new Object[] {});
-    	} catch(Exception e) {
-            return null;
-    	}
-	}
 
-	@Override
+    private Long getSentBytesByReflecting(SampleResult res) {
+        try {
+            return (Long) sentBytesMethod.invoke(res, new Object[] {});
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     protected JSettingsPanel createSettingsPanel() {
         return new JSettingsPanel(this,
                 JSettingsPanel.TIMELINE_OPTION

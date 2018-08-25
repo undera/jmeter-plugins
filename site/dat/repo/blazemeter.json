@@ -559,6 +559,14 @@
           "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.3/xtn5250-2.0.1.jar",
           "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.3/dm3270-lib-0.5.1.jar"
         }
+      },
+      "1.0.4": {
+        "changes": "Allow sending text to TN3230 server when screen has no defined fields",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/jmeter-bzm-rte-1.0.4.jar",
+        "libs": {
+          "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/xtn5250-2.0.1.jar",
+          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/dm3270-lib-0.6.jar"
+        }
       }
     }
   }

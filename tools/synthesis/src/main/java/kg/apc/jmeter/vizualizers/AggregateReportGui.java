@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.Format;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -48,9 +49,9 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         "aggregate_report_count",
         "average",
         "aggregate_report_median",
-        "aggregate_report_90%_line",
-        "aggregate_report_95%_line",
-        "aggregate_report_99%_line",
+        "aggregate_report_xx_pct1_line",
+        "aggregate_report_xx_pct2_line",
+        "aggregate_report_xx_pct3_line",
         "aggregate_report_min",
         "aggregate_report_max",
         "aggregate_report_error%",
@@ -58,6 +59,13 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
         "aggregate_report_bandwidth",
         "aggregate_report_stddev",};
     private final String TOTAL_ROW_LABEL = JMeterUtils.getResString("aggregate_report_total_label");
+    private static final String PCT1_LABEL = JMeterUtils.getPropDefault("aggregate_rpt_pct1", "90");
+    private static final String PCT2_LABEL = JMeterUtils.getPropDefault("aggregate_rpt_pct2", "95");
+    private static final String PCT3_LABEL = JMeterUtils.getPropDefault("aggregate_rpt_pct3", "99");
+
+    private static final Float PCT1_VALUE = new Float(Float.parseFloat(PCT1_LABEL)/100);
+    private static final Float PCT2_VALUE =  new Float(Float.parseFloat(PCT2_LABEL)/100);
+    private static final Float PCT3_VALUE =  new Float(Float.parseFloat(PCT3_LABEL)/100);
     private JTable myJTable;
     private JScrollPane myScrollPane;
     private final JButton saveTable =
@@ -72,7 +80,7 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
 
     public AggregateReportGui() {
         super();
-        statModel = new ObjectTableModel(COLUMNS,
+        statModel = new ObjectTableModel(getLabels(COLUMNS),
                 SamplingStatCalculator.class,
                 new Functor[]{
                     new Functor("getLabel"),
@@ -80,11 +88,11 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
                     new Functor("getMeanAsNumber"),
                     new Functor("getMedian"),
                     new Functor("getPercentPoint",
-                    new Object[]{new Float(.900)}),
+                    new Object[]{PCT1_VALUE}),
                      new Functor("getPercentPoint",
-                    new Object[]{new Float(.950)}),
+                    new Object[]{PCT2_VALUE}),
                      new Functor("getPercentPoint",
-                    new Object[]{new Float(.990)}),
+                    new Object[]{PCT3_VALUE}),
                     new Functor("getMin"),
                     new Functor("getMax"),
                     new Functor("getErrorPercentage"),
@@ -138,6 +146,30 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
             new DecimalFormat("#.0"), // pageSize
             new DecimalFormat("#0.00"), // Std Dev.
         };
+
+    static String[] getLabels(String[] keys) {
+        String[] labels = new String[keys.length];
+        for (int i = 0; i < labels.length; i++) {
+            labels[i]=MessageFormat.format(JMeterUtils.getResString(keys[i]), getColumnsMsgParameters()[i]);
+        }
+        return labels;
+    }
+
+    static final Object[][] getColumnsMsgParameters() {
+        return new Object[][] { null,
+                null,
+                null,
+                null,
+                new Object[]{PCT1_LABEL},
+                new Object[]{PCT2_LABEL},
+                new Object[]{PCT3_LABEL},
+                null,
+                null,
+                null,
+                null,
+                null,
+                null};
+    }
 
     @Override
     public String getLabelResource() {
@@ -264,7 +296,7 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
             FileWriter writer = null;
             try {
                 writer = new FileWriter(file);
-                CSVSaveService.saveCSVStats(SynthesisReportGui.getAllDataAsTable(statModel, FORMATS, COLUMNS), writer, saveHeaders.isSelected());
+                CSVSaveService.saveCSVStats(SynthesisReportGui.getAllDataAsTable(statModel, FORMATS, getLabels(COLUMNS)), writer, saveHeaders.isSelected());
             } catch (IOException e) {
                 log.warn(e.getMessage());
             } finally {

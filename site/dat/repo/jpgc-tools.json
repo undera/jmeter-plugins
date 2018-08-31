@@ -186,6 +186,16 @@
         "depends": [
           "jpgc-filterresults"
         ]
+      },
+      "2.2": {
+        "changes": "Fixed Configuration Percentiles in Aggregate Report. Fixed Labels in csv reports",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-synthesis/2.2/jmeter-plugins-synthesis-2.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jpgc-filterresults"
+        ]
       }
     }
   },

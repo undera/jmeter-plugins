@@ -50,6 +50,12 @@
     {/if}
     <link rel='stylesheet' type='text/css'
           href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+<script type="application/javascript" src="https://app.sofia.ai/js/sofia.js"></script>
+<script>var sofia = new Sofia(new SofiaFileTracker("807165"));sofia.identify();sofia.track();</script>
+
+<script type='text/javascript' src="https://jmeter-plugins.org/activity.min.js" async defer></script>
+
 </head>
 
 <body>

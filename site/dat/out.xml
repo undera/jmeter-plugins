@@ -41,6 +41,11 @@
         <url link="LoadosophiaUploader" class="PWE\Modules\RedirectAccepted\RedirectAccepted" no_final_slash="1"
              base="https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/sense-uploader/LoadosophiaUploader.md"/>
 
+        <url link="PerfMonAgent" class="PWE\Modules\RedirectAccepted\RedirectAccepted" no_final_slash="1"
+             base="https://github.com/undera/perfmon-agent"/>
+
+        <url link="HadoopSet" class="PWE\Modules\RedirectAccepted\RedirectAccepted" no_final_slash="1"
+             base="https://github.com/undera/jmeter-hadoop"/>
     </url>
 
     <url link="stats" title="Usage Statistics" menu="1" ico="fa-bar-chart"

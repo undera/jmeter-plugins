@@ -308,6 +308,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "3.5": {
+        "changes": "Fixed upload errors to BlazeMeter",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-senseuploader/3.5/jmeter-plugins-senseuploader-3.5.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
       }
     }
   },

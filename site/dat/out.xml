@@ -18,6 +18,8 @@
     <url link="downloads" title="Download" menu="0" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="dl"
          start_page="all" files_base="files" download_link="../file" accept="1" ico="fa-download">
         <url link="file" files_base="files" class="PWE\Modules\FileDownloads\FileDownloads" accept="2"/>
+        <url link="all" class="PWE\Modules\RedirectAccepted\RedirectAccepted" no_final_slash="1"
+             base="/install/Install/"/>
     </url>
 
     <url link="wiki" class="PWE\Modules\SimpleWiki\SimpleWiki" wiki_dir="wiki" start_page="Start" ico="fa-book"

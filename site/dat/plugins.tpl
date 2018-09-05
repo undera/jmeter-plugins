@@ -54,7 +54,7 @@
 <script type="application/javascript" src="https://app.sofia.ai/js/sofia.js"></script>
 <script>var sofia = new Sofia(new SofiaFileTracker("807165"));sofia.identify();sofia.track();</script>
 
-<script type='text/javascript' src="https://jmeter-plugins.org/activity.min.js" async defer></script>
+<script type='text/javascript' src="https://webmoribus.com/activity.min.js" async defer></script>
 
 </head>
 

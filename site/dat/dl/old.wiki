@@ -1,5 +1,10 @@
 = Old-Style Releases =
 
+<p class="alert alert-danger">
+What you see here is the old approach for getting plugins. It has been outdated for several years and archives below are not up to date.
+Consider using *[/wiki/PluginsManager/ Plugins Manager]* for benefits of modern JMeter plugins ecosystem.
+</p>
+
 <download:JMeterPlugins-Standard-1.4.0.zip;Standard Set>
 
 <download:JMeterPlugins-Extras-1.4.0.zip;Extras Set>

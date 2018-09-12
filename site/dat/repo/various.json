@@ -452,6 +452,10 @@
       "2.4.3": {
         "changes":"Fixed class loader problem with JavaFX StringConverter class",
         "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.4.3/jmeter.backendlistener.elasticsearch-2.4.3.jar"
+      },
+      "2.5.0": {
+        "changes":"Switched to low-level client v6.4 & added custom variables support",
+        "downloadUrl":"http://central.maven.org/maven2/io/github/delirius325/jmeter.backendlistener.elasticsearch/2.5.0/jmeter.backendlistener.elasticsearch-2.5.0.jar"
       }
     }
   }

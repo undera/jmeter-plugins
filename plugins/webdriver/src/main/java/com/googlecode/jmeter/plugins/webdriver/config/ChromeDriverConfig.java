@@ -2,6 +2,7 @@ package com.googlecode.jmeter.plugins.webdriver.config;
 
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
@@ -39,6 +40,9 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
     Capabilities createCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.PROXY, createProxy());
+	    
+	capabilities.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR,UnexpectedAlertBehaviour.IGNORE);
+	    
         LoggingPreferences logPrefs = new LoggingPreferences();
 		logPrefs.enable(LogType.BROWSER, Level.ALL);
 		capabilities.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);

@@ -123,15 +123,19 @@ public class RedisDataSet extends ConfigTestElement
         Jedis connection = null;
         try {
             connection = pool.getResource();
-            String line = null;
-            if(getMode.equals(GetMode.RANDOM_REMOVE)) {
-                line = connection.lpop(redisKey);                
-            } else {
-                line = connection.srandmember(redisKey);
-            }
+
+            // Get data from list's head
+            String line = connection.lpop(redisKey);
+
             if(line == null) { // i.e. no more data (nil)
                 throw new JMeterStopThreadException("End of redis data detected, thread will exit");
             }
+
+            if (getMode.equals(GetMode.RANDOM_KEEP)) {
+                // Add data string to list's tail
+                connection.rpush(redisKey, line);
+            }
+
             final String names = variableNames;
             if (vars == null) {
                 vars = JOrphanUtils.split(names, ","); 

@@ -15,9 +15,9 @@ public class IntegerInputVerifier extends InputVerifier {
     /**
      * Initialize the input verifier with an integer range and background colors.
      *
-     * @param min the minimum permissible integer value
-     * @param max the maximum permissible integer value
-     * @param background the background color to set on the JComponent if the input is valid
+     * @param min               the minimum permissible integer value
+     * @param max               the maximum permissible integer value
+     * @param background        the background color to set on the JComponent if the input is valid
      * @param warningBackground the background color to set on the JComponent if the input is invalid
      */
     public IntegerInputVerifier(int min, int max, Color background, Color warningBackground) {
@@ -36,10 +36,11 @@ public class IntegerInputVerifier extends InputVerifier {
     }
 
     /**
-     * Verifies the input with the side effect that the background color of {@code input} to {@code background} if {@see verify(JComponent)}
+     * Verifies the input with the side effect that the background color of {@code input} to {@code background} if
      * returns {@code true}, or {@code warningBackground} otherwise
-     * @param input
-     * @return
+     *
+     * @param input component
+     * @return if input is valid
      */
     public boolean shouldYieldFocus(JComponent input) {
         boolean isValidInput = verify(input);
@@ -52,7 +53,7 @@ public class IntegerInputVerifier extends InputVerifier {
     }
 
     /**
-     * Verifies that the input's text value can be converted to an integer that is >= {@code min} and <= {@code max}.
+     * Verifies that the input's text value can be converted to an integer that is {@code >= min} and {@code <=max}.
      *
      * @param input a JTextField instance
      * @return {@code true} if an only if the text input contains a value that

@@ -11,34 +11,25 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 public class GraphRowSimple
         extends AbstractGraphRow
-        implements Serializable
-{
+        implements Serializable {
     private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> values;
 
-    /**
-     *
-     */
-    public GraphRowSimple()
-    {
+    public GraphRowSimple() {
         super();
-        values = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
+        values = new ConcurrentSkipListMap<>();
     }
 
     /**
-     *
-     * @param xVal
-     * @param yVal
+     * @param xVal coord
+     * @param yVal coord
      */
     @Override
-    public void add(long xVal, double yVal)
-    {
+    public void add(long xVal, double yVal) {
         GraphPanelChartSimpleElement el;
-        if (values.containsKey(xVal))
-        {
+        if (values.containsKey(xVal)) {
             el = (GraphPanelChartSimpleElement) values.get(xVal);
             el.add(yVal);
-        } else
-        {
+        } else {
             el = new GraphPanelChartSimpleElement(yVal);
             values.put(xVal, el);
         }
@@ -46,31 +37,23 @@ public class GraphRowSimple
         super.add(xVal, yVal);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
-    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator()
-    {
+    public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator() {
         return values.entrySet().iterator();
     }
 
     @Override
-    public int size()
-    {
+    public int size() {
         return values.size();
     }
 
     @Override
-    public AbstractGraphPanelChartElement getElement(long value)
-    {
+    public AbstractGraphPanelChartElement getElement(long value) {
         return values.get(value);
     }
 
     @Override
-    public Long getHigherKey(long value)
-    {
+    public Long getHigherKey(long value) {
         return values.navigableKeySet().higher(value);
     }
 }

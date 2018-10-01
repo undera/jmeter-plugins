@@ -9,7 +9,7 @@ import java.util.*;
 
 public class CycleColors implements ColorsDispatcher {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private java.util.List<Color> assignedColors = new ArrayList<Color>();
+    private java.util.List<Color> assignedColors = new ArrayList<>();
     private final static int LEVEL_MAX = 256;
     private int level;
     private int bits;
@@ -29,10 +29,6 @@ public class CycleColors implements ColorsDispatcher {
         assignedColors.add(new Color(127, 127, 0));
     }
 
-    /**
-     *
-     * @return
-     */
     public Color getNextColor() {
         Color color = null;
 

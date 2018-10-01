@@ -10,18 +10,22 @@ import java.util.List;
 
 /**
  * Rotating Hue Color Palette
- *
+ * <p>
  * Creates rotating hue palette by setting the following in jmeter.properties or user.properties:
+ * <ul>
  * <li><code>jmeterPlugin.customColorsDispatcher = huerotate</code></li>
  * <li><code>jmeterPlugin.customColorsDispatcher.options = 9C27B0,8,4</code></li>
- *
+ * </ul>
+ * <p>
  * Where options define 3 fields
+ * <ul>
  * <li>options[0] - Starting color</li>
  * <li>options[1] - Number of proportional rotations</li>
- * <li>options[2] - black->gray gradient steps to generate</li>
+ * <li>options[2] - black to gray gradient steps to generate</li>
+ * </ul>
  */
 public class HueRotatePalette implements ColorsDispatcher {
-    List<Color> customPalette = new ArrayList<Color>(16);
+    List<Color> customPalette = new ArrayList<>(16);
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final int startingGradient = 0x000;
     private static final int maxGradient = 120;
@@ -29,7 +33,8 @@ public class HueRotatePalette implements ColorsDispatcher {
 
     /**
      * Implements ColorDispatcher using a base color and rotating it's hue and generating
-     * black -> gray gradient with user defined steps
+     * black to gray gradient with user defined steps
+     *
      * @param options comma delimited list of colors in hex, e.g. 112233,aa00ff
      */
     public HueRotatePalette(String options) {
@@ -40,20 +45,20 @@ public class HueRotatePalette implements ColorsDispatcher {
     private void buildCustomPalette(String options) {
         try {
             String[] opts = options.split(",");
-            Color baseColor = new Color ( Integer.parseInt(opts[0].trim(), 16) );
+            Color baseColor = new Color(Integer.parseInt(opts[0].trim(), 16));
             int rotations = Integer.parseInt(opts[1]);
             int gradient_steps = Integer.parseInt(opts[2]);
             float[] hsbVals = new float[3];
             Color.RGBtoHSB(baseColor.getRed(), baseColor.getGreen(), baseColor.getBlue(), hsbVals);
             log.debug("Base color: " + baseColor + " rotations " + rotations + " hue: " + hsbVals[0]);
             for (int i = 0; i <= rotations; i++) {
-                float hue = hsbVals[0]*(1f/rotations)*i;
-                Color c = new Color(Color.HSBtoRGB( hue, hsbVals[1], hsbVals[2]));
+                float hue = hsbVals[0] * (1f / rotations) * i;
+                Color c = new Color(Color.HSBtoRGB(hue, hsbVals[1], hsbVals[2]));
                 log.debug("Adding custom color (hue rotation): " + c);
                 customPalette.add(c);
             }
             log.debug("Black->Gray gradient steps: " + gradient_steps);
-            for (int i = startingGradient; i < maxGradient; i= i+(maxGradient/gradient_steps+2) ) {
+            for (int i = startingGradient; i < maxGradient; i = i + (maxGradient / gradient_steps + 2)) {
                 Color c = new Color(i, i, i);
                 log.debug("Adding gradient step: " + c);
                 customPalette.add(c);
@@ -91,7 +96,7 @@ public class HueRotatePalette implements ColorsDispatcher {
 
     @Override
     public Color getNextColor() {
-        if (i+1 > customPalette.size()) {
+        if (i + 1 > customPalette.size()) {
             reset();
             return getNextColor();
         } else {

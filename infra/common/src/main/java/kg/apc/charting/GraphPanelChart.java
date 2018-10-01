@@ -222,6 +222,9 @@ public class GraphPanelChart
 
     /**
      * Creates new chart object with default parameters
+     *
+     * @param allowCsvExport if do it
+     * @param haveGUI        if have it
      */
     public GraphPanelChart(boolean allowCsvExport, boolean haveGUI) {
         gpcId = getNextId();

@@ -49,16 +49,10 @@ public abstract class AbstractGraphRow {
         return drawThickLines;
     }
 
-    /**
-     * @param b
-     */
     public void setDrawLine(boolean b) {
         drawLine = b;
     }
 
-    /**
-     * @param aMarkerSize
-     */
     public void setMarkerSize(int aMarkerSize) {
         markerSize = aMarkerSize;
     }
@@ -77,16 +71,10 @@ public abstract class AbstractGraphRow {
         return markerSize;
     }
 
-    /**
-     * @return
-     */
     public Color getColor() {
         return color;
     }
 
-    /**
-     * @param nextColor
-     */
     public void setColor(Color nextColor) {
         color = nextColor;
     }
@@ -113,6 +101,7 @@ public abstract class AbstractGraphRow {
     }
 
     /**
+     * @param maxPoints ditto
      * @return the exact maxY, taking in account maxPoint limit
      */
     public double[] getMinMaxY(int maxPoints) {
@@ -137,14 +126,14 @@ public abstract class AbstractGraphRow {
 
             if (factor == 1) {
                 element = it.next();
-                AbstractGraphPanelChartElement elt = (AbstractGraphPanelChartElement) element.getValue();
+                AbstractGraphPanelChartElement elt = element.getValue();
                 calcY = elt.getValue();
             } else {
                 double nbPointProcessed = 0;
                 for (int i = 0; i < factor; i++) {
                     if (it.hasNext()) {
                         element = it.next();
-                        calcY = calcY + ((AbstractGraphPanelChartElement) element.getValue()).getValue();
+                        calcY = calcY + element.getValue().getValue();
                         nbPointProcessed++;
                     }
                 }
@@ -173,10 +162,6 @@ public abstract class AbstractGraphRow {
         return minX;
     }
 
-    /**
-     * @param xVal
-     * @param yVal
-     */
     public void add(long xVal, double yVal) {
         if (getFirstTime() == Long.MIN_VALUE) {
             firstTime = xVal;
@@ -190,9 +175,6 @@ public abstract class AbstractGraphRow {
         }
     }
 
-    /**
-     * @return
-     */
     public abstract Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator();
 
     /**
@@ -265,6 +247,8 @@ public abstract class AbstractGraphRow {
 
     /**
      * set the granulation value for drawbar width
+     *
+     * @param value to set
      */
     public void setGranulationValue(int value) {
         this.granulation = value;
@@ -273,7 +257,7 @@ public abstract class AbstractGraphRow {
     /**
      * For bar chart x axis too big prevention. Must be overridden if necessary.
      *
-     * @param excludeOutOfRangeValues
+     * @param excludeOutOfRangeValues ditto
      */
     public void setExcludeOutOfRangeValues(boolean excludeOutOfRangeValues) {
     }

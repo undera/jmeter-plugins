@@ -3,6 +3,7 @@ package kg.apc.charting.rows;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.elements.GraphPanelChartSumElement;
 import kg.apc.charting.AbstractGraphPanelChartElement;
+
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -30,20 +31,15 @@ public class GraphRowSumValues
      */
     public GraphRowSumValues() {
         super();
-        values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
+        values = new ConcurrentSkipListMap<>();
     }
 
     public GraphRowSumValues(boolean doRollingSum) {
         super();
-        values = new ConcurrentSkipListMap<Long, GraphPanelChartSumElement>();
+        values = new ConcurrentSkipListMap<>();
         isRollingSum = doRollingSum;
     }
 
-    /**
-     *
-     * @param xVal
-     * @param yVal
-     */
     @Override
     public void add(long xVal, double yVal) {
         GraphPanelChartSumElement el;
@@ -59,10 +55,6 @@ public class GraphRowSumValues
         super.add(xVal, yVal);
     }
 
-    /**
-     *
-     * @return
-     */
     public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator() {
         rollingSum = 0;
         iterator = values.entrySet().iterator();
@@ -121,13 +113,14 @@ public class GraphRowSumValues
         return countX;
     }
 
-    @Override
     /**
      * Method used to getMaxX without taking in account out of range
      * values. I.E. we don't take in account on value if the distance
-     * with the last point is > getGranulationValue() * excludeCount.
+     * with the last point is greater than getGranulationValue() * excludeCount.
+     *
      * @return the evaluated MaxX
      */
+    @Override
     public long getMaxX() {
         if (!excludeOutOfRangeValues) {
             return super.getMaxX();

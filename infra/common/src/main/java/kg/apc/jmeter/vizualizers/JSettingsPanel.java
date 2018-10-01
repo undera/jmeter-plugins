@@ -34,6 +34,9 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
 
     /**
      * Creates new form JSettingsPanel
+     *
+     * @param options flags
+     * @param parent  owner of it
      */
     public JSettingsPanel(SettingsInterface parent, int options) {
         boolean showTimelineOption = (options & TIMELINE_OPTION) != 0;
@@ -311,7 +314,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jPanelTimeLineContainer.add(jPanel4, gridBagConstraints);
 
         jComboBoxGranulation.setEditable(true);
-        jComboBoxGranulation.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "100", "500", "1000", "2000", "5000", "10000", "30000", "60000" }));
+        jComboBoxGranulation.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"100", "500", "1000", "2000", "5000", "10000", "30000", "60000"}));
         jComboBoxGranulation.setPreferredSize(new java.awt.Dimension(80, 20));
         jComboBoxGranulation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -330,6 +333,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 infoLabelMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 infoLabelMouseExited(evt);
             }
@@ -477,7 +481,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jPanelRenderingOptionsContainer.add(jLabelMaxPoints, gridBagConstraints);
 
         jComboBoxMaxPoints.setEditable(true);
-        jComboBoxMaxPoints.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20", "50", "100", "150", "200" }));
+        jComboBoxMaxPoints.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"20", "50", "100", "150", "200"}));
         jComboBoxMaxPoints.setSelectedIndex(1);
         jComboBoxMaxPoints.setPreferredSize(new java.awt.Dimension(50, 20));
         jComboBoxMaxPoints.addActionListener(new java.awt.event.ActionListener() {
@@ -497,6 +501,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 infoLabelMouseEntered(evt);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 infoLabelMouseExited(evt);
             }
@@ -534,7 +539,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jPanelRenderingOptionsContainer.add(jCheckBoxHideNonRepValues, gridBagConstraints);
 
         jComboBoxHideNonRepValLimit.setEditable(true);
-        jComboBoxHideNonRepValLimit.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "5", "10", "15", "20", "50", "100" }));
+        jComboBoxHideNonRepValLimit.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"5", "10", "15", "20", "50", "100"}));
         jComboBoxHideNonRepValLimit.setPreferredSize(new java.awt.Dimension(50, 20));
         jComboBoxHideNonRepValLimit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -621,7 +626,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 10, 2);
         jPanelGraphStyle.add(jLabelChartType, gridBagConstraints);
 
-        jComboBoxChartType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Line", "Bar", "Cubic Spline" }));
+        jComboBoxChartType.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Line", "Bar", "Cubic Spline"}));
         jComboBoxChartType.setSelectedIndex(1);
         jComboBoxChartType.setPreferredSize(new java.awt.Dimension(110, 20));
         jComboBoxChartType.addActionListener(new java.awt.event.ActionListener() {
@@ -668,7 +673,7 @@ public class JSettingsPanel extends javax.swing.JPanel implements GraphRendererI
         jPanelGraphStyle.add(jLabelLineWidth, gridBagConstraints);
 
         jComboBoxLineWidth.setEditable(true);
-        jComboBoxLineWidth.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "0", "0.1", "1", "3", "5" }));
+        jComboBoxLineWidth.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"0", "0.1", "1", "3", "5"}));
         jComboBoxLineWidth.setSelectedIndex(2);
         jComboBoxLineWidth.setMaximumSize(new java.awt.Dimension(56, 20));
         jComboBoxLineWidth.setMinimumSize(new java.awt.Dimension(56, 20));

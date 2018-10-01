@@ -110,7 +110,7 @@ public class RedisDataSet extends ConfigTestElement
     private String variableNames;
     private String delimiter;
     private GetMode getMode;
-    private boolean keepDataOnUse;
+    private boolean recycleDataOnUse;
     private RedisDataType redisDataType;
     
     private int maxIdle;
@@ -631,16 +631,16 @@ public class RedisDataSet extends ConfigTestElement
      *
      * @return
      */
-    public boolean isKeepDataOnUse() {
-        return keepDataOnUse;
+    public boolean getRecycleDataOnUse() {
+        return recycleDataOnUse;
     }
 
     /**
      *
-     * @param keepDataOnUse
+     * @param recycleDataOnUse
      */
-    public void setKeepDataOnUse(boolean keepDataOnUse) {
-        this.keepDataOnUse = keepDataOnUse;
+    public void setRecycleDataOnUse(boolean recycleDataOnUse) {
+        this.recycleDataOnUse = recycleDataOnUse;
     }
 
     /**

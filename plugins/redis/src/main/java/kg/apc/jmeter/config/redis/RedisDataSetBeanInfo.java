@@ -99,7 +99,7 @@ public class RedisDataSetBeanInfo extends BeanInfoSupport {
             // Whether data should be recycled or consumed on use
             p = property(RECYCLE_DATA_ON_USE);
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-            p.setValue(DEFAULT, Boolean.FALSE);
+            p.setValue(DEFAULT, Boolean.TRUE);
             p.setValue(NOT_EXPRESSION, Boolean.TRUE);
             p.setValue(NOT_OTHER, Boolean.TRUE);
 

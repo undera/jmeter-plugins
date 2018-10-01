@@ -27,6 +27,7 @@ import org.apache.log.Priority;
 
 import java.io.File;
 import java.io.PrintStream;
+import java.lang.reflect.Constructor;
 import java.util.ListIterator;
 
 public class TestPlanCheckTool extends AbstractCMDTool {
@@ -37,6 +38,9 @@ public class TestPlanCheckTool extends AbstractCMDTool {
     public TestPlanCheckTool() {
         super();
         JMeterPluginsUtils.prepareJMeterEnv(UniversalRunner.getJARLocation());
+        if (isJMeter32orLater()) {
+            configureCMDLogging();
+        }
     }
 
     private boolean isStats = false;
@@ -241,6 +245,31 @@ public class TestPlanCheckTool extends AbstractCMDTool {
             if (others > 0) {
                 log.info("Unknown Elements:\t" + others);
             }
+        }
+    }
+
+    public static boolean isJMeter32orLater() {
+        try {
+            Class<?> cls = TestPlanCheckTool.class.getClassLoader().loadClass("org.apache.jmeter.gui.logging.GuiLogEventBus");
+            if (cls != null) {
+                return true;
+            }
+        } catch (ClassNotFoundException ex) {
+            log.debug("Class 'org.apache.jmeter.gui.logging.GuiLogEventBus' not found", ex);
+        } catch (Throwable ex) {
+            log.warn("Fail to detect JMeter version", ex);
+        }
+        return false;
+    }
+
+    private void configureCMDLogging() {
+        try {
+            Class cls = Class.forName("kg.apc.cmdtools.logging.LoggingConfigurator");
+            Constructor constructor = cls.getConstructor();
+            constructor.newInstance();
+        } catch (Throwable ex) {
+            System.out.println("Fail to configure logging " + ex.getMessage());
+            ex.printStackTrace(System.out);
         }
     }
 }

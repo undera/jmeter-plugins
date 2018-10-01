@@ -12,7 +12,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-plancheck</artifactId>
-    <version>2.2</version>
+    <version>2.3</version>
 
     <name>Test Plan check tool</name>
     <description>test plan check tool</description>
@@ -60,6 +60,21 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.8.2</version>
+        </dependency>
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-cmn-jmeter</artifactId>

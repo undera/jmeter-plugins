@@ -35,6 +35,7 @@ public class RedisDataSetBeanInfo extends BeanInfoSupport {
     private static final String DELIMITER = "delimiter";             
     private static final String REDIS_KEY = "redisKey";             
     private static final String GET_MODE = "getMode";               
+    private static final String REDIS_DATA_TYPE = "redisDataType";  //$NON-NLS-1$
     private static final String HOST = "host";             
     private static final String PORT = "port";             
     private static final String TIMEOUT = "timeout";             
@@ -69,7 +70,7 @@ public class RedisDataSetBeanInfo extends BeanInfoSupport {
         super(RedisDataSet.class);
         try {
             createPropertyGroup("redis_data",             
-                    new String[] { REDIS_KEY, VARIABLE_NAMES, DELIMITER, GET_MODE });
+                    new String[] { REDIS_KEY, VARIABLE_NAMES, DELIMITER, GET_MODE, REDIS_DATA_TYPE });
     
             PropertyDescriptor p = property(REDIS_KEY);
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
@@ -94,6 +95,12 @@ public class RedisDataSetBeanInfo extends BeanInfoSupport {
     //        p.setValue(NOT_EXPRESSION, Boolean.FALSE);
     //        p.setValue(TAGS, GET_MODE_TAGS);
             
+            // What type of data is in the Redis store under this key (list or set). Defaults to list
+            p = property(REDIS_DATA_TYPE, RedisDataSet.RedisDataType.class);
+            p.setValue(NOT_UNDEFINED, Boolean.TRUE);
+            //p.setValue(NOT_EXPRESSION, Boolean.TRUE);
+            p.setValue(DEFAULT, RedisDataSet.RedisDataType.REDIS_DATA_TYPE_LIST.ordinal());
+
             p = property(GET_MODE, RedisDataSet.GetMode.class); 
             p.setValue(DEFAULT, RedisDataSet.GetMode.RANDOM_REMOVE.ordinal());
             p.setValue(NOT_UNDEFINED, Boolean.TRUE); // must be defined

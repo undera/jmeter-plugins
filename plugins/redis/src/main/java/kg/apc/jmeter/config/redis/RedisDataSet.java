@@ -44,9 +44,10 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
+import redis.clients.jedis.exceptions.JedisDataException;
 
 /**
- * Redis DataSet using a List. 
+ * Redis DataSet using a Redis Set or List.
  * @since 2.11
  */
 public class RedisDataSet extends ConfigTestElement 
@@ -79,6 +80,15 @@ public class RedisDataSet extends ConfigTestElement
         }
     }
 
+    public enum RedisDataType {
+        REDIS_DATA_TYPE_LIST((byte)0),
+        REDIS_DATA_TYPE_SET((byte)1);
+
+        private byte value;
+        private RedisDataType(byte value) { this.value = value; }
+        public byte getValue() { return value; }
+    }
+
     /**
      * 
      */
@@ -100,6 +110,7 @@ public class RedisDataSet extends ConfigTestElement
     private String variableNames;
     private String delimiter;
     private GetMode getMode;
+    private RedisDataType redisDataType;
     
     private int maxIdle;
     private int minIdle;
@@ -118,6 +129,45 @@ public class RedisDataSet extends ConfigTestElement
     private transient JedisPool pool;
 
 
+    private String getDataFromConnection(Jedis conn, String key) {
+        String line = null;
+
+        try {
+            if (redisDataType == RedisDataType.REDIS_DATA_TYPE_LIST) {
+                log.debug("Executing lpop against redis list");
+                // Get data from list's head
+                line = conn.lpop(key);
+            } else if (redisDataType.equals(RedisDataType.REDIS_DATA_TYPE_SET)) {
+                // FIXME TODO Check if select randomly
+                log.debug("Executing spop against redis set");
+                line = conn.spop(key);
+            } else {
+                log.warn("Unexpected redis datatype: {0}".format(key));
+            }
+        } catch (JedisDataException jde) {
+            log.error("Exception when retrieving data from Redis: " + jde);
+        }
+
+        return line;
+    }
+
+    private void addDataToConnection(Jedis conn, String key, String data) {
+        try {
+            if (redisDataType == RedisDataType.REDIS_DATA_TYPE_LIST) {
+                log.debug("Executing rpush against redis list");
+                // Add data string to list's tail
+                conn.rpush(redisKey, data);
+            } else if (redisDataType == RedisDataType.REDIS_DATA_TYPE_SET) {
+                log.debug("Executing sadd against redis set");
+                conn.sadd(key, data);
+            } else {
+                log.warn("Unexpected redis datatype: {0}".format(key));
+            }
+        } catch (JedisDataException jde) {
+            log.error("Exception when adding data to Redis: " + jde);
+        }
+    }
+
     @Override
     public void iterationStart(LoopIterationEvent event) {
         Jedis connection = null;
@@ -125,15 +175,14 @@ public class RedisDataSet extends ConfigTestElement
             connection = pool.getResource();
 
             // Get data from list's head
-            String line = connection.lpop(redisKey);
+            String line = getDataFromConnection(connection, redisKey);
 
             if(line == null) { // i.e. no more data (nil)
                 throw new JMeterStopThreadException("End of redis data detected, thread will exit");
             }
 
             if (getMode.equals(GetMode.RANDOM_KEEP)) {
-                // Add data string to list's tail
-                connection.rpush(redisKey, line);
+                addDataToConnection(connection, redisKey, line);
             }
 
             final String names = variableNames;
@@ -221,6 +270,26 @@ public class RedisDataSet extends ConfigTestElement
                                 log.debug("Converted " + pn + "=" + objectValue + " to mode=" + tmpMode  + " using Locale: " + rb.getLocale());
                             }
                             super.setProperty(pn, tmpMode);
+                            return;
+                        }
+                    }
+                    log.warn("Could not convert " + pn + "=" + objectValue + " using Locale: " + rb.getLocale());
+                } catch (IntrospectionException e) {
+                    log.error("Could not find BeanInfo", e);
+                }
+            } else if (pn.equals("redisDataType")) {
+                final Object objectValue = property.getObjectValue();
+                try {
+                    final BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());
+                    final ResourceBundle rb = (ResourceBundle) beanInfo.getBeanDescriptor().getValue(GenericTestBeanCustomizer.RESOURCE_BUNDLE);
+                    for(Enum<RedisDataType> e : RedisDataType.values()) {
+                        final String propName = e.toString();
+                        if (objectValue.equals(rb.getObject(propName))) {
+                            final int tmpType = e.ordinal();
+                            if (log.isDebugEnabled()) {
+                                log.debug("Converted " + pn + "=" + objectValue + " to data type=" + tmpType  + " using Locale: " + rb.getLocale());
+                            }
+                            super.setProperty(pn, tmpType);
                             return;
                         }
                     }
@@ -555,5 +624,21 @@ public class RedisDataSet extends ConfigTestElement
 
     public void setGetMode(int mode) {
         this.getMode = GetMode.values()[mode];
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getRedisDataType() {
+        return redisDataType.ordinal();
+    }
+
+    /**
+     *
+     * @param dataType
+     */
+    public void setRedisDataType(int dataType) {
+        this.redisDataType = RedisDataType.values()[dataType];
     }
 }

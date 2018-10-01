@@ -33,8 +33,7 @@ public class RedisDataSetBeanInfo extends BeanInfoSupport {
     // These names must agree case-wise with the variable and property names
     private static final String VARIABLE_NAMES = "variableNames";    
     private static final String DELIMITER = "delimiter";             
-    private static final String REDIS_KEY = "redisKey";             
-    private static final String GET_MODE = "getMode";               
+    private static final String REDIS_KEY = "redisKey";
     private static final String REDIS_DATA_TYPE = "redisDataType";  //$NON-NLS-1$
     private static final String RECYCLE_DATA_ON_USE = "recycleDataOnUse";  //$NON-NLS-1$
     private static final String HOST = "host";             
@@ -71,7 +70,7 @@ public class RedisDataSetBeanInfo extends BeanInfoSupport {
         super(RedisDataSet.class);
         try {
             createPropertyGroup("redis_data",             
-                    new String[] { REDIS_KEY, VARIABLE_NAMES, DELIMITER, GET_MODE, REDIS_DATA_TYPE, RECYCLE_DATA_ON_USE });
+                    new String[] { REDIS_KEY, VARIABLE_NAMES, DELIMITER, REDIS_DATA_TYPE, RECYCLE_DATA_ON_USE });
     
             PropertyDescriptor p = property(REDIS_KEY);
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
@@ -87,14 +86,6 @@ public class RedisDataSetBeanInfo extends BeanInfoSupport {
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
             p.setValue(DEFAULT, ",");        
             p.setValue(NOT_EXPRESSION, Boolean.TRUE);
-            
-    //        p = property(GET_MODE, TypeEditor.ComboStringEditor);
-    //        p.setValue(RESOURCE_BUNDLE, getBeanDescriptor().getValue(RESOURCE_BUNDLE));
-    //        p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-    //        p.setValue(DEFAULT, GET_MODE_TAGS[GET_MODE_REMOVE]);
-    //        p.setValue(NOT_OTHER, Boolean.FALSE);
-    //        p.setValue(NOT_EXPRESSION, Boolean.FALSE);
-    //        p.setValue(TAGS, GET_MODE_TAGS);
 
             // Whether data should be recycled or consumed on use
             p = property(RECYCLE_DATA_ON_USE);
@@ -108,11 +99,6 @@ public class RedisDataSetBeanInfo extends BeanInfoSupport {
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
             //p.setValue(NOT_EXPRESSION, Boolean.TRUE);
             p.setValue(DEFAULT, RedisDataSet.RedisDataType.REDIS_DATA_TYPE_LIST.ordinal());
-
-            p = property(GET_MODE, RedisDataSet.GetMode.class); 
-            p.setValue(DEFAULT, RedisDataSet.GetMode.RANDOM_REMOVE.ordinal());
-            p.setValue(NOT_UNDEFINED, Boolean.TRUE); // must be defined
-    
             
             createPropertyGroup("redis_connection",             
                     new String[] { HOST, PORT, TIMEOUT, PASSWORD, DATABASE });

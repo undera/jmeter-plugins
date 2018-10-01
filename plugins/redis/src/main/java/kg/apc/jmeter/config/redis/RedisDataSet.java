@@ -66,19 +66,6 @@ public class RedisDataSet extends ConfigTestElement
             return value;
         }
     }
-    
-    public enum GetMode {
-        RANDOM_REMOVE((byte)0),
-        RANDOM_KEEP((byte)1);
-        private byte value;
-        private GetMode(byte value) {
-            this.value = value;
-        }
-        
-        public byte getValue() {
-            return value;
-        }
-    }
 
     public enum RedisDataType {
         REDIS_DATA_TYPE_LIST((byte)0),
@@ -109,7 +96,6 @@ public class RedisDataSet extends ConfigTestElement
     private String redisKey;
     private String variableNames;
     private String delimiter;
-    private GetMode getMode;
     private boolean recycleDataOnUse;
     private RedisDataType redisDataType;
     
@@ -182,7 +168,7 @@ public class RedisDataSet extends ConfigTestElement
                 throw new JMeterStopThreadException("End of redis data detected, thread will exit");
             }
 
-            if (getMode.equals(GetMode.RANDOM_KEEP)) {
+            if (getRecycleDataOnUse()) {
                 addDataToConnection(connection, redisKey, line);
             }
 
@@ -238,27 +224,7 @@ public class RedisDataSet extends ConfigTestElement
     public void setProperty(JMeterProperty property) {
         if (property instanceof StringProperty) {
             final String pn = property.getName();
-            if (pn.equals("getMode")) {
-                final Object objectValue = property.getObjectValue();
-                try {
-                    final BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());
-                    final ResourceBundle rb = (ResourceBundle) beanInfo.getBeanDescriptor().getValue(GenericTestBeanCustomizer.RESOURCE_BUNDLE);
-                    for(Enum<GetMode> e : GetMode.values()) {
-                        final String propName = e.toString();
-                        if (objectValue.equals(rb.getObject(propName))) {
-                            final int tmpMode = e.ordinal();
-                            if (log.isDebugEnabled()) {
-                                log.debug("Converted " + pn + "=" + objectValue + " to mode=" + tmpMode  + " using Locale: " + rb.getLocale());
-                            }
-                            super.setProperty(pn, tmpMode);
-                            return;
-                        }
-                    }
-                    log.warn("Could not convert " + pn + "=" + objectValue + " using Locale: " + rb.getLocale());
-                } catch (IntrospectionException e) {
-                    log.error("Could not find BeanInfo", e);
-                }
-            } else if (pn.equals("whenExhaustedAction")) {
+            if (pn.equals("whenExhaustedAction")) {
                 final Object objectValue = property.getObjectValue();
                 try {
                     final BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());
@@ -617,14 +583,6 @@ public class RedisDataSet extends ConfigTestElement
     public void setSoftMinEvictableIdleTimeMillis(
             long softMinEvictableIdleTimeMillis) {
         this.softMinEvictableIdleTimeMillis = softMinEvictableIdleTimeMillis;
-    }
-    
-    public int getGetMode() {
-        return getMode.ordinal();
-    }
-
-    public void setGetMode(int mode) {
-        this.getMode = GetMode.values()[mode];
     }
 
     /**

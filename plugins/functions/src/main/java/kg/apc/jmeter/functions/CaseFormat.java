@@ -1,9 +1,10 @@
 package kg.apc.jmeter.functions;
 
 import java.util.Collection;
-import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -94,7 +95,7 @@ public class CaseFormat extends AbstractFunction {
 	protected String changeCase(String originalString, String mode) {
 		String targetString = originalString;
 		// mode is case insensitive, allow upper for example
-		CaseFormatMode changeCaseMode = CaseFormatMode.typeOf(mode.toUpperCase());
+		CaseFormatMode changeCaseMode = CaseFormatMode.get(mode.toUpperCase());
 		if (changeCaseMode != null) {
 			switch (changeCaseMode) {
 			case LOWER_CAMEL_CASE:
@@ -206,9 +207,15 @@ public class CaseFormat extends AbstractFunction {
 				"SPINAL_CASE"), LOWER_HYPHEN("LOWER_HYPHEN"), LOWER_UNDERSCORE("LOWER_UNDERSCORE"), UPPER_UNDERSCORE("UPPER_UNDERSCORE"), TRAIN_CASE("TRAIN_CASE"); //$NON-NLS-1$
 
 		private String mode;
-
+		
+                public static class Holder {
+			static Map<String, CaseFormatMode> valueMap = new HashMap<>();
+			private Holder() { }
+	        }
+		
 		private CaseFormatMode(String mode) {
 			this.mode = mode;
+			Holder.valueMap.put(mode, this); 
 		}
 
 		public String getName() {
@@ -221,14 +228,8 @@ public class CaseFormat extends AbstractFunction {
 		 * @param mode
 		 * @return relevant CamelCaseMode
 		 */
-		public static CaseFormatMode typeOf(String mode) {
-			EnumSet<CaseFormatMode> caseFormatModes = EnumSet.allOf(CaseFormatMode.class);
-			for (CaseFormatMode caseFormatMode : caseFormatModes) {
-				if (caseFormatMode.getName().equals(mode)) {
-					return caseFormatMode;
-				}
-			}
-			return null;
+		public static CaseFormatMode get(String mode) {
+			return Holder.valueMap.get(mode);
 		}
 	}
 

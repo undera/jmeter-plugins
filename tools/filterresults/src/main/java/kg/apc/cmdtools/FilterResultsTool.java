@@ -3,6 +3,7 @@ package kg.apc.cmdtools;
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
+import kg.apc.logging.LoggingUtils;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
@@ -21,8 +22,8 @@ public class FilterResultsTool extends AbstractCMDTool {
     public FilterResultsTool() {
         super();
         JMeterPluginsUtils.prepareJMeterEnv(UniversalRunner.getJARLocation());
+        LoggingUtils.addLoggingConfig();
         filterResults = new FilterResults();
-
     }
 
     @Override

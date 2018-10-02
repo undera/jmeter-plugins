@@ -209,7 +209,7 @@ public class CaseFormat extends AbstractFunction {
 		private String mode;
 		
                 public static class Holder {
-			static Map<String, CaseFormatMode> valueMap = new HashMap<>();
+			private static Map<String, CaseFormatMode> valueMap = new HashMap<>();
 			private Holder() { }
 	        }
 		

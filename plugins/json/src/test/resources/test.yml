@@ -1,0 +1,7 @@
+# Yaml for test
+developers: # all the contributors here
+  - rultor # bot used for devops
+  - salikjan
+  - sherif
+architect: mihai
+name: camel

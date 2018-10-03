@@ -15,11 +15,17 @@
  */
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class JSONPathAssertionTest {
 
@@ -69,7 +75,7 @@ public class JSONPathAssertionTest {
         System.out.println("isJsonValidationBool");
         JSONPathAssertion instance = new JSONPathAssertion();
         boolean result = instance.isJsonValidationBool();
-        assertEquals(false, result);
+        assertFalse(result);
     }
 
     @Test
@@ -85,7 +91,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(false, result.isFailure());
+        assertFalse(result.isFailure());
     }
 
     @Test
@@ -101,11 +107,11 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(false, result.isFailure());
+        assertFalse(result.isFailure());
 
         samplerResult.setResponseData("{\"myval\": 456}".getBytes());
         AssertionResult result2 = instance.getResult(samplerResult);
-        assertEquals(false, result2.isFailure());
+        assertFalse(result2.isFailure());
     }
 
     @Test
@@ -121,7 +127,7 @@ public class JSONPathAssertionTest {
         instance.setInvert(true);
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
-        assertEquals(true, result.isFailure());
+        assertTrue(result.isFailure());
         assertEquals(expResult.getName(), result.getName());
     }
 
@@ -136,11 +142,11 @@ public class JSONPathAssertionTest {
         instance.setJsonValidationBool(true);
         instance.setExpectedValue("some.+");
         AssertionResult result = instance.getResult(samplerResult);
-        assertEquals(false, result.isFailure());
+        assertFalse(result.isFailure());
 
         instance.setIsRegex(false);
         AssertionResult result2 = instance.getResult(samplerResult);
-        assertEquals(true, result2.isFailure());
+        assertTrue(result2.isFailure());
     }
 
     @Test
@@ -156,7 +162,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(true, result.isFailure());
+        assertTrue(result.isFailure());
     }
 
     @Test
@@ -172,7 +178,7 @@ public class JSONPathAssertionTest {
         instance.setInvert(true);
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
-        assertEquals(false, result.isFailure());
+        assertFalse(result.isFailure());
         assertEquals(expResult.getName(), result.getName());
     }
 
@@ -189,7 +195,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(false, result.isFailure());
+        assertFalse(result.isFailure());
     }
 
     @Test
@@ -205,7 +211,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(true, result.isFailure());
+        assertTrue(result.isFailure());
     }
 
     @Test
@@ -220,7 +226,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(false, result.isFailure());
+        assertFalse(result.isFailure());
     }
 
     @Test
@@ -235,7 +241,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(true, result.isFailure());
+        assertTrue(result.isFailure());
     }
 
     @Test
@@ -251,7 +257,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(false, result.isFailure());
+        assertFalse(result.isFailure());
     }
 
     @Test
@@ -267,7 +273,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(true, result.isFailure());
+        assertTrue(result.isFailure());
     }
 
     @Test
@@ -282,7 +288,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(false, result.isFailure());
+        assertFalse(result.isFailure());
     }
 
     @Test
@@ -298,7 +304,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(false, result.isFailure());
+        assertFalse(result.isFailure());
     }
 
     @Test
@@ -314,7 +320,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(false, result.isFailure());
+        assertTrue(result.isFailure());
     }
 
     @Test
@@ -331,7 +337,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(true, result.isFailure());
+        assertTrue(result.isFailure());
     }
 
     @Test
@@ -350,7 +356,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(true, result.isFailure());
+        assertTrue(result.isFailure());
         assertEquals("Value expected to match regexp '{headerkey=header value}', but it did not match: '{\"headerkey\":\"header value\"}'", result.getFailureMessage());
     }
 
@@ -382,7 +388,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(false, result.isFailure());
+        assertFalse(result.isFailure());
     }
 
     @Test
@@ -401,6 +407,90 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertEquals(false, result.isFailure());
+        assertFalse(result.isFailure());
+    }
+
+    @Test
+    public void testYamlAssertion() throws IOException {
+        File test = new File(getClass().getResource("/test1.yml").getPath());
+        String response = FileUtils.readFileToString(test);
+
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData(response.getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setInputFormat(JSONPathAssertion.INPUT_YAML);
+        instance.setJsonPath("$.execution[*].concurrency");
+        instance.setJsonValidationBool(true);
+        instance.setIsRegex(false);
+        instance.setExpectedValue("100");
+
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertFalse(result.isFailure());
+    }
+
+    @Test
+    public void testYamlAssertion2() throws IOException {
+        File test = new File(getClass().getResource("/test1.yml").getPath());
+        String response = FileUtils.readFileToString(test);
+
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData(response.getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setInputFormat(JSONPathAssertion.INPUT_YAML);
+        instance.setJsonPath("$.scenarios.quick-test.requests[0]");
+        instance.setJsonValidationBool(true);
+        instance.setIsRegex(false);
+        instance.setExpectedValue("http://blazedemo.com");
+
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertFalse(result.isFailure());
+    }
+
+    @Test
+    public void testYamlAssertion3() throws IOException {
+        File test = new File(getClass().getResource("/test1.yml").getPath());
+        String response = FileUtils.readFileToString(test);
+
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData(response.getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setInputFormat(JSONPathAssertion.INPUT_YAML);
+        instance.setJsonPath("$.name");
+        instance.setJsonValidationBool(true);
+        instance.setIsRegex(false);
+        instance.setExpectedValue("camel");
+
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertFalse(result.isFailure());
+    }
+
+    @Test
+    public void testYamlAssertion4() throws IOException {
+        File test = new File(getClass().getResource("/test.yml").getPath());
+        String response = FileUtils.readFileToString(test);
+
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData(response.getBytes());
+
+        JSONPathAssertion instance = new JSONPathAssertion();
+        instance.setInputFormat(JSONPathAssertion.INPUT_YAML);
+        instance.setJsonPath("$.developers");
+        instance.setJsonValidationBool(true);
+        instance.setIsRegex(false);
+        instance.setExpectedValue("[\"rultor\",\"salikjan\",\"sherif\"]");
+
+        AssertionResult expResult = new AssertionResult("");
+        AssertionResult result = instance.getResult(samplerResult);
+        assertEquals(expResult.getName(), result.getName());
+        assertFalse(result.isFailure());
     }
 }

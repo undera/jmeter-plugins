@@ -11,6 +11,7 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.gui;
 import com.atlantbh.jmeter.plugins.jsonutils.jsonpathassertion.JSONPathAssertion;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.assertions.gui.AbstractAssertionGui;
+import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jorphan.gui.JLabeledTextArea;
@@ -20,6 +21,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.util.Enumeration;
 
 /**
  * Java class representing GUI for the JSON Path Assertion component in JMeter
@@ -35,6 +37,9 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
     private JCheckBox invert = null;
     private static final String WIKIPAGE = "JSONPathAssertion";
     private JCheckBox isRegex;
+    protected ButtonGroup inputFormatGroup = new ButtonGroup();
+    protected JRadioButton inputJSON = new JRadioButton("JSON");
+    protected JRadioButton inputYAML = new JRadioButton("YAML");
 
     public JSONPathAssertionGui() {
         init();
@@ -48,6 +53,19 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
         VerticalPanel panel = new VerticalPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
+        JPanel groupPanel = new HorizontalPanel();
+        inputJSON.setActionCommand(JSONPathAssertion.INPUT_JSON);
+        inputYAML.setActionCommand(JSONPathAssertion.INPUT_YAML);
+        inputJSON.addChangeListener(this);
+        inputYAML.addChangeListener(this);
+        inputFormatGroup.add(inputJSON);
+        inputFormatGroup.add(inputYAML);
+        groupPanel.add(inputJSON);
+        groupPanel.add(inputYAML);
+        JPanel inputFormatPanel = new HorizontalPanel();
+        inputFormatPanel.add(new JLabel("Input Format: "));
+        inputFormatPanel.add(groupPanel);
+
         jsonPath = new JLabeledTextField("Assert JSON Path exists: ");
         jsonValidation = new JCheckBox("Additionally assert value");
         isRegex = new JCheckBox("Match as regular expression");
@@ -58,6 +76,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
         jsonValidation.addChangeListener(this);
         expectNull.addChangeListener(this);
 
+        panel.add(inputFormatPanel);
         panel.add(jsonPath);
         panel.add(jsonValidation);
         panel.add(isRegex);
@@ -77,6 +96,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
         expectNull.setSelected(false);
         invert.setSelected(false);
         isRegex.setSelected(true);
+        inputJSON.setSelected(true);
     }
 
     @Override
@@ -108,6 +128,9 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
             jpAssertion.setExpectNull(expectNull.isSelected());
             jpAssertion.setInvert(invert.isSelected());
             jpAssertion.setIsRegex(isRegex.isSelected());
+            if (inputFormatGroup.getSelection() != null) {
+                jpAssertion.setInputFormat(inputFormatGroup.getSelection().getActionCommand());
+            }
         }
     }
 
@@ -121,6 +144,14 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
         expectNull.setSelected(jpAssertion.isExpectNull());
         invert.setSelected(jpAssertion.isInvert());
         isRegex.setSelected(jpAssertion.isUseRegex());
+
+        Enumeration<AbstractButton> it = inputFormatGroup.getElements();
+        while (it.hasMoreElements()) {
+            AbstractButton btn = it.nextElement();
+            if (btn.getActionCommand().equals(jpAssertion.getInputFormat())) {
+                btn.setSelected(true);
+            }
+        }
     }
 
     @Override

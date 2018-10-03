@@ -37,9 +37,9 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
     private JCheckBox invert = null;
     private static final String WIKIPAGE = "JSONPathAssertion";
     private JCheckBox isRegex;
-    protected ButtonGroup inputFormatGroup = new ButtonGroup();
-    protected JRadioButton inputJSON = new JRadioButton("JSON");
-    protected JRadioButton inputYAML = new JRadioButton("YAML");
+    private ButtonGroup inputFormatGroup = new ButtonGroup();
+    private JRadioButton inputJSON = new JRadioButton("JSON");
+    private JRadioButton inputYAML = new JRadioButton("YAML");
 
     public JSONPathAssertionGui() {
         init();
@@ -56,8 +56,6 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
         JPanel groupPanel = new HorizontalPanel();
         inputJSON.setActionCommand(JSONPathAssertion.INPUT_JSON);
         inputYAML.setActionCommand(JSONPathAssertion.INPUT_YAML);
-        inputJSON.addChangeListener(this);
-        inputYAML.addChangeListener(this);
         inputFormatGroup.add(inputJSON);
         inputFormatGroup.add(inputYAML);
         groupPanel.add(inputJSON);

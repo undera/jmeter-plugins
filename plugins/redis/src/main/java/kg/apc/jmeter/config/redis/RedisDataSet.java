@@ -68,12 +68,12 @@ public class RedisDataSet extends ConfigTestElement
     }
 
     public enum RedisDataType {
-        REDIS_DATA_TYPE_LIST((byte)0),
-        REDIS_DATA_TYPE_SET((byte)1);
+        REDIS_DATA_TYPE_LIST(0),
+        REDIS_DATA_TYPE_SET(1);
 
-        private byte value;
-        private RedisDataType(byte value) { this.value = value; }
-        public byte getValue() { return value; }
+        private int value;
+        private RedisDataType(int value) { this.value = value; }
+        public int getValue() { return value; }
     }
 
     /**
@@ -125,7 +125,6 @@ public class RedisDataSet extends ConfigTestElement
                 // Get data from list's head
                 line = conn.lpop(key);
             } else if (redisDataType.equals(RedisDataType.REDIS_DATA_TYPE_SET)) {
-                // FIXME TODO Check if select randomly
                 log.debug("Executing spop against redis set");
                 line = conn.spop(key);
             } else {
@@ -614,6 +613,12 @@ public class RedisDataSet extends ConfigTestElement
      * @param dataType
      */
     public void setRedisDataType(int dataType) {
-        this.redisDataType = RedisDataType.values()[dataType];
+        try {
+            this.redisDataType = RedisDataType.values()[dataType];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Default to List
+            this.redisDataType = RedisDataSet.RedisDataType.REDIS_DATA_TYPE_LIST;
+
+        }
     }
 }

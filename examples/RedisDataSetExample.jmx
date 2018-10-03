@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="2.6" jmeter="2.10-SNAPSHOT.20131219">
+<jmeterTestPlan version="1.2" properties="4.0" jmeter="4.0 r1823414">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -14,7 +14,7 @@
       <kg.apc.jmeter.config.redis.RedisDataSet guiclass="TestBeanGUI" testclass="kg.apc.jmeter.config.redis.RedisDataSet" testname="RedisDataSet" enabled="true">
         <stringProp name="database">0</stringProp>
         <stringProp name="delimiter">,</stringProp>
-        <intProp name="getMode">0</intProp>
+        <intProp name="getMode">1</intProp>
         <stringProp name="host">localhost</stringProp>
         <intProp name="maxActive">20</intProp>
         <intProp name="maxIdle">10</intProp>
@@ -24,7 +24,7 @@
         <intProp name="numTestsPerEvictionRun">0</intProp>
         <stringProp name="password"></stringProp>
         <stringProp name="port">6379</stringProp>
-        <stringProp name="redisKey">ccList</stringProp>
+        <stringProp name="redisKey">ccSet</stringProp>
         <longProp name="softMinEvictableIdleTimeMillis">60000</longProp>
         <boolProp name="testOnBorrow">false</boolProp>
         <boolProp name="testOnReturn">false</boolProp>
@@ -33,6 +33,8 @@
         <stringProp name="timeout">2000</stringProp>
         <stringProp name="variableNames">cardNumber</stringProp>
         <intProp name="whenExhaustedAction">2</intProp>
+        <intProp name="redisDataType">1</intProp>
+        <boolProp name="recycleDataOnUse">true</boolProp>
       </kg.apc.jmeter.config.redis.RedisDataSet>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">

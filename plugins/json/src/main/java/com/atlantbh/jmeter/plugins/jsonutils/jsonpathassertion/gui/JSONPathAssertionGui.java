@@ -112,7 +112,7 @@ public class JSONPathAssertionGui extends AbstractAssertionGui implements Change
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("JSON Path Assertion");
+        return JMeterPluginsUtils.prefixLabel("JSON/YAML Path Assertion");
     }
 
     @Override

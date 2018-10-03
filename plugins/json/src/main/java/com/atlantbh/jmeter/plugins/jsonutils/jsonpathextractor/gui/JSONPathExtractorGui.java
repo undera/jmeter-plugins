@@ -152,7 +152,7 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("JSON Path Extractor");
+        return JMeterPluginsUtils.prefixLabel("JSON/YAML Path Extractor");
     }
 
     @Override

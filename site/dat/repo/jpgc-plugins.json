@@ -323,8 +323,8 @@
   },
   {
     "id": "jpgc-json",
-    "name": "JSON Plugins (deprecated)",
-    "description": "[Deprecated in favor of core JMeter 4.0+] Allows extracting values from JSON responses using JSONPath syntax. Also ships JSONPath Assertion.",
+    "name": "JSON/YAML Plugins (deprecated)",
+    "description": "[Deprecated in favor of core JMeter 4.0+] Allows extracting values from JSON/YAML responses using JSONPath syntax. Also ships JSONPath Assertion.",
     "screenshotUrl": "https://jmeter-plugins.org/img/wiki/JSONPathExtractor.png",
     "helpUrl": "https://jmeter-plugins.org/wiki/JSONPathExtractor/",
     "vendor": "JMeter-Plugins.org",
@@ -386,6 +386,18 @@
           "json-lib": "http://search.maven.org/remotecontent?filepath=net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
           "json-smart": "http://search.maven.org/remotecontent?filepath=net/minidev/json-smart/2.3/json-smart-2.3.jar",
           "asm": "http://search.maven.org/remotecontent?filepath=net/minidev/asm/1.0.2/asm-1.0.2.jar"
+        }
+      },
+      "2.7": {
+        "changes": "Added YAML path extractor and assertion",
+        "downloadUrl": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-json/2.7/jmeter-plugins-json-2.7.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "http://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
+          "json-path": "http://search.maven.org/remotecontent?filepath=com/jayway/jsonpath/json-path/2.4.0/json-path-2.4.0.jar",
+          "json-lib": "http://search.maven.org/remotecontent?filepath=net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
+          "json-smart": "http://search.maven.org/remotecontent?filepath=net/minidev/json-smart/2.3/json-smart-2.3.jar",
+          "asm": "http://search.maven.org/remotecontent?filepath=net/minidev/asm/1.0.2/asm-1.0.2.jar",
+          "snakeyaml" : "http://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.21/snakeyaml-1.21.jar"
         }
       }
     }

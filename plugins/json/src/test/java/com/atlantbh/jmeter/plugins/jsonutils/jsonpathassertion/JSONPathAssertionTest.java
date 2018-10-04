@@ -320,7 +320,7 @@ public class JSONPathAssertionTest {
         AssertionResult expResult = new AssertionResult("");
         AssertionResult result = instance.getResult(samplerResult);
         assertEquals(expResult.getName(), result.getName());
-        assertTrue(result.isFailure());
+        assertFalse(result.isFailure());
     }
 
     @Test

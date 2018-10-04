@@ -1,4 +1,4 @@
-= JSON Path Assertion =
+= JSON/YAML Path Assertion =
 
 <span class=''>[/?search=jpgc-json <i class='fa fa-download'></i> Download]</span>
 
@@ -8,7 +8,7 @@ then merged into JP@GC, and reworked significantly in v.1.2.1</i>
 
 == Description ==
 
-This component allows you to perform validations of JSON documents.
+This component allows you to perform validations of JSON or YAML documents (Use {{{Input Format}}} radio buttons for switch between JSON/YAML.).
 
 First, it will parse the JSON and fail if the data is not JSON.
 

@@ -90,5 +90,14 @@
             <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
             <version>0.3</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/ai.grakn/redis-mock -->
+        <dependency>
+            <groupId>ai.grakn</groupId>
+            <artifactId>redis-mock</artifactId>
+            <version>0.1.6</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 </project>

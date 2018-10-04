@@ -97,7 +97,8 @@ public class RedisDataSetBeanInfo extends BeanInfoSupport {
             // What type of data is in the Redis store under this key (list or set). Defaults to list
             p = property(REDIS_DATA_TYPE, RedisDataSet.RedisDataType.class);
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);
-            //p.setValue(NOT_EXPRESSION, Boolean.TRUE);
+            p.setValue(NOT_EXPRESSION, Boolean.TRUE);
+            p.setValue(NOT_OTHER, Boolean.TRUE);
             p.setValue(DEFAULT, RedisDataSet.RedisDataType.REDIS_DATA_TYPE_LIST.ordinal());
             
             createPropertyGroup("redis_connection",             

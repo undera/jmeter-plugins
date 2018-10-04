@@ -68,11 +68,11 @@ public class RedisDataSet extends ConfigTestElement
     }
 
     public enum RedisDataType {
-        REDIS_DATA_TYPE_LIST(0),
-        REDIS_DATA_TYPE_SET(1);
+        REDIS_DATA_TYPE_LIST((byte)0),
+        REDIS_DATA_TYPE_SET((byte)1);
 
-        private int value;
-        private RedisDataType(int value) { this.value = value; }
+        private byte value;
+        RedisDataType(byte value) { this.value = value; }
         public int getValue() { return value; }
     }
 
@@ -87,23 +87,26 @@ public class RedisDataSet extends ConfigTestElement
     public static final Integer DEFAULT_TIMEOUT = Protocol.DEFAULT_TIMEOUT;
     public static final Integer DEFAULT_DATABASE = Protocol.DEFAULT_DATABASE;
 
-    private String host;
-    private String port;
-    private String timeout;
+    /* Connection configuration */
+    private String host = "localhost";
+    private String port = String.valueOf(DEFAULT_PORT);
+    private String timeout = String.valueOf(DEFAULT_TIMEOUT);
     private String password;
-    private String database;
+    private String database = String.valueOf(DEFAULT_DATABASE);
 
+    /* Data configuration */
     private String redisKey;
     private String variableNames;
-    private String delimiter;
-    private boolean recycleDataOnUse;
-    private RedisDataType redisDataType;
-    
+    private String delimiter = ",";
+    private boolean recycleDataOnUse = true;
+    private RedisDataType redisDataType = RedisDataType.REDIS_DATA_TYPE_LIST;
+
+    /* Pool configuration */
     private int maxIdle;
     private int minIdle;
     private int maxActive;
     private long maxWait;
-    private WhenExhaustedAction whenExhaustedAction;
+    private WhenExhaustedAction whenExhaustedAction = WhenExhaustedAction.GROW;
     private boolean testOnBorrow;
     private boolean testOnReturn;
     private boolean testWhileIdle;
@@ -164,7 +167,7 @@ public class RedisDataSet extends ConfigTestElement
             String line = getDataFromConnection(connection, redisKey);
 
             if(line == null) { // i.e. no more data (nil)
-                throw new JMeterStopThreadException("End of redis data detected, thread will exit");
+                throw new JMeterStopThreadException("End of redis data detected");
             }
 
             if (getRecycleDataOnUse()) {

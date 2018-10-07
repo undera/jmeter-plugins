@@ -10,11 +10,13 @@ package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.gui;
 
 import com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor.JSONPathExtractor;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.processor.gui.AbstractPostProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Enumeration;
 
 /**
  * This is JSONPath extractor GUI class which contains necessary methods for
@@ -31,6 +33,9 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
     private JRadioButton useVariable;
     private ButtonGroup group;
     private JTextField srcVariableName;
+    private ButtonGroup inputFormatGroup = new ButtonGroup();
+    private JRadioButton inputJSON = new JRadioButton("JSON");
+    private JRadioButton inputYAML = new JRadioButton("YAML");
 
     public JSONPathExtractorGui() {
         super();
@@ -61,14 +66,29 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
         editConstraints.weightx = 1.0;
         editConstraints.fill = GridBagConstraints.HORIZONTAL;
 
-        addToPanel(mainPanel, labelConstraints, 0, 1, new JLabel("Destination Variable Name: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 1, variableNameTextField = new JTextField(20));
+        JPanel groupPanel = new HorizontalPanel();
+        inputJSON.setActionCommand(JSONPathExtractor.INPUT_JSON);
+        inputYAML.setActionCommand(JSONPathExtractor.INPUT_YAML);
+        inputFormatGroup.add(inputJSON);
+        inputFormatGroup.add(inputYAML);
+        groupPanel.add(inputJSON);
+        groupPanel.add(inputYAML);
 
-        addToPanel(mainPanel, labelConstraints, 0, 2, new JLabel("JSONPath Expression: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 2, jsonPathTextField = new JTextField(20));
+        int row = 1;
+        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Input Format: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, row, groupPanel);
+        row++;
 
-        addToPanel(mainPanel, labelConstraints, 0, 3, new JLabel("Default Value: ", JLabel.RIGHT));
-        addToPanel(mainPanel, editConstraints, 1, 3, defaultValTextField = new JTextField(20));
+        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Destination Variable Name: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, row, variableNameTextField = new JTextField(20));
+        row++;
+
+        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("JSONPath Expression: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, row, jsonPathTextField = new JTextField(20));
+        row++;
+
+        addToPanel(mainPanel, labelConstraints, 0, row, new JLabel("Default Value: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, row, defaultValTextField = new JTextField(20));
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);
@@ -114,6 +134,7 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
         defaultValTextField.setText("");
         srcVariableName.setText("");
         useBody.setSelected(true);
+        inputJSON.setSelected(true);
     }
 
     @Override
@@ -131,7 +152,7 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("JSON Path Extractor");
+        return JMeterPluginsUtils.prefixLabel("JSON/YAML Path Extractor");
     }
 
     @Override
@@ -144,6 +165,9 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
             extractor.setDefaultValue(defaultValTextField.getText());
             extractor.setSrcVariableName(srcVariableName.getText());
             extractor.setSubject(group.getSelection().getActionCommand());
+            if (inputFormatGroup.getSelection() != null) {
+                extractor.setInputFormat(inputFormatGroup.getSelection().getActionCommand());
+            }
         }
     }
 
@@ -160,6 +184,13 @@ public class JSONPathExtractorGui extends AbstractPostProcessorGui {
                 useVariable.setSelected(true);
             } else {
                 useBody.setSelected(true);
+            }
+            Enumeration<AbstractButton> it = inputFormatGroup.getElements();
+            while (it.hasMoreElements()) {
+                AbstractButton btn = it.nextElement();
+                if (btn.getActionCommand().equals(extractor.getInputFormat())) {
+                    btn.setSelected(true);
+                }
             }
         }
     }

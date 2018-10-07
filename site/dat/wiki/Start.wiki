@@ -86,11 +86,11 @@
 == Post-Processors ==
   * [XMLFormatPostProcessor XML Format PostProcessor]
   * [JSONToXMLConverter JSON To XML Converter]
-  * [JSONPathExtractor JSON Path Extractor]
+  * [JSONPathExtractor JSON/YAML Path Extractor]
   * [JSONFormatter JSON Formatter PostProcessor]
 
 == Assertions ==
-  * [JSONPathAssertion JSON Path Assertion]
+  * [JSONPathAssertion JSON/YAML Path Assertion]
 
 ----
 

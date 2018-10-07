@@ -190,7 +190,7 @@
   {
     "id": "tilln-wssecurity",
     "name": "WS Security for SOAP",
-    "description": "Digital signature, encryption, decryption and username token for SOAP messages via Pre/Post-Processors that modify sampler payloads/responses.",
+    "description": "Digital signature, encryption, decryption, timestamp and username token for SOAP messages via Pre/Post-Processors that modify sampler payloads/responses.",
     "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-wssecurity/master/docs/signature.png",
     "helpUrl": "https://github.com/tilln/jmeter-wssecurity",
     "vendor": "Till Neunast",
@@ -260,6 +260,18 @@
           "wss4j-ws-security-dom": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-dom/2.1.8/wss4j-ws-security-dom-2.1.8.jar",
           "wss4j-ws-security-common": "http://central.maven.org/maven2/org/apache/wss4j/wss4j-ws-security-common/2.1.8/wss4j-ws-security-common-2.1.8.jar",
           "xmlsec": "http://central.maven.org/maven2/org/apache/santuario/xmlsec/2.0.8/xmlsec-2.0.8.jar"
+        }
+      },
+      "1.6": {
+        "changes": "<ul><li>Support for signing/encrypting/decrypting attachments</li><li>Upgrade to wss4j v2.2</li><li>Support for TCP Sampler, SMTP Sampler</li><li>New options:</li><ul><li>Header: Actor, mustUnderstand</li><li>Parts to Sign/Encrypt: ID</li></ul><li>Removed options:</li><ul><li>Signature algorithm http://www.w3.org/2001/04/xmldsig-more#rsa-ripemd160</li><li>Digest algorithm http://www.w3.org/2001/04/xmlenc#ripemd160</li><li>Key encryption algorithm http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p</li></ul></ul>",
+        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.6/jmeter-wssecurity-1.6.jar",
+        "depends": [
+          "jmeter-core"
+        ],
+        "libs": {
+          "wss4j-ws-security-dom": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-dom/2.2.2/wss4j-ws-security-dom-2.2.2.jar",
+          "wss4j-ws-security-common": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-common/2.2.2/wss4j-ws-security-common-2.2.2.jar",
+          "xmlsec": "https://search.maven.org/remotecontent?filepath=org/apache/santuario/xmlsec/2.1.2/xmlsec-2.1.2.jar"
         }
       }
     }

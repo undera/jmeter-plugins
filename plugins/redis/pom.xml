@@ -12,7 +12,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-redis</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.3</version>
 
     <name>Redis</name>
     <description>Redis</description>

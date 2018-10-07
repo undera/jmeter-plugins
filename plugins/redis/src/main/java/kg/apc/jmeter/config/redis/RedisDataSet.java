@@ -44,9 +44,10 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
+import redis.clients.jedis.exceptions.JedisDataException;
 
 /**
- * Redis DataSet using a List. 
+ * Redis DataSet using a Redis Set or List.
  * @since 2.11
  */
 public class RedisDataSet extends ConfigTestElement 
@@ -65,18 +66,14 @@ public class RedisDataSet extends ConfigTestElement
             return value;
         }
     }
-    
-    public enum GetMode {
-        RANDOM_REMOVE((byte)0),
-        RANDOM_KEEP((byte)1);
+
+    public enum RedisDataType {
+        REDIS_DATA_TYPE_LIST((byte)0),
+        REDIS_DATA_TYPE_SET((byte)1);
+
         private byte value;
-        private GetMode(byte value) {
-            this.value = value;
-        }
-        
-        public byte getValue() {
-            return value;
-        }
+        RedisDataType(byte value) { this.value = value; }
+        public int getValue() { return value; }
     }
 
     /**
@@ -90,22 +87,26 @@ public class RedisDataSet extends ConfigTestElement
     public static final Integer DEFAULT_TIMEOUT = Protocol.DEFAULT_TIMEOUT;
     public static final Integer DEFAULT_DATABASE = Protocol.DEFAULT_DATABASE;
 
-    private String host;
-    private String port;
-    private String timeout;
+    /* Connection configuration */
+    private String host = "localhost";
+    private String port = String.valueOf(DEFAULT_PORT);
+    private String timeout = String.valueOf(DEFAULT_TIMEOUT);
     private String password;
-    private String database;
+    private String database = String.valueOf(DEFAULT_DATABASE);
 
+    /* Data configuration */
     private String redisKey;
     private String variableNames;
-    private String delimiter;
-    private GetMode getMode;
-    
+    private String delimiter = ",";
+    private boolean recycleDataOnUse = true;
+    private RedisDataType redisDataType = RedisDataType.REDIS_DATA_TYPE_LIST;
+
+    /* Pool configuration */
     private int maxIdle;
     private int minIdle;
     private int maxActive;
     private long maxWait;
-    private WhenExhaustedAction whenExhaustedAction;
+    private WhenExhaustedAction whenExhaustedAction = WhenExhaustedAction.GROW;
     private boolean testOnBorrow;
     private boolean testOnReturn;
     private boolean testWhileIdle;
@@ -118,20 +119,61 @@ public class RedisDataSet extends ConfigTestElement
     private transient JedisPool pool;
 
 
+    private String getDataFromConnection(Jedis conn, String key) {
+        String line = null;
+
+        try {
+            if (redisDataType == RedisDataType.REDIS_DATA_TYPE_LIST) {
+                log.debug("Executing lpop against redis list");
+                // Get data from list's head
+                line = conn.lpop(key);
+            } else if (redisDataType.equals(RedisDataType.REDIS_DATA_TYPE_SET)) {
+                log.debug("Executing spop against redis set");
+                line = conn.spop(key);
+            } else {
+                log.warn("Unexpected redis datatype: {0}".format(key));
+            }
+        } catch (JedisDataException jde) {
+            log.error("Exception when retrieving data from Redis: " + jde);
+        }
+
+        return line;
+    }
+
+    private void addDataToConnection(Jedis conn, String key, String data) {
+        try {
+            if (redisDataType == RedisDataType.REDIS_DATA_TYPE_LIST) {
+                log.debug("Executing rpush against redis list");
+                // Add data string to list's tail
+                conn.rpush(redisKey, data);
+            } else if (redisDataType == RedisDataType.REDIS_DATA_TYPE_SET) {
+                log.debug("Executing sadd against redis set");
+                conn.sadd(key, data);
+            } else {
+                log.warn("Unexpected redis datatype: {0}".format(key));
+            }
+        } catch (JedisDataException jde) {
+            log.error("Exception when adding data to Redis: " + jde);
+        }
+    }
+
     @Override
     public void iterationStart(LoopIterationEvent event) {
         Jedis connection = null;
         try {
             connection = pool.getResource();
-            String line = null;
-            if(getMode.equals(GetMode.RANDOM_REMOVE)) {
-                line = connection.lpop(redisKey);                
-            } else {
-                line = connection.srandmember(redisKey);
-            }
+
+            // Get data from list's head
+            String line = getDataFromConnection(connection, redisKey);
+
             if(line == null) { // i.e. no more data (nil)
-                throw new JMeterStopThreadException("End of redis data detected, thread will exit");
+                throw new JMeterStopThreadException("End of redis data detected");
             }
+
+            if (getRecycleDataOnUse()) {
+                addDataToConnection(connection, redisKey, line);
+            }
+
             final String names = variableNames;
             if (vars == null) {
                 vars = JOrphanUtils.split(names, ","); 
@@ -184,12 +226,12 @@ public class RedisDataSet extends ConfigTestElement
     public void setProperty(JMeterProperty property) {
         if (property instanceof StringProperty) {
             final String pn = property.getName();
-            if (pn.equals("getMode")) {
+            if (pn.equals("whenExhaustedAction")) {
                 final Object objectValue = property.getObjectValue();
                 try {
                     final BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());
                     final ResourceBundle rb = (ResourceBundle) beanInfo.getBeanDescriptor().getValue(GenericTestBeanCustomizer.RESOURCE_BUNDLE);
-                    for(Enum<GetMode> e : GetMode.values()) {
+                    for(Enum<WhenExhaustedAction> e : WhenExhaustedAction.values()) {
                         final String propName = e.toString();
                         if (objectValue.equals(rb.getObject(propName))) {
                             final int tmpMode = e.ordinal();
@@ -204,19 +246,19 @@ public class RedisDataSet extends ConfigTestElement
                 } catch (IntrospectionException e) {
                     log.error("Could not find BeanInfo", e);
                 }
-            } else if (pn.equals("whenExhaustedAction")) {
+            } else if (pn.equals("redisDataType")) {
                 final Object objectValue = property.getObjectValue();
                 try {
                     final BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());
                     final ResourceBundle rb = (ResourceBundle) beanInfo.getBeanDescriptor().getValue(GenericTestBeanCustomizer.RESOURCE_BUNDLE);
-                    for(Enum<WhenExhaustedAction> e : WhenExhaustedAction.values()) {
+                    for(Enum<RedisDataType> e : RedisDataType.values()) {
                         final String propName = e.toString();
                         if (objectValue.equals(rb.getObject(propName))) {
-                            final int tmpMode = e.ordinal();
+                            final int tmpType = e.ordinal();
                             if (log.isDebugEnabled()) {
-                                log.debug("Converted " + pn + "=" + objectValue + " to mode=" + tmpMode  + " using Locale: " + rb.getLocale());
+                                log.debug("Converted " + pn + "=" + objectValue + " to data type=" + tmpType  + " using Locale: " + rb.getLocale());
                             }
-                            super.setProperty(pn, tmpMode);
+                            super.setProperty(pn, tmpType);
                             return;
                         }
                     }
@@ -544,12 +586,42 @@ public class RedisDataSet extends ConfigTestElement
             long softMinEvictableIdleTimeMillis) {
         this.softMinEvictableIdleTimeMillis = softMinEvictableIdleTimeMillis;
     }
-    
-    public int getGetMode() {
-        return getMode.ordinal();
+
+    /**
+     *
+     * @return
+     */
+    public boolean getRecycleDataOnUse() {
+        return recycleDataOnUse;
     }
 
-    public void setGetMode(int mode) {
-        this.getMode = GetMode.values()[mode];
+    /**
+     *
+     * @param recycleDataOnUse
+     */
+    public void setRecycleDataOnUse(boolean recycleDataOnUse) {
+        this.recycleDataOnUse = recycleDataOnUse;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getRedisDataType() {
+        return redisDataType.ordinal();
+    }
+
+    /**
+     *
+     * @param dataType
+     */
+    public void setRedisDataType(int dataType) {
+        try {
+            this.redisDataType = RedisDataType.values()[dataType];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Default to List
+            this.redisDataType = RedisDataSet.RedisDataType.REDIS_DATA_TYPE_LIST;
+
+        }
     }
 }

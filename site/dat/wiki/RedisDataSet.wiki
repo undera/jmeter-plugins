@@ -4,78 +4,116 @@
 
 == Description ==
 
-Redis Data Set requires JMeter 2.10 or superior.
-Redis Data Set lets you extract data from a Redis source in 2 modes:
-  * RANDOM_REMOVE uses a Redis List, once a value is retrieved it is removed from List, this is useful if you must ensure unique data is used accross test servers 
-  * RANDOM_KEEP uses a Redis Set, retrieved value stays in Set, this is useful if you accept to have duplicate data accross test servers 
+Redis Data Set requests data from a Redis server and converts to JMeter variables. This allows data to be served from a single Redis server across multiple JMeter slave instances during a test, without needing to split the file or handle duplicate rows of data.
 
-To use a Redis Data Set you must at least configure:
-  * Redis Key : The list or set name
-  * Variable Names : The names of variables exported by Data Set to Test elements
-  * Delimiter : Separator used within row stored in Redis List or Set
-  * Get Mode : RANDOM_REMOVE or RANDOM_KEEP
-  * Redis Server Host
-  * Redis Server Port
-  * Data Base name
+The plugin has the following features:
+
+  * Automatic conversion to JMeter variables
+  * Data can be retrieved from a Redis List or Set
+  * Recycle or removal of test data on use
+  * Thread stop when no more data available
+  * Multiple concurrent JMeter clients from a single Redis instance
+  * Support for password-protected Redis instances
+
+Data is loaded to Redis under a key, where each entry is a string that is delimited into one or more variables. See [#loadingDataToRedis Loading Data to Redis] below.
+
+In the following example, there are 2 Redis databases, 0 and 1. Database 0 has 2 index keys, ccKeys and userName.
+
+{{{
++- 0
+   +- ccKeys
+      +- "123456,1234"
+      +- "123457,1235"
+      +- "123458,1236"
+   +- userName
+      +- "user1"
+      +- "user2"
+      +- "user3"
+}}}
+
+== Redis Lists vs Sets ===
+
+List
+* Data retrieved sequentially
+* Supports repeated or duplicate data
+
+Set
+* Data retrieved randomly
+* Data is unique within the set (adding duplicate data is ignored)
+
+[=#Configuration]
+== Configuration ==
 
 [/img/wiki/redis/RedisDataSet.png]
 
-To use RANDOM_REMOVE mode you need to first insert data this way.
+=== Data Configuration ===
 
-Inserting in a Redis List:
+This section describes how the data is stored within Redis and how it should be mapped to JMeter Variables. All options in this section are mandatory.
+
+  * Redis Key : The list or set name
+  * Variable Names : The names of variables exported by Data Set to Test elements. These are the equivalent of CSV column headers in the CSV Data Set.
+  * Delimiter : Separator used within row stored in Redis List or Set
+  * Data Source Type : Whether the data is loaded to Redis as a List or Set
+  * Recycle Data on Use : Whether data can be re-used, or should be removed from Redis on use. If true, then data will be re-used, across multiple iterations, threads and load generators. If false, then data will be *consumed* upon use. Once the data is exhausted, no further iterations will be executed. This is useful if you must ensure unique data is used across load generators.
+
+=== Connection Configuration ===
+
+The following options are mandatory:
+
+  * Redis Server Host : Hostname of the Redis server.
+  * Redis Server Port : This will typically be the standard Redis port 6379.
+  * Database : Redis database, typically set to 0.
+
+The following options are optional:
+
+  * Timeout for connection (ms)
+  * Password for connection : Add password for Redis databases that require authentication
+
+=== Redis Pool Configuration ===
+
+These options are controlled by the Apache Commons Pool library, and are described in more detail in the [https://commons.apache.org/proper/commons-pool/api-1.6/org/apache/commons/pool/impl/GenericObjectPool.html API page for that project].
+
+[=#loadingDataToRedis]
+== Loading Data to Redis ==
+
+It is typically most efficient to load data to Redis using [https://redis.io/topics/mass-insert pipe mode], `redis-cli --pipe`.
+
+An input CSV file that looks like this:
+
 {{{
-        JedisPoolConfig config = new JedisPoolConfig();
-        // Replace by your redis host
-        JedisPool pool = new JedisPool(config, "localhost");
-        Jedis jedis = null;
-        try {
-            jedis = pool.getResource();
-            for (int i = 0; i < 500; i++) {
-                // ccList will be used in Redis Data Set
-                jedis.lpush("ccList", ""+i);            
-            }
-        }finally {  
-            if(jedis != null) {
-                pool.returnResource(jedis);
-            }
-        }
+   ccNum,expiryDate
+   123456,1234
+   123457,1235
+   123458,1236
 }}}
 
-You can then set Redis key to ccList.
+would first need to be converted to a Redis-compatible input format before being loading into a List with an index key ccList:
 
-In the below example, we declare a Redis Data Set which exports cardNumber variable from a ccList and then use it in a Debug Sampler:
+{{{
+LPUSH ccList 123456,1234
+LPUSH ccList 123457,1235
+LPUSH ccList 123458,1236
+}}}
+
+or, in the case of a Set, with an index key ccSet:
+
+{{{
+SADD ccSet 123456,1234
+SADD ccSet 123457,1235
+SADD ccSet 123458,1236
+}}}
+
+In the below example, we declare a Redis Data Set which exports cardNumber variable from a Redis List using a key ccList and then use it in a Debug Sampler:
 
 [/img/wiki/redis/TestPlanWithRedisList.png]
 
-To use RANDOM_GET mode you need to first insert data this way.
+The JMX can be downloaded [/img/examples/RedisDataSetExample.jmx here].
 
-Inserting in a Redis Set:
-{{{
-        JedisPoolConfig config = new JedisPoolConfig();
-        // Replace by your redis host
+[=#TechnicalDetails]
+== Technical Details ==
 
-        JedisPool pool = new JedisPool(config, "localhost");
-        Jedis jedis = null;
-        try {
-            jedis = pool.getResource();
-            for (int i = 0; i < 500; i++) {
-                // ccSet will be used in Redis Data Set
-                jedis.sadd("ccSet", ""+i);            
-            }
-        }finally {  
-            if(jedis != null) {
-                pool.returnResource(jedis);
-            }
-        }
-}}}
+The RedisDataSet uses the [https://github.com/xetorthio/jedis Jedis Java Redis library] for connection and access operations.
 
-You can then set Redis key to ccSet
-In the below example, we declare a Redis Data Set which exports cardNumber variable from a ccSet and then use it in a Debug Sampler:
+For data loaded into a Redis set, RedisDataSet uses [/path/to/redis/url spop] and [https://redis.io/commands/sadd sadd] commands.
 
-[/img/wiki/redis/TestPlanWithRedisSet.png]
-
-
-== Examples ==
-[/img/examples/RedisDataSet-RandomKeep.jmx Example Redis Data Set using RANDOM_GET]
-
-[/img/examples/RedisDataSet-RandomRemove.jmx Example Redis Data Set using RANDOM_REMOVE]
+For data loaded into a Redis list, RedisDataSet uses [https://redis.io/commands/lpop lpop] and [https://redis.io/commands/rpush rpush] commands.

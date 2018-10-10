@@ -16,6 +16,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.*;
 import java.util.Collections;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -173,14 +174,11 @@ public class ChromeDriverConfigTest {
         config.setAndroidEnabled(true);
 
         final Capabilities capabilities = config.createCapabilities();
-        ChromeOptions options = new ChromeOptions();
-        capabilities.getCapability(ChromeOptions.CAPABILITY);
-        options.merge(capabilities);
+        Map<String, Object> options = (Map<String, Object>) capabilities.getCapability(ChromeOptions.CAPABILITY);
         assertThat("ChromeOption expected", options, is(notNullValue()));
 
-        /*Disabled since getExperimentalOption is deprecated*/
-  //        final String androidConfig = (String) options.getExperimentalOption("androidPackage");
-  //        assertThat(androidConfig, is("com.android.chrome"));
+        final String androidConfig = (String) options.get("androidPackage");
+        assertThat(androidConfig, is("com.android.chrome"));
     }
 
     @Test

@@ -4,9 +4,6 @@ import kg.apc.emulators.TestJMeterUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -19,7 +16,6 @@ public class PhantomJSDriverConfigGuiTest {
     @BeforeClass
     public static void setupJMeterEnv() {
         TestJMeterUtils.createJmeterEnv();
-        WebDriverManager.phantomjs().setup();
     }
 
     @Before

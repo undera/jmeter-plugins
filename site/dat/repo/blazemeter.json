@@ -600,5 +600,25 @@
         }
       }
     }
+  },
+  {
+    "id": "bzm-siebel",
+    "name": "Siebel CRM Recorder",
+    "description": "Siebel CRM recorder which provides auto-correlation of variables at recording time",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/SiebelPlugin/master/docs/recorded-samples.png",
+    "helpUrl": "https://github.com/Blazemeter/SiebelPlugin/blob/master/README.md",
+    "vendor": "BlazeMeter.com",
+    "markerClass": "com.blazemeter.jmeter.correlation.CorrelationProxyControl",
+    "componentClasses": [
+      "com.blazemeter.jmeter.correlation.CorrelationProxyControl",
+      "com.blazemeter.jmeter.correlation.CorrelationProxyControlGui",
+      "com.blazemeter.jmeter.correlation.gui.CorrelationRuleTestElement",
+      "com.blazemeter.jmeter.correlation.gui.CorrelationRulesTestElement"
+    ],
+    "versions": {
+      "0.1.0-beta": {
+        "downloadUrl": "https://github.com/Blazemeter/SiebelPlugin/releases/download/v0.1.0-beta/jmeter-bzm-siebel-correlation-0.1.0-beta.jar"
+      }
+    }
   }
 ]

@@ -8,9 +8,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.remote.CapabilityType;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -64,14 +64,14 @@ public class FirefoxDriverConfigTest {
     public void shouldCreateFirefox() throws Exception {
         FirefoxDriver mockFirefoxDriver = Mockito.mock(FirefoxDriver.class);
         whenNew(FirefoxDriver.class)
-            .withParameterTypes(FirefoxBinary.class, FirefoxProfile.class, Capabilities.class)
-            .withArguments(isA(FirefoxBinary.class), isA(FirefoxProfile.class), isA(Capabilities.class))
+            .withParameterTypes(GeckoDriverService.class, FirefoxOptions.class)
+            .withArguments(isA(GeckoDriverService.class), isA(FirefoxOptions.class))
             .thenReturn(mockFirefoxDriver);
 
         final FirefoxDriver browser = config.createBrowser();
 
         assertThat(browser, is(mockFirefoxDriver));
-        verifyNew(FirefoxDriver.class, times(1)).withArguments(isA(FirefoxBinary.class), isA(FirefoxProfile.class), isA(Capabilities.class));
+        verifyNew(FirefoxDriver.class, times(1)).withArguments(isA(GeckoDriverService.class), isA(FirefoxOptions.class));
     }
 
     @Test

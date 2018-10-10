@@ -11,6 +11,7 @@ import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -95,7 +96,7 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
     protected FirefoxDriver createBrowser() {
         FirefoxOptions desiredCapabilities = new FirefoxOptions(createCapabilities());
         desiredCapabilities.setCapability(FirefoxDriver.PROFILE, createProfile());
-        return new FirefoxDriver(new GeckoDriverService.Builder().build(),
+        return new FirefoxDriver(new GeckoDriverService.Builder().usingFirefoxBinary(new FirefoxBinary()).build(),
                 desiredCapabilities);
     }
 

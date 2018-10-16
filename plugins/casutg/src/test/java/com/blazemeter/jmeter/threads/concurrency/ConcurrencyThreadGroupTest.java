@@ -98,6 +98,10 @@ public class ConcurrencyThreadGroupTest {
         ctg.start(1, notifier, hashTree, new StandardJMeterEngine());
 
         ctg.waitThreadsStopped();
+
+        for (SampleEvent event : listener.events) {
+            assertEquals("Before Test Action sampler", event.getResult().getSampleLabel());
+        }
     }
 
     // WAP-9261

@@ -269,9 +269,9 @@
           "jmeter-core"
         ],
         "libs": {
-          "wss4j-ws-security-dom": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-dom/2.2.2/wss4j-ws-security-dom-2.2.2.jar",
-          "wss4j-ws-security-common": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-common/2.2.2/wss4j-ws-security-common-2.2.2.jar",
-          "xmlsec": "https://search.maven.org/remotecontent?filepath=org/apache/santuario/xmlsec/2.1.2/xmlsec-2.1.2.jar"
+          "wss4j-ws-security-dom>=2.2": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-dom/2.2.2/wss4j-ws-security-dom-2.2.2.jar",
+          "wss4j-ws-security-common>=2.2": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-common/2.2.2/wss4j-ws-security-common-2.2.2.jar",
+          "xmlsec>=2.1": "https://search.maven.org/remotecontent?filepath=org/apache/santuario/xmlsec/2.1.2/xmlsec-2.1.2.jar"
         }
       }
     }

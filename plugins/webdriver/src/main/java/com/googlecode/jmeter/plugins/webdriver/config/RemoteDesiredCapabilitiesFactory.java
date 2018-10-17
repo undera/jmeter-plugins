@@ -12,7 +12,7 @@ public class RemoteDesiredCapabilitiesFactory {
 	  if(RemoteCapability.CHROME.equals(capability)){
 		  ChromeOptions options = new ChromeOptions();
 	      desiredCapabilities = DesiredCapabilities.chrome();
-	      desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, options);
+//	      desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, options);
 		  return desiredCapabilities;
 	  } else if (RemoteCapability.FIREFOX.equals(capability)){
 		  FirefoxProfile profile = new FirefoxProfile();

@@ -139,6 +139,38 @@
     }
   },
   {
+    "id": "PepperBox",
+    "name": "Enhanced Kafka Support with customized schema and SASL support",
+    "description": "This plugin provides an easy way to generate load on Kafka with customized schema, high throughput and with popular security protocols",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/GSLabDev/pepper-box",
+    "vendor": "www.gslab.com",
+    "markerClass": "com.gslab.pepper.PepperBoxLoadGenerator.java",
+    "componentClasses": [
+	  "com.gslab.pepper.input.SchemaParser.java",
+	  "com.gslab.pepper.input.SchemaProcessor.java",
+	  "com.gslab.pepper.loadgen.impl.PlaintTextLoadGenerator.java",
+	  "com.gslab.pepper.loadgen.impl.SerializedLoadGenerator.java",
+	  "com.gslab.pepper.model.FieldExpressionMapping.java",
+	  "com.gslab.pepper.sampler.PepperBoxKafkaSampler.java"
+    ],
+    "versions": {
+      "v1.0": {
+        "downloadUrl": "https://github.com/GSLabDev/pepper-box/archive/v1.0.zip",
+        "depends": [
+          "jmeter-java"
+        ],
+        "libs": {
+          "guava": "https://search.maven.org/remotecontent?filepath=com/google/guava/guava/23.6-jre/guava-23.6-jre.jar",
+          "kafka_2.12": "https://search.maven.org/remotecontent?filepath=org/apache/kafka/kafka_2.12/1.0.0/kafka_2.12-1.0.0.jar",
+          "gson": "https://search.maven.org/remotecontent?filepath=com/google/code/gson/gson/2.8.2/gson-2.8.2.jar",
+          "joda-time": "https://search.maven.org/remotecontent?filepath=joda-time/joda-time/2.9.9/joda-time-2.9.9.jar",
+          "minimal-json": "https://search.maven.org/remotecontent?filepath=com/eclipsesource/minimal-json/minimal-json/0.9.5/minimal-json-0.9.5.jar"
+        }
+      }
+    }
+  },
+  {
     "id": "custom-soap",
     "name": "Custom SOAP Sampler",
     "description": "",

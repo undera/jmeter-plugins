@@ -96,7 +96,7 @@ public class VirtualUserController extends GenericController {
                 setDone(true);
             }
         } else {
-            // setDone(true); TODO: do we need it or not  ?
+            reInitialize();
         }
     }
 

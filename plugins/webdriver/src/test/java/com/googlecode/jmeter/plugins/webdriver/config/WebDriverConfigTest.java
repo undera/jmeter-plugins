@@ -19,8 +19,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.SessionNotFoundException;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -418,7 +418,7 @@ public class WebDriverConfigTest {
 
     @Test
     public void shouldHandleScenarioWhenBrowserHasAlreadyQuit() {
-        doThrow(new SessionNotFoundException()).when(browser).quit();
+        doThrow(new SessionNotCreatedException("Session not created")).when(browser).quit();
 
         config.quitBrowser(browser);
 

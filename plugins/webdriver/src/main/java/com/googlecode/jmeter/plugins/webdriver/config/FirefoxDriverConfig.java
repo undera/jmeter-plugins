@@ -1,7 +1,6 @@
 package com.googlecode.jmeter.plugins.webdriver.config;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +13,9 @@ import org.apache.log.Logger;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -63,11 +64,7 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
         for (int i = 0; i < rows.size(); i++) {
             ArrayList row = (ArrayList) rows.get(i).getObjectValue();
             String filename = ((JMeterProperty) row.get(0)).getStringValue();
-            try {
-                profile.addExtension(new File(filename));
-            } catch (IOException e) {
-                log.error("Failed to add extension " + filename, e);
-            }
+            profile.addExtension(new File(filename));
         }
     }
 
@@ -97,7 +94,10 @@ public class FirefoxDriverConfig extends WebDriverConfig<FirefoxDriver> {
 
     @Override
     protected FirefoxDriver createBrowser() {
-        return new FirefoxDriver(new FirefoxBinary(), createProfile(), createCapabilities());
+        FirefoxOptions desiredCapabilities = new FirefoxOptions(createCapabilities());
+        desiredCapabilities.setCapability(FirefoxDriver.PROFILE, createProfile());
+        return new FirefoxDriver(new GeckoDriverService.Builder().usingFirefoxBinary(new FirefoxBinary()).build(),
+                desiredCapabilities);
     }
 
     public void setUserAgentOverride(String userAgent) {

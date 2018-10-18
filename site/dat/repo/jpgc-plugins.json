@@ -762,7 +762,7 @@
       },
       "3.0": {
         "changes": "Upgrade Selenium library to version 3.14.0",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/2.4/jmeter-plugins-webdriver-2.4.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/3.0/jmeter-plugins-webdriver-3.0.jar",
         "libs": {
           "selenium-support": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-support/3.14.0/selenium-support-3.14.0.jar",
           "selenium-api": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-api/3.14.0/selenium-api-3.14.0.jar",

@@ -4,7 +4,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-webdriver</artifactId>
-    <version>2.4</version>
+    <version>3.0</version>
 
     <name>WebDriver/Selenium</name>
     <description>WebDriver/Selenium</description>

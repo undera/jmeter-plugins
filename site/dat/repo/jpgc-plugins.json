@@ -760,8 +760,8 @@
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
       },
-      "2.4": {
-        "changes": "Add vars, props and ctx to Sampler",
+      "3.0": {
+        "changes": "Upgrade Selenium library to version 3.14.0",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/2.4/jmeter-plugins-webdriver-2.4.jar",
         "libs": {
           "selenium-support": "https://search.maven.org/remotecontent?filepath=org/seleniumhq/selenium/selenium-support/3.14.0/selenium-support-3.14.0.jar",

@@ -476,6 +476,10 @@
       "2.5.0": {
         "changes":"Switched to low-level client v6.4 & added custom variables support",
         "downloadUrl":"http://central.maven.org/maven2/io/github/delirius325/jmeter.backendlistener.elasticsearch/2.5.0/jmeter.backendlistener.elasticsearch-2.5.0.jar"
+      },
+      "2.5.1": {
+        "changes":"Added way of adding all response headers as well as request headers as ElasticSearch Index properties. (Basically JSON key/value pairs)",
+        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.5.1/jmeter.backendlistener.elasticsearch-2.5.1.jar"
       }
     }
   }

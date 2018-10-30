@@ -3,7 +3,7 @@ package kg.apc.jmeter.samplers;
 
 import kg.apc.io.BinaryUtils;
 import org.apache.jmeter.protocol.tcp.sampler.TCPClient;
-import org.apache.jmeter.samplers.SampleResult
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jorphan.logging.LoggingManager;
 
 import java.io.ByteArrayOutputStream;

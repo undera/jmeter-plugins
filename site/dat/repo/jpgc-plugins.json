@@ -655,6 +655,14 @@
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
           "jmeter-plugins-common-io": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
         }
+      },
+      "0.4": {
+        "changes": "Fixed bind to local address/port",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-udp/0.4/jmeter-plugins-udp-0.4.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
+          "jmeter-plugins-common-io": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-common-io/0.2/jmeter-plugins-common-io-0.2.jar"
+        }
       }
     }
   },

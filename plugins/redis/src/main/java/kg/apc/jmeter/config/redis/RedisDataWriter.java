@@ -127,7 +127,7 @@ public class RedisDataWriter extends AbstractScopedTestElement implements TestBe
     public void setProperty(JMeterProperty property) {
         if (property instanceof StringProperty) {
             final String pn = property.getName();
-            if (pn.equals("getMode")) {
+            if ("getMode".equals(pn)) {
                 final Object objectValue = property.getObjectValue();
                 try {
                     final BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());

@@ -2,6 +2,7 @@ package kg.apc.cmdtools;
 
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.JMeterPluginsUtils;
+import kg.apc.logging.LoggingUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.JMeter;
 import org.apache.jmeter.assertions.Assertion;
@@ -27,6 +28,7 @@ import org.apache.log.Priority;
 
 import java.io.File;
 import java.io.PrintStream;
+import java.lang.reflect.Constructor;
 import java.util.ListIterator;
 
 public class TestPlanCheckTool extends AbstractCMDTool {
@@ -37,6 +39,7 @@ public class TestPlanCheckTool extends AbstractCMDTool {
     public TestPlanCheckTool() {
         super();
         JMeterPluginsUtils.prepareJMeterEnv(UniversalRunner.getJARLocation());
+        LoggingUtils.addLoggingConfig();
     }
 
     private boolean isStats = false;

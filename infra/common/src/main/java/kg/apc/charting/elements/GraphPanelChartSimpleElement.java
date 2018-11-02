@@ -2,36 +2,28 @@ package kg.apc.charting.elements;
 
 import kg.apc.charting.AbstractGraphPanelChartElement;
 
-/** {@inheritDoc} */
+/**
+ * {@inheritDoc}
+ */
 public class GraphPanelChartSimpleElement
-      extends AbstractGraphPanelChartElement
-{
-   double value = 0;
-   /**
-    *
-    * @param yVal
-    */
-   public GraphPanelChartSimpleElement(double yVal)
-   {
-      add(yVal);
-   }
+        extends AbstractGraphPanelChartElement {
+    double value = 0;
 
-   GraphPanelChartSimpleElement()
-   {
-   }
+    public GraphPanelChartSimpleElement(double yVal) {
+        add(yVal);
+    }
 
-   /**
-    *
-    * @param yVal
-    */
-   public void add(double yVal)
-   {
-      value = yVal;
-   }
+    GraphPanelChartSimpleElement() {
+    }
 
-   /** {@inheritDoc} */
-   public double getValue()
-   {
-      return value;
-   }
+    public void add(double yVal) {
+        value = yVal;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public double getValue() {
+        return value;
+    }
 }

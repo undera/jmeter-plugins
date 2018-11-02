@@ -17,3 +17,21 @@ JVM_ARGS="-Dhttps.proxyHost=myproxy.com -Dhttps.proxyPort=8080 -Dhttp.proxyUser=
 == Network Timeout ==
 
 If you experiencing "Connection Timed Out" errors, try setting property in user.properties file: {{{jpgc.repo.timeout=60000}}}.
+
+
+== SSL Configuration ==
+If  you got an exception {{{javax.net.ssl.SSLException: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty}}} it possible can be fixed by set the path to original cacert certificate file.
+This file can be found in the following paths:
+
+    * /usr/lib/jvm/java-8-oracle/jre/lib/security/cacerts.original
+    * /etc/ssl/certs/java/cacerts.original
+    * /etc/ssl/certs/java/cacerts
+
+And launch JMeter with additional parameters to pass path to this file:
+
+{{{
+JVM_ARGS="-Djavax.net.ssl.trustStore=/usr/lib/jvm/java-8-oracle/jre/lib/security/cacerts.original" jmeter\bin\jmeter.bat
+}}}
+
+
+_Firstly try to set path to cacerts.original file and then path to cacerts file_

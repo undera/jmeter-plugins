@@ -221,20 +221,23 @@ This function provides changing string case format.
 
 Parameters:
   # Original string value  - required
-  # Expected case mode (case insenstive), Default is "LOWER_CAMEL_CASE" (if not valid mode will return string as is)     
+  # Expected case mode (case insenstive), Default is LOWER_CAMEL_CASE (if not valid mode will return string as is)     
   # Optional variable to store result
 
-Example, save in outputVariable value "MyString"
+Example, save in myString Variable value "my-string"
 
-${__caseFormat("myString", "UPPER_CAMEL_CASE", outputVariable);
-
-Will save in outputVariable value "myString"
+${__caseFormat("my String", "LOWER_HYPHEN", myString);
 
 Case modes available:
 
-- Lower camel case, as: lowerCamelCase - name: "LOWER_CAMEL_CASE"
-- Upper camel case, as: UpperCamelCase - name: "UPPER_CAMEL_CASE"
-- Snake or lower underscore case, as: snake_lower_underscore_case - name: "SNAKE_CASE"/"LOWER_UNDERSCORE"
-- Lisp or kebab or spinal or lower hyphen case, as: lis-keba-spinal-lower-case - name: "KEBAB_CASE"/"LISP_CASE"/"SPINAL_CASE"/"LOWER_HYPHEN"
-- Train case, as: TRAIN-CASE - name: "TRAIN_CASE"
-- Upper underscore case, as: UPPER_UNDERSCORE_CASE - name: "UPPER_UNDERSCORE"
+1. LOWER_CAMEL_CASE - Lower camel case, output as: lowerCamelCase 
+
+2. UPPER_CAMEL_CASE - Upper camel case, output as: UpperCamelCase 
+
+3. SNAKE_CASE/LOWER_UNDERSCORE Snake or lower underscore case, output as: snake_lower_underscore_case
+
+4. KEBAB_CASE/LISP_CASE/SPINAL_CASE/LOWER_HYPHEN - Lisp or kebab or spinal or lower hyphen case, output as: lis-keba-spinal-lower-case
+
+5. TRAIN_CASE - Train case, output as: TRAIN-CASE
+
+6. UPPER_UNDERSCORE - Upper underscore case, output as: UPPER_UNDERSCORE_CASE

@@ -18,11 +18,11 @@ import java.io.*;
 import java.util.Collections;
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.matchers.JUnitMatchers.hasItem;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.*;
 import static org.powermock.api.mockito.PowerMockito.verifyNew;
@@ -154,15 +154,30 @@ public class ChromeDriverConfigTest {
         assertThat(capabilities.getCapability(ChromeOptions.CAPABILITY), is(nullValue()));
     }
 
+
+    @Test
+    public void shouldHaveInsecureCertsWhenInsecureCertsIsEnabled() {
+        config.setInsecureCertsEnabled(true);
+        final Capabilities capabilities = config.createCapabilities();
+        assertThat((Boolean) capabilities.getCapability("acceptInsecureCerts"), is(true));
+    }
+
+    @Test
+    public void shouldNotHaveInsecureCertsWhenInsecureCertsIsNotEnabled() {
+        config.setInsecureCertsEnabled(false);
+        final Capabilities capabilities = config.createCapabilities();
+        assertThat(capabilities.getCapability("acceptInsecureCerts"), is(nullValue()));
+    }
+
     @Test
     public void shouldHaveAndroidConfigWhenAndroidIsEnabled() {
         config.setAndroidEnabled(true);
 
         final Capabilities capabilities = config.createCapabilities();
-        ChromeOptions options = (ChromeOptions) capabilities.getCapability(ChromeOptions.CAPABILITY);
+        Map<String, Object> options = (Map<String, Object>) capabilities.getCapability(ChromeOptions.CAPABILITY);
         assertThat("ChromeOption expected", options, is(notNullValue()));
 
-        final String androidConfig = (String) options.getExperimentalOption("androidPackage");
+        final String androidConfig = (String) options.get("androidPackage");
         assertThat(androidConfig, is("com.android.chrome"));
     }
 
@@ -184,5 +199,12 @@ public class ChromeDriverConfigTest {
         assertThat(config.isHeadlessEnabled(), is(false));
         config.setHeadlessEnabled(true);
         assertThat(config.isHeadlessEnabled(), is(true));
+    }
+
+    @Test
+    public void getSetInsecureCertsEnabled() {
+        assertThat(config.isInsecureCertsEnabled(), is(false));
+        config.setInsecureCertsEnabled(true);
+        assertThat(config.isInsecureCertsEnabled(), is(true));
     }
 }

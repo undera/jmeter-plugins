@@ -1,0 +1,25 @@
+= Set Variables Action =
+
+<span class=''>[/?search=jpgc-prmctl <i class='fa fa-download'></i> Download]</span>
+
+Let's create empty test plan and add first Thread Group to it.
+Add a a _Set Variables Actions_ sampler and [http://jmeter.apache.org/usermanual/component_reference.html#Debug_Sampler Debug Sampler] to Thread Group.
+
+Add a [http://jmeter.apache.org/usermanual/component_reference.html#Simple_Controller Simple Controller] to Thread Group,
+then add a _Set Variables Actions_ sampler and [http://jmeter.apache.org/usermanual/component_reference.html#Debug_Sampler Debug Sampler] to Simple Controller.
+Let's rename it to "Step 1" and copy this controller.
+
+Go to first _Set Variables Actions_ sampler and add 2 variables with values,
+e.g. "step=none" and "var=value". Go to the second _Set Variables Actions_ sampler
+and add 2 variables with values, e.g. "step=1" and "var1=value".
+We defined 2 parameters, and our module will be called with their different values.
+
+Add [http://jmeter.apache.org/usermanual/component_reference.html#View_Results_Tree View Results Tree]
+listener to test plan to visualize results. Now your test plan should look like this:
+
+[/img/wiki/setVariablesAction.png]
+
+Run the test. Go to the View Results Tree and investigate Response data tabs for both samples.
+You'll see that step and var1 had different values after each _Set Variables Action_.
+
+[/img/examples/SetVariablesAction.jmx Download Example Test Plan]

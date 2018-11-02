@@ -17,7 +17,7 @@ It gives you the happiness of the "open workload" approach.
 
 == Few Important Notes ==
 
-  # JMeter test will be stopped when RPS schedule finishes.
+  # JMeter threads of Thread Groups in scope of the Element will be stopped when RPS schedule finishes.
   # provide enough working threads for your RPS, JMeter timers can only _delay_ threads (and limit RPS). You may pair this plugin with [ConcurrencyThreadGroup Concurrency Thread Group] using [ThroughputShapingTimer#Schedule-Feedback-Function Schedule Feedback Function] to dynamically maintain thread count required to achieve target RPS.
   # if you're using versions of JMeter lower than 3.3 and if you have RPS that lower at the end of test, make threads to lower also. Оtherwise you'll have a spike in last second.
   # avoid using zero RPS value as start of test, this produce spike also
@@ -38,6 +38,20 @@ Shaping Timer setting in example test plan:
 
 Actual RPS provided:
 [/img/wiki/throughput_shaping_timer2.png]
+
+== Properties exposed by Component ==
+
+The element will export the following properties that you can access through [https://jmeter.apache.org/usermanual/functions.html#__P __P] function or using in JSR223 Test Elements {{{props.get("property name")}}}
+
+Properties are:
+
+  * elementName_totalDuration  - Total duration as sum of the "Duration,sec" column
+  * elementName_cntDelayed - Number of current threads waiting, if lower than 1 it means we don't have enough threads to reach RPS
+  * elementName_cntSent - Number of samples sent since last second tick
+  * elementName_rps - Current RPS
+
+
+{{{elementName}}} will be the name of your Timer
 
 == Special Property Processing ==
 

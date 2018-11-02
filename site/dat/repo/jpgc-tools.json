@@ -13,14 +13,22 @@
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmd/2.0/jmeter-plugins-cmd-2.0.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
         }
       },
       "2.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmd/2.1/jmeter-plugins-cmd-2.1.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
+        }
+      },
+      "2.2": {
+        "changes": "Fixed logging for JMeter since v3.2",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmd/2.2/jmeter-plugins-cmd-2.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar",
+          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
         }
       }
     }
@@ -42,14 +50,22 @@
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-filterresults/2.0/jmeter-plugins-filterresults-2.0.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
         }
       },
       "2.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-filterresults/2.1/jmeter-plugins-filterresults-2.1.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
+        }
+      },
+      "2.2": {
+        "changes": "Fixed logging for JMeter since v3.2",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-filterresults/2.2/jmeter-plugins-filterresults-2.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar",
+          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
         }
       }
     }
@@ -135,14 +151,14 @@
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-plancheck/2.0/jmeter-plugins-plancheck-2.0.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
         }
       },
       "2.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-plancheck/2.1/jmeter-plugins-plancheck-2.1.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
         }
       },
       "2.2": {
@@ -150,7 +166,23 @@
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-plancheck/2.2/jmeter-plugins-plancheck-2.2.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
-          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.0/cmdrunner-2.0.jar"
+          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
+        }
+      },
+      "2.3": {
+        "changes": "Fixed logging for JMeter since v3.2",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-plancheck/2.3/jmeter-plugins-plancheck-2.3.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
+          "cmdrunner": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.1/cmdrunner-2.1.jar"
+        }
+      },
+      "2.4": {
+        "changes": "Update cmn and cmdrunner dependencies",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-plancheck/2.4/jmeter-plugins-plancheck-2.4.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar",
+          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
         }
       }
     }
@@ -186,6 +218,16 @@
         "depends": [
           "jpgc-filterresults"
         ]
+      },
+      "2.2": {
+        "changes": "Fixed Configuration Percentiles in Aggregate Report. Fixed Labels in csv reports",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-synthesis/2.2/jmeter-plugins-synthesis-2.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jpgc-filterresults"
+        ]
       }
     }
   },
@@ -210,6 +252,12 @@
       },
       "2.2": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/2.2/jmeter-plugins-table-server-2.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
+      },
+      "2.3": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/2.3/jmeter-plugins-table-server-2.3.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }

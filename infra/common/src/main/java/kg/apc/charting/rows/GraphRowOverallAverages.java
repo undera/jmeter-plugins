@@ -3,6 +3,7 @@ package kg.apc.charting.rows;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.elements.GraphPanelChartAverageElement;
 import kg.apc.charting.AbstractGraphPanelChartElement;
+
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -15,20 +16,12 @@ public class GraphRowOverallAverages
     private GraphPanelChartAverageElement element;
     private double avgX = 0;
 
-    /**
-     *
-     */
     public GraphRowOverallAverages() {
         super();
         element = new GraphPanelChartAverageElement();
         hasNext = true;
     }
 
-    /**
-     *
-     * @param xVal
-     * @param yVal
-     */
     @Override
     public void add(long xVal, double yVal) {
         avgX = (avgX * element.getCount() + xVal) / (element.getCount() + 1);
@@ -37,10 +30,6 @@ public class GraphRowOverallAverages
         super.add((long) avgX, element.getValue());
     }
 
-    /**
-     *
-     * @return
-     */
     public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator() {
         hasNext = true;
         return this;

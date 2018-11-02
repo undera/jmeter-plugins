@@ -67,6 +67,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "0.2": {
+        "changes" : "<p>Fixed resolve JMeter variables for Destination Variable name</p><p>Fix relative path</p>",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-directory-listing/0.2/jmeter-plugins-directory-listing-0.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
       }
     }
   },
@@ -114,6 +121,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "0.6": {
+        "changes": "fix leak with open files",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-random-csv-data-set/0.6/jmeter-plugins-random-csv-data-set-0.6.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
       }
     }
   },
@@ -155,6 +169,36 @@
       "0.3": {
         "changes" : "Fixed remote execution",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.3/jmeter-parallel-0.3.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
+      },
+      "0.4": {
+        "changes" : "Fixed reset Thread Context in all AbstractTestElements",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.4/jmeter-parallel-0.4.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
+      },
+      "0.5": {
+        "changes" : "Fixed Concurrency Modification exception for Config elements",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.5/jmeter-parallel-0.5.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
+      },
+      "0.7": {
+        "changes" : "Fixed unnecessary TE clone",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.7/jmeter-parallel-0.7.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         },
@@ -264,6 +308,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "3.5": {
+        "changes": "Fixed upload errors to BlazeMeter",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-senseuploader/3.5/jmeter-plugins-senseuploader-3.5.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
       }
     }
   },
@@ -295,7 +346,35 @@
       },
       "0.3": {
         "changes": "fix test plan reloading",
-        "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/wsc-0.3/jmeter-plugins-wsc-0.3.jar",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-wsc/0.3/jmeter-plugins-wsc-0.3.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
+        }
+      },
+      "0.4": {
+        "changes": "<p>Fixed samples generation in transaction controllers</p><p>Fixed styles for JMeter Darcula</p>",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-wsc/0.4/jmeter-plugins-wsc-0.4.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
+        }
+      },
+      "0.5": {
+        "changes": "<p>Fixed samples generation in transaction controllers (all nested levels)</p><p>Fixed samples generation with disabled subgroups</p>",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-wsc/0.5/jmeter-plugins-wsc-0.5.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
+        }
+      },
+      "0.6": {
+        "changes": "Added `Randomize choice`",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-wsc/0.6/jmeter-plugins-wsc-0.6.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
+        }
+      },
+      "0.7": {
+        "changes": "Fixed random weight choose",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-wsc/0.7/jmeter-plugins-wsc-0.7.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter>=0.5": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
         }
@@ -416,6 +495,136 @@
           "http2-hpack": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-hpack/9.4.0.v20161208/http2-hpack-9.4.0.v20161208.jar",
           "jetty-osgi-alpn": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/osgi/jetty-osgi-alpn/9.4.0.v20161208/jetty-osgi-alpn-9.4.0.v20161208.jar"
         }
+      },
+      "1.1": {
+        "changes": "Fix memory leak and JTL output error",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.1/jmeter-bzm-http2-1.1.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar",
+          "jetty-client": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-client/9.4.0.v20161208/jetty-client-9.4.0.v20161208.jar",
+          "jetty-util": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.0.v20161208/jetty-util-9.4.0.v20161208.jar",
+          "jetty-http": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.4.0.v20161208/jetty-http-9.4.0.v20161208.jar",
+          "jetty-io": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.0.v20161208/jetty-io-9.4.0.v20161208.jar",
+          "jetty-alpn-client": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-client/9.4.0.v20161208/jetty-alpn-client-9.4.0.v20161208.jar",
+          "http2-client": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.0.v20161208/http2-client-9.4.0.v20161208.jar",
+          "http2-common": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.0.v20161208/http2-common-9.4.0.v20161208.jar",
+          "http2-hpack": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-hpack/9.4.0.v20161208/http2-hpack-9.4.0.v20161208.jar",
+          "jetty-osgi-alpn": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/osgi/jetty-osgi-alpn/9.4.0.v20161208/jetty-osgi-alpn-9.4.0.v20161208.jar"
+        }
+      },
+      "1.2": {
+        "changes": "Fix HTTP2 plugin POST support to include proper request and fix issue with callback handler",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.2/jmeter-bzm-http2-1.2.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
+          "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
+          "http2-hpack>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-hpack/9.4.9.v20180320/http2-hpack-9.4.9.v20180320.jar",
+          "jetty-alpn-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-client/9.4.9.v20180320/jetty-alpn-client-9.4.9.v20180320.jar",
+          "jetty-alpn-openjdk8-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-openjdk8-client/9.4.9.v20180320/jetty-alpn-openjdk8-client-9.4.9.v20180320.jar",
+          "jetty-http>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.4.9.v20180320/jetty-http-9.4.9.v20180320.jar",
+          "jetty-io>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.9.v20180320/jetty-io-9.4.9.v20180320.jar",
+          "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
+        }
+      },
+      "1.3": {
+        "changes": "Added support for standards JMeter listeners and partial support for push promise",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.3/jmeter-bzm-http2-1.3.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
+          "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
+          "http2-hpack>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-hpack/9.4.9.v20180320/http2-hpack-9.4.9.v20180320.jar",
+          "jetty-alpn-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-client/9.4.9.v20180320/jetty-alpn-client-9.4.9.v20180320.jar",
+          "jetty-alpn-openjdk8-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-openjdk8-client/9.4.9.v20180320/jetty-alpn-openjdk8-client-9.4.9.v20180320.jar",
+          "jetty-http>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.4.9.v20180320/jetty-http-9.4.9.v20180320.jar",
+          "jetty-io>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.9.v20180320/jetty-io-9.4.9.v20180320.jar",
+          "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
+        }
+      },
+      "1.4": {
+        "changes": "Fixed serialization issue for JMeter distributed mode",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.4/jmeter-bzm-http2-1.4.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
+          "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
+          "http2-hpack>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-hpack/9.4.9.v20180320/http2-hpack-9.4.9.v20180320.jar",
+          "jetty-alpn-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-client/9.4.9.v20180320/jetty-alpn-client-9.4.9.v20180320.jar",
+          "jetty-alpn-openjdk8-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-openjdk8-client/9.4.9.v20180320/jetty-alpn-openjdk8-client-9.4.9.v20180320.jar",
+          "jetty-http>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.4.9.v20180320/jetty-http-9.4.9.v20180320.jar",
+          "jetty-io>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.9.v20180320/jetty-io-9.4.9.v20180320.jar",
+          "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "bzm-rte",
+    "name": "RTE Protocol Support",
+    "description": "Support for RTE (remote terminal emulation), providing sampler and config element to interact with remote terminal servers",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/RTEPlugin/master/docs/send-keys.png",
+    "helpUrl": "https://github.com/Blazemeter/RTEPlugin/blob/master/README.md",
+    "vendor": "BlazeMeter.com",
+    "markerClass": "com.blazemeter.jmeter.rte.sampler.RTESampler",
+    "componentClasses": [
+      "com.blazemeter.jmeter.rte.sampler.Inputs",
+      "com.blazemeter.jmeter.rte.sampler.RTESampler",
+      "com.blazemeter.jmeter.rte.sampler.gui.RTEConfigGui",
+      "com.blazemeter.jmeter.rte.sampler.gui.RTESamplerGui"
+    ],
+    "versions": {
+      "1.0.2": {
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.2/jmeter-bzm-rte-1.0.2.jar",
+        "libs": {
+          "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.2/xtn5250-2.0.1.jar",
+          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.2/dm3270-lib-0.5.1.jar"
+        }
+      },
+      "1.0.3": {
+        "changes": "Fix TN5250 protocol keys mapping for F13-F24, roll down and roll up keys",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.3/jmeter-bzm-rte-1.0.3.jar",
+        "libs": {
+          "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.3/xtn5250-2.0.1.jar",
+          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.3/dm3270-lib-0.5.1.jar"
+        }
+      },
+      "1.0.4": {
+        "changes": "Allow sending text to TN3230 server when screen has no defined fields",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/jmeter-bzm-rte-1.0.4.jar",
+        "libs": {
+          "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/xtn5250-2.0.1.jar",
+          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/dm3270-lib-0.6.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "bzm-siebel",
+    "name": "Siebel CRM Recorder",
+    "description": "Siebel CRM recorder which provides auto-correlation of variables at recording time",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/SiebelPlugin/master/docs/recorded-samples.png",
+    "helpUrl": "https://github.com/Blazemeter/SiebelPlugin/blob/master/README.md",
+    "vendor": "BlazeMeter.com",
+    "markerClass": "com.blazemeter.jmeter.correlation.CorrelationProxyControl",
+    "componentClasses": [
+      "com.blazemeter.jmeter.correlation.CorrelationProxyControl",
+      "com.blazemeter.jmeter.correlation.CorrelationProxyControlGui",
+      "com.blazemeter.jmeter.correlation.gui.CorrelationRuleTestElement",
+      "com.blazemeter.jmeter.correlation.gui.CorrelationRulesTestElement"
+    ],
+    "versions": {
+      "0.1.0-beta": {
+        "downloadUrl": "https://github.com/Blazemeter/SiebelPlugin/releases/download/v0.1.0-beta/jmeter-bzm-siebel-correlation-0.1.0-beta.jar"
       }
     }
   }

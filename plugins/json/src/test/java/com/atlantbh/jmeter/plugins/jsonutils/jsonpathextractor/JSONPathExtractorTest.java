@@ -16,6 +16,7 @@
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor;
 
 import kg.apc.emulators.TestJMeterUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
@@ -23,6 +24,9 @@ import org.apache.jmeter.threads.JMeterVariables;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 
@@ -324,5 +328,76 @@ public class JSONPathExtractorTest {
         boolean thiis = "{\"color\":\"red\",\"price\":19.95}".equals(test);
         boolean thaat = "{\"price\":19.95,\"color\":\"red\"}".equals(test);
         assertTrue(thiis || thaat);
+    }
+
+    @Test
+    public void testYamlExtractor1() throws IOException {
+        File test = new File(getClass().getResource("/test1.yml").getPath());
+        String response = FileUtils.readFileToString(test);
+
+        JMeterContext context = JMeterContextService.getContext();
+        JMeterVariables vars = context.getVariables();
+
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData(response.getBytes());
+        context.setPreviousResult(samplerResult);
+
+        JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setInputFormat(JSONPathExtractor.INPUT_YAML);
+        instance.setDefaultValue("DEFAULT");
+        instance.setVar("concurrency");
+        instance.setJsonPath("$.execution[*].concurrency");
+        instance.process();
+
+        assertEquals("[100]", vars.get("concurrency"));
+
+        instance.setJsonPath("execution[*].concurrency1");
+        instance.process();
+        assertEquals("DEFAULT", vars.get("concurrency"));
+    }
+
+    @Test
+    public void testYamlExtractor2() throws IOException {
+        File test = new File(getClass().getResource("/test.yml").getPath());
+        String response = FileUtils.readFileToString(test);
+
+        JMeterContext context = JMeterContextService.getContext();
+        JMeterVariables vars = context.getVariables();
+
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData(response.getBytes());
+        context.setPreviousResult(samplerResult);
+
+        JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setInputFormat(JSONPathExtractor.INPUT_YAML);
+        instance.setDefaultValue("DEFAULT");
+        instance.setVar("architect");
+        instance.setJsonPath("$.architect");
+        instance.process();
+
+        assertEquals("mihai", vars.get("architect"));
+    }
+
+    @Test
+    public void testYamlExtractor3() throws IOException {
+        File test = new File(getClass().getResource("/test.yml").getPath());
+        String response = FileUtils.readFileToString(test);
+
+        JMeterContext context = JMeterContextService.getContext();
+        JMeterVariables vars = context.getVariables();
+
+        SampleResult samplerResult = new SampleResult();
+        samplerResult.setResponseData(response.getBytes());
+        context.setPreviousResult(samplerResult);
+
+        JSONPathExtractor instance = new JSONPathExtractor();
+        instance.setInputFormat(JSONPathExtractor.INPUT_YAML);
+        instance.setDefaultValue("DEFAULT");
+        instance.setVar("developers");
+        instance.setJsonPath("$.developers");
+        instance.process();
+
+        assertEquals("[\"rultor\",\"salikjan\",\"sherif\"]", vars.get("developers"));
+        assertEquals("3", vars.get("developers_matchNr"));
     }
 }

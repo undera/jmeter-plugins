@@ -12,19 +12,11 @@ public class GraphRowAverages
 
     private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> values;
 
-    /**
-     *
-     */
     public GraphRowAverages() {
         super();
-        values = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
+        values = new ConcurrentSkipListMap<>();
     }
 
-    /**
-     *
-     * @param xVal
-     * @param yVal
-     */
     @Override
     public void add(long xVal, double yVal) {
         GraphPanelChartAverageElement el;
@@ -40,10 +32,6 @@ public class GraphRowAverages
         super.add(xVal, yVal);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Iterator<Entry<Long, AbstractGraphPanelChartElement>> iterator() {
         return values.entrySet().iterator();

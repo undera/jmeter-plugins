@@ -1,6 +1,7 @@
 package kg.apc.cmdtools;
 
 import kg.apc.jmeter.PluginsCMDWorker;
+import kg.apc.logging.LoggingUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.apache.log.Priority;
@@ -11,6 +12,10 @@ import java.util.ListIterator;
 public class ReporterTool extends AbstractCMDTool {
 
     private static final Logger log = LoggingManager.getLoggerForClass();
+
+    static {
+        LoggingUtils.addLoggingConfig();
+    }
 
     @Override
     protected void showHelp(PrintStream os) {

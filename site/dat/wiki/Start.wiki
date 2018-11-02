@@ -65,6 +65,7 @@
   * [HBaseScanSampler HBase Scan Sampler]
   * [HBaseRowkeySampler HBase Rowkey Sampler]
   * [WebDriverSampler WebDriver Sampler] for full browser tests, use Selenium
+  * [SetVariablesAction Set Variables Action]
 
 == Config Items ==
   * [HBaseConnection HBase Connection Config]
@@ -85,11 +86,11 @@
 == Post-Processors ==
   * [XMLFormatPostProcessor XML Format PostProcessor]
   * [JSONToXMLConverter JSON To XML Converter]
-  * [JSONPathExtractor JSON Path Extractor]
+  * [JSONPathExtractor JSON/YAML Path Extractor]
   * [JSONFormatter JSON Formatter PostProcessor]
 
 == Assertions ==
-  * [JSONPathAssertion JSON Path Assertion]
+  * [JSONPathAssertion JSON/YAML Path Assertion]
 
 ----
 

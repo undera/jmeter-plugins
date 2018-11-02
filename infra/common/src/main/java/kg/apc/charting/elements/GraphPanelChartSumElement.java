@@ -2,48 +2,34 @@ package kg.apc.charting.elements;
 
 import kg.apc.charting.AbstractGraphPanelChartElement;
 
-/** {@inheritDoc} */
+/**
+ * {@inheritDoc}
+ */
 public class GraphPanelChartSumElement
-      extends AbstractGraphPanelChartElement
-{
-   private int count = 0;
-   private double sumValue = 0;
+        extends AbstractGraphPanelChartElement {
+    private int count = 0;
+    private double sumValue = 0;
 
-   /**
-    *
-    * @param yVal
-    */
-   public GraphPanelChartSumElement(double yVal)
-   {
-      add(yVal);
-   }
+    public GraphPanelChartSumElement(double yVal) {
+        add(yVal);
+    }
 
-   GraphPanelChartSumElement()
-   {
-   }
+    GraphPanelChartSumElement() {
+    }
 
-   /**
-    *
-    * @param yVal
-    */
-   public void add(double yVal)
-   {
-      sumValue += yVal;
-      count++;
-   }
+    public void add(double yVal) {
+        sumValue += yVal;
+        count++;
+    }
 
-   /** {@inheritDoc} */
-   public double getValue()
-   {
-      return sumValue;
-   }
+    /**
+     * {@inheritDoc}
+     */
+    public double getValue() {
+        return sumValue;
+    }
 
-   /**
-    *
-    * @return
-    */
-   public int getCount()
-   {
-      return count;
-   }
+    public int getCount() {
+        return count;
+    }
 }

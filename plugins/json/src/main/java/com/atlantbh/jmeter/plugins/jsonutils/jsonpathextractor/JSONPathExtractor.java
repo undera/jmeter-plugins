@@ -9,6 +9,7 @@
 
 package com.atlantbh.jmeter.plugins.jsonutils.jsonpathextractor;
 
+import com.atlantbh.jmeter.plugins.jsonutils.YAMLToJSONConverter;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import net.minidev.json.JSONArray;
@@ -33,6 +34,10 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
 
     private static final long serialVersionUID = 1L;
 
+    public static final String INPUT_JSON = "JSON";
+    public static final String INPUT_YAML = "YAML";
+    public static final String INPUT_FORMAT = "INPUT_FORMAT";
+
     public static final String JSONPATH = "JSONPATH";
     public static final String VAR = "VAR";
     public static final String DEFAULT = "DEFAULT";
@@ -51,6 +56,15 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
     public JSONPathExtractor() {
         super();
     }
+
+    public void setInputFormat(String inputFormat) {
+        setProperty(INPUT_FORMAT, inputFormat);
+    }
+
+    public String getInputFormat() {
+        return getPropertyAsString(INPUT_FORMAT);
+    }
+
 
     public String getJsonPath() {
         return getPropertyAsString(JSONPATH);
@@ -106,6 +120,9 @@ public class JSONPathExtractor extends AbstractTestElement implements PostProces
 
 
         try {
+            if (INPUT_YAML.equals(getInputFormat())) {
+                responseData = YAMLToJSONConverter.convert(responseData);
+            }
             Object jsonPathResult = JsonPath.read(responseData, getJsonPath());
             if (jsonPathResult instanceof JSONArray) {
                 Object[] arr = ((JSONArray) jsonPathResult).toArray();

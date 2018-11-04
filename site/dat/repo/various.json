@@ -162,6 +162,16 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
         }
+      },
+      "1.3.3": {
+        "changes": "Sampler now supports Header/Cookie/Auth Manager, reports response headers, and handles binary attachments.",
+        "downloadUrl": "https://github.com/spinning10/JMeterSoapSampler/raw/master/target/CustomSoapSampler-1.3.3.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
+        }
       }
     }
   },

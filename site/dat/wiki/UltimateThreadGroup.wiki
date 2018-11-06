@@ -4,7 +4,7 @@
 
 "Ultimate" means there will be no need in further Thread Group plugins. The features that everyone needed in JMeter and they finally available:
   * infinite number of schedule records
-  * separate ramp-up time, shutdown time, flight time for each shedule record
+  * separate ramp-up time, shutdown time, flight time for each schedule record
   * and, of course, trustworthy load preview graph
 
 = Example =

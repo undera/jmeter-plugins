@@ -149,7 +149,9 @@ public class CompositeGraphGui extends AbstractOverTimeVisualizer {
                 String rowName = item[0] + " > " + item[1];
                 validRows.add(rowName);
                 if (!model.containsKey(rowName)) {
-                    model.put(rowName, row);
+                    CompositeGraphRow compositeRow = new CompositeGraphRow(row);
+                    compositeRow.setColor(colors.getNextColor());
+                    model.put(rowName, compositeRow);
 
                     // handle relative start times for JTL reload
                     if (relativeStartTime == 0 || relativeStartTime > row.getFirstTime()) {

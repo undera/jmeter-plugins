@@ -215,6 +215,16 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "0.9": {
+        "changes" : "Fixed Test Actions (Start Next Thread Loop, Stop Thread, Stop All Threads)",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.9/jmeter-parallel-0.9.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

@@ -13,7 +13,19 @@ Each plugin is a JSON object that contains following fields:
     * {{{helpUrl}}} - URL with help page for this plugin;
     * {{{vendor}}} -  vendor of this plugin;
     * {{{markerClass}}} - some class from this plugin, the presence of which may indicate that the plugin is installed;
+    * {{{componentClasses}}} - an array of significant classes that the plugin contains (Elements and GUIs). This information is used by 
+    jmeter-plugins-manager to find whether a plugin is installed or not;
     * {{{installerClass}}} - the class that will be launched during the installation of the plugin. _This field is optional_.
+                This class must be an executable class, meaning it must contain:
+                        
+{{{
+public static void main(String[] argv) {
+...
+}
+}}}
+
+                This class is executed outside of JMeter and will write its output (System.err/System.out) to a file called jpgc-installers-XXX.log in temp folder. Note that when running, this class has as classpath only the plugin jar.
+    * {{{canUninstall}}} - Boolean value that tells jmeter-plugins-manager whether plugin can be uninstalled. _This field is optional_. and defaults to true.
     * {{{versions}}} - mapping of version number to version descriptor, as explained below
 
 
@@ -24,6 +36,12 @@ This JSON object contains information about plugin version and consists from the
     * {{{downloadUrl}}} - URL for download this plugin;
     * {{{changes}}} - information about changes in this version, optional;
     * {{{libs}}} - it is a JSON map of plugins dependency libraries, where key is a library name and value is link for download this library;
+    Note this key can use a special syntax to indicate minimal version required using "key>=version",for example below we require that jmeter-plugins-cmn-jmeter is higher or equal to version 0.6:
+
+{{{
+    "jmeter-plugins-cmn-jmeter>=0.6": "https:\/\/search.maven.org\/remotecontent?filepath=kg\/apc\/jmeter-plugins-cmn-jmeter\/0.6\/jmeter-plugins-cmn-jmeter-0.6.jar"
+}}}
+    
     * {{{depends}}} - array of dependencies from other plugins, by plugin IDs.
 
 == Example Plugin Descriptor ==

@@ -42,7 +42,6 @@
         <module>redis</module>
         <module>tst</module>
         <module>udp</module>
-        <module>webdriver</module>
         <module>xml</module>
     </modules>
 </project>

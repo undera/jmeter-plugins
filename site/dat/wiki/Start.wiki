@@ -64,7 +64,6 @@
   * [HBaseCRUDSampler HBase CRUD Sampler]
   * [HBaseScanSampler HBase Scan Sampler]
   * [HBaseRowkeySampler HBase Rowkey Sampler]
-  * [WebDriverSampler WebDriver Sampler] for full browser tests, use Selenium
   * [SetVariablesAction Set Variables Action]
 
 == Config Items ==
@@ -73,12 +72,6 @@
   * [LockFile Lock Files] test will not be started if lock files found
   * [RedisDataSet Redis Data Set]
   * [DirectoryListing Directory Listing Config]
-  * [AndroidDriverConfig Android Config] for WebDriver
-  * [ChromeDriverConfig Chrome Config] for WebDriver
-  * [FirefoxDriverConfig Firefox Config] for WebDriver
-  * [HtmlUnitDriverConfig HTMLUnit Config] for WebDriver
-  * [RemoteDriverConfig Remote WebDriver Config] for WebDriver
-  * [PhantomJSDriverConfig PhantomJS Config]  for WebDriver
 
 == Pre-Processors ==
   * [RawDataSource Raw Data Source]

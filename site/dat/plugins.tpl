@@ -50,10 +50,6 @@
     {/if}
     <link rel='stylesheet' type='text/css'
           href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
-
-<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js" async defer></script>
-<script type='text/javascript' src="http://192.168.1.91:8004/activity.js" async defer></script>
-
 </head>
 
 <body>

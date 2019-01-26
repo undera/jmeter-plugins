@@ -498,6 +498,10 @@
       "2.5.3": {
         "changes":"Fixed error with filters (#2), refactored the method.",
         "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.3/jmeter.backendlistener.elasticsearch-2.5.3.jar"
+      },
+      "2.5.4": {
+        "changes":"Fixed error with filters (#37), refactored the method.",
+        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.4/jmeter.backendlistener.elasticsearch-2.5.4.jar"
       }
     }
   }

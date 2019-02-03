@@ -18,13 +18,13 @@
 
 package org.jmeterplugins.protocol.http.control;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class ServerRunner {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(ServerRunner.class);
 
     public static void run(Class serverClass) {
         try {

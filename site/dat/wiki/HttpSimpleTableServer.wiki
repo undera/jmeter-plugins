@@ -27,7 +27,7 @@ It is also recommended to use UTF-8 as the encoding:
 sampleresult.default.encoding=UTF-8
 }}}
 
-If you want automatically start a Simple Table Server on JMeter startup simply add "simple-table-server.bsh" in the "beanshell.init.file" property.
+If you want automatically start a Simple Table Server on JMeter STARTUP simply add "simple-table-server.bsh" in the "beanshell.init.file" property.
 Be sure that simple-table-server.bsh file is in your JMETER_HOME/bin directory.
 
 The Simple Table Server is a tiny http server which can send http GET/POST requests on port 9191 (by default).
@@ -51,8 +51,8 @@ There are different ways to start the STS:
 
 [/img/wiki/http_simple_table_server.png]
 
-  * with simple-table-server.cmd (.sh for UNIX) script located in your JMETER_HOME/bin directory
-  * on JMeter CLI startup with following properties in jmeter.properties file:
+  * with simple-table-server.cmd (.sh for UNIX) script located in your JMETER_HOME/bin directory. Parameters are read in the jmeter.properties or you could also set parameters like simple-table-server.cmd -DjmeterPlugin.sts.addTimestamp=true -DjmeterPlugin.sts.datasetDirectory=D:/jmeter/dataset
+  * on JMeter CLI startup (Windows : jmeter-n.cmd or Linux jmeter -n) following properties in jmeter.properties file or in user.properties :
 
 {{{
 jmeterPlugin.sts.loadAndRunOnStartup=true
@@ -372,7 +372,7 @@ You can override STS settings using command-line options:
   * -DjmeterPlugin.sts.addTimestamp=\<true/false>
 
 {{{
-jmeter.bat -DjmeterPlugin.sts.loadAndRunOnStartup=true -DjmeterPlugin.sts.port=9191 -DjmeterPlugin.sts.datasetDirectory=d:\data -n –t testdemo.jmx
+jmeter.bat -DjmeterPlugin.sts.loadAndRunOnStartup=true -DjmeterPlugin.sts.port=9191 -DjmeterPlugin.sts.datasetDirectory=d:/data -n –t testdemo.jmx
 }}}
 
 When it's done see results in the Listener Tree View.

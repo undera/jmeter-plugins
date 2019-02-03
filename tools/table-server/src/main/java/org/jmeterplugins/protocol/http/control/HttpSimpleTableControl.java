@@ -25,8 +25,9 @@ import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.testelement.property.BooleanProperty;
 import org.apache.jmeter.testelement.property.IntegerProperty;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test element that implements the Workbench HTTP Simple Table function
@@ -35,7 +36,7 @@ public class HttpSimpleTableControl extends AbstractTestElement {
 
     private static final long serialVersionUID = 233L;
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(HttpSimpleTableControl.class);
 
     private transient HttpSimpleTableServer server;
 
@@ -49,6 +50,8 @@ public class HttpSimpleTableControl extends AbstractTestElement {
 
     public static final String DEFAULT_TIMESTAMP_S = Boolean
             .toString(DEFAULT_TIMESTAMP);
+    
+    public static final String DEFAULT_LOG_LEVEL = "INFO";
 
     public static final String PORT = "HttpSimpleTableControlGui.port"; 
 

@@ -1,27 +1,27 @@
-/**
- * Copyright (c) 2012-2013 by Paul S. Hawke, 2001,2005-2013 by Jarno Elonen, 2010 by Konstantinos Togias
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
- *
- * Neither the name of the NanoHttpd organization nor the names of its contributors
- * may be used to endorse or promote products derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+  Copyright (c) 2012-2013 by Paul S. Hawke, 2001,2005-2013 by Jarno Elonen, 2010 by Konstantinos Togias
+  All rights reserved.
+  Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+  Redistributions of source code must retain the above copyright notice,
+  this list of conditions and the following disclaimer.
+
+  Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+  Neither the name of the NanoHttpd organization nor the names of its contributors
+  may be used to endorse or promote products derived from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY,
+  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package org.jmeterplugins.protocol.http.control;
@@ -49,6 +49,7 @@ import java.net.SocketTimeoutException;
 import java.net.URLDecoder;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,18 +66,17 @@ import java.util.TimeZone;
 
 /**
  * A simple, tiny, nicely embeddable HTTP server in Java
- * <p/>
- * <p/>
+ * 
+ * 
  * NanoHTTPD
- * <p>
- * </p>
- * Copyright (c) 2012-2013 by Paul S. Hawke, 2001,2005-2013 by Jarno Elonen,
+ *
+ * <p>Copyright (c) 2012-2013 by Paul S. Hawke, 2001,2005-2013 by Jarno Elonen,
  * 2010 by Konstantinos Togias</p>
- * <p/>
- * <p/>
+ * 
+ * 
  * <b>Features + limitations: </b>
  * <ul>
- * <p/>
+ * 
  * <li>Only one Java file</li>
  * <li>Java 5 compatible</li>
  * <li>Released as open source, Modified BSD licence</li>
@@ -100,17 +100,17 @@ import java.util.TimeZone;
  * <li>Contains a built-in list of most common mime types</li>
  * <li>All header names are converted lowercase so they don't vary between
  * browsers/clients</li>
- * <p/>
+ * 
  * </ul>
- * <p/>
- * <p/>
+ * 
+ * 
  * <b>How to use: </b>
  * <ul>
- * <p/>
+ * 
  * <li>Subclass and implement serve() and embed to your own program</li>
- * <p/>
+ * 
  * </ul>
- * <p/>
+ * 
  * See the separate "LICENSE.md" file for the distribution license (Modified BSD
  * licence)
  */
@@ -138,7 +138,7 @@ public abstract class NanoHTTPD {
     private final String hostname;
     private final int myPort;
     protected ServerSocket myServerSocket;
-    private Set<Socket> openConnections = new HashSet<Socket>();
+    private Set<Socket> openConnections = new HashSet<>();
     protected Thread myThread;
     /**
      * Pluggable strategy for asynchronously executing requests.
@@ -151,6 +151,7 @@ public abstract class NanoHTTPD {
 
     /**
      * Constructs an HTTP server on given port.
+     * @param port int
      */
     public NanoHTTPD(int port) {
         this(null, port);
@@ -158,6 +159,8 @@ public abstract class NanoHTTPD {
 
     /**
      * Constructs an HTTP server on given hostname and port.
+     * @param hostname str
+     * @param port int
      */
     public NanoHTTPD(String hostname, int port) {
         this.hostname = hostname;
@@ -312,8 +315,8 @@ public abstract class NanoHTTPD {
 
     /**
      * Override this to customize the server.
-     * <p/>
-     * <p/>
+     * 
+     * 
      * (By default, this delegates to serveFile() and allows directory listing.)
      *
      * @param uri
@@ -326,6 +329,8 @@ public abstract class NanoHTTPD {
      *            POST, data.
      * @param headers
      *            Header entries, percent decoded
+     * @param files
+     *            Map
      * @return HTTP response, see class Response for details
      */
     @Deprecated
@@ -338,8 +343,8 @@ public abstract class NanoHTTPD {
 
     /**
      * Override this to customize the server.
-     * <p/>
-     * <p/>
+     * 
+     * 
      * (By default, this delegates to serveFile() and allows directory listing.)
      *
      * @param session
@@ -347,7 +352,7 @@ public abstract class NanoHTTPD {
      * @return HTTP response, see class Response for details
      */
     public Response serve(IHTTPSession session) {
-        Map<String, String> files = new HashMap<String, String>();
+        Map<String, String> files = new HashMap<>();
         Method method = session.getMethod();
         if (Method.PUT.equals(method) || Method.POST.equals(method)) {
             try {
@@ -412,7 +417,7 @@ public abstract class NanoHTTPD {
      *         <code>List&lt;String&gt;</code> (a list of the values supplied).
      */
     protected Map<String, List<String>> decodeParameters(String queryString) {
-        Map<String, List<String>> parms = new HashMap<String, List<String>>();
+        Map<String, List<String>> parms = new HashMap<>();
         if (queryString != null) {
             StringTokenizer st = new StringTokenizer(queryString, "&");
             while (st.hasMoreTokens()) {
@@ -506,7 +511,7 @@ public abstract class NanoHTTPD {
 
     /**
      * Temp file manager.
-     * <p/>
+     * 
      * <p>
      * Temp file managers are created 1-to-1 with incoming requests, to create
      * and cleanup temporary files created as a result of handling the request.
@@ -520,7 +525,7 @@ public abstract class NanoHTTPD {
 
     /**
      * A temp file.
-     * <p/>
+     * 
      * <p>
      * Temp files are responsible for managing the actual temporary storage and
      * cleaning themselves up when no longer needed.
@@ -536,7 +541,7 @@ public abstract class NanoHTTPD {
 
     /**
      * Default threading strategy for NanoHttpd.
-     * <p/>
+     * 
      * <p>
      * By default, the server spawns a new Thread for every incoming request.
      * These are set to <i>daemon</i> status, and named according to the request
@@ -558,10 +563,8 @@ public abstract class NanoHTTPD {
 
     /**
      * Default strategy for creating and cleaning up temporary files.
-     * <p/>
-     * <p>
-     * </p>
-     * This class stores its files in the standard location (that is, wherever
+     * 
+     * <p>This class stores its files in the standard location (that is, wherever
      * <code>java.io.tmpdir</code> points to). Files are added to an internal
      * list, and deleted when no longer needed (that is, when
      * <code>clear()</code> is invoked at the end of processing a request).</p>
@@ -573,7 +576,7 @@ public abstract class NanoHTTPD {
         public DefaultTempFileManager() {
             tmpdir = System.getProperty("java.io.tmpdir");
             // tmpdir = "D:\\Profiles\\fHenry\\Downloads\\nanohttpd\\tmp";
-            tempFiles = new ArrayList<TempFile>();
+            tempFiles = new ArrayList<>();
         }
 
         @Override
@@ -597,10 +600,8 @@ public abstract class NanoHTTPD {
 
     /**
      * Default strategy for creating and cleaning up temporary files.
-     * <p/>
-     * <p>
-     * </p>
-     * </[>By default, files are created by <code>File.createTempFile()</code>
+     * 
+     * <p>By default, files are created by <code>File.createTempFile()</code>
      * in the directory specified.</p>
      */
     public static class DefaultTempFile implements TempFile {
@@ -648,7 +649,7 @@ public abstract class NanoHTTPD {
         /**
          * Headers for the HTTP response. Use addHeader() to add lines.
          */
-        private Map<String, String> header = new HashMap<String, String>();
+        private Map<String, String> header = new HashMap<>();
         /**
          * The request method that spawned this response.
          */
@@ -661,6 +662,7 @@ public abstract class NanoHTTPD {
         /**
          * Default constructor: response = HTTP_OK, mime = MIME_HTML and your
          * supplied message
+         * @param msg message string
          */
         public Response(String msg) {
             this(Status.OK, MIME_HTML, msg);
@@ -668,6 +670,9 @@ public abstract class NanoHTTPD {
 
         /**
          * Basic constructor.
+         * @param status str
+         * @param mimeType str
+         * @param data stream
          */
         public Response(Status status, String mimeType, InputStream data) {
             this.status = status;
@@ -677,20 +682,21 @@ public abstract class NanoHTTPD {
 
         /**
          * Convenience method that makes an InputStream out of given text.
+         * @param status str
+         * @param mimeType str
+         * @param txt str
          */
         public Response(Status status, String mimeType, String txt) {
             this.status = status;
             this.mimeType = mimeType;
-            try {
-                this.data = txt != null ? new ByteArrayInputStream(
-                        txt.getBytes("UTF-8")) : null;
-            } catch (java.io.UnsupportedEncodingException uee) {
-                uee.printStackTrace();
-            }
+            this.data = txt != null ? new ByteArrayInputStream(
+                    txt.getBytes(StandardCharsets.UTF_8)) : null;
         }
 
         /**
          * Adds given line to the header.
+         * @param name str
+         * @param value str
          */
         public void addHeader(String name, String value) {
             header.put(name, value);
@@ -755,7 +761,7 @@ public abstract class NanoHTTPD {
                 outputStream.write(buff, 0, read);
                 outputStream.write(CRLF);
             }
-            outputStream.write(String.format("0\r\n\r\n").getBytes());
+            outputStream.write("0\r\n\r\n".getBytes());
         }
 
         private void sendAsFixedLength(OutputStream outputStream, PrintWriter pw)
@@ -910,7 +916,9 @@ public abstract class NanoHTTPD {
         /**
          * Adds the files in the request body to the files map.
          *
-         * @arg files - map to modify
+         * @param  files - map to modify
+         * @throws IOException when failed
+         * @throws ResponseException when failed
          */
         void parseBody(Map<String, String> files) throws IOException,
                 ResponseException;
@@ -945,8 +953,8 @@ public abstract class NanoHTTPD {
             this.outputStream = outputStream;
             String remoteIp = inetAddress.isLoopbackAddress()
                     || inetAddress.isAnyLocalAddress() ? "127.0.0.1"
-                    : inetAddress.getHostAddress().toString();
-            headers = new HashMap<String, String>();
+                    : inetAddress.getHostAddress();
+            headers = new HashMap<>();
 
             headers.put("remote-addr", remoteIp);
             headers.put("http-client-ip", remoteIp);
@@ -964,7 +972,7 @@ public abstract class NanoHTTPD {
                 splitbyte = 0;
                 rlen = 0;
                 {
-                    int read = -1;
+                    int read;
                     try {
                         read = inputStream.read(buf, 0, BUFSIZE);
                     } catch (Exception e) {
@@ -991,9 +999,9 @@ public abstract class NanoHTTPD {
                     inputStream.unread(buf, splitbyte, rlen - splitbyte);
                 }
 
-                parms = new HashMap<String, String>();
+                parms = new HashMap<>();
                 if (null == headers) {
-                    headers = new HashMap<String, String>();
+                    headers = new HashMap<>();
                 }
 
                 // Create a BufferedReader for parsing the header.
@@ -1001,7 +1009,7 @@ public abstract class NanoHTTPD {
                         new ByteArrayInputStream(buf, 0, rlen)));
 
                 // Decode the header into parms and header java properties
-                Map<String, String> pre = new HashMap<String, String>();
+                Map<String, String> pre = new HashMap<>();
                 decodeHeader(hin, pre, parms, headers);
 
                 method = Method.lookup(pre.get("method"));
@@ -1024,11 +1032,9 @@ public abstract class NanoHTTPD {
                     r.setRequestMethod(method);
                     r.send(outputStream);
                 }
-            } catch (SocketException e) {
+            } catch (SocketException | SocketTimeoutException e) {
                 // throw it out to close socket object (finalAccept)
                 throw e;
-            } catch (SocketTimeoutException ste) {
-                throw ste;
             } catch (IOException ioe) {
                 Response r = new Response(Response.Status.INTERNAL_ERROR,
                         MIME_PLAINTEXT, "SERVER INTERNAL ERROR: IOException: "
@@ -1110,8 +1116,8 @@ public abstract class NanoHTTPD {
                                 .indexOf(boundaryStartString)
                                 + boundaryStartString.length();
                         String boundary = contentTypeHeader.substring(
-                                boundaryContentStart,
-                                contentTypeHeader.length());
+                                boundaryContentStart
+                        );
                         if (boundary.startsWith("\"")
                                 && boundary.endsWith("\"")) {
                             boundary = boundary.substring(1,
@@ -1123,7 +1129,7 @@ public abstract class NanoHTTPD {
                         // Handle application/x-www-form-urlencoded
                         String postLine = "";
                         StringBuilder postLineBuffer = new StringBuilder();
-                        char pbuf[] = new char[512];
+                        char[] pbuf = new char[512];
                         int read = in.read(pbuf);
                         while (read >= 0 && !postLine.endsWith("\r\n")) {
                             postLine = String.valueOf(pbuf, 0, read);
@@ -1221,7 +1227,7 @@ public abstract class NanoHTTPD {
                                 "BAD REQUEST: Content type is multipart/form-data but next chunk does not start with boundary. Usage: GET /example/file.html");
                     }
                     boundarycount++;
-                    Map<String, String> item = new HashMap<String, String>();
+                    Map<String, String> item = new HashMap<>();
                     mpline = in.readLine();
                     while (mpline != null && mpline.trim().length() > 0) {
                         int p = mpline.indexOf(':');
@@ -1243,7 +1249,7 @@ public abstract class NanoHTTPD {
                         }
                         StringTokenizer st = new StringTokenizer(
                                 contentDisposition, "; ");
-                        Map<String, String> disposition = new HashMap<String, String>();
+                        Map<String, String> disposition = new HashMap<>();
                         while (st.hasMoreTokens()) {
                             String token = st.nextToken();
                             int p = token.indexOf('=');
@@ -1256,16 +1262,16 @@ public abstract class NanoHTTPD {
                         String pname = disposition.get("name");
                         pname = pname.substring(1, pname.length() - 1);
 
-                        String value = "";
+                        StringBuilder value = new StringBuilder();
                         if (item.get("content-type") == null) {
                             while (mpline != null && !mpline.contains(boundary)) {
                                 mpline = in.readLine();
                                 if (mpline != null) {
                                     int d = mpline.indexOf(boundary);
                                     if (d == -1) {
-                                        value += mpline;
+                                        value.append(mpline);
                                     } else {
-                                        value += mpline.substring(0, d - 2);
+                                        value.append(mpline, 0, d - 2);
                                     }
                                 }
                             }
@@ -1280,14 +1286,14 @@ public abstract class NanoHTTPD {
                             String path = saveTmpFile(fbuf, offset,
                                     bpositions[boundarycount - 1] - offset - 4);
                             files.put(pname, path);
-                            value = disposition.get("filename");
-                            value = value.substring(1, value.length() - 1);
+                            value = new StringBuilder(disposition.get("filename"));
+                            value = new StringBuilder(value.substring(1, value.length() - 1));
                             do {
                                 mpline = in.readLine();
                             } while (mpline != null
                                     && !mpline.contains(boundary));
                         }
-                        parms.put(pname, value);
+                        parms.put(pname, value.toString());
                     }
                 }
             } catch (IOException ioe) {
@@ -1320,7 +1326,7 @@ public abstract class NanoHTTPD {
         private int[] getBoundaryPositions(ByteBuffer b, byte[] boundary) {
             int matchcount = 0;
             int matchbyte = -1;
-            List<Integer> matchbytes = new ArrayList<Integer>();
+            List<Integer> matchbytes = new ArrayList<>();
             for (int i = 0; i < b.limit(); i++) {
                 if (b.get(i) == boundary[matchcount]) {
                     if (matchcount == 0)
@@ -1495,8 +1501,8 @@ public abstract class NanoHTTPD {
      * features.
      */
     public class CookieHandler implements Iterable<String> {
-        private HashMap<String, String> cookies = new HashMap<String, String>();
-        private ArrayList<Cookie> queue = new ArrayList<Cookie>();
+        private HashMap<String, String> cookies = new HashMap<>();
+        private ArrayList<Cookie> queue = new ArrayList<>();
 
         public CookieHandler(Map<String, String> httpHeaders) {
             String raw = httpHeaders.get("cookie");

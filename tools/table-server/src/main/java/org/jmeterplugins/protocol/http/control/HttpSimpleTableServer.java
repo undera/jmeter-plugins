@@ -20,17 +20,23 @@ package org.jmeterplugins.protocol.http.control;
 
 import org.apache.jmeter.gui.Stoppable;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.apache.logging.log4j.core.config.Configurator;
+
+import org.apache.logging.log4j.Level;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWaiter {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(HttpSimpleTableServer.class);
 
-    public static final String STS_VERSION = "1.3";
+
+    public static final String STS_VERSION = "2.4";
     public static final String ROOT = "/sts/";
     public static final String ROOT2 = "/sts";
     public static final String URI_INITFILE = "INITFILE";
@@ -74,9 +80,13 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
             + "http://hostname:port/sts/RESET?FILENAME=file.txt</p>"
             + "<p>Shutdown the Simple Table Server:<br />"
             + "http://hostname:port/sts/STOP</p></body></html>";
+    
+    private static boolean bStartFromMain = false;
+    
     private String myDataDirectory;
     private boolean bTimestamp;
     private Random myRandom;
+    
 
     // CRLF ou LF ou CR
     public static String lineSeparator = System.getProperty("line.separator");
@@ -432,6 +442,10 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
     public void stopServer() {
         log.info("HTTP Simple Table Server is shutting down...");
         stop();
+        if (bStartFromMain) {
+        	log.info("... And Exit");
+        	System.exit(0);
+        }
     }
 
     public static void main(String args[]) {
@@ -446,10 +460,18 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
                 HttpSimpleTableControl.DEFAULT_TIMESTAMP);
 
         // default level
-        LoggingManager.setPriority("INFO");
+        Configurator.setLevel(log.getName(), Level.INFO);
         // allow override by system properties
-        LoggingManager.setLoggingLevels(System.getProperties());
-
+        
+        String loglevelStr = JMeterUtils.getPropDefault(
+                "loglevel", HttpSimpleTableControl.DEFAULT_LOG_LEVEL);
+        System.out.println("loglevel=" + loglevelStr);
+        
+        //Configurator.setLevel(log.getName(), Level.toLevel(loglevelStr));
+        Configurator.setRootLevel(Level.toLevel(loglevelStr));
+        Configurator.setLevel(log.getName(), Level.toLevel(loglevelStr));
+        bStartFromMain=true;
+        
         HttpSimpleTableServer serv = new HttpSimpleTableServer(port, timestamp,
                 dataset);
 
@@ -464,9 +486,8 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
     }
 
     public void waitForKey() {
-        log.info("Hit Enter to stop");
+        log.warn("Hit Enter Key on keyboards to Stop and Exit");
         try {
-
             System.in.read();
         } catch (Throwable ignored) {
         }

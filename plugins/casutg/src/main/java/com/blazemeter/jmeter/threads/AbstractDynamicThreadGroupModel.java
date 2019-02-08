@@ -24,7 +24,7 @@ public abstract class AbstractDynamicThreadGroupModel extends AbstractThreadGrou
     public static final String STEPS = "Steps";
     public static final String ITERATIONS = "Iterations";
     public static final String HOLD = "Hold";
-    protected final Set<DynamicThread> threads = Collections.newSetFromMap(new ConcurrentHashMap<DynamicThread, Boolean>());
+    protected transient Set<DynamicThread> threads = Collections.newSetFromMap(new ConcurrentHashMap<DynamicThread, Boolean>());
     protected final ResultCollector logFile = new FlushingResultCollector();
     protected volatile boolean running = false;
 

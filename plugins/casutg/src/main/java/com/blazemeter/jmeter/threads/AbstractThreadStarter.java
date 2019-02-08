@@ -44,11 +44,12 @@ public abstract class AbstractThreadStarter extends Thread {
             supplyActiveThreads();
         } catch (InterruptedException e) {
             log.debug("Interrupted", e);
+            Thread.currentThread().interrupt();
         }
         log.debug("Thread starter has done its job");
     }
 
-    abstract protected void supplyActiveThreads() throws InterruptedException;
+    protected abstract void supplyActiveThreads() throws InterruptedException;
 
     protected DynamicThread makeThread(long threadIndex) {
         boolean onErrorStopTest = owner.getOnErrorStopTest();

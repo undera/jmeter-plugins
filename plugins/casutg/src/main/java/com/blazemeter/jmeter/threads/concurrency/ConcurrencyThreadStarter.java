@@ -13,6 +13,7 @@ import com.blazemeter.jmeter.threads.DynamicThread;
 public class ConcurrencyThreadStarter extends AbstractThreadStarter {
     private static final Logger log = LoggingManager.getLoggerForClass();
     private static final long DEFAULT_SHIFT_RAMPUP = JMeterUtils.getPropDefault("dynamic_tg.shift_rampup_start", 0L);
+    static final long CACHING_VALIDITY_MS = JMeterUtils.getPropDefault("dynamic_tg.properties_caching_validity", 20L);
 
     private final ConcurrencyThreadGroup concurrTG;
     // We cache values for performance
@@ -20,6 +21,7 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
     private long hold;
     private long steps;
     private long maxConcurr;
+    private long lastCachedTime;
 
     public ConcurrencyThreadStarter(int groupIndex, ListenerNotifier listenerNotifier, ListedHashTree testTree, StandardJMeterEngine engine, ConcurrencyThreadGroup concurrencyThreadGroup) {
         super(groupIndex, concurrencyThreadGroup, testTree, listenerNotifier, engine);
@@ -29,6 +31,7 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
         this.hold = owner.getHoldSeconds();
         this.steps = owner.getStepsAsLong();
         this.maxConcurr = Math.round(owner.getTargetLevelAsDouble());
+        this.lastCachedTime = System.currentTimeMillis();
     }
 
     @Override
@@ -50,7 +53,9 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
     }
 
     private long getPlannedConcurrency(boolean isDebugEnabled) {
-        double timeOffset = (System.currentTimeMillis() - startTime) / 1000.0;
+        long now = System.currentTimeMillis();
+        checkNeedsPropertiesReloading(now);
+        double timeOffset = (now - startTime) / 1000.0;
         if(isDebugEnabled) {
             log.debug("Time progress: " + timeOffset + "/" + (rampUp + hold));
         }
@@ -75,4 +80,22 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
             return Math.round(slope * timeOffset);
         }
     }
+
+    void checkNeedsPropertiesReloading(long now) {
+        if (CACHING_VALIDITY_MS > 0 && now - lastCachedTime > CACHING_VALIDITY_MS) {
+            this.rampUp = owner.getRampUpSeconds();
+            this.hold = owner.getHoldSeconds();
+            this.steps = owner.getStepsAsLong();
+            this.maxConcurr = Math.round(owner.getTargetLevelAsDouble());
+            this.lastCachedTime = System.currentTimeMillis();            
+        }
+    }
+
+    /**
+     * @return the lastCachedTime
+     */
+    long getLastCachedTime() {
+        return lastCachedTime;
+    }
+
 }

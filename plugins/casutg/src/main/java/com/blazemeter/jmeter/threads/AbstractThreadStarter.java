@@ -44,6 +44,7 @@ public abstract class AbstractThreadStarter extends Thread {
             supplyActiveThreads();
         } catch (InterruptedException e) {
             log.debug("Interrupted", e);
+            // "InterruptedException" should not be ignored (squid:S2142)
             Thread.currentThread().interrupt();
         }
         log.debug("Thread starter has done its job");

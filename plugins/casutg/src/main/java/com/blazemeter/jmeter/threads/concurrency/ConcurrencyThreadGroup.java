@@ -29,14 +29,14 @@ public class ConcurrencyThreadGroup extends AbstractDynamicThreadGroup {
     }
 
     /**
-     * If threads is empty we wait on condition for 1s max to be notified,
-     *  otherwise 
+     * If threads is empty we wait on condition for DEFAULT_TEMPORISATION millis to be notified,
+     * otherwise we wait for 1s
      */
     public void waitThreadStopped() { // FIXME: method named in confusing way
         long sleepTime = threads.isEmpty() ? DEFAULT_TEMPORISATION : MIN_CHECK_TIME;
         lock.lock();
         try {
-            condition.await(sleepTime, TimeUnit.MILLISECONDS); 
+             condition.await(sleepTime, TimeUnit.MILLISECONDS); // NOSONAR 
         } catch (InterruptedException e) {
             log.debug("Interrupted", e);
             Thread.currentThread().interrupt();

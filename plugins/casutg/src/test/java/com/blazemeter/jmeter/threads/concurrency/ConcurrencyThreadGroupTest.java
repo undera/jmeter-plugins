@@ -116,10 +116,10 @@ public class ConcurrencyThreadGroupTest {
         ConcurrencyThreadStarter starter = new ConcurrencyThreadStarter(0, new ListenerNotifier(), 
                 hashTree, new StandardJMeterEngine(), ctg);
         long lastCachedTime = starter.getLastCachedTime();
-        Thread.sleep(ConcurrencyThreadStarter.CACHING_VALIDITY_MS/2);
+        Thread.sleep(ConcurrencyThreadStarter.CACHING_VALIDITY_MS / 2); // NOSONAR Intentional
         starter.checkNeedsPropertiesReloading(System.currentTimeMillis());
         assertEquals(lastCachedTime, starter.getLastCachedTime());
-        Thread.sleep(ConcurrencyThreadStarter.CACHING_VALIDITY_MS*2);
+        Thread.sleep(ConcurrencyThreadStarter.CACHING_VALIDITY_MS * 2); // NOSONAR Intentional
         starter.checkNeedsPropertiesReloading(System.currentTimeMillis());
         assertNotEquals(lastCachedTime, starter.getLastCachedTime());
     }

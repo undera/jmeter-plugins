@@ -12,7 +12,6 @@ import com.blazemeter.jmeter.threads.DynamicThread;
 
 public class ConcurrencyThreadStarter extends AbstractThreadStarter {
     private static final Logger log = LoggingManager.getLoggerForClass();
-    private static final long DEFAULT_SHIFT_RAMPUP = JMeterUtils.getPropDefault("dynamic_tg.shift_rampup_start", 0L);
     static final long CACHING_VALIDITY_MS = JMeterUtils.getPropDefault("dynamic_tg.properties_caching_validity", 20L);
 
     private final ConcurrencyThreadGroup concurrTG;
@@ -22,6 +21,7 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
     private long steps;
     private long maxConcurr;
     private long lastCachedTime;
+    private long defaultShiftRampup;
 
     public ConcurrencyThreadStarter(int groupIndex, ListenerNotifier listenerNotifier, ListedHashTree testTree, StandardJMeterEngine engine, ConcurrencyThreadGroup concurrencyThreadGroup) {
         super(groupIndex, concurrencyThreadGroup, testTree, listenerNotifier, engine);
@@ -31,6 +31,7 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
         this.hold = owner.getHoldSeconds();
         this.steps = owner.getStepsAsLong();
         this.maxConcurr = Math.round(owner.getTargetLevelAsDouble());
+        this.defaultShiftRampup = JMeterUtils.getPropDefault("dynamic_tg.shift_rampup_start", 0L);
         this.lastCachedTime = System.currentTimeMillis();
     }
 
@@ -60,7 +61,7 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
             log.debug("Time progress: " + timeOffset + "/" + (rampUp + hold));
         }
 
-        timeOffset -= DEFAULT_SHIFT_RAMPUP;
+        timeOffset -= defaultShiftRampup;
         if (timeOffset < 0) {
             timeOffset = 0;
         }
@@ -81,12 +82,17 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
         }
     }
 
+    /**
+     * Check if we need to reload properties
+     * @param now Now as Millis
+     */
     void checkNeedsPropertiesReloading(long now) {
         if (CACHING_VALIDITY_MS > 0 && now - lastCachedTime > CACHING_VALIDITY_MS) {
             this.rampUp = owner.getRampUpSeconds();
             this.hold = owner.getHoldSeconds();
             this.steps = owner.getStepsAsLong();
             this.maxConcurr = Math.round(owner.getTargetLevelAsDouble());
+            this.defaultShiftRampup = JMeterUtils.getPropDefault("dynamic_tg.shift_rampup_start", 0L);
             this.lastCachedTime = System.currentTimeMillis();            
         }
     }

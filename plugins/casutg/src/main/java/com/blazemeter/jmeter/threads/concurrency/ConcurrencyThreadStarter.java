@@ -19,7 +19,7 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
     private long rampUp;
     private long hold;
     private long steps;
-    private long maxConcurr;
+    private double maxConcurr;
     private long lastCachedTime;
     private long defaultShiftRampup;
 
@@ -30,7 +30,7 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
         this.rampUp = owner.getRampUpSeconds();
         this.hold = owner.getHoldSeconds();
         this.steps = owner.getStepsAsLong();
-        this.maxConcurr = Math.round(owner.getTargetLevelAsDouble());
+        this.maxConcurr = owner.getTargetLevelAsDouble();
         this.defaultShiftRampup = JMeterUtils.getPropDefault("dynamic_tg.shift_rampup_start", 0L);
         this.lastCachedTime = System.currentTimeMillis();
     }
@@ -71,13 +71,13 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
         }
 
         if (rampUp == 0 || timeOffset > rampUp) {
-            return maxConcurr;
+            return Math.round(maxConcurr);
         } else if (steps > 0) {
             double stepSize = maxConcurr / (double) steps;
             double stepLen = rampUp / (double) steps;
             return Math.round(stepSize * (Math.floor(timeOffset / stepLen) + 1));
         } else {
-            double slope = (double) maxConcurr / rampUp;
+            double slope = maxConcurr / rampUp;
             return Math.round(slope * timeOffset);
         }
     }
@@ -91,7 +91,7 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
             this.rampUp = owner.getRampUpSeconds();
             this.hold = owner.getHoldSeconds();
             this.steps = owner.getStepsAsLong();
-            this.maxConcurr = Math.round(owner.getTargetLevelAsDouble());
+            this.maxConcurr =owner.getTargetLevelAsDouble();
             this.defaultShiftRampup = JMeterUtils.getPropDefault("dynamic_tg.shift_rampup_start", 0L);
             this.lastCachedTime = System.currentTimeMillis();            
         }

@@ -36,7 +36,9 @@ public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGr
 
     @Override
     public void threadFinished(JMeterThread jMeterThread) {
-        log.debug("threadFinished: " + jMeterThread.getThreadName());
+        if(log.isDebugEnabled()) {
+            log.debug("threadFinished: " + jMeterThread.getThreadName());
+        }
         if (jMeterThread instanceof DynamicThread) {
             threads.remove(jMeterThread);
         }

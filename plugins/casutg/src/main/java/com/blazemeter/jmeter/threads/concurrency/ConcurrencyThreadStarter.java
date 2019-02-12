@@ -1,7 +1,5 @@
 package com.blazemeter.jmeter.threads.concurrency;
 
-import com.blazemeter.jmeter.threads.AbstractThreadStarter;
-import com.blazemeter.jmeter.threads.DynamicThread;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.threads.ListenerNotifier;
 import org.apache.jmeter.util.JMeterUtils;
@@ -9,23 +7,44 @@ import org.apache.jorphan.collections.ListedHashTree;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import com.blazemeter.jmeter.threads.AbstractThreadStarter;
+import com.blazemeter.jmeter.threads.DynamicThread;
+
 public class ConcurrencyThreadStarter extends AbstractThreadStarter {
     private static final Logger log = LoggingManager.getLoggerForClass();
+    static final long CACHING_VALIDITY_MS = JMeterUtils.getPropDefault("dynamic_tg.properties_caching_validity", 20L);
 
     private final ConcurrencyThreadGroup concurrTG;
+    // We cache values for performance
+    private long rampUp;
+    private long hold;
+    private long steps;
+    private double maxConcurr;
+    private long lastCachedTime;
+    private long defaultShiftRampup;
 
     public ConcurrencyThreadStarter(int groupIndex, ListenerNotifier listenerNotifier, ListedHashTree testTree, StandardJMeterEngine engine, ConcurrencyThreadGroup concurrencyThreadGroup) {
         super(groupIndex, concurrencyThreadGroup, testTree, listenerNotifier, engine);
         concurrTG = concurrencyThreadGroup;
+        // We cache values
+        this.rampUp = owner.getRampUpSeconds();
+        this.hold = owner.getHoldSeconds();
+        this.steps = owner.getStepsAsLong();
+        this.maxConcurr = owner.getTargetLevelAsDouble();
+        this.defaultShiftRampup = JMeterUtils.getPropDefault("dynamic_tg.shift_rampup_start", 0L);
+        this.lastCachedTime = System.currentTimeMillis();
     }
 
     @Override
     protected void supplyActiveThreads() throws InterruptedException {
         log.info("Start supplying threads");
         startTime = System.currentTimeMillis();
-        while (!owner.isLimitReached() && getPlannedConcurrency() >= 0) {
-            log.debug("Concurrency factual/expected: " + concurrTG.getConcurrency() + "/" + getPlannedConcurrency());
-            while (concurrTG.getConcurrency() < getPlannedConcurrency()) {
+        boolean isDebugEnabled = log.isDebugEnabled();
+        while (!owner.isLimitReached() && getPlannedConcurrency(isDebugEnabled) >= 0) {
+            if(isDebugEnabled) {
+                log.debug("Concurrency factual/expected: " + concurrTG.getConcurrency() + "/" + getPlannedConcurrency(isDebugEnabled));
+            }
+            while (concurrTG.getConcurrency() < getPlannedConcurrency(isDebugEnabled)) {
                 DynamicThread thread = addActiveThread();
                 concurrTG.threadStarted(thread);
             }
@@ -34,16 +53,15 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
         log.info("Done supplying threads");
     }
 
-    private long getPlannedConcurrency() {
-        long rampUp = owner.getRampUpSeconds();
-        long hold = owner.getHoldSeconds();
-        long steps = owner.getStepsAsLong();
-        double maxConcurr = owner.getTargetLevelAsDouble();
-        double timeOffset = (System.currentTimeMillis() - startTime) / 1000.0;
-        log.debug("Time progress: " + timeOffset + "/" + (rampUp + hold));
+    private long getPlannedConcurrency(boolean isDebugEnabled) {
+        long now = System.currentTimeMillis();
+        checkNeedsPropertiesReloading(now);
+        double timeOffset = (now - startTime) / 1000.0;
+        if(isDebugEnabled) {
+            log.debug("Time progress: " + timeOffset + "/" + (rampUp + hold));
+        }
 
-        long shift = JMeterUtils.getPropDefault("dynamic_tg.shift_rampup_start", 0L);
-        timeOffset -= shift;
+        timeOffset -= defaultShiftRampup;
         if (timeOffset < 0) {
             timeOffset = 0;
         }
@@ -63,4 +81,27 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
             return Math.round(slope * timeOffset);
         }
     }
+
+    /**
+     * Check if we need to reload properties
+     * @param now Now as Millis
+     */
+    void checkNeedsPropertiesReloading(long now) {
+        if (CACHING_VALIDITY_MS > 0 && now - lastCachedTime > CACHING_VALIDITY_MS) {
+            this.rampUp = owner.getRampUpSeconds();
+            this.hold = owner.getHoldSeconds();
+            this.steps = owner.getStepsAsLong();
+            this.maxConcurr =owner.getTargetLevelAsDouble();
+            this.defaultShiftRampup = JMeterUtils.getPropDefault("dynamic_tg.shift_rampup_start", 0L);
+            this.lastCachedTime = System.currentTimeMillis();            
+        }
+    }
+
+    /**
+     * @return the lastCachedTime
+     */
+    long getLastCachedTime() {
+        return lastCachedTime;
+    }
+
 }

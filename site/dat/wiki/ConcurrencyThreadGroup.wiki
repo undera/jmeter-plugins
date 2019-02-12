@@ -20,3 +20,18 @@ The preview graph reacts immediately to changes in the fields, showing you the p
 == Use With Throughput Shaping Timer Feedback Function ==
 
 When this thread group is used with [ThroughputShapingTimer Throughput Shaping Timer], you may replace Target Concurrency value with a call to the __tstFeedback function to dynamically maintain thread count required to achieve target RPS. When using this approach, leave Concurrency Thread Group Ramp Up Time and Ramp-Up Steps Count fields blank, but be sure to set Hold Target Rate Time to a value equal or greater than the total Duration specified in the Throughput Shaping Timer schedule. See [ThroughputShapingTimer#Schedule-Feedback-Function Throughput Shaping Timer Schedule Feedback Function]for function usage details.
+
+
+== Configurable properties ==
+
+=== dynamic_tg.properties_caching_validity:
+
+For performance reasons, the component caches its properties value for "dynamic_tg.properties_caching_validity" which defaults to 20 milliseconds.
+
+If you know you'll never be changing dynamically those values, you can set this property to a negative value.
+If you need to refresh it at a higher rate, decrease its value but be aware of potential performance impacts. 
+
+=== dynamic_tg.properties_caching_validity:
+
+This property is used to avoid CPU spikes on rampup start when no Dynamic threads have been created yet.
+Defaults to 10 millis.

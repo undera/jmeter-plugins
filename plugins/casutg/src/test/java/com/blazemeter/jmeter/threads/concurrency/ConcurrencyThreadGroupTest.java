@@ -1,7 +1,14 @@
 package com.blazemeter.jmeter.threads.concurrency;
 
-import com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroupTest;
-import kg.apc.emulators.TestJMeterUtils;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.jmeter.control.LoopController;
 import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.reporters.ResultCollector;
@@ -22,13 +29,9 @@ import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.blazemeter.jmeter.threads.arrivals.ArrivalsThreadGroupTest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import kg.apc.emulators.TestJMeterUtils;
 
 public class ConcurrencyThreadGroupTest {
     @BeforeClass
@@ -104,9 +107,24 @@ public class ConcurrencyThreadGroupTest {
         }
     }
 
-    // WAP-9261
-    @Test(timeout = 25000)
-    public void testSetDoneThreadsAfterHold() throws Exception {
+    @Test
+    public void testCachingOfProperties() throws InterruptedException {
+        Object[] objects = createTestPlan();
+        ListedHashTree hashTree = (ListedHashTree) objects[0];
+        ConcurrencyThreadGroupExt ctg = (ConcurrencyThreadGroupExt) objects[1];
+        
+        ConcurrencyThreadStarter starter = new ConcurrencyThreadStarter(0, new ListenerNotifier(), 
+                hashTree, new StandardJMeterEngine(), ctg);
+        long lastCachedTime = starter.getLastCachedTime();
+        Thread.sleep(ConcurrencyThreadStarter.CACHING_VALIDITY_MS / 2); // NOSONAR Intentional
+        starter.checkNeedsPropertiesReloading(System.currentTimeMillis());
+        assertEquals(lastCachedTime, starter.getLastCachedTime());
+        Thread.sleep(ConcurrencyThreadStarter.CACHING_VALIDITY_MS * 2); // NOSONAR Intentional
+        starter.checkNeedsPropertiesReloading(System.currentTimeMillis());
+        assertNotEquals(lastCachedTime, starter.getLastCachedTime());
+    }
+    
+    private Object[] createTestPlan() {
         JMeterContextService.getContext().setVariables(new JMeterVariables());
 
         TestSampleListener listener = new TestSampleListener();
@@ -140,11 +158,21 @@ public class ConcurrencyThreadGroupTest {
 
         ListedHashTree hashTree = new ListedHashTree();
         hashTree.add(ctg, loopTree);
-
         TestCompiler compiler = new TestCompiler(hashTree);
         // this hashTree can be save to *jmx
         hashTree.traverse(compiler);
 
+        return new Object[] {
+                hashTree,
+                ctg
+        };
+    }
+    // WAP-9261
+    @Test(timeout = 25000)
+    public void testSetDoneThreadsAfterHold() throws Exception {
+        Object[] objects = createTestPlan();
+        ListedHashTree hashTree = (ListedHashTree) objects[0];
+        ConcurrencyThreadGroupExt ctg = (ConcurrencyThreadGroupExt) objects[1];
         ListenerNotifier notifier = new ListenerNotifier();
 
         long startTime = System.currentTimeMillis();
@@ -155,7 +183,7 @@ public class ConcurrencyThreadGroupTest {
         long endTime = System.currentTimeMillis();
 
         // wait when all thread stopped
-        Thread.currentThread().sleep(5000);
+        Thread.sleep(5000);
 
         assertTrue((endTime - startTime) < 20000);
         //  ALL threads must be stopped

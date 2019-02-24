@@ -1,5 +1,7 @@
 package com.blazemeter.jmeter.threads.concurrency;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -20,8 +22,8 @@ public class ConcurrencyThreadGroup extends AbstractDynamicThreadGroup {
     private static final long DEFAULT_TEMPORISATION = JMeterUtils.getPropDefault("dynamic_tg.temporisation", 10L);
 
     public static final long MIN_CHECK_TIME = 1000L;
-    private final transient Lock lock = new ReentrantLock();
-    private final transient Condition condition = lock.newCondition(); 
+    private transient Lock lock = new ReentrantLock();
+    private transient Condition condition = lock.newCondition(); 
     
     @Override
     protected Thread getThreadStarter(int groupIndex, ListenerNotifier listenerNotifier, ListedHashTree testTree, StandardJMeterEngine engine) {
@@ -82,5 +84,12 @@ public class ConcurrencyThreadGroup extends AbstractDynamicThreadGroup {
 
     public boolean tooMuchConcurrency() {
         return threads.size() > getTargetLevelAsDouble();
+    }
+    
+    private void readObject(ObjectInputStream in)
+            throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        lock = new ReentrantLock();
+        condition = lock.newCondition(); 
     }
 }

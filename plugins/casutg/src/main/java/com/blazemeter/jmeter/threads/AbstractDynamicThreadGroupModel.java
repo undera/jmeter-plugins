@@ -1,6 +1,11 @@
 package com.blazemeter.jmeter.threads;
 
-import com.blazemeter.jmeter.reporters.FlushingResultCollector;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
@@ -10,9 +15,7 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import com.blazemeter.jmeter.reporters.FlushingResultCollector;
 
 // reason to have this class as separate is will to keep Model responsibility separate
 public abstract class AbstractDynamicThreadGroupModel extends AbstractThreadGroup implements TestStateListener {
@@ -172,5 +175,11 @@ public abstract class AbstractDynamicThreadGroupModel extends AbstractThreadGrou
 
     public void setIterationsLimit(String val) {
         setProperty(ITERATIONS, val);
+    }
+    
+    private void readObject(ObjectInputStream in)
+            throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        threads = Collections.newSetFromMap(new ConcurrentHashMap<DynamicThread, Boolean>());
     }
 }

@@ -502,6 +502,10 @@
       "2.5.4": {
         "changes":"Fixed error with filters (#37), refactored the method.",
         "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.4/jmeter.backendlistener.elasticsearch-2.5.4.jar"
+      },
+      "2.6.0": {
+        "changes":"Added AWS support, added RegExp support in filters, fixed bug with header parsing",
+        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.0/jmeter.backendlistener.elasticsearch-2.6.0.jar"
       }
     }
   }

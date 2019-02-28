@@ -31,6 +31,10 @@ public class VirtualUserController extends GenericController {
             iterationNo++;
             if (owner instanceof ArrivalsThreadGroup) {
                 getOwnerAsArrivals().arrivalFact(JMeterContextService.getContext().getThread(), iterationNo);
+                if (!owner.isRunning()) {
+                    setDone(true);
+                    return null;
+                }
             }
         }
 

@@ -36,12 +36,16 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
     }
 
     @Override
-    protected void supplyActiveThreads() throws InterruptedException {
+    protected void supplyActiveThreads() {
         log.info("Start supplying threads");
+        if (owner.getTargetLevelAsInt() <= 0) {
+            log.info("Start supplying threads");
+            return;
+        }
         startTime = System.currentTimeMillis();
         boolean isDebugEnabled = log.isDebugEnabled();
         while (!owner.isLimitReached() && getPlannedConcurrency(isDebugEnabled) >= 0) {
-            if(isDebugEnabled) {
+            if (isDebugEnabled) {
                 log.debug("Concurrency factual/expected: " + concurrTG.getConcurrency() + "/" + getPlannedConcurrency(isDebugEnabled));
             }
             while (concurrTG.getConcurrency() < getPlannedConcurrency(isDebugEnabled)) {
@@ -57,7 +61,7 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
         long now = System.currentTimeMillis();
         checkNeedsPropertiesReloading(now);
         double timeOffset = (now - startTime) / 1000.0;
-        if(isDebugEnabled) {
+        if (isDebugEnabled) {
             log.debug("Time progress: " + timeOffset + "/" + (rampUp + hold));
         }
 
@@ -84,6 +88,7 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
 
     /**
      * Check if we need to reload properties
+     *
      * @param now Now as Millis
      */
     void checkNeedsPropertiesReloading(long now) {
@@ -91,9 +96,9 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
             this.rampUp = owner.getRampUpSeconds();
             this.hold = owner.getHoldSeconds();
             this.steps = owner.getStepsAsLong();
-            this.maxConcurr =owner.getTargetLevelAsDouble();
+            this.maxConcurr = owner.getTargetLevelAsDouble();
             this.defaultShiftRampup = JMeterUtils.getPropDefault("dynamic_tg.shift_rampup_start", 0L);
-            this.lastCachedTime = System.currentTimeMillis();            
+            this.lastCachedTime = System.currentTimeMillis();
         }
     }
 

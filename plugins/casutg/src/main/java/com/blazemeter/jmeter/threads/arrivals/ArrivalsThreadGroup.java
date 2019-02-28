@@ -1,6 +1,5 @@
 package com.blazemeter.jmeter.threads.arrivals;
 
-import com.blazemeter.jmeter.control.VirtualUserController;
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
 import com.blazemeter.jmeter.threads.DynamicThread;
 import org.apache.jmeter.engine.StandardJMeterEngine;

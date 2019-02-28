@@ -182,4 +182,8 @@ public abstract class AbstractDynamicThreadGroupModel extends AbstractThreadGrou
         in.defaultReadObject();
         threads = Collections.newSetFromMap(new ConcurrentHashMap<DynamicThread, Boolean>());
     }
+
+    public boolean isRunning() {
+        return running;
+    }
 }

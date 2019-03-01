@@ -39,7 +39,7 @@ public class ConcurrencyThreadStarter extends AbstractThreadStarter {
     protected void supplyActiveThreads() {
         log.info("Start supplying threads");
         if (owner.getTargetLevelAsInt() <= 0) {
-            log.info("Start supplying threads");
+            log.info("ThreadStarter will finish, because target concurrency less than 0.");
             return;
         }
         startTime = System.currentTimeMillis();

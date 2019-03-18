@@ -625,6 +625,14 @@
           "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/xtn5250-2.0.1.jar",
           "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/dm3270-lib-0.6.jar"
         }
+      },
+      "1.1": {
+        "changes": "Support for setting fields by label and update dm3270 which includes tn3270 protocol enhancements support improvements (SSCP LU DATA, BID) and additional fixes (hiding invisible fields from screen and sending some fields back to server)",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1/jmeter-bzm-rte-1.1.jar",
+        "libs": {
+          "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1/xtn5250-2.1.jar",
+          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1/dm3270-lib-0.7.jar"
+        }
       }
     }
   },

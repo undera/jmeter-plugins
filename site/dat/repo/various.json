@@ -506,6 +506,10 @@
       "2.6.0": {
         "changes":"Added AWS support, added RegExp support in filters, fixed bug with header parsing",
         "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.0/jmeter.backendlistener.elasticsearch-2.6.0.jar"
+      },
+      "2.6.1": {
+        "changes":"Fixed bug with header parsing (#40, thanks @ncasaux)",
+        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
       }
     }
   }

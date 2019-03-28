@@ -633,6 +633,14 @@
           "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1/xtn5250-2.1.jar",
           "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1/dm3270-lib-0.7.jar"
         }
+      },
+      "1.1.1": {
+        "changes": "This version fixes property naming for inputs by label feature",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1.1/jmeter-bzm-rte-1.1.1.jar",
+        "libs": {
+          "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1.1/xtn5250-2.1.jar",
+          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1.1/dm3270-lib-0.7.jar"
+        }
       }
     }
   },

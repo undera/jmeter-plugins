@@ -512,5 +512,22 @@
         "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
       }
     }
+  },
+  {
+    "id": "camel-straw",
+    "name": "Camel Straw Launcher",
+    "description": "Allows you to run your jmeter load-test on camelstraw.io",
+    "screenshotUrl": "https://gallery.azure.com/artifact/20151001/entechsolutions.camel-straw.1.0.0/Artifacts/SampleImage/849648d3-edd8-47b7-9438-8ec0237637de.png",
+    "helpUrl": "https://github.com/eabdullin/camel-straw-plugin/wiki",
+    "vendor": "Camel Straw",
+    "markerClass": "com.camelstraw.guiplugin.config.CamelStraw",
+    "versions": {
+      "0.1.0": {
+        "downloadUrl": "https://camelstrawprod.blob.core.windows.net/camel-straw/camel-straw-0.1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
   }
 ]

@@ -101,7 +101,7 @@ if __name__ == "__main__":
             plugins.extend(content)
 
     if len(sys.argv) > 1:
-        logging.info("Doing no downloads")
+        logging.info("Doing no downloads, just checked JSON validity")
         sys.exit(0)
 
     # find pmgr

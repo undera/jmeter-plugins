@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "screenshotUrl": {
+        "type": "string"
+      },
+      "helpUrl": {
+        "type": "string"
+      },
+      "vendor": {
+        "type": "string"
+      },
+      "markerClass": {
+        "type": [
+          "null",
+          "string"
+        ]
+      },
+      "versions": {
+        "type": "object",
+        "properties": {
+          "": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "downloadUrl": {
+                "type": "string"
+              },
+              "libs": {
+                "type": "object",
+                "patternProperties": {
+                  ".+": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "required": [
+              "downloadUrl"
+            ]
+          }
+        },
+        "patternProperties": {
+          "^\\d+(\\.\\d+)*(-\\w+)?$": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "downloadUrl": {
+                "type": [
+                  "null",
+                  "string"
+                ]
+              },
+              "depends": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "changes": {
+                "type": "string"
+              },
+              "libs": {
+                "type": "object",
+                "patternProperties": {
+                  ".+": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "required": [
+              "downloadUrl"
+            ]
+          }
+        }
+      },
+      "componentClasses": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "canUninstall": {
+        "type": "boolean"
+      },
+      "installerClass": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "description",
+      "helpUrl",
+      "id",
+      "markerClass",
+      "name",
+      "screenshotUrl",
+      "vendor",
+      "versions"
+    ]
+  }
+}

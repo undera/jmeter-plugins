@@ -445,11 +445,11 @@
     "versions": {
       "2.2.3": {
         "changes": "DEPRECATED. Added back because of an issue with the plugins manager not uninstalling it.",
-        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.3/jmeter.backendlistener.elasticsearch-2.2.3.jar"
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.3/jmeter.backendlistener.elasticsearch-2.2.3.jar"
       },
       "2.2.5": {
         "changes": "Added request body in info/debug mode -- Forced lowercase for index creation",
-        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.5/jmeter.backendlistener.elasticsearch-2.2.5.jar"
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.5/jmeter.backendlistener.elasticsearch-2.2.5.jar"
       },
       "2.3.0": {
         "changes": "Added a new detail mode : 'error' - only send the failing samplers to ElasticSearch",
@@ -460,56 +460,56 @@
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.1/jmeter.backendlistener.elasticsearch-2.3.1.jar"
       },
       "2.3.2": {
-        "changes":"Fixed a bug where ElapsedTime wouldn't be considered as a date by ES. Added the possibility to send custom fields to ElasticSearch.",
-        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.2/jmeter.backendlistener.elasticsearch-2.3.2.jar"
+        "changes": "Fixed a bug where ElapsedTime wouldn't be considered as a date by ES. Added the possibility to send custom fields to ElasticSearch.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.2/jmeter.backendlistener.elasticsearch-2.3.2.jar"
       },
       "2.3.3": {
-        "changes":"Added injector hostname in the base ElasticSearch index",
-        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.3/jmeter.backendlistener.elasticsearch-2.3.3.jar"
+        "changes": "Added injector hostname in the base ElasticSearch index",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.3/jmeter.backendlistener.elasticsearch-2.3.3.jar"
       },
       "2.4.0": {
-        "changes":"Lots of refactoring, minor bug fixes, no major new feature",
-        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.0/jmeter.backendlistener.elasticsearch-2.4.0.jar"
+        "changes": "Lots of refactoring, minor bug fixes, no major new feature",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.0/jmeter.backendlistener.elasticsearch-2.4.0.jar"
       },
       "2.4.1": {
-        "changes":"Added support for Xpack authentication",
-        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.1/jmeter.backendlistener.elasticsearch-2.4.1.jar"
+        "changes": "Added support for Xpack authentication",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.1/jmeter.backendlistener.elasticsearch-2.4.1.jar"
       },
       "2.4.2": {
-        "changes":"Added string conversion to number for ElasticSearch",
-        "downloadUrl":"http://central.maven.org/maven2/io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.2/jmeter.backendlistener.elasticsearch-2.4.2.jar"
+        "changes": "Added string conversion to number for ElasticSearch",
+        "downloadUrl": "http://central.maven.org/maven2/io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.2/jmeter.backendlistener.elasticsearch-2.4.2.jar"
       },
       "2.4.3": {
-        "changes":"Fixed class loader problem with JavaFX StringConverter class",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.4.3/jmeter.backendlistener.elasticsearch-2.4.3.jar"
+        "changes": "Fixed class loader problem with JavaFX StringConverter class",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.4.3/jmeter.backendlistener.elasticsearch-2.4.3.jar"
       },
       "2.5.0": {
-        "changes":"Switched to low-level client v6.4 & added custom variables support",
-        "downloadUrl":"http://central.maven.org/maven2/io/github/delirius325/jmeter.backendlistener.elasticsearch/2.5.0/jmeter.backendlistener.elasticsearch-2.5.0.jar"
+        "changes": "Switched to low-level client v6.4 & added custom variables support",
+        "downloadUrl": "http://central.maven.org/maven2/io/github/delirius325/jmeter.backendlistener.elasticsearch/2.5.0/jmeter.backendlistener.elasticsearch-2.5.0.jar"
       },
       "2.5.1": {
-        "changes":"Added way of adding all response headers as well as request headers as ElasticSearch Index properties. (Basically JSON key/value pairs)",
-        "downloadUrl":"https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.5.1/jmeter.backendlistener.elasticsearch-2.5.1.jar"
+        "changes": "Added way of adding all response headers as well as request headers as ElasticSearch Index properties. (Basically JSON key/value pairs)",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.5.1/jmeter.backendlistener.elasticsearch-2.5.1.jar"
       },
       "2.5.2": {
-        "changes":"Fixed error with filters",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.2/jmeter.backendlistener.elasticsearch-2.5.2.jar"
+        "changes": "Fixed error with filters",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.2/jmeter.backendlistener.elasticsearch-2.5.2.jar"
       },
       "2.5.3": {
-        "changes":"Fixed error with filters (#2), refactored the method.",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.3/jmeter.backendlistener.elasticsearch-2.5.3.jar"
+        "changes": "Fixed error with filters (#2), refactored the method.",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.3/jmeter.backendlistener.elasticsearch-2.5.3.jar"
       },
       "2.5.4": {
-        "changes":"Fixed error with filters (#37), refactored the method.",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.4/jmeter.backendlistener.elasticsearch-2.5.4.jar"
+        "changes": "Fixed error with filters (#37), refactored the method.",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.4/jmeter.backendlistener.elasticsearch-2.5.4.jar"
       },
       "2.6.0": {
-        "changes":"Added AWS support, added RegExp support in filters, fixed bug with header parsing",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.0/jmeter.backendlistener.elasticsearch-2.6.0.jar"
+        "changes": "Added AWS support, added RegExp support in filters, fixed bug with header parsing",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.0/jmeter.backendlistener.elasticsearch-2.6.0.jar"
       },
       "2.6.1": {
-        "changes":"Fixed bug with header parsing (#40, thanks @ncasaux)",
-        "downloadUrl":"https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
+        "changes": "Fixed bug with header parsing (#40, thanks @ncasaux)",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
       }
     }
   }

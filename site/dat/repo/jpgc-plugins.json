@@ -418,7 +418,7 @@
           "json-lib": "http://search.maven.org/remotecontent?filepath=net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar",
           "json-smart": "http://search.maven.org/remotecontent?filepath=net/minidev/json-smart/2.3/json-smart-2.3.jar",
           "asm": "http://search.maven.org/remotecontent?filepath=net/minidev/asm/1.0.2/asm-1.0.2.jar",
-          "snakeyaml" : "http://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.21/snakeyaml-1.21.jar"
+          "snakeyaml": "http://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.21/snakeyaml-1.21.jar"
         }
       }
     }

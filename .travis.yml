@@ -3,9 +3,11 @@ language: java
 #jdk:
 #  - openjdk7
 #  - oraclejdk8
-install: "mvn -Dmaven.test.skip=true clean install --batch-mode"
+install:
+  - mvn -Dmaven.test.skip=true clean install --batch-mode
+  - python -m pip install jsonschema
 script:
-  - "mvn -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true -Dcobertura.report.format=xml --fail-at-end --batch-mode cobertura:cobertura test "
-  - "python downloads.py true"
+  - mvn -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true -Dcobertura.report.format=xml --fail-at-end --batch-mode cobertura:cobertura test
+  - python downloads.py true
 after_success:
   - bash <(curl -s https://codecov.io/bash)

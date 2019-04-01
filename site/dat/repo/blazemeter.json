@@ -69,7 +69,7 @@
         }
       },
       "0.2": {
-        "changes" : "<p>Fixed resolve JMeter variables for Destination Variable name</p><p>Fix relative path</p>",
+        "changes": "<p>Fixed resolve JMeter variables for Destination Variable name</p><p>Fix relative path</p>",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-directory-listing/0.2/jmeter-plugins-directory-listing-0.2.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
@@ -167,7 +167,7 @@
         ]
       },
       "0.3": {
-        "changes" : "Fixed remote execution",
+        "changes": "Fixed remote execution",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.3/jmeter-parallel-0.3.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
@@ -177,7 +177,7 @@
         ]
       },
       "0.4": {
-        "changes" : "Fixed reset Thread Context in all AbstractTestElements",
+        "changes": "Fixed reset Thread Context in all AbstractTestElements",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.4/jmeter-parallel-0.4.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
@@ -187,7 +187,7 @@
         ]
       },
       "0.5": {
-        "changes" : "Fixed Concurrency Modification exception for Config elements",
+        "changes": "Fixed Concurrency Modification exception for Config elements",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.5/jmeter-parallel-0.5.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
@@ -197,7 +197,7 @@
         ]
       },
       "0.7": {
-        "changes" : "Fixed unnecessary TE clone",
+        "changes": "Fixed unnecessary TE clone",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.7/jmeter-parallel-0.7.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
@@ -207,7 +207,7 @@
         ]
       },
       "0.8": {
-        "changes" : "Fixed sample labels for JMeter 5.0",
+        "changes": "Fixed sample labels for JMeter 5.0",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.8/jmeter-parallel-0.8.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
@@ -217,7 +217,7 @@
         ]
       },
       "0.9": {
-        "changes" : "Fixed Test Actions (Start Next Thread Loop, Stop Thread, Stop All Threads)",
+        "changes": "Fixed Test Actions (Start Next Thread Loop, Stop Thread, Stop All Threads)",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.9/jmeter-parallel-0.9.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
@@ -248,7 +248,7 @@
         }
       },
       "0.2": {
-        "changes" : "Fixed file naming when file hasn't extension",
+        "changes": "Fixed file naming when file hasn't extension",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-plugins-rotating-listener/0.2/jmeter-plugins-rotating-listener-0.2.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"

@@ -46,6 +46,7 @@ public class ReporterTool extends AbstractCMDTool {
                 + "--exclude-label-regex <true/false> " // filter samples label with regex
                 + "--start-offset <sec>" // filter samples on period time
                 + "--end-offset <sec>" // filter samples on period time
+                + "--yAxisLabel <string>" // Label string for Y-Axis on chart
                 + "]");
     }
 
@@ -247,6 +248,11 @@ public class ReporterTool extends AbstractCMDTool {
                 }
 
                 worker.setEndOffset((String) args.next());
+            } else if (nextArg.equalsIgnoreCase("--yAxisLabel")) {
+                if (!args.hasNext()) {
+                    throw new IllegalArgumentException("Missing Y-Axis label string");
+                }
+                worker.setYAxisLabel((String) args.next());
             } else {
                 worker.processUnknownOption(nextArg, args);
             }

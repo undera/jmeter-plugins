@@ -160,6 +160,16 @@ public class PluginsCMDWorkerTest {
         instance.setGraphHeight(i);
     }
 
+    /**
+     * Test of setYAxisLabel method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetYAxisLabel() {
+        System.out.println("setYAxisLabel");
+        String newYAxisLabel = "Response time [ms]";
+        instance.setYAxisLabel(newYAxisLabel);
+    }
+
     @Test
     public void testSetAggregate() {
         System.out.println("setAggregate");

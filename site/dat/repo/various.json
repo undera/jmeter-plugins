@@ -512,5 +512,19 @@
         "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
       }
     }
+  },
+  {
+    "id": "jmeter.pack-listener",
+    "name": "JMeter Listener pack",
+    "description": "This JMeter Plugin allows to write load test data on-the-fly to <a href=\"https://clickhouse.yandex\">ClickHouse</a> (as well as InfluxDB, ElasticSearch, with additional feature: aggregation of Samplers)<br />Explanations and usage examples on project wiki. <a href=\"https://grafana.com/orgs/testload/dashboards\">Dashboards for ClickHouse.</a>",
+    "screenshotUrl": "https://gitlab.com/testload/jmeter-listener/wikis/uploads/498fd6f5a85d7ce62f5cad54f69f6ce7/Screenshot_at_May_08_14-21-40.png",
+    "helpUrl": "https://gitlab.com/testload/jmeter-listener/wikis/home",
+    "vendor": "cloud.testload",
+    "markerClass": "cloud.testload.jmeter.ClickHouseBackendListenerClient",
+    "versions": {
+      "1.5": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=cloud/testload/jmeter.pack-listener/1.5/jmeter.pack-listener-1.5.jar"
+      }
+    }
   }
 ]

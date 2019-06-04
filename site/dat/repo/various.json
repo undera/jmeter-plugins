@@ -524,6 +524,10 @@
     "versions": {
       "1.5": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=cloud/testload/jmeter.pack-listener/1.5/jmeter.pack-listener-1.5.jar"
+      },
+      "1.7": {
+        "changes": "New ClickHouse table scheme jmresults(buffer)->jmresults_data(ops storage with extended data request/response)->jmresults_statistic(mat view as archive storage). New field (hostname) in stats",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=cloud/testload/jmeter.pack-listener/1.7/jmeter.pack-listener-1.7.jar"
       }
     }
   }

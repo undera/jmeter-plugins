@@ -202,6 +202,14 @@
           "jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar",
           "jsch": "https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.54/jsch-0.1.54.jar"
         }
+      },
+      "1.2": {
+        "changes": "Bug fixes and new locale config option.",
+        "downloadUrl": "https://github.com/tilln/jmeter-sshmon/releases/download/1.2/jmeter-sshmon-1.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar",
+          "jsch": "https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.54/jsch-0.1.54.jar"
+        }
       }
     }
   },

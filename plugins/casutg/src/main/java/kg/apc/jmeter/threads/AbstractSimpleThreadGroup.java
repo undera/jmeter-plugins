@@ -20,9 +20,10 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     private static final long WAIT_TO_DIE = JMeterUtils.getPropDefault("jmeterengine.threadstop.wait", 5 * 1000); // 5 seconds
+    public static final String THREAD_GROUP_DISTRIBUTED_PREFIX_PROPERTY_NAME = "__jm.D_TG"; // FIXME: use JMeterUtils.THREAD_GROUP_DISTRIBUTED_PREFIX_PROPERTY_NAME when dependency is updated
 
     // List of active threads
-    private final Map<JMeterThread, Thread> allThreads = new ConcurrentHashMap<JMeterThread, Thread>();
+    protected final Map<JMeterThread, Thread> allThreads = new ConcurrentHashMap<>();
 
     /**
      * Is test (still) running?
@@ -44,53 +45,55 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
 
     //JMeter 2.7 compatibility
     public void scheduleThread(JMeterThread thread) {
-       if(System.currentTimeMillis()-tgStartTime > TOLERANCE) {
-           tgStartTime = System.currentTimeMillis();
-       }
-       scheduleThread(thread, tgStartTime);
+        if (System.currentTimeMillis() - tgStartTime > TOLERANCE) {
+            tgStartTime = System.currentTimeMillis();
+        }
+        scheduleThread(thread, tgStartTime);
     }
 
-    
+
     @Override
-    public void start(int groupCount, ListenerNotifier notifier, ListedHashTree threadGroupTree, StandardJMeterEngine engine) {
+    public void start(int groupNum, ListenerNotifier notifier, ListedHashTree threadGroupTree, StandardJMeterEngine engine) {
         running = true;
 
         int numThreads = getNumThreads();
-        
-        log.info("Starting thread group number " + groupCount
-                + " threads " + numThreads);
-       
-            long now = System.currentTimeMillis(); // needs to be same time for all threads in the group
-            final JMeterContext context = JMeterContextService.getContext();
-            for (int i = 0; running && i < numThreads; i++) {
-                JMeterThread jmThread = makeThread(groupCount, notifier, threadGroupTree, engine, i, context);
-                scheduleThread(jmThread, now); // set start and end time
-                Thread newThread = new Thread(jmThread, jmThread.getThreadName());
-                registerStartedThread(jmThread, newThread);
-                newThread.start();
-            }
 
-        log.info("Started thread group number "+groupCount);
+        log.info("Starting thread group number " + groupNum + " threads " + numThreads);
+
+        long now = System.currentTimeMillis(); // needs to be same time for all threads in the group
+        final JMeterContext context = JMeterContextService.getContext();
+        for (int i = 0; running && i < numThreads; i++) {
+            JMeterThread jmThread = makeThread(groupNum, notifier, threadGroupTree, engine, i, context);
+            scheduleThread(jmThread, now); // set start and end time
+            Thread newThread = new Thread(jmThread, jmThread.getThreadName());
+            registerStartedThread(jmThread, newThread);
+            newThread.start();
+        }
+
+        log.info("Started thread group number " + groupNum);
     }
 
     private void registerStartedThread(JMeterThread jMeterThread, Thread newThread) {
         allThreads.put(jMeterThread, newThread);
     }
 
-    private JMeterThread makeThread(int groupCount,
-            ListenerNotifier notifier, ListedHashTree threadGroupTree,
-            StandardJMeterEngine engine, int i,
-            JMeterContext context) { // N.B. Context needs to be fetched in the correct thread
+    private JMeterThread makeThread(int groupNum,
+                                    ListenerNotifier notifier, ListedHashTree threadGroupTree,
+                                    StandardJMeterEngine engine, int threadNum,
+                                    JMeterContext context) { // N.B. Context needs to be fetched in the correct thread
         boolean onErrorStopTest = getOnErrorStopTest();
         boolean onErrorStopTestNow = getOnErrorStopTestNow();
         boolean onErrorStopThread = getOnErrorStopThread();
         boolean onErrorStartNextLoop = getOnErrorStartNextLoop();
+
         String groupName = getName();
+        String distributedPrefix = JMeterUtils.getPropDefault(THREAD_GROUP_DISTRIBUTED_PREFIX_PROPERTY_NAME, "");
+        final String threadName = distributedPrefix + (distributedPrefix.isEmpty() ? "" : "-") + groupName + " " + groupNum + "-" + (threadNum + 1);
+
         final JMeterThread jmeterThread = new JMeterThread(cloneTree(threadGroupTree), this, notifier);
-        jmeterThread.setThreadNum(i);
+        jmeterThread.setThreadNum(threadNum);
         jmeterThread.setThreadGroup(this);
         jmeterThread.setInitialContext(context);
-        final String threadName = groupName + " " + (groupCount) + "-" + (i + 1);
         jmeterThread.setThreadName(threadName);
         jmeterThread.setEngine(engine);
         jmeterThread.setOnErrorStopTest(onErrorStopTest);
@@ -102,9 +105,9 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
 
     @Override
     public boolean stopThread(String threadName, boolean now) {
-        for(Entry<JMeterThread, Thread> entry : allThreads.entrySet()){
+        for (Entry<JMeterThread, Thread> entry : allThreads.entrySet()) {
             JMeterThread thrd = entry.getKey();
-            if (thrd.getThreadName().equals(threadName)){
+            if (thrd.getThreadName().equals(threadName)) {
                 thrd.stop();
                 thrd.interrupt();
                 if (now) {
@@ -133,7 +136,7 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
             item.stop(); // set stop flag
             item.interrupt(); // interrupt sampler if possible
             Thread t = entry.getValue();
-            if (t != null ) { // Bug 49734
+            if (t != null) { // Bug 49734
                 t.interrupt(); // also interrupt JVM thread
             }
         }
@@ -168,6 +171,7 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
                 try {
                     thread.join(WAIT_TO_DIE);
                 } catch (InterruptedException e) {
+                    log.debug("Interrupted", e);
                 }
                 if (thread.isAlive()) {
                     stopped = false;
@@ -191,6 +195,7 @@ public abstract class AbstractSimpleThreadGroup extends AbstractThreadGroup {
                 try {
                     thread.join(WAIT_TO_DIE);
                 } catch (InterruptedException e) {
+                    log.debug("Interrupted", e);
                 }
             }
         }

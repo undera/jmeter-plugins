@@ -176,7 +176,7 @@ public abstract class AbstractDynamicThreadGroupModel extends AbstractThreadGrou
     public void setIterationsLimit(String val) {
         setProperty(ITERATIONS, val);
     }
-    
+
     private void readObject(ObjectInputStream in)
             throws IOException, ClassNotFoundException {
         in.defaultReadObject();

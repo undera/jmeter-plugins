@@ -125,7 +125,7 @@ public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGr
     }
 
     protected void joinThreadFrom(Set<DynamicThread> threadSet) {
-        DynamicThread[] threads = threadSet.toArray(new DynamicThread[threadSet.size()]);
+        DynamicThread[] threads = threadSet.toArray(new DynamicThread[0]);
         if (threads.length > 0 && threads[0] != null) {
             DynamicThread thread = threads[0];
             log.debug("Joining thread " + thread.getThreadName());

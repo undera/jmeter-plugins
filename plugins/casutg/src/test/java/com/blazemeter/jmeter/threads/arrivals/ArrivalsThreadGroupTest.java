@@ -1,8 +1,8 @@
 package com.blazemeter.jmeter.threads.arrivals;
 
-import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.sampler.TestAction;
+import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jorphan.collections.ListedHashTree;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class ArrivalsThreadGroupTest {
         TestJMeterUtils.createJmeterEnv();
     }
 
-    public static ListedHashTree getListedHashTree(AbstractDynamicThreadGroup atg, boolean stopThread) {
+    public static ListedHashTree getListedHashTree(AbstractThreadGroup atg, boolean stopThread) {
         ListedHashTree tree = new ListedHashTree();
         TestAction pauser = new TestAction();
         if (stopThread) {

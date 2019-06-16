@@ -1,18 +1,17 @@
-// TODO: resolve scrolling issue here and in all other samplers
-package kg.apc.jmeter.samplers;
+package kg.apc.jmeter.modifiers;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.dummy.DummyPanel;
-import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
+import org.apache.jmeter.processor.gui.AbstractPostProcessorGui;
 import org.apache.jmeter.testelement.TestElement;
 
 import java.awt.*;
 
-public class DummySamplerGui extends AbstractSamplerGui {
+public class DummySubPostProcessorGui extends AbstractPostProcessorGui {
     public static final String WIKIPAGE = "DummySampler";
     private final DummyPanel dummyPanel;
 
-    public DummySamplerGui() {
+    public DummySubPostProcessorGui() {
         setLayout(new BorderLayout(0, 5));
         setBorder(makeBorder());
 
@@ -25,7 +24,7 @@ public class DummySamplerGui extends AbstractSamplerGui {
 
     @Override
     public String getStaticLabel() {
-        return JMeterPluginsUtils.prefixLabel("Dummy Sampler");
+        return JMeterPluginsUtils.prefixLabel("Add Dummy Subresult");
     }
 
     @Override
@@ -35,10 +34,10 @@ public class DummySamplerGui extends AbstractSamplerGui {
 
     @Override
     public TestElement createTestElement() {
-        DummySampler sampler = new DummySampler();
-        modifyTestElement(sampler);
-        sampler.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
-        return sampler;
+        DummySubPostProcessor te = new DummySubPostProcessor();
+        modifyTestElement(te);
+        te.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
+        return te;
     }
 
     @Override
@@ -58,5 +57,4 @@ public class DummySamplerGui extends AbstractSamplerGui {
         super.clearGui();
         dummyPanel.initFields();
     }
-
 }

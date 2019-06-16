@@ -1,6 +1,7 @@
 package kg.apc.jmeter.samplers;
 
 import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.gui.AbstractJMeterGuiComponent;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JMeterUtils;
 import org.junit.Assert;
@@ -28,7 +29,8 @@ public class DummySamplerGuiTest {
             obj.modifyTestElement(te);
 
             JFrame frame = new JFrame(obj.getStaticLabel());
-            frame.setPreferredSize(new Dimension(800, 600));
+
+            frame.setPreferredSize(new Dimension(1024, 768));
             frame.getContentPane().add(obj, BorderLayout.CENTER);
             frame.pack();
             frame.setVisible(true);

@@ -189,7 +189,9 @@
     "markerClass": "kg.apc.jmeter.samplers.DummySampler",
     "componentClasses": [
       "kg.apc.jmeter.samplers.DummySampler",
-      "kg.apc.jmeter.samplers.DummySamplerGui"
+      "kg.apc.jmeter.samplers.DummySamplerGui",
+      "kg.apc.jmeter.modifiers.DummySubPostProcessor",
+      "kg.apc.jmeter.modifiers.DummySubPostProcessorGui"
     ],
     "versions": {
       "0.1": {
@@ -201,6 +203,13 @@
       "0.2": {
         "changes": "Introduce encoding for multibyte data",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.2/jmeter-plugins-dummy-0.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
+      },
+      "0.3": {
+        "changes": "Add URL and SampleResult class fields to UI, add Dummy Subsample Postprocessor",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.3/jmeter-plugins-dummy-0.3.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }

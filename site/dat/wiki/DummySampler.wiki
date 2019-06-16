@@ -12,6 +12,11 @@ without repeating whole test or waiting for exact condition in application under
 
 [/img/wiki/dummy_sampler.png]
 
+== Add Dummy Subresult Post-Processor ==
+
+In addition to Sampler component, you can use a post-processor that adds dummy samples as subresults. An obvious use-case
+is to have Dummy Sampler with Dummy Subresults to simulate HTTP Request with embedded resources.
+
 == Example ==
 
 [/img/examples/DummySamplerExample.jmx Download Example Test Plan]

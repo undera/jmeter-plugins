@@ -6,6 +6,8 @@ import org.apache.jmeter.samplers.Interruptible;
 import org.apache.jmeter.samplers.SampleResult;
 
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class DummySampler
         extends AbstractSampler implements Interruptible {
@@ -19,6 +21,7 @@ public class DummySampler
     public static final String LATENCY = "LATENCY";
     public static final String CONNECT = "CONNECT";
     public static final String IS_WAITING = "WAITING";
+    public static final String URL = "URL";
 
     @Override
     public SampleResult sample(Entry e) {
@@ -54,8 +57,12 @@ public class DummySampler
             throw new RuntimeException("Failed to get response data", exc);
         }
 
+        try {
+            res.setURL(new URL(getURL()));
+        } catch (MalformedURLException ex) {
+            // ignored
+        }
         res.setLatency(getLatency());
-
 
         try {
             if (SampleResult.class.getMethod("setConnectTime", long.class) != null) {
@@ -92,9 +99,10 @@ public class DummySampler
         setProperty(REQUEST_DATA, text);
     }
 
-    /**
-     * @return the successfull
-     */
+    public void setURL(String text) {
+        setProperty(URL, text);
+    }
+
     public boolean isSuccessfull() {
         return getPropertyAsBoolean(IS_SUCCESSFUL);
     }
@@ -103,29 +111,24 @@ public class DummySampler
         return getPropertyAsBoolean(IS_WAITING);
     }
 
-    /**
-     * @return the responseCode
-     */
     public String getResponseCode() {
         return getPropertyAsString(RESPONSE_CODE);
     }
 
-    /**
-     * @return the responseMessage
-     */
     public String getResponseMessage() {
         return getPropertyAsString(RESPONSE_MESSAGE);
     }
 
-    /**
-     * @return the responseData
-     */
     public String getResponseData() {
         return getPropertyAsString(RESPONSE_DATA);
     }
 
     public String getRequestData() {
         return getPropertyAsString(REQUEST_DATA);
+    }
+
+    public String getURL() {
+        return getPropertyAsString(URL);
     }
 
     public int getResponseTime() {

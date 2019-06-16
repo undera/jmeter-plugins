@@ -6,13 +6,34 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class DummySamplerGuiTest {
-    public DummySamplerGuiTest() {
-    }
+import javax.swing.*;
+import java.awt.*;
 
+public class DummySamplerGuiTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         TestJMeterUtils.createJmeterEnv();
+    }
+
+    @Test
+    public void displayGUI() throws InterruptedException {
+        if (!GraphicsEnvironment.isHeadless()) {
+            DummySamplerGui obj = new DummySamplerGui();
+            DummySampler te = (DummySampler) obj.createTestElement();
+            obj.configure(te);
+            obj.clearGui();
+            obj.modifyTestElement(te);
+
+            JFrame frame = new JFrame(obj.getStaticLabel());
+            frame.setPreferredSize(new Dimension(800, 600));
+            frame.getContentPane().add(obj, BorderLayout.CENTER);
+            frame.pack();
+            frame.setVisible(true);
+
+            while (frame.isVisible()) {
+                Thread.sleep(1000);
+            }
+        }
     }
 
     @Test

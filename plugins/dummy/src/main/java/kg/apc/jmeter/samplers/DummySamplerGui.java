@@ -22,6 +22,7 @@ public class DummySamplerGui
     private JCheckBox isWaiting;
     private JTextField latency;
     private JTextField connect;
+    private JTextField url;
 
 
     public DummySamplerGui() {
@@ -46,6 +47,7 @@ public class DummySamplerGui
         responseTime.setText(element.getPropertyAsString(DummySampler.RESPONSE_TIME));
         latency.setText(element.getPropertyAsString(DummySampler.LATENCY));
         connect.setText(element.getPropertyAsString(DummySampler.CONNECT));
+        url.setText(element.getPropertyAsString(DummySampler.URL));
     }
 
     @Override
@@ -77,6 +79,7 @@ public class DummySamplerGui
             dummySampler.setResponseTime(responseTime.getText());
             dummySampler.setLatency(latency.getText());
             dummySampler.setConnectTime(connect.getText());
+            dummySampler.setURL(url.getText());
         }
     }
 
@@ -96,6 +99,7 @@ public class DummySamplerGui
         responseTime.setText("${__Random(50,500)}");
         latency.setText("${__Random(1,50)}");
         connect.setText("${__Random(1,5)}");
+        url.setText("");
     }
 
     @Override
@@ -151,6 +155,9 @@ public class DummySamplerGui
 
         responseData = new JTextArea();
         addToPanel(mainPanel, editConstraints, 1, 8, GuiBuilderHelper.getTextAreaScrollPaneContainer(responseData, 10));
+
+        addToPanel(mainPanel, labelConstraints, 0, 9, new JLabel("URL: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 9, url = new JTextField());
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

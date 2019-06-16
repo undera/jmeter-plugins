@@ -6,7 +6,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-dummy</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
 
     <name>Dummy sampler</name>
     <description>Dummy sampler</description>
@@ -73,6 +73,22 @@
             <artifactId>jmeter-plugins-emulators</artifactId>
             <version>0.4</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jmeter</groupId>
+            <artifactId>ApacheJMeter_http</artifactId>
+            <version>2.13</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-math3</groupId>
+                    <artifactId>commons-math3</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-pool2</groupId>
+                    <artifactId>commons-pool2</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

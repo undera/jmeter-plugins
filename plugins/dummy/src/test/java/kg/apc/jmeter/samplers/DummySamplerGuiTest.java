@@ -2,6 +2,7 @@ package kg.apc.jmeter.samplers;
 
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,13 +12,15 @@ import java.awt.*;
 
 public class DummySamplerGuiTest {
     @BeforeClass
-    public static void setUpClass() throws Exception {
+    public static void setUpClass() {
         TestJMeterUtils.createJmeterEnv();
     }
 
     @Test
     public void displayGUI() throws InterruptedException {
         if (!GraphicsEnvironment.isHeadless()) {
+            JMeterUtils.setProperty("search_paths", System.getProperty("user.home") + "/.m2/repository/org/apache/jmeter/ApacheJMeter_core/2.13");
+
             DummySamplerGui obj = new DummySamplerGui();
             DummySampler te = (DummySampler) obj.createTestElement();
             obj.configure(te);

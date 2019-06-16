@@ -1,6 +1,7 @@
 package kg.apc.jmeter.samplers;
 
 import kg.apc.emulators.TestJMeterUtils;
+import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.samplers.SampleResult;
 import org.junit.After;
 import org.junit.Assert;
@@ -9,7 +10,7 @@ import org.junit.Test;
 
 public class DummySamplerTest {
     @Before
-    public void setUpClass() throws Exception {
+    public void setUpClass() {
         TestJMeterUtils.createJmeterEnv(); // to set UTF-8
     }
 
@@ -34,13 +35,34 @@ public class DummySamplerTest {
     }
 
     @Test
+    public void testSample_waiting() {
+        System.out.println("sample");
+        DummySampler instance = new DummySampler();
+        instance.setSimulateWaiting(true);
+        instance.setResponseTime("100");
+        SampleResult result = instance.sample(null);
+        Assert.assertNotNull(result);
+    }
+
+    @Test
+    public void testSample_http() {
+        System.out.println("sample");
+        DummySampler instance = new DummySampler();
+        instance.setSimulateWaiting(true);
+        instance.setResultClass(HTTPSampleResult.class.getCanonicalName());
+        SampleResult result = instance.sample(null);
+        Assert.assertTrue(result instanceof HTTPSampleResult);
+    }
+
+    @Test
     public void testSample_chinese() {
         String data = "大众";
         DummySampler instance = new DummySampler();
         instance.setResponseData(data);
         SampleResult result = instance.sample(null);
+        Assert.assertNotNull(result);
         // freaking "static final" DEFAULT_ENCODING field in SampleResult does not allow us to assert this
-        // Assert.assertEquals(data, result.getResponseDataAsString());
+        Assert.assertEquals(data, result.getResponseDataAsString());
     }
 
     @Test
@@ -79,7 +101,7 @@ public class DummySamplerTest {
         System.out.println("isSuccessfull");
         DummySampler instance = new DummySampler();
         boolean result = instance.isSuccessfull();
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
@@ -163,7 +185,7 @@ public class DummySamplerTest {
         System.out.println("isSimulateWaiting");
         DummySampler instance = new DummySampler();
         boolean result = instance.isSimulateWaiting();
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
@@ -179,6 +201,6 @@ public class DummySamplerTest {
         System.out.println("interrupt");
         DummySampler instance = new DummySampler();
         boolean result = instance.interrupt();
-        Assert.assertEquals(true, result);
+        Assert.assertTrue(result);
     }
 }

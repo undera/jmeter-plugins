@@ -3,11 +3,16 @@ package kg.apc.jmeter.samplers;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.gui.GuiBuilderHelper;
+import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.gui.AbstractSamplerGui;
 import org.apache.jmeter.testelement.TestElement;
+import org.apache.jmeter.util.JMeterUtils;
+import org.apache.jorphan.reflect.ClassFinder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.util.Objects;
 
 public class DummySamplerGui
         extends AbstractSamplerGui {
@@ -23,6 +28,7 @@ public class DummySamplerGui
     private JTextField latency;
     private JTextField connect;
     private JTextField url;
+    private JComboBox<String> resultClass;
 
 
     public DummySamplerGui() {
@@ -48,6 +54,7 @@ public class DummySamplerGui
         latency.setText(element.getPropertyAsString(DummySampler.LATENCY));
         connect.setText(element.getPropertyAsString(DummySampler.CONNECT));
         url.setText(element.getPropertyAsString(DummySampler.URL));
+        resultClass.setSelectedItem(element.getPropertyAsString(DummySampler.RESULT_CLASS));
     }
 
     @Override
@@ -80,6 +87,7 @@ public class DummySamplerGui
             dummySampler.setLatency(latency.getText());
             dummySampler.setConnectTime(connect.getText());
             dummySampler.setURL(url.getText());
+            dummySampler.setResultClass(Objects.requireNonNull(resultClass.getSelectedItem()).toString());
         }
     }
 
@@ -100,6 +108,7 @@ public class DummySamplerGui
         latency.setText("${__Random(1,50)}");
         connect.setText("${__Random(1,5)}");
         url.setText("");
+        resultClass.setSelectedItem(SampleResult.class.getCanonicalName());
     }
 
     @Override
@@ -158,6 +167,21 @@ public class DummySamplerGui
 
         addToPanel(mainPanel, labelConstraints, 0, 9, new JLabel("URL: ", JLabel.RIGHT));
         addToPanel(mainPanel, editConstraints, 1, 9, url = new JTextField());
+
+        String[] classesThatExtend;
+        try {
+            String[] paths = JMeterUtils.getSearchPaths();
+            Class[] lookup = {SampleResult.class};
+            classesThatExtend = ClassFinder.findClassesThatExtend(paths, lookup).toArray(new String[0]);
+            if (classesThatExtend.length < 1) {
+                throw new IOException("Go to default");
+            }
+        } catch (IOException e) {
+            classesThatExtend = new String[]{SampleResult.class.getCanonicalName()};
+        }
+        resultClass = new JComboBox<>(classesThatExtend);
+        addToPanel(mainPanel, labelConstraints, 0, 10, new JLabel("SampleResult class: ", JLabel.RIGHT));
+        addToPanel(mainPanel, editConstraints, 1, 10, resultClass);
 
         JPanel container = new JPanel(new BorderLayout());
         container.add(mainPanel, BorderLayout.NORTH);

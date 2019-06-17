@@ -18,7 +18,7 @@ public class DummySubPostProcessorGui extends AbstractPostProcessorGui {
         add(JMeterPluginsUtils.addHelpLinkToPanel(makeTitlePanel(), WIKIPAGE), BorderLayout.NORTH);
 
         this.dummyPanel = new DummyPanel();
-        add(dummyPanel.init(), BorderLayout.NORTH);
+        add(dummyPanel.init(), BorderLayout.CENTER);
         dummyPanel.initFields();
     }
 

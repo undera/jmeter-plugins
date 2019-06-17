@@ -10,9 +10,11 @@ import static org.junit.Assert.*;
 
 public class DummySubPostProcessorTest {
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JMeterContext threadContext = JMeterContextService.getContext();
         SampleResult res = new SampleResult();
+        res.sampleStart();
+        res.sampleEnd();
         threadContext.setPreviousResult(res);
     }
 

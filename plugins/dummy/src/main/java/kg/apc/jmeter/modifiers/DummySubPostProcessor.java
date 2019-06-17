@@ -17,7 +17,8 @@ public class DummySubPostProcessor extends AbstractTestElement implements PostPr
     public void process() {
         JMeterContext context = getThreadContext();
         SampleResult res = context.getPreviousResult();
-        res.addSubResult(dummy.sample());
+        SampleResult sample = dummy.sample();
+        res.addSubResult(sample);
     }
 
     public DummyElement getDummy() {

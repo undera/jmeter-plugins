@@ -1,6 +1,7 @@
 package kg.apc.jmeter.dummy;
 
 import kg.apc.jmeter.gui.GuiBuilderHelper;
+import kg.apc.jmeter.modifiers.DummySubPostProcessor;
 import kg.apc.jmeter.samplers.DummySampler;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestElement;
@@ -43,21 +44,27 @@ public class DummyPanel extends JPanel {
         resultClass.setSelectedItem(element.getPropertyAsString(DummyElement.RESULT_CLASS));
     }
 
-    public void modifyTestElement(TestElement sampler) {
-        if (sampler instanceof DummySampler) {
-            DummyElement dummy = ((DummySampler) sampler).getDummy();
-            dummy.setSimulateWaiting(isWaiting.isSelected());
-            dummy.setSuccessful(isSuccessful.isSelected());
-            dummy.setResponseCode(responseCode.getText());
-            dummy.setResponseMessage(responseMessage.getText());
-            dummy.setRequestData(requestData.getText());
-            dummy.setResponseData(responseData.getText());
-            dummy.setResponseTime(responseTime.getText());
-            dummy.setLatency(latency.getText());
-            dummy.setConnectTime(connect.getText());
-            dummy.setURL(url.getText());
-            dummy.setResultClass(Objects.requireNonNull(resultClass.getSelectedItem()).toString());
+    public void modifyTestElement(TestElement te) {
+        DummyElement dummy;
+        if (te instanceof DummySampler) {
+            dummy = ((DummySampler) te).getDummy();
+        } else if (te instanceof DummySubPostProcessor) {
+            dummy = ((DummySubPostProcessor) te).getDummy();
+        } else {
+            return;
         }
+
+        dummy.setSimulateWaiting(isWaiting.isSelected());
+        dummy.setSuccessful(isSuccessful.isSelected());
+        dummy.setResponseCode(responseCode.getText());
+        dummy.setResponseMessage(responseMessage.getText());
+        dummy.setRequestData(requestData.getText());
+        dummy.setResponseData(responseData.getText());
+        dummy.setResponseTime(responseTime.getText());
+        dummy.setLatency(latency.getText());
+        dummy.setConnectTime(connect.getText());
+        dummy.setURL(url.getText());
+        dummy.setResultClass(Objects.requireNonNull(resultClass.getSelectedItem()).toString());
     }
 
     public void initFields() {

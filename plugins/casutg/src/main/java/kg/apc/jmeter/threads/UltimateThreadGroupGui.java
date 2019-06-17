@@ -37,42 +37,27 @@ public class UltimateThreadGroupGui
 
     public static final String WIKIPAGE = "UltimateThreadGroup";
     private static final Logger log = LoggingManager.getLoggerForClass();
-    /**
-     *
-     */
     protected ConcurrentHashMap<String, AbstractGraphRow> model;
     private GraphPanelChart chart;
-    /**
-     *
-     */
     public static final String[] columnIdentifiers = new String[]{
-        "Start Threads Count", "Initial Delay, sec", "Startup Time, sec", "Hold Load For, sec", "Shutdown Time"
+            "Start Threads Count", "Initial Delay, sec", "Startup Time, sec", "Hold Load For, sec", "Shutdown Time"
     };
-    /**
-     *
-     */
     public static final Class[] columnClasses = new Class[]{
-        String.class, String.class, String.class, String.class, String.class
+            String.class, String.class, String.class, String.class, String.class
     };
     public static final Integer[] defaultValues = new Integer[]{
-        100, 0, 30, 60, 10
+            100, 0, 30, 60, 10
     };
     private LoopControlPanel loopPanel;
     protected PowerTableModel tableModel;
     protected JTable grid;
     protected ButtonPanelAddCopyRemove buttons;
 
-    /**
-     *
-     */
     public UltimateThreadGroupGui() {
         super();
         init();
     }
 
-    /**
-     *
-     */
     protected final void init() {
         JMeterPluginsUtils.addHelpLinkToPanel(this, WIKIPAGE);
         JPanel containerPanel = new VerticalPanel();
@@ -121,7 +106,6 @@ public class UltimateThreadGroupGui
 
     @Override
     public TestElement createTestElement() {
-        //log.info("Create test element");
         UltimateThreadGroup tg = new UltimateThreadGroup();
         modifyTestElement(tg);
         tg.setComment(JMeterPluginsUtils.getWikiLinkText(WIKIPAGE));
@@ -131,7 +115,6 @@ public class UltimateThreadGroupGui
 
     @Override
     public void modifyTestElement(TestElement tg) {
-        //log.info("Modify test element");
         if (grid.isEditing()) {
             grid.getCellEditor().stopCellEditing();
         }
@@ -147,10 +130,8 @@ public class UltimateThreadGroupGui
 
     @Override
     public void configure(TestElement tg) {
-        //log.info("Configure");
         super.configure(tg);
         UltimateThreadGroup utg = (UltimateThreadGroup) tg;
-        //log.info("Configure "+utg.getName());
         JMeterProperty threadValues = utg.getData();
         if (!(threadValues instanceof NullProperty)) {
             CollectionProperty columns = (CollectionProperty) threadValues;
@@ -248,7 +229,6 @@ public class UltimateThreadGroupGui
     }
 
     public void tableChanged(TableModelEvent e) {
-        //log.info("Model changed");
         updateUI();
     }
 
@@ -259,7 +239,6 @@ public class UltimateThreadGroupGui
     }
 
     public void editingStopped(ChangeEvent e) {
-        //log.info("Editing stopped");
         updateUI();
     }
 

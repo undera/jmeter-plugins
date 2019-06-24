@@ -518,6 +518,10 @@
       "2.6.1": {
         "changes": "Fixed bug with header parsing (#40, thanks @ncasaux)",
         "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
+      },
+      "2.6.5": {
+        "changes": "New SSL feature, header parsing fixes, multiple little bug fixes.",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.5/jmeter.backendlistener.elasticsearch-2.6.5.jar"
       }
     }
   },

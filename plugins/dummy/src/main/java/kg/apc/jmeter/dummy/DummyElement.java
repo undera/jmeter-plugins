@@ -5,11 +5,13 @@ import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DummyElement {
+public class DummyElement implements Serializable {
+    private static final long serialVersionUID = 246L;
     private static final Logger log = LoggingManager.getLoggerForClass();
 
     public static final String IS_SUCCESSFUL = "SUCCESFULL";

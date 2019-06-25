@@ -8,6 +8,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 public class DummySamplerTest {
     @Before
     public void setUpClass() {
@@ -26,7 +29,6 @@ public class DummySamplerTest {
 
     @Test
     public void testSample() {
-        System.out.println("sample");
         String data = "test";
         DummySampler instance = new DummySampler();
         instance.getDummy().setResponseData(data);
@@ -36,7 +38,6 @@ public class DummySamplerTest {
 
     @Test
     public void testSample_waiting() {
-        System.out.println("sample");
         DummySampler instance = new DummySampler();
         instance.getDummy().setSimulateWaiting(true);
         instance.getDummy().setResponseTime("100");
@@ -46,7 +47,6 @@ public class DummySamplerTest {
 
     @Test
     public void testSample_http() {
-        System.out.println("sample");
         DummySampler instance = new DummySampler();
         instance.getDummy().setSimulateWaiting(true);
         instance.getDummy().setResultClass(HTTPSampleResult.class.getCanonicalName());
@@ -67,14 +67,12 @@ public class DummySamplerTest {
 
     @Test
     public void testSetSuccessful() {
-        System.out.println("setSuccessful");
         DummySampler instance = new DummySampler();
         instance.getDummy().setSuccessful(false);
     }
 
     @Test
     public void testSetResponseCode() {
-        System.out.println("setResponseCode");
         String text = "";
         DummySampler instance = new DummySampler();
         instance.getDummy().setResponseCode(text);
@@ -82,7 +80,6 @@ public class DummySamplerTest {
 
     @Test
     public void testSetResponseMessage() {
-        System.out.println("setResponseMessage");
         String text = "";
         DummySampler instance = new DummySampler();
         instance.getDummy().setResponseMessage(text);
@@ -90,7 +87,6 @@ public class DummySamplerTest {
 
     @Test
     public void testSetResponseData() {
-        System.out.println("setResponseData");
         String text = "";
         DummySampler instance = new DummySampler();
         instance.getDummy().setResponseData(text);
@@ -98,7 +94,6 @@ public class DummySamplerTest {
 
     @Test
     public void testIsSuccessfull() {
-        System.out.println("isSuccessfull");
         DummySampler instance = new DummySampler();
         boolean result = instance.getDummy().isSuccessfull();
         Assert.assertFalse(result);
@@ -106,7 +101,6 @@ public class DummySamplerTest {
 
     @Test
     public void testGetResponseCode() {
-        System.out.println("getResponseCode");
         DummySampler instance = new DummySampler();
         String expResult = "";
         String result = instance.getDummy().getResponseCode();
@@ -115,7 +109,6 @@ public class DummySamplerTest {
 
     @Test
     public void testGetResponseMessage() {
-        System.out.println("getResponseMessage");
         DummySampler instance = new DummySampler();
         String expResult = "";
         String result = instance.getDummy().getResponseMessage();
@@ -124,7 +117,6 @@ public class DummySamplerTest {
 
     @Test
     public void testGetResponseData() {
-        System.out.println("getResponseData");
         DummySampler instance = new DummySampler();
         String expResult = "";
         String result = instance.getDummy().getResponseData();
@@ -133,7 +125,6 @@ public class DummySamplerTest {
 
     @Test
     public void testGetResponseTime() {
-        System.out.println("getResponseTime");
         DummySampler instance = new DummySampler();
         int expResult = 0;
         int result = instance.getDummy().getResponseTime();
@@ -142,14 +133,12 @@ public class DummySamplerTest {
 
     @Test
     public void testSetResponseTime() {
-        System.out.println("setResponseTime");
         DummySampler instance = new DummySampler();
         instance.getDummy().setResponseTime("10");
     }
 
     @Test
     public void testSetRequestData() {
-        System.out.println("setRequestData");
         String text = "";
         DummySampler instance = new DummySampler();
         instance.getDummy().setRequestData(text);
@@ -157,7 +146,6 @@ public class DummySamplerTest {
 
     @Test
     public void testGetRequestData() {
-        System.out.println("getRequestData");
         DummySampler instance = new DummySampler();
         String expResult = "";
         String result = instance.getDummy().getRequestData();
@@ -166,7 +154,6 @@ public class DummySamplerTest {
 
     @Test
     public void testGetLatency() {
-        System.out.println("getLatency");
         DummySampler instance = new DummySampler();
         int expResult = 0;
         int result = instance.getDummy().getLatency();
@@ -175,14 +162,12 @@ public class DummySamplerTest {
 
     @Test
     public void testSetSimulateWaiting() {
-        System.out.println("setSimulateWaiting");
         DummySampler instance = new DummySampler();
         instance.getDummy().setSimulateWaiting(false);
     }
 
     @Test
     public void testIsSimulateWaiting() {
-        System.out.println("isSimulateWaiting");
         DummySampler instance = new DummySampler();
         boolean result = instance.getDummy().isSimulateWaiting();
         Assert.assertFalse(result);
@@ -190,7 +175,6 @@ public class DummySamplerTest {
 
     @Test
     public void testSetLatency() {
-        System.out.println("setLatency");
         String time = "";
         DummySampler instance = new DummySampler();
         instance.getDummy().setLatency(time);
@@ -198,9 +182,15 @@ public class DummySamplerTest {
 
     @Test
     public void testInterrupt() {
-        System.out.println("interrupt");
         DummySampler instance = new DummySampler();
         boolean result = instance.interrupt();
         Assert.assertTrue(result);
+    }
+
+    @Test
+    public void testSerialize() throws IOException {
+        DummySampler instance = new DummySampler();
+        ObjectOutputStream os = new ObjectOutputStream(System.out);
+        os.writeObject(instance);
     }
 }

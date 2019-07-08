@@ -554,7 +554,13 @@
     "versions": {
       "1.0.0": {
         "changes": "Initial version.",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/rahulsinghai/jmeter.backendlistener.kafka/1.0.0/jmeter.backendlistener.kafka-1.0.0.jar",
+        "downloadUrl": "https://repo1.maven.org/maven2/io/github/rahulsinghai/jmeter.backendlistener.kafka/1.0.0/jmeter.backendlistener.kafka-1.0.0.jar",
+        "depends": [
+        ]
+      },
+      "1.0.1": {
+        "changes": "None. Improved documentation around coding style.",
+        "downloadUrl": "https://repo1.maven.org/maven2/io/github/rahulsinghai/jmeter.backendlistener.kafka/1.0.1/jmeter.backendlistener.kafka-1.0.1.jar",
         "depends": [
         ]
       }

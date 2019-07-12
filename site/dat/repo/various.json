@@ -451,34 +451,6 @@
     "vendor": "Delirius325",
     "markerClass": "io.github.delirius325.jmeter.backendlistener.elasticsearch.ElasticsearchBackendClient",
     "versions": {
-      "2.2.3": {
-        "changes": "DEPRECATED. Added back because of an issue with the plugins manager not uninstalling it.",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.3/jmeter.backendlistener.elasticsearch-2.2.3.jar"
-      },
-      "2.2.5": {
-        "changes": "Added request body in info/debug mode -- Forced lowercase for index creation",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.5/jmeter.backendlistener.elasticsearch-2.2.5.jar"
-      },
-      "2.3.0": {
-        "changes": "Added a new detail mode : 'error' - only send the failing samplers to ElasticSearch",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.0/jmeter.backendlistener.elasticsearch-2.3.0.jar"
-      },
-      "2.3.1": {
-        "changes": "Fixed a bug where filters wouldn't work in error mode",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.1/jmeter.backendlistener.elasticsearch-2.3.1.jar"
-      },
-      "2.3.2": {
-        "changes": "Fixed a bug where ElapsedTime wouldn't be considered as a date by ES. Added the possibility to send custom fields to ElasticSearch.",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.2/jmeter.backendlistener.elasticsearch-2.3.2.jar"
-      },
-      "2.3.3": {
-        "changes": "Added injector hostname in the base ElasticSearch index",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.3/jmeter.backendlistener.elasticsearch-2.3.3.jar"
-      },
-      "2.4.0": {
-        "changes": "Lots of refactoring, minor bug fixes, no major new feature",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.0/jmeter.backendlistener.elasticsearch-2.4.0.jar"
-      },
       "2.4.1": {
         "changes": "Added support for Xpack authentication",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.1/jmeter.backendlistener.elasticsearch-2.4.1.jar"
@@ -526,6 +498,10 @@
       "2.6.6": {
         "changes": "Fixed issue with index types ES 7.0+",
         "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.6/jmeter.backendlistener.elasticsearch-2.6.6.jar"
+      },
+      "2.6.7": {
+        "changes": "Fixed breaking issue with getElasticSearchVersion() method",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.7/jmeter.backendlistener.elasticsearch-2.6.7.jar"
       }
     }
   },

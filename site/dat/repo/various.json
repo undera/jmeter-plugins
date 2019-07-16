@@ -439,6 +439,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.2": {
+        "changes": "Improved memory usage for receiving binary messages",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2.2/jmeter-websocket-samplers-1.2.2.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

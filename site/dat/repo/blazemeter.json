@@ -495,8 +495,8 @@
     "id": "bzm-http2",
     "name": "HTTP/2 Sampler",
     "description": "HTTP/2 protocol sampler",
-    "helpUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/blob/master/http2/README.md",
-    "screenshotUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/raw/master/http2/http2Sampler.png",
+    "helpUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/blob/master/README.md",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-http2-plugin/master/syncRequest.png",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.http2.sampler.HTTP2Request",
     "componentClasses": [
@@ -650,6 +650,14 @@
         "libs": {
           "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1.1/xtn5250-2.1.jar",
           "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1.1/dm3270-lib-0.7.jar"
+        }
+      },
+      "2.0": {
+        "changes": "New rte recorder test element added and a many fixes!",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.0/jmeter-bzm-rte-2.0.jar",
+        "libs": {
+          "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.0/xtn5250-3.0.jar",
+          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.0/dm3270-lib-0.10.jar"
         }
       }
     }

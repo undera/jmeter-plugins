@@ -202,6 +202,14 @@
           "jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar",
           "jsch": "https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.54/jsch-0.1.54.jar"
         }
+      },
+      "1.2": {
+        "changes": "Bug fixes and new locale config option.",
+        "downloadUrl": "https://github.com/tilln/jmeter-sshmon/releases/download/1.2/jmeter-sshmon-1.2.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar",
+          "jsch": "https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.54/jsch-0.1.54.jar"
+        }
       }
     }
   },
@@ -431,6 +439,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.2": {
+        "changes": "Improved memory usage for receiving binary messages",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2.2/jmeter-websocket-samplers-1.2.2.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -443,34 +458,6 @@
     "vendor": "Delirius325",
     "markerClass": "io.github.delirius325.jmeter.backendlistener.elasticsearch.ElasticsearchBackendClient",
     "versions": {
-      "2.2.3": {
-        "changes": "DEPRECATED. Added back because of an issue with the plugins manager not uninstalling it.",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.3/jmeter.backendlistener.elasticsearch-2.2.3.jar"
-      },
-      "2.2.5": {
-        "changes": "Added request body in info/debug mode -- Forced lowercase for index creation",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.2.5/jmeter.backendlistener.elasticsearch-2.2.5.jar"
-      },
-      "2.3.0": {
-        "changes": "Added a new detail mode : 'error' - only send the failing samplers to ElasticSearch",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.0/jmeter.backendlistener.elasticsearch-2.3.0.jar"
-      },
-      "2.3.1": {
-        "changes": "Fixed a bug where filters wouldn't work in error mode",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.1/jmeter.backendlistener.elasticsearch-2.3.1.jar"
-      },
-      "2.3.2": {
-        "changes": "Fixed a bug where ElapsedTime wouldn't be considered as a date by ES. Added the possibility to send custom fields to ElasticSearch.",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.2/jmeter.backendlistener.elasticsearch-2.3.2.jar"
-      },
-      "2.3.3": {
-        "changes": "Added injector hostname in the base ElasticSearch index",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.3.3/jmeter.backendlistener.elasticsearch-2.3.3.jar"
-      },
-      "2.4.0": {
-        "changes": "Lots of refactoring, minor bug fixes, no major new feature",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.0/jmeter.backendlistener.elasticsearch-2.4.0.jar"
-      },
       "2.4.1": {
         "changes": "Added support for Xpack authentication",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/delirius325/jmeter.backendlistener.elasticsearch/2.4.1/jmeter.backendlistener.elasticsearch-2.4.1.jar"
@@ -510,6 +497,53 @@
       "2.6.1": {
         "changes": "Fixed bug with header parsing (#40, thanks @ncasaux)",
         "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
+      },
+      "2.6.5": {
+        "changes": "New SSL feature, header parsing fixes, multiple little bug fixes.",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.5/jmeter.backendlistener.elasticsearch-2.6.5.jar"
+      },
+      "2.6.6": {
+        "changes": "Fixed issue with index types ES 7.0+",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.6/jmeter.backendlistener.elasticsearch-2.6.6.jar"
+      },
+      "2.6.7": {
+        "changes": "Fixed breaking issue with getElasticSearchVersion() method",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.7/jmeter.backendlistener.elasticsearch-2.6.7.jar"
+      }
+    }
+  },
+  {
+    "id": "jmeter.pack-listener",
+    "name": "JMeter Listener pack",
+    "description": "This JMeter Plugin allows to write load test data on-the-fly to <a href=\"https://clickhouse.yandex\">ClickHouse</a> (as well as InfluxDB, ElasticSearch, with additional feature: aggregation of Samplers)<br />Explanations and usage examples on <a href=\"https://gitlab.com/testload/jmeter-listener/wikis/home\">project wiki.</a><br /> <a href=\"https://grafana.com/orgs/testload/dashboards\">Dashboards for ClickHouse.</a>",
+    "screenshotUrl": "https://gitlab.com/testload/jmeter-listener/wikis/uploads/498fd6f5a85d7ce62f5cad54f69f6ce7/Screenshot_at_May_08_14-21-40.png",
+    "helpUrl": "https://gitlab.com/testload/jmeter-listener/wikis/home",
+    "vendor": "Alexander Babaev",
+    "markerClass": "cloud.testload.jmeter.ClickHouseBackendListenerClient",
+    "versions": {
+      "1.5": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=cloud/testload/jmeter.pack-listener/1.5/jmeter.pack-listener-1.5.jar"
+      },
+      "1.7": {
+        "changes": "New ClickHouse table scheme jmresults(buffer)->jmresults_data(ops storage with extended data request/response)->jmresults_statistic(mat view as archive storage). New field (hostname) in stats",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=cloud/testload/jmeter.pack-listener/1.7/jmeter.pack-listener-1.7.jar"
+      }
+    }
+  },
+  {
+    "id": "jmeter.backendlistener.kafka",
+    "name": "Kafka backend listener",
+    "description": "Apache JMeter plugin for sending sample results to a Kafka server. <ul><li>Simply add a \"Backend Listener\" and change the implementation</li><li>Change the listener's configuration</li><li>To use filters, simply separate their name by a semicolon. (f1;f2;f3)</li></ul>",
+    "helpUrl": "https://github.com/rahulsinghai/jmeter-backend-listener-kafka/issues",
+    "screenshotUrl": "https://github.com/rahulsinghai/jmeter-backend-listener-kafka/blob/master/docs/configuration.JPG",
+    "vendor": "rahulsinghai",
+    "markerClass": "io.github.rahulsinghai.jmeter.backendlistener.kafka.KafkaBackendClient",
+    "versions": {
+      "1.0.0": {
+        "changes": "Initial version.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=io/github/rahulsinghai/jmeter.backendlistener.kafka/1.0.0/jmeter.backendlistener.kafka-1.0.0.jar",
+        "depends": [
+        ]
       }
     }
   }

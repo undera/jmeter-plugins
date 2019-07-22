@@ -114,8 +114,6 @@
                 <div>Every load test needs some sexy features!</div>
             </div>
             <div class="sponsorship pull-right">
-                <a href="http://blazemeter.com/?utm_source=jmplinnerpages&utm_medium=cpc&utm_content=jmpininnerpgs&utm_campaign=JMeter%2BPlug%2BIn%2BWiki"
-                   target="_blank"><img src="/img/site/blazemeter-mini.png" alt=""></a>
             </div>
         </div>
 

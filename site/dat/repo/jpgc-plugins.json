@@ -103,6 +103,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "2.9": {
+        "changes": "Support JMeter's way of prefixing threads for distributed testing",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.9/jmeter-plugins-casutg-2.9.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
+        }
       }
     }
   },
@@ -182,7 +189,9 @@
     "markerClass": "kg.apc.jmeter.samplers.DummySampler",
     "componentClasses": [
       "kg.apc.jmeter.samplers.DummySampler",
-      "kg.apc.jmeter.samplers.DummySamplerGui"
+      "kg.apc.jmeter.samplers.DummySamplerGui",
+      "kg.apc.jmeter.modifiers.DummySubPostProcessor",
+      "kg.apc.jmeter.modifiers.DummySubPostProcessorGui"
     ],
     "versions": {
       "0.1": {
@@ -196,6 +205,20 @@
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.2/jmeter-plugins-dummy-0.2.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
+      },
+      "0.3": {
+        "changes": "Add URL and SampleResult class fields to UI, add Dummy Subsample Postprocessor",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.3/jmeter-plugins-dummy-0.3.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
+      },
+      "0.4": {
+        "changes": "Fix serialization",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-dummy/0.4/jmeter-plugins-dummy-0.4.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
         }
       }
     }

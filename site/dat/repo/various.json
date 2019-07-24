@@ -176,6 +176,37 @@
     }
   },
   {
+    "id": "tilln-iso8583",
+    "name": "ISO-8583 Sampler",
+    "description": "Generate ISO-8583 financial transactions for testing of payment gateways and switches<br />With support for cryptogram calculation (PIN Block, MAC, ARQC)<br />Based on the <a href=\\\"http://jpos.org\\\">jPOS</a> framework",
+    "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-iso8583/master/docs/sampler.png",
+    "helpUrl": "https://github.com/tilln/jmeter-iso8583",
+    "vendor": "Till Neunast",
+    "markerClass": "nz.co.breakpoint.jmeter.iso8583.ISO8583Sampler",
+    "componentClasses": [
+      "nz.co.breakpoint.jmeter.iso8583.ISO8583Config",
+      "nz.co.breakpoint.jmeter.iso8583.ISO8583Sampler",
+      "nz.co.breakpoint.jmeter.iso8583.ISO8583Component",
+      "nz.co.breakpoint.jmeter.iso8583.ISO8583Crypto"
+    ],
+    "versions": {
+      "1.0": {
+        "downloadUrl": "https://github.com/tilln/jmeter-iso8583/releases/download/1.0/jmeter-iso8583-1.0.jar",
+        "libs": {
+          "jpos": "https://search.maven.org/remotecontent?filepath=org/jpos/jpos/2.1.3/jpos-2.1.3.jar",
+          "bcprov-jdk15on": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcprov-jdk15on/1.62/bcprov-jdk15on-1.62.jar",
+          "bcpg-jdk15on": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcpg-jdk15on/1.62/bcpg-jdk15on-1.62.jar",
+          "jdom2": "https://search.maven.org/remotecontent?filepath=org/jdom/jdom2/2.0.6/jdom2-2.0.6.jar",
+          "org.osgi.core": "https://search.maven.org/remotecontent?filepath=org/osgi/org.osgi.core/6.0.0/org.osgi.core-6.0.0.jar",
+          "commons-cli": "https://search.maven.org/remotecontent?filepath=commons-cli/commons-cli/1.4/commons-cli-1.4.jar",
+          "snakeyaml": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.24/snakeyaml-1.24.jar",
+          "HdrHistogram": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.11/HdrHistogram-2.1.11.jar",
+          "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
+        }
+      }
+    }
+  },
+  {
     "id": "tilln-sshmon",
     "name": "SSHMon Sample Collector",
     "description": "Monitoring plugin for agentless collection and plotting of remote server metrics via SSH connections",

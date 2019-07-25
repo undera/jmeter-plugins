@@ -98,7 +98,7 @@ if __name__ == "__main__":
     for repo_file in os.listdir(repo_dir):
         with open(os.path.join(repo_dir, repo_file)) as fhd:
             content = json.loads(fhd.read())
-#            jsonschema.validate(content, schema)
+            jsonschema.validate(content, schema)
             plugins.extend(content)
 
     if len(sys.argv) > 1:

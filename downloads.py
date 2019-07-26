@@ -60,7 +60,8 @@ def download_into_dir(dirname, url, dest_subpath):
     resp = requests.get(url)
     assert resp.status_code == 200
     if 'content-disposition' in resp.headers:
-        remote_filename = re.findall("filename=(.+)", resp.headers['content-disposition'])[0]
+        # handle optional quotes around filename:
+        remote_filename = re.sub('.*filename=(")?(?P<filename>.+)(?(1)"|$).*', "\g<filename>", resp.headers['content-disposition'])
     else:
         remote_filename = os.path.basename(resp.url)
 

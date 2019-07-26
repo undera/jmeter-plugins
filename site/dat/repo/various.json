@@ -178,7 +178,7 @@
   {
     "id": "tilln-iso8583",
     "name": "ISO-8583 Sampler",
-    "description": "Generate ISO-8583 financial transactions for testing of payment gateways and switches<br />With support for cryptogram calculation (PIN Block, MAC, ARQC)<br />Based on the <a href=\\\"http://jpos.org\\\">jPOS</a> framework",
+    "description": "Generate ISO-8583 financial transactions for testing of payment gateways and switches<br />With support for cryptogram calculation (PIN Block, MAC, ARQC)<br />Based on the <a href=\"http://jpos.org\">jPOS</a> framework",
     "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-iso8583/master/docs/sampler.png",
     "helpUrl": "https://github.com/tilln/jmeter-iso8583",
     "vendor": "Till Neunast",

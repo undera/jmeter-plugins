@@ -10,6 +10,6 @@ install:
   - python -m virtualenv --system-site-packages ./venv && source venv/bin/activate && python -m pip install jsonschema && python downloads.py true
   - mvn -Dmaven.test.skip=true clean install --batch-mode
 script:
-  - mvn -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true -Dcobertura.report.format=xml --fail-at-end --batch-mode cobertura:cobertura test
+  - mvn -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true --fail-at-end --batch-mode org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report
 after_success:
   - bash <(curl -s https://codecov.io/bash)

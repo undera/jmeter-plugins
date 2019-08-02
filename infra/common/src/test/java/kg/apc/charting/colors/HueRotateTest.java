@@ -3,58 +3,28 @@ package kg.apc.charting.colors;
 import kg.apc.charting.ColorsDispatcher;
 import kg.apc.charting.ColorsDispatcherFactory;
 import org.apache.jmeter.util.JMeterUtils;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.awt.*;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
-import static org.junit.Assert.*;
-import static org.powermock.api.mockito.PowerMockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.validateMockitoUsage;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest( { JMeterUtils.class })
+@PrepareForTest({JMeterUtils.class})
 public class HueRotateTest {
-
-    /**
-     *
-     */
-    public HueRotateTest() {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @BeforeClass
-    public static void setUpClass()
-            throws Exception {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @AfterClass
-    public static void tearDownClass()
-            throws Exception {
-    }
-
-    /**
-     *
-     */
-    @Before
-    public void setUp() {
-    }
-
-    /**
-     *
-     */
     @After
-    public void tearDown() {
+    public void validate() {
+        validateMockitoUsage();
     }
 
     /**
@@ -66,7 +36,7 @@ public class HueRotateTest {
         PowerMockito.when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher")).thenReturn("huerotate");
         PowerMockito.when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher.options")).thenReturn(null);
         ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
-        PowerMockito.verifyStatic();
+        // FIXME: PowerMockito.verifyStatic(JMeterUtils.class);
         assertEquals("HueRotatePalette", instance.getClass().getSimpleName());
     }
 
@@ -79,7 +49,7 @@ public class HueRotateTest {
         PowerMockito.when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher")).thenReturn("huerotate");
         PowerMockito.when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher.options")).thenReturn("");
         ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
-        PowerMockito.verifyStatic();
+        // FIXME: PowerMockito.verifyStatic(JMeterUtils.class);
         assertEquals("HueRotatePalette", instance.getClass().getSimpleName());
     }
 
@@ -92,7 +62,7 @@ public class HueRotateTest {
         PowerMockito.when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher")).thenReturn("huerotate");
         PowerMockito.when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher.options")).thenReturn("9C27B0");
         ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
-        PowerMockito.verifyStatic();
+        // FIXME: PowerMockito.verifyStatic(JMeterUtils.class);
         assertEquals("HueRotatePalette", instance.getClass().getSimpleName());
     }
 
@@ -105,7 +75,7 @@ public class HueRotateTest {
         PowerMockito.when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher")).thenReturn("huerotate");
         PowerMockito.when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher.options")).thenReturn("9C27B0,8");
         ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
-        PowerMockito.verifyStatic();
+        // FIXME: PowerMockito.verifyStatic(JMeterUtils.class);
         assertEquals("HueRotatePalette", instance.getClass().getSimpleName());
     }
 
@@ -118,7 +88,7 @@ public class HueRotateTest {
         PowerMockito.when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher")).thenReturn("huerotate");
         PowerMockito.when(JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher.options")).thenReturn("9C27B0,8,4");
         ColorsDispatcher instance = ColorsDispatcherFactory.getColorsDispatcher();
-        PowerMockito.verifyStatic();
+        // FIXME: PowerMockito.verifyStatic(JMeterUtils.class);
         for (int n = 0; n < 2000; n++) {
             Color c = instance.getNextColor();
             System.out.println(c);

@@ -640,31 +640,39 @@
         "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/jmeter-bzm-rte-1.0.4.jar",
         "libs": {
           "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/xtn5250-2.0.1.jar",
-          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/dm3270-lib-0.6.jar"
+          "dm3270-lib>=0.6": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.0.4/dm3270-lib-0.6.jar"
         }
       },
       "1.1": {
         "changes": "Support for setting fields by label and update dm3270 which includes tn3270 protocol enhancements support improvements (SSCP LU DATA, BID) and additional fixes (hiding invisible fields from screen and sending some fields back to server)",
         "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1/jmeter-bzm-rte-1.1.jar",
         "libs": {
-          "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1/xtn5250-2.1.jar",
-          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1/dm3270-lib-0.7.jar"
+          "xtn5250>=2.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1/xtn5250-2.1.jar",
+          "dm3270-lib>=0.7": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1/dm3270-lib-0.7.jar"
         }
       },
       "1.1.1": {
         "changes": "This version fixes property naming for inputs by label feature",
         "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1.1/jmeter-bzm-rte-1.1.1.jar",
         "libs": {
-          "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1.1/xtn5250-2.1.jar",
-          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1.1/dm3270-lib-0.7.jar"
+          "xtn5250>=2.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1.1/xtn5250-2.1.jar",
+          "dm3270-lib>=0.7": "https://github.com/Blazemeter/RTEPlugin/releases/download/v1.1.1/dm3270-lib-0.7.jar"
         }
       },
       "2.0": {
         "changes": "New rte recorder test element added and a many fixes!",
         "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.0/jmeter-bzm-rte-2.0.jar",
         "libs": {
-          "xtn5250": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.0/xtn5250-3.0.jar",
-          "dm3270-lib": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.0/dm3270-lib-0.10.jar"
+          "xtn5250>=3.0": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.0/xtn5250-3.0.jar",
+          "dm3270-lib>=0.10": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.0/dm3270-lib-0.10.jar"
+        }
+      },
+      "2.1": {
+        "changes": "New recorder features allowing to record input by label, wait for text and assertions",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.1/jmeter-bzm-rte-2.1.jar",
+        "libs": {
+          "xtn5250>=3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.1/xtn5250-3.1.jar",
+          "dm3270-lib>=0.11": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.1/dm3270-lib-0.11.jar"
         }
       }
     }

@@ -674,6 +674,14 @@
           "xtn5250>=3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.1/xtn5250-3.1.jar",
           "dm3270-lib>=0.11": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.1/dm3270-lib-0.11.jar"
         }
+      },
+      "2.1.1": {
+        "changes": "Fix bug originated in version 2.0 which could not allow user to insert empty inputs.",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.1.1/jmeter-bzm-rte-2.1.1.jar",
+        "libs": {
+          "xtn5250>=3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.1/xtn5250-3.1.jar",
+          "dm3270-lib>=0.11.1": "https://github.com/Blazemeter/dm3270/releases/download/v0.11.1-lib/dm3270-lib-0.11.1.jar"
+        }
       }
     }
   },

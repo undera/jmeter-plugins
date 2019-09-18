@@ -586,21 +586,38 @@
           "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
         }
       },
-      "1.4": {
-        "changes": "Fixed serialization issue for JMeter distributed mode",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.4/jmeter-bzm-http2-1.4.jar",
+        "1.4": {
+          "changes": "Fixed serialization issue for JMeter distributed mode",
+          "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.4/jmeter-bzm-http2-1.4.jar",
+          "depends": [
+            "jmeter-http"
+          ],
+          "libs": {
+            "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
+            "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
+            "http2-hpack>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-hpack/9.4.9.v20180320/http2-hpack-9.4.9.v20180320.jar",
+            "jetty-alpn-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-client/9.4.9.v20180320/jetty-alpn-client-9.4.9.v20180320.jar",
+            "jetty-alpn-openjdk8-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-openjdk8-client/9.4.9.v20180320/jetty-alpn-openjdk8-client-9.4.9.v20180320.jar",
+            "jetty-http>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.4.9.v20180320/jetty-http-9.4.9.v20180320.jar",
+            "jetty-io>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.9.v20180320/jetty-io-9.4.9.v20180320.jar",
+            "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
+          }
+        },
+      "1.4.1": {
+        "changes": "Fix issue handling http responses without body (like 204 status code)",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/jmeter-bzm-http2-1.4.1.jar",
         "depends": [
           "jmeter-http"
         ],
         "libs": {
-          "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
-          "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
-          "http2-hpack>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-hpack/9.4.9.v20180320/http2-hpack-9.4.9.v20180320.jar",
-          "jetty-alpn-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-client/9.4.9.v20180320/jetty-alpn-client-9.4.9.v20180320.jar",
-          "jetty-alpn-openjdk8-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-openjdk8-client/9.4.9.v20180320/jetty-alpn-openjdk8-client-9.4.9.v20180320.jar",
-          "jetty-http>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.4.9.v20180320/jetty-http-9.4.9.v20180320.jar",
-          "jetty-io>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.9.v20180320/jetty-io-9.4.9.v20180320.jar",
-          "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
+          "http2-client>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/http2-client-9.4.9.v20180320.jar",
+          "http2-common>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/http2-common-9.4.9.v20180320.jar",
+          "http2-hpack>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/http2-hpack-9.4.9.v20180320.jar",
+          "jetty-alpn-client>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/jetty-alpn-client-9.4.9.v20180320.jar",
+          "jetty-alpn-openjdk8-client>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/jetty-alpn-openjdk8-client-9.4.9.v20180320.jar",
+          "jetty-http>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/jetty-http-9.4.9.v20180320.jar",
+          "jetty-io>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/jetty-io-9.4.9.v20180320.jar",
+          "jetty-util>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/jetty-util-9.4.9.v20180320.jar"
         }
       }
     }
@@ -681,6 +698,14 @@
         "libs": {
           "xtn5250>=3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.1/xtn5250-3.1.jar",
           "dm3270-lib>=0.11.1": "https://github.com/Blazemeter/dm3270/releases/download/v0.11.1-lib/dm3270-lib-0.11.1.jar"
+        }
+      },
+      "2.2": {
+        "changes": "Extractor post-processor added, hide credentials and sampler naming while recording!",
+        "downloadUrl": "future release link",
+        "libs": {
+          "xtn5250>=3.1": "future release link",
+          "dm3270-lib>=0.11.1": "future release link"
         }
       }
     }

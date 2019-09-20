@@ -702,10 +702,10 @@
       },
       "2.2": {
         "changes": "Extractor post-processor added, hide credentials and sampler naming while recording!",
-        "downloadUrl": "future release link",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.2/jmeter-bzm-rte-2.2.jar",
         "libs": {
-          "xtn5250>=3.1": "future release link",
-          "dm3270-lib>=0.11.1": "future release link"
+          "xtn5250>=3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.2/xtn5250-3.1.jar",
+          "dm3270-lib>=0.11.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.2/dm3270-lib-0.11.1.jar"
         }
       }
     }

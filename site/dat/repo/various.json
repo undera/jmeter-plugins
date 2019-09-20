@@ -556,6 +556,10 @@
       "2.6.8": {
         "changes": "Fixed breaking issue with SSL conflicts",
         "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.8/jmeter.backendlistener.elasticsearch-2.6.8.jar"
+      },
+      "2.6.9": {
+        "changes": "Fixed breaking issue with SSL conflicts",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.9/jmeter.backendlistener.elasticsearch-2.6.9.jar"
       }
     }
   },

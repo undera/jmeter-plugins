@@ -452,7 +452,7 @@
     "id": "bzm-hls",
     "name": "HLS Sampler",
     "description": "HLS protocol sampler, enabling testing for streaming applications",
-    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/HLSPlugin/master/docs/HLSPluginView.png",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/HLSPlugin/master/docs/sampler.png",
     "helpUrl": "https://github.com/Blazemeter/HLSPlugin/blob/master/README.md",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.hls.logic.HlsSampler",

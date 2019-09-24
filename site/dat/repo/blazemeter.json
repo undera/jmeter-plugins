@@ -469,9 +469,6 @@
       },
       "1.1": {
         "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jmeter-hls-1.1/jmeter-hls-1.1.jar",
-        "libs": {
-          "mqtt-websocket-java": "https://github.com/inventit/mqtt-websocket-java/releases/download/1.0.1/mqtt-websocket-java-1.0.1.jar"
-        },
         "depends": [
           "jmeter-http"
         ]
@@ -479,9 +476,6 @@
       "1.2": {
         "changes": "Some bugs fixed",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/jmeter-hls-1.2/jmeter-hls-1.2.jar",
-        "libs": {
-          "mqtt-websocket-java": "https://github.com/inventit/mqtt-websocket-java/releases/download/1.0.1/mqtt-websocket-java-1.0.1.jar"
-        },
         "depends": [
           "jmeter-http"
         ]
@@ -489,8 +483,15 @@
       "1.3": {
         "changes": "Plugin name has been changed to continue with the convention of BlazeMeter plugins.\nLogo has been added.\nIssue in live stream when it did not show results in View Results Tree has been fixed.",
         "downloadUrl": "https://github.com/Blazemeter/HLSPlugin/releases/download/v1.3/jmeter-hls-1.3.jar",
+        "depends": [
+          "jmeter-http"
+        ]
+      },
+      "2.0": {
+        "changes": "Major new release with a lot of bug fixes and new features (simplified UI, granular assertions, etc). Please check the readme",
+        "downloadUrl": "https://github.com/Blazemeter/HLSPlugin/releases/download/v2.0/jmeter-bzm-hls-2.0.jar",
         "libs": {
-          "mqtt-websocket-java": "https://github.com/inventit/mqtt-websocket-java/releases/download/1.0.1/mqtt-websocket-java-1.0.1.jar"
+          "hlsparserj>=1.0.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v2.0/hlsparserj-1.0.0.jar"
         },
         "depends": [
           "jmeter-http"

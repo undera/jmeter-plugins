@@ -627,7 +627,12 @@
     "id": "bzm-rte",
     "name": "RTE Protocol Support",
     "description": "Support for RTE (remote terminal emulation), providing sampler and config element to interact with remote terminal servers",
-    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/RTEPlugin/master/docs/send-keys.png",
+    "screenshotUrl": [
+      "https://raw.githubusercontent.com/Blazemeter/RTEPlugin/master/docs/RecorderPanel.png",
+      "https://raw.githubusercontent.com/Blazemeter/RTEPlugin/master/docs/config.png",
+      "https://raw.githubusercontent.com/Blazemeter/RTEPlugin/master/docs/send-keys.png",
+      "https://raw.githubusercontent.com/Blazemeter/RTEPlugin/master/docs/rte-extractor.png"
+    ],
     "helpUrl": "https://github.com/Blazemeter/RTEPlugin/blob/master/README.md",
     "vendor": "BlazeMeter.com",
     "markerClass": "com.blazemeter.jmeter.rte.sampler.RTESampler",

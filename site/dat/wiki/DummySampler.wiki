@@ -19,4 +19,4 @@ is to have Dummy Sampler with Dummy Subresults to simulate HTTP Request with emb
 
 == Example ==
 
-[/img/examples/DummySamplerExample.jmx Download Example Test Plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/DummySamplerExample.jmx Download Example Test Plan]

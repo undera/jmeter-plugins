@@ -13,7 +13,7 @@ There may be any number of FIFOs and they differ by "queue name".
 
 Inter-thread communication plugins usually attached as a child of samplers that 
 provide or utilize data transmission. Download 
-[/img/examples/SynchronizationPluginsExample.jmx example test plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/SynchronizationPluginsExample.jmx example test plan]
 that demonstrates the process.
 
 [/img/wiki/synchronization.png]
@@ -22,7 +22,7 @@ that demonstrates the process.
 
 There are 4 functions for inter-thread communication in JP@GC: fifoPut, fifoGet, fifoPop, fifoSize. 
 
-There is [/img/examples/SynchronizationExample.jmx example test plan] to see how it works.
+There is [/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/SynchronizationExample.jmx example test plan] to see how it works.
 
 fifoPut puts a value into queue and returns stored value. fifoPut parameters:
   # Name of FIFO queue

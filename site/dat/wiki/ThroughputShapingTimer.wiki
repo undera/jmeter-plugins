@@ -31,7 +31,7 @@ For example, if your service response time may be 2.5sec and target rps is 1230,
 It is better to have some threads overhead to handle unexpected response time spikes. But beware of too much overhead, it will lead to "final spike".
 
 == Example ==
-[/img/examples/ThroughputShapingExample.jmx Example JMX for Throughput Shaping Timer]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/ThroughputShapingExample.jmx Example JMX for Throughput Shaping Timer]
 
 Shaping Timer setting in example test plan:
 [/img/wiki/throughput_shaping_timer1.png]

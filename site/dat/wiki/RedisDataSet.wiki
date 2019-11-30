@@ -107,7 +107,7 @@ In the below example, we declare a Redis Data Set which exports cardNumber varia
 
 [/img/wiki/redis/TestPlanWithRedisList.png]
 
-The JMX can be downloaded [/img/examples/RedisDataSetExample.jmx here].
+The JMX can be downloaded [/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/RedisDataSetExample.jmx here].
 
 [=#TechnicalDetails]
 == Technical Details ==

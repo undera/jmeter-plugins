@@ -13,4 +13,4 @@ there's a lot of value to load testing people.
   * [XMPPConnection XMPP Connection Config]
   * [XMPPSampler XMPP Sampler]
  
-Example test plan: [/img/examples/XMPP.jmx XMPP.jmx]
+Example test plan: [/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/XMPP.jmx XMPP.jmx]

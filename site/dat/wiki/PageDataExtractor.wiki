@@ -40,4 +40,4 @@ java -jar CMDRunner.jar --tool Reporter --generate-png test.png --input-jtl resu
 
 == Sample Test Plan ==
 
-[/img/examples/PageDataExtractorExample.jmx Download Example Test Plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/PageDataExtractorExample.jmx Download Example Test Plan]

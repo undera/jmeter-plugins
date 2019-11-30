@@ -46,6 +46,6 @@ to your test plan gives you fast reading of any data into variable, which may be
 
 == Example ==
 
-[/img/examples/RawRequestExample.jmx Download Test Plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/RawRequestExample.jmx Download Test Plan]
 
 [http://jmeter.512774.n5.nabble.com/fileupload-test-with-JMeter-td4267154.html Hidden Feature :)] and [https://groups.google.com/forum/#!topic/jmeter-plugins/VDqXDNDCr6w post on it]

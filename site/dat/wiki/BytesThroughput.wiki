@@ -8,4 +8,4 @@ This graph will display the amount of bytes sent and received by JMeter during t
 
 == Example ==
 
-[/img/examples/BytesThroughputExample.jmx Download Example Test Plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/BytesThroughputExample.jmx Download Example Test Plan]

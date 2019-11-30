@@ -1,1 +1,3 @@
 <div style='white-space: nowrap'><i class="fa fa-twitter-square"></i> [https://twitter.com/#!/jmeter_plugins Follow us on Twitter]</div>
+
+<div style='white-space: nowrap'><i class="fa fa-pencil-square"></i> [/editor/?utm_source=jpgc&utm_medium=banner&utm_campaign=sidebar Online JMX Editor]</div>

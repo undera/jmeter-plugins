@@ -350,5 +350,4 @@ usual places.
 == Links ==
 
   * [https://groups.google.com/forum/#!topic/jmeter-plugins/QfI0AcCeFF8 Discuss this article]
-  * [http://jmeter-plugins.org/img/examples/DNS_Test_Example.jmx Download Final Test Plan]
-  * [http://jmeter-plugins.org/ JP@GC Plugins Set - Project Page]
+  * [/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/DNS_Test_Example.jmx Download Final Test Plan]

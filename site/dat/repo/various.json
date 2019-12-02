@@ -618,5 +618,24 @@
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       }
     }
+  },
+  {
+    "id": "ulp-jmeter-videostreaming-plugin",
+    "name": "UbikLoadPack Video Streaming plugin",
+    "description": "Plugin which provides the ability to easily load test servers delivering Adaptive Bitrate Streaming (ABR). It supports the following implementations: Mpeg-Dash, Apple HLS, Microsoft Smooth (HSS) and Adobe HDS. Both Live and VOD streams are automatically handled. The plugin realistically simulates players and outputs video specific metrics allowing you to analyze User Experience",
+    "screenshotUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/ulp_vs_presentationScreenshot.png",
+    "helpUrl": "https://www.ubik-ingenierie.com/blog/ubikloadpack-streaming-plugin-help/",
+    "vendor": "UbikLoadPack by Ubik-Ingenierie",
+    "markerClass": "com.ubikingenierie.jmeter.plugin.hls.sampler.HLSSampler",
+    "componentClasses": [
+      "com.ubikingenierie.jmeter.plugin.hls.sampler.HLSSampler",
+      "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
+    ],
+    "versions": {
+      "6.5.0": {
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/6.5.0/ubik-jmeter-videostreaming-plugin-6.5.0.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      }
+    }
   }
 ]

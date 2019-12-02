@@ -601,11 +601,11 @@
   {
     "id": "ulp-jmeter-autocorrelator-plugin",
     "name": "UbikLoadPack Auto-correlator plugin",
-    "description": "Plugin which provides the ability to easily load tests Vaadin, Oracle Siebel, Oracle PeopleSoft, Oracle Hyperion and Oracle JD-Edwards applications with Apache JMeter",
+    "description": "Plugin which provides the ability to easily load tests Vaadin, Oracle Siebel, Oracle PeopleSoft, Oracle Hyperion and Oracle JD-Edwards EntrepriseOne (JDE Eone) applications with Apache JMeter",
     "screenshotUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-autocorrelator-plugin/ulp_ac_presentationScreenshot.png",
     "helpUrl": "https://www.ubik-ingenierie.com/blog/ubikloadpack-autocorrelator-plugin-help/",
     "vendor": "UbikLoadPack by Ubik-Ingenierie",
-    "markerClass": "com.ubikingenierie.jmeter.plugin.autocorrelator.postpro.AutoCorrelatorPreProcessor",
+    "markerClass": "com.ubikingenierie.jmeter.plugin.autocorrelator.prepro.AutoCorrelatorPreProcessor",
     "componentClasses": [
       "com.ubikingenierie.jmeter.plugin.autocorrelator.postpro.AutoCorrelatorPostProcessor",
       "com.ubikingenierie.jmeter.plugin.autocorrelator.postpro.AutoCorrelatorPostProcessorGui",

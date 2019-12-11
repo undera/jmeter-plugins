@@ -732,7 +732,7 @@
         "downloadUrl": "https://github.com/Blazemeter/SiebelPlugin/releases/download/v0.1.0-beta/jmeter-bzm-siebel-correlation-0.1.0-beta.jar"
       }
     }
-  }
+  },
   {
     "id": "mqmeter",
     "name": "IBM MQ Support",

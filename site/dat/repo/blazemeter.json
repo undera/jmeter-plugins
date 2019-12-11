@@ -741,9 +741,9 @@
     "helpUrl": "https://github.com/JoseLuisSR/mqmeter",
     "vendor": "JoseLuisSR",
     "markerClass": "co.signal.mqmeter.MQClientSampler",
-    "componentClasses": [
+	"componentClasses": [
       "co.signal.mqmeter.MQPublishSampler",
-	  "co.signal.mqmeter.MQClientSampler"
+      "co.signal.mqmeter.MQClientSampler"
     ],
     "versions": {
       "2.1.0": {

@@ -732,5 +732,26 @@
         "downloadUrl": "https://github.com/Blazemeter/SiebelPlugin/releases/download/v0.1.0-beta/jmeter-bzm-siebel-correlation-0.1.0-beta.jar"
       }
     }
+  },
+  {
+    "id": "mqmeter",
+    "name": "IBM MQ Support",
+    "description": "A JMeter Plugin to put and get message on IBM MQ Queue, also publish message on Topic. It connect to MQ Server through server channel using ip address, port number, userID and password (if the channel has CHLAUTH rules).",
+    "screenshotUrl": "https://github.com/JoseLuisSR/img2/blob/master/mqmeter/MQClientSampler.png",
+    "helpUrl": "https://github.com/JoseLuisSR/mqmeter",
+    "vendor": "JoseLuisSR",
+    "markerClass": "co.signal.mqmeter.MQClientSampler",
+	"componentClasses": [
+      "co.signal.mqmeter.MQPublishSampler",
+      "co.signal.mqmeter.MQClientSampler"
+    ],
+    "versions": {
+      "2.1.0": {
+        "downloadUrl": "https://github.com/JoseLuisSR/mqmeter/releases/download/2.1.0/mqmeter-2.1.0.jar",
+        "libs": {
+          "com.ibm.mq": "https://search.maven.org/remotecontent?filepath=com/ibm/mq/com.ibm.mq.allclient/9.0.4.0/com.ibm.mq.allclient-9.0.4.0.jar"
+        }
+      }
+    }
   }
 ]

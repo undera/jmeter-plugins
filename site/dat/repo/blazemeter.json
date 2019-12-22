@@ -737,7 +737,7 @@
     "id": "mqmeter",
     "name": "IBM MQ Support",
     "description": "A JMeter Plugin to put and get message on IBM MQ Queue, also publish message on Topic. It connect to MQ Server through server channel using ip address, port number, userID and password (if the channel has CHLAUTH rules).",
-    "screenshotUrl": "https://github.com/JoseLuisSR/img2/blob/master/mqmeter/MQClientSampler.png",
+    "screenshotUrl": "https://github.com/JoseLuisSR/mqmeter/blob/master/doc/img/PutGetMessageOnQueue.png?raw=true",
     "helpUrl": "https://github.com/JoseLuisSR/mqmeter",
     "vendor": "JoseLuisSR",
     "markerClass": "co.signal.mqmeter.MQClientSampler",
@@ -746,11 +746,8 @@
       "co.signal.mqmeter.MQClientSampler"
     ],
     "versions": {
-      "2.1.0": {
-        "downloadUrl": "https://github.com/JoseLuisSR/mqmeter/releases/download/2.1.0/mqmeter-2.1.0.jar",
-        "libs": {
-          "com.ibm.mq": "https://search.maven.org/remotecontent?filepath=com/ibm/mq/com.ibm.mq.allclient/9.0.4.0/com.ibm.mq.allclient-9.0.4.0.jar"
-        }
+      "2.1.1": {
+        "downloadUrl": "https://github.com/JoseLuisSR/mqmeter/releases/download/2.1.1/mqmeter-2.1.1.jar"
       }
     }
   }

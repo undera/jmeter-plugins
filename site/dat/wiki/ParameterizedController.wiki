@@ -34,4 +34,4 @@ listener to test plan to visualize results. Now your test plan should look like 
 Run the test. Go to the View Results Tree and investigate Response data tabs for both samples.
 You'l see that var1 and var2 had different values inside different Parameterized Controllers.
 
-[/img/examples/ParameterizedControllerExample.jmx Download Example Test Plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/ParameterizedControllerExample.jmx Download Example Test Plan]

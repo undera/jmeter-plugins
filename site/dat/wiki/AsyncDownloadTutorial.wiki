@@ -124,4 +124,4 @@ Beware that FIFO queue will wait a thousand or million seconds before timeout. S
 
 == Download Resulting Test Plan ==
 
-Remember that you'll need a [StandardSet Standard Set] of plugins installed to open and run this tutorial: [/img/examples/AsyncDownloadTutorial.jmx AsyncDownloadTutorial.jmx]
+Remember that you'll need a [StandardSet Standard Set] of plugins installed to open and run this tutorial: [/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/AsyncDownloadTutorial.jmx AsyncDownloadTutorial.jmx]

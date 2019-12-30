@@ -25,4 +25,4 @@ ___NOTE: In case when checked YAML Input Format then plugin will convert YAML to
 
 == Example ==
 
-[/img/examples/JSONPathExtractorExample.jmx Download Example Test Plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/JSONPathExtractorExample.jmx Download Example Test Plan]

@@ -38,6 +38,6 @@ You may override this value by setting JMeter property {{{kg.apc.jmeter.samplers
 
 == Example ==
 
-[/img/examples/UDPRequestExample.jmx Download Example Test Plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/UDPRequestExample.jmx Download Example Test Plan]
 
 Article: [dns_test_using_jmeter Performance Testing DNS Server with JMeter]

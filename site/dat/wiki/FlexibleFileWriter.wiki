@@ -81,6 +81,6 @@ Variable indexes are zero based, e.g. var1 have index '0', var2 have index '1'.
 
 == Example and Tutorials ==
 
-[/img/examples/FlexibleFileWriterExample.jmx Download Example Test Plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/FlexibleFileWriterExample.jmx Download Example Test Plan]
 
 [FFWTutorials Tutorials]

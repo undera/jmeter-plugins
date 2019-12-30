@@ -114,6 +114,7 @@
                 <div>Every load test needs some sexy features!</div>
             </div>
             <div class="sponsorship pull-right">
+                <a href="/editor/?utm_source=jpgc&utm_medium=banner&utm_campaign=header"><img src="/editor/img/banner.png"/ ></a>
             </div>
         </div>
 

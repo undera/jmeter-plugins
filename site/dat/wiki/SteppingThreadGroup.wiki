@@ -20,7 +20,7 @@ However, time goes by and probably better alternative has been offered: [Concurr
   * decrease load by portions
 
 == Example ==
-[/img/examples/SteppingThreadGroupExample.jmx Download Example Test Plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/SteppingThreadGroupExample.jmx Download Example Test Plan]
 
 Following screenshot shows Stepping Thread Group set to generate load increasing by 10 users each 2 minutes:
 

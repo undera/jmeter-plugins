@@ -23,4 +23,4 @@ you must add it before reloading files.</b>
 
 == Example ==
 
-[/img/examples/CompositeGraphExample.jmx Download Example Test Plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/CompositeGraphExample.jmx Download Example Test Plan]

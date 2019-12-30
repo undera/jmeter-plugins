@@ -56,6 +56,9 @@
     <url link="support" menu="1" title="Support Forums" class="PWE\Modules\RedirectAccepted\RedirectAccepted"
          base="http://groups.google.com/forum/#!forum/jmeter-plugins" accept="1" ico="fa-support"/>
 
+    <url link="editor" menu="1" title="JMX Editor" class="PWE\Modules\RedirectAccepted\RedirectAccepted"
+         base="/editor/?utm_source=jpgc&amp;utm_medium=banner&amp;utm_campaign=menu" accept="1" ico="fa-pencil-square-o"/>
+
     <url link="sources" title="Source Code" menu="0" ico="fa-github-alt"
          class="PWE\Modules\RedirectAccepted\RedirectAccepted" base="https://github.com/undera/jmeter-plugins"/>
 

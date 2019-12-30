@@ -25,6 +25,6 @@ Test will be stopped only if specified error rate exceeded for _sequentially_ N 
 To disable auto-stop on rate criteria, just set error rate to zero.
 
 == Examples ==
-[/img/examples/AutoStopExample_Time.jmx Example AutoStop on Response Time JMX]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/AutoStopExample_Time.jmx Example AutoStop on Response Time JMX]
 
-[/img/examples/AutoStopExample_ErrRate.jmx Example AutoStop on Error Rate JMX]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/AutoStopExample_ErrRate.jmx Example AutoStop on Error Rate JMX]

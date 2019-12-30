@@ -41,7 +41,7 @@ it will be used in future versions as chunk marker.
 
 == Example ==
 
-[/img/examples/RawDataSourceExample.jmx Download Example Test Plan]
+[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/RawDataSourceExample.jmx Download Example Test Plan]
 
 [https://raw.github.com/undera/jmeter-plugins/master/extras/test/kg/apc/jmeter/modifiers/DNSJavaDecoderToRawData.out Raw File Example #1 - HEX-encoded binary data for DNS requests]
 

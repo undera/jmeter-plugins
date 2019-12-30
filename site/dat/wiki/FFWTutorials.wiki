@@ -21,7 +21,7 @@ offers free format logging, works correct and efficient for thousands of paralle
 threads. There is two approaches suggested for writing custom data into files with FFW.
 
 == "Fake Sampler" Approach ==
-Please, download [/img/examples/FFWTutorial_FakeSampler.jmx tutorial Test Plan] 
+Please, download [/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/FFWTutorial_FakeSampler.jmx tutorial Test Plan]
 and open it in your JMeter. In this test plan we will query http://google.com/ web page, extract some data 
 from the response and store that data into tab separated text file.
 

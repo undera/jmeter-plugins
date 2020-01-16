@@ -710,6 +710,14 @@
           "xtn5250>=3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.2/xtn5250-3.1.jar",
           "dm3270-lib>=0.11.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.2/dm3270-lib-0.11.1.jar"
         }
+      },
+      "2.2.1": {
+        "changes": "Wait conditions behaviour changed and some reported issues fixed",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.2.1/jmeter-bzm-rte-2.2.1.jar",
+        "libs": {
+          "xtn5250>=3.2": "https://github.com/Blazemeter/xtn5250/releases/download/v3.2/xtn5250-3.2.jar",
+          "dm3270-lib>=0.12.1": "https://github.com/Blazemeter/dm3270/releases/download/v0.12.1-lib/dm3270-lib-0.12.1.jar"
+        }
       }
     }
   },

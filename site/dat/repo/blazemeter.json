@@ -620,6 +620,23 @@
           "jetty-io>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/jetty-io-9.4.9.v20180320.jar",
           "jetty-util>=9.4.9.v20180320": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/jetty-util-9.4.9.v20180320.jar"
         }
+      },
+      "1.5": {
+        "changes": "Request methods PATCH & DELETE were added. Also support for no SSL connections and libraries updated.",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/jmeter-bzm-http2-1.5.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/http2-client-9.4.26.v20200117.jar",
+          "http2-common>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/http2-common-9.4.26.v20200117.jar",
+          "http2-hpack>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/http2-hpack-9.4.26.v20200117.jar",
+          "jetty-alpn-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/jetty-alpn-client-9.4.26.v20200117.jar",
+          "jetty-alpn-openjdk8-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/jetty-alpn-openjdk8-client-9.4.26.v20200117.jar",
+          "jetty-http>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/jetty-http-9.4.26.v20200117.jar",
+          "jetty-io>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/jetty-io-9.4.26.v20200117.jar",
+          "jetty-util>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/jetty-util-9.4.26.v20200117.jar"
+        }
       }
     }
   },

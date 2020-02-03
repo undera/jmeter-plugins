@@ -761,5 +761,35 @@
         }
       }
     }
+  },
+  {
+    "id": "bzm-jmeter-citrix-plugin",
+    "name": "Blazemeter JMeter Citrix plugin",
+    "description": "Plugin which provides the ability to load tests Citrix exposed applications with Apache JMeter",
+    "screenshotUrl": "https://github.com/Blazemeter/CitrixPlugin/raw/master/citrix-jmeter/plugin-metadata/presentationScreenshot.png",
+    "helpUrl": "https://github.com/Blazemeter/CitrixPlugin/blob/master/README.md",
+    "vendor": "Blazemeter.com",
+    "markerClass": "com.blazemeter.jmeter.citrix.recorder.gui.CitrixRecorderGUI",
+    "componentClasses": [
+      "com.blazemeter.jmeter.citrix.assertion.CitrixAssertion",
+      "com.blazemeter.jmeter.citrix.assertion.gui.CitrixAssertionGui",
+      "com.blazemeter.jmeter.citrix.assertion.CitrixSessionAssertion",
+	  "com.blazemeter.jmeter.citrix.assertion.gui.CitrixSessionAssertionGui",
+	  "com.blazemeter.jmeter.citrix.gui.CitrixResultRenderer",
+	  "com.blazemeter.jmeter.citrix.listener.CitrixIcaFileSaver",
+	  "com.blazemeter.jmeter.citrix.listener.gui.CitrixIcaFileSaverGui",
+	  "com.blazemeter.jmeter.citrix.recorder.CitrixRecorder",
+	  "com.blazemeter.jmeter.citrix.recorder.gui.CitrixRecorderGUI",
+	  "com.blazemeter.jmeter.citrix.sampler.StartApplicationSampler",
+	  "com.blazemeter.jmeter.citrix.sampler.gui.StartApplicationSamplerGUI",
+      "com.blazemeter.jmeter.citrix.sampler.InteractionSampler",
+	  "com.blazemeter.jmeter.citrix.sampler.gui.CitrixSamplerGUI"
+    ],
+    "versions": {
+      "0.5.5": {
+        "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.5.5/citrix-jmeter-0.5.5.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      }
+    }
   }
 ]

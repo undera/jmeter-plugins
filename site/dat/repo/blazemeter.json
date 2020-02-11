@@ -496,6 +496,17 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "3.0": {
+        "changes": "Major new release with support for MPEG DASH and new features (like automatic protocol recognition, sampler renaming, etc). Please check the readme",
+        "downloadUrl": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/jmeter-bzm-hls-3.0.jar",
+        "libs": {
+          "hlsparserj>=1.0.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/hlsparserj-1.0.0.jar",
+          "mpd-parser>=release-0.8-jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0/mpd-parser-0.8-jdk8.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

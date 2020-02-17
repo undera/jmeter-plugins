@@ -637,5 +637,23 @@
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       }
     }
+  },
+  {
+    "id": "jmeter.backendlistener.azure",
+    "name": "Azure backend listener",
+    "description": "Apache JMeter plugin that enables you to send test results to Azure Application Insights.",
+    "helpUrl": "https://github.com/adrianmo/jmeter-backend-azure",
+    "screenshotUrl": "https://github.com/adrianmo/jmeter-backend-azure/blob/0.1.1/docs/requestduration.png?raw=true",
+    "vendor": "adrianmo",
+    "markerClass": "io.github.adrianmo.jmeter.backendlistener.azure.AzureBackendClient",
+    "versions": {
+      "0.1.1": {
+        "changes": "Initial version.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.1.1/jmeter.backendlistener.azure-0.1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
   }
 ]

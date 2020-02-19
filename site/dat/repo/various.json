@@ -560,6 +560,10 @@
       "2.6.9": {
         "changes": "Fixed breaking issue with SSL conflicts",
         "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.9/jmeter.backendlistener.elasticsearch-2.6.9.jar"
+      },
+      "2.6.10": {
+        "changes": "Fixed issue with sending variables through headers (#61)",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.10/jmeter.backendlistener.elasticsearch-2.6.10.jar"
       }
     }
   },
@@ -635,6 +639,24 @@
       "6.5.0": {
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/6.5.0/ubik-jmeter-videostreaming-plugin-6.5.0.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      }
+    }
+  },
+  {
+    "id": "jmeter.backendlistener.azure",
+    "name": "Azure backend listener",
+    "description": "Apache JMeter plugin that enables you to send test results to Azure Application Insights.",
+    "helpUrl": "https://github.com/adrianmo/jmeter-backend-azure",
+    "screenshotUrl": "https://github.com/adrianmo/jmeter-backend-azure/blob/0.1.1/docs/requestduration.png?raw=true",
+    "vendor": "adrianmo",
+    "markerClass": "io.github.adrianmo.jmeter.backendlistener.azure.AzureBackendClient",
+    "versions": {
+      "0.1.1": {
+        "changes": "Initial version.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.1.1/jmeter.backendlistener.azure-0.1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   }

@@ -651,6 +651,13 @@
     "vendor": "adrianmo",
     "markerClass": "io.github.adrianmo.jmeter.backendlistener.azure.AzureBackendClient",
     "versions": {
+      "0.2.1": {
+        "changes": "Bug fix release.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.1/jmeter.backendlistener.azure-0.2.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.2.0": {
         "changes": "Support real-time metrics visualization.",
         "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.0/jmeter.backendlistener.azure-0.2.0.jar",

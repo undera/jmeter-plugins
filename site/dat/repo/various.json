@@ -638,7 +638,7 @@
     "versions": {
     "6.6.0": {
         "changes": "Let user choose the audio and subtitles track by the language/name of the track, handle EXT-X-MEDIA, handle subtitles, improve HTTPS performances, bugfixes",
-        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/6.6.0/ubik-jmeter-videostreaming-plugin-6.6.0.jar?c=1584900487",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/6.6.0/ubik-jmeter-videostreaming-plugin-6.6.0.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       },
       "6.5.0": {

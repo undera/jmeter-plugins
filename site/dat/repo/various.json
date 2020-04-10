@@ -678,5 +678,27 @@
         ]
       }
     }
+  },
+  {
+    "id": "jmeter-pubsub-sampler",
+    "name": "GCP pubsub plugin",
+    "description": "Jmeter plugin to Publish and Subscribe Messages to GCP PubSub",
+    "screenshotUrl": "https://user-images.githubusercontent.com/18440913/79026677-7ad50580-7b81-11ea-95a9-a3d7f2cba3d5.png",
+    "helpUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler",
+    "vendor": "DigitalInsight-NCR",
+    "markerClass": "com.di.jmeter.pubsub.sampler.PublisherSampler",
+    "componentClasses": [
+      "com.di.jmeter.pubsub.sampler.SubscriberSampler",
+      "com.di.jmeter.pubsub.config.PublisherConfig",
+      "com.di.jmeter.pubsub.config.SubscriberConfig"
+    ],
+    "versions": {
+      "1.0": {
+        "downloadUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler/releases/download/1.0/jmeter-pubsub-sampler-1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
   }
 ]

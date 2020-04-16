@@ -203,6 +203,21 @@
           "HdrHistogram": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.11/HdrHistogram-2.1.11.jar",
           "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
         }
+      },
+      "1.1": {
+        "changes": "<ul><li>Upgrade to jPOS v2.1.4</li><li>Fire-and-forget messages</li><li>Non-persistent Channel option</li><li>Advanced Mux options to configure response/request matching</li><li>Non-message related cryptographic functions</li><li>Packager logging</li><li>Multiple success response codes</li><li>ARQC transaction data overriding, custom padding, and automatic CVR extraction</li><li>Bug fixes: #2</li><li>Incompatible changes:</li><ul><li>ISO8583 Crypto PreProcessor: Transaction Data field now overrides the ARQC input instead of appending</li><li>ISO8583 Config: renamed to ISO8583 Connection Configuration</li></ul></ul>",
+        "downloadUrl": "https://github.com/tilln/jmeter-iso8583/releases/download/1.1/jmeter-iso8583-1.1.jar",
+        "libs": {
+          "jpos>=2.1.4": "https://search.maven.org/remotecontent?filepath=org/jpos/jpos/2.1.4/jpos-2.1.4.jar",
+          "bcprov-jdk15on>=1.64": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcprov-jdk15on/1.64/bcprov-jdk15on-1.64.jar",
+          "bcpg-jdk15on>=1.64": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcpg-jdk15on/1.64/bcpg-jdk15on-1.64.jar",
+          "jdom2": "https://search.maven.org/remotecontent?filepath=org/jdom/jdom2/2.0.6/jdom2-2.0.6.jar",
+          "org.osgi.core": "https://search.maven.org/remotecontent?filepath=org/osgi/org.osgi.core/6.0.0/org.osgi.core-6.0.0.jar",
+          "commons-cli": "https://search.maven.org/remotecontent?filepath=commons-cli/commons-cli/1.4/commons-cli-1.4.jar",
+          "snakeyaml>=1.26": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.26/snakeyaml-1.26.jar",
+          "HdrHistogram>=2.1.12": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar",
+          "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
+        }
       }
     }
   },

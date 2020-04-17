@@ -21,7 +21,7 @@ public class JMXMonConnectionPoolTest {
 	private static String jmxUrlOk2 = "service:jmx:rmi:///jndi/rmi://xxxxx:9999/jmxrmi";
 	private static String jmxUrlOk3 = "service:jmx:rmi:///jndi/rmi://yyyyyy:9999/jmxrmi";
 	private static String jmxUrlOk4 = "service:jmx:rmi:///jndi/rmi://zzzzz:9999/jmxrmi";
-	
+	private static String jmxUrlLocal = "";
 	private static String jmxUrlKo = "servicjmxrmi";
 	@BeforeClass
     public static void setUpClass() {
@@ -83,6 +83,18 @@ public class JMXMonConnectionPoolTest {
 		// default test
 		testSubject = createTestSubject();
 		result = testSubject.getConnection(jmxUrlOk, attributes, false);
+	}
+
+	@Test
+	public void testGetConnection_Local() throws Exception {
+		JMXMonConnectionPool testSubject;
+		Hashtable attributes = null;
+		MBeanServerConnection result;
+
+		// default test
+		testSubject = createTestSubject();
+		result = testSubject.getConnection(jmxUrlLocal, attributes);
+		assertNotNull(result);
 	}
 
 	@Test

@@ -31,7 +31,7 @@ Retry : When checked, new connections are attempted during the test and lost con
 
 To change how often the a sample should be taken set the parameter "jmeterPlugin.jmxmon.interval" to the interval in milliseconds, default is every second.
 
-The URL field can be left empty to connect to and monitor the currently running JMeter JVM.
+The URL field can be left empty to connect to and monitor the currently running JMeter JVM (since v0.3).
 
 ==Find attributs informations with JConsole==
 Launch the JConsole tool (in the JDK /bin directory)

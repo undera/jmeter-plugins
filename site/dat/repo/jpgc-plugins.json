@@ -362,6 +362,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
         }
+      },
+      "0.3": {
+        "changes": "Local JVM connection option (for JMeter self-monitoring)",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-jmxmon/0.3/jmeter-plugins-jmxmon-0.3.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        }
       }
     }
   },

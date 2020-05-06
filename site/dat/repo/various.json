@@ -651,6 +651,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "7.0.1": {
+        "changes": "Fix NPE in Show Playlists",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.0.1/ubik-jmeter-videostreaming-plugin-7.0.1.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
     "7.0.0": {
         "changes": "Redesigned reporting to have live reporting and reporting per request type. New video metric. DASH : Added support to the Descriptor of the AdaptationSet, Added support for attribute suggestedPresentationDelay",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.0.0/ubik-jmeter-videostreaming-plugin-7.0.0.jar",

@@ -10,6 +10,6 @@ RUN echo '<Directory "/var/www/html">' >> /etc/apache2/conf-enabled/99local.conf
 RUN echo   'AllowOverride All' >> /etc/apache2/conf-enabled/99local.conf
 RUN echo '</Directory>' >> /etc/apache2/conf-enabled/99local.conf
 
-ENTRYPOINT service apache2 start && tail -f /var/log/apache2/*.log & ; bash
+ENTRYPOINT service apache2 start && tail -f /var/log/apache2/*.log
 
 # Implies we mount /site dir into /var/www/html

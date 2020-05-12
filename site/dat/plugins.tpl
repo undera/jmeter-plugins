@@ -114,7 +114,8 @@
                 <div>Every load test needs some sexy features!</div>
             </div>
             <div class="sponsorship pull-right">
-                <a href="/editor/?utm_source=jpgc&utm_medium=banner&utm_campaign=header"><img src="/editor/img/banner.png"/ ></a>
+                <a href="https://up9.com/?utm_source=jpgc&utm_medium=banner&utm_campaign=jpgc_sponsor"><img src="/img/site/up9.svg" height="68" alt="UP9"></a>
+                <a href="/editor/?utm_source=jpgc&utm_medium=banner&utm_campaign=header"><img src="/editor/img/banner.png" width="125" height="68" alt="BlocklyJMX"/></a>
             </div>
         </div>
 

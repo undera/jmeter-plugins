@@ -14,9 +14,9 @@ Just add a "JMXMon Samples Collector" listener where appropriate.
 
 Here are some typical values you might want to use:
 
-URI: service:jmx:rmi:///jndi/rmi://YOURHOST:6969/jmxrmi
+URI: {{{service:jmx:rmi:///jndi/rmi://YOURHOST:6969/jmxrmi}}}
 or
-service:jmx:rmi://YOURHOST:JMX_PORT/jndi/rmi://YOURHOST:JMX_PORT/jmxrmi
+{{{service:jmx:rmi://YOURHOST:JMX_PORT/jndi/rmi://YOURHOST:JMX_PORT/jmxrmi}}}
 
 This field can contains jmeter variables that will be expanded for each call over time if canRetry is checked
 Why? if a server spawn external process, it can return ip and port for jmx connection. It's up to you to extract those values into variable(s) and use then in URI field
@@ -30,6 +30,8 @@ Key (for composite JMX values): used
 Retry : When checked, new connections are attempted during the test and lost connections can be recovered
 
 To change how often the a sample should be taken set the parameter "jmeterPlugin.jmxmon.interval" to the interval in milliseconds, default is every second.
+
+The URL field can be left empty to connect to and monitor the currently running JMeter JVM (since v0.3).
 
 ==Find attributs informations with JConsole==
 Launch the JConsole tool (in the JDK /bin directory)

@@ -1,6 +1,7 @@
 package kg.apc.jmeter.jmxmon;
 
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -133,6 +134,12 @@ public class JMXMonConnectionPool {
 			this.jmxUrl = jmxUrl;
 		}
 		
+		/**
+		 * Empty URL denotes local connection
+		 */
+		private boolean isLocalConnection() {
+			return jmxUrl.isEmpty();
+		}
 		
 		/**
 		 * Start a connection thread if none are running
@@ -141,6 +148,11 @@ public class JMXMonConnectionPool {
 		 */
 		protected synchronized void tryConnect(final Hashtable attributes, boolean wait)
 		{
+			if (isLocalConnection()) {
+				log.debug("Using local PlatformMBeanServer connection");
+				connection = ManagementFactory.getPlatformMBeanServer();
+				return;
+			}
 			connectionAttemptFlag = true;
 			
 			connectionAttemptThread = new Thread(new Runnable() {
@@ -186,7 +198,7 @@ public class JMXMonConnectionPool {
 		protected MBeanServerConnection connect(Hashtable attributes, boolean wait) {
 
 			if (connection != null){
-				log.debug("Reused the same connection for url = " + jmxUrl);
+				log.debug("Reused the same connection for url = " + (isLocalConnection()?"(local JVM)":jmxUrl));
 				return connection;
 			}
 			

@@ -532,6 +532,24 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "3.0.2": {
+        "changes": "Patch fix for equals signs on URIs, subtitles better handled",
+        "downloadUrl": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jmeter-bzm-hls-3.0.2.jar",
+        "libs": {
+          "hlsparserj>=1.0.0": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/hlsparserj-c287e78.jar",
+          "mpd-parser>=release-0.8-jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/mpd-parser-0.8-jdk8.jar",
+          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-core-2.10.2.jar",
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-databind-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-module-jaxb-annotations-2.10.2.jar",
+          "stax2-api>=4.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/stax2-api-4.2.jar",
+          "woodstox-core>=5.3.0":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/woodstox-core-5.3.0.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

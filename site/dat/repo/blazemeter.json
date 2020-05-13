@@ -537,7 +537,7 @@
         "changes": "Patch fix for equals signs on URIs, subtitles better handled",
         "downloadUrl": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jmeter-bzm-hls-3.0.2.jar",
         "libs": {
-          "hlsparserj>=c287e78": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/hlsparserj-c287e78.jar",
+          "hlsparserj>=1.0.1-c287e78": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/hlsparserj-c287e78.jar",
           "mpd-parser>=release-0.8-jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/mpd-parser-0.8-jdk8.jar",
           "jackson-core>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-core-2.10.2.jar",
           "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.0.2/jackson-dataformat-xml-2.10.2.jar",

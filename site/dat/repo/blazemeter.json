@@ -797,6 +797,15 @@
           "xtn5250>=3.2": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.3/xtn5250-3.2.jar",
           "dm3270-lib>=0.12.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v2.3/dm3270-lib-0.12.1.jar"
         }
+      },
+      "3.0": {
+        "changes": "Now we support VT420 protocol!",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.0/jmeter-bzm-rte-3.0.jar",
+        "libs": {
+          "xtn5250>=3.2.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.0/xtn5250-3.2.1.jar",
+          "dm3270-lib>=0.12.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.0/dm3270-lib-0.12.3.jar",
+          "jVT220>=1.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.0/jVT220-1.3.jar"
+        }
       }
     }
   },

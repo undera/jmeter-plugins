@@ -651,6 +651,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "7.1.0": {
+        "changes": "Handle HLS Live Edge",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.0/ubik-jmeter-videostreaming-plugin-7.1.0.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "7.0.2": {
         "changes": "Simplify license use + bugfixes",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.0.2/ubik-jmeter-videostreaming-plugin-7.0.2.jar",

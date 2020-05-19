@@ -652,7 +652,7 @@
     ],
     "versions": {
      "7.1.0": {
-        "changes": "Handle HLS Live Edge",
+        "changes": "Improvements in HLS Live support",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.0/ubik-jmeter-videostreaming-plugin-7.1.0.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       },

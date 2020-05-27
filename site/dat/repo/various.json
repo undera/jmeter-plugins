@@ -504,6 +504,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.7": {
+        "changes": "Fixed bug about not always correctly reading frame under heavy load in combination with short read timeouts, and some other minor bug fixes.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2.7/jmeter-websocket-samplers-1.2.7.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

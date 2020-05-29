@@ -689,6 +689,31 @@
       }
     }
   },
+{
+    "id": "ulp-jmeter-gwt-plugin",
+    "name": "UbikLoadPack GWT plugin",
+    "description": "Plugin which provides the ability to easily script and performance test GWT based applications. It allows to Record and transform GWTRPC requests to XML, Out of the box transformation of requests from XML back to GWTRPC, On-demand transformation of responses from GWTRPC to XML for optional extraction, On-demand transformation of requests from Java objects back to GWTRPC, On-demand transformation of responses from GWTRPC to Java for optional extraction, Assertion on GWT response to check they are OK, View Results Tree renderer to test XPath extractions of data from GWTRPC responses",
+    "screenshotUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-gwt-plugin/ulp_gwt_screenshot_460.png",
+    "helpUrl": "https://www.ubik-ingenierie.com/blog/ubikloadpack-gwt-plugin-help/",
+    "vendor": "UbikLoadPack by Ubik-Ingenierie",
+    "markerClass": "com.ubikingenierie.jmeter.plugin.gwt.preprocessor.GwtPreProcessor",
+    "componentClasses": [
+      "com.ubikingenierie.jmeter.plugin.gwt.assertion.GwtAssertion",
+      "com.ubikingenierie.jmeter.plugin.gwt.assertion.GwtAssertionGui",
+      "com.ubikingenierie.jmeter.plugin.gwt.postprocessor.GwtResponseToXmlPostProcessor",
+      "com.ubikingenierie.jmeter.plugin.gwt.postprocessor.GwtResponseToObjectPostProcessor",
+      "com.ubikingenierie.jmeter.plugin.gwt.postprocessor.gui.GwtPostProcessorGui",
+      "com.ubikingenierie.jmeter.plugin.gwt.postprocessor.gui.GwtToObjectPostProcessorGui",
+      "com.ubikingenierie.jmeter.plugin.gwt.preprocessor.GwtPreProcessor",
+      "com.ubikingenierie.jmeter.plugin.gwt.preprocessor.gui.GwtPreProcessorGui"
+    ],
+    "versions": {
+      "4.6.0": {
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-gwt-plugin/4.6.0/ubik-jmeter-gwt-plugin-4.6.0.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      }
+    }
+},
   {
     "id": "jmeter.backendlistener.azure",
     "name": "Azure backend listener",

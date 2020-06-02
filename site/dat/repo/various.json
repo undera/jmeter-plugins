@@ -511,6 +511,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.8": {
+        "changes": "Added option to Single Read Sampler to read Text OR Binary, whatever is received.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2.8/jmeter-websocket-samplers-1.2.8.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

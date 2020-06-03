@@ -811,10 +811,10 @@
   },
   {
     "id": "bzm-siebel",
-    "name": "Siebel CRM Recorder",
-    "description": "Siebel CRM recorder which provides auto-correlation of variables at recording time",
-    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/SiebelPlugin/master/docs/recorded-samples.png",
-    "helpUrl": "https://github.com/Blazemeter/SiebelPlugin/blob/master/README.md",
+    "name": "Correlation Recorder",
+    "description": "Correlation Recorder provides auto-correlation of variables at recording time",
+    "screenshotUrl": "https://github.com/Blazemeter/CorrelationRecorder/blob/master/docs/template-elements-panel.png",
+    "helpUrl": "https://github.com/Blazemeter/CorrelationRecorder/blob/master/README.md",
     "vendor": "BlazeMeter.com",
     "markerClass": "com.blazemeter.jmeter.correlation.CorrelationProxyControl",
     "componentClasses": [
@@ -826,6 +826,13 @@
     "versions": {
       "0.1.0-beta": {
         "downloadUrl": "https://github.com/Blazemeter/SiebelPlugin/releases/download/v0.1.0-beta/jmeter-bzm-siebel-correlation-0.1.0-beta.jar"
+      },
+      "1.0": {
+        "changes": "Siebel Plugin has evolved into Correlation Recorder with lots of new features. Please check documentation to learn about all the new goodies!",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jmeter-bzm-correlation-recorder-1.0.jar",
+        "libs": {
+          "swingx-all>=1.6.5.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/swingx-all-1.6.5-1.jar"
+        }
       }
     }
   },

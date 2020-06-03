@@ -831,7 +831,12 @@
         "changes": "Siebel Plugin has evolved into Correlation Recorder with lots of new features. Please check documentation to learn about all the new goodies!",
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jmeter-bzm-correlation-recorder-1.0.jar",
         "libs": {
-          "swingx-all>=1.6.5.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/swingx-all-1.6.5-1.jar"
+          "swingx-all>=1.6.5.1": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/swingx-all-1.6.5-1.jar",
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-databind-2.10.2.jar",
+          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-core-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-module-jaxb-annotations-2.10.2.jar"
         }
       }
     }

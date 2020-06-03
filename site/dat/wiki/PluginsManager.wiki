@@ -33,6 +33,10 @@ If you want to use the Plugins Manager from command-line or programmatically, pl
 
 <div class="alert alert-warning">If you see empty dialog, this means that most likely you have proxy requirement for Internet connection. Please read [/wiki/PluginsManagerNetworkConfiguration following instructions].</div>
 
+If you face some issues where new plugins do not appear, then Plugins Manager might be using an outdated cached information.
+In this case, you can clear the folder referenced by {{{System property "java.io.tmpdir"/pmgr_cache}}}.
+
+
 == Add Your Plugin or Repository ==
 
 Now there is an opportunity for anyone who creates the JMeter plugins to quickly make them available to wide audience of JMeter-Plugins.org.

@@ -504,6 +504,20 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.7": {
+        "changes": "Fixed bug about not always correctly reading frame under heavy load in combination with short read timeouts, and some other minor bug fixes.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2.7/jmeter-websocket-samplers-1.2.7.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.2.8": {
+        "changes": "Added option to Single Read Sampler to read Text OR Binary, whatever is received.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2.8/jmeter-websocket-samplers-1.2.8.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -579,6 +593,10 @@
       "2.6.10": {
         "changes": "Fixed issue with sending variables through headers (#61)",
         "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.10/jmeter.backendlistener.elasticsearch-2.6.10.jar"
+      },
+      "2.6.11": {
+        "changes": "Fixed issue with deprecated methods resulting in errors and timeout issues",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.11/jmeter.backendlistener.elasticsearch-2.6.11.jar"
       }
     }
   },
@@ -682,6 +700,31 @@
       }
     }
   },
+{
+    "id": "ulp-jmeter-gwt-plugin",
+    "name": "UbikLoadPack GWT plugin",
+    "description": "Plugin which provides the ability to easily script and performance test GWT based applications. It allows to Record and transform GWTRPC requests to XML, Out of the box transformation of requests from XML back to GWTRPC, On-demand transformation of responses from GWTRPC to XML for optional extraction, On-demand transformation of requests from Java objects back to GWTRPC, On-demand transformation of responses from GWTRPC to Java for optional extraction, Assertion on GWT response to check they are OK, View Results Tree renderer to test XPath extractions of data from GWTRPC responses",
+    "screenshotUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-gwt-plugin/ulp_gwt_screenshot_460.png",
+    "helpUrl": "https://www.ubik-ingenierie.com/blog/ubikloadpack-gwt-plugin-help/",
+    "vendor": "UbikLoadPack by Ubik-Ingenierie",
+    "markerClass": "com.ubikingenierie.jmeter.plugin.gwt.preprocessor.GwtPreProcessor",
+    "componentClasses": [
+      "com.ubikingenierie.jmeter.plugin.gwt.assertion.GwtAssertion",
+      "com.ubikingenierie.jmeter.plugin.gwt.assertion.GwtAssertionGui",
+      "com.ubikingenierie.jmeter.plugin.gwt.postprocessor.GwtResponseToXmlPostProcessor",
+      "com.ubikingenierie.jmeter.plugin.gwt.postprocessor.GwtResponseToObjectPostProcessor",
+      "com.ubikingenierie.jmeter.plugin.gwt.postprocessor.gui.GwtPostProcessorGui",
+      "com.ubikingenierie.jmeter.plugin.gwt.postprocessor.gui.GwtToObjectPostProcessorGui",
+      "com.ubikingenierie.jmeter.plugin.gwt.preprocessor.GwtPreProcessor",
+      "com.ubikingenierie.jmeter.plugin.gwt.preprocessor.gui.GwtPreProcessorGui"
+    ],
+    "versions": {
+      "4.6.0": {
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-gwt-plugin/4.6.0/ubik-jmeter-gwt-plugin-4.6.0.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      }
+    }
+},
   {
     "id": "jmeter.backendlistener.azure",
     "name": "Azure backend listener",

@@ -450,7 +450,7 @@
   },
   {
     "id": "bzm-hls",
-    "name": "HLS Sampler",
+    "name": "BlazeMeter HLS Sampler",
     "description": "HLS protocol sampler, enabling testing for streaming applications",
     "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/HLSPlugin/master/docs/sampler.png",
     "helpUrl": "https://github.com/Blazemeter/HLSPlugin/blob/master/README.md",
@@ -555,7 +555,7 @@
   },
   {
     "id": "bzm-http2",
-    "name": "HTTP/2 Sampler",
+    "name": "BlazeMeter HTTP/2 Sampler",
     "description": "HTTP/2 protocol sampler",
     "helpUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/blob/master/README.md",
     "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-http2-plugin/master/syncRequest.png",
@@ -696,11 +696,11 @@
   },
   {
     "id": "bzm-rte",
-    "name": "RTE Protocol Support",
+    "name": "BlazeMeter RTE Protocol Support",
     "description": "Support for RTE (remote terminal emulation), providing a recorder, sampler and config element to interact with remote terminal servers",
     "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/RTEPlugin/master/docs/recorder/recorder-panel.png",
     "helpUrl": "https://github.com/Blazemeter/RTEPlugin/blob/master/README.md",
-    "vendor": "BlazeMeter.com",
+    "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.rte.sampler.RTESampler",
     "componentClasses": [
       "com.blazemeter.jmeter.rte.sampler.Inputs",
@@ -811,11 +811,11 @@
   },
   {
     "id": "bzm-siebel",
-    "name": "Correlation Recorder",
+    "name": "BlazeMeter Correlation Recorder",
     "description": "Correlation Recorder provides auto-correlation of variables at recording time",
     "screenshotUrl": "https://github.com/Blazemeter/CorrelationRecorder/blob/master/docs/template-elements-panel.png",
     "helpUrl": "https://github.com/Blazemeter/CorrelationRecorder/blob/master/README.md",
-    "vendor": "BlazeMeter.com",
+    "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.correlation.CorrelationProxyControl",
     "componentClasses": [
       "com.blazemeter.jmeter.correlation.CorrelationProxyControl",
@@ -864,11 +864,11 @@
   },
   {
     "id": "bzm-jmeter-citrix-plugin",
-    "name": "Blazemeter JMeter Citrix plugin",
-    "description": "Plugin which provides the ability to load tests Citrix exposed applications with Apache JMeter",
+    "name": "BlazeMeter Citrix",
+    "description": "Support for Citrix protocol (only available for Microsoft Windows)",
     "screenshotUrl": "https://github.com/Blazemeter/CitrixPlugin/raw/master/citrix-jmeter/plugin-metadata/presentationScreenshot.png",
     "helpUrl": "https://github.com/Blazemeter/CitrixPlugin/blob/master/README.md",
-    "vendor": "Blazemeter.com",
+    "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.citrix.recorder.gui.CitrixRecorderGUI",
     "componentClasses": [
       "com.blazemeter.jmeter.citrix.assertion.CitrixAssertion",

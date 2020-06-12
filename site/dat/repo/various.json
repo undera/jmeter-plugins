@@ -597,6 +597,10 @@
       "2.6.11": {
         "changes": "Fixed issue with deprecated methods resulting in errors and timeout issues",
         "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.11/jmeter.backendlistener.elasticsearch-2.6.11.jar"
+      },
+      "2.7.0": {
+        "changes": "Added an exclude feature for filters",
+        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.7.0/jmeter.backendlistener.elasticsearch-2.7.0.jar"
       }
     }
   },

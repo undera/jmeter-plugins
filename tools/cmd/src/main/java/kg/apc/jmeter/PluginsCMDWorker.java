@@ -46,6 +46,7 @@ public class PluginsCMDWorker {
     private int excludeSamplesWithRegex = -1;
     private int successFilter = -1;
     private int markers = -1;
+    private String yAxisLabel="Performance Metrics";
 
     public PluginsCMDWorker() {
         log.info("Using JMeterPluginsCMD v. " + JMeterPluginsUtils.getVersion());
@@ -100,6 +101,13 @@ public class PluginsCMDWorker {
         graphHeight = i;
     }
 
+
+    public void setYAxisLabel(String yAxisLabel) {
+        if(yAxisLabel != null) {
+            this.yAxisLabel = yAxisLabel;
+        }
+    }
+
     public int doJob() {
         checkParams();
 
@@ -141,6 +149,8 @@ public class PluginsCMDWorker {
 
         // to handle issue 64 and since it must be cheap - set options again
         setOptions(pluginInstance);
+
+        pluginInstance.getGraphPanelChart().setYAxisLabel(yAxisLabel);
 
         if ((exportMode & EXPORT_PNG) == EXPORT_PNG) {
             File pngFile = new File(outputPNG);

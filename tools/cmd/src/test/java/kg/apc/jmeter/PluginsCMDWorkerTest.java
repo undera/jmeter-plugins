@@ -72,6 +72,7 @@ public class PluginsCMDWorkerTest {
         instance.setInputFile(basedir + "/short.jtl");
         File pngfile = File.createTempFile("test", ".png");
         instance.setOutputPNGFile(pngfile.getAbsolutePath());
+        instance.setYAxisLabel("Response time [ms]");
         File csvfile = File.createTempFile("test", ".csv");
         instance.setOutputCSVFile(csvfile.getAbsolutePath());
         instance.setPluginType("ResponseTimesOverTime");
@@ -91,6 +92,7 @@ public class PluginsCMDWorkerTest {
         System.out.println("doJob 2");
         instance.setInputFile(basedir + "/short.jtl");
         instance.setOutputPNGFile(File.createTempFile("test", ".png").getAbsolutePath());
+        instance.setYAxisLabel("Response time [ms]");
         instance.setPluginType("ResponseTimesOverTime");
         instance.addExportMode(PluginsCMDWorker.EXPORT_PNG);
         int result = instance.doJob();
@@ -158,6 +160,16 @@ public class PluginsCMDWorkerTest {
         System.out.println("setGraphHeight");
         int i = 0;
         instance.setGraphHeight(i);
+    }
+
+    /**
+     * Test of setYAxisLabel method, of class PluginsCMDWorker.
+     */
+    @Test
+    public void testSetYAxisLabel() {
+        System.out.println("setYAxisLabel");
+        String newYAxisLabel = "Response time [ms]";
+        instance.setYAxisLabel(newYAxisLabel);
     }
 
     @Test

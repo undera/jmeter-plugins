@@ -86,7 +86,7 @@ def get_pmgr(plugins_list):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG, format="%(relativeCreated)d\t%(levelname)s\t%(message)s")
 
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir)

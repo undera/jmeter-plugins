@@ -22,6 +22,12 @@ def is_version_packed(fname):
     return resp.status_code == 200
 
 
+def get_packages():
+    resp = requests.get("http://jmeter-plugins.org/files/packages/")
+    assert resp.status_code == 200
+    return {x['file']: x['size'] for x in json.loads(resp.content)['files']}
+
+
 def pack_version(fname, ver_obj, pmgr_obj, installer_cls):
     if not ver_obj['downloadUrl']:
         return
@@ -61,7 +67,8 @@ def download_into_dir(dirname, url, dest_subpath):
     assert resp.status_code == 200
     if 'content-disposition' in resp.headers:
         # handle optional quotes around filename:
-        remote_filename = re.sub('.*filename=(")?(?P<filename>.+)(?(1)"|$).*', "\g<filename>", resp.headers['content-disposition'])
+        remote_filename = re.sub('.*filename=(")?(?P<filename>.+)(?(1)"|$).*', "\g<filename>",
+                                 resp.headers['content-disposition'])
     else:
         remote_filename = os.path.basename(resp.url)
 
@@ -69,7 +76,7 @@ def download_into_dir(dirname, url, dest_subpath):
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
 
-    with open(os.path.join(dirname, dest_subpath, remote_filename), 'w') as fname:
+    with open(os.path.join(dirname, dest_subpath, remote_filename), 'wb') as fname:
         fname.write(resp.content)
         fname.close()
     resp.close()
@@ -105,15 +112,17 @@ if __name__ == "__main__":
         logging.info("Doing no downloads, just checked JSON validity")
         sys.exit(0)
 
+    known_packages = get_packages()
+
     # find pmgr
     pmgr_obj = get_pmgr(plugins)
     download_into_dir(tempfile.mkdtemp(), pmgr_obj['downloadUrl'], "pmgr")  # TODO: use it as cached
 
-    for plugin in plugins:
+    for n, plugin in enumerate(plugins):
         if 'screenshotUrl' not in plugin:
             raise ValueError("%s has no screenshotUrl" % plugin['id'])
 
-        logging.debug("Processing plugin: %s", plugin['id'])
+        logging.debug("Processing plugin %d of %d: %s", n, len(plugins), plugin['id'])
         if plugin['id'] == 'jpgc-plugins-manager':
             continue
 
@@ -126,8 +135,8 @@ if __name__ == "__main__":
                 continue
 
             dest_file = "%s-%s.zip" % (plugin['id'], version)
-            if is_version_packed(dest_file):
-                logging.info("Skip: %s", plugin['id'])
+            if known_packages.get(dest_file) or is_version_packed(dest_file):
+                logging.info("Skip: %s %s", plugin['id'], version)
                 continue
 
             pack_version(os.path.join(dest_dir, dest_file), plugin['versions'][version], pmgr_obj,

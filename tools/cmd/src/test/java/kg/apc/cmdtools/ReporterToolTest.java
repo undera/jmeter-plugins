@@ -51,8 +51,9 @@ public class ReporterToolTest {
         File f = File.createTempFile("test", ".csv");
         String str = "--generate-csv " + f.getAbsolutePath() + " "
                 + "--input-jtl " + basedir + "/short.jtl "
-                + "--aggregate-rows yes --plugin-type ResponseTimesOverTime";
+                + "--aggregate-rows yes --plugin-type ResponseTimesOverTime --yAxisLabel 'ResponseTime[ms]'";
         String[] args = str.split(" +");
+
         ReporterTool instance = new ReporterTool();
         int expResult = 0;
         int result = instance.processParams(PluginsCMD.argsArrayToListIterator(args));
@@ -67,6 +68,7 @@ public class ReporterToolTest {
         File f = File.createTempFile("test", ".png");
         String str = "--width 800 --height 600 "
                 + "--plugin-type HitsPerSecond  "
+                + "--yAxisLabel 'Hits/sec'"
                 + "--aggregate-rows yes "
                 + "--generate-png " + f.getAbsolutePath() + " "
                 + "--input-jtl " + basedir + "/short.jtl";

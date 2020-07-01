@@ -63,6 +63,7 @@ def zip_dir(path, ziph):
 
 def download_into_dir(dirname, url, dest_subpath):
     logging.info("Downloading: %s", url)
+    logging.debug("Dest dir: %s / subpath: %s", dirname, dest_subpath)
     resp = requests.get(url)
     assert resp.status_code == 200
     if 'content-disposition' in resp.headers:

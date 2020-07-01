@@ -15,7 +15,8 @@ cp -r site/* upload/
 mkdir -p upload/files/nightly
 
 python downloads.py
-mv site/files/packages upload/files/packages
+mkdir -p upload/files/packages
+mv site/files/packages/* upload/files/packages/
 
 for D in `ls` ; do
     if ls $D/target/*-*.zip 2>/dev/null ; then

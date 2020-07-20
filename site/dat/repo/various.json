@@ -814,5 +814,21 @@
         ]
       }
     }
+  },
+    {
+    "id": "jmeter-prometheus",
+    "name": "Prometheus Listener Plugin",
+    "description": "A Jmeter plugin to expose sampled metrics to an endpoint to be scraped by Prometheus.",
+    "screenshotUrl": "https://raw.githubusercontent.com/johrstrom/jmeter-prometheus-plugin/master/docs/imgs/simple_testplan.png",
+    "helpUrl": "https://github.com/johrstrom/jmeter-prometheus-plugin",
+    "vendor": "",
+    "versions": {
+      "0.6.0": {
+        "downloadUrl": "https://github.com/johrstrom/jmeter-prometheus-plugin/releases/download/0.6.0/jmeter-prometheus-plugin-0.6.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
   }
 ]

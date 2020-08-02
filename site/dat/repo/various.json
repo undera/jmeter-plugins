@@ -673,6 +673,21 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "7.1.6": {
+        "changes": "Custom metrics graphs now use Percentile 95 for response times instead of mean. Improvements in error reporting + bugfixes",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.6/ubik-jmeter-videostreaming-plugin-7.1.6.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "7.1.5": {
+        "changes": "Bugfix version",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.5/ubik-jmeter-videostreaming-plugin-7.1.5.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "7.1.4": {
+        "changes": "Bugfix version",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.4/ubik-jmeter-videostreaming-plugin-7.1.4.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "7.1.3": {
         "changes": "Improve reporting and some bugfixes",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.3/ubik-jmeter-videostreaming-plugin-7.1.3.jar",
@@ -753,6 +768,13 @@
     "vendor": "adrianmo",
     "markerClass": "io.github.adrianmo.jmeter.backendlistener.azure.AzureBackendClient",
     "versions": {
+      "0.2.3": {
+        "changes": "Ability to add custom properties. Set Operation name to the test name value.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.3/jmeter.backendlistener.azure-0.2.3.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.2.2": {
         "changes": "Ability to filter samplers (list and regex)",
         "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.2/jmeter.backendlistener.azure-0.2.2.jar",
@@ -799,6 +821,26 @@
     "versions": {
       "1.0": {
         "downloadUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler/releases/download/1.0/jmeter-pubsub-sampler-1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
+  },
+    {
+    "id": "jmeter-prometheus",
+    "name": "Prometheus Listener Plugin",
+    "description": "A Jmeter plugin to expose sampled metrics to an endpoint to be scraped by Prometheus.",
+    "screenshotUrl": "https://raw.githubusercontent.com/johrstrom/jmeter-prometheus-plugin/master/docs/imgs/simple_testplan.png",
+    "helpUrl": "https://github.com/johrstrom/jmeter-prometheus-plugin",
+    "vendor": "johrstrom",
+    "markerClass": "com.github.johrstrom.collector.SuccessRatioCollector",
+    "componentClasses": [
+      "com.github.johrstrom.listener.PrometheusListener"
+    ],
+    "versions": {
+      "0.6.0": {
+        "downloadUrl": "https://github.com/johrstrom/jmeter-prometheus-plugin/releases/download/0.6.0/jmeter-prometheus-plugin-0.6.0.jar",
         "depends": [
           "jmeter-core"
         ]

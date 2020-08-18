@@ -659,23 +659,23 @@
           "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
         }
       },
-        "1.4": {
-          "changes": "Fixed serialization issue for JMeter distributed mode",
-          "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.4/jmeter-bzm-http2-1.4.jar",
-          "depends": [
-            "jmeter-http"
-          ],
-          "libs": {
-            "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
-            "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
-            "http2-hpack>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-hpack/9.4.9.v20180320/http2-hpack-9.4.9.v20180320.jar",
-            "jetty-alpn-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-client/9.4.9.v20180320/jetty-alpn-client-9.4.9.v20180320.jar",
-            "jetty-alpn-openjdk8-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-openjdk8-client/9.4.9.v20180320/jetty-alpn-openjdk8-client-9.4.9.v20180320.jar",
-            "jetty-http>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.4.9.v20180320/jetty-http-9.4.9.v20180320.jar",
-            "jetty-io>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.9.v20180320/jetty-io-9.4.9.v20180320.jar",
-            "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
-          }
-        },
+      "1.4": {
+        "changes": "Fixed serialization issue for JMeter distributed mode",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-bzm-http2/1.4/jmeter-bzm-http2-1.4.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-client/9.4.9.v20180320/http2-client-9.4.9.v20180320.jar",
+          "http2-common>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-common/9.4.9.v20180320/http2-common-9.4.9.v20180320.jar",
+          "http2-hpack>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/http2/http2-hpack/9.4.9.v20180320/http2-hpack-9.4.9.v20180320.jar",
+          "jetty-alpn-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-client/9.4.9.v20180320/jetty-alpn-client-9.4.9.v20180320.jar",
+          "jetty-alpn-openjdk8-client>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-alpn-openjdk8-client/9.4.9.v20180320/jetty-alpn-openjdk8-client-9.4.9.v20180320.jar",
+          "jetty-http>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-http/9.4.9.v20180320/jetty-http-9.4.9.v20180320.jar",
+          "jetty-io>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-io/9.4.9.v20180320/jetty-io-9.4.9.v20180320.jar",
+          "jetty-util>=9.4.9.v20180320": "http://search.maven.org/remotecontent?filepath=org/eclipse/jetty/jetty-util/9.4.9.v20180320/jetty-util-9.4.9.v20180320.jar"
+        }
+      },
       "1.4.1": {
         "changes": "Fix issue handling http responses without body (like 204 status code)",
         "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.4.1/jmeter-bzm-http2-1.4.1.jar",
@@ -709,24 +709,25 @@
           "jetty-io>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/jetty-io-9.4.26.v20200117.jar",
           "jetty-util>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/jetty-util-9.4.26.v20200117.jar"
         }
+      },
+      "1.6": {
+        "changes": "Added support for Gzip in response headers and added data frame to PUT method",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jmeter-bzm-http2-1.6.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/http2-client-9.4.26.v20200117.jar",
+          "http2-common>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/http2-common-9.4.26.v20200117.jar",
+          "http2-hpack>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/http2-hpack-9.4.26.v20200117.jar",
+          "jetty-alpn-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-alpn-client-9.4.26.v20200117.jar",
+          "jetty-alpn-openjdk8-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-alpn-openjdk8-client-9.4.26.v20200117.jar",
+          "jetty-http>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-http-9.4.26.v20200117.jar",
+          "jetty-io>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-io-9.4.26.v20200117.jar",
+          "jetty-util>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-util-9.4.26.v20200117.jar"
+        }
       }
-    },
-    "1.6": {
-      "changes": "Added support for Gzip in response headers and added data frame to PUT method",
-      "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jmeter-bzm-http2-1.6.jar",
-      "depends": [
-        "jmeter-http"
-      ],
-      "libs": {
-        "http2-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/http2-client-9.4.26.v20200117.jar",
-        "http2-common>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/http2-common-9.4.26.v20200117.jar",
-        "http2-hpack>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/http2-hpack-9.4.26.v20200117.jar",
-        "jetty-alpn-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-alpn-client-9.4.26.v20200117.jar",
-        "jetty-alpn-openjdk8-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-alpn-openjdk8-client-9.4.26.v20200117.jar",
-        "jetty-http>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-http-9.4.26.v20200117.jar",
-        "jetty-io>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-io-9.4.26.v20200117.jar",
-        "jetty-util>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-util-9.4.26.v20200117.jar"
-      }
+    }
   },
   {
     "id": "bzm-rte",
@@ -891,7 +892,7 @@
     "helpUrl": "https://github.com/JoseLuisSR/mqmeter",
     "vendor": "JoseLuisSR",
     "markerClass": "co.signal.mqmeter.MQClientSampler",
-	"componentClasses": [
+    "componentClasses": [
       "co.signal.mqmeter.MQPublishSampler",
       "co.signal.mqmeter.MQClientSampler"
     ],
@@ -916,16 +917,16 @@
       "com.blazemeter.jmeter.citrix.assertion.CitrixAssertion",
       "com.blazemeter.jmeter.citrix.assertion.gui.CitrixAssertionGui",
       "com.blazemeter.jmeter.citrix.assertion.CitrixSessionAssertion",
-	  "com.blazemeter.jmeter.citrix.assertion.gui.CitrixSessionAssertionGui",
-	  "com.blazemeter.jmeter.citrix.gui.CitrixResultRenderer",
-	  "com.blazemeter.jmeter.citrix.listener.CitrixIcaFileSaver",
-	  "com.blazemeter.jmeter.citrix.listener.gui.CitrixIcaFileSaverGui",
-	  "com.blazemeter.jmeter.citrix.recorder.CitrixRecorder",
-	  "com.blazemeter.jmeter.citrix.recorder.gui.CitrixRecorderGUI",
-	  "com.blazemeter.jmeter.citrix.sampler.StartApplicationSampler",
-	  "com.blazemeter.jmeter.citrix.sampler.gui.StartApplicationSamplerGUI",
+      "com.blazemeter.jmeter.citrix.assertion.gui.CitrixSessionAssertionGui",
+      "com.blazemeter.jmeter.citrix.gui.CitrixResultRenderer",
+      "com.blazemeter.jmeter.citrix.listener.CitrixIcaFileSaver",
+      "com.blazemeter.jmeter.citrix.listener.gui.CitrixIcaFileSaverGui",
+      "com.blazemeter.jmeter.citrix.recorder.CitrixRecorder",
+      "com.blazemeter.jmeter.citrix.recorder.gui.CitrixRecorderGUI",
+      "com.blazemeter.jmeter.citrix.sampler.StartApplicationSampler",
+      "com.blazemeter.jmeter.citrix.sampler.gui.StartApplicationSamplerGUI",
       "com.blazemeter.jmeter.citrix.sampler.InteractionSampler",
-	  "com.blazemeter.jmeter.citrix.sampler.gui.CitrixSamplerGUI"
+      "com.blazemeter.jmeter.citrix.sampler.gui.CitrixSamplerGUI"
     ],
     "versions": {
       "0.5.5": {

@@ -710,7 +710,23 @@
           "jetty-util>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.5/jetty-util-9.4.26.v20200117.jar"
         }
       }
-    }
+    },
+    "1.6": {
+      "changes": "Added support for Gzip in response headers and added data frame to PUT method",
+      "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jmeter-bzm-http2-1.6.jar",
+      "depends": [
+        "jmeter-http"
+      ],
+      "libs": {
+        "http2-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/http2-client-9.4.26.v20200117.jar",
+        "http2-common>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/http2-common-9.4.26.v20200117.jar",
+        "http2-hpack>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/http2-hpack-9.4.26.v20200117.jar",
+        "jetty-alpn-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-alpn-client-9.4.26.v20200117.jar",
+        "jetty-alpn-openjdk8-client>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-alpn-openjdk8-client-9.4.26.v20200117.jar",
+        "jetty-http>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-http-9.4.26.v20200117.jar",
+        "jetty-io>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-io-9.4.26.v20200117.jar",
+        "jetty-util>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-util-9.4.26.v20200117.jar"
+      }
   },
   {
     "id": "bzm-rte",

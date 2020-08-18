@@ -850,6 +850,15 @@
           "dm3270-lib>=0.12.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.0.1/dm3270-lib-0.12.3.jar",
           "jVT220>=1.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.0.1/jVT220-1.3.jar"
         }
+      },
+      "3.1": {
+        "changes": "Send attention key to a determined position, and some bug fix!",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1/jmeter-bzm-rte-3.1.jar",
+        "libs": {
+          "xtn5250>=3.2.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1/xtn5250-3.2.2.jar",
+          "dm3270-lib>=0.12.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1/dm3270-lib-0.12.3.2.jar",
+          "jVT220>=1.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1/jVT220-1.3.1.jar"
+        }
       }
     }
   },

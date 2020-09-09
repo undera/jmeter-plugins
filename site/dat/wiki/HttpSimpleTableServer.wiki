@@ -342,19 +342,18 @@ At the end of your Test Plan you can save remaining/adding data with a HTTP Requ
 
 In a loop, read random values from a file containing a login and a password at each row:
 
-[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/demo_sts_read_random.jmx Download Example Test Plan 1]
-
+[/img/examples/demo_sts_read_random.jmx Download Example Test Plan 1] Read random values example
 
 
 Read value from a file containing a login and a password at each row, each value is unique and cannot be read anymore:
 
-[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/demo_sts_read_first_remove.jmx Download Example Test Plan 2]
+[/img/examples/demo_sts_read_first_remove.jmx  Download Example Test Plan 2] Consume login lines example
 
 
 
 Add rows in a new linked list and save it in a file when the test is done:
 
-[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/demo_sts_add_save.jmx Download Example Test Plan 3]
+[/img/examples/demo_sts_add_save.jmx Download Example Test Plan 3] Save list example
 
 
 
@@ -363,7 +362,7 @@ The first injector loads the dataset in memory while the other injectors are wai
 The different injectors read randomly the data containing logins and passwords.
 When the test is done the first injector save the values in a file with a timestamp as prefix:
 
-[/editor/?utm_source=jpgc&utm_medium=openurl&utm_campaign=examples#/img/examples/demo_sts_read_random_for2slaves.jmx Download Example Test Plan 4]
+[/img/examples/demo_sts_read_random_for2slaves.jmx Download Example Test Plan 4] Multi JMeter injectors and save list examples
 
 You can override STS settings using command-line options:
   * -DjmeterPlugin.sts.port=\<port number>

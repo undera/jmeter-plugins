@@ -866,7 +866,7 @@
     "id": "bzm-siebel",
     "name": "BlazeMeter - Correlation Recorder Plugin",
     "description": "Correlation Recorder provides auto-correlation of variables at recording time",
-    "screenshotUrl": "https://github.com/Blazemeter/CorrelationRecorder/blob/master/docs/template-elements-panel.png",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/CorrelationRecorder/master/docs/rules-container-table.png",
     "helpUrl": "https://github.com/Blazemeter/CorrelationRecorder/blob/master/README.md",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.correlation.CorrelationProxyControl",

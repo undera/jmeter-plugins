@@ -890,6 +890,17 @@
           "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-core-2.10.2.jar",
           "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.0/jackson-module-jaxb-annotations-2.10.2.jar"
         }
+      },
+      "1.1": {
+        "changes": "Improvement in ui, documentation and new functionalities for Correlation Extractor and Replacements ",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jmeter-bzm-correlation-recorder-1.1.jar",
+        "libs": {
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-databind-2.10.2.jar",
+          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-core-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1/jackson-module-jaxb-annotations-2.10.2.jar"
+        }
       }
     }
   },

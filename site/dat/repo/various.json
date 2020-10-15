@@ -690,6 +690,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "7.1.8": {
+        "changes": "Performance improvements. Bugfix for distributed testing",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.8/ubik-jmeter-videostreaming-plugin-7.1.8.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "7.1.7": {
         "changes": "VOD: Add the option to resume a video between iterations. VOD: Add option to start video at an offset. Some bugfixes",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.7/ubik-jmeter-videostreaming-plugin-7.1.7.jar",

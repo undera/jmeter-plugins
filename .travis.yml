@@ -7,7 +7,8 @@ cache:
 #  - openjdk7
 #  - oraclejdk8
 install:
-  - python -m virtualenv --system-site-packages ./venv && source venv/bin/activate && python -m pip install jsonschema && python downloads.py true
+  - python -m virtualenv --system-site-packages ./venv && source venv/bin/activate && python -m pip install jsonschema && ./prepare-upload.sh
+  - curl -vfk https://jmeter-plugins.org/unzip.php -F "zipfile=@upload/site.zip" -H "Authorization: Bearer $UPLOAD_TOKEN"
   - mvn -Dmaven.test.skip=true clean install --batch-mode
 script:
   - mvn -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true --fail-at-end --batch-mode org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report

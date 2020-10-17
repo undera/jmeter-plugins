@@ -1,4 +1,3 @@
-sudo: false  # to use new infrastructure
 language: java
 cache:
   directories:
@@ -8,7 +7,7 @@ cache:
 #  - oraclejdk8
 install:
   - python -m virtualenv --system-site-packages ./venv && source venv/bin/activate && python -m pip install jsonschema && ./prepare-upload.sh
-  # - mvn -Dmaven.test.skip=true clean install --batch-mode
+  - mvn -Dmaven.test.skip=true clean install --batch-mode
 script:
   - mvn -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true --fail-at-end --batch-mode org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report
 after_success:

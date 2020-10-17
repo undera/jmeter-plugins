@@ -176,6 +176,23 @@
     }
   },
   {
+    "id": "tilln-formman",
+    "name": "HTTP Form Manager",
+    "description": "This plugin makes JMeter behave a little more like a browser: form fields are automatically populated with preselected values.<br><ul><li>No more manual correlation of hidden inputs, such as session variables.</li><li>Just correlate parameters that actually relate to user input.</li></ul>",
+    "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-formman/master/docs/before.png",
+    "helpUrl": "https://github.com/tilln/jmeter-formman",
+    "vendor": "Till Neunast",
+    "markerClass": "nz.co.breakpoint.jmeter.modifiers.HTTPFormManager",
+    "componentClasses": [
+      "nz.co.breakpoint.jmeter.modifiers.HTTPFormManager"
+    ],
+    "versions": {
+      "1.0": {
+        "downloadUrl": "https://github.com/tilln/jmeter-formman/releases/download/1.0/jmeter-formman-1.0.jar"
+      }
+    }
+  },
+  {
     "id": "tilln-iso8583",
     "name": "ISO-8583 Sampler",
     "description": "Generate ISO-8583 financial transactions for testing of payment gateways and switches<br />With support for cryptogram calculation (PIN Block, MAC, ARQC)<br />Based on the <a href=\"http://jpos.org\">jPOS</a> framework",
@@ -673,6 +690,16 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "7.1.8": {
+        "changes": "Performance improvements. Bugfix for distributed testing",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.8/ubik-jmeter-videostreaming-plugin-7.1.8.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "7.1.7": {
+        "changes": "VOD: Add the option to resume a video between iterations. VOD: Add option to start video at an offset. Some bugfixes",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.7/ubik-jmeter-videostreaming-plugin-7.1.7.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "7.1.6": {
         "changes": "Custom metrics graphs now use Percentile 95 for response times instead of mean. Improvements in error reporting + bugfixes",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.6/ubik-jmeter-videostreaming-plugin-7.1.6.jar",

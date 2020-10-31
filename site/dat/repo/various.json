@@ -690,6 +690,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "7.2.0": {
+        "changes": "Added support for Low Latency DASH",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.2.0/ubik-jmeter-videostreaming-plugin-7.2.0.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "7.1.9": {
         "changes": "Added ability to filter video streams by supported codec. Bugfixes",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.1.9/ubik-jmeter-videostreaming-plugin-7.1.9.jar",

@@ -22,8 +22,8 @@ import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.timers.Timer;
 import org.apache.jorphan.collections.HashTree;
 import org.apache.jorphan.collections.HashTreeTraverser;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.apache.log.Priority;
 
 import java.io.File;
@@ -33,7 +33,7 @@ import java.util.ListIterator;
 
 public class TestPlanCheckTool extends AbstractCMDTool {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(TestPlanCheckTool.class);
     private String jmx = null;
 
     public TestPlanCheckTool() {
@@ -57,15 +57,13 @@ public class TestPlanCheckTool extends AbstractCMDTool {
     @Override
     protected int processParams(ListIterator args) throws UnsupportedOperationException, IllegalArgumentException {
         // TODO: extract this duplicated code
-        LoggingManager.setPriority(Priority.INFO);
         // first process params without worker created
         while (args.hasNext()) {
             String nextArg = (String) args.next();
             if (nextArg.equals("--loglevel")) {
                 args.remove();
-                String loglevelStr = (String) args.next();
+                args.next();
                 args.remove();
-                LoggingManager.setPriority(loglevelStr);
             }
         }
 

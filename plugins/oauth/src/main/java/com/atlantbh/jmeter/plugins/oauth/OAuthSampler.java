@@ -16,9 +16,9 @@ import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampler2;
 import org.apache.jmeter.protocol.http.util.HTTPConstantsInterface;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jorphan.logging.LoggingManager;
+import org.slf4j.LoggerFactory;
 import org.apache.jorphan.util.JOrphanUtils;
-import org.apache.log.Logger;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +29,7 @@ import java.util.zip.GZIPInputStream;
 public class OAuthSampler extends HTTPSampler2 {
 
     private static final long serialVersionUID = -5877623539165274730L;
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(OAuthSampler.class);
     public static final String CONSUMER_KEY = "OAuthSampler.consumer_key";
     public static final String CONSUMER_SECRET = "OAuthSampler.consumer_secret";
     public static final String REQUEST_BODY = "OAuthSampler.request_body";

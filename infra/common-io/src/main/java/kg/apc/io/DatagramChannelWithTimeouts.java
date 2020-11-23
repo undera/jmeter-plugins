@@ -13,8 +13,8 @@ import java.nio.channels.MembershipKey;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.Set;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class DatagramChannelWithTimeouts extends DatagramChannel {
 
@@ -22,7 +22,7 @@ public class DatagramChannelWithTimeouts extends DatagramChannel {
     protected Selector selector;
     private long readTimeout = 10000;
     protected SelectionKey channelKey;
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(DatagramChannelWithTimeouts.class);
     private boolean fastFirstPacketRead;
 
     protected DatagramChannelWithTimeouts() throws IOException {

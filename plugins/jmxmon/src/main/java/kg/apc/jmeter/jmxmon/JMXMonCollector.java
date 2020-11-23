@@ -18,8 +18,8 @@ import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
@@ -33,7 +33,7 @@ public class JMXMonCollector
 
     private static final boolean autoGenerateFiles;
     private static final String JMXMON = "JmxMon";
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(JMXMonCollector.class);
     public static final String DATA_PROPERTY = "samplers";
     
     

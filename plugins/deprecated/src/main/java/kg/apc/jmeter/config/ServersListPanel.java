@@ -1,8 +1,8 @@
 package kg.apc.jmeter.config;
 
 import org.apache.jmeter.testelement.property.CollectionProperty;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ServersListPanel extends JPanel {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(ServersListPanel.class);
 
     private List<JMeterServerPanel> serversList;
 

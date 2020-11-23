@@ -6,8 +6,8 @@ import kg.apc.charting.plotters.CSplineRowPlotter;
 import kg.apc.charting.plotters.LineRowPlotter;
 import kg.apc.jmeter.gui.CustomNumberRenderer;
 import org.apache.jorphan.gui.NumberRenderer;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -59,7 +59,7 @@ public class GraphPanelChart
      */
     public static final int CHART_PERCENTAGE = 0;
     public static final int CHART_DEFAULT = -1;
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(GraphPanelChart.class);
     private Rectangle legendRect;
     private Rectangle xAxisRect;
     private Rectangle yAxisRect;

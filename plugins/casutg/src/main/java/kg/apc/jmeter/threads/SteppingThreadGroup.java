@@ -1,15 +1,15 @@
 package kg.apc.jmeter.threads;
 
-import org.apache.log.Logger;
+import org.slf4j.Logger;
 
 import org.apache.jmeter.threads.JMeterThread;
-import org.apache.jorphan.logging.LoggingManager;
+import org.slf4j.LoggerFactory;
 
 @Deprecated
 public class SteppingThreadGroup
         extends AbstractSimpleThreadGroup {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(SteppingThreadGroup.class);
     private static final String THREAD_GROUP_DELAY = "Threads initial delay";
     private static final String INC_USER_PERIOD = "Start users period";
     private static final String INC_USER_COUNT = "Start users count";

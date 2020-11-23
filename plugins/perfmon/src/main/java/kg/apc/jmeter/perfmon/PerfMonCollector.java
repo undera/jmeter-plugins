@@ -11,8 +11,8 @@ import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PerfMonCollector extends CorrectedResultCollector implements Runnable, PerfMonSampleGenerator {
     private static boolean autoGenerateFiles = false;
     private static final String PERFMON = "PerfMon";
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(PerfMonCollector.class);
     public static final String DATA_PROPERTY = "metricConnections";
     private int interval;
     private Thread workerThread = null;

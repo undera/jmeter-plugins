@@ -12,13 +12,13 @@ import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.threads.ListenerNotifier;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import com.blazemeter.jmeter.threads.AbstractDynamicThreadGroup;
 
 public class ConcurrencyThreadGroup extends AbstractDynamicThreadGroup {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(ConcurrencyThreadGroup.class);
     private static final long DEFAULT_TEMPORISATION = JMeterUtils.getPropDefault("dynamic_tg.temporisation", 10L);
 
     public static final long MIN_CHECK_TIME = 1000L;

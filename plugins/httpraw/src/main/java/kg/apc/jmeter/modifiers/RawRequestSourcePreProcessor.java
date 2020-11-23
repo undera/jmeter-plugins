@@ -17,16 +17,16 @@ import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.testelement.property.BooleanProperty;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
-import org.apache.jorphan.logging.LoggingManager;
+import org.slf4j.LoggerFactory;
 import org.apache.jorphan.util.JOrphanUtils;
-import org.apache.log.Logger;
+import org.slf4j.Logger;
 
 public class RawRequestSourcePreProcessor
         extends AbstractTestElement
         implements PreProcessor, NoThreadClone, TestStateListener {
 
     public static final String regexp = "\\s";
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(RawRequestSourcePreProcessor.class);
     public static final String VARIABLE_NAME = "variable_name";
     public static final String FILENAME = "filename";
     public static final String REWIND = "rewind";

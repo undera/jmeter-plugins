@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class GraphRowSumValues
         extends AbstractGraphRow
         implements Iterator<Entry<Long, AbstractGraphPanelChartElement>> {
-    //private static final Logger log = LoggingManager.getLoggerForClass();
+    //private static final Logger log = LoggerFactory.getLogger(GraphRowSumValues.class);
 
     private ConcurrentSkipListMap<Long, GraphPanelChartSumElement> values;
     private double rollingSum;

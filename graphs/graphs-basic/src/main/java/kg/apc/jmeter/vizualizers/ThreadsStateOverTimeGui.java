@@ -9,13 +9,13 @@ import kg.apc.charting.rows.GraphRowSimple;
 import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.graphs.AbstractOverTimeVisualizer;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class ThreadsStateOverTimeGui
         extends AbstractOverTimeVisualizer {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(ThreadsStateOverTimeGui.class);
     private long lastAggUpdateTime = 0;
 
     /**

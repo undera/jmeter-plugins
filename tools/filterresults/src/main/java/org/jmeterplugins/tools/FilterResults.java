@@ -11,8 +11,8 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.jmeterplugins.save.MergeResultsService;
 
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
@@ -25,7 +25,7 @@ import kg.apc.jmeter.vizualizers.JSettingsPanel;
 public class FilterResults extends AbstractGraphPanelVisualizer {
     private static final long serialVersionUID = 6432873068917332588L;
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(FilterResults.class);
     private Collection<String> emptyCollection = new ArrayList<String>();
 
     private List<SampleResult> samples = new ArrayList<SampleResult>();

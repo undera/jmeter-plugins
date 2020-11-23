@@ -1,7 +1,7 @@
 package kg.apc.emulators;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -15,7 +15,7 @@ public class FileChannelEmul extends FileChannel {
 
     private ByteBuffer writtenBytes;
     private ByteBuffer bytesToRead;
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(FileChannelEmul.class);
 
     public FileChannelEmul() {
         super();

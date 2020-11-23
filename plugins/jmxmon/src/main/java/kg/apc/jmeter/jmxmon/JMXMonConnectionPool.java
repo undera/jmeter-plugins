@@ -12,8 +12,8 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 /**
  * This class store jmx connections
@@ -26,7 +26,7 @@ public class JMXMonConnectionPool {
 	/**
 	 * the logger
 	 */
-	private static final Logger log = LoggingManager.getLoggerForClass();
+	private static final Logger log = LoggerFactory.getLogger(JMXMonConnectionPool.class);
 
 	/**
 	 * Store {@link JMXMonConnection}

@@ -12,14 +12,14 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.AbstractThreadGroup;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import com.blazemeter.jmeter.reporters.FlushingResultCollector;
 
 // reason to have this class as separate is will to keep Model responsibility separate
 public abstract class AbstractDynamicThreadGroupModel extends AbstractThreadGroup implements TestStateListener {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(AbstractDynamicThreadGroupModel.class);
     protected static final long WAIT_TO_DIE = JMeterUtils.getPropDefault("jmeterengine.threadstop.wait", 5 * 1000);
     public static final String LOG_FILENAME = "LogFilename";
     public static final String TARGET_LEVEL = "TargetLevel";

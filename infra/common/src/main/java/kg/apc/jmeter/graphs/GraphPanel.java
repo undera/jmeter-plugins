@@ -14,13 +14,13 @@ import javax.swing.event.ChangeListener;
 import kg.apc.charting.AbstractGraphRow;
 import kg.apc.charting.GraphPanelChart;
 import org.apache.jmeter.gui.GuiPackage;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class GraphPanel
         extends JTabbedPane {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(GraphPanel.class);
     private GraphPanelChart graphPanelObject;
     private JRowsSelectorPanel rowsTab;
     private JComponent settingsTab;

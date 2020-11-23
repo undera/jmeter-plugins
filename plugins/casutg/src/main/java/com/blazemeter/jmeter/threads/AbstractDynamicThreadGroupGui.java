@@ -10,8 +10,8 @@ import kg.apc.jmeter.gui.GuiBuilderHelper;
 import org.apache.jmeter.gui.util.VerticalPanel;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.threads.gui.AbstractThreadGroupGui;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractDynamicThreadGroupGui extends AbstractThreadGroupGui
         implements DocumentListener, Runnable, ActionListener {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(AbstractDynamicThreadGroupGui.class);
     protected GraphPanelChart previewChart;
     protected ConcurrentHashMap<String, AbstractGraphRow> chartModel;
     protected boolean uiCreated = false;

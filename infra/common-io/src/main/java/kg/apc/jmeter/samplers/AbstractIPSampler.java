@@ -6,8 +6,8 @@ import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.Interruptible;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -19,7 +19,7 @@ public abstract class AbstractIPSampler
         extends AbstractSampler
         implements Serializable, Cloneable, Interruptible {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(AbstractIPSampler.class);
     public static final String RECV_BUFFER_LEN_PROPERTY = "kg.apc.jmeter.samplers.ReceiveBufferSize";
     public static final String RESULT_DATA_LIMIT = "kg.apc.jmeter.samplers.ResultDataLimit";
     public static final String HOSTNAME = "hostname";

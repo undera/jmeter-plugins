@@ -1,14 +1,14 @@
 package kg.apc.charting.colors;
 
 import kg.apc.charting.ColorsDispatcher;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.awt.*;
 import java.util.*;
 
 public class CycleColors implements ColorsDispatcher {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(CycleColors.class);
     private java.util.List<Color> assignedColors = new ArrayList<>();
     private final static int LEVEL_MAX = 256;
     private int level;

@@ -5,12 +5,12 @@ import kg.apc.charting.AbstractGraphPanelChartElement;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class GraphRowPercentiles extends GraphRowSumValues {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(GraphRowPercentiles.class);
     private ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement> percentiles = new ConcurrentSkipListMap<Long, AbstractGraphPanelChartElement>();
     private long totalCount = 0L;
     private static final int FRACTION = 10;

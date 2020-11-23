@@ -2,8 +2,8 @@ package kg.apc.jmeter.dummy;
 
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class DummyElement implements Serializable {
     private static final long serialVersionUID = 246L;
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(DummyElement.class);
 
     public static final String IS_SUCCESSFUL = "SUCCESFULL";
     public static final String RESPONSE_CODE = "RESPONSE_CODE";

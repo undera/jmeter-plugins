@@ -8,8 +8,8 @@ import org.apache.jmeter.samplers.SampleSaveConfiguration;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public abstract class JMeterPluginsUtils {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(JMeterPluginsUtils.class);
 
     private static final String PLUGINS_PREFIX = "jp@gc - ";
     private static boolean prefixPlugins = true;
@@ -490,7 +490,6 @@ public abstract class JMeterPluginsUtils {
                     Properties tmp = new Properties();
                     tmp.load(fis);
                     jmeterProps.putAll(tmp);
-                    LoggingManager.setLoggingLevels(jmeterProps);//Do what would be done earlier
                 }
             } catch (IOException e) {
                 log.warn("Error loading user property file: " + userProp, e);

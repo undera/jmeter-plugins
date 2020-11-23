@@ -1,8 +1,8 @@
 package kg.apc.charting.colors;
 
 import kg.apc.charting.ColorsDispatcher;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class HueRotatePalette implements ColorsDispatcher {
     List<Color> customPalette = new ArrayList<>(16);
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(HueRotatePalette.class);
     private static final int startingGradient = 0x000;
     private static final int maxGradient = 120;
     int i = 0;

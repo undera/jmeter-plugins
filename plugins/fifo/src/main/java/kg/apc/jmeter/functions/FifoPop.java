@@ -8,15 +8,15 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.samplers.Sampler;
 import org.apache.jmeter.threads.JMeterVariables;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 public class FifoPop extends AbstractFunction {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(FifoPop.class);
 
     private static final List<String> desc = new LinkedList<String>();
     private static final String KEY = "__fifoPop";

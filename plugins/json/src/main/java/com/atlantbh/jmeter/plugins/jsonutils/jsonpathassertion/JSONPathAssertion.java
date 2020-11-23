@@ -17,8 +17,8 @@ import org.apache.jmeter.assertions.AssertionResult;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.apache.oro.text.regex.Pattern;
 
 import java.io.Serializable;
@@ -28,7 +28,7 @@ import java.io.Serializable;
  * previous sample result using JSON path expression
  */
 public class JSONPathAssertion extends AbstractTestElement implements Serializable, Assertion {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(JSONPathAssertion.class);
     private static final long serialVersionUID = 1L;
     public static final String INPUT_JSON = "JSON";
     public static final String INPUT_YAML = "YAML";

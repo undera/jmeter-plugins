@@ -28,7 +28,7 @@ import java.util.Enumeration;
  */
 public class JSONPathAssertionGui extends AbstractAssertionGui implements ChangeListener {
 
-    //private static final Logger log = LoggingManager.getLoggerForClass();
+    //private static final Logger log = LoggerFactory.getLogger(JSONPathAssertionGui.class);
     private static final long serialVersionUID = 1L;
     private JLabeledTextField jsonPath = null;
     private JLabeledTextArea jsonValue = null;

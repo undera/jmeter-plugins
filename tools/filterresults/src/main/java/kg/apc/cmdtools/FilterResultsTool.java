@@ -5,8 +5,8 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
 import kg.apc.logging.LoggingUtils;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.apache.log.Priority;
 import org.jmeterplugins.tools.FilterResults;
 
@@ -15,7 +15,7 @@ import java.util.ListIterator;
 
 public class FilterResultsTool extends AbstractCMDTool {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(FilterResultsTool.class);
 
     private FilterResults filterResults = null;
 
@@ -48,15 +48,13 @@ public class FilterResultsTool extends AbstractCMDTool {
 
         String outputFile = "out.res";
 
-        LoggingManager.setPriority(Priority.INFO);
         // first process params without worker created
         while (args.hasNext()) {
             String nextArg = (String) args.next();
             if (nextArg.equals("--loglevel")) {
                 args.remove();
-                String loglevelStr = (String) args.next();
+                args.next();
                 args.remove();
-                LoggingManager.setPriority(loglevelStr);
             }
         }
 

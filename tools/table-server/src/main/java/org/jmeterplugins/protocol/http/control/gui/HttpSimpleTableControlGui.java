@@ -42,8 +42,8 @@ import org.apache.jmeter.gui.util.HorizontalPanel;
 import org.apache.jmeter.gui.util.MenuFactory;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.jmeterplugins.protocol.http.control.HttpSimpleTableControl;
 
 public class HttpSimpleTableControlGui extends LogicControllerGui implements
@@ -51,7 +51,7 @@ public class HttpSimpleTableControlGui extends LogicControllerGui implements
 
     private static final long serialVersionUID = 240L;
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(HttpSimpleTableControlGui.class);
 
     public static final String WIKIPAGE = "HttpSimpleTableServer";
 

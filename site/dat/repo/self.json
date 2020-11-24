@@ -43,6 +43,13 @@
         "libs": {
           "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
         }
+      },
+      "1.6": {
+        "changes": "Changes to support JMeter 5.4 deprecation of old loggers",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.6/jmeter-plugins-manager-1.6.jar",
+        "libs": {
+          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
+        }
       }
     }
   }

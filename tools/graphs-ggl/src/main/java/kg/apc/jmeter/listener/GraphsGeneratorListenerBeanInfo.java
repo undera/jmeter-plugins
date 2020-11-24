@@ -21,8 +21,8 @@ package kg.apc.jmeter.listener;
 import java.beans.PropertyDescriptor;
 
 import org.apache.jmeter.testbeans.BeanInfoSupport;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 /**
  * BeanInfo for {@link GraphsGeneratorListener}
@@ -31,7 +31,7 @@ import org.apache.log.Logger;
  */
 public class GraphsGeneratorListenerBeanInfo extends BeanInfoSupport {
 
-    private static final Logger LOGGER = LoggingManager.getLoggerForClass();
+    private static final Logger LOGGER = LoggerFactory.getLogger(GraphsGeneratorListenerBeanInfo.class);
     // These names must agree case-wise with the variable and property names
     private static final String OUTPUT_BASE_FOLDER = "outputBaseFolder";
     private static final String RESULTS_FILE_NAME = "resultsFileName";

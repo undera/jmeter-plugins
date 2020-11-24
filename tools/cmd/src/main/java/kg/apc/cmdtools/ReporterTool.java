@@ -2,8 +2,8 @@ package kg.apc.cmdtools;
 
 import kg.apc.jmeter.PluginsCMDWorker;
 import kg.apc.logging.LoggingUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.apache.log.Priority;
 
 import java.io.PrintStream;
@@ -11,7 +11,7 @@ import java.util.ListIterator;
 
 public class ReporterTool extends AbstractCMDTool {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(ReporterTool.class);
 
     static {
         LoggingUtils.addLoggingConfig();
@@ -52,15 +52,13 @@ public class ReporterTool extends AbstractCMDTool {
 
     @Override
     protected int processParams(ListIterator args) throws UnsupportedOperationException, IllegalArgumentException {
-        LoggingManager.setPriority(Priority.INFO);
         // first process params without worker created
         while (args.hasNext()) {
             String nextArg = (String) args.next();
             if (nextArg.equals("--loglevel")) {
                 args.remove();
-                String loglevelStr = (String) args.next();
+                args.next();
                 args.remove();
-                LoggingManager.setPriority(loglevelStr);
             }
         }
 

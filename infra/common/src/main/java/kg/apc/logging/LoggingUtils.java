@@ -1,12 +1,12 @@
 package kg.apc.logging;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.lang.reflect.Constructor;
 
 public class LoggingUtils {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(LoggingUtils.class);
 
     public static void addLoggingConfig() {
         if (isJMeter32orLater()) {

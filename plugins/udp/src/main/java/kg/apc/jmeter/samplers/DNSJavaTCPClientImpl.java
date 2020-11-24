@@ -4,7 +4,8 @@ package kg.apc.jmeter.samplers;
 import kg.apc.io.BinaryUtils;
 import org.apache.jmeter.protocol.tcp.sampler.TCPClient;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jorphan.logging.LoggingManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import java.nio.charset.Charset;
 public class DNSJavaTCPClientImpl extends DNSJavaDecoder implements TCPClient {
 
     private ByteArrayOutputStream bos = new ByteArrayOutputStream();
-    private static final org.apache.log.Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(DNSJavaTCPClientImpl.class);
 
     public void setupTest() {
     }

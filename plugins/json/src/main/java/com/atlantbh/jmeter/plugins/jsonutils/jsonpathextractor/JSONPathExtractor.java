@@ -19,8 +19,8 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterVariables;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.text.DecimalFormat;
 import java.util.Map;
@@ -30,7 +30,7 @@ import java.util.Map;
  * result and extracts value from JSON output using JSONPath
  */
 public class JSONPathExtractor extends AbstractTestElement implements PostProcessor {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(JSONPathExtractor.class);
 
     private static final long serialVersionUID = 1L;
 

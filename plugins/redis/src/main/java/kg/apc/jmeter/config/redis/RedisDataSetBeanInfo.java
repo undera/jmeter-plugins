@@ -21,14 +21,14 @@ package kg.apc.jmeter.config.redis;
 import java.beans.PropertyDescriptor;
 
 import org.apache.jmeter.testbeans.BeanInfoSupport;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 /**
  * BeanInfo for {@link RedisDataSet}
  */
 public class RedisDataSetBeanInfo extends BeanInfoSupport {
-    private static final Logger LOGGER = LoggingManager.getLoggerForClass();
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisDataSetBeanInfo.class);
 
     // These names must agree case-wise with the variable and property names
     private static final String VARIABLE_NAMES = "variableNames";    

@@ -43,14 +43,14 @@ import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.NullProperty;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class PerfMonGui
         extends AbstractOverTimeVisualizer {
 
     public static final List<String> metrics = Arrays.asList("CPU", "Memory", "Swap", "Disks I/O", "Network I/O");
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(PerfMonGui.class);
     private PowerTableModel tableModel;
     private JTable grid;
     private JTextArea errorTextArea;

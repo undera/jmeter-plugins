@@ -3,12 +3,12 @@ package kg.apc.jmeter.modifiers;
 import org.apache.jmeter.processor.PostProcessor;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.testelement.TestStateListener;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class FifoPutPostProcessor extends AbstractTestElement
         implements PostProcessor, TestStateListener {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(FifoPutPostProcessor.class);
 
     public static final String QUEUE = "FifoName";
     public static final String VALUE = "Value";

@@ -35,10 +35,10 @@ import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterVariables;
-import org.apache.jorphan.logging.LoggingManager;
+import org.slf4j.LoggerFactory;
 import org.apache.jorphan.util.JMeterStopThreadException;
 import org.apache.jorphan.util.JOrphanUtils;
-import org.apache.log.Logger;
+import org.slf4j.Logger;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -81,7 +81,7 @@ public class RedisDataSet extends ConfigTestElement
      */
     private static final long serialVersionUID = 7383500755324202605L;
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(RedisDataSet.class);
 
     public static final Integer DEFAULT_PORT = Protocol.DEFAULT_PORT;
     public static final Integer DEFAULT_TIMEOUT = Protocol.DEFAULT_TIMEOUT;

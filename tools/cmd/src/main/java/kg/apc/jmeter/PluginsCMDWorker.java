@@ -5,8 +5,8 @@ import kg.apc.charting.GraphPanelChart;
 import kg.apc.cmd.UniversalRunner;
 import kg.apc.jmeter.graphs.AbstractGraphPanelVisualizer;
 import kg.apc.jmeter.vizualizers.CorrectedResultCollector;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +26,7 @@ public class PluginsCMDWorker {
     private String outputCSV;
     private String outputPNG;
     private AbstractGraphPanelVisualizer pluginType;
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(PluginsCMDWorker.class);
     private int aggregate = -1;
     private int zeroing = -1;
     private int preventOutliers = -1;

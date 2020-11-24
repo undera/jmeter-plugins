@@ -3,13 +3,13 @@ package kg.apc.charting;
 import java.io.Serializable;
 
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import kg.apc.charting.colors.*;
 
 public class ColorsDispatcherFactory implements Serializable {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(ColorsDispatcherFactory.class);
 
     public static ColorsDispatcher getColorsDispatcher() {
         String customDispatcher = JMeterUtils.getProperty("jmeterPlugin.customColorsDispatcher");

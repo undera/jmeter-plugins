@@ -2,14 +2,14 @@ package com.blazemeter.jmeter.threads;
 
 import com.blazemeter.jmeter.gui.ArrangedLabelFieldPanel;
 import kg.apc.jmeter.JMeterVariableEvaluator;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
 
 public class LoadParamsFieldsPanel extends ArrangedLabelFieldPanel implements ParamsPanel {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(LoadParamsFieldsPanel.class);
 
     protected JTextField targetRate = new JTextField();
     protected JTextField rampUpTime = new JTextField();

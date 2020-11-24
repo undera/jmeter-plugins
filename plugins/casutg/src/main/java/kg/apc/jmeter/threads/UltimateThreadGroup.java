@@ -9,8 +9,8 @@ import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class UltimateThreadGroup
         extends AbstractSimpleThreadGroup
         implements Serializable, TestStateListener {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(UltimateThreadGroup.class);
 
     public static final String DATA_PROPERTY = "ultimatethreadgroupdata";
     public static final String EXTERNAL_DATA_PROPERTY = "threads_schedule";

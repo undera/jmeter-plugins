@@ -11,8 +11,8 @@ import org.apache.jmeter.samplers.SampleListener;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.Serializable;
 import java.net.DatagramPacket;
@@ -24,7 +24,7 @@ public class AutoStop
         implements SampleListener, Serializable,
         TestStateListener, Remoteable, NoThreadClone {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(AutoStop.class);
     private final static String RESPONSE_TIME = "avg_response_time";
     private final static String ERROR_RATE = "error_rate";
     private final static String RESPONSE_TIME_SECS = "avg_response_time_length";

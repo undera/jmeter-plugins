@@ -15,15 +15,15 @@ import net.sf.json.JsonConfig;
 import org.apache.jmeter.processor.PostProcessor;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.threads.JMeterContext;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 /**
  * This is main class for JSON formatter which contains formatJSON method that
  * takes sample result and do pretty print in JSON
  */
 public class JSONFormatter extends AbstractTestElement implements PostProcessor {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(JSONFormatter.class);
     private static final long serialVersionUID = 1L;
     private static final JsonConfig config = new JsonConfig();
 

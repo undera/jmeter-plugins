@@ -20,8 +20,8 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jmeter.visualizers.ImageVisualizer;
 import org.apache.jmeter.visualizers.Sample;
 import org.apache.jmeter.visualizers.gui.AbstractVisualizer;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -41,7 +41,7 @@ public abstract class AbstractGraphPanelVisualizer
         ImageVisualizer,
         SettingsInterface {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(AbstractGraphPanelVisualizer.class);
     /**
      *
      */

@@ -28,9 +28,9 @@ import org.apache.jorphan.gui.NumberRenderer;
 import org.apache.jorphan.gui.ObjectTableModel;
 import org.apache.jorphan.gui.RateRenderer;
 import org.apache.jorphan.gui.RendererUtils;
-import org.apache.jorphan.logging.LoggingManager;
+import org.slf4j.LoggerFactory;
 import org.apache.jorphan.reflect.Functor;
-import org.apache.log.Logger;
+import org.slf4j.Logger;
 
 /**
  * OMG, I had to copy full contents of StatVisualizer just to make its data
@@ -41,7 +41,7 @@ public class AggregateReportGui extends AbstractGraphPanelVisualizer {
 
     private Collection<String> emptyCollection = new ArrayList<>();
     private static final long serialVersionUID = 241L;
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(AggregateReportGui.class);
     private static final String USE_GROUP_NAME = "useGroupName";
     private static final String SAVE_HEADERS = "saveHeaders";
     private static final String[] COLUMNS = {

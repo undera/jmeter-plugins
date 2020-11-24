@@ -2,13 +2,13 @@ package com.blazemeter.jmeter.threads.arrivals;
 
 import com.blazemeter.jmeter.threads.*;
 import kg.apc.jmeter.JMeterPluginsUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.awt.*;
 
 public class ArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGui {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(ArrivalsThreadGroupGui.class);
 
     public ArrivalsThreadGroupGui() {
         super();

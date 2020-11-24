@@ -11,8 +11,8 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Set;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 // IMPORTANT: we have troubles with Java 6 to 7 compatibility here
 // SEE: http://www.oracle.com/technetwork/java/javase/compatibility-417013.html#incompatibilities
@@ -30,7 +30,7 @@ public class SocketChannelWithTimeouts extends SocketChannel {
     private long connectTimeout = 5000;
     private long readTimeout = 10000;
     protected SelectionKey channelKey;
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(SocketChannelWithTimeouts.class);
     private boolean fastFirstPacketRead;
 
     protected SocketChannelWithTimeouts() throws IOException {

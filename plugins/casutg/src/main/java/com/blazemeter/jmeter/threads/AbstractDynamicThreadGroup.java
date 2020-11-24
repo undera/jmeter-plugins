@@ -6,14 +6,14 @@ import org.apache.jmeter.testelement.property.TestElementProperty;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.threads.ListenerNotifier;
 import org.apache.jorphan.collections.ListedHashTree;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.util.Set;
 
 // adding some basic methods to our Model
 public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGroupModel {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(AbstractDynamicThreadGroup.class);
     public static final String UNIT = "Unit";
     public static final String UNIT_MINUTES = "M";
     public static final String UNIT_SECONDS = "S";

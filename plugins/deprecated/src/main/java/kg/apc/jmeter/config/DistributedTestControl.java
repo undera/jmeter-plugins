@@ -4,8 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,7 +14,7 @@ public class DistributedTestControl extends ConfigTestElement {
 
     public static final String DATA_PROP = "SERVERS";
     public static final String PROP_HOSTS = "remote_hosts";
-    public static Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(DistributedTestControl.class);
 
     public CollectionProperty getData() {
         CollectionProperty data = (CollectionProperty) getProperty(DATA_PROP);

@@ -14,14 +14,14 @@ import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.TestListener;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContextService;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class ConsoleStatusLogger extends AbstractListenerElement
         implements SampleListener, Serializable,
         NoThreadClone, TestStateListener {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(ConsoleStatusLogger.class);
     private PrintStream out;
     private long cur = 0;
     private int count;

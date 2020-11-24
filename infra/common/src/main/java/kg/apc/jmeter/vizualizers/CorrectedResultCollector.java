@@ -6,12 +6,12 @@ import java.util.List;
 
 import org.apache.jmeter.reporters.ResultCollector;
 import org.apache.jmeter.samplers.SampleSaveConfiguration;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class CorrectedResultCollector extends ResultCollector {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(CorrectedResultCollector.class);
     public static final String INCLUDE_SAMPLE_LABELS = "include_sample_labels";
     public static final String EXCLUDE_SAMPLE_LABELS = "exclude_sample_labels";
     public static final String INCLUDE_REGEX_CHECKBOX_STATE = "include_checkbox_state";

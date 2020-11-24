@@ -11,8 +11,8 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import kg.apc.jmeter.JMeterVariableEvaluator;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import javax.swing.*;
 import javax.swing.event.DocumentListener;
@@ -22,7 +22,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class FreeFormArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGui implements TableModelListener, DocumentListener, Runnable, ActionListener {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(FreeFormArrivalsThreadGroupGui.class);
 
     public FreeFormArrivalsThreadGroupGui() {
         super();

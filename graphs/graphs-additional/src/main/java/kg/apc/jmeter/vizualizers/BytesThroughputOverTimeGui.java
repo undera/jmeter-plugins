@@ -10,7 +10,7 @@ import org.apache.jmeter.samplers.SampleResult;
 
 public class BytesThroughputOverTimeGui
         extends AbstractOverTimeVisualizer {
-    //private static final Logger log = LoggingManager.getLoggerForClass();
+    //private static final Logger log = LoggerFactory.getLogger(BytesThroughputOverTimeGui.class);
 
     private static Method sentBytesMethod;
     

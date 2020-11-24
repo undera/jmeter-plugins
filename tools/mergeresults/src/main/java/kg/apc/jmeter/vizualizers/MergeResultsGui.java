@@ -66,8 +66,8 @@ import org.apache.jmeter.testelement.property.NullProperty;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.gui.ComponentUtil;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.jmeterplugins.save.MergeResultsService;
 
 public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
@@ -75,7 +75,7 @@ public class MergeResultsGui extends AbstractGraphPanelVisualizer implements
 
     private static final long serialVersionUID = 240L;
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(MergeResultsGui.class);
 
     public static final String WIKIPAGE = "MergeResults";
 

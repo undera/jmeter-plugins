@@ -1,13 +1,13 @@
 package org.jmeterplugins.protocol.http.control;
 
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 
 
 class HttpSimpleTableServerEmul extends HttpSimpleTableServer {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(HttpSimpleTableServerEmul.class);
 
     @Override
     public void start() throws IOException {

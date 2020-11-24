@@ -4,13 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 import org.apache.jorphan.gui.NumberRenderer;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class DateTimeRenderer
         extends NumberRenderer {
 
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(DateTimeRenderer.class);
     protected final SimpleDateFormat dateFormatter;
     private long relativeStartTime = 0;
     private static final String EMPTY = "";

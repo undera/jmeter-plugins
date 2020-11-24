@@ -6,11 +6,11 @@ import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.threads.ListenerNotifier;
 import org.apache.jorphan.collections.ListedHashTree;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class FreeFormArrivalsThreadStarter extends ArrivalsThreadStarter {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(FreeFormArrivalsThreadStarter.class);
     private final FreeFormArrivalsThreadGroup arrivalsTG;
 
     public FreeFormArrivalsThreadStarter(int groupIndex, ListenerNotifier listenerNotifier, ListedHashTree listedHashTree, StandardJMeterEngine standardJMeterEngine, FreeFormArrivalsThreadGroup owner) {

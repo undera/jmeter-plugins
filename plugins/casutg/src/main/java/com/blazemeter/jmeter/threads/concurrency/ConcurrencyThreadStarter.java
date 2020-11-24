@@ -4,14 +4,14 @@ import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.threads.ListenerNotifier;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import com.blazemeter.jmeter.threads.AbstractThreadStarter;
 import com.blazemeter.jmeter.threads.DynamicThread;
 
 public class ConcurrencyThreadStarter extends AbstractThreadStarter {
-    private static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(ConcurrencyThreadStarter.class);
     static final long CACHING_VALIDITY_MS = JMeterUtils.getPropDefault("dynamic_tg.properties_caching_validity", 20L);
 
     private final ConcurrencyThreadGroup concurrTG;

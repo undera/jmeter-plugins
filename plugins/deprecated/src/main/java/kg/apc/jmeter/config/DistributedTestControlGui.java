@@ -4,8 +4,8 @@ import kg.apc.jmeter.JMeterPluginsUtils;
 import org.apache.jmeter.config.gui.AbstractConfigGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,7 @@ import java.util.Collection;
 public class DistributedTestControlGui extends AbstractConfigGui {
 
     public static final String WIKIPAGE = "DistributedTestControl";
-    public static Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(DistributedTestControlGui.class);
     private ServersListPanel serversPanel;
 
     public DistributedTestControlGui() {

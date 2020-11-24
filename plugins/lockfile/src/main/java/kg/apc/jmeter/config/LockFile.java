@@ -3,9 +3,9 @@ package kg.apc.jmeter.config;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.testelement.TestStateListener;
-import org.apache.jorphan.logging.LoggingManager;
 import org.apache.jorphan.util.JMeterStopTestNowException;
-import org.apache.log.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -14,7 +14,7 @@ import java.io.IOException;
 public class LockFile extends ConfigTestElement
         implements TestStateListener {
 
-    public static Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(LockFile.class);
     public static final String FILENAME = "filename";
     public static final String FILEMASK = "filemask";
 

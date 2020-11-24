@@ -15,8 +15,8 @@ import kg.apc.io.SocketChannelWithTimeouts;
 import org.apache.jmeter.samplers.Entry;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.util.JMeterUtils;
-import org.apache.jorphan.logging.LoggingManager;
-import org.apache.log.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // FIXME: actually keep-alive does not work!
 public class HTTPRawSampler extends AbstractIPSampler {
@@ -27,7 +27,7 @@ public class HTTPRawSampler extends AbstractIPSampler {
     private static final String RNpattern = "\\r\\n";
     private static final String SPACE = " ";
     // 
-    protected static final Logger log = LoggingManager.getLoggerForClass();
+    private static final Logger log = LoggerFactory.getLogger(HTTPRawSampler.class);
     private static final Pattern anyContent = Pattern.compile(".+", Pattern.DOTALL);
     private SocketChannel savedSock;
     private static final int fileSendingChunk = JMeterUtils.getPropDefault("kg.apc.jmeter.samplers.FileReadChunkSize", 1024 * 4);

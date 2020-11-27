@@ -1,0 +1,51 @@
+= Right Tail Outlier Detector =
+Experience shows that often, in performance testing, you may have a number of data points whose elapsed times are significantly higher than your normal observations. When you use these results to generate your statistics, you will get statistical values "skewed to the right" and which do not represent the real picture of the application you tested. 
+
+The reasons as to why some data points are much slower than others are usually independent from the application under test and due to environmental issues such as ad-hoc network issues, jobs or tasks kicking off on the server under test in the middle of your test such as IIS Application Pool Recycles etc.
+
+This plugin acts as a "low-pass filter": it will parse the results of your test and discard the data at the top end so that when you use the "cleansed" data for your statistics, you will have a truer and more consistent picture of the application under test.
+
+The plugin will find the upper bounds of the samples by itself using Tukey's technique and provides you with two options for the Tukey K parameter: you can either be very severe and remove all outliers by selecting K = 1.5, or be less stringent and remove only the far out values with K = 3.
+
+The plugin will save the trimmed results and the outliers in two separate files. You can then use the trimmed results file for your performance analysis; you may also review the list of outliers to check for any potential issues.
+
+Finally, the upper bounds and the number of omitted samplers are displayed in a table which you can export should you wish to document the truncation process in your test report.
+In this table, when the number of samples that is left after the truncation is less than 100, the plugin will mark them as "Small Group" as a precaution.
+
+== Setup ==
+Download the plugin using the JMeter Plugins Manager.<br>
+Then add the plugin to a Test Plan via the "Add > Non-Test Elements" menu.
+
+[[File:/img/wiki/rtod_NonTestElmnt.png]]
+
+== Usage via the GUI ==
+=== Filtering the outliers ===
+Specify the original JMeter results file, select your K option and hit "Detect".<br>
+The plugin parses the data, and if outliers are found, it will create two new files in the same folder of the original file: one for the outliers and another one for the remaining samplers with a suffix of "_trimmed" in the name.
+
+[[File:/img/wiki/rtod_Detect.png]]
+
+You can now use the "trimmed" file for performance analysis instead of the initial results file.
+
+=== Saving the truncation results ===
+If you use the trimmed file for your performance analysis, it is recommended to also add the truncation results in your test report to indicate this operation to the stake holders.<br>
+By clicking on the "Save" button, the plugin will copy the truncation results into a csv file which you can then import into your final test report.
+
+[[File:/img/wiki/rtod_Save.png]]
+
+== Usage via Command Line ==
+You can call the outlier detector in a script as in the following example:
+
+<code>jmeter\bin\RightTailOutlierDetector.bat --input-file inputfile.jtl --tukey-k 3</code>
+
+Parameters are:
+--input-file: <filenameIn> --tukey-k <1.5 or 3>
+
+The tool will return the result of the operation in the "RightTailOutlierDetectorTool: <returnedId>" line with <returnedId> equal to:
+* -1: no samplers found in the input file;
+* 0: no outliers found, no new files created;
+* <any positive number>: total number of outliers found - three new files created: "_trimmed", "_outliers" and "_trimSummary.csv"
+
+== See also ==
+* [https://en.wikipedia.org/wiki/Outlier Outlier]
+* [https://en.wikipedia.org/wiki/Truncation_(statistics) Truncation]

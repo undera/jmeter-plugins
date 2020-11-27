@@ -35,6 +35,7 @@
         <module>graphs-ggl</module>
         <module>pde</module>
         <module>synthesis</module>
+        <module>outlierdetector</module>
     </modules>
 
 </project>

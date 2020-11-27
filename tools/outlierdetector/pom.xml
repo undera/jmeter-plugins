@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>kg.apc</groupId>
+    <artifactId>jmeter-plugins-tools</artifactId>
+    <version>0.1</version>
+  </parent>
+  <artifactId>jmeter-plugins-outlierdetector</artifactId>
+  <version>1.0</version>
+  <name>Right Tail Outlier Detector</name>
+  <description>Detects and removes outliers in the right tail using Tukey fences.
+
+To compile this plugin, please set the Java Compliance level to a level equal or greater than 1.8.</description>
+  <properties>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  	<maven.compiler.source>13</maven.compiler.source>
+  	<maven.compiler.target>13</maven.compiler.target>
+  </properties>
+  <url>http://jmeter-plugins.org/</url>
+  <scm>
+  	<url>https://github.com/undera/jmeter-plugins</url>
+  	<connection>https://github.com/undera/jmeter-plugins.git</connection>
+  	<developerConnection>git@github.com:undera/jmeter-plugins.git</developerConnection>
+  </scm>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.apache.jmeter</groupId>
+  		<artifactId>ApacheJMeter_core</artifactId>
+  		<version>5.3</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>kg.apc</groupId>
+  		<artifactId>jmeter-plugins-cmn-jmeter</artifactId>
+  		<version>0.6</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>kg.apc</groupId>
+  		<artifactId>jmeter-plugins-emulators</artifactId>
+  		<version>0.4</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>kg.apc</groupId>
+  		<artifactId>cmdrunner</artifactId>
+  		<version>2.2.1</version>
+  	</dependency>
+  </dependencies>
+</project>

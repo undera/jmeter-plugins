@@ -273,6 +273,15 @@
           "jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar",
           "jsch": "https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.54/jsch-0.1.54.jar"
         }
+      },
+      "1.3": {
+        "changes": "<ul><li>Replaced ssh client library <a href=\"http://www.jcraft.com/jsch/\">JSch</a> with <a href=\"https://mina.apache.org/sshd-project/\">Apache Mina SSHD</a></li><li>ProxyJump support</li><li>Bug fixes</li></ul>",
+        "downloadUrl": "https://github.com/tilln/jmeter-sshmon/releases/download/1.3/jmeter-sshmon-1.3.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar",
+          "sshd-core>=2.6": "https://search.maven.org/remotecontent?filepath=org/apache/sshd/sshd-core/2.6.0/sshd-core-2.6.0.jar",
+          "sshd-common>=2.6": "https://search.maven.org/remotecontent?filepath=org/apache/sshd/sshd-common/2.6.0/sshd-common-2.6.0.jar"
+        }
       }
     }
   },

@@ -733,6 +733,23 @@
           "jetty-io>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-io-9.4.26.v20200117.jar",
           "jetty-util>=9.4.26.v20200117": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6/jetty-util-9.4.26.v20200117.jar"
         }
+      },
+      "1.6.1": {
+        "changes": "Updated Jetty dependencies",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/jmeter-bzm-http2-1.6.1.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/http2-client-9.4.35.v20201120.jar",
+          "http2-common>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/http2-common-9.4.35.v20201120.jar",
+          "http2-hpack>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/http2-hpack-9.4.35.v20201120.jar",
+          "jetty-alpn-client>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/jetty-alpn-client-9.4.35.v20201120.jar",
+          "jetty-alpn-openjdk8-client>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/jetty-alpn-openjdk8-client-9.4.35.v20201120.jar",
+          "jetty-http>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/jetty-http-9.4.35.v20201120.jar",
+          "jetty-io>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/jetty-io-9.4.35.v20201120.jar",
+          "jetty-util>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/jetty-util-9.4.35.v20201120.jar"
+        }
       }
     }
   },

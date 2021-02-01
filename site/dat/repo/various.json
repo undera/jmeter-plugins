@@ -929,7 +929,6 @@
 			"depends": [
 				"jmeter-core"
 				]
-			}			
 		}    
 	}
 ]

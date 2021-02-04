@@ -906,15 +906,15 @@
       "kg.apc.cmdtools.RightTailOutlierDetectorTool"
     ],
     "versions": {
-      "1.0.2": {
-        "changes": "Changed Java compliance level to 1.8.",
-        "downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/V1.0.2/jmeter-plugins-outlierdetector-1.0.2.jar",
-        "depends": [
-          "jmeter-core"
-        ],
-        "libs": {
-          "jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
-          }
+		"1.0.2": {
+			"changes": "Changed Java compliance level to 1.8.",
+			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/V1.0.2/jmeter-plugins-outlierdetector-1.0.2.jar",
+			"depends": [
+				"jmeter-core"
+				],
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
+			}
         },
 		"1.0.1": {
 			"changes": "Fix of HelpLink and of jar version number",

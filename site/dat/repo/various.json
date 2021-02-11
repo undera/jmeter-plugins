@@ -17,6 +17,13 @@
         "libs": {
           "jsch": "https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.50/jsch-0.1.50.jar"
         }
+      },
+      "1.2.0": {
+        "changes": "Configurable pseudo TTY allocation; bug fixes",
+        "downloadUrl": "https://github.com/yciabaud/jmeter-ssh-sampler/releases/download/jmeter-ssh-sampler-1.2.0/ApacheJMeter_ssh-1.2.0.jar",
+        "libs": {
+          "jsch": "https://search.maven.org/remotecontent?filepath=com/jcraft/jsch/0.1.55/jsch-0.1.55.jar"
+        }
       }
     }
   },

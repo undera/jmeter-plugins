@@ -883,6 +883,15 @@
           "dm3270-lib>=0.12.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1/dm3270-lib-0.12.3.2.jar",
           "jVT220>=1.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1/jVT220-1.3.1.jar"
         }
+      },
+      "3.1.1": {
+        "changes": "Fix various issues regarding input by tab, input by label, screen painting, and added support for ALP charset",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/jmeter-bzm-rte-3.1.1.jar",
+        "libs": {
+          "xtn5250>=3.2.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/xtn5250-3.2.2.jar",
+          "dm3270-lib>=0.12.4": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/dm3270-lib-0.12.4.jar",
+          "jVT220>=1.3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/jVT220-1.3.1.jar"
+        }
       }
     }
   },

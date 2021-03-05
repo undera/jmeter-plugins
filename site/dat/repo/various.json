@@ -954,5 +954,29 @@
 			]
 		}    
 	}
+  },
+  {
+    "id": "awsmeter",
+    "name": "AWS Support",
+    "description": "JMeter plugin for aws services.",
+    "screenshotUrl": "https://raw.githubusercontent.com/JoseLuisSR/awsmeter/main/doc/img/awsmeter-diagrams-Logo.png",
+    "helpUrl": "https://github.com/JoseLuisSR/awsmeter",
+    "vendor": "JoseLuisSR",
+    "markerClass": "org.apache.jmeter.protocol.aws.AWSSampler",
+    "componentClasses": [
+      "org.apache.jmeter.protocol.aws.kinesis.KinesisProducerSampler",
+      "org.apache.jmeter.protocol.aws.sqs.SQSProducerSampler",
+      "org.apache.jmeter.protocol.aws.sqs.SQSProducerStandardQueue",
+      "org.apache.jmeter.protocol.aws.sqs.SQSProducerFifoQueue"
+    ],
+    "versions": {
+      "1.0.0": {
+        "changes": "Publish data records in Kinesis Data Stream and Produce messages in SQS Standard or FIFO queue.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v1.0.0/awsmeter-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
   }
 ]

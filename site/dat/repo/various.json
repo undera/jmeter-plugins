@@ -978,5 +978,26 @@
         ]
       }
     }
+  },
+  {
+    "id": "yongfa365-jmeter-plugins",
+    "name": "Markdown Table Data-driven Controller",
+    "description": "Support 'Markdown Table Data-driven' on GUI,Replace the 'While Controller'",
+    "screenshotUrl": "https://raw.githubusercontent.com/yongfa365/yongfa365-jmeter-plugins/master/demo2.png",
+    "helpUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins",
+    "vendor": "yongfa365",
+    "markerClass": "yongfa365.jmeter.control.MarkdownTableDataDrivenController",
+    "componentClasses": [
+      "yongfa365.jmeter.control.gui.MarkdownTableDataDrivenControllerGui",
+      "yongfa365.jmeter.control.MarkdownTableDataDrivenController"
+    ],
+    "versions": {
+      "1.0": {
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/1.0/yongfa365-jmeter-plugin-1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
   }
 ]

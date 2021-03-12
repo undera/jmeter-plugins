@@ -82,7 +82,7 @@
     "description": "connect, publish, subscribe and disconnect samplers",
     "screenshotUrl": "https://github.com/xmeter-net/mqtt-jmeter/raw/master/screenshots/mqtt_jmeter_plugin.png",
     "helpUrl": "https://github.com/xmeter-net/mqtt-jmeter",
-    "vendor": "XMeter",
+    "vendor": "XMeter.com",
     "markerClass": "net.xmeter.samplers.ConnectSampler",
     "componentClasses": [
       "net.xmeter.gui.ConnectSamplerUI",

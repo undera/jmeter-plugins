@@ -77,6 +77,30 @@
     }
   },
   {
+    "id": "mqtt-xmeter",
+    "name": "MQTT Protocol Samplers",
+    "description": "connect, publish, subscribe and disconnect samplers",
+    "screenshotUrl": "https://github.com/xmeter-net/mqtt-jmeter/raw/master/screenshots/mqtt_jmeter_plugin.png",
+    "helpUrl": "https://github.com/xmeter-net/mqtt-jmeter",
+    "vendor": "XMeter",
+    "markerClass": "net.xmeter.samplers.ConnectSampler",
+    "componentClasses": [
+      "net.xmeter.gui.ConnectSamplerUI",
+      "net.xmeter.samplers.ConnectSampler",
+      "net.xmeter.gui.DisConnectSamplerUI",
+      "net.xmeter.samplers.DisConnectSampler",
+      "net.xmeter.gui.PubSamplerUI",
+      "net.xmeter.samplers.PubSampler",
+      "net.xmeter.gui.SubSamplerUI",
+      "net.xmeter.samplers.SubSampler",
+    ],
+    "versions": {
+      "2.0.2": {
+        "downloadUrl": "https://github.com/xmeter-net/mqtt-jmeter/blob/master/Download/v2.0.2/mqtt-xmeter-2.0.2-jar-with-dependencies.jar",
+      }
+    }
+  },
+  {
     "id": "netflix-cassandra",
     "name": "Cassandra Support",
     "description": "",

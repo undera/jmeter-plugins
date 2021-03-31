@@ -1,11 +1,14 @@
 package kg.apc.jmeter.config;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.jmeter.services.FileServer;
 import org.slf4j.LoggerFactory;
 import org.apache.jorphan.util.JOrphanUtils;
 import org.slf4j.Logger;
@@ -22,7 +25,10 @@ public class VariableFromCsvFileReader {
      */
     public VariableFromCsvFileReader(String csvFileName) {
         try {
-            input = new BufferedReader(new FileReader(csvFileName));
+            File f = new File(csvFileName);
+            f = (f.isAbsolute() || f.exists()) ? f : new File(FileServer.getFileServer().getBaseDir(), csvFileName);
+            
+            input = new BufferedReader(new FileReader(f.getAbsolutePath()));
         } catch (FileNotFoundException ex) {
             log.error("File not found: " + ex.getMessage());
         }

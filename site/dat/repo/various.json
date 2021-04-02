@@ -742,6 +742,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "7.2.4": {
+        "changes": "Bugfix on show playlists",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.2.4/ubik-jmeter-videostreaming-plugin-7.2.4.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "7.2.2": {
         "changes": "Bugfix on test stop",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.2.2/ubik-jmeter-videostreaming-plugin-7.2.2.jar",

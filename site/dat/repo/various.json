@@ -92,11 +92,11 @@
       "net.xmeter.gui.PubSamplerUI",
       "net.xmeter.samplers.PubSampler",
       "net.xmeter.gui.SubSamplerUI",
-      "net.xmeter.samplers.SubSampler",
+      "net.xmeter.samplers.SubSampler"
     ],
     "versions": {
       "2.0.2": {
-        "downloadUrl": "https://github.com/xmeter-net/mqtt-jmeter/blob/master/Download/v2.0.2/mqtt-xmeter-2.0.2-jar-with-dependencies.jar",
+        "downloadUrl": "https://github.com/xmeter-net/mqtt-jmeter/blob/master/Download/v2.0.2/mqtt-xmeter-2.0.2-jar-with-dependencies.jar"
       }
     }
   },

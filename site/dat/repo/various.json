@@ -999,7 +999,7 @@
   {
     "id": "awsmeter",
     "name": "AWS Support",
-    "description": "JMeter plugin for aws services.",
+    "description": "JMeter plugin to execute test over AWS Services like Kinesis Data Stream, SQS Standard and FIFO queue and SNS Standard and FIFO topic.",
     "screenshotUrl": "https://raw.githubusercontent.com/JoseLuisSR/awsmeter/main/doc/img/awsmeter-diagrams-Logo.png",
     "helpUrl": "https://github.com/JoseLuisSR/awsmeter",
     "vendor": "JoseLuisSR",
@@ -1008,12 +1008,21 @@
       "org.apache.jmeter.protocol.aws.kinesis.KinesisProducerSampler",
       "org.apache.jmeter.protocol.aws.sqs.SQSProducerSampler",
       "org.apache.jmeter.protocol.aws.sqs.SQSProducerStandardQueue",
-      "org.apache.jmeter.protocol.aws.sqs.SQSProducerFifoQueue"
+      "org.apache.jmeter.protocol.aws.sqs.SQSProducerFifoQueue",
+      "org.apache.jmeter.protocol.aws.sns.SNSProducerStandardTopic",
+      "org.apache.jmeter.protocol.aws.sns.SNSProducerFifoTopic"
     ],
     "versions": {
       "1.0.0": {
         "changes": "Publish data records in Kinesis Data Stream and Produce messages in SQS Standard or FIFO queue.",
         "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v1.0.0/awsmeter-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "2.0.0": {
+        "changes": "Publish messages in SNS Standard or FIFO topic.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v2.0.0/awsmeter-2.0.0.jar",
         "depends": [
           "jmeter-core"
         ]

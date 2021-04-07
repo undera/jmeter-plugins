@@ -1049,5 +1049,28 @@
         ]
       }
     }
+  },
+  {
+    "id": "jmeter-datadog-backend-listener",
+    "name": "Datadog Backend Listener",
+    "description": "Send JMeter test results to Datadog",
+    "screenshotUrl": "https://raw.githubusercontent.com/DataDog/jmeter-datadog-backend-listener/main/images/screenshot.png",
+    "helpUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/",
+    "vendor": "Datadog",
+    "markerClass": "org.datadog.jmeter.plugins.DatadogBackendClient",
+    "componentClasses": [
+      "org.datadog.jmeter.plugins.DatadogHttpClient",
+      "org.datadog.jmeter.plugins.metrics.DatadogMetric",
+      "org.datadog.jmeter.plugins.metrics.DatadogMetricContext",
+      "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
+    ],
+    "versions": {
+      "0.1.0": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.1.0/jmeter-datadog-backend-listener-0.1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
   }
 ]

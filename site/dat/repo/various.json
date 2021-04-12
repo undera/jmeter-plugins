@@ -1047,6 +1047,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.1": {
+        "changes": "Consider ThreadGroup's setting: 'Action to be taken after a Sampler error'.",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/1.1/yongfa365-jmeter-plugin-1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

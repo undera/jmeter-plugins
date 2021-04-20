@@ -955,6 +955,17 @@
           "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-core-2.10.2.jar",
           "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-module-jaxb-annotations-2.10.2.jar"
         }
+      },
+      "1.1.2": {
+        "changes": "Fixed issue that removed equals sign from request body",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jmeter-bzm-correlation-recorder-1.1.2.jar",
+        "libs": {
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-databind-2.10.2.jar",
+          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-core-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-module-jaxb-annotations-2.10.2.jar"
+        }
       }
     }
   },

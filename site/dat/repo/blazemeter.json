@@ -239,6 +239,26 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "0.10": {
+        "changes": "Add ability to limit the number of thread to start to simulate browser's real threading",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.10/jmeter-parallel-0.10.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
+      },
+      "0.11": {
+        "changes": "Fix parallel controller for JMeter 5.3+",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=com/blazemeter/jmeter-parallel/0.11/jmeter-parallel-0.11.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },
@@ -575,6 +595,24 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "3.1": {
+        "changes": "Improved protocol recognition and fixed minor dash issues",
+        "downloadUrl": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jmeter-bzm-hls-3.1.jar",
+        "libs": {
+          "hlsparserj>=1.0.1-c287e78": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/hlsparserj-c287e78.jar",
+          "mpd-parser>=release-0.8-jdk8": "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/mpd-parser-0.8-jdk8.jar",
+          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-core-2.10.2.jar",
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-databind-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/jackson-module-jaxb-annotations-2.10.2.jar",
+          "stax2-api>=4.2":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/stax2-api-4.2.jar",
+          "woodstox-core>=5.3.0":"https://github.com/Blazemeter/HLSPlugin/releases/download/v3.1/woodstox-core-5.3.0.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },
@@ -883,6 +921,15 @@
           "dm3270-lib>=0.12.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1/dm3270-lib-0.12.3.2.jar",
           "jVT220>=1.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1/jVT220-1.3.1.jar"
         }
+      },
+      "3.1.1": {
+        "changes": "Fix various issues regarding input by tab, input by label, screen painting, and added support for ALP charset",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/jmeter-bzm-rte-3.1.1.jar",
+        "libs": {
+          "xtn5250>=3.2.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/xtn5250-3.2.2.jar",
+          "dm3270-lib>=0.12.4": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/dm3270-lib-0.12.4.jar",
+          "jVT220>=1.3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/jVT220-1.3.1.jar"
+        }
       }
     }
   },
@@ -935,6 +982,17 @@
           "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-databind-2.10.2.jar",
           "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-core-2.10.2.jar",
           "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.1/jackson-module-jaxb-annotations-2.10.2.jar"
+        }
+      },
+      "1.1.2": {
+        "changes": "Fixed issue that removed equals sign from request body",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jmeter-bzm-correlation-recorder-1.1.2.jar",
+        "libs": {
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-annotations-2.10.2.jar",
+          "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-databind-2.10.2.jar",
+          "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-core-2.10.2.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-module-jaxb-annotations-2.10.2.jar"
         }
       }
     }
@@ -994,6 +1052,18 @@
       },
       "0.7.0": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.0/citrix-jmeter-0.7.0.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+      "0.7.1": {
+        "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.1/citrix-jmeter-0.7.1.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+	  "0.7.2": {
+        "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.2/citrix-jmeter-0.7.2.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+	  "0.7.3": {
+        "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.3/citrix-jmeter-0.7.3.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       }
     }

@@ -973,6 +973,30 @@
     }
   },
   {
+  	"id" : "apdexcalculator",
+    "name" : "Apdex Score Calculator",
+    "description" : "Calculates the Apdex score and rating of Samplers for a given satisfied threshold.",
+    "screenshotUrl" : "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/apdexcalculator/src/site/img/wiki/apdex_Calculate.PNG",
+    "helpUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/apdexcalculator/src/site/dat/wiki/ApdexScoreCalculator.wiki",
+    "vendor": "Robert Bourgault du Coudray",
+    "markerClass": "kg.apc.jmeter.vizualisers.ApdexScoreCalculatorGui",
+    "componentClasses": [
+      "kg.apc.jmeter.vizualizers.ApdexScoreCalculatorGui",
+      "kg.apc.cmdtools.ApdexScoreCalculatorTool"
+    ],
+    "versions" : {
+    	"1.0.1" : {
+    		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/V2.0.0/jmeter-plugins-apdexcalculator-1.0.1.jar",
+            "libs" : {
+            	"jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
+            },
+            "depends" : [
+				"jmeter-core"
+            ]
+        }
+    }
+  },
+  {
     "id": "outlierdetector",
     "name": "Right Tail Outlier Detector",
     "description": "A Jmeter plugin that detects and removes outliers in the right tail using Tukey fences.",

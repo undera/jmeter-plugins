@@ -1118,5 +1118,39 @@
         ]
       }
     }
+  },
+  {
+    "id": "jmeter-grpc-request",
+    "name": "JMeter gRPC Request",
+    "description": "Send gRPC request",
+    "screenshotUrl": "https://user-images.githubusercontent.com/15891411/93206727-121f3400-f784-11ea-890f-0ba6c6aaee9e.png",
+    "helpUrl": "https://github.com/zalopay-oss/jmeter-grpc-request",
+    "vendor": "Datadog",
+    "markerClass": "vn.zalopay.benchmark.GRPCSamplerGui",
+    "componentClasses": [
+      "vn.zalopay.benchmarkGRPCSampler."
+    ],
+    "versions": {
+      "1.0.0": {
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.0.0/jmeter-grpc-request-1.0-SNAPSHOT.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.1.0": {
+        "changes": "Change GUI, change process execution test, supports authentication via metadata, auto list full methods, count the failed request in the report.",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.0.0/jmeter-grpc-request-1.0-SNAPSHOT.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.1.1": {
+        "changes": "Fix: Could not find TLS ALPN provider; no working netty-tcnative, Conscrypt, or Jetty NPN/ALPN available.",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.1.1/jmeter-grpc-request-1.1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
   }
 ]

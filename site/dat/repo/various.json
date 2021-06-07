@@ -92,11 +92,11 @@
       "net.xmeter.gui.PubSamplerUI",
       "net.xmeter.samplers.PubSampler",
       "net.xmeter.gui.SubSamplerUI",
-      "net.xmeter.samplers.SubSampler",
+      "net.xmeter.samplers.SubSampler"
     ],
     "versions": {
       "2.0.2": {
-        "downloadUrl": "https://github.com/xmeter-net/mqtt-jmeter/blob/master/Download/v2.0.2/mqtt-xmeter-2.0.2-jar-with-dependencies.jar",
+        "downloadUrl": "https://github.com/xmeter-net/mqtt-jmeter/blob/master/Download/v2.0.2/mqtt-xmeter-2.0.2-jar-with-dependencies.jar"
       }
     }
   },
@@ -259,6 +259,21 @@
           "jpos>=2.1.4": "https://search.maven.org/remotecontent?filepath=org/jpos/jpos/2.1.4/jpos-2.1.4.jar",
           "bcprov-jdk15on>=1.64": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcprov-jdk15on/1.64/bcprov-jdk15on-1.64.jar",
           "bcpg-jdk15on>=1.64": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcpg-jdk15on/1.64/bcpg-jdk15on-1.64.jar",
+          "jdom2": "https://search.maven.org/remotecontent?filepath=org/jdom/jdom2/2.0.6/jdom2-2.0.6.jar",
+          "org.osgi.core": "https://search.maven.org/remotecontent?filepath=org/osgi/org.osgi.core/6.0.0/org.osgi.core-6.0.0.jar",
+          "commons-cli": "https://search.maven.org/remotecontent?filepath=commons-cli/commons-cli/1.4/commons-cli-1.4.jar",
+          "snakeyaml>=1.26": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.26/snakeyaml-1.26.jar",
+          "HdrHistogram>=2.1.12": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar",
+          "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
+        }
+      },
+      "1.2": {
+        "changes": "<ul><li>Upgrade to jPOS v2.1.6</li><li>Round-robin selection for multiple connections in server mode</li><li>Optional reference ID for explicitly linking Sampler to Connection Config</li><li>Request Listener script option to handle incoming messages (0800 network management)</li><li>Bug fixes: #30, #32</li></ul></ul>",
+        "downloadUrl": "https://github.com/tilln/jmeter-iso8583/releases/download/1.2/jmeter-iso8583-1.2.jar",
+        "libs": {
+          "jpos>=2.1.6": "https://search.maven.org/remotecontent?filepath=org/jpos/jpos/2.1.6/jpos-2.1.6.jar",
+          "bcprov-jdk15on>=1.67": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcprov-jdk15on/1.67/bcprov-jdk15on-1.67.jar",
+          "bcpg-jdk15on>=1.67": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcpg-jdk15on/1.67/bcpg-jdk15on-1.67.jar",
           "jdom2": "https://search.maven.org/remotecontent?filepath=org/jdom/jdom2/2.0.6/jdom2-2.0.6.jar",
           "org.osgi.core": "https://search.maven.org/remotecontent?filepath=org/osgi/org.osgi.core/6.0.0/org.osgi.core-6.0.0.jar",
           "commons-cli": "https://search.maven.org/remotecontent?filepath=commons-cli/commons-cli/1.4/commons-cli-1.4.jar",
@@ -742,6 +757,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "7.2.4": {
+        "changes": "Bugfix on show playlists",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.2.4/ubik-jmeter-videostreaming-plugin-7.2.4.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "7.2.2": {
         "changes": "Bugfix on test stop",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.2.2/ubik-jmeter-videostreaming-plugin-7.2.2.jar",
@@ -953,6 +973,30 @@
     }
   },
   {
+  	"id" : "apdexcalculator",
+    "name" : "Apdex Score Calculator",
+    "description" : "Calculates the Apdex score and rating of Samplers for a given satisfied threshold.",
+    "screenshotUrl" : "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/apdexcalculator/src/site/img/wiki/apdex_Calculate.PNG",
+    "helpUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/apdexcalculator/src/site/dat/wiki/ApdexScoreCalculator.wiki",
+    "vendor": "Robert Bourgault du Coudray",
+    "markerClass": "kg.apc.jmeter.vizualisers.ApdexScoreCalculatorGui",
+    "componentClasses": [
+      "kg.apc.jmeter.vizualizers.ApdexScoreCalculatorGui",
+      "kg.apc.cmdtools.ApdexScoreCalculatorTool"
+    ],
+    "versions" : {
+    	"1.0.1" : {
+    		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/V2.0.0/jmeter-plugins-apdexcalculator-1.0.1.jar",
+            "libs" : {
+            	"jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
+            },
+            "depends" : [
+				"jmeter-core"
+            ]
+        }
+    }
+  },
+  {
     "id": "outlierdetector",
     "name": "Right Tail Outlier Detector",
     "description": "A Jmeter plugin that detects and removes outliers in the right tail using Tukey fences.",
@@ -994,7 +1038,7 @@
   {
     "id": "awsmeter",
     "name": "AWS Support",
-    "description": "JMeter plugin for aws services.",
+    "description": "JMeter plugin to execute test over AWS Services like Kinesis Data Stream, SQS Standard and FIFO queue and SNS Standard and FIFO topic.",
     "screenshotUrl": "https://raw.githubusercontent.com/JoseLuisSR/awsmeter/main/doc/img/awsmeter-diagrams-Logo.png",
     "helpUrl": "https://github.com/JoseLuisSR/awsmeter",
     "vendor": "JoseLuisSR",
@@ -1003,12 +1047,21 @@
       "org.apache.jmeter.protocol.aws.kinesis.KinesisProducerSampler",
       "org.apache.jmeter.protocol.aws.sqs.SQSProducerSampler",
       "org.apache.jmeter.protocol.aws.sqs.SQSProducerStandardQueue",
-      "org.apache.jmeter.protocol.aws.sqs.SQSProducerFifoQueue"
+      "org.apache.jmeter.protocol.aws.sqs.SQSProducerFifoQueue",
+      "org.apache.jmeter.protocol.aws.sns.SNSProducerStandardTopic",
+      "org.apache.jmeter.protocol.aws.sns.SNSProducerFifoTopic"
     ],
     "versions": {
       "1.0.0": {
         "changes": "Publish data records in Kinesis Data Stream and Produce messages in SQS Standard or FIFO queue.",
         "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v1.0.0/awsmeter-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "2.0.0": {
+        "changes": "Publish messages in SNS Standard or FIFO topic.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v2.0.0/awsmeter-2.0.0.jar",
         "depends": [
           "jmeter-core"
         ]
@@ -1030,6 +1083,70 @@
     "versions": {
       "1.0": {
         "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/1.0/yongfa365-jmeter-plugin-1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.1": {
+        "changes": "Consider ThreadGroup's setting: 'Action to be taken after a Sampler error'.",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/1.1/yongfa365-jmeter-plugin-1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
+  },
+  {
+    "id": "jmeter-datadog-backend-listener",
+    "name": "Datadog Backend Listener",
+    "description": "Send JMeter test results to Datadog",
+    "screenshotUrl": "https://raw.githubusercontent.com/DataDog/jmeter-datadog-backend-listener/main/images/screenshot.png",
+    "helpUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/",
+    "vendor": "Datadog",
+    "markerClass": "org.datadog.jmeter.plugins.DatadogBackendClient",
+    "componentClasses": [
+      "org.datadog.jmeter.plugins.DatadogHttpClient",
+      "org.datadog.jmeter.plugins.metrics.DatadogMetric",
+      "org.datadog.jmeter.plugins.metrics.DatadogMetricContext",
+      "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
+    ],
+    "versions": {
+      "0.1.0": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.1.0/jmeter-datadog-backend-listener-0.1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
+  },
+  {
+    "id": "jmeter-grpc-request",
+    "name": "JMeter gRPC Request",
+    "description": "Send gRPC request",
+    "screenshotUrl": "https://user-images.githubusercontent.com/15891411/93206727-121f3400-f784-11ea-890f-0ba6c6aaee9e.png",
+    "helpUrl": "https://github.com/zalopay-oss/jmeter-grpc-request",
+    "vendor": "Datadog",
+    "markerClass": "vn.zalopay.benchmark.GRPCSamplerGui",
+    "componentClasses": [
+      "vn.zalopay.benchmarkGRPCSampler."
+    ],
+    "versions": {
+      "1.0.0": {
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.0.0/jmeter-grpc-request-1.0-SNAPSHOT.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.1.0": {
+        "changes": "Change GUI, change process execution test, supports authentication via metadata, auto list full methods, count the failed request in the report.",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.0.0/jmeter-grpc-request-1.0-SNAPSHOT.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.1.1": {
+        "changes": "Fix: Could not find TLS ALPN provider; no working netty-tcnative, Conscrypt, or Jetty NPN/ALPN available.",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.1.1/jmeter-grpc-request-1.1.1.jar",
         "depends": [
           "jmeter-core"
         ]

@@ -1080,7 +1080,7 @@
       "yongfa365.jmeter.control.gui.MarkdownTableDataDrivenControllerGui",
       "yongfa365.jmeter.control.MarkdownTableDataDrivenController",
       "yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui",
-      "yongfa365.jmeter.assertions.JSONPathAssertionPlus",
+      "yongfa365.jmeter.assertions.JSONPathAssertionPlus"
     ],
     "versions": {
       "1.0": {

@@ -1071,14 +1071,16 @@
   {
     "id": "yongfa365-jmeter-plugins",
     "name": "Markdown Table Data-driven Controller",
-    "description": "Support 'Markdown Table Data-driven' on GUI,Replace the 'While Controller'",
+    "description": "Support 'Markdown Table Data-driven' on GUI,Replace the 'While Controller','JsonPath Assertion'",
     "screenshotUrl": "https://raw.githubusercontent.com/yongfa365/yongfa365-jmeter-plugins/master/demo2.png",
     "helpUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins",
     "vendor": "yongfa365",
     "markerClass": "yongfa365.jmeter.control.MarkdownTableDataDrivenController",
     "componentClasses": [
       "yongfa365.jmeter.control.gui.MarkdownTableDataDrivenControllerGui",
-      "yongfa365.jmeter.control.MarkdownTableDataDrivenController"
+      "yongfa365.jmeter.control.MarkdownTableDataDrivenController",
+      "yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui",
+      "yongfa365.jmeter.assertions.JSONPathAssertionPlus",
     ],
     "versions": {
       "1.0": {
@@ -1090,6 +1092,13 @@
       "1.1": {
         "changes": "Consider ThreadGroup's setting: 'Action to be taken after a Sampler error'.",
         "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/1.1/yongfa365-jmeter-plugin-1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "2.0.0": {
+        "changes": "Support JsonPath Assertion",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/2.0/yongfa365-jmeter-plugin-2.0.0.jar",
         "depends": [
           "jmeter-core"
         ]

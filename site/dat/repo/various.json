@@ -1102,6 +1102,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "2.0.1": {
+        "changes": "Support JsonPath Assertion,bug fix",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/2.0.1/yongfa365-jmeter-plugin-2.0.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

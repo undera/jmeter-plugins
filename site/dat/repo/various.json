@@ -887,6 +887,13 @@
     "vendor": "adrianmo",
     "markerClass": "io.github.adrianmo.jmeter.backendlistener.azure.AzureBackendClient",
     "versions": {
+      "0.2.6": {
+        "changes": "Add support for connection string and deprecate Instrumentation Key.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.6/jmeter.backendlistener.azure-0.2.6.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.2.5": {
         "changes": "Ability to send arbitrary response headers as metrics.",
         "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.5/jmeter.backendlistener.azure-0.2.5.jar",

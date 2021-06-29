@@ -930,6 +930,15 @@
           "dm3270-lib>=0.12.4": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/dm3270-lib-0.12.4.jar",
           "jVT220>=1.3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/jVT220-1.3.1.jar"
         }
+      },
+      "3.2": {
+        "changes": "Wait for disconnect support in RTESampler and automatic detection by RTERecorder",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2/jmeter-bzm-rte-3.2.jar",
+        "libs": {
+          "xtn5250>=3.2.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2/xtn5250-3.2.3.jar",
+          "dm3270-lib>=0.13": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2/dm3270-lib-0.13.jar",
+          "jVT220>=1.3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2/jVT220-1.3.1.jar"
+        }
       }
     }
   },
@@ -1075,6 +1084,10 @@
       },
 	  "0.7.3": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.3/citrix-jmeter-0.7.3.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+	  "0.7.4": {
+        "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.4/citrix-jmeter-0.7.4.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       }
     }

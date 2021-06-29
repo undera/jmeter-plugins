@@ -887,6 +887,13 @@
     "vendor": "adrianmo",
     "markerClass": "io.github.adrianmo.jmeter.backendlistener.azure.AzureBackendClient",
     "versions": {
+      "0.2.5": {
+        "changes": "Ability to send arbitrary response headers as metrics.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.5/jmeter.backendlistener.azure-0.2.5.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.2.3": {
         "changes": "Ability to add custom properties. Set Operation name to the test name value.",
         "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.3/jmeter.backendlistener.azure-0.2.3.jar",
@@ -1036,6 +1043,29 @@
 	}
   },
   {
+  	"id" : "resultscomparator",
+    "name" : "Results Comparator",
+    "description" : "Compares the results of two test runs using Cohen's d effect size.",
+    "screenshotUrl" : "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/resultscomparator/src/site/img/wiki/rc_Compare.PNG",
+    "helpUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/resultscomparator/src/site/dat/wiki/ResultsComparator.wiki",
+    "vendor": "Robert Bourgault du Coudray",
+    "markerClass": "kg.apc.jmeter.vizualisers.ResultsComparatorGui",
+    "componentClasses": [
+      "kg.apc.jmeter.vizualizers.ResultsComparatorGui"
+    ],
+    "versions" : {
+    	"1.0.1" : {
+    		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/V3.0.0/jmeter-plugins-resultscomparator-1.0.1.jar",
+            "libs" : {
+            	"jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
+            },
+            "depends" : [
+				"jmeter-core"
+            ]
+        }
+    }
+  },
+  {
     "id": "awsmeter",
     "name": "AWS Support",
     "description": "JMeter plugin to execute test over AWS Services like Kinesis Data Stream, SQS Standard and FIFO queue and SNS Standard and FIFO topic.",
@@ -1071,14 +1101,16 @@
   {
     "id": "yongfa365-jmeter-plugins",
     "name": "Markdown Table Data-driven Controller",
-    "description": "Support 'Markdown Table Data-driven' on GUI,Replace the 'While Controller'",
+    "description": "Support 'Markdown Table Data-driven' on GUI,Replace the 'While Controller','JsonPath Assertion'",
     "screenshotUrl": "https://raw.githubusercontent.com/yongfa365/yongfa365-jmeter-plugins/master/demo2.png",
     "helpUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins",
     "vendor": "yongfa365",
     "markerClass": "yongfa365.jmeter.control.MarkdownTableDataDrivenController",
     "componentClasses": [
       "yongfa365.jmeter.control.gui.MarkdownTableDataDrivenControllerGui",
-      "yongfa365.jmeter.control.MarkdownTableDataDrivenController"
+      "yongfa365.jmeter.control.MarkdownTableDataDrivenController",
+      "yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui",
+      "yongfa365.jmeter.assertions.JSONPathAssertionPlus"
     ],
     "versions": {
       "1.0": {
@@ -1090,6 +1122,20 @@
       "1.1": {
         "changes": "Consider ThreadGroup's setting: 'Action to be taken after a Sampler error'.",
         "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/1.1/yongfa365-jmeter-plugin-1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "2.0.0": {
+        "changes": "Support JsonPath Assertion",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/2.0/yongfa365-jmeter-plugin-2.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "2.0.1": {
+        "changes": "Support JsonPath Assertion,bug fix",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/2.0.1/yongfa365-jmeter-plugin-2.0.1.jar",
         "depends": [
           "jmeter-core"
         ]

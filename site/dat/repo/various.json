@@ -887,6 +887,13 @@
     "vendor": "adrianmo",
     "markerClass": "io.github.adrianmo.jmeter.backendlistener.azure.AzureBackendClient",
     "versions": {
+      "0.2.5": {
+        "changes": "Ability to send arbitrary response headers as metrics.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.5/jmeter.backendlistener.azure-0.2.5.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.2.3": {
         "changes": "Ability to add custom properties. Set Operation name to the test name value.",
         "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.3/jmeter.backendlistener.azure-0.2.3.jar",
@@ -1071,14 +1078,16 @@
   {
     "id": "yongfa365-jmeter-plugins",
     "name": "Markdown Table Data-driven Controller",
-    "description": "Support 'Markdown Table Data-driven' on GUI,Replace the 'While Controller'",
+    "description": "Support 'Markdown Table Data-driven' on GUI,Replace the 'While Controller','JsonPath Assertion'",
     "screenshotUrl": "https://raw.githubusercontent.com/yongfa365/yongfa365-jmeter-plugins/master/demo2.png",
     "helpUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins",
     "vendor": "yongfa365",
     "markerClass": "yongfa365.jmeter.control.MarkdownTableDataDrivenController",
     "componentClasses": [
       "yongfa365.jmeter.control.gui.MarkdownTableDataDrivenControllerGui",
-      "yongfa365.jmeter.control.MarkdownTableDataDrivenController"
+      "yongfa365.jmeter.control.MarkdownTableDataDrivenController",
+      "yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui",
+      "yongfa365.jmeter.assertions.JSONPathAssertionPlus"
     ],
     "versions": {
       "1.0": {
@@ -1090,6 +1099,20 @@
       "1.1": {
         "changes": "Consider ThreadGroup's setting: 'Action to be taken after a Sampler error'.",
         "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/1.1/yongfa365-jmeter-plugin-1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "2.0.0": {
+        "changes": "Support JsonPath Assertion",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/2.0/yongfa365-jmeter-plugin-2.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "2.0.1": {
+        "changes": "Support JsonPath Assertion,bug fix",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/2.0.1/yongfa365-jmeter-plugin-2.0.1.jar",
         "depends": [
           "jmeter-core"
         ]
@@ -1113,6 +1136,40 @@
     "versions": {
       "0.1.0": {
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.1.0/jmeter-datadog-backend-listener-0.1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
+  },
+  {
+    "id": "jmeter-grpc-request",
+    "name": "JMeter gRPC Request",
+    "description": "Send gRPC request",
+    "screenshotUrl": "https://user-images.githubusercontent.com/15891411/93206727-121f3400-f784-11ea-890f-0ba6c6aaee9e.png",
+    "helpUrl": "https://github.com/zalopay-oss/jmeter-grpc-request",
+    "vendor": "Datadog",
+    "markerClass": "vn.zalopay.benchmark.GRPCSamplerGui",
+    "componentClasses": [
+      "vn.zalopay.benchmarkGRPCSampler."
+    ],
+    "versions": {
+      "1.0.0": {
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.0.0/jmeter-grpc-request-1.0-SNAPSHOT.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.1.0": {
+        "changes": "Change GUI, change process execution test, supports authentication via metadata, auto list full methods, count the failed request in the report.",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.0.0/jmeter-grpc-request-1.0-SNAPSHOT.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.1.1": {
+        "changes": "Fix: Could not find TLS ALPN provider; no working netty-tcnative, Conscrypt, or Jetty NPN/ALPN available.",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.1.1/jmeter-grpc-request-1.1.1.jar",
         "depends": [
           "jmeter-core"
         ]

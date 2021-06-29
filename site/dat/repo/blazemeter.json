@@ -930,6 +930,15 @@
           "dm3270-lib>=0.12.4": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/dm3270-lib-0.12.4.jar",
           "jVT220>=1.3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.1.1/jVT220-1.3.1.jar"
         }
+      },
+      "3.2": {
+        "changes": "Wait for disconnect support in RTESampler and automatic detection by RTERecorder",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2/jmeter-bzm-rte-3.2.jar",
+        "libs": {
+          "xtn5250>=3.2.3": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2/xtn5250-3.2.3.jar",
+          "dm3270-lib>=0.13": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2/dm3270-lib-0.13.jar",
+          "jVT220>=1.3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2/jVT220-1.3.1.jar"
+        }
       }
     }
   },
@@ -993,6 +1002,17 @@
           "jackson-databind>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-databind-2.10.2.jar",
           "jackson-core>=2.10.2" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-core-2.10.2.jar",
           "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.1.2/jackson-module-jaxb-annotations-2.10.2.jar"
+        }
+      },
+      "1.2": {
+        "changes": "Added Groups of Correlation Rules",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jmeter-bzm-correlation-recorder-1.2.jar",
+        "libs": {
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-annotations-2.12.0.jar",
+          "jackson-databind>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-databind-2.12.0.jar",
+          "jackson-core>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-core-2.12.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2/jackson-module-jaxb-annotations-2.10.2.jar"
         }
       }
     }
@@ -1064,6 +1084,10 @@
       },
 	  "0.7.3": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.3/citrix-jmeter-0.7.3.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+	  "0.7.4": {
+        "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.4/citrix-jmeter-0.7.4.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       }
     }

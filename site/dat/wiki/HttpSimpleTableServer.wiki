@@ -331,6 +331,27 @@ Reading password:
 
 At the end of your Test Plan you can save remaining/adding data with a HTTP Request Sampler in a "tearDown Thread Group".
 
+If you need to parse more than 2 columns, you could use a Post-Processeur groovy JSR223 like :
+
+[[[python
+// E.g. read line = <body>COL1VALUE;COL2VALUE;COL3VALUE;COL4VALUE;COL5VALUE</body>
+// column separator = ';'
+String lineData = org.apache.commons.lang3.StringUtils.substringBetween(prev.getResponseDataAsString(),"<body>","</body>");
+// lineData = COL1VALUE;COL2VALUE;COL3VALUE;COL4VALUE;COL5VALUE 
+def tabParam = org.apache.commons.lang3.StringUtils.splitPreserveAllTokens(lineData,';'); // use column separator = ';'
+
+if (tabParam.length == 5) {
+	vars.put("V_COL1PARAM", tabParam[0]); // variable V_COL1PARAM = COL1VALUE  (String value)
+	vars.put("V_COL2PARAM", tabParam[1]); // variable V_COL2PARAM = COL2VALUE  (String value)
+	vars.put("V_COL3PARM", tabParam[2]);
+	vars.put("V_COL4PARAM", tabParam[3]);
+	vars.put("V_COL5PARM", tabParam[4]);
+}
+else {
+	log.info("ERROR, Need 5 columns");
+}
+]]]
+
 == Example ==
 
   * Put the logins.csv file in your JMETER_HOME/bin directory:
@@ -375,3 +396,39 @@ jmeter.bat -DjmeterPlugin.sts.loadAndRunOnStartup=true -DjmeterPlugin.sts.port=9
 }}}
 
 When it's done see results in the Listener Tree View.
+
+If you want to use the Http Simple Server with the maven plugin, you could :
+- put your csv files in <project>/src/test/jmeter directory (e.g : logins.csv)
+- put the simple-table-server.bsh (beanshell script) in  <project>/src/test/jmeter directory
+- put the your jmeter script in <project>/src/test/jmeter directory (e.g : test_login.jmx)
+- declare in the maven build section, in the configuration > jmeterExtensions > declare the artifact kg.apc:jmeter-plugins-table-server:<version>
+- declare user properties for STS configuration and automatic start
+
+Extract pom.xml dedicated to Http Simple Table Server :
+{{{
+<build>
+		<plugins>
+			 <plugin>
+        <groupId>com.lazerycode.jmeter</groupId>
+        <artifactId>jmeter-maven-plugin</artifactId>
+        <version>3.4.0</version>
+...
+    <configuration>
+       <jmeterExtensions>
+	          <artifact>kg.apc:jmeter-plugins-table-server:2.4</artifact>
+	      </jmeterExtensions>
+       <propertiesUser>
+           <!-- properties configuration for Http Simple Table Server with automatic start when JMeter start -->
+           <jmeterPlugin.sts.port>9191</jmeterPlugin.sts.port>
+						     <jmeterPlugin.sts.addTimestamp>true</jmeterPlugin.sts.addTimestamp>
+						     <jmeterPlugin.sts.datasetDirectory>${project.build.directory}/jmeter/testFiles</jmeterPlugin.sts.datasetDirectory>
+						     <jmeterPlugin.sts.loadAndRunOnStartup>true</jmeterPlugin.sts.loadAndRunOnStartup>
+						     <beanshell.init.file>${project.build.directory}/jmeter/testFiles/simple-table-server.bsh</beanshell.init.file>
+       </propertiesUser>
+     </configuration>
+    </plugin>
+		</plugins>
+	</build>
+}}}
+
+

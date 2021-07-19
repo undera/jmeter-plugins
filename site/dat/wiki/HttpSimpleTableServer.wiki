@@ -398,11 +398,11 @@ jmeter.bat -DjmeterPlugin.sts.loadAndRunOnStartup=true -DjmeterPlugin.sts.port=9
 When it's done see results in the Listener Tree View.
 
 If you want to use the Http Simple Server with the maven plugin, you could :
-- put your csv files in <project>/src/test/jmeter directory (e.g : logins.csv)
-- put the simple-table-server.bsh (beanshell script) in  <project>/src/test/jmeter directory
-- put the your jmeter script in <project>/src/test/jmeter directory (e.g : test_login.jmx)
-- declare in the maven build section, in the configuration > jmeterExtensions > declare the artifact kg.apc:jmeter-plugins-table-server:<version>
-- declare user properties for STS configuration and automatic start
+* put your csv files in <project>/src/test/jmeter directory (e.g : logins.csv)
+* put the simple-table-server.bsh (beanshell script) in  <project>/src/test/jmeter directory
+* put the your jmeter script in <project>/src/test/jmeter directory (e.g : test_login.jmx)
+* declare in the maven build section, in the configuration > jmeterExtensions > declare the artifact kg.apc:jmeter-plugins-table-server:<version>
+* declare user properties for STS configuration and automatic start
 
 Extract pom.xml dedicated to Http Simple Table Server :
 {{{

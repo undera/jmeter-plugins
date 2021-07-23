@@ -757,6 +757,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "7.2.9": {
+        "changes": "Bugfix version",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.2.9/ubik-jmeter-videostreaming-plugin-7.2.9.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "7.2.8": {
         "changes": "DASH and SMOTH: use play ahead for LIVE. DASH: add support for Trick mode in VOD Playback. Live Edge : Introduce option to allow following Live Edge on every reload or only at the playing start.",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.2.8/ubik-jmeter-videostreaming-plugin-7.2.8.jar",
@@ -1162,6 +1167,12 @@
       "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
     ],
     "versions": {
+      "0.2.0": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.2.0/jmeter-datadog-backend-listener-0.2.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.1.0": {
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.1.0/jmeter-datadog-backend-listener-0.1.0.jar",
         "depends": [

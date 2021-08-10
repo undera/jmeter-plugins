@@ -96,7 +96,7 @@
     ],
     "versions": {
       "2.0.2": {
-        "downloadUrl": "https://github.com/xmeter-net/mqtt-jmeter/blob/master/Download/v2.0.2/mqtt-xmeter-2.0.2-jar-with-dependencies.jar"
+        "downloadUrl": "https://github.com/xmeter-net/mqtt-jmeter/raw/master/Download/v2.0.2/mqtt-xmeter-2.0.2-jar-with-dependencies.jar"
       }
     }
   },

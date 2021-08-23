@@ -1226,5 +1226,25 @@
         ]
       }
     }
-  }
+  },
+  {
+    "componentClasses": [
+        "com.di.jmeter.kafka.sampler.KafkaProducerConfig"
+    ],
+    "description": "Jmeter plugin to push events/messages to Kafka topics",
+    "helpUrl": "https://github.com/rollno748/di-kafkameter#readme",
+    "id": "di-kafkameter",
+    "markerClass": "com.di.jmeter.kafka.sampler.KafkaProducerSampler",
+    "name": "DI KafkaMeter",
+    "screenshotUrl": "https://clipground.com/images/kafka-logo-2.png",
+    "vendor": "DigitalInsight-NCR",
+    "versions": {
+        "1.0": {
+            "depends": [
+                "jmeter-core"
+            ],
+            "downloadUrl": "https://github.com/rollno748/di-kafkameter/releases/download/1.0/di-kafkameter-1.0.jar"
+        }
+    }
+}
 ]

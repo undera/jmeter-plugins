@@ -21,7 +21,14 @@ package kg.apc.jmeter.config.redis;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
+import java.security.GeneralSecurityException;
 import java.util.ResourceBundle;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLParameters;
+import javax.net.ssl.SSLSocketFactory;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.apache.jmeter.config.ConfigTestElement;
@@ -35,6 +42,8 @@ import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jmeter.util.JsseSSLManager;
+import org.apache.jmeter.util.SSLManager;
 import org.slf4j.LoggerFactory;
 import org.apache.jorphan.util.JMeterStopThreadException;
 import org.apache.jorphan.util.JOrphanUtils;
@@ -273,7 +282,21 @@ public class RedisDataSet extends ConfigTestElement
         if(!JOrphanUtils.isBlank(this.password)) {
             password = this.password;
         }
-        this.pool = new JedisPool(config, this.host, port, timeout, password, database);
+        SSLSocketFactory sslSocketFactory = null;
+        SSLParameters sslParameters = null;
+        HostnameVerifier hostnameVerifier = null;
+        if (this.ssl) {
+            SSLManager sslManager = SSLManager.getInstance();
+            try {
+                SSLContext sslContext = ((JsseSSLManager)sslManager).getContext();
+                sslSocketFactory = sslContext.getSocketFactory();
+                sslParameters = sslContext.getDefaultSSLParameters();
+                hostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
+            }catch(GeneralSecurityException ex) {
+                throw new IllegalStateException("Unable to get SSLContext from SSLManager", ex);
+            }
+        }
+        this.pool = new JedisPool(config, this.host, port, timeout, password, database, this.ssl, sslSocketFactory, sslParameters, hostnameVerifier);
     }
 
     /**

@@ -103,7 +103,7 @@ public class RedisDataSetBeanInfo extends BeanInfoSupport {
             p.setValue(DEFAULT, RedisDataSet.RedisDataType.REDIS_DATA_TYPE_LIST.ordinal());
             
             createPropertyGroup("redis_connection",             
-                    new String[] { HOST, PORT, TIMEOUT, PASSWORD, DATABASE });
+                    new String[] { HOST, PORT, SSL, TIMEOUT, PASSWORD, DATABASE });
     
             p = property(HOST);
             p.setValue(NOT_UNDEFINED, Boolean.TRUE);

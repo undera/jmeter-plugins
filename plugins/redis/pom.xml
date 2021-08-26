@@ -12,7 +12,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-redis</artifactId>
-    <version>0.3</version>
+    <version>0.4</version>
 
     <name>Redis</name>
     <description>Redis</description>
@@ -62,12 +62,7 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>2.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-pool</groupId>
-            <artifactId>commons-pool</artifactId>
-            <version>1.6</version>
+            <version>3.6.3</version>
         </dependency>
         <dependency>
             <groupId>com.io7m.xom</groupId>

@@ -615,7 +615,7 @@
           "jedis": "https://search.maven.org/remotecontent?filepath=redis/clients/jedis/3.6.3/jedis-3.6.3.jar",
           "commons-pool2": "http://search.maven.org/remotecontent?filepath=org/apache/commons/commons-pool2/2.9.0/commons-pool2-2.9.0.jar"
         }
-      },
+      }
     }
   },
   {

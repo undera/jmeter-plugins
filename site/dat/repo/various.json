@@ -977,7 +977,7 @@
                 "depends": [
                     "jmeter-core"
                 ],
-                "downloadUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler/releases/download/1.1/jmeter-pubsub-sampler-1.1.jar"
+                "downloadUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler/releases/download/1.1/jmeter-pubsub-sampler-1.1.jar",
                 "libs": {
                     "gson": "https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar"
                 }

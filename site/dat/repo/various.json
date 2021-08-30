@@ -956,8 +956,8 @@
   {
     "id": "jmeter-pubsub-sampler",
     "name": "GCP pubsub plugin",
-    "description": "Jmeter plugin to Publish and Subscribe Messages to GCP PubSub",
-    "screenshotUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler/blob/master/images/PublisherConfig.png",
+    "description": "Jmeter plugin to Publish and Subscribe Messages to GCP PubSub. <ul><li>Simply add a \"Publisher/Suscriber config \" and provide the service credentials</li><li>Add the Publisher/Subscriber sampler to send/read events</li><li><a href=\"https://rollno748.github.io/\">Author Details</a></li></ul>",
+    "screenshotUrl": "https://raw.githubusercontent.com/rollno748/Jmeter-pubsub-sampler/master/images/pubsub.png",
     "helpUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler",
     "vendor": "DigitalInsight-NCR",
     "markerClass": "com.di.jmeter.pubsub.sampler.PublisherSampler",
@@ -975,6 +975,9 @@
       },
       "1.1": {
         "downloadUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler/releases/download/1.1/jmeter-pubsub-sampler-1.1.jar",
+        "libs": {
+           "gson": "https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar"
+        },
         "depends": [
           "jmeter-core"
         ]

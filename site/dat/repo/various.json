@@ -959,7 +959,7 @@
             "com.di.jmeter.pubsub.config.PublisherConfig",
             "com.di.jmeter.pubsub.config.SubscriberConfig"
         ],
-        "description": "Jmeter plugin to Publish and Subscribe Messages to GCP PubSub. <ul><li>Simply add a \"Publisher/Suscriber config \" and provide the service credentials</li><li>Add the Publisher/Subscriber sampler to send/read events</li><li><a href="https://rollno748.github.io/">Author Dettails</a></li></ul>",
+        "description": "Jmeter plugin to Publish and Subscribe Messages to GCP PubSub. <ul><li>Simply add a \"Publisher/Suscriber config \" and provide the service credentials</li><li>Add the Publisher/Subscriber sampler to send/read events</li><li><a href=\"https://rollno748.github.io/\">Author Details</a></li></ul>",
         "helpUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler",
         "id": "jmeter-pubsub-sampler",
         "markerClass": "com.di.jmeter.pubsub.sampler.PublisherSampler",

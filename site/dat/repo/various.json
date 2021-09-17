@@ -1126,7 +1126,7 @@
   {
     "id": "yongfa365-jmeter-plugins",
     "name": "Markdown Table Data-driven Controller|JsonPath Assertion for sort",
-    "description": "<ul><li>'Markdown Table Data-driven Controller' on GUI,like 'While Controller' but easier.</li><li>'JsonPath Assertion' can assert elements sort 'Is Asc' or 'Is Desc' or 'All Match' or 'Any Match' or 'count between a and b'</li><li>"Console And Html Report" can gen beautiful html report and console report,It's useful for Jenkins saving log</li></ul>",
+    "description": "<ul><li>'Markdown Table Data-driven Controller' on GUI,like 'While Controller' but easier.</li><li>'JsonPath Assertion' can assert elements sort 'Is Asc' or 'Is Desc' or 'All Match' or 'Any Match' or 'count between a and b'</li><li>'Console And Html Report' can gen beautiful html report and console report,It's useful for Jenkins saving log</li></ul>",
     "screenshotUrl": "https://raw.githubusercontent.com/yongfa365/yongfa365-jmeter-plugins/master/demo2.png",
     "helpUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins",
     "vendor": "yongfa365",

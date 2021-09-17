@@ -1126,7 +1126,7 @@
   {
     "id": "yongfa365-jmeter-plugins",
     "name": "Markdown Table Data-driven Controller|JsonPath Assertion for sort",
-    "description": "<ul><li>'Markdown Table Data-driven Controller' on GUI,like 'While Controller' but easier.</li><li>'JsonPath Assertion' can assert elements sort 'Is Asc' or 'Is Desc' or 'All Match' or 'Any Match'</li></ul>",
+    "description": "<ul><li>'Markdown Table Data-driven Controller' on GUI,like 'While Controller' but easier.</li><li>'JsonPath Assertion' can assert elements sort 'Is Asc' or 'Is Desc' or 'All Match' or 'Any Match' or 'count between a and b'</li><li>"Console And Html Report" can gen beautiful html report and console report,It's useful for Jenkins saving log</li></ul>",
     "screenshotUrl": "https://raw.githubusercontent.com/yongfa365/yongfa365-jmeter-plugins/master/demo2.png",
     "helpUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins",
     "vendor": "yongfa365",
@@ -1135,7 +1135,9 @@
       "yongfa365.jmeter.control.gui.MarkdownTableDataDrivenControllerGui",
       "yongfa365.jmeter.control.MarkdownTableDataDrivenController",
       "yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui",
-      "yongfa365.jmeter.assertions.JSONPathAssertionPlus"
+      "yongfa365.jmeter.assertions.JSONPathAssertionPlus",
+      "yongfa365.jmeter.result.gui.ConsoleAndHtmlReportGui",
+      "yongfa365.jmeter.result.ConsoleAndHtmlReport"
     ],
     "versions": {
       "1.0": {
@@ -1161,6 +1163,13 @@
       "2.0.1": {
         "changes": "Support JsonPath Assertion,bug fix",
         "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/2.0.1/yongfa365-jmeter-plugin-2.0.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "3.0.0": {
+        "changes": "Support Console And Html Report",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/3.0.0/yongfa365-jmeter-plugin-3.0.0.jar",
         "depends": [
           "jmeter-core"
         ]

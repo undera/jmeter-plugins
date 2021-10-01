@@ -31,7 +31,12 @@ For performance reasons, the component caches its properties value for "dynamic_
 If you know you'll never be changing dynamically those values, you can set this property to a negative value.
 If you need to refresh it at a higher rate, decrease its value but be aware of potential performance impacts. 
 
-=== dynamic_tg.properties_caching_validity:
+=== dynamic_tg.temporisation:
+
+This property is used to add sleep after all threads stopped.
+Defaults to 10 millis.
+
+=== dynamic_tg.shift_rampup_start:
 
 This property is used to avoid CPU spikes on rampup start when no Dynamic threads have been created yet.
-Defaults to 10 millis.
+Defaults to 0 millis.

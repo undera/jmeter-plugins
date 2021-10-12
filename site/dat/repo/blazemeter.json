@@ -946,6 +946,15 @@
           "dm3270-lib>=0.13": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2/dm3270-lib-0.13.jar",
           "jVT220>=1.3.1": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2/jVT220-1.3.1.jar"
         }
+      },
+      "3.2.1": {
+        "changes": "Circular field support, alarm for VT420 and many bug fixes!",
+        "downloadUrl": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2.1/jmeter-bzm-rte-3.2.1.jar",
+        "libs": {
+          "xtn5250>=3.2.4": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2.1/xtn5250-3.2.4.jar",
+          "dm3270-lib>=0.14": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2.1/dm3270-lib-0.14.jar",
+          "jVT220>=1.3.2": "https://github.com/Blazemeter/RTEPlugin/releases/download/v3.2.1/jVT220-1.3.2.jar"
+        }
       }
     }
   },

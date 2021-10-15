@@ -110,6 +110,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
         }
+      },
+      "2.10": {
+        "changes": "Remove deprecation flag from Stepping Thread Group",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.10/jmeter-plugins-casutg-2.10.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
+        }
       }
     }
   },
@@ -605,6 +612,15 @@
           "qpid-common": "https://search.maven.org/remotecontent?filepath=org/apache/qpid/qpid-common/0.20/qpid-common-0.20.jar",
           "xom": "https://search.maven.org/remotecontent?filepath=com/io7m/xom/xom/1.2.10/xom-1.2.10.jar",
           "commons-pool": "http://search.maven.org/remotecontent?filepath=commons-pool/commons-pool/1.6/commons-pool-1.6.jar"
+        }
+      },
+      "0.5": {
+        "changes": "fixed ssl config in redis dataset so it actually gets used",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-redis/0.5/jmeter-plugins-redis-0.5.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar",
+          "jedis": "https://search.maven.org/remotecontent?filepath=redis/clients/jedis/3.6.3/jedis-3.6.3.jar",
+          "commons-pool2": "http://search.maven.org/remotecontent?filepath=org/apache/commons/commons-pool2/2.9.0/commons-pool2-2.9.0.jar"
         }
       }
     }

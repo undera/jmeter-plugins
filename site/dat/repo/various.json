@@ -96,7 +96,7 @@
     ],
     "versions": {
       "2.0.2": {
-        "downloadUrl": "https://github.com/xmeter-net/mqtt-jmeter/blob/master/Download/v2.0.2/mqtt-xmeter-2.0.2-jar-with-dependencies.jar"
+        "downloadUrl": "https://github.com/xmeter-net/mqtt-jmeter/raw/master/Download/v2.0.2/mqtt-xmeter-2.0.2-jar-with-dependencies.jar"
       }
     }
   },
@@ -747,8 +747,8 @@
   {
     "id": "ulp-jmeter-videostreaming-plugin",
     "name": "UbikLoadPack Video Streaming plugin",
-    "description": "Plugin which provides the ability to easily load test servers delivering Adaptive Bitrate Streaming (ABR). It supports the following implementations: Low Latency Mpeg-Dash, Mpeg-Dash, Apple HLS, Microsoft Smooth (HSS) and Adobe HDS. Both Live and VOD streams are automatically handled. The plugin realistically simulates players and outputs video specific metrics allowing you to analyze User Experience",
-    "screenshotUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/ulp_vs_screenshot_700.png",
+    "description": "Plugin which provides the ability to easily load test servers delivering Adaptive Bitrate Streaming (ABR). It supports the following implementations: Low Latency Mpeg-Dash, Mpeg-Dash, Apple HLS / Low-Latency HLS (LL-HLS), Microsoft Smooth (HSS) and Adobe HDS. Both Live and VOD streams are automatically handled. The plugin realistically simulates players and outputs video specific metrics allowing you to analyze User Experience",
+    "screenshotUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/ulp_vs_screenshot_800.png",
     "helpUrl": "https://www.ubik-ingenierie.com/blog/ubikloadpack-streaming-plugin-help/",
     "vendor": "UbikLoadPack by Ubik-Ingenierie",
     "markerClass": "com.ubikingenierie.jmeter.plugin.hls.sampler.HLSSampler",
@@ -757,6 +757,21 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "8.0.0": {
+        "changes": "Introduce support for Apple Low-Latency HLS (LL-HLS), see https://www.ubik-ingenierie.com/blog/performance-testing-low-latency-hls-servers/",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.0/ubik-jmeter-videostreaming-plugin-8.0.0.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "7.2.9": {
+        "changes": "Bugfix version",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.2.9/ubik-jmeter-videostreaming-plugin-7.2.9.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "7.2.8": {
+        "changes": "DASH and SMOTH: use play ahead for LIVE. DASH: add support for Trick mode in VOD Playback. Live Edge : Introduce option to allow following Live Edge on every reload or only at the playing start.",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.2.8/ubik-jmeter-videostreaming-plugin-7.2.8.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "7.2.4": {
         "changes": "Bugfix on show playlists",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.2.4/ubik-jmeter-videostreaming-plugin-7.2.4.jar",
@@ -887,6 +902,13 @@
     "vendor": "adrianmo",
     "markerClass": "io.github.adrianmo.jmeter.backendlistener.azure.AzureBackendClient",
     "versions": {
+      "0.2.6": {
+        "changes": "Add support for connection string and deprecate Instrumentation Key.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.6/jmeter.backendlistener.azure-0.2.6.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.2.5": {
         "changes": "Ability to send arbitrary response headers as metrics.",
         "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.5/jmeter.backendlistener.azure-0.2.5.jar",
@@ -934,8 +956,8 @@
   {
     "id": "jmeter-pubsub-sampler",
     "name": "GCP pubsub plugin",
-    "description": "Jmeter plugin to Publish and Subscribe Messages to GCP PubSub",
-    "screenshotUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler/blob/master/images/PublisherConfig.png",
+    "description": "Jmeter plugin to Publish and Subscribe Messages to GCP PubSub. <ul><li>Simply add a \"Publisher/Suscriber config \" and provide the service credentials</li><li>Add the Publisher/Subscriber sampler to send/read events</li><li><a href=\"https://rollno748.github.io/\">Author Details</a></li></ul>",
+    "screenshotUrl": "https://raw.githubusercontent.com/rollno748/Jmeter-pubsub-sampler/master/images/pubsub.png",
     "helpUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler",
     "vendor": "DigitalInsight-NCR",
     "markerClass": "com.di.jmeter.pubsub.sampler.PublisherSampler",
@@ -953,6 +975,9 @@
       },
       "1.1": {
         "downloadUrl": "https://github.com/rollno748/Jmeter-pubsub-sampler/releases/download/1.1/jmeter-pubsub-sampler-1.1.jar",
+        "libs": {
+           "gson": "https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar"
+        },
         "depends": [
           "jmeter-core"
         ]
@@ -1100,8 +1125,8 @@
   },
   {
     "id": "yongfa365-jmeter-plugins",
-    "name": "Markdown Table Data-driven Controller",
-    "description": "Support 'Markdown Table Data-driven' on GUI,Replace the 'While Controller','JsonPath Assertion'",
+    "name": "Markdown Table Data-driven Controller|JsonPath Assertion for sort",
+    "description": "<ul><li>'Markdown Table Data-driven Controller' on GUI,like 'While Controller' but easier.</li><li>'JsonPath Assertion' can assert elements sort 'Is Asc' or 'Is Desc' or 'All Match' or 'Any Match' or 'count between a and b'</li><li>'Console And Html Report' can gen beautiful html report and console report,It's useful for Jenkins saving log</li></ul>",
     "screenshotUrl": "https://raw.githubusercontent.com/yongfa365/yongfa365-jmeter-plugins/master/demo2.png",
     "helpUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins",
     "vendor": "yongfa365",
@@ -1110,7 +1135,9 @@
       "yongfa365.jmeter.control.gui.MarkdownTableDataDrivenControllerGui",
       "yongfa365.jmeter.control.MarkdownTableDataDrivenController",
       "yongfa365.jmeter.assertions.gui.JSONPathAssertionPlusGui",
-      "yongfa365.jmeter.assertions.JSONPathAssertionPlus"
+      "yongfa365.jmeter.assertions.JSONPathAssertionPlus",
+      "yongfa365.jmeter.result.gui.ConsoleAndHtmlReportGui",
+      "yongfa365.jmeter.result.ConsoleAndHtmlReport"
     ],
     "versions": {
       "1.0": {
@@ -1139,6 +1166,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "3.0.0": {
+        "changes": "Support Console And Html Report",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/3.0.0/yongfa365-jmeter-plugin-3.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -1157,6 +1191,12 @@
       "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
     ],
     "versions": {
+      "0.2.0": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.2.0/jmeter-datadog-backend-listener-0.2.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.1.0": {
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.1.0/jmeter-datadog-backend-listener-0.1.0.jar",
         "depends": [
@@ -1198,5 +1238,25 @@
         ]
       }
     }
-  }
+  },
+  {
+    "componentClasses": [
+        "com.di.jmeter.kafka.sampler.KafkaProducerConfig"
+    ],
+    "description": "Jmeter plugin to push events/messages to Kafka topics",
+    "helpUrl": "https://github.com/rollno748/di-kafkameter#readme",
+    "id": "di-kafkameter",
+    "markerClass": "com.di.jmeter.kafka.sampler.KafkaProducerSampler",
+    "name": "DI KafkaMeter",
+    "screenshotUrl": "https://clipground.com/images/kafka-logo-2.png",
+    "vendor": "DigitalInsight-NCR",
+    "versions": {
+        "1.0": {
+            "depends": [
+                "jmeter-core"
+            ],
+            "downloadUrl": "https://github.com/rollno748/di-kafkameter/releases/download/1.0/di-kafkameter-1.0.jar"
+        }
+    }
+}
 ]

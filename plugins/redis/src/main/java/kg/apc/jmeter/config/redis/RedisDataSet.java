@@ -21,9 +21,16 @@ package kg.apc.jmeter.config.redis;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
+import java.security.GeneralSecurityException;
 import java.util.ResourceBundle;
 
-import org.apache.commons.pool.impl.GenericObjectPool;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLParameters;
+import javax.net.ssl.SSLSocketFactory;
+
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.apache.jmeter.config.ConfigTestElement;
 import org.apache.jmeter.engine.event.LoopIterationEvent;
 import org.apache.jmeter.engine.event.LoopIterationListener;
@@ -35,6 +42,8 @@ import org.apache.jmeter.testelement.property.JMeterProperty;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterVariables;
+import org.apache.jmeter.util.JsseSSLManager;
+import org.apache.jmeter.util.SSLManager;
 import org.slf4j.LoggerFactory;
 import org.apache.jorphan.util.JMeterStopThreadException;
 import org.apache.jorphan.util.JOrphanUtils;
@@ -52,20 +61,6 @@ import redis.clients.jedis.exceptions.JedisDataException;
  */
 public class RedisDataSet extends ConfigTestElement 
     implements TestBean, LoopIterationListener, NoConfigMerge, TestStateListener {
-    public enum WhenExhaustedAction {
-        FAIL(GenericObjectPool.WHEN_EXHAUSTED_FAIL),
-        BLOCK(GenericObjectPool.WHEN_EXHAUSTED_BLOCK),
-        GROW(GenericObjectPool.WHEN_EXHAUSTED_GROW);
-        
-        private byte value;
-        private WhenExhaustedAction(byte value) {
-            this.value = value;
-        }
-        
-        public byte getValue() {
-            return value;
-        }
-    }
 
     public enum RedisDataType {
         REDIS_DATA_TYPE_LIST((byte)0),
@@ -86,10 +81,14 @@ public class RedisDataSet extends ConfigTestElement
     public static final Integer DEFAULT_PORT = Protocol.DEFAULT_PORT;
     public static final Integer DEFAULT_TIMEOUT = Protocol.DEFAULT_TIMEOUT;
     public static final Integer DEFAULT_DATABASE = Protocol.DEFAULT_DATABASE;
+    public static final Integer DEFAULT_MAX_ACTIVE = GenericObjectPoolConfig.DEFAULT_MAX_TOTAL;
+    public static final Integer DEFAULT_MAX_IDLE = GenericObjectPoolConfig.DEFAULT_MAX_IDLE;
+    public static final Integer DEFAULT_MIN_IDLE = GenericObjectPoolConfig.DEFAULT_MIN_IDLE;
 
     /* Connection configuration */
     private String host = "localhost";
     private String port = String.valueOf(DEFAULT_PORT);
+    private boolean ssl = false;
     private String timeout = String.valueOf(DEFAULT_TIMEOUT);
     private String password;
     private String database = String.valueOf(DEFAULT_DATABASE);
@@ -102,11 +101,11 @@ public class RedisDataSet extends ConfigTestElement
     private RedisDataType redisDataType = RedisDataType.REDIS_DATA_TYPE_LIST;
 
     /* Pool configuration */
-    private int maxIdle;
-    private int minIdle;
-    private int maxActive;
+    private int maxIdle = DEFAULT_MAX_IDLE;
+    private int minIdle = DEFAULT_MIN_IDLE;
+    private int maxActive = DEFAULT_MAX_ACTIVE;
     private long maxWait;
-    private WhenExhaustedAction whenExhaustedAction = WhenExhaustedAction.GROW;
+    private boolean blockWhenExhausted;
     private boolean testOnBorrow;
     private boolean testOnReturn;
     private boolean testWhileIdle;
@@ -226,27 +225,7 @@ public class RedisDataSet extends ConfigTestElement
     public void setProperty(JMeterProperty property) {
         if (property instanceof StringProperty) {
             final String pn = property.getName();
-            if (pn.equals("whenExhaustedAction")) {
-                final Object objectValue = property.getObjectValue();
-                try {
-                    final BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());
-                    final ResourceBundle rb = (ResourceBundle) beanInfo.getBeanDescriptor().getValue(GenericTestBeanCustomizer.RESOURCE_BUNDLE);
-                    for(Enum<WhenExhaustedAction> e : WhenExhaustedAction.values()) {
-                        final String propName = e.toString();
-                        if (objectValue.equals(rb.getObject(propName))) {
-                            final int tmpMode = e.ordinal();
-                            if (log.isDebugEnabled()) {
-                                log.debug("Converted " + pn + "=" + objectValue + " to mode=" + tmpMode  + " using Locale: " + rb.getLocale());
-                            }
-                            super.setProperty(pn, tmpMode);
-                            return;
-                        }
-                    }
-                    log.warn("Could not convert " + pn + "=" + objectValue + " using Locale: " + rb.getLocale());
-                } catch (IntrospectionException e) {
-                    log.error("Could not find BeanInfo", e);
-                }
-            } else if (pn.equals("redisDataType")) {
+            if (pn.equals("redisDataType")) {
                 final Object objectValue = property.getObjectValue();
                 try {
                     final BeanInfo beanInfo = Introspector.getBeanInfo(this.getClass());
@@ -274,11 +253,11 @@ public class RedisDataSet extends ConfigTestElement
     @Override
     public void testStarted(String distributedHost) {
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxActive(getMaxActive());
+        config.setMaxTotal(getMaxActive());
         config.setMaxIdle(getMaxIdle());
         config.setMinIdle(getMinIdle());
-        config.setMaxWait(getMaxWait());
-        config.setWhenExhaustedAction((byte)getWhenExhaustedAction());
+        config.setMaxWaitMillis(getMaxWait());
+        config.setBlockWhenExhausted(getBlockWhenExhausted());
         config.setTestOnBorrow(getTestOnBorrow());
         config.setTestOnReturn(getTestOnReturn());
         config.setTestWhileIdle(getTestWhileIdle());
@@ -303,7 +282,21 @@ public class RedisDataSet extends ConfigTestElement
         if(!JOrphanUtils.isBlank(this.password)) {
             password = this.password;
         }
-        this.pool = new JedisPool(config, this.host, port, timeout, password, database);
+        SSLSocketFactory sslSocketFactory = null;
+        SSLParameters sslParameters = null;
+        HostnameVerifier hostnameVerifier = null;
+        if (this.ssl) {
+            SSLManager sslManager = SSLManager.getInstance();
+            try {
+                SSLContext sslContext = ((JsseSSLManager)sslManager).getContext();
+                sslSocketFactory = sslContext.getSocketFactory();
+                sslParameters = sslContext.getDefaultSSLParameters();
+                hostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
+            }catch(GeneralSecurityException ex) {
+                throw new IllegalStateException("Unable to get SSLContext from SSLManager", ex);
+            }
+        }
+        this.pool = new JedisPool(config, this.host, port, timeout, password, database, this.ssl, sslSocketFactory, sslParameters, hostnameVerifier);
     }
 
     /**
@@ -332,6 +325,20 @@ public class RedisDataSet extends ConfigTestElement
      */
     public void setPort(String port) {
         this.port = port;
+    }
+
+    /**
+     * @return the ssl
+     */
+    public boolean getSsl() {
+        return ssl;
+    }
+
+    /**
+     * @param ssl the ssl to set
+     */
+    public void setSsl(boolean ssl) {
+        this.ssl = ssl;
     }
 
     /**
@@ -475,17 +482,17 @@ public class RedisDataSet extends ConfigTestElement
     }
 
     /**
-     * @return the whenExhaustedAction
+     * @return the blockWhenExhausted
      */
-    public int getWhenExhaustedAction() {
-        return whenExhaustedAction.ordinal();
+    public boolean getBlockWhenExhausted() {
+        return blockWhenExhausted;
     }
 
     /**
-     * @param whenExhaustedAction the whenExhaustedAction to set
+     * @param blockWhenExhausted the blockWhenExhausted to set
      */
-    public void setWhenExhaustedAction(int whenExhaustedAction) {
-        this.whenExhaustedAction = WhenExhaustedAction.values()[whenExhaustedAction];
+    public void setBlockWhenExhausted(boolean blockWhenExhausted) {
+        this.blockWhenExhausted = blockWhenExhausted;
     }
 
     /**

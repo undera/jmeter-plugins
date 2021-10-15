@@ -23,4 +23,4 @@ Everyone who provided pull request or other contribution, deserves mentioning on
   * BlazeMeter feat. Dynatrace - Arrivals Thread Groups and Weighted Switch Controller
   * Pascal Treilhes - added connection resilience to [JMXMon]
   * Ori Marko - Add caseFormat function to [Custom JMeter Function]
-  * Mohamed Ibrahim - GCP PubSub Plugin 
+  * Mohamed Ibrahim - GCP PubSub plugin, DI-KafkaMeter plugin

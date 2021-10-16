@@ -1079,6 +1079,16 @@
       "kg.apc.jmeter.vizualizers.ResultsComparatorGui"
     ],
     "versions" : {
+    	"2.1" : {
+			"changes": "Addition of Pass/Fail testing criteria.",
+    		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.1.0/jmeter-plugins-resultscomparator-2.1.jar",
+            "libs" : {
+            	"jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
+            },
+            "depends" : [
+				"jmeter-core"
+            ]
+        },
     	"1.0.1" : {
     		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/V3.0.0/jmeter-plugins-resultscomparator-1.0.1.jar",
             "libs" : {

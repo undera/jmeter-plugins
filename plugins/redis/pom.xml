@@ -12,7 +12,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-redis</artifactId>
-    <version>0.3</version>
+    <version>0.5</version>
 
     <name>Redis</name>
     <description>Redis</description>
@@ -62,33 +62,13 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>2.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-pool</groupId>
-            <artifactId>commons-pool</artifactId>
-            <version>1.6</version>
-        </dependency>
-        <dependency>
-            <groupId>com.io7m.xom</groupId>
-            <artifactId>xom</artifactId>
-            <version>1.2.10</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.9.2</version>
+            <version>3.6.3</version>
         </dependency>
 
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
-            <version>0.3</version>
+            <version>0.6</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/ai.grakn/redis-mock -->

@@ -58,6 +58,7 @@ like [SettingsPanel GUI settings] do with optional parameters:
 || {{{--exclude-label-regex <true/false>}}} || exclude samples using regular expression ||
 || {{{--start-offset <sec>}}} || include in report only samples with (timestamp - relativeStartTime) > startOffset ||
 || {{{--end-offset <sec>}}} || include in report only samples with (timestamp - relativeStartTime) < endOffset ||
+|| {{{--yAxisLabel <String>}}} || Set Y-Axis label on charts ||
 
 == Plugin Type Classes ==
 Make note that you need to install corresponding plugins set to have Extras plugins available in CMD.
@@ -82,3 +83,7 @@ Most of class names are self-explanatory:
   * TransactionsPerSecond
   * PageDataExtractorOverTime
   * MergeResults = [MergeResults] Command Line Merge Tool to simplify the comparison of two or more load tests, need properties file (like merge-results.properties)
+
+== Maven Plugin ==
+You could also generate graphs with the jmeter-graph-tool-maven plugin 
+[https://github.com/vdaburon/jmeter-graph-tool-maven-plugin]

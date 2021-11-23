@@ -13,11 +13,14 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
     protected JTextField logFile = new JTextField();
     protected JTextField iterations = new JTextField();
     protected JTextField concurrLimit = new JTextField();
+    protected JTextField propertiesIdentifier = new JTextField();
     protected ButtonGroup unitGroup = new ButtonGroup();
     protected JRadioButton unitSeconds = new JRadioButton("seconds");
     protected JRadioButton unitMinutes = new JRadioButton("minutes");
+    protected JCheckBox useIdentifier = new JCheckBox("useIdentifier");
+    protected boolean showIdentifier;
 
-    public AdditionalFieldsPanel(boolean showConcurrencyLimit) {
+    public AdditionalFieldsPanel(boolean showConcurrencyLimit, boolean showIdentifier) {
         JPanel groupPanel = new HorizontalPanel();
         unitMinutes.setActionCommand(ArrivalsThreadGroup.UNIT_MINUTES);
         unitSeconds.setActionCommand(ArrivalsThreadGroup.UNIT_SECONDS);
@@ -27,8 +30,15 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
         groupPanel.add(unitSeconds);
         add("Time Unit: ", groupPanel);
 
+
         add("Thread Iterations Limit: ", iterations);
+
         add("Log Threads Status into File: ", logFile);
+        this.showIdentifier = showIdentifier;
+        if (this.showIdentifier) {
+            add("Load from Properties", useIdentifier);
+            add("Properties identifier:", propertiesIdentifier);
+        }
 
         if (showConcurrencyLimit) {
             add("Concurrency Limit: ", concurrLimit);
@@ -39,6 +49,10 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
         logFile.setText(tg.getLogFilename());
         iterations.setText(tg.getIterationsLimit());
         concurrLimit.setText("1000");
+        if (showIdentifier) {
+            useIdentifier.setSelected(tg.getUseIdentifier());
+            propertiesIdentifier.setText(tg.getIdentifier());
+        }
         unitMinutes.setSelected(true);
         if (tg instanceof ArrivalsThreadGroup) {
             ArrivalsThreadGroup atg = (ArrivalsThreadGroup) tg;
@@ -57,6 +71,10 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
     public void UItoModel(AbstractDynamicThreadGroup tg, JMeterVariableEvaluator evaluator) {
         tg.setLogFilename(evaluator.evaluate(logFile.getText()));
         tg.setIterationsLimit(evaluator.evaluate(iterations.getText()));
+        if (showIdentifier) {
+            tg.setUseIdentifier(useIdentifier.isSelected());
+            tg.setIdentifier(evaluator.evaluate(propertiesIdentifier.getText()));
+        }
         if (unitGroup.getSelection() != null) {
             tg.setUnit(unitGroup.getSelection().getActionCommand());
         }
@@ -71,6 +89,7 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
         logFile.setText("");
         iterations.setText("");
         concurrLimit.setText("1000");
+        propertiesIdentifier.setText("");
         unitMinutes.setSelected(true);
     }
 

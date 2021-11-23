@@ -6,8 +6,8 @@ import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.PropertyIterator;
 import org.apache.jmeter.threads.ListenerNotifier;
 import org.apache.jorphan.collections.ListedHashTree;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FreeFormArrivalsThreadStarter extends ArrivalsThreadStarter {
     private static final Logger log = LoggerFactory.getLogger(FreeFormArrivalsThreadStarter.class);
@@ -25,7 +25,12 @@ public class FreeFormArrivalsThreadStarter extends ArrivalsThreadStarter {
         int offset = 0;
         while (it.hasNext()) {
             CollectionProperty record = (CollectionProperty) it.next();
-            double chunkLen = record.get(2).getDoubleValue() * arrivalsTG.getUnitFactor();
+            double chunkLen;
+            if (arrivalsTG.getUseIdentifier()) {
+                chunkLen = record.get(2).getDoubleValue();
+            } else {
+                chunkLen = record.get(2).getDoubleValue() * arrivalsTG.getUnitFactor();
+            }
             double timeProgress = this.rollingTime / 1000.0 - startTime;
             double chunkProgress = (timeProgress - offset) / chunkLen;
             offset += chunkLen;

@@ -52,7 +52,7 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGu
 
     @Override
     protected AdditionalFieldsPanel getAdditionalFieldsPanel() {
-        return new AdditionalFieldsPanel(true);
+        return new AdditionalFieldsPanel(true, true);
     }
 
     protected void setChartPropertiesFromTG(AbstractDynamicThreadGroup tg) {
@@ -100,6 +100,7 @@ public class FreeFormArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGu
             double to = evaluator.getDouble(record.get(1));
             double during = evaluator.getDouble(record.get(2));
             row.add(offset * 1000, from);
+
             offset += during * tg.getUnitFactor();
             row.add(offset * 1000, to);
             totalArrivals += during * from + during * (to - from) / 2;

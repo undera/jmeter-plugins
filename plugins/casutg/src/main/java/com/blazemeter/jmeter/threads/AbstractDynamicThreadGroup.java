@@ -5,9 +5,10 @@ import org.apache.jmeter.engine.StandardJMeterEngine;
 import org.apache.jmeter.testelement.property.TestElementProperty;
 import org.apache.jmeter.threads.JMeterThread;
 import org.apache.jmeter.threads.ListenerNotifier;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
@@ -15,9 +16,20 @@ import java.util.Set;
 public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGroupModel {
     private static final Logger log = LoggerFactory.getLogger(AbstractDynamicThreadGroup.class);
     public static final String UNIT = "Unit";
+    private static final String IDENTIFIER = "Identifier";
+    private static final String USE_IDENTIFIER = "use_identifier";
     public static final String UNIT_MINUTES = "M";
     public static final String UNIT_SECONDS = "S";
     protected transient Thread threadStarter;
+
+
+    public String getIdentifier() {
+        return getPropertyAsString(IDENTIFIER);
+    }
+
+    public void setIdentifier(String value) {
+        setProperty(IDENTIFIER, value);
+    }
 
     public AbstractDynamicThreadGroup() {
         super();
@@ -36,7 +48,7 @@ public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGr
 
     @Override
     public void threadFinished(JMeterThread jMeterThread) {
-        if(log.isDebugEnabled()) {
+        if (log.isDebugEnabled()) {
             log.debug("threadFinished: " + jMeterThread.getThreadName());
         }
         if (jMeterThread instanceof DynamicThread) {
@@ -160,13 +172,31 @@ public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGr
         return getPropertyAsString(UNIT);
     }
 
+    public String getOverriddenTimeUnit() {
+        String identifyer = getIdentifier() + ".timeunit";
+        String property = JMeterUtils.getProperty(identifyer);
+        if (property == null) {
+            log.warn("Identifyer not set:" + identifyer + " Using default timeFrame: S");
+            property = "S";
+        }
+        return property;
+    }
+
     public double getUnitFactor() {
-        if (getUnit().equals(UNIT_MINUTES)) {
+        boolean isUseMinutes = getUnit().equals(UNIT_MINUTES);
+        if (getUseIdentifier()) {
+            String unitFactor = getOverriddenTimeUnit();
+            if (unitFactor.equalsIgnoreCase("M")) {
+                isUseMinutes = true;
+            } else if (unitFactor.equalsIgnoreCase("S")) {
+                isUseMinutes = false;
+            }
+        }
+        if (isUseMinutes) {
             return 60.0;
         } else {
             return 1;
         }
-
     }
 
     public String getUnitStr() {
@@ -177,5 +207,13 @@ public abstract class AbstractDynamicThreadGroup extends AbstractDynamicThreadGr
     @Override
     public void startNextLoop() {
         ((VirtualUserController) getSamplerController()).startNextLoop();
+    }
+
+    public boolean getUseIdentifier() {
+        return getPropertyAsBoolean(USE_IDENTIFIER);
+    }
+
+    public void setUseIdentifier(boolean useIdentifier) {
+        setProperty(USE_IDENTIFIER, useIdentifier);
     }
 }

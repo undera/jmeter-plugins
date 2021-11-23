@@ -14,6 +14,15 @@ public class FreeFormLoadPanel extends Grid implements ParamsPanel {
     private static final Class[] columnClasses = new Class[]{String.class, String.class, String.class};
     private static final String[] defaultValues = new String[]{"1", "10", "60"};
 
+
+    public static String[] getColumnIdentifiers() {
+        return columnIdentifiers;
+    }
+
+    public static Class[] getColumnClasses() {
+        return columnClasses;
+    }
+
     public FreeFormLoadPanel() {
         super("Threads Schedule", columnIdentifiers, columnClasses, defaultValues);
     }

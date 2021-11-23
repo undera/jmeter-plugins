@@ -30,7 +30,7 @@ public class ConcurrencyThreadGroupGui extends AbstractDynamicThreadGroupGui {
 
     @Override
     protected AdditionalFieldsPanel getAdditionalFieldsPanel() {
-        return new AdditionalFieldsPanel(false);
+        return new AdditionalFieldsPanel(false, false);
     }
 
 

@@ -32,7 +32,7 @@ public class ArrivalsThreadGroupGui extends AbstractDynamicThreadGroupGui {
 
     @Override
     protected AdditionalFieldsPanel getAdditionalFieldsPanel() {
-        return new AdditionalFieldsPanel(true);
+        return new AdditionalFieldsPanel(true, false);
     }
 
 

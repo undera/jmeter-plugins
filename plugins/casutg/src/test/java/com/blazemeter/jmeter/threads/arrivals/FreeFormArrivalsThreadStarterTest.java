@@ -5,13 +5,17 @@ import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.StringProperty;
 import org.apache.jmeter.threads.ListenerNotifier;
+import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.ListedHashTree;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
+
 
 public class FreeFormArrivalsThreadStarterTest {
     private static final Logger log = LoggerFactory.getLogger(FreeFormArrivalsThreadStarterTest.class);
@@ -19,6 +23,38 @@ public class FreeFormArrivalsThreadStarterTest {
     @BeforeClass
     public static void setUp() throws Exception {
         TestJMeterUtils.createJmeterEnv();
+    }
+
+
+    @Test
+    public void testCustomProperties() {
+        CollectionProperty sched = new CollectionProperty();
+        sched.addProperty(getRow(1, 10, 30));
+        sched.addProperty(getRow(10, 10, 5));
+        sched.addProperty(getRow(10, 1, 15));
+//        sched.addProperty(new StringProperty("arrivals.schedule.1", "spawn(1,10,30s) spawn(10,10,5s) spawn(10,1,15s)"));
+        JMeterUtils.getJMeterProperties().put("arrivals.schedule.1", "spawn(1,10,30s) spawn(10,10,5s) spawn(10,1,15s)");
+        FreeFormArrivalsThreadGroup atg = new FreeFormArrivalsThreadGroup();
+        atg.setUseIdentifier(true);
+        atg.setIdentifier("arrivals.schedule.1");
+        atg.setProperty(sched);
+        FreeFormArrivalsThreadStarterEmul obj = new FreeFormArrivalsThreadStarterEmul(atg);
+        List<Double> resultList = new ArrayList<>();
+
+
+        for (int n = 0; n < 60; n++) {
+            resultList.add(obj.getCurrentRate());
+            log.error("Rate " + n + ": " + obj.getCurrentRate());
+            obj.addRollingTime(1000);
+        }
+
+//        List<Double> expectedList = Arrays.asList(1.4, 1.3, 1.2);
+//
+//        assertThat(resultList)
+//                .containsExactlyElementsOf(expectedList);
+////        assertThat(actual, contains(expectedList));
+////
+////        Assert.assertThat(resultList, (Matcher<? super List<Double>>) contains(expectedList));
     }
 
     @Test
@@ -32,7 +68,7 @@ public class FreeFormArrivalsThreadStarterTest {
         atg.setProperty(sched);
         FreeFormArrivalsThreadStarterEmul obj = new FreeFormArrivalsThreadStarterEmul(atg);
         for (int n = 0; n < 60; n++) {
-            log.info("Rate " + n + ": " + obj.getCurrentRate());
+            log.error("Rate " + n + ": " + obj.getCurrentRate());
             obj.addRollingTime(1000);
         }
     }

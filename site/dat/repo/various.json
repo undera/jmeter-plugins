@@ -757,6 +757,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "8.0.2": {
+        "changes": "Bugfix version in Installer and HLS non master playlist detection",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.2/ubik-jmeter-videostreaming-plugin-8.0.2.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "8.0.1": {
         "changes": "Bugfix version in Dash",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.1/ubik-jmeter-videostreaming-plugin-8.0.1.jar",

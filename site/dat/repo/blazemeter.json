@@ -659,6 +659,18 @@
       }
     }
   },
+  {
+    "id": "bzm-http2",
+    "name": "BlazeMeter - HTTP/2 Plugin",
+    "description": "HTTP/2 protocol sampler",
+    "helpUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/blob/master/README.md",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/jmeter-http2-plugin/master/syncRequest.png",
+    "vendor": "BlazeMeter",
+    "installerClass": "com.blazemeter.jmeter.http2.Installer",
+    "markerClass": "com.blazemeter.jmeter.http2.sampler.HTTP2Sampler",
+    "componentClasses": [
+      "com.blazemeter.jmeter.http2.sampler.gui.HTTP2SamplerGui"
+    ],
     "versions": {
       "1.0": {
         "downloadUrl": "https://github.com/Blazemeter/jmeter-bzm-plugins/releases/download/http2-1.0/jmeter-bzm-http2-1.0.jar",
@@ -814,6 +826,25 @@
           "jetty-http>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/jetty-http-9.4.35.v20201120.jar",
           "jetty-io>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/jetty-io-9.4.35.v20201120.jar",
           "jetty-util>=9.4.35.v20201120": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v1.6.1/jetty-util-9.4.35.v20201120.jar"
+        }
+      },
+      "2.0": {
+        "changes": "Major release using as baseline Java 11 and Jetty 11, proxy support and many other new functionalities!",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/jmeter-bzm-http2-2.0.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/http2-client-11.0.6.jar",
+          "http2-common>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/http2-common-11.0.6.jar",
+          "http2-hpack>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/http2-hpack-11.0.6.jar",
+          "http2-http-client-transport>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/http2-http-client-transport-11.0.6.jar",
+          "jetty-alpn-client>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/jetty-alpn-client-11.0.6.jar",
+          "jetty-alpn-java-client>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/jetty-alpn-java-client-11.0.6.jar",
+          "jetty-client>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/jetty-client-11.0.6.jar",
+          "jetty-http>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/jetty-http-11.0.6.jar",
+          "jetty-io>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/jetty-io-11.0.6.jar",
+          "jetty-util>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/jetty-util-11.0.6.jar"
         }
       }
     }

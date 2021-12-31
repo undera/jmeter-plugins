@@ -1263,6 +1263,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.0": {
+        "changes": "Auto generate request data base on proto file, supporting JSON string.",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.2.0/jmeter-grpc-request-v1.2.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

@@ -1200,6 +1200,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "3.0.1": {
+        "changes": "ui cn-->  en",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/3.0.1/yongfa365-jmeter-plugin-3.0.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

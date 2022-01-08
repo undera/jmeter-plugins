@@ -1277,6 +1277,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.1": {
+        "changes": "JDK provider support NPN_AND_ALPN protocol when running with SSL.",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.2.1/jmeter-grpc-request-v1.2.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

@@ -866,7 +866,7 @@
         "changes": "Redesigned reporting to have live reporting and reporting per request type. New video metric. DASH : Added support to the Descriptor of the AdaptationSet, Added support for attribute suggestedPresentationDelay",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.0.0/ubik-jmeter-videostreaming-plugin-7.0.0.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
-      }, 
+      },
     "6.6.0": {
         "changes": "Let user choose the audio and subtitles track by the language/name of the track, handle EXT-X-MEDIA, handle subtitles, improve HTTPS performances, bugfixes",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/6.6.0/ubik-jmeter-videostreaming-plugin-6.6.0.jar",
@@ -1088,7 +1088,7 @@
 			"depends": [
 				"jmeter-core"
 			]
-		}    
+		}
 	}
   },
   {
@@ -1255,7 +1255,7 @@
     "vendor": "Datadog",
     "markerClass": "vn.zalopay.benchmark.GRPCSamplerGui",
     "componentClasses": [
-      "vn.zalopay.benchmarkGRPCSampler."
+      "vn.zalopay.benchmarkGRPCSampler"
     ],
     "versions": {
       "1.0.0": {
@@ -1313,5 +1313,25 @@
             "downloadUrl": "https://github.com/rollno748/di-kafkameter/releases/download/1.0/di-kafkameter-1.0.jar"
         }
     }
-}
+  },
+  {
+    "id": "schema-assertion",
+    "name": "ApacheJmeter Schema Assertion",
+    "description": "Validate response field types based on JSON/YAML Schema",
+    "screenshotUrl": "https://cdn.jsdelivr.net/gh/yeshan333/jsDelivrCDN@main/demo1.jpg",
+    "helpUrl": "https://github.com/yeshan333/ApacheJmeter_Schema_Assertion",
+    "vendor": "yeshan333",
+    "markerClass": "com.github.yeshan333.jmeter.assertions.gui.SchemaAssertionGui",
+    "componentClasses": [
+      "com.github.yeshan333.jmeter.assertions.SchemaAssertion"
+    ],
+    "versions": {
+      "1.0.0": {
+        "downloadUrl": "https://github.com/yeshan333/ApacheJmeter_Schema_Assertion/releases/download/v1.0.0/ApacheJmeter_Schema_Assertion-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
+  }
 ]

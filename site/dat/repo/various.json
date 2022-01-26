@@ -1255,7 +1255,7 @@
     "vendor": "Datadog",
     "markerClass": "vn.zalopay.benchmark.GRPCSamplerGui",
     "componentClasses": [
-      "vn.zalopay.benchmarkGRPCSampler."
+      "vn.zalopay.benchmarkGRPCSampler"
     ],
     "versions": {
       "1.0.0": {
@@ -1315,7 +1315,7 @@
     }
   },
   {
-    "id": "jmeter-schema-assertion",
+    "id": "schema-assertion",
     "name": "ApacheJmeter Schema Assertion",
     "description": "Validate response field types based on JSON/YAML Schema",
     "screenshotUrl": "https://cdn.jsdelivr.net/gh/yeshan333/jsDelivrCDN@main/demo1.jpg",
@@ -1323,7 +1323,7 @@
     "vendor": "yeshan333",
     "markerClass": "com.github.yeshan333.jmeter.assertions.gui.SchemaAssertionGui",
     "componentClasses": [
-      "com.github.yeshan333.jmeter.assertions.SchemaAssertion."
+      "com.github.yeshan333.jmeter.assertions.SchemaAssertion"
     ],
     "versions": {
       "1.0.0": {

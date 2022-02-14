@@ -1343,5 +1343,31 @@
         ]
       }
     }
+  },
+  {
+    "id": "jmeter-dynatrace-backend-listener",
+    "name": "Dynatrace Backend Listener",
+    "description": "Send JMeter test results to Dynatrace",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/dynatrace-oss/jmeter-dynatrace-plugin",
+    "vendor": "Dynatrace",
+    "markerClass": "com.dynatrace.jmeter.plugins.MintBackendListener",
+    "componentClasses": [
+      "com.dynatrace.jmeter.plugins.MintMetricSender",
+      "com.dynatrace.mint.MintDimension",
+      "com.dynatrace.mint.MintMetricsLine",
+      "com.dynatrace.mint.MintGauge",
+      "com.dynatrace.mint.SchemalessMetricSanitizer",
+      "com.dynatrace.jmeter.plugins.MintConnectionException"
+    ],
+    "versions": {
+      "1.8.0": {
+        "downloadUrl": "https://github.com/dynatrace-oss/jmeter-dynatrace-plugin/releases/download/1.8.0/jmeter-dynatrace-plugin-1.8.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      }
+    }
   }
 ]

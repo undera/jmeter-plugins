@@ -18,3 +18,25 @@ This plugin was inspired by _[http://www.dynatrace.com/?utm_source=jmplinnerpage
 Free-Form Arrivals TG has the same idea of "arriving users" as [ArrivalsThreadGroup Arrivals Thread Group]. It just offers free-form schedule capabilities.
 
 [/img/wiki/FreeFormArrivalsThreadGroup.png]
+
+== Additional behavior ==
+
+Added {{{Use identification property for profile}}} checkbox, that enable to use separate load profile for each FreeFormArrivals Thread Group in your project.
+It simplefyes load profile configuration in complex profiles, when you need to use many FreeFormArrivals Thread Groups with different load profiles.
+Now you can configure them with properties individual.
+
+
+How to use:
+  * Enable  {{{Use identification property for profile}}} check Box.
+  * Type property name inside Properties Identifier text Box: Example: {{{operation.one.loadprofile}}}
+  * When start Jmeter add additional {{{-J operation.one.loadprofile=spawn(1,100,1h) -J operation.one.loadprofile.timeunit=S}}}. Or add these properties to user.properties file.
+
+Property Syntax example:
+  * {{{operation.one.loadprofile=spawn(1,100,60m) spawn(100,100,1h) spawn(spawn(100,1,3600s)}}} - This property will create test with duration of 3 Hours.
+  * Awailible timeframes: {{{s - seconds, m - minutes, h - hours}}}
+  * {{{operation.one.loadprofile.timeunit=M}}} - Will be used Minute for timeunit in load profile. spawn(100,100,1h) - will be 100 thread will be created per minute.
+
+Known issues:
+  * Current load profile ui configuration will be overriden by configuration from property.
+  * Load Graph is displayed, based on selected timeunit from UI. But it will be not used in real test. So - test duration will be calculated incorrect in UI. But it works fine in real tests:
+  * When use property: default timeUnit is Seconds. To specify timeUnit, run Jmeter with additional jvm property with {{{[cpecified property name].timeunit=M}}}.

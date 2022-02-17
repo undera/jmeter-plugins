@@ -17,7 +17,7 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
     protected ButtonGroup unitGroup = new ButtonGroup();
     protected JRadioButton unitSeconds = new JRadioButton("seconds");
     protected JRadioButton unitMinutes = new JRadioButton("minutes");
-    protected JCheckBox useIdentifier = new JCheckBox("useIdentifier");
+    protected JCheckBox useIdentifier = new JCheckBox("Use identification property for profile");
     protected boolean showIdentifier;
 
     public AdditionalFieldsPanel(boolean showConcurrencyLimit, boolean showIdentifier) {
@@ -90,6 +90,7 @@ public class AdditionalFieldsPanel extends ArrangedLabelFieldPanel implements Pa
         iterations.setText("");
         concurrLimit.setText("1000");
         propertiesIdentifier.setText("");
+        useIdentifier.setSelected(false);
         unitMinutes.setSelected(true);
     }
 

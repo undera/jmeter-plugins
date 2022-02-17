@@ -32,7 +32,6 @@ public class FreeFormArrivalsThreadStarterTest {
         sched.addProperty(getRow(1, 10, 30));
         sched.addProperty(getRow(10, 10, 5));
         sched.addProperty(getRow(10, 1, 15));
-//        sched.addProperty(new StringProperty("arrivals.schedule.1", "spawn(1,10,30s) spawn(10,10,5s) spawn(10,1,15s)"));
         JMeterUtils.getJMeterProperties().put("arrivals.schedule.1", "spawn(1,10,30s) spawn(10,10,5s) spawn(10,1,15s)");
         FreeFormArrivalsThreadGroup atg = new FreeFormArrivalsThreadGroup();
         atg.setUseIdentifier(true);
@@ -48,13 +47,6 @@ public class FreeFormArrivalsThreadStarterTest {
             obj.addRollingTime(1000);
         }
 
-//        List<Double> expectedList = Arrays.asList(1.4, 1.3, 1.2);
-//
-//        assertThat(resultList)
-//                .containsExactlyElementsOf(expectedList);
-////        assertThat(actual, contains(expectedList));
-////
-////        Assert.assertThat(resultList, (Matcher<? super List<Double>>) contains(expectedList));
     }
 
     @Test
@@ -68,7 +60,7 @@ public class FreeFormArrivalsThreadStarterTest {
         atg.setProperty(sched);
         FreeFormArrivalsThreadStarterEmul obj = new FreeFormArrivalsThreadStarterEmul(atg);
         for (int n = 0; n < 60; n++) {
-            log.error("Rate " + n + ": " + obj.getCurrentRate());
+            log.info("Rate " + n + ": " + obj.getCurrentRate());
             obj.addRollingTime(1000);
         }
     }

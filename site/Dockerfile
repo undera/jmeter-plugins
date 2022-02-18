@@ -17,6 +17,7 @@ RUN echo   'AllowOverride All' >> /etc/apache2/conf-enabled/99local.conf
 RUN echo '</Directory>' >> /etc/apache2/conf-enabled/99local.conf
 
 WORKDIR /var/www/html
-ENTRYPOINT composer upgrade && service apache2 start && tail -f /var/log/apache2/*.log
+ENTRYPOINT ln -sf vendor/undera/pwe/.htaccess && composer upgrade && service apache2 start && tail -f /var/log/apache2/*.log
 
 # Implies we mount /site dir into /var/www/html
+# docker build . -t jpgc && docker run -it -p 8080:80 -v `pwd`:/var/www/html jpgc

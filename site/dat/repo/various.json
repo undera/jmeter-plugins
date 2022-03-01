@@ -201,7 +201,7 @@
           "jmeter-http"
         ],
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.5/jmeter-plugins-cmn-jmeter-0.5.jar"
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
         }
       }
     }
@@ -324,7 +324,7 @@
         "changes": "<ul><li>Replaced ssh client library <a href=\"http://www.jcraft.com/jsch/\">JSch</a> with <a href=\"https://mina.apache.org/sshd-project/\">Apache Mina SSHD</a></li><li>ProxyJump support</li><li>Bug fixes</li></ul>",
         "downloadUrl": "https://github.com/tilln/jmeter-sshmon/releases/download/1.3/jmeter-sshmon-1.3.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar",
+          "jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
           "sshd-core>=2.6": "https://search.maven.org/remotecontent?filepath=org/apache/sshd/sshd-core/2.6.0/sshd-core-2.6.0.jar",
           "sshd-common>=2.6": "https://search.maven.org/remotecontent?filepath=org/apache/sshd/sshd-common/2.6.0/sshd-common-2.6.0.jar"
         }
@@ -470,7 +470,7 @@
       "2.0": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-hadoop/2.0/jmeter-plugins-hadoop-2.0.jar",
         "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar",
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
           "hbase": "https://search.maven.org/remotecontent?filepath=org/apache/hbase/hbase/0.94.5/hbase-0.94.5.jar",
           "zookeeper": "https://search.maven.org/remotecontent?filepath=org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar",
           "commons-beanutils": "https://search.maven.org/remotecontent?filepath=commons-beanutils/commons-beanutils/1.8.3/commons-beanutils-1.8.3.jar",
@@ -757,6 +757,26 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "8.0.4": {
+        "changes": "Live DASH: Introduce option to follow redirect URL for Manifest Reload",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.4/ubik-jmeter-videostreaming-plugin-8.0.4.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "8.0.3": {
+        "changes": "Bugfix version",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.3/ubik-jmeter-videostreaming-plugin-8.0.3.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "8.0.2": {
+        "changes": "Bugfix version in Installer and HLS non master playlist detection",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.2/ubik-jmeter-videostreaming-plugin-8.0.2.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "8.0.1": {
+        "changes": "Bugfix version in Dash",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.1/ubik-jmeter-videostreaming-plugin-8.0.1.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "8.0.0": {
         "changes": "Introduce support for Apple Low-Latency HLS (LL-HLS), see https://www.ubik-ingenierie.com/blog/performance-testing-low-latency-hls-servers/",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.0/ubik-jmeter-videostreaming-plugin-8.0.0.jar",
@@ -856,7 +876,7 @@
         "changes": "Redesigned reporting to have live reporting and reporting per request type. New video metric. DASH : Added support to the Descriptor of the AdaptationSet, Added support for attribute suggestedPresentationDelay",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/7.0.0/ubik-jmeter-videostreaming-plugin-7.0.0.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
-      }, 
+      },
     "6.6.0": {
         "changes": "Let user choose the audio and subtitles track by the language/name of the track, handle EXT-X-MEDIA, handle subtitles, improve HTTPS performances, bugfixes",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/6.6.0/ubik-jmeter-videostreaming-plugin-6.6.0.jar",
@@ -902,6 +922,20 @@
     "vendor": "adrianmo",
     "markerClass": "io.github.adrianmo.jmeter.backendlistener.azure.AzureBackendClient",
     "versions": {
+      "0.2.8": {
+        "changes": "Add new logSampleData option for logging response data.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.8/jmeter.backendlistener.azure-0.2.8.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "0.2.7": {
+        "changes": "Add new logResponseData option for logging response data.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.7/jmeter.backendlistener.azure-0.2.7.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.2.6": {
         "changes": "Add support for connection string and deprecate Instrumentation Key.",
         "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.6/jmeter.backendlistener.azure-0.2.6.jar",
@@ -1020,7 +1054,7 @@
     	"1.0.1" : {
     		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/V2.0.0/jmeter-plugins-apdexcalculator-1.0.1.jar",
             "libs" : {
-            	"jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
+            	"jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
             },
             "depends" : [
 				"jmeter-core"
@@ -1048,7 +1082,7 @@
 				"jmeter-core"
 			],
 			"libs": {
-				"jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
 			}
         },
 		"1.0.1": {
@@ -1064,7 +1098,7 @@
 			"depends": [
 				"jmeter-core"
 			]
-		}    
+		}
 	}
   },
   {
@@ -1083,7 +1117,7 @@
 			"changes": "Addition of Pass/Fail testing criteria.",
     		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.1.0/jmeter-plugins-resultscomparator-2.1.jar",
             "libs" : {
-            	"jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
+            	"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
             },
             "depends" : [
 				"jmeter-core"
@@ -1183,6 +1217,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "3.0.1": {
+        "changes": "ui cn-->  en",
+        "downloadUrl": "https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/3.0.1/yongfa365-jmeter-plugin-3.0.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -1224,7 +1265,7 @@
     "vendor": "Datadog",
     "markerClass": "vn.zalopay.benchmark.GRPCSamplerGui",
     "componentClasses": [
-      "vn.zalopay.benchmarkGRPCSampler."
+      "vn.zalopay.benchmarkGRPCSampler"
     ],
     "versions": {
       "1.0.0": {
@@ -1243,6 +1284,20 @@
       "1.1.1": {
         "changes": "Fix: Could not find TLS ALPN provider; no working netty-tcnative, Conscrypt, or Jetty NPN/ALPN available.",
         "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.1.1/jmeter-grpc-request-1.1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.2.0": {
+        "changes": "Auto generate request data base on proto file, supporting JSON string.",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.2.0/jmeter-grpc-request-v1.2.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.2.1": {
+        "changes": "JDK provider support NPN_AND_ALPN protocol when running with SSL.",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.2.1/jmeter-grpc-request-v1.2.1.jar",
         "depends": [
           "jmeter-core"
         ]
@@ -1268,5 +1323,51 @@
             "downloadUrl": "https://github.com/rollno748/di-kafkameter/releases/download/1.0/di-kafkameter-1.0.jar"
         }
     }
-}
+  },
+  {
+    "id": "schema-assertion",
+    "name": "ApacheJmeter Schema Assertion",
+    "description": "Validate response field types based on JSON/YAML Schema",
+    "screenshotUrl": "https://cdn.jsdelivr.net/gh/yeshan333/jsDelivrCDN@main/demo1.jpg",
+    "helpUrl": "https://github.com/yeshan333/ApacheJmeter_Schema_Assertion",
+    "vendor": "yeshan333",
+    "markerClass": "com.github.yeshan333.jmeter.assertions.gui.SchemaAssertionGui",
+    "componentClasses": [
+      "com.github.yeshan333.jmeter.assertions.SchemaAssertion"
+    ],
+    "versions": {
+      "1.0.0": {
+        "downloadUrl": "https://github.com/yeshan333/ApacheJmeter_Schema_Assertion/releases/download/v1.0.0/ApacheJmeter_Schema_Assertion-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      }
+    }
+  },
+  {
+    "id": "jmeter-dynatrace-backend-listener",
+    "name": "Dynatrace Backend Listener",
+    "description": "Send JMeter test results to Dynatrace",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/dynatrace-oss/jmeter-dynatrace-plugin",
+    "vendor": "Dynatrace",
+    "markerClass": "com.dynatrace.jmeter.plugins.MintBackendListener",
+    "componentClasses": [
+      "com.dynatrace.jmeter.plugins.MintMetricSender",
+      "com.dynatrace.mint.MintDimension",
+      "com.dynatrace.mint.MintMetricsLine",
+      "com.dynatrace.mint.MintGauge",
+      "com.dynatrace.mint.SchemalessMetricSanitizer",
+      "com.dynatrace.jmeter.plugins.MintConnectionException"
+    ],
+    "versions": {
+      "1.8.0": {
+        "downloadUrl": "https://github.com/dynatrace-oss/jmeter-dynatrace-plugin/releases/download/1.8.0/jmeter-dynatrace-plugin-1.8.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      }
+    }
+  }
 ]

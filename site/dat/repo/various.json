@@ -1051,6 +1051,17 @@
       "kg.apc.cmdtools.ApdexScoreCalculatorTool"
     ],
     "versions" : {
+		"2.0.1": {
+			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/jmeter-plugins-apdexcalculator-2.0.1.jar",
+			"changes": "Addition of Pass/Fail threshold when running the plugin from CLI in CI/CD.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/rbourga-jmeter-plugins-comm-1.0.jar"
+			},
+			"depends": [
+				"jmeter-core"
+			]
+        },
     	"1.0.1" : {
     		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/V2.0.0/jmeter-plugins-apdexcalculator-1.0.1.jar",
             "libs" : {
@@ -1075,6 +1086,17 @@
       "kg.apc.cmdtools.RightTailOutlierDetectorTool"
     ],
     "versions": {
+		"1.0.4": {
+			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/jmeter-plugins-outlierdetector-1.0.4.jar",
+			"changes": "Addition of Pass/Fail threshold when running the plugin from CLI in CI/CD.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/rbourga-jmeter-plugins-comm-1.0.jar"
+			},
+			"depends": [
+				"jmeter-core"
+			]
+        },
 		"1.0.2": {
 			"changes": "Changed Java compliance level to 1.8.",
 			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/V1.0.2/jmeter-plugins-outlierdetector-1.0.2.jar",
@@ -1113,6 +1135,17 @@
       "kg.apc.jmeter.vizualizers.ResultsComparatorGui"
     ],
     "versions" : {
+		"3.1.2": {
+			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/jmeter-plugins-resultscomparator-3.1.2.jar",
+			"changes": "Addition of Pass/Fail threshold when running the plugin from CLI in CI/CD.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/rbourga-jmeter-plugins-comm-1.0.jar"
+			},
+			"depends": [
+				"jmeter-core"
+			]
+        },
     	"2.1" : {
 			"changes": "Addition of Pass/Fail testing criteria.",
     		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.1.0/jmeter-plugins-resultscomparator-2.1.jar",

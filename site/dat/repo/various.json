@@ -1407,15 +1407,14 @@
     "id": "validate-thread-group",
     "name": "Validate Thread Group",
     "description": "Adds Validation Thread Group option to the toolbar",
-    "screenshotUrl": "",
+    "screenshotUrl": "https://raw.githubusercontent.com/QAInsights/validate-thread-group/main/images/Valiate-Thread-Group.png",
     "helpUrl": "https://github.com/QAInsights/validate-thread-group",
-    "vendor": "QAInsights",
+    "vendor": "QAInsights.com",
     "markerClass": "org.qainsights.jmeter.validatetg.gui.ValidateTGMenuItem",
     "componentClasses": [
       "org.qainsights.jmeter.validatetg.gui.ValidateTGMenuCreator",
       "org.qainsights.jmeter.validatetg.gui.ValidateTGAction",
       "org.qainsights.jmeter.validatetg.gui.ComponentFinder"
-
     ],
     "versions": {
       "1.8.0": {

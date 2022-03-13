@@ -1402,5 +1402,29 @@
         ]
       }
     }
+  },
+  {
+    "id": "validate-thread-group",
+    "name": "Validate Thread Group",
+    "description": "Adds Validation Thread Group option to the toolbar",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/QAInsights/validate-thread-group",
+    "vendor": "QAInsights",
+    "markerClass": "org.qainsights.jmeter.validatetg.gui.ValidateTGMenuItem",
+    "componentClasses": [
+      "org.qainsights.jmeter.validatetg.gui.ValidateTGMenuCreator",
+      "org.qainsights.jmeter.validatetg.gui.ValidateTGAction",
+      "org.qainsights.jmeter.validatetg.gui.ComponentFinder"
+
+    ],
+    "versions": {
+      "1.8.0": {
+        "downloadUrl": "https://github.com/QAInsights/validate-thread-group/releases/download/v1.0.0/validatetg-1.0-SNAPSHOT.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      }
+    }
   }
 ]

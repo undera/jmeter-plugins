@@ -1394,7 +1394,7 @@
       "com.dynatrace.jmeter.plugins.MintConnectionException"
     ],
     "versions": {
-      "1.8.0": {
+      "1.0.0": {
         "downloadUrl": "https://github.com/dynatrace-oss/jmeter-dynatrace-plugin/releases/download/1.8.0/jmeter-dynatrace-plugin-1.8.0.jar",
         "depends": [
           "jmeter-core",

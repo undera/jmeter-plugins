@@ -1428,9 +1428,9 @@
   },
   {
     "id": "baolu-csv-data-file-config",
-    "name": "baolu-csv-data-file-config",
+    "name": "Baolu-csv-data-file-config",
     "description": "<ul><li>This plug-in supports automatic or manual csv data allocation for each thread.It has a similar LoadRunner capability parameterization.</li><li>If your request involves database update operation, using this plug-in in the test script can avoid lock waiting and improve the reliability of test results.</li></ul>",
-    "screenshotUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/blob/master/src/main/resources/images/imge02.png",
+    "screenshotUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/raw/master/src/main/resources/images/imge02.png",
     "helpUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config",
     "vendor": "libaolu",
     "markerClass": "com.baolu.jmeter.config.BaoluCSVDataSetBeanInfo",

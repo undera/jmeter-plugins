@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.apache.jmeter.threads.JMeterThread;
 import org.slf4j.LoggerFactory;
 
-@Deprecated
 public class SteppingThreadGroup
         extends AbstractSimpleThreadGroup {
 

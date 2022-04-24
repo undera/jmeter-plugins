@@ -1361,7 +1361,7 @@
     "componentClasses": [
         "com.di.jmeter.config.ExtendedCsvDataSet"
     ],
-    "description": "Jmeter plugin to effectively manage CSV dataset like other enterprise industry standard tools. <ul><li>Simply add a \"Config Element \" and Set the appropriate options</li><li><a href=\"https://rollno748.github.io/\">Author Details</a></li></ul>",
+    "description": "Jmeter plugin to effectively manage CSV dataset like other enterprise industry standard tools. <ul><li>Simply add a \"Config Element \" and Set the appropriate options</li><li><a href=\"https://rollno748.medium.com/extended-csv-dataset-config-for-jmeter-17b1d8bda6b8\">Usage Guide</a></li><li><a href=\"https://rollno748.github.io/\">Author Details</a></li></ul>",
     "helpUrl": "https://github.com/rollno748/Extended-csv-dataset-config#readme",
     "id": "extended-csv-dataset-config",
     "markerClass": "com.di.jmeter.config.ExtendedCsvDataSet",
@@ -1375,6 +1375,13 @@
                 "jmeter-components"
             ],
             "downloadUrl": "https://github.com/rollno748/Extended-csv-dataset-config/releases/download/1.0/di-extended-csv-1.0.jar"
+        },
+        "1.1": {
+          "downloadUrl": "https://github.com/rollno748/Extended-csv-dataset-config/releases/download/1.1/di-extended-csv-1.1.jar",
+          "depends": [
+            "jmeter-core",
+            "jmeter-components"
+          ]
         }
     }
   },

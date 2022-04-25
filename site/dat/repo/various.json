@@ -1470,6 +1470,10 @@
     "versions": {
       "1.2.0": {
         "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.0/baolu-csv-data-file-config-1.2.0.jar"
+      },
+      "1.2.1": {
+        "changes": "Fix the bug that the file cannot be found in the relative directory.",
+        "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.1/baolu-csv-data-file-config-1.2.1.jar"
       }
     }
   }

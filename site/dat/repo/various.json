@@ -1474,6 +1474,10 @@
       "1.2.1": {
         "changes": "Fix the bug that the file cannot be found in the relative directory.",
         "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.1/baolu-csv-data-file-config-1.2.1.jar"
+      },
+      "1.2.2": {
+        "changes": "<ul><li>Format log output,remove unnecessary log printing to improve performance.</li><li>Completely solve the problem that the relative directory of the parameter file cannot be read.</li></ul>",
+        "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.2/baolu-csv-data-file-config-1.2.2.jar"
       }
     }
   }

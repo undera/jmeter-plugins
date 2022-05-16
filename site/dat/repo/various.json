@@ -757,6 +757,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "8.0.4": {
+        "changes": "Live DASH: Introduce option to follow redirect URL for Manifest Reload",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.4/ubik-jmeter-videostreaming-plugin-8.0.4.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "8.0.3": {
         "changes": "Bugfix version",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.3/ubik-jmeter-videostreaming-plugin-8.0.3.jar",
@@ -1046,6 +1051,17 @@
       "kg.apc.cmdtools.ApdexScoreCalculatorTool"
     ],
     "versions" : {
+		"2.0.1": {
+			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/jmeter-plugins-apdexcalculator-2.0.1.jar",
+			"changes": "Addition of Pass/Fail threshold when running the plugin from CLI in CI/CD.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/rbourga-jmeter-plugins-comm-1.0.jar"
+			},
+			"depends": [
+				"jmeter-core"
+			]
+        },
     	"1.0.1" : {
     		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/V2.0.0/jmeter-plugins-apdexcalculator-1.0.1.jar",
             "libs" : {
@@ -1070,6 +1086,17 @@
       "kg.apc.cmdtools.RightTailOutlierDetectorTool"
     ],
     "versions": {
+		"1.0.4": {
+			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/jmeter-plugins-outlierdetector-1.0.4.jar",
+			"changes": "Addition of Pass/Fail threshold when running the plugin from CLI in CI/CD.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/rbourga-jmeter-plugins-comm-1.0.jar"
+			},
+			"depends": [
+				"jmeter-core"
+			]
+        },
 		"1.0.2": {
 			"changes": "Changed Java compliance level to 1.8.",
 			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/V1.0.2/jmeter-plugins-outlierdetector-1.0.2.jar",
@@ -1108,6 +1135,17 @@
       "kg.apc.jmeter.vizualizers.ResultsComparatorGui"
     ],
     "versions" : {
+		"3.1.2": {
+			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/jmeter-plugins-resultscomparator-3.1.2.jar",
+			"changes": "Addition of Pass/Fail threshold when running the plugin from CLI in CI/CD.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/rbourga-jmeter-plugins-comm-1.0.jar"
+			},
+			"depends": [
+				"jmeter-core"
+			]
+        },
     	"2.1" : {
 			"changes": "Addition of Pass/Fail testing criteria.",
     		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.1.0/jmeter-plugins-resultscomparator-2.1.jar",
@@ -1237,6 +1275,12 @@
       "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
     ],
     "versions": {
+      "0.3.0": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.3.0/jmeter-datadog-backend-listener-0.3.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.2.0": {
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.2.0/jmeter-datadog-backend-listener-0.2.0.jar",
         "depends": [
@@ -1320,6 +1364,34 @@
     }
   },
   {
+    "componentClasses": [
+        "com.di.jmeter.config.ExtendedCsvDataSet"
+    ],
+    "description": "Jmeter plugin to effectively manage CSV dataset like other enterprise industry standard tools. <ul><li>Simply add a \"Config Element \" and Set the appropriate options</li><li><a href=\"https://rollno748.medium.com/extended-csv-dataset-config-for-jmeter-17b1d8bda6b8\">Usage Guide</a></li><li><a href=\"https://rollno748.github.io/\">Author Details</a></li></ul>",
+    "helpUrl": "https://github.com/rollno748/Extended-csv-dataset-config#readme",
+    "id": "extended-csv-dataset-config",
+    "markerClass": "com.di.jmeter.config.ExtendedCsvDataSet",
+    "name": "Extended CSV dataset config",
+    "screenshotUrl": "https://raw.githubusercontent.com/rollno748/Extended-csv-dataset-config/master/images/ExtendedCSV.png",
+    "vendor": "DigitalInsight-NCR",
+    "versions": {
+        "1.0": {
+            "depends": [
+                "jmeter-core",
+                "jmeter-components"
+            ],
+            "downloadUrl": "https://github.com/rollno748/Extended-csv-dataset-config/releases/download/1.0/di-extended-csv-1.0.jar"
+        },
+        "1.1": {
+          "downloadUrl": "https://github.com/rollno748/Extended-csv-dataset-config/releases/download/1.1/di-extended-csv-1.1.jar",
+          "depends": [
+            "jmeter-core",
+            "jmeter-components"
+          ]
+        }
+    }
+  },
+  {
     "id": "schema-assertion",
     "name": "ApacheJmeter Schema Assertion",
     "description": "Validate response field types based on JSON/YAML Schema",
@@ -1336,6 +1408,82 @@
         "depends": [
           "jmeter-core"
         ]
+      }
+    }
+  },
+  {
+    "id": "jmeter-dynatrace-backend-listener",
+    "name": "Dynatrace Backend Listener",
+    "description": "Send JMeter test results to Dynatrace",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/dynatrace-oss/jmeter-dynatrace-plugin",
+    "vendor": "Dynatrace",
+    "markerClass": "com.dynatrace.jmeter.plugins.MintBackendListener",
+    "componentClasses": [
+      "com.dynatrace.jmeter.plugins.MintMetricSender",
+      "com.dynatrace.mint.MintDimension",
+      "com.dynatrace.mint.MintMetricsLine",
+      "com.dynatrace.mint.MintGauge",
+      "com.dynatrace.mint.SchemalessMetricSanitizer",
+      "com.dynatrace.jmeter.plugins.MintConnectionException"
+    ],
+    "versions": {
+      "1.8.0": {
+        "downloadUrl": "https://github.com/dynatrace-oss/jmeter-dynatrace-plugin/releases/download/1.8.0/jmeter-dynatrace-plugin-1.8.0.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      }
+    }
+  },
+  {
+    "id": "validate-thread-group",
+    "name": "Validate Thread Group",
+    "description": "Adds Validation Thread Group option to the toolbar",
+    "screenshotUrl": "https://raw.githubusercontent.com/QAInsights/validate-thread-group/main/images/Valiate-Thread-Group.png",
+    "helpUrl": "https://github.com/QAInsights/validate-thread-group",
+    "vendor": "QAInsights.com",
+    "markerClass": "org.qainsights.jmeter.validatetg.gui.ValidateTGMenuItem",
+    "componentClasses": [
+      "org.qainsights.jmeter.validatetg.gui.ValidateTGMenuCreator",
+      "org.qainsights.jmeter.validatetg.gui.ValidateTGAction",
+      "org.qainsights.jmeter.validatetg.gui.ComponentFinder"
+    ],
+    "versions": {
+      "1.0.1": {
+        "downloadUrl": "https://github.com/QAInsights/validate-thread-group/releases/download/v1.0.1/validatetg-1.0.1.jar",
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      }
+    }
+  },
+  {
+    "id": "baolu-csv-data-file-config",
+    "name": "Baolu-csv-data-file-config",
+    "description": "<ul><li>This plug-in supports automatic or manual csv data allocation for each thread.It has a similar LoadRunner capability parameterization.</li><li>If your request involves database update operation, using this plug-in in the test script can avoid lock waiting and improve the reliability of test results.</li></ul>",
+    "screenshotUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/raw/master/src/main/resources/images/imge02.png",
+    "helpUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config",
+    "vendor": "libaolu",
+    "markerClass": "com.baolu.jmeter.config.BaoluCSVDataSetBeanInfo",
+    "componentClasses": [
+      "com.baolu.jmeter.config.BaoluCSVDataSet",
+      "com.baolu.jmeter.services.BaoluCSVFileReader",
+      "com.baolu.jmeter.services.FileServer"
+    ],
+    "versions": {
+      "1.2.0": {
+        "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.0/baolu-csv-data-file-config-1.2.0.jar"
+      },
+      "1.2.1": {
+        "changes": "Fix the bug that the file cannot be found in the relative directory.",
+        "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.1/baolu-csv-data-file-config-1.2.1.jar"
+      },
+      "1.2.2": {
+        "changes": "<ul><li>Format log output,remove unnecessary log printing to improve performance.</li><li>Completely solve the problem that the relative directory of the parameter file cannot be read.</li></ul>",
+        "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.2/baolu-csv-data-file-config-1.2.2.jar"
       }
     }
   }

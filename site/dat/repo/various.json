@@ -757,6 +757,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "8.0.5": {
+        "changes": "Bugfix version",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.5/ubik-jmeter-videostreaming-plugin-8.0.5.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "8.0.4": {
         "changes": "Live DASH: Introduce option to follow redirect URL for Manifest Reload",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.4/ubik-jmeter-videostreaming-plugin-8.0.4.jar",

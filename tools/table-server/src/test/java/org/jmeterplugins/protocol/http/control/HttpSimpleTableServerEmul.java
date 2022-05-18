@@ -1,6 +1,9 @@
 package org.jmeterplugins.protocol.http.control;
 
 import org.slf4j.LoggerFactory;
+
+import kg.apc.emulators.TestJMeterUtils;
+
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -22,10 +25,25 @@ class HttpSimpleTableServerEmul extends HttpSimpleTableServer {
     }
 
 
-    public HttpSimpleTableServerEmul(int i, boolean b, String jMeterBinDir) {
-        super(i, b, jMeterBinDir);
+    public HttpSimpleTableServerEmul(int i, boolean b, String jMeterBinDir, String charsetEncodingHttpResponse, String charsetEncodingReadFile, String charsetEncodingWriteFile, boolean isDemon ) {
+        super(i, b, jMeterBinDir, charsetEncodingHttpResponse, charsetEncodingReadFile, charsetEncodingWriteFile, isDemon);
     }
 
+    /*
+    public HttpSimpleTableServerEmul() {
+    	String jMeterBinDir = TestJMeterUtils.getTempDir();
+    	int i = -1;
+    	boolean bIsStartup = false;
+    	String charset = "UTF-8";
+    	boolean bIsDaemon = false;
+    	super(i, bIsStartup,  jMeterBinDir, charset, charset, charset, bIsDaemon);
+    }
+ */   
+    protected HttpSimpleTableServerEmul() {
+    	super();
+    }
+    
+    
     @Override
     public void waitForKey() {
         log.info("Not waiting for key");

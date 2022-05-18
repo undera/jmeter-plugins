@@ -120,7 +120,7 @@ login4;password4
 login5;password5
 }}}
 
-The *charset to read the file* is jmeterPlugin.sts.charsetEncodingReadFile=<charset>, default value = System property : file.encoding
+The *charset to read the file* is jmeterPlugin.sts.charsetEncodingReadFile=\<charset>, default value = System property : file.encoding
 
 File could be load when STS startup with 
 {{{
@@ -309,7 +309,7 @@ dossier.csv = 1<br />
 
 *Save the specified linked list in a file to the specified location*
 
-The charset use to write the file is set with meterPlugin.sts.charsetEncodingWriteFile=<charset>, default value = System property : file.encoding
+The charset use to write the file is set with meterPlugin.sts.charsetEncodingWriteFile=\<charset>, default value = System property : file.encoding
 
 {{{
 http://hostname:port/sts/SAVE?FILENAME=logins.csv
@@ -418,7 +418,7 @@ else {
 
   [/img/examples/logins.csv Download logins.csv file]
 
-  * Run the Simple Table Server manually with the simple-table-server.cmd file or automatically with beanShell configuration.
+  * Run the Simple Table Server manually with the simple-table-server.cmd file or automatically with groovy configuration.
   * Run one of the following scripts:
 
 In a loop, read random values from a file containing a login and a password at each row:

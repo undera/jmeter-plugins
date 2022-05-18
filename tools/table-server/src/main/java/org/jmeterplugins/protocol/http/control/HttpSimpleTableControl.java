@@ -47,10 +47,16 @@ public class HttpSimpleTableControl extends AbstractTestElement {
     public static final String DEFAULT_DATA_DIR = JMeterUtils.getJMeterBinDir();
 
     public static final boolean DEFAULT_TIMESTAMP = true;
+    
+    public static final boolean DEFAULT_DAEMON = false;
 
     public static final String DEFAULT_TIMESTAMP_S = Boolean
             .toString(DEFAULT_TIMESTAMP);
     
+    public static final String DEFAULT_CHARSET_ENCODING_HTTP_RESPONSE = "UTF-8";
+    public static final String DEFAULT_CHARSET_ENCODING_READ_FILE = "UTF-8";
+    public static final String DEFAULT_CHARSET_ENCODING_WRITE_FILE = "UTF-8";
+    		
     public static final String DEFAULT_LOG_LEVEL = "INFO";
 
     public static final String PORT = "HttpSimpleTableControlGui.port"; 
@@ -100,14 +106,67 @@ public class HttpSimpleTableControl extends AbstractTestElement {
         setProperty(DATA_DIR, dataDir);
     }
 
+
     public void startHttpSimpleTable() throws IOException {
-        log.info("Creating HTTP Simple Table Server...");
-        log.info("Port=" + getPort());
-        log.info("Dataset directory=" + getDataDir());
-        log.info("Timestamp=" + getTimestamp());
-        log.info("STS Version=" + HttpSimpleTableServer.STS_VERSION);
-        server = new HttpSimpleTableServer(getPort(), getTimestamp(),
-                getDataDir());
+    	boolean daemon = HttpSimpleTableControl.DEFAULT_DAEMON; //false
+    	
+        String charsetEncodingHttpResponse = JMeterUtils.getPropDefault(
+                "jmeterPlugin.sts.charsetEncodingHttpResponse",
+                HttpSimpleTableControl.DEFAULT_CHARSET_ENCODING_HTTP_RESPONSE);
+        
+        String charsetEncodingReadFile = JMeterUtils.getPropDefault(
+                "jmeterPlugin.sts.charsetEncodingReadFile",
+                HttpSimpleTableControl.DEFAULT_CHARSET_ENCODING_READ_FILE);
+        
+        
+        String charsetEncodingWriteFile = JMeterUtils.getPropDefault(
+                "jmeterPlugin.sts.charsetEncodingWriteFile",
+                HttpSimpleTableControl.DEFAULT_CHARSET_ENCODING_WRITE_FILE);
+        
+       
+        String fileEncodingSystem = System.getProperty("file.encoding");
+        if (fileEncodingSystem != null) {
+        	if (JMeterUtils.getProperty("jmeterPlugin.sts.charsetEncodingReadFile") == null) {
+        		charsetEncodingReadFile=fileEncodingSystem;
+        	}
+        	if (JMeterUtils.getProperty("jmeterPlugin.sts.charsetEncodingWriteFile") == null) {
+        		charsetEncodingWriteFile=fileEncodingSystem; 
+        	}
+        }
+        
+        String  samplerDefaultEncoding = JMeterUtils.getProperty("sampleresult.default.encoding");
+        if (samplerDefaultEncoding != null) {
+        	if (JMeterUtils.getProperty("jmeterPlugin.sts.charsetEncodingHttpResponse") == null) {
+        		charsetEncodingHttpResponse = samplerDefaultEncoding;
+        	}
+        }
+        log.info("Creating HttpSimpleTable from GUI or when JMeter start");
+        log.info("------------------------------");
+        log.info("SERVER_PORT : " + getPort());
+        log.info("DATASET_DIR : " + getDataDir());
+        log.info("ADD TIMESTAMP : " + getTimestamp());
+        log.info("DAEMON PROCESS : " + daemon);
+        log.info("charsetEncodingHttpResponse : " + charsetEncodingHttpResponse);
+        log.info("charsetEncodingReadFile : " + charsetEncodingReadFile);
+        log.info("charsetEncodingWriteFile : " + charsetEncodingWriteFile);
+        log.info("------------------------------");
+        log.info("STS_VERSION : " + HttpSimpleTableServer.STS_VERSION);  
+        
+        System.out.println("Creating HttpSimpleTable from GUI or when JMeter start");
+        System.out.println("------------------------------");
+        System.out.println("SERVER_PORT : " + getPort());
+        System.out.println("DATASET_DIR : " + getDataDir());
+        System.out.println("ADD TIMESTAMP : " + getTimestamp());
+        System.out.println("DAEMON PROCESS : " + daemon);
+        System.out.println("charsetEncodingHttpResponse : " + charsetEncodingHttpResponse);
+        System.out.println("charsetEncodingReadFile : " + charsetEncodingReadFile);
+        System.out.println("charsetEncodingWriteFile : " + charsetEncodingWriteFile);
+        System.out.println("------------------------------");
+        System.out.println("STS_VERSION : " + HttpSimpleTableServer.STS_VERSION);  
+        
+        
+         server = new HttpSimpleTableServer(getPort(), getTimestamp(),
+                getDataDir(), charsetEncodingHttpResponse, charsetEncodingReadFile, charsetEncodingWriteFile, daemon);
         server.start();
         GuiPackage instance = GuiPackage.getInstance();
         if (instance != null) {

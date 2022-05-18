@@ -1,12 +1,9 @@
 package org.jmeterplugins.protocol.http.control;
 
-import org.slf4j.LoggerFactory;
-
-import kg.apc.emulators.TestJMeterUtils;
+import java.io.IOException;
 
 import org.slf4j.Logger;
-
-import java.io.IOException;
+import org.slf4j.LoggerFactory;
 
 
 class HttpSimpleTableServerEmul extends HttpSimpleTableServer {

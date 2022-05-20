@@ -286,8 +286,8 @@
   },
   {
     "id": "tilln-junit",
-    "name": "Generates CI/CD-compatible JUnit Reports in XML format based on custom KPIs: Comparing aggregate metrics with threshold values determines pass/fail.<br />Supports filtering of sample labels by regular expressions.<br />Supported aggregates:<ul><li>Response time percentiles (any)</li><li>Maximum and minimum response time</li><li>Response time average and standard deviation</li><li>Sample error rate</li><li>Total number of samples</li><li>Custom metrics</li></ul>",
-    "description": "",
+    "name": "JUnit Reporter",
+    "description": "Generates CI/CD-compatible JUnit Reports in XML format based on custom KPIs: Comparing aggregate metrics with threshold values determines pass/fail.<br />Supports filtering of sample labels by regular expressions.<br />Supported aggregates:<ul><li>Response time percentiles (any)</li><li>Maximum and minimum response time</li><li>Response time average and standard deviation</li><li>Sample error rate</li><li>Total number of samples</li><li>Custom metrics</li></ul>",
     "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-junit-reporter/master/docs/reporter.png",
     "helpUrl": "https://github.com/tilln/jmeter-junit-reporter",
     "vendor": "Till Neunast",

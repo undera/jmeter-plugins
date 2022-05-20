@@ -285,6 +285,23 @@
     }
   },
   {
+    "id": "tilln-junit",
+    "name": "Generates CI/CD-compatible JUnit Reports in XML format based on custom KPIs: Comparing aggregate metrics with threshold values determines pass/fail.<br />Supports filtering of sample labels by regular expressions.<br />Supported aggregates:<ul><li>Response time percentiles (any)</li><li>Maximum and minimum response time</li><li>Response time average and standard deviation</li><li>Sample error rate</li><li>Total number of samples</li><li>Custom metrics</li></ul>",
+    "description": "",
+    "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-junit-reporter/master/docs/reporter.png",
+    "helpUrl": "https://github.com/tilln/jmeter-junit-reporter",
+    "vendor": "Till Neunast",
+    "markerClass": "nz.co.breakpoint.jmeter.JUnitReporter",
+    "componentClasses": [
+      "nz.co.breakpoint.jmeter.JUnitReporter"
+    ],
+    "versions": {
+      "1.0": {
+        "downloadUrl": "https://github.com/tilln/jmeter-junit-reporter/releases/download/1.0/jmeter-junit-reporter-1.0.jar"
+      }
+    }
+  },
+  {
     "id": "tilln-sshmon",
     "name": "SSHMon Sample Collector",
     "description": "Monitoring plugin for agentless collection and plotting of remote server metrics via SSH connections",

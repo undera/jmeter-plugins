@@ -302,6 +302,23 @@
     }
   },
   {
+    "id": "tilln-retrier",
+    "name": "Sample Retrier",
+    "description": "Post-Processor that retries failed samplers based on sample results (regex match of response code, data, headers or message).<br /><ul><li>Configurable pause and back-off behaviour</li><li>Handles \"Retry-After\" HTTP headers</li><li>Retries as represented as sub-results</li></ul>Does <b>not</b> take into account any assertion results.",
+    "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-retrier/master/docs/example.png",
+    "helpUrl": "https://github.com/tilln/jmeter-retrier",
+    "vendor": "Till Neunast",
+    "markerClass": "nz.co.breakpoint.jmeter.modifiers.RetryPostProcessor",
+    "componentClasses": [
+      "nz.co.breakpoint.jmeter.modifiers.RetryPostProcessor"
+    ],
+    "versions": {
+      "1.0": {
+        "downloadUrl": "https://github.com/tilln/jmeter-retrier/releases/download/1.0/jmeter-retrier-1.0.jar"
+      }
+    }
+  },
+  {
     "id": "tilln-sshmon",
     "name": "SSHMon Sample Collector",
     "description": "Monitoring plugin for agentless collection and plotting of remote server metrics via SSH connections",

@@ -1525,5 +1525,55 @@
         "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.2/baolu-csv-data-file-config-1.2.2.jar"
       }
     }
+  },
+  {
+    "id": "jmeter-atakama-variabilization-plugin",
+    "name": "Atakama Variabilization Plugin",
+    "description": "Variabilization plugin for jmeter",
+    "screenshotUrl": "",
+    "helpUrl": "https://github.com/atakama/jmeter_plugin_variabilization",
+    "vendor": "Atakama Technologies",
+    "markerClass": "com.atakama.jmeter.parameters.gui.ParametersGui",
+    "componentClasses": [
+      "com.atakama.jmeter.recording.HttpData",
+      "com.atakama.jmeter.recording.HttpSample",
+      "com.atakama.jmeter.recording.TestResults",
+      "com.atakama.jmeter.recording.Sample",
+      "com.atakama.jmeter.recording.BearerToken",
+      "com.atakama.jmeter.recording.JavaURL"
+    ],
+    "versions": {
+      "1.0": {
+        "downloadUrl": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/jmeter-atakama-parameters-1.0.jar",
+		"libs": {
+				"jakarta.activation-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/jakarta.activation-api-1.2.1.jar",
+				"jakarta.xml.bind-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/jakarta.xml.bind-api-2.3.2.jar",
+				"jaxb-core": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/jaxb-core-2.3.0.1.jar",
+				"jaxb-runtime": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/jaxb-runtime-2.3.2.jar",
+				"lib-crypt": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/lib-crypt-1.0.6.jar"
+				
+		},
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+	  "1.0.1": {
+		"changes": "Take into account POST data variables ",
+        "downloadUrl": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/jmeter-atakama-parameters-1.0.1.jar",
+		"libs": {
+				"jakarta.activation-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/jakarta.activation-api-1.2.1.jar",
+				"jakarta.xml.bind-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/jakarta.xml.bind-api-2.3.2.jar",
+				"jaxb-core": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/jaxb-core-2.3.0.1.jar",
+				"jaxb-runtime": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/jaxb-runtime-2.3.2.jar",
+				"lib-crypt": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/lib-crypt-1.0.6.jar"
+				
+		},
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      }
+    }
   }
 ]

@@ -1576,4 +1576,28 @@
       }
     }
   }
+  ,
+   {
+      "id":"jmeter-atakama-backend-listener-plugin",
+      "name":"Atakama Backend Listener Plugin",
+      "description":"This plugin aims to send jmeter metrics to Atakama Infrastructure",
+      "screenshotUrl":"",
+      "helpUrl":"https://github.com/atakama/jmeter_plugin_backend_listener",
+      "vendor":"Atakama Technologies",
+      "markerClass":"com.atakama.jmeter.visualizers.backend.BackendListenerGui",
+      "componentClasses":[
+         "com.atakama.jmeter.backend.influx.InfluxdbLocalConfig",
+         "com.atakama.jmeter.visualizers.backend.LicencePanel",
+         "com.atakama.jmeter.backend.influx.InfluxdbMetricsSender"
+      ],
+      "versions":{
+         "1.3.0":{
+            "downloadUrl":"https://github.com/atakama/jmeter_plugin_backend_listener/releases/download/1.3.0/jmeter-atakama-backend-1.3.0.jar",
+            "depends":[
+               "jmeter-core",
+               "jmeter-components"
+            ]
+         }
+      }
+   }
 ]

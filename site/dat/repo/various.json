@@ -298,6 +298,10 @@
     "versions": {
       "1.0": {
         "downloadUrl": "https://github.com/tilln/jmeter-junit-reporter/releases/download/1.0/jmeter-junit-reporter-1.0.jar"
+      },
+      "1.1": {
+        "changes": "Bug fixes",
+        "downloadUrl": "https://github.com/tilln/jmeter-junit-reporter/releases/download/1.1/jmeter-junit-reporter-1.1.jar"
       }
     }
   },

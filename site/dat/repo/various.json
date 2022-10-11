@@ -1527,6 +1527,10 @@
       "1.2.2": {
         "changes": "<ul><li>Format log output,remove unnecessary log printing to improve performance.</li><li>Completely solve the problem that the relative directory of the parameter file cannot be read.</li></ul>",
         "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.2/baolu-csv-data-file-config-1.2.2.jar"
+      },
+      "1.2.3": {
+        "changes": "<ul><li>Support multithreading group.</li></ul>",
+        "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.3/baolu-csv-data-file-config-1.2.3.jar"
       }
     }
   },

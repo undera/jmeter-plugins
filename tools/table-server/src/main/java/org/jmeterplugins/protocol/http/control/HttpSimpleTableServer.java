@@ -18,25 +18,38 @@
 
 package org.jmeterplugins.protocol.http.control;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Random;
+
 import org.apache.jmeter.gui.Stoppable;
 import org.apache.jmeter.util.JMeterUtils;
-
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.config.Configurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.apache.logging.log4j.core.config.Configurator;
-
-import org.apache.logging.log4j.Level;
-
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWaiter {
     private static final Logger log = LoggerFactory.getLogger(HttpSimpleTableServer.class);
 
 
-    public static final String STS_VERSION = "2.4";
+    public static final String STS_VERSION = "3.1";
     public static final String ROOT = "/sts/";
     public static final String ROOT2 = "/sts";
     public static final String URI_INITFILE = "INITFILE";
@@ -47,57 +60,93 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
     public static final String URI_STATUS = "STATUS";
     public static final String URI_RESET = "RESET";
     public static final String URI_STOP = "STOP";
+    public static final String URI_CONFIG = "CONFIG";
+    
     public static final String PARM_FILENAME = "FILENAME";
     public static final String PARM_LINE = "LINE";
     public static final String PARM_READ_MODE = "READ_MODE";
     public static final String PARM_ADD_MODE = "ADD_MODE";
     public static final String PARM_UNIQUE = "UNIQUE";
     public static final String PARM_KEEP = "KEEP";
+    public static final String PARM_ADD_TIMESTAMP = "ADD_TIMESTAMP";
+    
     public static final String VAL_FIRST = "FIRST";
     public static final String VAL_LAST = "LAST";
     public static final String VAL_RANDOM = "RANDOM";
     public static final String VAL_TRUE = "TRUE";
     public static final String VAL_FALSE = "FALSE";
 
-    public static final String INDEX = "<html><head><title>URL for the dataset</title><head>"
-            + "<body><h4>From a data file (default: &lt;JMETER_HOME&gt;/bin/[data_file])</h4>"
-            + "<p>Load file in memory:<br />"
+    public static final String INDEX = "<html><head><title>Help URL for the dataset</title><head>"
+            + "<body><h4>Help Http Simple Table Server (STS) Version : " + STS_VERSION + "<br/>From a data file (default: &lt;JMETER_HOME&gt;/bin/&lt;data_file&gt;) or from the directory set with jmeterPlugin.sts.datasetDirectory</h4>"
+            + "<p>The parameter enclosed in square brackets is <b>[optional]</b> and and the values in italics correspond to the <b><i>possible values</i></b> <br />"
+            + "<p><b>Load file in memory:</b><br />"
             + "http://hostname:port/sts/INITFILE?FILENAME=file.txt</p>"
-            + "<p>Get one line from list:<br />"
-            + "http://hostname:port/sts/READ?READ_MODE=[<i>FIRST</i>,<i>LAST</i>,<i>RANDOM</i>]&KEEP=[<i>TRUE</i>,<i>FALSE</i>]&FILENAME=file.txt</p>"
-            + "<p>Return the number of remaining lines of a linked list:<br />"
+            + "<p><b>Get one line from list</b>:<br />"
+            + "http://hostname:port/sts/READ?FILENAME=file.txt&[READ_MODE=[<i>FIRST</i>,<i>LAST</i>,<i>RANDOM</i>]]&[KEEP=[<i>TRUE</i>,<i>FALSE</i>]]</p>"
+            + "<p><b>Return the number of remaining lines</b> of a linked list:<br />"
             + "http://hostname:port/sts/LENGTH?FILENAME=file.txt</p>"
-            + "<p>Add a line into a file: (GET OR POST HTTP protocol)<br />"
-            + "GET  : http://hostname:port/sts/ADD?FILENAME=file.txt&LINE=D0001123&ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]<br />"
-            + "GET Parameters : FILENAME=file.txt&LINE=D0001123&ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]&UNIQUE=[<i>FALSE</i>,<i>TRUE</i>]<br />"
+            + "<p><b>Add a line into a file:</b> (GET OR POST HTTP protocol)<br />"
+            + "GET  : http://hostname:port/sts/ADD?FILENAME=file.txt&LINE=D0001123&[ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]]&[UNIQUE=[<i>FALSE</i>,<i>TRUE</i>]]<br />"
+            + "GET Parameters : FILENAME=file.txt&LINE=D0001123&[ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]]&[UNIQUE=[<i>FALSE</i>,<i>TRUE</i>]]<br />"
             + "POST : http://hostname:port/sts/ADD<br />"
-            + "POST Parameters : FILENAME=file.txt,LINE=D0001123,ADD_MODE=[<i>FIRST</i>,<i>LAST</i>],UNIQUE=[<i>FALSE</i>,<i>TRUE</i>]</p>"
-            + "<p>Save the specified linked list in a file to the default location:<br />"
-            + "http://hostname:port/sts/SAVE?FILENAME=file.txt</p>"
-            + "<p>Display the list of loaded files and the number of remaining lines for each linked list:<br />"
+            + "POST Parameters : FILENAME=file.txt,LINE=D0001123,[ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]],[UNIQUE=[<i>FALSE</i>,<i>TRUE</i>]]</p>"
+            + "<p><b>Save the specified linked list in a file</b> to the default location:<br />"
+            + "http://hostname:port/sts/SAVE?FILENAME=file.txt&[ADD_TIMESTAMP=[<i>FALSE</i>,<i>TRUE</i>]]</p>"
+            + "<p><b>Display the list of loaded files and the number of remaining lines</b> for each linked list:<br />"
             + "http://hostname:port/sts/STATUS</p>"
-            + "<p>Remove all of the elements from the specified list:<br />"
+            + "<p><b>Remove all of the elements</b> from the specified list:<br />"
             + "http://hostname:port/sts/RESET?FILENAME=file.txt</p>"
-            + "<p>Shutdown the Simple Table Server:<br />"
-            + "http://hostname:port/sts/STOP</p></body></html>";
+            + "<p><b>Show configuration:</b><br />"
+            + "http://hostname:port/sts/CONFIG</p>"
+            + "<p><b>Shutdown the Simple Table Server:</b><br />"
+            + "http://hostname:port/sts/STOP</p></body></html>"
+            + "<p><b>Mode daemon :</b><br />"
+            + "jmeterPlugin.sts.daemon=[<i>true,false</i>] if <i>true</i> daemon process don't wait keyboards key pressed for nohup command, if <i>false</i> (default) wait keyboards key &lt;ENTER&gt; to Stop<br />"
+            + "<h4>To load files at STS Startup use (optional) :</h4>"
+            + "<p>E.g : read 3 csv files with comma separator (not a regular expression), files are read from the directory set with jmeterPlugin.sts.datasetDirectory <br />"
+            + "jmeterPlugin.sts.initFileAtStartup=file1.csv,file2.csv,file3.csv<br />"
+            + "jmeterPlugin.sts.initFileAtStartupRegex=false<br />"
+            + "<p>OR E.g : read all files with .csv extension declare with a regular expression (initFileAtStartupRegex=true) from directory set with jmeterPlugin.sts.datasetDirectory <br />"
+            + "jmeterPlugin.sts.initFileAtStartup=.+\\.csv<br />"
+            + "jmeterPlugin.sts.initFileAtStartupRegex=true<br />"
+            + "<h4>Set the Charset to read, write file and send http response :</h4>"
+            + "<p>E.g : charset = UTF-8, ISO8859_15 or Cp1252 (Windows)<br />"
+            + "jmeterPlugin.sts.charsetEncodingHttpResponse=&lt;charset&gt; (Use UTF-8) in the http header add \"Content-Type:text/html; charset=&lt;charset&gt;\", default JMeter property : sampleresult.default.encoding<br />"
+            + "jmeterPlugin.sts.charsetEncodingReadFile=&lt;charset&gt; (set the charset corresponding to characters in the file), default System property : file.encoding<br />"
+            + "jmeterPlugin.sts.charsetEncodingWriteFile=&lt;charset&gt; default System property : file.encoding<br />"
+            + "</body></html>";
+            
     
     private static boolean bStartFromMain = false;
-    
+    private int myPort;
     private String myDataDirectory;
     private boolean bTimestamp;
     private Random myRandom;
-    
+    private String myCharsetEncodingHttpResponse;
+    private String myCharsetEncodingReadFile;
+    private String myCharsetEncodingWriteFile;
+    private static boolean bIsDemon = false;
 
     // CRLF ou LF ou CR
     public static String lineSeparator = System.getProperty("line.separator");
 
     private Map<String, LinkedList<String>> database = new HashMap<String, LinkedList<String>>();
 
-    public HttpSimpleTableServer(int port, boolean timestamp, String dataDir) {
+    public HttpSimpleTableServer(int port, boolean timestamp, String dataDir, String charsetEncodingHttpResponse, String charsetEncodingReadFile, String charsetEncodingWriteFile, boolean isDemon) {
         super(port);
+        myPort=port;
         myDataDirectory = dataDir;
         bTimestamp = timestamp;
         myRandom = new Random();
+        myCharsetEncodingHttpResponse=charsetEncodingHttpResponse;
+        myCharsetEncodingReadFile=charsetEncodingReadFile;
+        myCharsetEncodingWriteFile=charsetEncodingWriteFile;
+        bIsDemon=isDemon;
+
+    }
+    
+    protected HttpSimpleTableServer() {
+    	 super(-1);
     }
 
     @Override
@@ -133,7 +182,9 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         // no cache for the response
         response.addHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.addHeader("Pragma", "no-cache");
-        response.addHeader("Expires", "0");		
+        response.addHeader("Expires", "0");
+        // add the encoding charset
+        response.addHeader("Content-Type", "text/html; charset=" + myCharsetEncodingHttpResponse);
         return response;
     }
 
@@ -157,7 +208,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
             msg = length(parms.get(PARM_FILENAME));
         }
         if (uri.equals(ROOT + URI_SAVE)) {
-            msg = save(parms.get(PARM_FILENAME));
+            msg = save(parms.get(PARM_FILENAME), parms.get(PARM_ADD_TIMESTAMP));
         }
         if (uri.equals(ROOT + URI_STATUS)) {
             msg = status();
@@ -165,9 +216,13 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         if (uri.equals(ROOT + URI_RESET)) {
             msg = reset(parms.get(PARM_FILENAME));
         }
+        if (uri.equals(ROOT + URI_CONFIG)) {
+            msg = showConfig();
+        }
         if (uri.equals(ROOT + URI_STOP)) {
             stopServer();
         }
+        
         return msg;
     }
 
@@ -236,7 +291,6 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         if (VAL_TRUE.equals(keepMode)) {
             database.get(filename).add(line);
         }
-
         return "<html><title>OK</title>" + lineSeparator + "<body>" + line
                 + "</body>" + lineSeparator + "</html>";
     }
@@ -293,7 +347,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
                 + lineSeparator + "</html>";
     }
 
-    private String save(String filename) {
+    private String save(String filename, String paramAddTimeStamp) {
         if (null == filename) {
             return "<html><title>KO</title>" + lineSeparator
                     + "<body>Error : FILENAME parameter was missing !</body>"
@@ -317,7 +371,11 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         }
         BufferedWriter out = null;
         String saveFilename = filename;
-        if (bTimestamp) {
+        boolean bParamAddTimestamp = bTimestamp;
+        if (paramAddTimeStamp != null) {
+        	bParamAddTimestamp = Boolean.getBoolean(paramAddTimeStamp);
+        }
+        if (bParamAddTimestamp) {
             Date dNow = new Date();
             SimpleDateFormat ft = new SimpleDateFormat(
                     "yyyyMMdd'T'HH'h'mm'm'ss's.'");
@@ -325,8 +383,8 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         }
         try {
             Iterator<String> it = database.get(filename).iterator();
-            out = new BufferedWriter(new FileWriter(new File(myDataDirectory,
-                    saveFilename)));
+            // add the charset to write the file
+            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(myDataDirectory,saveFilename)), myCharsetEncodingWriteFile));
             while (it.hasNext()) {
                 out.write(it.next());
                 out.write(lineSeparator);
@@ -405,7 +463,8 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         File f = new File(myDataDirectory, filename);
         if (f.exists()) {
             try {
-                bufferReader = new BufferedReader(new FileReader(f), 50 * 1024);
+                // add the charset to read the file
+            	bufferReader = new BufferedReader(new InputStreamReader(new FileInputStream(f),myCharsetEncodingReadFile), 50 * 1024);
                 String line;
                 while ((line = bufferReader.readLine()) != null) {
                     lines.add(line);
@@ -437,6 +496,29 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
                 + "<body>Error : file not found !</body>" + lineSeparator
                 + "</html>";
     }
+    
+    private String showConfig() {
+        StringBuffer sb = new StringBuffer(1024);
+        boolean bLoadAndRunOnStartup = JMeterUtils.getPropDefault("jmeterPlugin.sts.loadAndRunOnStartup",false);
+        sb.append("jmeterPlugin.sts.loadAndRunOnStartup=" + bLoadAndRunOnStartup + "<br />");
+        sb.append("startFromCli=" + bStartFromMain + "<br />" + lineSeparator);
+        sb.append("jmeterPlugin.sts.port=" + myPort + "<br />" + lineSeparator);
+        sb.append("jmeterPlugin.sts.datasetDirectory=" + myDataDirectory + "<br />" + lineSeparator);
+        sb.append("jmeterPlugin.sts.addTimestamp=" + bTimestamp + "<br />" + lineSeparator);
+        sb.append("jmeterPlugin.sts.demon=" + bIsDemon + "<br />" + lineSeparator);
+        sb.append("jmeterPlugin.sts.charsetEncodingHttpResponse=" + myCharsetEncodingHttpResponse + "<br />" + lineSeparator);
+        sb.append("jmeterPlugin.sts.charsetEncodingReadFile=" + myCharsetEncodingReadFile + "<br />" + lineSeparator);
+        sb.append("jmeterPlugin.sts.charsetEncodingWriteFile=" + myCharsetEncodingWriteFile + "<br />" + lineSeparator);
+        
+        String sInitFileAtStartup = JMeterUtils.getPropDefault("jmeterPlugin.sts.initFileAtStartup", "");
+        sb.append("jmeterPlugin.sts.initFileAtStartup=" + sInitFileAtStartup + "<br />" + lineSeparator);
+        
+        boolean bInitFileAtStartupRegex = JMeterUtils.getPropDefault("jmeterPlugin.sts.initFileAtStartupRegex", false);
+        sb.append("jmeterPlugin.sts.initFileAtStartupRegex=" + bInitFileAtStartupRegex + "<br />" + lineSeparator);
+        sb.append("databaseIsEmpty=" + database.isEmpty() + "<br />" + lineSeparator);
+        return "<html><title>OK</title>" + lineSeparator + "<body>"
+                + lineSeparator + sb.toString() + "</body></html>";
+    }
 
     @Override
     public void stopServer() {
@@ -453,12 +535,59 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         String dataset = JMeterUtils.getPropDefault(
                 "jmeterPlugin.sts.datasetDirectory",
                 HttpSimpleTableControl.DEFAULT_DATA_DIR);
+        
+        String dataSetComplInfo = ", If DATASET_DIR==null then DATASET_DIR is <JMETER_HOME>/bin directory";
+        if (dataset != null) {
+        	dataSetComplInfo = "";
+        }
+        
         int port = JMeterUtils.getPropDefault("jmeterPlugin.sts.port",
                 HttpSimpleTableControl.DEFAULT_PORT);
+        
         boolean timestamp = JMeterUtils.getPropDefault(
                 "jmeterPlugin.sts.addTimestamp",
                 HttpSimpleTableControl.DEFAULT_TIMESTAMP);
+        
+        boolean bIsDaemonProc = JMeterUtils.getPropDefault(
+                "jmeterPlugin.sts.daemon",
+                HttpSimpleTableControl.DEFAULT_DAEMON);
+        
+        String sDaemonProcFromSystProp = System.getProperty("jmeterPlugin.sts.daemon"); // -DjmeterPlugin.sts.daemon=true or false
+        if (sDaemonProcFromSystProp != null) {
+        	boolean bIsDaemonTmp = Boolean.parseBoolean(sDaemonProcFromSystProp);
+        	bIsDaemonProc = bIsDaemonTmp;
+        }
 
+        String charsetEncodingHttpResponse = JMeterUtils.getPropDefault(
+                "jmeterPlugin.sts.charsetEncodingHttpResponse",
+                HttpSimpleTableControl.DEFAULT_CHARSET_ENCODING_HTTP_RESPONSE);
+        
+        String charsetEncodingReadFile = JMeterUtils.getPropDefault(
+                "jmeterPlugin.sts.charsetEncodingReadFile",
+                HttpSimpleTableControl.DEFAULT_CHARSET_ENCODING_READ_FILE);
+        
+        
+        String charsetEncodingWriteFile = JMeterUtils.getPropDefault(
+                "jmeterPlugin.sts.charsetEncodingWriteFile",
+                HttpSimpleTableControl.DEFAULT_CHARSET_ENCODING_WRITE_FILE);
+        
+        String fileEncodingSystem = System.getProperty("file.encoding");
+        if (fileEncodingSystem != null) {
+        	if (JMeterUtils.getProperty("jmeterPlugin.sts.charsetEncodingReadFile") == null) {
+        		charsetEncodingReadFile=fileEncodingSystem;
+        	}
+        	if (JMeterUtils.getProperty("jmeterPlugin.sts.charsetEncodingWriteFile") == null) {
+        		charsetEncodingWriteFile=fileEncodingSystem; 
+        	}
+        }
+        
+        String  samplerDefaultEncoding = JMeterUtils.getProperty("sampleresult.default.encoding");
+        if (samplerDefaultEncoding != null) {
+        	if (JMeterUtils.getProperty("jmeterPlugin.sts.charsetEncodingHttpResponse") == null) {
+        		charsetEncodingHttpResponse = samplerDefaultEncoding;
+        	}
+        }
+        
         // default level
         Configurator.setLevel(log.getName(), Level.INFO);
         // allow override by system properties
@@ -473,23 +602,113 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         bStartFromMain=true;
         
         HttpSimpleTableServer serv = new HttpSimpleTableServer(port, timestamp,
-                dataset);
+                dataset, charsetEncodingHttpResponse, charsetEncodingReadFile, charsetEncodingWriteFile, bIsDaemonProc);
 
-        log.info("Creating HttpSimpleTable ...");
+        log.info("Creating HttpSimpleTable from CLI");
         log.info("------------------------------");
         log.info("SERVER_PORT : " + port);
-        log.info("DATASET_DIR : " + dataset);
-        log.info("TIMESTAMP : " + timestamp);
+        log.info("DATASET_DIR : " + dataset + dataSetComplInfo);
+        log.info("ADD TIMESTAMP : " + timestamp);
+        log.info("DEAMON PROCESS : " + bIsDaemonProc);
+        log.info("charsetEncodingHttpResponse : " + charsetEncodingHttpResponse);
+        log.info("charsetEncodingReadFile : " + charsetEncodingReadFile);
+        log.info("charsetEncodingWriteFile : " + charsetEncodingWriteFile);
         log.info("------------------------------");
         log.info("STS_VERSION : " + STS_VERSION);
         ServerRunner.executeInstance(serv);
     }
 
+    // only when start STS from Command Line Interface (script shell : simple-table-server.cmd or simple-table-server.sh)
     public void waitForKey() {
-        log.warn("Hit Enter Key on keyboards to Stop and Exit");
-        try {
-            System.in.read();
-        } catch (Throwable ignored) {
+    	
+    	try {
+    		// load files at STS startup
+			initFileAtStartup();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	if (!bIsDemon) {
+	        log.warn("Hit Enter Key on keyboards to Stop and Exit");
+	        try {
+	            System.in.read();
+	        } catch (Throwable ignored) {
+	        }
+    	} else { // mode daemon
+    		log.warn("Mode daemon process, call 'http://hostname:port/sts/STOP' or kill this process to end the Http Simple Table Server");
+    		boolean infiniteLoop = true;
+    		while (infiniteLoop) {
+    			try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					log.warn("Daemon process killed");
+				}
+    		}
+    	}
+    }
+    
+    public void initFileAtStartup() throws IOException {
+        final String sInitFileAtStartup = JMeterUtils.getPropDefault("jmeterPlugin.sts.initFileAtStartup", "");
+        boolean bInitFileAtStartupRegex = JMeterUtils.getPropDefault("jmeterPlugin.sts.initFileAtStartupRegex", false);
+        if (sInitFileAtStartup.length() > 0) {
+        	log.info("INITFILE at STS startup");
+        	log.info("jmeterPlugin.sts.initFileAtStartup=" + sInitFileAtStartup);
+        	log.info("jmeterPlugin.sts.initFileAtStartupRegex=" + bInitFileAtStartupRegex);
+        }
+        int port = JMeterUtils.getPropDefault("jmeterPlugin.sts.port",HttpSimpleTableControl.DEFAULT_PORT);
+        if (sInitFileAtStartup.length() > 0 && bInitFileAtStartupRegex == false) {
+            // E.g : jmeterPlugin.sts.initFileAtStartup=file1.csv,file2.csv,file3.csv
+           
+            String tabFileName[] = org.apache.commons.lang3.StringUtils.splitPreserveAllTokens(sInitFileAtStartup,',');
+            for (int i = 0; i < tabFileName.length; i++) {
+                String fileName = tabFileName[i].trim();
+                log.info("INITFILE : i = " + i + ", fileName = " + fileName);
+                URL url = new URL("http://localhost:" + port +"/sts/INITFILE?FILENAME=" + fileName);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        		String inputLine;
+        		StringBuffer content = new StringBuffer();
+        		while ((inputLine = in.readLine()) != null) {
+        		    content.append(inputLine);
+        		}
+        		in.close();
+        		con.disconnect();	
+                
+                log.info(url.toString() + ", response=" + content);
+            }
+        }
+        
+        if (sInitFileAtStartup.length() > 0 && bInitFileAtStartupRegex == true) {
+            // E.g : jmeterPlugin.sts.initFileAtStartup=file\d+\.csv regex match : file1.csv, file2.csv, file3.csv, file44.csv ...
+           
+            String dataDir = JMeterUtils.getPropDefault("jmeterPlugin.sts.datasetDirectory", "."); // default <JMETER_HOME>/bin
+            File fDir = new File(dataDir);
+            File [] files = fDir.listFiles(new FilenameFilter() {
+                    public boolean accept(File dir, String name) {
+                        return name.matches(sInitFileAtStartup);
+                }
+            });
+        
+            for (int i = 0; i < files.length; i++) {
+                String fileName = files[i].getName();
+                log.info("INITFILE : i = " + i + ", fileName = " + fileName);
+                URL url = new URL("http://localhost:" + port +"/sts/INITFILE?FILENAME=" + fileName);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        		String inputLine;
+        		StringBuffer content = new StringBuffer();
+        		while ((inputLine = in.readLine()) != null) {
+        		    content.append(inputLine);
+        		}
+        		in.close();
+        		con.disconnect();	
+                
+        		log.info(url.toString() + ", response=" + content);
+            }
         }
     }
 }

@@ -7,10 +7,10 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-table-server</artifactId>
-    <version>2.4</version>
+    <version>3.1</version>
 
-    <name>Table server</name>
-    <description>Table server</description>
+    <name>Simple Table Server</name>
+    <description>Http Simple Table Server</description>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -66,12 +66,12 @@
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-cmn-jmeter</artifactId>
-            <version>0.6</version>
+            <version>0.7</version>
         </dependency>
         <dependency>
             <groupId>kg.apc</groupId>
             <artifactId>jmeter-plugins-emulators</artifactId>
-            <version>0.2</version>
+            <version>0.4</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

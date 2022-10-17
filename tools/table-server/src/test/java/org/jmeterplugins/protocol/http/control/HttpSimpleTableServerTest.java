@@ -51,21 +51,23 @@ public class HttpSimpleTableServerTest {
 
         out.close();
 
+        String charset = "UTF-8";
+    	boolean isDaemon = false;
 
-        HttpSimpleTableServer obj = new HttpSimpleTableServerEmul(-1, true, DATA_DIR);
+        HttpSimpleTableServer obj = new HttpSimpleTableServerEmul(-1, true, DATA_DIR, charset, charset, charset, isDaemon);
 
         // HELP (GET)
         String result = sendHttpGet(obj, ""
                 + "/sts");
         assertTrue(0 < result.length()
                 && result
-                .startsWith("<html><head><title>URL for the dataset</title><head>"));
+                .startsWith("<html><head><title>Help URL for the dataset</title><head>"));
 
         // HELP (GET)
         result = sendHttpGet(obj, "" + "/sts/");
         assertTrue(0 < result.length()
                 && result
-                .startsWith("<html><head><title>URL for the dataset</title><head>"));
+                .startsWith("<html><head><title>Help URL for the dataset</title><head>"));
 
         // STATUS (GET) : ERROR EMPTY DATABASE
         result = sendHttpGet(obj, ""
@@ -190,13 +192,17 @@ public class HttpSimpleTableServerTest {
                 + "<body>Error : UNIQUE value has to be TRUE or FALSE !</body>"
                 + CRLF + "</html>", result);
 
-        // ADD (GET) : ERROR ADD SHOULD USE POST METHOD
-        result = sendHttpGet(obj, ""
-                + "/sts/ADD?LINE=login4;password4&FILENAME=" + filename);
-        assertEquals("<html><title>KO</title>" + CRLF
-                        + "<body>Error : unknown command !</body>" + CRLF + "</html>",
-                result);
-
+        /*
+        // ADD (GET) A NEW LINE : 
+        Map<String, String> urlParametersAdd1 = this.createParm("FILENAME", filename);
+        urlParametersAdd1.put("ADD_MODE", "LAST");
+        urlParametersAdd1.put("FILENAME", "test-login.csv");
+        urlParametersAdd1.put("LINE", "login4;password4");
+        result = sendHttpGet(obj, "/sts/ADD", urlParametersAdd1);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+        */
+        
         // ADD (POST) : ERROR MISSING LINE
         Map<String, String> urlParameters2 = this.createParm("FILENAME", "unknown.txt");
         urlParameters2.put("ADD_MODE", "LAST");
@@ -289,6 +295,12 @@ public class HttpSimpleTableServerTest {
         result = sendHttpGet(obj, "/sts/STATUS");
         assertEquals("<html><title>OK</title>" + CRLF + "<body>" + CRLF
                 + filename + " = 0<br />" + CRLF + "</body></html>", result);
+        
+        // CONFIG (GET)
+        result = sendHttpGet(obj, "/sts/CONFIG");
+        assertTrue(0 < result.length()
+                && result
+                .startsWith("<html><title>OK</title>"));
     }
 
 

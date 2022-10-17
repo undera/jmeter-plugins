@@ -36,7 +36,10 @@ public class ServerRunnerTest {
         HttpSimpleTableServer serv = null;
         ServerRunner.executeInstance(serv);
 
-        serv = new HttpSimpleTableServerEmul(-1, false, JMeterUtils.getJMeterBinDir());
+        String charset = "UTF-8";
+    	boolean isDaemon = false;
+    	
+        serv = new HttpSimpleTableServerEmul(-1, false, JMeterUtils.getJMeterBinDir(), charset, charset, charset, isDaemon);
         serv.start();
         ServerRunner.executeInstance(serv);
         serv.stopServer();

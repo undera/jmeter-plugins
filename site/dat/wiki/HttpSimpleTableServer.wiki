@@ -11,13 +11,26 @@ The main idea is to use a tiny http server in JMeter Plugins to manage the datas
 
 == Configuration ==
 
-In jmeter.properties file:
+In jmeter.properties file, STS properties are :
 
 {{{
 jmeterPlugin.sts.port=9191
 jmeterPlugin.sts.addTimestamp=true
 jmeterPlugin.sts.datasetDirectory=D:/jmeter/dataset
 jmeterPlugin.sts.loadAndRunOnStartup=false
+
+jmeterPlugin.sts.daemon=false
+jmeterPlugin.sts.charsetEncodingHttpResponse=UTF-8
+jmeterPlugin.sts.charsetEncodingReadFile=UTF-8
+jmeterPlugin.sts.charsetEncodingWriteFile=UTF-8
+
+jmeterPlugin.sts.initFileAtStartup=article.csv,users.csv
+jmeterPlugin.sts.initFileAtStartupRegex=false
+
+jmeterPlugin.sts.initFileAtStartup=file\d+\.csv
+jmeterPlugin.sts.initFileAtStartupRegex=true
+
+
 }}}
 
 Do not use '\' in the path directory, it doesn't work well, use '/' or '\\' instead.
@@ -27,8 +40,8 @@ It is also recommended to use UTF-8 as the encoding:
 sampleresult.default.encoding=UTF-8
 }}}
 
-If you want automatically start a Simple Table Server on JMeter STARTUP simply add "simple-table-server.bsh" in the "beanshell.init.file" property.
-Be sure that simple-table-server.bsh file is in your JMETER_HOME/bin directory.
+If you want automatically start a Simple Table Server on JMeter STARTUP simply add jsr223.init.file=simple-table-server.groovy in jmeter.properties
+Be sure that simple-table-server.groovy file is in your JMETER_HOME/bin directory.
 
 The Simple Table Server is a tiny http server which can send http GET/POST requests on port 9191 (by default).
 You can set a custom port through the graphical user interface or by overriding the jmeterplugin.sts.port property.
@@ -51,19 +64,22 @@ There are different ways to start the STS:
 
 [/img/wiki/http_simple_table_server.png]
 
-  * with simple-table-server.cmd (.sh for UNIX) script located in your JMETER_HOME/bin directory. Parameters are read in the jmeter.properties or you could also set parameters like simple-table-server.cmd -DjmeterPlugin.sts.addTimestamp=true -DjmeterPlugin.sts.datasetDirectory=D:/jmeter/dataset
+  * with simple-table-server.cmd (.sh for UNIX) script located in your JMETER_HOME/bin directory. Parameters are read in the jmeter.properties or you could also set parameters like simple-table-server.cmd -DjmeterPlugin.sts.addTimestamp=true -DjmeterPlugin.sts.datasetDirectory=D:/jmeter/dataset, set jmeterPlugin.sts.daemon=true when you want launch the STS with the nohup linux command like process daemon, the STS will not waiting the <ENTER> key to stop. 
   * on JMeter CLI startup (Windows : jmeter-n.cmd or Linux jmeter -n) following properties in jmeter.properties file or in user.properties :
 
 {{{
 jmeterPlugin.sts.loadAndRunOnStartup=true
 jmeterPlugin.sts.port=9191
+
+jmeterPlugin.sts.daemon=false
   
-beanshell.init.file=simple-table-server.bsh
+jsr223.init.file=simple-table-server.groovy
 }}}
 
-When the STS is running go to {{{http://<HOST>:<PORT>/sts/}}} to see all available commands.
+When the STS is running go to {{{http://<HOST>:<PORT>/sts/}}} to *see all available commands* and a short help.
 
 *Calls are synchronized, all commands are executed one by one.*
+
 
 Example of a dataset file logins.csv:
 
@@ -104,9 +120,33 @@ login4;password4
 login5;password5
 }}}
 
+The *charset to read the file* is jmeterPlugin.sts.charsetEncodingReadFile=\<charset>, default value = System property : file.encoding
+
+File could be load when STS startup with 
+{{{
+jmeterPlugin.sts.initFileAtStartupRegex=false
+jmeterPlugin.sts.initFileAtStartup=article.csv,users.csv
+
+OR
+
+jmeterPlugin.sts.initFileAtStartupRegex=true
+jmeterPlugin.sts.initFileAtStartup=file\d+\.csv
+
+}}}
+
+jmeterPlugin.sts.initFileAtStartupRegex=false and jmeterPlugin.sts.initFileAtStartup=file1.csv,file2.csv,otherfile.csv
+read csv files with comma separator (not a regular expression), e.g : read file1.csv and file2.csv and otherfile.csv
+
+OR
+
+jmeterPlugin.sts.initFileAtStartupRegex=true and jmeterPlugin.sts.initFileAtStartup=.+\.csv
+read all csv files in the dataset directory the jmeterPlugin.sts.initFileAtStartup value is a regular expression
+
 === READ ===
 
 *Get one line from list*
+
+The charset use in the response is jmeterPlugin.sts.charsetEncodingHttpResponse=<charset>, default value = JMeter property : sampleresult.default.encoding
 
 {{{
 http://hostname:port/sts/READ?READ_MODE={FIRST, LAST, RANDOM}&KEEP={TRUE, FALSE}&FILENAME=logins.csv
@@ -269,6 +309,8 @@ dossier.csv = 1<br />
 
 *Save the specified linked list in a file to the specified location*
 
+The charset use to write the file is set with meterPlugin.sts.charsetEncodingWriteFile=\<charset>, default value = System property : file.encoding
+
 {{{
 http://hostname:port/sts/SAVE?FILENAME=logins.csv
 }}}
@@ -288,6 +330,12 @@ HTML format:
 </html>
 ]]]
 
+You can force the addTimestamp value with parameter ADD_TIMESTAMP in the url like :
+{{{
+http://hostname:port/sts/SAVE?FILENAME=logins.csv&ADD_TIMESTAMP=[true,false]
+}}}
+
+
 === RESET ===
 
 *Remove all of the elements from the specified list*
@@ -304,12 +352,24 @@ HTML format:
 </html>
 ]]]
 
+Always returns OK even if the file did not exist
+
 === STOP ===
 
 *Shutdown the Simple Table Server*
 
 {{{
 http://hostname:port/sts/STOP
+}}}
+
+When the jmeterPlugin.sts.daemon=true, you need to call http://hostname:port/sts/STOP or kill the process to stop the STS
+
+=== CONFIG ===
+
+*Display the current configuration for the Simple Table Server*
+
+{{{
+http://hostname:port/sts/CONFIG
 }}}
 
 See examples below for further information.
@@ -352,13 +412,13 @@ else {
 }
 ]]]
 
-== Example ==
+== Examples ==
 
   * Put the logins.csv file in your JMETER_HOME/bin directory:
 
   [/img/examples/logins.csv Download logins.csv file]
 
-  * Run the Simple Table Server manually with the simple-table-server.cmd file or automatically with beanShell configuration.
+  * Run the Simple Table Server manually with the simple-table-server.cmd file or automatically with groovy configuration.
   * Run one of the following scripts:
 
 In a loop, read random values from a file containing a login and a password at each row:
@@ -379,7 +439,7 @@ Add rows in a new linked list and save it in a file when the test is done:
 
 
 Read in a random mode a dataset located on the controller machine with severals slaves.
-The first injector loads the dataset in memory while the other injectors are waiting few seconds.
+The first injector loads the dataset in memory while the other injectors are waiting few seconds (you could also use meterPlugin.sts.initFileAtStartup=file1.csv,file2.csv and jmeterPlugin.sts.initFileAtStartupRegex=false to read files when STS startup)
 The different injectors read randomly the data containing logins and passwords.
 When the test is done the first injector save the values in a file with a timestamp as prefix:
 
@@ -390,16 +450,24 @@ You can override STS settings using command-line options:
   * -DjmeterPlugin.sts.loadAndRunOnStartup=\<true/false>
   * -DjmeterPlugin.sts.datasetDirectory=\<path/to/your/directory>
   * -DjmeterPlugin.sts.addTimestamp=\<true/false>
+  * -DjmeterPlugin.sts.daemon=\<true/false>
+  * -DjmeterPlugin.sts.charsetEncodingHttpResponse=\<charset like UTF-8>
+  * -DjmeterPlugin.sts.charsetEncodingReadFile=\<charset like UTF-8>
+  * -DjmeterPlugin.sts.charsetEncodingWriteFile=\<charset like UTF-8>
+  * -DjmeterPlugin.sts.initFileAtStartup=\<files to read when STS startup, e.g : article.csv,users.csv>
+  * -DjmeterPlugin.sts.initFileAtStartupRegex=false=\<false : no regular expression, files with comma separator, true : read files matching the regular expression>
+  
 
 {{{
-jmeter.bat -DjmeterPlugin.sts.loadAndRunOnStartup=true -DjmeterPlugin.sts.port=9191 -DjmeterPlugin.sts.datasetDirectory=d:/data -n –t testdemo.jmx
+jmeter.bat -DjmeterPlugin.sts.loadAndRunOnStartup=true -DjmeterPlugin.sts.port=9191 -DjmeterPlugin.sts.datasetDirectory=d:/data -DjmeterPlugin.sts.charsetEncodingReadFile=UTF-8 -n –t testdemo.jmx
 }}}
 
 When it's done see results in the Listener Tree View.
 
+== JMETER MAVEN PLUGIN ==
 If you want to use the Http Simple Server with the **JMeter Maven plugin**, you could :
   * put your csv files in <project>/src/test/jmeter directory (e.g : logins.csv)
-  * put the simple-table-server.bsh (beanshell script) in  <project>/src/test/jmeter directory
+  * put the simple-table-server.groovy (groovy script) in  <project>/src/test/jmeter directory
   * put the your jmeter script in <project>/src/test/jmeter directory (e.g : test_login.jmx)
   * declare in the maven build section, in the configuration > jmeterExtensions > declare the artifact kg.apc:jmeter-plugins-table-server:<version>
   * declare user properties for STS configuration and automatic start
@@ -412,11 +480,11 @@ Extract pom.xml dedicated to Http Simple Table Server :
              <plugin>
                  <groupId>com.lazerycode.jmeter</groupId>
                  <artifactId>jmeter-maven-plugin</artifactId>
-                 <version>3.4.0</version>
+                 <version>3.5.0</version>
 ...
                  <configuration>
                      <jmeterExtensions>
-                          <artifact>kg.apc:jmeter-plugins-table-server:2.4</artifact>
+                          <artifact>kg.apc:jmeter-plugins-table-server:3.1</artifact>
                      </jmeterExtensions>
                      <propertiesUser>
                          <!-- properties configuration for Http Simple Table Server with automatic start when JMeter start -->
@@ -424,7 +492,7 @@ Extract pom.xml dedicated to Http Simple Table Server :
                          <jmeterPlugin.sts.addTimestamp>true</jmeterPlugin.sts.addTimestamp>
                          <jmeterPlugin.sts.datasetDirectory>${project.build.directory}/jmeter/testFiles</jmeterPlugin.sts.datasetDirectory>
                          <jmeterPlugin.sts.loadAndRunOnStartup>true</jmeterPlugin.sts.loadAndRunOnStartup
-                         <beanshell.init.file>${project.build.directory}/jmeter/testFiles/simple-table-server.bsh</beanshell.init.file>
+                         <jsr223.init.file>${project.build.directory}/jmeter/testFiles/simple-table-server.groovy</jsr223.init.file>
                      </propertiesUser>
                  </configuration>
              </plugin>

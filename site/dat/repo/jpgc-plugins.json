@@ -43,39 +43,6 @@
       "kg.apc.jmeter.threads.UltimateThreadGroupGui"
     ],
     "versions": {
-      "2.0": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.0/jmeter-plugins-casutg-2.0.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.1": {
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.1/jmeter-plugins-casutg-2.1.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.2": {
-        "changes": "fixed issue with JMeter 2.11 not working with concurrency thread group",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.2/jmeter-plugins-casutg-2.2.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.3": {
-        "changes": "fixed issue with Test Action + start next loop not working with CTG",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.3/jmeter-plugins-casutg-2.3.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
-      "2.4": {
-        "changes": "fixed variable processing in load parameter fields",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.4/jmeter-plugins-casutg-2.4.jar",
-        "libs": {
-          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.4/jmeter-plugins-cmn-jmeter-0.4.jar"
-        }
-      },
       "2.5": {
         "changes": "fixed stop test after hold limit",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-casutg/2.5/jmeter-plugins-casutg-2.5.jar",
@@ -995,6 +962,26 @@
     "versions": {
       "0.1": {
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-xml/0.1/jmeter-plugins-xml-0.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
+        }
+      }
+    }
+  },
+  {
+    "id": "jpgc-esa",
+    "name": "Extractor Success Assertion",
+    "description": "Assertion to check that extractor were successfull",
+    "screenshotUrl": "https://github.com/undera/jmeter-extract-success/blob/main/screenshot.png?raw=true",
+    "helpUrl": "https://github.com/undera/jmeter-extract-success",
+    "vendor": "JMeter-Plugins.org",
+    "markerClass": "org.jmeterplugins.assertions.ExtractorSuccessAssertion",
+    "componentClasses": [
+      "org.jmeterplugins.assertions.ExtractorSuccessAssertionGui"
+    ],
+    "versions": {
+      "0.1": {
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-esa/0.1/jmeter-plugins-esa-0.1.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
         }

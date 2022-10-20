@@ -32,6 +32,7 @@ rename "s/.zip/_$REV.zip/" upload/files/nightly/*.zip
 # examples
 cp -r examples upload/img/
 
+php --version
 curl -sS https://getcomposer.org/installer | php
 cd upload
 ../composer.phar update --no-dev --prefer-stable

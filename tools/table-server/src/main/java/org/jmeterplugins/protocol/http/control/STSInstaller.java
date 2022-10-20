@@ -9,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 public class STSInstaller {
     public static void main(String[] argv) throws IOException {
         writeOut("simple-table-server.bsh", false);
+        writeOut("simple-table-server.groovy", false);
         writeOut("simple-table-server.cmd", false);
         writeOut("simple-table-server.sh", true);
         writeOut("NanoHttpd-2.1.0_License.txt", false);

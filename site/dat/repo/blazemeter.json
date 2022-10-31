@@ -847,6 +847,25 @@
           "jetty-io>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/jetty-io-11.0.6.jar",
           "jetty-util>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0/jetty-util-11.0.6.jar"
         }
+      },
+      "2.0.1": {
+        "changes": "Fixed NPE issues with resources took too long to answer",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/jmeter-bzm-http2-2.0.1.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/http2-client-11.0.6.jar",
+          "http2-common>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/http2-common-11.0.6.jar",
+          "http2-hpack>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/http2-hpack-11.0.6.jar",
+          "http2-http-client-transport>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/http2-http-client-transport-11.0.6.jar",
+          "jetty-alpn-client>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/jetty-alpn-client-11.0.6.jar",
+          "jetty-alpn-java-client>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/jetty-alpn-java-client-11.0.6.jar",
+          "jetty-client>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/jetty-client-11.0.6.jar",
+          "jetty-http>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/jetty-http-11.0.6.jar",
+          "jetty-io>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/jetty-io-11.0.6.jar",
+          "jetty-util>=11.0.6": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.1/jetty-util-11.0.6.jar"
+        }
       }
     }
   },

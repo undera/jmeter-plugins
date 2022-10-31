@@ -14,7 +14,7 @@ import java.util.List;
 public class StrReplaceRegex extends AbstractFunction {
 
     private static final List<String> desc = new LinkedList<String>();
-    private static final String KEY = "__strReplace";
+    private static final String KEY = "__strReplaceRegex";
 
     static {
         desc.add("String to get part of");

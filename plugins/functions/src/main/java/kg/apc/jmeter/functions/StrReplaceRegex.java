@@ -13,7 +13,7 @@ import java.util.List;
 
 public class StrReplaceRegex extends AbstractFunction {
 
-    private static final List<String> desc = new LinkedList<String>();
+    private static final List<String> desc = new LinkedList<>();
     private static final String KEY = "__strReplace";
 
     static {

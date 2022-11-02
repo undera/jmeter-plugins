@@ -1537,9 +1537,9 @@
    {
     "id": "jmeter-atakama-variabilization-plugin",
     "name": "Atakama Variabilization Plugin",
-    "description": "Variabilization plugin for jmeter: https://github.com/atakama/jmeter_plugin_variabilization",
+    "description": "<b>Variabilization plugin for jmeter:</b><br><br> You can request a trial by following this link: <a href="https://ph-eval.atakama-technologies.com/downloadWebsite/index.php/product/show?id=1">https://ph-eval.atakama-technologies.com/downloadWebsite/index.php/product/show?id=1</a>",
     "screenshotUrl": "https://user-images.githubusercontent.com/2484866/182579087-59225ac5-8abb-4a87-835a-2f202b1374fd.png",
-    "helpUrl": "https://ph-eval.atakama-technologies.com/downloadWebsite/index.php/product/show?id=1",
+    "helpUrl": "https://github.com/atakama/jmeter_plugin_variabilization",
     "vendor": "Atakama Technologies",
     "markerClass": "com.atakama.jmeter.parameters.gui.ParametersGui",
     "componentClasses": [

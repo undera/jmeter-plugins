@@ -1565,6 +1565,22 @@
           "jmeter-core",
           "jmeter-components"
         ]
+      },
+	  "1.2.0": {
+		"changes": "Upgrade license system",  
+        "downloadUrl": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jmeter-atakama-parameters-1.2.0.jar",
+		"libs": {
+				"jakarta.activation-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jakarta.activation-api-1.2.1.jar",
+				"jakarta.xml.bind-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jakarta.xml.bind-api-2.3.2.jar",
+				"jaxb-core": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jaxb-core-2.3.0.1.jar",
+				"jaxb-runtime": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jaxb-runtime-2.3.2.jar",
+				"lib-crypt": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/lib-crypt-1.0.6.jar"
+				
+		},
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
       }
     }
   }

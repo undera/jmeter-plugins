@@ -1240,6 +1240,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "2.1.1": {
+        "changes": "Get AWS session token from the credentials file and SNS Java Sampler Client bug fix..",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v2.1.1/awsmeter-2.1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

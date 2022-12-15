@@ -167,8 +167,14 @@ public class VariableThroughputTimer
         if (log.isDebugEnabled()) {
             log.debug("Calculating {} {} {}", millisSinceLastSecond, cntSent * msecPerReq, cntSent);
         }
+        
+        
         if (millisSinceLastSecond < (cntSent * msecPerReq)) {
-            // TODO : Explain this for other maintainers
+            //this code allows for very big number of threads to be fired each second (at most 1 divided by how much time "delay" runs because it's synchronized)
+            //each second has number of requests to fire
+            //this condition evaluates to true if threads have been firing (executing "sample" and then executing "delay") quickly enough since the second started
+            //otherwise next thread should be fired instantly
+            
             // cntDelayed + 1 : Current threads waiting + this thread
             return (int) (1 + 1000.0 * (cntDelayed + 1) / rps);
         }

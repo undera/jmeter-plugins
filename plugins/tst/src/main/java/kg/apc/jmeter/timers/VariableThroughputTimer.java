@@ -169,7 +169,7 @@ public class VariableThroughputTimer
         }
         
         
-        if (millisSinceLastSecond < (cntSent * msecPerReq)) {
+        if (millisSinceLastSecond < (cntSent * msecPerReq) || msecPerReq > 1000) {
             //this code allows for very big number of threads to be fired each second (at most 1 divided by how much time "delay" runs because it's synchronized)
             //each second has number of requests to fire
             //this condition evaluates to true if threads have been firing (executing "sample" and then executing "delay") quickly enough since the second started

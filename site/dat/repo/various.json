@@ -1458,6 +1458,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.1.0": {
+        "changes": "jmeter core lib upgrade to jmeter 5.5",
+        "downloadUrl": "https://github.com/yeshan333/ApacheJmeter_Schema_Assertion/releases/download/v1.1.0/ApacheJmeter_Schema_Assertion-1.1.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

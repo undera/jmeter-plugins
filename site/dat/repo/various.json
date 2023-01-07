@@ -1629,5 +1629,32 @@
             ]
          }
       }
-   }
+   },
+   {
+    "componentClasses": [
+        "io.perfwise.cb.config.BucketConfig",
+        "io.perfwise.cb.sampler.CBSampler"
+    ],
+    "description": "JMeter plugin to load test Couchbase DB <ul><li>Simply add a \"Config Element \" and set the cocuhbase connection options and provide a object name to export</li><li>Add a \"Couchbase sampler \" and provide the exported object name.</li><li><a href=\"https://rollno748.github.io/\">Author Details</a></li></ul>",
+    "helpUrl": "https://github.com/rollno748/JMeter-couchbase-sampler#readme",
+    "id": "couchbase",
+    "markerClass": "io.perfwise.cb.sampler.CBSampler",
+    "name": "Couchbase Plugin",
+    "screenshotUrl": "https://raw.githubusercontent.com/rollno748/JMeter-couchbase-sampler/master/img/couchbase.png",
+    "vendor": "Perfwise",
+    "versions": {
+        "1.0": {
+          "downloadUrl": "https://github.com/rollno748/JMeter-couchbase-sampler/releases/download/1.0/jmeter-couchbase-sampler-1.0.jar",
+          "libs": {
+             "java-client": "https://repo1.maven.org/maven2/com/couchbase/client/java-client/3.4.1/java-client-3.4.1.jar",
+             "core-io":"https://repo1.maven.org/maven2/com/couchbase/client/core-io/2.4.1/core-io-2.4.1.jar",
+             "reactor-core":"https://repo1.maven.org/maven2/io/projectreactor/reactor-core/3.5.0/reactor-core-3.5.0.jar",
+             "reactive-streams":"https://repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
+        }
+    }
+  }
 ]

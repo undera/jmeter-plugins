@@ -1634,6 +1634,15 @@
                "jmeter-components"
             ]
          }
+		 ,
+		 "1.5.0":{
+			"changes": "Update system license, identify sampler with sampler name and header atk_Etape", 
+            "downloadUrl":"https://github.com/atakama/jmeter_plugin_backend_listener/releases/download/1.5.0/jmeter-atakama-backend-1.5.0.jar",
+            "depends":[
+               "jmeter-core",
+               "jmeter-components"
+            ]
+         }
       }
    },
    {

@@ -1396,6 +1396,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.6": {
+        "changes": "Prints exceptions that occur before the request is initiated; setEndTime must be called after setStartTime; allow run plugin with M1 ARM chip; ...",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.2.6/jmeter-grpc-request.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

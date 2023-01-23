@@ -1678,5 +1678,34 @@
           ]
         }
     }
-  }
+  },
+  {
+        "id" : "ulp-observability-plugin",
+        "name" : "UbikLoadPack Observability Plugin",
+        "description" : "This plugin allows you to monitor your JMeter CLI performance test from your favorite browser without having to start JMeter in GUI mode",
+        "screenshotUrl" : "https://raw.githubusercontent.com/ubikingenierie/ulp-observability-plugin/main/screenshot/ulp_observability3.png",
+        "helpUrl": "https://www.ubik-ingenierie.com/blog/ubik-load-pack-observability-plugin/",
+        "vendor": "https://ubikloadpack.com",
+        "markerClass": "com.ubikloadpack.jmeter.ulp.observability.listener.ULPObservabilityListener",
+        "versions" : {
+            "1.0.1" : {
+                "downloadUrl" : "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.0.1/ulp-observability-listener-1.0.1.jar",
+                "libs": {
+                    "jetty-server":"https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/11.0.13/jetty-server-11.0.13.jar",
+                    "jetty-servlet":"https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/11.0.13/jetty-servlet-11.0.13.jar",
+                    "jetty-servlets":"https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/11.0.13/jetty-servlets-11.0.13.jar",
+                    "jetty-webapp":"https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-webapp/11.0.13/jetty-webapp-11.0.13.jar",
+                    "jetty-util":"https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.13/jetty-util-11.0.13.jar",
+                    "jetty-http":"https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/11.0.13/jetty-http-11.0.13.jar",
+                    "jetty-security":"https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/11.0.13/jetty-security-11.0.13.jar",
+                    "jetty-io":"https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/11.0.13/jetty-io-11.0.13.jar",
+                    "jetty-xml":"https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-xml/11.0.13/jetty-xml-11.0.13.jar",
+                    "jakarta.servlet-api":"https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/5.0.0-M2/jakarta.servlet-api-5.0.0-M2.jar",
+                    "micrometer-core":"https://repo1.maven.org/maven2/io/micrometer/micrometer-core/1.10.3/micrometer-core-1.10.3.jar",
+                    "cron-scheduler":"https://repo1.maven.org/maven2/io/timeandspace/cron-scheduler/0.1/cron-scheduler-0.1.jar",
+                    "HdrHistogram":"https://repo1.maven.org/maven2/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"
+                }
+            }
+        }
+    }
 ]

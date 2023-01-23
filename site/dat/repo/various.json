@@ -285,6 +285,44 @@
     }
   },
   {
+    "id": "tilln-junit",
+    "name": "JUnit Reporter",
+    "description": "Generates CI/CD-compatible JUnit Reports in XML format based on custom KPIs: Comparing aggregate metrics with threshold values determines pass/fail.<br />Supports filtering of sample labels by regular expressions.<br />Supported aggregates:<ul><li>Response time percentiles (any)</li><li>Maximum and minimum response time</li><li>Response time average and standard deviation</li><li>Sample error rate</li><li>Total number of samples</li><li>Custom metrics</li></ul>",
+    "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-junit-reporter/master/docs/reporter.png",
+    "helpUrl": "https://github.com/tilln/jmeter-junit-reporter",
+    "vendor": "Till Neunast",
+    "markerClass": "nz.co.breakpoint.jmeter.JUnitReporter",
+    "componentClasses": [
+      "nz.co.breakpoint.jmeter.JUnitReporter"
+    ],
+    "versions": {
+      "1.0": {
+        "downloadUrl": "https://github.com/tilln/jmeter-junit-reporter/releases/download/1.0/jmeter-junit-reporter-1.0.jar"
+      },
+      "1.1": {
+        "changes": "Bug fixes",
+        "downloadUrl": "https://github.com/tilln/jmeter-junit-reporter/releases/download/1.1/jmeter-junit-reporter-1.1.jar"
+      }
+    }
+  },
+  {
+    "id": "tilln-retrier",
+    "name": "Sample Retrier",
+    "description": "Post-Processor that retries failed samplers based on sample results (regex match of response code, data, headers or message).<br /><ul><li>Configurable pause and back-off behaviour</li><li>Handles \"Retry-After\" HTTP headers</li><li>Retries as represented as sub-results</li></ul>Does <b>not</b> take into account any assertion results.",
+    "screenshotUrl": "https://raw.githubusercontent.com/tilln/jmeter-retrier/master/docs/example.png",
+    "helpUrl": "https://github.com/tilln/jmeter-retrier",
+    "vendor": "Till Neunast",
+    "markerClass": "nz.co.breakpoint.jmeter.modifiers.RetryPostProcessor",
+    "componentClasses": [
+      "nz.co.breakpoint.jmeter.modifiers.RetryPostProcessor"
+    ],
+    "versions": {
+      "1.0": {
+        "downloadUrl": "https://github.com/tilln/jmeter-retrier/releases/download/1.0/jmeter-retrier-1.0.jar"
+      }
+    }
+  },
+  {
     "id": "tilln-sshmon",
     "name": "SSHMon Sample Collector",
     "description": "Monitoring plugin for agentless collection and plotting of remote server metrics via SSH connections",
@@ -757,6 +795,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "8.0.5": {
+        "changes": "Bugfix version",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.5/ubik-jmeter-videostreaming-plugin-8.0.5.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "8.0.4": {
         "changes": "Live DASH: Introduce option to follow redirect URL for Manifest Reload",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.4/ubik-jmeter-videostreaming-plugin-8.0.4.jar",
@@ -1197,6 +1240,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "2.1.1": {
+        "changes": "Get AWS session token from the credentials file and SNS Java Sampler Client bug fix..",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v2.1.1/awsmeter-2.1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -1275,6 +1325,12 @@
       "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
     ],
     "versions": {
+      "0.3.1": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.3.1/jmeter-datadog-backend-listener-0.3.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.3.0": {
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.3.0/jmeter-datadog-backend-listener-0.3.0.jar",
         "depends": [
@@ -1337,6 +1393,13 @@
       "1.2.1": {
         "changes": "JDK provider support NPN_AND_ALPN protocol when running with SSL.",
         "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.2.1/jmeter-grpc-request-v1.2.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.2.6": {
+        "changes": "Prints exceptions that occur before the request is initiated; setEndTime must be called after setStartTime; allow run plugin with M1 ARM chip; ...",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.2.6/jmeter-grpc-request.jar",
         "depends": [
           "jmeter-core"
         ]
@@ -1405,6 +1468,13 @@
     "versions": {
       "1.0.0": {
         "downloadUrl": "https://github.com/yeshan333/ApacheJmeter_Schema_Assertion/releases/download/v1.0.0/ApacheJmeter_Schema_Assertion-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.1.0": {
+        "changes": "jmeter core lib upgrade to jmeter 5.5",
+        "downloadUrl": "https://github.com/yeshan333/ApacheJmeter_Schema_Assertion/releases/download/v1.1.0/ApacheJmeter_Schema_Assertion-1.1.0.jar",
         "depends": [
           "jmeter-core"
         ]
@@ -1484,7 +1554,129 @@
       "1.2.2": {
         "changes": "<ul><li>Format log output,remove unnecessary log printing to improve performance.</li><li>Completely solve the problem that the relative directory of the parameter file cannot be read.</li></ul>",
         "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.2/baolu-csv-data-file-config-1.2.2.jar"
+      },
+      "1.2.3": {
+        "changes": "<ul><li>Support multithreading group.</li></ul>",
+        "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.3/baolu-csv-data-file-config-1.2.3.jar"
       }
+    }
+  },
+   {
+    "id": "jmeter-atakama-variabilization-plugin",
+    "name": "Atakama Variabilization Plugin",
+    "description": "<b>Variabilization plugin for jmeter:</b><br><br> You can request a trial by following this link: <a href=\"https://ph-eval.atakama-technologies.com/downloadWebsite/index.php/product/show?id=1\">https://ph-eval.atakama-technologies.com/downloadWebsite/index.php/product/show?id=1</a>",
+    "screenshotUrl": "https://user-images.githubusercontent.com/2484866/182579087-59225ac5-8abb-4a87-835a-2f202b1374fd.png",
+    "helpUrl": "https://github.com/atakama/jmeter_plugin_variabilization",
+    "vendor": "Atakama Technologies",
+    "markerClass": "com.atakama.jmeter.parameters.gui.ParametersGui",
+    "componentClasses": [
+      "com.atakama.jmeter.recording.HttpData",
+      "com.atakama.jmeter.recording.HttpSample",
+      "com.atakama.jmeter.recording.TestResults",
+      "com.atakama.jmeter.recording.Sample",
+      "com.atakama.jmeter.recording.BearerToken",
+      "com.atakama.jmeter.recording.JavaURL"
+    ],
+    "versions": {
+      "1.1.0": {
+        "downloadUrl": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/jmeter-atakama-parameters-1.1.0.jar",
+		"libs": {
+				"jakarta.activation-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/jakarta.activation-api-1.2.1.jar",
+				"jakarta.xml.bind-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/jakarta.xml.bind-api-2.3.2.jar",
+				"jaxb-core": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/jaxb-core-2.3.0.1.jar",
+				"jaxb-runtime": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/jaxb-runtime-2.3.2.jar",
+				"lib-crypt": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/lib-crypt-1.0.6.jar"
+				
+		},
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      },
+	  "1.2.0": {
+		"changes": "Upgrade license system",  
+        "downloadUrl": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jmeter-atakama-parameters-1.2.0.jar",
+		"libs": {
+				"jakarta.activation-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jakarta.activation-api-1.2.1.jar",
+				"jakarta.xml.bind-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jakarta.xml.bind-api-2.3.2.jar",
+				"jaxb-core": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jaxb-core-2.3.0.1.jar",
+				"jaxb-runtime": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jaxb-runtime-2.3.2.jar",
+				"lib-crypt": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/lib-crypt-1.0.6.jar"
+				
+		},
+        "depends": [
+          "jmeter-core",
+          "jmeter-components"
+        ]
+      }
+    }
+  }
+  ,
+   {
+      "id":"jmeter-atakama-backend-listener-plugin",
+      "name":"Atakama Backend Listener Plugin",
+      "description":"This plugin aims to send jmeter metrics to Atakama Infrastructure",
+      "screenshotUrl":"",
+      "helpUrl":"https://github.com/atakama/jmeter_plugin_backend_listener",
+      "vendor":"Atakama Technologies",
+      "markerClass":"com.atakama.jmeter.visualizers.backend.BackendListenerGui",
+      "componentClasses":[
+         "com.atakama.jmeter.backend.influx.InfluxdbLocalConfig",
+         "com.atakama.jmeter.visualizers.backend.LicencePanel",
+         "com.atakama.jmeter.backend.influx.InfluxdbMetricsSender"
+      ],
+      "versions":{
+         "1.3.0":{
+            "downloadUrl":"https://github.com/atakama/jmeter_plugin_backend_listener/releases/download/1.3.0/jmeter-atakama-backend-1.3.0.jar",
+            "depends":[
+               "jmeter-core",
+               "jmeter-components"
+            ]
+         },
+		 "1.4.0":{
+			"changes": "Update components name and contact", 
+            "downloadUrl":"https://github.com/atakama/jmeter_plugin_backend_listener/releases/download/1.4.0/jmeter-atakama-backend-1.4.0.jar",
+            "depends":[
+               "jmeter-core",
+               "jmeter-components"
+            ]
+         }
+		 ,
+		 "1.5.0":{
+			"changes": "Update system license, identify sampler with sampler name and header atk_Etape", 
+            "downloadUrl":"https://github.com/atakama/jmeter_plugin_backend_listener/releases/download/1.5.0/jmeter-atakama-backend-1.5.0.jar",
+            "depends":[
+               "jmeter-core",
+               "jmeter-components"
+            ]
+         }
+      }
+   },
+   {
+    "componentClasses": [
+        "io.perfwise.cb.config.BucketConfig",
+        "io.perfwise.cb.sampler.CBSampler"
+    ],
+    "description": "JMeter plugin to load test Couchbase DB <ul><li>Simply add a \"Config Element \" and set the cocuhbase connection options and provide a object name to export</li><li>Add a \"Couchbase sampler \" and provide the exported object name.</li><li><a href=\"https://rollno748.github.io/\">Author Details</a></li></ul>",
+    "helpUrl": "https://github.com/rollno748/JMeter-couchbase-sampler#readme",
+    "id": "couchbase",
+    "markerClass": "io.perfwise.cb.sampler.CBSampler",
+    "name": "Couchbase Plugin",
+    "screenshotUrl": "https://raw.githubusercontent.com/rollno748/JMeter-couchbase-sampler/master/img/couchbase.png",
+    "vendor": "Perfwise",
+    "versions": {
+        "1.0": {
+          "downloadUrl": "https://github.com/rollno748/JMeter-couchbase-sampler/releases/download/1.0/jmeter-couchbase-sampler-1.0.jar",
+          "libs": {
+             "java-client": "https://repo1.maven.org/maven2/com/couchbase/client/java-client/3.4.1/java-client-3.4.1.jar",
+             "core-io":"https://repo1.maven.org/maven2/com/couchbase/client/core-io/2.4.1/core-io-2.4.1.jar",
+             "reactor-core":"https://repo1.maven.org/maven2/io/projectreactor/reactor-core/3.5.0/reactor-core-3.5.0.jar",
+             "reactive-streams":"https://repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
+        }
     }
   }
 ]

@@ -9,27 +9,6 @@
     "markerClass": "org.jmeterplugins.repository.PluginManager",
     "canUninstall": false,
     "versions": {
-      "1.0.2": {
-        "changes": "<p>- Added cache plugins repo</p></p>- Optimize pmgr requests</p><p>- Fixed crash if pmgr put in lib folder</p><p>- Fixed decode PATH for JMeterHome</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.0.2/jmeter-plugins-manager-1.0.2.jar",
-        "libs": {
-          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
-        }
-      },
-      "1.1": {
-        "changes": "<p>- Drop cache if we know it is outdated</p></p>- Fix bug with cmdrunner lib install</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.1/jmeter-plugins-manager-1.1.jar",
-        "libs": {
-          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
-        }
-      },
-      "1.2": {
-        "changes": "<p>- Fixed parse test plan(xml version 1.1)</p></p>- Fix bug with install/update libs</p>",
-        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.2/jmeter-plugins-manager-1.2.jar",
-        "libs": {
-          "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.2/cmdrunner-2.2.jar"
-        }
-      },
       "1.3": {
         "changes": "Improve test plan parsing",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.3/jmeter-plugins-manager-1.3.jar",
@@ -56,6 +35,13 @@
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.7/jmeter-plugins-manager-1.7.jar",
         "libs": {
           "cmdrunner>=2.2": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
+        }
+      },
+      "1.8": {
+        "changes": "Use headless mode in BAT file for Windows",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.8/jmeter-plugins-manager-1.8.jar",
+        "libs": {
+          "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
         }
       }
     }

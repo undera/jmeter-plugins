@@ -267,6 +267,13 @@
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
         }
+      },
+      "3.1": {
+        "changes": "Replace beanshell with groovy script : jsr223.init.file=simple-table-server.groovy. New features : Could load files when STS startup, Set charset to read or write file and in http header response, Add CONFIG command, add daemon mode for linux nohup, SAVE command add ADD_TIMESTAMP parameter",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/3.1/jmeter-plugins-table-server-3.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
+        }
       }
     }
   }

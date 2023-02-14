@@ -1325,6 +1325,12 @@
       "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
     ],
     "versions": {
+      "0.3.1": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.3.1/jmeter-datadog-backend-listener-0.3.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.3.0": {
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.3.0/jmeter-datadog-backend-listener-0.3.0.jar",
         "depends": [
@@ -1390,6 +1396,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.6": {
+        "changes": "Prints exceptions that occur before the request is initiated; setEndTime must be called after setStartTime; allow run plugin with M1 ARM chip; ...",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.2.6/jmeter-grpc-request.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -1397,7 +1410,7 @@
     "componentClasses": [
         "com.di.jmeter.kafka.sampler.KafkaProducerConfig"
     ],
-    "description": "Jmeter plugin to push events/messages to Kafka topics",
+    "description": "Jmeter plugin to push/read events/messages to Kafka topics",
     "helpUrl": "https://github.com/rollno748/di-kafkameter#readme",
     "id": "di-kafkameter",
     "markerClass": "com.di.jmeter.kafka.sampler.KafkaProducerSampler",
@@ -1410,6 +1423,19 @@
                 "jmeter-core"
             ],
             "downloadUrl": "https://github.com/rollno748/di-kafkameter/releases/download/1.0/di-kafkameter-1.0.jar"
+        },
+        "1.1": {
+          "depends": [
+            "jmeter-core"
+          ],
+          "downloadUrl": "https://github.com/rollno748/di-kafkameter/releases/download/1.1/di-kafkameter-1.1.jar",
+          "libs": {
+            "kafka-clients": "https://repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.3.1/kafka-clients-3.3.1.jar",
+            "guava": "https://repo1.maven.org/maven2/com/google/guava/guava/31.1-jre/guava-31.1-jre.jar",
+            "lz4-java": "https://repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar",
+            "snappy-java": "https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.8.4/snappy-java-1.1.8.4.jar",
+            "zstd-jni-1.5.2-1": "https://repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.2-1/zstd-jni-1.5.2-1.jar"
+          }
         }
     }
   },
@@ -1455,6 +1481,13 @@
     "versions": {
       "1.0.0": {
         "downloadUrl": "https://github.com/yeshan333/ApacheJmeter_Schema_Assertion/releases/download/v1.0.0/ApacheJmeter_Schema_Assertion-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.1.0": {
+        "changes": "jmeter core lib upgrade to jmeter 5.5",
+        "downloadUrl": "https://github.com/yeshan333/ApacheJmeter_Schema_Assertion/releases/download/v1.1.0/ApacheJmeter_Schema_Assertion-1.1.0.jar",
         "depends": [
           "jmeter-core"
         ]
@@ -1621,6 +1654,75 @@
                "jmeter-components"
             ]
          }
+		 ,
+		 "1.5.0":{
+			"changes": "Update system license, identify sampler with sampler name and header atk_Etape", 
+            "downloadUrl":"https://github.com/atakama/jmeter_plugin_backend_listener/releases/download/1.5.0/jmeter-atakama-backend-1.5.0.jar",
+            "depends":[
+               "jmeter-core",
+               "jmeter-components"
+            ]
+         }
       }
-   }
+   },
+   {
+    "componentClasses": [
+        "io.perfwise.cb.config.BucketConfig",
+        "io.perfwise.cb.sampler.CBSampler"
+    ],
+    "description": "JMeter plugin to load test Couchbase DB <ul><li>Simply add a \"Config Element \" and set the cocuhbase connection options and provide a object name to export</li><li>Add a \"Couchbase sampler \" and provide the exported object name.</li><li><a href=\"https://rollno748.github.io/\">Author Details</a></li></ul>",
+    "helpUrl": "https://github.com/rollno748/JMeter-couchbase-sampler#readme",
+    "id": "couchbase",
+    "markerClass": "io.perfwise.cb.sampler.CBSampler",
+    "name": "Couchbase Plugin",
+    "screenshotUrl": "https://raw.githubusercontent.com/rollno748/JMeter-couchbase-sampler/master/img/couchbase.png",
+    "vendor": "Perfwise",
+    "versions": {
+        "1.0": {
+          "downloadUrl": "https://github.com/rollno748/JMeter-couchbase-sampler/releases/download/1.0/jmeter-couchbase-sampler-1.0.jar",
+          "libs": {
+             "java-client": "https://repo1.maven.org/maven2/com/couchbase/client/java-client/3.4.1/java-client-3.4.1.jar",
+             "core-io":"https://repo1.maven.org/maven2/com/couchbase/client/core-io/2.4.1/core-io-2.4.1.jar",
+             "reactor-core":"https://repo1.maven.org/maven2/io/projectreactor/reactor-core/3.5.0/reactor-core-3.5.0.jar",
+             "reactive-streams":"https://repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
+        }
+    }
+  },
+    {
+        "id": "ulp-observability-plugin",
+        "name": "UbikLoadPack Observability Plugin",
+        "description": "This plugin allows you to monitor your JMeter CLI performance test from your favorite browser without having to start JMeter in GUI mode",
+        "screenshotUrl": "https://raw.githubusercontent.com/ubikingenierie/ulp-observability-plugin/main/screenshot/ulp_observability3.png",
+        "helpUrl": "https://www.ubik-ingenierie.com/blog/ubik-load-pack-observability-plugin/",
+        "vendor": "UbikLoadPack by Ubik-Ingenierie",
+        "markerClass": "com.ubikloadpack.jmeter.ulp.observability.listener.ULPObservabilityListener",
+        "versions": {
+             "1.0.2": {
+                "downloadUrl": "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.0.2/ulp-observability-listener-1.0.2.jar",
+                "depends": [
+                    "jmeter-core"
+                ],
+                "libs": {
+                    "jetty-server": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/11.0.13/jetty-server-11.0.13.jar",
+                    "jetty-servlet": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/11.0.13/jetty-servlet-11.0.13.jar",
+                    "jetty-servlets": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/11.0.13/jetty-servlets-11.0.13.jar",
+                    "jetty-webapp": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-webapp/11.0.13/jetty-webapp-11.0.13.jar",
+                    "jetty-util": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.13/jetty-util-11.0.13.jar",
+                    "jetty-http": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/11.0.13/jetty-http-11.0.13.jar",
+                    "jetty-security": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/11.0.13/jetty-security-11.0.13.jar",
+                    "jetty-io": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/11.0.13/jetty-io-11.0.13.jar",
+                    "jetty-xml": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-xml/11.0.13/jetty-xml-11.0.13.jar",
+                    "jakarta.servlet-api": "https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/5.0.0-M2/jakarta.servlet-api-5.0.0-M2.jar",
+                    "micrometer-core": "https://repo1.maven.org/maven2/io/micrometer/micrometer-core/1.10.3/micrometer-core-1.10.3.jar",
+                    "micrometer-commons": "https://repo1.maven.org/maven2/io/micrometer/micrometer-commons/1.10.3/micrometer-commons-1.10.3.jar",
+                    "cron-scheduler": "https://repo1.maven.org/maven2/io/timeandspace/cron-scheduler/0.1/cron-scheduler-0.1.jar",
+                    "HdrHistogram": "https://repo1.maven.org/maven2/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"
+                 }
+             }
+        }
+    }
 ]

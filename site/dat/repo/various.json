@@ -795,6 +795,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "8.0.6": {
+        "changes": "Bugfix version for HLS and Dash subtitles and wrong first chunk download in HLS for certain types of manifest",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.6/ubik-jmeter-videostreaming-plugin-8.0.6.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "8.0.5": {
         "changes": "Bugfix version",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.5/ubik-jmeter-videostreaming-plugin-8.0.5.jar",

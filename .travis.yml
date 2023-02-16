@@ -10,7 +10,7 @@ before_install:
   - sudo apt-get update
   - php -v
   - sudo apt-get -y install php5.6
-  - /usr/bin/php5.6
+#  - /usr/bin/php5.6
   - php -v
   - which php
   - sudo update-alternatives --set php /usr/bin/php5.6

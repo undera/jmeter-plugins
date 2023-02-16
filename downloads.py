@@ -6,7 +6,8 @@ import subprocess
 import sys
 import tempfile
 import zipfile
-from distutils.version import StrictVersion
+# from distutils.version import StrictVersion
+from packaging.version import parse as StrictVersion
 
 import jsonschema
 import requests
@@ -32,6 +33,7 @@ def pack_version(fname, ver_obj, pmgr_obj, installer_cls):
     if not ver_obj['downloadUrl']:
         return
 
+    logging.info("Packing into %s", fname)
     with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as ziph:
         tmp_dir = tempfile.mkdtemp()
 
@@ -94,7 +96,8 @@ def get_pmgr(plugins_list):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG, format="%(relativeCreated)d\t%(levelname)s\t%(message)s")
+    level = logging.DEBUG if os.getenv("DEBUG") else logging.INFO
+    logging.basicConfig(level=level, format="%(relativeCreated)d\t%(levelname)s\t%(message)s")
 
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
@@ -128,9 +131,10 @@ if __name__ == "__main__":
             continue
 
         for version in plugin['versions']:
-            logging.debug("Version: %s", version)
             if not version:
                 continue
+
+            logging.debug("Version: %s", version)
 
             if not plugin['versions'][version]['downloadUrl']:
                 continue

@@ -1,0 +1,32 @@
+name: PR Validation
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "*" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run validation script
+      run: ./prepare-upload.sh
+
+    - name: Maven install
+      run: mvn -T 1C -Dmaven.test.skip=true clean install --batch-mode
+
+    - name: Maven tests
+      run: mvn -T 1C -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true --fail-at-end --batch-mode org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report
+
+    - name: Run validation script
+      run: ./site-upload.sh
+      if: github.ref == 'refs/heads/master'
+

@@ -7,10 +7,11 @@ cache:
 #  - oraclejdk8
 before_install:
   - lsb_release -a
+  - dpkg -l | grep php
   - sudo add-apt-repository -y ppa:ondrej/php
   - sudo apt-get update
   - php -v
-  - sudo apt-get -y install php5.6
+  - sudo apt-get -y install php5.6-cli
   - find /usr -name "php*"
 #  - /usr/bin/php5.6
   - php -v

@@ -8,8 +8,10 @@ cache:
 before_install:
   - sudo add-apt-repository -y ppa:ondrej/php
   - sudo apt-get update
+  - php -v
   - sudo apt-get -y install php5.6
   - sudo update-alternatives --set php /usr/bin/php5.6
+  - /usr/bin/php5.6
   - php -v
 install:
   - python -m virtualenv --system-site-packages ./venv && source venv/bin/activate && python -m pip install jsonschema && ./prepare-upload.sh

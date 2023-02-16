@@ -33,6 +33,7 @@ def pack_version(fname, ver_obj, pmgr_obj, installer_cls):
     if not ver_obj['downloadUrl']:
         return
 
+    logging.info("Packing into %s", fname)
     with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as ziph:
         tmp_dir = tempfile.mkdtemp()
 

@@ -1,16 +1,12 @@
 #! /bin/sh -ex
 
-REV=`git log -1 --format="%H" | cut -c1-10`
-
-echo Running with REV=$REV
+python downloads.py
 
 rm -rf upload
 mkdir -p upload
 
 # site docs
 cp -r site/* upload/
-
-python downloads.py
 
 # examples
 cp -r examples upload/img/

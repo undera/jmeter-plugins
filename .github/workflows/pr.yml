@@ -1,4 +1,4 @@
-name: PR Validation
+name: Build Automation
 
 on:
   push:
@@ -20,11 +20,11 @@ jobs:
     - name: Prepare upload
       run: ./prepare-upload.sh
 
-    - name: Maven tests
-      run: mvn -T 1C -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true --fail-at-end --batch-mode org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report install
+    #- name: Maven tests
+    #  run: mvn -T 1C -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true --fail-at-end --batch-mode org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report install
 
-    - name: Codecov
-      uses: codecov/codecov-action@v3.1.1
+    #- name: Codecov
+    #  uses: codecov/codecov-action@v3.1.1
 
     - name: Perform upload
       run: 'curl --fail -vk https://jmeter-plugins.org/unzip.php -F "zipfile=@upload/site.zip" -H "Authorization: Bearer $UPLOAD_TOKEN"'

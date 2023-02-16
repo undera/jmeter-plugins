@@ -27,6 +27,6 @@ jobs:
     #  uses: codecov/codecov-action@v3.1.1
 
     - name: Perform upload
-      run: 'curl --fail -vk https://jmeter-plugins.org/unzip.php -F "zipfile=@upload/site.zip" -H "Authorization: Bearer $UPLOAD_TOKEN"'
+      run: 'curl --fail -vk https://jmeter-plugins.org/unzip.php -F "zipfile=@upload/site.zip" -H "Authorization: Bearer ${{ secrets.UPLOAD_TOKEN }}"'
       # if: github.ref == 'refs/heads/master'
 

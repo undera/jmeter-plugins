@@ -2,20 +2,6 @@ language: java
 cache:
   directories:
     - $HOME/.m2
-#jdk:
-#  - openjdk7
-#  - oraclejdk8
-before_install:
-  - lsb_release -a
-  - sudo add-apt-repository -y ppa:ondrej/php
-  - sudo apt-get update
-  - php -v
-  - sudo apt-get -y install php5.6-cli
-  - find /usr -name "php*"
-#  - /usr/bin/php5.6
-  - php -v
-  - which php
-  - sudo update-alternatives --set php /usr/bin/php5.6
 install:
   - python -m virtualenv --system-site-packages ./venv && source venv/bin/activate && python -m pip install jsonschema && ./prepare-upload.sh
   - mvn -T 1C -Dmaven.test.skip=true clean install --batch-mode

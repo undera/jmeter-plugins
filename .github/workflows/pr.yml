@@ -17,16 +17,16 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Run validation script
-      run: ./prepare-upload.sh
-
-    - name: Maven install
-      run: mvn -T 1C -Dmaven.test.skip=true clean install --batch-mode
-
     - name: Maven tests
       run: mvn -T 1C -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true --fail-at-end --batch-mode org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report
 
+    - name: Codecov
+      uses: codecov/codecov-action@v3.1.1
+
     - name: Run validation script
-      run: ./site-upload.sh
-      if: github.ref == 'refs/heads/master'
+      run: ./prepare-upload.sh
+
+    - name: Run validation script
+      run: 'curl --fail -vk https://jmeter-plugins.org/unzip.php -F "zipfile=@upload/site.zip" -H "Authorization: Bearer $UPLOAD_TOKEN"'
+      # if: github.ref == 'refs/heads/master'
 

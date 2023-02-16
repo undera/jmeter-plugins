@@ -2,8 +2,7 @@
 
 REV=`git log -1 --format="%H" | cut -c1-10`
 
-# build
-#mvn clean cobertura:cobertura package
+echo Running with REV=$REV
 
 rm -rf upload
 mkdir -p upload
@@ -25,6 +24,8 @@ for D in `ls` ; do
 done
 
 #cp manager/target/jmeter-plugins-manager-*.jar upload/files/nightly/
+
+ls -la upload/files/nightly
 
 rename "s/.jar/_$REV.jar/" upload/files/nightly/*.jar
 rename "s/.zip/_$REV.zip/" upload/files/nightly/*.zip

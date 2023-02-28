@@ -25,6 +25,12 @@ jobs:
     - name: Prepare upload
       run: ./prepare-upload.sh
 
+    - uses: actions/setup-java@v3
+      with:
+        #distribution: 'temurin'
+        #java-version: '17'
+        cache: 'maven'
+
     - name: Maven tests
       run: mvn -T 1C -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true --fail-at-end --batch-mode org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report install
 

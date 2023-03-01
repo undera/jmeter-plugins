@@ -28,11 +28,12 @@ jobs:
     - uses: actions/setup-java@v3
       with:
         distribution: oracle
-        java-version: '17'
+        java-version: '18'
         cache: maven
 
     - name: Maven tests
       run: mvn -T 1C -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true --fail-at-end --batch-mode org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report install
+      working-directory: ./plugins/casutg
 
     - name: Codecov
       uses: codecov/codecov-action@v3.1.1

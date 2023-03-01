@@ -27,8 +27,8 @@ jobs:
 
     - uses: actions/setup-java@v3
       with:
-        distribution: oracle
-        java-version: '11.0'
+        distribution: temurin
+        java-version: '8'
         cache: maven
 
     - name: Maven tests

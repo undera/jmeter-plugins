@@ -32,7 +32,7 @@ public class CaseFormatTest {
 			throws Exception {
 		TestJMeterUtils.createJmeterEnv();
 	}
-	
+
     @Before
     public void setUp() {
     	changeCase = new CaseFormat();

@@ -2,6 +2,7 @@ package kg.apc.jmeter.functions;
 
 import static org.junit.Assert.assertEquals;
 
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.engine.util.CompoundVariable;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.threads.JMeterContext;
@@ -26,6 +27,12 @@ public class CaseFormatTest {
 
 	private CaseFormat changeCase;
 
+	@BeforeClass
+	public static void setUpClass()
+			throws Exception {
+		TestJMeterUtils.createJmeterEnv();
+	}
+	
     @Before
     public void setUp() {
     	changeCase = new CaseFormat();

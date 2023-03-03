@@ -1,15 +1,23 @@
 package kg.apc.jmeter.vizualizers;
 
+import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.samplers.SampleEvent;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.property.CollectionProperty;
 import org.apache.jmeter.testelement.property.JMeterProperty;
 
 import static org.junit.Assert.*;
+
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class MonitoringResultsCollectorTest {
-    
+    @BeforeClass
+    public static void setUpClass()
+            throws Exception {
+        TestJMeterUtils.createJmeterEnv();
+    }
+
     /**
      * Test of setData method, of class MonitoringResultsCollector.
      */

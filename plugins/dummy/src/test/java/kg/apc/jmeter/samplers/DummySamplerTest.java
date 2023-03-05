@@ -60,6 +60,7 @@ public class DummySamplerTest {
         String enc1 = JMeterUtils.getProperty("sampleresult.default.encoding");
         String data = "大众";
         DummySampler instance = new DummySampler();
+        instance.getDummy().setSuccessful(true);
         instance.getDummy().setResponseData(data);
         SampleResult result = instance.sample(null);
         result.setDataEncoding("UTF-8");

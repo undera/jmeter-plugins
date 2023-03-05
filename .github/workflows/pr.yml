@@ -9,9 +9,6 @@ on:
 permissions:
   contents: read
 
-env:
-  MAVEN_OPTS: "-Dfile.encoding=UTF-8"
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,7 +32,7 @@ jobs:
         cache: maven
 
     - name: Maven tests
-      run: mvn -T 1C -Dfile.encoding=UTF8 -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true --fail-at-end --batch-mode org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report install
+      run: mvn -T 1C -Djava.awt.headless=true -Dmaven.test.redirectTestOutputToFile=true --fail-at-end --batch-mode org.jacoco:jacoco-maven-plugin:prepare-agent test org.jacoco:jacoco-maven-plugin:report install
       working-directory: ./plugins/dummy
 
     - name: Codecov

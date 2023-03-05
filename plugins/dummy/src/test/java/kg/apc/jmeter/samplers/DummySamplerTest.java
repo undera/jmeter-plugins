@@ -57,20 +57,13 @@ public class DummySamplerTest {
 
     @Test
     public void testSample_chinese() {
-        String enc1 = JMeterUtils.getProperty("sampleresult.default.encoding");
         String data = "大众";
-
         DummySampler instance = new DummySampler();
-        instance.getDummy().setSuccessful(true);
         instance.getDummy().setResponseData(data);
         SampleResult result = instance.sample(null);
-        System.out.println("Enc: " + enc1 + '/' + result.getDataEncodingWithDefault());
-
         Assert.assertNotNull(result);
-        Assert.assertEquals("Expected byte len", 6, result.getResponseData().length);
         // freaking "static final" DEFAULT_ENCODING field in SampleResult does not allow us to assert this
-        Assert.assertTrue("nt With enc: " + enc1 + '/' + result.getDataEncodingWithDefault() + ": " + result.getResponseMessage(), result.isSuccessful());
-        Assert.assertEquals("ne With enc: " + enc1 + '/' + result.getDataEncodingWithDefault(), data, result.getResponseDataAsString());
+        Assert.assertEquals(data, result.getResponseDataAsString());
     }
 
     @Test

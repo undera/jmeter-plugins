@@ -94,7 +94,7 @@ public class DummyElement implements Serializable {
             }
             res.sampleEnd();
         } else {
-            res.setStampAndTime(System.currentTimeMillis(), (long) getResponseTime());
+            res.setStampAndTime(System.currentTimeMillis(), getResponseTime());
         }
 
         return res;

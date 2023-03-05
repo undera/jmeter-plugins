@@ -3,6 +3,7 @@ package kg.apc.jmeter.samplers;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -56,6 +57,7 @@ public class DummySamplerTest {
 
     @Test
     public void testSample_chinese() {
+        String enc1 = JMeterUtils.getProperty("sampleresult.default.encoding");
         String data = "大众";
         DummySampler instance = new DummySampler();
         instance.getDummy().setResponseData(data);
@@ -63,7 +65,7 @@ public class DummySamplerTest {
         System.out.println("Enc: " + result.getDataEncodingWithDefault());
         Assert.assertNotNull(result);
         // freaking "static final" DEFAULT_ENCODING field in SampleResult does not allow us to assert this
-        Assert.assertEquals("With enc: " + result.getDataEncodingWithDefault(), data, result.getResponseDataAsString());
+        Assert.assertEquals("With enc: " + enc1 + '/' + result.getDataEncodingWithDefault(), data, result.getResponseDataAsString());
     }
 
     @Test

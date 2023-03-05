@@ -11,6 +11,7 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.HashTree;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -50,7 +51,7 @@ public abstract class TestJMeterUtils {
         JMeterUtils.setProperty("sample_variables", "TEST1,TEST2,TEST3"); // for Flexible File Writer Test
         JMeterUtils.setProperty("saveservice_properties", "/ss.props");
         JMeterUtils.setProperty("upgrade_properties", "/ss.props");
-        JMeterUtils.setProperty("sampleresult.default.encoding", "UTF-8"); // enable multibyte
+        JMeterUtils.setProperty("sampleresult.default.encoding", StandardCharsets.UTF_8.name()); // enable multibyte
     }
 
     public static String getTempDir() {

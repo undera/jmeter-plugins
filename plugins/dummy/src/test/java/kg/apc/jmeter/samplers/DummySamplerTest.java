@@ -66,8 +66,8 @@ public class DummySamplerTest {
         System.out.println("Enc: " + result.getDataEncodingWithDefault());
         Assert.assertNotNull(result);
         // freaking "static final" DEFAULT_ENCODING field in SampleResult does not allow us to assert this
-        Assert.assertEquals("ne With enc: " + enc1 + '/' + result.getDataEncodingWithDefault(), data, result.getResponseDataAsString());
         Assert.assertTrue("nt With enc: " + enc1 + '/' + result.getDataEncodingWithDefault() + ": " + result.getResponseMessage(), result.isSuccessful());
+        Assert.assertEquals("ne With enc: " + enc1 + '/' + result.getDataEncodingWithDefault(), data, result.getResponseDataAsString());
     }
 
     @Test

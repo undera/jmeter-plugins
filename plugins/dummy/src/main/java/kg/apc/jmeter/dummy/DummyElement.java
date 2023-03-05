@@ -56,10 +56,11 @@ public class DummyElement implements Serializable {
         // responde data
         res.setDataType(SampleResult.TEXT);
         try {
-            res.setResponseData(getResponseData().getBytes(res.getDataEncodingWithDefault()));
+            byte[] bytes = getResponseData().getBytes(res.getDataEncodingWithDefault());
+            res.setResponseData(bytes);
         } catch (UnsupportedEncodingException exc) {
             log.warn("Failed to get response data", exc);
-            throw new RuntimeException(exc);
+            res.setResponseMessage(exc.toString());
         }
 
         String url = getURL();

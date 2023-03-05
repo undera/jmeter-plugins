@@ -3,7 +3,6 @@ package kg.apc.jmeter.samplers;
 import kg.apc.emulators.TestJMeterUtils;
 import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult;
 import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.util.JMeterUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

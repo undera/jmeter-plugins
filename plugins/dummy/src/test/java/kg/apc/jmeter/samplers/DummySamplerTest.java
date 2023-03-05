@@ -62,6 +62,7 @@ public class DummySamplerTest {
         DummySampler instance = new DummySampler();
         instance.getDummy().setResponseData(data);
         SampleResult result = instance.sample(null);
+        result.setDataEncoding("UTF-8");
         System.out.println("Enc: " + result.getDataEncodingWithDefault());
         Assert.assertNotNull(result);
         // freaking "static final" DEFAULT_ENCODING field in SampleResult does not allow us to assert this

@@ -19,10 +19,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run tests
-        run: |
-          sudo locale-gen ${{ env.LANG }}
-          sudo update-locale LANG=${{ env.LANG }}
+    - name: Run tests
+      run: |
+        locale
+        sudo locale-gen ${{ env.LANG }}
+        sudo update-locale LANG=${{ env.LANG }}
 
     - uses: actions/checkout@v3
 

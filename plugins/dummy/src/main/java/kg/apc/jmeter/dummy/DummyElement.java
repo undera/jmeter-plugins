@@ -1,5 +1,6 @@
 package kg.apc.jmeter.dummy;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
 import org.apache.jmeter.util.JMeterUtils;
@@ -41,8 +42,6 @@ public class DummyElement implements Serializable {
             log.warn("Failed to create sample of desired type", ex);
         }
 
-        res.setDataEncoding(JMeterUtils.getProperty("sampleresult.default.encoding"));
-
         res.setSampleLabel(model.getName());
 
         // source data
@@ -60,7 +59,9 @@ public class DummyElement implements Serializable {
             res.setResponseData(bytes);
         } catch (UnsupportedEncodingException exc) {
             log.warn("Failed to get response data", exc);
+            res.setSuccessful(false);
             res.setResponseMessage(exc.toString());
+            res.setResponseData((exc + "\n" + ExceptionUtils.getStackTrace(exc)).getBytes());
         }
 
         String url = getURL();

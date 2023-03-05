@@ -85,7 +85,7 @@ public class DummyElement implements Serializable {
         cls = (Class<SampleResult>) Class.forName(getResultClass());
 
         SampleResult res;
-        res = cls.newInstance();
+        res = cls.getDeclaredConstructor().newInstance();
         if (isSimulateWaiting()) {
             res.sampleStart();
             try {
@@ -167,7 +167,7 @@ public class DummyElement implements Serializable {
     public int getResponseTime() {
         int time = 0;
         try {
-            time = Integer.valueOf(getPropertyAsString(RESPONSE_TIME));
+            time = Integer.parseInt(getPropertyAsString(RESPONSE_TIME));
         } catch (NumberFormatException ignored) {
         }
         return time;
@@ -176,7 +176,7 @@ public class DummyElement implements Serializable {
     public int getLatency() {
         int time = 0;
         try {
-            time = Integer.valueOf(getPropertyAsString(LATENCY));
+            time = Integer.parseInt(getPropertyAsString(LATENCY));
         } catch (NumberFormatException ignored) {
         }
         return time;
@@ -197,7 +197,7 @@ public class DummyElement implements Serializable {
     public int getConnectTime() {
         int time = 0;
         try {
-            time = Integer.valueOf(getPropertyAsString(CONNECT));
+            time = Integer.parseInt(getPropertyAsString(CONNECT));
         } catch (NumberFormatException ignored) {
         }
         return time;

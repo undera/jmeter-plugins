@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class DummyElement implements Serializable {
     private static final long serialVersionUID = 246L;
@@ -27,7 +28,7 @@ public class DummyElement implements Serializable {
     public static final String IS_WAITING = "WAITING";
     public static final String URL = "URL";
     public static final String RESULT_CLASS = "RESULT_CLASS";
-    private AbstractTestElement model;
+    private final AbstractTestElement model;
 
     public DummyElement(AbstractTestElement model) {
         this.model = model;
@@ -42,6 +43,8 @@ public class DummyElement implements Serializable {
             log.warn("Failed to create sample of desired type", ex);
         }
 
+        res.setDataEncoding(StandardCharsets.UTF_8.name());
+
         res.setSampleLabel(model.getName());
 
         // source data
@@ -55,7 +58,8 @@ public class DummyElement implements Serializable {
         // responde data
         res.setDataType(SampleResult.TEXT);
         try {
-            byte[] bytes = getResponseData().getBytes(res.getDataEncodingWithDefault());
+            String enc = res.getDataEncodingWithDefault();
+            byte[] bytes = getResponseData().getBytes(enc);
             res.setResponseData(bytes);
         } catch (UnsupportedEncodingException exc) {
             log.warn("Failed to get response data", exc);

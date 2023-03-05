@@ -2,6 +2,7 @@ package kg.apc.jmeter.dummy;
 
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
+import org.apache.jmeter.util.JMeterUtils;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -40,6 +41,8 @@ public class DummyElement implements Serializable {
             log.warn("Failed to create sample of desired type", ex);
         }
 
+        res.setDataEncoding(JMeterUtils.getProperty("sampleresult.default.encoding"));
+
         res.setSampleLabel(model.getName());
 
         // source data
@@ -56,6 +59,7 @@ public class DummyElement implements Serializable {
             res.setResponseData(getResponseData().getBytes(res.getDataEncodingWithDefault()));
         } catch (UnsupportedEncodingException exc) {
             log.warn("Failed to get response data", exc);
+            throw new RuntimeException(exc);
         }
 
         String url = getURL();

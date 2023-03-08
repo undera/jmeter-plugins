@@ -795,9 +795,9 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
-     "9.0.0": {
-        "changes": "Add support for HTTP/2",
-        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.0.0/ubik-jmeter-videostreaming-plugin-9.0.0.jar",
+     "9.0.1": {
+        "changes": "Add support for HTTP/2, this version now requires JAVA 11 or higher",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.0.1/ubik-jmeter-videostreaming-plugin-9.0.1.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       },
      "8.0.8": {

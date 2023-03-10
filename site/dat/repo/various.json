@@ -1468,7 +1468,7 @@
     "id": "extended-csv-dataset-config",
     "markerClass": "com.di.jmeter.config.ExtendedCsvDataSet",
     "name": "Extended CSV dataset config",
-    "screenshotUrl": "https://raw.githubusercontent.com/rollno748/Extended-csv-dataset-config/master/images/ExtendedCSV.png",
+    "screenshotUrl": "https://raw.githubusercontent.com/rollno748/Extended-csv-dataset-config/master/images/ExtendedCsvDataSetConfig.png",
     "vendor": "DigitalInsight-NCR",
     "versions": {
         "1.0": {
@@ -1480,6 +1480,13 @@
         },
         "1.1": {
           "downloadUrl": "https://github.com/rollno748/Extended-csv-dataset-config/releases/download/1.1/di-extended-csv-1.1.jar",
+          "depends": [
+            "jmeter-core",
+            "jmeter-components"
+          ]
+        },
+        "2.0": {
+          "downloadUrl": "https://github.com/rollno748/Extended-csv-dataset-config/releases/download/2.0/di-extended-csv-2.0.jar",
           "depends": [
             "jmeter-core",
             "jmeter-components"

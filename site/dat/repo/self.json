@@ -43,6 +43,13 @@
         "libs": {
           "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
         }
+      },
+      "1.9": {
+        "changes": "Fix issue of 1.8 of libs saved into wrond directory",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-manager/1.9/jmeter-plugins-manager-1.9.jar",
+        "libs": {
+          "cmdrunner>=2.3": "https://search.maven.org/remotecontent?filepath=kg/apc/cmdrunner/2.3/cmdrunner-2.3.jar"
+        }
       }
     }
   }

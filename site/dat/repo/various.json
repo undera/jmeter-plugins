@@ -1110,7 +1110,7 @@
     "vendor": "Robert Bourgault du Coudray",
     "markerClass": "kg.apc.jmeter.vizualisers.ApdexScoreCalculatorGui",
     "componentClasses": [
-      "kg.apc.jmeter.vizualizers.ApdexScoreCalculatorGui",
+      "kg.apc.jmeter.vizualisers.ApdexScoreCalculatorGui",
       "kg.apc.cmdtools.ApdexScoreCalculatorTool"
     ],
     "versions" : {
@@ -1193,9 +1193,10 @@
     "screenshotUrl" : "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/resultscomparator/src/site/img/wiki/rc_Compare.PNG",
     "helpUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/resultscomparator/src/site/dat/wiki/ResultsComparator.wiki",
     "vendor": "Robert Bourgault du Coudray",
-    "markerClass": "kg.apc.jmeter.vizualisers.ResultsComparatorGui",
+    "markerClass": "kg.apc.jmeter.vizualizers.ResultsComparatorGui",
     "componentClasses": [
-      "kg.apc.jmeter.vizualizers.ResultsComparatorGui"
+      "kg.apc.jmeter.vizualizers.ResultsComparatorGui",
+      "kg.apc.cmdtools.ResultsComparatorTool"
     ],
     "versions" : {
 		"3.1.2": {

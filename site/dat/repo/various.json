@@ -281,6 +281,21 @@
           "HdrHistogram>=2.1.12": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar",
           "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
         }
+      },
+      "1.3": {
+        "changes": "<ul><li>Upgrade to jPOS v2.1.8</li><li>Bug fixes: #24</li><li>Incompatible changes:</li><ul><li>ISO8583 Config: Request Listener script now Groovy instead of BeanShell</li><li>ISO8583 Crypto PreProcessor: Removed some ARQC settings that are now derived automatically from Issuer Application Data (Session Key Derivation Method, jmeter.iso8583.arqcInputTags, jmeter.iso8583.arqcFromFullIADForCVNs)</li></ul></ul>",
+        "downloadUrl": "https://github.com/tilln/jmeter-iso8583/releases/download/1.3/jmeter-iso8583-1.3.jar",
+        "libs": {
+          "jpos>=2.1.8": "https://search.maven.org/remotecontent?filepath=org/jpos/jpos/2.1.8/jpos-2.1.8.jar",
+          "bcprov-jdk15on>=1.69": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcprov-jdk15on/1.69/bcprov-jdk15on-1.69.jar",
+          "bcpg-jdk15on>=1.69": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcpg-jdk15on/1.69/bcpg-jdk15on-1.69.jar",
+          "jdom2>=2.0.6.1": "https://search.maven.org/remotecontent?filepath=org/jdom/jdom2/2.0.6.1/jdom2-2.0.6.1.jar",
+          "org.osgi.core": "https://search.maven.org/remotecontent?filepath=org/osgi/org.osgi.core/6.0.0/org.osgi.core-6.0.0.jar",
+          "commons-cli": "https://search.maven.org/remotecontent?filepath=commons-cli/commons-cli/1.4/commons-cli-1.4.jar",
+          "snakeyaml>=1.33": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.33/snakeyaml-1.33.jar",
+          "HdrHistogram>=2.1.12": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar",
+          "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
+        }
       }
     }
   },

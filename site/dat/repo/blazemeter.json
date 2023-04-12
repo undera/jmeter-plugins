@@ -1151,6 +1151,19 @@
           "jackson-core>=2.12.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-core-2.12.0.jar",
           "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v1.2.3/jackson-module-jaxb-annotations-2.10.2.jar"
         }
+      },
+      "2.0": {
+        "changes": "Added support for automatic correlations and rules analysis, alongside general improvements.",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jmeter-bzm-correlation-recorder-2.0.0.jar",
+        "libs": {
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-module-jaxb-annotations-2.10.2.jar",
+		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jmeter-bzm-commons-0.2.1.jar",
+		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/json-20190722.jar"
+        }
       }
     }
   },

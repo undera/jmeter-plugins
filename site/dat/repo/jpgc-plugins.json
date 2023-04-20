@@ -596,6 +596,15 @@
           "jedis": "https://search.maven.org/remotecontent?filepath=redis/clients/jedis/3.6.3/jedis-3.6.3.jar",
           "commons-pool2": "https://search.maven.org/remotecontent?filepath=org/apache/commons/commons-pool2/2.9.0/commons-pool2-2.9.0.jar"
         }
+      },
+      "0.6": {
+        "changes": "Performance improvements and update",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-redis/0.6/jmeter-plugins-redis-0.6.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+          "jedis": "https://search.maven.org/remotecontent?filepath=redis/clients/jedis/3.6.3/jedis-3.6.3.jar",
+          "commons-pool2": "https://search.maven.org/remotecontent?filepath=org/apache/commons/commons-pool2/2.9.0/commons-pool2-2.9.0.jar"
+        }
       }
     }
   },

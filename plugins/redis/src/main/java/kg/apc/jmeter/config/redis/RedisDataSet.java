@@ -54,13 +54,80 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
 import redis.clients.jedis.exceptions.JedisDataException;
+import redis.clients.jedis.args.ListDirection;
 
 /**
  * Redis DataSet using a Redis Set or List.
  * @since 2.11
  */
-public class RedisDataSet extends ConfigTestElement 
-    implements TestBean, LoopIterationListener, NoConfigMerge, TestStateListener {
+public class RedisDataSet extends ConfigTestElement
+        implements TestBean, LoopIterationListener, NoConfigMerge, TestStateListener {
+
+
+    private interface PollingStrategy {
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException;
+    }
+
+    /**
+     *  Pops an element from a redis list from right (LIFO)
+     */
+    private class PopFromListStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing lpop against redis list");
+            String line = conn.lpop(key);
+            return line;
+        }
+    }
+
+    private class QueueStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing lmove against redis list");
+            String line = conn.lmove(key, key, ListDirection.RIGHT, ListDirection.LEFT);
+            return line;
+        }
+    }
+    private class PopFromSetStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing spop against redis set");
+            String line = conn.spop(key);
+            return line;
+        }
+    }
+
+    private class CopyFromSetStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing srandmember against redis set");
+            String line = conn.srandmember(key);
+            return line;
+        }
+    }
+
+    // backwards compatible (Redis versions below 6.2)
+    private class PopAndPushBackListStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing lpop against redis list");
+            String line = conn.lpop(key);
+            log.debug("Executing rpush against redis list");
+            conn.rpush(key, line);
+            return line;
+        }
+    }
+
+    private class PopAndPushBackSetStrategy implements PollingStrategy {
+        @Override
+        public String getDataFromConnection(Jedis conn, String key) throws JedisDataException {
+            log.debug("Executing spop against redis set");
+            String line = conn.spop(key);
+            log.debug("Executign sadd against redis set");
+            conn.sadd(key, line);
+            return line;
+        }
+    }
 
     public enum RedisDataType {
         REDIS_DATA_TYPE_LIST((byte)0),
@@ -71,9 +138,34 @@ public class RedisDataSet extends ConfigTestElement
         public int getValue() { return value; }
     }
 
-    /**
-     * 
-     */
+    private PollingStrategy selectPollingStrategy(){
+
+        switch (redisDataType) {
+            case REDIS_DATA_TYPE_SET:
+                if (!getRecycleDataOnUse()) {
+                    return new PopFromSetStrategy();
+                } else {
+                    if (getPropertyAsBoolean("plugins.redis.legacy", false)) {
+                        return new PopAndPushBackSetStrategy();
+                    }
+                    return new CopyFromSetStrategy();
+                }
+            case REDIS_DATA_TYPE_LIST:
+                if (!getRecycleDataOnUse()) {
+                    return new PopFromListStrategy();
+                } else {
+                    if (getPropertyAsBoolean("plugins.redis.legacy", false)){
+                        return new PopAndPushBackListStrategy();
+                    }
+                    return new QueueStrategy();
+                }
+            default:
+                log.error("Redis configuration not supported!");
+                break;
+        }
+        return null;
+    }
+
     private static final long serialVersionUID = 7383500755324202605L;
 
     private static final Logger log = LoggerFactory.getLogger(RedisDataSet.class);
@@ -114,77 +206,43 @@ public class RedisDataSet extends ConfigTestElement
     private long minEvictableIdleTimeMillis;
     private long softMinEvictableIdleTimeMillis;
     private transient String[] vars;
-    
+
     private transient JedisPool pool;
 
+    private PollingStrategy pollingStrategy;
 
-    private String getDataFromConnection(Jedis conn, String key) {
-        String line = null;
-
-        try {
-            if (redisDataType == RedisDataType.REDIS_DATA_TYPE_LIST) {
-                log.debug("Executing lpop against redis list");
-                // Get data from list's head
-                line = conn.lpop(key);
-            } else if (redisDataType.equals(RedisDataType.REDIS_DATA_TYPE_SET)) {
-                log.debug("Executing spop against redis set");
-                line = conn.spop(key);
-            } else {
-                log.warn("Unexpected redis datatype: {0}".format(key));
-            }
-        } catch (JedisDataException jde) {
-            log.error("Exception when retrieving data from Redis: " + jde);
-        }
-
-        return line;
-    }
-
-    private void addDataToConnection(Jedis conn, String key, String data) {
-        try {
-            if (redisDataType == RedisDataType.REDIS_DATA_TYPE_LIST) {
-                log.debug("Executing rpush against redis list");
-                // Add data string to list's tail
-                conn.rpush(redisKey, data);
-            } else if (redisDataType == RedisDataType.REDIS_DATA_TYPE_SET) {
-                log.debug("Executing sadd against redis set");
-                conn.sadd(key, data);
-            } else {
-                log.warn("Unexpected redis datatype: {0}".format(key));
-            }
-        } catch (JedisDataException jde) {
-            log.error("Exception when adding data to Redis: " + jde);
-        }
-    }
 
     @Override
     public void iterationStart(LoopIterationEvent event) {
         Jedis connection = null;
+        if (null == pollingStrategy) {
+            pollingStrategy = selectPollingStrategy();
+        }
         try {
             connection = pool.getResource();
-
+            String line = null;
             // Get data from list's head
-            String line = getDataFromConnection(connection, redisKey);
+            try {
+                line = pollingStrategy.getDataFromConnection(connection, redisKey);
+            } catch (JedisDataException jde) {
+                log.error("Failed to retrieve data from redis key {}", redisKey);
 
-            if(line == null) { // i.e. no more data (nil)
+            }
+            if (null == line) {
                 throw new JMeterStopThreadException("End of redis data detected");
             }
-
-            if (getRecycleDataOnUse()) {
-                addDataToConnection(connection, redisKey, line);
-            }
-
             final String names = variableNames;
             if (vars == null) {
-                vars = JOrphanUtils.split(names, ","); 
+                vars = JOrphanUtils.split(names, ",");
             }
-            
+
             final JMeterContext context = getThreadContext();
             JMeterVariables threadVars = context.getVariables();
             String[] values = JOrphanUtils.split(line, delimiter, false);
             for (int a = 0; a < vars.length && a < values.length; a++) {
                 threadVars.put(vars[a], values[a]);
             }
-            
+
         } finally {
             pool.returnResource(connection);
         }
@@ -192,7 +250,7 @@ public class RedisDataSet extends ConfigTestElement
 
     @Override
     public void testEnded() {
-        testEnded(""); 
+        testEnded("");
     }
 
     @Override
@@ -202,7 +260,7 @@ public class RedisDataSet extends ConfigTestElement
 
     @Override
     public void testStarted() {
-        testStarted(""); 
+        testStarted("");
     }
 
     @Override
@@ -212,7 +270,7 @@ public class RedisDataSet extends ConfigTestElement
         return clonedElement;
 
     }
-    
+
     /**
      * Override the setProperty method in order to convert
      * the original String calcMode property.
@@ -249,7 +307,7 @@ public class RedisDataSet extends ConfigTestElement
         }
         super.setProperty(property);
     }
-    
+
     @Override
     public void testStarted(String distributedHost) {
         JedisPoolConfig config = new JedisPoolConfig();
@@ -297,6 +355,7 @@ public class RedisDataSet extends ConfigTestElement
             }
         }
         this.pool = new JedisPool(config, this.host, port, timeout, password, database, this.ssl, sslSocketFactory, sslParameters, hostnameVerifier);
+
     }
 
     /**

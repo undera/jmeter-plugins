@@ -1000,6 +1000,13 @@
     "vendor": "adrianmo",
     "markerClass": "io.github.adrianmo.jmeter.backendlistener.azure.AzureBackendClient",
     "versions": {
+      "0.2.9": {
+        "changes": "Add more logging options for data payloads.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.9/jmeter.backendlistener.azure-0.2.9.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.2.8": {
         "changes": "Add new logSampleData option for logging response data.",
         "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.8/jmeter.backendlistener.azure-0.2.8.jar",

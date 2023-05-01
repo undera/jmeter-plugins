@@ -1727,7 +1727,7 @@
                     "micrometer-core": "https://repo1.maven.org/maven2/io/micrometer/micrometer-core/1.10.3/micrometer-core-1.10.3.jar",
                     "micrometer-commons": "https://repo1.maven.org/maven2/io/micrometer/micrometer-commons/1.10.3/micrometer-commons-1.10.3.jar",
                     "cron-scheduler": "https://repo1.maven.org/maven2/io/timeandspace/cron-scheduler/0.1/cron-scheduler-0.1.jar",
-                    "HdrHistogram": "https://repo1.maven.org/maven2/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar",
+                    "HdrHistogram": "https://repo1.maven.org/maven2/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"
                  }
              },
              "1.0.2": {

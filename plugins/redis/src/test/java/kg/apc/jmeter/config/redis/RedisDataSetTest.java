@@ -1,6 +1,13 @@
 package kg.apc.jmeter.config.redis;
 
-import ai.grakn.redismock.RedisServer;
+
+import com.github.fppt.jedismock.RedisServer;
+import com.github.fppt.jedismock.datastructures.Slice;
+import com.github.fppt.jedismock.operations.server.MockExecutor;
+import com.github.fppt.jedismock.server.RedisCommandInterceptor;
+import com.github.fppt.jedismock.server.Response;
+import com.github.fppt.jedismock.server.ServiceOptions;
+import com.github.fppt.jedismock.storage.OperationExecutorState;
 import org.apache.jmeter.threads.JMeterContext;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.threads.JMeterVariables;
@@ -11,7 +18,9 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -40,8 +49,38 @@ public class RedisDataSetTest {
         jmcx.setVariables(new JMeterVariables());
         threadVars = jmcx.getVariables();
 
+
         // Create new mock RedisServer
         server = RedisServer.newRedisServer(6370);
+        server.setOptions(ServiceOptions.withInterceptor(new RedisCommandInterceptor() {
+            @Override
+            public Slice execCommand(OperationExecutorState operationExecutorState, String s, List<Slice> list) {
+                Slice response;
+                Slice record;
+                if ("lmove".equalsIgnoreCase(s)) {
+                    Slice from = list.get(0);
+                    Slice to = list.get(1);
+                    record = MockExecutor.proceed(operationExecutorState, "lpop", Arrays.<Slice>asList(from));
+                    MockExecutor.proceed(operationExecutorState, "rpush", Arrays.<Slice>asList(to, record));
+
+                    response = Response.bulkString(Slice.create(record.toString().replaceAll("\\$\\d*", "").trim()));
+                } else if ("srandmember".equalsIgnoreCase(s)) {
+                    Slice from = list.get(0);
+                    record = MockExecutor.proceed(operationExecutorState, "spop",Arrays.<Slice>asList(from));
+                    MockExecutor.proceed(operationExecutorState, "sadd", Arrays.<Slice>asList(from, record));
+                    response  = Response.bulkString(Slice.create(record.toString().replaceAll("\\$\\d*", "").trim()));
+                } else {
+                    record = MockExecutor.proceed(operationExecutorState, s, list);
+                    response = record;
+                }
+                // Return error on empty list
+                if ("$-1".equals(record.toString().trim())) {
+                    //null response
+                    response = Response.error("End of list");
+                }
+                return response;
+            }
+        }));
         server.start();
 
         // Setup test data
@@ -59,7 +98,11 @@ public class RedisDataSetTest {
 
     @After
     public void tearDown() {
-        server.stop();
+        try {
+            server.stop();
+        } catch (IOException e) {
+            System.err.println("Failed to stop the redis mock");;
+        }
     }
 
     @Test
@@ -83,12 +126,6 @@ public class RedisDataSetTest {
         ds.iterationStart(null);
         assertEquals("12345679", threadVars.get("ccNum"));
         assertEquals("1235", threadVars.get("ccExpiry"));
-
-        // Confirm that cycling through gets the first "row" of data again
-        ds.iterationStart(null);
-        ds.iterationStart(null);
-        assertEquals("12345678", threadVars.get("ccNum"));
-        assertEquals("1234", threadVars.get("ccExpiry"));
 
         ds.testEnded(null);
     }

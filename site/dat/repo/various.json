@@ -1764,6 +1764,30 @@
         "vendor": "UbikLoadPack by Ubik-Ingenierie",
         "markerClass": "com.ubikloadpack.jmeter.ulp.observability.listener.ULPObservabilityListener",
         "versions": {
+             "1.0.3": {
+                "changes": "Enhancements and bugfixes, more details at https://github.com/ubikingenierie/ulp-observability-plugin/milestone/3?closed=1",
+                "downloadUrl": "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.0.3/ulp-observability-listener-1.0.3.jar",
+                "depends": [
+                    "jmeter-core"
+                ],
+                "libs": {
+                    "commons-lang3": "https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar",
+                    "jetty-server": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/11.0.13/jetty-server-11.0.13.jar",
+                    "jetty-servlet": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/11.0.13/jetty-servlet-11.0.13.jar",
+                    "jetty-servlets": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/11.0.13/jetty-servlets-11.0.13.jar",
+                    "jetty-webapp": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-webapp/11.0.13/jetty-webapp-11.0.13.jar",
+                    "jetty-util": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.13/jetty-util-11.0.13.jar",
+                    "jetty-http": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/11.0.13/jetty-http-11.0.13.jar",
+                    "jetty-security": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/11.0.13/jetty-security-11.0.13.jar",
+                    "jetty-io": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/11.0.13/jetty-io-11.0.13.jar",
+                    "jetty-xml": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-xml/11.0.13/jetty-xml-11.0.13.jar",
+                    "jakarta.servlet-api": "https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/5.0.0-M2/jakarta.servlet-api-5.0.0-M2.jar",
+                    "micrometer-core": "https://repo1.maven.org/maven2/io/micrometer/micrometer-core/1.10.3/micrometer-core-1.10.3.jar",
+                    "micrometer-commons": "https://repo1.maven.org/maven2/io/micrometer/micrometer-commons/1.10.3/micrometer-commons-1.10.3.jar",
+                    "cron-scheduler": "https://repo1.maven.org/maven2/io/timeandspace/cron-scheduler/0.1/cron-scheduler-0.1.jar",
+                    "HdrHistogram": "https://repo1.maven.org/maven2/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"
+                 }
+             },
              "1.0.2": {
                 "downloadUrl": "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.0.2/ulp-observability-listener-1.0.2.jar",
                 "depends": [

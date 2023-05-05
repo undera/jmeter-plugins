@@ -1267,7 +1267,9 @@
       "org.apache.jmeter.protocol.aws.sqs.SQSProducerStandardQueue",
       "org.apache.jmeter.protocol.aws.sqs.SQSProducerFifoQueue",
       "org.apache.jmeter.protocol.aws.sns.SNSProducerStandardTopic",
-      "org.apache.jmeter.protocol.aws.sns.SNSProducerFifoTopic"
+      "org.apache.jmeter.protocol.aws.sns.SNSProducerFifoTopic",
+      "org.apache.jmeter.protocol.aws.cognito.CognitoProducerAdminCreateUser",
+      "org.apache.jmeter.protocol.aws.cognito.CognitoProducerAdminLoginUser"
     ],
     "versions": {
       "1.0.0": {
@@ -1285,8 +1287,15 @@
         ]
       },
       "2.1.1": {
-        "changes": "Get AWS session token from the credentials file and SNS Java Sampler Client bug fix..",
+        "changes": "Get AWS session token from the credentials file and SNS Java Sampler Client bug fix.",
         "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v2.1.1/awsmeter-2.1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "3.0.0": {
+        "changes": "Add Cognito sampler and bug fix to get aws credentials from JMeter Java Sampler parameters.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v3.0.0/awsmeter-3.0.0.jar",
         "depends": [
           "jmeter-core"
         ]

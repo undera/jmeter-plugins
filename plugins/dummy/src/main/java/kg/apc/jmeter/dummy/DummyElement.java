@@ -1,14 +1,16 @@
 package kg.apc.jmeter.dummy;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.jmeter.samplers.SampleResult;
 import org.apache.jmeter.testelement.AbstractTestElement;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class DummyElement implements Serializable {
     private static final long serialVersionUID = 246L;
@@ -25,7 +27,7 @@ public class DummyElement implements Serializable {
     public static final String IS_WAITING = "WAITING";
     public static final String URL = "URL";
     public static final String RESULT_CLASS = "RESULT_CLASS";
-    private AbstractTestElement model;
+    private final AbstractTestElement model;
 
     public DummyElement(AbstractTestElement model) {
         this.model = model;
@@ -40,6 +42,8 @@ public class DummyElement implements Serializable {
             log.warn("Failed to create sample of desired type", ex);
         }
 
+        res.setDataEncoding(StandardCharsets.UTF_8.name());
+
         res.setSampleLabel(model.getName());
 
         // source data
@@ -53,9 +57,14 @@ public class DummyElement implements Serializable {
         // responde data
         res.setDataType(SampleResult.TEXT);
         try {
-            res.setResponseData(getResponseData().getBytes(res.getDataEncodingWithDefault()));
+            String enc = res.getDataEncodingWithDefault();
+            byte[] bytes = getResponseData().getBytes(enc);
+            res.setResponseData(bytes);
         } catch (UnsupportedEncodingException exc) {
             log.warn("Failed to get response data", exc);
+            res.setSuccessful(false);
+            res.setResponseMessage(exc.toString());
+            res.setResponseData((exc + "\n" + ExceptionUtils.getStackTrace(exc)).getBytes());
         }
 
         String url = getURL();
@@ -79,7 +88,7 @@ public class DummyElement implements Serializable {
         cls = (Class<SampleResult>) Class.forName(getResultClass());
 
         SampleResult res;
-        res = cls.newInstance();
+        res = cls.getDeclaredConstructor().newInstance();
         if (isSimulateWaiting()) {
             res.sampleStart();
             try {
@@ -88,7 +97,7 @@ public class DummyElement implements Serializable {
             }
             res.sampleEnd();
         } else {
-            res.setStampAndTime(System.currentTimeMillis(), (long) getResponseTime());
+            res.setStampAndTime(System.currentTimeMillis(), getResponseTime());
         }
 
         return res;
@@ -161,7 +170,7 @@ public class DummyElement implements Serializable {
     public int getResponseTime() {
         int time = 0;
         try {
-            time = Integer.valueOf(getPropertyAsString(RESPONSE_TIME));
+            time = Integer.parseInt(getPropertyAsString(RESPONSE_TIME));
         } catch (NumberFormatException ignored) {
         }
         return time;
@@ -170,7 +179,7 @@ public class DummyElement implements Serializable {
     public int getLatency() {
         int time = 0;
         try {
-            time = Integer.valueOf(getPropertyAsString(LATENCY));
+            time = Integer.parseInt(getPropertyAsString(LATENCY));
         } catch (NumberFormatException ignored) {
         }
         return time;
@@ -191,7 +200,7 @@ public class DummyElement implements Serializable {
     public int getConnectTime() {
         int time = 0;
         try {
-            time = Integer.valueOf(getPropertyAsString(CONNECT));
+            time = Integer.parseInt(getPropertyAsString(CONNECT));
         } catch (NumberFormatException ignored) {
         }
         return time;

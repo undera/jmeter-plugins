@@ -3,11 +3,14 @@ package kg.apc.jmeter.graphs;
 import java.util.concurrent.ConcurrentSkipListMap;
 import javax.swing.JPanel;
 import kg.apc.charting.AbstractGraphRow;
+import kg.apc.emulators.TestJMeterUtils;
 import kg.apc.jmeter.vizualizers.JSettingsPanel;
 import kg.apc.jmeter.vizualizers.MonitoringResultsCollector;
 import kg.apc.jmeter.vizualizers.MonitoringSampleResult;
 import org.apache.jmeter.testelement.TestElement;
 import static org.junit.Assert.*;
+
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class AbstractMonitoringVisualizerTest {
@@ -40,6 +43,12 @@ public class AbstractMonitoringVisualizerTest {
         public ConcurrentSkipListMap<String, AbstractGraphRow> getModelAggr() {
             return modelAggregate;
         }
+    }
+
+    @BeforeClass
+    public static void setUpClass()
+            throws Exception {
+        TestJMeterUtils.createJmeterEnv();
     }
 
     @Test

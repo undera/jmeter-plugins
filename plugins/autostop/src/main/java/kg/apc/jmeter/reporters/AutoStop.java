@@ -268,6 +268,7 @@ public class AutoStop
 
     private void stopTest() {
         stopTries++;
+        System.setProperty("auto_stopped", "true");
 
         if (JMeter.isNonGUI()) {
             log.info("Stopping JMeter via UDP call");

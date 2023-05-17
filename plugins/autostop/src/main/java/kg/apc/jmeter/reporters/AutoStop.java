@@ -11,13 +11,14 @@ import org.apache.jmeter.samplers.SampleListener;
 import org.apache.jmeter.testelement.TestStateListener;
 import org.apache.jmeter.threads.JMeterContextService;
 import org.apache.jmeter.util.JMeterUtils;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
 
 public class AutoStop
         extends AbstractListenerElement
@@ -203,7 +204,7 @@ public class AutoStop
     private int getResponseTimeAsInt() {
         int res = 0;
         try {
-            res = Integer.valueOf(getResponseTime());
+            res = Integer.parseInt(getResponseTime());
         } catch (NumberFormatException e) {
             log.error("Wrong response time: " + getResponseTime(), e);
             setResponseTime("0");
@@ -214,7 +215,7 @@ public class AutoStop
     private int getResponseTimeSecsAsInt() {
         int res = 0;
         try {
-            res = Integer.valueOf(getResponseTimeSecs());
+            res = Integer.parseInt(getResponseTimeSecs());
         } catch (NumberFormatException e) {
             log.error("Wrong response time period: " + getResponseTime(), e);
             setResponseTimeSecs("1");
@@ -225,7 +226,7 @@ public class AutoStop
     private int getResponseLatencyAsInt() {
         int res = 0;
         try {
-            res = Integer.valueOf(getResponseLatency());
+            res = Integer.parseInt(getResponseLatency());
         } catch (NumberFormatException e) {
             log.error("Wrong response time: " + getResponseLatency(), e);
             setResponseLatency("0");
@@ -236,7 +237,7 @@ public class AutoStop
     private int getResponseLatencySecsAsInt() {
         int res = 0;
         try {
-            res = Integer.valueOf(getResponseLatencySecs());
+            res = Integer.parseInt(getResponseLatencySecs());
         } catch (NumberFormatException e) {
             log.error("Wrong response time period: " + getResponseLatencySecs(), e);
             setResponseLatencySecs("1");
@@ -247,7 +248,7 @@ public class AutoStop
     private float getErrorRateAsFloat() {
         float res = 0;
         try {
-            res = Float.valueOf(getErrorRate()) / 100;
+            res = Float.parseFloat(getErrorRate()) / 100;
         } catch (NumberFormatException e) {
             log.error("Wrong error rate: " + getErrorRate(), e);
             setErrorRate("0");
@@ -258,7 +259,7 @@ public class AutoStop
     private int getErrorRateSecsAsInt() {
         int res = 0;
         try {
-            res = Integer.valueOf(getErrorRateSecs());
+            res = Integer.parseInt(getErrorRateSecs());
         } catch (NumberFormatException e) {
             log.error("Wrong error rate period: " + getResponseTime(), e);
             setErrorRateSecs("1");
@@ -291,15 +292,13 @@ public class AutoStop
             int port = JMeterUtils.getPropDefault("jmeterengine.nongui.port", JMeter.UDP_PORT_DEFAULT);
             log.info("Sending " + command + " request to port " + port);
             DatagramSocket socket = new DatagramSocket();
-            byte[] buf = command.getBytes("ASCII");
+            byte[] buf = command.getBytes(StandardCharsets.US_ASCII);
             InetAddress address = InetAddress.getByName("localhost");
             DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
             socket.send(packet);
             socket.close();
         } catch (Exception e) {
-            //e.printStackTrace();
             log.error(e.getMessage());
         }
-
     }
 }

@@ -9,6 +9,7 @@ This criteria are used in OR logic, the component will ask JMeter to stop test
 if one of the criteria has been met.
 After 5 tries of "shutdown test" component will switch to more insistent "stop test",
 after 5 more it will try to "stop NOW".
+
 On initiating "shutdown test" AutoStop will create environment variable "auto_stopped" = "true" 
 which can be checked later in order to take additional actions on test failure (e.g. send alert). 
 

@@ -494,6 +494,18 @@
           "wss4j-ws-security-common": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-common/2.3.1/wss4j-ws-security-common-2.3.1.jar",
           "xmlsec": "https://search.maven.org/remotecontent?filepath=org/apache/santuario/xmlsec/2.2.1/xmlsec-2.2.1.jar"
         }
+      },
+      "1.9": {
+        "changes": "Maintenance release: Upgrade to wss4j v3.0.0",
+        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.9/jmeter-wssecurity-1.9.jar",
+        "depends": [
+          "jmeter-core"
+        ],
+        "libs": {
+          "wss4j-ws-security-dom": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-dom/3.0.0/wss4j-ws-security-dom-3.0.0.jar",
+          "wss4j-ws-security-common": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-common/3.0.0/wss4j-ws-security-common-3.0.0.jar",
+          "xmlsec": "https://search.maven.org/remotecontent?filepath=org/apache/santuario/xmlsec/3.0.1/xmlsec-3.0.1.jar"
+        }
       }
     }
   },

@@ -1061,7 +1061,7 @@
     "id": "bzm-siebel",
     "name": "BlazeMeter - Correlation Recorder Plugin",
     "description": "Correlation Recorder provides auto-correlation of variables at recording time",
-    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/CorrelationRecorder/master/docs/rules-container-table.png",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/CorrelationRecorder/master/docs/jmeterpluginsScreenshot.png",
     "helpUrl": "https://github.com/Blazemeter/CorrelationRecorder/blob/master/README.md",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.correlation.CorrelationProxyControl",
@@ -1163,6 +1163,45 @@
           "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jackson-module-jaxb-annotations-2.10.2.jar",
 		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/jmeter-bzm-commons-0.2.1.jar",
 		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.0/json-20190722.jar"
+        }
+      },
+      "2.0.1": {
+        "changes": "Fixed a UI update lock issue.",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jmeter-bzm-correlation-recorder-2.0.1.jar",
+        "libs": {
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jackson-module-jaxb-annotations-2.10.2.jar",
+		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/jmeter-bzm-commons-0.2.1.jar",
+		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.1/json-20190722.jar"
+        }
+      },
+      "2.0.2": {
+        "changes": "Minor fixes and improvements in rule export.",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jmeter-bzm-correlation-recorder-2.0.2.jar",
+        "libs": {
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jackson-module-jaxb-annotations-2.10.2.jar",
+		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/jmeter-bzm-commons-0.2.1.jar",
+		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.2/json-20190722.jar"
+        }
+      },
+      "2.0.3": {
+        "changes": "Minor fixes and improvements.",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jmeter-bzm-correlation-recorder-2.0.3.jar",
+        "libs": {
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jackson-module-jaxb-annotations-2.10.2.jar",
+		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/jmeter-bzm-commons-0.2.1.jar",
+		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.0.3/json-20190722.jar"
         }
       }
     }

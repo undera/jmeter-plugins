@@ -271,6 +271,41 @@ Available options:
 POST Protocol with parameters
 [/img/wiki/http_sts_add_request.png]
 
+== FIND ==
+
+*Find a line (LINE) in a file (FILENAME) (GET OR POST HTTP protocol)*
+
+The LINE to find is for FIND_MODE :
+  * A string this SUBSTRING (Default, ALineInTheFile contains the stringToFind ) or EQUALS (stringToFind == ALineInTheFile)
+  * A regular expression with REGEX_FIND (contains) and REGEX_MATCH (entire region the pattern)
+  * KEEP=TRUE => the data is kept and put to the end of list
+  * KEEP=FALSE => the data is removed
+
+GET Protocol
+{{{
+http://hostname:port/sts/FIND?FILENAME=colors.txt&LINE=(BLUE|RED)&[FIND_MODE=[SUBSTRING,EQUALS,REGEX_FIND,REGEX_MATCH]]&KEEP=[TRUE, FALSE]
+}}}
+GET parameters : FILENAME=colors.txt, LINE=LineToFind, FIND_MODE=SUBSTRING,EQUALS,REGEX_FIND or REGEX_MATCH (SUBSTRING Default), KEEP=TRUE (Default) or FALSE
+
+POST Protocol
+{{{
+http://hostname:port/sts/FIND
+}}}
+POST Parameters : FILENAME=colors.txt, LINE=(BLUE|RED) or LINE=BLUE or LINE=B.* or LINE=.*E.* ,FIND_MODE=SUBSTRING (Default),EQUALS,REGEX_FIND or REGEX_MATCH, KEEP=TRUE (Default) or FALSE
+
+If find return the first line finded, start reading at first line in the file (linked list)
+[[[html
+<html><title>OK</title>
+<body>RED</body>
+</html>
+
+If *NOT find* return title KO and "Error : Not find !"
+[[[html
+<html><title>KO</title>
+<body>Error : Not find !</body>
+</html>
+
+
 === LENGTH  ===
 
 *Return the number of remaining lines of a linked list*

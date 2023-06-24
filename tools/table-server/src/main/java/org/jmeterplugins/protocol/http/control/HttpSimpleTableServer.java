@@ -18,6 +18,13 @@
 
 package org.jmeterplugins.protocol.http.control;
 
+import org.apache.jmeter.gui.Stoppable;
+import org.apache.jmeter.util.JMeterUtils;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.config.Configurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -37,19 +44,15 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
-
-import org.apache.jmeter.gui.Stoppable;
-import org.apache.jmeter.util.JMeterUtils;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.core.config.Configurator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWaiter {
     private static final Logger log = LoggerFactory.getLogger(HttpSimpleTableServer.class);
 
 
-    public static final String STS_VERSION = "3.1";
+    public static final String STS_VERSION = "4.0";
     public static final String ROOT = "/sts/";
     public static final String ROOT2 = "/sts";
     public static final String URI_INITFILE = "INITFILE";
@@ -61,6 +64,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
     public static final String URI_RESET = "RESET";
     public static final String URI_STOP = "STOP";
     public static final String URI_CONFIG = "CONFIG";
+    public static final String URI_FIND = "FIND";
     
     public static final String PARM_FILENAME = "FILENAME";
     public static final String PARM_LINE = "LINE";
@@ -69,12 +73,19 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
     public static final String PARM_UNIQUE = "UNIQUE";
     public static final String PARM_KEEP = "KEEP";
     public static final String PARM_ADD_TIMESTAMP = "ADD_TIMESTAMP";
+    public static final String PARM_FIND_MODE= "FIND_MODE";
     
     public static final String VAL_FIRST = "FIRST";
     public static final String VAL_LAST = "LAST";
     public static final String VAL_RANDOM = "RANDOM";
     public static final String VAL_TRUE = "TRUE";
     public static final String VAL_FALSE = "FALSE";
+
+    public static final String VAL_FIND_STR_SUBSTRING = "SUBSTRING";
+    public static final String VAL_FIND_STR_EQUALS = "EQUALS";
+    public static final String VAL_FIND_REGEX_FIND = "REGEX_FIND";
+    public static final String VAL_FIND_REGEX_MATCH = "REGEX_MATCH";
+
 
     public static final String INDEX = "<html><head><title>Help URL for the dataset</title><head>"
             + "<body><h4>Help Http Simple Table Server (STS) Version : " + STS_VERSION + "<br/>From a data file (default: &lt;JMETER_HOME&gt;/bin/&lt;data_file&gt;) or from the directory set with jmeterPlugin.sts.datasetDirectory</h4>"
@@ -83,7 +94,13 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
             + "http://hostname:port/sts/INITFILE?FILENAME=file.txt</p>"
             + "<p><b>Get one line from list</b>:<br />"
             + "http://hostname:port/sts/READ?FILENAME=file.txt&[READ_MODE=[<i>FIRST</i>,<i>LAST</i>,<i>RANDOM</i>]]&[KEEP=[<i>TRUE</i>,<i>FALSE</i>]]</p>"
-            + "<p><b>Return the number of remaining lines</b> of a linked list:<br />"
+            + "<p><b>Find a line (LINE) in a file (FILENAME)</b>, the line to find is a string this SUBSTRING (Default) or EQUALS and a regular expression with REGEX_FIND (contains) and REGEX_MATCH (entire region the pattern).<br />"
+            + "GET  : http://hostname:port/sts/FIND?FILENAME=file.txt&LINE=(BLUE|RED)&[FIND_MODE=[<i>SUBSTRING</i>,<i>EQUALS</i>,<i>REGEX_FIND</i>,<i>REGEX_MATCH</i>]]&[KEEP=[<i>TRUE</i>,<i>FALSE</i>]]<br />"
+            + "GET Parameters : FILENAME=file.txt&LINE=RED&[FIND_MODE=[<i>SUBSTRING</i>,<i>EQUALS</i>,<i>REGEX_FIND</i>,<i>REGEX_MATCH</i>]]&[KEEP=[<i>TRUE</i>,<i>FALSE</i>]]<br />"
+            + "POST : http://hostname:port/sts/FIND<br />"
+            + "POST Parameters : FILENAME=file.txt,LINE=(BLUE|RED) or LINE=BLUE or LINE=B.* or LINE=.*E.* ,[FIND_MODE=[<i>SUBSTRING</i>,<i>EQUALS</i>,<i>REGEX_FIND</i>,<i>REGEX_MATCH</i>]]&[KEEP=[<i>TRUE</i>,<i>FALSE</i>]]<br />"
+            + "If NOT find return title KO and \"Error : Not find !\"</p>"
+            + "<p><b>Save the specified linked list in a file</b> to the default location:<br />"
             + "http://hostname:port/sts/LENGTH?FILENAME=file.txt</p>"
             + "<p><b>Add a line into a file:</b> (GET OR POST HTTP protocol)<br />"
             + "GET  : http://hostname:port/sts/ADD?FILENAME=file.txt&LINE=D0001123&[ADD_MODE=[<i>FIRST</i>,<i>LAST</i>]]&[UNIQUE=[<i>FALSE</i>,<i>TRUE</i>]]<br />"
@@ -177,7 +194,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
             msg = doAction(uri, method, parms);
         }
 
-        Response response = new NanoHTTPD.Response(msg);
+        Response response = new Response(msg);
 
         // no cache for the response
         response.addHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -198,6 +215,10 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         }
         if (uri.equals(ROOT + URI_READ)) {
             msg = read(parms.get(PARM_READ_MODE), parms.get(PARM_KEEP),
+                    parms.get(PARM_FILENAME));
+        }
+        if (uri.equals(ROOT + URI_FIND) && (Method.POST.equals(method) || (Method.GET.equals(method)))) {
+            msg = find(parms.get(PARM_FIND_MODE), parms.get(PARM_LINE), parms.get(PARM_KEEP),
                     parms.get(PARM_FILENAME));
         }
         if (uri.equals(ROOT + URI_ADD) && (Method.POST.equals(method) || (Method.GET.equals(method)))) {
@@ -287,6 +308,127 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         }
 
         line = database.get(filename).remove(index);
+
+        if (VAL_TRUE.equals(keepMode)) {
+            database.get(filename).add(line);
+        }
+        return "<html><title>OK</title>" + lineSeparator + "<body>" + line
+                + "</body>" + lineSeparator + "</html>";
+    }
+
+    private String find(String findMode, String lineToFind, String keepMode, String filename) {
+        if (null == filename) {
+            return "<html><title>KO</title>" + lineSeparator
+                    + "<body>Error : FILENAME parameter was missing !</body>"
+                    + lineSeparator + "</html>";
+        }
+        if (!database.containsKey(filename)) {
+            return "<html><title>KO</title>" + lineSeparator + "<body>Error : "
+                    + filename + " not loaded yet !</body>" + lineSeparator
+                    + "</html>";
+        }
+        if (database.get(filename).isEmpty()) {
+            return "<html><title>KO</title>" + lineSeparator
+                    + "<body>Error : No more line !</body>" + lineSeparator
+                    + "</html>";
+        }
+
+        if (lineToFind == null || lineToFind.length() == 0) {
+            return "<html><title>KO</title>" + lineSeparator
+                    + "<body>Error : Cant't find empty line !</body>" + lineSeparator
+                    + "</html>";
+        }
+
+        if (null == findMode) {
+            findMode = VAL_FIND_STR_SUBSTRING;
+        }
+        if (null == keepMode) {
+            keepMode = VAL_TRUE;
+        }
+        if (!VAL_FIND_STR_SUBSTRING.equals(findMode) && !VAL_FIND_REGEX_FIND.equals(findMode) &&
+            !VAL_FIND_STR_EQUALS.equals(findMode) && !VAL_FIND_REGEX_MATCH.equals(findMode)) {
+            return "<html><title>KO</title>"
+                    + lineSeparator
+                    + "<body>Error : " + PARM_FIND_MODE + " value has to be " + VAL_FIND_STR_EQUALS + ", " + VAL_FIND_STR_SUBSTRING +
+                    ", " +  VAL_FIND_REGEX_FIND + " or " + VAL_FIND_REGEX_MATCH + " !</body>"
+                    + lineSeparator + "</html>";
+        }
+        if (!VAL_TRUE.equals(keepMode) && !VAL_FALSE.equals(keepMode)) {
+            return "<html><title>KO</title>"
+                    + lineSeparator
+                    + "<body>Error : " + PARM_KEEP + " has to be TRUE or FALSE !</body>"
+                    + lineSeparator + "</html>";
+        }
+
+        String line = "NOT_FOUND";
+        int index = 0;
+        boolean find = false;
+
+        LinkedList linkedList  = database.get(filename);
+
+        if (VAL_FIND_STR_SUBSTRING.equals(findMode)) {
+            Iterator<String> iterator = linkedList.iterator();
+            while (iterator.hasNext() && !find) {
+                String lineTmp = iterator.next();
+                if (lineTmp.contains(lineToFind)) {
+                    find = true;
+                    line = lineTmp;
+                } else {
+                    index++;
+                }
+            }
+        }
+
+        if (VAL_FIND_STR_EQUALS.equals(findMode)) {
+            Iterator<String> iterator = linkedList.iterator();
+            while (iterator.hasNext() && !find) {
+                String lineTmp = iterator.next();
+                if (lineTmp.equals(lineToFind)) {
+                    find = true;
+                    line = lineTmp;
+                } else {
+                    index++;
+                }
+            }
+        }
+
+        if (VAL_FIND_REGEX_FIND.equals(findMode) || VAL_FIND_REGEX_MATCH.equals(findMode)) {
+            Pattern p = null;
+            try {
+                p = Pattern.compile(lineToFind);
+            } catch (PatternSyntaxException ex) {
+                return "<html><title>KO</title>"
+                        + lineSeparator
+                        + "<body>Error : Regex compile error !</body>"
+                        + lineSeparator + "</html>";
+            }
+
+            Iterator<String> iterator = linkedList.iterator();
+            while (iterator.hasNext() && !find) {
+                String lineTmp = iterator.next();
+                Matcher m = p.matcher(lineTmp);
+                if (VAL_FIND_REGEX_FIND.equals(findMode) && m.find()) {
+                    find = true;
+                    line = lineTmp;
+                } else {
+                    if (VAL_FIND_REGEX_MATCH.equals(findMode) && m.matches()) {
+                        find = true;
+                        line = lineTmp;
+                    }
+                    else {
+                        index++;
+                    }
+                }
+            }
+        }
+
+        if (!find) {
+            return "<html><title>KO</title>" + lineSeparator
+                    + "<body>Error : Not find !</body>"
+                    + lineSeparator + "</html>";
+        }
+
+        database.get(filename).remove(index);
 
         if (VAL_TRUE.equals(keepMode)) {
             database.get(filename).add(line);
@@ -530,7 +672,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         }
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         JMeterUtils.loadJMeterProperties("jmeter.properties");
         String dataset = JMeterUtils.getPropDefault(
                 "jmeterPlugin.sts.datasetDirectory",
@@ -661,7 +803,7 @@ public class HttpSimpleTableServer extends NanoHTTPD implements Stoppable, KeyWa
         if (sInitFileAtStartup.length() > 0 && bInitFileAtStartupRegex == false) {
             // E.g : jmeterPlugin.sts.initFileAtStartup=file1.csv,file2.csv,file3.csv
            
-            String tabFileName[] = org.apache.commons.lang3.StringUtils.splitPreserveAllTokens(sInitFileAtStartup,',');
+            String[] tabFileName = org.apache.commons.lang3.StringUtils.splitPreserveAllTokens(sInitFileAtStartup,',');
             for (int i = 0; i < tabFileName.length; i++) {
                 String fileName = tabFileName[i].trim();
                 log.info("INITFILE : i = " + i + ", fileName = " + fileName);

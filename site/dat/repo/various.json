@@ -1906,5 +1906,21 @@
           "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/releases/download/v1.4/junit-reporter-kpi-from-jmeter-dashboard-stats-1.4-jar-with-dependencies.jar"
         }
       }
+    },
+    {
+      "id": "vdn-junit-reporter-kpi-from-jmeter-report-csv",
+      "name": "vdn@github - junit-reporter-kpi-from-jmeter-report-csv tool",
+      "description": "A tool that creates a JUnit XML file with KPI rules from JMeter CSV Report, export result in html, csv or json format.",
+      "helpUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv",
+      "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/raw/main/doc/images/kpi_excel.png",
+      "vendor": "Vincent Daburon",
+      "markerClass": "io.github.vdaburon.jmeter.utils.reportkpi.ToolInstaller",
+      "installerClass": "io.github.vdaburon.jmeter.utils.reportkpi.ToolInstaller",
+      "versions": {
+        "1.5": {
+          "changes": "First version for jmeter-plugin repo",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/releases/download/V1.5/junit-reporter-kpi-from-jmeter-report-csv-1.5-jar-with-dependencies.jar"
+        }
+      }
     }
 ]

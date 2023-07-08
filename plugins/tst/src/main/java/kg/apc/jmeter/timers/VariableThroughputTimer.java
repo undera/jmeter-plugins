@@ -191,7 +191,7 @@ public class VariableThroughputTimer
         } else {
             dataProperty = DATA_PROPERTY_POSTFIX;
         }
-        log.info("Load property set to {}", dataProperty);
+        log.debug("Load property set to {}", dataProperty);
     }
 
     public void setData(CollectionProperty rows) {
@@ -202,7 +202,7 @@ public class VariableThroughputTimer
         if (overrideProp != null) {
             return overrideProp;
         }
-        log.info("Loading profile from property {}", dataProperty);
+        log.debug("Loading profile from property {}", dataProperty);
         setDataProperty();
         return getProperty(dataProperty);
     }
@@ -256,7 +256,7 @@ public class VariableThroughputTimer
         String loadProp = JMeterUtils.getProperty(dataProperty);
         log.debug("Loading property: {}={}", dataProperty, loadProp);
         if (!StringUtils.isEmpty(loadProp)) {
-            log.info("GUI load profile will be ignored as property {} is defined", dataProperty);
+            log.debug("GUI load profile will be ignored as property {} is defined", dataProperty);
             PowerTableModel dataModel = new PowerTableModel(VariableThroughputTimer.columnIdentifiers, VariableThroughputTimer.columnClasses);
 
             String[] chunks = loadProp.split("\\)");
@@ -269,8 +269,8 @@ public class VariableThroughputTimer
                 }
             }
 
-            log.info("Setting load profile from property {}: {}", dataProperty, loadProp);
-            log.info("load profile resolved to", dataModel);
+            log.debug("Setting load profile from property {}: {}", dataProperty, loadProp);
+            log.debug("load profile resolved to", dataModel);
             overrideProp = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, dataProperty);
         }
     }

@@ -120,7 +120,7 @@ public class VariableThroughputTimerGui
 
     @Override
     public void modifyTestElement(TestElement tg) {
-        log.info("Modify test element");
+        log.debug("Modify test element");
         super.configureTestElement(tg);
         if (grid.isEditing()) {
             grid.getCellEditor().stopCellEditing();
@@ -128,7 +128,7 @@ public class VariableThroughputTimerGui
 
         if (tg instanceof VariableThroughputTimer) {
             VariableThroughputTimer utg = (VariableThroughputTimer) tg;
-            log.info("property " + utg.getDataProperty());
+            log.debug("property " + utg.getDataProperty());
             CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(tableModel, utg.getDataProperty());
             utg.setData(rows);
         }

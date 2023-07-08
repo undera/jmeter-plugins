@@ -21,7 +21,6 @@ import org.apache.jmeter.util.JMeterUtils;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 public class VariableThroughputTimer
         extends AbstractTestElement
@@ -84,33 +83,33 @@ public class VariableThroughputTimer
      *
      * @return 0
      */
-    public synchronized long  delay() {
-            while (true) {
-                long curTimeMs = System.currentTimeMillis();
-                long millisSinceLastSecond = curTimeMs % 1000;
-                long nowInMsRoundedAtSec = curTimeMs - millisSinceLastSecond;
-                checkNextSecond(nowInMsRoundedAtSec);
-                int delayMs = getDelay(millisSinceLastSecond);
+    public synchronized long delay() {
+        while (true) {
+            long curTimeMs = System.currentTimeMillis();
+            long millisSinceLastSecond = curTimeMs % 1000;
+            long nowInMsRoundedAtSec = curTimeMs - millisSinceLastSecond;
+            checkNextSecond(nowInMsRoundedAtSec);
+            int delayMs = getDelay(millisSinceLastSecond);
 
-                if (stopping) {
-                    delayMs = delayMs > 0 ? 10 : 0;
-                    notify(); // NOSONAR Don't notifyAll as cost is too big in terms of performances
-                }
-
-                if (delayMs < 1) {
-                    notify(); // NOSONAR Don't notifyAll as cost is too big in terms of performances
-                    break;
-                }
-                cntDelayed++;
-                try {
-                    wait(delayMs);
-                } catch (InterruptedException ex) {
-                    log.debug("Waiting thread was interrupted", ex);
-                    Thread.currentThread().interrupt();
-                }
-                cntDelayed--;
+            if (stopping) {
+                delayMs = delayMs > 0 ? 10 : 0;
+                notify(); // NOSONAR Don't notifyAll as cost is too big in terms of performances
             }
-            cntSent++;
+
+            if (delayMs < 1) {
+                notify(); // NOSONAR Don't notifyAll as cost is too big in terms of performances
+                break;
+            }
+            cntDelayed++;
+            try {
+                wait(delayMs);
+            } catch (InterruptedException ex) {
+                log.debug("Waiting thread was interrupted", ex);
+                Thread.currentThread().interrupt();
+            }
+            cntDelayed--;
+        }
+        cntSent++;
 
         return 0;
     }

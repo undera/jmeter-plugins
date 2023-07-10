@@ -1922,5 +1922,21 @@
           "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/releases/download/V1.5/junit-reporter-kpi-from-jmeter-report-csv-1.5-jar-with-dependencies.jar"
         }
       }
+    },
+    {
+      "id": "vdn-junit-reporter-kpi-compare-jmeter-report-csv",
+      "name": "vdn@github - junit-reporter-kpi-compare-jmeter-report-csv",
+      "description": "This tool read KPI declarations in a file and apply the KPI assertion on 2 JMeter Report CSV files (current and reference) and generates a result file in JUnit XML format and others formats Html, Json and Csv.",
+      "helpUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv",
+      "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/raw/main/doc/images/kpi_excel.png",
+      "vendor": "Vincent Daburon",
+      "markerClass": "io.github.vdaburon.jmeter.utils.comparekpi.ToolInstaller",
+      "installerClass": "io.github.vdaburon.jmeter.utils.comparekpi.ToolInstaller",
+      "versions": {
+        "1.2": {
+          "changes": "First version for jmeter-plugin repo",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/releases/download/V1.2/junit-reporter-kpi-compare-jmeter-report-csv-1.2-jar-with-dependencies.jar"
+        }
+      }
     }
 ]

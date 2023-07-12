@@ -115,7 +115,7 @@ public class VariableThroughputTimerGuiTest {
     public void testConfigure() {
         System.out.println("configure");
         VariableThroughputTimer tg = new VariableThroughputTimer();
-        CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, VariableThroughputTimer.DATA_PROPERTY);
+        CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(dataModel, tg.getDataProperty());
         tg.setData(rows);
         VariableThroughputTimerGui instance = new VariableThroughputTimerGui();
         //tg.setProperty(new ObjectProperty(AbstractThreadGroup.MAIN_CONTROLLER, tg));

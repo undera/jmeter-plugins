@@ -494,6 +494,18 @@
           "wss4j-ws-security-common": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-common/2.3.1/wss4j-ws-security-common-2.3.1.jar",
           "xmlsec": "https://search.maven.org/remotecontent?filepath=org/apache/santuario/xmlsec/2.2.1/xmlsec-2.2.1.jar"
         }
+      },
+      "1.9": {
+        "changes": "Maintenance release: Upgrade to wss4j v3.0.0",
+        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.9/jmeter-wssecurity-1.9.jar",
+        "depends": [
+          "jmeter-core"
+        ],
+        "libs": {
+          "wss4j-ws-security-dom": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-dom/3.0.0/wss4j-ws-security-dom-3.0.0.jar",
+          "wss4j-ws-security-common": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-common/3.0.0/wss4j-ws-security-common-3.0.0.jar",
+          "xmlsec": "https://search.maven.org/remotecontent?filepath=org/apache/santuario/xmlsec/3.0.1/xmlsec-3.0.1.jar"
+        }
       }
     }
   },
@@ -1773,6 +1785,30 @@
         "vendor": "UbikLoadPack by Ubik-Ingenierie",
         "markerClass": "com.ubikloadpack.jmeter.ulp.observability.listener.ULPObservabilityListener",
         "versions": {
+             "1.0.4": {
+                "changes": "Enhancements and bugfixes, more details at https://github.com/ubikingenierie/ulp-observability-plugin/milestone/5?closed=1",
+                "downloadUrl": "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.0.4/ulp-observability-listener-1.0.4.jar",
+                "depends": [
+                    "jmeter-core"
+                ],
+                "libs": {
+                    "commons-lang3": "https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar",
+                    "jetty-server": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/11.0.13/jetty-server-11.0.13.jar",
+                    "jetty-servlet": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/11.0.13/jetty-servlet-11.0.13.jar",
+                    "jetty-servlets": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/11.0.13/jetty-servlets-11.0.13.jar",
+                    "jetty-webapp": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-webapp/11.0.13/jetty-webapp-11.0.13.jar",
+                    "jetty-util": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.13/jetty-util-11.0.13.jar",
+                    "jetty-http": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/11.0.13/jetty-http-11.0.13.jar",
+                    "jetty-security": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/11.0.13/jetty-security-11.0.13.jar",
+                    "jetty-io": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/11.0.13/jetty-io-11.0.13.jar",
+                    "jetty-xml": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-xml/11.0.13/jetty-xml-11.0.13.jar",
+                    "jakarta.servlet-api": "https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/5.0.0-M2/jakarta.servlet-api-5.0.0-M2.jar",
+                    "micrometer-core": "https://repo1.maven.org/maven2/io/micrometer/micrometer-core/1.10.3/micrometer-core-1.10.3.jar",
+                    "micrometer-commons": "https://repo1.maven.org/maven2/io/micrometer/micrometer-commons/1.10.3/micrometer-commons-1.10.3.jar",
+                    "cron-scheduler": "https://repo1.maven.org/maven2/io/timeandspace/cron-scheduler/0.1/cron-scheduler-0.1.jar",
+                    "HdrHistogram": "https://repo1.maven.org/maven2/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"
+                 }
+             },
              "1.0.3": {
                 "changes": "Enhancements and bugfixes, more details at https://github.com/ubikingenierie/ulp-observability-plugin/milestone/3?closed=1",
                 "downloadUrl": "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.0.3/ulp-observability-listener-1.0.3.jar",
@@ -1820,5 +1856,87 @@
                  }
              }
         }
+    },
+    {
+      "id": "jmeter-rapi-plugin",
+      "name": "Rapi JMeter Plugins",
+      "description": "This plugin can run Rapi Runner for front-end load testing while using JMeter and can parse .csv results to generate front-end load reports.",
+      "screenshotUrl": "https://raw.githubusercontent.com/RapiTest/rapi-pub/main/start-testing/assets/rapi_logo.png",
+      "helpUrl": "https://github.com/bobcode99/jmeter-rapi-plugin",
+      "vendor": "NCKU SELAB",
+      "markerClass": "ncku.selab.rapi4jmeter.sampler.RapiSampler",
+      "componentClasses": [
+        "ncku.selab.rapi4jmeter.sampler.RapiSamplerGui",
+        "ncku.selab.rapi4jmeter.sampler.RapiSampler",
+        "ncku.selab.rapi4jmeter.reporter.RapiSamplerResultReporterGui",
+        "ncku.selab.rapi4jmeter.config.EdgeConfig",
+        "ncku.selab.rapi4jmeter.config.EdgeConfigGui",
+        "ncku.selab.rapi4jmeter.config.ChromeConfig",
+        "ncku.selab.rapi4jmeter.config.ChromeConfigGui",
+        "ncku.selab.rapi4jmeter.config.FirefoxConfig",
+        "ncku.selab.rapi4jmeter.config.FirefoxConfigPanel"
+      ],
+      "versions": {
+        "1.0.0": {
+          "downloadUrl": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.0/rapi-jmeter-plugins-1.0.0.jar",
+          "libs": {
+             "opencsv": "https://repo1.maven.org/maven2/com/opencsv/opencsv/5.7.1/opencsv-5.7.1.jar",
+             "json-simple": "https://repo1.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar",
+             "rapi-api-java": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.0/rapi-api-java-1.0.1.jar",
+             "rapi-jmeter-report": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.0/rapi-jmeter-report-1.0.3.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
+        }
+      }
+    },
+    {
+      "id": "vdn-junit-reporter-kpi-from-jmeter-dashboard-stats",
+      "name": "vdn@github - junit-reporter-kpi-from-jmeter-dashboard-stats tool",
+      "description": "A tool that creates a JUnit XML file with KPI rules from JMeter JMeter Dashboard stats.json and generates a result file in JUnit XML format and other formats : html, csv and json.",
+      "helpUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats",
+      "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/raw/main/doc/images/kpi_excel.png",
+      "vendor": "Vincent Daburon",
+      "markerClass": "io.github.vdaburon.jmeter.utils.jsonkpi.ToolInstaller",
+      "installerClass": "io.github.vdaburon.jmeter.utils.jsonkpi.ToolInstaller",
+      "versions": {
+        "1.4": {
+          "changes": "Version for jmeter-plugins-manager repo",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/releases/download/v1.4/junit-reporter-kpi-from-jmeter-dashboard-stats-1.4-jar-with-dependencies.jar"
+        }
+      }
+    },
+    {
+      "id": "vdn-junit-reporter-kpi-from-jmeter-report-csv",
+      "name": "vdn@github - junit-reporter-kpi-from-jmeter-report-csv tool",
+      "description": "A tool that creates a JUnit XML file with KPI rules from JMeter CSV Report, export result in html, csv or json format.",
+      "helpUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv",
+      "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/raw/main/doc/images/kpi_excel.png",
+      "vendor": "Vincent Daburon",
+      "markerClass": "io.github.vdaburon.jmeter.utils.reportkpi.ToolInstaller",
+      "installerClass": "io.github.vdaburon.jmeter.utils.reportkpi.ToolInstaller",
+      "versions": {
+        "1.5": {
+          "changes": "First version for jmeter-plugin repo",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/releases/download/V1.5/junit-reporter-kpi-from-jmeter-report-csv-1.5-jar-with-dependencies.jar"
+        }
+      }
+    },
+    {
+      "id": "vdn-junit-reporter-kpi-compare-jmeter-report-csv",
+      "name": "vdn@github - junit-reporter-kpi-compare-jmeter-report-csv",
+      "description": "This tool read KPI declarations in a file and apply the KPI assertion on 2 JMeter Report CSV files (current and reference) and generates a result file in JUnit XML format and others formats Html, Json and Csv.",
+      "helpUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv",
+      "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/raw/main/doc/images/kpi_excel.png",
+      "vendor": "Vincent Daburon",
+      "markerClass": "io.github.vdaburon.jmeter.utils.comparekpi.ToolInstaller",
+      "installerClass": "io.github.vdaburon.jmeter.utils.comparekpi.ToolInstaller",
+      "versions": {
+        "1.2": {
+          "changes": "First version for jmeter-plugin repo",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/releases/download/V1.2/junit-reporter-kpi-compare-jmeter-report-csv-1.2-jar-with-dependencies.jar"
+        }
+      }
     }
 ]

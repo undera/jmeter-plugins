@@ -234,7 +234,7 @@
   {
     "id": "jpgc-sts",
     "name": "HTTP Simple Table Server",
-    "description": "The main idea is to use a tiny http server in JMeter Plugins to manage the dataset files with simple commands to get / add rows of data in files.",
+    "description": "The main idea is to use a tiny http server in JMeter Plugins to manage the dataset files with simple commands to get / add / find rows of data in files.",
     "screenshotUrl": "https://jmeter-plugins.org/img/wiki/http_simple_table_server.png",
     "helpUrl": "https://jmeter-plugins.org/wiki/HttpSimpleTableServer/",
     "vendor": "JMeter-Plugins.org",
@@ -271,6 +271,13 @@
       "3.1": {
         "changes": "Replace beanshell with groovy script : jsr223.init.file=simple-table-server.groovy. New features : Could load files when STS startup, Set charset to read or write file and in http header response, Add CONFIG command, add daemon mode for linux nohup, SAVE command add ADD_TIMESTAMP parameter",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/3.1/jmeter-plugins-table-server-3.1.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
+        }
+      },
+      "4.0": {
+        "changes": "Add command FIND, find a string in the file, FIND_MODE=SUBSTRING (Default), EQUALS, REGEX_FIND, REGEX_MATCH",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-table-server/4.0/jmeter-plugins-table-server-4.0.jar",
         "libs": {
           "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
         }

@@ -754,7 +754,7 @@
       "2.7.1": {
 	"changes":"Added support for datastream indexes",
 	"downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.7.1/jmeter.backendlistener.elasticsearch-2.7.1.jar"
-      },
+      }
     }
   },
   {

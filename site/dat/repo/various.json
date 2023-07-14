@@ -689,7 +689,7 @@
       },
       "2.4.3": {
         "changes": "Fixed class loader problem with JavaFX StringConverter class",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.4.3/jmeter.backendlistener.elasticsearch-2.4.3.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.4.3/jmeter.backendlistener.elasticsearch-2.4.3.jar"
       },
       "2.5.0": {
         "changes": "Switched to low-level client v6.4 & added custom variables support",
@@ -701,56 +701,60 @@
       },
       "2.5.2": {
         "changes": "Fixed error with filters",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.2/jmeter.backendlistener.elasticsearch-2.5.2.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.5.2/jmeter.backendlistener.elasticsearch-2.5.2.jar"
       },
       "2.5.3": {
         "changes": "Fixed error with filters (#2), refactored the method.",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.3/jmeter.backendlistener.elasticsearch-2.5.3.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.5.3/jmeter.backendlistener.elasticsearch-2.5.3.jar"
       },
       "2.5.4": {
         "changes": "Fixed error with filters (#37), refactored the method.",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.4/jmeter.backendlistener.elasticsearch-2.5.4.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.5.4/jmeter.backendlistener.elasticsearch-2.5.4.jar"
       },
       "2.6.0": {
         "changes": "Added AWS support, added RegExp support in filters, fixed bug with header parsing",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.0/jmeter.backendlistener.elasticsearch-2.6.0.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.0/jmeter.backendlistener.elasticsearch-2.6.0.jar"
       },
       "2.6.1": {
         "changes": "Fixed bug with header parsing (#40, thanks @ncasaux)",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
       },
       "2.6.5": {
         "changes": "New SSL feature, header parsing fixes, multiple little bug fixes.",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.5/jmeter.backendlistener.elasticsearch-2.6.5.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.5/jmeter.backendlistener.elasticsearch-2.6.5.jar"
       },
       "2.6.6": {
         "changes": "Fixed issue with index types ES 7.0+",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.6/jmeter.backendlistener.elasticsearch-2.6.6.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.6/jmeter.backendlistener.elasticsearch-2.6.6.jar"
       },
       "2.6.7": {
         "changes": "Fixed breaking issue with getElasticSearchVersion() method",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.7/jmeter.backendlistener.elasticsearch-2.6.7.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.7/jmeter.backendlistener.elasticsearch-2.6.7.jar"
       },
       "2.6.8": {
         "changes": "Fixed breaking issue with SSL conflicts",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.8/jmeter.backendlistener.elasticsearch-2.6.8.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.8/jmeter.backendlistener.elasticsearch-2.6.8.jar"
       },
       "2.6.9": {
         "changes": "Fixed breaking issue with SSL conflicts",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.9/jmeter.backendlistener.elasticsearch-2.6.9.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.9/jmeter.backendlistener.elasticsearch-2.6.9.jar"
       },
       "2.6.10": {
         "changes": "Fixed issue with sending variables through headers (#61)",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.10/jmeter.backendlistener.elasticsearch-2.6.10.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.10/jmeter.backendlistener.elasticsearch-2.6.10.jar"
       },
       "2.6.11": {
         "changes": "Fixed issue with deprecated methods resulting in errors and timeout issues",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.11/jmeter.backendlistener.elasticsearch-2.6.11.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.11/jmeter.backendlistener.elasticsearch-2.6.11.jar"
       },
       "2.7.0": {
         "changes": "Added an exclude feature for filters",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.7.0/jmeter.backendlistener.elasticsearch-2.7.0.jar"
-      }
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.7.0/jmeter.backendlistener.elasticsearch-2.7.0.jar"
+      },
+      "2.7.1": {
+	"changes":"Added support for datastream indexes",
+	"downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.7.1/jmeter.backendlistener.elasticsearch-2.7.1.jar"
+      },
     }
   },
   {

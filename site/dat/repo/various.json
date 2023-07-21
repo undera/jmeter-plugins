@@ -689,7 +689,7 @@
       },
       "2.4.3": {
         "changes": "Fixed class loader problem with JavaFX StringConverter class",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.4.3/jmeter.backendlistener.elasticsearch-2.4.3.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.4.3/jmeter.backendlistener.elasticsearch-2.4.3.jar"
       },
       "2.5.0": {
         "changes": "Switched to low-level client v6.4 & added custom variables support",
@@ -701,55 +701,59 @@
       },
       "2.5.2": {
         "changes": "Fixed error with filters",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.2/jmeter.backendlistener.elasticsearch-2.5.2.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.5.2/jmeter.backendlistener.elasticsearch-2.5.2.jar"
       },
       "2.5.3": {
         "changes": "Fixed error with filters (#2), refactored the method.",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.3/jmeter.backendlistener.elasticsearch-2.5.3.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.5.3/jmeter.backendlistener.elasticsearch-2.5.3.jar"
       },
       "2.5.4": {
         "changes": "Fixed error with filters (#37), refactored the method.",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.4/jmeter.backendlistener.elasticsearch-2.5.4.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.5.4/jmeter.backendlistener.elasticsearch-2.5.4.jar"
       },
       "2.6.0": {
         "changes": "Added AWS support, added RegExp support in filters, fixed bug with header parsing",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.0/jmeter.backendlistener.elasticsearch-2.6.0.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.0/jmeter.backendlistener.elasticsearch-2.6.0.jar"
       },
       "2.6.1": {
         "changes": "Fixed bug with header parsing (#40, thanks @ncasaux)",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
       },
       "2.6.5": {
         "changes": "New SSL feature, header parsing fixes, multiple little bug fixes.",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.5/jmeter.backendlistener.elasticsearch-2.6.5.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.5/jmeter.backendlistener.elasticsearch-2.6.5.jar"
       },
       "2.6.6": {
         "changes": "Fixed issue with index types ES 7.0+",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.6/jmeter.backendlistener.elasticsearch-2.6.6.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.6/jmeter.backendlistener.elasticsearch-2.6.6.jar"
       },
       "2.6.7": {
         "changes": "Fixed breaking issue with getElasticSearchVersion() method",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.7/jmeter.backendlistener.elasticsearch-2.6.7.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.7/jmeter.backendlistener.elasticsearch-2.6.7.jar"
       },
       "2.6.8": {
         "changes": "Fixed breaking issue with SSL conflicts",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.8/jmeter.backendlistener.elasticsearch-2.6.8.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.8/jmeter.backendlistener.elasticsearch-2.6.8.jar"
       },
       "2.6.9": {
         "changes": "Fixed breaking issue with SSL conflicts",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.9/jmeter.backendlistener.elasticsearch-2.6.9.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.9/jmeter.backendlistener.elasticsearch-2.6.9.jar"
       },
       "2.6.10": {
         "changes": "Fixed issue with sending variables through headers (#61)",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.10/jmeter.backendlistener.elasticsearch-2.6.10.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.10/jmeter.backendlistener.elasticsearch-2.6.10.jar"
       },
       "2.6.11": {
         "changes": "Fixed issue with deprecated methods resulting in errors and timeout issues",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.11/jmeter.backendlistener.elasticsearch-2.6.11.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.11/jmeter.backendlistener.elasticsearch-2.6.11.jar"
       },
       "2.7.0": {
         "changes": "Added an exclude feature for filters",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.7.0/jmeter.backendlistener.elasticsearch-2.7.0.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.7.0/jmeter.backendlistener.elasticsearch-2.7.0.jar"
+      },
+      "2.7.1": {
+	"changes":"Added support for datastream indexes",
+	"downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.7.1/jmeter.backendlistener.elasticsearch-2.7.1.jar"
       }
     }
   },
@@ -1785,6 +1789,30 @@
         "vendor": "UbikLoadPack by Ubik-Ingenierie",
         "markerClass": "com.ubikloadpack.jmeter.ulp.observability.listener.ULPObservabilityListener",
         "versions": {
+             "1.1.0": {
+                "changes": "Enhancements and bugfixes, more details at https://github.com/ubikingenierie/ulp-observability-plugin/milestone/4?closed=1",
+                "downloadUrl": "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.1.0/ulp-observability-listener-1.1.0.jar",
+                "depends": [
+                    "jmeter-core"
+                ],
+                "libs": {
+                    "commons-lang3": "https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar",
+                    "jetty-server": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/11.0.14/jetty-server-11.0.14.jar",
+                    "jetty-servlet": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/11.0.14/jetty-servlet-11.0.14.jar",
+                    "jetty-servlets": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/11.0.14/jetty-servlets-11.0.14.jar",
+                    "jetty-webapp": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-webapp/11.0.14/jetty-webapp-11.0.14.jar",
+                    "jetty-util": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.14/jetty-util-11.0.14.jar",
+                    "jetty-http": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/11.0.14/jetty-http-11.0.14.jar",
+                    "jetty-security": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/11.0.14/jetty-security-11.0.14.jar",
+                    "jetty-io": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/11.0.14/jetty-io-11.0.14.jar",
+                    "jetty-xml": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-xml/11.0.14/jetty-xml-11.0.14.jar",
+                    "jakarta.servlet-api": "https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/5.0.0-M2/jakarta.servlet-api-5.0.0-M2.jar",
+                    "micrometer-core": "https://repo1.maven.org/maven2/io/micrometer/micrometer-core/1.10.3/micrometer-core-1.10.3.jar",
+                    "micrometer-commons": "https://repo1.maven.org/maven2/io/micrometer/micrometer-commons/1.10.3/micrometer-commons-1.10.3.jar",
+                    "cron-scheduler": "https://repo1.maven.org/maven2/io/timeandspace/cron-scheduler/0.1/cron-scheduler-0.1.jar",
+                    "HdrHistogram": "https://repo1.maven.org/maven2/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"
+                 }
+             },
              "1.0.4": {
                 "changes": "Enhancements and bugfixes, more details at https://github.com/ubikingenierie/ulp-observability-plugin/milestone/5?closed=1",
                 "downloadUrl": "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.0.4/ulp-observability-listener-1.0.4.jar",
@@ -1856,5 +1884,87 @@
                  }
              }
         }
+    },
+    {
+      "id": "jmeter-rapi-plugin",
+      "name": "Rapi JMeter Plugins",
+      "description": "This plugin can run Rapi Runner for front-end load testing while using JMeter and can parse .csv results to generate front-end load reports.",
+      "screenshotUrl": "https://raw.githubusercontent.com/RapiTest/rapi-pub/main/start-testing/assets/rapi_logo.png",
+      "helpUrl": "https://github.com/bobcode99/jmeter-rapi-plugin",
+      "vendor": "NCKU SELAB",
+      "markerClass": "ncku.selab.rapi4jmeter.sampler.RapiSampler",
+      "componentClasses": [
+        "ncku.selab.rapi4jmeter.sampler.RapiSamplerGui",
+        "ncku.selab.rapi4jmeter.sampler.RapiSampler",
+        "ncku.selab.rapi4jmeter.reporter.RapiSamplerResultReporterGui",
+        "ncku.selab.rapi4jmeter.config.EdgeConfig",
+        "ncku.selab.rapi4jmeter.config.EdgeConfigGui",
+        "ncku.selab.rapi4jmeter.config.ChromeConfig",
+        "ncku.selab.rapi4jmeter.config.ChromeConfigGui",
+        "ncku.selab.rapi4jmeter.config.FirefoxConfig",
+        "ncku.selab.rapi4jmeter.config.FirefoxConfigPanel"
+      ],
+      "versions": {
+        "1.0.0": {
+          "downloadUrl": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.0/rapi-jmeter-plugins-1.0.0.jar",
+          "libs": {
+             "opencsv": "https://repo1.maven.org/maven2/com/opencsv/opencsv/5.7.1/opencsv-5.7.1.jar",
+             "json-simple": "https://repo1.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar",
+             "rapi-api-java": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.0/rapi-api-java-1.0.1.jar",
+             "rapi-jmeter-report": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.0/rapi-jmeter-report-1.0.3.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
+        }
+      }
+    },
+    {
+      "id": "vdn-junit-reporter-kpi-from-jmeter-dashboard-stats",
+      "name": "vdn@github - junit-reporter-kpi-from-jmeter-dashboard-stats tool",
+      "description": "A tool that creates a JUnit XML file with KPI rules from JMeter JMeter Dashboard stats.json and generates a result file in JUnit XML format and other formats : html, csv and json.",
+      "helpUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats",
+      "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/raw/main/doc/images/kpi_excel.png",
+      "vendor": "Vincent Daburon",
+      "markerClass": "io.github.vdaburon.jmeter.utils.jsonkpi.ToolInstaller",
+      "installerClass": "io.github.vdaburon.jmeter.utils.jsonkpi.ToolInstaller",
+      "versions": {
+        "1.4": {
+          "changes": "Version for jmeter-plugins-manager repo",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/releases/download/v1.4/junit-reporter-kpi-from-jmeter-dashboard-stats-1.4-jar-with-dependencies.jar"
+        }
+      }
+    },
+    {
+      "id": "vdn-junit-reporter-kpi-from-jmeter-report-csv",
+      "name": "vdn@github - junit-reporter-kpi-from-jmeter-report-csv tool",
+      "description": "A tool that creates a JUnit XML file with KPI rules from JMeter CSV Report, export result in html, csv or json format.",
+      "helpUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv",
+      "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/raw/main/doc/images/kpi_excel.png",
+      "vendor": "Vincent Daburon",
+      "markerClass": "io.github.vdaburon.jmeter.utils.reportkpi.ToolInstaller",
+      "installerClass": "io.github.vdaburon.jmeter.utils.reportkpi.ToolInstaller",
+      "versions": {
+        "1.5": {
+          "changes": "First version for jmeter-plugin repo",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/releases/download/V1.5/junit-reporter-kpi-from-jmeter-report-csv-1.5-jar-with-dependencies.jar"
+        }
+      }
+    },
+    {
+      "id": "vdn-junit-reporter-kpi-compare-jmeter-report-csv",
+      "name": "vdn@github - junit-reporter-kpi-compare-jmeter-report-csv",
+      "description": "This tool read KPI declarations in a file and apply the KPI assertion on 2 JMeter Report CSV files (current and reference) and generates a result file in JUnit XML format and others formats Html, Json and Csv.",
+      "helpUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv",
+      "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/raw/main/doc/images/kpi_excel.png",
+      "vendor": "Vincent Daburon",
+      "markerClass": "io.github.vdaburon.jmeter.utils.comparekpi.ToolInstaller",
+      "installerClass": "io.github.vdaburon.jmeter.utils.comparekpi.ToolInstaller",
+      "versions": {
+        "1.2": {
+          "changes": "First version for jmeter-plugin repo",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/releases/download/V1.2/junit-reporter-kpi-compare-jmeter-report-csv-1.2-jar-with-dependencies.jar"
+        }
+      }
     }
 ]

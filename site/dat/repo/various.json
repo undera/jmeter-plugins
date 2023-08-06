@@ -1928,6 +1928,18 @@
           "depends": [
              "jmeter-core"
           ]
+        },
+        "1.0.2": {
+          "downloadUrl": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.2/rapi-jmeter-plugins-1.0.2.jar",
+          "libs": {
+             "opencsv": "https://repo1.maven.org/maven2/com/opencsv/opencsv/5.7.1/opencsv-5.7.1.jar",
+             "json-simple": "https://repo1.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar",
+             "rapi-api-java": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.2/rapi-api-java-1.0.1.jar",
+             "rapi-jmeter-report": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.2/rapi-jmeter-report-1.0.4.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
         }
       }
     },

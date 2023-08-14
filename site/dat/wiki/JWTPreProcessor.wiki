@@ -1,0 +1,12 @@
+= JAVA WEB TOKEN(JWT) Pre Processor =
+
+== Description ==
+
+This is a Jmeter pre-processor plugin that can generate Java Web Token (JWT). When a JWT requires as a pre-requisite to send an HTTP request, this plugin can generate the JWT based on the details provided by the user. The JWT token is stored in a Jmeter variable which can use in other samplers like HTTP.
+
+To generate the JWT String, the following data needs to specified:
+  * Signing algorithm (HS256, RS256).
+  * Secret Key
+  * JWT header attributes (if any)
+  * JWT payload attributes
+  * Variable name to store the JWT value.

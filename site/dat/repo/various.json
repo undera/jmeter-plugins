@@ -1999,7 +1999,7 @@
     },
   {
     "id": "jwt-preProcessor",
-    "name": "JWT-PreProcessor",
+    "name": "JWT PreProcessor",
     "description": "This is a Jmeter pre-processor plugin that can generate Java Web Token",
     "screenshotUrl": "https://github.com/sashikaR/jwt-preProcessor/blob/master/images/image-6.png",
     "helpUrl": "https://github.com/sashikaR/jwt-preProcessor",
@@ -2007,7 +2007,7 @@
     "markerClass": "sr.jmeter.jwt.preprocessor.JwtPreProcessor",
     "installerClass": "sr.jmeter.jwt.preprocessor.JwtPreProcessor",
     "versions": {
-      "v1.0.0": {
+      "1.0.0": {
         "changes": "First version for jmeter-plugin repo",
         "downloadUrl": "https://github.com/sashikaR/jwt-preProcessor/releases/download/v1.0.0/jmeter_jwt_pre_processor-1.0-20230812.171728-1.jar"
       }

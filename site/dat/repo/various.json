@@ -1996,5 +1996,20 @@
           "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/releases/download/V1.2/junit-reporter-kpi-compare-jmeter-report-csv-1.2-jar-with-dependencies.jar"
         }
       }
+    },
+  {
+    "id": "jwt-preProcessor",
+    "name": "JWT PreProcessor",
+    "description": "This is a Jmeter pre-processor plugin that can generate Java Web Token",
+    "screenshotUrl": "https://github.com/sashikaR/jwt-preProcessor/blob/master/images/image-6.png",
+    "helpUrl": "https://github.com/sashikaR/jwt-preProcessor",
+    "vendor": "Sashika Rangoda",
+    "markerClass": "sr.jmeter.jwt.preprocessor.JwtPreProcessor",
+    "versions": {
+      "1.0.2": {
+        "changes": "First version for jmeter-plugin repo",
+        "downloadUrl": "https://github.com/sashikaR/jwt-preProcessor/releases/download/v1.0.2/jmeter_plugins_jwt_pre_processor-1.0-SNAPSHOT.jar"
+      }
     }
+  }
 ]

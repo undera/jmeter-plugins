@@ -2005,7 +2005,6 @@
     "helpUrl": "https://github.com/sashikaR/jwt-preProcessor",
     "vendor": "Sashika Rangoda",
     "markerClass": "sr.jmeter.jwt.preprocessor.JwtPreProcessor",
-    "installerClass": "sr.jmeter.jwt.preprocessor.JwtPreProcessor",
     "versions": {
       "1.0.2": {
         "changes": "First version for jmeter-plugin repo",

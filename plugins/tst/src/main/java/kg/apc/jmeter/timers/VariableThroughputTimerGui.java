@@ -120,16 +120,16 @@ public class VariableThroughputTimerGui
 
     @Override
     public void modifyTestElement(TestElement tg) {
-        //log.info("Modify test element");
+        log.debug("Modify test element");
         super.configureTestElement(tg);
-
         if (grid.isEditing()) {
             grid.getCellEditor().stopCellEditing();
         }
 
         if (tg instanceof VariableThroughputTimer) {
             VariableThroughputTimer utg = (VariableThroughputTimer) tg;
-            CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(tableModel, VariableThroughputTimer.DATA_PROPERTY);
+            log.debug("property " + utg.getDataProperty());
+            CollectionProperty rows = JMeterPluginsUtils.tableModelRowsToCollectionProperty(tableModel, utg.getDataProperty());
             utg.setData(rows);
         }
     }
@@ -160,7 +160,8 @@ public class VariableThroughputTimerGui
 
         if (tableModel != null) {
             VariableThroughputTimer utgForPreview = new VariableThroughputTimer();
-            utgForPreview.setData(JMeterPluginsUtils.tableModelRowsToCollectionPropertyEval(tableModel, VariableThroughputTimer.DATA_PROPERTY));
+            utgForPreview.setName(getName());
+            utgForPreview.setData(JMeterPluginsUtils.tableModelRowsToCollectionPropertyEval(tableModel, utgForPreview.getDataProperty()));
             updateChart(utgForPreview);
         }
     }

@@ -55,10 +55,13 @@ Properties are:
 
 == Special Property Processing ==
 
-There is a way to specify load pattern from special jmeter property {{{load_profile}}}.
+There is a way to specify load pattern from special jmeter property {{{tst-name.load_profile}}}, where tst-name
+is the name of the Throughput Shaping Timer to define the load pattern on.
+The {{{load.profile}}} jmeter property is used as a default if the {{{tst-name}}} is not defined.
+If neither the {{{tst_name.load_profile}}}  or default {{{load_profile}}} are defined, the values from GUI are taken
 Property can be specified either in user.properties file (jmeter.properties also applicable), or
-from command line like {{{-J "load\_profile=..."}}}. Make note that this property is temporary,
-and will be replaced by some GUI setting in future versions.
+from command line like {{{-J "load\_profile=..."}}}.
+
 
 Load pattern specified with set of function-like declarations.
 "Functions" may be of 3 types: const, line and step.
@@ -74,7 +77,31 @@ Duration value in every function may be specified with shorthand case-insensitiv
 
 Duration setting may be combined like _1d11h23m6s_.
 
-Example of load profile string: {{{load_profile=const(10,10s) line(10,100,1m) step(5,25,5,1h)}}}
+Example of load profile string: {{{my_timer.load_profile=const(10,10s) line(10,100,1m) step(5,25,5,1h)}}}
+Example of default load profile string : {{{load_profile=step(5, 50, 5, 2m) const(50, 10m)}}}
+
+Scenario 1:
+- Throughput Shaping Timer is named "my_timer"
+- The property {{{my_timer.load_profile}}} is not defined
+- {{{load_profile}}} is not defined
+Outcome:
+    Throughput will be shaped from values defined in GUI
+
+Scenario 2:
+- Throughput Shaping Timer is named "my_timer"
+- property {{{my_timer.load_profile}}} is defined {{{my_timer.load_profile=const(10, 1m)}}}
+Outcome:
+ Named property takes the first priority and the throughput will be shaped as defined in named property
+ The timer will attempt to keep the pace of 10 RPS for the duration of 1 minute
+
+ Scenario 3
+ - Throuhgput Shaping Timer is named "my_timer"
+ - property {{{my_timer.load_profile}}} is not defined
+ - property {{{load_profile}}} is defined {{{load_profile=step(5, 25, 5, 1m)}}}
+ Outcome:
+  Default property takes 2nd priority and the timer will attempt to generate the RPS defined in the {{{load_profile}} property}}}
+
+
 
 == Schedule Feedback Function ==
 There is special JMeter function that enables feeback loop for number of threads.

@@ -113,6 +113,8 @@ The JMX can be downloaded [/editor/?utm_source=jpgc&utm_medium=openurl&utm_campa
 == Technical Details ==
 
 The RedisDataSet uses the [https://github.com/xetorthio/jedis Jedis Java Redis library] for connection and access operations.
+Starting from version 0.6, RedisDataSet uses  [https://redis.io/commands/srandmember/ srandmember] and [https://redis.io/commands/lmove/ lmove] commands.
+For Redis versions below 6.2.0, you can define a "plugins.redis.legacy=true" property in jmeter.properties.
 
 For data loaded into a Redis set, RedisDataSet uses [/path/to/redis/url spop] and [https://redis.io/commands/sadd sadd] commands.
 

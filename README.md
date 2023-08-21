@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/undera/jmeter-plugins.png?branch=master)](https://travis-ci.org/undera/jmeter-plugins)
 JMeter Plugins
 =============================
 

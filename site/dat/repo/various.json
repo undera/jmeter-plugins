@@ -281,6 +281,21 @@
           "HdrHistogram>=2.1.12": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar",
           "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
         }
+      },
+      "1.3": {
+        "changes": "<ul><li>Upgrade to jPOS v2.1.8</li><li>Bug fixes: #24</li><li>Incompatible changes:</li><ul><li>ISO8583 Config: Request Listener script now Groovy instead of BeanShell</li><li>ISO8583 Crypto PreProcessor: Removed some ARQC settings that are now derived automatically from Issuer Application Data (Session Key Derivation Method, jmeter.iso8583.arqcInputTags, jmeter.iso8583.arqcFromFullIADForCVNs)</li></ul></ul>",
+        "downloadUrl": "https://github.com/tilln/jmeter-iso8583/releases/download/1.3/jmeter-iso8583-1.3.jar",
+        "libs": {
+          "jpos>=2.1.8": "https://search.maven.org/remotecontent?filepath=org/jpos/jpos/2.1.8/jpos-2.1.8.jar",
+          "bcprov-jdk15on>=1.69": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcprov-jdk15on/1.69/bcprov-jdk15on-1.69.jar",
+          "bcpg-jdk15on>=1.69": "https://search.maven.org/remotecontent?filepath=org/bouncycastle/bcpg-jdk15on/1.69/bcpg-jdk15on-1.69.jar",
+          "jdom2>=2.0.6.1": "https://search.maven.org/remotecontent?filepath=org/jdom/jdom2/2.0.6.1/jdom2-2.0.6.1.jar",
+          "org.osgi.core": "https://search.maven.org/remotecontent?filepath=org/osgi/org.osgi.core/6.0.0/org.osgi.core-6.0.0.jar",
+          "commons-cli": "https://search.maven.org/remotecontent?filepath=commons-cli/commons-cli/1.4/commons-cli-1.4.jar",
+          "snakeyaml>=1.33": "https://search.maven.org/remotecontent?filepath=org/yaml/snakeyaml/1.33/snakeyaml-1.33.jar",
+          "HdrHistogram>=2.1.12": "https://search.maven.org/remotecontent?filepath=org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar",
+          "javatuples": "https://search.maven.org/remotecontent?filepath=org/javatuples/javatuples/1.2/javatuples-1.2.jar"
+        }
       }
     }
   },
@@ -479,6 +494,18 @@
           "wss4j-ws-security-common": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-common/2.3.1/wss4j-ws-security-common-2.3.1.jar",
           "xmlsec": "https://search.maven.org/remotecontent?filepath=org/apache/santuario/xmlsec/2.2.1/xmlsec-2.2.1.jar"
         }
+      },
+      "1.9": {
+        "changes": "Maintenance release: Upgrade to wss4j v3.0.0",
+        "downloadUrl": "https://github.com/tilln/jmeter-wssecurity/releases/download/1.9/jmeter-wssecurity-1.9.jar",
+        "depends": [
+          "jmeter-core"
+        ],
+        "libs": {
+          "wss4j-ws-security-dom": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-dom/3.0.0/wss4j-ws-security-dom-3.0.0.jar",
+          "wss4j-ws-security-common": "https://search.maven.org/remotecontent?filepath=org/apache/wss4j/wss4j-ws-security-common/3.0.0/wss4j-ws-security-common-3.0.0.jar",
+          "xmlsec": "https://search.maven.org/remotecontent?filepath=org/apache/santuario/xmlsec/3.0.1/xmlsec-3.0.1.jar"
+        }
       }
     }
   },
@@ -662,7 +689,7 @@
       },
       "2.4.3": {
         "changes": "Fixed class loader problem with JavaFX StringConverter class",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.4.3/jmeter.backendlistener.elasticsearch-2.4.3.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.4.3/jmeter.backendlistener.elasticsearch-2.4.3.jar"
       },
       "2.5.0": {
         "changes": "Switched to low-level client v6.4 & added custom variables support",
@@ -674,55 +701,59 @@
       },
       "2.5.2": {
         "changes": "Fixed error with filters",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.2/jmeter.backendlistener.elasticsearch-2.5.2.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.5.2/jmeter.backendlistener.elasticsearch-2.5.2.jar"
       },
       "2.5.3": {
         "changes": "Fixed error with filters (#2), refactored the method.",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.3/jmeter.backendlistener.elasticsearch-2.5.3.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.5.3/jmeter.backendlistener.elasticsearch-2.5.3.jar"
       },
       "2.5.4": {
         "changes": "Fixed error with filters (#37), refactored the method.",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.5.4/jmeter.backendlistener.elasticsearch-2.5.4.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.5.4/jmeter.backendlistener.elasticsearch-2.5.4.jar"
       },
       "2.6.0": {
         "changes": "Added AWS support, added RegExp support in filters, fixed bug with header parsing",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.0/jmeter.backendlistener.elasticsearch-2.6.0.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.0/jmeter.backendlistener.elasticsearch-2.6.0.jar"
       },
       "2.6.1": {
         "changes": "Fixed bug with header parsing (#40, thanks @ncasaux)",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.1/jmeter.backendlistener.elasticsearch-2.6.1.jar"
       },
       "2.6.5": {
         "changes": "New SSL feature, header parsing fixes, multiple little bug fixes.",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.5/jmeter.backendlistener.elasticsearch-2.6.5.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.5/jmeter.backendlistener.elasticsearch-2.6.5.jar"
       },
       "2.6.6": {
         "changes": "Fixed issue with index types ES 7.0+",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.6/jmeter.backendlistener.elasticsearch-2.6.6.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.6/jmeter.backendlistener.elasticsearch-2.6.6.jar"
       },
       "2.6.7": {
         "changes": "Fixed breaking issue with getElasticSearchVersion() method",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.7/jmeter.backendlistener.elasticsearch-2.6.7.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.7/jmeter.backendlistener.elasticsearch-2.6.7.jar"
       },
       "2.6.8": {
         "changes": "Fixed breaking issue with SSL conflicts",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.8/jmeter.backendlistener.elasticsearch-2.6.8.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.8/jmeter.backendlistener.elasticsearch-2.6.8.jar"
       },
       "2.6.9": {
         "changes": "Fixed breaking issue with SSL conflicts",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.9/jmeter.backendlistener.elasticsearch-2.6.9.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.9/jmeter.backendlistener.elasticsearch-2.6.9.jar"
       },
       "2.6.10": {
         "changes": "Fixed issue with sending variables through headers (#61)",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.10/jmeter.backendlistener.elasticsearch-2.6.10.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.10/jmeter.backendlistener.elasticsearch-2.6.10.jar"
       },
       "2.6.11": {
         "changes": "Fixed issue with deprecated methods resulting in errors and timeout issues",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.6.11/jmeter.backendlistener.elasticsearch-2.6.11.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.6.11/jmeter.backendlistener.elasticsearch-2.6.11.jar"
       },
       "2.7.0": {
         "changes": "Added an exclude feature for filters",
-        "downloadUrl": "https://github.com/delirius325/jmeter-elasticsearch-backend-listener/releases/download/2.7.0/jmeter.backendlistener.elasticsearch-2.7.0.jar"
+        "downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.7.0/jmeter.backendlistener.elasticsearch-2.7.0.jar"
+      },
+      "2.7.1": {
+	"changes":"Added support for datastream indexes",
+	"downloadUrl": "https://github.com/anthonygauthier/jmeter-elasticsearch-backend-listener/releases/download/2.7.1/jmeter.backendlistener.elasticsearch-2.7.1.jar"
       }
     }
   },
@@ -785,7 +816,7 @@
   {
     "id": "ulp-jmeter-videostreaming-plugin",
     "name": "UbikLoadPack Video Streaming plugin",
-    "description": "Plugin which provides the ability to easily load test servers delivering Adaptive Bitrate Streaming (ABR). It supports the following implementations: Low Latency Mpeg-Dash, Mpeg-Dash, Apple HLS / Low-Latency HLS (LL-HLS), Microsoft Smooth (HSS) and Adobe HDS. Both Live and VOD streams are automatically handled. The plugin realistically simulates players and outputs video specific metrics allowing you to analyze User Experience",
+    "description": "Plugin which provides the ability to easily load test servers delivering Adaptive Bitrate Streaming (ABR). It supports the following implementations: Low Latency Mpeg-Dash, Mpeg-Dash, Apple HLS / Low-Latency HLS (LL-HLS), Microsoft Smooth (HSS) and Adobe HDS. Both Live and VOD streams are automatically handled. The plugin realistically simulates players and outputs video specific metrics allowing you to analyze User Experience. It supports HTTP 1.1 and HTTP/2 (since version 9.0.1)",
     "screenshotUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/ulp_vs_screenshot_800.png",
     "helpUrl": "https://www.ubik-ingenierie.com/blog/ubikloadpack-streaming-plugin-help/",
     "vendor": "UbikLoadPack by Ubik-Ingenierie",
@@ -795,6 +826,26 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "9.0.1": {
+        "changes": "Add support for HTTP/2, this version now requires JAVA 11 or higher",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.0.1/ubik-jmeter-videostreaming-plugin-9.0.1.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "8.0.8": {
+        "changes": "Bugfix version for Show playlist in case of video manifest, fix NPE for Multiperiod DASH VOD",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.8/ubik-jmeter-videostreaming-plugin-8.0.8.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "8.0.7": {
+        "changes": "Bugfix version for HLS and Dash subtitles and wrong first chunk download in HLS for certain types of manifest",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.7/ubik-jmeter-videostreaming-plugin-8.0.7.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "8.0.6": {
+        "changes": "Bugfix version for HLS and Dash subtitles and wrong first chunk download in HLS for certain types of manifest",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.6.1/ubik-jmeter-videostreaming-plugin-8.0.6.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "8.0.5": {
         "changes": "Bugfix version",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/8.0.5/ubik-jmeter-videostreaming-plugin-8.0.5.jar",
@@ -965,6 +1016,13 @@
     "vendor": "adrianmo",
     "markerClass": "io.github.adrianmo.jmeter.backendlistener.azure.AzureBackendClient",
     "versions": {
+      "0.2.9": {
+        "changes": "Add more logging options for data payloads.",
+        "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.9/jmeter.backendlistener.azure-0.2.9.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.2.8": {
         "changes": "Add new logSampleData option for logging response data.",
         "downloadUrl": "https://github.com/adrianmo/jmeter-backend-azure/releases/download/0.2.8/jmeter.backendlistener.azure-0.2.8.jar",
@@ -1090,7 +1148,7 @@
     "vendor": "Robert Bourgault du Coudray",
     "markerClass": "kg.apc.jmeter.vizualisers.ApdexScoreCalculatorGui",
     "componentClasses": [
-      "kg.apc.jmeter.vizualizers.ApdexScoreCalculatorGui",
+      "kg.apc.jmeter.vizualisers.ApdexScoreCalculatorGui",
       "kg.apc.cmdtools.ApdexScoreCalculatorTool"
     ],
     "versions" : {
@@ -1173,9 +1231,10 @@
     "screenshotUrl" : "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/resultscomparator/src/site/img/wiki/rc_Compare.PNG",
     "helpUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/resultscomparator/src/site/dat/wiki/ResultsComparator.wiki",
     "vendor": "Robert Bourgault du Coudray",
-    "markerClass": "kg.apc.jmeter.vizualisers.ResultsComparatorGui",
+    "markerClass": "kg.apc.jmeter.vizualizers.ResultsComparatorGui",
     "componentClasses": [
-      "kg.apc.jmeter.vizualizers.ResultsComparatorGui"
+      "kg.apc.jmeter.vizualizers.ResultsComparatorGui",
+      "kg.apc.cmdtools.ResultsComparatorTool"
     ],
     "versions" : {
 		"3.1.2": {
@@ -1224,7 +1283,9 @@
       "org.apache.jmeter.protocol.aws.sqs.SQSProducerStandardQueue",
       "org.apache.jmeter.protocol.aws.sqs.SQSProducerFifoQueue",
       "org.apache.jmeter.protocol.aws.sns.SNSProducerStandardTopic",
-      "org.apache.jmeter.protocol.aws.sns.SNSProducerFifoTopic"
+      "org.apache.jmeter.protocol.aws.sns.SNSProducerFifoTopic",
+      "org.apache.jmeter.protocol.aws.cognito.CognitoProducerAdminCreateUser",
+      "org.apache.jmeter.protocol.aws.cognito.CognitoProducerAdminLoginUser"
     ],
     "versions": {
       "1.0.0": {
@@ -1237,6 +1298,20 @@
       "2.0.0": {
         "changes": "Publish messages in SNS Standard or FIFO topic.",
         "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v2.0.0/awsmeter-2.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "2.1.1": {
+        "changes": "Get AWS session token from the credentials file and SNS Java Sampler Client bug fix.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v2.1.1/awsmeter-2.1.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "3.0.0": {
+        "changes": "Add Cognito sampler and bug fix to get aws credentials from JMeter Java Sampler parameters.",
+        "downloadUrl": "https://github.com/JoseLuisSR/awsmeter/releases/download/v3.0.0/awsmeter-3.0.0.jar",
         "depends": [
           "jmeter-core"
         ]
@@ -1318,6 +1393,18 @@
       "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
     ],
     "versions": {
+      "0.4.0": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.4.0/jmeter-datadog-backend-listener-0.4.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "0.3.1": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.3.1/jmeter-datadog-backend-listener-0.3.1.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.3.0": {
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.3.0/jmeter-datadog-backend-listener-0.3.0.jar",
         "depends": [
@@ -1383,6 +1470,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.6": {
+        "changes": "Prints exceptions that occur before the request is initiated; setEndTime must be called after setStartTime; allow run plugin with M1 ARM chip; ...",
+        "downloadUrl": "https://github.com/zalopay-oss/jmeter-grpc-request/releases/download/v1.2.6/jmeter-grpc-request.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -1390,7 +1484,7 @@
     "componentClasses": [
         "com.di.jmeter.kafka.sampler.KafkaProducerConfig"
     ],
-    "description": "Jmeter plugin to push events/messages to Kafka topics",
+    "description": "Jmeter plugin to push/read events/messages to Kafka topics",
     "helpUrl": "https://github.com/rollno748/di-kafkameter#readme",
     "id": "di-kafkameter",
     "markerClass": "com.di.jmeter.kafka.sampler.KafkaProducerSampler",
@@ -1403,6 +1497,32 @@
                 "jmeter-core"
             ],
             "downloadUrl": "https://github.com/rollno748/di-kafkameter/releases/download/1.0/di-kafkameter-1.0.jar"
+        },
+        "1.1": {
+          "depends": [
+            "jmeter-core"
+          ],
+          "downloadUrl": "https://github.com/rollno748/di-kafkameter/releases/download/1.1/di-kafkameter-1.1.jar",
+          "libs": {
+            "kafka-clients": "https://repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.3.1/kafka-clients-3.3.1.jar",
+            "guava": "https://repo1.maven.org/maven2/com/google/guava/guava/31.1-jre/guava-31.1-jre.jar",
+            "lz4-java": "https://repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar",
+            "snappy-java": "https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.8.4/snappy-java-1.1.8.4.jar",
+            "zstd-jni-1.5.2-1": "https://repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.2-1/zstd-jni-1.5.2-1.jar"
+          }
+        },
+        "1.2": {
+          "depends": [
+            "jmeter-core"
+          ],
+          "downloadUrl": "https://github.com/rollno748/di-kafkameter/releases/download/1.2/di-kafkameter-1.2.jar",
+          "libs": {
+            "kafka-clients": "https://repo1.maven.org/maven2/org/apache/kafka/kafka-clients/3.3.1/kafka-clients-3.3.1.jar",
+            "guava": "https://repo1.maven.org/maven2/com/google/guava/guava/31.1-jre/guava-31.1-jre.jar",
+            "lz4-java": "https://repo1.maven.org/maven2/org/lz4/lz4-java/1.8.0/lz4-java-1.8.0.jar",
+            "snappy-java": "https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.8.4/snappy-java-1.1.8.4.jar",
+            "zstd-jni-1.5.2-1": "https://repo1.maven.org/maven2/com/github/luben/zstd-jni/1.5.2-1/zstd-jni-1.5.2-1.jar"
+          }
         }
     }
   },
@@ -1415,7 +1535,7 @@
     "id": "extended-csv-dataset-config",
     "markerClass": "com.di.jmeter.config.ExtendedCsvDataSet",
     "name": "Extended CSV dataset config",
-    "screenshotUrl": "https://raw.githubusercontent.com/rollno748/Extended-csv-dataset-config/master/images/ExtendedCSV.png",
+    "screenshotUrl": "https://raw.githubusercontent.com/rollno748/Extended-csv-dataset-config/master/images/ExtendedCsvDataSetConfig.png",
     "vendor": "DigitalInsight-NCR",
     "versions": {
         "1.0": {
@@ -1427,6 +1547,13 @@
         },
         "1.1": {
           "downloadUrl": "https://github.com/rollno748/Extended-csv-dataset-config/releases/download/1.1/di-extended-csv-1.1.jar",
+          "depends": [
+            "jmeter-core",
+            "jmeter-components"
+          ]
+        },
+        "2.0": {
+          "downloadUrl": "https://github.com/rollno748/Extended-csv-dataset-config/releases/download/2.0/di-extended-csv-2.0.jar",
           "depends": [
             "jmeter-core",
             "jmeter-components"
@@ -1448,6 +1575,13 @@
     "versions": {
       "1.0.0": {
         "downloadUrl": "https://github.com/yeshan333/ApacheJmeter_Schema_Assertion/releases/download/v1.0.0/ApacheJmeter_Schema_Assertion-1.0.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.1.0": {
+        "changes": "jmeter core lib upgrade to jmeter 5.5",
+        "downloadUrl": "https://github.com/yeshan333/ApacheJmeter_Schema_Assertion/releases/download/v1.1.0/ApacheJmeter_Schema_Assertion-1.1.0.jar",
         "depends": [
           "jmeter-core"
         ]
@@ -1534,11 +1668,11 @@
       }
     }
   },
-  {
+   {
     "id": "jmeter-atakama-variabilization-plugin",
     "name": "Atakama Variabilization Plugin",
-    "description": "Variabilization plugin for jmeter",
-    "screenshotUrl": "",
+    "description": "<b>Variabilization plugin for jmeter:</b><br><br> You can request a trial by following this link: <a href=\"https://ph-eval.atakama-technologies.com/downloadWebsite/index.php/product/show?id=1\">https://ph-eval.atakama-technologies.com/downloadWebsite/index.php/product/show?id=1</a>",
+    "screenshotUrl": "https://user-images.githubusercontent.com/2484866/182579087-59225ac5-8abb-4a87-835a-2f202b1374fd.png",
     "helpUrl": "https://github.com/atakama/jmeter_plugin_variabilization",
     "vendor": "Atakama Technologies",
     "markerClass": "com.atakama.jmeter.parameters.gui.ParametersGui",
@@ -1551,14 +1685,14 @@
       "com.atakama.jmeter.recording.JavaURL"
     ],
     "versions": {
-      "1.0": {
-        "downloadUrl": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/jmeter-atakama-parameters-1.0.jar",
+      "1.1.0": {
+        "downloadUrl": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/jmeter-atakama-parameters-1.1.0.jar",
 		"libs": {
-				"jakarta.activation-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/jakarta.activation-api-1.2.1.jar",
-				"jakarta.xml.bind-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/jakarta.xml.bind-api-2.3.2.jar",
-				"jaxb-core": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/jaxb-core-2.3.0.1.jar",
-				"jaxb-runtime": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/jaxb-runtime-2.3.2.jar",
-				"lib-crypt": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0/lib-crypt-1.0.6.jar"
+				"jakarta.activation-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/jakarta.activation-api-1.2.1.jar",
+				"jakarta.xml.bind-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/jakarta.xml.bind-api-2.3.2.jar",
+				"jaxb-core": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/jaxb-core-2.3.0.1.jar",
+				"jaxb-runtime": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/jaxb-runtime-2.3.2.jar",
+				"lib-crypt": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.1.0/lib-crypt-1.0.6.jar"
 				
 		},
         "depends": [
@@ -1566,32 +1700,15 @@
           "jmeter-components"
         ]
       },
-	  "1.0.1": {
-		"changes": "Take into account POST data variables ",
-        "downloadUrl": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/jmeter-atakama-parameters-1.0.1.jar",
+	  "1.2.0": {
+		"changes": "Upgrade license system",  
+        "downloadUrl": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jmeter-atakama-parameters-1.2.0.jar",
 		"libs": {
-				"jakarta.activation-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/jakarta.activation-api-1.2.1.jar",
-				"jakarta.xml.bind-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/jakarta.xml.bind-api-2.3.2.jar",
-				"jaxb-core": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/jaxb-core-2.3.0.1.jar",
-				"jaxb-runtime": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/jaxb-runtime-2.3.2.jar",
-				"lib-crypt": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.1/lib-crypt-1.0.6.jar"
-				
-		},
-        "depends": [
-          "jmeter-core",
-          "jmeter-components"
-        ]
-      }
-	  ,
-	  "1.0.2": {
-		"changes": "Fix bug when there are parameters with empty values",
-        "downloadUrl": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.2/jmeter-atakama-parameters-1.0.2.jar",
-		"libs": {
-				"jakarta.activation-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.2/jakarta.activation-api-1.2.1.jar",
-				"jakarta.xml.bind-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.2/jakarta.xml.bind-api-2.3.2.jar",
-				"jaxb-core": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.2/jaxb-core-2.3.0.1.jar",
-				"jaxb-runtime": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.2/jaxb-runtime-2.3.2.jar",
-				"lib-crypt": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.0.2/lib-crypt-1.0.6.jar"
+				"jakarta.activation-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jakarta.activation-api-1.2.1.jar",
+				"jakarta.xml.bind-api": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jakarta.xml.bind-api-2.3.2.jar",
+				"jaxb-core": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jaxb-core-2.3.0.1.jar",
+				"jaxb-runtime": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/jaxb-runtime-2.3.2.jar",
+				"lib-crypt": "https://github.com/atakama/jmeter_plugin_variabilization/releases/download/1.2.0/lib-crypt-1.0.6.jar"
 				
 		},
         "depends": [
@@ -1631,6 +1748,268 @@
                "jmeter-components"
             ]
          }
+		 ,
+		 "1.5.0":{
+			"changes": "Update system license, identify sampler with sampler name and header atk_Etape", 
+            "downloadUrl":"https://github.com/atakama/jmeter_plugin_backend_listener/releases/download/1.5.0/jmeter-atakama-backend-1.5.0.jar",
+            "depends":[
+               "jmeter-core",
+               "jmeter-components"
+            ]
+         }
       }
-   }
+   },
+   {
+    "componentClasses": [
+        "io.perfwise.cb.config.BucketConfig",
+        "io.perfwise.cb.sampler.CBSampler"
+    ],
+    "description": "JMeter plugin to load test Couchbase DB <ul><li>Simply add a \"Config Element \" and set the cocuhbase connection options and provide a object name to export</li><li>Add a \"Couchbase sampler \" and provide the exported object name.</li><li><a href=\"https://rollno748.github.io/\">Author Details</a></li></ul>",
+    "helpUrl": "https://github.com/rollno748/JMeter-couchbase-sampler#readme",
+    "id": "couchbase",
+    "markerClass": "io.perfwise.cb.sampler.CBSampler",
+    "name": "Couchbase Plugin",
+    "screenshotUrl": "https://raw.githubusercontent.com/rollno748/JMeter-couchbase-sampler/master/img/couchbase.png",
+    "vendor": "Perfwise",
+    "versions": {
+        "1.0": {
+          "downloadUrl": "https://github.com/rollno748/JMeter-couchbase-sampler/releases/download/1.0/jmeter-couchbase-sampler-1.0.jar",
+          "libs": {
+             "java-client": "https://repo1.maven.org/maven2/com/couchbase/client/java-client/3.4.1/java-client-3.4.1.jar",
+             "core-io":"https://repo1.maven.org/maven2/com/couchbase/client/core-io/2.4.1/core-io-2.4.1.jar",
+             "reactor-core":"https://repo1.maven.org/maven2/io/projectreactor/reactor-core/3.5.0/reactor-core-3.5.0.jar",
+             "reactive-streams":"https://repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
+        }
+    }
+  },
+    {
+        "id": "ulp-observability-plugin",
+        "name": "UbikLoadPack Observability Plugin",
+        "description": "This plugin allows you to monitor your JMeter CLI performance test from your favorite browser without having to start JMeter in GUI mode",
+        "screenshotUrl": "https://raw.githubusercontent.com/ubikingenierie/ulp-observability-plugin/main/screenshot/ulp_observability3.png",
+        "helpUrl": "https://www.ubik-ingenierie.com/blog/ubik-load-pack-observability-plugin/",
+        "vendor": "UbikLoadPack by Ubik-Ingenierie",
+        "markerClass": "com.ubikloadpack.jmeter.ulp.observability.listener.ULPObservabilityListener",
+        "versions": {
+             "1.1.0": {
+                "changes": "Enhancements and bugfixes, more details at https://github.com/ubikingenierie/ulp-observability-plugin/milestone/4?closed=1",
+                "downloadUrl": "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.1.0/ulp-observability-listener-1.1.0.jar",
+                "depends": [
+                    "jmeter-core"
+                ],
+                "libs": {
+                    "commons-lang3": "https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar",
+                    "jetty-server": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/11.0.14/jetty-server-11.0.14.jar",
+                    "jetty-servlet": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/11.0.14/jetty-servlet-11.0.14.jar",
+                    "jetty-servlets": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/11.0.14/jetty-servlets-11.0.14.jar",
+                    "jetty-webapp": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-webapp/11.0.14/jetty-webapp-11.0.14.jar",
+                    "jetty-util": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.14/jetty-util-11.0.14.jar",
+                    "jetty-http": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/11.0.14/jetty-http-11.0.14.jar",
+                    "jetty-security": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/11.0.14/jetty-security-11.0.14.jar",
+                    "jetty-io": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/11.0.14/jetty-io-11.0.14.jar",
+                    "jetty-xml": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-xml/11.0.14/jetty-xml-11.0.14.jar",
+                    "jakarta.servlet-api": "https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/5.0.0-M2/jakarta.servlet-api-5.0.0-M2.jar",
+                    "micrometer-core": "https://repo1.maven.org/maven2/io/micrometer/micrometer-core/1.10.3/micrometer-core-1.10.3.jar",
+                    "micrometer-commons": "https://repo1.maven.org/maven2/io/micrometer/micrometer-commons/1.10.3/micrometer-commons-1.10.3.jar",
+                    "cron-scheduler": "https://repo1.maven.org/maven2/io/timeandspace/cron-scheduler/0.1/cron-scheduler-0.1.jar",
+                    "HdrHistogram": "https://repo1.maven.org/maven2/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"
+                 }
+             },
+             "1.0.4": {
+                "changes": "Enhancements and bugfixes, more details at https://github.com/ubikingenierie/ulp-observability-plugin/milestone/5?closed=1",
+                "downloadUrl": "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.0.4/ulp-observability-listener-1.0.4.jar",
+                "depends": [
+                    "jmeter-core"
+                ],
+                "libs": {
+                    "commons-lang3": "https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar",
+                    "jetty-server": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/11.0.13/jetty-server-11.0.13.jar",
+                    "jetty-servlet": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/11.0.13/jetty-servlet-11.0.13.jar",
+                    "jetty-servlets": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/11.0.13/jetty-servlets-11.0.13.jar",
+                    "jetty-webapp": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-webapp/11.0.13/jetty-webapp-11.0.13.jar",
+                    "jetty-util": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.13/jetty-util-11.0.13.jar",
+                    "jetty-http": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/11.0.13/jetty-http-11.0.13.jar",
+                    "jetty-security": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/11.0.13/jetty-security-11.0.13.jar",
+                    "jetty-io": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/11.0.13/jetty-io-11.0.13.jar",
+                    "jetty-xml": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-xml/11.0.13/jetty-xml-11.0.13.jar",
+                    "jakarta.servlet-api": "https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/5.0.0-M2/jakarta.servlet-api-5.0.0-M2.jar",
+                    "micrometer-core": "https://repo1.maven.org/maven2/io/micrometer/micrometer-core/1.10.3/micrometer-core-1.10.3.jar",
+                    "micrometer-commons": "https://repo1.maven.org/maven2/io/micrometer/micrometer-commons/1.10.3/micrometer-commons-1.10.3.jar",
+                    "cron-scheduler": "https://repo1.maven.org/maven2/io/timeandspace/cron-scheduler/0.1/cron-scheduler-0.1.jar",
+                    "HdrHistogram": "https://repo1.maven.org/maven2/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"
+                 }
+             },
+             "1.0.3": {
+                "changes": "Enhancements and bugfixes, more details at https://github.com/ubikingenierie/ulp-observability-plugin/milestone/3?closed=1",
+                "downloadUrl": "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.0.3/ulp-observability-listener-1.0.3.jar",
+                "depends": [
+                    "jmeter-core"
+                ],
+                "libs": {
+                    "commons-lang3": "https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar",
+                    "jetty-server": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/11.0.13/jetty-server-11.0.13.jar",
+                    "jetty-servlet": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/11.0.13/jetty-servlet-11.0.13.jar",
+                    "jetty-servlets": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/11.0.13/jetty-servlets-11.0.13.jar",
+                    "jetty-webapp": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-webapp/11.0.13/jetty-webapp-11.0.13.jar",
+                    "jetty-util": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.13/jetty-util-11.0.13.jar",
+                    "jetty-http": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/11.0.13/jetty-http-11.0.13.jar",
+                    "jetty-security": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/11.0.13/jetty-security-11.0.13.jar",
+                    "jetty-io": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/11.0.13/jetty-io-11.0.13.jar",
+                    "jetty-xml": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-xml/11.0.13/jetty-xml-11.0.13.jar",
+                    "jakarta.servlet-api": "https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/5.0.0-M2/jakarta.servlet-api-5.0.0-M2.jar",
+                    "micrometer-core": "https://repo1.maven.org/maven2/io/micrometer/micrometer-core/1.10.3/micrometer-core-1.10.3.jar",
+                    "micrometer-commons": "https://repo1.maven.org/maven2/io/micrometer/micrometer-commons/1.10.3/micrometer-commons-1.10.3.jar",
+                    "cron-scheduler": "https://repo1.maven.org/maven2/io/timeandspace/cron-scheduler/0.1/cron-scheduler-0.1.jar",
+                    "HdrHistogram": "https://repo1.maven.org/maven2/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"
+                 }
+             },
+             "1.0.2": {
+                "downloadUrl": "https://github.com/ubikingenierie/ulp-observability-plugin/releases/download/ulp-observability-1.0.2/ulp-observability-listener-1.0.2.jar",
+                "depends": [
+                    "jmeter-core"
+                ],
+                "libs": {
+                    "jetty-server": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-server/11.0.13/jetty-server-11.0.13.jar",
+                    "jetty-servlet": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlet/11.0.13/jetty-servlet-11.0.13.jar",
+                    "jetty-servlets": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-servlets/11.0.13/jetty-servlets-11.0.13.jar",
+                    "jetty-webapp": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-webapp/11.0.13/jetty-webapp-11.0.13.jar",
+                    "jetty-util": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.13/jetty-util-11.0.13.jar",
+                    "jetty-http": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-http/11.0.13/jetty-http-11.0.13.jar",
+                    "jetty-security": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-security/11.0.13/jetty-security-11.0.13.jar",
+                    "jetty-io": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-io/11.0.13/jetty-io-11.0.13.jar",
+                    "jetty-xml": "https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-xml/11.0.13/jetty-xml-11.0.13.jar",
+                    "jakarta.servlet-api": "https://repo1.maven.org/maven2/jakarta/servlet/jakarta.servlet-api/5.0.0-M2/jakarta.servlet-api-5.0.0-M2.jar",
+                    "micrometer-core": "https://repo1.maven.org/maven2/io/micrometer/micrometer-core/1.10.3/micrometer-core-1.10.3.jar",
+                    "micrometer-commons": "https://repo1.maven.org/maven2/io/micrometer/micrometer-commons/1.10.3/micrometer-commons-1.10.3.jar",
+                    "cron-scheduler": "https://repo1.maven.org/maven2/io/timeandspace/cron-scheduler/0.1/cron-scheduler-0.1.jar",
+                    "HdrHistogram": "https://repo1.maven.org/maven2/org/hdrhistogram/HdrHistogram/2.1.12/HdrHistogram-2.1.12.jar"
+                 }
+             }
+        }
+    },
+    {
+      "id": "jmeter-rapi-plugin",
+      "name": "Rapi JMeter Plugins",
+      "description": "This plugin can run Rapi Runner for front-end load testing while using JMeter and can parse .csv results to generate front-end load reports.",
+      "screenshotUrl": "https://raw.githubusercontent.com/RapiTest/rapi-pub/main/start-testing/assets/rapi_logo.png",
+      "helpUrl": "https://github.com/bobcode99/jmeter-rapi-plugin",
+      "vendor": "NCKU SELAB",
+      "markerClass": "ncku.selab.rapi4jmeter.sampler.RapiSampler",
+      "componentClasses": [
+        "ncku.selab.rapi4jmeter.sampler.RapiSamplerGui",
+        "ncku.selab.rapi4jmeter.sampler.RapiSampler",
+        "ncku.selab.rapi4jmeter.reporter.RapiSamplerResultReporterGui",
+        "ncku.selab.rapi4jmeter.config.EdgeConfig",
+        "ncku.selab.rapi4jmeter.config.EdgeConfigGui",
+        "ncku.selab.rapi4jmeter.config.ChromeConfig",
+        "ncku.selab.rapi4jmeter.config.ChromeConfigGui",
+        "ncku.selab.rapi4jmeter.config.FirefoxConfig",
+        "ncku.selab.rapi4jmeter.config.FirefoxConfigPanel"
+      ],
+      "versions": {
+        "1.0.0": {
+          "downloadUrl": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.0/rapi-jmeter-plugins-1.0.0.jar",
+          "libs": {
+             "opencsv": "https://repo1.maven.org/maven2/com/opencsv/opencsv/5.7.1/opencsv-5.7.1.jar",
+             "json-simple": "https://repo1.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar",
+             "rapi-api-java": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.0/rapi-api-java-1.0.1.jar",
+             "rapi-jmeter-report": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.0/rapi-jmeter-report-1.0.3.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
+        },
+        "1.0.1": {
+          "downloadUrl": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.1/rapi-jmeter-plugins-1.0.1.jar",
+          "libs": {
+             "opencsv": "https://repo1.maven.org/maven2/com/opencsv/opencsv/5.7.1/opencsv-5.7.1.jar",
+             "json-simple": "https://repo1.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar",
+             "rapi-api-java": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.1/rapi-api-java-1.0.1.jar",
+             "rapi-jmeter-report": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.1/rapi-jmeter-report-1.0.4.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
+        },
+        "1.0.2": {
+          "downloadUrl": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.2/rapi-jmeter-plugins-1.0.2.jar",
+          "libs": {
+             "opencsv": "https://repo1.maven.org/maven2/com/opencsv/opencsv/5.7.1/opencsv-5.7.1.jar",
+             "json-simple": "https://repo1.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar",
+             "rapi-api-java": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.2/rapi-api-java-1.0.1.jar",
+             "rapi-jmeter-report": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.2/rapi-jmeter-report-1.0.4.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
+        }
+      }
+    },
+    {
+      "id": "vdn-junit-reporter-kpi-from-jmeter-dashboard-stats",
+      "name": "vdn@github - junit-reporter-kpi-from-jmeter-dashboard-stats tool",
+      "description": "A tool that creates a JUnit XML file with KPI rules from JMeter JMeter Dashboard stats.json and generates a result file in JUnit XML format and other formats : html, csv and json.",
+      "helpUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats",
+      "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/raw/main/doc/images/kpi_excel.png",
+      "vendor": "Vincent Daburon",
+      "markerClass": "io.github.vdaburon.jmeter.utils.jsonkpi.ToolInstaller",
+      "installerClass": "io.github.vdaburon.jmeter.utils.jsonkpi.ToolInstaller",
+      "versions": {
+        "1.4": {
+          "changes": "Version for jmeter-plugins-manager repo",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/releases/download/v1.4/junit-reporter-kpi-from-jmeter-dashboard-stats-1.4-jar-with-dependencies.jar"
+        }
+      }
+    },
+    {
+      "id": "vdn-junit-reporter-kpi-from-jmeter-report-csv",
+      "name": "vdn@github - junit-reporter-kpi-from-jmeter-report-csv tool",
+      "description": "A tool that creates a JUnit XML file with KPI rules from JMeter CSV Report, export result in html, csv or json format.",
+      "helpUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv",
+      "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/raw/main/doc/images/kpi_excel.png",
+      "vendor": "Vincent Daburon",
+      "markerClass": "io.github.vdaburon.jmeter.utils.reportkpi.ToolInstaller",
+      "installerClass": "io.github.vdaburon.jmeter.utils.reportkpi.ToolInstaller",
+      "versions": {
+        "1.5": {
+          "changes": "First version for jmeter-plugin repo",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/releases/download/V1.5/junit-reporter-kpi-from-jmeter-report-csv-1.5-jar-with-dependencies.jar"
+        }
+      }
+    },
+    {
+      "id": "vdn-junit-reporter-kpi-compare-jmeter-report-csv",
+      "name": "vdn@github - junit-reporter-kpi-compare-jmeter-report-csv",
+      "description": "This tool read KPI declarations in a file and apply the KPI assertion on 2 JMeter Report CSV files (current and reference) and generates a result file in JUnit XML format and others formats Html, Json and Csv.",
+      "helpUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv",
+      "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/raw/main/doc/images/kpi_excel.png",
+      "vendor": "Vincent Daburon",
+      "markerClass": "io.github.vdaburon.jmeter.utils.comparekpi.ToolInstaller",
+      "installerClass": "io.github.vdaburon.jmeter.utils.comparekpi.ToolInstaller",
+      "versions": {
+        "1.2": {
+          "changes": "First version for jmeter-plugin repo",
+          "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/releases/download/V1.2/junit-reporter-kpi-compare-jmeter-report-csv-1.2-jar-with-dependencies.jar"
+        }
+      }
+    },
+  {
+    "id": "jwt-preProcessor",
+    "name": "JWT PreProcessor",
+    "description": "This is a Jmeter pre-processor plugin that can generate Java Web Token",
+    "screenshotUrl": "https://github.com/sashikaR/jwt-preProcessor/blob/master/images/image-6.png",
+    "helpUrl": "https://github.com/sashikaR/jwt-preProcessor",
+    "vendor": "Sashika Rangoda",
+    "markerClass": "sr.jmeter.jwt.preprocessor.JwtPreProcessor",
+    "versions": {
+      "1.0.2": {
+        "changes": "First version for jmeter-plugin repo",
+        "downloadUrl": "https://github.com/sashikaR/jwt-preProcessor/releases/download/v1.0.2/jmeter_plugins_jwt_pre_processor-1.0-SNAPSHOT.jar"
+      }
+    }
+  }
 ]

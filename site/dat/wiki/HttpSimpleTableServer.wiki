@@ -2,12 +2,12 @@
 
 <span class=''>[/?search=jpgc-sts <i class='fa fa-download'></i> Download]</span>
 
-Performance testing with JMeter can be done with several JMeter injectors (on a remote host) and one JMeter controller (with GUI, on your local host).
+Performance testing with JMeter can be done with several JMeter injectors (on a remote host) and one JMeter controller (with GUI or CLI, on your local host).
 Scripts are sent to JMeter injectors using RMI protocol.
 Results are brought back periodically to the JMeter controller.
 Unfortunately the dataset and csv files aren't transferred from the controller to injectors.
 
-The main idea is to use a tiny http server in JMeter Plugins to manage the dataset files with simple commands to get / add rows of data in files.
+The main idea is to use a tiny http server in JMeter Plugins to manage the dataset files with simple commands to get / find / add rows of data in files.
 
 == Configuration ==
 
@@ -48,7 +48,7 @@ You can set a custom port through the graphical user interface or by overriding 
 
 == Distributed architecture for JMeter ==
 
-The Simple Table Server runs on the JMeter controller (master) and load generators (slaves) make calls to the STS to get or add some data.  
+The Simple Table Server runs on the JMeter controller (master) and load generators (slaves) make calls to the STS to get, find or add some data.
 At the beginning of the test, the first load generator will load data in memory (initial call) and at the end of the test it asks the STS saving values in a file.  
 All the load generators ask data from the same STS which is started on the JMeter controller.
 
@@ -78,7 +78,9 @@ jsr223.init.file=simple-table-server.groovy
 
 When the STS is running go to {{{http://<HOST>:<PORT>/sts/}}} to *see all available commands* and a short help.
 
-*Calls are synchronized, all commands are executed one by one.*
+Usally {{{http://localhost:9191/sts/}}}
+
+*Calls are synchronized, all commands are executed ONE BY ONE.*
 
 
 Example of a dataset file logins.csv:
@@ -96,6 +98,8 @@ login5;password5
 *Load file in memory. Lines are stored in a linked list, 1 line = 1 element*
 
 The filename is limited to 128 characters maxi and must not contains characters \ / : or ..
+
+This limits are for security reasons (E.g: NOT read "/etc/passwd" or ../../../tomcat/conf/server.xml).
 
 
 {{{
@@ -126,12 +130,11 @@ File could be load when STS startup with
 {{{
 jmeterPlugin.sts.initFileAtStartupRegex=false
 jmeterPlugin.sts.initFileAtStartup=article.csv,users.csv
-
+}}}
 OR
-
+{{{
 jmeterPlugin.sts.initFileAtStartupRegex=true
 jmeterPlugin.sts.initFileAtStartup=file\d+\.csv
-
 }}}
 
 jmeterPlugin.sts.initFileAtStartupRegex=false and jmeterPlugin.sts.initFileAtStartup=file1.csv,file2.csv,otherfile.csv
@@ -142,7 +145,7 @@ OR
 jmeterPlugin.sts.initFileAtStartupRegex=true and jmeterPlugin.sts.initFileAtStartup=.+\.csv
 read all csv files in the dataset directory the jmeterPlugin.sts.initFileAtStartup value is a regular expression
 
-=== READ ===
+== READ ==
 
 *Get one line from list*
 
@@ -236,7 +239,7 @@ login4;password4
 login5;password5
 }}}
 
-=== ADD ===
+== ADD ==
 
 *Add a line into a file: (GET OR POST HTTP protocol)*
 
@@ -262,16 +265,52 @@ HTML format:
 ]]]
 
 Available options:
-  * ADD_MODE=FIRST => add to the top
+  * ADD_MODE=FIRST => add to the top (the begin of the linked list)
   * ADD_MODE=LAST => add to the end
-  * FILENAME=dossier.csv => if doesn't already exist it creates a LinkList in memory
+  * FILENAME=dossier.csv => if doesn't already exist it creates a LinkedList in memory
   * LINE=1234;98763 => the line to add
-  * UNIQUE=TRUE => do not add line if the list already contains such line
+  * UNIQUE=TRUE => do not add line if the list already contains such line (if already exits then return title KO and don't add the same line)
 
 POST Protocol with parameters
 [/img/wiki/http_sts_add_request.png]
 
-=== LENGTH  ===
+== FIND ==
+
+*Find a line (LINE) in a file (FILENAME) (GET OR POST HTTP protocol)*
+
+The LINE to find is for FIND_MODE :
+  * A string this SUBSTRING (Default, ALineInTheFile contains the stringToFind ) or EQUALS (stringToFind == ALineInTheFile)
+  * A regular expression with REGEX\_FIND (contains) and REGEX\_MATCH (entire region the pattern)
+  * KEEP=TRUE => the data is kept and put to the end of listed list
+  * KEEP=FALSE => the data is removed
+
+GET Protocol
+{{{
+http://hostname:port/sts/FIND?FILENAME=colors.txt&LINE=BLUE|RED&[FIND_MODE=[SUBSTRING,EQUALS,REGEX_FIND,REGEX_MATCH]]&KEEP=[TRUE, FALSE]
+}}}
+GET parameters : FILENAME=colors.txt, LINE=LineToFind, FIND\_MODE=SUBSTRING,EQUALS,REGEX\_FIND or REGEX\_MATCH (SUBSTRING Default), KEEP=TRUE (Default) or FALSE
+
+POST Protocol
+{{{
+http://hostname:port/sts/FIND
+}}}
+POST Parameters : FILENAME=colors.txt, LINE=BLUE|RED or LINE=BLUE or LINE=B.\* or LINE=.\*E.\* ,FIND\_MODE=SUBSTRING (Default),EQUALS,REGEX\_FIND or REGEX\_MATCH, KEEP=TRUE (Default) or FALSE
+
+If find return the first line finded, start reading at first line in the file (linked list)
+[[[html
+<html><title>OK</title>
+<body>RED</body>
+</html>
+]]]
+
+If *NOT find* return title KO and "Error : Not find !"
+[[[html
+<html><title>KO</title>
+<body>Error : Not find !</body>
+</html>
+]]]
+
+== LENGTH  ==
 
 *Return the number of remaining lines of a linked list*
 
@@ -287,7 +326,7 @@ HTML format:
 </html>
 ]]]
 
-=== STATUS ===
+== STATUS ==
 
 *Display the list of loaded files and the number of remaining lines for each linked list*
 
@@ -305,11 +344,11 @@ dossier.csv = 1<br />
 </body></html>
 ]]]
 
-=== SAVE ===
+== SAVE ==
 
 *Save the specified linked list in a file to the specified location*
 
-The charset use to write the file is set with meterPlugin.sts.charsetEncodingWriteFile=\<charset>, default value = System property : file.encoding
+The charset use to write the file is set with jmeterPlugin.sts.charsetEncodingWriteFile=\<charset>, default value = System property : file.encoding
 
 {{{
 http://hostname:port/sts/SAVE?FILENAME=logins.csv
@@ -336,7 +375,7 @@ http://hostname:port/sts/SAVE?FILENAME=logins.csv&ADD_TIMESTAMP=[true,false]
 }}}
 
 
-=== RESET ===
+== RESET ==
 
 *Remove all of the elements from the specified list*
 
@@ -352,9 +391,9 @@ HTML format:
 </html>
 ]]]
 
-Always returns OK even if the file did not exist
+Always returns title OK even if the file did not exist
 
-=== STOP ===
+== STOP ==
 
 *Shutdown the Simple Table Server*
 
@@ -364,7 +403,7 @@ http://hostname:port/sts/STOP
 
 When the jmeterPlugin.sts.daemon=true, you need to call http://hostname:port/sts/STOP or kill the process to stop the STS
 
-=== CONFIG ===
+== CONFIG ==
 
 *Display the current configuration for the Simple Table Server*
 
@@ -439,7 +478,7 @@ Add rows in a new linked list and save it in a file when the test is done:
 
 
 Read in a random mode a dataset located on the controller machine with severals slaves.
-The first injector loads the dataset in memory while the other injectors are waiting few seconds (you could also use meterPlugin.sts.initFileAtStartup=file1.csv,file2.csv and jmeterPlugin.sts.initFileAtStartupRegex=false to read files when STS startup)
+The first injector loads the dataset in memory while the other injectors are waiting few seconds (you could also use jmeterPlugin.sts.initFileAtStartup=file1.csv,file2.csv and jmeterPlugin.sts.initFileAtStartupRegex=false to read files when STS startup)
 The different injectors read randomly the data containing logins and passwords.
 When the test is done the first injector save the values in a file with a timestamp as prefix:
 
@@ -466,11 +505,11 @@ When it's done see results in the Listener Tree View.
 
 == JMETER MAVEN PLUGIN ==
 If you want to use the Http Simple Server with the **JMeter Maven plugin**, you could :
-  * put your csv files in <project>/src/test/jmeter directory (e.g : logins.csv)
-  * put the simple-table-server.groovy (groovy script) in  <project>/src/test/jmeter directory
-  * put the your jmeter script in <project>/src/test/jmeter directory (e.g : test_login.jmx)
-  * declare in the maven build section, in the configuration > jmeterExtensions > declare the artifact kg.apc:jmeter-plugins-table-server:<version>
-  * declare user properties for STS configuration and automatic start
+  * Put your csv files in <project>/src/test/jmeter directory (e.g : logins.csv)
+  * Put the simple-table-server.groovy (groovy script) in  <project>/src/test/jmeter directory
+  * Put the your jmeter script in <project>/src/test/jmeter directory (e.g : test_login.jmx)
+  * Declare in the maven build section, in the configuration > jmeterExtensions > declare the artifact kg.apc:jmeter-plugins-table-server:<version>
+  * Declare user properties for STS configuration and automatic start
 
 Extract pom.xml dedicated to Http Simple Table Server :
 
@@ -480,18 +519,18 @@ Extract pom.xml dedicated to Http Simple Table Server :
              <plugin>
                  <groupId>com.lazerycode.jmeter</groupId>
                  <artifactId>jmeter-maven-plugin</artifactId>
-                 <version>3.5.0</version>
+                 <version>3.7.0</version>
 ...
                  <configuration>
                      <jmeterExtensions>
-                          <artifact>kg.apc:jmeter-plugins-table-server:3.1</artifact>
+                          <artifact>kg.apc:jmeter-plugins-table-server:4.0</artifact>
                      </jmeterExtensions>
                      <propertiesUser>
                          <!-- properties configuration for Http Simple Table Server with automatic start when JMeter start -->
                          <jmeterPlugin.sts.port>9191</jmeterPlugin.sts.port>
                          <jmeterPlugin.sts.addTimestamp>true</jmeterPlugin.sts.addTimestamp>
                          <jmeterPlugin.sts.datasetDirectory>${project.build.directory}/jmeter/testFiles</jmeterPlugin.sts.datasetDirectory>
-                         <jmeterPlugin.sts.loadAndRunOnStartup>true</jmeterPlugin.sts.loadAndRunOnStartup
+                         <jmeterPlugin.sts.loadAndRunOnStartup>true</jmeterPlugin.sts.loadAndRunOnStartup>
                          <jsr223.init.file>${project.build.directory}/jmeter/testFiles/simple-table-server.groovy</jsr223.init.file>
                      </propertiesUser>
                  </configuration>
@@ -499,5 +538,3 @@ Extract pom.xml dedicated to Http Simple Table Server :
          </plugins>
     </build>
 ]]]
-
-

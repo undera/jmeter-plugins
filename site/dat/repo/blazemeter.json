@@ -1214,11 +1214,31 @@
           "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-core-2.13.0.jar",
           "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jackson-module-jaxb-annotations-2.10.2.jar",
 		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/jmeter-bzm-commons-0.2.1.jar",
-		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/json-20190722.jar",
-		  "bzm-repositories-plugin>=1.0":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/bzm-repositories-plugin-1.0.jar"
-        }
+		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/json-20190722.jar"
+        },
+		"depends": [
+			"bzm-repositories"
+		]
       }
     }
+  },
+  {
+    "id": "bzm-repositories",
+    "name": "BlazeMeter - Repositories Core",
+    "description": "BlazeMeter repositories functionality for the Correlation Recorder Plugin",
+    "screenshotUrl": "",
+    "helpUrl": "",
+    "vendor": "BlazeMeter",
+    "markerClass": "com.blazemeter.jmeter.repository.plugin.system.SystemManager",
+    "componentClasses": [],
+    "versions": {
+      "1.0": {
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/bzm-repositories-plugin-1.0.jar",
+		"depends": [
+			"bzm-siebel"
+		]
+      }
+	}
   },
   {
     "id": "mqmeter",

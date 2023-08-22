@@ -1665,6 +1665,10 @@
       "1.2.3": {
         "changes": "<ul><li>Support multithreading group.</li></ul>",
         "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.3/baolu-csv-data-file-config-1.2.3.jar"
+      },
+      "1.2.4": {
+        "changes": "<ul><li>Fix null pointer exception in distributed mode.</li><li>Resolve Chinese garbled code.</li><li>Solving the bug of multithreaded groups with the same parameter values in distributed mode.</li></ul>",
+        "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.4/baolu-csv-data-file-config-1.2.4.jar"
       }
     }
   },

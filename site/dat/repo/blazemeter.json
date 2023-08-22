@@ -1233,10 +1233,7 @@
     "componentClasses": [],
     "versions": {
       "1.0": {
-        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/bzm-repositories-plugin-1.0.jar",
-		"depends": [
-			"bzm-siebel"
-		]
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/bzm-repositories-plugin-1.0.jar"
       }
 	}
   },

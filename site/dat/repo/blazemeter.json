@@ -1224,10 +1224,10 @@
   },
   {
     "id": "bzm-repositories",
-    "name": "BlazeMeter - Repositories Core",
+    "name": "BlazeMeter - Repositories",
     "description": "BlazeMeter repositories functionality for the Correlation Recorder Plugin",
-    "screenshotUrl": "",
-    "helpUrl": "",
+    "screenshotUrl": "https://raw.githubusercontent.com/Blazemeter/CorrelationRecorder/master/docs/bzmRepositoriesScreenshot.png",
+    "helpUrl": "https://blazemeter.github.io/CorrelationRecorder/guide/installation-guide.html#integration-with-blazemeter",
     "vendor": "BlazeMeter",
     "markerClass": "com.blazemeter.jmeter.repository.plugin.system.SystemManager",
     "componentClasses": [],

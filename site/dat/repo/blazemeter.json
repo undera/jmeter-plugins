@@ -1336,6 +1336,10 @@
 	  "0.7.6": {
         "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.6/citrix-jmeter-0.7.6.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+	  "0.7.7": {
+        "downloadUrl": "https://github.com/Blazemeter/CitrixPlugin/releases/download/0.7.7/citrix-jmeter-0.7.7.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       }
     }
   }

@@ -301,6 +301,98 @@ public class HttpSimpleTableServerTest {
         assertTrue(0 < result.length()
                 && result
                 .startsWith("<html><title>OK</title>"));
+
+        // FIND CMD
+        // ADD (POST) for FIND tests
+        Map<String, String> urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("LINE", "RED");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("LINE", "GREEN");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("LINE", "BLUE");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("LINE", "A123B");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","SUBSTRING");
+        urlParametersFind.put("LINE", "GREE");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>GREEN</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","EQUALS");
+        urlParametersFind.put("LINE", "BLUE");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>BLUE</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","REGEX_FIND");
+        urlParametersFind.put("LINE", "(BLUE|RED)");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>RED</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","REGEX_FIND");
+        urlParametersFind.put("LINE", "\\d\\d\\d");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>A123B</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","REGEX_FIND");
+        urlParametersFind.put("LINE", "\\d\\d\\d)");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>KO</title>" + CRLF + "<body>Error : Regex compile error !</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","REGEX_MATCH");
+        urlParametersFind.put("LINE", "[A-Z]\\d{3}.*");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>A123B</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","REGEX_MATCH");
+        urlParametersFind.put("LINE", ".*?U.*");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body>BLUE</body>" + CRLF
+                + "</html>", result);
+
+        urlParametersFind = this.createParm("FILENAME", "colors.txt");
+        urlParametersFind.put("FILENAME", "colors.txt");
+        urlParametersFind.put("FIND_MODE","SUBSTRING");
+        urlParametersFind.put("LINE", "");
+        result = sendHttpPost(obj, "/sts/FIND", urlParametersFind);
+        assertEquals("<html><title>KO</title>" + CRLF + "<body>Error : Cant't find empty line !</body>" + CRLF
+                + "</html>", result);
+
     }
 
 

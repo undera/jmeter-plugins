@@ -826,13 +826,18 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "9.1.3": {
+        "changes": "Trigger Low Latency Dash based on availabilityTimeComplete tag, release notes at https://www.ubik-ingenierie.com/blog/release-of-ubikloadpack-video-streaming-plugin-9-1/",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.1.3/ubik-jmeter-videostreaming-plugin-9.1.3.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "9.1.2": {
-        "changes": "Introduce CDN Caching simulator, improve reporting, increase accuracy of simulation, bug fixes on DASH and audio streams",
+        "changes": "Introduce CDN Caching simulator, improve reporting, increase accuracy of simulation, bug fixes on DASH and audio streams, release notes at https://www.ubik-ingenierie.com/blog/release-of-ubikloadpack-video-streaming-plugin-9-1/",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.1.2/ubik-jmeter-videostreaming-plugin-9.1.2.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       },
      "9.0.1": {
-        "changes": "Add support for HTTP/2, this version now requires JAVA 11 or higher",
+        "changes": "Add support for HTTP/2, this version now requires JAVA 11 or higher, release notes at https://www.ubik-ingenierie.com/blog/release-of-ubikloadpack-video-streaming-plugin-9-1/",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.0.1/ubik-jmeter-videostreaming-plugin-9.0.1.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       },

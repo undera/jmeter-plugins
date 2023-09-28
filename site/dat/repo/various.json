@@ -816,8 +816,8 @@
   {
     "id": "ulp-jmeter-videostreaming-plugin",
     "name": "UbikLoadPack Video Streaming plugin",
-    "description": "Plugin which provides the ability to easily load test servers delivering Adaptive Bitrate Streaming (ABR). It supports the following implementations: Low Latency Mpeg-Dash, Mpeg-Dash, Apple HLS / Low-Latency HLS (LL-HLS), Microsoft Smooth (HSS) and Adobe HDS. Both Live and VOD streams are automatically handled. The plugin realistically simulates players and outputs video specific metrics allowing you to analyze User Experience. It supports HTTP 1.1 and HTTP/2 (since version 9.0.1)",
-    "screenshotUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/ulp_vs_screenshot_800.png",
+    "description": "Plugin which provides the ability to easily load test servers delivering Adaptive Bitrate Streaming (ABR). It supports the following implementations: Low Latency Mpeg-Dash, Mpeg-Dash, Apple HLS / Low-Latency HLS (LL-HLS), Microsoft Smooth (HSS) and Adobe HDS. Both Live and VOD streams are automatically handled. The plugin realistically simulates players and outputs video specific metrics allowing you to analyze User Experience. It supports HTTP 1.1 and HTTP/2. It also allows to simulate CDN behaviour with Video Streams.",
+    "screenshotUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/ulp_vs_screenshot_910.png",
     "helpUrl": "https://www.ubik-ingenierie.com/blog/ubikloadpack-streaming-plugin-help/",
     "vendor": "UbikLoadPack by Ubik-Ingenierie",
     "markerClass": "com.ubikingenierie.jmeter.plugin.hls.sampler.HLSSampler",
@@ -826,8 +826,23 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "9.1.4": {
+        "changes": "bug fixes, release notes at https://www.ubik-ingenierie.com/blog/release-of-ubikloadpack-video-streaming-plugin-9-1/",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.1.4/ubik-jmeter-videostreaming-plugin-9.1.4.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "9.1.3": {
+        "changes": "Trigger Low Latency Dash based on availabilityTimeComplete tag, release notes at https://www.ubik-ingenierie.com/blog/release-of-ubikloadpack-video-streaming-plugin-9-1/",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.1.3/ubik-jmeter-videostreaming-plugin-9.1.3.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
+     "9.1.2": {
+        "changes": "Introduce CDN Caching simulator, improve reporting, increase accuracy of simulation, bug fixes on DASH and audio streams, release notes at https://www.ubik-ingenierie.com/blog/release-of-ubikloadpack-video-streaming-plugin-9-1/",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.1.2/ubik-jmeter-videostreaming-plugin-9.1.2.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "9.0.1": {
-        "changes": "Add support for HTTP/2, this version now requires JAVA 11 or higher",
+        "changes": "Add support for HTTP/2, this version now requires JAVA 11 or higher, release notes at https://www.ubik-ingenierie.com/blog/release-of-ubikloadpack-video-streaming-plugin-9-1/",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.0.1/ubik-jmeter-videostreaming-plugin-9.0.1.jar",
         "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
       },
@@ -1393,6 +1408,12 @@
       "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
     ],
     "versions": {
+      "0.4.0": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.4.0/jmeter-datadog-backend-listener-0.4.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.3.1": {
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.3.1/jmeter-datadog-backend-listener-0.3.1.jar",
         "depends": [
@@ -1659,6 +1680,10 @@
       "1.2.3": {
         "changes": "<ul><li>Support multithreading group.</li></ul>",
         "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.3/baolu-csv-data-file-config-1.2.3.jar"
+      },
+      "1.2.4": {
+        "changes": "<ul><li>Fix null pointer exception in distributed mode.</li><li>Resolve Chinese garbled code.</li><li>Solving the bug of multithreaded groups with the same parameter values in distributed mode.</li></ul>",
+        "downloadUrl": "https://github.com/LeeBaul/baolu-csv-data-file-config/releases/download/v1.2.4/baolu-csv-data-file-config-1.2.4.jar"
       }
     }
   },
@@ -1916,6 +1941,30 @@
           "depends": [
              "jmeter-core"
           ]
+        },
+        "1.0.1": {
+          "downloadUrl": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.1/rapi-jmeter-plugins-1.0.1.jar",
+          "libs": {
+             "opencsv": "https://repo1.maven.org/maven2/com/opencsv/opencsv/5.7.1/opencsv-5.7.1.jar",
+             "json-simple": "https://repo1.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar",
+             "rapi-api-java": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.1/rapi-api-java-1.0.1.jar",
+             "rapi-jmeter-report": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.1/rapi-jmeter-report-1.0.4.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
+        },
+        "1.0.2": {
+          "downloadUrl": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.2/rapi-jmeter-plugins-1.0.2.jar",
+          "libs": {
+             "opencsv": "https://repo1.maven.org/maven2/com/opencsv/opencsv/5.7.1/opencsv-5.7.1.jar",
+             "json-simple": "https://repo1.maven.org/maven2/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar",
+             "rapi-api-java": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.2/rapi-api-java-1.0.1.jar",
+             "rapi-jmeter-report": "https://github.com/bobcode99/jmeter-rapi-plugin/releases/download/v1.0.2/rapi-jmeter-report-1.0.4.jar"
+          },
+          "depends": [
+             "jmeter-core"
+          ]
         }
       }
     },
@@ -1966,5 +2015,20 @@
           "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/releases/download/V1.2/junit-reporter-kpi-compare-jmeter-report-csv-1.2-jar-with-dependencies.jar"
         }
       }
+    },
+  {
+    "id": "jwt-preProcessor",
+    "name": "JWT PreProcessor",
+    "description": "This is a Jmeter pre-processor plugin that can generate Java Web Token",
+    "screenshotUrl": "https://github.com/sashikaR/jwt-preProcessor/blob/master/images/image-6.png",
+    "helpUrl": "https://github.com/sashikaR/jwt-preProcessor",
+    "vendor": "Sashika Rangoda",
+    "markerClass": "sr.jmeter.jwt.preprocessor.JwtPreProcessor",
+    "versions": {
+      "1.0.2": {
+        "changes": "First version for jmeter-plugin repo",
+        "downloadUrl": "https://github.com/sashikaR/jwt-preProcessor/releases/download/v1.0.2/jmeter_plugins_jwt_pre_processor-1.0-SNAPSHOT.jar"
+      }
     }
+  }
 ]

@@ -1156,8 +1156,8 @@
   },
   {
   	"id" : "apdexcalculator",
-    "name" : "Apdex Score Calculator",
-    "description" : "Calculates the Apdex score and rating of Samplers for a given satisfied threshold.",
+    "name" : "Apdex Score Calculator (Deprecated)",
+    "description" : "[Deprecated in favor of Apdex & Coefficient of Variation] Calculates the Apdex score and rating of Samplers for a given satisfied threshold.",
     "screenshotUrl" : "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/apdexcalculator/src/site/img/wiki/apdex_Calculate.PNG",
     "helpUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/apdexcalculator/src/site/dat/wiki/ApdexScoreCalculator.wiki",
     "vendor": "Robert Bourgault du Coudray",
@@ -1169,7 +1169,7 @@
     "versions" : {
 		"2.0.2": {
 			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.2/jmeter-plugins-apdexcalculator-2.0.2.jar",
-			"changes": "Please UNISNSTALL this plugin and replace with Apdex & Coefficient of Variation plugin.",
+			"changes": "Please UNINSTALL this plugin and replace with Apdex & Coefficient of Variation plugin.",
 			"libs": {
 				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
 				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.2/rbourga-jmeter-plugins-comm-1.0.jar"
@@ -1202,8 +1202,8 @@
   },
   {
     "id": "outlierdetector",
-    "name": "Right Tail Outlier Detector",
-    "description": "A Jmeter plugin that detects and removes outliers in the right tail using Tukey fences.",
+    "name": "Right Tail Outlier Detector (Deprecated)",
+    "description": "[Deprecated in favor of Upper Outlier Removal] A Jmeter plugin that detects and removes outliers in the right tail using Tukey fences.",
     "screenshotUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/outlierdetector/src/site/img/wiki/rtod_Principle.jpg",
     "helpUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/outlierdetector/src/site/dat/wiki/RightTailOutlierDetection.wiki",
     "vendor": "Robert Bourgault du Coudray",
@@ -1215,7 +1215,7 @@
     "versions": {
 		"1.0.5": {
 			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.2/jmeter-plugins-outlierdetector-1.0.5.jar",
-			"changes": "Please UNISNSTALL this plugin and replace with Upper Outlier Removal plugin.",
+			"changes": "Please UNINSTALL this plugin and replace with Upper Outlier Removal plugin.",
 			"libs": {
 				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
 				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.2/rbourga-jmeter-plugins-comm-1.0.jar"
@@ -1263,8 +1263,8 @@
   },
   {
   	"id" : "resultscomparator",
-    "name" : "Results Comparator",
-    "description" : "Compares the results of two test runs using Cohen's d effect size.",
+    "name" : "Results Comparator (Deprecated)",
+    "description" : "[Deprecated in favor of Cohen's d Comparator] Compares the results of two test runs using Cohen's d effect size.",
     "screenshotUrl" : "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/resultscomparator/src/site/img/wiki/rc_Compare.PNG",
     "helpUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/resultscomparator/src/site/dat/wiki/ResultsComparator.wiki",
     "vendor": "Robert Bourgault du Coudray",
@@ -1276,7 +1276,7 @@
     "versions" : {
 		"3.1.3": {
 			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.2/jmeter-plugins-resultscomparator-3.1.3.jar",
-			"changes": "Please UNISNSTALL this plugin and replace with Cohen's d Comparator plugin.",
+			"changes": "Please UNINSTALL this plugin and replace with Cohen's d Comparator plugin.",
 			"libs": {
 				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
 				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.2/rbourga-jmeter-plugins-comm-1.0.jar"

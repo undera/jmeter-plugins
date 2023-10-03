@@ -1270,6 +1270,9 @@
     "versions": {
       "1.0": {
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/bzm-repositories-plugin-1.0.jar"
+      },
+	  "1.1": {
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/bzm-repositories-plugin-1.1.jar"
       }
 	}
   },

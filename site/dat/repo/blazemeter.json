@@ -904,6 +904,25 @@
           "jetty-io>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/jetty-io-11.0.15.jar",
           "jetty-util>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/jetty-util-11.0.15.jar"
         }
+      },
+	  "2.0.4": {
+        "changes": "Added support for JMeter 5.6.x",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/jmeter-bzm-http2-2.0.4.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/http2-client-11.0.15.jar",
+          "http2-common>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/http2-common-11.0.15.jar",
+          "http2-hpack>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/http2-hpack-11.0.15.jar",
+          "http2-http-client-transport>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/http2-http-client-transport-11.0.15.jar",
+          "jetty-alpn-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/jetty-alpn-client-11.0.15.jar",
+          "jetty-alpn-java-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/jetty-alpn-java-client-11.0.15.jar",
+          "jetty-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/jetty-client-11.0.15.jar",
+          "jetty-http>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/jetty-http-11.0.15.jar",
+          "jetty-io>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/jetty-io-11.0.15.jar",
+          "jetty-util>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/jetty-util-11.0.15.jar"
+        }
       }
     }
   },

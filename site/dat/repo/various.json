@@ -2061,7 +2061,11 @@
       "1.0.2": {
         "changes": "First version for jmeter-plugin repo",
         "downloadUrl": "https://github.com/sashikaR/jwt-preProcessor/releases/download/v1.0.2/jmeter_plugins_jwt_pre_processor-1.0-SNAPSHOT.jar"
-      }
+      },
+	"1.1.0": {
+        "changes": "Added PKCS#8 compatibility and bug fixes",
+        "downloadUrl": "https://github.com/sashikaR/jwt-preProcessor/releases/download/v1.1.0/jmeter_plugins_jwt_pre_processor-1.1.0-SNAPSHOT.jar"
+      }     
     }
   },
   {

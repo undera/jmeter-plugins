@@ -669,7 +669,7 @@
         ]
       },
       "1.2.9": {
-        "changes": "A stomp enhancement was added.",
+        "changes": "Increased max read timeout; added data type for simplifying handling STOMP protocol messages.",
         "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2.9/jmeter-websocket-samplers-1.2.9.jar",
         "depends": [
           "jmeter-core"

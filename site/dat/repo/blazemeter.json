@@ -904,6 +904,44 @@
           "jetty-io>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/jetty-io-11.0.15.jar",
           "jetty-util>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.3/jetty-util-11.0.15.jar"
         }
+      },
+	  "2.0.4": {
+        "changes": "Added support for JMeter 5.6.x",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/jmeter-bzm-http2-2.0.4.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/http2-client-11.0.15.jar",
+          "http2-common>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/http2-common-11.0.15.jar",
+          "http2-hpack>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/http2-hpack-11.0.15.jar",
+          "http2-http-client-transport>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/http2-http-client-transport-11.0.15.jar",
+          "jetty-alpn-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/jetty-alpn-client-11.0.15.jar",
+          "jetty-alpn-java-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/jetty-alpn-java-client-11.0.15.jar",
+          "jetty-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/jetty-client-11.0.15.jar",
+          "jetty-http>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/jetty-http-11.0.15.jar",
+          "jetty-io>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/jetty-io-11.0.15.jar",
+          "jetty-util>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.4/jetty-util-11.0.15.jar"
+        }
+      },
+	  "2.0.5": {
+        "changes": "Fixes around iteration support in Thread Group and Loop Controllers, fixes in embedded resources, and better support for HTTP/1.",
+        "downloadUrl": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/jmeter-bzm-http2-2.0.5.jar",
+        "depends": [
+          "jmeter-http"
+        ],
+        "libs": {
+          "http2-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/http2-client-11.0.15.jar",
+          "http2-common>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/http2-common-11.0.15.jar",
+          "http2-hpack>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/http2-hpack-11.0.15.jar",
+          "http2-http-client-transport>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/http2-http-client-transport-11.0.15.jar",
+          "jetty-alpn-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/jetty-alpn-client-11.0.15.jar",
+          "jetty-alpn-java-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/jetty-alpn-java-client-11.0.15.jar",
+          "jetty-client>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/jetty-client-11.0.15.jar",
+          "jetty-http>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/jetty-http-11.0.15.jar",
+          "jetty-io>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/jetty-io-11.0.15.jar",
+          "jetty-util>=11.0.15": "https://github.com/Blazemeter/jmeter-http2-plugin/releases/download/v2.0.5/jetty-util-11.0.15.jar"
+        }
       }
     }
   },
@@ -1238,6 +1276,23 @@
 		"depends": [
 			"bzm-repositories"
 		]
+      },
+	  "2.2": {
+        "changes": "Improvements and fixes, as well saving of rules to remote repositories was also incorporate.d",
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jmeter-bzm-correlation-recorder-2.2.jar",
+        "libs": {
+          "jackson-dataformat-xml>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-dataformat-xml-2.10.2.jar",
+          "jackson-annotations>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-annotations-2.13.0.jar",
+          "jackson-databind>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-databind-2.13.0.jar",
+          "jackson-core>=2.13.0" : "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-core-2.13.0.jar",
+          "jackson-module-jaxb-annotations>=2.10.2":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jackson-module-jaxb-annotations-2.10.2.jar",
+		  "jmeter-bzm-commons>=0.2.1":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/jmeter-bzm-commons-0.2.1.jar",
+		  "json>=20190722":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/json-20190722.jar",
+		  "maven-artifact>=3.8.4":"https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/maven-artifact-3.8.4.jar"
+        },
+		"depends": [
+			"bzm-repositories"
+		]
       }
     }
   },
@@ -1253,6 +1308,9 @@
     "versions": {
       "1.0": {
         "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.1/bzm-repositories-plugin-1.0.jar"
+      },
+	  "1.1": {
+        "downloadUrl": "https://github.com/Blazemeter/CorrelationRecorder/releases/download/v2.2/bzm-repositories-plugin-1.1.jar"
       }
 	}
   },

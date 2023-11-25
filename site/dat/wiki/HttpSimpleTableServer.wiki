@@ -125,11 +125,14 @@ login5;password5
 The *charset to read the file* is jmeterPlugin.sts.charsetEncodingReadFile=\<charset>, default value = System property : file.encoding
 
 File could be load when STS startup with 
+
 {{{
 jmeterPlugin.sts.initFileAtStartupRegex=false
 jmeterPlugin.sts.initFileAtStartup=article.csv,users.csv
 }}}
+
 OR
+
 {{{
 jmeterPlugin.sts.initFileAtStartupRegex=true
 jmeterPlugin.sts.initFileAtStartup=file\d+\.csv
@@ -250,14 +253,17 @@ Available options:
   * KEEP=FALSE => the data is removed
 
 GET Protocol
+
 {{{
 http://hostname:port/sts/READMULTI?FILENAME=logins.csv&NB_LINES={Nb lines to read}&READ_MODE={FIRST, LAST, RANDOM}&KEEP={TRUE, FALSE}
 }}}
+
 GET parameters : FILENAME=logins.csv, NB_LINES=Nb lines to read (Integer), READ_MODE=FIRST (Default) or LAST or RANDOM, KEEP=TRUE (Default) or FALSE
 
 E.g : Read first 3 lines, http://hostname:port/sts/READMULTI?FILENAME=logins.csv&NB_LINES=3&READ_MODE=FIRST&KEEP=true
 
 NB_LINES=3, KEEP=TRUE, READ_MODE=FIRST, KEEP=TRUE => result
+
 [[[html
 <html><title>OK</title>
 <body>
@@ -279,6 +285,7 @@ login3;password3
 }}}
 
 If *NB_LINES* greater than list size
+
 [[[html
 <html><title>KO</title>
 <body>Error : Number lines to read greater than file size, 20 greater than 5 !</body>
@@ -290,16 +297,20 @@ If *NB_LINES* greater than list size
 *Add a line into a file: (GET OR POST HTTP protocol)*
 
 GET Protocol
+
 {{{
 http://hostname:port/sts/ADD?FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST, LAST}&UNIQUE={FALSE, TRUE}
 }}}
+
 GET Parameters : FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST, LAST}&UNIQUE={FALSE, TRUE}
 
 
 POST Protocol
+
 {{{
 http://hostname:port/sts/ADD
 }}}
+
 POST Parameters : FILENAME=dossier.csv, LINE=D0001123, ADD_MODE={FIRST, LAST}, UNIQUE={FALSE, TRUE}
 
 HTML format:
@@ -331,18 +342,23 @@ The LINE to find is for FIND_MODE :
   * KEEP=FALSE => the data is removed
 
 GET Protocol
+
 {{{
 http://hostname:port/sts/FIND?FILENAME=colors.txt&LINE=BLUE|RED&[FIND_MODE=[SUBSTRING,EQUALS,REGEX_FIND,REGEX_MATCH]]&KEEP=[TRUE, FALSE]
 }}}
+
 GET parameters : FILENAME=colors.txt, LINE=LineToFind, FIND\_MODE=SUBSTRING,EQUALS,REGEX\_FIND or REGEX\_MATCH (SUBSTRING Default), KEEP=TRUE (Default) or FALSE
 
 POST Protocol
+
 {{{
 http://hostname:port/sts/FIND
 }}}
+
 POST Parameters : FILENAME=colors.txt, LINE=BLUE|RED or LINE=BLUE or LINE=B.\* or LINE=.\*E.\* ,FIND\_MODE=SUBSTRING (Default),EQUALS,REGEX\_FIND or REGEX\_MATCH, KEEP=TRUE (Default) or FALSE
 
 If find return the first line finded, start reading at first line in the file (linked list)
+
 [[[html
 <html><title>OK</title>
 <body>RED</body>
@@ -350,6 +366,7 @@ If find return the first line finded, start reading at first line in the file (l
 ]]]
 
 If *NOT find* return title KO and "Error : Not find !"
+
 [[[html
 <html><title>KO</title>
 <body>Error : Not find !</body>
@@ -587,6 +604,7 @@ Extract pom.xml dedicated to Http Simple Table Server :
 
 
 == VERSIONS ==
+
 Version 5.0 november 2023, add READMULTI command
 
 Version 4.0 june 2023, add FIND command

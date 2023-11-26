@@ -32,7 +32,7 @@ jmeterPlugin.sts.initFileAtStartupRegex=true
 
 }}}
 
-Do not use '\' in the path directory, it doesn't work well, use '/' or '\\' instead.
+Do not use '\' in the path directory, it doesn't work well, use '/' or '\\\\' instead.
 It is also recommended to use UTF-8 as the encoding:
 
 {{{
@@ -47,9 +47,9 @@ You can set a custom port through the graphical user interface or by overriding 
 
 == Distributed architecture for JMeter ==
 
-The Simple Table Server runs on the JMeter controller (master) and load generators (slaves) make calls to the STS to get or add some data.  
-At the beginning of the test, the first load generator will load data in memory (initial call) and at the end of the test it asks the STS saving values in a file.  
-All the load generators ask data from the same STS which is started on the JMeter controller.
+The Simple Table Server runs on the JMeter controller (master) and load generators/injectors (slaves) make calls to the STS to get or add some data.  
+At the beginning of the test, the first load injector will load data in memory (initial call) and at the end of the test it asks the STS saving values in a file.  
+All the load injectors ask data from the same STS which is started on the JMeter controller.
 
 [/img/wiki/http_sts_jmeter_archi_distributed_v4.0.png]
 
@@ -92,7 +92,7 @@ login4;password4
 login5;password5
 }}}
 
-=== INITFILE ===
+== INITFILE ==
 
 *Load file in memory. Lines are stored in a linked list, 1 line = 1 element*
 
@@ -258,11 +258,11 @@ GET Protocol
 http://hostname:port/sts/READMULTI?FILENAME=logins.csv&NB_LINES={Nb lines to read}&READ_MODE={FIRST, LAST, RANDOM}&KEEP={TRUE, FALSE}
 }}}
 
-GET parameters : FILENAME=logins.csv, NB_LINES=Nb lines to read (Integer), READ_MODE=FIRST (Default) or LAST or RANDOM, KEEP=TRUE (Default) or FALSE
+GET parameters : FILENAME=logins.csv, NB\_LINES=Nb lines to read (Integer), READ\_MODE=FIRST (Default) or LAST or RANDOM, KEEP=TRUE (Default) or FALSE
 
-E.g : Read first 3 lines, http://hostname:port/sts/READMULTI?FILENAME=logins.csv&NB_LINES=3&READ_MODE=FIRST&KEEP=true
+E.g : Read first 3 lines, http://hostname:port/sts/READMULTI?FILENAME=logins.csv&NB1\_LINES=3&READ\_MODE=FIRST&KEEP=true
 
-NB_LINES=3, KEEP=TRUE, READ_MODE=FIRST, KEEP=TRUE => result
+NB\_LINES=3, KEEP=TRUE, READ\_MODE=FIRST, KEEP=TRUE => result
 
 [[[html
 <html><title>OK</title>
@@ -292,7 +292,7 @@ If *NB_LINES* greater than list size
 </html>
 ]]]
 
-=== ADD ===
+== ADD ==
 
 *Add a line into a file: (GET OR POST HTTP protocol)*
 
@@ -437,7 +437,6 @@ You can force the addTimestamp value with parameter ADD_TIMESTAMP in the url lik
 http://hostname:port/sts/SAVE?FILENAME=logins.csv&ADD_TIMESTAMP=[true,false]
 }}}
 
-
 == RESET ==
 
 *Remove all of the elements from the specified list*
@@ -474,11 +473,9 @@ When the jmeterPlugin.sts.daemon=true, you need to call http://hostname:port/sts
 http://hostname:port/sts/CONFIG
 }}}
 
-See examples below for further information.
-
 == Using STS in a Test Plan ==
 
-Initialize file using a "setUp Thread Group" by calling URL with one or more HTTP Request Sampler.
+Initialize file using a "setUp Thread Group" by calling URL with one or more HTTP Request Sampler or with jmeterPlugin.sts.initFileAtStartup property to read file at JMeter startup.
 
 Reading a row of data is done by calling READ method at each iteration by a HTTP Request Sampler.
 Then you can use a Regular Expression Extractor to parse the response data.
@@ -492,6 +489,7 @@ Reading password:
 [/img/wiki/http_sts_regex_extractor_read_password.png]
 
 At the end of your Test Plan you can save remaining/adding data with a HTTP Request Sampler in a "tearDown Thread Group".
+
 
 If you need to parse more than 2 columns, you could use a Post-Processeur groovy JSR223 like :
 

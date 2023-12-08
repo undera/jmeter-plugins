@@ -257,7 +257,10 @@ public class RedisDataSet extends ConfigTestElement
 
     @Override
     public void testEnded(String host) {
-        pool.getResource();
+        int idleConn = pool.getNumIdle();
+        for(int i=0;i<idleConn;i++){
+           pool.getResource();
+        }
         pool.destroy();
     }
 

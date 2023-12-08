@@ -227,11 +227,9 @@ public class RedisDataSet extends ConfigTestElement
             } catch (JedisDataException jde) {
                 log.error("Failed to retrieve data from redis key {}", redisKey);
             }
-
             if (null == line) {
                 throw new JMeterStopThreadException("End of redis data detected");
             }
-
             final String names = variableNames;
             if (vars == null) {
                 vars = JOrphanUtils.split(names, ",");
@@ -247,7 +245,6 @@ public class RedisDataSet extends ConfigTestElement
         } finally {
             pool.returnResource(connection);
         }
-
     }
 
     @Override

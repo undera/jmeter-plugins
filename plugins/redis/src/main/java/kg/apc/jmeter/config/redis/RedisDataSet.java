@@ -226,7 +226,6 @@ public class RedisDataSet extends ConfigTestElement
                 line = pollingStrategy.getDataFromConnection(connection, redisKey);
             } catch (JedisDataException jde) {
                 log.error("Failed to retrieve data from redis key {}", redisKey);
-
             }
             if (null == line) {
                 throw new JMeterStopThreadException("End of redis data detected");
@@ -255,6 +254,10 @@ public class RedisDataSet extends ConfigTestElement
 
     @Override
     public void testEnded(String host) {
+        int idleConn = pool.getNumIdle();
+        for(int i=0;i<idleConn;i++){
+           pool.getResource();
+        }
         pool.destroy();
     }
 

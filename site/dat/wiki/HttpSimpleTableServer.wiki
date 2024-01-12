@@ -30,10 +30,9 @@ jmeterPlugin.sts.initFileAtStartupRegex=false
 jmeterPlugin.sts.initFileAtStartup=file\d+\.csv
 jmeterPlugin.sts.initFileAtStartupRegex=true
 
-
 }}}
 
-Do not use '\' in the path directory, it doesn't work well, use '/' or '\\' instead.
+Do not use '\' in the path directory, it doesn't work well, use '/' or '\\\\' instead.
 It is also recommended to use UTF-8 as the encoding:
 
 {{{
@@ -48,9 +47,9 @@ You can set a custom port through the graphical user interface or by overriding 
 
 == Distributed architecture for JMeter ==
 
-The Simple Table Server runs on the JMeter controller (master) and load generators (slaves) make calls to the STS to get, find or add some data.
-At the beginning of the test, the first load generator will load data in memory (initial call) and at the end of the test it asks the STS saving values in a file.  
-All the load generators ask data from the same STS which is started on the JMeter controller.
+The Simple Table Server runs on the JMeter controller (master) and load generators/injectors (slaves) make calls to the STS to get or add some data.  
+At the beginning of the test, the first load injector will load data in memory (initial call) and at the end of the test it asks the STS saving values in a file.  
+All the load injectors ask data from the same STS which is started on the JMeter controller.
 
 [/img/wiki/http_sts_jmeter_archi_distributed_v4.0.png]
 
@@ -60,12 +59,12 @@ All the load generators ask data from the same STS which is started on the JMete
 
 There are different ways to start the STS:
 
-  * with JMeter GUI:
+  * 1) with JMeter GUI:
 
 [/img/wiki/http_simple_table_server.png]
 
-  * with simple-table-server.cmd (.sh for UNIX) script located in your JMETER_HOME/bin directory. Parameters are read in the jmeter.properties or you could also set parameters like simple-table-server.cmd -DjmeterPlugin.sts.addTimestamp=true -DjmeterPlugin.sts.datasetDirectory=D:/jmeter/dataset, set jmeterPlugin.sts.daemon=true when you want launch the STS with the nohup linux command like process daemon, the STS will not waiting the <ENTER> key to stop. 
-  * on JMeter CLI startup (Windows : jmeter-n.cmd or Linux jmeter -n) following properties in jmeter.properties file or in user.properties :
+  * 2) with simple-table-server.cmd (.sh for UNIX) script located in your JMETER_HOME/bin directory. Parameters are read in the jmeter.properties or you could also set parameters like simple-table-server.cmd -DjmeterPlugin.sts.addTimestamp=true -DjmeterPlugin.sts.datasetDirectory=D:/jmeter/dataset, set jmeterPlugin.sts.daemon=true when you want launch the STS with the nohup linux command like process daemon, the STS will not waiting the <ENTER> key to stop.
+  * 3) on JMeter CLI startup (Windows : jmeter-n.cmd or Linux jmeter -n) following properties in jmeter.properties file or in user.properties :
 
 {{{
 jmeterPlugin.sts.loadAndRunOnStartup=true
@@ -78,7 +77,7 @@ jsr223.init.file=simple-table-server.groovy
 
 When the STS is running go to {{{http://<HOST>:<PORT>/sts/}}} to *see all available commands* and a short help.
 
-Usally {{{http://localhost:9191/sts/}}}
+Usually {{{http://localhost:9191/sts/}}}
 
 *Calls are synchronized, all commands are executed ONE BY ONE.*
 
@@ -93,14 +92,13 @@ login4;password4
 login5;password5
 }}}
 
-=== INITFILE ===
+== INITFILE ==
 
 *Load file in memory. Lines are stored in a linked list, 1 line = 1 element*
 
 The filename is limited to 128 characters maxi and must not contains characters \ / : or ..
 
 This limits are for security reasons (E.g: NOT read "/etc/passwd" or ../../../tomcat/conf/server.xml).
-
 
 {{{
 http://hostname:port/sts/INITFILE?FILENAME=logins.csv
@@ -127,11 +125,14 @@ login5;password5
 The *charset to read the file* is jmeterPlugin.sts.charsetEncodingReadFile=\<charset>, default value = System property : file.encoding
 
 File could be load when STS startup with 
+
 {{{
 jmeterPlugin.sts.initFileAtStartupRegex=false
 jmeterPlugin.sts.initFileAtStartup=article.csv,users.csv
 }}}
+
 OR
+
 {{{
 jmeterPlugin.sts.initFileAtStartupRegex=true
 jmeterPlugin.sts.initFileAtStartup=file\d+\.csv
@@ -239,21 +240,77 @@ login4;password4
 login5;password5
 }}}
 
+== READMULTI ==
+
+*Get multi lines from list in one request*
+
+Available options:
+  * NB_LINES=Number of lines to read : 1 \<= Nb lines (Integer) and Nb lines \<= list size
+  * READ_MODE=FIRST =>start to read at the first line
+  * READ_MODE=LAST => start to read at the last line (reverse)
+  * READ_MODE=RANDOM => read n lines randomly
+  * KEEP=TRUE => the data is kept and put to the end of list
+  * KEEP=FALSE => the data is removed
+
+GET Protocol
+
+{{{
+http://hostname:port/sts/READMULTI?FILENAME=logins.csv&NB_LINES={Nb lines to read}&READ_MODE={FIRST, LAST, RANDOM}&KEEP={TRUE, FALSE}
+}}}
+
+GET parameters : FILENAME=logins.csv, NB\_LINES=Nb lines to read (Integer), READ\_MODE=FIRST (Default) or LAST or RANDOM, KEEP=TRUE (Default) or FALSE
+
+E.g : Read first 3 lines, http://hostname:port/sts/READMULTI?FILENAME=logins.csv&NB1\_LINES=3&READ\_MODE=FIRST&KEEP=true
+
+NB\_LINES=3, KEEP=TRUE, READ\_MODE=FIRST, KEEP=TRUE => result
+
+[[[html
+<html><title>OK</title>
+<body>
+login1;password1<br />
+login2;password2<br />
+login3;password2<br />
+</body>
+</html>
+]]]
+
+Linked list after this command:
+
+{{{
+login4;password4
+login5;password5
+login1;password1
+login2;password2
+login3;password3
+}}}
+
+If *NB_LINES* greater than list size
+
+[[[html
+<html><title>KO</title>
+<body>Error : Number lines to read greater than file size, 20 greater than 5 !</body>
+</html>
+]]]
+
 == ADD ==
 
 *Add a line into a file: (GET OR POST HTTP protocol)*
 
 GET Protocol
+
 {{{
 http://hostname:port/sts/ADD?FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST, LAST}&UNIQUE={FALSE, TRUE}
 }}}
+
 GET Parameters : FILENAME=dossier.csv&LINE=D0001123&ADD_MODE={FIRST, LAST}&UNIQUE={FALSE, TRUE}
 
 
 POST Protocol
+
 {{{
 http://hostname:port/sts/ADD
 }}}
+
 POST Parameters : FILENAME=dossier.csv, LINE=D0001123, ADD_MODE={FIRST, LAST}, UNIQUE={FALSE, TRUE}
 
 HTML format:
@@ -265,7 +322,7 @@ HTML format:
 ]]]
 
 Available options:
-  * ADD_MODE=FIRST => add to the top (the begin of the linked list)
+  * ADD_MODE=FIRST => add to the top
   * ADD_MODE=LAST => add to the end
   * FILENAME=dossier.csv => if doesn't already exist it creates a LinkedList in memory
   * LINE=1234;98763 => the line to add
@@ -276,27 +333,32 @@ POST Protocol with parameters
 
 == FIND ==
 
-*Find a line (LINE) in a file (FILENAME) (GET OR POST HTTP protocol)*
+*Find a line in a file (GET OR POST HTTP protocol)*
 
 The LINE to find is for FIND_MODE :
   * A string this SUBSTRING (Default, ALineInTheFile contains the stringToFind ) or EQUALS (stringToFind == ALineInTheFile)
   * A regular expression with REGEX\_FIND (contains) and REGEX\_MATCH (entire region the pattern)
-  * KEEP=TRUE => the data is kept and put to the end of listed list
+  * KEEP=TRUE => the data is kept and put to the end of list
   * KEEP=FALSE => the data is removed
 
 GET Protocol
+
 {{{
 http://hostname:port/sts/FIND?FILENAME=colors.txt&LINE=BLUE|RED&[FIND_MODE=[SUBSTRING,EQUALS,REGEX_FIND,REGEX_MATCH]]&KEEP=[TRUE, FALSE]
 }}}
+
 GET parameters : FILENAME=colors.txt, LINE=LineToFind, FIND\_MODE=SUBSTRING,EQUALS,REGEX\_FIND or REGEX\_MATCH (SUBSTRING Default), KEEP=TRUE (Default) or FALSE
 
 POST Protocol
+
 {{{
 http://hostname:port/sts/FIND
 }}}
+
 POST Parameters : FILENAME=colors.txt, LINE=BLUE|RED or LINE=BLUE or LINE=B.\* or LINE=.\*E.\* ,FIND\_MODE=SUBSTRING (Default),EQUALS,REGEX\_FIND or REGEX\_MATCH, KEEP=TRUE (Default) or FALSE
 
 If find return the first line finded, start reading at first line in the file (linked list)
+
 [[[html
 <html><title>OK</title>
 <body>RED</body>
@@ -304,6 +366,7 @@ If find return the first line finded, start reading at first line in the file (l
 ]]]
 
 If *NOT find* return title KO and "Error : Not find !"
+
 [[[html
 <html><title>KO</title>
 <body>Error : Not find !</body>
@@ -374,7 +437,6 @@ You can force the addTimestamp value with parameter ADD_TIMESTAMP in the url lik
 http://hostname:port/sts/SAVE?FILENAME=logins.csv&ADD_TIMESTAMP=[true,false]
 }}}
 
-
 == RESET ==
 
 *Remove all of the elements from the specified list*
@@ -411,11 +473,9 @@ When the jmeterPlugin.sts.daemon=true, you need to call http://hostname:port/sts
 http://hostname:port/sts/CONFIG
 }}}
 
-See examples below for further information.
-
 == Using STS in a Test Plan ==
 
-Initialize file using a "setUp Thread Group" by calling URL with one or more HTTP Request Sampler.
+Initialize file using a "setUp Thread Group" by calling URL with one or more HTTP Request Sampler or with jmeterPlugin.sts.initFileAtStartup property to read file at JMeter startup.
 
 Reading a row of data is done by calling READ method at each iteration by a HTTP Request Sampler.
 Then you can use a Regular Expression Extractor to parse the response data.
@@ -429,6 +489,7 @@ Reading password:
 [/img/wiki/http_sts_regex_extractor_read_password.png]
 
 At the end of your Test Plan you can save remaining/adding data with a HTTP Request Sampler in a "tearDown Thread Group".
+
 
 If you need to parse more than 2 columns, you could use a Post-Processeur groovy JSR223 like :
 
@@ -523,7 +584,7 @@ Extract pom.xml dedicated to Http Simple Table Server :
 ...
                  <configuration>
                      <jmeterExtensions>
-                          <artifact>kg.apc:jmeter-plugins-table-server:4.0</artifact>
+                          <artifact>kg.apc:jmeter-plugins-table-server:5.0</artifact>
                      </jmeterExtensions>
                      <propertiesUser>
                          <!-- properties configuration for Http Simple Table Server with automatic start when JMeter start -->
@@ -538,3 +599,14 @@ Extract pom.xml dedicated to Http Simple Table Server :
          </plugins>
     </build>
 ]]]
+
+
+== VERSIONS ==
+
+Version 5.0 november 2023, add READMULTI command
+
+Version 4.0 june 2023, add FIND command
+
+Version 3.1 may 2022, add CONFIG command, add Charset configuration, init files at startup and daemon
+
+

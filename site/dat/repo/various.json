@@ -1857,7 +1857,7 @@
       "description": "A tool that creates a JUnit XML file with KPI rules from JMeter JMeter Dashboard stats.json and generates a result file in JUnit XML format and other formats : html, csv and json.",
       "helpUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats",
       "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/raw/main/doc/images/kpi_excel.png",
-      "vendor": "Vincent Daburon",
+      "vendor": "Vincent DABURON",
       "markerClass": "io.github.vdaburon.jmeter.utils.jsonkpi.ToolInstaller",
       "installerClass": "io.github.vdaburon.jmeter.utils.jsonkpi.ToolInstaller",
       "versions": {

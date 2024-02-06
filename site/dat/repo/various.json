@@ -1907,7 +1907,7 @@
       "screenshotUrl": "https://github.com/vdaburon/elastic-apm-jmeter-plugin/raw/main/doc/images/elastic_apm_integration_tool_gui.png",
       "vendor": "Vincent DABURON",
       "markerClass": "io.github.vdaburon.jmeterplugins.elasticapm.ElasticApmIntegrateInstaller",
-      "installerClass": "io.github.vdaburon.jmeterplugins.elasticapm.ElasticApmIntegrateInstallerr",
+      "installerClass": "io.github.vdaburon.jmeterplugins.elasticapm.ElasticApmIntegrateInstaller",
       "versions": {
         "1.0": {
           "changes": "First version for jmeter-plugin repo",

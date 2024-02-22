@@ -674,6 +674,13 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.10": {
+        "changes": "Merge header managers when present, use Java 8 as before.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2.10/jmeter-websocket-samplers-1.2.10.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },

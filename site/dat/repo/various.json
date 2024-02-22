@@ -2008,5 +2008,23 @@
 	        "depends":["jmeter-core"]
 		}
 	}
+  },
+  {
+    "id": "jmeter-har-import",
+    "name": "HAR (HTTP Archive) Import",
+    "description": "This plugin allows you to import HAR files into JMeter and convert them into HTTP Request Samplers for easier recording.",
+    "vendor": "Qytera GmbH",
+    "screenshotUrl": "https://raw.githubusercontent.com/Qytera-Gmbh/JMeterHARImporterPlugin/main/screenshot-usage.png",
+    "helpUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/blob/main/README.md",
+    "markerClass": "de.qytera.jmeterharimporter.HARImporter",
+    "componentClasses": [
+      "de.qytera.jmeterharimporter.HARImporter",
+      "de.qytera.jmeterharimporter.HARImportMenu"
+    ],
+    "versions": {
+      "0.1.0": {
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.1.0/jmeter-har-import-plugin-v0.1.0.jar"
+      }
+    }
   }
 ]

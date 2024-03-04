@@ -266,6 +266,16 @@
         "depends": [
           "jmeter-http"
         ]
+      },
+      "0.12": {
+        "changes": "Fix parallel controller for JMeter 5.6+",
+        "downloadUrl": "https://github.com/OctoPerf/jmeter-bzm-plugins/releases/download/0.12/jmeter-parallel-0.12.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
+        },
+        "depends": [
+          "jmeter-http"
+        ]
       }
     }
   },

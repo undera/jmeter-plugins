@@ -7,7 +7,7 @@
 
     <groupId>kg.apc</groupId>
     <artifactId>jmeter-plugins-table-server</artifactId>
-    <version>4.0</version>
+    <version>5.0</version>
 
     <name>Simple Table Server</name>
     <description>Http Simple Table Server</description>

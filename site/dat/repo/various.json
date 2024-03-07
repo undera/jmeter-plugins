@@ -667,6 +667,20 @@
         "depends": [
           "jmeter-core"
         ]
+      },
+      "1.2.9": {
+        "changes": "Increased max read timeout; added data type for simplifying handling STOMP protocol messages.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2.9/jmeter-websocket-samplers-1.2.9.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
+      "1.2.10": {
+        "changes": "Merge header managers when present, use Java 8 as before.",
+        "downloadUrl": "https://search.maven.org/remotecontent?filepath=net/luminis/jmeter/jmeter-websocket-samplers/1.2.10/jmeter-websocket-samplers-1.2.10.jar",
+        "depends": [
+          "jmeter-core"
+        ]
       }
     }
   },
@@ -826,6 +840,11 @@
       "com.ubikingenierie.jmeter.plugin.hls.gui.HLSSamplerGUI"
     ],
     "versions": {
+     "9.1.4": {
+        "changes": "bug fixes, release notes at https://www.ubik-ingenierie.com/blog/release-of-ubikloadpack-video-streaming-plugin-9-1/",
+        "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.1.4/ubik-jmeter-videostreaming-plugin-9.1.4.jar",
+        "depends":["jmeter-core", "jmeter-components", "jmeter-http"]
+      },
      "9.1.3": {
         "changes": "Trigger Low Latency Dash based on availabilityTimeComplete tag, release notes at https://www.ubik-ingenierie.com/blog/release-of-ubikloadpack-video-streaming-plugin-9-1/",
         "downloadUrl": "https://ubikloadpack.com/plugins/ulp-jmeter-streaming-plugin/9.1.3/ubik-jmeter-videostreaming-plugin-9.1.3.jar",
@@ -1150,136 +1169,6 @@
     }
   },
   {
-  	"id" : "apdexcalculator",
-    "name" : "Apdex Score Calculator",
-    "description" : "Calculates the Apdex score and rating of Samplers for a given satisfied threshold.",
-    "screenshotUrl" : "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/apdexcalculator/src/site/img/wiki/apdex_Calculate.PNG",
-    "helpUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/apdexcalculator/src/site/dat/wiki/ApdexScoreCalculator.wiki",
-    "vendor": "Robert Bourgault du Coudray",
-    "markerClass": "kg.apc.jmeter.vizualisers.ApdexScoreCalculatorGui",
-    "componentClasses": [
-      "kg.apc.jmeter.vizualisers.ApdexScoreCalculatorGui",
-      "kg.apc.cmdtools.ApdexScoreCalculatorTool"
-    ],
-    "versions" : {
-		"2.0.1": {
-			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/jmeter-plugins-apdexcalculator-2.0.1.jar",
-			"changes": "Addition of Pass/Fail threshold when running the plugin from CLI in CI/CD.",
-			"libs": {
-				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
-				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/rbourga-jmeter-plugins-comm-1.0.jar"
-			},
-			"depends": [
-				"jmeter-core"
-			]
-        },
-    	"1.0.1" : {
-    		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/V2.0.0/jmeter-plugins-apdexcalculator-1.0.1.jar",
-            "libs" : {
-            	"jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
-            },
-            "depends" : [
-				"jmeter-core"
-            ]
-        }
-    }
-  },
-  {
-    "id": "outlierdetector",
-    "name": "Right Tail Outlier Detector",
-    "description": "A Jmeter plugin that detects and removes outliers in the right tail using Tukey fences.",
-    "screenshotUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/outlierdetector/src/site/img/wiki/rtod_Principle.jpg",
-    "helpUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/outlierdetector/src/site/dat/wiki/RightTailOutlierDetection.wiki",
-    "vendor": "Robert Bourgault du Coudray",
-    "markerClass": "kg.apc.jmeter.vizualizers.RightTailOutlierDetectorGui",
-    "componentClasses": [
-      "kg.apc.jmeter.vizualizers.RightTailOutlierDetectorGui",
-      "kg.apc.cmdtools.RightTailOutlierDetectorTool"
-    ],
-    "versions": {
-		"1.0.4": {
-			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/jmeter-plugins-outlierdetector-1.0.4.jar",
-			"changes": "Addition of Pass/Fail threshold when running the plugin from CLI in CI/CD.",
-			"libs": {
-				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
-				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/rbourga-jmeter-plugins-comm-1.0.jar"
-			},
-			"depends": [
-				"jmeter-core"
-			]
-        },
-		"1.0.2": {
-			"changes": "Changed Java compliance level to 1.8.",
-			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/V1.0.2/jmeter-plugins-outlierdetector-1.0.2.jar",
-			"depends": [
-				"jmeter-core"
-			],
-			"libs": {
-				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
-			}
-        },
-		"1.0.1": {
-			"changes": "Fix of HelpLink and of jar version number",
-			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/V1.0.1/jmeter-plugins-outlierdetector-1.0.1.jar",
-			"depends": [
-				"jmeter-core"
-			]
-		},
-		"1.0.0": {
-            "changes": "Initial version.",
-			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v1.0.0/jmeter-plugins-outlierdetector-1.0.jar",
-			"depends": [
-				"jmeter-core"
-			]
-		}
-	}
-  },
-  {
-  	"id" : "resultscomparator",
-    "name" : "Results Comparator",
-    "description" : "Compares the results of two test runs using Cohen's d effect size.",
-    "screenshotUrl" : "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/resultscomparator/src/site/img/wiki/rc_Compare.PNG",
-    "helpUrl": "https://github.com/rbourga/jmeter-plugins-2/blob/main/tools/resultscomparator/src/site/dat/wiki/ResultsComparator.wiki",
-    "vendor": "Robert Bourgault du Coudray",
-    "markerClass": "kg.apc.jmeter.vizualizers.ResultsComparatorGui",
-    "componentClasses": [
-      "kg.apc.jmeter.vizualizers.ResultsComparatorGui",
-      "kg.apc.cmdtools.ResultsComparatorTool"
-    ],
-    "versions" : {
-		"3.1.2": {
-			"downloadUrl": "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/jmeter-plugins-resultscomparator-3.1.2.jar",
-			"changes": "Addition of Pass/Fail threshold when running the plugin from CLI in CI/CD.",
-			"libs": {
-				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
-				"rbourga-jmeter-plugins-comm":"https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.2.1/rbourga-jmeter-plugins-comm-1.0.jar"
-			},
-			"depends": [
-				"jmeter-core"
-			]
-        },
-    	"2.1" : {
-			"changes": "Addition of Pass/Fail testing criteria.",
-    		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/v3.1.0/jmeter-plugins-resultscomparator-2.1.jar",
-            "libs" : {
-            	"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar"
-            },
-            "depends" : [
-				"jmeter-core"
-            ]
-        },
-    	"1.0.1" : {
-    		"downloadUrl" : "https://github.com/rbourga/jmeter-plugins-2/releases/download/V3.0.0/jmeter-plugins-resultscomparator-1.0.1.jar",
-            "libs" : {
-            	"jmeter-plugins-cmn-jmeter>=0.6": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.6/jmeter-plugins-cmn-jmeter-0.6.jar"
-            },
-            "depends" : [
-				"jmeter-core"
-            ]
-        }
-    }
-  },
-  {
     "id": "awsmeter",
     "name": "AWS Support",
     "description": "JMeter plugin to execute test over AWS Services like Kinesis Data Stream, SQS Standard and FIFO queue and SNS Standard and FIFO topic.",
@@ -1403,6 +1292,12 @@
       "org.datadog.jmeter.plugins.metrics.ConcurrentAggregator"
     ],
     "versions": {
+      "0.5.0": {
+        "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.5.0/jmeter-datadog-backend-listener-0.5.0.jar",
+        "depends": [
+          "jmeter-core"
+        ]
+      },
       "0.4.0": {
         "downloadUrl": "https://github.com/DataDog/jmeter-datadog-backend-listener/releases/download/0.4.0/jmeter-datadog-backend-listener-0.4.0.jar",
         "depends": [
@@ -1969,7 +1864,7 @@
       "description": "A tool that creates a JUnit XML file with KPI rules from JMeter JMeter Dashboard stats.json and generates a result file in JUnit XML format and other formats : html, csv and json.",
       "helpUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats",
       "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterDashboardStats/raw/main/doc/images/kpi_excel.png",
-      "vendor": "Vincent Daburon",
+      "vendor": "Vincent DABURON",
       "markerClass": "io.github.vdaburon.jmeter.utils.jsonkpi.ToolInstaller",
       "installerClass": "io.github.vdaburon.jmeter.utils.jsonkpi.ToolInstaller",
       "versions": {
@@ -1985,7 +1880,7 @@
       "description": "A tool that creates a JUnit XML file with KPI rules from JMeter CSV Report, export result in html, csv or json format.",
       "helpUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv",
       "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiJMeterReportCsv/raw/main/doc/images/kpi_excel.png",
-      "vendor": "Vincent Daburon",
+      "vendor": "Vincent DABURON",
       "markerClass": "io.github.vdaburon.jmeter.utils.reportkpi.ToolInstaller",
       "installerClass": "io.github.vdaburon.jmeter.utils.reportkpi.ToolInstaller",
       "versions": {
@@ -2001,13 +1896,29 @@
       "description": "This tool read KPI declarations in a file and apply the KPI assertion on 2 JMeter Report CSV files (current and reference) and generates a result file in JUnit XML format and others formats Html, Json and Csv.",
       "helpUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv",
       "screenshotUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/raw/main/doc/images/kpi_excel.png",
-      "vendor": "Vincent Daburon",
+      "vendor": "Vincent DABURON",
       "markerClass": "io.github.vdaburon.jmeter.utils.comparekpi.ToolInstaller",
       "installerClass": "io.github.vdaburon.jmeter.utils.comparekpi.ToolInstaller",
       "versions": {
         "1.2": {
           "changes": "First version for jmeter-plugin repo",
           "downloadUrl": "https://github.com/vdaburon/JUnitReportKpiCompareJMeterReportCsv/releases/download/V1.2/junit-reporter-kpi-compare-jmeter-report-csv-1.2-jar-with-dependencies.jar"
+        }
+      }
+    },
+    {
+      "id": "vdn-elastic-apm-tool",
+      "name": "vdn@github - elastic-apm-tool",
+      "description": "Manage the Elastic Application Performance Monitoring (ELASTIC APM) in JMeter script.",
+      "helpUrl": "https://github.com/vdaburon/elastic-apm-jmeter-plugin",
+      "screenshotUrl": "https://github.com/vdaburon/elastic-apm-jmeter-plugin/raw/main/doc/images/elastic_apm_integration_tool_gui.png",
+      "vendor": "Vincent DABURON",
+      "markerClass": "io.github.vdaburon.jmeterplugins.elasticapm.ElasticApmIntegrateInstaller",
+      "installerClass": "io.github.vdaburon.jmeterplugins.elasticapm.ElasticApmIntegrateInstaller",
+      "versions": {
+        "1.0": {
+          "changes": "First version for jmeter-plugin repo",
+          "downloadUrl": "https://github.com/vdaburon/elastic-apm-jmeter-plugin/releases/download/Version1.0/elastic-apm-jmeter-plugin-1.0-jar-with-dependencies.jar"
         }
       }
     },
@@ -2023,6 +1934,103 @@
       "1.0.2": {
         "changes": "First version for jmeter-plugin repo",
         "downloadUrl": "https://github.com/sashikaR/jwt-preProcessor/releases/download/v1.0.2/jmeter_plugins_jwt_pre_processor-1.0-SNAPSHOT.jar"
+      },
+	"1.1.0": {
+        "changes": "Added PKCS#8 compatibility and bug fixes",
+        "downloadUrl": "https://github.com/sashikaR/jwt-preProcessor/releases/download/v1.1.0/jmeter_plugins_jwt_pre_processor-1.1.0-SNAPSHOT.jar"
+      }     
+    }
+  },
+  {
+	"id": "rbourga-jmeter-plugins-apdexcovcalculator",
+	"name": "Apdex & Coefficient of Variation",
+	"description": "Calculates the Apdex score of Samplers for a given Satisfied Threshold as well as their Coefficient of Variation.",
+    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/main/QualityAnalysis/ApdexCov/wiki/images/Screenshot.png",
+    "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/APDEX-Score-and-Coefficient-of-Variation-Calculator",
+    "vendor": "Robert Bourgault du Coudray",
+    "markerClass": "com.github.rbourga.jmeter.apdexcov.logic.ApdexCoVLogic",
+    "componentClasses": [
+		"com.github.rbourga.jmeter.apdexcov.gui.ApdexCoVGui",
+		"kg.apc.cmdtools.ApdexCoVTool"
+	],
+    "versions": {
+		"1.0.0": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.0.0/jmeter-plugins-apdexcovcalculator-1.0.0.jar",
+			"changes": "Initial release - replaces Apdex Score Calculator plugin.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.0.0/jmeter-plugins-comm-1.0.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar"
+			},
+	        "depends":["jmeter-core"]
+		}
+	}
+  },
+  {
+	"id": "rbourga-jmeter-plugins-cohendeffectsize",
+	"name": "Cohen's d Results Comparison",
+	"description": "Measures the magnitude of the difference between two test results using Cohen's d.",
+    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/main/ResultsComparison/CohenDEffectSize/wiki/images/Screenshot.png",
+    "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/Results-Comparison",
+    "vendor": "Robert Bourgault du Coudray",
+    "markerClass": "com.github.rbourga.jmeter.effectsize.logic.CohenDEffectSizeLogic",
+    "componentClasses": [
+		"com.github.rbourga.jmeter.effectsize.gui.CohenDEffectSizeGui",
+		"kg.apc.cmdtools.ResultsCompareTool"
+	],
+    "versions": {
+		"1.0.0": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.0.0/jmeter-plugins-cohendeffectsize-1.0.0.jar",
+			"changes": "Initial release - replaces Results Comparator plugin.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.0.0/jmeter-plugins-comm-1.0.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar"
+			},
+	        "depends":["jmeter-core"]
+		}
+	}
+  },
+  {
+	"id": "rbourga-jmeter-plugins-tukeyoutlierdetector",
+	"name": "Upper Outlier Removal",
+	"description": "Detects outliers in the right tail using Tukey's fences and removes them.",
+    "screenshotUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/blob/main/OutlierDetection/TukeyRightTailOutlierDetector/wiki/images/Screenshot.png",
+    "helpUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/wiki/Right-Tail-Outlier-Detection",
+    "vendor": "Robert Bourgault du Coudray",
+    "markerClass": "com.github.rbourga.jmeter.tukeyoutlierdetector.logic.TukeyOutlierDetectorLogic",
+    "componentClasses": [
+		"com.github.rbourga.jmeter.tukeyoutlierdetector.gui.TukeyOutlierDetectorGui",
+		"kg.apc.cmdtools.TukeyOutlierDetectorTool"
+	],
+    "versions": {
+		"1.0.0": {
+			"downloadUrl": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.0.0/jmeter-plugins-tukeyoutlierdetector-1.0.0.jar",
+			"changes": "Initial release - replaces Right Tail Outlier Detector plugin.",
+			"libs": {
+				"jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+				"jmeter-plugins-comm": "https://github.com/rbourga/rbourga-jmeter-plugins/releases/download/v1.0.0/jmeter-plugins-comm-1.0.0.jar",
+				"commons-csv": "https://repo1.maven.org/maven2/org/apache/commons/commons-csv/1.10.0/commons-csv-1.10.0.jar"
+			},
+	        "depends":["jmeter-core"]
+		}
+	}
+  },
+  {
+    "id": "jmeter-har-import",
+    "name": "HAR (HTTP Archive) Import",
+    "description": "This plugin allows you to import HAR files into JMeter and convert them into HTTP Request Samplers for easier recording.",
+    "vendor": "Qytera GmbH",
+    "screenshotUrl": "https://raw.githubusercontent.com/Qytera-Gmbh/JMeterHARImporterPlugin/main/screenshot-usage.png",
+    "helpUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/blob/main/README.md",
+    "markerClass": "de.qytera.jmeterharimporter.HARImporter",
+    "componentClasses": [
+      "de.qytera.jmeterharimporter.HARImporter",
+      "de.qytera.jmeterharimporter.HARImportMenu"
+    ],
+    "versions": {
+      "0.1.0": {
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.1.0/jmeter-har-import-plugin-v0.1.0.jar"
       }
     }
   }

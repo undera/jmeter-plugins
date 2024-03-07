@@ -393,6 +393,95 @@ public class HttpSimpleTableServerTest {
         assertEquals("<html><title>KO</title>" + CRLF + "<body>Error : Cant't find empty line !</body>" + CRLF
                 + "</html>", result);
 
+        /** READMULTI **/
+        String filemaneReadMulti = "months.txt";
+        Map<String, String> urlParametersReadMulti = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("NB_LINES","2");
+        urlParametersReadMulti.put("READ_MODE", "FIRST");
+        urlParametersReadMulti.put("KEEP", "TRUE");
+        result = sendHttpPost(obj, "/sts/READMULTI", urlParametersReadMulti);
+        assertEquals("<html><title>KO</title>" + CRLF
+                + "<body>Error : " + filemaneReadMulti + " not loaded yet !</body>" + CRLF
+                + "</html>", result);
+
+        Map<String, String> urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "January");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "February");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "March");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "April");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "May");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        urlParametersReadMultiAdd = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMultiAdd.put("LINE", "June");
+        urlParametersReadMultiAdd.put("ADD_MODE","LAST");
+        result = sendHttpPost(obj, "/sts/ADD", urlParametersReadMultiAdd);
+        assertEquals("<html><title>OK</title>" + CRLF + "<body></body>" + CRLF
+                + "</html>", result);
+
+        // read 2 first lines
+        urlParametersReadMulti = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("NB_LINES","2");
+        urlParametersReadMulti.put("READ_MODE", "FIRST");
+        urlParametersReadMulti.put("KEEP", "TRUE");
+        result = sendHttpPost(obj, "/sts/READMULTI", urlParametersReadMulti);
+        //System.out.println("Resultat READDMULTI = " + CRLF + result);
+        assertEquals("<html><title>OK</title>" + CRLF +
+                "<body>"+ CRLF +
+                "January<br />"+ CRLF +
+                "February<br />"+ CRLF +
+                "</body>"+ CRLF +
+                "</html>"
+                , result);
+
+        // try to read to many lines
+        urlParametersReadMulti = this.createParm("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("FILENAME", filemaneReadMulti);
+        urlParametersReadMulti.put("NB_LINES","200");
+        urlParametersReadMulti.put("READ_MODE", "FIRST");
+        urlParametersReadMulti.put("KEEP", "TRUE");
+        result = sendHttpPost(obj, "/sts/READMULTI", urlParametersReadMulti);
+        //System.out.println("Resultat READDMULTI = " + CRLF + result);
+        assertEquals("<html><title>KO</title>" + CRLF +
+                "<body>Error : Number lines to read greater than file size, 200 greater than 6 !</body>"
+                        + CRLF + "</html>"
+                , result);
+
     }
 
 

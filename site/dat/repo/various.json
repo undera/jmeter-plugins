@@ -1935,6 +1935,10 @@
         "1.0": {
           "changes": "First Version for jmeter-plugins repo",
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v1.0/har-convertor-jmeter-plugin-1.0-jar-with-dependencies.jar"
+        },
+        "2.0": {
+          "changes": "Add parameters page_start_number and sampler_start_number to facilitate partial recording of website navigation. Modify for POST multipart/form-data don't put the content of the file in the Record.xml file because binary content could be large and not XML compatible.",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v2.0/har-convertor-jmeter-plugin-2.0-jar-with-dependencies.jar"
         }
       }
    },

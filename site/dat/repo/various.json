@@ -1463,6 +1463,13 @@
             "jmeter-core",
             "jmeter-components"
           ]
+        },
+        "2.2": {
+          "downloadUrl": "https://github.com/rollno748/Extended-csv-dataset-config/releases/download/2.2/di-extended-csv-2.2.jar",
+          "depends": [
+            "jmeter-core",
+            "jmeter-components"
+          ]
         }
     }
   },

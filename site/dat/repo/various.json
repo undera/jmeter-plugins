@@ -1941,7 +1941,7 @@
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v2.0/har-convertor-jmeter-plugin-2.0-jar-with-dependencies.jar"
         },
 	"3.0": {
-          "changes": "Add Button "CONVERT AND LOAD GENERATED SCRIPT". File Chooser select only file and no directory.",
+          "changes": "Add Button 'CONVERT AND LOAD GENERATED SCRIPT'. File Chooser select only file and no directory.",
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v3.0/har-convertor-jmeter-plugin-3.0-jar-with-dependencies.jar"
         }
       }

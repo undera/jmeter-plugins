@@ -381,6 +381,15 @@
           "sshd-core>=2.6": "https://search.maven.org/remotecontent?filepath=org/apache/sshd/sshd-core/2.6.0/sshd-core-2.6.0.jar",
           "sshd-common>=2.6": "https://search.maven.org/remotecontent?filepath=org/apache/sshd/sshd-common/2.6.0/sshd-common-2.6.0.jar"
         }
+      },
+      "1.4": {
+        "changes": "Maintenance release: Dependency updates and bug fixes",
+        "downloadUrl": "https://github.com/tilln/jmeter-sshmon/releases/download/1.4/jmeter-sshmon-1.4.jar",
+        "libs": {
+          "jmeter-plugins-cmn-jmeter>=0.7": "https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar",
+          "sshd-core>=2.6": "https://search.maven.org/remotecontent?filepath=org/apache/sshd/sshd-core/2.12.1/sshd-core-2.12.1.jar",
+          "sshd-common>=2.6": "https://search.maven.org/remotecontent?filepath=org/apache/sshd/sshd-common/2.12.1/sshd-common-2.12.1.jar"
+        }
       }
     }
   },

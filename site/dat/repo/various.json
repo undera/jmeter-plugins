@@ -1960,9 +1960,9 @@
           "changes": "Add Button 'CONVERT AND LOAD GENERATED SCRIPT'. File Chooser select only file and no directory.",
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v3.0/har-convertor-jmeter-plugin-3.0-jar-with-dependencies.jar"
         },
-	"3.1": {
-          "changes": "Remove the header Content-length because the length is computed by JMeter when the request is created. POST or PUT could have query string and body with content so add query string to the path. Set Content Encoding to UFT-8 for POST or PUT method and request Content-Type:application/json. Add body data content in record.xml for PUT and PATCH methods.",
-          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v3.1/har-convertor-jmeter-plugin-3.1-jar-with-dependencies.jar"
+	"3.2": {
+          "changes": "Remove the header Content-length because the length is computed by JMeter when the request is created. POST or PUT could have query string and body with content so add query string to the path. Set Content Encoding to UFT-8 for POST or PUT method and request Content-Type:application/json. Add body data content in record.xml for PUT and PATCH methods. encode value for x-www-form-urlencoded when value contains space, equal, slash or plus characters.",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v3.2/har-convertor-jmeter-plugin-3.2-jar-with-dependencies.jar"
         }
       }
    },

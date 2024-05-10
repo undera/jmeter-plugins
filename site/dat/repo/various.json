@@ -1963,6 +1963,10 @@
 	"3.2": {
           "changes": "Remove the header Content-length because the length is computed by JMeter when the request is created. POST or PUT could have query string and body with content so add query string to the path. Set Content Encoding to UFT-8 for POST or PUT method and request Content-Type:application/json. Add body data content in record.xml for PUT and PATCH methods. encode value for x-www-form-urlencoded when value contains space, equal, slash or plus characters.",
           "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v3.2/har-convertor-jmeter-plugin-3.2-jar-with-dependencies.jar"
+        },
+	"5.0": {
+          "changes": "Add an external csv file with transaction information for JMeter Transaction Controller Name. Add compatibility with HAR generated with LoadRunner Web Recorder Chrome Extension. Correct Filter Include first filter and Filter Exclude second filter",
+          "downloadUrl": "https://github.com/vdaburon/har-convertor-jmeter-plugin/releases/download/v5.0/har-convertor-jmeter-plugin-5.0-jar-with-dependencies.jar"
         }
       }
    },

@@ -2084,6 +2084,10 @@
       "0.2.0": {
         "changes": "Several options for configuration added, e.g. en/disabling timers; host exclusion added; grouping of samplers. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.0/jmeter-har-import-plugin-v0.2.0.jar"
+      },
+      "0.2.1": {
+        "changes": "New way for adding think time. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.1/jmeter-har-import-plugin-v0.2.1.jar"
       }
     }
   }

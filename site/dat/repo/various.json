@@ -2074,11 +2074,16 @@
     "markerClass": "de.qytera.jmeterharimporter.HARImporter",
     "componentClasses": [
       "de.qytera.jmeterharimporter.HARImporter",
-      "de.qytera.jmeterharimporter.HARImportMenu"
+      "de.qytera.jmeterharimporter.HARImportDialog"
     ],
     "versions": {
       "0.1.0": {
+        "changes": "Initial version for basic GET, POST, PUT, PATCH and DELETE request support. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
         "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.1.0/jmeter-har-import-plugin-v0.1.0.jar"
+      },
+      "0.2.0": {
+        "changes": "Several options for configuration added, e.g. en/disabling timers; host exclusion added; grouping of samplers. For more details see: https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases",
+        "downloadUrl": "https://github.com/Qytera-Gmbh/JMeterHARImporterPlugin/releases/download/v0.2.0/jmeter-har-import-plugin-v0.2.0.jar"
       }
     }
   }
